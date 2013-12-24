@@ -1,13 +1,13 @@
 Name: libschroedinger
-Version: 1.0.10
-Release: alt2
+Version: 1.0.11
+Release: alt1
 
 Summary: Library for decoding and encoding video in the Dirac format
 Group: System/Libraries
 License: LGPL/MIT/MPL
 URL: http://www.diracvideo.org/
 
-Source0: http://www.diracvideo.org/download/schroedinger/schroedinger-%version.tar.gz
+Source0: schroedinger-%version.tar
 
 #Patch0: ldadd.patch
 
@@ -74,6 +74,9 @@ Development documantation for libschroedinger.
 %_datadir/gtk-doc/html/schroedinger
 
 %changelog
+* Tue Dec 24 2013 Paul Wolneykien <manowar@altlinux.org> 1.0.11-alt1
+- Freshed up to v1.0.11 with the help of cronbuild and update-source-functions.
+
 * Wed Oct 26 2011 Paul Wolneykien <manowar@altlinux.ru> 1.0.10-alt2
 - Add glib-2.0 to the set of build requisites.
 
