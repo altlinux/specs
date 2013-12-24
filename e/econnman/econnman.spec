@@ -2,13 +2,13 @@
 Summary: Enlightenment Connection Manager
 Name: econnman
 Version: 1.1
-Release: alt2
+Release: alt3
 License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 Source: %name-%version.tar
 
-Requires: connman
+Requires: connman python-module-efl
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-base python3-devel
@@ -39,6 +39,9 @@ export PYTHON=/usr/bin/python3
 %_datadir/%name
 
 %changelog
+* Tue Dec 24 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt3
+- Depend on python-module-efl.
+
 * Thu Dec 12 2013 Paul Wolneykien <manowar@altlinux.org> 1.1-alt2
 - Fix the version pattern in the cronbuild script.
 
