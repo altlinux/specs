@@ -1,6 +1,6 @@
 Name: orc
 Version: 0.4.18
-Release: alt1
+Release: alt2
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -8,7 +8,6 @@ License: BSD
 URL: http://code.entropywave.com/projects/orc/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildRequires: gtk-doc valgrind-devel
 BuildRequires: glib2-devel >= 2.10.0
@@ -91,7 +90,6 @@ This package contains documentation for Orc.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %autoreconf
@@ -128,6 +126,10 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Tue Dec 24 2013 Paul Wolneykien <manowar@altlinux.org> 0.4.18-alt2
+- Switch to building from tarballs, assisted by cronbuild and the
+  update-source-functions.
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.18-alt1
 - 0.4.18
 
