@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.2
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -436,6 +436,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt3
+- xfce settings: Increase the default double-click time.
+- xfce settings: Disable mousewheel-rollup feature in the xfwm4.
+
 * Mon Dec 16 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt2
 - xfce-settings: Fix summary and description.
 - Package old SL New Year wallpapers.
