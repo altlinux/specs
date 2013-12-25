@@ -1,5 +1,5 @@
 %define		branch 0.8
-%define		svn svn3924
+%define		svn svn3984
 
 Version:	%branch.0.1
 Name:		qmmp-plugin-pack
@@ -109,6 +109,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Wed Dec 25 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn3984
+- build svn3984
+
 * Sat Nov 23 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn3924
 - build svn3924
 
