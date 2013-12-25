@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-squidmill
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -39,6 +39,10 @@ Alterator module for browsing the Squid proxy server statistics
 %_alterator_backend3dir/squidmill
 
 %changelog
+* Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt1
+- Display `squidmill` command error message (last line) if any.
+- Make the initial backend query async.
+
 * Fri Jul 12 2013 Paul Wolneykien <manowar@altlinux.org> 2.3-alt1
 - Require alterator-service-functions >= 2.0.2.
 - Do not redirect the query log for the purpose of debug.
