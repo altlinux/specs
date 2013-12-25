@@ -2,7 +2,7 @@
 
 Name: kino
 Version: 1.3.4
-Release: alt7
+Release: alt8
 
 Summary: Non-linear DV editor
 Group: Video
@@ -18,6 +18,7 @@ Source5: kino-1.3.4-ru.po.bz2
 Patch1: kino-1.3.4-alt-alsa-default.patch
 Patch2: kino-1.3.4-alt-makefile-libxml2.patch
 Patch3: kino-1.3.4-v4l1.patch
+Patch4: ffmpeg2dirac-optional.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -86,6 +87,7 @@ a DVD right from Kino
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p2
 bzcat %SOURCE5 > po/ru.po
 
 %build
@@ -142,6 +144,10 @@ fi
 %_datadir/%name/scripts/dvdauthor/
 
 %changelog
+* Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 1.3.4-alt8
+- Make the 'ffmpeg2dirac' export script not to require ffmpeg2dirac
+  binary.
+
 * Mon Oct 31 2011 Michael Shigorin <mike@altlinux.org> 1.3.4-alt7
 - devel, dvdauthor subpackages made noarch
 
