@@ -1,6 +1,6 @@
 Name: update-source-functions
 Version: 0.1.7
-Release: alt1
+Release: alt2
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
 License: GPLv3
@@ -9,7 +9,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: python-module-json
+Requires: python-module-simplejson
 
 %description
 This package contains the set of Shell functions intended to help with
@@ -36,6 +36,10 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.7-alt2
+- Use simplejson instead of json for compatibility with older
+  Python versions.
+
 * Thu Dec 12 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.7-alt1
 - Use wget which handles SourceForge download URIs properly.
 - Make the tarname extraction more smart.
