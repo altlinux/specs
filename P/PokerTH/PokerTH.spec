@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 1.0.1
-Release: alt1.1
+Version: 1.1
+Release: alt1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -15,13 +15,13 @@ Patch: %name-%version-%release.patch
 #BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue May 26 2009
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel libqt4-devel
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
 
 BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-devel libircclient-devel libprotobuf-devel
 BuildPreReq: protobuf-compiler
 
 %description
-PokerTH is a poker game written in C++/QT4. You can play the popular
+PokerTH is a poker game written in C++/Qt5. You can play the popular
 "Texas Hold'em" poker variant against up to nine computer-opponents or
 play network games with people all over the world.
 
@@ -30,11 +30,10 @@ play network games with people all over the world.
 %patch -p1
 
 %build
-qmake-qt4 \
+qmake-qt5 \
 	QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" \
 	pokerth.pro
-%make_build Makefile.pokerth_{lib,game,server}
 sed -i 's|-pipe |%optflags -fno-strict-aliasing |g' Makefile*
 %make_build
 
@@ -50,6 +49,10 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 1.1-alt1
+- Build with Qt5.
+- [1.1]
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
 - Fixed build
 
