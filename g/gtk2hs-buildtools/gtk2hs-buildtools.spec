@@ -6,12 +6,12 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %f_pkg_name
-Version: 0.12.4
-Release: alt2
+Version: 0.12.5.1
+Release: alt1
 License: GPL-2
 
 Group: Development/Haskell
-Url: http://www.haskell.org/gtk2hs/
+Url: http://hackage.haskell.org/package/gtk2hs-buildtools
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
@@ -45,6 +45,9 @@ Haskell. These tools are not needed to actually run Gtk2Hs programs.
 %files -f %name-files.all
 
 %changelog
+* Wed Dec 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.12.5.1-alt1
+- 0.12.5.1
+
 * Sun Jan 27 2013 Denis Smirnov <mithraen@altlinux.ru> 0.12.4-alt2
 - cleanup
 
