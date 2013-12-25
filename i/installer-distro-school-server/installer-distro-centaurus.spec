@@ -1,7 +1,7 @@
 %define distro school-server
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt7
+Release: alt8
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Dec 25 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt8
+- Add bacula-local-backup to expert list
+
 * Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt7
 - Turn off Rujel and Clamav services by default
 
