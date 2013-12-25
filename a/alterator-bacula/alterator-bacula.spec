@@ -1,6 +1,6 @@
 Name: alterator-bacula
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -69,10 +69,7 @@ mkdir -p %buildroot%hookdir
 install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 
 %post
-mkdir -m 0750 /srv/backup
-chown -R bacula:bacula /srv/backup
-/etc/init.d/alteratord restart
-alterator-cmdline /bacula-director action init
+/usr/sbin/bacula-reset-settings
 
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
@@ -90,6 +87,9 @@ alterator-cmdline /bacula-director action init
 %altdir/desktop-directories/*
 
 %changelog
+* Wed Dec 25 2013 Andrey Kolotov <qwest@altlinux.org> 1.2-alt1
+- Changed installation package.
+
 * Tue Dec 24 2013 Andrey Kolotov <qwest@altlinux.org> 1.1-alt2
 - Deleted the asterisk symbol in ui/settings.
 
