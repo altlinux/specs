@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.12
+Version: 0.2.12.1
 Release: alt1
 
 Summary: Simple image creator
@@ -82,6 +82,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Wed Dec 25 2013 Michael Shigorin <mike@altlinux.org> 0.2.12.1-alt1
+- mki-copy-efiboot: rescue needs no bootsplash
+
 * Sun Dec 22 2013 Michael Shigorin <mike@altlinux.org> 0.2.12-alt1
 - mki-copy-efiboot: further refactoring and fixups
   + hardlink image contents
