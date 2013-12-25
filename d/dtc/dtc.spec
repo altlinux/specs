@@ -1,6 +1,6 @@
 Name: dtc
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: %gpl2plus
@@ -87,6 +87,9 @@ popd
 %doc README.license Documentation/dtc-paper.dvi.bz2 Documentation/dtc-paper.ps.bz2 Documentation/dtc-paper.pdf.bz2 Documentation/dtc-manual.txt.bz2 Documentation/dts-format.txt.bz2
 
 %changelog
+* Wed Dec 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
+- 1.4.0 released
+
 * Thu Dec 27 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.3.0-alt2
 - Increase package version due the ugly correlation with package version
   in the FC AutoImports repository.
