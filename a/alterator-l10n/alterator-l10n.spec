@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9
-Release: alt67
+Version: 2.9.1
+Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,13 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Dec 25 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.1-alt1
+- Add Russian help files for Bacula modules and alterator-console
+- Fix help title for alterator-dhcp
+- Add alterator-console translations
+- Update alterator-bacula translations
+- Change version numbering policy (2.9.x) for package
+
 * Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt67
 - Remove warning about shrink Vista partition
 - Add warning about separate /usr patition on LUKS use
