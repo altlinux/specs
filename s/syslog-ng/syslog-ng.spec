@@ -10,8 +10,8 @@
 %def_enable	mongodb
 
 Name: syslog-ng
-Version: 3.4.6
-Release: alt1.git20131204
+Version: 3.4.7
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -23,7 +23,7 @@ Conflicts: klogd < 1.4.1-alt7
 
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
-Source: http://www.balabit.com/downloads/files/syslog-ng/sources/3.4.1/source/%{name}_%{version}.tar.gz
+Source: http://www.balabit.com/downloads/files/syslog-ng/sources/%{version}/source/%{name}_%{version}.tar.gz
 Patch1: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Apr 19 2013 (-bi)
@@ -32,7 +32,7 @@ Patch1: %name-%version-%release.patch
 # + SSL/TLS
 # + PCRE
 # + SQL
-BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.12-alt0.3.4.1 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl
+BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl
 
 %if_enabled geoip
 BuildRequires: libGeoIP-devel
@@ -286,6 +286,9 @@ fi
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Dec 26 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.7-alt1
+- 3.4.7 (git20131225)
+
 * Thu Dec 05 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.6-alt1.git20131204
 - 3.4.6 (git20131204)
 
