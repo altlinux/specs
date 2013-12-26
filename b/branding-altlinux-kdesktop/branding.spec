@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.2
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -300,6 +300,11 @@ cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
 mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 popd
+# kde4 disable annoing autostart
+mkdir -p %buildroot%_sysconfdir/skel/.config/autostart/
+for n in tracker-miner-fs tracker-store ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot%_sysconfdir/skel/.config/autostart/$n.desktop
+done
 
 #kde3-settings
 pushd kde3-settings
@@ -403,6 +408,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 %_sysconfdir/skel/.config/gtk-3.0
+%_sysconfdir/skel/.config/autostart
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -455,6 +461,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Dec 26 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt2
+- disable tracker autostart (ALT#26549)
+
 * Mon Dec 16 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt1
 - 7.0.2 release
 
