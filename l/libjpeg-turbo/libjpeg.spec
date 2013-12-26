@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
-Version: 1.2.1
-Release: alt1
+Version: 1.3.1
+Release: alt0.1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -9,13 +9,13 @@ Group: System/Libraries
 Url: http://sourceforge.net/projects/%name/
 
 # http://download.sourceforge.net/%name/%name-%version.tar.gz
-Source: %name-%version.tar
+Source: %name-%version-%release.tar
 Source2: http://jpegclub.org/jpegexiforient.c
 Source3: exifautotran
 Source4: jpeginfo.c
 
 Patch1: libjpeg-6b-suse-int32.patch
-Patch2: libjpeg-turbo-1.2.0-fedora-noinst.patch
+Patch2: libjpeg-turbo-fedora-noinst.patch
 Patch3: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch4: libjpeg-turbo-alt-versioning.patch
 Patch5: libjpeg-turbo-alt-libturbojpeg.patch
@@ -100,7 +100,7 @@ This package contains a turbojpeg shared library.
 This package contains development files for the turbojpeg library.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -177,6 +177,9 @@ install -pm644 README* ChangeLog.txt change.log example.c \
 %_includedir/turbojpeg.h
 
 %changelog
+* Thu Dec 26 2013 Dmitry V. Levin <ldv@altlinux.org> 2:1.3.1-alt0.1
+- Updated to 1.3.1 r1092 (fixes CVE-2013-6629, CVE-2013-6630).
+
 * Wed Jul 18 2012 Dmitry V. Levin <ldv@altlinux.org> 2:1.2.1-alt1
 - Updated to 1.2.1 (fixes CVE-2012-2806).
 
