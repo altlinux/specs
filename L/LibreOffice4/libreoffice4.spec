@@ -1,5 +1,5 @@
 # 4.1.4.2
-%define with_forky no
+%define with_forky yes
 
 Name: LibreOffice4
 Version: 4.1
@@ -9,7 +9,7 @@ Version: 4.1
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt7
+Release: alt8
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -287,6 +287,8 @@ test -r %conffile && . %conffile ||:
 	--enable-ext-ct2n \
 	--enable-ext-barcode \
   \
+	--enable-release-build \
+  \
 	--enable-gtk3 \
 	--enable-gstreamer \
 	--disable-gstreamer-0-10 \
@@ -304,8 +306,9 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %ifdef with_forky
 # TODO prefect forky_max tune
 echo Using forky
-export forky_max_procs=`awk '/^Max processes/{print int(9*$3/10)}' < /proc/self/limits`
-export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/10)}' < /proc/meminfo`
+export forky_divider=12
+export forky_max_procs=`awk '/^Max processes/{print int(9*$3/'$forky_divider')}' < /proc/self/limits`
+export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/'$forky_divider')}' < /proc/meminfo`
 export forky_max_rss=$(($forky_max_vsz/3))
 export forky_verbose=1
 export LD_PRELOAD=`pwd`/forky.so
@@ -432,6 +435,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Thu Dec 26 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt8
+- Build with --enable-release-build
+
 * Thu Dec 19 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt7
 - Version up to officially corporative stable 4.1.4.2
 - Disable applied patches
