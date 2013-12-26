@@ -13,7 +13,7 @@
 %def_with debugtools
 
 Name: openvswitch
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -23,6 +23,15 @@ Group: Networking/Other
 Url: http://openvswitch.org
 Source0: %url/releases/%name-%version.tar
 Source1: %name.init
+Source3: 01-%name
+Source4: create-ovsbr
+Source5: create-ovsbond
+Source6: create-ovsport
+Source7: destroy-ovsbr
+Source8: destroy-ovsbond
+Source9: destroy-ovsport
+Source10: setup-ovsbr
+
 Patch: openvswitch-2.0_alt_fix_function.patch
 
 BuildRequires: graphviz libssl-devel openssl python-module-PyQt4 python-module-PySide python-modules-json python-module-twisted-conch python-module-wx valgrind-devel groff
@@ -123,7 +132,7 @@ popd
 
 %build
 ./boot.sh
-%configure --with-logdir=%_logdir/%name --with-dbdir=%_localstatedir/%name --with-pkidir=%_localstatedir/%name/pki
+%configure --with-rundir=%_runtimedir/%name --with-logdir=%_logdir/%name --with-dbdir=%_localstatedir/%name --with-pkidir=%_localstatedir/%name/pki
 %make_build
 
 # test 591 fails, reported upstream
@@ -150,6 +159,15 @@ install -pDm644 xenserver/etc_profile.d_openvswitch.sh \
          %buildroot%_sysconfdir/profile.d/openvswitch.sh
 install -pDm644 xenserver/usr_share_openvswitch_scripts_sysconfig.template \
          %buildroot%_sysconfdir/sysconfig/%name
+#etcnet
+install -pDm644 %SOURCE3 %buildroot%_sysconfdir/net/options.d/01-openvswitch
+install -pDm755 %SOURCE4 %buildroot%_sysconfdir/net/scripts/create-ovsbr
+install -pDm755 %SOURCE5 %buildroot%_sysconfdir/net/scripts/create-ovsbond
+install -pDm755 %SOURCE6 %buildroot%_sysconfdir/net/scripts/create-ovsport
+install -pDm755 %SOURCE7 %buildroot%_sysconfdir/net/scripts/destroy-ovsbr
+install -pDm755 %SOURCE8 %buildroot%_sysconfdir/net/scripts/destroy-ovsbond
+install -pDm755 %SOURCE9 %buildroot%_sysconfdir/net/scripts/destroy-ovsport
+install -pDm755 %SOURCE10 %buildroot%_sysconfdir/net/scripts/setup-ovsbr
 
 # FIXME
 %if_with xenserver
@@ -217,10 +235,13 @@ install -pDm644 python/compat/uuid.py %buildroot%python_sitelibdir_noarch/
 %_datadir/%name/scripts/ovs-lib
 %_datadir/%name/scripts/ovs-save
 %_datadir/%name/scripts/ovs-ctl
+%_datadir/%name/scripts/ovs-check-dead-ifs
 %config(noreplace) %_sysconfdir/openvswitch
 %config(noreplace) %_sysconfdir/profile.d/openvswitch.sh
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_sysconfdir/logrotate.d/openvswitch
+%config(noreplace) %_sysconfdir/net/options.d/01-openvswitch
+%_sysconfdir/net/scripts/*
 
 %if_with debugtools
 %files debugtools
@@ -238,6 +259,7 @@ install -pDm644 python/compat/uuid.py %buildroot%python_sitelibdir_noarch/
 %files common
 %_logdir/%name
 %_localstatedir/%name
+%_runtimedir/%name
 %_bindir/ovs-appctl
 %_bindir/ovs-benchmark
 %_bindir/ovs-ofctl
@@ -293,6 +315,12 @@ install -pDm644 python/compat/uuid.py %buildroot%python_sitelibdir_noarch/
 %endif
 
 %changelog
+* Wed Dec 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt1
+- Fix runtimedir
+- Add %_datadir/%name/scripts/ovs-check-dead-ifs
+- Add etcnet support
+- Fix initscript for etcnet support
+
 * Sat Dec 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0-alt1
 - 2.0
 - Remove package brcompat (from upstream v1.10.0)
