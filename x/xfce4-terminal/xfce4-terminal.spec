@@ -1,6 +1,6 @@
 Name: xfce4-terminal
-Version: 0.6.2
-Release: alt3
+Version: 0.6.3
+Release: alt1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -10,10 +10,6 @@ Url: http://www.xfce.org
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-# ALT bug #29513, from xfce bug #10395
-Patch1: fix-encoding.patch
-# Xfce bug #9732.
-Patch2: Fix-terminal-session-restore.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -41,8 +37,6 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag terminal_version_tag configure.ac.in
@@ -71,6 +65,10 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Fri Dec 27 2013 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt1
+- Drop obsoleted patches.
+- Updated to 0.6.3.
+
 * Thu Dec 26 2013 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt3
 - Fix terminal session restore.
 - Fix Xfce name (XFCE -> Xfce).
