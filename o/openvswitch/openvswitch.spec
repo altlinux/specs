@@ -14,7 +14,7 @@
 
 Name: openvswitch
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: An open source, production quality, multilayer virtual switch
 License: Apache
@@ -315,6 +315,9 @@ install -pDm644 python/compat/uuid.py %buildroot%python_sitelibdir_noarch/
 %endif
 
 %changelog
+* Fri Dec 27 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt2
+- Add OVS_REMOVE and remove ports and bridges ony if set yes
+
 * Wed Dec 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt1
 - Fix runtimedir
 - Add %_datadir/%name/scripts/ovs-check-dead-ifs
