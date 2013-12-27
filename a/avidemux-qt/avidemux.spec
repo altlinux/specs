@@ -1,9 +1,11 @@
 
 %define rname avidemux
+%def_disable ownffmpeg
+%add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.5.6
-Release: alt2
+Version: 2.6.7
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -11,30 +13,37 @@ Summary(ru_RU.UTF-8): Avidemux -- это редактор AVI-файлов с г
 Url: http://avidemux.org/
 License: GPL
 
+Provides: avidemux3 = %version-%release
 Provides: avidemux2 = %version-%release
 Obsoletes: avidemux2 < %version-%release
 Provides: avidemux = %version-%release
 Conflicts: avidemux
 
 Source: avidemux-%version.tar
+%if_enabled ownffmpeg
 Source1: ffmpeg.tar.bz2
+%endif
 Source2: avidemux.desktop
+Source3: http://gitorious.org/avidemux2-6/avidemux2-6/blobs/raw/7cf44bbc1f33894594b2bc84089d1779edc5c2b9/avidemux_plugins/ADM_autoScrips/lib/ADM_resize.py
 
-Patch1: plugins-compile.patch
-Patch2: avidemux-2.5.4-alt-x264-test.patch
-Patch3: avidemux-2.5.4-alt-i18n-qm-path.patch
-Patch4: avidemux-2.5.4-alt-x264-115.patch
-Patch5: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
+%if_enabled ownffmpeg
+Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
+%endif
+Patch2: avidemux-2.6.0-alt-i18n-qm-path.patch
+Patch3: avidemux-2.6.0-alt-crash-retranslate.patch
+Patch4: avidemux-2.6.0-alt-flags.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
 # Automatically added by buildreq on Thu Oct 28 2010 (-bi)
 #BuildRequires: bzlib-devel cmake gcc-c++ git-svn glibc-devel-static libGL-devel libSDL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXvMC-devel libXxf86misc-devel libaften-devel libesd-devel libfaad-devel libjack-devel liblame-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsubversion-auth-gnome-keyring libsubversion-auth-kwallet libvdpau-devel libvorbis-devel libvpx-devel libx264-devel libxkbfile-devel libxml2-devel libxvid-devel perl-IO-Compress qt4-designer rpm-build-ruby tetex-core xml-utils xsltproc yasm
-BuildRequires: bzlib-devel cmake gcc-c++ glibc-devel libSDL-devel
+BuildRequires: bzlib-devel cmake gcc-c++ glibc-devel libSDL-devel python-devel
 BuildRequires: libaften-devel libfaad-devel libjack-devel liblame-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel
-BuildRequires: libvdpau-devel libvorbis-devel libvpx-devel libx264-devel
-BuildRequires: libxml2-devel libxvid-devel perl-IO-Compress libqt4-devel
+BuildRequires: libvdpau-devel libva-devel
+#BuildRequires: libxvba-devel
+BuildRequires: libvorbis-devel libvpx-devel libx264-devel
+BuildRequires: libxml2-devel libxvid-devel perl-IO-Compress libqt4-devel libsqlite3-devel
 BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel
 
 %description
@@ -82,76 +91,104 @@ Common files for %name
 
 %prep
 %setup -qn %rname-%version
-%patch1 -p0
+%if_enabled ownffmpeg
+%patch1 -p1
+%endif
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-%patch5 -p1
+%patch4 -p1
 %patch100 -p1
 
-install -m 0644 %SOURCE1 avidemux/ADM_libraries/
+%if_enabled ownffmpeg
+install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
+%endif
 
-# disable gtk ui
-#sed -i 's|SET.*ADM_UI_GTK[[:space:]].*||' CMakeLists.txt
-
-# fix hardcoded libdir
-sed -i 's|Dir="lib"|Dir="%{_lib}"|' avidemux/main.cpp avidemux/ADM_core/src/ADM_fileio.cpp
-grep -q '"%{_lib}"' avidemux/main.cpp
-grep -q '"%{_lib}"' avidemux/ADM_core/src/ADM_fileio.cpp
 
 
 %build
 export QTDIR=%_qt4dir
 BUILDDIR=$PWD
-%K4cmake \
-    -DAVIDEMUX_INSTALL_PREFIX=%prefix \
-    -DAVIDEMUX_CORECONFIG_DIR=$BUILDDIR/BUILD-%_target_platform/config \
-    -DAVIDEMUX_SOURCE_DIR=$BUILDDIR \
-    -DAVIDEMUX_INSTALL_PREFIX=$BUILDDIR/BUILD-%_target_platform \
-    -DPULSEAUDIOSIMPLE:BOOL=TRUE \
-    -DGTK:BOOL=FALSE \
-    -DUSE_ARTS:BOOL=FALSE \
-    -DUSE_ESD:BOOL=FALSE \
-    -DUSE_SDL:BOOL=TRUE \
-    -DUSE_ALSA:BOOL=TRUE
-%K4make
+sh bootStrap.bash --with-core --with-cli --with-qt4 --without-gtk --with-plugins
+lrelease-qt4 po/*.ts
+for p in po/*.po ; do
+    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
+    msgfmt -o po/"$FLNG".mo $p
+done
 
 %install
 %set_verify_elf_method unresolved=relaxed,textrel=relaxed
-%K4install
-if [ -d %buildroot/usr/lib -a "%_lib" == "lib64" ]
-then
-    mkdir -p %buildroot/%_libdir
-    mv %buildroot/usr/lib/* %buildroot/%_libdir/
-fi
+cp -ar install/* %buildroot/
+mkdir -p %buildroot/usr/
+for d in bin include %_lib share
+do
+    [ -d "%buildroot/$d" ] || continue
+    mv "%buildroot/$d" %buildroot/usr/
+done
 
-install -pD -m644 avidemux_icon.png %buildroot%_pixmapsdir/%rname.png
-install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%rname.desktop
-ln -s avidemux2_qt4 %buildroot%_bindir/%rname
+install -pD -m644 avidemux_icon.png %buildroot/%_pixmapsdir/%rname.png
+install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%rname.desktop
+install -pD -m644 %SOURCE3 %buildroot/%_libdir/ADM_plugins6/autoScripts/lib/
+ln -s avidemux3_qt4 %buildroot/%_bindir/%rname
 
-#find_lang %name
+for p in po/*.mo ; do
+    LNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||' -e 's|@.*||'`
+    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
+    mkdir -p %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES
+    install -m 0644 po/"$FLNG".mo %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES/avidemux.mo
+done
+mkdir -p %buildroot/%_datadir/avidemux6/i18n/
+install -m 0644 po/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
+
+%find_lang avidemux
+#echo "%%defattr(644,root,root,755)" > avidemux.lang
+for f in %buildroot/%_datadir/avidemux6/i18n/avidemux*.qm
+do
+    LNG=`echo "$f"| sed -e 's|^.*/\(.*\)_\([a-z][a-z]\)[^[:alpha:]].*|\2|'`
+    FILE=%%_datadir/avidemux6/i18n/`basename "$f"`
+    echo "%%lang($LNG) $FILE" >>avidemux.lang
+done
 
 
-%files
+
+%files -f avidemux.lang
 %_desktopdir/*.desktop
 %_bindir/avidemux
-%_bindir/avidemux2_cli
-%_bindir/avidemux2_qt4
-%_libdir/libADM_UICli.so*
-%_libdir/libADM_UIQT4.so*
-%_libdir/libADM_render_cli.so
-%_libdir/libADM_render_qt4.so
-%_libdir/libADM5*
+%_bindir/avidemux3_cli
+%_bindir/avidemux3_jobs
+%_bindir/avidemux3_qt4
+%_libdir/libADM_UI*.so*
+%_libdir/libADM_render*.so
+%_libdir/libADM6*
 %_libdir/libADM_core*.so*
-%_libdir/libADM_smjs.so*
-%_libdir/ADM_plugins
+%_libdir/libADM_audio*.so
+%_libdir/ADM_plugins?/
 %_pixmapsdir/*
-%_datadir/ADM_scripts
-%_datadir/avidemux
+#%_datadir/ADM_scripts
+%dir %_datadir/avidemux6
+%dir %_datadir/avidemux6/i18n
+%_datadir/avidemux6/help
+
+# devel
+%exclude %_includedir/avidemux
 
 %changelog
-* Tue Sep 10 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.6-alt2
-- rebuilt with recent libx264
+* Fri Dec 27 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.7-alt1
+- new version
+
+* Fri Sep 13 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.5-alt1
+- new version
+
+* Wed Jun 26 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.4-alt1
+- new version
+
+* Thu Mar 07 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt1
+- new version
+
+* Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1
+- new version
+
+* Mon Aug 06 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt0.M60P.1
+- built for M60P
 
 * Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt1
 - new version
