@@ -1,13 +1,13 @@
 Name: xfwm4
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
-Summary: Window manager for XFce
+Summary: Window manager for Xfce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfwm4
 Source: %name-%version.tar
@@ -68,6 +68,10 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Fri Dec 27 2013 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.11.1.
+
 * Tue Sep 24 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Don't include stropts.h.
 - Updated to 4.11.0.
