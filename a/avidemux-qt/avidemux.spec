@@ -5,7 +5,7 @@
 
 Name: avidemux-qt
 Version: 2.6.7
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -40,8 +40,7 @@ Patch100: avidemux-2.5.1-opencore-check.patch
 BuildRequires: bzlib-devel cmake gcc-c++ glibc-devel libSDL-devel python-devel
 BuildRequires: libaften-devel libfaad-devel libjack-devel liblame-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel
-BuildRequires: libvdpau-devel libva-devel
-#BuildRequires: libxvba-devel
+BuildRequires: libvdpau-devel libva-devel libxvba-devel
 BuildRequires: libvorbis-devel libvpx-devel libx264-devel
 BuildRequires: libxml2-devel libxvid-devel perl-IO-Compress libqt4-devel libsqlite3-devel
 BuildRequires: xml-utils xsltproc yasm kde-common-devel libalsa-devel
@@ -103,6 +102,7 @@ Common files for %name
 install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
 %endif
 
+grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 
 
 %build
@@ -172,6 +172,9 @@ done
 %exclude %_includedir/avidemux
 
 %changelog
+* Sat Dec 28 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.7-alt2
+- built with xvba support
+
 * Fri Dec 27 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.7-alt1
 - new version
 
