@@ -1,37 +1,40 @@
-%define ver_major 3.4
+%define ver_major 3.5
+%define gst_api_ver 1.0
 
 Name: sound-juicer
 Version: %ver_major.0
 Release: alt1
+
 Summary: Clean and lean CD ripper
 Group: Sound
 License: GPLv2+
 Url: http://live.gnome.org/SoundJuicer
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Requires: gst-plugins-base gst-plugins-good
+Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: gnome-common
 BuildRequires: intltool desktop-file-utils gcc-c++
 BuildRequires: gnome-doc-utils-xslt gnome-doc-utils
-BuildRequires: glib2-devel >= 2.18
+BuildRequires: libgio-devel >= 2.32
 BuildRequires: libbrasero-devel >= 3.0.0
 BuildRequires: libgtk+3-devel >= 2.90.0
 BuildRequires: GConf libGConf-devel
-BuildRequires: libgio-devel libdbus-glib-devel libdbus-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
-BuildRequires: gstreamer-devel gst-plugins-devel gst-plugins-base gst-plugins-good gstreamer-utils
+BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
+BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
 BuildRequires: libgnome-media-profiles-devel >= 3.0.0
-BuildRequires: libmusicbrainz3-devel  >= 3.0.2 libdiscid-devel
+BuildRequires: libmusicbrainz5-devel  >= 5.0.1 libdiscid-devel
 
 %description
 GStreamer-based CD ripping tool. Saves audio CDs to audio formats,
 supported by GStreamer.
 
 %prep
-%setup -q
+%setup
+subst 's/0\.10/1.0/' configure
 
 %build
 %configure \
@@ -42,9 +45,10 @@ supported by GStreamer.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang --with-gnome %name
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=DiscBurning \
 	--add-category=GTK \
@@ -68,6 +72,9 @@ fi
 %doc AUTHORS README NEWS
 
 %changelog
+* Fri Dec 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Wed Mar 28 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
