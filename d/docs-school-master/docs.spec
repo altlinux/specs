@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Dec 27 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt4
+- Update screenshot with slideshow
+
 * Wed Dec 25 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt3
 - Update screenshots from release
 

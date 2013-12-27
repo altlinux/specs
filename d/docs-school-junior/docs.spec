@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Dec 27 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt3
+- Update screenshots
+
 * Tue Dec 17 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt2
 - fix distro version
 

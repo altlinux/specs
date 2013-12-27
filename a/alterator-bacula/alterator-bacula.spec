@@ -1,6 +1,6 @@
 Name: alterator-bacula
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -69,7 +69,7 @@ mkdir -p %buildroot%hookdir
 install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 
 %post
-/usr/sbin/bacula-reset-settings
+/usr/sbin/bacula-reset-settings ||:
 
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
@@ -87,6 +87,9 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Fri Dec 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.2-alt2
+- Fix postinstall script to prevent dist-upgrade fail
+
 * Wed Dec 25 2013 Andrey Kolotov <qwest@altlinux.org> 1.2-alt1
 - Changed installation package.
 
