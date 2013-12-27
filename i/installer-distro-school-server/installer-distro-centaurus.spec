@@ -1,7 +1,7 @@
 %define distro school-server
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt8
+Release: alt9
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Dec 27 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt9
+- Disable smartd and ejudge services by default
+
 * Wed Dec 25 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt8
 - Add bacula-local-backup to expert list
 
