@@ -3,7 +3,7 @@
 %define cvs_date rc2
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt2
+%define rel alt1
 
 %def_disable static
 # only bluez4 supported
@@ -13,7 +13,7 @@
 %def_with pam_helper
 
 Name: e18
-Version: 0.18.0
+Version: 0.18.2
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -181,6 +181,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Dec 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.2-alt1
+- 0.18.2
+
 * Sun Dec 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt2
 - 0.18 release
 
