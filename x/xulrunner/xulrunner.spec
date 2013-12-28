@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	25.0.1
+Version:	26.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -358,6 +358,24 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Sat Dec 21 2013 Alexey Gladkov <legion@altlinux.ru> 26.0-alt1
+- New release (26.0).
+- Fixed:
+  + MFSA 2013-117 Mis-issued ANSSI/DCSSI certificate
+  + MFSA 2013-116 JPEG information leak
+  + MFSA 2013-115 GetElementIC typed array stubs can be generated outside observed typesets
+  + MFSA 2013-114 Use-after-free in synthetic mouse movement
+  + MFSA 2013-113 Trust settings for built-in roots ignored during EV certificate validation
+  + MFSA 2013-112 Linux clipboard information disclosure though selection paste
+  + MFSA 2013-111 Segmentation violation when replacing ordered list elements
+  + MFSA 2013-110 Potential overflow in JavaScript binary search algorithms
+  + MFSA 2013-109 Use-after-free during Table Editing
+  + MFSA 2013-108 Use-after-free in event listeners
+  + MFSA 2013-107 Sandbox restrictions not applied to nested object elements
+  + MFSA 2013-106 Character encoding cross-origin XSS attack
+  + MFSA 2013-105 Application Installation doorhanger persists on navigation
+  + MFSA 2013-104 Miscellaneous memory safety hazards (rv:26.0 / rv:24.2)
+
 * Wed Nov 20 2013 Alexey Gladkov <legion@altlinux.ru> 25.0.1-alt1
 - New release (25.0.1).
 - Fixed:
