@@ -3,8 +3,8 @@
 %define build_bench 1
 
 Name: mariadb
-Version: 5.5.33a
-Release: alt4
+Version: 5.5.34
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -662,6 +662,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.34-alt1
+- New version
+
 * Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 5.5.33a-alt4
 - provide mysql virtual package (ALT#29595)
 
