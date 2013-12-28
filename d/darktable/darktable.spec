@@ -1,26 +1,26 @@
-%define beta rc1
-
 Name: darktable
 Version: 1.4
-Release: alt0.1.%beta
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
 Group: Graphics
 
 Url: http://%name.sourceforge.net/
-Source: http://downloads.sourceforge.net/%name/%name-%version~%beta.tar.xz
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.xz
 Patch: %name-1.4-alt-lfs.patch
 
 # For gconf_schemasdir definition:
 BuildPreReq: rpm-build-gnome
 
+BuildRequires: libgio-devel >= 2.30 libgtk+2-devel >= 2.24
 BuildRequires: cmake gcc-c++ intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libgnome-keyring-devel
-BuildRequires: libgomp-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms2-devel liblensfun-devel
-BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release openexr-devel perl-Pod-Parser
+BuildRequires: libgomp-devel libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
+BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
+BuildRequires: openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel
 BuildRequires: libGraphicsMagick-c++-devel libopenjpeg-devel
@@ -31,7 +31,7 @@ your digital negatives in a database and lets you view them through a zoomable
 light table. It also enables you to develop raw images and enhance them.
 
 %prep
-%setup -n %name-%version~%beta
+%setup
 %patch -p1
 
 %build
@@ -61,6 +61,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/darktable/
 
 %changelog
+* Sat Dec 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4 release
+
 * Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt0.1.rc1
 - 1.4-rc1
 - built against libexiv2.so.13
