@@ -1,12 +1,12 @@
 Summary: iSCSI utilities
 Name: tgt
-Version: 1.0.36
+Version: 1.0.42
 Release: alt1
 License: %gpl2only
 Group: System/Configuration/Networking
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-URL: http://stgt.sourceforge.net/
+URL: https://github.com/fujita/tgt
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -53,6 +53,10 @@ This package provides utils to create an iSCSI storage.
 %_man8dir/*
 
 %changelog
+* Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.42-alt1
+- New version
+- Change URL
+
 * Sat May 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.36-alt1
 - New version
 - Change URL
