@@ -1,6 +1,6 @@
 Summary: tool to ascii-print or forward sFlow datagrams
 Name: sflowtool
-Version: 3.28
+Version: 3.30
 Release: alt1
 License: http://www.inmon.com/technology/sflowlicense.txt
 Group: Monitoring
@@ -32,6 +32,9 @@ such as Graphite or rrdtool.
 %doc AUTHORS INSTALL NEWS ChangeLog README scripts
 
 %changelog
+* Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.30-alt1
+- New version
+
 * Sun Oct 14 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.28-alt1
 - New version
 
