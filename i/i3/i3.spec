@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.6
-Release: alt1
+Version: 4.7
+Release: alt1.1
 
 Summary: I3 window manager
 License: BSD-like
@@ -16,8 +16,8 @@ Packager: %packager
 # It requires dmenu for launching programs (Ctrl-d keybinding)
 Requires: dmenu
 
-# Automatically added by buildreq on Sat Sep 29 2012
-BuildRequires: flex libXcursor-devel libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel perl-Pod-Parser
+# Automatically added by buildreq on Sat Dec 28 2013
+BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel perl-Pod-Parser
 
 %package devel
 Summary: Development file for IPC interface of i3 window manager
@@ -119,6 +119,12 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Sat Dec 28 2013 Andrey Bergman <vkni@altlinux.org> 4.7-alt1.1
+- Added perl-Pod-Parser buildreq.
+
+* Sat Dec 28 2013 Andrey Bergman <vkni@altlinux.org> 4.7-alt1
+- Version update
+
 * Tue Aug 27 2013 Andrey Bergman <vkni@altlinux.org> 4.6-alt1
 - Version update
 
