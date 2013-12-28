@@ -1,5 +1,5 @@
 Name: docker-io
-Version: 0.7.0
+Version: 0.7.2
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -14,16 +14,14 @@ Source0: %name-%version.tar
 Source1: docker.service
 Source2: docker.init
 
-Patch0: docker-0.7-remove-dotcloud-tar.patch
-
 BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
-BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3)
+BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3) golang(github.com/syndtr/gocapability/capability)
 
-Requires: tar lxc
+Requires: tar lxc xz
 Provides: lxc-docker
 
-%global commit 0d078b65817fc91eba916652b3f087a6c2eef851
+%global commit 28b162eeb48002e1824a1b43bbc864e93af8e26b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global gopath          %_datadir/gocode
@@ -46,7 +44,6 @@ servers, OpenStack clusters, public instances, or combinations of the above.
 %prep
 %setup -q
 rm -rf vendor
-%patch0 -p1 -b docker-0.7-remove-dotcloud-tar.patch
 
 %build
 mkdir _build
@@ -140,6 +137,9 @@ exit 0
 %dir %_sharedstatedir/docker
 
 %changelog
+* Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.2-alt1
+- New version
+
 * Tue Nov 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.0-alt1
 - Release
 
