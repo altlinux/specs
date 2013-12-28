@@ -1,7 +1,7 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Linux PCI utilities
@@ -21,20 +21,20 @@ Requires: %libname = %version-%release
 # http://git.ucw.cz/gitweb/?p=pciutils.git
 # git://git.ucw.cz/pciutils.git
 
-Summary(ru_RU.KOI8-R): Утилиты для работы с PCI в Linux
-Summary(uk_UA.KOI8-U): Утил╕ти для роботи з PCI в Linux
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌я▀ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ PCI п╡ Linux
+Summary(uk_UA.UTF-8): пёя┌п╦п╩я√я┌п╦ п╢п╩я▐ я─п╬п╠п╬я┌п╦ п╥ PCI п╡ Linux
 
 %description
 This package contains various utilities for inspecting
 and setting devices connected to the PCI bus.
 
-%description -l ru_RU.KOI8-R
-Этот пакет содержит несколько утилит для просмотра и настройки
-устройств, подключенных к шине PCI.
+%description -l ru_RU.UTF-8
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╫п╣я│п╨п╬п╩я▄п╨п╬ я┐я┌п╦п╩п╦я┌ п╢п╩я▐ п©я─п╬я│п╪п╬я┌я─п╟ п╦ п╫п╟я│я┌я─п╬п╧п╨п╦
+я┐я│я┌я─п╬п╧я│я┌п╡, п©п╬п╢п╨п╩я▌я┤п╣п╫п╫я▀я┘ п╨ я┬п╦п╫п╣ PCI.
 
-%description -l uk_UA.KOI8-U
-Цей пакунок м╕стить дек╕лька утил╕т для перегляду й налаштування
-пристро╖в, як╕ п╕дключено до шини PCI.
+%description -l uk_UA.UTF-8
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╪я√я│я┌п╦я┌я▄ п╢п╣п╨я√п╩я▄п╨п╟ я┐я┌п╦п╩я√я┌ п╢п╩я▐ п©п╣я─п╣пЁп╩я▐п╢я┐ п╧ п╫п╟п╩п╟я┬я┌я┐п╡п╟п╫п╫я▐
+п©я─п╦я│я┌я─п╬я≈п╡, я▐п╨я√ п©я√п╢п╨п╩я▌я┤п╣п╫п╬ п╢п╬ я┬п╦п╫п╦ PCI.
 
 %package -n %libname
 Summary: Linux PCI library
@@ -93,6 +93,10 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Sat Dec 28 2013 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1
+- 3.2.1
+- converted summary/description to utf-8
+
 * Thu May 16 2013 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
