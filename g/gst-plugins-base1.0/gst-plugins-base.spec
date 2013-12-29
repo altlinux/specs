@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -25,7 +25,7 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%version.tar.xz
 Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
-BuildRequires: orc >= 0.4.18 liborc-test-devel
+BuildRequires: gcc-c++ orc >= 0.4.18 liborc-test-devel
 BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
 BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel
@@ -157,6 +157,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Sun Dec 29 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
