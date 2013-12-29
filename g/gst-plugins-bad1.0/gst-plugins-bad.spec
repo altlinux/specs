@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -31,7 +31,10 @@ BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-module
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
 BuildRequires: libzbar-devel libwayland-client-devel libwebp-devel libopenjpeg-devel libbluez-devel
-BuildRequires: libfluidsynth-devel
+BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
+BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
+BuildRequires: libvo-amrwbenc-devel librsvg-devel
+BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -85,6 +88,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %dir %_gst_libdir
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
+%_typelibdir/GstEGL-%api_ver.typelib
+%_typelibdir/GstInsertBin-%api_ver.typelib
+%_typelibdir/GstMpegts-%api_ver.typelib
 #%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
 #%_datadir/glib-2.0/schemas/*.xml
 
@@ -92,6 +98,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_includedir/gstreamer-%api_ver/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_girdir/GstEGL-%api_ver.gir
+%_girdir/GstInsertBin-%api_ver.gir
+%_girdir/GstMpegts-%api_ver.gir
 
 %if_enabled gtk_doc
 %files doc
@@ -100,6 +109,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sun Dec 29 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
