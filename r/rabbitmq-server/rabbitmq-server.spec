@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%add_erlang_req_modules_skiplist bad
-
 %define oname rabbitmq
 
 Name: rabbitmq-server
-Version: 2.8.7
-Release: alt4
+Version: 3.2.2
+Release: alt1
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -19,15 +17,12 @@ Source6: rabbitmq-server.init
 URL: http://www.rabbitmq.com/
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 
-
 BuildRequires(pre): rpm-build-erlang
-BuildRequires: erlang-devel
-BuildRequires: python-module-simplejson
-BuildRequires: erlang-otp-devel
-BuildRequires: xmlto
-BuildRequires: zip
-BuildRequires: unzip
+BuildRequires: erlang-devel erlang-otp-devel
+BuildRequires: python-module-simplejson python-modules-xml
+BuildRequires: xmlto zip unzip netcat
 Requires: erlang
+
 Summary: The RabbitMQ server
 
 %description
@@ -56,6 +51,7 @@ sed -i 's|@RABBITMQ_DIR@|%_erllibdir/%name|g' %SOURCE5
 %make_install TARGET_DIR=%buildroot%_erllibdir/%name \
         SBIN_DIR=%buildroot%_libexecdir/%oname \
         MAN_DIR=%buildroot%_mandir \
+        DOC_INSTALL_DIR=%buildroot%_defaultdocdir/%name-%version \
         install
 
 mkdir -p %buildroot%_localstatedir/%oname/mnesia
@@ -109,6 +105,9 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_datadir/%name
 
 %changelog
+* Sun Dec 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.2.2-alt1
+- New version (ALT #27190)
+
 * Wed Aug 21 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt4
 - Fix spacing in the sysvinit script
 
