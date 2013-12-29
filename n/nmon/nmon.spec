@@ -1,5 +1,5 @@
 Name: nmon
-Version: 14h
+Version: 14i
 Release: alt1
 
 Summary: IBM nmon - system monitor
@@ -37,6 +37,9 @@ install -pm755 nmon %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Sat Dec 28 2013 Andrey Bergman <vkni@altlinux.org> 14i-alt1
+- Version update.
+
 * Fri Jul 26 2013 Andrey Bergman <vkni@altlinux.org> 14h-alt1
 - Version update.
 
