@@ -1,8 +1,8 @@
-%define git_date .git20131219
-#define git_date %nil
+#define git_date .git20131219
+%define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
@@ -53,6 +53,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Mon Dec 30 2013 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Thu Dec 19 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20131219
 - Upstream git snapshot (master branch).
 
