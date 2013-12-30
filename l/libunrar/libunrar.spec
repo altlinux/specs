@@ -1,5 +1,5 @@
 Name:		libunrar
-Version:	5.0.12
+Version:	5.0.14
 Release:	alt1
 Summary:	Library for extract *.rar format archives
 Url:		http://www.rarlab.com/rar_add.htm
@@ -26,5 +26,8 @@ install -pD -m 644 libunrar.so %buildroot/%_libdir/libunrar.so
 %_libdir/libunrar.so
 
 %changelog
+* Mon Dec 30 2013 Motsyo Gennadi <drool@altlinux.ru> 5.0.14-alt1
+- build for Sisyphus (thank for src.rpm to Anatoly Chernov)
+
 * Wed Oct 02 2013 Motsyo Gennadi <drool@altlinux.ru> 5.0.12-alt1
 - build for Sisyphus (thank for src.rpm to Anatoly Chernov)
