@@ -1,6 +1,6 @@
 Name: iksemel
 Version: 1.4
-Release: alt4
+Release: alt4.1
 
 Summary: iksemel Jabber Library
 Group: Development/C
@@ -9,7 +9,8 @@ Url: http://code.google.com/p/iksemel/
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: iksemel-1.3-gnutls-2.8.patch
 
 # Automatically added by buildreq on Tue May 23 2006
 BuildRequires: gcc-c++ libgnutls-devel
@@ -34,12 +35,11 @@ Requires: lib%name = %version-%release
 
 %prep
 %setup
+%patch0 -p0
 
 %build
-#autoreconf -fisv
-%configure
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make ||:
+%autoreconf
+%configure --with-gnutls
 %make
 
 %install
@@ -63,6 +63,9 @@ rmdir %buildroot%_infodir
 %exclude %_libdir/libiksemel.a
 
 %changelog
+* Tue Dec 31 2013 Terechkov Evgenii <evg@altlinux.org> 1.4-alt4.1
+- Patch from gentoo to really build with gnutls
+
 * Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt4
 - add Url tag
 - fix non-strict dependency
