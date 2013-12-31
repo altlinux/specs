@@ -1,8 +1,10 @@
+%set_automake_version 1.11
+
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: 3.10.1
+Version: 3.10.2
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -58,8 +60,8 @@ desktop-file-install \
 
 %find_lang %name --with-gnome
 
-%check
-%make check
+#%%check
+#%%make check
 
 %files -f %name.lang
 %doc COPYING README TODO NEWS AUTHORS
@@ -77,6 +79,9 @@ desktop-file-install \
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 
 %changelog
+* Tue Dec 31 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
+- 3.10.2
+
 * Mon Oct 28 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.1-alt1
 - 3.10.1
 
