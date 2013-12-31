@@ -1,5 +1,5 @@
 Name: passivedns
-Version: 0.3.3
+Version: 1.1.3
 Release: alt1
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
@@ -95,7 +95,7 @@ EOF
 %preun_service %name
 
 %files
-%doc README doc tools/README.skip_white_black-list.txt
+%doc README doc tools/README.skip_white_black-list.txt www
 %_sbindir/*
 %dir %attr(3770,root,_%name) %_logdir/%name
 %_logrotatedir/%name
@@ -110,5 +110,8 @@ EOF
 %_bindir/*.pl
 
 %changelog
+* Tue Dec 31 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1.3-alt1
+- New version
+
 * Tue Mar 20 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.3.3-alt1
 - built for ALT Linux
