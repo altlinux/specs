@@ -1,5 +1,5 @@
 Name: dos2unix
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 
 Summary: Text file format converter
@@ -39,6 +39,9 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Tue Dec 31 2013 Yuri N. Sedunov <aris@altlinux.org> 6.0.4-alt1
+- 6.0.4
+
 * Sat Dec 14 2013 Yuri N. Sedunov <aris@altlinux.org> 6.0.3-alt1
 - 6.0.3
 - removed obsolete patches
