@@ -1,9 +1,11 @@
+%def_disable qt5
+
 Name: qsynth
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
-Summary(ru_RU.KOI8-R): QSynth - это графическая надстройка над FluidSynth
+Summary(ru_RU.UTF-8): QSynth - я█я┌п╬ пЁя─п╟я└п╦я┤п╣я│п╨п╟я▐ п╫п╟п╢я│я┌я─п╬п╧п╨п╟ п╫п╟п╢ FluidSynth
 Group: Sound
 License: GPL
 Url: http://%name.sourceforge.net
@@ -14,8 +16,12 @@ Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 
 Requires: fluidsynth
 
-# Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: gcc-c++ ladspa_sdk libfluidsynth-devel libqt4-devel libXext-devel
+BuildRequires: gcc-c++ ladspa_sdk libfluidsynth-devel libXext-devel
+%if_enabled qt5
+BuildRequires: libqt5-devel
+%else
+BuildRequires: libqt4-devel
+%endif
 
 %description
 QSynth is a fluidsynth GUI front-end application. Eventually it may
@@ -24,12 +30,12 @@ control and manage a variety of command line softsynth but for the
 moment it wraps the excellent Fluidsynth. Fluidsynth is a command line
 software synthesiser based on the Soundfont specification.
 
-%description -l ru_RU.KOI8-R
-QSynth -- это графическая надстройка над FluidSynth. В будущем 
-программа может превратиться в универсальный фронт-энд для многих 
-других синтезаторов, работающих из командной строки, но пока 
-используется только FluidSynth. FluidSynth же, в свою очередь, 
-является программным синтезатором на основе спецификаций SoundFont 2.
+%description -l ru_RU.UTF-8
+QSynth -- я█я┌п╬ пЁя─п╟я└п╦я┤п╣я│п╨п╟я▐ п╫п╟п╢я│я┌я─п╬п╧п╨п╟ п╫п╟п╢ FluidSynth. п▓ п╠я┐п╢я┐я┴п╣п╪
+п©я─п╬пЁя─п╟п╪п╪п╟ п╪п╬п╤п╣я┌ п©я─п╣п╡я─п╟я┌п╦я┌я▄я│я▐ п╡ я┐п╫п╦п╡п╣я─я│п╟п╩я▄п╫я▀п╧ я└я─п╬п╫я┌-я█п╫п╢ п╢п╩я▐ п╪п╫п╬пЁп╦я┘
+п╢я─я┐пЁп╦я┘ я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╬п╡, я─п╟п╠п╬я┌п╟я▌я┴п╦я┘ п╦п╥ п╨п╬п╪п╟п╫п╢п╫п╬п╧ я│я┌я─п╬п╨п╦, п╫п╬ п©п╬п╨п╟
+п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ я┌п╬п╩я▄п╨п╬ FluidSynth. FluidSynth п╤п╣, п╡ я│п╡п╬я▌ п╬я┤п╣я─п╣п╢я▄,
+я▐п╡п╩я▐п╣я┌я│я▐ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╪ я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╬п╪ п╫п╟ п╬я│п╫п╬п╡п╣ я│п©п╣я├п╦я└п╦п╨п╟я├п╦п╧ SoundFont 2.
 
 %define qtdir %_libdir/qt4
 
@@ -39,7 +45,8 @@ QSynth -- это графическая надстройка над FluidSynth. В будущем
 %build
 export QTDIR=%qtdir
 export PATH=%qtdir/bin:$PATH
-%configure --localedir=%_datadir/%name/locale
+%configure --localedir=%_datadir/%name/locale \
+	%{subst_enable qt5}
 
 # SMP-incompatible build
 %make
@@ -58,6 +65,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Tue Dec 31 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- 0.3.8
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - 0.3.7
 
