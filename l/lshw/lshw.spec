@@ -1,5 +1,5 @@
 Name: lshw
-Version: 2.16
+Version: 2.17
 Release: alt1
 %define real_version B.0%version
 
@@ -54,10 +54,9 @@ This package provides graphical (GTK+) front-end to lshw.
 %patch2 -p1
 
 %build
-subst 's/-g -Wall -Os/%optflags/' src/core/Makefile src/gui/Makefile src/Makefile
-# parallel build seems OK now. let's try...
+subst 's/\(DEFINES=\)/\1-D_FILE_OFFSET_BITS=64 /' src/core/Makefile src/gui/Makefile src/Makefile
 export SQLITE=1
-%make_build all gui
+%make_build  all gui
 
 %install
 export SQLITE=1
@@ -98,6 +97,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/lshw-gui
 %_desktopdir/*
 
 %changelog
+* Wed Jan 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.17-alt1
+- 2.17
+
 * Sun Jan 15 2012 Victor Forsiuk <force@altlinux.org> 2.16-alt1
 - 2.16
 
