@@ -1,6 +1,6 @@
 Name: grep
-Version: 2.15
-Release: alt2
+Version: 2.16
+Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -25,7 +25,7 @@ Requires: libpcre3 >= 0:6.4-alt2
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.0.8061.5191b35
+BuildRequires: makeinfo, gnulib >= 0.1.58.0f3a662
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
@@ -91,6 +91,11 @@ install -pm644 %_sourcedir/GREP_COLORS \
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Thu Jan 02 2014 Dmitry V. Levin <ldv@altlinux.org> 2.16-alt1
+- Updated to v2.16.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.1-58-g0f3a662.
+
 * Sun Nov 17 2013 Dmitry V. Levin <ldv@altlinux.org> 2.15-alt2
 - Updated to v2.15-6-g9a9b4c5.
 - Updated translations from translationproject.org.

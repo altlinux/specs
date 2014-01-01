@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.0.8061.5191b35
+Version: 0.1.58.0f3a662
 Release: alt1
 
 Summary: GNU Portability Library
@@ -10,7 +10,7 @@ Url: http://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
 Patch: gnulib-alt-utimens.patch
 AutoReqProv: no
-BuildRequires: gnu-config
+BuildRequires: gnu-config makeinfo
 
 %description
 Gnulib is intended to be the canonical source for most of the important
@@ -43,6 +43,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Sat Jan 04 2014 Dmitry V. Levin <ldv@altlinux.org> 0.1.58.0f3a662-alt1
+- Updated to gnulib snapshot v0.1-58-g0f3a662.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.0.8061.5191b35-alt1
 - Updated to gnulib snapshot v0.0-8061-g5191b35.
 
