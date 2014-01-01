@@ -7,6 +7,7 @@
 %define with_kdm 1
 %define with_hal 1
 %define with_smb 1
+%define with_tsak 0
 %define arts 1
 
 %add_findpackage_path %_K3bindir
@@ -35,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -81,6 +82,7 @@ Source4000: kdebase-3.0-mailsettings.cc
 # ALT
 Source5002: kdebase-3.0-kscreensaver.pamd
 Source5003: polkit-gnome-authentication-agent-1-tde.desktop
+Source5004: kjobviewer.tray.desktop
 
 ###             ###
 ### Patch party ###
@@ -233,6 +235,7 @@ Patch1084: kdebase-3.5.13.2-desktop-translate.patch
 Patch1085: kdebase-3.5.13.2-kicker-systemtray-gtk3-size.patch
 Patch1086: kdebase-3.5.13.2-desktop-fixes.patch
 Patch1087: tdebase-3.5.13-KJobViewer-crash.patch
+Patch1088: tdebase-3.5.13-desktop-icoTextShadow.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -655,6 +658,7 @@ Menu resources for the original KDE menu.
 %patch1085 -p1
 %patch1086 -p1
 %patch1087 -p1
+%patch1088 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -732,6 +736,11 @@ then
 %endif
 %if %with_hal
     -DWITH_HAL=ON \
+%endif
+%if %with_tsak
+    -DBUILD_TSAK=ON \
+%else
+    -DBUILD_TSAK=OFF \
 %endif
     -DKDE_DISTRIBUTION_TEXT="%distribution %_target_cpu"
 fi
@@ -1035,6 +1044,7 @@ install -dm 0755 %buildroot/%_K3cfg
 cp -ar altlinux/kcfg/* %buildroot/%_K3cfg
 
 install -Dm0644 %SOURCE5003 %buildroot/%_xdgconfigdir/autostart/polkit-gnome-authentication-agent-1-tde.desktop
+install -Dm0644 %SOURCE5004 %buildroot/%_K3start/kjobviewer.tray.desktop
 
 %post kdm
 if [ -d %_localstatedir/kdm/faces -a -f %_datadir/design/current/faces/default.png -a ! -e %_localstatedir/kdm/faces/.default.face.icon ]
@@ -1241,7 +1251,9 @@ fi
 %_K3bindir/kcminit_startup
 %_K3bindir/kxdglauncher
 %_K3bindir/krootbacking
+%if %with_tsak
 %_K3bindir/tsak
+%endif
 #
 %dir %_K3libdir/kconf_update_bin
 %_K3libdir/kconf_update_bin/khotkeys_update
@@ -1573,6 +1585,7 @@ fi
 %_K3start/ktip.desktop
 %_K3start/panel.desktop
 %_K3start/krandrtray-autostart.desktop
+%_K3start/kjobviewer.tray.desktop
 #
 %_K3mimelnk/application/x-konsole.desktop
 %_K3mimelnk/application/x-ksysguard.desktop
@@ -1798,7 +1811,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 %_K3exec/kdm
 %_K3exec/kdm_config
 %_K3exec/kdmctl
+%if %with_tsak
 %_K3bindir/kdmtsak
+%endif
 %_K3bindir/kdm_greet
 %_K3exec/kdm_greet
 %_K3bindir/krootimage
@@ -1985,6 +2000,14 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Wed Jan 01 2014 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt7
+- Some default configs changed.
+- TSAK build disable
+- KJobViewer adapted for automatic start to tray.
+- For guaranty icons text width to ten '0' its count for meassure set to 12.
+- Shadowed text on desktop draw fix for prevent shadow shift.
+- kdm.desktop and clock.desktop fix for Administrative mode open into kcm.
+
 * Sun Dec 22 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt6
 - KJobViewer crash from system tray on exit is fixed.
 - kde-settings-information.directory added for bind kdeinfo subtree to Kcontrol Peripherals.
