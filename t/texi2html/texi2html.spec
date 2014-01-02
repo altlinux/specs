@@ -1,6 +1,6 @@
 Name: texi2html
-Version: 1.78
-Release: alt1.1
+Version: 1.82
+Release: alt1
 License: GPL
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Group: Text tools
@@ -48,6 +48,9 @@ output not specified in the Texinfo input file to be specified.
 %_datadir/%name
 
 %changelog
+* Fri Jan 03 2014 Michael Pozhidaev <msp@altlinux.ru> 1.82-alt1
+- New version: 1.82
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 1.78-alt1.1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for texi2html
