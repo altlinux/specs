@@ -1,4 +1,4 @@
-%define ver_major 2.16
+%define ver_major 2.18
 %define ver_minor 0
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
@@ -18,8 +18,9 @@ Source1: russian-lirycs-test.ly
 
 Requires: ghostscript
 
-BuildRequires: zlib-devel fontforge guile-devel
-BuildRequires: perl-Math-Complex
+BuildRequires: texi2html >= 1.82 
+BuildRequires: dblatex convert zip rsync zlib-devel fontforge guile-devel
+BuildRequires: perl-Math-Complex perl-podlators
 BuildRequires: emacs-devel emacs24
 BuildRequires: rpm-build-licenses
 
@@ -84,8 +85,8 @@ subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' 
 %build
 %configure \
 	--with-ncsb-dir=/usr/share/fonts/type1/urw \
-	--enable-relocation \
-	--enable-documentation \
+	--enable-documentation 
+#	--enable-relocation \
 # TODO: where is it?
 #	--enable-gui
 
@@ -134,7 +135,7 @@ done
 %_datadir/%name
 #%_infodir/*
 %_man1dir/*
-%doc *.txt COPYING DEDICATION ROADMAP THANKS
+%doc AUTHORS.txt COPYING DEDICATION HACKING INSTALL.txt LICENSE LICENSE.DOCUMENTATION LICENSE.OFL NEWS.txt README.txt ROADMAP
 %doc russian-lirycs-test.ly
 
 #%files tex
@@ -156,6 +157,12 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Thu Jan 02 2014 Michael Pozhidaev <msp@altlinux.ru> 2.18.0-alt0.1
+- New version: 2.18.0
+
+* Sat Dec 07 2013 Michael Pozhidaev <msp@altlinux.ru> 2.16.0-alt0.2
+- %autoreconf added to fix compilation errors
+
 * Sat Oct 06 2012 Michael Pozhidaev <msp@altlinux.ru> 2.16.0-alt0.1
 - New version
 
