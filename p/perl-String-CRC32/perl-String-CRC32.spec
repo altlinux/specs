@@ -1,14 +1,14 @@
 %define dist String-CRC32
 Name: perl-%dist
-Version: 1.4
-Release: alt3
+Version: 1.5
+Release: alt1
 
 Summary: Cyclic redundency check generation
 License: Public Domain
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SO/SOENKE/String-CRC32-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -34,6 +34,9 @@ and from files.
 	%perl_vendor_autolib/String
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.4-alt3
 - built for perl 5.18
 
