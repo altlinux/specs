@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-String-Random
-Version:        0.24
+Version:        0.25
 Release:        alt1
 Summary:        Perl module to generate random strings based on a pattern
 License:        GPL+ or Artistic
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Thu Dec 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
