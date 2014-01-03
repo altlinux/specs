@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-All
 Name: perl-%dist
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: IO::All of it to Graham and Damian!
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IN/INGY/IO-All-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/F/FR/FREW/IO-All-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -42,6 +42,9 @@ rm t/os.t
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
 - automated CPAN update
 
