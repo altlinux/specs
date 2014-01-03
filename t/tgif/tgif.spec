@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 19
+%define fedora 20
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_5
+Release:	alt2_6
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -16,6 +16,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-QPL-%{version}.tar.gz
 Patch10:	tgif-textcursor-a-urasim.patch
 # Check below later
 Patch101:	tgif-QPL-4.1.45-size-debug.patch
+Patch102:	tgif-QPL-4.2.5-format-security.patch
 
 BuildRequires: xorg-cf-files gccmakedep imake
 BuildRequires:	desktop-file-utils
@@ -48,6 +49,7 @@ Tgif является пакетом для двумерной графики. Он поддерживает создание иерархичес
 #%%patch10 -p0 -b textcursor
 # Check later
 #%%patch101 -p1 -b .size
+%patch102 -p1 -b .format
 
 %{__perl} -pi \
 	-e 's,JISX-0208-1983-0,EUC-JP,g' \
@@ -167,6 +169,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_5
 - update to new release by fcimport
 
