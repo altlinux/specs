@@ -1,13 +1,12 @@
+Group: Text tools
 %define debug_package %{nil}
 %define lang or
 %define langrelease 1
 
 Name:           aspell-or
 Version:        0.03
-Release:        alt2_10
-Summary:        GNU Aspell Oriya Dictionary Package
-
-Group:          Text tools
+Release:        alt2_11
+Summary:        GNU Aspell Odia Dictionary Package
 License:        GPLv2+
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
@@ -17,7 +16,7 @@ Requires:       aspell >= 0.60
 Source44: import.info
 
 %description
-GNU Aspell Oriya Dictionary Package
+GNU Aspell Odia Dictionary Package
 
 # Note that this package, like other aspell's language packs, does not come up
 # cleanly through rpmlint, but with the following errors:
@@ -40,8 +39,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=%{buildroot}
-
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 %files
 %doc COPYING Copyright
@@ -50,6 +48,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_10
 - update to new release by fcimport
 
