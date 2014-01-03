@@ -1,5 +1,5 @@
 Name: asunder
-Version: 2.2
+Version: 2.4
 Release: alt1
 
 Summary: Audio CD ripper and encoder for Linux
@@ -8,10 +8,12 @@ Group: Sound
 Url: http://littlesvr.ca/%name/index.php
 
 Source: http://littlesvr.ca/%name/releases/%name-%version.tar.bz2
-Patch1: %name-1.5-fix-desktop-file-categories.patch
-Packager: Alexey Rusakov <ktirf@altlinux.org>
+Patch: %name-1.5-fix-desktop-file-categories.patch
+Patch1: %name-2.4-alt-lfs.patch
 
 Requires: cdparanoia
+Requires: vorbis-tools
+Requires: lame
 
 BuildPreReq: rpm-build-licenses >= 0.7 intltool
 
@@ -21,9 +23,9 @@ BuildPreReq: libcddb-devel >= 0.9.5
 
 %description
 Asunder is a graphical Audio CD ripper and encoder for Linux. You can use
-it to save tracks from an Audio CD as WAV, MP3, OGG, FLAC, and/or Wavpack.
+it to save tracks from an Audio CD as WAV, MP3, OGG, FLAC, OPUS and/or Wavpack.
 Features:
-    * Supports WAV, MP3, Ogg Vorbis, FLAC, and Wavpack audio files
+    * Supports WAV, MP3, Ogg Vorbis, FLAC, Opus, Wavpack, Musepack, AAC, and Monkey's audio files
     * Uses CDDB to name and tag each track
     * Creates M3U playlists
     * Can encode to multiple formats in one session
@@ -32,10 +34,13 @@ Features:
     * Does not require a specific desktop environment
 
 %prep
-%setup -q
+%setup
+%patch
 %patch1
+[ ! -d m4 ] && mkdir m4
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -55,6 +60,9 @@ cp %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir/
 %_liconsdir/%name.png
 
 %changelog
+* Fri Jan 03 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
+- 2.4
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
