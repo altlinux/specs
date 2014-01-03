@@ -1,11 +1,11 @@
 Name: bodr
-Version: 9
+Version: 10
 Release: alt1
 
 Summary: Blue Obelisk Data Repository
 Group: Sciences/Chemistry
 License: MIT
-Url: http://bodr.sourceforge.net
+Url: http://www.blueobelisk.org
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 
@@ -28,7 +28,7 @@ use this repository to make their software interoperable.
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure --docdir=%pkgdocdir
@@ -38,11 +38,14 @@ use this repository to make their software interoperable.
 %make DESTDIR=%buildroot install
 
 %files
-%_datadir/bodr
-%_datadir/pkgconfig/bodr.pc
+%_datadir/%name/
+%_datadir/pkgconfig/%name.pc
 %doc %pkgdocdir
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 10-alt1
+- new version
+
 * Fri Aug 26 2011 Yuri N. Sedunov <aris@altlinux.org> 9-alt1
 - new version
 
