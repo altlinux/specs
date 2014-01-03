@@ -5,7 +5,7 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -61,11 +61,15 @@ This package contains the static library needed for developing with
 %install
 %make_install DESTDIR=%buildroot install
 
+%check
+%make check
+
 %if_enabled shared
 %files
 %_bindir/%_name
-%doc AUTHORS ChangeLog NEWS README
 %_libdir/*.so.*
+%_man1dir/%_name.1.*
+%doc AUTHORS ChangeLog NEWS README
 %endif
 
 %files devel
@@ -82,6 +86,10 @@ This package contains the static library needed for developing with
 
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+- %%check section
+
 * Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
