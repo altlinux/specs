@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Package-Generator
-Version: 1.105
+Version: 1.106
 Release: alt1
 
 Summary: Package-Generator - Perl module
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.106-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.105-alt1
 - automated CPAN update
 
