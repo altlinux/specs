@@ -9,7 +9,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define fedora 20
 Name:			springlobby
 Version:		0.169
-Release:		alt1_7
+Release:		alt1_8
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -32,7 +32,7 @@ Provides:		spring-lobby = %{version}-%{release}
 
 Requires:		icon-theme-hicolor
 Requires:		springrts
-ExclusiveArch:	x86_64 i386
+ExclusiveArch:	%{ix86} x86_64
 Source44: import.info
 Patch33: springlobby-0.169-alt-linkage.patch
 
@@ -89,6 +89,9 @@ desktop-file-install	\
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_8
+- update to new release by fcimport
+
 * Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_7
 - update to new release by fcimport
 
