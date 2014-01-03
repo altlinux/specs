@@ -3,11 +3,15 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sratom
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name sratom
+%define version 0.4.2
 %global maj 0
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
 Version:    0.4.2
-Release:    alt1_5
+Release:    alt1_6
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -59,7 +63,7 @@ export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_docdir}/%{oldname}-devel-%{version} \
+    --docdir=%{_pkgdocdir} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -67,23 +71,28 @@ export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
+install -pm 644 COPYING NEWS README %{buildroot}%{_pkgdocdir}
 
 # tests failing - see http://dev.drobilla.net/ticket/832
 #%%check
 #./build/sratom_test
 
 %files
-%doc NEWS README COPYING
+%{_pkgdocdir}
+%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 
 %files devel
+%{_pkgdocdir}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}-devel-%{version}
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5
 - update to new release by fcimport
 
