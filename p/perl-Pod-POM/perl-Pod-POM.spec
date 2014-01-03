@@ -1,6 +1,6 @@
 %define dist Pod-POM
 Name: perl-%dist
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: Pod Object Model
@@ -41,6 +41,9 @@ generate an output representation in one form or another.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
