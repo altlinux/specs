@@ -1,20 +1,20 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(XSLoader.pm)
-# END SourceDeps(oneline)
-%define module_version 0.37
-%define module_name Sereal-Decoder
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(Test/Warn.pm)
+# END SourceDeps(oneline)
+%define module_version 2.01
+%define module_name Sereal-Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.37
+Version: 2.01
 Release: alt1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/S/SM/SMUELLER/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Sereal-Decoder-%{version}.tar.gz
 
 %description
 This library implements a deserializer for an efficient, compact-output,
@@ -52,6 +52,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - build for Sisyphus (required for perl update)
 
