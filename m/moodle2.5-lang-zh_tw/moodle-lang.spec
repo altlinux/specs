@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename zh_tw
 %define packagversion 2.5.0
-%define packagedate 201312261738
+%define packagedate 201312291709
 %define moodlebranch 2.5
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Chinese (Traditional/Big5)
@@ -68,6 +68,10 @@ ln -s -f $(relative %buildroot%_ttffontsdir/chinese-big5/bkai00mp.ttf \
 %moodle_langdir/*
 
 %changelog
+* Fri Jan 03 2014 Cronbuild Service <cronbuild@altlinux.org> 2.5.0.201312291709-alt1
+- repocop cronbuild 20140103. At your service.
+- zh_tw.zip build 2013-12-29 17:09 UTC
+
 * Fri Dec 27 2013 Cronbuild Service <cronbuild@altlinux.org> 2.5.0.201312261738-alt1
 - repocop cronbuild 20131227. At your service.
 - zh_tw.zip build 2013-12-26 17:38 UTC
