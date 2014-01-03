@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libacpi
 Version:        0.2
-Release:        alt2_19
+Release:        alt2_20
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -11,6 +11,8 @@ Source0:        http://www.ngolde.de/download/%{name}-%{version}.tar.gz
 Patch0:         %{name}-%{version}.patch
 Patch1:         %{name}-%{version}-sysfs.patch
 ExcludeArch:    ppc ppc64
+
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 Source44: import.info
 
 %description    
@@ -35,7 +37,7 @@ developing applications that use %{name}.
 %patch0 -p1
 %patch1 -p1
 sed -i "s/CFLAGS += .*/CFLAGS += -fPIC $RPM_OPT_FLAGS/;s&usr/local&usr&" config.mk
-sed -i "s&share/doc/%{name}&share/doc/%{name}-%{version}&g" Makefile
+sed -i "s&\${PREFIX}/share/doc/%{name}&%{_pkgdocdir}&g" Makefile
 
 
 %build
@@ -50,22 +52,25 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %{_mandir}/man3/*
-%dir %{_defaultdocdir}/%{name}-%{version}
-%doc %{_defaultdocdir}/%{name}-%{version}/AUTHORS
-%doc %{_defaultdocdir}/%{name}-%{version}/CHANGES
-%doc %{_defaultdocdir}/%{name}-%{version}/README
-%doc %{_defaultdocdir}/%{name}-%{version}/LICENSE
+%dir %{_pkgdocdir}
+%doc %{_pkgdocdir}/AUTHORS
+%doc %{_pkgdocdir}/CHANGES
+%doc %{_pkgdocdir}/README
+%doc %{_pkgdocdir}/LICENSE
 %{_libdir}/*.so.*
 
 %files devel
-%dir %{_defaultdocdir}/%{name}-%{version}/doc
-%doc %{_defaultdocdir}/%{name}-%{version}/doc/*
+%dir %{_pkgdocdir}/doc
+%doc %{_pkgdocdir}/doc/*
 %{_bindir}/test-libacpi
 %{_includedir}/*
 %{_libdir}/*.so
 
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_20
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_19
 - update to new release by fcimport
 
