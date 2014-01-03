@@ -1,6 +1,6 @@
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.32
+Version: 1.34
 Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
@@ -32,6 +32,9 @@ collection of objects without duplication.
 %perl_vendor_autolib/Set
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 
