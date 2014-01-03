@@ -3,10 +3,15 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname slv2
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name slv2
+%define version 0.6.6
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
+
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_13
+Release:		alt4_14
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -35,7 +40,7 @@ libraries, avoiding the associated risks).
 %package devel
 Summary:	Development libraries and headers for %{oldname}
 Group:		Development/C
-Requires:	libslv2 = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Provides: slv2-devel = %{version}-%{release}
 
 %description devel
@@ -66,7 +71,7 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 ./waf configure --prefix=%{_prefix} \
 	--libdir=%{_libdir} \
-	--htmldir=%{_docdir}/%{oldname}-devel-%{version} \
+	--htmldir=%{_pkgdocdir} \
 	--build-docs
 ./waf build -v %{?_smp_mflags}
 
@@ -76,21 +81,33 @@ rm -f build/default/doc/man/man3/_*
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}.so*
+install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_pkgdocdir}
 
 %files
-%doc AUTHORS ChangeLog COPYING README
+%dir %{_pkgdocdir}
+%{_pkgdocdir}/AUTHORS
+%{_pkgdocdir}/ChangeLog
+%{_pkgdocdir}/COPYING
+%{_pkgdocdir}/README
 %{_bindir}/lv2*
 %{_libdir}/lib%{oldname}.so.*
 %{_mandir}/man1/*
 
 %files devel
-%{_docdir}/%{oldname}-devel-%{version}
+%{_pkgdocdir}/*
+%exclude %{_pkgdocdir}/AUTHORS
+%exclude %{_pkgdocdir}/ChangeLog
+%exclude %{_pkgdocdir}/COPYING
+%exclude %{_pkgdocdir}/README
 %{_includedir}/%{oldname}/
 %{_libdir}/pkgconfig/%{oldname}.pc
 %{_libdir}/lib%{oldname}.so
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_13
 - update to new release by fcimport
 
