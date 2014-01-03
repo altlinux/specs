@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Log-Dispatch-Array
-Version: 1.002
+Version: 1.003
 Release: alt1
 
 Summary: log events to an array (reference)
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Log/Dispatch/Array.pm
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
 - automated CPAN update
 
