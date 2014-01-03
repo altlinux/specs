@@ -1,4 +1,4 @@
-%define module_version 0.030
+%define module_version 0.032
 %define module_name Exporter-Tiny
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Mo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.030
-Release: alt2
+Version: 0.032
+Release: alt1
 Summary: an exporter with the features of Sub::Exporter but only core dependencies
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Exporter-Tiny
 
-Source0: http://cpan.org.ua/authors/id/T/TO/TOBYINK/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TOBYINK/Exporter-Tiny-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/E*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.032-alt1
+- automated CPAN update
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.030-alt2
 - uploaded to Sisyphus as Scalar-Does dependency
 
