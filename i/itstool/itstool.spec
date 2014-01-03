@@ -1,5 +1,5 @@
 Name: itstool
-Version: 1.2.0
+Version: 2.0.2
 Release: alt1
 
 Summary: ITS-based XML translation tool
@@ -10,6 +10,8 @@ Url: http://itstool.org/
 Source: http://files.itstool.org/itstool/%name-%version.tar.bz2
 
 BuildArch: noarch
+
+BuildRequires: python-module-libxml2
 
 %description
 ITS Tool allows to translate XML documents with PO files, using rules
@@ -36,6 +38,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Fri Jan 03 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
