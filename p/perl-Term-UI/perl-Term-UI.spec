@@ -1,6 +1,6 @@
 %define dist Term-UI
 Name: perl-%dist
-Version: 0.38
+Version: 0.42
 Release: alt1
 
 Summary: User interfaces via Term::ReadLine made easy
@@ -34,6 +34,9 @@ template. It can also parse options per unix style.
 %perl_vendor_privlib/Term
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- automated CPAN update
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated CPAN update
 
