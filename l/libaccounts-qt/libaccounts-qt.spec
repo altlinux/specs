@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ libqt4-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 %add_optflags %optflags_shared
 Name:		libaccounts-qt
 Version:	1.6
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Accounts framework Qt bindings
 Group:		System/Libraries
 License:	LGPLv2
@@ -23,7 +23,7 @@ Framework to provide accounts for Qt.
 %package devel
 Summary:	Development files for accounts-qt
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Requires:	qt4-devel%{?_isa}
 
 %description devel
@@ -50,7 +50,9 @@ rm -f %{buildroot}/%{_datadir}/doc/accounts-qt/html/installdox
 rm -rf %{buildroot}%{_datadir}/%{name}-tests
 rm -f %{buildroot}%{_bindir}/accountstest
 
-mv %{buildroot}%{_docdir}/accounts-qt %{buildroot}%{_docdir}/libaccounts-qt
+# move installed docs to include them in subpackage via %%doc magic
+rm -rf __tmp_doc ; mkdir __tmp_doc
+mv %{buildroot}%{_docdir}/accounts-qt __tmp_doc
 
 %files
 %doc COPYING
@@ -60,9 +62,12 @@ mv %{buildroot}%{_docdir}/accounts-qt %{buildroot}%{_docdir}/libaccounts-qt
 %{_libdir}/lib*.so
 %{_includedir}/accounts-qt/
 %{_libdir}/pkgconfig/accounts-qt.pc
-%{_docdir}/libaccounts-qt
+%doc __tmp_doc/accounts-qt/*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3
 - update to new release by fcimport
 
