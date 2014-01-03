@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt6_7jpp7
+Release:        alt7_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -46,6 +46,7 @@ Source8:        org.eclipse.jdt.core-3.8.0.v_C03.pom
 Patch0:         lucene-3.6-compile.patch
 Patch73:	eclipse-3.7.0-alt-dependencies.patch
 Patch74:	fix-libwebkitgtk-1.11.91-compatibility.patch
+Patch75:    swt-gtk-combo.patch
 
 BuildRequires:  ant >= 1.8.3
 BuildRequires:  rsync
@@ -230,6 +231,7 @@ cp %{SOURCE1} .
 ant applyPatches
 %patch0
 pushd build/eclipse-%{eclipse_version}-%{build_id}-src
+%patch75 -p2
 
 sed -i -e "s|\[2.9.0,3.0.0)|\[2.9.0,4.0.0)|g" plugins/org.eclipse.help.base/META-INF/MANIFEST.MF
 
@@ -720,6 +722,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Fri Jan 03 2014 Paul Wolneykien <manowar@altlinux.ru> 1:4.2.0-alt7_7jpp7
+- Fix the Eclipse bug #383189 (patch).
+
 * Sat Jul 27 2013 Paul Wolneykien <manowar@altlinux.ru> 1:4.2.0-alt6_7jpp7
 - Fix the WebKitGTK crash in libsoup (patch).
 
