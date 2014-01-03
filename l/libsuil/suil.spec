@@ -3,10 +3,15 @@ BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname suil
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name suil
+%define version 0.6.16
 %global maj 0
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
+
 Name:       libsuil
 Version:    0.6.16
-Release:    alt1_1
+Release:    alt1_2
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -63,16 +68,18 @@ export CXXFLAGS="%{optflags}"
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
-    --docdir=%{_docdir}/%{oldname}-devel-%{version} \
+    --docdir=%{_pkgdocdir} \
     --docs 
 ./waf build -v %{?_smp_mflags}
 
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
+install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 
 %files
-%doc AUTHORS NEWS README COPYING
+%{_pkgdocdir}
+%exclude %{_pkgdocdir}/%{oldname}-%{maj}
 %dir %{_libdir}/suil-%{maj}
 %{_libdir}/lib%{oldname}-*.so.*
 %{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt4.so
@@ -84,10 +91,13 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}-devel-%{version}
+%{_pkgdocdir}/%{oldname}-%{maj}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.16-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.16-alt1_1
 - update to new release by fcimport
 
