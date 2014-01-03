@@ -3,11 +3,15 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname serd
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name serd
+%define version 0.18.2
 %global maj 0
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:           libserd
 Version:        0.18.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -56,7 +60,7 @@ export CFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_docdir}/%{oldname}-devel-%{version} \
+    --docdir=%{_pkgdocdir} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -64,9 +68,14 @@ export CFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
+install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 
 %files
-%doc AUTHORS NEWS README COPYING
+%dir %{_pkgdocdir}/
+%{_pkgdocdir}/AUTHORS
+%{_pkgdocdir}/COPYING
+%{_pkgdocdir}/NEWS
+%{_pkgdocdir}/README
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/serdi
 %{_mandir}/man1/serdi.1*
@@ -75,10 +84,13 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_libdir}/lib%{oldname}-%{maj}*.so
 %{_libdir}/pkgconfig/%{oldname}*.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}-devel-%{version}
+%{_pkgdocdir}/%{oldname}-%{maj}/
 %{_mandir}/man3/*.3*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.2-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18.2-alt1_2
 - update to new release by fcimport
 
