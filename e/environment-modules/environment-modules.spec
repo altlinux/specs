@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -22,6 +22,9 @@ Patch1:         environment-modules-versioning.patch
 Patch2:         environment-modules-clear.patch
 # Patch from modules list to add completion to avail command
 Patch3:         environment-modules-avail.patch
+# Fix -Werror=format-security
+# https://bugzilla.redhat.com/show_bug.cgi?id=1037053
+Patch4:         environment-modules-format.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -61,6 +64,7 @@ have access to the module alias.
 %patch1 -p1 -b .versioning
 %patch2 -p1 -b .clear
 %patch3 -p1 -b .avail
+%patch4 -p1 -b .format
 
 
 %build
@@ -99,6 +103,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_7
 - update to new release by fcimport
 
