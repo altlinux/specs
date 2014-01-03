@@ -3,11 +3,15 @@ BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sord
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name sord
+%define version 0.12.0
 %global maj 0
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
 Version:    0.12.0
-Release:    alt1_3
+Release:    alt1_4
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -15,7 +19,7 @@ License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-devel
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: glib2-devel
@@ -56,7 +60,7 @@ export CFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_docdir}/%{oldname}-devel-%{version} \
+    --docdir=%{_pkgdocdir} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -64,23 +68,27 @@ export CFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
+install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_pkgdocdir}
 
 %files
-%doc AUTHORS NEWS README COPYING
+%{_pkgdocdir}
+%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/sordi
 %{_bindir}/sord_validate
-%{_mandir}/man1/sordi.1*
+%{_mandir}/man1/%{oldname}*.1*
 
 %files devel
+%{_pkgdocdir}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}-devel-%{version}
-%{_mandir}/man1/%{oldname}*.1.*
-%{_mandir}/man3/%{oldname}*.3.*
+%{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_3
 - update to new release by fcimport
 
