@@ -2,7 +2,7 @@
 %def_disable gmdb2
 
 Name: mdbtools
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Utilities for use M$ Access databases under Linux
@@ -11,7 +11,7 @@ Group: Databases
 License: GPL/LGPL
 Url: https://github.com/brianb/mdbtools
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
@@ -113,6 +113,9 @@ statically linked with MDB Tools.
 %endif
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Fri Jun 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - go to new upstream: https://github.com/brianb/mdbtools
 - build against libodbcinst.so.2
