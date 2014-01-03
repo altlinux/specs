@@ -5,11 +5,11 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/Command.pm) perl(ExtU
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.27
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/CPAN-Changes/
-Source:	http://www.cpan.org/authors/id/B/BR/BRICAS/CPAN-Changes-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/B/BR/BRICAS/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl
 BuildRequires:	perl(Cwd.pm)
@@ -61,6 +61,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1_1
+- update to new release by fcimport
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 
