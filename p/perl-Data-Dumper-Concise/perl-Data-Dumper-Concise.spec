@@ -1,14 +1,14 @@
 %define dist Data-Dumper-Concise
 Name: perl-%dist
-Version: 2.020
-Release: alt2
+Version: 2.021
+Release: alt1
 
 Summary: Less indentation and newlines plus sub deparsing
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/F/FR/FREW/Data-Dumper-Concise-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ return the Data::Dumper object it's created.
 %perl_vendor_privlib/Devel*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.021-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 2.020-alt2
 - disabled build dependency on perl-Module-Install
 
