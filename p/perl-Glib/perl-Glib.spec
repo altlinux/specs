@@ -1,6 +1,6 @@
 %define dist Glib
 Name: perl-%dist
-Version: 1.303
+Version: 1.304
 Release: alt1
 
 Summary: Perl module for the glib-2.x library
@@ -69,6 +69,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.304-alt1
+- automated CPAN update
+
 * Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.303-alt1
 - automated CPAN update
 
