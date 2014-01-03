@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Convert/Color/HueChromaBased.pm) perl(List/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-Color
-Version:        0.09
-Release:        alt1_3
+Version:        0.10
+Release:        alt1
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Convert-Color/
-Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/P/PE/PEVANS/Convert-Color-%{version}.tar.gz
 # Workaround to a source-code trick, which break rpm's perl-module deptracking
 Patch0:         Convert-Color-0.09.patch
 BuildArch:      noarch
@@ -51,6 +51,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_3
 - update to new release by fcimport
 
