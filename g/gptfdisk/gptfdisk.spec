@@ -1,6 +1,6 @@
 Name: gptfdisk
-Version: 0.8.7
-Release: alt1.git.e3ee733f
+Version: 0.8.8
+Release: alt1
 
 Summary: GPT partitioning and MBR repair software
 License: GPLv2
@@ -55,6 +55,9 @@ provides a few additional partition manipulation features.
 %build
 %make
 
+%check
+./gdisk_test.sh
+
 %install
 install -D gdisk %buildroot%_sbindir/gdisk
 install -D sgdisk %buildroot%_sbindir/sgdisk
@@ -83,6 +86,9 @@ install -D fixparts.8 %buildroot%_man8dir/fixparts.8
 
 
 %changelog
+* Sun Jan 05 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.8-alt1
+- New version
+
 * Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.7-alt1.git.e3ee733f
 - New version snapshot
 
