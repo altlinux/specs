@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.24
-Release: alt2
+Release: alt2.1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -52,7 +52,7 @@ Requires: lib%name = %version-%release
 Summary: SANE shared libraries
 Group: System/Libraries
 License: LGPL
-Provides: sane-backends
+Provides: %oname = %version-%release
 
 %package -n lib%name-gphoto2
 Summary: SANE libraries for gphoto2
@@ -70,6 +70,7 @@ License: LGPL
 Requires: lib%name = %version-%release
 Provides: %name-devel = %version
 Obsoletes: %name-devel
+Provides: %oname-devel = %version-%release
 
 %package -n lib%name-devel-static
 Summary: SANE static libraries
@@ -246,6 +247,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Sat Jan 04 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.24-alt2.1
+- Add sane-backends-devel provides for Red Hat compatibility
+
 * Fri Oct 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.24-alt2
 - return GROUP=scanner (ALT bug #29425)
 - remove obsoleted patches
