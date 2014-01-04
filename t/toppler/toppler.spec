@@ -1,5 +1,5 @@
 Name: toppler
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Group: Games/Arcade
@@ -78,6 +78,9 @@ install -m 644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc AUTHORS README COPYING ChangeLog NEWS
 
 %changelog
+* Sat Jan 04 2014 Evgeny V Shishkov <shev@altlinux.org> 1.1.6-alt1
+- new version 1.1.6
+
 * Wed Mar 21 2012 Evgeny V Shishkov <shev@altlinux.org> 1.1.5-alt1
 - new version 1.1.5
 - update .desktop file
