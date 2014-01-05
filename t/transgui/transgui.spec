@@ -1,6 +1,6 @@
 Name:		transgui
 Version:	5.0.1
-Release:	alt1
+Release:	alt2
 
 Summary:	An App to remotely control a Transmission Bit-Torrent client
 Summary(ru_RU.UTF8): Приложение для удаленного управления Бит-торрент-клиентом Transmission
@@ -13,7 +13,6 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://transmisson-remote-gui.googlecode.com/files/%name-%version-src.zip
 Source1:	%name.desktop
 Source2:	%name.1
-Source3:	%name.sh
 
 %add_findreq_skiplist %_datadir/%name/lang/%name.pl
 
@@ -47,8 +46,7 @@ cd TransGUI
 execstack -c %name
 
 %install
-install -Dp -m 755 TransGUI/%name %buildroot%_bindir/%name.bin
-install -m 755 %SOURCE3 %buildroot%_bindir/%name
+install -Dp -m 755 TransGUI/%name %buildroot%_bindir/%name
 install -Dp -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -Dp -m 644 %SOURCE2 %buildroot%_man1dir/%name.1
 
@@ -73,6 +71,10 @@ rm -f %buildroot%_datadir/%name/lang/transgui.template
 %_datadir/%name/lang
 
 %changelog
+* Sun Jan 05 2014 Motsyo Gennadi <drool@altlinux.ru> 5.0.1-alt2
+- add mime-types support
+- remove sh-script for old version
+
 * Sun Jan 05 2014 Motsyo Gennadi <drool@altlinux.ru> 5.0.1-alt1
 - 5.0.1
 
