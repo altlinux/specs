@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgsf
-Version: %ver_major.28
+Version: %ver_major.29
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -145,6 +145,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 
 %changelog
+* Sun Jan 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.14.29-alt1
+- 1.4.29
+
 * Fri Aug 02 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.28-alt1
 - 1.14.28
 
