@@ -14,7 +14,7 @@
 
 Name: libwebkitgtk2
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -273,6 +273,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt2
+- rebuilt against libwebp.so.5
+
 * Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt1
 - 2.2.3
 

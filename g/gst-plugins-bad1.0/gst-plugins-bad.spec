@@ -9,7 +9,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -91,6 +91,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstEGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
+%_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 #%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
 #%_datadir/glib-2.0/schemas/*.xml
 
@@ -109,6 +110,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
+- rebuilt against libwebp.so.5
+
 * Sun Dec 29 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

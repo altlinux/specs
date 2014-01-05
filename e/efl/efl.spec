@@ -5,11 +5,13 @@
 %def_enable multisense
 %def_disable tslib
 %def_disable egl
-%def_disable drm
+%def_disable xcb
+%def_enable drm
+%def_enable ibus
 
 Name: efl
 Version: 1.8.3
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -29,10 +31,16 @@ BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel gst-plugins-
 BuildRequires: liblua5-devel libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
+%if_enabled xcb
+BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-image-devel libxcb-render-util-devel
+BuildRequires: libxcbutil-icccm-devel libxcbutil-keysyms-devel libpixman-devel
+%else
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
+%endif
 BuildRequires: libGL-devel
+%{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= 1.3.0 libwayland-cursor-devel libxkbcommon-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
@@ -125,6 +133,8 @@ documentation for EFL.
 %prep
 %setup
 #%%patch -p1
+#subst 's/xcb-xprint//
+#	/ECORE_XCB_XPRINT/d' configure.ac
 
 %build
 %autoreconf
@@ -139,7 +149,9 @@ documentation for EFL.
 	%{subst_enable wayland} \
 	%{subst_enable fb} \
 	%{subst_enable egl} \
-	%{subst_enable drm}
+	%{subst_enable drm} \
+	%{subst_enable ibus} \
+	%{?_enable_xcb:--with-x11=xcb}
 %make_build
 #%make doc
 
@@ -248,6 +260,10 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt2
+- enabled IBUS, DRM support
+- built against libwebp.so.5
+
 * Sat Dec 21 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
