@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.24
-Release: alt2.1
+Release: alt2.2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -33,6 +33,7 @@ Patch201: sane-backends-1.0.18-plustek-s12.patch
 
 Requires: lib%name = %version-%release
 Requires: udev
+Provides: %oname-drivers-scanners = %version-%release
 
 # manually removed: libsane-devel
 # Automatically added by buildreq on Wed Sep 05 2012
@@ -53,11 +54,13 @@ Summary: SANE shared libraries
 Group: System/Libraries
 License: LGPL
 Provides: %oname = %version-%release
+Provides: %oname-libs = %version-%release
 
 %package -n lib%name-gphoto2
 Summary: SANE libraries for gphoto2
 Group: System/Libraries
 Requires: lib%name = %version-%release
+Provides: %oname-drivers-cameras = %version-%release
 
 %description -n lib%name-gphoto2
 This package contains the SANE libraries which are needed by applications that
@@ -247,6 +250,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Sun Jan 05 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.24-alt2.2
+- Add all provides for sane-backends-* for Red Hat compatibility
+
 * Sat Jan 04 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.24-alt2.1
 - Add sane-backends-devel provides for Red Hat compatibility
 
