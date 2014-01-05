@@ -3,7 +3,7 @@
 # packaging ugly motif apps, so we will name our main package just "fbi".
 Name: fbi
 Version: 2.09
-Release: alt2
+Release: alt3
 
 Summary: Image viewer for Linux framebuffer console
 License: GPLv2+
@@ -48,6 +48,9 @@ export CFLAGS="%optflags"
 %_man1dir/exiftran*
 
 %changelog
+* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.09-alt3
+- rebuilt against libwebp.so.5
+
 * Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 2.09-alt2
 - rebuilt against libwebp.so.4
 

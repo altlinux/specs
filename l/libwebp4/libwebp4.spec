@@ -1,23 +1,17 @@
-%define _unpackaged_files_terminate_build 1
-%def_enable libwebpmux
-%def_enable libwebpdemux
-%def_enable libwebpdecoder
+%define _name libwebp
 
-Name: libwebp
-Version: 0.4.0
-Release: alt1
+Name: %{_name}4
+Version: 0.3.1
+Release: alt2
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
 Group: System/Libraries
 
 URL: http://webmproject.org/
-Source: http://webp.googlecode.com/files/%name-%version.tar.gz
-# init only
-Patch: %name-0.4.0-alt-lfs.patch
+Source: http://webp.googlecode.com/files/%_name-%version.tar.gz
 
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libgif-devel
-BuildRequires: libfreeglut-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel
 
 %description
 WebP is an image format that does lossy compression of digital
@@ -51,62 +45,33 @@ developers can use WebP to compress, archive and distribute digital
 images more efficiently.
 
 %prep
-%setup
-%patch -b .lfs
+%setup -n %_name-%version
 
 %build
 %autoreconf
-%configure --disable-static \
-	%{subst_enable libwebpmux} \
-	%{subst_enable libwebpdemux} \
-	%{subst_enable libwebpdecoder}
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
 
 %files
-%_libdir/%name.so.*
-%{?_enable_libwebpmux:%_libdir/%{name}mux.so.*}
-%{?_enable_libwebpdemux:%_libdir/%{name}demux.so.*}
-%{?_enable_libwebpdecoder:%_libdir/%{name}decoder.so.*}
+%_libdir/*.so.*
 
+%if 0
 %files devel
-%dir %_includedir/webp
-%_includedir/webp/decode.h
-%_includedir/webp/encode.h
-%_includedir/webp/types.h
-%if_enabled libwebpmux
-%_includedir/webp/mux.h
-%_includedir/webp/mux_types.h
-%endif
-%{?_enable_libwebpdemux:%_includedir/webp/demux.h}
-%_libdir/%name.so
-%{?_enable_libwebpmux:%_libdir/%{name}mux.so}
-%{?_enable_libwebpdemux:%_libdir/%{name}demux.so}
-%{?_enable_libwebpdecoder:%_libdir/%{name}decoder.so}
-%_pkgconfigdir/%name.pc
-%{?_enable_libwebpmux:%_pkgconfigdir/%{name}mux.pc}
-%{?_enable_libwebpdemux:%_pkgconfigdir/%{name}demux.pc}
-%{?_enable_libwebpdecoder:%_pkgconfigdir/%{name}decoder.pc}
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*
 
 %files tools
-%_bindir/cwebp
-%_bindir/dwebp
-%_man1dir/cwebp.1.*
-%_man1dir/dwebp.1.*
-
-%if_enabled libwebpmux
-%_bindir/gif2webp
-%_bindir/webpmux
-%_man1dir/gif2webp.1.*
-%_man1dir/webpmux.1.*
+%_bindir/*
+%_man1dir/*
 %endif
-%{?_enable_libwebpdemux:%_bindir/vwebp}
 
 %changelog
-* Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
-- 0.4.0
+* Sun Jan 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt2
+- compat library
 
 * Mon Oct 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
