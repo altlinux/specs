@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile-Cache
-Version: 1.00
+Version: 1.01
 Release: alt1
 
 Summary: Cache compiled XML translators
@@ -48,6 +48,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
