@@ -1,21 +1,19 @@
 Name: libguess
-Version: 0.2.0
-Release: alt4.qa1
+Version: 1.1
+Release: alt1
 
-Summary: library for detecting far east encodings
+Summary: high-speed character set detection library
 
 License: BSD
 Group: System/Libraries
-Url: http://www.nongnu.org/libtranslate/
+Url: http://www.atheme.org/projects/libguess.html
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Source: %name-%version.tar.gz
 
-Source: %name-%version-d7.tar.gz
-Patch: libguess-ds-cn.patch
+BuildRequires: libmowgli-devel >= 0.9.50
 
 %description
-libguess is a library for autodetecting Chinese(Traditional/Simplified),Korean
-and Japanese encodings.
+%name is a library for autodetecting encodings.
 
 %package devel
 Summary: Header files for libguess
@@ -26,29 +24,27 @@ Requires: %name = %version-%release
 This package contain header files for libguess.
 
 %prep
-%setup -q -n %name-%version-d7
-%patch -p1
+%setup
 
 %build
+%configure
 %make_build
 
 %install
-subst "s|\${PREFIX}\/lib|%buildroot%_libdir|g" Makefile
-mkdir -p %buildroot%_libdir
-mkdir -p %buildroot%_includedir
-%make PREFIX=%buildroot%_prefix install
-
-ln -sf %name.so.%version %buildroot%_libdir/%name.so.0
-ln -sf %name.so.%version %buildroot%_libdir/%name.so
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
 
 %files devel
-%_includedir/*
+%_includedir/%name/
 %_libdir/*.so
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jan 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt4.qa1
 - NMU: rebuilt for updated dependencies.
 
