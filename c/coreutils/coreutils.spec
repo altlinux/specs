@@ -1,6 +1,6 @@
 Name: coreutils
-Version: 8.21
-Release: alt2
+Version: 8.22
+Release: alt1
 %define srcname %name-%version-%release
 
 Summary: The GNU versions of common management utilities
@@ -50,7 +50,8 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.0.8061.5191b35
+BuildRequires: gnulib >= 0.1.58.0f3a662
+BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
 BuildRequires: libacl-devel
@@ -209,6 +210,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Thu Jan 02 2014 Dmitry V. Levin <ldv@altlinux.org> 8.22-alt1
+- Updated to v8.22-5-g299924f.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.1-58-g0f3a662.
+
 * Tue Oct 29 2013 Dmitry V. Levin <ldv@altlinux.org> 8.21-alt2
 - Updated to v8.21-135-gc90b9e0.
 - Updated translations from translationproject.org.
