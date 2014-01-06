@@ -1,5 +1,5 @@
 Name: docker-io
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -8,6 +8,7 @@ Group: System/Configuration/Other
 Url: http://www.docker.io
 # only x86_64 for now: https://github.com/dotcloud/docker/issues/136
 ExclusiveArch: x86_64
+Conflicts: docker
 
 # https://github.com/crosbymichael/docker
 Source0: %name-%version.tar
@@ -21,7 +22,7 @@ BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(c
 Requires: tar lxc xz
 Provides: lxc-docker
 
-%global commit 28b162eeb48002e1824a1b43bbc864e93af8e26b
+%global commit 8502ad4ba7b5410eb55f3517a801b33f61b1f625
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global gopath          %_datadir/gocode
@@ -137,6 +138,9 @@ exit 0
 %dir %_sharedstatedir/docker
 
 %changelog
+* Mon Jan 06 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.3-alt1
+- New version
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.2-alt1
 - New version
 
