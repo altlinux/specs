@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.1e
+Version: 1.0.1f
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -39,6 +39,7 @@ Patch24: openssl-rh-chil-fixes.patch
 Patch25: openssl-rh-alt-secure-getenv.patch
 Patch26: openssl-rh-dh-1024.patch
 Patch27: openssl-rh-padlock64.patch
+Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
 
 %define shlib_soversion 10
 %define compat_shlib_versions 1.0.0 1.0.0a
@@ -251,6 +252,7 @@ on the command line.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
+%patch28 -p1
 
 find -type f -name \*.orig -delete
 
@@ -457,6 +459,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Jan 06 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1f-alt1
+- Updated to 1.0.1f
+  (fixes CVE-2013-4353, CVE-2013-6449, and CVE-2013-6450).
+
 * Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.1e-alt1
 - Updated to OpenSSL_1_0_1e-21-g0e9dd38.
 - Updated patches from Fedora openssl-1.0.1e-4.
