@@ -1,6 +1,6 @@
 Name: audience
 Version: 0.1
-Release: alt2.r302
+Release: alt3.r305
 
 Summary: A modern media player
 License: GPLv3
@@ -40,6 +40,9 @@ hardware acceleration than most players out there.
 %_datadir/icons/hicolor/*/apps/audience.svg
 
 %changelog
+* Sun Jan 05 2014 Igor Zubkov <icesik@altlinux.org> 0.1-alt3.r305
+- r305
+
 * Thu Dec 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt2.r302
 - Make build more verbose
 
