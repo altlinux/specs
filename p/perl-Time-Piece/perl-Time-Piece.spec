@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Time-Piece
 Name: perl-%dist
-Version: 1.26
+Version: 1.27
 Release: alt1
 
 Summary: Object Oriented time objects
@@ -39,6 +39,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
