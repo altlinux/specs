@@ -1,14 +1,14 @@
 %define dist Crypt-Rijndael
 Name: perl-%dist
-Version: 1.11
-Release: alt2
+Version: 1.12
+Release: alt1
 
 Summary: Crypt::CBC compliant Rijndael encryption module
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Crypt-Rijndael-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Manifest perl-Test-Pod perl-Test-Pod-Coverage
@@ -32,6 +32,9 @@ as the Advanced Encryption Standard.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.11-alt2
 - built for perl 5.18
 
