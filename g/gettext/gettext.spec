@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.18.3.1
-Release: alt2
+Version: 0.18.3.2
+Release: alt1
 
 %define libintl libintl3
 
@@ -15,14 +15,10 @@ Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch1: 0001-Don-t-add-gnulib-lib-to-include-path-when-compiling-.patch
-Patch2: 0002-po-gram-fix-memory-leaks.patch
-Patch3: 0003-libintl-Fix-pointer-use-after-free-and-make-error-ha.patch
-Patch4: 0004-autopoint-recognize-multiple-arguments-of-AM_GNU_GET.patch
-Patch5: 0005-autopoint-discard-stderr-of-autom4te.patch
-Patch6: 0006-msgfmt-adjust-the-default-value-of-PO-Revision-Date-.patch
-Patch7: 0007-autopoint-use-m4-as-the-fallback-macro-directory.patch
-Patch8: 0008-Clear-error_message_count-before-parsing-PO-files.patch
+Patch1: 0001-po-gram-fix-memory-leaks.patch
+Patch2: 0002-libintl-Fix-pointer-use-after-free-and-make-error-ha.patch
+Patch3: 0003-msgfmt-adjust-the-default-value-of-PO-Revision-Date-.patch
+Patch4: 0004-Clear-error_message_count-before-parsing-PO-files.patch
 
 Patch11: gettext-0.18.1.1-deb-project-id.patch
 Patch12: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
@@ -42,7 +38,7 @@ Obsoletes: %name-base
 %def_with java
 
 %{?_with_included_gettext:Requires: %libintl = %version-%release}
-BuildPreReq: emacs-nox gcc-c++ xz %{?_with_java:jdkgcj /proc}
+BuildPreReq: emacs-nox gcc-c++ makeinfo xz %{?_with_java:jdkgcj /proc}
 # Needed for the --color option of the various programs.
 # Otherwise, embedded versions are used, which is forbidden by policy.
 BuildRequires: glib2-devel libcroco-devel libncurses-devel libunistring-devel libxml2-devel
@@ -180,10 +176,6 @@ a formatted output library for C++.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %patch11 -p1
 %patch12 -p1
@@ -342,6 +334,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 0.18.3.2-alt1
+- Updated to 0.18.3.2.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.3.1-alt2
 - Backported some upstream fixes.
 

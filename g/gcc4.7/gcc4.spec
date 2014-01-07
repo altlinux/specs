@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt7
+Release: alt8
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -66,6 +66,8 @@ Url: http://gcc.gnu.org/
 %endif
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
+# due to automake warnings treated as errors
+%set_automake_version 1.11
 
 # Build parameters.
 %ifdef _cross_platform
@@ -213,6 +215,7 @@ Requires: libgcc1 %REQ %version-%release
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, libmpfr-devel, libmpc-devel, libelf-devel
+BuildPreReq: makeinfo
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 BuildPreReq: zlib-devel
@@ -916,6 +919,9 @@ version %version.
 
 %prep
 %setup -a1 -n %srcdirname
+
+# due to autoconf >= 2.69
+> libgo/config/go.m4
 
 # Set proper version info.
 echo %version >gcc/BASE-VER
@@ -1993,6 +1999,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt8
+- Fixed build with GNU Autoconf >= 2.69.
+- Changed build to use GNU Automake 1.11.
+
 * Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt7
 - libgfortran3, libitm1: added a strict requirement on libgcc1.
 
