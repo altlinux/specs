@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version	4.3.4
+%define module_version	4.3.6
 %define module_release	alt1
 
 %define flavour		ovz-el

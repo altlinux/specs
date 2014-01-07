@@ -56,7 +56,7 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.4
+Version: 4.3.6
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -696,6 +696,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Jan 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.6-alt1
+- Update to new release
+
 * Wed Dec 04 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.4-alt1
 - Update to new release
 
