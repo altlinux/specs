@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.6
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -596,6 +596,7 @@ mountpoint -q /dev || {
 %endif
 %dir %vboxdir
 %dir %vboxdir/ExtensionPacks
+%attr(4710,root,vboxusers) %vboxdir/VBoxExtPackHelperApp
 %attr(4710,root,vboxusers) %vboxdir/VBoxHeadless
 %attr(4710,root,vboxusers) %vboxdir/VBoxNetDHCP
 %attr(4710,root,vboxusers) %vboxdir/VBoxNetNAT
@@ -696,6 +697,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Jan 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.6-alt2
+- Control VBoxExtPackHelperApp with setuid restrictions
+
 * Tue Jan 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.6-alt1
 - Update to new release
 
