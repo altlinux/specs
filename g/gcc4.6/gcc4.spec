@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt9
+Release: alt10
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -61,6 +61,8 @@ Url: http://gcc.gnu.org/
 %set_verify_elf_method unresolved=relaxed
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
+# support for Cygnus-style trees has been removed in newer automake.
+%set_automake_version 1.11
 
 # Build parameters.
 %ifdef _cross_platform
@@ -203,6 +205,7 @@ Requires: libgcc1 %REQ %version-%release
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, libmpfr-devel, libmpc-devel, libelf-devel
+BuildPreReq: makeinfo
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 BuildPreReq: zlib-devel
@@ -875,6 +878,9 @@ version %version.
 
 %prep
 %setup -a1 -n %srcdirname
+
+# due to autoconf >= 2.69
+> libgo/config/go.m4
 
 # Set proper version info.
 echo %version >gcc/BASE-VER
@@ -1918,6 +1924,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt10
+- Fixed build with GNU Autoconf >= 2.69.
+- Changed build to use GNU Automake 1.11.
+
 * Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt9
 - relocate libquadmath info file to doc subpackage
 
