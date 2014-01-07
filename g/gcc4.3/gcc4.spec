@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.3.2
-Release: alt18
+Release: alt19
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap and crtstuff have an exception which
@@ -45,6 +45,8 @@ Url: http://gcc.gnu.org/
 %set_verify_elf_method unresolved=relaxed
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
+# support for Cygnus-style trees has been removed in newer automake.
+%set_automake_version 1.11
 
 # Build parameters.
 %def_enable compat
@@ -170,6 +172,7 @@ Requires: %binutils_deps, glibc-devel
 
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, glibc-devel-static >= 2.4, libmpfr-devel
+BuildPreReq: makeinfo
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 %{?_with_ada:BuildPreReq: gcc-gnat}
@@ -718,7 +721,7 @@ This package contains documentation for the GNU Compiler Collection
 version %version.
 
 %prep
-%setup -q -a1 -n %srcdirname
+%setup -a1 -n %srcdirname
 
 # Set proper version info.
 echo %version >gcc/BASE-VER
@@ -1612,6 +1615,9 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 4.3.2-alt19
+- Changed build to use GNU Automake 1.11.
+
 * Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.3.2-alt18
 - Backported upstream change to fix build with glibc-2.16.
 - Define _FORTIFY_SOURCE only for optimization level 2 or higher.
