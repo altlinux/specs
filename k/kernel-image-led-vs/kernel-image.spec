@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.25
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -151,7 +151,7 @@ Release: alt3
 %Extra_modules vboxhost 4.3.6
 %Extra_modules vboxguest 4.3.6
 %Extra_modules knem 1.1.0
-%Extra_modules exfat 1.2.6
+%Extra_modules exfat 1.2.7
 %Extra_modules ipt_NETFLOW 1.8.2
 #Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
@@ -1792,6 +1792,23 @@ done)
 
 
 %changelog
+* Wed Jan 08 2014 Led <led@altlinux.ru> 3.10.25-alt4
+- updated:
+  + fix-arch-x86
+  + fix-drivers-scsi-fcoe--fcoe
+  + fix-net-core
+- added:
+  + fix-drivers-net--macvlan
+  + fix-drivers-net-wireless-ath-ath9k--ath9k (CVE-2013-4579)
+  + fix-drivers-net-wireless-ath-ath9k--ath9k_htc (CVE-2013-4579)
+  + fix-drivers-scsi--bnx2fc
+  + fix-drivers-scsi-fcoe--libfcoe
+  + fix-fs-autofs4
+  + fix-fs-dlm
+  + fix-kernel-sched
+- exfat 1.2.7
+- disabled I2C_VIA (x86_64)
+
 * Tue Dec 24 2013 Led <led@altlinux.ru> 3.10.25-alt3
 - updated:
   + fix-mm
