@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.7.0
+%define module_version	2.7.0.2
 %define module_release alt1
 
 %define flavour	ovz-el
@@ -63,8 +63,6 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
 
-sed -i '/^[[:blank:]]*ms->rxbufpolicy/d' dahdi/drivers/dahdi/dahdi-base.c
-
 %build
 pushd dahdi
 export KERNEL_SOURCE=%_usrsrc/linux-%kversion-%flavour
@@ -86,6 +84,8 @@ make \
 
 #make -C %_usrsrc/linux-%kversion-%flavour SUBDIRS=`realpath .` modules \
 popd
+
+
 %install
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 pushd dahdi
@@ -168,6 +168,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 08 2014 Led <led@altlinux.ru> 2.7.0.2-alt1
+- 2.7.0.2
 
 * Tue Jul 02 2013 Led <led@altlinux.org> 2.7.0-alt1
 - 2.7.0
