@@ -1,11 +1,11 @@
-#define __cc musl-gcc
+%define __cc musl-gcc
 
 %define _libexecdir %_exec_prefix/libexec
 
 %define bname busybox
 Name: %bname-hasher
-Version: 1.21.1
-Release: alt5
+Version: 1.22.0
+Release: alt1
 Summary: %bname's static utils for hasher
 License: GPLv2
 Group: System/Kernel and hardware
@@ -128,6 +128,10 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Wed Jan 08 2014 Led <led@altlinux.ru> 1.22.0-alt1
+- 1.22.0
+- build with musl-gcc
+
 * Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt5
 - build with standard cc
 
