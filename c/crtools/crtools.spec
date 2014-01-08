@@ -1,11 +1,13 @@
 Name: crtools
-Version: 1.0
-Release: alt5
+Version: 1.1
+%define pre -rc1
+%define ver %version%{?pre:%pre}
+Release: alt0.1
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
 URL: http://criu.org
-Source: %name-%version.tar
+Source: %name-%ver.tar
 Patch: %name-%version-%release.patch
 Provides: criu = %version-%release
 ExclusiveArch: x86_64 %arm
@@ -17,7 +19,7 @@ An utility to checkpoint/restore tasks.
 
 
 %prep
-%setup -q
+%setup -q -n %name-%ver
 %patch -p1
 
 
@@ -38,6 +40,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Wed Jan 08 2014 Led <led@altlinux.ru> 1.1-alt0.1
+- 1.1-rc1
+
 * Sat Dec 14 2013 Led <led@altlinux.ru> 1.0-alt5
 - upstream fixes
 
