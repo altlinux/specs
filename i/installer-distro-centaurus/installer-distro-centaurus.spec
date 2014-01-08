@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt6
+Release: alt7
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jan 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt7
+- ModemManager enabled in systemd-enabled
+
 * Tue Dec 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt6
 - dm changed to prefdm in systemd-enabled
 
