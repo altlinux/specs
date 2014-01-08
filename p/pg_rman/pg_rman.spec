@@ -1,5 +1,5 @@
 Name: pg_rman
-Version: 1.2.5
+Version: 1.2.7
 Release: alt1
 Summary: pg_rman is an online backup and restore tool for PostgreSQL
 License: New BSD
@@ -34,6 +34,9 @@ install -pD -m 644 %_builddir/%name/COPYRIGHT %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Wed Jan 8 2014 Andrew Clark <andyc@altlinux.org> 1.2.7-alt1
+- version update 1.2.7-alt1
+
 * Sat Mar 16 2013 Andrew Clark <andyc@altlinux.org> 1.2.5-alt1
 - initial build for ALT.
 
