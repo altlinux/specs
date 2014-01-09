@@ -1,6 +1,6 @@
 Name: python-module-pyxattr
-Version: 0.5.0
-Release: alt1.1.1.1
+Version: 0.5.2
+Release: alt1
 
 Summary: A python module for accessing filesystem Extended Attributes
 
@@ -10,7 +10,6 @@ Url: http://pyxattr.sourceforge.net/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: Python Development Team <python@packages.altlinux.org>
 
 %setup_python_module pyxattr
 
@@ -36,6 +35,9 @@ operating systems.
 %doc NEWS README
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
+- Version 0.5.2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.0-alt1.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
