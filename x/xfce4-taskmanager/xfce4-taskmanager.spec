@@ -1,24 +1,26 @@
 Name: xfce4-taskmanager
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
-Summary: Taskmanager for XFce Desktop
+Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/applications/xfce4-taskmanager
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
+# git://git.xfce.org/apps/xfce4-taskmanager
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfcegui4-devel libxfce4util-devel
-BuildRequires: glib2-devel libatk-devel intltool libwnck-devel
-BuildRequires: libgtk+2-devel libpango-devel libcairo-devel
+BuildRequires: glib2-devel intltool
+BuildRequires: libgtk+2-devel libcairo-devel libwnck-devel libgksu-devel
+# For exo-csource (needed in the maintainer mode)
+BuildRequires: libexo-devel
 
 %description
-%name is taskmanager application for XFce desktop environment.
+%name is taskmanager application for Xfce desktop environment.
 
 %description -l ru_RU.UTF-8
 %name -- Менеджер задач для Xfce.
@@ -29,8 +31,10 @@ BuildRequires: libgtk+2-devel libpango-devel libcairo-devel
 %build
 %xfce4reconf
 %configure \
-    --enable-wnck \
-    --enable-debug=no
+	--enable-maintainer-mode \
+	--enable-wnck \
+	--enable-gksu \
+	--enable-debug=no
 %make_build
 
 %install
@@ -38,16 +42,21 @@ BuildRequires: libgtk+2-devel libpango-devel libcairo-devel
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README AUTHORS
 %_bindir/*
 %_desktopdir/xfce4-taskmanager.desktop
 
 %changelog
+* Thu Jan 09 2014 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated BR.
+- Updated to 1.0.1.
+
 * Wed Feb 09 2011 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
 - Spec updated, tar.gz -> tar.
 
 * Mon Jun 21 2010 Denis Koryavov <dkoryavov@altlinux.org> 1.0.0-alt1
-- New version. 
+- New version.
 
 * Mon Dec 29 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.4.1-alt1
 - new version
