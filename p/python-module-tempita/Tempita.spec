@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.1
-Release: alt2.hg20110828.1
+Version: 0.5.3
+Release: alt1.hg20131219
 Summary: A very small text templating language
 License: MIT
 Group: Development/Python
@@ -57,6 +57,8 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
+find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
+find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 %python3_build
 popd
 %endif
@@ -80,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.hg20131219
+- Version 0.5.3
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.1-alt2.hg20110828.1
 - Rebuild with Python-3.3
 
