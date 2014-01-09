@@ -1,4 +1,4 @@
-%define svn_revision 403600
+%define svn_revision 405158
 Name: asterisk13
 Summary: Open source PBX
 Version: 13
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 403600
+%define svn_revision 405158
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -714,7 +714,7 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %dir /usr/share/asterisk/documentation/13
 /usr/share/asterisk/documentation/13/appdocsxml.dtd
 /usr/share/asterisk/documentation/13/core-en_US.xml
-/usr/share/asterisk/documentation/13/snapshots.xslt
+/usr/share/asterisk/documentation/13/appdocsxml.xslt
 %exclude /var/lib/asterisk/images/asterisk-intro.jpg
 %exclude /var/lib/asterisk/images/kpad2.jpg
 %exclude %_docdir/%name-%version/core-en_US.xml
@@ -987,7 +987,7 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %if_without corosync
 %exclude %astsample res_corosync
 %endif
-%_docdir/%name-%version/snapshots.xslt
+%_docdir/%name-%version/appdocsxml.xslt
 
 %files -n aelparse13
 %_sbindir/aelparse-%version
@@ -1277,6 +1277,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Thu Jan 09 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.405158
+- update from svn revision 405158
+
 * Mon Dec 09 2013 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.403600
 - update from svn revision 403600
 
