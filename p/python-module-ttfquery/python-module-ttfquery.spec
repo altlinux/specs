@@ -1,7 +1,7 @@
 %define oname TTFQuery
 Name: python-module-ttfquery
-Version: 1.0.1
-Release: alt2.1.1
+Version: 1.0.5
+Release: alt1
 
 Summary: FontTools-based package for querying system fonts
 
@@ -53,10 +53,14 @@ which TTFQuery was refactored.
 
 %files
 %doc license.txt
+%_bindir/*
 %python_sitelibdir/ttfquery/
 %python_sitelibdir/*egg-info/
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1
+- Version 1.0.5
+
 * Thu Oct 27 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt2.1.1
 - Rebuild with Python-2.7
 
