@@ -1,6 +1,6 @@
 %define dist Module-Pluggable
 Name: perl-%dist
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Automatically give your module the ability to have plugins
@@ -34,6 +34,9 @@ for your module.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 5.1-alt1
+- automated CPAN update
+
 * Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 5.0-alt1
 - automated CPAN update
 
