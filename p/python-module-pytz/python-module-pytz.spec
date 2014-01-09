@@ -3,7 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2013d
+Epoch: 1
+Version: 2013.9
 Release: alt1
 
 %setup_python_module %oname
@@ -42,7 +43,7 @@ Library Reference (datetime.tzinfo).
 %package -n python3-module-%oname-tests
 Summary: Tests for pytz (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 pytz brings the Olson tz database into Python. This library allows
@@ -57,7 +58,7 @@ This package contains tests for pytz.
 %package tests
 Summary: Tests for pytz
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 pytz brings the Olson tz database into Python. This library allows
@@ -119,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2013.9-alt1
+- Version 2013.9
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013d-alt1
 - Version 2013d
 
