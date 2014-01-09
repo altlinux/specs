@@ -1,7 +1,7 @@
 %define rname reportlab
 Name: python-module-Reportlab
-Version: 2.5
-Release: alt3.1.1
+Version: 2.7
+Release: alt1
 License: BSD license (see LICENSE.txt for details)
 Summary: The Reportlab Toolkit
 Group: Development/Python
@@ -71,6 +71,9 @@ cp -fR tests %buildroot%python_sitelibdir/%rname/
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1
+- Version 2.7
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.5-alt3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
