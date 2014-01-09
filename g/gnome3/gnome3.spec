@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -38,16 +38,7 @@ BuildPreReq: rpm-build-licenses
 %define wm_theme_prefix metacity-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
-%define orca_ver 2.32.1
-
-%define default_gnome_theme		%gnome_theme_prefix-clearlooks >= %ver_major
-%define default_gnome_theme_name		Glossy
-%define default_wm_theme		%wm_theme_prefix-clearlooks
-%define default_wm_theme_name		Clearlooks
-# TODO: Create a gtk2-themes-default virtual package;
-# libgtk-engines-default has little sense to an end user.
-%define more_gtk2_themes		libgtk-engine-thinice, libgtk-engines-default, libgtk-engine-crux
-%define more_wm_themes			%wm_theme_prefix-metabox %wm_theme_prefix-clearlooks
+%define orca_ver 3.9.92
 
 %description
 A set of virtual packages for GNOME Desktop version 3 installation.
@@ -124,6 +115,10 @@ Obsoletes: gnome-default
 Provides: gnome-default = %version-%release
 
 Requires: %name-minimal = %version-%release
+
+## Canberra modules for both GTK+
+Requires: libcanberra-gtk2
+Requires: libcanberra-gtk3
 ## Color manager
 Requires: gnome-color-manager
 ## Password keeper
@@ -153,9 +148,8 @@ Requires: evince >= %evince_ver
 #Requires: fbreader
 ## and videos from a webcam
 Requires: cheese
-
-## Applets
-#Requires: gnome-applets >= %applets_ver
+# Note editor
+Requires: bijiben
 
 # Utilities
 Requires: gnome-utils >= 3.6
@@ -192,6 +186,12 @@ Requires: parcellite
 Requires: gnome-documents
 # A quick previewer for Nautilus
 Requires: sushi
+# Video propeties viewer and thumbnailer for Nautilus
+Requires: totem-nautilus
+# mypaint, krita thumbnailer for Nautilus
+Requires: gnome-kra-ora-thumbnailer
+#  Epub thumbnailer for Nautilus
+Requires: gnome-epub-thumbnailer
 # Menu editor
 Requires: alacarte
 # Weather application
@@ -200,12 +200,7 @@ Requires: gnome-weather >= %ver_major
 Requires: gnome-clocks >= %ver_major
 # Maps application
 Requires: gnome-maps >= %ver_major
-
-# Look & Feel
-## All default themes
-#Requires: metacity-themes-default >= %metacity_ver
-#Requires: gnome-themes-default >= %ver_major
-
+# power consumption statistic
 Requires: gnome-power-manager >= %ver_major
 Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control applet
@@ -238,7 +233,7 @@ Requires: %name-default = %version-%release
 
 # Sound & graphics & video
 ## All Rhythmbox plugins
-#Requires: rhythmbox-plugins
+Requires: rhythmbox-plugins
 ## CD-ripper
 Requires: goobox
 ## Image viewer, browser and simple editor
@@ -259,7 +254,8 @@ Requires: vinagre
 Requires: ekiga
 ## Client for ed2k network
 Requires: aMule
-
+## BitTorrent client
+Requires:  transmission-gtk
 # Windows (TM) communications
 ## RDP
 Requires: rdesktop
@@ -365,6 +361,10 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Jan 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
+- added libcanberra-gtk{2,3}, totem-nautilus and epub, kra/ora
+  thumbnailers for Nautilus to -default
+
 * Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - removed gnome-screensaver
 - added gnome-music, gnome-maps, gnome-photos to -default
