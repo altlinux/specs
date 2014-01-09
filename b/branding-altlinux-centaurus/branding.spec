@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.2
-Release: alt1
+Release: alt2
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -270,6 +270,7 @@ pushd mate-settings
 install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
 install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
 install -m 644 -D Trolltech.conf '%buildroot%_sysconfdir/skel/.config/Trolltech.conf'
+mkdir -p '%buildroot%_sysconfdir/skel/.cache/thumbnails'
 popd
 
 #slideshow
@@ -348,6 +349,7 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %files mate-settings
 %_datadir/glib-2.0/schemas/*.gschema.override
 %_sysconfdir/skel/.config/Trolltech.conf
+%_sysconfdir/skel/.cache
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -364,6 +366,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jan 09 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.2-alt2
+- .cache/thumbnails added to etcskel
+
 * Wed Nov 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.2-alt1
 - version change
 
