@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.10
 %define parser_ver 3.9.5
@@ -37,7 +37,7 @@
 
 Name: totem
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -52,6 +52,7 @@ Obsoletes: %name-plugins-publish  %name-plugins-iplayer
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
+Requires: %name-video-thumbnailer = %version-%release
 Requires: dconf gnome-icon-theme
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -201,6 +202,7 @@ A plugin to allow videos to be rotated if they're in the wrong orientation.
 Summary: Zeitgeist plugin for Totem
 Group: Video
 Requires: %name = %version-%release
+Requires: zeitgeist
 
 %description plugins-zeitgeist
 A plugin sending events to Zeitgeist
@@ -264,7 +266,7 @@ This package provides Totem reference manual
 %package nautilus
 Summary: Nautilus extension for the Totem media player
 Group: Video
-Requires: %name-backend = %version-%release
+Requires: %name-video-thumbnailer = %version-%release
 Provides: totem-gstreamer-nautilus = %version-%release
 Provides: totem-xine-nautilus = %version-%release
 Provides: totem-nautilus = %version
@@ -279,8 +281,22 @@ Obsoletes: totem-nautilus < %version-%release
 This package provides integration with the Totem media player for
 the Nautilus file manager.
 
+%package video-thumbnailer
+Summary: Totem video thumbnailer
+Group: Video
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
+Requires: gst-libav
+Requires: iso-codes
+
+%description video-thumbnailer
+This package provides a video thumbnailer from Totem package that can be
+used by other applications like filemanagers.
+
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 [ ! -d m4 ] && mkdir m4
 
@@ -313,6 +329,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %files -f %name.lang
 %_bindir/*
+%exclude %_bindir/%name-video-thumbnailer
 %dir %_libdir/%name
 # depends on pygtk
 #%_libexecdir/%name/totem-bugreport.py
@@ -320,8 +337,8 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/icons/hicolor/*/*/*.png
 %_datadir/icons/hicolor/*/*/*.svg
 %_datadir/%name
-%_datadir/thumbnailers/totem.thumbnailer
 %_man1dir/*
+%exclude %_man1dir/%name-video-thumbnailer.1.*
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
@@ -422,7 +439,16 @@ find %buildroot%_libdir -name \*.la -delete
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
+%files video-thumbnailer
+%_bindir/%name-video-thumbnailer
+%_man1dir/%name-video-thumbnailer.1.*
+%_datadir/thumbnailers/%name.thumbnailer
+
 %changelog
+* Thu Jan 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt2
+- updated to 2dc3096 (fixed BGO ##721054, 712153, 709905... )
+- moved totem-video-thumbnailer to separate subpackage
+
 * Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
