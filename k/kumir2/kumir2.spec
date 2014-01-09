@@ -1,6 +1,6 @@
 Name: kumir2
-Version: 2.0.99
-Release: alt1
+Version: 2.1.0
+Release: alt0.beta4
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -10,11 +10,10 @@ Group: Education
 Url: http://lpm.org.ru/kumir
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-BuildPreReq: libqt4-devel gcc-c++ cmake python-modules python-modules-json
+BuildPreReq: libqt4-devel gcc-c++ cmake python-modules python-modules-json boost-devel
 Requires: libqt4-core
 
-Source: kumir2-2.1.0-beta1.tar.gz
-Patch0: %name-disable-pictomir.patch
+Source: kumir2-2.1.0-beta4.tar
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -34,8 +33,7 @@ This is a second generation of well-known Kumir system.
 Пакет kumir2 содержит новую реализацию системы Кумир.
 
 %prep
-%setup -n kumir2-2.1.0-beta1
-%patch0 -p1
+%setup -n kumir2-2.1.0-beta4
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
 
 %build
@@ -53,10 +51,14 @@ cd build
 %_bindir/*
 %_libdir/%name
 %_datadir/%name
+%_datadir/mime/packages/*.xml
 %_desktopdir/*
 %_iconsdir/*/*/*/*
 
 %changelog
+* Thu Jan 09 2014 Denis Kirienko <dk@altlinux.org> 2.1.0-alt0.beta4
+- Version 2.1.0-beta4
+
 * Tue Nov 05 2013 Denis Kirienko <dk@altlinux.org> 2.0.99-alt1
 - Version 2.1.0-beta1
 
@@ -65,4 +67,3 @@ cd build
 
 * Sat Aug 20 2011 Denis Kirienko <dk@altlinux.ru> 1.99.0.alpha7-alt1
 - Initial build for Sisyphus - alpha-version, only for testing.
-
