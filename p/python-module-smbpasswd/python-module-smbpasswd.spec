@@ -1,11 +1,11 @@
-%define version 1.0.1
-%define release alt3
+%define version 1.0.2
+%define release alt1
 %setup_python_module smbpasswd
 
 Summary: Python SMB Password Hash Generator module
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 Source0: py-%modulename-%version.tar.gz
 License: GPL
 Group: Development/Python
@@ -27,6 +27,9 @@ Python SMB Password Hash Generator module
 %files -f INSTALLED_FILES
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
+- Version 1.0.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt3.1
 - Rebuild with Python-2.7
 
