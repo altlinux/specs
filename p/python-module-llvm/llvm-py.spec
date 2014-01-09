@@ -4,8 +4,8 @@
 %def_with clang
 
 Name: python-module-%oname
-Version: 0.11.3
-Release: alt1.git20131118
+Version: 0.12.4
+Release: alt1
 Summary: Python Bindings for LLVM
 License: BSD
 Group: Development/Python
@@ -13,6 +13,9 @@ Url: http://www.llvmpy.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+# https://github.com/llvmpy/llvmpy/issues/96
+Patch0: https://github.com/gentoo90/llvmpy/commit/eb43529f7b24e12df5dce37512d349621767c025.patch
+Patch1: https://github.com/gentoo90/llvmpy/commit/8a0778e75a953ee75d2d95b05f5db39690bccee8.patch
 
 BuildPreReq: llvm-devel python-devel gcc-c++ libffi-devel
 %if_with clang
@@ -45,6 +48,8 @@ utilities" like Boost.Python, swig etc.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -91,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Mon Apr 07 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.4-alt1
+- New version.
+- Rebuilt with LLVM/Clang 3.4.
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.3-alt1.git20131118
 - New snapshot
 

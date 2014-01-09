@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.5.2
-Release:	alt1.1
+Release:	alt1.2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1346,6 +1346,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.2-alt1.2
+- Rebuilt with LLVM 3.4.
+
 * Wed Apr 02 2014 Alexei Takaseev <taf@altlinux.org> 3.5.2-alt1.1
 - Fix BuildReq postgresql-devel9.1 to postgresql-devel
 
