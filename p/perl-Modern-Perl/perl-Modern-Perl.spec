@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/More.pm) perl-Module-Build perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
-Version:        1.20121103
-Release:        alt1_1
+Version:        1.20140107
+Release:        alt1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Modern-Perl/
-Source0:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/C/CH/CHROMATIC/Modern-Perl-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
@@ -44,6 +44,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.20140107-alt1
+- automated CPAN update
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.20121103-alt1_1
 - update to new release by fcimport
 
