@@ -1,20 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(CPAN/Meta.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-MinimumVersion
 Version:	0.101081
-Release:	alt1
+Release:	alt1_1
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-MinimumVersion/
-Source:	http://www.cpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
 BuildArch:	noarch
 
 BuildRequires:	perl(base.pm)
+BuildRequires:  perl(CPAN/Meta.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Find/Rule.pm)
@@ -25,9 +26,7 @@ BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(YAML/Tiny.pm)
 BuildRequires:	perl(version.pm)
-
-# For improved tests
-BuildRequires:	perl(Test/Pod.pm)
+BuildRequires:	perl(warnings.pm)
 Source44: import.info
 
 %description
@@ -48,13 +47,16 @@ find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 chmod -R u+w $RPM_BUILD_ROOT/*
 
 %check
-make test RELEASE_TESTING=1
+make test
 
 %files
 %doc Changes LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.101081-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.101081-alt1
 - automated CPAN update
 
