@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.3
-Release: alt6
+Version: 1.2
+Release: alt1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -219,7 +219,7 @@ popd
 # docs
 
 %make_build -C doc html
-#make_build -C doc man
+%make_build -C doc man
 
 %install
 %if_with python3
@@ -254,13 +254,13 @@ done
 
 install -d %buildroot%_docdir/%name
 #install -d %buildroot%_docdir/%name/pdf
-#install -d %buildroot%_man1dir
+install -d %buildroot%_man1dir
 
 cp -fR doc/_build/html %buildroot%_docdir/%name/
 #install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
-install -p -m644 AUTHORS CHANGES EXAMPLES LICENSE README TODO \
+install -p -m644 AUTHORS CHANGES EXAMPLES LICENSE README.rst TODO \
 	%buildroot%_docdir/%name
-#install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
+install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
 
 # macros
 
@@ -317,7 +317,7 @@ popd
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/doctrees
 %python_sitelibdir/*.egg-info
-#_man1dir/*
+%_man1dir/*
 
 %files devel
 
@@ -358,6 +358,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2-alt1
+- Version 1.2
+
 * Thu Oct 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt6
 - Fixed build manpages (ALT #29450)
 
