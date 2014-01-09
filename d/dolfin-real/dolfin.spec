@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2.0
-Release: alt4.git20131022
+Release: alt5.git20131022
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -26,7 +26,7 @@ BuildPreReq: python-module-petsc-config libdakota-devel eigen3
 BuildPreReq: python-module-Pyro4 python-module-Scientific
 BuildPreReq: python-module-fiat %mpiimpl-devel python-devel libcgal-devel
 BuildPreReq: cmake swig libgts-devel libxml2-devel libnumpy-devel
-BuildPreReq: boost-devel libvtk-python-devel vtk-python ufc-devel ffc
+BuildPreReq: boost-devel libvtk6.0-python-devel vtk6.0-python ufc-devel ffc
 BuildPreReq: python-module-viper viper zlib-devel syfi libsyfi-devel
 BuildPreReq: python-module-syfi python-module-ply python-module-Numeric
 BuildPreReq: boost-filesystem-devel boost-program_options-devel
@@ -40,7 +40,8 @@ BuildPreReq: python-module-PyTrilinos10 libmpfr-devel
 BuildPreReq: libarmadillo-devel libhypre-devel libqd-devel
 BuildPreReq: petsc-%scalar_type-sources python-module-sphinx-devel
 #BuildPreReq: texlive-latex-extra ghostscript-utils
-BuildPreReq: ghostscript-utils libhwloc-devel libqt4-devel libvtk-devel
+BuildPreReq: ghostscript-utils libhwloc-devel libqt4-devel libvtk6.0-devel
+BuildPreReq: vtk6.0-examples
 #BuildPreReq: libgomp-devel
 
 %description
@@ -354,6 +355,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt5.git20131022
+- Rebuilt with vtk6.0
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt4.git20131022
 - New snapshot
 
