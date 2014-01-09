@@ -1,6 +1,6 @@
 %define dist MooseX-Traits-Pluggable
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Trait loading and resolution for Moose
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/MooseX-Traits-Pluggable-0.10.tar.gz
+Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/MooseX-Traits-Pluggable-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ apply_traits to apply traits to an instance.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
