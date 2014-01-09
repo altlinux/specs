@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define module_version 2.01
+%define module_version 2.03
 %define module_name Sereal-Encoder
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.01
+Version: 2.03
 Release: alt1
 Summary: Fast, compact, powerful binary serialization
 Group: Development/Perl
@@ -49,6 +49,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
 - automated CPAN update
 
