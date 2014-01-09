@@ -1,7 +1,7 @@
-%define rev bff9efc9
+%define rev 1a63c15e
 Name: naev
 Version: 0.5.3
-Release: alt6.%rev
+Release: alt7.%rev
 Summary: NAEV is a 2D space trading and combat game, in a similar vein to Escape Velocity
 Group: Games/Other
 License: GPLv3
@@ -65,6 +65,9 @@ install -pD -m 755 %SOURCE3 %buildroot%_bindir/%name.sh
 %_gamesdatadir/ndata/
 
 %changelog
+* Thu Jan 9 2014 Andrew Clark <andyc@altlinux.org> 0.5.3-alt7.1a63c15e
+- version update to 0.5.3-alt7.1a63c15e
+
 * Wed Jul 24 2013 Andrew Clark <andyc@altlinux.org> 0.5.3-alt6.bff9efc9
 - version update to 0.5.3-alt6.bff9efc9
 
