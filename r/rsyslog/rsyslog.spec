@@ -1,6 +1,6 @@
 
 Name: rsyslog
-Version: 7.4.7
+Version: 7.4.8
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -490,6 +490,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Thu Jan 09 2014 Alexey Shabalin <shaba@altlinux.ru> 7.4.8-alt1
+- 7.4.8
+
 * Tue Dec 10 2013 Alexey Shabalin <shaba@altlinux.ru> 7.4.7-alt1
 - 7.4.7
 
