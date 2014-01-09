@@ -4,7 +4,7 @@
 Epoch: 1
 
 Version: 0.8.92
-Release: alt1
+Release: alt2
 Name: emacs-jabber
 License: %gpl2plus
 Group: Networking/Instant messaging
@@ -23,9 +23,7 @@ BuildPreReq: emacs-devel >= 0.0.1-alt2
 BuildPreReq: emacs-common
 BuildPreReq: rpm-build-licenses
 BuildPreReq: emacs-gnus >= 5.10
-BuildPreReq: automake >= 1.9
-# Waiting for autocrap update...
-# BuildPreReq: automake >= 1.12
+BuildPreReq: automake >= 1.12
 
 %description
 jabber.el is a minimal Jabber client running under Emacs.
@@ -53,9 +51,9 @@ You need to install %name-el only if you intend to modify any of the
 %configure --with-lispdir=%_emacslispdir/%pkg_name
 make install DESTDIR=%buildroot abs_builddir="%_builddir/%name-%version"
 # We need automake >= 1.12 to support LOG_COMPILER:
-# pushd tests
-# make check
-# popd
+pushd tests
+make check
+popd
 
 mkdir -p %buildroot%_bindir
 mv -v %buildroot%_libexecdir/%name-uri-handler %buildroot%_bindir
@@ -83,6 +81,9 @@ install -m 644 jabber-fallback-lib/hexrgb.elc %buildroot%_emacslispdir/%pkg_name
 %doc %pkg_name.texi
 
 %changelog
+* Thu Jan  9 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt2
+- git-20140109
+
 * Thu Jul 11 2013 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt1
 - git-20130711
 
