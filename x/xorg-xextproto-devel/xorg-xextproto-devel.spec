@@ -1,5 +1,5 @@
 Name: xorg-xextproto-devel
-Version: 7.2.1
+Version: 7.3.0
 Release: alt1
 Epoch: 2
 Summary: X.org XExtProto protocol headers
@@ -39,6 +39,9 @@ X.org XExtProto protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 09 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:7.3.0-alt1
+- 7.3.0
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:7.2.1-alt1
 - 7.2.1
 
