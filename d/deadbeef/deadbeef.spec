@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed 
-%define rev	5390e6de
+%define rev	5f781386
 Name:		deadbeef
-Version:	0.5.6
-Release:	alt4.%rev
+Version:	0.6.0
+Release:	alt1.%rev
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
@@ -634,6 +634,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Thu Jan 9 2014 Andrew Clark <andyc@altlinux.org> 0.6.0-alt1.5f781386
+- version update to 0.6.0-alt1.5f781386
+
 * Sat Oct 12 2013 Andrew Clark <andyc@altlinux.org> 0.5.6-alt4.5390e6de
 - version update to 0.5.6-alt4.5390e6de
 
