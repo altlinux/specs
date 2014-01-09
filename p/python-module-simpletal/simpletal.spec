@@ -1,13 +1,12 @@
 Name: python-module-simpletal
-Version: 4.1
-Release: alt2.1
+Version: 4.3
+Release: alt1
 Summary: SimpleTAL is an independent implementation of TAL
 License: BSD-like
 Group: Development/Python
 Url: http://www.owlfish.com/software/simpleTAL/
 Packager: Gennady Kovalev <gik@altlinux.ru>
 Source0: SimpleTAL-%version.tar
-Patch0: SimpleTAL-%version-alt-allinone.patch
 BuildRequires: python-module-setuptools
 BuildArch: noarch
 
@@ -19,7 +18,6 @@ of the TAL, TALES and METAL specifications used in Zope.
 
 %prep
 %setup -n SimpleTAL-%version
-%patch0
 
 
 %build
@@ -35,6 +33,9 @@ cp -r buildroot/* %buildroot
 
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt1
+- Version 4.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.1-alt2.1
 - Rebuild with Python-2.7
 
