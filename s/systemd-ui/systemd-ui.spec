@@ -1,8 +1,8 @@
 
 Name: systemd-ui
 Url: http://www.freedesktop.org/wiki/Software/systemd
-Version: 2
-Release: alt2.git.0bfc54de
+Version: 3
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Other
 Summary: Graphical front-end for systemd
@@ -40,6 +40,9 @@ services, and a graphical agent to request passwords from the user.
 %_man1dir/systemadm.*
 
 %changelog
+* Thu Jan 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3-alt1
+- version 3
+
 * Fri Oct 04 2013 Alexey Shabalin <shaba@altlinux.ru> 2-alt2.git.0bfc54de
 - upstream snapshot 0bfc54dedd309b3e265fb8d514e58ac1c67811af
 
