@@ -5,7 +5,7 @@
 %define ver 6.0
 Name: %oname%ver
 Version: %ver.0
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -388,7 +388,7 @@ sed -i 's|%buildroot||g' \
 #sed -i 's|\(.*VTK_LIBRARY_DIRS.*\)/%_lib/vtk\-%ver|\1/%_lib|' \
 #	%buildroot%_libdir/vtk-%ver/VTKConfig.cmake
 sed -i 's|lib/|%_lib/|' \
-	%buildroot%_libdir/cmake/vtk-%ver/VTKTargets-relwithdebinfo.cmake
+	%buildroot%_libdir/cmake/vtk-%ver/*.cmake
 
 #install -p -m644 Hybrid/* \
 install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
@@ -429,6 +429,7 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 
 %files -n lib%name-devel
 %_libdir/*.so
+%_libdir/*.a
 %exclude %_libdir/*TCL-%ver.so
 %exclude %_libdir/*Python*.so
 #exclude %_libdir/libvtkmy*.so
@@ -498,6 +499,9 @@ install -p -m644 Common/Core/vtkArrayIteratorIncludes.h \
 %python_sitelibdir/*/test
 
 %changelog
+* Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.0-alt2
+- Fixed cmake files
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.0-alt1
 - Version 6.0.0
 
