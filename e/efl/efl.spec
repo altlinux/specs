@@ -10,8 +10,8 @@
 %def_enable ibus
 
 Name: efl
-Version: 1.8.3
-Release: alt2
+Version: 1.8.4
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -260,6 +260,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Fri Jan 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt2
 - enabled IBUS, DRM support
 - built against libwebp.so.5
