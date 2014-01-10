@@ -1,5 +1,5 @@
 Name: xorg-glproto-devel
-Version: 1.4.16
+Version: 1.4.17
 Release: alt1
 Summary: X.org GLProto protocol headers
 License: MIT/X11
@@ -12,6 +12,7 @@ Provides: glproto = %version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildArch: noarch
 BuildRequires: xorg-util-macros
 
 %description
@@ -30,9 +31,12 @@ X.org GLProto protocol headers
 
 %files
 %_includedir/GL
-%_pkgconfigdir/*.pc
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 09 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.4.17-alt1
+- 1.4.17
+
 * Sat Sep 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.4.16-alt1
 - 1.4.16
 
