@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 10.0.1
+Version: 10.0.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -20,7 +20,7 @@ BuildRequires: llvm-devel >= 3.3 llvm-devel-static >= 3.3
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
-BuildRequires: libvdpau-devel libXvMC-devel
+BuildRequires: libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -351,6 +351,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Fri Jan 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.0.2-alt1
+- 10.0.2
+
 * Fri Dec 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:10.0.1-alt1
 - 10.0.1
 
