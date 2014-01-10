@@ -1,7 +1,7 @@
 %define modulename ulib
 
 Name: python3-module-%modulename
-Version: 0.10
+Version: 0.21
 Release: alt1
 
 Summary: ulib: Useful python library
@@ -28,6 +28,8 @@ Useful python3 library.
 
 %prep
 %setup
+# needs astroid
+rm -f ulib/tools/lintfix.py
 
 %build
 %python3_build
@@ -40,6 +42,9 @@ Useful python3 library.
 %python3_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Fri Jan 10 2014 Vitaly Lipatov <lav@altlinux.ru> 0.21-alt1
+- build 0.21
+
 * Fri Dec 13 2013 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
 - build 0.10, python3 only
 
