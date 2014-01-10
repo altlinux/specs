@@ -6,7 +6,7 @@
 Name: kde4-okular
 %define major 4
 %define minor 11
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -22,7 +22,7 @@ Provides: kde4graphics-okular = %version-%release
 Obsoletes: kde4graphics-okular < %version-%release
 
 Source: %rname-%version.tar
-Patch1: okular-4.11.1-alt-print-truncate-title.patch
+Patch1: okular-4.11.5-alt-print-truncate-title.patch
 
 # Automatically added by buildreq on Mon Sep 12 2011 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libpoppler3-qt4 libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -129,6 +129,12 @@ Development files for %name
 
 
 %changelog
+* Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
