@@ -1,6 +1,6 @@
 Name:		rosa-media-player
-Version:	1.6
-Release:	alt2
+Version:	1.6.9
+Release:	alt1
 Summary:	Multimedia player based on mplayer technology
 
 License:	GPLv2+
@@ -9,7 +9,7 @@ Url:		https://abf.rosalinux.ru/uxteam/ROSA_Media_Player/tree/develop
 
 Source:		%name-%version.tar.gz
 
-Packager:   Andrey Cherepanov <cas@altlinux.org>
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre):	qt4-devel >= 4.2.0
 BuildRequires:  libwildmidi-devel
@@ -21,8 +21,8 @@ Requires:	mplayer >= 1.0
 Requires:	mencoder
 Requires:	ffmpeg
 Requires:	xdg-utils
-Requires:   timidity-instruments
-Requires:   wget
+Requires:   	timidity-instruments
+Requires:   	wget
 
 %description
 Rosa Media Player (ROMP) - multimedia player that supports most of audio
@@ -59,6 +59,9 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Thu Jan 09 2014 Andrey Cherepanov <cas@altlinux.org> 1.6.9-alt1
+- New version
+
 * Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 1.6-alt2
 - Pack user manual
 - Fix path to localization files
