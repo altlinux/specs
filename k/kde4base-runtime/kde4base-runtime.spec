@@ -7,10 +7,10 @@
 %define rname kdebase-runtime
 %define major 4
 %define minor 11
-%define bugfix 4
+%define bugfix 5
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -231,6 +231,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
+* Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1.M70P.1
+- built for M70P
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt2
 - add patch from Fedora to fix notifications volume
 
