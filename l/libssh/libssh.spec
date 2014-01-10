@@ -1,6 +1,6 @@
 
 Name: libssh
-Version: 0.5.5
+Version: 0.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -77,10 +77,17 @@ install -m 0644 %SOURCE2 ./
 %files devel
 %_pkgconfigdir/%name.pc
 %_pkgconfigdir/libssh_threads.pc
+%_libdir/cmake/libssh*
 %_includedir/%name
 %_libdir/*.so
 
 %changelog
+* Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
+* Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.5-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.5-alt1
 - new version
 
