@@ -25,12 +25,19 @@
 %endif
 
 Name: systemd
+# Epoch 1 is when systemd and journalctl are split.
+# (Without it, we cannot specify the conflicts correctly
+# for pkgs both from p7/t7 and Sisyphus
+# so that older systemd from p7/t7 can be installed along with newer journalctl.)
+Epoch: 1
 Version: 208
-Release: alt2
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
+
+Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source:%name-%version.tar
 Source2: rc-local.service
@@ -109,27 +116,34 @@ BuildRequires: libgcrypt-devel
 %{?_enable_microhttpd:BuildRequires: libmicrohttpd-devel}
 
 Requires: dbus >= %dbus_ver
-Requires: udev = %version-%release
-Requires: libudev1 = %version-%release
-Requires: libnss-myhostname = %version-%release
+Requires: udev = %epoch:%version-%release
+Requires: libudev1 = %epoch:%version-%release
+Requires: libnss-myhostname = %epoch:%version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 
 # Requires: selinux-policy >= 3.8.5
 
-Requires: libsystemd-daemon = %version-%release
-Requires: libsystemd-login = %version-%release
-Requires: libsystemd-journal = %version-%release
-Requires: %name-utils = %version-%release
+Requires: libsystemd-daemon = %epoch:%version-%release
+Requires: libsystemd-login = %epoch:%version-%release
+Requires: libsystemd-journal = %epoch:%version-%release
+Requires: %name-utils = %epoch:%version-%release
+
+# /*bin/journalctl is in a subpackage.
+# We want to be able to install a new journalctl and use the old (stable) systemd.
+Conflicts: journalctl < %epoch:%version-%release
+# We (our post-script) expect it to be at this path; it may change in future:
+Requires(post): /sbin/journalctl
+Requires: /sbin/journalctl
 
 # Copy from SysVinit
 PreReq: coreutils
 Requires: /sbin/sulogin
 Requires: sysvinit-utils
 
-Obsoletes: systemd-units < 43-alt1
-Provides: systemd-units = %version-%release
+Obsoletes: systemd-units < 0:43-alt1
+Provides: systemd-units = %epoch:%version-%release
 Provides: syslogd-daemon
 
 %description
@@ -156,7 +170,7 @@ This package contains the development files.
 %package -n libsystemd-login
 Group: System/Libraries
 Summary: Systemd Login Utility Library
-Requires: libsystemd-daemon = %version-%release
+Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libsystemd-login
 The libsystemd-login library provides an interface for the
@@ -165,7 +179,7 @@ systemd-logind service which is used to track user sessions and seats.
 %package -n libsystemd-id128
 Group: System/Libraries
 Summary: Systemd 128 Bit ID Utility Library
-Requires: libsystemd-daemon = %version-%release
+Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libsystemd-id128
 The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
@@ -173,7 +187,7 @@ The libsystemd-id128 library provides utility functions for generating 128 bit I
 %package -n libsystemd-journal
 Group: System/Libraries
 Summary: Systemd Journal Utility Library
-Requires: libsystemd-daemon = %version-%release
+Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libsystemd-journal
 The libsystemd-journal library provides an interface for the systemd journal service.
@@ -182,7 +196,7 @@ The libsystemd-journal library provides an interface for the systemd journal ser
 Group: Development/C
 Summary: Development headers for systemd Daemon Utility Library
 License: MIT
-Requires: libsystemd-daemon = %version-%release
+Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libsystemd-daemon-devel
 The sd-daemon library provides a reference implementation of various
@@ -191,7 +205,7 @@ APIs for new-style daemons, as implemented by the systemd init system.
 %package -n libsystemd-login-devel
 Group: Development/C
 Summary: Development headers for systemd Login Utility Library
-Requires: libsystemd-login = %version-%release
+Requires: libsystemd-login = %epoch:%version-%release
 
 %description -n libsystemd-login-devel
 The libsystemd-login library provides an interface for the
@@ -202,7 +216,7 @@ This package contains the development files.
 %package -n libsystemd-id128-devel
 Group: Development/C
 Summary: Development headers for systemd 128 Bit ID Utility Library
-Requires: libsystemd-id128 = %version-%release
+Requires: libsystemd-id128 = %epoch:%version-%release
 
 %description -n libsystemd-id128-devel
 The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
@@ -212,8 +226,8 @@ This package contains the development files.
 %package -n libsystemd-journal-devel
 Group: Development/C
 Summary: Development headers for systemd Journal Utility Library
-Requires: libsystemd-journal = %version-%release
-Requires: libsystemd-id128-devel = %version-%release
+Requires: libsystemd-journal = %epoch:%version-%release
+Requires: libsystemd-id128-devel = %epoch:%version-%release
 
 %description -n libsystemd-journal-devel
 The libsystemd-journal library provides an interface for the systemd journal service.
@@ -257,7 +271,7 @@ Development headers and library files for developing applications for systemd.
 %package sysvinit
 Group: System/Configuration/Boot and Init
 Summary: systemd System V init tools
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 # Obsoletes: SysVinit
 Provides: SysVinit = 2.88-alt0.1
 #Obsoletes:      upstart
@@ -279,7 +293,7 @@ This package contains utils (systemd-binfmt,systemd-modules-load,systemd-sysctl,
 %package analyze
 Group: System/Configuration/Boot and Init
 Summary: Analyze tool for systemd.
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description analyze
 Analyze tool for systemd.
@@ -287,10 +301,26 @@ Analyze tool for systemd.
 %package journal-gateway
 Group: System/Servers
 Summary: Journal Gateway Daemon
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description journal-gateway
 This service provides access to the journal via HTTP and JSON.
+
+%package -n journalctl
+Group: System/Configuration/Boot and Init
+Summary: Tool to query the journal from systemd.
+Provides: /bin/journalctl
+Provides: /sbin/journalctl
+# File conflict with the releases before splitting out journalctl.
+# 0:208-alt3 was the first release when the pkg was split in Sisyphus.
+# The split pkgs for p7/t7 have lesser releases, so they couldn't coexist
+# with newer journalctl due to this conflict. But Epoch helps us:
+# there will be split pkgs for p7/t7 with Epoch 1, and hecne
+# this conflict declaration won't apply!
+Conflicts: %name < 0:208-alt3
+
+%description -n journalctl
+Tool to query the journal from systemd.
 
 %package coredump
 Group: System/Servers
@@ -305,7 +335,9 @@ Summary: Bash completion for systemd utils
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: systemd = %version-%release
+Requires: systemd = %epoch:%version-%release
+# Not to loose it on upgrades after the split.
+Requires: bash-completion-journalctl
 
 %description -n bash-completion-%name
 Bash completion for %name.
@@ -318,11 +350,25 @@ BuildArch: noarch
 %description -n zsh-completion-%name
 Zsh completion for %name.
 
+%package -n bash-completion-journalctl
+Summary: Bash completion for journalctl from systemd
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: /sbin/journalctl
+Conflicts: journalctl < %epoch:%version-%release
+# File conflict with the releases before splitting out journalctl.
+# 0:208-alt3 was the first release when the pkg was split in Sisyphus.
+Conflicts: bash-completion-%name < 0:208-alt3
+
+%description -n bash-completion-journalctl
+Bash completion for journalctl from systemd.
+
 %package -n python-module-%name
 Summary: Python Bindings for systemd
 License: LGPLv2+
 Group: Development/Python
-Requires: libsystemd-journal = %version-%release
+Requires: libsystemd-journal = %epoch:%version-%release
 
 %description -n python-module-%name
 This package contains python binds for systemd APIs
@@ -332,13 +378,13 @@ Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 PreReq: shadow-utils dmsetup kmod >= 14 util-linux >= 2.20 losetup >= 2.19.1
-PreReq: udev-rules = %version-%release
-PreReq: udev-hwdb = %version-%release
-PreReq: systemd-utils = %version-%release
-Requires: libudev1 = %version-%release
+PreReq: udev-rules = %epoch:%version-%release
+PreReq: udev-hwdb = %epoch:%version-%release
+PreReq: systemd-utils = %epoch:%version-%release
+Requires: libudev1 = %epoch:%version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
-Conflicts: systemd < %version-%release
+Conflicts: systemd < %epoch:%version-%release
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 
@@ -354,8 +400,8 @@ provide a very flexible device naming policy
 Summary: Extra rules and tools for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
-Requires: udev = %version-%release
-Requires: libudev1 = %version-%release
+Requires: udev = %epoch:%version-%release
+Requires: libudev1 = %epoch:%version-%release
 
 %description -n udev-extras
 The udev-extras package contains an additional rules and tools
@@ -366,7 +412,7 @@ Summary: Rule files for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/rules.d /lib/udev/rules.d
-Conflicts: udev < %version-%release
+Conflicts: udev < %epoch:%version-%release
 BuildArch: noarch
 
 %description -n udev-rules
@@ -380,7 +426,7 @@ Summary: Hardware database for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
-Conflicts: udev < %version-%release
+Conflicts: udev < %epoch:%version-%release
 BuildArch: noarch
 
 %description -n udev-hwdb
@@ -391,9 +437,9 @@ Summary: CD rule generator for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
-PreReq: udev-rules = %version-%release
-Provides: udev-rule-generator = %version-%release
-Obsoletes: udev-rule-generator < %version-%release
+PreReq: udev-rules = %epoch:%version-%release
+Provides: udev-rule-generator = %epoch:%version-%release
+Obsoletes: udev-rule-generator < %epoch:%version-%release
 
 %description -n udev-rule-generator-cdrom
 This package contains CD rule generator for udev
@@ -403,7 +449,7 @@ Summary: Net rule generator for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
-PreReq: udev-rules = %version-%release
+PreReq: udev-rules = %epoch:%version-%release
 
 %description -n udev-rule-generator-net
 This package contains Net rule generator for udev
@@ -413,7 +459,7 @@ Summary: Bash completion for udev utils
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: udev = %version-%release
+Requires: udev = %epoch:%version-%release
 
 %description -n bash-completion-udev
 Bash completion for udev.
@@ -422,8 +468,8 @@ Bash completion for udev.
 Summary: Shared library to access udev device information
 Group: System/Libraries
 License: LGPLv2.1+
-Conflicts: libudev < 181-alt5
-Requires: libsystemd-daemon = %version-%release
+Conflicts: libudev < 0:181-alt5
+Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libudev1
 This package provides shared library to access udev device information
@@ -432,7 +478,7 @@ This package provides shared library to access udev device information
 Summary: Libraries and headers for libudev
 Group: Development/C
 License: LGPLv2.1+
-Requires: libudev1 = %version-%release
+Requires: libudev1 = %epoch:%version-%release
 
 %description -n libudev-devel
 Shared library and headers for libudev
@@ -440,7 +486,7 @@ Shared library and headers for libudev
 %package -n libgudev
 Summary: GObject bindings for libudev
 Group: System/Libraries
-Requires: libudev1 = %version-%release
+Requires: libudev1 = %epoch:%version-%release
 
 %description -n libgudev
 This package provides shared library to access udev device information
@@ -448,7 +494,7 @@ This package provides shared library to access udev device information
 %package -n libgudev-gir
 Summary: GObject introspection data for the GUdev library
 Group: System/Libraries
-Requires: libgudev = %version-%release
+Requires: libgudev = %epoch:%version-%release
 
 %description -n libgudev-gir
 GObject introspection data for the GUdev library
@@ -456,7 +502,7 @@ GObject introspection data for the GUdev library
 %package -n libgudev-devel
 Summary: Libraries and headers for libgudev
 Group: Development/C
-Requires: libgudev = %version-%release
+Requires: libgudev = %epoch:%version-%release
 
 %description -n libgudev-devel
 Shared library and headers for libgudev
@@ -465,7 +511,7 @@ Shared library and headers for libgudev
 Summary: GObject introspection devel data for the GUdev library
 Group: System/Libraries
 BuildArch: noarch
-Requires: libgudev-gir = %version-%release libgudev-devel = %version-%release
+Requires: libgudev-gir = %epoch:%version-%release libgudev-devel = %epoch:%version-%release
 
 %description -n libgudev-gir-devel
 GObject introspection devel data for the GUdev library
@@ -577,7 +623,8 @@ ln -s ../sbin/systemctl %buildroot/sbin/runlevel
 
 ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
 ln -r -s %buildroot/sbin/systemctl %buildroot/bin/
-
+# for compatibility with older systemd pkgs which expected it at /bin/:
+ln -r -s %buildroot/sbin/journalctl %buildroot/bin/
 
 rm -rf %buildroot%_docdir/systemd
 
@@ -894,7 +941,6 @@ update_chrooted all
 /sbin/systemd-machine-id-setup
 /sbin/systemd-notify
 /sbin/systemd-tty-ask-password-agent
-/sbin/journalctl
 /sbin/loginctl
 /sbin/machinectl
 
@@ -912,6 +958,7 @@ update_chrooted all
 %_rpmlibdir/systemd-tmpfiles.filetrigger
 %_man1dir/*
 %exclude %_man1dir/init.*
+%exclude %_man1dir/journalctl.*
 %_man5dir/*
 %_man7dir/*
 %exclude %_man7dir/udev*
@@ -1115,6 +1162,7 @@ update_chrooted all
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/*
 %exclude %_sysconfdir/bash_completion.d/udevadm
+%exclude %_sysconfdir/bash_completion.d/journalctl
 
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/*
@@ -1123,6 +1171,14 @@ update_chrooted all
 %files -n python-module-%name
 %python_sitelibdir/%name
 %endif
+
+%files -n journalctl
+/bin/journalctl
+/sbin/journalctl
+%_man1dir/journalctl.*
+
+%files -n bash-completion-journalctl
+%_sysconfdir/bash_completion.d/journalctl
 
 %files -n bash-completion-udev
 %_sysconfdir/bash_completion.d/udevadm
@@ -1222,6 +1278,16 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Jan  2 2014 Ivan Zakharyaschev <imz@altlinux.org> 1:208-alt4
+- declare the file conflicts with systemd pkgs before the split of journalctl
+  (Epoch 1 for the split pkg, so that the new split journalctl from Sisyphus 
+  or any branches conflicts with Epoch 0 old pkgs)
+- declare shaba@ as the maintainer
+
+* Thu Jan  2 2014 Ivan Zakharyaschev <imz@altlinux.org> 208-alt3
+- split journalctl into a separate pkg
+  (to be used for querying without systemd) (ALT#29674)
+
 * Thu Oct 17 2013 Alexey Shabalin <shaba@altlinux.ru> 208-alt2
 - update udev.init for create static inodes for SysV
 
