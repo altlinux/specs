@@ -2,8 +2,8 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.4.2
-Release:	alt2
+Version:	3.5.1
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -21,9 +21,10 @@ BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	gettext
 BuildRequires:  gcc-c++
 BuildRequires:	glibc-devel
-BuildRequires:  gstreamer-devel	
-BuildRequires:  gst-plugins-devel	
+BuildRequires:  gstreamer1.0-devel	
+BuildRequires:  gst-plugins1.0-devel	
 BuildRequires:	imlib2-devel
+BuildRequires:  libalure-devel >= 1.2
 BuildRequires:	libcairo-devel
 BuildRequires:	libcurl-devel
 BuildRequires:	libdbus-devel
@@ -34,6 +35,7 @@ BuildRequires:	libGLU-devel
 %endif
 BuildRequires:	libglew-devel
 BuildRequires:	libgmime-devel
+BuildRequires:  libgmp-devel
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	libgsl-devel
 BuildRequires:	libgtk+2-devel
@@ -42,6 +44,7 @@ BuildRequires:	libICE-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libltdl3-devel
 BuildRequires:	libmysqlclient-devel
+BuildRequires:	libopenal-devel
 BuildRequires:	libpcre-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libpoppler-devel
@@ -53,6 +56,7 @@ BuildRequires:	libSDL_mixer-devel
 BuildRequires:	libSDL_ttf-devel
 BuildRequires:	libsqlite3-devel
 BuildRequires:	libsqlite-devel
+BuildRequires:	libssl-devel
 BuildRequires:	libtool
 BuildRequires:	libunixODBC-devel
 BuildRequires:	libv4l-devel
@@ -72,8 +76,7 @@ Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
-Patch5:     %name-3.4.1-remove-undefined-symbols.patch
-Patch6:     %name-3.4.2-llvm-3.3.patch
+Patch5:		%name-3.5.0-remove-undefined-symbols.patch
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -120,6 +123,8 @@ Provides:	%name = %version-%release
 Requires:	tar, gzip, rpm-build, gettext
 Requires:	%name-runtime = %version-%release
 Requires:	%name-devel = %version-%release
+Requires:	%name-gb-args = %version-%release
+Requires:	%name-gb-clipper = %version-%release
 Requires:	%name-gb-db = %version-%release
 Requires:	%name-gb-db-form = %version-%release
 Requires:	%name-gb-desktop = %version-%release
@@ -128,6 +133,7 @@ Requires:	%name-gb-form = %version-%release
 Requires:	%name-gb-form-dialog = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
+Requires:	%name-gb-gtk = %version-%release
 Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
@@ -160,10 +166,11 @@ Requires:	%name-ide = %version-%release
 Requires:	%name-gb-args = %version-%release
 Requires:	%name-gb-cairo = %version-%release
 Requires:	%name-gb-chart = %version-%release
-Requires:   %name-gb-complex = %version-%release
+Requires:	%name-gb-clipper = %version-%release
+Requires:	%name-gb-complex = %version-%release
 Requires:	%name-gb-compress = %version-%release
 Requires:	%name-gb-crypt = %version-%release
-Requires:   %name-gb-data = %version-%release
+Requires:	%name-gb-data = %version-%release
 Requires:	%name-gb-db = %version-%release
 Requires:	%name-gb-db-form = %version-%release
 Requires:	%name-gb-db-mysql = %version-%release
@@ -173,36 +180,41 @@ Requires:	%name-gb-db-sqlite2 = %version-%release
 Requires:	%name-gb-db-sqlite3 = %version-%release
 Requires:	%name-gb-dbus = %version-%release
 Requires:	%name-gb-desktop = %version-%release
-Requires:   %name-gb-desktop-gnome = %version-%release
+Requires:	%name-gb-desktop-gnome = %version-%release
 Requires:	%name-gb-eval-highlight = %version-%release
 Requires:	%name-gb-form = %version-%release
 Requires:	%name-gb-form-dialog = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
-Requires:   %name-gb-httpd = %version-%release
-Requires:   %name-gb-gsl = %version-%release
-Requires:   %name-gb-gtk = %version-%release
-Requires:   %name-gb-gtk-opengl = %version-%release
+Requires:	%name-gb-httpd = %version-%release
+Requires:	%name-gb-gmp = %version-%release
+Requires:	%name-gb-gsl = %version-%release
+Requires:	%name-gb-gtk = %version-%release
+Requires:	%name-gb-gtk-opengl = %version-%release
 Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
 Requires:	%name-gb-image-imlib = %version-%release
 Requires:	%name-gb-image-io = %version-%release
-Requires:   %name-gb-jit = %version-%release
-Requires:   %name-gb-map = %version-%release
-Requires:   %name-gb-media = %version-%release
-Requires:   %name-gb-memcached = %version-%release
-Requires:   %name-gb-mime = %version-%release
-Requires:   %name-gb-ncurses = %version-%release
+Requires:	%name-gb-jit = %version-%release
+Requires:	%name-gb-logging = %version-%release
+Requires:	%name-gb-map = %version-%release
+Requires:	%name-gb-media = %version-%release
+Requires:	%name-gb-memcached = %version-%release
+Requires:	%name-gb-mime = %version-%release
+Requires:	%name-gb-ncurses = %version-%release
 Requires:	%name-gb-net = %version-%release
 Requires:	%name-gb-net-curl = %version-%release
 Requires:	%name-gb-net-pop3 = %version-%release
 Requires:	%name-gb-net-smtp = %version-%release
+Requires:	%name-gb-openal = %version-%release
 %if_enabled opengl
 Requires:	%name-gb-opengl = %version-%release
 Requires:	%name-gb-opengl-glu = %version-%release
 Requires:	%name-gb-opengl-glsl = %version-%release
+Requires:	%name-gb-opengl-sge = %version-%release
 %endif
+Requires:	%name-gb-openssl = %version-%release
 Requires:	%name-gb-option = %version-%release
 Requires:	%name-gb-pcre = %version-%release
 Requires:	%name-gb-pdf = %version-%release
@@ -218,8 +230,8 @@ Requires:	%name-gb-signal = %version-%release
 Requires:	%name-gb-v4l = %version-%release
 Requires:	%name-gb-vb = %version-%release
 Requires:	%name-gb-xml = %version-%release
-Requires:   %name-gb-xml-html = %version-%release
-Requires:   %name-gb-xml-libxml = %version-%release
+Requires:	%name-gb-xml-html = %version-%release
+Requires:	%name-gb-xml-libxml = %version-%release
 Requires:	%name-gb-xml-rpc = %version-%release
 Requires:	%name-gb-xml-xslt = %version-%release
 Requires:	%name-gb-web = %version-%release
@@ -250,6 +262,14 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-chart
 This package contains the Gambas3 Chart components.
+
+%package gb-clipper
+Summary:	Gambas3 component package for clipper
+Group:		Development/Tools
+Requires:	%{name}-runtime = %{version}-%{release}
+
+%description gb-clipper
+%{summary}
 
 %package gb-complex
 Summary:	Gambas3 component package for complex
@@ -416,6 +436,14 @@ Requires:	%name-runtime = %version-%release
 %description gb-httpd
 Gambas3 component package for httpd.
 
+%package gb-gmp
+Summary:	Gambas3 component package for gmp
+Group:		Development/Tools
+Requires:	%{name}-runtime = %{version}-%{release}
+
+%description gb-gmp
+%{summary}
+
 %package gb-gsl
 Summary:	Gambas3 component package for gsl
 Group:		Development/Tools
@@ -493,6 +521,14 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-jit
 Gambas3 Just In Time compiler.
+
+%package gb-logging
+Summary:	Gambas3 component package for logging
+Group:		Development/Tools
+Requires:	%{name}-runtime = %{version}-%{release}
+
+%description gb-logging
+%{summary}
 
 %package gb-map
 Summary:    Gambas3 component package for map
@@ -573,6 +609,14 @@ It supports mail attachments, mail alternatives, and protocol encryption
 (SSL or TLS), provided that the openssl program is installed on your
 system.
 
+%package gb-openal
+Summary:       Gambas3 component package for openal
+Group:         Development/Tools
+Requires:      %name-runtime = %version-%release
+
+%description gb-openal
+Gambas3 component package for openal.
+
 %if_enabled opengl
 %package gb-opengl 
 Summary:	Gambas3 component package for opengl 
@@ -598,6 +642,23 @@ Requires:	%name-runtime = %version-%release
 %description gb-opengl-glsl
 This component allows you to use the Mesa libraries to do 3D operations.
 %endif
+
+%package gb-opengl-sge
+Summary:	Gambas3 component package for opengl-sge
+Group:		Development/Tools
+Requires:	%{name}-runtime = %{version}-%{release}
+Requires:	%{name}-gb-opengl = %{version}-%{release}
+
+%description gb-opengl-sge
+%{summary}
+
+%package gb-openssl
+Summary:	Gambas3 component package for openssl
+Group:		Development/Tools
+Requires:	%{name}-runtime = %{version}-%{release}
+
+%description gb-openssl
+%{summary}
 
 %package gb-option
 Summary:	Gambas3 component package for option
@@ -777,7 +838,6 @@ This component allows you to use xml-xslt.
 %patch2 -p1
 %patch4 -p2
 %patch5 -p2
-%patch6 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -899,6 +959,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.component
 %_libdir/%name/gb.debug.*
 %_libdir/%name/gb.draw.*
+%_libdir/%name/gb.geom.*
 %_libdir/%name/gb.eval.component
 %_libdir/%name/gb.eval.so*
 %_libdir/%name/gb.eval.la
@@ -963,6 +1024,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-chart
 %_libdir/%name/gb.chart.*
 %appdir/info/gb.chart.*
+
+%files gb-clipper
+%{_libdir}/%{name}/gb.clipper.*
+%{_datadir}/%{name}/info/gb.clipper.*
 
 %files gb-complex
 %_libdir/%name/gb.complex.*
@@ -1062,6 +1127,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.httpd.*
 %appdir/info/gb.httpd.*
 
+%files gb-gmp
+%{_libdir}/%{name}/gb.gmp.*
+%{_datadir}/%{name}/info/gb.gmp.*
+
 %files gb-gsl
 %_libdir/%name/gb.gsl.*
 %appdir/info/gb.gsl.*
@@ -1106,6 +1175,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.jit.*
 %appdir/info/gb.jit.*
 
+%files gb-logging
+%{_libdir}/%{name}/gb.logging.*
+%{_datadir}/%{name}/info/gb.logging.*
+
 %files gb-map
 %_libdir/%name/gb.map.*
 %appdir/info/gb.map.*
@@ -1146,6 +1219,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.net.smtp.*
 %appdir/info/gb.net.smtp.*
 
+%files gb-openal
+%_libdir/%name/gb.openal.*
+%appdir/info/gb.openal.*
+
 %if_enabled opengl
 %files gb-opengl
 %_libdir/%name/gb.opengl.component
@@ -1153,6 +1230,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.opengl.la
 %appdir/info/gb.opengl.info
 %appdir/info/gb.opengl.list
+
+%files gb-opengl-sge
+%{_libdir}/%{name}/gb.opengl.sge.*
+%{_datadir}/%{name}/info/gb.opengl.sge.*
 
 %files gb-opengl-glu
 %_libdir/%name/gb.opengl.glu.*
@@ -1162,6 +1243,11 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.opengl.glsl.*
 %appdir/info/gb.opengl.glsl.*
 %endif
+
+%files gb-openssl
+%{_libdir}/%{name}/gb.openssl.*
+%{_datadir}/%{name}/info/gb.openssl.*
+
 
 %files gb-option
 %_libdir/%name/gb.option.*
@@ -1260,6 +1346,12 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Wed Nov 27 2013 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version
+
+* Fri Oct 25 2013 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version
+
 * Wed Aug 28 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt2
 - Rebuild with llvm-3.3
 
