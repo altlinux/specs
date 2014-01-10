@@ -1,11 +1,11 @@
 Name: stardict
-Version: 3.0.3
-Release: alt3
+Version: 3.0.4
+Release: alt1
 
 Summary: StarDict dictionary
 License: GPLv3+
 Group: System/Internationalization
-Url: http://www.stardict.org
+Url: http://code.google.com/p/stardict-3/
 
 # http://stardict-3.googlecode.com/files/%name-%version.tar.bz2
 Source: %name-%version.tar
@@ -15,14 +15,12 @@ Source5: docklet_stop.png
 Source6: slovnyktodict.awk
 Source7: mueller2stardict.sh
 
-Patch1: stardict-3.0.3-rh-gcc46.patch
-Patch2: stardict-3.0.3-rh-glib2.patch
+Patch1: stardict-hg597.patch
+Patch2: stardict-hg598.patch
 Patch3: stardict-3.0.3-alt-dsl2dict.patch
 Patch4: stardict-3.0.3-alt-linkage.patch
-Patch5: stardict-3.0.3-alt-desktop.patch
-Patch6: stardict-3.0.3-alt-tabfile.patch
-Patch7: stardict-3.0.3-alt-zlib.patch
-Patch8: stardict-3.0.3-alt-buffer.patch
+Patch5: stardict-3.0.4-alt-desktop.patch
+Patch6: stardict-3.0.4-alt-tabfile.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -101,8 +99,6 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -181,6 +177,10 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Fri Jan 10 2014 Dmitry V. Levin <ldv@altlinux.org> 3.0.4-alt1
+- 3.0.3 -> 3.0.4 (closes: #28649).
+- Updated ru.po (closes: #29035).
+
 * Sat Jan 12 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt3
 - Enabled LFS support.
 
