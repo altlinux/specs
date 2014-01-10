@@ -1,7 +1,7 @@
 
 Name: rsyslog
 Version: 7.4.8
-Release: alt1
+Release: alt3
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -490,6 +490,12 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Fri Jan 10 2014 Alexey Shabalin <shaba@altlinux.ru> 7.4.8-alt3
+- drop SysSock.Unlink=off option (ALT#29666)
+
+* Fri Jan 10 2014 Alexey Shabalin <shaba@altlinux.ru> 7.4.8-alt2
+- fixed run for SysV
+
 * Thu Jan 09 2014 Alexey Shabalin <shaba@altlinux.ru> 7.4.8-alt1
 - 7.4.8
 
