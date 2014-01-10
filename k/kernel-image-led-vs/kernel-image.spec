@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.25
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -52,6 +52,7 @@ Release: alt4
 %def_enable htmldocs
 %def_enable man
 %def_disable compat
+%def_enable relocatable
 %def_enable x32
 %def_enable cr
 %def_enable bld
@@ -1037,6 +1038,7 @@ config_disable \
 	%{?_enable_ext4_for_ext2:EXT2_FS} %{?_enable_ext4_for_ext3:EXT3_FS}
 
 config_enable \
+	%{?_enable_relocatable:RELOCATABLE} \
 %ifarch i486 i586 i686
 	X86_GENERIC \
 	%{?_enable_optimize_for_size:CC_OPTIMIZE_FOR_SIZE} \
@@ -1792,6 +1794,11 @@ done)
 
 
 %changelog
+* Thu Jan 09 2014 Led <led@altlinux.ru> 3.10.25-alt5
+- PHYSICAL_START=0x1000000
+- PHYSICAL_ALIGN=0x1000000 (x86)
+- enabled relocatable
+
 * Wed Jan 08 2014 Led <led@altlinux.ru> 3.10.25-alt4
 - updated:
   + fix-arch-x86
