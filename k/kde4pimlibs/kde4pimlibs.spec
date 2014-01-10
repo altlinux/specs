@@ -6,8 +6,8 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.11.4
-Release: alt2
+Version: 4.11.5
+Release: alt1
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -91,6 +91,12 @@ Header files for developing applications using %name.
 
 
 %changelog
+* Thu Jan 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1.M70P.1
+- built for M70P
+
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt2
 - update from 4.11 branch
 

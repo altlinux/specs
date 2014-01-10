@@ -23,7 +23,7 @@
 
 %define major 4
 %define minor 11
-%define bugfix 4
+%define bugfix 5
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
@@ -102,7 +102,7 @@ Patch1035: kdebase-workspace-4.6.0-alt-disable-effect-startupfeedback.patch
 Patch1036: kdebase-workspace-4.6.3-alt-kdm-apply-colors.patch
 Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
-Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
+Patch1039: kdebase-workspace-4.11.4-alt-def-plasma-digitalclock.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 #
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
@@ -116,7 +116,7 @@ Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
 Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
 Patch1052: kdebase-workspace-4.11.1-alt-disable-kcm-randr.patch
-Patch1053: kdebase-workspace-4.11.1-alt-oxygen-decoration-color-selinux.patch
+Patch1053: kdebase-workspace-4.11.5-alt-oxygen-decoration-color-selinux.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -955,6 +955,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
