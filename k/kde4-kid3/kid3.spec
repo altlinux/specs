@@ -1,7 +1,7 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 2.3
+Version: 3.0.2
 Release: alt1
 
 Group: Sound
@@ -12,72 +12,166 @@ Url: http://kid3.sourceforge.net/
 Provides: %rname = %version-%release
 Conflicts: kid3 <= 1.3-alt1
 
-Source: kid3-%{version}.tar.gz
-Patch1: kid3-2.1-alt-desktop_ru_uk.patch
+Source: kid3-%{version}.tar
+Patch1: kid3-3.0.2-alt-desktop_ru_uk.patch
+Patch2: kid3-3.0.2-alt-libdir.patch
 
 BuildRequires(pre): kde4libs-devel
 # Automatically added by buildreq on Mon May 21 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static id3lib kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libavcodec-devel libavutil-devel libdbus-devel libdbusmenu-qt2 libflac-devel libfreetype-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel id3lib-devel kde4libs-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libicu libmpeg4ip-devel libqt3-devel libswscale-devel libtag-devel libvorbis-devel zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel id3lib-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libmpeg4ip-devel libswscale-devel libtag-devel libvorbis-devel
-BuildRequires: phonon-devel
-
+BuildRequires: gcc-c++ glib2-devel id3lib-devel libavdevice-devel libavformat-devel libchromaprint-devel libflac++-devel libswscale-devel libtag-devel libvorbis-devel
+# libmpeg4ip-devel
+BuildRequires: phonon-devel libreadline-devel /usr/bin/xsltproc
 
 %description
-Kid3 - Efficient ID3 Tagger
+Kid3 - Efficient Audio Tagger
 
 With Kid3 you can:
 
 - Edit ID3v1.1 tags
-- Edit all ID3v2.3 frames
-- Convert between ID3v1.1 and ID3v2.3 tags
-- Edit Ogg/Vorbis tags
-- Edit FLAC tags
+- Edit all ID3v2.3 and ID3v2.4 frames
+- Convert between ID3v1.1, ID3v2.3 and ID3v2.4 tags
+- Edit tags in MP3, Ogg/Vorbis, FLAC, MPC, APE, MP4/AAC, MP2, Speex,
+  TrueAudio, WavPack, WMA, WAV, AIFF files and tracker modules.
 - Edit tags of multiple files, e.g. the artist, album, year and genre
   of all files of an album typically have the same values and can be
   set together.
 - Generate tags from filenames
+- Generate tags from the contents of tag fields
 - Generate filenames from tags
+- Rename directories from tags
 - Generate playlist files
 - Automatic case conversion and string translation
-- Import of album data from freedb.org, MusicBrainz and other data sources
-- Export of album data in various formats
+- Import and export album data
+- Import from gnudb.org, TrackType.org, MusicBrainz, Discogs, Amazon
 
 Authors: Urs Fleisch
+
+%package -n %rname-common
+Summary: Common empty package for %rname
+Group: System/Configuration/Other
+BuildArch: noarch
+Conflicts: kde4-kid3 < 3.0
+%description -n %rname-common
+Common empty package for %rname
+
+%package -n %rname-core
+Summary: Core files needed for %rname
+Group: System/Libraries
+Requires: %rname-common = %EVR
+%description -n %rname-core
+Core files needed for %rname
+
+%package -n %rname-ui-kde4
+Summary: ID3 tagger KDE4 UI
+Group: Sound
+Requires: %rname-core = %EVR
+Provides: %rname = %version-%release
+Provides: kde4-kid3 = %EVR
+Obsoletes: kde4-kid3 < %EVR
+Conflicts: kid3 <= 1.3-alt1
+%description -n %rname-ui-kde4
+Package contains KDE4 UI.
+%{description}
+
+%package -n %rname-ui-qt4
+Summary: ID3 tagger Qt4 UI
+Group: Sound
+Requires: %rname-core = %EVR
+#Provides: %rname = %version-%release
+%description -n %rname-ui-qt4
+Package contains Qt4 UI.
+%{description}
+
+%package -n %rname-ui-cli
+Summary: ID3 tagger CLI UI
+Group: Sound
+Requires: %rname-core = %EVR
+#Provides: %rname = %version-%release
+%description -n %rname-ui-cli
+Package contains command line UI.
+%{description}
+
+
+%package -n libkid3-core
+Summary: %name library
+Group: System/Libraries
+Requires: %rname-common = %EVR
+%description -n libkid3-core
+%name library.
+
+%package -n libkid3-gui
+Summary: %name library
+Group: System/Libraries
+Requires: %rname-common = %EVR
+%description -n libkid3-gui
+%name library.
 
 
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 
 %build
 %K4cmake \
+    -DWITH_APPS="Qt;CLI;KDE" \
+    -DWITH_QT4:BOOL=ON \
+    -DWITH_QT5:BOOL=OFF \
     -DWITH_TAGLIB:BOOL=ON \
-    -DWITH_MP4V2:BOOL=ON \
     -DWITH_ID3LIB:BOOL=ON \
     -DWITH_VORBIS:BOOL=ON \
     -DWITH_FLAC:BOOL=ON \
     -DWITH_CHROMAPRINT=ON \
     -DWITH_DBUS=ON \
-    -DWITH_KDE:BOOL=ON
+    #
+#    -DWITH_MP4V2:BOOL=ON \
 %K4make
 
 
 %install
 %K4install
-%K4find_lang --with-kde %rname
+%find_lang --with-kde --with-qt %rname
 
+%files -n %rname-common -f %rname.lang
+%_K4dbus_interfaces/*id3*
 
-%files -f %rname.lang
+%files -n %rname-core
+%_libdir/kid3/plugins/lib*.so
+
+%files -n %rname-ui-kde4
 %doc AUTHORS NEWS README ChangeLog
 %_K4bindir/%rname
 %_K4xdg_apps/%rname.desktop
 %_K4iconsdir/hicolor/*/apps/%rname.*
-%_K4dbus_interfaces/*id3*
 %_K4apps/%rname/
 
+%files -n %rname-ui-qt4
+%doc AUTHORS NEWS README ChangeLog
+%_bindir/%rname-qt
+%doc %_docdir/kid3-qt/
+%_iconsdir/*/*/apps/kid3-qt.*
+%_desktopdir/kid3-qt.desktop
+
+%files -n %rname-ui-cli
+%doc AUTHORS NEWS README ChangeLog
+%_K4bindir/%rname-cli
+
+%files -n libkid3-core
+%_libdir/libkid3-core.so.*
+
+%files -n libkid3-gui
+%_libdir/libkid3-gui.so.*
+
 %changelog
+* Thu Jan 09 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1
+- new version
+
+* Wed Sep 18 2013 Sergey V Turchin <zerg@altlinux.org> 2.3-alt0.M70P.1
+- build for M70P
+
 * Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.3-alt1
 - new version
 
