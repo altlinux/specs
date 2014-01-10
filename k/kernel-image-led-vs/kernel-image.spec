@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.25
-Release: alt5
+Version: 3.10.26
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 25
+%define kernel_stable_version 26
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1794,6 +1794,16 @@ done)
 
 
 %changelog
+* Fri Jan 10 2014 Led <led@altlinux.ru> 3.10.26-alt1
+- 3.10.26
+- removed:
+  + fix-drivers-gpu-drm
+  + fix-drivers-net-wireless-ath-ath9k--ath9k
+  + fix-drivers-net-wireless-ath-ath9k--ath9k_htc
+- updated:
+  + fix-drivers-block--rbd
+  + feat-fs-aufs
+
 * Thu Jan 09 2014 Led <led@altlinux.ru> 3.10.25-alt5
 - PHYSICAL_START=0x1000000
 - PHYSICAL_ALIGN=0x1000000 (x86)
