@@ -4,7 +4,7 @@
 
 Name: autosshd
 Version: 0.0.2
-Release: alt7
+Release: alt8
 
 Summary: System administration - AutoSSH system level service
 Group: System/Servers
@@ -90,6 +90,9 @@ chown %autossh_user:%autossh_group /var/run/autosshd/
 %dir /var/lock/subsys/%name/
 
 %changelog
+* Sat Jan 11 2014 Ivan Zakharyaschev <imz@altlinux.org> 0.0.2-alt8
+- doc: Added links to some guides (how to make use of autosshd).
+
 * Fri Jan 10 2014 Ivan Zakharyaschev <imz@altlinux.org> 0.0.2-alt7
 - Declare lav@ as the maintainer
 
