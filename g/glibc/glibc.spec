@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt5
+Release: alt6
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -386,6 +386,16 @@ mksock %buildroot/var/run/nscd/socket
 touch %buildroot/var/run/nscd/nscd.pid
 touch %buildroot/var/{lib,run}/nscd/{passwd,group,hosts,services}
 
+%ifarch x86_64
+install -pm644 alt/stubs-32.h %buildroot%_includedir/gnu/
+%endif
+%ifarch %ix86
+cmp alt/stubs-32.h %buildroot%_includedir/gnu/stubs-32.h || {
+	echo 'Bundled stubs-32.h is out of date'
+	exit 1
+}
+%endif
+
 # Install nss.conf
 install -pm644 nis/nss %buildroot%_sysconfdir/nss.conf
 
@@ -647,6 +657,14 @@ fi
 %_datadir/i18n
 
 %changelog
+* Sat Jan 11 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt6
+- Backported upstream fixes for sw bugs:
+  14547, 14699, 15003, 15014, 15073, 15122, 15160, 15234, 15330, 15465,
+  15736, 15754, 15759, 15855, 15856, 15857, 15917, 16038, 16072
+  (including fixes for CVE-2012-4412, CVE-2012-4424, CVE-2013-4237,
+   CVE-2013-4332, CVE-2013-4458, CVE-2013-4788).
+- x86_64: packaged /usr/include/gnu/stubs-32.h from x86.
+
 * Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt5
 - getaddrinfo: updated fix for sw#15339.
 
