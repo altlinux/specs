@@ -1,5 +1,5 @@
 Name: ldns
-Version: 1.6.16
+Version: 1.6.17
 Release: alt1
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
@@ -83,6 +83,7 @@ Python extensions for ldns
 %build
 %autoreconf
 %configure --disable-rpath --with-drill --with-examples \
+	--enable-rrtype-ninfo --enable-rrtype-rkey --enable-rrtype-cds --enable-rrtype-uri --enable-rrtype-ta \
 %if %with_python
 	--with-pyldns
 %endif
@@ -147,6 +148,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Sat Jan 11 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.17-alt1
+- 1.6.17
+
 * Sat Nov 17 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.16-alt1
 - 1.6.16
 
