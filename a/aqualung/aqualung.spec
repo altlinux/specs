@@ -1,7 +1,7 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
 Version: 0.9svn1272
-Release: alt1
+Release: alt2
 License: GPL
 Group: Sound
 # http://aqualung.factorial.hu/download.php?key=svntgzd
@@ -88,7 +88,7 @@ sed -i 's/\[mad], \[mad],/[mad], [libmad],/' configure.ac
 	--with-wavpack=yes
 
 # *64 patch
-sed -i 's@/usr/lib/@%_libdir@g' src/plugin.c
+sed -i 's@/usr/lib/@%_libdir/@g' src/plugin.c
 
 %make_build
 
@@ -126,6 +126,9 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Jan 11 2014 Fr. Br. George <george@altlinux.ru> 0.9svn1272-alt2
+- Fix x86_64 typo
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.9svn1272-alt1
 - Autobuild version bump to 0.9svn1272
 
