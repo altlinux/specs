@@ -4,7 +4,7 @@
 %define lngg Kazakh
 
 Name: kde4-i18n-%lng
-Version: 4.11.4
+Version: 4.11.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -88,6 +88,9 @@ fi
 
 
 %changelog
+* Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
