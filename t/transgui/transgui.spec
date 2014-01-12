@@ -1,6 +1,6 @@
 Name:		transgui
 Version:	5.0.1
-Release:	alt2
+Release:	alt3
 
 Summary:	An App to remotely control a Transmission Bit-Torrent client
 Summary(ru_RU.UTF8): Приложение для удаленного управления Бит-торрент-клиентом Transmission
@@ -42,8 +42,7 @@ GUI швидше і має більше можливостей, ніж вбуд�
 
 %build
 cd TransGUI
-%make_build CC="gcc %optflags" CPP="g++ %optflags"
-execstack -c %name
+make CC="gcc %optflags" CPP="g++ %optflags"
 
 %install
 install -Dp -m 755 TransGUI/%name %buildroot%_bindir/%name
@@ -71,6 +70,10 @@ rm -f %buildroot%_datadir/%name/lang/transgui.template
 %_datadir/%name/lang
 
 %changelog
+* Sun Jan 12 2014 Motsyo Gennadi <drool@altlinux.ru> 5.0.1-alt3
+- fix interception of links
+- cleanup spec-file
+
 * Sun Jan 05 2014 Motsyo Gennadi <drool@altlinux.ru> 5.0.1-alt2
 - add mime-types support
 - remove sh-script for old version
