@@ -1,6 +1,6 @@
 Name:           CharLS
 Version:        1.0
-Release:        alt1
+Release:        alt2
 Summary:        JPEG-LS compliant compressor/decompressor codec
 Group:          System/Libraries
 License:        BSD
@@ -40,7 +40,7 @@ developing applications that use %name.
 
 %prep
 %setup
-find . -type f -name '*.txt' -o -name '*.h' -o -name '*.cpp' | xargs dos2unix -U
+find . -type f -name '*.txt' -o -name '*.h' -o -name '*.cpp' | xargs dos2unix
 
 %patch1 -p1
 %patch2 -p1
@@ -48,11 +48,10 @@ find . -type f -name '*.txt' -o -name '*.h' -o -name '*.cpp' | xargs dos2unix -U
 
 %build
 %cmake -Dcharls_BUILD_SHARED_LIBS:BOOL=ON
-
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 %files -n lib%name
 %doc License.txt
@@ -63,5 +62,8 @@ find . -type f -name '*.txt' -o -name '*.h' -o -name '*.cpp' | xargs dos2unix -U
 %_includedir/%name
 
 %changelog
+* Sun Jan 12 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0-alt2
+- fix build
+
 * Wed Nov 09 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0-alt1
 - first build for ALT Linux
