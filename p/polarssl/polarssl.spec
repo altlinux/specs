@@ -1,5 +1,5 @@
 Name: polarssl
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -34,6 +34,7 @@ applications with as little hassle as possible.
 Summary: Development files for PolarSSL
 Group: Development/C
 Requires: lib%name = %version-%release
+Conflicts: hiawatha
 
 %description -n lib%name-devel
 Contains libraries and header files for
@@ -87,6 +88,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sun Jan 12 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.3-alt1
+- Version 1.3.3
+
 * Wed Nov 06 2013 Nazarov Denis <nenderus@altlinux.org> 1.3.2-alt1
 - Version 1.3.2
 
