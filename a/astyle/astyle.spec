@@ -1,5 +1,5 @@
 Name: astyle
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: A small, fast automatic indentation filter for C/C++/Java code
@@ -46,6 +46,9 @@ install -p -m755 -D src/bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jan 12 2014 Fr. Br. George <george@altlinux.ru> 2.04-alt1
+- Autobuild version bump to 2.04
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 2.03-alt1
 - Autobuild version bump to 2.03
 
