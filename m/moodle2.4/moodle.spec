@@ -3,9 +3,9 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define packagversion 2.4.7
-%define packagedate 20131224
-%define packagemoodleversion 2012120307.08
+%define packagversion 2.4.8
+%define packagedate 20140113
+%define packagemoodleversion 2012120308.00
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 
@@ -411,6 +411,10 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Sun Jan 12 2014 Cronbuild Service <cronbuild@altlinux.org> 2.4.8.20140113-alt1
+- repocop cronbuild 20140112. At your service.
+- 2.4.8 (Build: 20140113)
+
 * Wed Dec 25 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.7.20131224-alt1
 - repocop cronbuild 20131225. At your service.
 - 2.4.7+ (Build: 20131224)
