@@ -1,6 +1,6 @@
 Name: cups
-Version: 1.6.2
-Release: alt4
+Version: 1.7.0
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -8,59 +8,124 @@ Group: System/Servers
 
 Url: http://www.cups.org
 
-Source: ftp://ftp.easysw.com/pub/cups/%version/%name-%version.tar
+Source: http://www.cups.org/software/%version/cups-%version-source.tar.bz2
 
-Source100: %name.control
-Source101: %name.pam
-Source102: %name.alternatives
-Source103: %name.startup
-Source104: %name.xinetd
-Source105: %name.modprobe
-Source110: %name.systemd.path
-Source111: %name.systemd.service
-Source112: %name.systemd.socket
-Source113: %name.systemd.tmpfiles
-Source114: %name-alt-locale.tar
+# READMEs
+Source10: README.alt
+Source11: README.patches
 
-Patch1: cups-1.6.0-debian-pidfile.patch
-Patch2: cups-1.6.1-alt-hardening.patch
-Patch3: cups-1.4.0-rh-lpr-help.patch
-Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
-Patch5: cups-1.4.3-rh-driverd-timeout.patch
-Patch6: cups-1.6.2-fc-lspp.patch
-Patch66: cups-1.6.2-fc-lspp-alt.patch
-Patch7: cups-1.4.6-alt-config-libs.patch
-Patch9: cups-1.6.1-rh-0755.patch
-Patch10: cups-1.6-rh-dnssd-deviceid.patch
-Patch15: cups-1.6.1-rh-systemd-socket.patch
-Patch16: cups-1.5.3-translation.patch
-Patch19: cups-1.6.1-ubuntu-work-around-some-broken-ipp-printers.patch
-Patch22: cups-1.6.1-ubuntu-airprint-support.patch
-Patch26: cups-1.6.1-ubuntu-cupsd-no-crash-on-avahi-threaded-poll-shutdown.patch
-Patch29: cups-1.4-ubuntu-default-error-policy-retry-job.patch
-Patch31: cups-1.6.1-alt-faq-localization.patch
-Patch32: cups-1.6.2-alt-makefile.patch
-Patch33: cups-1.6.1-fc-dbus-utf8.patch
-Patch34: cups-1.6.2-alt-lpd-utf8.patch
+# MISC
+Source20: cups.control
 
+# support
+Source97: alt_ru.po
+Source98: pofix.py
+Source99: repatch_spec.sh
+
+## FC patches
+Patch1: FC-no-gzip-man.patch
+Patch2: FC-system-auth.patch
+Patch3: FC-multilib.patch
+Patch4: FC-dbus-utf8.patch
+Patch5: FC-banners.patch
+Patch6: FC-serverbin-compat.patch
+Patch7: FC-no-export-ssllibs.patch
+Patch8: FC-direct-usb.patch
+Patch9: FC-lpr-help.patch
+Patch10: FC-peercred.patch
+Patch11: FC-pid.patch
+Patch12: FC-eggcups.patch
+Patch13: FC-driverd-timeout.patch
+Patch14: FC-strict-ppd-line-length.patch
+Patch15: FC-logrotate.patch
+Patch16: FC-usb-paperout.patch
+Patch17: FC-res_init.patch
+Patch18: FC-filter-debug.patch
+Patch19: FC-uri-compat.patch
+Patch20: FC-str3382.patch
+Patch21: FC-0755.patch
+Patch22: FC-hp-deviceid-oid.patch
+Patch23: FC-dnssd-deviceid.patch
+Patch24: FC-ricoh-deviceid-oid.patch
+Patch25: FC-systemd-socket.patch
+Patch26: FC-lpd-manpage.patch
+Patch27: FC-avahi-address.patch
+Patch28: FC-usb-timeout.patch
+Patch29: FC-enum-all.patch
+Patch30: FC-stringpool-rdar15382819.patch
+Patch31: FC-dymo-deviceid.patch
+Patch32: FC-freebind.patch
+Patch33: FC-no-gcry.patch
+Patch34: FC-libusb-quirks.patch
+Patch35: FC-use-ipp1.1.patch
+Patch36: FC-avahi-no-threaded.patch
+Patch37: FC-gz-crc.patch
+Patch38: FC-ipp-multifile.patch
+Patch39: FC-full-relro.patch
+Patch40: FC-web-devices-timeout.patch
+Patch41: FC-final-content-type.patch
+Patch42: FC-jobhistory.patch
+Patch43: FC-journal.patch
+Patch44: FC-synconclose.patch
+Patch45: FC-dbus-notifier.patch
+Patch46: FC-lspp.patch
+
+## Ubuntu patches
+Patch101: Ubuntu-get-ppd-file-for-statically-configured-ipp-shared-queues.patch
+Patch102: Ubuntu-pidfile.patch
+Patch103: Ubuntu-ppd-poll-with-client-conf.patch
+Patch104: Ubuntu-manpage-hyphen-minus.patch
+Patch105: Ubuntu-rootbackends-worldreadable.patch
+Patch106: Ubuntu-dbus-utf8.patch
+Patch107: Ubuntu-color-management-extension.patch
+Patch108: Ubuntu-airprint-support.patch
+Patch109: Ubuntu-removecvstag.patch
+Patch110: Ubuntu-no-conffile-timestamp.patch
+Patch111: Ubuntu-drop_unnecessary_dependencies.patch
+Patch112: Ubuntu-reactivate_recommended_driver.patch
+Patch113: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
+Patch114: Ubuntu-do-not-broadcast-with-hostnames.patch
+Patch115: Ubuntu-deviced-allow-device-ids-with-newline.patch
+Patch116: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
+Patch117: Ubuntu-configure-default-browse-protocols.patch
+Patch118: Ubuntu-mention-rfc2911-in-ipptoolfile-for-clarity.patch
+Patch119: Ubuntu-tests-ignore-warnings.patch
+Patch120: Ubuntu-tests-ignore-usb-crash.patch
+Patch121: Ubuntu-test-i18n-nonlinux.patch
+Patch122: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
+Patch123: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
+Patch124: Ubuntu-tests-use-cupsfilters.patch
+Patch125: Ubuntu-add-ipp-backend-of-cups-1.4.patch
+Patch126: Ubuntu-logfiles_adm_readable.patch
+Patch127: Ubuntu-default_log_settings.patch
+Patch128: Ubuntu-confdirperms.patch
+Patch129: Ubuntu-printer-filtering.patch
+Patch130: Ubuntu-show-compile-command-lines.patch
+Patch131: Ubuntu-ppdc-dynamic-linking.patch
+Patch132: Ubuntu-log-debug-history-nearly-unlimited.patch
+Patch133: Ubuntu-cupsd-sync-files-on-close.patch
+
+## ALT patches
+Patch500: ALT-1.6.1-hardening.patch
+Patch501: ALT-build_po.patch
+Patch502: ALT-remove_BSD.patch
+Patch503: ALT-enable-631.patch
+Patch504: ALT-1.6.2-lpd-utf8.patch
+Patch505: ALT-1.4.6-config-libs.patch
+Patch506: ALT-1.6.2-lspp-SE.patch
+Patch507: ALT-1.7.0-docroot-i18n.patch
+
+## Provides
+Provides: %name-ppd = %version %name-common = %version
+
+## External dependencies
 Requires: printer-testpages bc cups-filters
 
-PreReq: lib%name = %version-%release, ghostscript-cups
-#PreReq: urw-fonts >= 1.0.7pre41-alt3
-PreReq: alternatives >= 0.2
+# Automatically added by buildreq on Tue Dec 24 2013
+# optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config python-base
+BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel libusb-devel xdg-utils zlib-devel
 
-Provides: %name-ppd = %version %name-common = %version
-Obsoletes: %name-ppd < %version %name-common < %version
-
-#use external pdftops filter
-BuildPreReq: /usr/bin/pdftops
-Requires: /usr/bin/pdftops
-
-# for DBUSDIR
 BuildRequires: dbus
-
-# Automatically added by buildreq on Wed Mar 23 2011 (-bi)
-BuildRequires: ImageMagick-tools gcc-c++ libacl-devel libdbus-devel libgcrypt-devel libjpeg-devel libldap-devel libopenslp-devel libpam-devel libpng-devel libssl-devel libtiff-devel libusb-devel poppler xdg-utils libselinux-devel libaudit-devel fontconfig-devel libsystemd-daemon-devel libavahi-devel
 
 %description
 The Common Unix Printing System provides a portable printing layer for
@@ -75,24 +140,13 @@ up broadcasted printer information from other CUPS servers and do not
 need to be assigned to a specific CUPS server by an
 /etc/cups/client.conf file.
 
-%package ppd
-Summary: ppd drivers for %name
-License: GPL
+%package ipptool
+Summary: Common Unix Printing System - tool for performing IPP requests
 Group: System/Servers
-PreReq: %name = %version-%release
-
-%description ppd
-ppd drivers for %name
-
-
-%package backend-pdf
-Summary: pdf backend for %name
 License: GPL
-Group: System/Servers
-PreReq: %name = %version-%release
 
-%description backend-pdf
-pdf backend for %name, allows to create pdf files "on-fly"
+%description ipptool
+Sends IPP requests to the specified URI and tests and/or displays the results.
 
 %package -n lib%name
 Summary: Common Unix Printing System - CUPS library
@@ -105,16 +159,12 @@ UNIX(TM) operating systems. This package contains the CUPS API library
 which contains common functions used by both the CUPS daemon and all
 CUPS frontends (lpr-cups, xpp, qtcups, kups, ...).
 
-This package you need for both CUPS clients and servers. It is also
-needed by Samba.
-
 %package -n lib%name-devel
 Summary: Common Unix Printing System - Development environment "libcups"
 License: LGPL
 Group: Development/C
 Requires: lib%name = %version-%release
 Provides: %name-devel = %version %name-ddk = %version
-Obsoletes: %name-devel < %version %name-ddk < %version
 
 %description -n lib%name-devel
 The Common Unix Printing System provides a portable printing layer for
@@ -122,232 +172,206 @@ UNIX(TM) operating systems. This is the development package for
 creating additional printer drivers, printing software, and other CUPS
 services using the main CUPS library "libcups".
 
-%package -n alterator-backend-%name
-Summary: Alterator backend for the Common Unix Printing System
-License: GPL
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: alterator > 1.99-alt14
-
-%description -n alterator-backend-%name
-Alterator backend for the Common Unix Printing System
-
-%package ipptool
-Summary: Common Unix Printing System - tool for performing IPP requests
-Group: System/Servers
-License: GPL
-Requires: lib%name = %version-%release
-
-%description ipptool
-Sends IPP requests to the specified URI and tests and/or displays the results.
-
 
 %prep
 %setup
-%setup -T -D
 
-tar xf %SOURCE114
+## FC apply patches
+%patch1 -p1 -b .no-gzip-man
+%patch2 -p1 -b .system-auth
+#patch3 -p1 -b .multilib
+%patch4 -p1 -b .dbus-utf8
+%patch5 -p1 -b .banners
+#patch6 -p1 -b .serverbin-compat
+%patch7 -p1 -b .no-export-ssllibs
+%patch8 -p1 -b .direct-usb
+%patch9 -p1 -b .lpr-help
+%patch10 -p1 -b .peercred
+%patch11 -p1 -b .pid
+%patch12 -p1 -b .eggcups
+%patch13 -p1 -b .driverd-timeout
+%patch14 -p1 -b .strict-ppd-line-length
+%patch15 -p1 -b .logrotate
+%patch16 -p1 -b .usb-paperout
+%patch17 -p1 -b .res_init
+%patch18 -p1 -b .filter-debug
+#patch19 -p1 -b .uri-compat
+%patch20 -p1 -b .str3382
+%patch21 -p1 -b .0755
+%patch22 -p1 -b .hp-deviceid-oid
+%patch23 -p1 -b .dnssd-deviceid
+%patch24 -p1 -b .ricoh-deviceid-oid
+%patch25 -p1 -b .systemd-socket
+%patch26 -p1 -b .lpd-manpage
+%patch27 -p1 -b .avahi-address
+%patch28 -p1 -b .usb-timeout
+%patch29 -p1 -b .enum-all
+%patch30 -p1 -b .stringpool-rdar15382819
+%patch31 -p1 -b .dymo-deviceid
+%patch32 -p1 -b .freebind
+%patch33 -p1 -b .no-gcry
+%patch34 -p1 -b .libusb-quirks
+%patch35 -p1 -b .use-ipp1.1
+%patch36 -p1 -b .avahi-no-threaded
+%patch37 -p1 -b .gz-crc
+%patch38 -p1 -b .ipp-multifile
+%patch39 -p1 -b .full-relro
+%patch40 -p1 -b .web-devices-timeout
+%patch41 -p1 -b .final-content-type
+%patch42 -p1 -b .jobhistory
+%patch43 -p1 -b .journal
+%patch44 -p1 -b .synconclose
+%patch45 -p1 -b .dbus-notifier
+%patch46 -p1 -b .lspp
 
-%patch1 -p1
-%patch2 -p2
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch66 -p1
-%patch7 -p2
-%patch9 -p1
-%patch10 -p1
-%patch15 -p1
-%patch16 -p1
-%patch19 -p1
-%patch22 -p1
-%patch26 -p1
-%patch29 -p1
-%patch32 -p1
-%patch31 -p1
-%patch33 -p1
-%patch34 -p1
+## Ubuntu apply patches
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+##patch104 -p1
+%patch105 -p1
+#patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+#patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+##patch116 -p1
+%patch117 -p1
+##patch118 -p1
+%patch119 -p1
+%patch120 -p1
+%patch121 -p1
+%patch122 -p1
+%patch123 -p1
+%patch124 -p1
+%patch125 -p1
+#patch126 -p1
+%patch127 -p1
+%patch128 -p1
+%patch129 -p1
+%patch130 -p1
+##patch131 -p1
+%patch132 -p1
+#patch133 -p1
+
+## ALT apply patches
+%patch500 -p1
+%patch501 -p1
+%patch502 -p1
+%patch503 -p1
+%patch504 -p1
+%patch505 -p1
+%patch506 -p1
+%patch507 -p1
+
+# make some temporary hacks
+sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
+
+## create some files
+cat > cups-lps.xinetd <<@@@
+# default: off
+# description: The cups-lpd mini daemon enable cups accepting jobs from a
+#       remote LPD client
+service printer
+{
+        socket_type     = stream
+        protocol        = tcp
+        wait            = no
+        user            = lp
+        server          = /usr/lib/cups/daemon/cups-lpd
+        disable         = yes
+}
+@@@
+
+cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
+
+# TODO help translation injecting
 
 %build
 aclocal -I config-scripts
 autoconf -I config-scripts
 
 %configure \
-   --enable-pie \
    --enable-relro \
    --enable-dbus \
    --enable-libusb \
    --with-cups-user=lp \
    --with-cups-group=lp \
    --with-log-file-perm=0600 \
-   --with-docdir=%_docdir/%name-%version \
-    --localstatedir=%_var \
-    --enable-lspp \
-    --enable-avahi \
-    --with-local_protocols='dnssd'
-#   --with-local_protocols='CUPS dnssd'  \
-#    --with-remote_protocols='CUPS dnssd'
-    #
+   --with-docdir=%_docdir/%name \
+   --with-rcdir=%_initdir/.. \
+   --localstatedir=%_var \
+   --enable-avahi \
+   --with-local_protocols='dnssd' \
+   --enable-lspp \
+   --enable-libpaper \
+   --enable-debug
 
-%make_build STRIPPROG=touch
+%make_build
+# STRIPPROG=touch
+
+(
+cd locale
+make pot
+mv cups_ru.po cups_old.po
+msgmerge cups_old_ru.po cups.pot -C ../alt_ru.po -o cups_ru.po
+python ../pofix.py cups_ru.po
+)
 
 %install
-make BUILDROOT=%buildroot STRIPPROG=touch install
+make BUILDROOT=%buildroot install
 
-install -Dpm 755 %SOURCE100 %buildroot%_sysconfdir/control.d/facilities/%name
-install -Dpm 644 %SOURCE101 %buildroot%_sysconfdir/pam.d/%name
-install -Dpm 644 %SOURCE102 %buildroot%_altdir/%name
-install -Dpm 755 %SOURCE103 %buildroot%_initdir/%name
-install -Dpm 644 %SOURCE104 %buildroot%_sysconfdir/xinetd.d/%name-lpd
-install -Dpm 644 %SOURCE105 %buildroot%_sysconfdir/modprobe.d/blacklist-%name
-
-# Install systemd files
-install -Dpm 644 %SOURCE110 %buildroot%systemd_unitdir/%name.path
-install -Dpm 644 %SOURCE111 %buildroot%systemd_unitdir/%name.service
-install -Dpm 644 %SOURCE112 %buildroot%systemd_unitdir/%name.socket
-install -Dpm 644 %SOURCE113 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
-
-
-# prepare the commands conflicting with LPD for the update-alternatives treatment
-for i in lpr lpq lprm lp cancel lpstat
-do
-    mv %buildroot%_bindir/$i %buildroot%_bindir/$i-%name
-    mv %buildroot%_man1dir/$i.1.gz %buildroot%_man1dir/$i-%name.1.gz
+# systemd files
+# TODO check all three, they're different!
+for t in socket path service; do
+  install -D data/cups.$t %buildroot%_unitdir/cups.$t
 done
-mv %buildroot%_sbindir/lpc %buildroot%_sbindir/lpc-%name
-mv %buildroot%_man8dir/lpc.8.gz %buildroot%_man8dir/lpc-%name.8.gz
-mv %buildroot%_sysconfdir/modprobe.d/blacklist-cups %buildroot%_sysconfdir/modprobe.d/blacklist-cups.conf
 
-#link default fonts to URW
-#rm -rf %buildroot%_datadir/%name/fonts/Monospace*
-#ln -sf %_datadir/fonts/type1/urw/n022003l.pfb %buildroot%_datadir/%name/fonts/Monospace
-#ln -sf %_datadir/fonts/type1/urw/n022004l.pfb %buildroot%_datadir/%name/fonts/Monospace-Bold
-#ln -sf %_datadir/fonts/type1/urw/n022023l.pfb %buildroot%_datadir/%name/fonts/Monospace-Oblique
-#ln -sf %_datadir/fonts/type1/urw/n022024l.pfb %buildroot%_datadir/%name/fonts/Monospace-BoldOblique
-
-#create some empty config files to prevent .rpmsave on update from cups-1.1.x
-touch %buildroot/%_sysconfdir/%name/printers.conf
-
-#fix icons
-convert -resize 48x48 desktop/cups-64.png  desktop/cups-48.png
-install -Dpm 644 desktop/cups-48.png %buildroot%_liconsdir/cups.png
-
-# install /lib/tmpfiles.d/cups.conf
-mkdir -p %buildroot/lib/tmpfiles.d
-cat > %buildroot/lib/tmpfiles.d/cups.conf <<EOF
-d %_runtimedir/cups 0755 root lp -
-d %_runtimedir/cups/certs 0511 lp sys -
-EOF
-
-# /lib/tmpfiles.d/cups-lp.conf
-cat > %buildroot/lib/tmpfiles.d/cups-lp.conf <<EOF
-# This file is part of cups.
-#
-# Legacy parallel port character device nodes, to trigger the
-# auto-loading of the kernel module on access.
-#
-# See tmpfiles.d(5) for details
-
-c /dev/lp0 0660 root lp - 6:0
-c /dev/lp1 0660 root lp - 6:1
-c /dev/lp2 0660 root lp - 6:2
-c /dev/lp3 0660 root lp - 6:3
-EOF
-
-mkdir -p %buildroot/lib/udev/devices
-touch %buildroot/lib/udev/devices/lp0
-touch %buildroot/lib/udev/devices/lp1
-touch %buildroot/lib/udev/devices/lp2
-touch %buildroot/lib/udev/devices/lp3
-
-%pre
-%pre_control %name
-
-%post
-%post_control %name -s server
-%post_service %name
-rm -f /var/cache/cups/ppds.dat
-
-%preun
-%preun_service %name
-
-%triggerpostun -- %name < 1.5.0-alt4
-[ -f %_sysconfdir/modprobe.d/blacklist-cups.rpmsave ] && {
-    echo "Renaming %_sysconfdir/modprobe.d/blacklist-cups, please check"
-    mv -vf %_sysconfdir/modprobe.d/blacklist-cups.conf %_sysconfdir/modprobe.d/blacklist-cups.rpmnew
-    mv -vf %_sysconfdir/modprobe.d/blacklist-cups.rpmsave %_sysconfdir/modprobe.d/blacklist-cups.conf
-    } ||:
+# install non-upstream files
+install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
+install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 
 %files
-%doc %_docdir/%name-%version
-
+%doc README*
+%_docdir/%name
 %config(noreplace) %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/modprobe.d/*
-#special hack for snmp.conf
 %config(noreplace) %attr(0640,root,lp) %_sysconfdir/%name/snmp.conf
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 %config(noreplace) %_sysconfdir/pam.d/%name
-%systemd_unitdir/%name.*
-%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
-%_sysconfdir/control.d/facilities/%name
+%config(noreplace) %_sysconfdir/dbus-1/system.d/*
+%_controldir/%name
+%_unitdir/cups.*
 %_initdir/%name
-%_altdir/%name
-%_sysconfdir/dbus-1/system.d/%name.conf
-
 %_prefix/lib/%name
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
+%_man7dir/*
 
 %_datadir/%name
-%exclude %_datadir/%name/examples
-%exclude %_datadir/%name/ipptool
-%exclude %_datadir/%name/data/testprint
-%exclude %_datadir/%name/banners/*
-
-%_logdir/%name
-%dir %_spooldir/%name
-%dir %_spooldir/%name/tmp
-%dir %_cachedir/%name
-%attr(0755,root,lp) %ghost %dir %_var/run/%name/
+%_datadir/locale/*/*.po
+%_sbindir/*
+%_bindir/*
 
 %_iconsdir/hicolor/*/apps/*.png
 %_desktopdir/%name.desktop
 
-%_bindir/cupstestdsc
-%_bindir/cupstestppd
-%attr(02711,root,lp) %_bindir/cancel-cups
-%attr(02711,root,lp) %_bindir/lp-cups
-%attr(02711,root,lp) %_bindir/lpoptions
-%attr(02711,root,lp) %_bindir/lppasswd
-%attr(02711,root,lp) %_bindir/lpq-cups
-%attr(02711,root,lp) %_bindir/lpr-cups
-%attr(02711,root,lp) %_bindir/lprm-cups
-%attr(02711,root,lp) %_bindir/lpstat-cups
+%exclude %_prefix/*/*/*/ipptool*
+%exclude %_prefix/*/*/ipptool*
+%exclude %_prefix/*/ipptool*
+%exclude %_bindir/%name-config
+%exclude %_bindir/ppd*
+%exclude %_mandir/*/ppd*
+%exclude %_datadir/%name/examples
+%exclude %_sysconfdir/rc.d/rc*.d
 
-%_sbindir/*
-
-%_man1dir/*
-%exclude %_man1dir/ppd*
-%exclude %_man1dir/ipptool*
-
-%_man7dir/*
-
-%_man5dir/*
-%exclude %_man5dir/ppd*
-
-%_man8dir/*
-
-%_datadir/%name/model
-%_datadir/locale/*/*.po
-
-%attr(0660, root, lp) %dev(c, 6, 0) /lib/udev/devices/lp0
-%attr(0660, root, lp) %dev(c, 6, 1) /lib/udev/devices/lp1
-%attr(0660, root, lp) %dev(c, 6, 2) /lib/udev/devices/lp2
-%attr(0660, root, lp) %dev(c, 6, 3) /lib/udev/devices/lp3
-
-/lib/tmpfiles.d/cups.conf
-/lib/tmpfiles.d/cups-lp.conf
-
-#%_sysconfdir/fonts/conf.d/99pdftoopvp.conf
+%exclude %_datadir/%name/data/testprint
+%exclude %_datadir/%name/banners/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -361,23 +385,18 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ppd*
 %_man5dir/ppd*
 
-
 %files ipptool
 %_bindir/ipptool
-%dir %_datadir/cups/ipptool
-%_datadir/cups/ipptool/create-printer-subscription.test
-%_datadir/cups/ipptool/get-completed-jobs.test
-%_datadir/cups/ipptool/get-jobs.test
-%_datadir/cups/ipptool/ipp-1.1.test
-%_datadir/cups/ipptool/ipp-2.0.test
-%_datadir/cups/ipptool/ipp-2.1.test
-%_datadir/cups/ipptool/testfile.jpg
-%_datadir/cups/ipptool/testfile.pdf
-%_datadir/cups/ipptool/testfile.ps
-%_datadir/cups/ipptool/testfile.txt
+%_datadir/cups/ipptool
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Tue Dec 17 2013 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
+- Total rebuild from FC and Ubuntu
+- Change packaging scheme
+- Revise and apply all FC and Ubuntu patches
+- Prepere to separate russian translation
+
 * Thu Oct 31 2013 Andriy Stepanov <stanv@altlinux.ru> 1.6.2-alt4
 - Add patch: always pass SeLinux info
 
@@ -1146,6 +1165,7 @@ rm -f /var/cache/cups/ppds.dat
 - pstoraster not removed to have the flexibility to also use CUPS drivers
 - Updated to version 1.1.2 with bugfix patch for the Makefile
 
-* Tue Jul  4 2000 François Pons <fpons@mandrakesoft.com> 1.1-0.b5.1mdk
+* Tue Jul  4 2000 FranÐ“ois Pons <fpons@mandrakesoft.com> 1.1-0.b5.1mdk
 - removed pstoraster from installation as drivers are in cups-drivers.
 - initial release.
+
