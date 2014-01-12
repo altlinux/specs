@@ -1,5 +1,5 @@
 Name: i3status
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: I3 status bar generator for i3bar, dzen2, xmobar or similar programs.
@@ -75,6 +75,9 @@ install -pm644 CHANGELOG %buildroot%docdir/
 %_man1dir/*
 
 %changelog
+* Sun Jan 12 2014 Andrey Bergman <vkni@altlinux.org> 2.8-alt1
+- Version update.
+
 * Fri Apr 12 2013 Andrey Bergman <vkni@altlinux.org> 2.7-alt1
 - Version update.
 
