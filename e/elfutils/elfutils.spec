@@ -1,22 +1,13 @@
 Name: elfutils
-Version: 0.155
-Release: alt2
+Version: 0.158
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
 Group: Development/C
 URL: http://fedorahosted.org/elfutils/
-
-# http://fedorahosted.org/releases/e/l/elfutils/%version/%name-%version.tar.bz2
-Source: %name-%version.tar
-
-Patch1: elfutils-0.155-rh-portability.patch
-Patch2: elfutils-0.155-rh-robustify.patch
-Patch3: elfutils-0.155-rh-binutils-pr-ld-13621.patch
-Patch4: elfutils-0.147-alt-findtextrel.patch
-Patch5: elfutils-0.147-alt-osabi.patch
-Patch6: elfutils-0.155-alt-elflint-bss.patch
-Patch7: elfutils-0.155-alt-elflint-st_value.patch
+# git://git.altlinux.org/gears/e/elfutils.git
+Source: %name-%version-%release.tar
 
 Requires: libelf = %version-%release
 
@@ -52,6 +43,16 @@ handling compiled objects.  libebl provides some higher-level ELF access
 functionality.  libdw provides access to the DWARF debugging information.
 libasm provides a programmable assembler interface.
 
+%package devel-static
+Summary: Static archives to handle compiled objects
+License: GPLv2+ or LGPLv3+
+Group: Development/C
+Requires: %name-devel = %version-%release
+Requires: libelf-devel-static = %version-%release
+
+%description devel-static
+This package contains static archives with the code to handle compiled objects.
+
 %package -n libelf
 Summary: Library to read and write ELF files
 License: GPLv2+ or LGPLv3+
@@ -81,39 +82,22 @@ Group: Development/C
 Requires: libelf-devel = %version-%release
 
 %description -n libelf-devel-static
-This package contains static library to create applications for handling
-compiled objects.  libelf allows you to access the internals of the ELF
-object file format, so you can see the different sections of an ELF file.
+This package contains static libelf library.
 
 %prep
-%setup
-#patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-
-# Remove flex-generated files.
-rm libcpu/i386_lex.c src/ldlex.c
-
-# Disable -Werror for a while.
-#sed -i 's/ -Werror / /' tests/Makefile*
-
-bzip2 -9k NEWS
-find -type f -name \*.sh -not -perm -0100 -print0 |
-	xargs -r0 chmod +x --
+%setup -n %name-%version-%release
 
 %build
 %add_optflags -fexceptions
+%autoreconf
 rm -rf %buildtarget
 mkdir %buildtarget
 cd %buildtarget
-%configure --enable-dependency-tracking \
+%configure \
+	--enable-dependency-tracking \
 	--program-prefix=%_programprefix \
 	--enable-dwz \
-	--enable-shared %{subst_enable static}
+	--enable-maintainer-mode
 %make_build
 
 %install
@@ -136,6 +120,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-ranlib
 %_bindir/eu-readelf
 %_bindir/eu-size
+%_bindir/eu-stack
 %_bindir/eu-strings
 %_bindir/eu-strip
 %_bindir/eu-unstrip
@@ -144,27 +129,31 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libdw-*.so
 %_libdir/libasm*.so.*
 %_libdir/libdw*.so.*
-%_libdir/elfutils
+%_libdir/elfutils/
 
 %files devel
 %_includedir/dwarf.h
-%_includedir/elfutils
+%_includedir/elfutils/
 %_libdir/libasm.so
 %_libdir/libdw.so
-%exclude %_libdir/libasm.a
-%exclude %_libdir/libdw.a
-%exclude %_libdir/libebl.a
+%_libdir/libebl.a
+
+%if_enabled static
+%files devel-static
+%_libdir/libasm.a
+%_libdir/libdw.a
+%endif
 
 %files -n libelf -f %name.lang
-%doc AUTHORS CONTRIBUTING NEWS.bz2 NOTES README THANKS
+%doc AUTHORS CONTRIBUTING NEWS NOTES README THANKS
 %_libdir/libelf-*.so
 %_libdir/libelf*.so.*
 
 %files -n libelf-devel
-%_libdir/libelf.so
 %_includedir/libelf.h
 %_includedir/gelf.h
 %_includedir/nlist.h
+%_libdir/libelf.so
 
 %if_enabled static
 %files -n libelf-devel-static
@@ -172,6 +161,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Jan 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.158-alt1
+- Updated to 0.158.
+
 * Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 0.155-alt2
 - elflint --gnu-ld: tolerate __bss_start out of .dynsym bounds.
 
