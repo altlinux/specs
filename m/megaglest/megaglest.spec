@@ -1,7 +1,7 @@
-%define rev svn3819
+%define rev 311a783b
 Name: megaglest
-Version: 3.6.0.3
-Release: alt2.%rev
+Version: 3.9.0
+Release: alt1.%rev
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
@@ -13,12 +13,11 @@ Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
 
-Patch1: megaglest_map_editor_cmake.patch 
 Patch2: megaglest-3.6.0.3-alt-gcc4.7.patch
 
-# Automatically added by buildreq on Wed Jul 06 2011
-# optimized out: cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libfreetype-devel libgdk-pixbuf libogg-devel libstdc++-devel libxerces-c pkg-config xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cmake fontconfig-devel gcc-c++ libSDL-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libjpeg-devel liblua5-devel libopenal-devel libpng-devel libvorbis-devel libwxGTK-devel libxerces-c-devel libxml2-devel libglew-devel
+# Automatically added by buildreq on Sat Jan 11 2014
+# optimized out: cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libfreetype-devel libgdk-pixbuf libogg-devel libstdc++-devel libwayland-client libwayland-server libxerces-c pkg-config xorg-kbproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: cmake fontconfig-devel gcc-c++ libSDL-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libglew-devel libjpeg-devel liblua5-devel libopenal-devel libpng-devel libvorbis-devel libwxGTK-devel libxerces-c-devel libxml2-devel
 
 Requires: %name-data = %version 
 
@@ -30,7 +29,6 @@ with their corresponding tech trees, units, buildings and some maps.
 
 %prep
 %setup  -n %name-source-%version
-#patch1 -p2
 %patch2 -p2
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
 
@@ -45,7 +43,7 @@ cmake --debug-output -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags"
 mkdir -p %buildroot{%_bindir,%_niconsdir,%_desktopdir}
 
 # and install what we need where we need it to be...
-install -pm755 mk/linux/%name %buildroot%_bindir/%name-bin
+install -pm755 source/glest_game/%name %buildroot%_bindir/%name-bin
 install -pm755 %SOURCE2 %buildroot%_bindir/%name
 
 install -pm 644 %SOURCE3 %buildroot%_niconsdir/%name.png
@@ -58,8 +56,8 @@ install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
-* Tue Dec 04 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.6.0.3-alt2.svn3819
-- Rebuild with libxerces-c 3.1.1
+* Sun Jan 12 2014 Andrew Clark <andyc@altlinux.org> 3.9.0-alt1.311a783b
+- version update to 3.9.0-alt1.311a783b
 
 * Thu Nov 1 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt1.svn3819
 - version update to 3.6.0.3-alt1.svn3819
