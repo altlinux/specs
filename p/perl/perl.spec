@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.18.1
+Version: 5.18.2
 Release: alt1
 Epoch: 1
 
@@ -706,6 +706,9 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Wed Jan 08 2014 Vladimir Lettiev <crux@altlinux.ru> 1:5.18.2-alt1
+- 5.18.1 -> 5.18.2
+
 * Tue Aug 20 2013 Vladimir Lettiev <crux@altlinux.ru> 1:5.18.1-alt1
 - 5.16.3 -> 5.18.1
 - Version::Requirements removed from core
