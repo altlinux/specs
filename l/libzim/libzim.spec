@@ -1,6 +1,6 @@
 Name:          libzim
 Version:       1.0
-Release:       alt1
+Release:       alt2
 Summary:       Library for reading/writing ZIM files
 
 License:       GPLv2+
@@ -11,6 +11,8 @@ Source0:       http://www.openzim.org/download/zimlib-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel
+
+Provides:      zimlib = %version-%release
 
 %description
 The zimlib is the standard implementation of the ZIM specification. It
@@ -25,6 +27,7 @@ contents.
 Summary:  Development files for %{name}
 Group:    Development/Other
 Requires: %name = %version-%release
+Provides: zimlib-devel = %version-%release
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -51,5 +54,8 @@ developing applications that use %{name}.
 %_libdir/*.so
 
 %changelog
+* Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
+- Provide zimlib and zimlib-devel for compatibity with Fedora
+
 * Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Import to ALT Linux from Fedora
