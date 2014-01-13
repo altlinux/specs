@@ -4,7 +4,7 @@
 
 Name: mpeg4ip
 Version: 1.5.0.1
-Release: alt13.3
+Release: alt14
 
 Summary: Set of linux video stream processing utilities
 License: MPL
@@ -17,6 +17,7 @@ Patch: %name-ffmpeg-0.7.1.patch
 Patch1: %name-1.5.0.1-alt-v4l.patch
 Patch2: %name-1.5.0.1-alt-v4l-libav.patch
 Patch3: %name-1.5.0.1-alt-DSO.patch
+Patch4: %name-1.5.0.1-alt-libav9.patch
 
 # Automatically added by buildreq on Thu Dec 15 2005
 BuildRequires: esound-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel id3lib-devel libSDL-devel liba52-devel libalsa-devel libatk-devel libaudio-devel libaudiofile-devel libcairo-devel libfaad-devel libglitz-devel libgtk+2-devel liblame-devel libmad-devel libmpeg2-devel libpango-devel libpng-devel libstdc++-devel libvorbis-devel nasm xvid-devel zlib-devel libx264-devel
@@ -124,6 +125,7 @@ MPEG4IP Static development files
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 touch bootstrapped
 # build player plugins as plugins, not libraries.
 find ./player -name Makefile\* -print0 | xargs -r0 subst 's,\(\-module\),\1 -avoid-version,' --
@@ -211,6 +213,9 @@ rm -rf %buildroot%_datadir/doc/%name-%version/{mp4v2,programs}
 # TODO: fix checking of x264, when x264 will upgraded
 
 %changelog
+* Mon Jan 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0.1-alt14
+- fixed build with libav9
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0.1-alt13.3
 - Fixed build
 
