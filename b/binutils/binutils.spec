@@ -1,6 +1,6 @@
 Name: binutils
-Version: 2.23.51.0.1
-Release: alt2
+Version: 2.24.0
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -10,33 +10,30 @@ Url: http://sourceware.org/binutils/
 
 # ftp://ftp.kernel.org/pub/linux/devel/%name/%name-%version.tar.xz
 Source: %name-%version.tar
-Source1: gcc.sh
-Source2: gxx.sh
-Source3: output-format.sed
+Source1: bfd.h
+Source2: gcc.sh
+Source3: gxx.sh
+Source4: output-format.sed
 
-# RH
-#Patch01: binutils-2.20.51.0.7-rh-libtool-lib64.patch
-Patch02: binutils-2.20.51.0.10-rh-ppc64-pie.patch
-#Patch03: binutils-2.20.51.0.2-rh-ia64-lib64.patch
-Patch04: binutils-2.20.51.0.2-rh-alt-version.patch
-Patch05: binutils-2.20.51.0.2-rh-set-long-long.patch
-Patch06: binutils-2.20.51.0.10-rh-copy-osabi.patch
-Patch07: binutils-2.20.51.0.10-rh-sec-merge-emit.patch
-#Patch08: binutils-2.22.52.0.1-rh-relro-on-by-default.patch
-#Patch09: binutils-2.22.52.0.1-rh-export-demangle.h.patch
-Patch10: binutils-2.23.51.0.1-rh833355-gold-keep.patch
-Patch11: binutils-2.22.52.0.4-rh845084-no-config-h-check.patch
+Patch: binutils-2_24-branch.patch
 
-# ALT
-Patch100: binutils-2.22.52.0.3-alt-configure.patch
-Patch101: binutils-2.22.52.0.3-alt-texinfo.patch
-Patch102: binutils-2.22.52.0.4-alt-no-warn-shared-textrel.patch
-Patch103: binutils-2.22.52.0.3-alt-ld-defaults.patch
-Patch104: binutils-2.22.52.0.4-alt-ld-testsuite.patch
-Patch105: binutils-2.22.52.0.3-alt-gold-testsuite.patch
-Patch106: binutils-2.22.52.0.3-alt-export-headers.patch
+Patch0001: 0001-gold-testsuite-fix-dependencies.patch
+Patch0002: 0002-Also-copy-EI_OSABI-field.patch
+Patch0003: 0003-Set-SHF_INFO_LINK-bit-for-SHT_REL-SHT_RELA-sections.patch
+Patch0004: 0004-Check-corrupted-symbol-table.patch
+Patch0005: 0005-Add-lto-and-none-lto-input-support-for-ld-r.patch
+Patch0006: 0006-gold-change-default-hash-style-to-gnu.patch
+Patch0007: 0007-bfd-export-demangle.h-and-hashtab.h.patch
+Patch0008: 0008-ld-add-no-warn-shared-textrel-option.patch
+Patch0009: 0009-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
+Patch0010: 0010-ld-change-default-hash-style-to-gnu.patch
+Patch0011: 0011-ld-enable-z-relro-by-default.patch
+Patch0012: 0012-gold-enable-z-relro-by-default.patch
+Patch0013: 0013-ld-testsuite-restore-upstream-default-options.patch
+Patch0014: 0014-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch0015: 0015-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
 
-Patch111: binutils-2.23.51.0.1-alt-ld-testsuite-workaround-x86.patch
+Patch100: binutils-alt-ld-testsuite-workaround-x86.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -77,39 +74,38 @@ libiberty.
 %prep
 %setup
 
-#patch01 -p0
-%patch02 -p0
-#patch03 -p0
-%patch04 -p0
-%patch05 -p0
-%patch06 -p0
-%patch07 -p0
-#patch08 -p0
-#patch09 -p0
-%patch10 -p0
-%patch11 -p0
+%patch -p1
 
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
-%patch106 -p1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch0007 -p1
+%patch0008 -p1
+%patch0009 -p1
+%patch0010 -p1
+%patch0011 -p1
+%patch0012 -p1
+%patch0013 -p1
+%patch0014 -p1
+%patch0015 -p1
 
 %ifarch %ix86
-%patch111 -p1
+%patch100 -p1
 %endif
 
-grep -Fl 'x86_64-*kfreebsd*-gnu)' */configure |while read f; do
-	patch "$f" < %PATCH100
-	sed -i -e 's,sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib",sys_lib_search_path_spec="/lib$libsuff /usr/lib$libsuff /usr/local/lib$libsuff",' \
-	       -e 's,sys_lib_dlsearch_path_spec="/lib /usr/lib",sys_lib_dlsearch_path_spec="/lib$libsuff /usr/lib$libsuff",' \
-	       -e 's,sys_lib_dlsearch_path_spec="/lib /usr/lib \$lt_ld_extra",sys_lib_dlsearch_path_spec="$sys_lib_dlsearch_path_spec $lt_ld_extra",' "$f"
-done
+grep -FlZ 'LD="${LD-ld} -m elf_x86_64"' libtool.m4 */configure |
+        xargs -0 sed -i -e '
+/LD="\${LD-ld} -m elf_x86_64"/ i \
+	    libsuff=64
+s,sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib",sys_lib_search_path_spec="/lib$libsuff /usr/lib$libsuff /usr/local/lib$libsuff",
+s,sys_lib_dlsearch_path_spec="/lib /usr/lib",sys_lib_dlsearch_path_spec="/lib$libsuff /usr/lib$libsuff",
+s,sys_lib_dlsearch_path_spec="/lib /usr/lib \$lt_ld_extra",sys_lib_dlsearch_path_spec="$sys_lib_dlsearch_path_spec $lt_ld_extra",
+' --
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
-
-find -type f -name \*.orig -delete
 
 %build
 %define _configure_target --host=%_target_platform --build=%_target_platform
@@ -131,10 +127,12 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-plugins \
 	--with-bugurl=http://bugzilla.altlinux.org/ \
 	--enable-gold=yes --enable-ld=default \
+	--with-stage1-ldflags=' ' \
+	--with-boot-ldflags=' ' \
 	$ADDITIONAL_TARGETS
 
 for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
-	%make_build tooldir=%_prefix $t
+	%make_build MAKEINFOFLAGS=--no-split tooldir=%_prefix $t
 done
 
 %install
@@ -146,7 +144,7 @@ echo "%_bindir/ld	%_bindir/ld.bfd	50" >  %buildroot%_altdir/ld-bfd
 echo "%_bindir/ld	%_bindir/ld.gold	10" >  %buildroot%_altdir/ld-gold
 
 # Remove /usr/bin/ld to avoid conflicts with alternatives
-rm -f %buildroot%_bindir/ld
+rm %buildroot%_bindir/ld
 
 # Install PIC version of the libiberty.a
 install -pm644 libiberty/pic/libiberty.a %buildroot%_libdir/
@@ -162,28 +160,10 @@ find %buildroot%_man1dir -type f |while read f; do
 	[ -f "%buildroot%_bindir/$n" ] || rm -v "$f"
 done
 
-# Prepare info file lists.
-ls %buildroot%_infodir/*.info |
-	fgrep -v /bfd |
-	sed "s|^%buildroot\(.*\)|\1*|g" >files.lst
-
-# Fix multilib conflicts of generated values by __WORDSIZE-based expressions.
-%ifarch %ix86 x86_64 x86_32 ppc ppc64 s390 s390x sparc sparc64
+%ifarch %ix86 x86_32 ppc
 # Sanity check --enable-64-bit-bfd really works.
 grep -Fqsx '#define BFD_ARCH_SIZE 64' %buildroot%_prefix/include/bfd.h
-
-sed -i -e '/^#include "ansidecl.h"/{p;s|^.*|#include <bits/wordsize.h>|}' \
-    -e 's/^\(#define BFD_DEFAULT_TARGET_SIZE \)\(32\|64\) *$/\1__WORDSIZE/' \
-    -e 's/^\(#define BFD_HOST_64BIT_LONG \)[01] *$/\1(__WORDSIZE == 64)/' \
-    -e 's/^\(#define BFD_HOST_64_BIT \)\(long \)\?long *$/#if __WORDSIZE == 32\
-\1long long\
-#else\
-\1long\
-#endif/' \
-    -e 's/^\(#define BFD_HOST_U_64_BIT unsigned \)\(long \)\?long *$/\1BFD_HOST_64_BIT/' \
-    %buildroot%_includedir/bfd.h
 %endif
-touch -r bfd/bfd-in2.h %buildroot%_includedir/bfd.h
 
 # Generate .so linker scripts for dependencies; imported from glibc/Makerules:
 
@@ -195,7 +175,8 @@ rm -f %buildroot%_libdir/lib{bfd,opcodes}.so
 OUTPUT_FORMAT="\
 /* Ensure this .so library will not be used by a link for a different format
    on a multi-architecture system.  */
-$(gcc $CFLAGS $LDFLAGS -shared -x c /dev/null -o /dev/null -Wl,--verbose -v 2>&1 | sed -n -f "%_sourcedir/output-format.sed")"
+$(gcc $CFLAGS $LDFLAGS -shared -x c /dev/null -o /dev/null -Wl,--verbose -v 2>&1 |
+	sed -n -f "%_sourcedir/output-format.sed")"
 
 cat >%buildroot%_libdir/libbfd.so <<EOF
 /* GNU ld script */
@@ -223,18 +204,28 @@ pushd %buildroot%_includedir
 	done
 popd
 
+# Cleanup config.h remnants
+sed -i '/PR 14072:/,/^#endif/d' %buildroot%_includedir/bfd/bfd.h
+sed -i '/HAVE_STDINT_H/,/^#endif/d; /#include <sys\/types.h>/i#include <stdint.h>' \
+	%buildroot%_includedir/bfd/plugin-api.h
+
+# Workaround multilib issues
+wordsize=$(printf '%%s\n%%s' '#include <bits/wordsize.h>' '__WORDSIZE' | gcc -E -P -)
+mv %buildroot%_includedir/bfd/bfd{,-$wordsize}.h
+install -pm644 %_sourcedir/bfd.h %buildroot%_includedir/bfd/
+
 # Add more include files.
-install -pm644 include/{demangle,libiberty}.h %buildroot%_includedir/
+install -pm644 include/libiberty.h %buildroot%_includedir/
 install -pm644 bfd/{elf-bfd,lib*}.h %buildroot%_includedir/bfd/
 cp -a include/{coff,elf,nlm} %buildroot%_includedir/bfd/
-rm -f %buildroot%_includedir/bfd/{*in.h,*/ChangeLog*}
+rm %buildroot%_includedir/bfd/{*in.h,*/ChangeLog*}
 
 # Install NEWS.
 for n in binutils gas ld; do
 	install -pm644 $n/NEWS NEWS-$n
 done
 
-%find_lang %name bfd gas gprof ld opcodes --append --output files.lst
+%find_lang binutils bfd gas gold gprof ld opcodes --append --output files.lst
 
 %set_verify_elf_method strict
 
@@ -243,10 +234,10 @@ done
 RUNTESTFLAGS=
 XFAIL_TESTS=
 %ifarch x86_64
-XFAIL_TESTS='exception_static_test incremental_test_2 incremental_test_3 incremental_test_4 incremental_test_5 incremental_test_6 incremental_copy_test incremental_common_test_1 incremental_comdat_test_1'
+XFAIL_TESTS="$XFAIL_TESTS exception_static_test incremental_test_2 incremental_test_3 incremental_test_4 incremental_test_5 incremental_test_6 incremental_copy_test incremental_common_test_1 incremental_comdat_test_1"
 %endif
 %ifarch %ix86
-XFAIL_TESTS=debug_msg.sh
+XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
 %endif
 %make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
@@ -255,19 +246,27 @@ XFAIL_TESTS=debug_msg.sh
 %_libdir/*.a
 %_libdir/libbfd.so
 %_libdir/libopcodes.so
-%_includedir/bfd
+%_includedir/bfd/
 %_includedir/*.h
 %_infodir/bfd.info*
 
 %files -f files.lst
 %_bindir/*
 %_altdir/ld-*
-%_prefix/lib/ldscripts
+%_prefix/lib/ldscripts/
 %_mandir/man?/*
 %_libdir/*-*.so
+%_infodir/*.info*
+%exclude %_infodir/bfd.info*
 %doc NEWS*
 
 %changelog
+* Mon Jan 13 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.24.0-alt1
+- Updated to 2.24.0 20140113.
+- ld, gold: changed defaults:
+  + enabled -z relro by default;
+  + changed default hash style to gnu.
+
 * Wed Oct 31 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.23.51.0.1-alt2
 - Fixed build.
 
