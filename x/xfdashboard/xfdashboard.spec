@@ -1,6 +1,6 @@
 Name: xfdashboard
-Version: 0.0.1
-Release: alt1.git20131125
+Version: 0.1.1
+Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
@@ -26,6 +26,7 @@ http://gmc-holle.github.io/xfdashboard/
 %prep
 %setup
 %patch -p1
+mkdir m4
 
 %build
 # Don't use git tag in version.
@@ -45,6 +46,9 @@ http://gmc-holle.github.io/xfdashboard/
 %_bindir/%name
 
 %changelog
+* Mon Jan 13 2014 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
+- Updated to 0.1.1.
+
 * Thu Nov 28 2013 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.git20131125
 - Initial build.
 
