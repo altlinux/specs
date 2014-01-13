@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt6
+Release: alt7
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -168,6 +168,9 @@ Summary: Include and object files required for C development
 Group: Development/C
 Requires: %name = %epoch:%version-%release, glibc-kernheaders >= %enablekernel, kernel-headers-common >= 1.1.4-alt1
 #Requires: %name-doc = %epoch:%version-%release
+%ifarch %ix86 x86_64 %arm
+Provides: %_includedir/gnu/stubs-32.h
+%endif
 %ifarch %ix86
 # Earlier gcc's had atexit reference in crtendS.o, which does not
 # work with this glibc where atexit is in libc_nonshared.a
@@ -657,6 +660,12 @@ fi
 %_datadir/i18n
 
 %changelog
+* Mon Jan 13 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt7
+- Backported more upstream fixes, including fixes for sw bugs:
+  387, 10278, 12492, 13028, 14286, 14752, 15277, 15308, 15309, 15362,
+  15380, 15381, 15618, 15672, 15763, 15859, 15892, 16055, 16274.
+- glibc-devel: added /usr/include/gnu/stubs-32.h to provides.
+
 * Sat Jan 11 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt6
 - Backported upstream fixes for sw bugs:
   14547, 14699, 15003, 15014, 15073, 15122, 15160, 15234, 15330, 15465,
