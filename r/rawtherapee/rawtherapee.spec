@@ -10,7 +10,7 @@
 %endif
 
 Name: rawtherapee
-Version: 4.0.11
+Version: 4.0.12
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -29,7 +29,7 @@ URL: http://www.rawtherapee.com/
 %if_enabled hg
 Source: rawtherapee-%version.tar.bz2
 %else
-Source: http://rawtherapee.googlecode.com/files/%name-%version.tar.xz
+Source: http://rawtherapee.com/shared/source/%name-%version.tar.xz
 %endif
 Source4: rawtherapee.Ukrainian
 
@@ -88,6 +88,7 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 
 %files
 %_bindir/%name
+%_bindir/camconst.json
 %doc AUTHORS.txt LICENSE.txt RELEASE_NOTES.txt
 
 %files data
@@ -97,6 +98,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Jan 13 2014 Yuri N. Sedunov <aris@altlinux.org> 4.0.12-alt1
+- 4.0.12
+
 * Wed Dec 18 2013 Yuri N. Sedunov <aris@altlinux.org> 4.0.11-alt1
 - 4.0.11
 
