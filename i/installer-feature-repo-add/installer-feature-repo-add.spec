@@ -1,5 +1,5 @@
 Name: installer-feature-repo-add
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Add the installation media to APT configuration
@@ -35,6 +35,9 @@ Requires: installer-stage2
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- further cdrom restrictions (see #29704)
+
 * Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - init with installer-sdk
 
