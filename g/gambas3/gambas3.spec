@@ -2,7 +2,7 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.5.1
+Version:	3.5.2
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1346,6 +1346,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.2-alt1
+- New version
+
 * Wed Nov 27 2013 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
 - New version
 
