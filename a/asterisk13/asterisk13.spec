@@ -1,4 +1,4 @@
-%define svn_revision 405309
+%define svn_revision 405363
 Name: asterisk13
 Summary: Open source PBX
 Version: 13
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 405309
+%define svn_revision 405363
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -1277,6 +1277,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Mon Jan 13 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.405363
+- update from svn revision 405363
+
 * Fri Jan 10 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.405309
 - update from svn revision 405309
 
