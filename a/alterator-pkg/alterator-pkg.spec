@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.16
+Version: 2.6.18
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,12 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 2.6.18-alt1
+- Drop 90-pkg.sh, see also installer-feature-cdrom-add (closes: #29704)
+
+* Sun Jan 12 2014 Evgeny Sinelnikov <sin@altlinux.ru> 2.6.17-alt1
+- Add support cifs install method
+
 * Wed Dec 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.16-alt1
 - Show comment in group content if it exists or package list (ALT #27973)
 
