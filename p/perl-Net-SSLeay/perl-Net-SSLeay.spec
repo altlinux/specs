@@ -1,6 +1,6 @@
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.56
+Version: 1.57
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -34,6 +34,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
+- automated CPAN update
+
 * Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 
