@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -25,7 +25,7 @@ Source1: %_name.map
 Source2: %_name.lds
 Source3: gdk-pixbuf-loaders.filetrigger
 
-%define glib_ver 2.37.2
+%define glib_ver 2.37.6
 %define gi_ver 0.9.5
 
 Requires: %name-locales = %version
@@ -33,7 +33,7 @@ Requires: %name-locales = %version
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
-BuildPreReq: glib2-devel >= %glib_ver
+BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc libjpeg-devel libpng-devel libtiff-devel
 %{?_with_x11:BuildRequires: libX11-devel}
 %{?_with_libjasper:BuildRequires: libjasper-devel}
@@ -214,6 +214,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Jan 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.3-alt1
+- 2.30.3
+
 * Tue Dec 17 2013 Yuri N. Sedunov <aris@altlinux.org> 2.30.2-alt1
 - 2.30.2
 
