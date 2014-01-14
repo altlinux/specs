@@ -1,10 +1,13 @@
 Serial: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: glibc-devel
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.2.3
+%define octave_pkg_version 2.0.2
 %define octave_pkg_name io
 %define octave_descr_name io
 Name: octave-%octave_pkg_name
-Version: 1.2.3
+Version: 2.0.2
 Release: alt1
 Summary: Input/Output
 
@@ -21,8 +24,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(io) = %version
-# Depends: octave (>= 3.4.0), octave (<= 3.7.1)
-Requires: octave >= 3.4.0 octave <= 3.7.1
+# Depends: octave (>= 3.7.2)
+Requires: octave >= 3.7.2
 
 
 %description
@@ -50,6 +53,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.0.2-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.3-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.3-alt1
 - updated by octave-package-builder
 

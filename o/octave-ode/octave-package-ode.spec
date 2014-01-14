@@ -2,7 +2,7 @@
 %define octave_descr_name ODE
 Name: octave-%octave_pkg_name
 Version: 1.0.1
-Release: alt1.qa1
+Release: alt2
 Summary: Ordinary Differential Equation (ODE) Solvers
 
 Group: Sciences/Mathematics
@@ -55,6 +55,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.1-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.1-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

@@ -1,8 +1,8 @@
-%define octave_pkg_version 1.0.0
+%define octave_pkg_version 1.0.1
 %define octave_pkg_name ncarray
 %define octave_descr_name ncArray
 Name: octave-%octave_pkg_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: ncArray
 
@@ -31,7 +31,7 @@ Extension Description:
 Access a single or a collection of NetCDF files as a multi-dimensional array
 
 %prep
-%setup -n ncArray
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -48,6 +48,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.1-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt1
 - updated by octave-package-builder
 

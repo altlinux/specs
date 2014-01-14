@@ -1,10 +1,10 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 2.0.2
+%define octave_pkg_version 2.2.0
 %define octave_pkg_name quaternion
 %define octave_descr_name quaternion
 Name: octave-%octave_pkg_name
-Version: 2.0.2
+Version: 2.2.0
 Release: alt1
 Summary: Quaternion
 
@@ -33,7 +33,7 @@ Extension Description:
 Quaternion package for GNU Octave, includes a quaternion class with overloaded operators
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -50,6 +50,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.2.0-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.0.2-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.0.2-alt1
 - updated by octave-package-builder
 

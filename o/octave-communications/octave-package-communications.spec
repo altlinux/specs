@@ -1,12 +1,15 @@
 Serial: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(FileHandle.pm) perl(IPC/Open3.pm) perl(Text/Wrap.pm)
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.1.1
+%define octave_pkg_version 1.2.0
 %define octave_pkg_name communications
 %define octave_descr_name Communications
 Name: octave-%octave_pkg_name
-Version: 1.1.1
-Release: alt2
-Summary: Communications.
+Version: 1.2.0
+Release: alt1
+Summary: Communications
 
 Group: Sciences/Mathematics
 License: GPLv3+
@@ -33,7 +36,7 @@ Extension Description:
 Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -50,6 +53,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.0-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt3
+- Rebuild with the next version of Octave: 3.8.0
+
 * Tue Jul 02 2013 Paul Wolneykien <manowar@altlinux.org> 1:1.1.1-alt2
 - Rebuild with a new version of libhdf5.
 

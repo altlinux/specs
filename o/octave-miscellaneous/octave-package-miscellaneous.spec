@@ -5,7 +5,7 @@ Serial: 4
 %define octave_descr_name Miscellaneous
 Name: octave-%octave_pkg_name
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: Miscellaneous functions
 
 Group: Sciences/Mathematics
@@ -56,6 +56,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 4:1.2.0-alt4
+- Rebuild with the next version of Octave: 3.8.0
+
 * Wed Jan 09 2013 Paul Wolneykien <manowar@altlinux.ru> 4:1.2.0-alt3
 - updated by octave-package-builder
 

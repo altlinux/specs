@@ -1,14 +1,14 @@
 Name: octave
-Version: 3.6.4
-Release: alt4.1
+Version: 3.8.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
 Summary: GNU Octave -- a high-level language for numerical computations
 License: GPLv3
 Group: Sciences/Mathematics
-Url: http://www.octave.org
-Packager: Paul Wolneykien <manowar@altlinux.ru>
+Url: http://www.octave.org/
+Packager: Paul Wolneykien <manowar@altlinux.org>
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
@@ -17,6 +17,9 @@ BuildRequires: libSM-devel libICE-devel liblcms-devel bzlib-devel libltdl-devel
 BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-devel
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
+BuildRequires: libarpack-ng-devel
+BuildRequires: libqt4-devel
+BuildRequires: libqscintilla2-qt4-devel
 BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
@@ -26,8 +29,8 @@ Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 
 Patch0: octave-include-pcre.patch
-Patch1: octave-3.4.0-alt-gcc4.6.patch
-Patch2: octave-3.4.0-alt-suitesparse.patch
+Patch1: desktop-force-run-gui.patch
+Patch2: fix_depends-pattern.patch
 
 Requires: gnuplot
 
@@ -79,8 +82,8 @@ This package contains extra documentation for GNU Octave.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p1
-%patch2 -p1
+%patch1 -p2
+%patch2 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -98,41 +101,25 @@ This package contains extra documentation for GNU Octave.
 
 mkdir -p %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages
 
-pushd doc
-mkdir -p %buildroot%docdir
-find interpreter/octave.html liboctave/liboctave.html -type f | cpio -pmdv %buildroot%docdir
-install -pm0644 faq/OctaveFAQ.pdf interpreter/octave.pdf \
-    liboctave/liboctave.pdf refcard/refcard-a4.pdf %buildroot%docdir
-popd
-gzip -c ChangeLog > %buildroot%docdir/ChangeLog.gz
-install -pm0644 BUGS COPYING NEWS* README %buildroot%docdir
+gzip -c ChangeLog >ChangeLog.gz
 
 # Install the filetrigger for packages:
 install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 
 #check
-#make_build check
+#make check
 
 %files
-%dir %docdir
-%docdir/BUGS
-%docdir/COPYING
-%docdir/NEWS*
-%docdir/README
-%docdir/ChangeLog.gz
-
-%_bindir/octave
-%_bindir/octave-%version
-%_bindir/octave-config
-%_bindir/octave-config-%version
+%doc BUGS COPYING NEWS* README ChangeLog.gz
+%_bindir/%{name}*
 
 %_datadir/%name
 %_libdir/%name/%version/*.so*
+%_libdir/%name/%version/exec
+%_libdir/%name/%version/oct
 %exclude %_libdir/%name/%version/*.la*
-%_libexecdir/%name
 
 %_infodir/octave.info*
-%_infodir/OctaveFAQ.info*
 %_infodir/liboctave.info*
 
 %_man1dir/*
@@ -147,11 +134,18 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %_bindir/mkoctfile-%version
 
 %files doc
-%docdir/*.pdf
-%docdir/interpreter
-%docdir/liboctave
+%doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt1
+- Fix the requirement string splitting (patch).
+- Desktop file runs GUI version (patch).
+- Build with GUI (QT4).
+- Build with the arpack (ng) library.
+
+* Mon Jan 13 2014 Paul Wolneykien <manowar@altlinux.ru> 3.8.0-alt1
+- repocop cronbuild 20140113. At your service.
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.4-alt4.1
 - Fixed build
 

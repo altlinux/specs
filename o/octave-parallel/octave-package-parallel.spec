@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mkoctfile /usr/bin/octave
+BuildRequires: /usr/bin/mkoctfile /usr/bin/octave glibc-devel
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.8.4
-%define octave_pkg_name odepkg
-%define octave_descr_name OdePkg
+%define octave_pkg_version 2.1.1
+%define octave_pkg_name parallel
+%define octave_descr_name Parallel
 Name: octave-%octave_pkg_name
-Version: 0.8.4
-Release: alt2
-Summary: OdePkg
+Version: 2.1.1
+Release: alt1
+Summary: Parallel Computing.
 
 Group: Sciences/Mathematics
-License: GPLv2+
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
@@ -22,9 +22,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(odepkg) = %version
-# Depends: octave (>= 3.2.0)
-Requires: octave >= 3.2.0
+Provides: octave(parallel) = %version
+# Depends: octave (>= 3.4.0)
+Requires: octave >= 3.4.0
 
 
 %description
@@ -32,7 +32,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-A package for solving ordinary differential equations and more.
+Parallel execution package for cluster computers. See
 
 %prep
 %setup -T -c %name-%version
@@ -52,12 +52,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 0.8.4-alt2
-- Rebuild with the next version of Octave: 3.8.0
-
-* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 0.8.4-alt1
-- updated by octave-package-builder
-
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.8.2-alt1
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 2.1.1-alt1
 - updated by octave-package-builder
 

@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: glibc-devel
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.0.0
+%define octave_pkg_version 2.2.0
 %define octave_pkg_name image
 %define octave_descr_name Image
 Name: octave-%octave_pkg_name
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 Summary: Image Processing
 
@@ -20,8 +23,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(image) = %version
-# Depends: octave (>= 3.6.0), signal (>= 1.2.0)
-Requires: octave >= 3.6.0 octave(signal) >= 1.2.0
+# Depends: octave (>= 3.8.0), signal (>= 1.2.0), general (>= 1.3.0)
+Requires: octave >= 3.8.0 octave(signal) >= 1.2.0 octave(general) >= 1.3.0
 
 
 %description
@@ -49,6 +52,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 2.2.0-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 2.0.0-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 2.0.0-alt1
 - updated by octave-package-builder
 

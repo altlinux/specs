@@ -3,7 +3,7 @@
 %define octave_descr_name cgi
 Name: octave-%octave_pkg_name
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: cgi
 
 Group: Sciences/Mathematics
@@ -48,6 +48,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 0.1.0-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.0-alt1
 - updated by octave-package-builder
 

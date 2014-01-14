@@ -5,7 +5,7 @@ Serial: 1
 %define octave_descr_name Mechanics
 Name: octave-%octave_pkg_name
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: Classical Mechanics & Structural Analysis
 
 Group: Sciences/Mathematics
@@ -33,10 +33,12 @@ Extension Description:
 Library with functions useful for numerical computation in classical mechanics and structural analysis.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -50,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.1-alt2
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.1-alt1
 - updated by octave-package-builder
 
