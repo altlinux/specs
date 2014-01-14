@@ -1,16 +1,16 @@
-%define module_version 0.92
+%define module_version 0.93
 %define module_name App-Nopaste
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(HTTP/Request/Common.pm) perl(LWP/Protocol.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Manifest/Skip.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI/Escape.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        0.92
+Version:        0.93
 Release:        alt1
 Summary:        Easy access to any pastebin
 License:        perl
 Group:          Development/Perl
 URL:            https://github.com/sartak/app-nopaste/tree
-Source0:        http://cpan.org.ua/authors/id/S/SA/SARTAK/%module_name-%module_version.tar.gz
+Source:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Browser/Open.pm)
@@ -97,6 +97,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
+- automated CPAN update
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
 - uploaded to Sisyphus as Scalar-Does dependency
 
