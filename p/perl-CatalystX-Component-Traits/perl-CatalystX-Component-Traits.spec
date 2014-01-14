@@ -1,6 +1,6 @@
 %define dist CatalystX-Component-Traits
 Name: perl-%dist
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: Automatic Trait Loading and Resolution for Catalyst Components
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/CatalystX-Component-Traits-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/CatalystX-Component-Traits-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ MooseX::Traits/new_with_traits from MooseX::Traits::Pluggable.
 %perl_vendor_privlib/CatalystX*
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
