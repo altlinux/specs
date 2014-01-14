@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/jar /usr/bin/java /usr/bin/javac
 %define octave_descr_name Java
 Name: octave-%octave_pkg_name
 Version: 1.2.9
-Release: alt1
+Release: alt2
 Summary: Java Interface
 
 Group: Sciences/Mathematics
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.9-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.9-alt1
 - updated by octave-package-builder
 

@@ -4,7 +4,7 @@
 %define octave_descr_name Audio
 Name: octave-%octave_pkg_name
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: Audio
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.1.4-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt1
 - initial import by octave-package-builder
 

@@ -1,9 +1,9 @@
 Serial: 1
-%define octave_pkg_version 1.2.4
+%define octave_pkg_version 1.2.6
 %define octave_pkg_name splines
 %define octave_descr_name splines
 Name: octave-%octave_pkg_name
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 Summary: Splines.
 
@@ -49,6 +49,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.6-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.4-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.4-alt1
 - updated by octave-package-builder
 

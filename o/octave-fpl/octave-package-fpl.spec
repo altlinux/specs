@@ -4,7 +4,7 @@ Serial: 1
 %define octave_descr_name fpl
 Name: octave-%octave_pkg_name
 Version: 1.3.4
-Release: alt1
+Release: alt2
 Summary: Fem PLotting
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.4-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.4-alt1
 - updated by octave-package-builder
 

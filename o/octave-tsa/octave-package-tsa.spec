@@ -3,7 +3,7 @@
 %define octave_descr_name TSA
 Name: octave-%octave_pkg_name
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: The TSA-toolbox
 
 Group: Sciences/Mathematics
@@ -48,6 +48,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 4.1.1-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
 - initial import by octave-package-builder
 

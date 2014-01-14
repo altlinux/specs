@@ -1,10 +1,10 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 2.4.5
+%define octave_pkg_version 2.6.1
 %define octave_pkg_name control
 %define octave_descr_name Control
 Name: octave-%octave_pkg_name
-Version: 2.4.5
+Version: 2.6.1
 Release: alt1
 Summary: Control Systems
 
@@ -30,7 +30,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT library
+Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT Library
 
 %prep
 %setup -T -c %name-%version
@@ -50,6 +50,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.6.1-alt1
+- updated by octave-package-builder
+
+* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:2.4.5-alt2
+- Rebuild with the next version of Octave: 3.8.0
+
 * Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.4.5-alt1
 - updated by octave-package-builder
 
