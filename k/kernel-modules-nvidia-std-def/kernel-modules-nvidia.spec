@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	331.20
-%define module_release	alt2
+%define module_version	331.38
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 14 2014 Sergey V Turchin <zerg at altlinux dot org> 331.38-alt1..
+- new release (331.38)
 
 * Fri Jan 10 2014 Sergey V Turchin <zerg at altlinux dot org> 331.20-alt2..
 - new releases (173.14.39, 304.117) with XOrg 1.15 support
