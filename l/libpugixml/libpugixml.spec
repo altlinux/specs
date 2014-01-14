@@ -2,7 +2,7 @@
 
 Name:           libpugixml
 Version:        1.0
-Release:        alt2
+Release:        alt3
 Summary:        A light-weight C++ XML processing library
 
 Group:          System/Libraries
@@ -51,7 +51,8 @@ mkdir -p %buildroot%_includedir/
 mkdir -p %buildroot%_libdir/
 install -p -m 0644 contrib/* %buildroot%_datadir/%rname/contrib/
 install -p -m 0644 src/*.hpp %buildroot%_includedir/
-install -p -m 0755 BUILD/*.so %buildroot%_libdir/
+install -p -m 0755 BUILD/*.so.* %buildroot%_libdir/
+mv BUILD/*.so %buildroot%_libdir/
 
 %files
 %doc readme.txt
@@ -64,6 +65,9 @@ install -p -m 0755 BUILD/*.so %buildroot%_libdir/
 %_includedir/*.hpp
 
 %changelog
+* Tue Jan 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt3
+- Make devel .so library as symlink to so-named library
+
 * Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
 - Build in Sisyphus under name libpugixml
 
