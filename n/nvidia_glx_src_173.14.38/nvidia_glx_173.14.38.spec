@@ -13,8 +13,8 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 38
-%define pkg_rel alt68
-%def_enable kernelsource
+%define pkg_rel alt69
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -403,6 +403,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 173.14.38-alt69
+- don't package kernel module sources
+
 * Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.38-alt68
 - new version
 
