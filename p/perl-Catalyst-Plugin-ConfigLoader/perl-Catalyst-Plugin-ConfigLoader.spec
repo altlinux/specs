@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-ConfigLoader
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: %m_name - Load config files of various types
@@ -47,6 +47,9 @@ INI and Perl formats.
 %doc README Changes
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
