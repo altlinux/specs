@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 331.20
+Version: 331.38
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -98,6 +98,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt1
+- new version
+
+* Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt0.M70P.1
+- built for M70P
+
 * Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt1
 - new version
 
