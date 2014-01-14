@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.4203
+Version: 0.4204
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -57,6 +57,9 @@ bzip2 -k Changes
 %exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.4204-alt1
+- automated CPAN update
+
 * Thu Nov 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.4203-alt1
 - automated CPAN update
 
