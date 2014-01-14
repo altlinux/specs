@@ -1,5 +1,5 @@
 Name: 0install
-Version: 2.4.1
+Version: 2.5.1
 Release: alt1
 Summary: Decentralised cross-distribution software installation system
 Group: System/Configuration/Packaging
@@ -78,7 +78,7 @@ ln -s 0install-python-fallback 0install
 
 %install
 #python_install
-sh install.sh %buildroot%_prefix
+sh install.sh %buildroot%prefix
 %find_lang zero-install
 
 %files
@@ -102,6 +102,9 @@ sh install.sh %buildroot%_prefix
 %_datadir/fish/completions/*
 
 %changelog
+* Sun Jan 12 2014 Fr. Br. George <george@altlinux.ru> 2.5.1-alt1
+- Autobuild version bump to 2.5.1
+
 * Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
 - Autobuild version bump to 2.4.1
 - Force not to use ocaml due to incomplete requirements
