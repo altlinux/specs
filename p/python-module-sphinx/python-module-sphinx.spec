@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -358,6 +358,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2-alt2
+- Added sphinx/ext/refcounting.py from old source
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2-alt1
 - Version 1.2
 
