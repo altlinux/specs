@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Encode.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(Test/More.pm) perl(charnames.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-utf8
-Version:        1.00
-Release:        alt3_6
+Version:        1.01
+Release:        alt1
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-utf8/
-Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/Builder.pm)
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_6
 - update to new release by fcimport
 
