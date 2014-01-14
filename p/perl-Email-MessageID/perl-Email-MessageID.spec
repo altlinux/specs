@@ -1,6 +1,6 @@
 %define dist Email-MessageID
 Name: perl-%dist
-Version: 1.402
+Version: 1.404
 Release: alt1
 
 Summary: Generate world unique message-ids
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MessageID-1.402.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MessageID-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ a message uniquely. This software generates a unique message-id.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.404-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.402-alt1
 - automated CPAN update
 
