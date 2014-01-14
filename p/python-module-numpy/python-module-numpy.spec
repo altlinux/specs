@@ -2,7 +2,7 @@
 %define svnver 259fff8
 %define majver 2
 %def_without latex
-%def_with doc
+%def_without doc
 %def_with addons
 %def_with tests
 %def_with python3
@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt8.git20131021
+Release: alt9.git20131021
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -716,7 +716,7 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname
-touch %buildroot%python_sitelibdir/floatint/__init__.py
+#touch %buildroot%python_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -741,7 +741,7 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname-py3
-touch %buildroot%python_sitelibdir/floatint/__init__.py
+#touch %buildroot%python_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -803,6 +803,7 @@ fi
 #exclude %python_sitelibdir/%oname/numarray/include
 %exclude %python_sitelibdir/%oname/distutils/mingw
 %exclude %python_sitelibdir/%oname/f2py/src
+%exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/random/mtrand/*.h
@@ -824,8 +825,8 @@ fi
 #exclude %python_sitelibdir/%oname/linalg/*.h
 %endif
 %python_sitelibdir/%oname-*.egg-info
-%python_sitelibdir/numpyx*
-%python_sitelibdir/floatint*
+#python_sitelibdir/numpyx*
+#%python_sitelibdir/floatint*
 
 %if_with python3
 %files -n python3-module-%oname -f %name.lang
@@ -851,6 +852,7 @@ fi
 #exclude %python3_sitelibdir/%oname/numarray/include
 %exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
+%exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.c
@@ -1054,6 +1056,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt9.git20131021
+- Disabled docs
+
 * Tue Oct 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20131021
 - New snapshot
 

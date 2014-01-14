@@ -6,12 +6,12 @@ BuildRequires(pre): rpm-build-python
 %define oname scipy
 %define svnver 8cec719
 
-%def_enable docs
+%def_disable docs
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt5.git20131020
+Release: alt6.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt6.git20131020
+- Disabled docs
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt5.git20131020
 - Don't require sympy for module for Python 3
 
