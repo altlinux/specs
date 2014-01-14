@@ -1,6 +1,6 @@
 Name: wxlua
 Version: 2.8.10.0
-Release: alt1.qa3
+Release: alt1.qa4
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -117,6 +117,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.10.0-alt1.qa4
+- Rebuilt with wxGTK 2.8.12
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.10.0-alt1.qa3
 - Fixed build with gcc 4.6
 

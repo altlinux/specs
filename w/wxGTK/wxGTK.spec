@@ -7,8 +7,8 @@
 %endif
 
 Name: wxGTK
-Version: %wxbranch.11.0
-Release: alt1.svn20100628.7
+Version: %wxbranch.12
+Release: alt1.svn20131012
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -26,7 +26,8 @@ BuildPreReq: libgtk+2-devel libjpeg-devel libtiff-devel
 BuildPreReq: rpm-build-java libXt-devel gstreamer-devel
 BuildPreReq: libGConf-devel gst-plugins-devel
 
-BuildPreReq: libstdc++-devel libpng-devel
+BuildPreReq: libstdc++-devel libpng-devel bakefile
+BuildPreReq: libxml2-devel
 
 Requires: lib%name = %{?serial:%serial:}%version-%release
 
@@ -155,6 +156,7 @@ subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 %build
 ./autogen.sh
+#autoreconf
 %configure --without-odbc \
 	 --without-debug_flag \
 	 --without-debug_info \
@@ -225,7 +227,7 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_libdir/libwx_gtk2%{ucode}_richtext-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_core-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_html-%wxbranch.so.*
-%_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so.*
+#_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_media-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_xrc-%wxbranch.so.*
 %_libdir/libwx_gtk2%{ucode}_qa-%wxbranch.so.*
@@ -254,7 +256,7 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_libdir/libwx_gtk2%{ucode}_svg-%wxbranch.so
 %_libdir/libwx_gtk2%{ucode}_gl-%wxbranch.so
 %_libdir/wx/%{wxbranch}/sound_sdl-%{wxbranch}.so
-%_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so
+#_libdir/libwx_gtk2%{ucode}_mmedia-%wxbranch.so
 %_libdir/libwx_gtk2%{ucode}_media-%wxbranch.so
 %_libdir/libwx_gtk2%{ucode}_xrc-%wxbranch.so
 %_libdir/libwx_gtk2%{ucode}_qa-%wxbranch.so
@@ -284,7 +286,7 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_includedir/wx-%wxbranch/wx/fl
 %_includedir/wx-%wxbranch/wx/plot
 %_includedir/wx-%wxbranch/wx/svg
-%_includedir/wx-%wxbranch/wx/mmedia
+#_includedir/wx-%wxbranch/wx/mmedia
 %if "%wxbranch" >= "2.5"
 %_includedir/wx-%wxbranch/wx/xml
 %_libdir/libwx_base%{ucode}_xml-%wxbranch.so
@@ -317,6 +319,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.8.12-alt1.svn20131012
+- Version 2.8.12
+
 * Thu Mar 21 2013 Sergey Y. Afonin <asy@altlinux.ru> 2:2.8.11.0-alt1.svn20100628.7
 - Built without libgnomeprintui and with libgtk+2
 

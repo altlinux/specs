@@ -55,7 +55,7 @@ Name: erlang
 %define subver 2
 Version: %ver.%subver
 %define plevel b
-Release: alt3
+Release: alt3.1
 Summary: A programming language developed by Ericsson
 License: %epl
 Group: Development/Erlang
@@ -1282,6 +1282,10 @@ symlinks -scdr %buildroot
 
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> R15B.2-alt3.1
+- Rebuilt with wxGTK 2.8.12
+
+* Tue Oct 23 2012 Pavel Shilovsky <piastry@altlinux.org> R15B.2-alt2
 * Tue Apr 23 2013 Dmitry V. Levin <ldv@altlinux.org> R15B.2-alt3
 - Disabled pdf_opt because ghostscript no longer provides pdfopt.
 

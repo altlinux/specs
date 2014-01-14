@@ -6,8 +6,8 @@
 %def_enable docs
 
 Name: python-module-wx
-Version: %major.11.0
-Release: alt2.svn20100628.2
+Version: %major.12.1
+Release: alt1.svn20120530
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -20,8 +20,10 @@ Url: http://www.wxpython.org/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.wxwidgets.org/svn/wx
+# http://svn.wxwidgets.org/svn/wx/wxPython/branches/WX_2_8_BRANCH
 Source: %origname-%version.tar.bz2
+
+# http://svn.wxwidgets.org/svn/wx/wxPython/3rdParty
 Source1: agw-%version.tar.bz2
 Source2: floatcanvas-%version.tar.bz2
 Source3: Editra-%version.tar.bz2
@@ -222,6 +224,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.12.1-alt1.svn20120530
+- Version 2.8.12.1
+
 * Thu Mar 21 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.8.11.0-alt2.svn20100628.2
 - Rebuilt with wxGTK 2.8.11.0-alt1.svn20100628.7 (ALT #28702)
 

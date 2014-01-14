@@ -8,7 +8,7 @@
 
 Name: pgadmin3
 Version: 1.18.1
-Release: alt1
+Release: alt1.1
 
 Summary: Powerful administration and development platform for PostgreSQL.
 License: BSD
@@ -135,6 +135,9 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.18.1-alt1.1
+- Rebuilt with wxGTK 2.8.12
+
 * Fri Nov 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.18.1-alt1
 - git REL-1_18_0_PATCHES branch
 
