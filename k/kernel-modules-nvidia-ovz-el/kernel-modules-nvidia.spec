@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	331.20
+%define module_version	331.38
 %define module_release	alt1
 %define flavour		ovz-el
 
@@ -27,17 +27,13 @@
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%nvIF_ver_gteq %kversion 3.10
-%define legacy3 173.14.38
-%else
-%define legacy3 %nil
-%endif
+%define legacy3 173.14.39
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.116
+%define legacy4 304.117
 %else
 %define legacy4 %nil
 %endif
@@ -193,6 +189,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 15 2014 Led <led@altlinux.ru> 331.38-alt1
+- new releases (331.38, 304.117, 173.14.39)
+- enabled legacy3
 
 * Fri Nov 29 2013 Led <led@altlinux.ru> 331.20-alt1
 - new release (331.20)
