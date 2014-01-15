@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -99,7 +99,7 @@ This package contains extra documentation for GNU Octave.
 %install
 %makeinstall
 
-mkdir -p %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages
+mkdir -p %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages %buildroot%_datadir/octave/octave_packages
 
 gzip -c ChangeLog >ChangeLog.gz
 
@@ -119,6 +119,12 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %_libdir/%name/%version/oct
 %exclude %_libdir/%name/%version/*.la*
 
+%dir %_libdir/%name
+%dir %_libdir/%name/%version
+%dir %_datadir/%name/packages
+%dir %_libdir/%name/packages
+%dir %_datadir/%name/octave_packages
+
 %_infodir/octave.info*
 %_infodir/liboctave.info*
 
@@ -137,6 +143,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Jan 15 2014 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt2
+- Own unowned dirs.
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt1
 - Fix the requirement string splitting (patch).
 - Desktop file runs GUI version (patch).
