@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt2
+Version: 1.3
+Release: alt1.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -268,8 +268,8 @@ install -d %buildroot%_rpmmacrosdir
 install -p -m644 macro %buildroot%_rpmmacrosdir/%oname
 install -p -m644 ../python3/macro3 %buildroot%_rpmmacrosdir/%{oname}3
 
-install -p -m644 %oname/directives/desc.py \
-	%buildroot%python_sitelibdir/%oname/directives/
+#install -p -m644 %oname/directives/desc.py \
+#	%buildroot%python_sitelibdir/%oname/directives/
 
 #if_with python3
 #install -p -m644 %oname/directives/desc.py \
@@ -277,6 +277,8 @@ install -p -m644 %oname/directives/desc.py \
 #endif
 
 # add pickle files
+
+%make_build -C doc pickle
 
 install -d %buildroot%python_sitelibdir/%oname/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
@@ -319,7 +321,7 @@ popd
 %python_sitelibdir/*.egg-info
 %_man1dir/*
 
-%files devel
+#files devel
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -358,6 +360,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt1.a0
+- Version 1.3a0
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2-alt2
 - Added sphinx/ext/refcounting.py from old source
 
