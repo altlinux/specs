@@ -1,12 +1,12 @@
 Name: bozohttpd
-Version: 20130711
+Version: 20140102
 Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
 Source: %name-%version.tar.bz2
-Patch: bozohttpd-20130711-gnu_source.patch
-Patch1: bozohttpd-20100920-small.patch
+Patch: bozohttpd-20140102-bozoname.patch
+Patch1: bozohttpd-20140102-small.patch
 Url: http://www.eterna.com.au/bozohttpd/
 
 %define sum tiny http 1.1 server
@@ -16,9 +16,9 @@ Url: http://www.eterna.com.au/bozohttpd/
 	BINOWN=`id -u` BINGRP=`id -g` BINMODE=755 \\\
 	MANOWN=`id -u` MANGRP=`id -g` MANMODE=644
 
-# Automatically added by buildreq on Fri Sep 02 2011
+# Automatically added by buildreq on Wed Jan 15 2014
 # optimized out: libcom_err-devel libkrb5-devel pkgsrc-mk-files
-BuildRequires: bmake groff-base libssl-devel unifdef
+BuildRequires: bmake groff-base liblua5-devel libssl-devel unifdef
 
 %description
 the bozotic HTTP server
@@ -60,22 +60,21 @@ Requires: lib%name-devel
 
 %prep
 %setup
+find . -name .\#\* -exec rm {} \;
 %patch -p1
 %patch1 -p1
 # XXX
 sed -i 's/-lssl /-lssl -lc /' libbozohttpd/Makefile
+sed 's@#include "netbsd_queue.h"@#include <bozohttpd/netbsd_queue.h>@' < bozohttpd.h > libbozohttpd/bozohttpd.h
 
 %build
-%bmake COPTS="-DDO_HTPASSWD"
-(
-cd libbozohttpd
-%bmake
-sed 's/#include "queue.h"/#include <bozohttpd/queue.h>/' < ../bozohttpd.h > bozohttpd.h
-)
-(
-cd small
-%bmake
-)
+%bmake COPTS+="-D_GNU_SOURCE"
+%bmake COPTS+="-D_GNU_SOURCE -DNO_LUA_SUPPORT" -C libbozohttpd
+%bmake COPTS+="-D_GNU_SOURCE" -C small
+# XXX syntax errors in upstream in lua/glue.c
+#ln -s libluabozohttpd.so.0.0 lua/libluabozohttpd.so   
+#ln -s ../libbozohttpd/libbozohttpd.so.0.0 lua/libbozohttpd.so
+#bmake COPTS+="-D_GNU_SOURCE -I.." LDADD="-L. -lbozohttpd" -C lua
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_libdir \
@@ -111,6 +110,11 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 20140102-alt1
+- Autobuild version bump to 20140102
+- Cleanup and fix build
+- Disabler lua server for it doesn't even compile for now
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 20130711-alt1
 - Autobuild version bump to 20130711
 - Fix build
