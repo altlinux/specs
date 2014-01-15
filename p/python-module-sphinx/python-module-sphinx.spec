@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.a0
+Release: alt2.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -321,7 +321,7 @@ popd
 %python_sitelibdir/*.egg-info
 %_man1dir/*
 
-#files devel
+%files devel
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -360,6 +360,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt2.a0
+- Enabled devel subpackage
+
 * Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt1.a0
 - Version 1.3a0
 
