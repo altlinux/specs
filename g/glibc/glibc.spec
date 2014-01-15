@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt7
+Release: alt8
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -660,6 +660,11 @@ fi
 %_datadir/i18n
 
 %changelog
+* Wed Jan 15 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt8
+- libc.so: link libc.so.6 both before and after libc_nonshared.a,
+  to fix spurious undefined reference with --as-needed reported
+  in sw#16403.
+
 * Mon Jan 13 2014 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt7
 - Backported more upstream fixes, including fixes for sw bugs:
   387, 10278, 12492, 13028, 14286, 14752, 15277, 15308, 15309, 15362,
