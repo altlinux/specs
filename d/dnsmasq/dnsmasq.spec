@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.68
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -44,6 +44,14 @@ Dnsmasq - это компактный, простой в настройке сервер DNS и DHCP,
 Dnsmasq не поддерживает пересылку DNS-зон и поэтому не может использоваться
 в качестве авторитативного. Для этой цели вам понадобится PowerDNS или BIND.
 
+%package        utils
+Summary:        Utilities for manipulating DHCP server leases
+Group:          Networking/Other
+
+%description    utils
+Utilities that use the standard DHCP protocol to
+query/remove a DHCP server's leases.
+
 %prep
 %setup
 %patch -p1
@@ -56,6 +64,7 @@ sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
 
 %build
 %make_build
+%make_build -C contrib/wrt
 
 %install
 %makeinstall_std PREFIX=%prefix
@@ -66,6 +75,12 @@ install -pD -m600 %SOURCE2            %buildroot%sysconfig_file
 install -pD -m600 %name.conf.example  %buildroot%_sysconfdir/%name.conf
 install -pD -m700 %SOURCE3            %buildroot%_sbindir/%name-helper
 install -pD -m644 %SOURCE4            %buildroot%_unitdir/%name.service
+
+# For utils package
+install -pD -m 755 contrib/wrt/dhcp_release %buildroot%_bindir/dhcp_release
+install -pD -m 644 contrib/wrt/dhcp_release.1 %buildroot%_man1dir/dhcp_release.1
+install -pD -m 755 contrib/wrt/dhcp_lease_time %buildroot%_bindir/dhcp_lease_time
+install -pD -m 644 contrib/wrt/dhcp_lease_time.1 %buildroot%_man1dir/dhcp_lease_time.1
 
 %pre
 # Upgrade configuration from previous versions
@@ -95,7 +110,14 @@ fi
 %_man8dir/%{name}*
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
+%files utils
+%_bindir/dhcp_*
+%_man1dir/dhcp_*
+
 %changelog
+* Wed Jan 15 2014 Mikhail Efremov <sem@altlinux.org> 2.68-alt2
+- Add 'utils' subpackage (thx Denis Pynkin) (closes: #29726).
+
 * Mon Dec 09 2013 Mikhail Efremov <sem@altlinux.org> 2.68-alt1
 - Updated to 2.68.
 
