@@ -1,6 +1,6 @@
 Name: pnmixer
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: Volume mixer for the system tray
 License: %gpl3only
@@ -61,6 +61,10 @@ mv %buildroot%_desktopdir/%name.desktop %buildroot%_sysconfdir/xdg/autostart/
 %_datadir/%name/
 
 %changelog
+* Wed Jan 15 2014 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt2
+- Bump release because of the release in the autoimport
+  repository is greater then alt1. Make robots happy.
+
 * Tue Jan 14 2014 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Fix segfault if no channels found.
 - Fix icon in launcher.
