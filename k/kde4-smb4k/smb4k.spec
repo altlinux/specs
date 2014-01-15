@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.0.7
+Version: 1.1.0
 Release: alt1
 
 Group: Networking/Other
@@ -51,8 +51,8 @@ Developemnt files for %name
 
 
 %build
-%K4build
-
+%K4build \
+    -DINSTALL_PLASMOID=false
 
 %install
 %K4install
@@ -61,18 +61,19 @@ Developemnt files for %name
 
 %files -f %rname.lang
 %_kde4_bindir/*
+%_K4libdir/libkdeinit4_smb4k.so
+%_K4lib/*.so
 %_K4exec/mounthelper
 %_K4conf_update/*
-%_K4lib/*.so
 %_K4libdir/libsmb4ktooltips.so
 %_kde4_xdg_apps/smb4k.desktop
 %_K4apps/smb4k
 %_K4cfg/smb4k.kcfg
 %_kde4_iconsdir/hicolor/*/*/*.*
 %_K4iconsdir/oxygen/*/apps/*.*
-%_K4dbus_system/de.berlios.smb4k.mounthelper.conf
-%_K4dbus_sys_services/de.berlios.smb4k.mounthelper.service
-%_datadir/polkit-1/actions/de.berlios.smb4k.mounthelper.policy
+%_K4dbus_system/net.sourceforge.smb4k.mounthelper.conf
+%_K4dbus_sys_services/net.sourceforge.smb4k.mounthelper.service
+%_datadir/polkit-1/actions/net.sourceforge.smb4k.mounthelper.policy
 
 %files -n %libsmb4kcore
 %_K4libdir/libsmb4kcore.so.%sover
@@ -80,6 +81,9 @@ Developemnt files for %name
 
 
 %changelog
+* Wed Jan 15 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Mon May 20 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.7-alt1
 - new version
 
