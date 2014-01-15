@@ -2,7 +2,7 @@
 %define libchromaprint libchromaprint%sover
 
 Name: chromaprint
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Library implementing the AcoustID fingerprinting
 
@@ -10,7 +10,7 @@ Group: Sound
 License: LGPLv2+
 Url: http://www.acoustid.org/chromaprint/
 Source: %name-%version.tar
-Patch0: chromaprint-1.0-alt-libav9.patch
+Patch0: chromaprint-1.1-alt-libav9.patch
 
 # Automatically added by buildreq on Mon May 21 2012 (-bi)
 # optimized out: boost-devel cmake-modules elfutils libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config python-base
@@ -65,7 +65,7 @@ mkdir -p %buildroot/%_bindir
 %_bindir/*
 
 %files -n %libchromaprint
-%doc CHANGES.txt NEWS.txt README.txt
+%doc NEWS.txt README.txt
 %_libdir/libchromaprint.so.%sover
 %_libdir/libchromaprint.so.%sover.*
 
@@ -75,6 +75,9 @@ mkdir -p %buildroot/%_bindir
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jan 15 2014 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
+- new version
+
 * Thu Sep 26 2013 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - new version
 - fix build with new libav; thanks sbloshakov@alt
