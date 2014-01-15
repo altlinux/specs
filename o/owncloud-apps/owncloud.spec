@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/apps/
 
 Name: owncloud-apps
-Version: 5.0.13
+Version: 5.0.14a
 Release: alt1
 
 Summary: Applications for owncloud
@@ -35,6 +35,9 @@ rm -f %buildroot%installdir/l10n/init.sh
 %installdir/*
 
 %changelog
+* Wed Jan 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.14a-alt1
+- 5.0.14a
+
 * Wed Nov 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.13-alt1
 - 5.0.13
 
