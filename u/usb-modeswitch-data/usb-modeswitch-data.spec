@@ -1,6 +1,6 @@
 Summary: Data and udev-rules for usb-modeswitch
 Name: usb-modeswitch-data
-Version: 20121109
+Version: 20131113
 Release: alt1
 License: GPL
 
@@ -29,6 +29,9 @@ DESTDIR=%buildroot make install
 /lib/udev/rules.d/*
 
 %changelog
+* Wed Jan 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20131113-alt1
+- 20131113
+
 * Fri Nov 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20121109-alt1
 - 20121109
 - huawei-E171 patch removed (merged in upstream)
