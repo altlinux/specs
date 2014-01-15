@@ -15,13 +15,13 @@
 %define nv_version 331
 %define nv_release 20
 %define nv_minor %nil
-%define pkg_rel alt123
+%define pkg_rel alt124
 %ifarch x86_64
 %def_disable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -339,6 +339,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 15 2014 Sergey V Turchin <zerg@altlinux.org> 331.20-alt124
+- don't package kernel module sources
+
 * Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt123
 - fix build requires
 
