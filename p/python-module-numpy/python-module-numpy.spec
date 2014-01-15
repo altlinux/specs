@@ -2,7 +2,7 @@
 %define svnver 259fff8
 %define majver 2
 %def_without latex
-%def_without doc
+%def_with doc
 %def_with addons
 %def_with tests
 %def_with python3
@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt10.git20131021
+Release: alt11.git20131021
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -63,6 +63,9 @@ BuildPreReq: python3-module-sphinx-devel python3-module-Pygments
 BuildPreReq: python-tools-2to3
 %endif
 
+Provides: python-module-numpy-addons = %EVR
+%py_provides %oname.addons
+
 %description
 NumPy is a general-purpose array-processing package designed to
 efficiently manipulate large multi-dimensional arrays of arbitrary
@@ -80,6 +83,8 @@ Summary: NumPy: array processing for numbers, strings, records, and objects (Pyt
 Group: Development/Python3
 Requires: python3-module-%oname-testing = %version-%release
 Requires: lib%oname-py3 = %version-%release
+%py3_provides %oname.addons
+Provides: python3-module-numpy-addons = %EVR
 
 %description -n python3-module-%oname
 NumPy is a general-purpose array-processing package designed to
@@ -107,20 +112,20 @@ create arrays of arbitrary type.
 
 This package contains numpydoc module for NumPy.
 
-%package -n python3-module-%oname-addons
-Summary: Addons for NumPy (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+#package -n python3-module-%oname-addons
+#Summary: Addons for NumPy (Python 3)
+#Group: Development/Python3
+#Requires: python3-module-%oname = %version-%release
 
-%description -n python3-module-%oname-addons
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains addons NumPy for matplotlib and scipy.
+#description -n python3-module-%oname-addons
+#NumPy is a general-purpose array-processing package designed to
+#efficiently manipulate large multi-dimensional arrays of arbitrary
+#records without sacrificing too much speed for small multi-dimensional
+#arrays.  NumPy is built on the Numeric code base and adds features
+#introduced by numarray as well as an extended C-API and the ability to
+#create arrays of arbitrary type.
+#
+#This package contains addons NumPy for matplotlib and scipy.
 
 %package -n python3-module-%oname-testing
 Summary: Testing part of NumPy (Python 3)
@@ -246,21 +251,21 @@ create arrays of arbitrary type.
 
 This package contains pickles for NumPy.
 
-%package addons
-Summary: Addons for NumPy
-Group: Development/Python
-Requires: %name = %version-%release
-Conflicts: %name < %version-%release
-
-%description addons
-NumPy is a general-purpose array-processing package designed to
-efficiently manipulate large multi-dimensional arrays of arbitrary
-records without sacrificing too much speed for small multi-dimensional
-arrays.  NumPy is built on the Numeric code base and adds features
-introduced by numarray as well as an extended C-API and the ability to
-create arrays of arbitrary type.
-
-This package contains addons NumPy for matplotlib and scipy.
+#package addons
+#Summary: Addons for NumPy
+#Group: Development/Python
+#Requires: %name = %version-%release
+#Conflicts: %name < %version-%release
+#
+#description addons
+#NumPy is a general-purpose array-processing package designed to
+#efficiently manipulate large multi-dimensional arrays of arbitrary
+#records without sacrificing too much speed for small multi-dimensional
+#arrays.  NumPy is built on the Numeric code base and adds features
+#introduced by numarray as well as an extended C-API and the ability to
+#create arrays of arbitrary type.
+#
+#This package contains addons NumPy for matplotlib and scipy.
 
 %package testing
 Summary: Testing part of NumPy
@@ -716,7 +721,7 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname
-#touch %buildroot%python_sitelibdir/floatint/__init__.py
+touch %buildroot%python_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -741,7 +746,7 @@ install -p -m644 %oname/core/code_generators/genapi.py \
 	%buildroot%python3_sitelibdir/%oname
 install -p -m644 %oname/core/src/private/npy_config.h \
 	%buildroot%_includedir/%oname-py3
-#touch %buildroot%python_sitelibdir/floatint/__init__.py
+touch %buildroot%python_sitelibdir/floatint/__init__.py
 
 # delete unnecessary files
 
@@ -824,8 +829,8 @@ fi
 %exclude %python_sitelibdir/%oname/linalg/*.c
 #exclude %python_sitelibdir/%oname/linalg/*.h
 %python_sitelibdir/%oname-*.egg-info
-#python_sitelibdir/numpyx*
-#%python_sitelibdir/floatint*
+%python_sitelibdir/numpyx*
+%python_sitelibdir/floatint*
 
 %if_with python3
 %files -n python3-module-%oname -f %name.lang
@@ -877,13 +882,13 @@ fi
 %endif
 
 %if_with addons
-%files addons
+#files addons
 #python_sitelibdir/%oname/numarray/image.py*
 #python_sitelibdir/%oname/numarray/convolve.py*
 #python_sitelibdir/%oname/numarray/nd_image.py*
 
 %if_with python3
-%files -n python3-module-%oname-addons
+#files -n python3-module-%oname-addons
 #python3_sitelibdir/%oname/numarray/image.py*
 #python3_sitelibdir/%oname/numarray/convolve.py*
 #python3_sitelibdir/%oname/numarray/nd_image.py*
@@ -1055,6 +1060,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt11.git20131021
+- Enabled docs
+
 * Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt10.git20131021
 - Removed dependency on devel subpackage (ALT #29723)
 
