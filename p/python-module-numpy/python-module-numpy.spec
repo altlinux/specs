@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt9.git20131021
+Release: alt10.git20131021
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -806,11 +806,11 @@ fi
 %exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
 %exclude %python_sitelibdir/%oname/pickle
+%endif
 %exclude %python_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python_sitelibdir/%oname/random/mtrand/*.c
 %exclude %python_sitelibdir/%oname/random/mtrand/*.pxi
 %exclude %python_sitelibdir/%oname/random/mtrand/*.pyx
-%exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 #exclude %python_sitelibdir/%oname/numarray/*.c
 %exclude %python_sitelibdir/%oname/core/src/multiarray/*.h
 %exclude %python_sitelibdir/%oname/core/src/multiarray/*.c*
@@ -823,7 +823,6 @@ fi
 %exclude %python_sitelibdir/%oname/lib/src
 %exclude %python_sitelibdir/%oname/linalg/*.c
 #exclude %python_sitelibdir/%oname/linalg/*.h
-%endif
 %python_sitelibdir/%oname-*.egg-info
 #python_sitelibdir/numpyx*
 #%python_sitelibdir/floatint*
@@ -853,7 +852,7 @@ fi
 %exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
-%if_with doc
+#if_with doc
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.h
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.c
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pxi
@@ -871,7 +870,7 @@ fi
 %exclude %python3_sitelibdir/%oname/lib/src
 %exclude %python3_sitelibdir/%oname/linalg/*.c
 #exclude %python3_sitelibdir/%oname/linalg/*.h
-%endif
+#endif
 %python3_sitelibdir/%oname-*.egg-info
 #python3_sitelibdir/numpyx*
 #python3_sitelibdir/floatint*
@@ -953,7 +952,7 @@ fi
 %endif
 %python_sitelibdir/%oname/core/lib/libnpymath.so
 %_includedir/%oname
-%if_with docs
+#if_with docs
 %python_sitelibdir/%oname/random/mtrand/*.h
 %python_sitelibdir/%oname/random/mtrand/*.c
 %python_sitelibdir/%oname/random/mtrand/*.pxi
@@ -970,7 +969,7 @@ fi
 %python_sitelibdir/%oname/lib/src
 %python_sitelibdir/%oname/linalg/*.c
 #python_sitelibdir/%oname/linalg/*.h
-%endif
+#endif
 %python_sitelibdir/%oname/core/include
 #python_sitelibdir/%oname/numarray/include
 %python_sitelibdir/%oname/distutils/mingw
@@ -985,7 +984,7 @@ fi
 %python3_sitelibdir/%oname/core/lib/libnpymath3.so
 %_pkgconfigdir/%oname-py3.pc
 %_includedir/%oname-py3
-%if_with docs
+#if_with docs
 %python3_sitelibdir/%oname/random/mtrand/*.h
 %python3_sitelibdir/%oname/random/mtrand/*.c
 %python3_sitelibdir/%oname/random/mtrand/*.pxi
@@ -1002,7 +1001,7 @@ fi
 %python3_sitelibdir/%oname/lib/src
 %python3_sitelibdir/%oname/linalg/*.c
 #python3_sitelibdir/%oname/linalg/*.h
-%endif
+#endif
 %python3_sitelibdir/%oname/core/include
 #python3_sitelibdir/%oname/numarray/include
 %python3_sitelibdir/%oname/distutils/mingw
@@ -1056,6 +1055,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt10.git20131021
+- Removed dependency on devel subpackage (ALT #29723)
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt9.git20131021
 - Disabled docs
 
