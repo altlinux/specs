@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.26
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1794,6 +1794,13 @@ done)
 
 
 %changelog
+* Tue Jan 14 2014 Led <led@altlinux.ru> 3.10.26-alt2
+- updated:
+  + feat-drivers-block--rxdsk
+  + feat-fs-aufs
+- added:
+  + fix-kernel--futex
+
 * Fri Jan 10 2014 Led <led@altlinux.ru> 3.10.26-alt1
 - 3.10.26
 - removed:
