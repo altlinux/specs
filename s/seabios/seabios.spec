@@ -1,5 +1,7 @@
+%define debug_level 1
+
 Name: seabios
-Version: 1.7.3.2
+Version: 1.7.4
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -18,6 +20,7 @@ Source13: config.vga.stdvga
 Source14: config.vga.vmware
 
 BuildRequires: python-base python-modules iasl
+BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 Conflicts: qemu-common < 1.6.0-alt1
 
 %description
@@ -33,39 +36,68 @@ BuildArch: noarch
 %description -n seavgabios
 SeaVGABIOS is an open-source VGABIOS implementation.
 
+%set_verify_elf_skiplist %_datadir/%name/bios*.bin
+
 %prep
 %setup -q
 echo %version > .version
-sed -i '/VERSION="${VERSION}-.*"$/d' tools/buildversion.sh
+sed -i '/VERSION="${VERSION}-.*"$/d' scripts/buildversion.sh
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
-
-%make .config
-mkdir -p binaries seabios seavgabios
+mkdir -p binaries
 
 # seabios
-%make clean distclean
-echo "" > .config
-%make oldnoconfig
-%make out/bios.bin
-cp out/bios.bin binaries/bios.bin
-cp out/*dsdt.aml binaries/
+echo 'CONFIG_DEBUG_LEVEL=%debug_level' > config.template
+echo 'CONFIG_QEMU_HARDWARE=y' >> config.template
+echo 'CONFIG_PERMIT_UNALIGNED_PCIROM=y' >> config.template
+
+build_bios() {
+	%make clean
+	cp config.template .config
+	echo CONFIG_`echo $1 | tr a-z A-Z`=y >> .config
+	make oldnoconfig V=1
+	make V=1 \
+		HOSTCC=gcc \
+		CC=x86_64-linux-gnu-gcc \
+		AS=x86_64-linux-gnu-as \
+		LD=x86_64-linux-gnu-ld \
+		OBJCOPY=x86_64-linux-gnu-objcopy \
+		OBJDUMP=x86_64-linux-gnu-objdump \
+		STRIP=x86_64-linux-gnu-strip
+	cp out/$2 binaries/bios-$1.bin
+}
+
+build_bios csm Csm16.bin
+build_bios coreboot bios.bin.elf
+build_bios qemu bios.bin
+cp out/src/fw/*dsdt*.aml binaries
 
 # seavgabios
 for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14; do
 	name=${config#*config.vga.}
 	%make clean distclean
 	cp ${config} .config
+	echo "CONFIG_DEBUG_LEVEL=%{debug_level}" >> .config
 	%make oldnoconfig
-	%make out/vgabios.bin
+	%make V=1 \
+		HOSTCC=gcc \
+		CC=x86_64-linux-gnu-gcc \
+		AS=x86_64-linux-gnu-as \
+		LD=x86_64-linux-gnu-ld \
+		OBJCOPY=x86_64-linux-gnu-objcopy \
+		OBJDUMP=x86_64-linux-gnu-objdump \
+		STRIP=x86_64-linux-gnu-strip \
+		out/vgabios.bin
 	cp out/vgabios.bin binaries/vgabios-${name}.bin
 done
 
 %install
 mkdir -p %buildroot%_datadir/%name
-install -m 0644 binaries/bios.bin %buildroot%_datadir/%name/
-install -m 0644 binaries/*dsdt.aml %buildroot%_datadir/%name/
+install -m 0644 binaries/bios-qemu.bin %buildroot%_datadir/%name/bios.bin
+install -m 0644 binaries/bios-csm.bin %buildroot%_datadir/%name/bios-csm.bin
+install -m 0644 binaries/bios-coreboot.bin %buildroot%_datadir/%name/bios-coreboot.bin
+install -m 0644 binaries/*.aml %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_datadir/seavgabios
 install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
@@ -74,14 +106,17 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %files
 %doc COPYING COPYING.LESSER README TODO
 %dir %_datadir/%name
-%_datadir/%name/bios.bin
-%_datadir/%name/*dsdt.aml
+%_datadir/%name/bios*.bin
+%_datadir/%name/*.aml
 
 %files -n seavgabios
 %dir %_datadir/seavgabios
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Wed Jan 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt1
+- 1.7.4
+
 * Wed Oct 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.3.2-alt1
 - 1.7.3.2
 
