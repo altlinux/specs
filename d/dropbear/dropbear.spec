@@ -1,12 +1,12 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
-Version: 2013.60
+Version: 2013.62
 Release: alt1
 License: MIT-style
 Group: System/Servers
 Url: http://matt.ucc.asn.au/dropbear/dropbear.html
 
-Patch: dropbear-2013.59-authkey_fp.patch
+Patch: dropbear-2013.62-authkey_fp.patch
 
 Source: %name-%version.tar.bz2
 
@@ -45,7 +45,7 @@ Manpages and other documentation for dropbear SSH.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %build
 export LIBS=-lcrypt CFLAGS="-I/usr/include/tomcrypt -I/usr/include/tommath"
@@ -76,6 +76,10 @@ install -D dropbearconvert.1 %buildroot%_man1dir/dropbearconvert.1
 %_bindir/scp
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 2013.62-alt1
+- Autobuild version bump to 2013.62
+- Update "fingerprint expose" patch
+
 * Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 2013.60-alt1
 - Autobuild version bump to 2013.60
 
