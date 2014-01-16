@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: flickcurl
 Version: 1.14
-Release: alt1.1
+Release: alt1.2
 Summary: Flickcurl C library for the Flickr API
 License: LGPL 2.1 / ASL 2.0
 Group: Graphics
@@ -83,6 +85,9 @@ gtkdocize
 %_man1dir/%name-config.1*
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt1.2
+- Fixed build
+
 * Wed Aug 17 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt1.1
 - Rebuilt with curl 7.21.7
 
