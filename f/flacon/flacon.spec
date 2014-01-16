@@ -1,5 +1,5 @@
 Name: flacon
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Audio File Encoder
@@ -35,7 +35,7 @@ pushd %_target_platform
 
 cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags'
 
 popd
 
@@ -55,6 +55,15 @@ popd
 %_man1dir/%name.1.gz
 
 %changelog
+* Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt1
+- Version 0.9.3
+
+* Sun Oct 27 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.2-alt0.M70P.1
+- Build for branch p7
+
+* Sun Oct 27 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.2-alt0.M70T.1
+- Build for branch t7
+
 * Sun Oct 27 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.2-alt1
 - Version 0.9.2
 
