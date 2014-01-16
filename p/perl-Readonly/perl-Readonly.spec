@@ -1,16 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build.pm)
 %define dist Readonly
 %def_without bootstrap
 
 Name: perl-%dist
-Version: 1.03
-Release: alt5
+Version: 1.04
+Release: alt1
 
 Summary: Readonly - facility for creating read-only scalars, arrays, hashes
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/modules/by-module/Readonly/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SA/SANKO/Readonly-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,14 +37,15 @@ should not be changed.
 
 %install
 %perl_vendor_install
-# Come home, baby!
-mv %buildroot%perl_vendor_privlib/benchmark.pl .
 
 %files
-%doc README benchmark.pl
-%perl_vendor_privlib/Readonly.pm
+%doc README.md
+%perl_vendor_privlib/Readonly*
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt5
 - enabled dependency on perl-Readonly-XS
 
