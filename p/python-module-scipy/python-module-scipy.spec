@@ -6,12 +6,12 @@ BuildRequires(pre): rpm-build-python
 %define oname scipy
 %define svnver 8cec719
 
-%def_disable docs
+%def_enable docs
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt6.git20131020
+Release: alt7.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt7.git20131020
+- Rebuilt with new python-module-sphinx
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt6.git20131020
 - Disabled docs
 
