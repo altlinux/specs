@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     1
 %define postgresql_subminor  10
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -51,6 +51,7 @@ Conflicts: %{prog_name}8.3
 Conflicts: %{prog_name}9.0
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
+BuildRequires: libselinux-devel
 
 %description
 PostgreSQL is an advanced Object-Relational database management system
@@ -280,6 +281,7 @@ database.
     --with-libxml \
     --with-libxslt \
     --with-gnu-ld \
+    --with-selinux \
     --with-ossp-uuid
 
 %make_build pkglibdir=%_libdir/%PGSQL
@@ -569,6 +571,7 @@ fi
 %_libdir/pgsql/auth_delay.so
 %_libdir/pgsql/dummy_seclabel.so
 %_libdir/pgsql/file_fdw.so
+%_libdir/pgsql/sepgsql.so
 
 %files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
@@ -622,6 +625,8 @@ fi
 %_datadir/%PGSQL/snowball_create.sql
 %_datadir/%PGSQL/unknown.pltcl
 %_datadir/%PGSQL/extension
+%_datadir/%PGSQL/contrib
+%_datadir/%PGSQL/contrib/sepgsql.sql
 %_localstatedir/%PGSQL
 %_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
@@ -696,6 +701,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Jan 16 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.10-alt2
+- Build with selinux
+
 * Sat Nov 23 2013 Alexei Takaseev <taf@altlinux.org> 9.1.10-alt1
 - 9.1.10
 
