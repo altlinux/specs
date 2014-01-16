@@ -1,6 +1,6 @@
 Name: ucblogo
 Version: 6.0
-Release: alt2.qa1
+Release: alt2.qa3
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
@@ -66,6 +66,8 @@ sed -i 's|\$\(prefix\)/info|/usr/share/info|' emacs/makefile
 
 find -name 'CVS' | xargs rm -rf
 find -name '.svn' | xargs rm -rf
+mkdir -p docs/usermanual
+cp -f docs/html/*.html docs/usermanual/
 
 %build
 # build WX version
@@ -117,6 +119,9 @@ rm -f $RPM_BUILD_ROOT%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0-alt2.qa3
+- Fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
