@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libapogee
 Version: 2.2
-Release: alt2_10
+Release: alt2_12
 Summary: Library for Apogee CCD Cameras
 
 %define majorver 2
@@ -19,6 +19,7 @@ Patch0: libapogee-suffix.patch
 # Patch to build in ppc ppc64
 #https://sourceforge.net/tracker2/?func=detail&aid=2215787&group_id=90275&atid=593019
 Patch1: libapogee-sysio.patch
+Patch2: libapogee-format-security.patch
 
 # Bug upstream about libapogee calling exit()
 # https://sourceforge.net/tracker2/?func=detail&aid=2595732&group_id=90275&atid=593019
@@ -33,7 +34,7 @@ Apogee library is used by applications to control Apogee CCDs.
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -41,6 +42,7 @@ These are the header files needed to develop a %{name} application
 %setup -q -n %{name}%{majorver}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 # curl/types.h is deprecated
 # upstream bug https://sourceforge.net/tracker/?func=detail&aid=3462419&group_id=90275&atid=593019
 sed -i '/include.*[<"]curl\/types.h[">]/d' \
@@ -64,6 +66,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_10
 - update to new release by fcimport
 
