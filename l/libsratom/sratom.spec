@@ -5,13 +5,13 @@ BuildRequires: waf
 %define oldname sratom
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sratom
-%define version 0.4.2
+%define version 0.4.4
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsratom
-Version:    0.4.2
-Release:    alt1_6
+Version:    0.4.4
+Release:    alt1_1
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -90,6 +90,9 @@ install -pm 644 COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_6
 - update to new release by fcimport
 
