@@ -1,18 +1,21 @@
 Name:       sensorfw-pegatron
 Summary:    Sensor framework integration for Pegatron Lucid tablets
 Version:    0.4
-Release:    alt1.67.4
+Release:    alt2
 Group:      System/Configuration/Other
 License:    GPLv2
 URL:        http://www.intel.com
-Source0:    %{name}-%{version}.tar.bz2
+Source0:    %{name}-%{version}.tar
 Source100:  sensorfw-pegatron.yaml
-Source101:  pegatron-lucid.sysconfig
+Source101:  pegatron-lucid.setup
 Patch0:     pegaorient-isvalid.patch
 Patch1:     fix-missing-unistd.h.patch
 BuildRequires:  libqt4-devel
 BuildRequires:  sensorfw-devel
 BuildRequires:  gcc-c++
+
+# Use sensord-daemon-conf-setup
+Requires: sensorfw > 0.7.2-alt1.83.3
 
 
 %description
@@ -53,7 +56,7 @@ mv -v %buildroot%_sysconfdir/acpi/events/pegaorient-acpid.conf %buildroot%_sysco
 # >> install post
 # << install post
 
-install -D -m0644 %{SOURCE101} %buildroot%_sysconfdir/sensorfw/pegatron-lucid.sysconfig
+install -D -m0644 %{SOURCE101} %buildroot%_sysconfdir/sensorfw/pegatron-lucid.setup
 
 
 %files
@@ -63,12 +66,15 @@ install -D -m0644 %{SOURCE101} %buildroot%_sysconfdir/sensorfw/pegatron-lucid.sy
 %_sysconfdir/sensorfw/pegaals-range
 %_sysconfdir/sensorfw/sensord-pegatron.conf
 %_sysconfdir/X11/xorg.conf.d/80-suppress-accel.conf
-%_sysconfdir/sensorfw/pegatron-lucid.sysconfig
+%_sysconfdir/sensorfw/pegatron-lucid.setup
 # >> files
 # << files
 
 
 %changelog
+* Thu Jan 16 2014 Paul Wolneykien <manowar@altlinux.org> 0.4-alt2
+- Adapt for use with sensord-daemon-conf-setup.
+
 * Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 0.4-alt1.67.4
 - Fix the missing unistd.h include.
 
