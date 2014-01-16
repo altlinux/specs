@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 %def_disable static
 #def_enable debug
 
 %define libname libhtmltmplpro
 Name: htmltmplpro
 Version: 0.9510
-Release: alt1
+Release: alt1.1
 
 Summary: HTML::Template compatible HTML template library
 License: GPL2+ or Artistic
@@ -123,6 +125,9 @@ make check
 %endif
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9510-alt1.1
+- Fixed build
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.9510-alt1
 - new version; see Changes
 
