@@ -1,7 +1,7 @@
 %define major 0.9
 Name: podofo
 Version: %major.1
-Release: alt1
+Release: alt1.1
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -53,7 +53,10 @@ Development files for the PoDoFo library.
 %prep
 %setup
 %patch -p2
-%cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=%buildroot/%_prefix -DPODOFO_BUILD_SHARED:BOOL=TRUE
+%cmake -G "Unix Makefiles" \
+	-DCMAKE_INSTALL_PREFIX=%buildroot/%_prefix \
+	-DPODOFO_BUILD_SHARED:BOOL=TRUE \
+	-DFREETYPE_INCLUDE_DIR:FILEPATH=%_includedir/freetype2
 
 %build
 %make_build -C BUILD VERBOSE=1
@@ -74,6 +77,9 @@ Development files for the PoDoFo library.
 %_libdir/*.so
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.1
+- Fixed build
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - new version 0.9.1 (with rpmrb script)
 
