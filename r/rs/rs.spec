@@ -1,7 +1,7 @@
 Name: rs
-Version: 9.2
+Version: 10.0
 Release: alt1
-Source: rs-9.2.tar
+Source: rs-10.0.tar
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/%name
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Reshape a data array
@@ -34,6 +34,9 @@ install %name.1 %buildroot%_man1dir/
 %_man1dir/%name.*
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 10.0-alt1
+- Autobuild version bump to 10.0
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 9.2-alt1
 - Autobuild version bump to 9.2
 - Switch to RELENG regular update
