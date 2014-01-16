@@ -1,5 +1,5 @@
 Name: gnucash-docs
-Version: 2.4.2
+Version: 2.6.0
 Release: alt1
 
 Summary: Documentation for the Gnucash
@@ -42,10 +42,13 @@ This is the documentation module for GnuCash.
 
 %files
 %doc AUTHORS COPYING-DOCS ChangeLog NEWS README HACKING
-%_datadir/gnome/help/gnucash/
-%_datadir/omf/gnucash-docs/
+%_datadir/gnome/help/gnucash-*/
+%_datadir/omf/gnucash-*/
 
 %changelog
+* Thu Jan 09 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- new version
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
 - new version 2.4.2 (with rpmrb script)
 

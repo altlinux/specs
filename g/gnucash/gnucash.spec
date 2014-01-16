@@ -1,5 +1,9 @@
+# TODO:fix build Python bindings
+%def_disable python
+
+
 Name: gnucash
-Version: 2.4.13
+Version: 2.6.0
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -12,9 +16,6 @@ Url: http://www.gnucash.org
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Source1: %name-48.xpm
-Source2: %name-32.xpm
-Source3: %name-16.xpm
 Source5: %name-README.RU
 Source7: conv_gnucash2.sh
 
@@ -25,12 +26,22 @@ Requires(post): GConf2
 AutoReq: yes, noperl
 
 BuildRequires: doxygen graphviz guile18-devel intltool libglade-devel libgnomeoffice-devel libgnomeui-devel libgtkhtml3-devel libofx-devel libreadline-devel slib-guile
+BuildRequires: libGConf-devel
 BuildRequires: libdbi-devel
-BuildRequires: libmysqlclient-devel postgresql9.1-devel
+BuildRequires: libdbi-drivers-devel
+BuildRequires: libdbi-drivers-dbd-sqlite
+BuildRequires: libdbi-drivers-dbd-mysql
+BuildRequires: libdbi-drivers-dbd-pgsql
 #if_disabled goffice_internal
 BuildPreReq: libgnomeoffice-devel
 #endif
 BuildRequires: zlib-devel
+BuildRequires: libxslt-devel
+BuildRequires: aqbanking-devel
+BuildRequires: libwebkitgtk2-devel
+%ifdef python
+BuildRequires: python-devel
+%endif
 
 Requires: slib-guile
 
@@ -89,34 +100,41 @@ fetch and update.
 
 %build
 %autoreconf
-%configure --with-gnome --enable-ofx
+%ifdef python
+sed -i 's|get_python_lib(0|get_python_lib(1|g' configure
+export PYTHON=/usr/bin/python
+%endif
+%configure --with-gnome \
+	   --enable-ofx \
+	   --enable-aqbanking \
+	   --with-html-engine=webkit \
+	   --enable-locale-specific-tax \
+	   --enable-dbi \
+%ifdef python
+	   --enable-python \
+%endif
+	   --disable-static
 
 %make_build
+#ifdef python
+#  PYTHON_CPPFLAGS="$(pkg-config python --cflags)"
+#endif
 
 %install
 %makeinstall_std
 
-rm -f %buildroot%_bindir/gnucash-valgrind
+rm -rf %buildroot%_bindir/gnucash-valgrind \
+       %buildroot%_libexecdir/%name/src/
 
 %find_lang %name --with-gnome
 
 install -m755 %SOURCE7 %buildroot%_bindir/conv_gnucash2.sh
 
 test -f ChangeLog && bzip ChangeLog*
-rm -f %buildroot%_datadir/gnucash/gnome
-ls -1 %buildroot%_sysconfdir/gconf/schemas/* | sed s?.*/etc/gconf/schemas/?? | sed s/\.schemas$// > %buildroot%_datadir/%name/%name-schemas.list
 
-%post
-cat %_datadir/%name/%name-schemas.list | while read scm; do
-    %gconf2_install $scm;
-done
-
-%preun
-if [ $1 = 0 ]; then
-cat %_datadir/%name/%name-schemas.list | while read scm; do
-    %gconf2_uninstall $scm;
-done
-fi
+rm -f %buildroot%_datadir/gnucash/gnome \
+      %buildroot%_bindir/gnc-test-env \
+      %buildroot%_bindir/gnc-fq-update
 
 %files -n lib%name-devel
 %doc ChangeLog.*
@@ -136,17 +154,17 @@ fi
 %files -f %name.lang
 %doc AUTHORS ChangeLog.bz2 HACKING NEWS README
 %doc doc/README.* doc/guile-hackers.txt
+%doc %_defaultdocdir/%name/
 %_bindir/*
-%_sysconfdir/gconf/schemas/*
 %config %_sysconfdir/%name
 %_desktopdir/%name.desktop
-%dir %_libexecdir/%name/
 %_libexecdir/%name/overrides/
-%dir %_datadir/%name/
 %_datadir/%name/
-%_man1dir/*
+%doc %_man1dir/*
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
+%_datadir/appdata/%name.appdata.xml
+%_datadir/glib-2.0/schemas/org.%name.*.xml
 
 #hbci отдельно
 #%exclude %_datadir/%name/glade/hbci*
@@ -154,6 +172,11 @@ fi
 %files quotes
 
 %changelog
+* Thu Jan 16 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version
+- Use aqbanking
+- Remove redundant binaries and registration of GConf schemas
+
 * Sun Nov 24 2013 Andrey Cherepanov <cas@altlinux.org> 2.4.13-alt1
 - New version
 - Build with libofx-0.9.9
