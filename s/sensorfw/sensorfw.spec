@@ -2,10 +2,10 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt1.83.3
+Release:    alt2
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
-Source0:    %{name}-%{version}.tar.gz
+Source0:    %{name}-%{version}.tar
 Source1:    sensorfw-rpmlintrc
 Source2:    sensord.service
 Source3:    sensord-daemon-conf-setup
@@ -14,7 +14,7 @@ Source5:    sensord-icdk.conf
 Source6:    sensord-exopc.conf
 Source7:    sensord-mrst_cdk.conf
 Source8:    sensord-oaktrail.conf
-Source9:    sensord-sysconfig.filetrigger
+Source9:    sensord.sysconfig
 Source100:  sensorfw.yaml
 Patch0:     sensorfw-0.7.1-tests-directories.patch
 Patch1:     sensorfw-0.7.1-pegatron-accel.patch
@@ -172,13 +172,8 @@ mkdir -p %{buildroot}/%{_lib}/systemd/system/basic.target.wants
 ln -s ../sensord.service %{buildroot}/%{_lib}/systemd/system/basic.target.wants/sensord.service
 # << install post
 
-# Install the filetrigger for sensord sysconfig
-install -D -m755 %{SOURCE9} %buildroot%_rpmlibdir/sensord-sysconfig.filetrigger
-
-# Generate the default sysconfig for sensord:
-mkdir -p -m0755 %buildroot%_sysconfdir/sysconfig
-SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
-
+# Install the sensord sysconfig
+install -D -m644 %{SOURCE9} %buildroot%_sysconfdir/sysconfig/sensord
 
 #%preun
 #if systemctl -q is-active sensord.service; then systemctl stop sensord.service; fi
@@ -206,9 +201,8 @@ SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
 %doc debian/copyright debian/README COPYING
 /%{_lib}/systemd/system/sensord.service
 /%{_lib}/systemd/system/basic.target.wants/sensord.service
-%exclude %{_bindir}/sensord-daemon-conf-setup
+%{_bindir}/sensord-daemon-conf-setup
 %_initdir/sensord
-%_rpmlibdir/sensord-sysconfig.filetrigger
 %{_sysconfdir}/sysconfig/sensord
 # << files
 
@@ -262,6 +256,10 @@ SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
 # << files configs
 
 %changelog
+* Thu Jan 16 2014 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt2
+- Fix the systemd unit.
+- Use autodetect script for both systemd and SysV-init.
+
 * Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 0.7.2-alt1.83.3
 - Fix the build: add missing unistd.h and some libs, fix the broken
   local method call.
