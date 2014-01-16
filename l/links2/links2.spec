@@ -3,15 +3,16 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.6
-Release: alt1.1
+Version: 2.8
+Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
 License: GPL
 Group: Networking/WWW
 
 Url: http://links.twibright.com
-Source: %url/download/links-%version.tar.bz2
+Source0: %url/download/links-%version.tar.gz
+Source100: %name.watch
 
 %if_with directfb
 BuildPreReq: libdirectfb-devel
@@ -38,6 +39,8 @@ Obsoletes: links
 # optimized out: alternatives libX11-devel libcom_err-devel libkrb5-devel libsysfs-devel pkg-config xorg-xproto-devel zlib-devel
 BuildRequires: bzlib-devel libXt-devel libdirectfb-devel libgpm-devel libjpeg-devel liblzma-devel libpng-devel libssl-devel libtiff-devel
 
+Summary(ru_RU.UTF-8): Текстовый и графический веб-браузер, похожий на Lynx
+
 %description
 Links is a graphics and text mode web browser, released under GPL.
 Links runs in graphics mode (mouse required) on X Window System (UN*X,
@@ -46,6 +49,18 @@ Links runs in text mode (mouse optional) on UN*X console, ssh/telnet
 virtual terminal, vt100 terminal, xterm, and virtually any other text
 terminal. Mouse is supported for GPM, xterm, and OS/2. Links supports
 colors on terminal.
+
+%description -l ru_RU.UTF-8
+Links - веб-браузер для графического и текстового режима, выпущенный
+под лицензией GPL.
+
+В графическом режиме требует мышь и работает на X Window System
+(UN*X, Cygwin), SVGAlib, Linux Framebuffer, OS/2 PMShell, AtheOS GUI.
+
+В текстовом режиме может использовать мышь и работает на UN*X-консоли,
+виртуальных терминалах ssh/telnet, vt100, xterm и практически любых
+других текстовых. Мышь поддерживается на GPM, xterm и OS/2.
+Links умеет цвета в терминале.
 
 %prep
 %setup -n links-%version
@@ -111,6 +126,10 @@ chmod +x %buildroot%_bindir/x%name
 %doc README SITES mailcap.pl
 
 %changelog
+* Thu Jan 16 2014 Michael Shigorin <mike@altlinux.org> 2.8-alt1
+- new version (watch file uupdate)
+- added Russian package description
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1.1
 - Rebuilt with libpng15
 
