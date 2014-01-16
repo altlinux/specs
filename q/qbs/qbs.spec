@@ -1,6 +1,6 @@
 Name: qbs
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Qt Build Suite
 License: LGPLv2.1 with exceptions
@@ -62,6 +62,7 @@ Provides Qt support for the %name
 %package examples
 Summary: Examples for the usage of %name
 Group: Development/Tools
+BuildArch: noarch
 
 %description examples
 Provides examples for using the %name
@@ -91,10 +92,12 @@ Provides examples for using the %name
 %_bindir/%name-config
 %_bindir/%name-detect-toolchains
 %_bindir/%name-qmltypes
+%dir %_datadir/%name
 %_datadir/%name/imports
 %dir %_datadir/%name/modules
 %_datadir/%name/modules/%name
 %_datadir/%name/modules/utils.js
+%dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/lib%{name}core.so.*
 
@@ -119,5 +122,8 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.1.1-alt2
+- Fix arch for examples subpackage
+
 * Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.1.1-alt1
 - Initial release for ALT Linux
