@@ -13,8 +13,8 @@
 %define nv_version 331
 %define nv_release 38
 %define nv_minor %nil
-%define pkg_rel alt128
-%define set_gl_nvidia_ver 0.10.0
+%define pkg_rel alt129
+%define set_gl_nvidia_ver 0.10.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -244,6 +244,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt129
+- fix process non-NVIDIA devices (ALT#29729)
+
 * Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt128
 - bump version
 
