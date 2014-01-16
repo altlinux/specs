@@ -1,5 +1,5 @@
 Name: gifsicle
-Version: 1.71
+Version: 1.78
 Release: alt1
 Summary: command-line program for manipulating GIF images
 Group: Graphics
@@ -39,6 +39,9 @@ program that checks whether two GIFs look the same.
 %doc README* NEWS
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 1.78-alt1
+- Autobuild version bump to 1.78
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.71-alt1
 - Autobuild version bump to 1.71
 - Fix docs
