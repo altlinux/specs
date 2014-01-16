@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.1.0
+Version: 6.2.1
 Release: alt1
 
 Summary: DHCP Client
@@ -66,6 +66,11 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Thu Jan 16 2014 Mikhail Efremov <sem@altlinux.org> 1:6.2.1-alt1
+- dhcpcd.conf: Disable wpa_supplicant hook by default.
+- wpa_supplicant hook: Use wpa_supplicant.conf for the interface.
+- Updated to 6.2.1.
+
 * Fri Sep 20 2013 Mikhail Efremov <sem@altlinux.org> 1:6.1.0-alt1
 - Disable 'persistent' option by default.
 - Don't package 70-vendor-encap hook.
