@@ -1,5 +1,5 @@
 Name: haveged
-Version: 1.7c
+Version: 1.8
 Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
@@ -58,5 +58,8 @@ ln -s rc.d/init.d %buildroot/etc/init.d
 %_libdir/*.so
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 1.8-alt1
+- Autobuild version bump to 1.8
+
 * Mon Dec 16 2013 Fr. Br. George <george@altlinux.ru> 1.7c-alt1
 - Initial buildfrom upstream spec
