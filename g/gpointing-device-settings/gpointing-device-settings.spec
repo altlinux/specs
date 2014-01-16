@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name:     gpointing-device-settings
 Version:  1.5.1
-Release:  alt4
+Release:  alt4.1
 Summary:  Configuration tool for pointing devices
 
 Group:    System/Configuration/Hardware
@@ -124,6 +126,9 @@ fi
 %_libdir/*.so
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt4.1
+- Fixed build
+
 * Mon May 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt4
 - Restore in Sisyphus (ALT #28927)
 - Build with new GConf and gnome-settings-daemon
