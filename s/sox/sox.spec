@@ -1,7 +1,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.1
-Release: alt1
+Release: alt1.1
 License: LGPL
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -17,7 +17,7 @@ Requires: libsox-fmt-alsa = %version-%release
 Requires: libsox-fmt-ao = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
-Requires: libsox-fmt-ffmpeg = %version-%release
+#Requires: libsox-fmt-ffmpeg = %version-%release
 Requires: libsox-fmt-flac = %version-%release
 Requires: libsox-fmt-gsm = %version-%release
 Requires: libsox-fmt-lpc10 = %version-%release
@@ -335,8 +335,8 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files -n libsox-fmt-fap
 %_libdir/sox/libsox_fmt_fap.so
 
-%files -n libsox-fmt-ffmpeg
-%_libdir/sox/libsox_fmt_ffmpeg.so
+#files -n libsox-fmt-ffmpeg
+#_libdir/sox/libsox_fmt_ffmpeg.so
 
 %files -n libsox-fmt-flac
 %_libdir/sox/libsox_fmt_flac.so
@@ -397,6 +397,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.4.1-alt1.1
+- Fixed build
+
 * Wed Feb 20 2013 Denis Smirnov <mithraen@altlinux.ru> 14.4.1-alt1
 - 14.4.1
 
