@@ -14,7 +14,7 @@
 
 Name: mint-display-manager
 Version: 1.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: The Mint Display Manager
 License: %gpl2plus
@@ -26,6 +26,7 @@ Source1: mdm_xdmcp.control
 Source2: mdm-termok-command
 
 Patch: %name-%version-%release.patch
+Patch1: mint-display-manager-alt-noWerror.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: desktop-file-utils intltool gnome-common gnome-doc-utils libglade-devel libxml2-devel
@@ -61,12 +62,14 @@ This package contains user documentation for Mint Display Manager.
 
 %prep
 %setup
+%patch1 -p2
 %patch -p1
 
 %build
 export ac_cv_path_CONSOLE_HELPER=%_bindir/consolehelper
 gnome-doc-prepare --force
 %autoreconf
+
 %configure \
 		--with-sysconfsubdir=X11/mdm \
 		--enable-console-helper \
@@ -79,6 +82,10 @@ gnome-doc-prepare --force
 		--disable-scrollkeeper \
 		%{subst_enable static} \
 		--disable-dependency-tracking
+
+for i in `find -type f`; do
+	sed -i 's|-Werror=[^\w]*||' $i
+done
 
 %make_build
 gzip -9nf ChangeLog
@@ -142,6 +149,9 @@ useradd -r -N -c 'MDM' -g %base_name -d /var/lib/mdm -s /dev/null %base_name >/d
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1.1
+- Fixed build
+
 * Tue Jan 22 2013 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Fix LocaleFile path in the mdm.conf.in.
 - Masquerade Xreset dependence.
