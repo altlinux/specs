@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: libkate
 Version: 0.4.1
-Release: alt1.3
+Release: alt1.4
 Summary: kate is a karaoke and text codec for embedding in ogg
 License: BSD-style
 Group: Video
@@ -83,6 +85,9 @@ new Kate streams to an Ogg file.
 %_man1dir/KateDJ.1*
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.4
+- Fixed build
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.3
 - Rebuilt with libpng15
 
