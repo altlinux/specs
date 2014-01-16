@@ -1,15 +1,14 @@
 Summary: Python extension module for reading flow-tools' data
 Name: python-module-pyflowtools
-Version: 0.3.4
-Release: alt2.1.1
+Version: 0.3.4.1
+Release: alt1
 %setup_python_module pyflowtools
 Url: http://code.google.com/p/pyflowtools/
 Source0: %modulename-%version.tar.gz
 License: GPL
 Group: Development/Python
-Packager: Python Development Team <python at packages.altlinux.org>
 Requires: flow-tools zlib
-BuildRequires: libflow-tools-devel zlib-devel
+BuildRequires: libflow-tools-ng-devel zlib-devel
 Obsoletes: pyflowtools
 
 %description
@@ -35,6 +34,9 @@ http://www.splintered.net/sw/flow-tools).
 %doc CHANGES README COPYING example.py flowprint-full
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4.1-alt1
+- Version 0.3.4.1
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.4-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
