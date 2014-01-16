@@ -3,8 +3,8 @@
 
 %define rname ktp-accounts-kcm
 Name: kde4-ktp-accounts-kcm
-Version: 0.7.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Configuration Module for Telepathy Instant Messaging Accounts
@@ -82,6 +82,12 @@ done
 #%_K4includedir/KTp/
 
 %changelog
+* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
+- new version
+
+* Tue Dec 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1.M70P.1
+- built for M70P
+
 * Thu Nov 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2
 - turn on by default "ConnectAutomatically" during account creation
 
