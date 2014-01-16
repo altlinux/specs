@@ -1,6 +1,6 @@
 Name: devscripts
 Version: 2.12.6
-Release: alt2
+Release: alt2.1
 Source: %{name}_%version.tar.gz
 # XXX We have awfully old po4a
 Source1: devscripts-po4a.conf
@@ -18,6 +18,8 @@ BuildRequires: python-module-setuptools
 # Automatically added by buildreq on Tue Jun 21 2011
 # optimized out: libgpg-error perl-Dpkg perl-Encode perl-File-BaseDir perl-HTTP-Date perl-HTTP-Message perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-CharWidth perl-Text-WrapI18N perl-TimeDate perl-URI perl-libnet perl-podlators python-base xml-common
 BuildRequires: docbook5-style-xsl dpkg perl-DBM perl-File-DesktopEntry perl-libwww po4a xsltproc
+
+BuildPreReq: perl-Pod-Checker
 
 %description
 Devscripts provides several scripts which may be of use to Debian
@@ -109,6 +111,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.6-alt2.1
+- Fixed build
+
 * Wed Oct 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.12.6-alt2
 - Fix build with new pod2man.
 
