@@ -1,6 +1,8 @@
+%set_automake_version 1.9
+
 Name: desproxy
 Version: 0.1.0
-Release: alt0.2.qa1
+Release: alt0.2.qa2
 
 Summary: desproxy - a TCP tunnel for HTTP proxies
 License: GPL
@@ -40,6 +42,9 @@ Patch1: %name-autoconf.patch.bz2
 %_datadir/locale/*/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt0.2.qa2
+- Fixed build
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.0-alt0.2.qa1
 - NMU: rebuilt for debuginfo.
 
