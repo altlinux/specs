@@ -1,5 +1,5 @@
 Name: zsh
-Version: 5.0.0
+Version: 5.0.5
 Release: alt1
 Epoch: 1
 
@@ -14,8 +14,9 @@ Patch: zsh-%version-%release.patch
 Provides: zsh-doc = %epoch:%version
 Obsoletes: zsh-doc < %epoch:%version
 
-# Automatically added by buildreq on Sun Jun 21 2009
-BuildRequires: libcap-devel libgdbm-devel libncursesw-devel libpcre-devel yodl
+# Automatically added by buildreq on Thu Jan 16 2014
+# optimized out: gnu-config groff-base less libncurses-devel libtinfo-devel makeinfo
+BuildRequires: git-core libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl
 
 # For make check
 BuildPreReq: /dev/pts
@@ -109,6 +110,13 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Thu Jan 16 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.5-alt1
+- Autobuild version bump to 5.0.5
+- Fix merge script
+
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 1:5.0.2-alt1
+- Autobuild version bump to 5.0.2
+
 * Thu Nov 15 2012 Fr. Br. George <george@altlinux.ru> 1:5.0.0-alt1
 - Autobuild version bump to 5.0.0
 - Exclude upstream-privided systemd completion
