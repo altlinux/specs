@@ -4,8 +4,8 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.72
-Release: alt3
+Version: 0.73
+Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
 
@@ -16,8 +16,6 @@ Group: Development/Perl
 Url: %CPAN %module
 # another URL: http://www.net-dns.org/
 Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-%{version}.tar.gz
-# see https://rt.cpan.org/Public/Bug/Display.html?id=84601 for patch description
-Patch: net-dns-0.72-mem-leak.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Digest-BubbleBabble perl-Digest-HMAC perl-IO-Socket-INET6 perl-Net-IP perl-Test-Pod
@@ -28,7 +26,6 @@ perform nearly any type of DNS query from a Perl script.
 
 %prep
 %setup -n %module-%version
-%patch -p0
 
 # Fix test that will not succeed in Sisyphus build environment.
 sed -i- 's/tests=>12/tests=>11/; s/use Net::DNS::Nameserver;/exit;/' t/11-inet6.t
@@ -51,6 +48,9 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- automated CPAN update
+
 * Mon Nov 11 2013 Vladimir Didenko <cow@altlinux.org> 0.72-alt3
 - fix memory leak (closes: #29564)
 
