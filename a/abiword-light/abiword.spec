@@ -5,7 +5,7 @@
 Name: abiword-light
 Summary: Lean and fast full-featured word processor
 Version: 2.8.6
-Release: alt1
+Release: alt1.1
 Group: Office
 License: GPL
 Url: http://www.abisource.com/
@@ -22,9 +22,10 @@ Source11: abiword.mime
 
 Patch: abiword-2.8.6-headers.patch
 Patch1: abiword-2.8.4-alt-glib2.patch
-Patch2: abiword-2.8.6-alt-gcc4.6.patch
+#Patch2: abiword-2.8.6-alt-gcc4.6.patch
 Patch3: abiword-2.8.6-alt-libpng15.patch
 Patch4: abiword-2.8.6-alt-link-plugins.patch
+Patch5: abiword-2.8.6-alt-undefined.patch
 
 
 #AutoReq: yes, noshell
@@ -84,9 +85,10 @@ Headers and pkgconfig support for  Abiword plugin building.
 %setup -q -n abiword-%version
 %patch -p1 -b .headers
 %patch1 -p2
-%patch2 -p2
+#patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 
@@ -147,6 +149,9 @@ install -D %SOURCE1 %buildroot%_desktopdir/
 #TODO: apply %%lang tags to localized files /usr/share/abiword-2.8/strings/*.strings (5 Mb)
 
 %changelog
+* Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt1.1
+- Fixed build
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
 - new version 2.8.6 (with rpmrb script)
 - rebuild with libwpg
