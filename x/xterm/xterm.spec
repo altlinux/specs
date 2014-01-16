@@ -25,8 +25,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 297
-Release: alt2
+Version: 300
+Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.KOI8-R): Стандартный эмулятор терминала для X Window System
@@ -170,6 +170,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 300-alt1
+- Autobuild version bump to 300
+
 * Wed Oct 09 2013 Fr. Br. George <george@altlinux.ru> 297-alt2
 - Shorten passedPty to fit PTYCHARLEN (Closes: #29431)
 
