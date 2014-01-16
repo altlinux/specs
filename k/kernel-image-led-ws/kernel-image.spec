@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.26
-Release: alt2
+Version: 3.10.27
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 26
+%define kernel_stable_version 27
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1794,6 +1794,13 @@ done)
 
 
 %changelog
+* Thu Jan 16 2014 Led <led@altlinux.ru> 3.10.27-alt1
+- 3.10.27
+- updated:
+  + feat-kernel-vserver
+- added:
+  + fix-drivers-video--efifb
+
 * Tue Jan 14 2014 Led <led@altlinux.ru> 3.10.26-alt2
 - updated:
   + feat-drivers-block--rxdsk
