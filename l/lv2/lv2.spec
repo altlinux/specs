@@ -3,14 +3,14 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lv2
-%define version 1.6.0
+%define version 1.8.0
 %global debug_package %{nil}
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.6.0
-Release:        alt1_2
+Version:        1.8.0
+Release:        alt1_1
 Summary:        Audio Plugin Standard
 Group:          System/Libraries
 
@@ -74,12 +74,20 @@ Provides:       %{name}-docs = %{version}-%{release}
 %description    doc
 Documentation for the LV2 plugin API.
 
+%package        example-plugins
+Summary:        Examples of the LV2 Audio Plugin Standard
+Group:          Audio/Multimedia
+
+%description    example-plugins
+Example LV2 audio plugins
+
 %prep
 %setup -q
 
 %build
+export CFLAGS="%{optflags}"
 ./waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} --debug \
-  --docs --docdir=%{_pkgdocdir} --no-plugins
+  --docs --docdir=%{_pkgdocdir}
 ./waf -vv %{?_smp_mflags}
 
 %install
@@ -97,11 +105,15 @@ done
 %{_pkgdocdir}/NEWS
 %{_pkgdocdir}/README
 %{_libdir}/%{name}/
+
 %exclude %{_libdir}/%{name}/*/*.[ch]
 
 %files devel
+%{_bindir}/lv2specgen.py
+%{_datadir}/lv2specgen
 %{_includedir}/%{name}.h
 %{_includedir}/%{name}/
+%{_libdir}/%{name}/eg-*
 %{_libdir}/%{name}/*/*.[hc]
 %{_libdir}/pkgconfig/lv2core.pc
 %{_libdir}/pkgconfig/%{name}.pc
@@ -110,6 +122,9 @@ done
 %{_pkgdocdir}/
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - update to new release by fcimport
 
