@@ -1,7 +1,7 @@
 Name: profanity
 # configure.ac:AC_INIT([profanity], [0.1.10], [boothj5web@gmail.com])
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
@@ -35,6 +35,9 @@ cp %SOURCE1 profrc
 %_man1dir/*
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 0.3.1-alt1
+- Autobuild version bump to 0.3.1
+
 * Tue Aug 27 2013 Fr. Br. George <george@altlinux.ru> 0.3.0-alt2
 - Add themes and sample config file
 
