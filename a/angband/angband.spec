@@ -1,5 +1,5 @@
 Name: angband
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Angband is a "graphical" dungeon adventure game
@@ -42,15 +42,16 @@ EOF
 
 %build
 %configure --enable-x11 --enable-curses --disable-sdl
-%make_build configdir=%_sysconfdir/%name libdatadir=%_datadir/%name
+%make_build
 
 %install
-%makeinstall configdir=%buildroot%_sysconfdir/%name libdatadir=%buildroot%_datadir/%name
+%makeinstall_std DESTDIR=%buildroot
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc copying.txt readme.txt thanks.txt changes.txt faq.txt
 %dir %_sysconfdir/%name
+%_defaultdocdir/%name
 %config %_sysconfdir/%name/*
 #attr(02711,games,games) %_bindir/%name
 %_bindir/%name
@@ -59,6 +60,10 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 3.5.0-alt1
+- Autobuild version bump to 3.5.0
+- Fix paths
+
 * Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 3.4.1-alt1
 - Autobuild version bump to 3.4.1
 - Heavy path fixes (no more shared hiscores supported by upstream)
