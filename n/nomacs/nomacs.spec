@@ -1,14 +1,16 @@
-Name:		nomacs
-Version:	1.0.2
-Release:	alt1
-License:	GPLv3
-Group:		Graphics
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
-Summary:	A fast and small image viewer
-Source0:	http://sourceforge.net/projects/nomacs/files/%name-%version/%name-%version.tar.bz2
-Url:		http://www.nomacs.org
+Name: nomacs
+Version: 1.6.3
+Release: alt1
 
-BuildRequires: cmake gcc-c++ libexiv2-devel libgomp-devel libopencv-devel libraw-devel-static libqt4-devel
+License: GPLv3
+Group: Graphics
+Summary: A fast and small image viewer
+Url: http://www.nomacs.org
+
+Source: http://sourceforge.net/projects/nomacs/files/%name-%version/%name-%version.tar.bz2
+
+BuildRequires: cmake gcc-c++ libqt4-devel libexiv2-devel libgomp-devel
+BuildRequires: libtiff-devel libopencv-devel libraw-devel-static zlib-devel
 
 %description
 nomacs is a free image viewer small, fast and able to handle the most common
@@ -19,25 +21,30 @@ or via LAN is possible. It allows to compare images and spot the differences
 
 %prep
 %setup
+rm -rf {LibRaw,exiv2,expat,zlib}*
 
 %build
-cmake \
-	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags"
-%make_build
+%cmake ../ImageLounge
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmakeinstall_std
 
-%files
+%find_lang --with-qt %name
+
+%files -f %name.lang
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_man1dir/*
-%_datadir/%name/translations/*.qm
+%dir %_datadir/%name/translations
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+- built against libexiv2.so.13
+
 * Fri Apr 05 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.2-alt1
 - initial build for ALT Linux
