@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-devel libglpk-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq5.4-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
+BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-devel libglpk35-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq5.4-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 # END SourceDeps(oneline)
 %define oname gnunet
 Name: gnunet
 Version: 0.9.5a
-Release: alt1
+Release: alt1.1
 
 Summary: Peer-to-peer framework
 
@@ -59,7 +59,7 @@ applications which will use %name.
 %build
 %autoreconf
 %configure --disable-rpath
-%make_build || %make
+%make_build V=1 || %make V=1
 
 %install
 %makeinstall_std
@@ -179,6 +179,9 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetvpn.pc
 
 %changelog
+* Fri Jan 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5a-alt1.1
+- Rebuilt with glpk35
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.5a-alt1
 - Friendly NMU: update to 0.9.5a
 
