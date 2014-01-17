@@ -1,6 +1,6 @@
 Name: mpg123
-Version: 1.13.4
-Release: alt2
+Version: 1.17.0
+Release: alt1
 
 Summary: MPEG audio player
 Group: Sound
@@ -9,18 +9,21 @@ License: distributable
 ExclusiveArch: %ix86 x86_64 %arm
 
 %ifarch %ix86
-%define wcpu i386
+%define wcpu i586
+%else
+%ifarch x86_64
+%define wcpu x86-64
 %else
 %define wcpu generic
 %endif
+%endif
 
-Url: http://www.%name.de
-Source: %name-%version.tar
+Url: http://www.%name.org
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
-Packager: Alexey Morsov <swi@altlinux.ru>
 
-BuildRequires: libalsa-devel libaudio-devel esound-devel libaudiofile-devel libSDL_sound-devel libSDL-devel libltdl-devel
-BuildRequires: libpulseaudio-devel
+BuildRequires: libalsa-devel libaudio-devel esound-devel libaudiofile-devel
+BuildRequires: libSDL_sound-devel libSDL-devel libltdl-devel libpulseaudio-devel
 
 %description
 Mpg123 is a fast, free and portable MPEG audio player for Unix.
@@ -55,10 +58,11 @@ This package provides mpg123 library headers
 install -p -m644 %SOURCE1 .
 
 %build
-%undefine __libtoolize
 %autoreconf
 %add_optflags %optflags_shared
-%configure --with-audio='alsa oss esd sdl pulse' --with-optimization=0 --enable-ltdl-install=no --with-cpu=%{wcpu}
+%configure --with-audio='alsa oss esd sdl pulse' \
+	--with-optimization=0 \
+	--with-cpu=%{wcpu}
 %make_build
 
 %install
@@ -83,6 +87,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13.4-alt2
 - build for arm too
 
