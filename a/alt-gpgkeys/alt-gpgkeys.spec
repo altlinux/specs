@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.78
+Version: 0.7.79
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,10 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.7.79-alt1
+- Updated key: naf@ (4C8055EB; closes: #25143).
+- Added key: ikar@ (E9C46618; closes: #29605).
+
 * Wed Jan 08 2014 Dmitry V. Levin <ldv@altlinux.org> 0.7.78-alt1
 - Updated key: ildar@ (B2052C03; closes: #22294).
 
