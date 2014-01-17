@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.9.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.pre.git20131113
+Release: alt1.pre.git20140108
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -33,7 +33,7 @@ BuildPreReq: doxygen graphviz
 BuildPreReq: libfftw3-mpi-devel libexodusii-devel libparmetis0-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel libblitz-devel getfemxx
 BuildPreReq: libtbb-devel python-module-sphinx-devel python-module-Pygments
-BuildPreReq: libglpk-devel libaztecoo10-devel libloca10-devel libbelos10-devel
+BuildPreReq: libglpk35-devel libaztecoo10-devel libloca10-devel libbelos10-devel
 BuildPreReq: librtop10-devel libthyra10-devel libtpetra10-devel libkokkos10-devel
 BuildPreReq: libisorropia10-devel libadolc-devel libsparskit-devel
 BuildPreReq: liboptika10-devel libctrilinos10-devel libpiro10-devel
@@ -309,7 +309,7 @@ done
 	--with-tbb=%prefix \
 	--with-tbb-lib=%_libdir \
 	--with-gm=%prefix \
-	--with-glpk-include=%_includedir/glpk \
+	--with-glpk-include=%_includedir/glpk35 \
 	--with-glpk-lib=%_libdir \
 	--with-lapack=lapack \
 	--with-eigen-include=%_includedir/eigen3 \
@@ -457,6 +457,10 @@ popd
 %endif
 
 %changelog
+* Fri Jan 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.pre.git20140108
+- New snapshot
+- Rebuilt with glpk35
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.pre.git20131113
 - Version 0.9.3-pre
 
