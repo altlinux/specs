@@ -3,7 +3,7 @@
 %define cvs_date rc2
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1
+%define rel alt2
 
 %def_disable static
 # only bluez4 supported
@@ -50,6 +50,7 @@ Patch4: e17-0.17.0-alt-g-s-d_path.patch
 Patch5: e17-0.17.1-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.17.1-pam-helper.patch
+Patch12: fix-connman-module-detection.patch
 
 Obsoletes: e17
 Provides: %_name = %version-%release
@@ -100,6 +101,7 @@ Development headers for Enlightenment.
 %patch5 -p1 -b .nosuid
 %patch6 -p2
 %patch11 -p1
+%patch12 -p2
 
 %build
 %autoreconf
@@ -172,6 +174,7 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/applications/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/e18.service}
 %doc AUTHORS COPYING README
+%exclude %_libdir/enlightenment/modules/*/*/*.la
 
 %files devel
 %dir %_includedir/enlightenment/
@@ -181,6 +184,10 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Jan 17 2014 Paul Wolneykien <manowar@altlinux.org> 1:0.18.2-alt2
+- Exclude the extra *.la files.
+- Fix the connman module detection (patch).
+
 * Sat Dec 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.2-alt1
 - 0.18.2
 
