@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.2
+Version: 0.9.9.3
 Release: alt1
 
 Summary: The system startup scripts
@@ -164,6 +164,11 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.3-alt1
+- rc.sysinit: determine selinuxfs mountpoint at runtime.
+- init.d/netfs: added glusterfs support
+  (by Danil Mikhailov; closes: #29304).
+
 * Wed Nov 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.2-alt1
 - scripts/cleanup: pass --remove --exclude-prefix=/dev
   to systemd-tmpfiles (closes: #29537).
