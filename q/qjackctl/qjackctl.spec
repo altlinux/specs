@@ -3,11 +3,12 @@
 %define cvsdate 20060910
 %define prerel %nil
 
+%def_disable qt5
 # enable/disable JACK version support
 %def_disable jack_version
 
 Name: qjackctl
-Version: 0.3.10
+Version: 0.3.11
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -30,8 +31,12 @@ Source: http://prdownloads.sourceforge.net/%name/%name-%version%prerel.tar.gz
 Requires: jackd >= %jack_ver
 
 BuildRequires(pre): jackit-devel >= %jack_ver
-BuildRequires: gcc-c++ rpm-macros-qt4 libqt4-devel
-BuildRequires: libalsa-devel libX11-devel libXext-devel
+BuildRequires: gcc-c++ libalsa-devel libX11-devel libXext-devel
+%if_enabled qt5
+BuildRequires: libqt5-devel
+%else
+BuildRequires: libqt4-devel
+%endif
 
 %description
 Qjackctl -- is an easy to use GUI to low-latency JACK audio server. You
@@ -58,8 +63,9 @@ JACK-клиентов.
 export QTDIR=%_qt4dir
 export PATH=%_qt4dir/bin:$PATH
 %configure \
-	--localedir=%_datadir/%name/locale
-	%{?_enable_jack_version:--enable-jack-version}
+	--localedir=%_datadir/%name/locale \
+	%{?_enable_jack_version:--enable-jack-version} \
+	%{subst_enable qt5}
 %make_build
 
 %install
@@ -77,6 +83,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- 0.3.11
+
 * Mon Apr 01 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
 - 0.3.10
 
