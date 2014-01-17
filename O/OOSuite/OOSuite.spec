@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: OOSuite
 Version: 0.51
-Release: alt1.svn20131012
+Release: alt2.svn20131012
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -17,7 +17,7 @@ Source: %name-%version.tar.gz
 BuildPreReq: python-devel gcc-fortran /proc
 BuildPreReq: libnumpy-devel python-module-setuptools
 BuildPreReq: python-module-matplotlib
-BuildPreReq: libglpk-devel
+BuildPreReq: libglpk35-devel
 BuildPreReq: python-module-cvxopt python-module-pswarm_py
 BuildPreReq: python-module-pyipopt python-module-pywrapper
 BuildPreReq: python-module-scipy libopenblas-devel
@@ -46,7 +46,7 @@ This package contains python wrapper of toms587.
 Summary: Python module of Numerical optimization framework
 Group: Development/Python
 %setup_python_module openopt
-Requires: libglpk >= 4.38
+Requires: libglpk35 >= 4.38
 Requires: python-module-scipy >= 0.8.0
 Requires: python-module-matplotlib
 %py_requires scipy setuptools matplotlib cvxopt
@@ -278,6 +278,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Fri Jan 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.51-alt2.svn20131012
+- Rebuilt with glpk35
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.51-alt1.svn20131012
 - Version 0.51
 
