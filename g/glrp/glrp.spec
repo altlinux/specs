@@ -1,14 +1,13 @@
 Name:		glrp
-Version:	1.4.5
-Release:	alt2
+Version:	1.4.6
+Release:	alt1
 Summary:	Robust internet radio station streamer
 Url:		http://sourceforge.net/projects/glrp/?source=dlp
 License:	GPLv3+
 Group:		Sound
 Source0:	greatlittleradioplayer_%version.tar.gz
-Source1:	Ukrainian.lng
 
-Patch0:		greatlittleradioplayer_1.4.5_fix_phonon_includes.diff
+Patch0:		greatlittleradioplayer_1.4.6_fix_phonon_includes.diff
 Patch1:		greatlittleradioplayer_1.4.5_fix_desktop.diff
 
 BuildRequires:	gcc-c++ libqt4-devel
@@ -36,7 +35,7 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags -I/usr/include/kde4" "QMAKE_CXXFLAGS+=%optfla
 %install
 install -Dp -m 0644 extras-greatlittleradioplayer.desktop %buildroot%_desktopdir/%name.desktop
 
-install -Dp -m 0644 %SOURCE1 %buildroot%_datadir/glrp/language/Ukrainian.lng
+mkdir -p %buildroot%_datadir/glrp/language
 cp language/* %buildroot%_datadir/glrp/language/
 
 mkdir -p %buildroot%_datadir/glrp/styles
@@ -54,6 +53,9 @@ cp changelog.txt %buildroot%_datadir/glrp/
 %_iconsdir/hicolor/scalable/apps/
 
 %changelog
+* Fri Jan 17 2014 Motsyo Gennadi <drool@altlinux.ru> 1.4.6-alt1
+- 1.4.6
+
 * Mon Nov 25 2013 Motsyo Gennadi <drool@altlinux.ru> 1.4.5-alt2
 - fix Requires (phonon-backend-5-gstreamer)
 
