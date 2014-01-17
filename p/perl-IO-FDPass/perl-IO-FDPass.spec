@@ -1,8 +1,8 @@
 Name: perl-IO-FDPass
 Version: 1.0
-Release: alt1
+Release: alt2
 
-Summary: unknown
+Summary: pass a file descriptor over a socket
 Group: Development/Perl
 License: Perl
 
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc README Changes
 
 %changelog
+* Fri Jan 17 2014 Vladimir Lettiev <crux@altlinux.ru> 1.0-alt2
+- fixed summary
+
 * Thu Jan 16 2014 Vladimir Lettiev <crux@altlinux.ru> 1.0-alt1
 - initial build for ALTLinux
 
