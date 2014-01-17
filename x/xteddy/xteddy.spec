@@ -1,43 +1,46 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel
+BuildRequires: libICE-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
+BuildRequires: libXext-devel
 Name:           xteddy
-Version:        2.0.1
-Release:        alt5_13
+Version:        2.2
+Release:        alt1_1
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
 License:        GPL+
 URL:            http://fam-tille.de/debian/xteddy.html
 Source0:        http://webstaff.itn.liu.se/~stegu/xteddy/%{name}-%{version}.tar.gz
-# Both submitted upstream by mail
-Patch0:         xteddy-2.0.1-visual.patch
-Patch1:         xteddy-2.0.1-iconname.patch
+# This is original artwork by Lubomir Rintel, distributed under same
+# terms and condition as xteddy
+Source1:        kacicka.png
+Patch0:         0001-Link-against-Xext.patch
 
-BuildRequires:  imlib-devel libpng-devel
+BuildRequires:  imlib2-devel libpng-devel
 Source44: import.info
-Patch33: xteddy-2.0.1-alt-link-X11.patch
+Patch33: xteddy-2.2-alt-link-X11.patch
 
 %description
 Xteddy is your virtual comfort when things get rough. It can do everything
 a real teddy bear can do. That is, I can sit around silently, look cute,
-and make you smile. 
+and make you smile.
 
 
 %prep
 %setup -q
-%patch0 -p1 -b .visual
-%patch1 -p1 -b .iconname
+%patch0 -p1
 %patch33 -p1
-
+sed -i -e s,/usr/games/xteddy,xteddy, xtoys
 
 %build
+#autoreconf -fisv
 %configure
 make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
+install -p -m644 %{SOURCE1} %{buildroot}%{_datadir}/xteddy/
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%name.desktop <<'EOF'
@@ -58,14 +61,17 @@ EOF
 %{_bindir}/xteddy
 %{_bindir}/xteddy_test
 %{_bindir}/xtoys
-%{_mandir}/man1/xteddy.1*
+%{_mandir}/man6/xteddy.6*
 %{_datadir}/xteddy
 %doc COPYING README AUTHORS ChangeLog NEWS
-%doc xteddy.README xtuxxy.credit
+%doc xteddy.README images.credit
 %_desktopdir/%name.desktop
 
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt5_13
 - update to new release by fcimport
 
