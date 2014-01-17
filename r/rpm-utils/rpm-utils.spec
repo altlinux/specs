@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.9.17
+Version: 0.9.18
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -42,15 +42,24 @@ This package contains following utilities:
 %makeinstall_std
 
 %check
-echo rpm-build |
-	%buildroot%_datadir/buildreqs/optimize_package_list > out
-[ "$(cat out)" = rpm-build ]
-
 rpmquery -a --qf='%%{name}\n' |
 	%buildroot%_datadir/buildreqs/optimize_package_list > out
 grep -qs 'rpm-build' out
 grep -qs 'librpm-devel' out
 grep -qs 'gcc.*-c++' out
+
+rm -f FAIL
+rpmquery -a --qf '%%{name}\n' |while read n; do
+	echo "$n" |
+		%buildroot%_datadir/buildreqs/optimize_package_list > out
+	[ "$n" = "$(cat out)" ] ||
+		echo "$n -> $(cat out)" >> FAIL
+done
+if [ -s FAIL ]; then
+	echo FAILED:
+	cat FAIL
+	exit 1
+fi >&2
 
 %files
 %dir %_sysconfdir/buildreqs
@@ -63,6 +72,9 @@ grep -qs 'gcc.*-c++' out
 %_datadir/buildreqs
 
 %changelog
+* Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.18-alt1
+- optimize_package_list: fixed misoptimization (closes: #26320).
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9.17-alt1
 - Fixed build with fresh glibc.
 
