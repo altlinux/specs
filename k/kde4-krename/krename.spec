@@ -1,12 +1,13 @@
 %define origname krename
 
-Summary: A powerfull batch renamer for KDE4
 Name: kde4-%origname
 Version: 4.0.9
-Release: alt1
+Release: alt2
+
+Summary: A powerfull batch renamer for KDE4
+Group: File tools
 License: GPL
 Url: http://www.krename.net
-Group: File tools
 Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %origname.tar.bz2
@@ -46,6 +47,9 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K4srv/*
 
 %changelog
+* Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 4.0.9-alt2
+- rebuilt against libexiv2.so.13
+
 * Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 4.0.9-alt1
 - 4.0.9
 - fixed build
