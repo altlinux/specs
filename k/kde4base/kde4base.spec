@@ -8,7 +8,7 @@
 %define rname kdebase
 %define major 4
 %define minor 11
-%define bugfix 4
+%define bugfix 5
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -606,6 +606,12 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Fri Jan 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
+- new version
+
+* Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
