@@ -1,8 +1,8 @@
 %define _name python-ethtool
-%def_without man
+%def_with man
 
 Name: python-module-ethtool
-Version: 0.8
+Version: 0.10
 Release: alt1
 
 Summary: Ethernet settings python bindings
@@ -12,8 +12,8 @@ Url: http://git.fedorahosted.org/cgit/%_name.git
 
 Source: https://fedorahosted.org/releases/p/y/%_name/%_name-%version.tar.bz2
 
-BuildRequires: python-devel libnl1-devel
-%{?_with_man:BuildRequires: asciidoc >= 8.6.8}
+BuildRequires: python-devel libnl-devel
+%{?_with_man:BuildRequires: asciidoc-a2x >= 8.6.8}
 
 %description
 Python bindings for the ethtool kernel interface, that allows querying
@@ -48,6 +48,9 @@ install -m644 man/pifconfig.8 %buildroot%_man8dir/pifconfig.8
 %{?_with_man:%_man8dir/*}
 
 %changelog
+* Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
+- 0.10
+
 * Wed Oct 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
 - first build for Sisyphus
 - wait for asciidoc >= 8.6.8 to build mans
