@@ -1,7 +1,7 @@
 %define dist IO-File-String
 Name: perl-%dist
 Version: 0.11
-Release: alt1
+Release: alt2
 
 Summary: load/save whole file as single string
 License: GPL or Artistic
@@ -23,6 +23,11 @@ It is subclass of IO::File so that all methods are inherited (including the 'new
 %prep
 %setup -q -n %dist-%version
 
+cat > t/00-01_use.t <<'EOF'
+use Test::More tests => 1;
+require_ok( 'IO::File::String' );
+EOF
+
 %build
 %perl_vendor_build
 
@@ -34,5 +39,8 @@ It is subclass of IO::File so that all methods are inherited (including the 'new
 %perl_vendor_privlib/IO/File/*
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2
+- fixed build
+
 * Mon Mar 16 2009 Boris Savelev <boris@altlinux.org> 0.11-alt1
 - initial build
