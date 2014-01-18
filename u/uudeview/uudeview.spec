@@ -1,28 +1,41 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt5.1.qa2
+Release: alt7
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
 Group: Text tools
 
 Url: http://www.fpx.de/fp/Software/UUDeview
-Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %name-library.pdf
 
 # Automatically added by buildreq on Tue Mar 16 2004
 BuildRequires: sendmail-common tcl-devel tetex-core tetex-dvips tetex-latex tk-devel transfig
+
+Summary(ru_RU.UTF-8): быстрый кодер/декодер uuenc/xxenc/base64
 
 %description 
 Smart multi-file multi-part decoder for uuencoded,
 xxencoded, Base64 and BinHex encoded files. Also
 includes a similarly powerful encoder.
 
+%description -l ru_RU.UTF-8
+"Умный" декодер для файлов uuenc/xxenc/base64/BinHex.
+Также включает кодер с аналогичными характеристиками.
+
+%package -n xdeview
+Summary: uudeview for X
+License: GPL
+Group: Text tools
+
+%description -n xdeview
+%summary
+
 %package doc
 Requires: %name
 Summary: Documentation for uudeview - smart uuenc/xxenc/base64 encoder/decoder
-Summary(ru_RU.KOI8-R): ������������ ��� uudeview - �������� uuenc/xxenc/base64 ������/��������
+Summary(ru_RU.UTF-8): Документация для uudeview - быстрого кодера/декодера uuenc/xxenc/base64
 License: GPL
 Group: Text tools
 BuildArch: noarch
@@ -55,7 +68,7 @@ install -pDm0644 %SOURCE1 doc/library.pdf
 
 %build
 %add_optflags %optflags_shared
-%configure
+%configure --enable-tcl=%_libdir
 %make_build
 make -C doc ps 
 
@@ -67,9 +80,17 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %makeinstall -C uulib
 
 %files 
-%_bindir/*
-%_man1dir/*
+%_bindir/minews
+%_bindir/uudeview
+%_bindir/uuenview
+%_man1dir/uudeview*
+%_man1dir/uuenview*
 %doc HISTORY INSTALL README
+
+%files -n xdeview
+%_bindir/uuwish
+%_bindir/xdeview
+%_man1dir/xdeview*
 
 %files -n libuu
 %_libdir/libuu.so.*
@@ -82,6 +103,15 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Sat Jan 18 2014 Michael Shigorin <mike@altlinux.org> 0.5.20-alt7
+- oops, work around weird FTBFS on x86_64 (base_libs broke)
+
+* Wed Jan 15 2014 Michael Shigorin <mike@altlinux.org> 0.5.20-alt6
+- separate xdeview subpackage to avoid pulling libX11 & co
+  into regular-rescue.iso but still to provide a nice utility
+- added Russian description, converted Summary: to UTF-8
+- dropped Packager: as a matter of fact (thank you vvk@!)
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.20-alt5.1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
