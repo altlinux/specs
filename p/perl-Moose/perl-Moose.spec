@@ -1,14 +1,14 @@
 %define dist Moose
 Name: perl-%dist
-Version: 2.1005
-Release: alt2
+Version: 2.1201
+Release: alt1
 
 Summary: A postmodern object system for Perl 5
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Moose-%{version}.tar.gz
 
 # avoid dependency on perl-devel
 %add_findreq_skiplist */Test/Moose*
@@ -20,12 +20,14 @@ Source: %dist-%version.tar.gz
 %add_findreq_skiplist */Moose/Util/TypeConstraints.pm
 # XXX Can't locate object method "initialize" via package "Class::MOP::Class"
 %add_findreq_skiplist */Class/MOP.pm
+#Can't locate object method "_can_be_made_compatible_with" via package "Class::MOP::Method::Constructor"
+%add_findreq_skiplist */Class/MOP/Method/Constructor.pm
 
 Provides: perl-Class-MOP = %version
 Obsoletes: perl-Class-MOP < %version
 
 # Automatically added by buildreq on Wed Nov 16 2011 (-bi)
-BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Specio perl-Throwable
+BuildRequires: perl-Algorithm-C3 perl-DateTime perl-Devel-GlobalDestruction perl-Eval-Closure perl-Filter-Simple perl-HTTP-Message perl-IO-String perl-Locale-US perl-MRO-Compat perl-Module-Refresh perl-Params-Coerce perl-Regexp-Common perl-Sub-Name perl-Task-Weaken perl-Test-Deep perl-Test-Fatal perl-Test-Output perl-Test-Requires perl-namespace-clean perl-Test-CheckDeps perl-Package-DeprecationManager perl-Class-Load-XS perl-Specio perl-Throwable perl(Devel/StackTrace.pm) perl(ExtUtils/CBuilder.pm)
 
 %description
 Moose is an extension of the Perl 5 object system.
@@ -54,6 +56,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.1201-alt1
+- automated CPAN update
+
 * Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 2.1005-alt2
 - add Specio build dependency
 
