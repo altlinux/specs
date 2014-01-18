@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.27
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1794,6 +1794,14 @@ done)
 
 
 %changelog
+* Sat Jan 18 2014 Led <led@altlinux.ru> 3.10.27-alt3
+- updated:
+  + fix-drivers-acpi
+- added:
+  + fix-arch-arm
+  + fix-drivers-dma--edma
+  + fix-drivers-net-ethernet-ti--ti_cpsw
+
 * Fri Jan 17 2014 Led <led@altlinux.ru> 3.10.27-alt2
 - updated:
   + feat-drivers-block--btier
