@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
 Version:	1.0.5
-Release:	alt1_4jpp7
+Release:	alt1_6jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -32,6 +32,12 @@ Patch6:		arduino-add-to-groups.patch
 
 # Required for Koji's ARM build hosts:
 Patch8:		arduino-build-platform.patch
+
+# Requested upstream in https://github.com/arduino/Arduino/pull/1572:
+Patch9:         arduino-appdata.patch
+
+# Accepted upstream for Arduino 1.5.
+Patch10:        0001-Handle-new-.ino-file-extension-on-Linux.patch
 
 BuildRequires:	jpackage-utils ant ant-apache-regexp desktop-file-utils ecj jna rxtx git
 Requires:	%{name}-core = %{epoch}:%{version}-%{release} %{name}-doc = %{epoch}:%{version}-%{release}
@@ -91,6 +97,7 @@ chmod a+rx build/linux/%{name}-add-groups
 %patch3 -p1
 %patch7 -p1
 %patch8 -p0
+%patch9 -p1
 
 echo -e "\n# By default, don't notify the user of a new upstream version." \
         "\n# https://bugzilla.redhat.com/show_bug.cgi?id=773519" \
@@ -102,6 +109,8 @@ pwd=`pwd`
 cd /
 git apply --directory=$pwd %{PATCH4}
 cd $pwd
+
+%patch10 -p1
 
 build-jar-repository -p -s app/lib/ ecj jna RXTXcomm
 
@@ -154,6 +163,9 @@ cp -p ../linux/%{name}.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 
 desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications ../linux/%{name}.desktop
 
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mime/packages
+cp -a ../linux/%{name}.xml $RPM_BUILD_ROOT/%{_datadir}/mime/packages/
+
 for dir in ../linux/icons/*; do
     size=`basename $dir`
     mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/$size/apps
@@ -165,6 +177,9 @@ cp -a ../linux/%{name}-add-groups $RPM_BUILD_ROOT/%{_libexecdir}/
 
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions
 cp -a ../linux/cc.arduino.add-groups.policy $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions
+
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/appdata
+cp -a ../linux/%{name}.appdata.xml $RPM_BUILD_ROOT/%{_datadir}/appdata/
 # unFedorize; ALTize
 if grep 'dialout lock' %buildroot/%_bindir/arduino; then
    sed -i -e 's,dialout lock,uucp,' %buildroot/%_bindir/arduino
@@ -180,12 +195,14 @@ fi
 %{_datadir}/%{name}/*.jar
 %{_datadir}/%{name}/lib/*
 %exclude %{_datadir}/%{name}/lib/version.txt
-%{_datadir}/applications/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/mime/packages/%{name}.xml
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/polkit-1/actions/cc.arduino.add-groups.policy
 %{_libexecdir}/%{name}-add-groups
 %{_mandir}/man1/%{name}.1*
 %{_datadir}/%{name}/reference
+%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files -n %{name}-core
@@ -209,6 +226,9 @@ fi
 
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_6jpp7
+- update
+
 * Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_4jpp7
 - update to new release by jppimport
 
