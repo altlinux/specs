@@ -4,11 +4,11 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           colossus
-%global         rev        5134
-%global         revdate    20120314
-Version:        0.13.2
-%global         branch     0.13.x
-Release:        alt1_5jpp7
+%global         rev        5331
+%global         revdate    20130917
+Version:        0.14.0
+%global         branch    %{nil}
+Release:        alt1_1jpp7
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -26,8 +26,6 @@ URL:            http://colossus.sourceforge.net/
 Source0:        colossus-%{branch}-%{revdate}-%{rev}.tar.gz
 Source1:        colossus-gen-tarball.sh
 Source2:        colossus-rev.xsl
-# Backport carryover hang patch from upstream trunk
-Patch0:         hang.patch
 
 BuildArch:      noarch
 
@@ -63,9 +61,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{branch}-%{revdate}-%{rev}
-# With 0.13.x there is an extra direcory level
-mv Colossus/* Colossus/.??* .
-%patch0 -p2
 
 %build
 
@@ -153,6 +148,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_1jpp7
+- update
+
 * Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.13.2-alt1_5jpp7
 - update to new release by jppimport
 
