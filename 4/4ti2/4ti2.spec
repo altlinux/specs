@@ -2,8 +2,8 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           4ti2
-Version:        1.3.2
-Release:        alt3_13
+Version:        1.6
+Release:        alt1_0
 Summary:        A software package for problems on linear spaces
 
 Group:          System/Libraries
@@ -28,7 +28,7 @@ your PATH you will need to run module load %%{name}-%{_arch}
 %prep
 %setup -q
 cp -p %{SOURCE1} .
-%patch0 -p1 -b .gcc47
+#patch0 -p1 -b .gcc47
 
 %build
 CXXFLAGS="%{optflags} -I%{_includedir}/glpk" \
@@ -81,6 +81,9 @@ make check
 %{_libdir}/%{name}/bin/zsolve
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_0
+- new version (manual update)
+
 * Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt3_13
 - update to new release by fcimport
 
