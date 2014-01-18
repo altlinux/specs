@@ -8,8 +8,10 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    4.1.3
-Release:    alt1
-
+Release:    alt3nt
+%if %release == alt3nt
+%define _without_test 1
+%endif
 Summary:    Tapper-* command line tools
 License:    BSD
 Group:      Development/Perl
@@ -94,6 +96,9 @@ Command line tools for Tapper.
 
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt3nt
+- disabled tests - waiting for the new release
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1
 - automated CPAN update
 
