@@ -7,16 +7,15 @@ BuildRequires: jpackage-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.0.0.0
+Version:	5.2.0.0
 Release:	alt1_2jpp7
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5000_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5200_source.zip
 
-Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
 
@@ -29,15 +28,14 @@ Patch2:		azureus-no-shared-plugins.patch
 Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4:	azureus-4.0.0.4-boo-osx.diff
-Patch5:	azureus-4.0.0.4-boo-updating-w32.diff
 
 Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch7:	azureus-4.2.0.4-java5.patch
 
-Patch8:	azureus-4.8.1.2-fix-compile.patch
-
 Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+
+Patch10: azureus-5.2.0.0-startupScript.patch
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j
@@ -79,15 +77,14 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch4 -p1 -b .boo-osx
-%patch5 -p1 -b .boo-updating-w32
 
 %patch6  -p1 -b stupid-invalid-characters
 
 %patch7 -p1 -b .java5
 
-%patch8 -p1 -b .fix-compile
-
 %patch9 -p1 -b .no-bundled-apache-commons
+
+%patch10 -p1 -b .startupScript
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -116,8 +113,8 @@ ant jar
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
-# TODO: fix launcher to be multilib-safe
-install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
+
+install -p -D -m 0755 org/gudy/azureus2/platform/unix/startupScript $RPM_BUILD_ROOT%{_bindir}/azureus
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -155,6 +152,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 5.2.0.0-alt1_2jpp7
+- update
+
 * Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 5.0.0.0-alt1_2jpp7
 - update to new release by jppimport
 
