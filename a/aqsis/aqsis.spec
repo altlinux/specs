@@ -4,13 +4,15 @@ BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt1_6
+Release:	alt2_6
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
 License:	GPLv2+ and LGPLv2+
 URL:		http://www.aqsis.org
 Source0:	http://downloads.sourceforge.net/aqsis/aqsis-%{version}.tar.gz
+# from mageia
+Patch: imfinputfile-forward-declaration.diff
 
 BuildRequires:  desktop-file-utils
 
@@ -105,7 +107,7 @@ integration with third-party applications.
 
 %prep
 %setup -q
-
+%patch -p1
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -219,6 +221,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_6
+- fixed build
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_6
 - update to new release by fcimport
 
