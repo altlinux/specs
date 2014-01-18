@@ -7,7 +7,7 @@
 
 Name: mingw32-%origname
 Version: 0.9510
-Release: alt1
+Release: alt2
 
 Summary: Windows MinGW HTML::Template compatible HTML template library
 License: GPL2+ or Artistic
@@ -118,6 +118,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Sun Jan 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.9510-alt2
+- fixed build
+
 * Tue May 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.9510-alt1
 - new version; see Changes
 
