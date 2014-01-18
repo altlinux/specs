@@ -1,7 +1,7 @@
 %define _name cpopen
 
 Name: python-module-%_name
-Version: 1.2.3
+Version: 1.3
 Release: alt1
 
 Summary: A C reimplementation of the tricky bits of Python's Popen
@@ -24,16 +24,19 @@ using C code.
 %python_build
 
 %install
-%__python setup.py install --root %buildroot \
-	--install-lib %python_sitelibdir/%_name
+%__python setup.py install --root %buildroot
 
 %files
+%dir %python_sitelibdir/%_name
 %python_sitelibdir/%_name/%_name.so
 %python_sitelibdir/%_name/__init__.py*
-%python_sitelibdir/%_name/%_name-%version-py*.egg-info
+%python_sitelibdir/%_name-%version-py*.egg-info
 %doc AUTHORS readme.md
 
 %changelog
+* Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Wed Oct 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - first build for Sisyphus
 
