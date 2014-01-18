@@ -15,7 +15,7 @@
 
 Name: perl-Net-RBLClient
 Version: 0.5
-Release: alt2.1
+Release: alt3
 
 Summary: Parallel RBL lookup client
 
@@ -25,6 +25,7 @@ Url: http://www.cpan.org
 
 BuildArch: noarch
 Source: %m_distro-0.5.tar.gz
+Patch: Net-RBLClient-0.5-syntaxfix.patch
 
 # Automatically added by buildreq on Wed Nov 22 2006
 BuildRequires: perl-devel perl-Net-DNS
@@ -46,6 +47,7 @@ during such blocking.
 
 %prep
 %setup -n RBLCLient-0.5
+%patch -p1
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -58,6 +60,9 @@ during such blocking.
 %_man1dir/*
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt3
+- fixed build
+
 * Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
