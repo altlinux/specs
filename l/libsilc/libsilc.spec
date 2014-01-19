@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-devel libtinfo-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt3_10
+Release: alt3_11
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -90,7 +91,8 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 [ -d $RPM_BUILD_ROOT%{_libdir}/silc/modules ]
 
 %files
-%doc COPYING BSD GPL doc/FAQ CREDITS
+%{_pkgdocdir}
+%exclude %{_pkgdocdir}/INSTALL
 %{_libdir}/libsilc-1.1.so.*
 %{_libdir}/libsilcclient-1.1.so.*
 %dir %_libdir/silc
@@ -113,6 +115,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_11
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_10
 - fc update
 
