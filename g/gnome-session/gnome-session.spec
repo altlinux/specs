@@ -5,7 +5,7 @@
 
 Name: gnome-session
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -133,6 +133,13 @@ export XDG_DATA_DIRS="%_datadir/gnome:%_datadir:/usr/local/share"
 
 # to avoid gnome-shell crash
 #/bin/rm -f "\$HOME"/.config/gnome-session/saved-session/gnome-shell.desktop >/dev/null 2>&1
+
+# saved gnome-shell-classic.desktop is lacking --mode=classic due to gnome-session bug
+desktop="\$HOME"/.config/gnome-session/saved-session/gnome-shell-classic.desktop
+string="--mode=classic"
+if [ -a "\$desktop" ]; then
+grep -qs "\'\$string'" "\$desktop" || subst 's/\(Exec=gnome-shell\)/\1 '\$string'/' "\$desktop"
+fi
 __START_GNOME_COMMON__
 
 cat <<__START_GNOME__ >startgnome
@@ -231,6 +238,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Sun Jan 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt3
+- fixed problem with "classic" session when auto-save-session is set to true
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt2
 - 3.10.1 snapshot (3f3066f3), fixed BGO ##710582, 710480
 
