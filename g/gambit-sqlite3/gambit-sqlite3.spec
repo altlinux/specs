@@ -1,6 +1,6 @@
 Name: gambit-sqlite3
 Version: 1.2
-Release: alt7
+Release: alt8
 Summary: SQLite3 database library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -46,6 +46,9 @@ This package contains the library link file
 %{_includedir}/gambit/libgambc-sqlite3.c
 
 %changelog
+* Sun Jan 19 2014 Paul Wolneykien <manowar@altlinux.org> 1.2-alt8
+- Rebuild with a new version of Gambit
+
 * Wed May 22 2013 Paul Wolneykien <manowar@altlinux.org> 1.2-alt7
 - Add procs to access fields in a sqlite3 exception.
 
