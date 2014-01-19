@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -46,6 +46,9 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
 
 %changelog
+* Sun Jan 19 2014 Terechkov Evgenii <evg@altlinux.org> 1.4.4-alt2
+- apt-rpm: Properly detect rpm packages installation/upgrade.
+
 * Sun Jan 12 2014 Terechkov Evgenii <evg@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
