@@ -1,15 +1,15 @@
 %define _name python-efl
 
 Name: python-module-efl
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
 License: LGPLv2+
 Url: http://trac.enlightenment.org/e/wiki/Python
 
-Source: http://download.enlightenment.org/rel/bindings/python/%_name-%version.tar.gz
+Source: http://download.enlightenment.org/rel/bindings/python/%_name-%version.tar.bz2
 #Source: %_name-%version.tar
 
 %setup_python_module ecore
@@ -101,6 +101,9 @@ popd
 %doc AUTHORS README
 
 %changelog
+* Sun Jan 19 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt2
 - updated buildreqs
 
