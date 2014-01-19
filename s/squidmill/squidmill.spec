@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -21,7 +21,7 @@ Requires: gambit-signal >= 1.1-alt1
 Requires: gambit-dsock >= 1.1-alt1
 
 %description
-Squidmill daemon acquires and integrates information from a
+Squidmill daemon acquires and integrates information from the
 Squid proxy server access log files. Rounding is supported to
 save space and reporting time.
 
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Sun Jan 19 2014 Paul Wolneykien <manowar@altlinux.org> 2.4-alt3
+- Rebuild with a new version of Gambit
+
 * Thu Jul 11 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt2
 - Fix the status proc of the init-script.
 
