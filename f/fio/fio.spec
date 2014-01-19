@@ -1,5 +1,8 @@
+%def_enable gfio
+%def_disable numa
+
 Name: fio
-Version: 2.0.11
+Version: 2.1.4
 Release: alt1
 
 Summary: IO testing tool
@@ -9,8 +12,10 @@ Group: System/Kernel and hardware
 Url: http://git.kernel.dk/?p=fio.git;a=summary
 Source0: %name-%version.tar
 
-# Automatically added by buildreq on Sun Jun 12 2011
-BuildRequires: libaio-devel
+BuildRequires: libaio-devel zlib-devel
+
+%{?_enable_gfio:BuildRequires: libgtk+2-devel}
+%{?_enable_numa:BuildRequires: libnuma-devel }
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -20,10 +25,41 @@ otherwise parameters given to them overriding that setting is given.
 The typical use of fio is to write a job file matching the io load
 one wants to simulate.
 
+
+%package tools
+Summary: Analyze tools for %name
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description tools
+fio2gnuplot - analyze a set of fio's log files to turn them into a set of graphical traces using gnuplot tool.
+fio_generate_plots - Generate plots for Flexible I/O Tester
+
+%package -n gfio
+Summary: Gtk frontend for %name
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description -n gfio
+fio is a tool that will spawn a number of threads or processes doing a
+particular type of io action as specified by the user. fio takes a
+number of global parameters, each inherited by the thread unless
+otherwise parameters given to them overriding that setting is given.
+The typical use of fio is to write a job file matching the io load
+one wants to simulate.
+
+This package conteon gtk frontend for %name
+
+
 %prep
 %setup
 
 %build
+./configure \
+	%{subst_enable gfio} \
+	%{subst_enable numa} \
+	--extra-cflags="%optflags"
+
 %make_build V=1 EXTFLAGS="%optflags"
 
 %install
@@ -31,10 +67,25 @@ one wants to simulate.
 
 %files
 %doc HOWTO README REPORTING-BUGS examples
-%_bindir/*
-%_man1dir/*
+%_bindir/genfio
+%_bindir/%name
+%_man1dir/%name.1.*
+
+%files tools
+%_bindir/fio2gnuplot
+%_bindir/fio_generate_plots
+%_datadir/%name
+%_man1dir/fio2gnuplot.*
+%_man1dir/fio_generate_plots.*
+
+%files -n gfio
+%_bindir/gfio
 
 %changelog
+* Sun Jan 19 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+- add packages fio-tools and gfio
+
 * Thu Dec 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.11-alt1
 - 2.0.11
 
