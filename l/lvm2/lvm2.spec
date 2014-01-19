@@ -1,5 +1,5 @@
-%define lvm2version 2.02.103
-%define dmversion 1.02.82
+%define lvm2version 2.02.104
+%define dmversion 1.02.83
 
 %def_disable cluster
 %def_enable selinux
@@ -200,7 +200,6 @@ mv libdm/ioctl/libdevmapper.a .
 
 %configure \
 	%{subst_enable selinux} \
-	%{subst_enable lvmetad} \
 	--disable-static_link \
 	--enable-lvm1_fallback \
 	--enable-readline \
@@ -219,6 +218,10 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-usrlibdir=%_libdir \
 	--enable-dmeventd \
 	--with-udevdir=/lib/udev/rules.d \
+%if_enabled lvmetad
+	--enable-lvmetad \
+	--enable-udev-systemd-background-jobs \
+%endif
 	--enable-udev_sync \
 	--with-dmeventd-path="/sbin/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
@@ -320,6 +323,7 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_initdir/lvm2-lvmetad
 %_unitdir/lvm2-lvmetad.service
 %_unitdir/lvm2-lvmetad.socket
+%_unitdir/lvm2-pvscan@.service
 /lib/udev/rules.d/69-dm-lvm-metad.rules
 %endif
 /lib/systemd/system-generators/lvm2-activation-generator
@@ -399,6 +403,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Sun Jan 19 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.104-alt1
+- 2.02.104
+
 * Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 2.02.103-alt1
 - 2.02.103
 
