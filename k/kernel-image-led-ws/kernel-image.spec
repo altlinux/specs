@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.27
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1794,6 +1794,10 @@ done)
 
 
 %changelog
+* Mon Jan 20 2014 Led <led@altlinux.ru> 3.10.27-alt4
+- updated:
+  + feat-fs-aufs
+
 * Sat Jan 18 2014 Led <led@altlinux.ru> 3.10.27-alt3
 - updated:
   + fix-drivers-acpi
