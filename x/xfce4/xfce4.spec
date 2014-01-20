@@ -1,11 +1,11 @@
 Name: xfce4
 Version: 4.10
-Release: alt4
-Summary: Set of XFce4 Desktop installers.
+Release: alt5
+Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
 URL: http://www.xfce.org
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 
 BuildRequires(pre): rpm-build-licenses
@@ -22,8 +22,8 @@ This package contains common directories for Xfce4 Desktop
 Environment.
 
 %package minimal
-Summary: Minimal installation of XFce4 Desktop
-Summary(ru_RU.UTF8): Минимальная установка XFce4
+Summary: Minimal installation of Xfce4 Desktop
+Summary(ru_RU.UTF8): Минимальная установка Xfce4
 Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: xfce4-panel
@@ -35,14 +35,14 @@ Requires: xfwm4
 
 %description minimal
 %name-minimal is a virtual package to provide minimal installation
-of XFce4 Desktop.
+of Xfce4 Desktop.
 
 %description -l ru_RU.UTF8
 %name-minimal устанавливает минимальный набор пакетов необходимых
 для работы с окружением рабочего стола Xfce 4.
 
 %package default
-Summary: Default installation of XFce4 Desktop
+Summary: Default installation of Xfce4 Desktop
 Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-minimal = %version-%release
@@ -50,8 +50,6 @@ Requires: xfce4-power-manager
 Requires: xfce4-appfinder
 Requires: gtk2-themes-xfce4
 Requires: xfce4-notifyd
-Requires: xfce4-mixer
-Requires: xfce4-volumed
 Requires: xfce4-taskmanager
 Requires: xfce4-terminal
 Requires: tumbler
@@ -60,7 +58,7 @@ Requires: thunar-volman-plugin
 Requires: thunar-media-tags-plugin
 Requires: thunar-archive-plugin
 # Icon themes
-Requires: xfce4-icon-theme
+Requires: rodent-icon-theme
 # for trash and network in Thunar
 Requires: gvfs gvfs-backends
 # Screensaver
@@ -68,10 +66,10 @@ Requires: screen-saver-engine
 
 %description default
 %name-default is a virtual package to provide default installation
-of XFce4 Desktop.
+of Xfce4 Desktop.
 
 %package full
-Summary: Default installation of XFce4 Desktop
+Summary: Full installation of Xfce4 Desktop
 Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-default = %version-%release
@@ -83,6 +81,9 @@ Requires: xfce4-screenshooter
 Requires: xarchiver
 Requires: ristretto
 Requires: mousepad
+Requires: xfce4-mixer
+# xfce4-volumed-pulse is alternative for xfce4-volumed.
+#Requires: xfce4-volumed
 # Panel plugins
 Requires: xfce4-clipman-plugin
 Requires: xfce4-cpufreq-plugin
@@ -118,7 +119,7 @@ Requires: xfce4-sensors-plugin
 
 %description full
 %name-full is a virtual package to provide full installation
-of XFce4 Desktop.
+of Xfce4 Desktop.
 
 %package regular
 Summary: Virtual package for use in the regular-xfce distro
@@ -153,6 +154,13 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Mon Jan 20 2014 Mikhail Efremov <sem@altlinux.org> 4.10-alt5
+- default: Drop xfce4-volumed.
+- Move xfce4-mixer from default to full.
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- full: Fix summary.
+- default: Replace xfce4-icon-theme with rodent-icon-theme.
+
 * Wed Apr 10 2013 Mikhail Efremov <sem@altlinux.org> 4.10-alt4
 - minimal: Drop ConsoleKit.
 - full: Added mousepad.
