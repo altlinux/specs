@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-themes-Nesedah
-Version: r9169
-Release: alt1.svn20131001
+Version: r9537
+Release: alt1.svn20131105
 Summary: GNUstep's Nesedah theme
 License: Free
 Group: Graphical desktop/GNUstep
@@ -27,7 +27,7 @@ Nesedah theme for GNUstep.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -38,6 +38,9 @@ Nesedah theme for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9537-alt1.svn20131105
+- Version r9537
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9169-alt1.svn20131001
 - Version r9169
 

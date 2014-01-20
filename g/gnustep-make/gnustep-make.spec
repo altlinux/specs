@@ -1,6 +1,6 @@
 Name: gnustep-make
-Version: 2.6.5
-Release: alt1.git20130727
+Version: 2.6.6
+Release: alt1.git20131230
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Other
@@ -103,6 +103,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt1.git20131230
+- Version 2.6.6
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.5-alt1.git20130727
 - Version 2.6.5
 

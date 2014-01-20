@@ -1,10 +1,10 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt3.svn20130529
+Release: alt4.svn20130529
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
-Url: http://www.gnustep.org/
+Url: http://www.gnustep.it/Renaissance/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-renaissance.git
@@ -103,6 +103,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt4.svn20130529
+- Rebuilt with new gnustep-gui
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt3.svn20130529
 - New snapshot
 

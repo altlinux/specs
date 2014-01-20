@@ -2,7 +2,7 @@
 
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt6.git20100910
+Release: alt7.git20100910
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
@@ -56,7 +56,7 @@ This package contains development files of gnustep-ucsdata.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
@@ -77,6 +77,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Unicode/
 %_libdir/*.so
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt7.git20100910
+- Rebuilt with new gnustep-gui
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt6.git20100910
 - Rebuilt with libobjc2 instead of libobjc
 

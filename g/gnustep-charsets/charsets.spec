@@ -2,7 +2,7 @@
 
 Name: gnustep-charsets
 Version: r29248
-Release: alt4.git20100109
+Release: alt5.git20100109
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libgnustep-ucsdata-devel
 BuildPreReq: /proc
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 mkcharsets: Creates the standard set of bitmap files for NSCharacterSet
@@ -42,7 +44,7 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -52,6 +54,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt5.git20100109
+- Rebuilt with new gnustep-gui
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt4.git20100109
 - Rebuilt with libobjc2 instead of libobjc
 

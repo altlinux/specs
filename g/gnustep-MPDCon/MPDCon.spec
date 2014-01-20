@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-MPDCon
-Version: 1.4
-Release: alt3
+Version: 1.5.1
+Release: alt1
 Summary: A GNUstep MPD client
 License: GPLv2
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/MPDCon.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -38,7 +38,7 @@ Features:
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lSQLClient -lmpdclient -lbsd'
  
 %install
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1
+- Version 1.5.1
+
 * Thu Oct 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3
 - Rebuilt with new gnustep-sqlclient
 

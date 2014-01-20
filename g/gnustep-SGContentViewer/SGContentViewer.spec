@@ -2,17 +2,19 @@
 
 Name: gnustep-SGContentViewer
 Version: 2006
-Release: alt1
+Release: alt2
 Summary: A contents Inspector that can play music files
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/GWorkspace.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-ShengGuang-devel gnustep-libId3-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-ShengGuang
 
@@ -29,7 +31,7 @@ shorten, voc, midi, and mod files.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -42,6 +44,9 @@ shorten, voc, midi, and mod files.
 %_libdir/GNUstep
 
 %changelog
+* Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt1
 - Initial build for Sisyphus
 

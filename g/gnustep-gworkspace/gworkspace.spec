@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt3.git20130911
+Release: alt3.git20131218
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -81,7 +81,7 @@ export CC=gcc
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 %incs' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP %incs' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc2 -lm'
  
 libFSNode="$PWD/FSNode/FSNode.framework/libFSNode.so"
@@ -92,7 +92,7 @@ pushd Inspector
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 %incs' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP %incs' \
 	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc2"
 popd
 
@@ -144,6 +144,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.git20131218
+- New snapshot
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.git20130911
 - New snapshot
 

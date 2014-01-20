@@ -2,11 +2,11 @@
 
 Name: gnustep-Pantomime
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: GNUMail framework
 License: LGPL
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/Pantomime
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -73,7 +73,7 @@ This package contains development files of GNUstep Pantomime.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2 -lssl' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -110,6 +110,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1.2/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3
+- Rebuilt with new gnustep-gui
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2
 - Added requirement on %name for lib%name-devel
 

@@ -2,11 +2,11 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt4
+Release: alt5
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://coyote.octets.fr/simpleagenda/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -15,6 +15,8 @@ Source1: %name.menu
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-dbuskit-devel libical-devel libuuid-devel
 BuildPreReq: gnustep-AddressManager-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-dbuskit
 
@@ -39,7 +41,7 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libical'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/libical'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -54,6 +56,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt5
+- Rebuilt with new gnustep-gui
+
 * Thu Nov 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt4
 - Rebuilt with new libical
 

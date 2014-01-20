@@ -2,17 +2,19 @@
 
 Name: gnustep-IMImage
 Version: 2004
-Release: alt2
+Release: alt3
 Summary: IMImage image Inspector for GWorkspace.app to preview many types of graphics formats
 License: GPLv2+
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/GWorkspace.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel libImageMagick-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-gworkspace ghostscript
 
@@ -33,7 +35,7 @@ can also be used to preview Type 1 and TrueType fonts.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/ImageMagick-6' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/ImageMagick-6' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -46,6 +48,9 @@ can also be used to preview Type 1 and TrueType fonts.
 %_libdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2004-alt3
+- Rebuilt with new gnustep-gui
+
 * Sat Apr 20 2013 Anton Farygin <rider@altlinux.ru> 2004-alt2
 - Rebuilt with new ImageMagick
 

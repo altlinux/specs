@@ -1,6 +1,6 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt2
+Release: alt3
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -55,6 +55,7 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	debug=yes \
 	strip=no \
 	shared=yes \
+	 AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
  
 %install
@@ -111,6 +112,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt3
+- Rebuilt with new gnustep-gui
+
 * Thu Oct 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2
 - Applied repocop patch
 

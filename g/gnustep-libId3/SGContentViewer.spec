@@ -2,7 +2,7 @@
 
 Name: gnustep-libId3
 Version: 2006
-Release: alt1
+Release: alt2
 Summary: libid3 library
 License: LGPLv2.1
 Group: System/Libraries
@@ -36,7 +36,7 @@ This package contains development files of libid3.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lz' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -52,6 +52,9 @@ This package contains development files of libid3.
 %_libdir/*.so
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt1
 - Initial build for Sisyphus
 

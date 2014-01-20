@@ -2,7 +2,7 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt2.git20130630
+Release: alt2.git20131220
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -69,7 +69,7 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2' \
+		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 		CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm $1"
 }
 
@@ -112,6 +112,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20131220
+- New snapshot
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20130630
 - New snapshot
 

@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt1
+Release:        alt2
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -12,6 +12,8 @@ Source:         %name-%version.tar
 
 BuildRequires:  gcc-objc libgnustep-objc2-devel gnustep-make-devel
 BuildRequires:  gnustep-base-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
  
 %description 
 This package contains sample applications for the GNUstep framework.
@@ -25,7 +27,7 @@ This package contains sample applications for the GNUstep framework.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
 %install
@@ -41,6 +43,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2
+- Rebuilt with new gnustep-gui
+
 * Wed Mar 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
 

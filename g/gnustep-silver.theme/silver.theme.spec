@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-silver.theme
-Version: 3.0
+Version: 3.1
 Release: alt1
 Summary: Silver theme for GNUstep
 License: GPLv3
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Silver.theme is a theme with menu in-window, silvered controls,
@@ -28,7 +30,7 @@ people who want use GNUstep apps in desktops like Gnome, KDE, ...
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -38,6 +40,9 @@ people who want use GNUstep apps in desktops like Gnome, KDE, ...
 %_libdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1
+- Rebuilt with new gnustep-gui
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Version 3.0
 
