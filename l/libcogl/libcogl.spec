@@ -1,4 +1,6 @@
 %define oname cogl
+%define ver_major 1.16
+%define gst_api_ver 1.0
 
 %ifarch %arm
 %def_enable gles2
@@ -8,8 +10,8 @@
 %def_enable gl
 %endif
 
-
 %def_enable cairo
+%def_enable gst
 %def_disable profile
 
 %def_enable glib
@@ -23,15 +25,15 @@
 %def_enable xlib_egl
 
 Name: libcogl
-Version: 1.16.1
-Release: alt0.2
+Version: %ver_major.2
+Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.clutter-project.org/
 
-Source: %oname-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.tar.xz
 Patch: cogl-1.16.1-alt-gles2.patch
 
 Conflicts: libclutter < 1.8.0
@@ -59,6 +61,7 @@ Conflicts: libclutter < 1.8.0
 %{?_enable_kms_egl:BuildRequires: pkgconfig(gbm) pkgconfig(libdrm)}
 %{?_enable_wayland_server:BuildRequires: pkgconfig(wayland-server) >= %wayland_ver}
 %{?_enable_xlib_egl:BuildRequires: pkgconfig(egl) pkgconfig(x11) pkgconfig(xext) pkgconfig(xfixes) >= %xfixes_ver pkgconfig(xdamage) pkgconfig(xcomposite) >= %xcomposite_ver pkgconfig(xrandr) >= %xrandr_ver}
+%{?_enable_gst:BuildRequires: gst-plugins%gst_api_ver-devel}
 BuildRequires: gtk-doc >= %gtk_doc_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver  gir(GL) = 1.0 gir(GObject) = 2.0 gir(Pango) = 1.0 gir(PangoCairo) = 1.0
 
@@ -137,18 +140,23 @@ Contains developer documentation for %oname.
 	%{?_enable_kms_egl:--enable-kms-egl-platform } \
 	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
 	%{?_enable_wayland_server:--enable-wayland-egl-server} \
-	%{?_enable_xlib_egl:--enable-xlib-egl-platform}
+	%{?_enable_xlib_egl:--enable-xlib-egl-platform} \
+	%{?_enable_gst:--enable-cogl-gst}
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %oname
 
 %files -f %oname.lang
 %doc COPYING NEWS README ChangeLog
 %_libdir/libcogl*.so.*
+%if_enabled gst
+%_libdir/gstreamer-%gst_api_ver/libgstcogl.so
+%exclude %_libdir/gstreamer-%gst_api_ver/*.la
+%endif
 
 %files devel
 %_includedir/cogl
@@ -165,6 +173,10 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jan 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+- enabled gstreamer support
+
 * Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt0.2
 - sbolshakov@: fix for arm build
 
