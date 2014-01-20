@@ -6,12 +6,12 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmobar
-Version: 0.18
+Version: 0.19
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
-Url: http://code.haskell.org/~arossato/xmobar
+Url: http://projects.haskell.org/xmobar/
 Source: %name-%version.tar
 Summary: A Minimalistic Text Based Status Bar
 
@@ -41,6 +41,9 @@ runghc Setup copy --destdir=%buildroot
 %doc news.md readme.md
 
 %changelog
+* Mon Jan 20 2014 Denis Smirnov <mithraen@altlinux.ru> 0.19-alt1
+- 0.19
+
 * Mon Jul 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.18-alt1
 - 0.18
 
