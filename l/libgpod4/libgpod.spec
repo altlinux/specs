@@ -1,8 +1,8 @@
 %define MOUNT_DIR /media
 
 Name: libgpod4
-Version: 0.8.2
-Release: alt3
+Version: 0.8.3
+Release: alt1
 
 Summary: iPod access library
 Group: Sound
@@ -137,6 +137,9 @@ rm -f %buildroot%python_sitelibdir/gpod/*.la
 %_pkgconfigdir/libgpod-sharp.pc
 
 %changelog
+* Mon Jan 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt3
 - rebuilt against libimobiledevice.so.4
 
