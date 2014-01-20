@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.20
+Version: 1.1.21
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jan 20 2014 Michael Shigorin <mike@altlinux.org> 1.1.21-alt1
+- rescue tweaks
+
 * Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 1.1.20-alt1
 - support for CIFS installation method (sin@)
 - glibc-locales for regular images (closes: #29693)
