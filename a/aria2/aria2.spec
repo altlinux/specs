@@ -1,20 +1,19 @@
 Name: aria2
-Version: 1.18.2
+Version: 1.18.3
 Release: alt1
 
-Summary: aria2 - a simple utility for downloading files faster.
+Summary: aria2 - a simple utility for downloading files faster
 License: GPL
 Group: Networking/File transfer
 Url: http://aria2.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %{name}-%version.tar.bz2
+Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Thu Mar 23 2006
 BuildRequires: gcc-c++ libssl-devel libstdc++-devel
 
 %description
-
 aria2 is a download utility with resuming and segmented downloading.
 Supported protocols are HTTP/HTTPS/FTP/BitTorrent. It also supports Metalink
 version 3.0.
@@ -34,24 +33,36 @@ Currently it has following features:
 - Metalink version 3.0 support (HTTP/FTP/BitTorrent).
 - Limiting download/upload speed
 
-
-
 %prep
-%setup -q -n %{name}-%version
+%setup -n %name-%version
 
 %build
 %configure
 %make
 
 %install
-mkdir -p %buildroot%_bindir
-%__install -pD -m755 src/aria2c %buildroot%_bindir/%name
+#mkdir -p %buildroot%_bindir
+#__install -pD -m755 src/aria2c %buildroot%_bindir/aria2c
 
-%files
+%makeinstall
+%find_lang aria2c
+
+ln -s aria2c  %buildroot%_bindir/%name
+
+%files -f aria2c.lang
 %doc AUTHORS ChangeLog README
 %_bindir/%name
+%_bindir/aria2c
+%_man1dir/aria2c.1.bz2
+#_mandir/*/man1/aria2c.1.gz
+%_datadir/locale/*/LC_MESSAGES/aria2.mo
 
 %changelog
+* Mon Jan 20 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt1
+- 1.18.3
+- add aria2c as binary (Closes: #29742)
+- add man and locales files
+
 * Sun Dec 29 2013 Ilya Mashkin <oddity@altlinux.ru> 1.18.2-alt1
 - 1.18.2
 
