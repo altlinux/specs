@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-INET6Glue
-Version: 0.601
+Version: 0.602
 Release: alt1
 
 Summary: Make common modules IPv6 ready by hotpatching
@@ -72,6 +72,9 @@ deal with FTP over IPv6. Also loads the Net::INET6Glue::INET_is_INET6 manpage.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.602-alt1
+- automated CPAN update
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.601-alt1
 - automated CPAN update
 
