@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.15.4
-Release: alt1
+Release: alt2
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -76,6 +76,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.4-alt2
+- Rebuilt with new libraw
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.4-alt1
 - Version 3.15.4
 

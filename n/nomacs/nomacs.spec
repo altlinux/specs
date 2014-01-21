@@ -1,6 +1,6 @@
 Name: nomacs
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 License: GPLv3
 Group: Graphics
@@ -42,6 +42,9 @@ rm -rf {LibRaw,exiv2,expat,zlib}*
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt2
+- rebuilt against libraw.so.10
+
 * Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 - built against libexiv2.so.13

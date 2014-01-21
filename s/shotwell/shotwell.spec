@@ -1,15 +1,13 @@
 Name: shotwell
 Version: 0.15.1
-Release: alt1
+Release: alt2
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
 License: LGPL
 Url: http://www.yorba.org/shotwell/
 
-# Cloned from git://yorba.org/shotwell
 Source: %name-%version.tar.xz
-#Patch: %name-%version-%release.patch
 
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libGConf-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel
@@ -55,6 +53,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Jan 21 2014 Vladimir Lettiev <crux@altlinux.ru> 0.15.1-alt2
+- rebuilt with libraw 0.16.0
+
 * Sat Dec 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15.1-alt1
 - 0.15.1
 

@@ -1,5 +1,5 @@
 Name: libraw
-Version: 0.14.7
+Version: 0.16.0
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras 
@@ -81,6 +81,12 @@ This package contains static library.
 %_libdir/libraw_r.a
 
 %changelog
+* Tue Jan 21 2014 Vladimir Lettiev <crux@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+
+* Tue Jun 04 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15.2-alt1
+- 0.15.2
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14.7-alt1
 - 0.14.7
 
