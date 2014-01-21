@@ -1,7 +1,7 @@
 %define dist X11-Protocol-Other
 
 Name:     perl-%dist
-Version:  28
+Version:  29
 Release:  alt1
 
 Summary:  This is some miscellaneous extras and helpers for X11::Protocol
@@ -38,6 +38,9 @@ This is some miscellaneous extras and helpers for X11::Protocol.
 %perl_vendor_privlib/Encode/X11.pm
 
 %changelog
+* Tue Jan 21 2014 Andrey Cherepanov <cas@altlinux.org> 29-alt1
+- New version
+
 * Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 28-alt1
 - New version
 
