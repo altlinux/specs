@@ -4,7 +4,7 @@
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.2.3
+Version: 2.2.5
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -287,6 +287,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Tue Jan 21 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt1
+- new version
+
 * Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
 - New version
 
