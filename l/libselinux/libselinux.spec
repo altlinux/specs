@@ -1,7 +1,7 @@
 %def_with python
 
 Name: libselinux
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Tue Jan 21 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.2-alt1
+- new version
+
 * Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
 - new version
 
