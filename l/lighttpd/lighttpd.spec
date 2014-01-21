@@ -13,7 +13,7 @@
 %define svnrev 2849
 
 Name: lighttpd
-Version: 1.4.33
+Version: 1.4.34
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -115,7 +115,7 @@ libtoolize -f -c
 
 mkdir -p %buildroot%_sysconfdir/{rc.d/init.d,sysconfig}
 mkdir -p %buildroot%_unitdir
-mkdir -p %buildroot{%_spooldir/%name/tmp,%_var/log/%name}
+mkdir -p %buildroot{%_spooldir/%name/tmp,%_var/log/%name,%_var/lib/%name}
 
 # inirscript, sysconfig and unit
 install -m755 %name.init %buildroot%_initdir/%name
@@ -162,6 +162,7 @@ gpasswd -a %lighttpd_user %webserver_group
 %_man8dir/*
 %dir %attr(1770,root,%lighttpd_group) %lighttpd_spool
 %dir %attr(1770,root,%lighttpd_group) %lighttpd_spool/tmp
+%dir %attr(1770,root,%lighttpd_group) %_var/lib/%name
 %dir %attr(1770,root,%lighttpd_group) %_var/log/%name
 %dir %_libdir/%name
 %_libdir/%name/*.so
@@ -200,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Tue Jan 21 2014 Alexei Takaseev <taf@altlinux.org> 1.4.34-alt1
+- 1.4.34
+
 * Mon Sep 30 2013 Alexei Takaseev <taf@altlinux.org> 1.4.33-alt1
 - 1.4.33
 
