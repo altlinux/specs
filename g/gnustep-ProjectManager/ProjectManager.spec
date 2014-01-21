@@ -1,0 +1,66 @@
+#set_verify_elf_method unresolved=strict
+
+Name: gnustep-ProjectManager
+Version: 0.2
+Release: alt1
+Summary: Alternative Integrated Development Environment (IDE) for GNUstep
+License: GPLv2
+Group: Graphical desktop/GNUstep
+Url: http://home.gna.org/pmanager/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-gui-devel doxygen
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+BuildPreReq: gnustep-HighlighterKit-devel gnustep-WizardKit-devel
+
+%description
+ProjectManager is an alternative Integrated Development Environment
+(IDE) for GNUstep. It aims to provide a simple, but very usable
+development environment for all a programmer's everyday needs.
+
+%package docs
+Summary: Documentation for ProjectManager
+Group: Documentation
+BuildArch: noarch
+
+%description docs
+ProjectManager is an alternative Integrated Development Environment
+(IDE) for GNUstep. It aims to provide a simple, but very usable
+development environment for all a programmer's everyday needs.
+
+This package contains documentation for ProjectManager.
+
+%prep
+%setup
+
+%build
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+ 
+doxygen
+
+%install
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%files
+%doc BUGS README TRICKS
+%_bindir/*
+%_libdir/GNUstep
+
+%files docs
+%doc Documentation/html/*
+
+%changelog
+* Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
+- Initial build for Sisyphus
+
