@@ -2,7 +2,7 @@
 
 Name: gnustep-simplewebkit
 Version: 0.1.0
-Release: alt1.git20130508
+Release: alt1.git20131216
 Summary: Framework which is meant to be a simple, drop-in replacement for WebKit
 License: LGPLv2+
 Group: Networking/WWW
@@ -53,7 +53,7 @@ This package contains development files of SimpleWebKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm'
  
 %install
@@ -91,6 +91,9 @@ popd
 %_libdir/GNUstep/Frameworks/SimpleWebKit.framework/Versions/0.1/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20131216
+- New snapshot
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20130508
 - New snapshot
 

@@ -2,11 +2,11 @@
 
 Name: gnustep-Zipper
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: Tool for inspecting the contents of a compressed archive
 License: GPLv2+
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://gap.nongnu.org/zipper/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Zipper consists only of a single window, displaying the contents of the
@@ -35,7 +37,7 @@ Features:
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -51,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2
+- Rebuilt with new gnustep-gui
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Version 1.5
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-gsgd
 Version: r31302
-Release: alt2.git20100910
+Release: alt3.git20100910
 Summary: Objc interface to libgd library
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -55,7 +55,7 @@ This package contains development files of gsgd.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
@@ -70,6 +70,9 @@ This package contains development files of gsgd.
 %_libdir/*.so
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31302-alt3.git20100910
+- Rebuilt with new gnustep-gui
+
 * Fri Jan 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31302-alt2.git20100910
 - Rebuilt with libgd2 instead of libgd
 

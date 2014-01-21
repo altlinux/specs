@@ -2,7 +2,7 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt1
+Release: alt2
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -66,7 +66,7 @@ This package contains development files of ShengGuang.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS="-O2 -I$PWD/.." \
+	AUXILIARY_CPPFLAGS="-O2 -DGNUSTEP -I$PWD/.." \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -104,6 +104,9 @@ ln -s %_libdir/GNUstep/Library/Headers/ShengGuang \
 %_libdir/GNUstep/Library/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt1
 - Initial build for Sisyphus
 

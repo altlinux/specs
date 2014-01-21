@@ -2,7 +2,7 @@
 
 Name: gnustep-gscoredata
 Version: r33286
-Release: alt1.svn20110612
+Release: alt2.svn20110612
 Summary: Free implementation of the Apple Core Data framework
 License: LGPLv2.1+, FDLv1.2
 Group: Graphical desktop/GNUstep
@@ -70,7 +70,7 @@ framework.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 doxygen
@@ -112,6 +112,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r33286-alt2.svn20110612
+- Rebuilt with new gnustep-gui
+
 * Sun Jan 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r33286-alt1.svn20110612
 - Initial build for Sisyphus
 

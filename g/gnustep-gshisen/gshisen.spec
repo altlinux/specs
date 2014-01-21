@@ -2,7 +2,7 @@
 
 Name: gnustep-gshisen
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: GShisen is a game for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 GShisen is the first GNUstep game!
@@ -35,6 +37,7 @@ can use the Hint feature to find two tiles which may be removed.
 	debug=yes \
 	strip=no \
 	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -49,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3
+- Rebuilt with new gnustep-gui
+
 * Sun Jan 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2
 - Added menu file (thnx kostyalamer@)
 

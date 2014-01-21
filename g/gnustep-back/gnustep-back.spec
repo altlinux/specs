@@ -3,8 +3,8 @@
 #based on Fedora's spec
 
 Name: gnustep-back    
-Version: 0.23.1
-Release: alt4.git20130910
+Version: 0.24.0
+Release: alt1.git20140101
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -16,11 +16,13 @@ Source2: Times.FontInfo.plist
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
-BuildPreReq: libart_lgpl-devel gcc-objc libglitz-devel
+BuildPreReq: libart_lgpl-devel gcc-objc libglitz-devel libcairo-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
 BuildPreReq: fonts-type1-urw
 BuildRequires: texinfo /proc
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel
 
 Requires: fonts-type1-urw gnustep-base gnustep-gui
 
@@ -39,7 +41,7 @@ windowing environments). This package includes development headers too.
 	--libexecdir=%_libdir \
 	--enable-glitz \
 	--enable-server=x11 \
-	--enable-graphics=xlib \
+	--enable-graphics=cairo \
 	--with-tiff-library \
 	--with-x \
 	--with-installation-domain=SYSTEM
@@ -51,7 +53,8 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
 
 %make_build -C Documentation \
 	messages=yes \
@@ -112,6 +115,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.git20140101
+- Version 0.24.0
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt4.git20130910
 - New snapshot
 

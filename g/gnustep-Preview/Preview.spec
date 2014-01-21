@@ -2,11 +2,11 @@
 
 Name: gnustep-Preview
 Version: 0.8.5
-Release: alt2
+Release: alt3
 Summary: Very simple Image Viewer
 License: GPLv2
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/Preview.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Preview is a very simple Image Viewer.
@@ -27,7 +29,7 @@ Preview is a very simple Image Viewer.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -43,6 +45,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt3
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt2
 - Added menu file (thnx kostyalamer@)
 

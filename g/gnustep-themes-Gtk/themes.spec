@@ -1,6 +1,6 @@
 Name: gnustep-themes-Gtk
 Version: 1.0
-Release: alt4.svn20120521
+Release: alt4.svn20140115
 Summary: Gnome Theme for GNUstep
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
@@ -14,6 +14,8 @@ BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel
 BuildPreReq: glib2-devel libgtk+2-devel libGConf-devel
 BuildPreReq: /proc
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Gnome is a theme engine for GNUstep which
@@ -29,7 +31,7 @@ for drawing its widgets.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -39,6 +41,9 @@ for drawing its widgets.
 %_libdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.svn20140115
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.svn20120521
 - Rebuilt with libobjc2 instead of libobjc
 

@@ -2,11 +2,11 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt1.git20130819
+Release: alt3.git20130819
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/GDL
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-gdl2.git
@@ -17,6 +17,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel
 BuildPreReq: postgresql-devel libsqlite3-devel
 BuildPreReq: texinfo texi2html texlive-latex-base
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %version-%release
 
@@ -141,6 +143,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt3.git20130819
+- Rebuilt with new gnustep-gui
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.git20130819
 - New snapshot
 

@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-Graphos
-Version: 0.4
+Version: 0.5
 Release: alt1
 Summary: Vector editor for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://gap.nongnu.org/graphos/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Graphos is a vector drawing application centered around bezier paths.
@@ -35,7 +37,7 @@ Features:
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -49,6 +51,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
+- Version 0.5
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Version 0.4
 

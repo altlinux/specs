@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 0.9.5
-Release: alt3
+Release: alt4
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -75,7 +75,7 @@ pushd Frameworks/Cynthiune
 	shared=yes \
 	disable-windowsmedia=yes \
 	disable-arts=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug' \
+	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 popd
@@ -87,7 +87,7 @@ popd
 	shared=yes \
 	disable-windowsmedia=yes \
 	disable-arts=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug' \
+	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lCynthiune -lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -131,6 +131,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt4
+- Rebuilt with new gnustep-gui
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
 - Added menu files (thnx kostyalamer@)
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-terminal
 Version: 0.9.8
-Release: alt3
+Release: alt4
 Summary: Terminal emulator for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 Terminal is terminal emulator for GNUstep. Multiple windows, scroll
@@ -30,7 +32,7 @@ terminal services.
 	strip=no \
 	shared=yes \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
-	AUXILIARY_CPPFLAGS='-O2'
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -44,6 +46,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt4
+- Rebuilt with new gnustep-gui
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt3
 - Set UTF-8 as default encoding
 

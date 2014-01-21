@@ -3,8 +3,8 @@
 # based on Fedora's package
 
 Name: gnustep-gui
-Version: 0.23.1
-Release: alt3.git20130913
+Version: 0.24.0
+Release: alt1.git20140101
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -22,6 +22,8 @@ BuildPreReq: libX11-devel libicu-devel imake libImageMagick-devel
 BuildPreReq: ImageMagick-tools libsndfile-devel libao-devel
 BuildPreReq: flite-devel libicns-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel
 
 Requires: lib%name = %version-%release
 
@@ -97,17 +99,20 @@ done
 	--with-x \
 	--with-installation-domain=SYSTEM
 
+#make_build \
+#	messages=yes \
+#	debug=yes \
+#	strip=no \
+#	shared=yes \
+#	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
+#	||:
+#touch Tools/GSspell.service/Resources/Info-gnustep.plist
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes ||:
-touch Tools/GSspell.service/Resources/Info-gnustep.plist
-%make_build \
-	messages=yes \
-	debug=yes \
-	strip=no \
-	shared=yes
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
  
 # too long now
 %if 0
@@ -156,6 +161,9 @@ rm -fR %buildroot%_infodir
 %endif
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.git20140101
+- Version 0.24.0
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt3.git20130913
 - New snapshot
 

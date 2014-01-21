@@ -2,7 +2,7 @@
 
 Name: gnustep-GNUMail
 Version: 1.2.0
-Release: alt4
+Release: alt5
 Summary: Official GNUstep mail application and a clone of NeXT's Mail.app
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -64,7 +64,7 @@ This package contains development files of GNUstep GNUMail.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lPantomime -lAddressView -lAddresses -lgnustep-gui -lgnustep-base -lobjc2' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -105,6 +105,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt5
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt4
 - Fixed menu file by kostyalamer@
 

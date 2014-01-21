@@ -2,17 +2,19 @@
 
 Name: gnustep-RSSkit
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: Simple library for reading the different types of RSS file formats
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://gap.nongnu.org/grr/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: doxygen gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
 
@@ -67,7 +69,7 @@ This package contains development documentation for RSSKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
 doxygen doxygen
@@ -108,6 +110,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2
+- Rebuilt with new gnustep-gui
+
 * Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
 

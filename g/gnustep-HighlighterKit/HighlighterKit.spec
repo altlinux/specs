@@ -2,11 +2,11 @@
 
 Name: gnustep-HighlighterKit
 Version: 0.1.2
-Release: alt1
+Release: alt2
 Summary: Framework needed by Gemas and Project Manager
 License: MIT / FDL
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/HighlighterKit
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -55,7 +55,7 @@ This package contains development files of GNUstep HighlighterKit.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
@@ -92,6 +92,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2
+- Rebuilt with new gnustep-gui
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Initial build for Sisyphus
 

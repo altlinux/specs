@@ -2,11 +2,11 @@
 
 Name: gnustep-Grr
 Version: 1.0
-Release: alt2
+Release: alt3
 Summary: RSS Reader application
 License: GPL
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/Grr.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-RSSkit-devel gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-RSSkit
 
@@ -44,7 +46,7 @@ From the website:
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -60,6 +62,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3
+- Rebuilt with new gnustep-gui
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2
 - Added menu file (thnx kostyalamer@)
 

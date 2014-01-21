@@ -2,7 +2,7 @@
 
 Name: gnustep-gorm
 Version: 1.2.20
-Release: alt1.svn20130703
+Release: alt1.svn20140119
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-gorm.git
+# http://svn.gna.org/svn/gnustep/apps/gorm/trunk/
 Source: %name-%version.tar
 Source1: %name.menu
 
@@ -72,7 +73,7 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2' \
+		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base -lobjc2 -lm $1 $2 $3"
 }
 
@@ -130,6 +131,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt1.svn20140119
+- New snapshot
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt1.svn20130703
 - Version 1.2.20
 

@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-base
-Version: 1.24.5
-Release: alt1.git20130910
+Version: 1.24.6
+Release: alt1.git20131231
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -80,6 +80,7 @@ export CC=gcc
 	debug=yes \
 	strip=no \
 	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lobjc2 -lffi -licui18n -lxslt -lxml2 -lgnutls -lz'
 
 # very long now
@@ -147,6 +148,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt1.git20131231
+- Version 1.24.6
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.5-alt1.git20130910
 - Version 1.24.5
 

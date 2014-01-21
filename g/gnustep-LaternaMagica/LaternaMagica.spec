@@ -2,11 +2,11 @@
 
 Name: gnustep-LaternaMagica
 Version: 0.4
-Release: alt2
+Release: alt3
 Summary: Image viewer and slideshow application
 License: GPLv2
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://gap.nongnu.org/laternamagica/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 LaternaMagica is a single-window image viewer application which is
@@ -44,6 +46,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt3
+- Rebuilt with new gnustep-gui
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt2
 - Added menu file (thnx kostyalamer@)
 

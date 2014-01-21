@@ -2,7 +2,7 @@
 
 Name: gnustep-PictureFrame
 Version: 1.1.3
-Release: alt3
+Release: alt4
 Summary: Software for a digital picture frame
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -14,6 +14,8 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 %description
 PictureFrame is an application meant to be run on your own home-built
@@ -56,7 +58,7 @@ This package contains development files of PictureFrame.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -75,6 +77,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt4
+- Rebuilt with new gnustep-gui
+
 * Fri Mar 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt3
 - Added menu file (thnx kostyalamer@)
 
