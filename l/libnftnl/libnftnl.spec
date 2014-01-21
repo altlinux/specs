@@ -1,6 +1,6 @@
 Name:           libnftnl
 Version:        1.0.0
-Release:        alt1
+Release:        alt2
 Summary:        Netfilter nf_tables infrastructure library
 Group:          System/Libraries
 License:        LGPLv2.1+
@@ -31,6 +31,14 @@ Requires:       pkgconfig, %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package	examples
+Summary:        Examples for %name
+Group:          System/Libraries
+
+%description	examples
+The %name-examples package contains examples files for %name.
+
+
 %prep
 %setup
 
@@ -44,6 +52,8 @@ developing applications that use %name.
 pushd tests
     ./test-script.sh
 popd
+mkdir -p %buildroot%_sbindir
+cp examples/.libs/* %buildroot%_sbindir/
 
 %install
 %makeinstall_std
@@ -53,7 +63,6 @@ popd
 %_libdir/%name.so.*
 
 %files devel
-%doc examples
 %_libdir/*.so
 %_includedir/%name
 %_libdir/pkgconfig/*.pc
@@ -61,6 +70,13 @@ popd
 %files devel-static
 %_libdir/*.a
 
+%files examples
+%doc examples/*.c
+%_sbindir/*
+
 %changelog
+* Tue Jan 21 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.0-alt2
+- move examples to own package
+
 * Tue Jan 21 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.0-alt1
 - first build for ALT Linux
