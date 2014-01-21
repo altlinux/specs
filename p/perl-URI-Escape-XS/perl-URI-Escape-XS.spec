@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Carp.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-URI-Escape-XS
-Version:        0.10
-Release:        alt3_5
+Version:        0.11
+Release:        alt1
 Summary:        Drop-In replacement for URI::Escape
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/URI-Escape-XS/
-Source0:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DA/DANKOGAI/URI-Escape-XS-%{version}.tar.gz
 
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Encode.pm)
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_archlib}/URI*
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Thu Oct 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_5
 - Sisyphus build
 
