@@ -1,12 +1,13 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.1
-Release: alt1.1
+Release: alt2
 License: LGPL
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
 BuildRequires: ladspa_sdk libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl-devel libmad-devel libmagic-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
+%def_without ffmpeg
 Packager: Denis Smirnov <mithraen@altlinux.org>
 Url: http://%name.sourceforge.net/
 Source: %name-%version.tar
@@ -17,7 +18,9 @@ Requires: libsox-fmt-alsa = %version-%release
 Requires: libsox-fmt-ao = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
-#Requires: libsox-fmt-ffmpeg = %version-%release
+%if_with ffmpeg
+Requires: libsox-fmt-ffmpeg = %version-%release
+%endif
 Requires: libsox-fmt-flac = %version-%release
 Requires: libsox-fmt-gsm = %version-%release
 Requires: libsox-fmt-lpc10 = %version-%release
@@ -103,6 +106,7 @@ Requires: libsox = %version-%release
 %description -n libsox-fmt-fap
 %summary
 
+%if_with ffmpeg
 %package -n libsox-fmt-ffmpeg
 Summary: %summary
 Group: Sound
@@ -110,6 +114,7 @@ Requires: libsox = %version-%release
 
 %description -n libsox-fmt-ffmpeg
 %summary
+%endif
 
 %package -n libsox-fmt-flac
 Summary: %summary
@@ -335,8 +340,10 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files -n libsox-fmt-fap
 %_libdir/sox/libsox_fmt_fap.so
 
-#files -n libsox-fmt-ffmpeg
-#_libdir/sox/libsox_fmt_ffmpeg.so
+%if_with ffmpeg
+%files -n libsox-fmt-ffmpeg
+%_libdir/sox/libsox_fmt_ffmpeg.so
+%endif
 
 %files -n libsox-fmt-flac
 %_libdir/sox/libsox_fmt_flac.so
@@ -397,6 +404,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Tue Jan 21 2014 Denis Smirnov <mithraen@altlinux.ru> 14.4.1-alt2
+- disable build ffmpeg module by default
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.4.1-alt1.1
 - Fixed build
 
