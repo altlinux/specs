@@ -13,7 +13,7 @@
 %define nv_version 331
 %define nv_release 38
 %define nv_minor %nil
-%define pkg_rel alt130
+%define pkg_rel alt131
 %define set_gl_nvidia_ver 0.10.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -181,6 +181,7 @@ install -m 0755 %SOURCE2 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libvdpau_nvidia.so
 
 %__ln_s ../../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so
+%__ln_s libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
 %__ln_s ../..%nv_etclib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
 
 
@@ -240,11 +241,15 @@ fi
 #
 %x11_lib_dir/libnvidia-cfg.so.?
 %x11_lib_dir/vdpau/libvdpau_nvidia.so
+%x11_lib_dir/vdpau/libvdpau_nvidia.so.1
 #
 %_bindir/nvidia-install-driver
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Tue Jan 21 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt131
+- add libvdpau_nvidia.so.1
+
 * Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt130
 - move vdpau module to libdir/vdpau/
 
