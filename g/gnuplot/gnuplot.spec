@@ -1,11 +1,11 @@
 Name: gnuplot
-Version: 4.4.0
-Release: alt2.qa1
+Version: 4.6.4
+Release: alt1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
 Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
-License: Freeware-like
+License: gnuplot and MIT
 Group: Sciences/Other
 URL: http://gnuplot.sourceforge.net/
 Packager: Alexey Morsov <swi@altlinux.ru>
@@ -21,19 +21,21 @@ Source12: %name.48.png
 
 Source14: gnuplot-emacs.el
 
-Patch1: gnuplot-4.2.4-build.alt.patch
+Patch1: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-texmf 
+BuildRequires(pre): rpm-build-texmf
 BuildPreReq: desktop-file-utils
-BuildRequires: gcc-c++ ghostscript-module-X groff-base imake libXt-devel libncurses-devel libreadline-devel tetex-latex xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel
-BuildRequires: tetex-core tetex-dvips
+BuildRequires: gcc-c++ ghostscript-module-X groff-base imake libXt-devel libncurses-devel libreadline-devel tetex-latex xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel libgif-devel
+BuildRequires: tetex-core tetex-dvips tetex-latex-unicode
+BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
 # for wxt terminal
-BuildRequires: libwxGTK-devel libcairo-devel libpango-devel
+BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
 # for lua/TikZ
 BuildRequires: liblua5-devel texmf-pgf
 
-Requires(post,postun): desktop-file-utils 
 
+Requires(post,postun): desktop-file-utils
+Requires: fonts-ttf-dejavu
 
 %package -n emacs-mode-%name
 Summary: A GNU Emacs major mode for %name
@@ -90,11 +92,14 @@ The Emacs Lisp sources for bytecode included in %name
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
-%configure --prefix=%{_prefix} --with-readline=gnu --with-png --with-gif=png --without-linux-vga \
-	--with-cdrwc --without-row-help --enable-thin-splines \
+%configure --with-readline=gnu \
+	--without-linux-vga \
+	--with-cdrwc \
+	--without-row-help \
+	--enable-thin-splines \
 	--with-texdir=%buildroot%{_texmfmain}/%{name} \
 	--with-lua \
-	--with-gihdir=%{name}/4.4/
+	--with-gihdir=%{name}/4.6/
 #find -type f -print0 |
 #	xargs -r0 fgrep -l gdImageGif |
 #	xargs perl -pi -e 's/gdImageGif/gdImagePng/g'
@@ -156,7 +161,6 @@ install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 %_libexecdir/%name
 %_datadir/%name
 %_desktopdir/*
-%_infodir/%{name}*
 %_niconsdir/*.png
 %_miconsdir/*.png
 %_liconsdir/*.png
@@ -174,6 +178,12 @@ install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 %_emacslispdir/%name/*.el
 
 %changelog
+* Tue Jan 21 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.4-alt1
+- 4.6.4
+- update fonts paths
+- define ttffont as DejaVuSans.ttf
+- add fedora patches
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:4.4.0-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
