@@ -6,16 +6,16 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.1.1
-Release: alt1
+Version: 2.1.3
+Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-#Source: %_name-%version.tar
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source: %_name-%version.tar
+#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Source1: %name.control
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
@@ -33,7 +33,7 @@ Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
-Requires: mdadm ntfsprogs parted gdisk acl
+Requires: mdadm ntfsprogs parted gdisk acl dosfstools
 
 BuildRequires: intltool gtk-doc gnome-common
 BuildRequires: libgio-devel >= %glib_ver
@@ -175,6 +175,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt0.1
+- 2.1.3 snapshot (4ce586f)
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1 release
 
