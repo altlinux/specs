@@ -13,13 +13,13 @@ BuildRequires: perl(Encode.pm) perl(English.pm) perl(open.pm) perl-devel perl-po
 %global debug_package %{nil}
 
 Name:		perl-Test-Mojibake
-Version:	0.8
-Release:	alt2_4
+Version:	0.9
+Release:	alt1
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
-Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
 Patch0:		Test-Mojibake-0.4-no-Test::Version.patch
 Patch1:		Test-Mojibake-0.8-old-Test::More.patch
 BuildArch:	noarch
@@ -153,6 +153,9 @@ sed -i -e 's|release-minimum-version.t|t/release-minimum-version.t|' MANIFEST
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_4
 - Sisyphus build
 
