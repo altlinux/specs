@@ -1,10 +1,10 @@
-%define module_version 0.93
+%define module_version 0.94
 %define module_name App-Nopaste
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(HTTP/Request/Common.pm) perl(LWP/Protocol.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Module/Manifest/Skip.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI/Escape.pm) perl(YAML/Tiny.pm) perl(base.pm) perl-devel
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        0.93
+Version:        0.94
 Release:        alt1
 Summary:        Easy access to any pastebin
 License:        perl
@@ -97,6 +97,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
 - automated CPAN update
 
