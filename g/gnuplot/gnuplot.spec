@@ -1,6 +1,8 @@
+%define ver_major 4.6
+
 Name: gnuplot
-Version: 4.6.4
-Release: alt1
+Version: %ver_major.4
+Release: alt2
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -25,17 +27,45 @@ Patch1: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-texmf
 BuildPreReq: desktop-file-utils
-BuildRequires: gcc-c++ ghostscript-module-X groff-base imake libXt-devel libncurses-devel libreadline-devel tetex-latex xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel libgif-devel
-BuildRequires: tetex-core tetex-dvips tetex-latex-unicode
+BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd2-devel libpng-devel libjpeg-devel libgif-devel
+BuildRequires: /usr/bin/tex
+BuildRequires: /usr/bin/dvips
+BuildRequires: /usr/bin/pdflatex
 BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
+
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
+# for qt terminal
+BuildRequires: libqt4-devel >= 4.5
 # for lua/TikZ
 BuildRequires: liblua5-devel texmf-pgf
 
 
 Requires(post,postun): desktop-file-utils
 Requires: fonts-ttf-dejavu
+Requires: %name-common-x11 = %{?epoch:%epoch:}%version-%release
+
+%package common
+Group: Sciences/Other
+Summary: The common gnuplot parts
+BuildArch: noarch
+Conflicts: %name < %{?epoch:%epoch:}%version-%release
+
+%package common-x11
+Group: Sciences/Other
+Summary: The common-x11 gnuplot parts
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
+Conflicts: %name < %{?epoch:%epoch:}%version-%release
+
+%package minimal
+Group: Sciences/Other
+Summary: Minimal version of program for plotting mathematical expressions and data
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
+
+%package qt
+Group: Sciences/Other
+Summary: Qt interface for gnuplot
+Requires: %name-common-x11 = %{?epoch:%epoch:}%version-%release
 
 %package -n emacs-mode-%name
 Summary: A GNU Emacs major mode for %name
@@ -57,6 +87,16 @@ Requires: emacs-mode-%name = %{?epoch:%epoch:}%version-%release
 Obsoletes: emacs-gnuplot <= 0.6.0-alt1
 Provides: emacs-gnuplot-el
 
+%package doc
+Group: Documentation
+Summary: Documentation of bindings for the gnuplot main application
+BuildArch: noarch
+
+%package demo
+Group: Sciences/Other
+Summary: Demo gnuplot applications
+BuildArch: noarch
+
 %description
 Gnuplot is a command-line driven, interactive function plotting program
 especially suited for scientific data representation. Gnuplot can be used to
@@ -72,6 +112,37 @@ Gnuplot это интерактивная программа, предназна
 данных.  Gnuplot может строить 2-х и 3-х мерные графики функций 
 и числовых данных во множестве различных графических форматов.
 
+%description common
+Gnuplot is a command-line driven, interactive function plotting
+program especially suited for scientific data representation.  Gnuplot
+can be used to plot functions and data points in both two and three
+dimensions and in many different formats.
+
+This subpackage contains common parts needed for arbitrary version of gnuplot
+
+%description common-x11
+Gnuplot is a command-line driven, interactive function plotting
+program especially suited for scientific data representation.  Gnuplot
+can be used to plot functions and data points in both two and three
+dimensions and in many different formats.
+
+This subpackage contains common-x11 parts needed for arbitrary version of gnuplot
+
+%description minimal
+Gnuplot is a command-line driven, interactive function plotting
+program especially suited for scientific data representation.  Gnuplot
+can be used to plot functions and data points in both two and three
+dimensions and in many different formats.
+
+
+%description qt
+Gnuplot is a command-line driven, interactive function plotting
+program especially suited for scientific data representation.  Gnuplot
+can be used to plot functions and data points in both two and three
+dimensions and in many different formats.
+
+This package provides a Qt based terminal version of gnuplot
+
 %description -n emacs-mode-%name
 A GNU Emacs major mode for %name
 
@@ -84,27 +155,40 @@ The Emacs Lisp sources for bytecode included in %name
 %description -n emacs-mode-%name-el -l ru_RU.UTF-8
 Исходный код Emacs Lisp для emacs-mode-%name
 
+%description doc
+The gnuplot-doc package contains the documentation related to gnuplot
+plotting tool
+
+%description demo
+The gnuplot-demo package contains the demo applications related to gnuplot
+plotting tool
 
 %prep
-%setup -q 
+%setup -q
 %patch1 -p1
-
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
-%configure --with-readline=gnu \
-	--without-linux-vga \
-	--with-cdrwc \
-	--without-row-help \
-	--enable-thin-splines \
-	--with-texdir=%buildroot%{_texmfmain}/%{name} \
-	--with-lua \
-	--with-gihdir=%{name}/4.6/
-#find -type f -print0 |
-#	xargs -r0 fgrep -l gdImageGif |
-#	xargs perl -pi -e 's/gdImageGif/gdImagePng/g'
 
-# due to some problems with building on i586 in SMP mode turn it off to noSMP
+%define configure_opts --with-readline=gnu --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%buildroot%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
+
+# at first create minimal version of gnuplot for server SIG purposes
+mkdir minimal
+cd minimal
+ln -s ../configure .
+%configure %configure_opts --disable-wxwidgets --without-cairo --without-x
+%make_build
+cd -
+
+# create full version of gnuplot
+mkdir qt
+cd qt
+ln -s ../configure .
+%configure %configure_opts --disable-wxwidgets --enable-qt
+%make_build
+cd -
+
+%configure %configure_opts --without-qt
 %make_build
 
 pushd lisp
@@ -128,7 +212,23 @@ popd
 
 
 %install
+# install wx
 %makeinstall
+# rename binary
+mv %buildroot%_bindir/%name %buildroot%_bindir/%name-wx
+
+# install qt
+install -p -m 755 qt/src/%name %buildroot%_bindir/%name-qt
+
+# install minimal binary
+install -p -m 755 minimal/src/%name %buildroot%_bindir/%name-minimal
+
+# Add alternatives for gnuplot
+mkdir -p %buildroot%_altdir
+printf '%_bindir/%name\t%_bindir/gnuplot-minimal\t10\n' > %buildroot%_altdir/%name-minimal
+printf '%_bindir/%name\t%_bindir/gnuplot-wx\t20\n' > %buildroot%_altdir/%name-wx
+printf '%_bindir/%name\t%_bindir/gnuplot-qt\t30\n' > %buildroot%_altdir/%name-qt
+
 
 pushd lisp
     mkdir -p %buildroot%{_emacslispdir}/%name
@@ -151,20 +251,33 @@ install -D -pm644 %SOURCE10  %buildroot/%_miconsdir/%name.png
 install -D -pm644 %SOURCE11  %buildroot/%_niconsdir/%name.png
 install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 
+# cleanup before add to doc
+rm -f demo/Makefile*
+rm -f demo/html/Makefile*
 
 %files
-%doc README ChangeLog BUGS Copyright NEWS
-%doc demo tutorial/tutorial.pdf gnuplot-faq.html
-%doc docs/psdoc docs/gpcard.pdf docs/gnuplot.pdf
-%_bindir/*
+%_bindir/gnuplot-wx
+%_altdir/%name-wx
+
+%files common
 %_mandir/man?/*
-%_libexecdir/%name
 %_datadir/%name
 %_desktopdir/*
 %_niconsdir/*.png
 %_miconsdir/*.png
 %_liconsdir/*.png
 %_texmfmain/%name
+
+%files common-x11
+%_libexecdir/%name
+
+%files minimal
+%_bindir/gnuplot-minimal
+%_altdir/%name-minimal
+
+%files qt
+%_bindir/gnuplot-qt
+%_altdir/%name-qt
 
 %files -n emacs-mode-%name
 %dir %_defaultdocdir/emacs-%{name}-%{version}/
@@ -177,7 +290,19 @@ install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 %_emacslispdir/*.el
 %_emacslispdir/%name/*.el
 
+%files doc
+%doc ChangeLog Copyright BUGS  README NEWS
+%doc tutorial/tutorial.pdf gnuplot-faq.html
+%doc docs/psdoc/ps_* docs/gpcard.pdf docs/gnuplot.pdf
+
+%files demo
+%doc demo
+
 %changelog
+* Wed Jan 22 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.4-alt2
+- add common, common-x11, minimal, qt, doc, demo packages and alternatives
+- build with texlive
+
 * Tue Jan 21 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.4-alt1
 - 4.6.4
 - update fonts paths
