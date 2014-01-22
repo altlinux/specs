@@ -60,7 +60,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.11
+Version:	4.3.13
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -129,7 +129,7 @@ Requires(postun):	/usr/sbin/semodule /usr/sbin/semanage
 #################
 
 # move static www files from HOME/www to HOME/static
-Patch1: xymon_trunk.installstaticwww.patch
+Patch1: xymon_4313.installstaticwww.patch
 
 # specify location of help files instead of assuming
 Patch2: xymon.helpdir.patch
@@ -160,7 +160,6 @@ Patch6: xymon437.initdvars.patch
 
 # remove auto-updating of scripts and binaries from xymonclient.sh
 # since there's no good way to make this work on an RPM system
-Patch7: xymon.clientversion.patch
 Patch8: xymon.noclientupdate.patch
 
 
@@ -182,8 +181,8 @@ Patch18: xymon.nullfollowsincl.patch
 Patch19: xymon.nolocalclient.patch
 
 
-# allow http tests to store the raw output as a data message (store=)
-Patch27: xymon.datahttp.patch
+# allow http tests to store the raw output as a data message (data=)
+Patch27: xymon_branch.datahttp.patch
 
 
 # don't print default env file name unless running xymoncmd with --debug
@@ -250,9 +249,6 @@ Patch203: xymon.usrlibs.patch
 Patch326: xymon_trunk.httpheaders.patch
 Patch26: xymon.httpheaders.patch
 
-# xymongen bug
-Patch320: xymongen-4311.patch
-
 # TRUNK ONLY
 # use distribution fping instead of building included one
 Patch401: xymon_trunk.nofping.patch
@@ -282,6 +278,12 @@ Patch501: xymongen.tasks.cfg.DIST.patch
 
 # added control for using "ifconfig" and "netstat -rn" in xymonclient-linux.sh
 Patch502: xymonclient-linux.sh-ifconfig-route.altlinux.patch
+
+# build/Makefile.rules bug
+Patch503: xymon-4.3.13-build-rules.patch
+
+# missingalert timecheck bug
+Patch504: xymon-4.3.12-missingalert-timecheck.patch
 
 ##########################################################################
 ##########################################################################
@@ -447,7 +449,6 @@ the Xymon server in NCV format.
 %patch4 -b .sections
 %patch5 -b .breakout
 %patch6 -b .initdvars
-%patch7 -b .clientversion
 %patch8 -b .noclientupdate
 
 
@@ -479,8 +480,6 @@ the Xymon server in NCV format.
 
 %patch203 -b .usrlibs
 
-%patch320
-
 %if_disabled trunk
 %patch26 -b .httpheaders
 %patch27 -b .datahttp
@@ -498,7 +497,10 @@ the Xymon server in NCV format.
 
 %patch500 -p2
 %patch501 -p0
-%patch502 -p0
+%patch502 -p2
+%patch503 -p2
+%patch504 -p0
+
 
 %if_disabled trunk
   PROTOFILE="xymond/etcfiles/protocols.cfg.DIST"
@@ -979,7 +981,7 @@ done
 #  sed -e "s/^include /source /" -i %{_sysconfdir}/%{clientName}/xymonclient.cfg*
 
 %post apache2
-for A2MODULE in authn_file authz_groupfile rewrite ; do
+for A2MODULE in authn_file authz_groupfile rewrite userdir cgi; do
     a2enmod $A2MODULE &>/dev/null || :
 done
 
@@ -1275,6 +1277,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Wed Jan 22 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.3.13-alt1
+- new version (CVE-2013-4173 was fixed in previous 4.3.12)
+- some patches synced with terabithia's xymon-4.3.13-1.fc20.src.rpm
+
 * Thu May 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.11-alt1
 - new version
 - added xymongen-4311.patch and
