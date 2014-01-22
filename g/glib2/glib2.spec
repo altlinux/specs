@@ -21,7 +21,7 @@
 
 Name: glib2
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -49,6 +49,8 @@ Patch: glib-2.35.9-alt-compat-version-script.patch
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.36-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=707298
+Patch4: glib-2.38-bgo-707298.patch
 
 %def_with locales
 %if_with locales
@@ -214,6 +216,7 @@ the functionality of the installed glib2/libgio packages.
 %patch1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -404,6 +407,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Jan 22 2014 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt3
+- applied patch for BGO #707298
+
 * Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt2
 - added glibc-kernheaders to buildreqs
 - installed tests
