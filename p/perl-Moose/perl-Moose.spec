@@ -1,6 +1,6 @@
 %define dist Moose
 Name: perl-%dist
-Version: 2.1201
+Version: 2.1202
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -56,6 +56,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.1202-alt1
+- automated CPAN update
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.1201-alt1
 - automated CPAN update
 
