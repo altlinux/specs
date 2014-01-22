@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-Wrapper
-Version: 1.04
+Version: 1.05
 Release: alt1
 
 Summary: Text-Wrapper - Simple word wrapping routine
@@ -52,6 +52,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
