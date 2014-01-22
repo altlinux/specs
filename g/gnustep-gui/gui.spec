@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.24.0
-Release: alt1.git20140101
+Release: alt2.git20140101
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -161,6 +161,9 @@ rm -fR %buildroot%_infodir
 %endif
 
 %changelog
+* Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt2.git20140101
+- Set _isVertical is public in %_includedir/AppKit/NSProgressIndicator.h
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.git20140101
 - Version 0.24.0
 
