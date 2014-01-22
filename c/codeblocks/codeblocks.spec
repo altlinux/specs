@@ -1,6 +1,6 @@
 Name: codeblocks
-%define revision 8629
-Version: 12.11
+%define revision 9158
+Version: 13.12
 Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
@@ -12,7 +12,7 @@ Url: http://www.codeblocks.org
 Packager: Denis Kirienko <dk@altlinux.ru>
 
 # http://svn.berlios.de/svnroot/repos/codeblocks/trunk 
-Source0: %name-svn%revision-src.tar
+Source0: codeblocks_13.12-1.tar
 Source1: %name-8.02-alt-icons.tar.bz2
 Source3: %name.desktop
 Source4: %name.po
@@ -21,8 +21,8 @@ Source5: %name-default.conf
 Patch0: codeblocks-scriptedwizard-localization.patch
 Patch1: codeblocks-ebuild.conf.patch
 
-BuildPreReq: wxGTK-devel >= 2.8.10-alt2 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
-Requires: automake >= 1.7 wxGTK >= 2.8.10-alt2 gcc gcc-c++ gdb xterm
+BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
+Requires: automake >= 1.7 wxGTK >= 2.8.12 gcc gcc-c++ gdb xterm
 
 %set_verify_elf_skiplist %_datadir/%name/*
 
@@ -66,11 +66,11 @@ SDK для создания собственных плагинов к сред�
 %define pkgdata %_datadir/%name
 
 %prep
-%setup -q -n %name -a 1
+%setup -q -n %name-%version -a 1
 cp %SOURCE3 src/mime/
 cp %SOURCE4 .
 
-%patch0 -p1
+# %patch0 -p1
 %patch1 -p1
 
 # Script update_revision.sh generates file revision.m4 that contains info about svn revision.
@@ -128,6 +128,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{pkgdata}/images/16x16
 %{pkgdata}/images/codecompletion
 %{pkgdata}/images/settings
+%{pkgdata}/compilers
 %{pkgdata}/lexers
 %{pkgdata}/locale
 %dir %{_libdir}/%{name}
@@ -178,6 +179,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{pkgdata}/lib_finder.zip
 %{pkgdata}/MouseSap.zip
 %{pkgdata}/NassiShneiderman.zip
+%{pkgdata}/occurrenceshighlighting.zip
 %{pkgdata}/openfileslist.zip
 %{pkgdata}/projectsimporter.zip
 %{pkgdata}/Profiler.zip
@@ -221,6 +223,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{_libdir}/%{name}/plugins/liblib_finder.*
 %{_libdir}/%{name}/plugins/libMouseSap.*
 %{_libdir}/%{name}/plugins/libNassiShneiderman.*
+%{_libdir}/%{name}/plugins/liboccurrenceshighlighting.*
 %{_libdir}/%{name}/plugins/libopenfileslist.*
 %{_libdir}/%{name}/plugins/libprojectsimporter.*
 %{_libdir}/%{name}/plugins/libProfiler.*
@@ -241,8 +244,14 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 17 2014 Denis Kirienko <dk@altlinux.org> 13.12-alt1
+- 13.12 release
+
+* Fri Jun 21 2013 Denis Kirienko <dk@altlinux.org> 12.11.9158-alt1
+- SVN snapshot 9158
+
 * Sun Dec 09 2012 Denis Kirienko <dk@altlinux.org> 12.11-alt1
-- 12.11 realese (SVN 8629)
+- 12.11 release (SVN 8629)
 
 * Fri Nov 23 2012 Denis Kirienko <dk@altlinux.org> 12.11-alt0.2
 - 12.11 RC2 (SVN 8598)
