@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2.a0
+Release: alt3.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -18,6 +18,7 @@ Source0: %name-%version.tar
 Source1: conf.py.template
 Source2: macro
 Source3: macro3
+Source4: refcounting.py
 
 BuildArch: noarch
 
@@ -176,6 +177,9 @@ This packages contains pickles for Sphinx.
 
 %prep
 %setup
+
+cp %SOURCE4 sphinx/ext/
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -289,6 +293,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 install -p -m644 conf.py.template \
 	%buildroot%python_sitelibdir/%oname/
 
+%ifarch x86_64
+LIBSUF=64
+%endif
+
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -360,6 +368,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt3.a0
+- Removed sphinx.ext from sys.path
+
 * Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt2.a0
 - Enabled devel subpackage
 
