@@ -1,6 +1,6 @@
 Name: sbsigntools
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Canonical EFI binary signing tools
 License: GPLv3
@@ -11,7 +11,9 @@ Source1: ccan-0.0.2.tar.gz
 
 # Automatically added by buildreq on Thu Nov 01 2012
 # optimized out: perl-Encode perl-Locale-gettext pkg-config python3-base
-BuildRequires: binutils-devel git-core gnu-efi help2man libssl-devel libuuid-devel python3
+BuildRequires: binutils-devel git-core help2man libssl-devel libuuid-devel python3
+
+BuildRequires: gnu-efi-3.0r
 
 # NB: !x86_64 is fake here at the moment,
 #     need to have another look at pesign
@@ -56,6 +58,9 @@ find %buildroot -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Jan 22 2014 Michael Shigorin <mike@altlinux.org> 0.6-alt3
+- fix BR:
+
 * Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 0.6-alt2
 - fake 32-bit x86 package (since archdep buildrequires are worse)
 
