@@ -4,9 +4,12 @@
 %define brand altlinux
 %define Brand ALT Linux
 
+%define major 7
+%define minor 0
+%define bugfix 3
 Name: branding-%brand-%smalltheme
-Version: 7.0.2
-Release: alt2
+Version: %major.%minor.%bugfix
+Release: alt1
 BuildArch: noarch
 
 %define theme %name
@@ -31,6 +34,9 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define Brand_ru Альт Линукс
 %define status_en %nil
 %define status %nil
+%define ProductName %Brand %major.%minor %Theme
+%define ProductName_ru %Brand_ru %major.%minor %Theme_ru
+
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
@@ -243,7 +249,19 @@ ALT Linux index.html welcome page.
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' NAME_RU='%Theme_ru' BRAND_FNAME='%Brand' BRAND_FNAME_RU='%Brand_ru' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
+THEME=%theme \
+NAME='%Theme' \
+NAME_RU='%Theme_ru' \
+BRAND_FNAME='%Brand' \
+BRAND_FNAME_RU='%Brand_ru' \
+BRAND='%brand' \
+PRODUCT_NAME='%ProductName' \
+PRODUCT_NAME_RU='%ProductName_ru' \
+STATUS_EN=%status_en \
+STATUS=%status \
+VERSION=%version \
+X86='%x86' \
+    ./configure
 make
 
 %install
@@ -461,6 +479,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Jan 22 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt1
+- licence fixed
+
 * Thu Dec 26 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt2
 - disable tracker autostart (ALT#26549)
 
