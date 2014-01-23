@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.21
+%define v8_ver 3.22
 
 %def_disable debug
 %def_disable nacl
@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        31.0.1650.63
+Version:        32.0.1700.77
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -60,8 +60,6 @@ Patch67:        chromium_use_gold.patch
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
-# Upsteam patch for build chromedriver/embed_version_in_cpp.py (https://code.google.com/p/chromium/issues/detail?id=305371)
-Patch72:    chromium-31.0.1650.48-fix-chromedriver-build.patch
 
 # Patches from Debian
 Patch80:	nspr.patch
@@ -91,6 +89,7 @@ BuildRequires:  libalsa-devel
 BuildRequires:  libavcodec-devel
 BuildRequires:  libavformat-devel
 BuildRequires:  libavutil-devel
+BuildRequires:  libcap-devel
 BuildRequires:  libcups-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libelf-devel
@@ -215,7 +214,6 @@ to Gnome's Keyring.
 #%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
-%patch72 -p1
 
 %patch80 -p2
 %patch81 -p1
@@ -441,6 +439,15 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Jan 21 2014 Andrey Cherepanov <cas@altlinux.org> 32.0.1700.77-alt1
+- New version
+- Security fixes:
+  - High CVE-2013-6646: Use-after-free in web workers.
+  - High CVE-2013-6641: Use-after-free related to forms.
+  - High CVE-2013-6643: Unprompted sync with an attacker's Google account.
+  - Medium CVE-2013-6645 Use-after-free related to speech input elements.
+- Set interpreter /bin/bash for main executable for correct ulimit call
+
 * Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 31.0.1650.63-alt1
 - New version
 - Security fixes:
