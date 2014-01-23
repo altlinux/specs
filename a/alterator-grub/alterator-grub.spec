@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -47,6 +47,12 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Thu Jan 23 2014 Michael Shigorin <mike@altlinux.org> 0.9.8-alt1
+- force shim installation even if SecureBoot is not there
+  during install (so that the bootloader doesn't turn into
+  a pumpkin when SB is suddenly turned on or the disk is
+  moved into another system)
+
 * Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 0.9.7-alt1
 - do not force ESP subdir name onto grub-install;
   thus it's changed from "ALT Linux" to "altlinux"
