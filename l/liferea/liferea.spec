@@ -1,11 +1,12 @@
+%def_enable libnotify
 
 Name: liferea
-Version: 1.10.0
+Version: 1.10.5
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
 Group: Networking/News
-Url: http://%name.sf.net/
+Url: http://lzone.de/liferea
 
 Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
@@ -14,12 +15,17 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): gobject-introspection-devel
-BuildRequires: libnotify-devel
-BuildRequires: libgtk+3-devel >= 3.4.0 glib2-devel libgio-devel libpango-devel libxml2-devel libxslt-devel libsqlite3-devel >= 3.7.0
-BuildRequires: libpeas-devel gsettings-desktop-schemas-devel
-BuildRequires: libgtk+3-gir-devel
-BuildRequires: libsoup-devel libwebkitgtk3-devel libjson-glib-devel
 BuildRequires: gcc-c++ intltool
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.4.0
+BuildRequires: pkgconfig(glib-2.0) >= 2.28.0 pkgconfig(gio-2.0) >= 2.26.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(pango) >= 1.4.0
+BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
+BuildRequires: pkgconfig(sqlite3) >= 3.7.0
+BuildRequires: pkgconfig(libsoup-2.4) >= 2.28.2 pkgconfig(webkitgtk-3.0) pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(libpeas-1.0) >= 1.0.0 pkgconfig(libpeas-gtk-1.0) >= 1.0.0
+%{?_enable_libnotify:BuildRequires: pkgconfig(libnotify) >= 0.7}
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -56,6 +62,7 @@ Play music and videos directly from Liferea
 %autoreconf
 %configure \
 	--enable-introspection \
+	%{subst_enable libnotify} \
 	--disable-static
 %make_build
 
@@ -70,8 +77,10 @@ Play music and videos directly from Liferea
 %_bindir/*
 %_libdir/%name/girepository-1.0/*.typelib
 %_datadir/%name
-%_datadir/applications/%name.desktop
 %_datadir/glib-2.0/schemas/*.xml
+%_datadir/GConf/gsettings/%name.convert
+%_datadir/appdata/%name.appdata.xml
+%_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_man1dir/%name.*
 
@@ -82,6 +91,9 @@ Play music and videos directly from Liferea
 %_libdir/%name/plugins/media-player.*
 
 %changelog
+* Thu Jan 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1.10.5-alt1
+- 1.10.5
+
 * Sat May 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
 - 1.10-RC1
 - add plugin packages
