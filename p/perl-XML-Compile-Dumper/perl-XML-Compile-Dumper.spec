@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile-Dumper
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Remember precompiled XML processors
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-Dumper-0.13.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-Dumper-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jan 11 2009
 BuildRequires: perl-Data-Dump-Streamer perl-Test-Pod perl-XML-Compile perl-XML-Compile-Tester
@@ -54,6 +54,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Thu Jan 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
