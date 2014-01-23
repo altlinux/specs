@@ -2,7 +2,7 @@
 
 Name: gnustep-GTAMSAnalyzer
 Version: 0.42
-Release: alt1
+Release: alt2
 Summary: GTAMS Analyzer is a complete coding and analysis package
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -60,6 +60,12 @@ rm -f Source/obj
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc ReadMe.* *.html
 %_bindir/*
@@ -69,6 +75,9 @@ rm -f Source/obj
 %doc Documentation/*
 
 %changelog
+* Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt2
+- Applied repocop patch
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt1
 - Initial build for Sisyphus
 
