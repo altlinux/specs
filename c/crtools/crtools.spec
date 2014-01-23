@@ -1,8 +1,8 @@
 Name: crtools
 Version: 1.1
-%define pre -rc1
+%define pre -rc2
 %define ver %version%{?pre:%pre}
-Release: alt0.1
+Release: alt0.2
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -12,7 +12,7 @@ Patch: %name-%version-%release.patch
 Provides: criu = %version-%release
 ExclusiveArch: x86_64 %arm
 
-BuildRequires: libprotobuf-c-devel asciidoc xmlto
+BuildRequires: libprotobuf-c-devel asciidoc xmlto %_bindir/a2x
 
 %description
 An utility to checkpoint/restore tasks.
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Thu Jan 23 2014 Led <led@altlinux.ru> 1.1-alt0.2
+- 1.1-rc2
+
 * Wed Jan 08 2014 Led <led@altlinux.ru> 1.1-alt0.1
 - 1.1-rc1
 
