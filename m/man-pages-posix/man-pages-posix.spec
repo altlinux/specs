@@ -1,18 +1,19 @@
 Name: man-pages-posix
-Version: 2003a
+Version: 2013a
 Release: alt1
 
 Summary: Manual pages about using POSIX system
 License: Distributable
 Group: Documentation
+
 Url: http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/
 BuildArch: noarch
 
-# ftp://ftp.kernel.org/pub/linux/docs/man-pages/man-pages-posix/man-pages-posix-2003-a.tar.xz
+# https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/man-pages-posix-2013-a.tar.xz
 Source: %name-%version.tar
 
-Provides: man-pages-POSIX = %version, man-pages-posix-2003-a = %version
-Obsoletes: man-pages-POSIX < %version, man-pages-posix-2003-a < %version
+Provides: man-pages-POSIX = %version
+Obsoletes: man-pages-POSIX < %version
 
 Requires: man >= 1.5i2-alt4
 
@@ -44,12 +45,16 @@ find -type f -print0 |
 
 %files
 %_mandir/man1p
-%doc POSIX-COPYRIGHT *.Announce *.lsm Changes
+%doc POSIX-COPYRIGHT *.Announce *.lsm
 
 %files devel
 %_mandir/man[37]p
 
 %changelog
+* Thu Jan 23 2014 Michael Shigorin <mike@altlinux.org> 2013a-alt1
+- 2013-a
+- trimmed P:/O: (upgrade should have occured long ago)
+
 * Tue Jun 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2003a-alt1
 - Repackaged as man-pages-posix + man-pages-posix-devel.
 
