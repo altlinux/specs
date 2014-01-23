@@ -2,7 +2,7 @@
 
 Name: gnustep-Encore
 Version: 0.3.1
-Release: alt1
+Release: alt2
 Summary: A set of utility classes
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -112,6 +112,9 @@ popd
 %_libdir/GNUstep/Frameworks/Encore.framework/Headers
 
 %changelog
+* Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2
+- Added %_includedir/Encore/ECLoggingConfigurationFactory.h
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus
 
