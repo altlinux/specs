@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
-Version: 0.22
-Release: alt2
+Version: 0.23
+Release: alt1
 
 Summary: Put propagator into make-initrd generated image
 License: GPL
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Jan 23 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.23-alt1
+- partition size calculation fixed again
+
 * Wed Dec 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.22-alt2
 - partition size calculation fixed
 
