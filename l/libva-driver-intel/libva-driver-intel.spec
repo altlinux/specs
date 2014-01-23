@@ -1,5 +1,5 @@
 Name: libva-driver-intel
-Version: 1.0.18
+Version: 1.2.2
 Release: alt1
 
 Summary: VDPAU-based backend for VA API
@@ -11,7 +11,8 @@ Conflicts: libva < 1.1.0
 
 Source: %name-%version-%release.tar
 
-BuildRequires: libva-devel libX11-devel libGL-devel
+BuildRequires: intel-gen4asm
+BuildRequires: libva-devel libX11-devel libGL-devel libEGL-devel
 
 %description
 Video decode driver for Intel chipsets.
@@ -35,5 +36,8 @@ Note that contents of this package were previously in libva package.
 %_libdir/dri/*.so
 
 %changelog
+* Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+
 * Thu Jun 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.18-alt1
 - 1.0.18

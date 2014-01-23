@@ -1,5 +1,5 @@
 Name: libva
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libGL-devel libEGL-devel libXext-devel libXfixes-devel
+BuildRequires: libwayland-client-devel libwayland-server-devel
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -55,6 +56,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Thu Jun 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
