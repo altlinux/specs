@@ -7,7 +7,7 @@
 %define	systemdsystemunitdir /lib/systemd/system
 
 Name: dbus
-Version: 1.6.18
+Version: 1.8.0
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -21,7 +21,8 @@ PreReq: shadow-utils
 Requires: lib%name = %version-%release
 
 BuildRequires: doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel
-BuildRequires: libaudit-devel libcap-ng-devel libsystemd-daemon-devel libsystemd-login-devel
+BuildRequires: libaudit-devel libcap-ng-devel
+BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -95,7 +96,6 @@ mkdir -p m4
 	--enable-libaudit \
 	--enable-selinux \
 	--enable-systemd \
-	--with-xml=expat \
 	--bindir=/bin \
 	--libexecdir=/lib/dbus-1 \
 	--with-system-pid-file=%_var/run/messagebus.pid \
@@ -157,6 +157,7 @@ touch %buildroot%_sysconfdir/machine-id
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
 /bin/dbus-uuidgen
+/bin/dbus-run-session
 %dir /lib/dbus-1
 %attr(4510,root,messagebus) /lib/dbus-1/dbus-daemon-launch-helper
 %dir %_datadir/dbus-1
@@ -169,6 +170,7 @@ touch %buildroot%_sysconfdir/machine-id
 %_man1dir/dbus-cleanup-sockets.1*
 %_man1dir/dbus-daemon.1*
 %_man1dir/dbus-uuidgen.1*
+%_man1dir/dbus-run-session.1*
 
 %files tools
 /bin/dbus-send
@@ -196,6 +198,9 @@ touch %buildroot%_sysconfdir/machine-id
 %dir %_datadir/dbus-1/interfaces
 
 %changelog
+* Thu Jan 23 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Mon Nov 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.6.18-alt1
 - 1.6.18
 
