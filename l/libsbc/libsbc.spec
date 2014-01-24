@@ -1,5 +1,5 @@
 Name: libsbc
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: Sub Band Codec used by bluetooth A2DP
 Group: System/Libraries
@@ -60,6 +60,9 @@ Bluetooth low-complexity, Sub Band Codec analyzer.
 %_bindir/sbc*
 
 %changelog
+* Fri Jan 24 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Tue Jun 25 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1-alt1
 - 1.1
 
