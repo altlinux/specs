@@ -12,8 +12,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98
-Release: alt2
+Version: 0.98.1
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -307,6 +307,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Fri Jan 24 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.1-alt1
+- 0.98.1
+
 * Mon Dec 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.98-alt2
 - fixed build on ARM (thanks to sbolshakov@altlinux)
 - set automake 1.11 for build
