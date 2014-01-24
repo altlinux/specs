@@ -1,16 +1,13 @@
-%define upstreamname vdpau-video
-
 Name: libva-driver-vdpau
-Version: 0.7.3
-Release: alt1.1
+Version: 0.7.4
+Release: alt1
+
 Summary: VDPAU-based backend for VA API
-Group: System/Libraries
 License: GPLv2
+Group: System/Libraries
 Url: http://www.splitted-desktop.com/~gbeauchesne/vdpau-video/
 
-Source: %upstreamname-%version.tar
-# https://438180.bugs.gentoo.org/attachment.cgi?id=326908
-Patch: vdpau-video-0.7.3-gentoo-glext.patch
+Source: %name-%version.tar
 
 BuildRequires: libvdpau-devel libva-devel libX11-devel libGL-devel
 
@@ -18,8 +15,7 @@ BuildRequires: libvdpau-devel libva-devel libX11-devel libGL-devel
 Video decode driver for NVIDIA chipsets (VDPAU implementation)
 
 %prep
-%setup -q -n %upstreamname-%version
-%patch -p0
+%setup
 
 %build
 %autoreconf
@@ -36,6 +32,9 @@ Video decode driver for NVIDIA chipsets (VDPAU implementation)
 %_libdir/dri/*.so
 
 %changelog
+* Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.4-alt1
+- 0.7.4
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.1
 - Fixed build
 
