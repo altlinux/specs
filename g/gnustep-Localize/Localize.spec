@@ -1,0 +1,52 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-Localize
+Version: 20040424
+Release: alt1
+Summary: Application to aid in the translation of .strings files
+License: GPLv2
+Group: Graphical desktop/GNUstep
+Url: http://www.eskimo.com/~pburns/Localize/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+%description
+Localize is an application to aid in the translation of .strings files.
+.strings files must be distributed in ASCII encoding, which generally
+isn't a convenient encoding to do translation in. As an example, its
+rather difficult to enter Chinese characters into an ASCII encoded text
+file. Localize will, with any luck, help out with this. Currently its
+just a shell of an application, but sometime in the future I hope to
+complete it.
+
+%prep
+%setup
+
+%build
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+ 
+%install
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%files
+%doc Documentation/*
+%_bindir/*
+%_libdir/GNUstep
+
+%changelog
+* Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20040424-alt1
+- Initial build for Sisyphus
+
