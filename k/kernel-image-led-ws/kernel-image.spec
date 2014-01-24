@@ -1,6 +1,8 @@
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_with() %{expand:%%force_with %{1}} %{expand:%%undefine _without_%{1}}
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
+%define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
+%define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 
 %define intel_64 nocona core2 corei7 nehalem
 %define intel_32 pentium pentiumpro pentium_mmx pentium2 pentium3 pentium_m pentium4 prescott atom
@@ -25,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.27
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -127,7 +129,7 @@ Release: alt5
 %def_enable yama
 %def_enable thp
 %def_enable kvm
-%def_enable hyperv
+%def_disable hyperv
 %def_disable hypervisor_guest
 %def_disable kvm_guest
 %def_disable nfs_swap
@@ -218,6 +220,13 @@ ExcludeArch: i386
 
 %ifnarch i486
 %set_disable math_emu
+%endif
+
+%if "%sub_flavour" == "vs"
+%def_enable vserver
+%set_enable hypervisor_guest
+%else
+%def_disable vserver
 %endif
 
 %{?_disable_pci:%set_disable drm}
@@ -1794,6 +1803,14 @@ done)
 
 
 %changelog
+* Fri Jan 24 2014 Led <led@altlinux.ru> 3.10.27-alt6
+- updated:
+  + fix-drivers-hid--hid
+- added:
+  + fix-drivers-hid--hid-multitouch
+  + fix-drivers-hid-usbhid--usbhid
+- enabled hypervisor_guest (for vs kernels)
+
 * Fri Jan 24 2014 Led <led@altlinux.ru> 3.10.27-alt5
 - updated:
   + fix-drivers-gpu-drm--i915
