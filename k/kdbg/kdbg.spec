@@ -1,6 +1,6 @@
 
 Name: kdbg
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Group: Development/Other
@@ -12,7 +12,7 @@ Requires: gdb
 
 Source: %name-%version.tar
 
-Patch1: kdbg-2.5.3-alt-using-libthread.patch
+Patch1: kdbg-2.5.4-alt-parse-gdb-output.patch
 
 BuildRequires: gcc-c++ kde4libs-devel kde-common-devel
 BuildRequires: libqt4-devel libstdc++-devel zlib-devel
@@ -48,6 +48,9 @@ inspecting variables, and stepping through code.
 #%_iconsdir/*/*/apps/kdbg.*
 
 %changelog
+* Fri Jan 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.5.4-alt1
+- new version
+
 * Wed Jun 26 2013 Sergey V Turchin <zerg@altlinux.org> 2.5.3-alt1
 - new version
 
