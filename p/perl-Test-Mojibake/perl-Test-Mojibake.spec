@@ -1,27 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Encode.pm) perl(English.pm) perl(open.pm) perl-devel perl-podlators
+BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(open.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 20
 # We need to patch the test suite if we have an old version of Test::More
-%global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
-
-# PPI can't handle the unicode byte order mark in t/bom.pl prior to version 1.204_02
-%global old_ppi %(perl -MPPI -e 'print (($PPI::VERSION < 1.204_02) ? 1 : 0);' 2>/dev/null || echo 0)
+%global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.96) ? 1 : 0);' 2>/dev/null || echo 0)
 
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Mojibake
 Version:	0.9
-Release:	alt1
+Release:	alt1_1
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
-Source:	http://www.cpan.org/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
 Patch0:		Test-Mojibake-0.4-no-Test::Version.patch
-Patch1:		Test-Mojibake-0.8-old-Test::More.patch
+Patch1:		Test-Mojibake-0.9-old-Test::More.patch
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
@@ -72,7 +69,7 @@ BuildRequires:	perl(Test/Vars.pm)
 %if 0%{?fedora} || 0%{?rhel} > 6
 BuildRequires:	perl(Perl/Critic/Policy/Modules/ProhibitModuleShebang.pm)
 BuildRequires:	perl(Test/CPAN/Changes.pm)
-#BuildRequires:	perl(Test/Version.pm)
+BuildRequires:	perl(Test/Version.pm)
 %endif
 # Modules only available from F-18, EL-7
 %if 0%{?fedora} > 17 || 0%{?rhel} > 6
@@ -118,11 +115,13 @@ Enter the Test::Mojibake ;)
 %setup -q -n Test-Mojibake-%{version}
 
 # Test::Version not always available
+%if !0%{?fedora} && 0%{?rhel} < 7
 %patch0
+%endif
 
 # We need to patch the test suite if we have an old version of Test::More
 %if %{old_test_more}
-%patch1 -p1
+%patch1
 %endif
 
 %build
@@ -135,16 +134,7 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 # %{_fixperms} %{buildroot}
 
 %check
-# PPI can't handle the unicode byte order mark in t/bom.pl prior to version 1.204_02
-%if %{old_ppi}
-mv t/release-minimum-version.t ./
-sed -i -e 's|t/release-minimum-version.t|release-minimum-version.t|' MANIFEST
-%endif
 make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
-%if %{old_ppi}
-mv ./release-minimum-version.t t/
-sed -i -e 's|release-minimum-version.t|t/release-minimum-version.t|' MANIFEST
-%endif
 
 %files
 %doc Changes LICENSE README
@@ -153,6 +143,9 @@ sed -i -e 's|release-minimum-version.t|t/release-minimum-version.t|' MANIFEST
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Fri Jan 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
+- update to new release by fcimport
+
 * Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1
 - automated CPAN update
 
