@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.27
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1794,6 +1794,13 @@ done)
 
 
 %changelog
+* Fri Jan 24 2014 Led <led@altlinux.ru> 3.10.27-alt5
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-hwmon--coretemp
+  + fix-fs-f2fs
+  + fix-fs-nilfs2
+
 * Mon Jan 20 2014 Led <led@altlinux.ru> 3.10.27-alt4
 - updated:
   + feat-fs-aufs
