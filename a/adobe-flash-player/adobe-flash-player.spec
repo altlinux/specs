@@ -6,9 +6,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake 11
-%define ver_ix86 11.2.202.332
-%define ver_x86_64 11.2.202.332
-Release: alt23
+%define ver_ix86 11.2.202.335
+%define ver_x86_64 11.2.202.335
+Release: alt24
 Serial: 3
 
 %define ver_real %ver_fake
@@ -50,7 +50,7 @@ Group: Networking/WWW
 Summary: Adobe Flash Player
 Requires: libcurl /usr/bin/xdg-open
 Provides: flash-plugin = %version-%release
-Obsoletes: flash-plugin < %version-%release
+Obsoletes: flash-plugin <= %version
 Provides: mozilla-plugin-macromedia-flash = %version-%release
 Obsoletes: mozilla-plugin-macromedia-flash < %version-%release
 %description -n %bin_name
@@ -138,6 +138,11 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Fri Jan 24 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt24
+- 11.2.202.335 (x86,x86-64)
+- security fixes:
+  CVE-2014-0491, CVE-2014-0492
+
 * Thu Jan 09 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt23
 - 11.2.202.332 (x86,x86-64)
 - security fixes:
