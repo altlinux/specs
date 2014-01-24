@@ -2,7 +2,7 @@
 
 Name: gnustep-Burn
 Version: 0.5.0
-Release: alt1.cvs20140123
+Release: alt2.cvs20140123
 Summary: Burn ist a front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -29,6 +29,18 @@ point-and-click operation and save your projects for later reuse.
 Burn.app will hide as many settings as possible from you, thus making it
 very easy and user-friendly to create your own CDs.
 
+%package devel
+Summary: Development files of Burn
+Group: Development/Objective-C
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description devel
+Burn.app is a GNUstep based CD burning program for GNU/Linux. It serves
+as front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia.
+
+This package contains development files of Burn.
+
 %prep
 %setup
 
@@ -45,12 +57,21 @@ very easy and user-friendly to create your own CDs.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -d %buildroot%_includedir/Burn
+install -m644 *.h Burn/*.h %buildroot%_includedir/Burn/
+
 %files
 %doc BUGS CHANGELOG CREDITS README TODO
 %_bindir/*
 %_libdir/GNUstep
 
+%files devel
+%_includedir/*
+
 %changelog
+* Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.cvs20140123
+- Added headers
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.cvs20140123
 - Initial build for Sisyphus
 
