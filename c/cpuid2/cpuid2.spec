@@ -1,5 +1,5 @@
 Name: cpuid2
-Version: 20140112
+Version: 20140123
 Release: alt1
 
 Summary: dumps CPUID information about the CPU(s)
@@ -27,6 +27,9 @@ instruction, and also determines the exact model of CPU(s).
 %_man1dir/*
 
 %changelog
+* Fri Jan 24 2014 Ilya Mashkin <oddity@altlinux.ru> 20140123-alt1
+- new version
+
 * Mon Jan 20 2014 Ilya Mashkin <oddity@altlinux.ru> 20140112-alt1
 - new version
 
