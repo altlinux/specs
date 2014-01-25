@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.27
-Release: alt6
+Version: 3.10.28
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 27
+%define kernel_stable_version 28
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1803,6 +1803,14 @@ done)
 
 
 %changelog
+* Sat Jan 25 2014 Led <led@altlinux.ru> 3.10.28-alt1
+- 3.10.28
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-hwmon--coretemp
+  + fix-fs-nilfs2
+  + fix-virt-kvm--kvm
+
 * Fri Jan 24 2014 Led <led@altlinux.ru> 3.10.27-alt6
 - updated:
   + fix-drivers-hid--hid
