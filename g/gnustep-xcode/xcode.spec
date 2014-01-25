@@ -1,6 +1,6 @@
 Name: gnustep-xcode
 Version: 0.1
-Release: alt5.git20130921
+Release: alt6.git20130921
 Summary: The XCLib framework is used to parse and process xcodeproj files
 License: GPL
 Group: Development/Objective-C
@@ -56,9 +56,25 @@ This package contains development files of XCLib framework.
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+pushd %buildroot%_libdir
+for j in XCode; do
+	for i in lib$j.so*; do
+		rm -f $i
+		mv GNUstep/Frameworks/$j.framework/Versions/Current/$i ./
+		for k in lib$j.so.*.*; do
+			ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/Current/$i
+			rm GNUstep/Frameworks/$j.framework/Versions/Current/$j
+			ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/Current/$j
+		done
+	done
+done
+popd
+
 %files
 %doc ChangeLog README
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/XCode.framework/Versions/0/Headers
+%exclude %_libdir/GNUstep/Frameworks/XCode.framework/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -66,8 +82,13 @@ This package contains development files of XCLib framework.
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/XCode.framework/Versions/0/Headers
+%_libdir/GNUstep/Frameworks/XCode.framework/Headers
 
 %changelog
+* Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt6.git20130921
+- Rebuilt for debuginfo
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt5.git20130921
 - New snapshot
 
