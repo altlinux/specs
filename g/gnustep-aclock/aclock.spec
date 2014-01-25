@@ -2,7 +2,7 @@
 
 Name: gnustep-aclock
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: Analog Clock
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -41,6 +41,9 @@ Analog Clock for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
+- Applied patch from Debian
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Rebuilt with new gnustep-gui
 
