@@ -15,8 +15,8 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: %ver_major.3
-Release: alt0.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -24,8 +24,8 @@ Group: System/Libraries
 Url: http://www.clutter-project.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
@@ -182,6 +182,9 @@ gtkdocize
 
 
 %changelog
+* Sat Jan 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
+- 1.16.4
+
 * Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt0.1
 - 1.16.3 snapshot (fixed BGO ##722220, 722188, 719901, 719563...)
 
