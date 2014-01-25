@@ -2,7 +2,7 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt1.git20140115
+Release: alt2.git20140115
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,9 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-gorm-devel
 
 Requires: lib%name = %EVR
+
+Conflicts: gnustep-terminal
+Conflicts: gnustep-TextEdit
 
 %description
 Backbone is an attempt (our attempt) at creating a Really Good Desktop.
@@ -91,9 +94,6 @@ for j in BBAppKit PrefsModule; do
 done
 popd
 
-mv %buildroot%_bindir/Terminal %buildroot%_bindir/BTerminal
-mv %buildroot%_bindir/TextEdit %buildroot%_bindir/BTextEdit
-
 %files
 %doc AUTHORS
 %_bindir/*
@@ -113,6 +113,9 @@ mv %buildroot%_bindir/TextEdit %buildroot%_bindir/BTextEdit
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.git20140115
+- Added explicit conflict with gnustep-terminal and gnustep-TextEdit
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20140115
 - Initial build for Sisyphus
 
