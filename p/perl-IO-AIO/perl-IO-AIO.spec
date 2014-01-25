@@ -1,6 +1,7 @@
+Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.18
+Version: 4.2
 Release: alt2
 
 Summary: Asynchronous Input/Output
@@ -42,6 +43,12 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Sat Jan 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.2-alt2
+- bumped serial
+
+* Sat Jan 25 2014 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 4.18-alt2
 - built for perl 5.18
 
