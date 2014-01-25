@@ -1,0 +1,49 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-Cartotheque
+Version: 0.1
+Release: alt1
+Summary: Managing notes on small cards
+License: LGPLv2.1
+Group: Graphical desktop/GNUstep
+Url: http://wiki.gnustep.org/index.php/Cartotheque.app
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/Cartotheque-0.1.tar.gz
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-gui-devel
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+%description
+An application for managing notes on small cards (like punch cards :).
+The application uses a directory based repository for cards with various
+contents. Currently only one contents is supported, and that is RTF
+contents (NSAttributedString) editable by a text view.
+
+%prep
+%setup
+
+%build
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+ 
+%install
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%files
+%doc *.txt
+%_bindir/*
+%_libdir/GNUstep
+
+%changelog
+* Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
+- Initial build for Sisyphus
+
