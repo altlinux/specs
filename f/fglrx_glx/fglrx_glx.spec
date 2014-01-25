@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
 Version: 13.251
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -37,6 +37,7 @@ Source14: xinf2fdi
 Patch0: %bname-13.20.16-printk-loglevel.patch
 Patch1: %bname-13.251-kernel-3.9.patch
 Patch2: %bname-13.251-kernel-3.12.patch
+Patch3: %bname-13.251-kernel-3.13.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -114,6 +115,7 @@ cd common/lib/modules/%bname/build_mod
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -275,6 +277,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sat Jan 25 2014 Led <led@altlinux.ru> 1:13.251-alt2
+- kernel module: fixed build for kernel 3.13
+
 * Fri Dec 20 2013 Led <led@altlinux.ru> 1:13.251-alt1
 - 13.251 (Catalyst 13.12)
 
