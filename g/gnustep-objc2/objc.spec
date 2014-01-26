@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt7.git20131223
+Release: alt8.git20131223
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -142,7 +142,7 @@ cp -f %SOURCE1 GNUmakefile
 sed -i 's|#include "visibility.h"|#include "objc2/visibility.h"|' \
 	class.h
 install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
-	selector.h \
+	selector.h sarray2.h category.h \
 	%buildroot%_includedir/objc2/
 
 %files -n lib%name
@@ -165,6 +165,9 @@ install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Sun Jan 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt8.git20131223
+- Added sarray2.h and category.h
+
 * Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt7.git20131223
 - Added necessary headers
 
