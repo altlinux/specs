@@ -1,10 +1,11 @@
-Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
 Name:		libmozjs24
 Version:	24.2.0
-Release:	alt1
+Release:	alt2
+
+Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
+Group:		System/Libraries
 License:	MPL/GPL/LGPL
 URL:		http://www.mozilla.org/js/spidermonkey/
-Group:		System/Libraries
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	%name-%version.tar
@@ -47,7 +48,6 @@ SpiderMonkey is the code-name for the Mozilla's C implementation of JavaScript.
 
 %prep
 %setup -q -n %name-%version
-
 %patch0 -p2
 
 %build
@@ -64,15 +64,13 @@ export XCFLAGS SHELL
 %__autoconf
 
 %configure \
-	--disable-e4x \
 	--with-pthreads \
 	--with-system-nspr \
 	--with-system-zlib \
 	--enable-system-ffi \
 	--enable-threadsafe \
 	--enable-readline \
-	--enable-jemalloc \
-	#
+	--enable-jemalloc
 
 %make_build
 
@@ -91,11 +89,11 @@ cd js/src
 )
 
 #cd %buildroot/%_pkgconfigdir
-#ln -s mozjs-17.0.pc mozjs.pc
+#ln -s mozjs-24.0.pc mozjs.pc
 
 cd %buildroot/%_libdir
-ln -s libmozjs-17.0.so.1.0   libmozjs-17.0.so
-ln -s libmozjs-17.0.so.1.0.0 libmozjs-17.0.so.1.0
+ln -s libmozjs-24.so.1.0.0 libmozjs-24.so.1.0
+ln -s libmozjs-24.so.1.0 libmozjs-24.so
 
 %files
 %_libdir/*.so.*
@@ -112,6 +110,10 @@ ln -s libmozjs-17.0.so.1.0.0 libmozjs-17.0.so.1.0
 %_libdir/*.a
 
 %changelog
+* Sun Jan 26 2014 Yuri N. Sedunov <aris@altlinux.org> 24.2.0-alt2
+- s/17/24/
+- removed obsolete e4x configure option
+
 * Sat Dec 28 2013 Alexey Gladkov <legion@altlinux.ru> 24.2.0-alt1
 - New version (24.2.0).
 
