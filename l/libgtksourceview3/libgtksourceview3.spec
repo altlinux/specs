@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -85,7 +85,7 @@ GObject introspection devel data for the GtkSourceView library
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %configure \
@@ -99,7 +99,7 @@ GObject introspection devel data for the GtkSourceView library
 #xvfb-run %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %_name-%api_ver
 
@@ -126,6 +126,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Mon Jan 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
