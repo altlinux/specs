@@ -1,6 +1,6 @@
 Name: xorg-glamor
-Version: 0.5.1
-Release: alt2
+Version: 0.6.0
+Release: alt1
 Summary: X.Org glamor library
 License: MIT
 Group: System/Libraries
@@ -59,6 +59,9 @@ develop programs which make use of %name
 
 
 %changelog
+* Mon Jan 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.6.0-alt1
+- 0.6.0
+
 * Wed Oct 16 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.5.1-alt2
 - disable GLES (closes: #28857)
 
