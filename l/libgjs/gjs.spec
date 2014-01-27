@@ -5,11 +5,11 @@
 %define _name gjs
 %define api_ver 1.0
 
-%def_disable installed_tests
+%def_enable installed_tests
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -50,13 +50,13 @@ Requires: %name = %version-%release
 Files for development with %name.
 
 %package tests
-Summary: Tests for the glib2/libgio packages
+Summary: Tests for the Gjs package
 Group: Development/Other
-Requires: libgio = %version-%release
+Requires: %name = %version-%release
 
 %description tests
 This package provides tests programs that can be used to verify
-the functionality of the installed glib2/libgio packages.
+the functionality of the installed Gjs library package.
 
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -72,11 +72,11 @@ the functionality of the installed glib2/libgio packages.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 # check failed if installed-tests disabled
-#%make check
+%make check
 
 %files
 %_bindir/%_name
@@ -97,6 +97,7 @@ the functionality of the installed glib2/libgio packages.
 
 
 %if_enabled installed_tests
+%add_typelib_req_skiplist typelib(GIMarshallingTests) typelib(Regress) typelib(WarnLib)
 %files tests
 %_libdir/%_name/libgimarshallingtests.so
 %_libdir/%_name/libregress.so
@@ -109,6 +110,9 @@ the functionality of the installed glib2/libgio packages.
 
 
 %changelog
+* Sun Jan 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt2
+- new -tests subpackage
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
 - 1.38.1
 
