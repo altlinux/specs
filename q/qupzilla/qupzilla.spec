@@ -8,8 +8,8 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.6.0
-Release: alt1
+Version: 1.6.1
+Release: alt2
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -25,6 +25,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ phonon-devel
 
 BuildRequires: libqt4-devel >= 4.7
+BuildRequires: gdb
 
 %description
 QupZilla is a new and very fast World Wide Web Browser
@@ -39,7 +40,7 @@ support, Speed Dial and SSL Certificate manager.
 %build
 export USE_WEBGL="true"
 export NONBLOCK_JS_DIALOGS="true"
-export KDE="true"
+export KDE="false"
 export USE_LIBPATH="%_libdir"
 echo "CONFIG += debug" >> src/defines.pri
 qmake-qt4
@@ -65,6 +66,14 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Mon Jan 27 2014 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2
+- BR: gdb (https://github.com/QupZilla/qupzilla/issues/1180)
+- disabled KDE integration, I prefer qupzilla package
+  to stay relatively lean and mean regarding R:
+
+* Mon Jan 27 2014 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Thu Jan 02 2014 Michael Shigorin <mike@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
