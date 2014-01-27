@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.7
-Release: alt1.1
+Version: 4.7.2
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -119,6 +119,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Mon Jan 27 2014 Andrey Bergman <vkni@altlinux.org> 4.7.2-alt1
+- Version update
+
 * Sat Dec 28 2013 Andrey Bergman <vkni@altlinux.org> 4.7-alt1.1
 - Added perl-Pod-Parser buildreq.
 
