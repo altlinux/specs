@@ -1,6 +1,6 @@
 Name: tkabber
-Version: 0.11.1
-Release: alt4
+Version: 1.0
+Release: alt1
 
 Summary: Tkabber is an open source Jabber Client.
 License: GPL
@@ -11,7 +11,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-tcl >= 0.2.1-alt2
 BuildRequires: cpio tcl
 
-Requires: tcl-gpg tcl-udp tcl-tksystray >= 0.2
+Requires: tcl-gpg tcl-udp tcl-tktray tcl-xmpp >= 1.0
 Conflicts: tkabber-plugins < 0.11.1-alt2
 
 Source0: %name-%version-%release.tar
@@ -60,6 +60,12 @@ gzip -9nf ChangeLog
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jan 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
+- 1.0 released
+
+* Mon Jun 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt5
+- updated to svn rev.1999
+
 * Mon Dec 27 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt4
 - updated to svn rev.1974
 

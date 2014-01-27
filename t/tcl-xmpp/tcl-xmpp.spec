@@ -1,6 +1,6 @@
 Name: tcl-xmpp
-Version: 0.1
-Release: alt4
+Version: 1.0
+Release: alt1
 
 Summary: XMPP library for Tcl
 License: BSD
@@ -35,6 +35,9 @@ gzip ChangeLog
 %_mandir/mann/*
 
 %changelog
+* Mon Jan 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
+- 1.0 released
+
 * Mon Dec 27 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1-alt4
 - updated to svn rev.158
 

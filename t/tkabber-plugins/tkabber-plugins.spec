@@ -1,6 +1,6 @@
 Name: tkabber-plugins
-Version: 0.11.1
-Release: alt4
+Version: 1.0
+Release: alt1
 
 Summary: Set of plugins for Tkabber.
 License: GPL
@@ -30,6 +30,9 @@ find . -mindepth 2 -type f -not -name ChangeLog | cpio -pmd %buildroot%_datadir/
 %_datadir/%name
 
 %changelog
+* Mon Jan 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
+- 1.0 released
+
 * Mon Dec 27 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt4
 - updated to svn rev.1973
 
