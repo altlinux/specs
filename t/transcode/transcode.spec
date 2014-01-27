@@ -31,27 +31,32 @@
 %def_disable xio
 
 Name: transcode
-Version: 1.1.5
-Release: alt6
+Version: 1.1.7
+Release: alt1
 
 Summary: A linux video stream processing utility
 
 License: GPL
 Group: Video
-Url: http://tcforge.berlios.de/
+Url: http://bitbucket.org/france/transcode-tcforge/
 
 Source: %name-%version.tar.bz2
 Source1: subtitleripper-0.3-4.tar
 Source2: export_dvraw.c
 Patch0: %name-subtitleripper.patch
-Patch1: %name-mp3merge.patch
 # http://article.gmane.org/gmane.comp.video.transcode.user/18434
 # http://article.gmane.org/gmane.comp.video.transcode.user/18381
 # http://article.gmane.org/gmane.comp.video.transcode.user/18446
-
+# Gentoo
+Patch10: transcode-1.1.7-ffmpeg.patch
+Patch11: transcode-1.1.7-ffmpeg-0.10.patch
+Patch12: transcode-1.1.7-ffmpeg-0.11.patch
+Patch13: transcode-1.1.7-preset-free.patch
+Patch14: transcode-1.1.7-libav-9.patch
+Patch15: transcode-1.1.7-preset-force.patch
+Patch16: transcode-1.1.7-ffmpeg2.patch
+Patch17: transcode-1.1.7-freetype251.patch
 # ALTLinux patches
-Patch2: transcode-1.1.5-alt-libav.patch
-Patch3: transcode-1.1.5-alt-aud_aux.patch
 Patch98: transcode-1.1.5-textrel.patch
 Patch99: subtitleripper-0.3-4-alt-makefile.patch
 
@@ -68,7 +73,7 @@ Patch99: subtitleripper-0.3-4-alt-makefile.patch
 BuildRequires: glibc-devel imake libImageMagick-devel libSDL-devel libXaw-devel libXpm-devel
 BuildRequires: libXv-devel liba52-devel libalsa-devel
 BuildRequires: libavformat-devel libdvdread-devel libfreetype-devel liblame-devel liblzo2-devel
-BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel
+BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel libswscale-devel
 BuildRequires: libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel
 BuildRequires: libxvid-devel >= %xvid_ver xorg-cf-files
 BuildPreReq: libpng-devel
@@ -120,16 +125,26 @@ tar xf %SOURCE1 -C contrib/subrip/
 sed -i s/-lppm/-lnetpbm/ contrib/subrip/subtitleripper/Makefile
 sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch0 -p0
-%patch1 -p1
-%patch2 -p2
-%patch3 -p0
+#
+%patch10 -p0
+%patch11 -p0
+%patch12 -p1
+%patch13 -p1
+%patch14 -p0
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+#
 %patch98 -p2
 %patch99 -p1
 install -m644 %SOURCE2 filter/
+%autoreconf
 
 %build
-%autoreconf
 %configure \
+--enable-experimental \
+--enable-deprecated \
+--disable-x86-textrels \
 %{subst_enable mmx} \
 %{subst_enable a52} \
 %if_enabled a52
@@ -169,7 +184,8 @@ install -m644 %SOURCE2 filter/
 --enable-libmpeg2 \
 --enable-libmpeg2convert \
 %endif
-%{subst_enable freetype2}
+%{subst_enable freetype2} \
+#
 
 %make_build
 
@@ -207,6 +223,7 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_libdir/%name/*.so
 %_libdir/%name/*.cfg
 %_libdir/%name/*.awk
+%_datadir/%name/
 %_man1dir/*
 %doc AUTHORS ChangeLog README TODO
 %doc docs/README*
@@ -220,6 +237,10 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon Jan 27 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.7-alt1
+- new version
+- sync patches with Gentoo
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 1.1.5-alt6
 - Rebuild with new libImageMagick
 
