@@ -1,18 +1,17 @@
 %def_enable static
 
 Name: libusb
-Version: 1.0.9
-Release: alt2
+Version: 1.0.18
+Release: alt1
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPL
 Group: System/Libraries
 Url: http://sourceforge.net/projects/libusb/
-Packager: Alexander Bokovoy <ab@altlinux.org>
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: docbook-dtds docbook-style-dsssl docbook-utils doxygen graphviz openjade sgml-common gcc-c++
+BuildRequires: doxygen libudev-devel
 
 %description
 Libusb is a library which allows userspace access to USB devices
@@ -46,8 +45,7 @@ This package contains documentation for %name
 %prep
 %setup -q
 %patch -p1
-
-mkdir -p m4
+mkdir m4
 
 %build
 %autoreconf
@@ -68,7 +66,7 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 %files
 /%_lib/%name-*.so.*
-%doc AUTHORS README NEWS THANKS TODO
+%doc AUTHORS README NEWS TODO
 
 %files devel
 %_libdir/%name-*.so
@@ -84,6 +82,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/html
 
 %changelog
+* Mon Jan 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.18-alt1
+- 1.0.18
+
 * Sat Apr 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt2
 - 1.0.9
 
