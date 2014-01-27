@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.28
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,15 @@ done)
 
 
 %changelog
+* Mon Jan 27 2014 Led <led@altlinux.ru> 3.10.28-alt3
+- added:
+  + fix-drivers-md--raid456
+  + fix-kernel-time--tick-sched
+
+* Mon Jan 27 2014 Led <led@altlinux.ru> 3.10.28-alt2
+- added:
+  + feat-net-netfilter-nf_tables
+
 * Sat Jan 25 2014 Led <led@altlinux.ru> 3.10.28-alt1
 - 3.10.28
 - updated:
