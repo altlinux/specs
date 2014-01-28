@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 0.93
+Version: 0.94
 Release: alt1
 
 Summary: Define a user
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/User-Identity-0.93.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/User-Identity-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 04 2006
 BuildRequires: perl-TimeDate perl-devel
@@ -58,6 +58,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
 - automated CPAN update
 
