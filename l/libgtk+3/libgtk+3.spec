@@ -19,7 +19,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -35,7 +35,6 @@ Source: %_name-%version.tar
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
-Patch10: gtk+-3.10.6-up-fix.patch
 
 %define glib_ver 2.37.7
 %define cairo_ver 1.10
@@ -206,9 +205,6 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-
-%patch10 -p1
-rm -f gdk/wayland/{gtk-shell-client-protocol.h,gtk-shell-protocol.c}
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -384,6 +380,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.7-alt1
+- 3.10.7
+
 * Thu Dec 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.6-alt1
 - 3.10.6
 
