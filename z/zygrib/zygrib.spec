@@ -1,7 +1,8 @@
 %define binname zyGrib
+%def_with system_qwt
 
 Name: zygrib
-Version: 6.1.4
+Version: 6.2.3
 Release: alt1
 
 Summary: Visualisation of meteo data from files in GRIB Format 1
@@ -16,8 +17,11 @@ Source2: %binname.desktop
 Requires: fonts-ttf-liberation
 Requires: %name-data = %{version}-%{release}
 
-# Automatically added by buildreq on Sat Nov 05 2011
-BuildRequires: bzlib-devel gcc-c++ libproj-devel libqt4-devel libqwt6-devel libnova-devel
+BuildRequires: bzlib-devel gcc-c++ libproj-devel libqt4-devel libnova-devel
+
+%if_with system_qwt
+BuildRequires: libqwt6-devel
+%endif
 
 BuildRequires: rpm-build-licenses
 
@@ -47,6 +51,10 @@ home page: http://www.geonames.org/
 
 # remove system-wide fonts
 rm -rf data/fonts
+
+%if_with system_qwt
+%{__perl} -p -e 's|cd src/qwt-6.0.1/src|# cd src/qwt-6.0.1/src|g;' -i $RPM_BUILD_DIR/%binname-%version/Makefile
+%endif
 
 %build
 
@@ -100,6 +108,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Tue Jan 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 6.2.3-alt1
+- New version
+
 * Sat Jun 22 2013 Sergey Y. Afonin <asy@altlinux.ru> 6.1.4-alt1
 - New version
 
