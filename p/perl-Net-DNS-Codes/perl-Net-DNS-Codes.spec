@@ -1,7 +1,7 @@
 %define module Net-DNS-Codes
 
 Name: perl-%module
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Net::DNS::Codes - collection of C library DNS codes
@@ -9,7 +9,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/M/MI/MIKER/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKER/Net-DNS-Codes-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ HEADER field.
 %perl_vendor_privlib/Net
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 0.11-alt1
 - 0.11
 
