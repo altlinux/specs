@@ -2,7 +2,7 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt2
+Release: alt3
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -78,7 +78,7 @@ This package contains development files of ShengGuang.
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
-pushd %buildroot%_libdir/GNUstep/Library/Libraries
+pushd %buildroot%_libdir/GNUstep/Libraries
 lib=$(ls *.so.*.*.*)
 for i in *.so*; do
 	mv $i %buildroot%_libdir/
@@ -87,13 +87,13 @@ done
 popd
 
 install -d %buildroot%_includedir
-ln -s %_libdir/GNUstep/Library/Headers/ShengGuang \
+ln -s %_libdir/GNUstep/Headers/ShengGuang \
 	%buildroot%_includedir/
 
 %files
 %doc README
 %_libdir/GNUstep
-%exclude %_libdir/GNUstep/Library/Headers
+%exclude %_libdir/GNUstep/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -101,9 +101,12 @@ ln -s %_libdir/GNUstep/Library/Headers/ShengGuang \
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/GNUstep/Library/Headers
+%_libdir/GNUstep/Headers
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt3
+- Fixed build
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
 - Rebuilt with new gnustep-gui
 
