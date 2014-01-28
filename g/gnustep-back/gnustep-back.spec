@@ -4,12 +4,12 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt1.git20140101
+Release: alt1.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
 URL: http://www.gnustep.org
-# https://github.com/gnustep/gnustep-back.git
+# http://svn.gna.org/svn/gnustep/libs/back/trunk/
 Source: %name-%version.tar
 Source1: Courier.FontInfo.plist
 Source2: Times.FontInfo.plist
@@ -115,6 +115,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.svn20140127
+- New snapshot
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.git20140101
 - Version 0.24.0
 
