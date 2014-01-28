@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Object-Realize-Later
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Delayed realization of objects
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/M/MA/MARKOV/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Object-Realize-Later-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 04 2006
 BuildRequires: perl-devel
@@ -54,6 +54,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Object/
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Oct 10 2008 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
 - new version 0.18 (with rpmrb script)
 
