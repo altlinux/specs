@@ -13,7 +13,7 @@
 %def_with pam_helper
 
 Name: e18
-Version: 0.18.2
+Version: 0.18.3
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -184,6 +184,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.3-alt2
+- 0.18.3
+
 * Fri Jan 17 2014 Paul Wolneykien <manowar@altlinux.org> 1:0.18.2-alt2
 - Exclude the extra *.la files.
 - Fix the connman module detection (patch).

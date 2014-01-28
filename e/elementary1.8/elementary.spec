@@ -1,7 +1,8 @@
 %define _name elementary
 %define ver_major 1.8
+
 Name: %_name%ver_major
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -101,6 +102,9 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Fri Jan 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
