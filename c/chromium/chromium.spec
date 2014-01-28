@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        32.0.1700.77
+Version:        32.0.1700.102
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -439,6 +439,20 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Jan 28 2014 Andrey Cherepanov <cas@altlinux.org> 32.0.1700.102-alt1
+- New version
+- Security fixes:
+  - High CVE-2013-6649: Use-after-free in SVG images.
+- Fixes:
+  - Mouse Pointer disappears after exiting full-screen mode. (317496)
+  - Drag and drop files into Chrome may not work properly. (332579)
+  - Quicktime Plugin crashes in Chrome. (308466)
+  - Chrome becomes unresponsive. (335248)
+  - Trackpad users may not be able to scroll horizontally. (332797)
+  - Scrolling does not work in combo box. (334454)
+  - Chrome does not work with all CSS minifiers such as whitespace
+    around a media query's `and` keyword. (333035)
+
 * Tue Jan 21 2014 Andrey Cherepanov <cas@altlinux.org> 32.0.1700.77-alt1
 - New version
 - Security fixes:
