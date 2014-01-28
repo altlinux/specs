@@ -17,7 +17,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _disable_test 1
 
 Name: perl-Cache
-Version: 2.06
+Version: 2.08
 Release: alt1
 
 Summary: Cache - the Cache interface
@@ -61,6 +61,9 @@ in different manners (such as as files on a filesystem, or in memory).
 %perl_vendor_privlib/Cache.pm
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
