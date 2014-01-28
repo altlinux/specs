@@ -1,14 +1,14 @@
 %define dist Digest-JHash
 Name: perl-%dist
-Version: 0.07
-Release: alt4
+Version: 0.08
+Release: alt1
 
 Summary: Perl extension for 32 bit Jenkins Hashing Algorithm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Digest-JHash-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -34,6 +34,9 @@ digest" of the input in the form of an unsigned long integer.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt4
 - built for perl 5.18
 
