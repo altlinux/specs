@@ -1,6 +1,6 @@
 Name: gnustep-buildtool
-Version: r35695
-Release: alt1.svn20121015
+Version: r36614
+Release: alt1.svn20130513
 Summary: The GNUstep buildtool
 License: GPLv2+
 Group: Development/Tools
@@ -38,6 +38,9 @@ GNUstep buildtool.
 %_bindir/*
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r36614-alt1.svn20130513
+- New snapshot
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r35695-alt1.svn20121015
 - Initial build for Sisyphus
 
