@@ -13,7 +13,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 39
-%define pkg_rel alt69
+%define pkg_rel alt70
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -74,6 +74,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: buildfix_kernel_3.13.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -184,6 +186,7 @@ cd %tbname-%tbver-%tbsuffix
 
 pushd usr/src/nv/
 rm -rf precompiled
+%patch1 -p1
 popd
 
 
@@ -403,6 +406,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt70
+- fix against absent DEVICE_ACPI_HANDLE on 3.13 kernel
+
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.39-alt69
 - new version
 
