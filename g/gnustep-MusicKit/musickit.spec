@@ -1,0 +1,256 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-MusicKit
+Version: 5.6.2
+Release: alt1.git20110723
+Summary: The GNUstep GUI library
+License: GPLv2+
+Group: Graphical desktop/GNUstep
+Url: http://musickit.sourceforge.net/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+# https://musickit.svn.sourceforge.net/svnroot/musickit/trunk/
+Source: %name-%version.tar
+
+BuildRequires: rpm-macros-make
+BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
+BuildPreReq: gnustep-gui-devel libalsa-devel
+BuildPreReq: doxygen graphviz ltxml openjade
+BuildPreReq: libportaudio2-devel libogg-devel libvorbis-devel
+BuildPreReq: libsndfile-devel libshout2-devel libmp3hip-devel
+BuildPreReq: libportmidi libportmidi-devel liblame-devel
+BuildPreReq: gcc-c++ texinfo texi2html
+BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+%description
+The GNUstep GUI library is a library of graphical user interface classes
+written completely in the Objective-C language; the classes are based
+upon the OpenStep specification as release by NeXT Software, Inc.  These
+classes include graphical objects such as buttons, text fields, popup
+lists, browser lists, and windows; there are also many associated
+classes for handling events, colors, fonts, pasteboards and images.
+
+%package -n lib%name
+Summary: Libraries for %name
+Group: System/Libraries
+License: LGPLv2+ and LGPLv3+
+
+%description -n lib%name
+The GNUstep GUI library is a library of graphical user interface classes
+written completely in the Objective-C language; the classes are based
+upon the OpenStep specification as release by NeXT Software, Inc.  These
+classes include graphical objects such as buttons, text fields, popup
+lists, browser lists, and windows; there are also many associated
+classes for handling events, colors, fonts, pasteboards and images.
+
+This package contains the libraries for %name.
+
+%package -n lib%name-devel
+Summary: Header files for the gnustep-gui package
+Group: Development/Objective-C
+Provides: %name-devel = %EVR
+Requires: gnustep-base-devel /proc
+Requires: lib%name = %version-%release
+Requires: %name = %version-%release
+
+%description -n lib%name-devel
+The GNUstep GUI library is a library of graphical user interface classes
+written completely in the Objective-C language; the classes are based
+upon the OpenStep specification as release by NeXT Software, Inc.  These
+classes include graphical objects such as buttons, text fields, popup
+lists, browser lists, and windows; there are also many associated
+classes for handling events, colors, fonts, pasteboards and images.
+
+This package contains the header files for gnustep-gui.
+
+%package examples
+Summary: Examples of %name
+Group: Development/Objective-C
+Requires: %name = %EVR
+
+%description examples
+The GNUstep GUI library is a library of graphical user interface classes
+written completely in the Objective-C language; the classes are based
+upon the OpenStep specification as release by NeXT Software, Inc.  These
+classes include graphical objects such as buttons, text fields, popup
+lists, browser lists, and windows; there are also many associated
+classes for handling events, colors, fonts, pasteboards and images.
+
+This package contains examples of %name.
+
+%package docs
+Summary: Documentation for %name
+Group: Documentation
+BuildArch: noarch
+License: GFDL
+
+%description docs
+The GNUstep GUI library is a library of graphical user interface classes
+written completely in the Objective-C language; the classes are based
+upon the OpenStep specification as release by NeXT Software, Inc.  These
+classes include graphical objects such as buttons, text fields, popup
+lists, browser lists, and windows; there are also many associated
+classes for handling events, colors, fonts, pasteboards and images.
+
+This package contains the documentation for %name.
+
+%prep
+%setup -n MusicKit-%version
+
+for i in $(find ./ -type f); do
+	sed -i 's|objc/|objc2/|g' $i
+done
+
+cp -fR MusicKit/Examples _ex
+
+%install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+TOPDIR=$PWD
+
+autoIt() {
+autoconf ||aclocal ||:
+autoheader || autoconf ||:
+}
+
+pushd MusicKit
+autoIt
+%configure
+popd
+
+pushd MusicKit/Frameworks/PlatformDependent/MKPerformSndMIDI_portaudio
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+
+popd
+
+pushd MusicKit/Frameworks/SndKit
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	CONFIG_SYSTEM_LIBS='-lMKPerformSndMIDI' \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir'
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	BUILDLIBROOT=%buildroot%_libdir
+
+popd
+
+pushd MusicKit/Frameworks/MKDSP_Native
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir'
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	BUILDLIBROOT=%buildroot%_libdir
+
+popd
+
+pushd MusicKit/Frameworks/MusicKit
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir' \
+	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
+	BUILDLIBROOT=%buildroot%_libdir
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	BUILDLIBROOT=%buildroot%_libdir
+
+popd
+
+pushd MusicKit
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir' \
+	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
+	BUILDLIBROOT=%buildroot%_libdir
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	BUILDLIBROOT=%buildroot%_libdir
+
+popd
+
+pushd MusicKit/Documentation
+touch /tmp/MusicKit_ChangeLog.txt
+%make_build \
+	messages=yes \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%makeinstall_std \
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
+	DSTROOT=%buildroot
+popd
+
+pushd %buildroot%_libdir
+for j in MKPerformSndMIDI SndKit MKDSP MusicKit; do
+	for i in lib$j.so*; do
+		rm -f $i
+		mv GNUstep/Frameworks/$j.framework/Versions/Current/$i ./
+		for k in lib$j.so.*.*; do
+			ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/Current/$i
+			rm GNUstep/Frameworks/$j.framework/Versions/Current/$j
+			ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/Current/$j
+		done
+	done
+done
+popd
+
+%files
+%_bindir/EnvelopeEd
+%_bindir/Midi*
+%_bindir/MultipleSoundPlayer
+%_bindir/PianoRoll
+%_bindir/ScorePlayer
+%_bindir/Spectro
+%_bindir/TwoWaves
+%_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/5/Headers
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_libdir/*.so
+%_libdir/GNUstep/Frameworks/*.framework/Versions/5/Headers
+%_libdir/GNUstep/Frameworks/*.framework/Headers
+
+%files docs
+%_docdir/GNUstep
+%doc MusicKit/Applications/PhysicalModels/Documentation/*
+
+%files examples
+%_bindir/*
+%exclude %_bindir/EnvelopeEd
+%exclude %_bindir/Midi*
+%exclude %_bindir/MultipleSoundPlayer
+%exclude %_bindir/PianoRoll
+%exclude %_bindir/ScorePlayer
+%exclude %_bindir/Spectro
+%exclude %_bindir/TwoWaves
+%doc _ex/*
+
+%changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt1.git20110723
+- Initial build for Sisyphus
+
