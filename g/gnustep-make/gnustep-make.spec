@@ -1,6 +1,7 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt2.git20131230
+Release: alt2.svn20140116
+# http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Other
@@ -52,10 +53,10 @@ export CC=gcc CXX=g++ CPP='gcc -E'
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 %makeinstall_std
 
-if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub); then
-       echo >&2 %buildroot is dirty
-       exit 1
-fi
+#if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub); then
+#       echo >&2 %buildroot is dirty
+#       exit 1
+#fi
 
 #install -d %buildroot/etc/profile.d
 
@@ -103,6 +104,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt2.svn20140116
+- New snapshot
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt2.git20131230
 - Disabled %_libdir/GNUstep/Library
 
