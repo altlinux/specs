@@ -4,8 +4,8 @@
 %add_findreq_skiplist */Net/DNS/ToolKit/RR/AFSDB.pm
 
 Name: perl-%module
-Version: 0.47
-Release: alt2
+Version: 0.48
+Release: alt1
 
 Summary: Tools for working with DNS packets
 License: Perl
@@ -38,6 +38,9 @@ NPROCS=1
 %perl_vendor_autolib/Net
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.47-alt2
 - built for perl 5.18
 
