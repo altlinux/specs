@@ -5,7 +5,7 @@
 
 Name: qt5-tools
 Version: 5.1.1
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -23,6 +23,7 @@ Source23: qdbusviewer.desktop
 Source24: qtconfig.desktop
 
 Patch1: alt-build-qtconfig.patch
+Patch2: alt-cmake-config.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
@@ -30,6 +31,7 @@ Patch1: alt-build-qtconfig.patch
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
 BuildRequires: gstreamer-devel gst-plugins-devel libXext-devel libX11-devel
+BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -40,7 +42,8 @@ BuildRequires: qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+BuildArch: noarch
+Requires: qt5-base-common
 %description common
 Common package for %name
 
@@ -62,9 +65,9 @@ Requires: %name-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
+BuildArch: noarch
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
@@ -139,6 +142,7 @@ Requires: %name-common = %EVR
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
+%patch2 -p1
 syncqt.pl-qt5 \
     -version %version \
     -private \
@@ -153,7 +157,9 @@ syncqt.pl-qt5 \
 
 %build
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
@@ -272,6 +278,15 @@ done
 
 
 %changelog
+* Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt5
+- fix paths in cmake config (ALT#29761)
+
+* Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3.M70P.2
+- build docs
+
+* Mon Nov 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3.M70P.1
+- built for M70P
+
 * Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4
 - built qtconfig
 
