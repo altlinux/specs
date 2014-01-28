@@ -2,8 +2,8 @@
 # http://hub.qgis.org/issues/5274
 
 Name: qgis
-Version: 1.8.0
-Release: alt1.1
+Version: 2.0.1
+Release: alt1
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
 Group: Sciences/Geosciences
@@ -17,17 +17,9 @@ Source: %name-%version.tar
 
 # Fix detection problem for GRASS libraries
 Patch0: %name-1.5.0-fedora-grass.patch
-
-# http://hub.qgis.org/issues/5809
-# Crash when datasource is moved or deleted
-Patch1: %name-1.8.0-fedora-datasource-crash.patch
-
-# TODO: Upstream (fedora's)
-# Use system version of qextserialport library
-Patch2: %name-1.8.0-fedora-alt-qextserialport.patch
-
-#QGIS to compile with sip 4.15
-Patch3: %name-1.8.0-qgis-sip.patch
+Patch2: %name-2.0.1-httplib2.patch
+Patch3: %name-2.0.1-sip-4.15.patch
+Patch4: %name-2.0.1-sip-8601.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -49,27 +41,26 @@ BuildRequires: libfcgi-devel
 BuildRequires: flex bison
 BuildRequires: libgdal-devel
 BuildRequires: libgeos-devel
-BuildRequires: grass-devel
+BuildRequires: grass-devel = 6.4.3
 BuildRequires: libgsl-devel
 BuildRequires: libspatialite-devel
 BuildRequires: postgresql-devel
 BuildRequires: libproj-devel
 BuildRequires: python-module-PyQt4-devel
 BuildRequires: txt2tags
-# PyQwt-devel
 BuildRequires: python-devel
 BuildRequires: libqt4-devel
-BuildRequires: qt4-mobility-devel
-# qt4-webkit-devel
-BuildRequires: libqt4-devel
+# Fail to build with Qt-Mobility. See http://hub.qgis.org/issues/7753
+#BuildRequires: qt4-mobility-devel
 BuildRequires: libqt4-webkit
-
-BuildRequires: libqwt6-devel
+BuildRequires: python-module-PyQwt-devel
 BuildRequires: qextserialport-devel
 BuildRequires: libqwtpolar-devel
 BuildRequires: python-module-sip-devel >= 4.15
 BuildRequires: spatialindex-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: python-module-qscintilla2-qt4-devel
+BuildRequires: libqscintilla2-qt4-devel
 
 Requires: gpsbabel
 
@@ -108,7 +99,7 @@ Summary: Python integration and plug-ins for Quantum GIS
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
 Requires: python-module-gdal
-Requires: python-module-PyQt4
+Requires: python-module-qscintilla2-qt4
 # SPI API >= 9.1
 Requires: python-module-sip
 
@@ -133,14 +124,21 @@ Please refer to %name-mapserver-README for details!
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Delete bundled libs
 rm -rf src/core/spatialite
 rm -rf src/core/gps/qwtpolar
 rm -rf src/core/gps/qextserialport
+
+# TODO Don't build unsupported Python bindings
+subst 's/^\(ADD_SUBDIRECTORY(otb)\)/#\1/' python/plugins/processing/CMakeLists.txt
+subst 's/^\(ADD_SUBDIRECTORY(saga)\)/#\1/' python/plugins/processing/CMakeLists.txt
+rm -rf python/plugins/processing/{otb,saga}
+subst 's/^\(.*OTBAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
+subst 's/^\(.*SagaAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
 
 %build
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
@@ -177,9 +175,10 @@ cmake \
 	-DWITH_PYSPATIALITE:BOOL=FALSE \
 	-DWITH_SPATIALITE:BOOL=TRUE \
 	-DWITH_INTERNAL_SPATIALITE:BOOL=FALSE \
+	-DQEXTSERIALPORT_LIBRARY:PATH=%_libdir/libqextserialport.so \
 	-DQEXTSERIALPORT_INCLUDE_DIR:PATH=%_includedir/qt4/QtExtSerialPort \
 	-DQWTPOLAR_INCLUDE_DIR:PATH=%_includedir/qwt \
-	-DWITH_QTMOBILITY:BOOL=TRUE \
+	-DWITH_QTMOBILITY:BOOL=FALSE \
 	-DWITH_TOUCH:BOOL=TRUE \
 	.
 %make_build
@@ -233,9 +232,9 @@ rm -f BUGS \
 	README
 popd
 
-# Name of locale is wrong
-mv %buildroot%_datadir/qgis/i18n/qgis_sr_CS-Latn.qm \
-	%buildroot%_datadir/qgis/i18n/qgis_sr@latin.qm
+# Fix Serbian locale names
+mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Cyrl,}.qm
+mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %find_lang %name --with-qt
 
 %files -f %{name}.lang
@@ -255,7 +254,7 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr_CS-Latn.qm \
 %_libdir/%name
 %_bindir/%name
 %_bindir/qbrowser
-%_man1dir/%{name}*
+%doc %_man1dir/*
 %dir %_datadir/%name/
 %_datadir/mime/packages/%name.xml
 %_datadir/pixmaps/%name.png
@@ -297,6 +296,10 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr_CS-Latn.qm \
 %_libexecdir/%name
 
 %changelog
+* Mon Jan 27 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version (ALT #27790)
+- Fix Grass version to make breakage more visible
+
 * Fri Dec 06 2013 Andrey Kolotov <qwest@altlinux.org> 1.8.0-alt1.1
 - build fixed
 
