@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt3.a0
+Release: alt4.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -368,6 +368,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt4.a0
+- Restored original sphinx/highlighting.py
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt3.a0
 - Removed sphinx.ext from sys.path
 
