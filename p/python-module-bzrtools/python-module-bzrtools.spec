@@ -1,7 +1,7 @@
 # $Id: python-module-bzrtools.spec 138 2004-03-26 23:17:36Z cray $
 # -*- coding: utf-8 -*-
 Name: python-module-bzrtools
-Version: 2.5
+Version: 2.6.0
 Release: alt1
 
 %setup_python_module bzrtools
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Wed Jan 14 2004
 #BuildRequires: libapr1-devel libaprutil1-devel libsubversion-devel
+
+Provides: bzrtools
 
 %description
 Bzrtools is plugin providing a collection of utilities for bzr.
@@ -55,6 +57,9 @@ This package contain tools and test suites for testing bzrtools.
 %python_sitelibdir/bzrlib/plugins/%modulename/tests
 
 %changelog
+* Tue Jan 28 2014 Anatoly Kitaykin <cetus@altlinux.org> 2.6.0-alt1
+- 2.6 release
+
 * Fri Mar 09 2012 Anatoly Kitaikin <cetus@altlinux.org> 2.5-alt1
 - 2.5 release
 - create python-module-bzrtools-tests subpackage
