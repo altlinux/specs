@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     22
 %define BUILD_NUMBER      24
-%define PATCH_LEVEL       8
+%define PATCH_LEVEL       18
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 
@@ -62,7 +62,6 @@ sed -i 's|build/gyp/gyp|gyp|g' Makefile
     library=shared \
     snapshot=on \
     soname_version=%{soversion} \
-
 %ifarch armh
     armfloatabi=hard
 %endif
@@ -85,6 +84,10 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Tue Jan 28 2014 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.22.24.18-alt1
+- new version (Closes: #29762)
+  + High CVE-2013-6650: Memory corruption in V8.
+
 * Sun Dec 01 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.22.24.8-alt1
 - new version (Closes: #29628)
   + Medium CVE-2013-6638: Buffer overflow in v8.
