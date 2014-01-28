@@ -5,14 +5,14 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt8.git20131223
+Release: alt8.svn20140120
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-libobjc2.git
+# http://svn.gna.org/svn/gnustep/libs/libobjc2/trunk/
 Source: %name-%version.tar
 Source1: Makefile
 Patch: gnustep-objc2-1.6.1-alt-i586.patch
@@ -165,6 +165,9 @@ install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt8.svn20140120
+- New snapshot
+
 * Sun Jan 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt8.git20131223
 - Added sarray2.h and category.h
 
