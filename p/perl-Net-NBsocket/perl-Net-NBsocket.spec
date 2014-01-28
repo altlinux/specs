@@ -1,7 +1,7 @@
 %define module Net-NBsocket
 
 Name: perl-%module
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Net::NBsocket - Non-Blocking Sockets
@@ -34,6 +34,9 @@ sockets of various flavors.
 %perl_vendor_privlib/auto/Net
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
