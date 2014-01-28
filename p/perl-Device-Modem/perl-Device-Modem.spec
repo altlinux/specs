@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Device-Modem
-Version: 1.56
+Version: 1.57
 Release: alt1
 
 Summary: Perl extension to talk to modem devices connected via serial port
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc README Changes examples
 
 %changelog
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 
