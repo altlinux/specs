@@ -2,7 +2,7 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt3.git20130819
+Release: alt4.git20130819
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -120,6 +120,9 @@ popd
 # bad info
 rm -fR %buildroot%_infodir
 
+install -d %buildroot%_includedir
+cp -fR EOInterface %buildroot%_includedir/
+
 gzip ChangeLog
 
 %files
@@ -143,6 +146,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt4.git20130819
+- Added EOInterface headers
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt3.git20130819
 - Rebuilt with new gnustep-gui
 
