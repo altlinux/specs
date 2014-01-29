@@ -2,7 +2,7 @@
 
 Name: gnustep-Ladder
 Version: 1.0
-Release: alt1
+Release: alt2
 Summary: Ladder is a graphically pleasing implementation of Go
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnugo
+Requires: gnustep-back
 
 %description
 Ladder is a graphically pleasing implementation of Go. It uses gnugo as
@@ -45,6 +46,9 @@ order to run it.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 
