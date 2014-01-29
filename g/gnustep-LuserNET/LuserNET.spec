@@ -2,7 +2,7 @@
 
 Name: gnustep-LuserNET
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: News reader for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-Pantomime-devel
 
 Requires: gnustep-Pantomime
+Requires: gnustep-back
 
 %description
 LuserNET is an NNTP based news reader for GNUstep. Although it's at an
@@ -53,6 +54,9 @@ available:
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus
 
