@@ -2,7 +2,7 @@
 
 Name: gnustep-FlexiSheet
 Version: 0.1
-Release: alt2.cvs20140127
+Release: alt3.cvs20140127
 Summary: A Quantrix-like spreadsheet
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -21,6 +21,7 @@ BuildPreReq: gnustep-simplewebkit-devel
 
 Requires: gnustep-ObjcUnit
 Requires: gnustep-simplewebkit
+Requires: gnustep-back
 
 %description
 A Quantrix-like spreadsheet.
@@ -73,6 +74,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc Documentation
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.cvs20140127
+- Added Requires: gnustep-back
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.cvs20140127
 - Applied repocop patch
 
