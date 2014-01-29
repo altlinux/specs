@@ -2,7 +2,7 @@
 
 Name: gnustep-GRubik
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: GRubik is a virtual 3D Rubik's cube for you to solve
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 GRubik is a virtual 3D Rubik's cube for you to solve.
@@ -52,6 +54,9 @@ ln -s %_libdir/GNUstep/Applications/GRubik.app/GRubik \
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
