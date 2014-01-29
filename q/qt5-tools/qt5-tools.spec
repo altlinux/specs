@@ -5,7 +5,7 @@
 
 Name: qt5-tools
 Version: 5.1.1
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -278,6 +278,12 @@ done
 
 
 %changelog
+* Wed Jan 29 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt6
+- fix cmake config file (ALT#29761)
+
+* Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4.M70P.1
+- built for M70P
+
 * Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt5
 - fix paths in cmake config (ALT#29761)
 
