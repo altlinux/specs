@@ -2,7 +2,7 @@
 
 Name: gnustep-GScheme
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: GNUstep-aware scheme interpreter
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel flex
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 A GNUstep-aware scheme interpreter. Includes many examples, e.g. the
@@ -46,6 +48,9 @@ document-based and you can edit more than one file at the same time.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
 
