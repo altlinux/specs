@@ -2,7 +2,7 @@
 
 Name: gnustep-MP3ToWav
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: MP3ToWav plugin for Burn.app
 License: Free
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,9 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libao-devel libmad-devel gnustep-Burn-devel
+
+Requires: gnustep-Burn
+Requires: gnustep-back
 
 %description
 MP3ToWav plugin for Burn.app.
@@ -42,6 +45,9 @@ MP3ToWav plugin for Burn.app.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2
+- Added Requires: gnustep-Burn and Requires: gnustep-back
+
 * Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus
 
