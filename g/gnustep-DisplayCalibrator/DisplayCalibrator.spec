@@ -2,7 +2,7 @@
 
 Name: gnustep-DisplayCalibrator
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: Gamma calibration for GNUstep
 License: Free
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 DisplayCalibrator is a GNUstep application to calibrate the gamma of
@@ -42,6 +44,9 @@ your display.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Initial build for Sisyphus
 
