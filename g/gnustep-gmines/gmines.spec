@@ -2,7 +2,7 @@
 
 Name: gnustep-gmines
 Version: 0.2
-Release: alt3
+Release: alt4
 Summary: The classic Minesweeper game 
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 The classic Minesweeper game for GNUstep.
@@ -43,6 +45,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3
 - Rebuilt with new gnustep-gui
 
