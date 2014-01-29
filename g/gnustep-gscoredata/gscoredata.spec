@@ -2,7 +2,7 @@
 
 Name: gnustep-gscoredata
 Version: r33286
-Release: alt2.svn20110612
+Release: alt3.svn20110612
 Summary: Free implementation of the Apple Core Data framework
 License: LGPLv2.1+, FDLv1.2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgnustep-objc2-devel /proc
 BuildPreReq: doxygen graphviz
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 GNUstep Core Data framework, a free implementation of the Apple Core
@@ -112,6 +113,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r33286-alt3.svn20110612
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r33286-alt2.svn20110612
 - Rebuilt with new gnustep-gui
 
