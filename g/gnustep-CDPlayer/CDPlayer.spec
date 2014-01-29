@@ -2,7 +2,7 @@
 
 Name: gnustep-CDPlayer
 Version: 0.5.1
-Release: alt3
+Release: alt4
 Summary: Small CD Audio Player for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,8 @@ BuildPreReq: libcdaudio-devel gnustep-gui-devel
 BuildPreReq: gnustep-systempreferences-devel
 
 Requires: gnustep-cddb.bundle
+Requires: gnustep-systempreferences
+Requires: gnustep-back
 
 %description
 CDPlayer.app is a small CD Audio Player for GNUstep. This application is
@@ -73,6 +75,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt4
+- Added Requires: gnustep-systempreferences and Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3
 - Rebuilt with new gnustep-gui
 
