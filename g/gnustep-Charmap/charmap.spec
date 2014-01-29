@@ -2,7 +2,7 @@
 
 Name: gnustep-Charmap
 Version: 0.3
-Release: alt1.rc1
+Release: alt2.rc1
 Summary: Character map
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Charmap is a powerful character map built with the OpenStep standard,
@@ -66,6 +68,9 @@ This package contains documentation for Charmap.
 %doc Documentation/*.pdf
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2.rc1
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.rc1
 - Initial build for Sisyphus
 
