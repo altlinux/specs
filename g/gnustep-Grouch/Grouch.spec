@@ -2,7 +2,7 @@
 
 Name: gnustep-Grouch
 Version: 20061120
-Release: alt1
+Release: alt2
 Summary: Grouch is an AOL Instant MessengerSM and ICQ client for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,8 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-renaissance-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-renaissance
+Requires: gnustep-back
 
 %description
 Grouch is an AOL Instant MessengerSM and ICQ client for GNUstep.
@@ -86,6 +88,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20061120-alt2
+- Added Requires: gnustep-renaissance and Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20061120-alt1
 - Initial build for Sisyphus
 
