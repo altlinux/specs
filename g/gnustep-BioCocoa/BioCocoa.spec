@@ -2,7 +2,7 @@
 
 Name: gnustep-BioCocoa
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Summary: Open source OpenStep (GNUstep/Cocoa) framework for bioinformatics
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 BioCocoa is an open source OpenStep (GNUstep/Cocoa) framework for
@@ -125,6 +126,9 @@ popd
 %_libdir/GNUstep/Frameworks/BioCocoa.framework/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1
 - Initial build for Sisyphus
 
