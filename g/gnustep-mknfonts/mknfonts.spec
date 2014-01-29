@@ -2,7 +2,7 @@
 
 Name: gnustep-mknfonts
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Create nfont packages for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel libfreetype-devel
+
+Requires: gnustep-back
 
 %description
 Create nfont packages for GNUstep.
@@ -38,6 +40,9 @@ Create nfont packages for GNUstep.
 %_bindir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Initial build for Sisyphus
 
