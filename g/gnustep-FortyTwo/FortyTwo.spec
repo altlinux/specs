@@ -2,7 +2,7 @@
 
 Name: gnustep-FortyTwo
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Generic, native graph management system for GNUstep and Cocoa
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -21,6 +21,7 @@ BuildPreReq: gnustep-Encore-devel gnustep-BDB-devel
 Requires: lib%name = %EVR
 Requires: gnustep-BDB
 Requires: gnustep-Encore
+Requires: gnustep-back
 
 %description
 FT is a generic, native graph management system for GNUstep and Cocoa
@@ -135,6 +136,9 @@ install -d %buildroot%_localstatedir/GNUstep
 %doc documentation/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
 
