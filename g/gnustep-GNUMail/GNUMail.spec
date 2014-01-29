@@ -2,11 +2,11 @@
 
 Name: gnustep-GNUMail
 Version: 1.2.0
-Release: alt5
+Release: alt6
 Summary: Official GNUstep mail application and a clone of NeXT's Mail.app
 License: GPLv2
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/GNUMail.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -18,6 +18,7 @@ BuildPreReq: gnustep-AddressManager-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-AddressManager gnustep-Pantomime
+Requires: gnustep-back
 
 %description
 GNUMail is the official GNUstep mail application and a clone of NeXT's
@@ -105,6 +106,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt6
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt5
 - Rebuilt with new gnustep-gui
 
