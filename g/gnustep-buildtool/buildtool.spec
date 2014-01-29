@@ -1,6 +1,6 @@
 Name: gnustep-buildtool
 Version: r36614
-Release: alt1.svn20130513
+Release: alt2.svn20130513
 Summary: The GNUstep buildtool
 License: GPLv2+
 Group: Development/Tools
@@ -15,7 +15,7 @@ BuildPreReq: libgnustep-xcode-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
-Requires: gnustep-xcode
+Requires: gnustep-xcode-devel
 
 %description
 GNUstep buildtool.
@@ -38,6 +38,9 @@ GNUstep buildtool.
 %_bindir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r36614-alt2.svn20130513
+- Added Requires: gnustep-xcode-devel
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r36614-alt1.svn20130513
 - New snapshot
 
