@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraKit
 Version: 20041011
-Release: alt1
+Release: alt2
 Summary: A simple wrapper to libgphoto
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libgphoto2-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 A simple wrapper to libgphoto.
@@ -89,6 +90,9 @@ popd
 %_libdir/GNUstep/Frameworks/CameraKit.framework/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20041011-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20041011-alt1
 - Initial build for Sisyphus
 
