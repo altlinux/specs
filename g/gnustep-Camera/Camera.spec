@@ -2,7 +2,7 @@
 
 Name: gnustep-Camera
 Version: 0.8
-Release: alt1
+Release: alt2
 Summary: Camera downloads files from your digital camera
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libgphoto2-devel
+
+Requires: gnustep-back
 
 %description
 A simple tool to download photos from a digital camera.
@@ -43,6 +45,9 @@ A simple tool to download photos from a digital camera.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Initial build for Sisyphus
 
