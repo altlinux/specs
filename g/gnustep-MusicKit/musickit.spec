@@ -2,8 +2,8 @@
 
 Name: gnustep-MusicKit
 Version: 5.6.2
-Release: alt1.git20110723
-Summary: The GNUstep GUI library
+Release: alt2.git20110723
+Summary: Software system for building music, sound, signal processing, and MIDI applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://musickit.sourceforge.net/
@@ -24,13 +24,19 @@ BuildPreReq: gcc-c++ texinfo texi2html
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
+Requires: gnustep-back
+
 %description
-The GNUstep GUI library is a library of graphical user interface classes
-written completely in the Objective-C language; the classes are based
-upon the OpenStep specification as release by NeXT Software, Inc.  These
-classes include graphical objects such as buttons, text fields, popup
-lists, browser lists, and windows; there are also many associated
-classes for handling events, colors, fonts, pasteboards and images.
+The MusicKit is an object-oriented software system for building music,
+sound, signal processing, and MIDI applications. It has been used in
+such diverse commercial applications as music sequencers, computer
+games, and document processors. Professors and students in academia have
+used the MusicKit in a host of areas, including music performance,
+scientific experiments, computer-aided instruction, and physical
+modeling. The MusicKit was the first to unify the MIDI and Music V
+paradigms, thus combining interaction with generality (Music V, written
+by Max Mathews and others at Bell Labs four decades ago, was the first
+widely available "computer music compiler").
 
 %package -n lib%name
 Summary: Libraries for %name
@@ -38,12 +44,16 @@ Group: System/Libraries
 License: LGPLv2+ and LGPLv3+
 
 %description -n lib%name
-The GNUstep GUI library is a library of graphical user interface classes
-written completely in the Objective-C language; the classes are based
-upon the OpenStep specification as release by NeXT Software, Inc.  These
-classes include graphical objects such as buttons, text fields, popup
-lists, browser lists, and windows; there are also many associated
-classes for handling events, colors, fonts, pasteboards and images.
+The MusicKit is an object-oriented software system for building music,
+sound, signal processing, and MIDI applications. It has been used in
+such diverse commercial applications as music sequencers, computer
+games, and document processors. Professors and students in academia have
+used the MusicKit in a host of areas, including music performance,
+scientific experiments, computer-aided instruction, and physical
+modeling. The MusicKit was the first to unify the MIDI and Music V
+paradigms, thus combining interaction with generality (Music V, written
+by Max Mathews and others at Bell Labs four decades ago, was the first
+widely available "computer music compiler").
 
 This package contains the libraries for %name.
 
@@ -56,12 +66,16 @@ Requires: lib%name = %version-%release
 Requires: %name = %version-%release
 
 %description -n lib%name-devel
-The GNUstep GUI library is a library of graphical user interface classes
-written completely in the Objective-C language; the classes are based
-upon the OpenStep specification as release by NeXT Software, Inc.  These
-classes include graphical objects such as buttons, text fields, popup
-lists, browser lists, and windows; there are also many associated
-classes for handling events, colors, fonts, pasteboards and images.
+The MusicKit is an object-oriented software system for building music,
+sound, signal processing, and MIDI applications. It has been used in
+such diverse commercial applications as music sequencers, computer
+games, and document processors. Professors and students in academia have
+used the MusicKit in a host of areas, including music performance,
+scientific experiments, computer-aided instruction, and physical
+modeling. The MusicKit was the first to unify the MIDI and Music V
+paradigms, thus combining interaction with generality (Music V, written
+by Max Mathews and others at Bell Labs four decades ago, was the first
+widely available "computer music compiler").
 
 This package contains the header files for gnustep-gui.
 
@@ -71,12 +85,16 @@ Group: Development/Objective-C
 Requires: %name = %EVR
 
 %description examples
-The GNUstep GUI library is a library of graphical user interface classes
-written completely in the Objective-C language; the classes are based
-upon the OpenStep specification as release by NeXT Software, Inc.  These
-classes include graphical objects such as buttons, text fields, popup
-lists, browser lists, and windows; there are also many associated
-classes for handling events, colors, fonts, pasteboards and images.
+The MusicKit is an object-oriented software system for building music,
+sound, signal processing, and MIDI applications. It has been used in
+such diverse commercial applications as music sequencers, computer
+games, and document processors. Professors and students in academia have
+used the MusicKit in a host of areas, including music performance,
+scientific experiments, computer-aided instruction, and physical
+modeling. The MusicKit was the first to unify the MIDI and Music V
+paradigms, thus combining interaction with generality (Music V, written
+by Max Mathews and others at Bell Labs four decades ago, was the first
+widely available "computer music compiler").
 
 This package contains examples of %name.
 
@@ -87,12 +105,16 @@ BuildArch: noarch
 License: GFDL
 
 %description docs
-The GNUstep GUI library is a library of graphical user interface classes
-written completely in the Objective-C language; the classes are based
-upon the OpenStep specification as release by NeXT Software, Inc.  These
-classes include graphical objects such as buttons, text fields, popup
-lists, browser lists, and windows; there are also many associated
-classes for handling events, colors, fonts, pasteboards and images.
+The MusicKit is an object-oriented software system for building music,
+sound, signal processing, and MIDI applications. It has been used in
+such diverse commercial applications as music sequencers, computer
+games, and document processors. Professors and students in academia have
+used the MusicKit in a host of areas, including music performance,
+scientific experiments, computer-aided instruction, and physical
+modeling. The MusicKit was the first to unify the MIDI and Music V
+paradigms, thus combining interaction with generality (Music V, written
+by Max Mathews and others at Bell Labs four decades ago, was the first
+widely available "computer music compiler").
 
 This package contains the documentation for %name.
 
@@ -251,6 +273,9 @@ popd
 %doc _ex/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt2.git20110723
+- Added Requires: gnustep-back
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt1.git20110723
 - Initial build for Sisyphus
 
