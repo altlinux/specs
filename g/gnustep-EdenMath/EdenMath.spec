@@ -2,11 +2,11 @@
 
 Name: gnustep-EdenMath
 Version: 1.1.1
-Release: alt3.a
+Release: alt4.a
 Summary: Scientific calculator for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/EdenMath.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 EdenMath is a scientific calculator which does standard arithmetic,
@@ -47,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt4.a
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt3.a
 - Rebuilt with new gnustep-gui
 
