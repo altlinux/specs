@@ -2,7 +2,7 @@
 
 Name: gnustep-netclasses
 Version: 1.06
-Release: alt1
+Release: alt2
 Summary: Asynchronous networking framework for GNUstep and Mac OS X
 License: LGPLv2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Asynchronous networking framework for GNUstep and Mac OS X. Has built-in
@@ -117,6 +118,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.06-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.06-alt1
 - Initial build for Sisyphus
 
