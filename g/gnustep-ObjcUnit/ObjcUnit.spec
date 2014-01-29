@@ -2,7 +2,7 @@
 
 Name: gnustep-ObjcUnit
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: ObjcUnit framework for GNUstep
 License: IBM Public License Version 1.0
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 ObjcUnit is a unit testing framework for Objective-C originally on Mac
@@ -117,6 +118,9 @@ popd
 %doc ObjcUnit/Documentation/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
 
