@@ -1,6 +1,6 @@
 Name: python-module-kivy
 Version: 1.7.2
-Release: alt1
+Release: alt2
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Group: Development/Python
@@ -13,9 +13,9 @@ Patch: Kivy-1.7.2-colorpicker_doc.patch
 %add_python_req_skip freenect
 %add_python_req_skip jnius
 
-# Automatically added by buildreq on Mon Jan 16 2012
-# optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-protobuf python-module-simplejson python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
-BuildRequires: libGL-devel python-module-Cython0.18 python-module-Pyrex python-module-distutils-extra python-module-sphinx python-modules-json time
+# Automatically added by buildreq on Wed Jan 29 2014
+# optimized out: libEGL-devel python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-html5lib python-module-jinja2 python-module-markupsafe python-module-numpy python-module-numpy-testing python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
+BuildRequires: ctags libGL-devel libGLES-devel python-module-Cython0.18 python-module-Pyrex python-module-jinja2-tests python-module-nss python-module-pygame python-module-pytz python-module-sphinx python-modules-json time
 
 %description
 Kivy - Open source library for rapid development of applications
@@ -43,6 +43,8 @@ cd doc &&
 export PYTHONPATH=`ls -d ../build/lib*` &&
 python autobuild.py &&
 export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
+# XXX no file found?
+ln sources/.static/logo-kivy.png .
 make html
 
 %install
@@ -58,6 +60,9 @@ make html
 %_bindir/*
 
 %changelog
+* Wed Jan 29 2014 Fr. Br. George <george@altlinux.ru> 1.7.2-alt2
+- Fix build and dependencies
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.7.2-alt1
 - Autobuild version bump to 1.7.2
 - Move examples and docs to the newly introduced devel package
