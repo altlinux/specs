@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt5.svn20140116
+Release: alt7.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -54,13 +54,13 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 %makeinstall_std
 
 %ifarch x86_64
-sed -i 's|i586|x86_64|g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
+sed -i 's|-march=i586||g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
 %endif
 
-#if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub -not -name config.make); then
-#       echo >&2 %buildroot is dirty
-#       exit 1
-#fi
+if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub -not -name config.make); then
+       echo >&2 %buildroot is dirty
+       exit 1
+fi
 
 #install -d %buildroot/etc/profile.d
 
@@ -108,6 +108,12 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt7.svn20140116
+- Deleted -march=i586
+
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt6.svn20140116
+- 
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt5.svn20140116
 - Other fixes
 

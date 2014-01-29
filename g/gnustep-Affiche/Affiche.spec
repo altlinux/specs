@@ -2,7 +2,7 @@
 
 Name: gnustep-Affiche
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: An application to "stick" little notes on the desktop
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Affiche is a little application that allows people to "stick" little
@@ -43,6 +45,9 @@ environment.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus
 
