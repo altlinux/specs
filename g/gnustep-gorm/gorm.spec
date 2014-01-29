@@ -2,14 +2,13 @@
 
 Name: gnustep-gorm
 Version: 1.2.20
-Release: alt1.svn20140119
+Release: alt2.svn20140119
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-gorm.git
 # http://svn.gna.org/svn/gnustep/apps/gorm/trunk/
 Source: %name-%version.tar
 Source1: %name.menu
@@ -19,6 +18,7 @@ BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 Gorm is an acronym for Graphic Object Relationship modeler (or perhaps
@@ -131,6 +131,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt2.svn20140119
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt1.svn20140119
 - New snapshot
 
