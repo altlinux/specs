@@ -2,7 +2,7 @@
 
 Name: gnustep-GSBench
 Version: 0.5.2
-Release: alt1
+Release: alt2
 Summary: Benchmarking tool for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,9 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-projectcenter-devel
+
+Requires: gnustep-projectcenter
+Requires: gnustep-back
 
 %description
 A benchmarking tool for GNUstep, originated from NXBench.
@@ -43,6 +46,9 @@ A benchmarking tool for GNUstep, originated from NXBench.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt2
+- Added Requires: gnustep-projectcenter and Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
 - Initial build for Sisyphus
 
