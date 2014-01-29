@@ -2,7 +2,7 @@
 
 Name: gnustep-Encore
 Version: 0.3.1
-Release: alt2
+Release: alt3
 Summary: A set of utility classes
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Encore is a set of utility classes written in Objective-C for GNUstep
@@ -112,6 +113,9 @@ popd
 %_libdir/GNUstep/Frameworks/Encore.framework/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt3
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2
 - Added %_includedir/Encore/ECLoggingConfigurationFactory.h
 
