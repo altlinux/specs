@@ -2,7 +2,7 @@
 
 Name: gnustep-HelpViewer
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: HelpViewer is an online help viewer for GNUstep programs
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 HelpViewer is an online help viewer for GNUstep applications. It uses
@@ -42,6 +44,9 @@ XML files, and its goal is to be fast and easy to use.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
