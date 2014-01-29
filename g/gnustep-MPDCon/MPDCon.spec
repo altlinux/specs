@@ -2,7 +2,7 @@
 
 Name: gnustep-MPDCon
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: A GNUstep MPD client
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: gnustep-gui-devel libsqlite3-devel libmpdclient-devel
 BuildPreReq: gnustep-sqlclient-devel libbsd-devel
 
 Requires: mpd
+Requires: gnustep-back
 
 %description
 A client for the Music Player Daemon (MPD).
@@ -53,6 +54,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt2
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1
 - Version 1.5.1
 
