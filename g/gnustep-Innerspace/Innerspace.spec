@@ -2,7 +2,7 @@
 
 Name: gnustep-Innerspace
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Innerspace is a screensaver
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libX11-devel
+
+Requires: gnustep-back
 
 %description
 Innerspace is a screensaver which is compatible with BackSpace from the
@@ -45,6 +47,9 @@ modules.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
 
