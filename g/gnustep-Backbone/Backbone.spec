@@ -2,13 +2,14 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt2.git20140115
+Release: alt3.git20140115
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://www.nongnu.org/backbone/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://git.savannah.nongnu.org/backbone.git
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -18,6 +19,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-gorm-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 Conflicts: gnustep-terminal
 Conflicts: gnustep-TextEdit
@@ -113,6 +115,9 @@ popd
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt3.git20140115
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.git20140115
 - Added explicit conflict with gnustep-terminal and gnustep-TextEdit
 
