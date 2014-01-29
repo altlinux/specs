@@ -2,11 +2,11 @@
 
 Name: gnustep-GToolKit
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: Implements a simple and easy to use ObjC interface to the GTK+ widget set
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
-Url: http://gnu.ethz.ch/linuks.mine.nu/aclock/
+Url: http://wiki.gnustep.org/index.php/GToolKit
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -121,6 +121,9 @@ done
 %doc html/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
+- Change URL
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1
 - Initial build for Sisyphus
 
