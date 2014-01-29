@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt3.git20131218
+Release: alt3.svn20131218
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,8 @@ BuildPreReq: gnustep-systempreferences-devel libsqlite3-devel unzip
 BuildPreReq: gnustep-gui-devel gnustep-gui inotify-tools-devel
 
 Requires: lib%name = %version-%release
+Requires: gnustep-systempreferences
+Requires: gnustep-back
 
 %description
 GWorkspace is a clone of the NeXT workspace manager with some added
@@ -144,6 +146,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.svn20131218
+- Added Requires: gnustep-systempreferences and Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.git20131218
 - New snapshot
 
