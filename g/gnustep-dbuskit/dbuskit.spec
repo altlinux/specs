@@ -2,14 +2,14 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt5.git20140101
+Release: alt6.git20140101
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-dbuskit.git
+# http://svn.gna.org/svn/gnustep/libs/dbuskit/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
@@ -18,6 +18,7 @@ BuildPreReq: clang-devel clang
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 GNUstep interface to the DBUS data transport mechanism. This library
@@ -149,6 +150,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt6.git20140101
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt5.git20140101
 - New snapshot
 
