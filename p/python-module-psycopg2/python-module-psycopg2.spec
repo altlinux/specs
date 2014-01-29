@@ -2,7 +2,7 @@
 %def_with python3
 
 Version: 2.5.1
-Release: alt1
+Release: alt2
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -11,13 +11,14 @@ Name: %packagename
 Source0: psycopg2.tar
 License: GPL
 Group: Development/Python
-URL: http://www.initd.org/software/psycopg/
+URL: http://www.psycopg.org/psycopg/
 BuildRequires: postgresql-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
 %endif
-Packager: Python Development Team <python@packages.altlinux.org>
+
+Requires: python-modules-json
 
 %description
 psycopg is a PostgreSQL database adapter for the Python programming
@@ -100,6 +101,10 @@ sed -i 's|_psycopg|%oname._psycopg|' \
 %endif
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
+- Changed URL (ALT #29766)
+- Added Requires: python-modules-json (ALT #29767)
+
 * Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 - Dropped Zope adapter from source repository. ZPsycopgDA now has its own
