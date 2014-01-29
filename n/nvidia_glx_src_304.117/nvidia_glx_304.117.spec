@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 117
 %define nv_minor %nil
-%define pkg_rel alt115
+%define pkg_rel alt116
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -361,6 +361,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 29 2014 Sergey V Turchin <zerg@altlinux.org> 304.117-alt116
+- don't package kernel module sources
+
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 304.117-alt115
 - new version
 
