@@ -1,5 +1,5 @@
 Name: vlc
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: VLC media player
@@ -666,6 +666,7 @@ echo %version-%release > src/revision.txt
 	--enable-flac \
 	--enable-freetype \
 	--enable-fribidi \
+	--enable-gles2 \
 	--enable-gnutls \
 	--enable-goom \
 	--enable-httpd \
@@ -749,7 +750,7 @@ mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vlc.filetrigger
 #!/bin/sh -e
 
-grep -qs '^%vlc_plugindir/.*\.so\$' && %vlc_libdir/vlc-cache-gen %vlc_plugindir ||:
+grep -qs '^%vlc_plugindir/.*\.so\$' && %vlc_libdir/vlc-cache-gen %vlc_plugindir
 __EOF__
 
 chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
@@ -1211,6 +1212,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/video_output/libxcb_xv_plugin.so
 %vlc_plugindir/video_output/libegl_plugin.so
 %vlc_plugindir/video_output/libgl_plugin.so
+%vlc_plugindir/video_output/libgles2_plugin.so
 %vlc_plugindir/video_output/libglx_plugin.so
 %vlc_plugindir/video_filter/libanaglyph_plugin.so
 %vlc_plugindir/video_filter/libpanoramix_plugin.so
@@ -1306,6 +1308,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Jan 30 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.3-alt1
+- 2.1.3 released
+
 * Mon Dec 09 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.2-alt1
 - 2.1.2 released
 
