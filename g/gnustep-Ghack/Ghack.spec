@@ -2,7 +2,7 @@
 
 Name: gnustep-Ghack
 Version: 0.2
-Release: alt2.git20130613
+Release: alt3.git20130613
 Summary: Graphical nethack
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Minimal tile engine graphics support.
@@ -44,6 +46,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3.git20130613
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.git20130613
 - Rebuilt with new gnustep-gui
 
