@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraTransfer
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: Get pictures from a digital camera
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libgphoto2-devel
+
+Requires: gnustep-back
 
 %description
 CameraTransfer is a GNUstep front-end to the gphoto2 library.
@@ -46,6 +48,9 @@ install -m644 %SOURCE1 .
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
