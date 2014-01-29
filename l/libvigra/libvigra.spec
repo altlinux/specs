@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libvigra
-Version: 1.6.0
-Release: alt2.2
+Version: 1.10.0
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,10 +12,10 @@ Group: System/Libraries
 
 Url: http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra
 Source: %url/vigra%version.tar.gz
-Patch: libvigra-1.6.0-alt-libpng15.patch
 
 # Automatically added by buildreq on Wed Jun 13 2007
-BuildRequires: gcc-c++ libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
+BuildRequires: gcc-c++ libfftw3-devel libjpeg-devel libpng-devel libtiff-devel cmake
+BuildRequires: libhdf5-devel doxygen
 
 Provides: vigra
 Obsoletes: vigra
@@ -49,21 +49,14 @@ Development documentation for vigra library.
 
 %prep
 %setup -n vigra%version
-%patch -p2
 
-%__subst 's/^CXXFLAGS=.*$//; s/^CFLAGS=.*$//' configure
 
 %build
-export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
-%add_optflags %optflags_shared -fpermissive
-export CXXFLAGS="%optflags"
-export CFLAGS="%optflags"
-./configure --prefix=%_prefix --libdir=%_libdir %{subst_enable static} \
-	--with-fftw --with-jpeg --with-png --with-tiff
-%make_build
+%cmake -DWITH_VIGRANUMPY=0
+%cmake_build
 
 %install
-%make_install prefix=%buildroot/usr libdir=%buildroot%_libdir docdir=`pwd`/docs install
+%cmake_install install DESTDIR=%buildroot
 
 %files
 %_libdir/*.so.*
@@ -72,11 +65,16 @@ export CFLAGS="%optflags"
 %_bindir/*
 %_includedir/vigra
 %_libdir/*.so
+%_libdir/vigra
 
-%files devel-doc
-%doc docs/[!L]*
 
 %changelog
+* Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+- build system changed to CMAKE
+- patch removed
+- devel-docs package removed
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.2
 - Rebuilt with libpng15
 

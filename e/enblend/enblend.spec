@@ -1,24 +1,23 @@
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 Name: enblend
-Version: 4.0
-Release: alt4
-License: VIGRA License
+Version: 4.1.2
+Release: alt1
+License: GPLv2+ 
 Group: Graphics
 URL: http://enblend.sourceforge.net/
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 Source0: %name-%version.tar.gz
 Source1: %name.readme
-Patch1: %name-fix-png15-4.0.patch
-Patch2: %name-fix-boost3-4.0.patch
 
 Provides: enfuse
 
 
 BuildRequires: boost-devel gcc-c++ libstdc++-devel automake autoconf boost-filesystem-devel
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libglew-devel liblcms-devel
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel libglew-devel liblcms2-devel libvigra-devel
 BuildRequires: libxmi-devel libXmu-devel libXi-devel
 BuildRequires: libGLU-devel libGLUT-devel openexr-devel liblcms-devel libstlport-devel
-BuildRequires: gnuplot texinfo fonts-ttf-freefont ghostscript perl transfig tidy
+BuildRequires: gnuplot texinfo fonts-ttf-freefont ghostscript perl transfig tidy help2man
+BuildRequires: libgsl-devel
 
 %description
 enblend  overlays  multiple  TIFF  images using the Burt & Adelson mul-
@@ -28,8 +27,6 @@ the  input  images  invisible and very suitable to make panoramas.
 %prep
 
 %setup -q
-%patch1 -p1
-%patch2 -p1
 
 %build
 
@@ -46,13 +43,16 @@ autoreconf -fisv
 %makeinstall
 
 %files
-%doc AUTHORS NEWS README VIGRA_LICENSE
+%doc AUTHORS NEWS README
 %_bindir/*
 %_man1dir/*
-/usr/share/info/*
 
 
 %changelog
+* Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.2-alt1
+- New version
+- compat patches removed
+
 * Wed Feb 13 2013 Sergei Epiphanov <serpiph@altlinux.ru> 4.0-alt4
 - Rebuild with new libboost version
 
