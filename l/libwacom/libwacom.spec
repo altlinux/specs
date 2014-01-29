@@ -1,8 +1,8 @@
-%define ver_major 0.7
+%define ver_major 0.8
 %def_disable static
 
 Name: libwacom
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -87,6 +87,9 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jan 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
+- 0.8
+
 * Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
