@@ -2,7 +2,7 @@
 
 Name: gnustep-NeXTGo
 Version: 3.0
-Release: alt1
+Release: alt2
 Summary: NeXTGo is the classic Go game
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 NeXTGo is the classic Go game originally written for the OPENSTEP/Mach
@@ -47,6 +49,9 @@ ln -s %_libdir/GNUstep/Applications/NeXTGo.app/NeXTGo \
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt2
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Initial build for Sisyphus
 
