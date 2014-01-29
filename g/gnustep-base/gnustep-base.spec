@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt1.git20131231
+Release: alt1.svn20140126
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -11,7 +11,7 @@ License: LGPL
 Group: Development/Other
 Url: http://www.gnustep.org/
 
-# https://github.com/gnustep/gnustep-base.git
+# http://svn.gna.org/svn/gnustep/libs/base/trunk/
 Source: %name-%version.tar
 Source1: %name.init
 
@@ -148,6 +148,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt1.svn20140126
+- New snapshot
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt1.git20131231
 - Version 1.24.6
 
