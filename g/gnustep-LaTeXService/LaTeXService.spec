@@ -2,7 +2,7 @@
 
 Name: gnustep-LaTeXService
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: LaTeX service for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 This is a small service which could convert a LaTeX text into an image
@@ -43,6 +45,9 @@ rendering.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
+- Added Requires: gnustep-back
+
 * Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
