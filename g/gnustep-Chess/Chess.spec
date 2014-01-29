@@ -2,7 +2,7 @@
 
 Name: gnustep-Chess
 Version: 33
-Release: alt1.cvs20140127
+Release: alt2.cvs20140127
 Summary: Chess game
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-c++
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Chess game.
@@ -42,6 +44,9 @@ Chess game.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 33-alt2.cvs20140127
+- Added Requires: gnustep-back
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 33-alt1.cvs20140127
 - Initial build for Sisyphus
 
