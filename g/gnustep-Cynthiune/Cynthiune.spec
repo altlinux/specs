@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -20,6 +20,7 @@ BuildPreReq: libmodplug-devel gcc-c++ libmusicbrainz-devel
 BuildPreReq: libalsa-devel libmpc-devel libao-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Cynthiune is a free software and romantic music player for GNUstep and
@@ -131,6 +132,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
+- Added Requires: gnustep-back
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
