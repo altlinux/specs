@@ -2,7 +2,7 @@
 
 Name: gnustep-buildkit
 Version: 0.1
-Release: alt1.git20110801
+Release: alt2.git20110801
 Summary: GNUstep BuildKit
 License: Free
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel clang-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 GNUstep BuildKit.
@@ -40,6 +42,9 @@ GNUstep BuildKit.
 %_bindir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20110801
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20110801
 - Initial build for Sisyphus
 
