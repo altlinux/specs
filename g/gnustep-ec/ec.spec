@@ -2,14 +2,14 @@
 
 Name: gnustep-ec
 Version: 1.0.2
-Release: alt1.git20131212
+Release: alt2.svn20140116
 Summary: Enterprise Control Configuration and Logging framework
 License: GPLv3 / LGPLv3
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-ec
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-ec.git
+# http://svn.gna.org/svn/gnustep/libs/ec/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -19,6 +19,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libreadline-devel libncurses-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Enterprise Control Configuration and Logging framework.
@@ -94,6 +95,12 @@ Configuration and Logging framework.
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2.svn20140116
+- New snapshot
+
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2.git20131212
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20131212
 - Initial build for Sisyphus
 
