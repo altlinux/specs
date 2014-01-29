@@ -2,8 +2,8 @@ Name: sendmail
 
 %define tarbolversion 8.14.7
 
-Version: 8.14.7
-Release: alt2
+Version: 8.14.8
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -67,7 +67,7 @@ Patch10: %name-mrs-8.12.11.patch
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-#Patch100:
+Patch100: sendmail-8.14.8.m4header.patch
 
 %add_findreq_skiplist */include/*
 
@@ -95,8 +95,8 @@ is a behind-the-scenes program which actually moves your e-mail over networks
 or the Internet to where you want it to go.
 
 If you ever need to reconfigure Sendmail, you'll also need to have the
-%name.cf package installed. If you need documentation on Sendmail, you 
-can install the %name-doc package (%name-doc contain ALT Linux specific 
+%name.cf package installed. If you need documentation on Sendmail, you
+can install the %name-doc package (%name-doc contain ALT Linux specific
 recomendations README.alt and README.cyrus-imap).
 
 %package submit
@@ -198,7 +198,7 @@ them that you are currently not reading your mail.
 %patch50 -p1
 
 #errata
-#patch100 -p1
+%patch100 -p0
 
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE6 > cf/cf/altlinux.mc
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE11> cf/cf/submit.mc
@@ -495,6 +495,11 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Wed Jan 29 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.8-alt1
+- New version
+- enabled reject for mail which contains a NUL byte
+  (in configs for Cyrus-IMAP)
+
 * Thu Sep 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.7-alt2
 - rebuilt with cyrus-sasl 2.1.26
 
