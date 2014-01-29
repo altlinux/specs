@@ -2,13 +2,14 @@
 
 Name: gnustep-Bean
 Version: 0.1
-Release: alt1.cvs20140127
+Release: alt2.cvs20140127
 Summary: A word processor
 License: GPLv3
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/bean/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/ported-apps/Util/Bean
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -16,6 +17,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-pbxbuild
+
+Requires: gnustep-back
 
 %description
 A word processor.
@@ -44,6 +47,9 @@ pbxbuild -p Bean.xcodeproj -g
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.cvs20140127
+- Added Requires: gnustep-back
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.cvs20140127
 - Initial build for Sisyphus
 
