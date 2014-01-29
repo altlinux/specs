@@ -2,7 +2,7 @@
 
 Name: gnustep-Fortunate
 Version: 3.0
-Release: alt1
+Release: alt2
 Summary: Fortunate displays a quotation in a window
 License: Public domain / BSD
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-pbxbuild
 
 Requires: fortune
+Requires: gnustep-back
 
 %description
 Fortunate displays a quotation in a window. Fortunate is a
@@ -49,6 +50,9 @@ pbxbuild -p Fortunate3.0.pbproj -g
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Initial build for Sisyphus
 
