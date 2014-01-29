@@ -2,11 +2,11 @@
 
 Name: gnustep-FisicaLab
 Version: 0.3.3
-Release: alt1
+Release: alt2
 Summary: FisicaLab.app is an educational application to solve physics problems
 License: GPLv3
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://www.gnu.org/software/fisicalab/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: libgsl-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 FisicaLab consist in a chalkboard to set the problems and a palette with
@@ -59,6 +61,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt2
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1
 - Version 0.3.3
 
