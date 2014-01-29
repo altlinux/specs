@@ -2,7 +2,7 @@
 
 Name: gnustep-gsweb
 Version: 1.3.0
-Release: alt1.svn20130622
+Release: alt1.svn20131221
 Summary: A library which was designed to be compatible with WebObjects 4.x
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: gnustep-gdl2-devel libxml2-devel libpng-devel
 BuildPreReq: libwrap-devel
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 GNUstepWeb is a development framework for web applications written in
@@ -131,6 +132,9 @@ gzip ChangeLog
 %_libdir/GNUstep/Frameworks/*.framework/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.svn20131221
+- New snapshot
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.svn20130622
 - New snapshot
 
