@@ -2,7 +2,7 @@
 
 Name: gnustep-Lynkeos
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Tool to process planetary astronomical images for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,8 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel
 BuildPreReq: libtiff-devel libswscale-devel
+
+Requires: gnustep-back
 
 %description
 This is an application dedicated to the processing of astronomical
@@ -62,6 +64,9 @@ popd
 %doc Docs/html/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
 
