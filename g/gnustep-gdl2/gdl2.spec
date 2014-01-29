@@ -2,14 +2,14 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt4.git20130819
+Release: alt4.svn20130819
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
 Url: http://wiki.gnustep.org/index.php/GDL
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-gdl2.git
+# http://svn.gna.org/svn/gnustep/libs/gdl2/trunk/
 Source: %name-%version.tar
 Source1: RCS_ID.h
 
@@ -21,6 +21,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 The GNUstep Database Library 2 (GDL2) is a set of libraries to map
@@ -146,6 +147,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt4.svn20130819
+- New snapshot from SVN
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt4.git20130819
 - Added EOInterface headers
 
