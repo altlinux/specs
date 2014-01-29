@@ -2,7 +2,7 @@
 
 Name: gnustep-Gemas
 Version: 0.3
-Release: alt4
+Release: alt5
 Summary: A simple code editor for GNUstepers 
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-HighlighterKit
+Requires: gnustep-back
 
 %description
 Gemas is a simple code editor for GNUstepers. Features:
@@ -59,6 +60,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt5
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
 - Rebuilt with new gnustep-gui
 
