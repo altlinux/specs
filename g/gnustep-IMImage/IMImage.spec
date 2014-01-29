@@ -2,7 +2,7 @@
 
 Name: gnustep-IMImage
 Version: 2004
-Release: alt3
+Release: alt4
 Summary: IMImage image Inspector for GWorkspace.app to preview many types of graphics formats
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-gworkspace ghostscript
+Requires: gnustep-back
 
 %description
 IMImage image Inspector for GWorkspace.app to preview many types of
@@ -48,6 +49,9 @@ can also be used to preview Type 1 and TrueType fonts.
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2004-alt4
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2004-alt3
 - Rebuilt with new gnustep-gui
 
