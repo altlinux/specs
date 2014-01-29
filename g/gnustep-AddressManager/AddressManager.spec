@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt5
+Release: alt6
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -16,6 +16,7 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 AddressManager is a versatile address book application for managing
@@ -113,6 +114,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt6
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt5
 - Rebuilt with new gnustep-gui
 
