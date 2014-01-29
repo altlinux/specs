@@ -2,7 +2,7 @@
 
 Name: gnustep-DataBasin
 Version: 0.6
-Release: alt1
+Release: alt2
 Summary: Data access tool and for SalesForce.com based on the SOAP API interfaces
 License: GPL / LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-webservices-devel
+
+Requires: gnustep-back
 
 %description
 DataBasin is a tool to access and work with SalesForce.com. It allows
@@ -62,6 +64,9 @@ Features
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
 - Initial build for Sisyphus
 
