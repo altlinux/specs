@@ -2,7 +2,7 @@
 
 Name: gnustep-cddb.bundle
 Version: 0.2
-Release: alt4
+Release: alt5
 Summary: GNUstep bundle for cddb access
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 cddb.bundle is a GNUstep bundle for cddb access.
@@ -60,6 +62,9 @@ ln -s %_libdir/GNUstep/Headers/Cddb \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt5
+- Added Requires: gnustep-back
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4
 - Fixed build
 
