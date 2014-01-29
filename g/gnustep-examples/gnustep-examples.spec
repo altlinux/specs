@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt2
+Release:        alt3
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -14,6 +14,8 @@ BuildRequires:  gcc-objc libgnustep-objc2-devel gnustep-make-devel
 BuildRequires:  gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
  
 %description 
 This package contains sample applications for the GNUstep framework.
@@ -43,6 +45,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2
 - Rebuilt with new gnustep-gui
 
