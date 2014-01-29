@@ -2,7 +2,7 @@
 
 Name: gnustep-Connect
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Connect is a GNUstep frontend to pppd
 License: Free
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: ppp
+Requires: gnustep-back
 
 %description
 Connect is a GNUstep frontend to pppd.
@@ -53,6 +54,9 @@ Features:
 %_libdir/GNUstep
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
