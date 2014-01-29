@@ -2,7 +2,7 @@
 
 Name: gnustep-BatMon
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: Battery monitor for laptops
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Battery Monitor is a battery monitor for laptops. It displays the
@@ -44,6 +46,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Version 0.7
 
