@@ -2,7 +2,7 @@
 
 Name: gnustep-GTAMSAnalyzer
 Version: 0.42
-Release: alt2
+Release: alt3
 Summary: GTAMS Analyzer is a complete coding and analysis package
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 GTAMS Analyzer is a complete coding and analysis package. It is a "port"
@@ -75,6 +77,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc Documentation/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt3
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt2
 - Applied repocop patch
 
