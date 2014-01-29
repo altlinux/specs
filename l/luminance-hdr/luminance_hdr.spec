@@ -1,22 +1,25 @@
 %define _name luminance
 Name: %_name-hdr
-Version: 2.3.1
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
 License: GPLv2+
 Url: http://qtpfsgui.sourceforge.net/
 
-Source: http://sourceforge.net/projects/qtpfsgui/files/%name-%version.tar.bz2
+Source: http://downloads.sourceforge.net/project/qtpfsgui/luminance/%version/%name-%version.tar.bz2
 Source1: luminance-hdr_lang_ru.qm
 
 Obsoletes: qtpfsgui
 Provides: qtpfsgui = %version-%release
 
-BuildRequires: cmake gcc-c++ boost-devel libgomp-devel libqt4-devel phonon-devel
+BuildRequires: cmake gcc-c++ libgomp-devel
+BuildRequires: boost-devel boost-program_options-devel
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel qt5-quick1-devel
 BuildRequires: openexr-devel libexiv2-devel libfftw3-devel liblcms2-devel
-BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libgsl-devel
+BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libpng-devel
+BuildRequires: libgsl-devel libcfitsio-devel libgtest-devel zlib-devel
 
 %description
 Luminance HDR is a graphical user interface application that aims to
@@ -30,13 +33,11 @@ provide a workflow for HDR imaging.
 
 %build
 %cmake
-pushd BUILD
-%make_build
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
-popd
+%cmakeinstall_std
+
 %find_lang --with-qt --output=%name.lang lang qt
 
 %files -f %name.lang
@@ -49,6 +50,9 @@ popd
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt2
 - rebuilt against libraw.so.10
 
