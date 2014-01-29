@@ -4,7 +4,7 @@
 
 Name: gnustep-gmastermind
 Version: 0.6
-Release: alt2
+Release: alt3
 Summary: GMastermind is a game for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 GMastermind is an implementation of the well-known Mastermind game.
@@ -55,6 +57,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
 - Rebuilt with new gnustep-gui
 
