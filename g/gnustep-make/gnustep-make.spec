@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt7.svn20140116
+Release: alt8.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -78,6 +78,9 @@ fi
 #find %buildroot%_datadir/GNUstep/Makefiles/Instance/Documentation \
 #        -type f ! -name '*.html' ! -name '*.css' ! -name '*.gz' | xargs gzip -9nf 
 
+sed -i 's|\-march=[0-9a-z_]*||g' $(find %buildroot -type f)
+sed -i 's|\-mtune=[0-9a-z_]*||g' $(find %buildroot -type f)
+
 gzip ChangeLog
 
 %files
@@ -108,6 +111,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt8.svn20140116
+- Deleted all -march and -mtune
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt7.svn20140116
 - Deleted -march=i586
 
