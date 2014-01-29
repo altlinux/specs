@@ -2,7 +2,7 @@
 
 Name: gnustep-GSKrab
 Version: 0.0.1
-Release: alt1
+Release: alt2
 Summary: GNUstep Keyboard Grabber
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libX11-devel xorg-xproto-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 GS Krab is a framework and a daemon to enable GNUstep applications to
@@ -107,6 +108,9 @@ popd
 %_libdir/GNUstep/Frameworks/GSKrab.framework/Headers
 
 %changelog
+* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1
 - Initial build for Sisyphus
 
