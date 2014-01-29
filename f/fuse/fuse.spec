@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.3
-Release: alt2
+Release: alt3
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -10,7 +10,6 @@ Url: http://sourceforge.net/projects/fuse
 
 Source: %name-%version.tar
 Source1: fusermount-control
-Source2: cuse.conf
 
 Patch0: %name.Makefile.patch
 Patch1: %name.udev.patch
@@ -81,9 +80,6 @@ rm -fr %buildroot%_sysconfdir/init.d
 mkdir -p %buildroot%_udevrulesdir/
 mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
-mkdir -p %buildroot/lib/tmpfiles.d
-cp %SOURCE2 %buildroot/lib/tmpfiles.d/cuse.conf
-
 %pre
 %_sbindir/groupadd -r -f fuse
 %_sbindir/groupadd -r -f cuse
@@ -94,7 +90,6 @@ cp %SOURCE2 %buildroot/lib/tmpfiles.d/cuse.conf
 
 %files
 %doc AUTHORS NEWS README Filesystems README.NFS
-/lib/tmpfiles.d/cuse.conf
 %_sysconfdir/control.d/facilities/fusermount
 %_udevrulesdir/*
 /sbin/mount.fuse
@@ -113,6 +108,9 @@ cp %SOURCE2 %buildroot/lib/tmpfiles.d/cuse.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 29 2014 Michael Shigorin <mike@altlinux.org> 2.9.3-alt3
+- drop cuse.conf: conflicts with another one, see #29444 (ALT#29777)
+
 * Thu Oct 10 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt2
 - not use /lib/udev/devices (ALT#29444)
 
