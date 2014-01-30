@@ -2,14 +2,14 @@
 
 Name: gnustep-quartzcore
 Version: 0.1
-Release: alt1.git20121018
+Release: alt1.svn20121018
 Summary: Implementation of the Core Animation APIs
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-quartzcore
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-quartzcore.git
+# http://svn.gna.org/svn/gnustep/libs/quartzcore/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -21,6 +21,7 @@ BuildPreReq: clang-devel libGLU-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-opal
+Requires: gnustep-back
 
 %description
 This is GNUstep QuartzCore, an implementation of the Core Animation APIs
@@ -101,6 +102,9 @@ popd
 %_libdir/GNUstep/Frameworks/QuartzCore.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20121018
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20121018
 - Initial build for Sisyphus
 
