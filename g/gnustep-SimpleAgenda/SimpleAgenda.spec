@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt5
+Release: alt6
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -19,6 +19,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-dbuskit
+Requires: gnustep-back
 
 %description
 SimpleAgenda is a simple calendar and agenda application.
@@ -56,6 +57,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt6
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt5
 - Rebuilt with new gnustep-gui
 
