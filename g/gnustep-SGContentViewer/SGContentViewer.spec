@@ -2,7 +2,7 @@
 
 Name: gnustep-SGContentViewer
 Version: 2006
-Release: alt2
+Release: alt3
 Summary: A contents Inspector that can play music files
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-ShengGuang
+Requires: gnustep-back
 
 %description
 A contents Inspector that can play Ogg Vorbis, mp3, speex, flac,
@@ -44,6 +45,9 @@ shorten, voc, midi, and mod files.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt3
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
 - Rebuilt with new gnustep-gui
 
