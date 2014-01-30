@@ -2,19 +2,21 @@
 
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt7.git20100910
+Release: alt7.svn20100910
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-ucsdata.git
+# http://svn.gna.org/svn/gnustep/libs/ucsdata/trunk/
 Source: %name-%version.tar
 Source1: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel /proc
+
+Requires: gnustep-back
 
 %description
 The GNUstep Unicode Character Set Data Library is a small library which
@@ -77,6 +79,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Unicode/
 %_libdir/*.so
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt7.svn20100910
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt7.git20100910
 - Rebuilt with new gnustep-gui
 
