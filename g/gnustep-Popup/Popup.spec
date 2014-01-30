@@ -2,7 +2,7 @@
 
 Name: gnustep-Popup
 Version: 0.5
-Release: alt1.pre1
+Release: alt2.pre1
 Summary: Spaced repetition learning system for pairs of words
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Popup is an interactive learning aid for pairs of words. It behaves much
@@ -52,6 +54,9 @@ Features:
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.pre1
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.pre1
 - Initial build for Sisyphus
 
