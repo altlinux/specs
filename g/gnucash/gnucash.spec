@@ -3,7 +3,7 @@
 
 
 Name: gnucash
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -18,10 +18,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source5: %name-README.RU
 Source7: conv_gnucash2.sh
-
-BuildPreReq: GConf2
-Requires: lib%name = %version-%release
-Requires(post): GConf2
 
 AutoReq: yes, noperl
 
@@ -43,7 +39,9 @@ BuildRequires: libwebkitgtk2-devel
 BuildRequires: python-devel
 %endif
 
+Requires: lib%name = %version-%release
 Requires: slib-guile
+Requires: dconf
 
 %description
 GnuCash is a personal finance manager. A check-book like
@@ -172,6 +170,10 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Thu Jan 30 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
+- New version
+- Replace GConf2 bt dconf
+
 * Thu Jan 16 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - New version
 - Use aqbanking
