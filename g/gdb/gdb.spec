@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.5.0.20121002
-Release: alt4
+Release: alt5
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -335,16 +335,44 @@ Patch728: gdb-check-type.patch
 
 %def_enable tui
 %def_disable check
+%def_with python
 
 BuildRequires: flex libreadline-devel libexpat-devel liblzma-devel zlib-devel
-BuildRequires: python-devel libstdc++6 %{?_enable_tui:libncursesw-devel}
+BuildRequires: %{?_with_python:python-devel} libstdc++6 %{?_enable_tui:libncursesw-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu glibc-devel-static gcc-c++ gcc-fortran gcc-java gcc-objc prelink valgrind /proc /dev/pts}}
+%if_with python
+Provides: python-module-gdb = %version-%release
+%endif
+Requires: gdb-common = %version-%release
 
 %description
 GDB is a full featured, command driven debugger.  GDB allows you to
 trace the execution of programs and examine their internal state at
 any time.  The debugger is most effective when used together with a
 supported compiler, such as those from the GNU Compiler Collection.
+
+%package light
+Summary: A GNU source-level debugger for C, C++ and other languages (light build)
+Group: Development/Debuggers
+Requires: gdb-common = %version-%release
+Conflicts: gdb < 7.5.0.20121002-alt5
+
+%description light
+GDB is a full featured, command driven debugger.  GDB allows you to
+trace the execution of programs and examine their internal state at
+any time.  The debugger is most effective when used together with a
+supported compiler, such as those from the GNU Compiler Collection.
+This package contains light build of GDB without expat, python and
+tui support.
+
+%package common
+Summary: GDB common files
+Group: Development/Debuggers
+BuildArch: noarch
+Conflicts: gdb < 7.5.0.20121002-alt5
+
+%description common
+This package contains common GDB files.
 
 %package -n libgdb-devel
 Summary: GDB static libraries
@@ -506,8 +534,9 @@ done
 
 %define _configure_script ../configure
 %define configure_opts \\\
-	--with-gdb-datadir=%_libdir/gdb \\\
+	--with-gdb-datadir=%_datadir/gdb \\\
 	--with-separate-debug-dir=/usr/lib/debug \\\
+	--with-auto-load-dir='$debugdir:%_libdir/gdb/auto-load:$datadir/auto-load' \\\
 	--enable-gdb-build-warnings=,-Wno-unused \\\
 	--disable-werror \\\
 	--disable-sim \\\
@@ -529,7 +558,7 @@ rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
 
-%configure %configure_opts %{subst_enable tui}
+%configure %configure_opts %{subst_enable tui} %{subst_with python}
 %make_build
 %make_build -C gdb libgdb.a
 %make_build info MAKEINFOFLAGS=--no-split
@@ -564,7 +593,13 @@ mkdir -p %buildroot%_libdir
 install -pm644 */lib*.a %buildroot%_libdir/
 popd #%buildtarget
 
-mkdir -p %buildroot%_libdir/gdb/auto-load
+mkdir -p %buildroot%_datadir/gdb/auto-load
+
+%if_with python
+mkdir -p %buildroot%python_sitelibdir_noarch
+mv %buildroot%_datadir/gdb/python/gdb/ %buildroot%python_sitelibdir_noarch/
+ln -s ../../../..%python_sitelibdir_noarch/gdb %buildroot%_datadir/gdb/python/gdb
+%endif
 
 %check
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
@@ -575,17 +610,33 @@ popd
 
 %files
 %_bindir/*
+%if_with python
+%_datadir/gdb/python
+%python_sitelibdir_noarch/*
+%endif
+%exclude %_bindir/gdb-light
+
+%files light
+%_bindir/gdb-light
+
+%files common
 %_man1dir/*
 %_infodir/*
-%_libdir/gdb
+%_datadir/gdb
 %_desktopdir/*
 %doc gdb/{MAINTAINERS,NEWS}.xz
+%exclude %_datadir/gdb/python
 
 %files -n libgdb-devel
 %_includedir/*
 %_libdir/lib*.a
 
 %changelog
+* Thu Jan 30 2014 Evgeny Sinelnikov <sin@altlinux.ru> 7.5.0.20121002-alt5
+- Built with python support (closes: #29759).
+- Added separate subpackages gdb-common and gdb-light.
+- Changed default auto-load path to /usr/share/gdb directory.
+
 * Tue Nov 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.5.0.20121002-alt4
 - Fixed build with readline6.
 
