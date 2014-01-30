@@ -1,6 +1,6 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt3
+Release: alt4
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -11,6 +11,8 @@ BuildPreReq: gcc-c++ libfreetype-devel gcc-objc gnustep-make-devel
 BuildPreReq: gnustep-base-devel libgnustep-objc2-devel gnustep-gui-devel
 
 Source: %name-%version.tar
+
+Requires: gnustep-back
 
 %description
 Kit for displaying PDFs in a View, based on xpdf.
@@ -112,6 +114,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt4
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt3
 - Rebuilt with new gnustep-gui
 
