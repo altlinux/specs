@@ -1,5 +1,5 @@
 Name: xorg-xproto-devel
-Version: 7.0.24
+Version: 7.0.25
 Release: alt1
 Summary: X proto header files
 License: MIT/X11
@@ -38,6 +38,9 @@ X proto header files
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 7.0.25-alt1
+- 7.0.25
+
 * Mon Apr 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 7.0.24-alt1
 - 7.0.24
 
