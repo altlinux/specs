@@ -2,7 +2,7 @@
 
 Name: gnustep-RpmViewer
 Version: 2001
-Release: alt2
+Release: alt3
 Summary: Contents Inspector to see the contents of rpm packages
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-gworkspace
+Requires: gnustep-back
 
 %description
 RpmViewer is a contents Inspector to see the contents of rpm packages.
@@ -42,6 +43,9 @@ RpmViewer is a contents Inspector to see the contents of rpm packages.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2001-alt3
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2001-alt2
 - Rebuilt with new gnustep-gui
 
