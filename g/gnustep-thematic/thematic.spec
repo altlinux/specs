@@ -2,14 +2,14 @@
 
 Name: gnustep-thematic
 Version: 0.2
-Release: alt1.git20131105
+Release: alt1.svn20140112
 Summary: Theme editor for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-thematic
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-thematic.git
+# http://svn.gna.org/svn/gnustep/apps/thematic/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -19,6 +19,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-gorm
 Requires: gnustep-projectcenter
+Requires: gnustep-back
 
 %description
 Thematic.app is a theme editor for GNUstep.
@@ -45,6 +46,9 @@ Thematic.app is a theme editor for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.svn20140112
+- New snapshot
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20131105
 - Initial build for Sisyphus
 
