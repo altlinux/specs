@@ -2,14 +2,14 @@
 
 Name: gnustep-opal
 Version: r37181
-Release: alt1.git20131001
+Release: alt2.svn20131001
 Summary: Vector drawing library with an API similar to Quartz 2D
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-opal.git
+# http://svn.gna.org/svn/gnustep/libs/opal/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -17,6 +17,7 @@ BuildPreReq: gnustep-base-devel gnustep-corebase-devel libcairo-devel
 BuildPreReq: liblcms-devel libjpeg-devel libtiff-devel
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 Opal is a vector drawing library with an API similar to
@@ -84,6 +85,9 @@ This package contains development files of Opal.
 %_libdir/*.so
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r37181-alt2.svn20131001
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r37181-alt1.git20131001
 - Version r37181
 
