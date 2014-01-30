@@ -2,15 +2,17 @@
 
 Name: gnustep-themes-Narcissus
 Version: r9538
-Release: alt1.svn20131105
+Release: alt2.svn20131105
 Summary: GNUstep's Narcissus theme
 License: Free
 Group: Graphical desktop/GNUstep
 Url: http://etoileos.com/etoile/mockups/narcissus/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-easydiff.git
+# http://svn.gna.org/svn/etoile/trunk/Etoile/Themes/Narcissus.theme/
 Source: %name-%version.tar
+
+Requires: gnustep-back
 
 %description
 Narcissus theme for GNUstep.
@@ -26,6 +28,9 @@ cp -fR Resources %buildroot%_libdir/GNUstep/Themes/Narcissus.theme/
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9538-alt2.svn20131105
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9538-alt1.svn20131105
 - Version r9538
 
