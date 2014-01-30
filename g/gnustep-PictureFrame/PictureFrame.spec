@@ -2,7 +2,7 @@
 
 Name: gnustep-PictureFrame
 Version: 1.1.3
-Release: alt4
+Release: alt5
 Summary: Software for a digital picture frame
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 PictureFrame is an application meant to be run on your own home-built
@@ -77,6 +79,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt5
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt4
 - Rebuilt with new gnustep-gui
 
