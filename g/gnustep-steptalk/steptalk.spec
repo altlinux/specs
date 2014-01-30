@@ -2,20 +2,21 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt2.git20131220
+Release: alt2.svn20140106
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.gna.org/svn/gnustep/libs/gui/trunk/
+# http://svn.gna.org/svn/gnustep/libs/steptalk/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 StepTalk is a scripting framework for creating scriptable servers or
@@ -112,6 +113,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.svn20140106
+- New snapshot
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20131220
 - New snapshot
 
