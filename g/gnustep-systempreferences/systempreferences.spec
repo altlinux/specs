@@ -1,13 +1,13 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt5.git20130916
+Release: alt6.svn20130916
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-systempreferences.git
+# http://svn.gna.org/svn/gnustep/apps/systempreferences/trunk/
 Source: %name-%version.tar
 Source1: %name.menu
 
@@ -15,6 +15,7 @@ BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 This is the implementation of the PreferencePanes framework
@@ -100,6 +101,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt6.svn20130916
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt5.git20130916
 - New snapshot
 
