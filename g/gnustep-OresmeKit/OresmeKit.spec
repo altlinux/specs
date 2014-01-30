@@ -2,13 +2,14 @@
 
 Name: gnustep-OresmeKit
 Version: 0.1
-Release: alt1.cvs20140127
+Release: alt2.cvs20140127
 Summary: Oresme is a plotting framework for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/oresmekit/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/libs/Oresme/OresmeKit
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -17,6 +18,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 OresmeKit, a plotting and charting framework for Objective-C, GNUstep
@@ -99,6 +101,9 @@ popd
 %_libdir/GNUstep/Frameworks/OresmeKit.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.cvs20140127
+- Added Requires: gnustep-back
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.cvs20140127
 - Initial build for Sisyphus
 
