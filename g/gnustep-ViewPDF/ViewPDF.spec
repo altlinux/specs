@@ -2,7 +2,7 @@
 
 Name: gnustep-ViewPDF
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Portable Document Format (PDF) viewer for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-PopplerKit-devel
 
 Requires: gnustep-PopplerKit
+Requires: gnustep-back
 
 %description
 ViewPDF is an application to view and navigate in PDF documents.
@@ -48,6 +49,9 @@ Key Features:
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Initial build for Sisyphus
 
