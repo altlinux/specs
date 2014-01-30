@@ -1,6 +1,6 @@
 Name: gnustep-xcode
 Version: 0.1
-Release: alt6.git20130921
+Release: alt7.git20130921
 Summary: The XCLib framework is used to parse and process xcodeproj files
 License: GPL
 Group: Development/Objective-C
@@ -12,6 +12,8 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel /proc
+
+Requires: gnustep-back
 
 %description
 The XCLib framework is used to parse and process xcodeproj files so that
@@ -86,6 +88,9 @@ popd
 %_libdir/GNUstep/Frameworks/XCode.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt7.git20130921
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt6.git20130921
 - Rebuilt for debuginfo
 
