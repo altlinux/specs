@@ -2,7 +2,7 @@
 
 Name: gnustep-Poe
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: Poe, or "a Pugnacious Ogg Editor", is a vorbis comment editor
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libvorbis-devel libogg-devel
+
+Requires: gnustep-back
 
 %description
 Poe tries to follow the vorbis comment header specification
@@ -54,6 +56,9 @@ Features:
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus
 
