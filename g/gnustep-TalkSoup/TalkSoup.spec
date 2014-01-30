@@ -2,7 +2,7 @@
 
 Name: gnustep-TalkSoup
 Version: 1.0
-Release: alt1.alpha
+Release: alt2.alpha
 Summary: GNUstep IRC client
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -19,6 +19,7 @@ BuildPreReq: gnustep-netclasses-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-netclasses
+Requires: gnustep-back
 
 %description
 TalkSoup is a GNUstep IRC client with a minimalistic feel and by far one
@@ -133,6 +134,9 @@ ln -s %_libdir/GNUstep/Applications/TalkSoup.app/TalkSoup \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.alpha
+- Added Requires: gnustep-back
+
 * Thu Jan 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.alpha
 - Initial build for Sisyphus
 
