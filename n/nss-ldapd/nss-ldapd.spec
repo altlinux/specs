@@ -3,7 +3,7 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.8.12
+Version: 0.8.13
 Release: alt1
 
 Summary: An nsswitch module which uses directory servers
@@ -18,6 +18,8 @@ Source3: nslcd.tmpconf
 Source4: nslcd.service
 Patch:   %name-0.8.10-alt-DSO.patch
 Patch1:	 %name-nslcd-user-name.patch
+Patch2:  %name-0.8.13-In-nslcd-log-EPIPE-only-on-debug-level.patch
+Patch3:  %name-0.8.13-Use-a-timeout-when-skipping-remaining-result-data.patch
 
 Requires: nscd
 Requires: su
@@ -42,6 +44,8 @@ nsswitch module.
 %setup
 %patch -p2
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 %autoreconf
 
 
@@ -173,6 +177,13 @@ exit 0
 %endif
 
 %changelog
+* Thu Jan 30 2014 Andrey Cherepanov <cas@altlinux.org> 0.8.13-alt1
+- New version
+- Log EPIPE only on debug level
+- When the NSS modules closes the connection and skips any remaining
+  result data, wait for up to 500 msec to read any available data (see
+  https://bugzilla.redhat.com/show_bug.cgi?id=1003011 )
+
 * Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.12-alt1
 - New verison 0.8.12 (see http://arthurdejong.org/nss-pam-ldapd/release-0-8-12)
 - Fix nslcd user and group name in configuration file
