@@ -2,7 +2,7 @@
 
 Name: gnustep-PRICE
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: PRICE (Precision Raster Image Convolution Engine)
 License: GPLv2+
 Group: File tools
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 PRICE is a high quality image manipulation and enhancement application
@@ -46,6 +48,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt4
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3
 - Rebuilt with new gnustep-gui
 
