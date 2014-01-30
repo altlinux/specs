@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.14.7
+%define tarbolversion 8.14.8
 
-Version: 8.14.8
-Release: alt1
+Version: %tarbolversion
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -495,6 +495,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Thu Jan 30 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.8-alt2
+- 8.14.8-alt1 pushed with 8.14.7 tarball. :-(
+  So alt2 is realy new version.
+
 * Wed Jan 29 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.8-alt1
 - New version
 - enabled reject for mail which contains a NUL byte
