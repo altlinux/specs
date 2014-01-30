@@ -1,13 +1,13 @@
 Name: gnustep-themes-Gtk
 Version: 1.0
-Release: alt4.svn20140115
+Release: alt5.svn20140115
 Summary: Gnome Theme for GNUstep
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.gna.org/svn/gnustep/libs/gui/trunk/
+# http://svn.gna.org/svn/gnustep/plugins/themes/Gtk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
@@ -16,6 +16,8 @@ BuildPreReq: glib2-devel libgtk+2-devel libGConf-devel
 BuildPreReq: /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Gnome is a theme engine for GNUstep which
@@ -41,6 +43,9 @@ for drawing its widgets.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt5.svn20140115
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.svn20140115
 - New snapshot
 
