@@ -2,19 +2,22 @@
 
 Name: gnustep-Switcher
 Version: 20140127
-Release: alt1.cvs20140127
+Release: alt2.cvs20140127
 Summary: Allow applications to appear when the icon is clicked on from another workspace
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/gap co gap/bundles/Switcher
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 This is a quick hack to allow applications to appear when the icon is
@@ -41,6 +44,9 @@ clicked on from another workspace.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt2.cvs20140127
+- Added Requires: gnustep-back
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt1.cvs20140127
 - Initial build for Sisyphus
 
