@@ -2,7 +2,7 @@
 
 Name: gnustep-themes-Nesedah
 Version: r9537
-Release: alt1.svn20131105
+Release: alt2.svn20131105
 Summary: GNUstep's Nesedah theme
 License: Free
 Group: Graphical desktop/GNUstep
@@ -14,6 +14,8 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
+
+Requires: gnustep-back
 
 %description
 Nesedah theme for GNUstep.
@@ -38,6 +40,9 @@ Nesedah theme for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9537-alt2.svn20131105
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9537-alt1.svn20131105
 - Version r9537
 
