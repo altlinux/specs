@@ -3,8 +3,8 @@
 
 %define rname kdepim-runtime
 %define major 4
-%define minor 11
-%define bugfix 4
+%define minor 12
+%define bugfix 2
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -15,6 +15,7 @@ License: GPLv2
 Url: http://www.kde.org
 
 Requires: %name-common = %version-%release
+Requires: kde4pimlibs
 
 Provides: kde4-pim-runtime-google = %version-%release
 Obsoletes: kde4-pim-runtime-google < %version-%release
@@ -27,7 +28,7 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # FC
 Patch50: kdepim-runtime-4.4.93-show_akonadi_kcm.patch
 # ALT
-Patch102: kdepim-4.9.1-alt-akonadi-sqlite3.patch
+Patch102: kdepim-4.12.2-alt-akonadi-sqlite3.patch
 #
 Patch104: kdepim-4.8.0-alt-def-mixedmaildir-path.patch
 Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
@@ -40,7 +41,8 @@ Patch109: kdepim-4.11.1-alt-def-nepomuk.patch
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
-BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
+BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
+#BuildRequires: dblatex
 BuildRequires: libkgapi-devel qjson-devel kde4-nepomuk-core-devel libkfbapi-devel
 
 BuildRequires: kde4libs-devel >= %version
@@ -163,8 +165,8 @@ based on kdepim.
 #
 %_K4bindir/akonadi_*
 %_K4bindir/akonaditray
-%_K4bindir/akonadi2xml
 %_K4bindir/accountwizard
+%_K4bindir/gidmigrator
 %_K4bindir/kaddressbookmigrator
 %_K4bindir/kjotsmigrator
 %_K4bindir/kmail-migrator
@@ -179,7 +181,6 @@ based on kdepim.
 %_K4lib/kcm_akonadi_*.so
 %_datadir/akonadi/
 %dir %_K4apps/akonadi/
-%_K4apps/akonadi/akonadi-xml.xsd
 %_K4apps/akonadi/firstrun/
 %dir %_K4apps/akonadi/plugins/
 %dir %_K4apps/akonadi/plugins/serializer/
@@ -205,8 +206,6 @@ based on kdepim.
 %_K4srvtyp/davgroupwareprovider.desktop
 %_K4srvtyp/akonadinepomukfeeder.desktop
 
-%files -n libakonadi4-xml
-%_K4libdir/libakonadi-xml.so.*
 %files -n libkdepim4-copy
 %_K4libdir/libkdepim-copy.so.*
 %files -n libmaildir4
@@ -224,6 +223,12 @@ based on kdepim.
 
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 

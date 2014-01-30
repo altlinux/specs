@@ -23,7 +23,7 @@
 
 %define major 4
 %define minor 11
-%define bugfix 5
+%define bugfix 6
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
@@ -955,6 +955,13 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.6-alt1
+- new version
+- return "-nolisten tcp" to default xserver args while xserverrc not used (see bug 29780)
+
+* Sat Jan 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 
