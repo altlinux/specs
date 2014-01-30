@@ -2,7 +2,7 @@
 
 Name: gnustep-ProjectManager
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: Alternative Integrated Development Environment (IDE) for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,10 @@ BuildPreReq: gnustep-gui-devel doxygen
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-HighlighterKit-devel gnustep-WizardKit-devel
+
+Requires: gnustep-HighlighterKit
+Requires: gnustep-WizardKit
+Requires: gnustep-back
 
 %description
 ProjectManager is an alternative Integrated Development Environment
@@ -61,6 +65,10 @@ doxygen
 %doc Documentation/html/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
+- Added Requires: gnustep-HighlighterKit, Requires: gnustep-WizardKit
+  and Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Initial build for Sisyphus
 
