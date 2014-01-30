@@ -1,5 +1,5 @@
 Name: libXpm
-Version: 3.5.10
+Version: 3.5.11
 Release: alt1
 Summary: X Pixmap Library
 License: MIT/X11
@@ -56,6 +56,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 3.5.11-alt1
+- 3.5.11
+
 * Thu Mar 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.10-alt1
 - 3.5.10
 

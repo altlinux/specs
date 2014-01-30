@@ -1,5 +1,5 @@
 Name: libXmu
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Xmu Library
 License: MIT/X11
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
+- 1.1.2
+
 * Tue Mar 06 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 
