@@ -2,7 +2,7 @@
 
 Name: gnustep-ShengGuang
 Version: 2006
-Release: alt3
+Release: alt4
 Summary: Library used by MusicBox for audio control
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libogg-devel libvorbis-devel libsmpeg-devel libflac-devel
 BuildPreReq: libspeex-devel libSDL-devel libSDL_sound-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 ShengGuang is a library used by MusicBox for audio control.
@@ -104,6 +105,9 @@ ln -s %_libdir/GNUstep/Headers/ShengGuang \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt4
+- Added Requires: gnustep-back
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt3
 - Fixed build
 
