@@ -2,7 +2,7 @@
 
 Name: gnustep-VolumeControl
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Audio mixer for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 VolumeControl is a GNUstep program for adjusting the audio mixer on
@@ -43,6 +45,9 @@ controlled.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Initial build for Sisyphus
 
