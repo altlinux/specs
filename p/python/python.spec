@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.6
-Release: alt2
+Release: alt3
 
 %define package_name		%real_name
 %define weight			1001
@@ -645,6 +645,9 @@ rm -r Modules/expat
 %patch23 -p1
 %patch24 -p1
 
+# XXX temporary Issue20445 fix
+sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
+
 find -type f \( -name \*~ -o -name \*.orig \) -print0 |
 	xargs -r0 rm -f --
 
@@ -653,12 +656,12 @@ find -type f -print0 |
     xargs -r0 sed -i 's@/usr/local/bin/python@/usr/bin/python@' --
 
 %build
-rm -rf ../build-shared
-mkdir -p ../build-shared
+rm -rf ../build-static
+mkdir -p ../build-static
 export OPT="$RPM_OPT_FLAGS"
 libtoolize --copy --force
 autoconf
-cp -rl * ../build-shared/
+cp -rl * ../build-static/
 
 build () {
 %configure --with-threads \
@@ -673,11 +676,11 @@ build () {
 %make_build LDFLAGS=-L$PWD
 }
 
-pushd ../build-shared
-build  --enable-shared
+pushd ../build-static
+build
 popd
 
-build
+build --enable-shared
 
 #bzip2 info/python*info*
 #cat > info/python%nodot_ver.dir <<EOF
@@ -721,7 +724,7 @@ makeinstall() {
 install %SOURCE2 %buildroot%python_libdir/encodings
 }
 
-pushd ../build-shared
+pushd ../build-static
 makeinstall
 popd
 
@@ -1044,6 +1047,10 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Thu Jan 30 2014 Fr. Br. George <george@altlinux.ru> 2.7.6-alt3
+- Build and install shared build, separate static (was contrariwise).
+- Fix for python issue 20445.
+
 * Fri Nov 22 2013 Dmitry V. Levin <ldv@altlinux.org> 2.7.6-alt2
 - Relocated _sysconfigdata (required by sysconfig) from -modules to -base.
 
