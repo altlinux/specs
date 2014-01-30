@@ -2,7 +2,7 @@
 
 Name: gnustep-TimeMon
 Version: 4.1
-Release: alt4
+Release: alt5
 Summary: CPU time usage monitor
 License: Permission to use, copy, modify, and distribute without fee
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 TimeMon gives a graphical representation of where the CPU cycles are
@@ -47,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt5
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt4
 - Rebuilt with new gnustep-gui
 
