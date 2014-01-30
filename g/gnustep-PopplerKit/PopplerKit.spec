@@ -2,7 +2,7 @@
 
 Name: gnustep-PopplerKit
 Version: 0.0.20051227svn
-Release: alt1
+Release: alt2
 Summary: GNUstep framework for rendering PDF content
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libpoppler-devel fontconfig-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 PopplerKit is a GNUstep framework for accessing and rendering PDF
@@ -104,6 +105,9 @@ popd
 %_libdir/GNUstep/Frameworks/PopplerKit.framework/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20051227svn-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20051227svn-alt1
 - Initial build for Sisyphus
 
