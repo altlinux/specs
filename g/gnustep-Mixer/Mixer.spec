@@ -2,7 +2,7 @@
 
 Name: gnustep-Mixer
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Mixer application designed for WindowMaker
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: libX11-devel libXpm-devel libXext-devel
 
 Requires: gnustep-back
+Requires: alsa-oss
 
 %description
 There's nothing in the program that makes it *require* WindowMaker,
@@ -48,6 +49,9 @@ For work this application You need run `/sbin/modprobe snd-pcm-oss'.
 %_bindir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2
+- Added Requires: alsa-oss (thnx mik@)
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Initial build for Sisyphus
 
