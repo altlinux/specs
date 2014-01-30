@@ -2,7 +2,7 @@
 
 Name: gnustep-WizardKit
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Framework needed by Project Manager
 License: MIT / FDL
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Framework needed by Project Manager.
@@ -104,6 +105,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
