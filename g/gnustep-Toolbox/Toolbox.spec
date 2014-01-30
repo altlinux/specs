@@ -2,7 +2,7 @@
 
 Name: gnustep-Toolbox
 Version: 0.8
-Release: alt1
+Release: alt2
 Summary: Collection of tools for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Toolbox is a collection of tools. Each tool is in the form of bundle. In
@@ -119,6 +120,9 @@ ln -s %_libdir/GNUstep/Headers/Toolbox %buildroot%_includedir/
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt2
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Initial build for Sisyphus
 
