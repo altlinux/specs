@@ -1,13 +1,12 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt4.svn20130529
+Release: alt5.svn20130529
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
 Url: http://www.gnustep.it/Renaissance/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-renaissance.git
 # http://svn.gna.org/svn/gnustep/libs/renaissance/trunk/
 Source: %name-%version.tar
 
@@ -16,6 +15,7 @@ BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: texlive-latex-base
 
 Requires: lib%name = %version-%release
+Requires: gnustep-back
 
 %description
 Renaissance is an alternative way to make GUIs using which supports
@@ -103,6 +103,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt5.svn20130529
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt4.svn20130529
 - Rebuilt with new gnustep-gui
 
