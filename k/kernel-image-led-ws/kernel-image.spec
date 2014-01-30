@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.28
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,10 @@ done)
 
 
 %changelog
+* Thu Jan 30 2014 Led <led@altlinux.ru> 3.10.28-alt4
+- updated:
+  + feat-fs-aufs
+
 * Mon Jan 27 2014 Led <led@altlinux.ru> 3.10.28-alt3
 - added:
   + fix-drivers-md--raid456
