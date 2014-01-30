@@ -2,7 +2,7 @@
 
 Name: gnustep-Vespucci
 Version: 0.1
-Release: alt1.cvs20140125
+Release: alt2.cvs20140125
 Summary: Vespucci is a navigator for the World Wide Web
 License: Free
 Group: Graphical desktop/GNUstep
@@ -19,6 +19,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-simplewebkit-devel
 
 Requires: gnustep-simplewebkit
+Requires: gnustep-back
 
 %description
 Vespucci is a web browser which uses a WebKit-compatible rendering
@@ -56,6 +57,9 @@ Features:
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.cvs20140125
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.cvs20140125
 - Initial build for Sisyphus
 
