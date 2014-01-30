@@ -2,8 +2,8 @@
 
 Name: gnustep-Money
 Version: 0.1
-Release: alt2
-Summary: money.app
+Release: alt3
+Summary: The Document-base application is a kind of special, but commonly used applications
 License: Free
 Group: Graphical desktop/GNUstep
 Url: http://www.nongnu.org/gstutorial/en/ch13.html
@@ -19,7 +19,9 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 Requires: gnustep-back
 
 %description
-money.app
+The Document-base application is a kind of special, but commonly used
+applications. You can open multiple documents, edit and save each of
+them. Most text editors belong to the document-base application.
 
 %prep
 %setup
@@ -42,6 +44,9 @@ money.app
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3
+- Fixed description
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
 - Added Requires: gnustep-back
 
