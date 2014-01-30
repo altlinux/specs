@@ -2,14 +2,14 @@
 
 Name: gnustep-palettes
 Version: r20982
-Release: alt1.git20050327
+Release: alt2.svn20050327
 Summary: GNUstep palettes
 License: Free
 Group: Graphical desktop/GNUstep
 Url: https://github.com/gnustep/gnustep-palettes
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-palettes.git
+# http://svn.gna.org/svn/gnustep/libs/palettes/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
@@ -19,6 +19,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-gorm-devel
 
 Requires: gnustep-gorm
+Requires: gnustep-back
 
 %description
 GNUstep palettes.
@@ -44,6 +45,9 @@ GNUstep palettes.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r20982-alt2.svn20050327
+- Added Requires: gnustep-back
+
 * Sat Jan 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r20982-alt1.git20050327
 - Initial build for Sisyphus
 
