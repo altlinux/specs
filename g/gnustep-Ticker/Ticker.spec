@@ -2,7 +2,7 @@
 
 Name: gnustep-Ticker
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: An RSS monitor for RSS and Atom feeds
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -15,6 +15,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 An RSS monitor for RSS and Atom feeds that lets you monitor many feeds
@@ -41,6 +43,9 @@ at once and supports feed access through a web (HTTP) proxy.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 
