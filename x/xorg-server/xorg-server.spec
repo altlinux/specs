@@ -19,7 +19,7 @@
 
 Name: xorg-server
 Version: 1.14.5
-Release: alt2
+Release: alt3
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -298,6 +298,10 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu Jan 30 2014 Dmitry V. Levin <ldv@altlinux.org> 2:1.14.5-alt3
+- NMU.
+- Reverted to 1.14.5-alt1 due to regressions (closes: #29354, #29747).
+
 * Tue Dec 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.5-alt2
 - added patches to censored screenshots for selinux
 
