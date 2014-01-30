@@ -2,7 +2,7 @@
 
 Name: gnustep-Zipper
 Version: 1.5
-Release: alt2
+Release: alt3
 Summary: Tool for inspecting the contents of a compressed archive
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+
+Requires: gnustep-back
 
 %description
 Zipper consists only of a single window, displaying the contents of the
@@ -53,6 +55,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt3
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2
 - Rebuilt with new gnustep-gui
 
