@@ -2,7 +2,7 @@
 
 Name: gnustep-RSSkit
 Version: 0.4.0
-Release: alt2
+Release: alt3
 Summary: Simple library for reading the different types of RSS file formats
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -17,6 +17,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 RSSKit is a simple library for reading the different types of
@@ -110,6 +111,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3
+- Added Requires: gnustep-back
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2
 - Rebuilt with new gnustep-gui
 
