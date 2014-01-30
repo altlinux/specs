@@ -2,7 +2,7 @@
 
 Name: gnustep-SlideShow
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: A slideshow viewer
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,8 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-SlideShowKit-devel
+
+Requires: gnustep-back
 
 %description
 A slideshow viewer.
@@ -42,6 +44,9 @@ A slideshow viewer.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Added Requires: gnustep-back
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
