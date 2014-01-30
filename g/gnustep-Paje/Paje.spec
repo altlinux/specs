@@ -2,7 +2,7 @@
 
 Name: gnustep-Paje
 Version: 1.98
-Release: alt1
+Release: alt2
 Summary: Paje is an interactive and scalable trace-based visualization tool
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: ghostscript-utils texlive-base-bin texlive-publishers
 
 Requires: lib%name = %EVR
+Requires: gnustep-back
 
 %description
 Paje is an interactive and scalable trace-based visualization tool which
@@ -154,6 +155,9 @@ popd
 %doc Documentation/UserManual/*.ps Documentation/lang-paje/*.ps
 
 %changelog
+* Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.98-alt2
+- Added Requires: gnustep-back
+
 * Wed Jan 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.98-alt1
 - Initial build for Sisyphus
 
