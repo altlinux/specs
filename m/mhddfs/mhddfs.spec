@@ -1,17 +1,17 @@
 Name: mhddfs
-Version: 0.1.37
-Release: alt1.qa1
+Version: 0.1.39
+Release: alt1
 
 Summary: file system for unifying several mount points into one
 License: GPLv3
 Group: File tools
 
 Url: http://mhddfs.uvw.ru
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
+Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: libfuse-devel libattr-devel
+BuildRequires: libfuse-devel libattr-devel libuthash-devel
 
 %description
 This FUSE-based file system allows mount points (or directories) to be
@@ -36,6 +36,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc ChangeLog README*
 
 %changelog
+* Thu Jan 30 2014 Evgenii Terechkov <evg@altlinux.org> 0.1.39-alt1
+- 0.1.39
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.37-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
