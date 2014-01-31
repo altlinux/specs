@@ -1,7 +1,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -19,7 +19,8 @@ BuildRequires: boost-devel boost-program_options-devel
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel qt5-quick1-devel
 BuildRequires: openexr-devel libexiv2-devel libfftw3-devel liblcms2-devel
 BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libpng-devel
-BuildRequires: libgsl-devel libcfitsio-devel libgtest-devel zlib-devel
+BuildRequires: libgsl-devel libgtest-devel zlib-devel
+BuildRequires: libcfitsio-devel libccfits-devel
 
 %description
 Luminance HDR is a graphical user interface application that aims to
@@ -50,6 +51,9 @@ provide a workflow for HDR imaging.
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Fri Jan 31 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2
+- enabled FITS support
+
 * Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
