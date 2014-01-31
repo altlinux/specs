@@ -1,5 +1,5 @@
 Name: mongo
-Version: 2.4.8
+Version: 2.4.9
 Release: alt1
 Summary: mongo client shell and tools
 License: AGPL 3.0
@@ -248,6 +248,9 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %_libdir/libmongoclient.a
 
 %changelog
+* Wed Jan 29 2014 Dmitry Derjavin <dd@altlinux.org> 2.4.9-alt1
+- 2.4.9
+
 * Fri Nov 22 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.4.8-alt1
 - Update spec
 - Add patches from Fedora
