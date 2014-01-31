@@ -6,8 +6,8 @@
 
 %define rname kdebase-runtime
 %define major 4
-%define minor 11
-%define bugfix 5
+%define minor 12
+%define bugfix 2
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -42,7 +42,7 @@ BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsopra
 BuildRequires: kde4-nepomuk-core-devel kde4-kactivities-devel
 BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
-BuildRequires: libopenslp-devel libqca2-devel
+BuildRequires: libopenslp-devel libqca2-devel libgpgme-devel
 #BuildRequires: libqzeitgeist-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
 BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
@@ -63,13 +63,11 @@ Requires: kde-common >= %major.%minor
 Summary: Core files for %name
 Group: Graphical desktop/KDE
 Requires: %libname = %EVR
-Requires: kde4-icon-theme-oxygen
-Requires: phonon-backend >= 4.3.0
-Requires: shared-desktop-ontologies
+Requires: phonon-backend
+Requires: kde4-icon-theme-oxygen shared-desktop-ontologies kde4pimlibs
 %ifnarch s390 s390x
 Requires: eject
 %endif
-#Obsoletes: kde4base-runtime < 4.2.60
 %description core
 Core files for  %name
 
@@ -231,6 +229,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Sat Jan 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 

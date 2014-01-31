@@ -15,11 +15,11 @@
 
 %define rname kdepim
 %define major 4
-%define minor 11
-%define bugfix 4
+%define minor 12
+%define bugfix 2
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -63,17 +63,19 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # Upstream
 # ALT
 Patch101: kdepim-4.0.80-alt-kmail-acctlocal-lock.patch
-Patch102: kdepim-4.11.1-alt-nepomuk-warning.patch
+Patch102: kdepim-4.12.2-alt-nepomuk-warning.patch
 Patch103: kdepim-4.7.1-alt-force-7bit-cte.patch
 Patch104: kdepim-4.7.2-alt-migration.patch
 
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
-BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel
-BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
+BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
+BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
+#BuildRequires: dblatex
 BuildRequires: kde4-nepomuk-widgets-devel kde4-pim-runtime-devel >= %version kde4-nepomuk-core-devel
 #BuildRequires: libindicate-qt-devel
+BuildRequires: liblink-grammar-devel
 
 %if_enabled kitchensync
 BuildRequires: libopensync-devel >= 0.30
@@ -81,7 +83,7 @@ BuildRequires: libopensync-devel >= 0.30
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
-BuildRequires: kde4base-workspace-devel >= %version
+BuildRequires: kde4base-workspace-devel
 
 %description
 Information Management applications for the K Desktop Environment.
@@ -1059,6 +1061,41 @@ Requires: %name-common = %version-%release
 %description -n libsendlater4
 %name library
 
+%package  -n libfolderarchive4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libfolderarchive4
+%name library
+
+%package  -n libgrantleetheme4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libgrantleetheme4
+%name library
+
+%package  -n libgrantleethemeeditor4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libgrantleethemeeditor4
+%name library
+
+%package  -n libkaddressbookgrantlee4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkaddressbookgrantlee4
+%name library
+
+%package  -n libknotesprivate4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libknotesprivate4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1079,6 +1116,7 @@ based on kdepim.
 
 %build
 %K4build \
+    -DKDE4_BUILD_TESTS=OFF \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
     -DKDEPIM_BUILD_DESKTOP:BOOL=ON \
     -DKDEPIM_BUILD_MOBILE:BOOL=ON \
@@ -1095,24 +1133,36 @@ based on kdepim.
 %files common
 %dir %_K4apps/libkleopatra/
 %_datadir/ontology/kde/*
+%_K4conf/ksieve_script.knsrc
 
 %files core
+%_K4bindir/mboximporter
+%_K4xdg_apps/mboximporter.desktop
+#
+%_K4bindir/contactthemeeditor
+%_K4apps/contactthemeeditor/
+%_K4xdg_apps/contactthemeeditor.desktop
+#
+%_K4bindir/calendarjanitor
 %_K4bindir/kabc2mutt
 %_K4bindir/kabcclient
 %_K4bindir/konsolekalendar
 %_K4bindir/pimsettingexporter
 %_K4lib/kcm_pimactivity.so
+%_K4lib/grammar_link.so
 %_K4lib//plugins/grantlee/
 #%_K4libdir/strigi/*
 %_K4apps/composereditor/
 %_K4apps/pimsettingexporter/
 %_K4conf/messageviewer_header_themes.knsrc
+%_K4conf_update/grantleetheme.upd
 %_K4xdg_apps/konsolekalendar.desktop
 %_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 %_K4srv/kontact/
 %_K4srv/kcmpimactivity.desktop
+%_K4srv/grammar_link.desktop
 %_K4doc/en/konsolekalendar
 %_K4doc/en/kabcclient
 %_K4doc/en/pimsettingexporter/
@@ -1316,6 +1366,7 @@ based on kdepim.
 %_K4lib/kontact_kaddressbookplugin.so
 %_K4lib/kcm_ldap.so
 %_libdir/akonadi/contact/editorpageplugins/cryptopageplugin.so
+%_K4conf/kaddressbook_themes.knsrc
 %_K4apps/kaddressbook
 %_K4apps/kontact/ksettingsdialog/kaddressbook.setdlg
 %_K4srv/kaddressbookpart.desktop
@@ -1622,6 +1673,16 @@ based on kdepim.
 %_K4libdir/libpimactivity.so.*
 %files -n libsendlater4
 %_K4libdir/libsendlater.so.*
+%files -n libfolderarchive4
+%_K4libdir/libfolderarchive.so.*
+%files -n libgrantleetheme4
+%_K4libdir/libgrantleetheme.so.*
+%files -n libgrantleethemeeditor4
+%_K4libdir/libgrantleethemeeditor.so.*
+%files -n libkaddressbookgrantlee4
+%_K4libdir/libkaddressbookgrantlee.so.*
+%files -n libknotesprivate4
+%_K4libdir/libknotesprivate.so.*
 
 %files devel
 %_K4link/*.so
@@ -1633,6 +1694,12 @@ based on kdepim.
 
 
 %changelog
+* Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1.M70P.2
+- built for M70P
+
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt2
 - update from 4.11 branch
 

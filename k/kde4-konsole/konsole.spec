@@ -3,7 +3,7 @@
 
 %define rname konsole
 %define major 4
-%define minor 11
+%define minor 12
 %define bugfix 2
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
@@ -88,6 +88,12 @@ __EOF__
 
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 

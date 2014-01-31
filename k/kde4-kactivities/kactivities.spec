@@ -5,8 +5,8 @@
 %define rname kactivities
 Name: kde4-kactivities
 %define major 4
-%define minor 11
-%define bugfix 1
+%define minor 12
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -117,6 +117,12 @@ done
 %_K4link/*.so
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 

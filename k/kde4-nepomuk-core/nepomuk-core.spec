@@ -3,10 +3,10 @@
 %define rname nepomuk-core
 Name: kde4-nepomuk-core
 %define major  4
-%define minor  11
-%define bugfix 3
+%define minor  12
+%define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -141,6 +141,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt2
 - rebuild with new exiv2
 

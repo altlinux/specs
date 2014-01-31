@@ -6,7 +6,7 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.11.5
+Version: 4.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -35,15 +35,262 @@ BuildRequires: kde4libs-devel >= %version
 Personal Information Management (PIM) libraries for the
 K Desktop Environment 4.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kde-common
+Conflicts: kde4pimlibs < 4.12
+%description common
+%name common package
+
 %package devel
 Group: Development/KDE and QT
 Summary: Header files for %name
-Requires: kde-common boost-devel
+Requires: boost-devel
 Requires: kde4libs-devel => %version
+Requires: %name-common = %version-%release
 Requires: %name = %version-%release
-
 %description devel
 Header files for developing applications using %name.
+
+%package -n libakonadi4-xml
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-xml
+%name library
+
+%package -n libakonadi4-calendar
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-calendar
+%name library
+
+%package -n libakonadi4-contact
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-contact
+%name library
+
+%package -n libakonadi4-kabc
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-kabc
+%name library
+
+%package -n libakonadi4-kcal
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-kcal
+%name library
+
+%package -n libakonadi4-kde
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-kde
+%name library
+
+%package -n libakonadi4-kmime
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-kmime
+%name library
+
+%package -n libakonadi4-notes
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-notes
+%name library
+
+%package -n libakonadi4-socialutils
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libakonadi4-socialutils
+%name library
+
+%package -n libgpgmexx4-pthread
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libgpgmexx4-pthread
+%name library
+
+%package -n libgpgmexx4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libgpgmexx4
+%name library
+
+%package -n libkabc4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkabc4
+%name library
+
+%package -n libkabc4_file_core
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkabc4_file_core
+%name library
+
+%package -n libkalarmcal4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkalarmcal4
+%name library
+
+%package -n libkblog4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkblog4
+%name library
+
+%package -n libkcal4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkcal4
+%name library
+
+%package -n libkcalcore4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkcalcore4
+%name library
+
+%package -n libkcalutils4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkcalutils4
+%name library
+
+%package -n libkholidays4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkholidays4
+%name library
+
+%package -n libkimap4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkimap4
+%name library
+
+%package -n libkldap4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkldap4
+%name library
+
+%package -n libkmbox4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkmbox4
+%name library
+
+%package -n libkmime4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkmime4
+%name library
+
+%package -n libkontactinterface4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkontactinterface4
+%name library
+
+%package -n libkpimidentities4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkpimidentities4
+%name library
+
+%package -n libkpimtextedit4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkpimtextedit4
+%name library
+
+%package -n libkpimutils4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkpimutils4
+%name library
+
+%package -n libkresources4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkresources4
+%name library
+
+%package -n libktnef4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libktnef4
+%name library
+
+%package -n libkxmlrpcclient4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkxmlrpcclient4
+%name library
+
+%package -n libmailtransport4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libmailtransport4
+%name library
+
+%package -n libmicroblog4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libmicroblog4
+%name library
+
+%package -n libqgpgme4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libqgpgme4
+%name library
+
+%package -n libsyndication4
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libsyndication4
+%name library
 
 %prep
 %setup -q -n %rname-%version
@@ -61,23 +308,24 @@ Header files for developing applications using %name.
 %K4install
 
 
+%files common
+
 %files
 %_kde4_bindir/akonadi*
 %_K4datadir/apps/akonadi-kde/
-%_K4libdir/lib*.so.*
-#%_K4libdir/libkdeinit4_*.so
-%_K4lib/*.so*
+%_K4lib/*.so
 %dir %_K4libdir/gpgmepp/
 %_K4apps/kabc/
-#%_K4apps/libical/
 %_K4conf_update/*
 %_K4cfg/*
 %_K4srv/*
 %_K4srvtyp/*
-%_K4apps/libkholidays
-%_K4apps/akonadi
+%_K4apps/libkholidays/
+%_K4apps/akonadi/
+%_K4apps/akonadi_knut_resource/
 %_K4xdg_mime/kdepimlibs-mime.xml
 %_K4xdg_mime/x-vnd.akonadi.socialfeeditem.xml
+%_datadir/akonadi/
 %doc %_K4doc/en/*
 
 %files devel
@@ -89,8 +337,82 @@ Header files for developing applications using %name.
 %_K4includedir/*
 %_K4libdir/gpgmepp/*.cmake
 
+%files -n libakonadi4-xml
+%_K4libdir/libakonadi-xml.so.*
+%files -n libakonadi4-calendar
+%_K4libdir/libakonadi-calendar.so.*
+%files -n libakonadi4-contact
+%_K4libdir/libakonadi-contact.so.*
+%files -n libakonadi4-kabc
+%_K4libdir/libakonadi-kabc.so.*
+%files -n libakonadi4-kcal
+%_K4libdir/libakonadi-kcal.so.*
+%files -n libakonadi4-kde
+%_K4libdir/libakonadi-kde.so.*
+%files -n libakonadi4-kmime
+%_K4libdir/libakonadi-kmime.so.*
+%files -n libakonadi4-notes
+%_K4libdir/libakonadi-notes.so.*
+%files -n libakonadi4-socialutils
+%_K4libdir/libakonadi-socialutils.so.*
+%files -n libgpgmexx4-pthread
+%_K4libdir/libgpgme++-pthread.so.*
+%files -n libgpgmexx4
+%_K4libdir/libgpgme++.so.*
+%files -n libkabc4
+%_K4libdir/libkabc.so.*
+%files -n libkabc4_file_core
+%_K4libdir/libkabc_file_core.so.*
+%files -n libkalarmcal4
+%_K4libdir/libkalarmcal.so.*
+%files -n libkblog4
+%_K4libdir/libkblog.so.*
+%files -n libkcal4
+%_K4libdir/libkcal.so.*
+%files -n libkcalcore4
+%_K4libdir/libkcalcore.so.*
+%files -n libkcalutils4
+%_K4libdir/libkcalutils.so.*
+%files -n libkholidays4
+%_K4libdir/libkholidays.so.*
+%files -n libkimap4
+%_K4libdir/libkimap.so.*
+%files -n libkldap4
+%_K4libdir/libkldap.so.*
+%files -n libkmbox4
+%_K4libdir/libkmbox.so.*
+%files -n libkmime4
+%_K4libdir/libkmime.so.*
+%files -n libkontactinterface4
+%_K4libdir/libkontactinterface.so.*
+%files -n libkpimidentities4
+%_K4libdir/libkpimidentities.so.*
+%files -n libkpimtextedit4
+%_K4libdir/libkpimtextedit.so.*
+%files -n libkpimutils4
+%_K4libdir/libkpimutils.so.*
+%files -n libkresources4
+%_K4libdir/libkresources.so.*
+%files -n libktnef4
+%_K4libdir/libktnef.so.*
+%files -n libkxmlrpcclient4
+%_K4libdir/libkxmlrpcclient.so.*
+%files -n libmailtransport4
+%_K4libdir/libmailtransport.so.*
+%files -n libmicroblog4
+%_K4libdir/libmicroblog.so.*
+%files -n libqgpgme4
+%_K4libdir/libqgpgme.so.*
+%files -n libsyndication4
+%_K4libdir/libsyndication.so.*
 
 %changelog
+* Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Sat Jan 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 
