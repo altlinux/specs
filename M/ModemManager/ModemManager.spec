@@ -11,7 +11,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.1.900
+Version: 1.2.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -208,6 +208,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 31 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Wed Dec 18 2013 Mikhail Efremov <sem@altlinux.org> 1.1.900-alt1
 - Fixes from upstream git:
   + iface-modem: fix crash in
