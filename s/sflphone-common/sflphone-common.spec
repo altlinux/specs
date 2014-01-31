@@ -1,8 +1,8 @@
 %define rname sflphone
 
 Name: sflphone-common
-Version: 1.2.3
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -12,7 +12,7 @@ License: GPLv3
 Conflicts: sflphone
 
 Source: %name-%version.tar
-Patch1: sflphone-1.2.2-alt-find-gsm.patch
+Patch1: sflphone-1.3.0-alt-find-gsm.patch
 Patch2: sflphone-1.2.2-alt-find-pcre.patch
 Patch10: pjproject-2.0.1-alt-libav.patch
 
@@ -20,7 +20,7 @@ Patch10: pjproject-2.0.1-alt-libav.patch
 # optimized out: elfutils gcc-c++ gnu-config libavcodec-devel libavutil-devel libccrtp-devel libcom_err-devel libcommoncpp2-devel libdbus-c++ libdbus-devel libgpg-error libkrb5-devel libopencore-amrnb0 libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base ruby ruby-stdlibs
 #BuildRequires: glibc-devel-static libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel libzrtpcpp-devel perl-Pod-Parser python-module-distribute rpm-build-ruby
 BuildRequires: gcc-c++ glibc-devel libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel
-BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel
+BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
 BuildRequires: libzrtpcpp-devel perl-Pod-Parser python-devel
 BuildRequires: libudev-devel libavdevice-devel libswscale-devel
@@ -75,6 +75,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
+- new version
+
 * Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt2
 - rebuilt with new libav
 
