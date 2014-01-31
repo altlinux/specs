@@ -7,14 +7,14 @@ find -type f -print0 | xargs -0 chmod 0664
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt3
+Release: alt4
 
 Summary: A Python module for interfacing with the SDL multimedia library
-Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой SDL
+Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
 
 Group: Development/Python
 License: LGPL
-Url: http://pygame.seul.org
+Url: http://www.pygame.org
 
 Source: http://pygame.seul.org/ftp/pygame-%{version}release.tar.bz2
 #Patch: pygame-1.7.1.patch
@@ -52,7 +52,7 @@ by Mark Baker.
 Install %name if you would like to write or play SDL games written in the
 python language.
 
-%description -l ru_RU.KOI8-R
+%description -l ru_RU.UTF-8
 pygame - расширение языка программирования Python, позволяющее
 использовать возможности мультимедийной библиотеки SDL (Simple
 DirectMedia Layer), предоставляющей низкоуровневый доступ к звуковым
@@ -96,7 +96,7 @@ and example programs.
 
 %package devel
 Summary: Pygame development headers
-Summary(ru_RU.KOI8-R): Файлы для разработчика приложений, использующих pygame
+Summary(ru_RU.UTF-8): Файлы для разработчика приложений, использующих pygame
 Group: Development/Python
 BuildArch: noarch
 Requires: %name = %version-%release
@@ -111,7 +111,7 @@ Mark Baker.
 
 Install %name-devel if you need the API documentation and example programs.
 
-%description devel -l ru_RU.KOI8-R
+%description devel -l ru_RU.UTF-8
 Пакет содержит заголовочные файлы, документацию и примеры программ,
 использующих расширение pygame.
 
@@ -193,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 31 2014 Fr. Br. George <george@altlinux.ru> 1.9.1-alt4
+- Fix spec encoding
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt3
 - Rebuilt with libpng15
 
