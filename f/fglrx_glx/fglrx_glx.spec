@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
 Version: 13.251
-Release: alt2
+Release: alt3
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -44,7 +44,9 @@ Provides: %bname = %EVR
 #Provides: libGL
 Provides: xorg-drv-%bname
 
-Requires: xorg-server >= 1.5.0 libdrm >= 2.4.5-alt2
+Requires: xorg-server >= 1.5.0
+Requires: libdrm >= 2.4.5-alt2
+Requires: XORG_ABI_VIDEODRV < 15
 Requires: hwdatabase
 Requires: libGL libXrandr libXi libXcursor libXinerama
 
@@ -277,6 +279,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Fri Jan 31 2014 Led <led@altlinux.ru> 1:13.251-alt3
+- fixed requires
+
 * Sat Jan 25 2014 Led <led@altlinux.ru> 1:13.251-alt2
 - kernel module: fixed build for kernel 3.13
 
