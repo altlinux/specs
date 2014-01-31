@@ -1,6 +1,6 @@
 Name: xorg-glamor
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: X.Org glamor library
 License: MIT
 Group: System/Libraries
@@ -22,6 +22,7 @@ Open-source X.org graphics common driver based on GL library
 %package devel
 Summary: X.Org glamor development package
 Group: Development/C
+Requires: %name = %version-%release
 Obsoletes: libglamor-devel < %version-%release
 
 %description devel
@@ -57,8 +58,10 @@ develop programs which make use of %name
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-
 %changelog
+* Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.6.0-alt2
+- %name-devel: fixed requires
+
 * Mon Jan 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.6.0-alt1
 - 0.6.0
 

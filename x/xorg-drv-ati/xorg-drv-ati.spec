@@ -1,6 +1,6 @@
 Name: xorg-drv-ati
-Version: 7.2.0
-Release: alt2
+Version: 7.3.0
+Release: alt1
 Epoch: 4
 Summary: ATI video driver
 License: MIT/X11
@@ -62,6 +62,9 @@ and the Xinerama extension.
 %_man4dir/radeon.4*
 
 %changelog
+* Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:7.3.0-alt1
+- 7.3.0
+
 * Tue Oct 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:7.2.0-alt2
 - enabled glamor
 

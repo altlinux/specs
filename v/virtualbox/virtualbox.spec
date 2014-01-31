@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.6
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -697,6 +697,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Feb 04 2014 Fr. Br. George <george@altlinux.ru> 4.3.6-alt3
+- Rebuild with xorg-1.15
+
 * Tue Jan 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.6-alt2
 - Control VBoxExtPackHelperApp with setuid restrictions
 
