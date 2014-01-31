@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.2
+Version: 2.5.3.1
 Release: alt1
 
 Group: System/Libraries
@@ -81,7 +81,6 @@ against %name library.
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
-%add_optflags -I/usr/include/libxml2
 %autoreconf
 export udevscriptdir=/lib/udev
 export utilsdir=%_libexecdir/%name
@@ -178,6 +177,13 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Fri Jan 31 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.3.1-alt1
+- 2.5.3.1
+
+* Fri Jan 31 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.3-alt1
+- 2.5.3
+- removed unneeded macro add_optflags
+
 * Mon Jun 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.2-alt1
 - 2.5.2
 - dropped patch1
