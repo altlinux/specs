@@ -7,8 +7,8 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 1.8.0
-Release: alt4
+Version: 1.10.1
+Release: alt3
 Group: Sciences/Geosciences
 
 License: MIT
@@ -17,10 +17,11 @@ URL: http://www.gdal.org/
 Source: %name-%version.tar
 
 Patch0: %name-1.7.1-alt-swig_python.patch
-Patch1: %name-1.7.1-alt-pydir.patch
+# Patch1: %name-1.7.1-alt-pydir.patch
 Patch2: %name-1.7.1-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
-Patch4: %name-1.8.0-alt-libpng15.patch
+# Patch4: %name-1.8.0-alt-libpng15.patch
+Patch5: %name-1.8.0-alt-libproj.so_name.patch
 
 %define libname lib%name
 
@@ -28,6 +29,8 @@ Patch4: %name-1.8.0-alt-libpng15.patch
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes
 
 BuildPreReq: chrpath
+
+Requires: libproj
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -91,13 +94,15 @@ Perl modules for GDAL/OGR.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p2
+# %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
+# %patch4 -p2
+%patch5 -p2
 
 %build
 %configure \
+        --enable-static=no \
 	--datadir=%_datadir/%name \
 	--includedir=%_includedir/%name \
 	--with-libz \
@@ -146,6 +151,7 @@ mkdir -p %buildroot%python_sitelibdir
 cp -a %buildroot%python_sitelibdir/GDAL*/osgeo %buildroot%python_sitelibdir/
 make DESTDIR=%buildroot install-docs
 make DESTDIR=%buildroot install-man
+mv %buildroot/usr/man %buildroot/usr/share
 install -p -m644 NEWS %buildroot%_docdir/%name
 mkdir -p  %buildroot/%_libdir/perl5/
 mv %buildroot/usr/lib/perl5/*-linux-thread-multi/* %buildroot/%_libdir/perl5/
@@ -187,10 +193,20 @@ done
 %files -n perl-Geo-GDAL
 %perl_vendor_archlib/Geo
 %perl_vendor_autolib/Geo
-%exclude %perl_vendor_archlib/Geo/*.dox
-%exclude %perl_vendor_archlib/Geo/GDAL/*.dox
+# %exclude %perl_vendor_archlib/Geo/*.dox
+# %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Fri Jan 31 2014 Dmitry Derjavin <dd@altlinux.org> 1.10.1-alt3
+- libproj: fixed hardcoded library path and dependency added
+
+* Mon Jan 20 2014 Dmitry Derjavin <dd@altlinux.org> 1.10.1-alt2
+- Static build disabled;
+- accidentally disabled apps-install patch got back.
+
+* Thu Jan 16 2014 Dmitry Derjavin <dd@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.8.0-alt4
 - built for perl 5.18
 
