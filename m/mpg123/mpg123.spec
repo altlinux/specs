@@ -1,12 +1,18 @@
 Name: mpg123
-Version: 1.17.0
+Version: 1.18.0
 Release: alt1
 
 Summary: MPEG audio player
 Group: Sound
 License: distributable
+Url: http://www.%name.org
+
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source1: mp3license
 
 ExclusiveArch: %ix86 x86_64 %arm
+
+Requires: libmpg123 = %version-%release
 
 %ifarch %ix86
 %define wcpu i586
@@ -18,11 +24,7 @@ ExclusiveArch: %ix86 x86_64 %arm
 %endif
 %endif
 
-Url: http://www.%name.org
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
-Source1: mp3license
-
-BuildRequires: libalsa-devel libaudio-devel esound-devel libaudiofile-devel
+BuildRequires: libalsa-devel libaudio-devel libaudiofile-devel esound-devel
 BuildRequires: libSDL_sound-devel libSDL-devel libltdl-devel libpulseaudio-devel
 
 %description
@@ -42,19 +44,19 @@ Group: System/Libraries
 Provides: libmpg123
 
 %description -n libmpg123
-This package provides mpg123 library
+This package provides mpg123 library.
 
 %package -n libmpg123-devel
 Summary: mpg123 library headers
 Group:  Development/C
-Requires: libmpg123
+Requires: libmpg123 = %version-%release
 
 %description -n libmpg123-devel
 This package provides mpg123 library headers
 
 
 %prep
-%setup -q
+%setup
 install -p -m644 %SOURCE1 .
 
 %build
@@ -62,8 +64,9 @@ install -p -m644 %SOURCE1 .
 %add_optflags %optflags_shared
 %configure --with-audio='alsa oss esd sdl pulse' \
 	--with-optimization=0 \
+	--enable-network=yes \
 	--with-cpu=%{wcpu}
-%make_build
+%make_build CFLAGS="%optflags -Wformat -Werror=format-security"
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -87,6 +90,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sat Feb 01 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
 - 1.17.0
 
