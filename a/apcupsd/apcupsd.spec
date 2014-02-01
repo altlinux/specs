@@ -2,8 +2,8 @@
 %def_disable cgi
 
 Name: apcupsd
-Version: 3.14.10
-Release: alt2
+Version: 3.14.11
+Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Power management software for APC UPS hardware
@@ -182,9 +182,12 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Sat Feb 01 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.11-alt1
+- New version (with MODBUS support)
+
 * Tue Jul 03 2012 Sergey Y. Afonin <asy@altlinux.ru> 3.14.10-alt2
 - Fixed typo in platforms/altlinux/apcupsd.in
-- Some improvements in script "apcupsdmessages"
+- Some improvements in script "upsdmessages"
 
 * Wed Sep 14 2011 Sergey Y. Afonin <asy@altlinux.ru> 3.14.10-alt1
 - New version
