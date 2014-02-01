@@ -1,6 +1,6 @@
 Name: wavsplit
 Version: 1.2.1
-Release: alt6
+Release: alt7
 Summary: Splits wavfiles into tracks
 License: GPLv2
 Group: Sound
@@ -23,8 +23,7 @@ pieces and won't process live albums.
 
 
 %build
-%make clean
-%make_build CFLAGS="%optflags"
+%make_build CC=%__cc CFLAGS="%optflags"
 
 
 %install
@@ -39,6 +38,10 @@ install -d %buildroot{%_bindir,%_man1dir}
 
 
 %changelog
+* Sat Feb 01 2014 Led <led@altlinux.ru> 1.2.1-alt7
+- u_int32_t and u_short replaced with uint32_t and uint16_t
+- fixed Makefile
+
 * Sat Feb 01 2014 Led <led@altlinux.ru> 1.2.1-alt6
 - fixed permissions of created files
 
