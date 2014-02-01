@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	331.38
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		hpc-skif
 
 %setup_kernel_module %flavour
@@ -33,7 +33,7 @@
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.117
+%define legacy4 304.119
 %else
 %define legacy4 %nil
 %endif
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jan 30 2014 Led <led@altlinux.ru> 331.38-alt2
+- new release (304.119)
 
 * Wed Jan 15 2014 Led <led@altlinux.ru> 331.38-alt1
 - new releases (331.38, 304.117, 173.14.39)
