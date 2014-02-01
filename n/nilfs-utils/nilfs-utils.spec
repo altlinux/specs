@@ -1,14 +1,15 @@
 %def_enable shared
 %def_enable static
 %def_with selinux
-%def_enable libmount
+%def_with blkid
+%def_with libmount
 %define libdir /%_lib
 
 %define bname nilfs
 %define lname lib%bname
 Name: %bname-utils
-Version: 2.1.5
-Release: alt2
+Version: 2.1.6
+Release: alt1
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -18,7 +19,10 @@ Patch: %name-%version-%release.patch
 Provides: %{bname}2-utils = %version-%release
 %{!?_disable_shared:Requires: %lname = %version-%release}
 
-BuildRequires: libuuid-devel libblkid-devel %{?_enable_libmount:libmount-devel} %{?_with_selinux:libselinux-devel}
+BuildRequires: libuuid-devel
+%{?_with_blkid:BuildRequires: libblkid-devel}
+%{?_with_libmount:BuildRequires: libmount-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel}
 
 %description
 Utilities to work with NILFS v2 filesystems.
@@ -70,6 +74,8 @@ This package contains NILFS v2 static libraries.
 	--libdir=%libdir \
 	--enable-largefile \
 	%{subst_enable static} \
+	%{subst_with blkid} \
+	%{subst_with libmount} \
 	%{subst_with selinux} \
 	--with-gnu-ld
 %make_build
@@ -118,6 +124,9 @@ done
 
 
 %changelog
+* Sat Feb 01 2014 Led <led@altlinux.ru> 2.1.6-alt1
+- 2.1.6
+
 * Fri Oct 18 2013 Led <led@altlinux.ru> 2.1.5-alt2
 - cleanerd: fix wrong cleaner speed of manual clean mode
 
