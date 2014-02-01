@@ -1,6 +1,6 @@
 Name: dolphin-emu
-Version: 4.0.1
-Release: alt3
+Version: 4.0.2
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -9,7 +9,7 @@ Group: Emulators
 Url: https://ru.%name.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: %name-%version.tar
+Source: dolphin-%version.tar.gz
 Patch0: %name-%version-alt.patch
 
 BuildRequires: cmake
@@ -45,7 +45,7 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n %name
+%setup -n dolphin-%version
 %patch0 -p1
 
 %build
@@ -63,6 +63,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Sat Feb 01 2014 Nazarov Denis <nenderus@altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Wed Nov 20 2013 Nazarov Denis <nenderus@altlinux.org> 4.0.1-alt3
 - Rebuild with wxGTK 3.0
 
