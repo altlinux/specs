@@ -1,13 +1,9 @@
 Name: wavsplit
 Version: 1.2.1
-Release: alt5.qa1
-
-Packager: Victor Forsyuk <force@altlinux.org>
-
+Release: alt6
 Summary: Splits wavfiles into tracks
 License: GPLv2
 Group: Sound
-
 URL: http://sourceforge.net/projects/wavsplit/
 Source: http://downloads.sourceforge.net/wavsplit/%name-%version.tar
 Patch: %name-1.2.1-alt.patch
@@ -20,24 +16,32 @@ time display. You'll get the splitting done much faster and reliably
 than with complex algorithms, which split your a capella songs in
 pieces and won't process live albums.
 
+
 %prep
 %setup
 %patch -p1
+
 
 %build
 %make clean
 %make_build CFLAGS="%optflags"
 
+
 %install
 install -d %buildroot{%_bindir,%_man1dir}
 %make_install BIN=%buildroot%_bindir MAN=%buildroot%_man1dir install
 
+
 %files
-%doc README README.wavren
+%doc CHANGES CREDITS README README.wavren
 %_bindir/*
 %_man1dir/*
 
+
 %changelog
+* Sat Feb 01 2014 Led <led@altlinux.ru> 1.2.1-alt6
+- fixed permissions of created files
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
