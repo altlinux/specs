@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Sat Feb 01 2014 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt1
+- Handle full URIs in a pubdir answer properly.
+
 * Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.8-alt1
 - Fix/improve: delete the non-numeric tag prefix by default (GitHub).
 
