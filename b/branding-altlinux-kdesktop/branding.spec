@@ -9,7 +9,7 @@
 %define bugfix 3
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -479,6 +479,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Sat Feb 01 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt2
+- fix license.all.html
+
 * Wed Jan 22 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt1
 - licence fixed
 
