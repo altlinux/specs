@@ -1,8 +1,8 @@
-%define svn svn5903
+%define svn svn6011
 
 Name: handbrake
 Version: 0.9.9
-Release: alt1.%svn
+Release: alt2.%svn
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 # #Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
@@ -12,13 +12,13 @@ Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
 # #Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/fdk-aac-v0.1.1-6-gbae4553.tar.bz2
 Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9.6.tar.bz2
+Source104: http://download.handbrake.fr/handbrake/contrib/libav-v10_alpha2.tar.bz2
 Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
 Source106: http://download.handbrake.fr/handbrake/contrib/freetype-2.4.7.tar.bz2
 Source107: http://download.handbrake.fr/handbrake/contrib/lame-3.98.tar.gz
-Source108: http://download.handbrake.fr/handbrake/contrib/libbluray-0.2.3.tar.bz2
-Source109: http://download.handbrake.fr/handbrake/contrib/libdvdnav-svn1168.tar.gz
-Source110: http://download.handbrake.fr/handbrake/contrib/libdvdread-svn1168.tar.gz
+Source108: http://download.handbrake.fr/handbrake/contrib/libbluray-0.5.0.tar.bz2
+Source109: http://download.handbrake.fr/handbrake/contrib/libdvdnav-a5c1325.tar.bz2
+Source110: http://download.handbrake.fr/handbrake/contrib/libdvdread-a2f211a.tar.bz2
 Source111: http://download.handbrake.fr/handbrake/contrib/libmkv-0.6.5-0-g82075ae.tar.gz
 Source112: http://download.handbrake.fr/handbrake/contrib/libtool-2.4.2.tar.bz2
 Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
@@ -116,6 +116,12 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Sun Feb 02 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt2.svn6011
+- fix rules
+
+* Sun Feb 02 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn6011
+- build svn6011
+
 * Sun Nov 24 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5903
 - build svn5903
 
