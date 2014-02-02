@@ -2,7 +2,7 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt3.git20140115
+Release: alt4.git20140115
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://git.savannah.nongnu.org/backbone.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -96,6 +97,8 @@ for j in BBAppKit PrefsModule; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc AUTHORS
 %_bindir/*
@@ -103,6 +106,7 @@ popd
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/BBAppKit.framework/Versions/2014A/Headers
 %exclude %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -115,6 +119,9 @@ popd
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4.git20140115
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt3.git20140115
 - Added Requires: gnustep-back
 
