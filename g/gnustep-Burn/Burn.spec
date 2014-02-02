@@ -2,7 +2,7 @@
 
 Name: gnustep-Burn
 Version: 0.5.0
-Release: alt3.cvs20140123
+Release: alt4.cvs20140123
 Summary: Burn ist a front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -12,6 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # cvs -d:pserver:anonymous@gsburn.cvs.sourceforge.net:/cvsroot/gsburn login
 # cvs -z3 -d:pserver:anonymous@gsburn.cvs.sourceforge.net:/cvsroot/gsburn co -P Burn.app
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -63,15 +64,21 @@ This package contains development files of Burn.
 install -d %buildroot%_includedir/Burn
 install -m644 *.h Burn/*.h %buildroot%_includedir/Burn/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc BUGS CHANGELOG CREDITS README TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files devel
 %_includedir/*
 
 %changelog
+* Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt4.cvs20140123
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt3.cvs20140123
 - Added Requires: gnustep-CDPlayer and Requires: gnustep-back
 
