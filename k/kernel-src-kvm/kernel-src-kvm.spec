@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
 Version: 3.10.21
-Release: alt2
+Release: alt3
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,10 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Sun Feb 02 2014 Led <led@altlinux.ru> 3.10.21-alt3
+- updates from linux-3.10.29:
+  + kvm: x86: fix apic_base enable check
+
 * Sun Jan 12 2014 Led <led@altlinux.ru> 3.10.21-alt2
 - updates from linux-3.10.26:
   + KVM: x86: Fix APIC map calculation after re-enabling
