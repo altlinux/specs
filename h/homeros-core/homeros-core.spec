@@ -1,7 +1,7 @@
 %define skeldir %_sysconfdir/skel.homeros.ru_RU.UTF-8
 
 Name: homeros-core
-Version: 20130412
+Version: 20140202
 Release: alt1
 Summary: The set of scripts and settings for ALT Linux Homeros
 Group: System/Configuration/Other
@@ -17,6 +17,12 @@ Source: %name-%version.tar.gz
 Summary: The scripts for ALT Linux Homeros installation
 Group: System/Configuration/Other
 License: GPL
+
+%package -n homeros-xutils
+Summary: The scripts for launching mplayer and xpdf from terminal mode (designed for Homeros environment)
+Group: System/Configuration/Other
+License: GPL
+Requires: mplayer mplayer-tools xpdf 
 
 %package -n homeros-emacs
 Summary: The set of GNU Emacs scripts for ALT Linux Homeros
@@ -35,6 +41,14 @@ The set of scripts and settings for ALT Linux Homeros
 %description -n homeros-install
 The scripts from this package implement LiveCD cloning technique for ALT Linux Homeros installation.
 
+%description -n homeros-xutils
+This package contains a following scripts:
+- show-movie
+- show-pdf
+
+These scripts allow launching mplayer and xpdf from terminal mode
+(including terminal GNU Emacs).
+
 %description -n homeros-emacs
 This package contains GNU Emacs scripts for ALT Linux Homeros.
 
@@ -50,16 +64,14 @@ The package with various data files for ALT Linux Homeros LiveCD environment.
 ./homeros-core-install %buildroot
 
 %files
-%config %skeldir
-%_bindir/useradd-homeros
 %_datadir/sounds/homeros
-%_bindir/run-gqview-without-escape
+
+%files -n homeros-xutils
 %_bindir/show-movie
-%_bindir/show-photo
 %_bindir/show-pdf
 
 %files -n homeros-install
-%_bindir/homeros-install
+%_sbindir/homeros-install
 /usr/libexec/homeros-install
 %_datadir/homeros-install
 
@@ -72,6 +84,21 @@ The package with various data files for ALT Linux Homeros LiveCD environment.
 %_datadir/homeros-live-data
 
 %changelog
+* Sun Feb 02 2014 Michael Pozhidaev <msp@altlinux.ru> 20140202-alt1
+- homeros-xutils subpackage restored with show-movie and show-pdf scripts
+
+* Wed Jan 22 2014 Michael Pozhidaev <msp@altlinux.ru> 20140122-alt1
+- homeros-install: rc.local in the new system is either empty or taken from /etc/rc.d/rc.local.homeros-install-initial
+
+* Mon Aug 05 2013 Michael Pozhidaev <msp@altlinux.ru> 20130806-alt1
+-homeros-install script goes to /sbin
+- no longer useradd-homeros script
+-  no longer skel directory for Homeros
+
+* Mon Aug 05 2013 Michael Pozhidaev <msp@altlinux.ru> 20130805-alt1
+- Fixed bug with local scripts launch in homeros-install
+- useradd-homeros no longer invoked in homeros-install (usual useradd is used instead of it)
+
 * Fri Apr 12 2013 Michael Pozhidaev <msp@altlinux.ru> 20130412-alt1
 - homeros-install deep clean up
 - New packages layout: homeros-core, homeros-install, homeros-emacs and homeros-live-data
