@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraTransfer
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: Get pictures from a digital camera
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 Source1: BCell.m
+Source2: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -42,12 +43,18 @@ install -m644 %SOURCE1 .
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE2 %buildroot%_menudir/%name
+
 %files
 %doc README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Added Requires: gnustep-back
 
