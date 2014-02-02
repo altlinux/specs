@@ -2,7 +2,7 @@
 
 Name: gnustep-Affiche
 Version: 0.6.0
-Release: alt2
+Release: alt3
 Summary: An application to "stick" little notes on the desktop
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.debian.org/jessie/affiche.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -39,12 +40,18 @@ environment.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2
 - Added Requires: gnustep-back
 
