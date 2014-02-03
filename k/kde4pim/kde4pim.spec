@@ -19,7 +19,7 @@
 %define bugfix 2
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -60,7 +60,8 @@ Requires: %name-ktnef = %version-%release
 
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
-# Upstream
+# FC
+Patch1: kdepim-4.11.90-install_kleopatra_headers.patch
 # ALT
 Patch101: kdepim-4.0.80-alt-kmail-acctlocal-lock.patch
 Patch102: kdepim-4.12.2-alt-nepomuk-warning.patch
@@ -1108,6 +1109,7 @@ based on kdepim.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 ###%patch101 -p1
 %patch102 -p1
 #%patch103 -p1
@@ -1686,14 +1688,16 @@ based on kdepim.
 
 %files devel
 %_K4link/*.so
-#%_K4includedir/*
+%_K4includedir/*
 #%_K4apps/cmake/modules/*
 %_K4apps/kdepimwidgets
 %_K4lib/plugins/designer/*.so
 %_K4dbus_interfaces/*
 
-
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt2
+- install kleopatra headers
+
 * Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
