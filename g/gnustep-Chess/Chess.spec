@@ -2,7 +2,7 @@
 
 Name: gnustep-Chess
 Version: 33
-Release: alt2.cvs20140127
+Release: alt3.cvs20140127
 Summary: Chess game
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/ported-apps/Games/Chess
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-c++
@@ -38,12 +39,18 @@ Chess game.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc COPYING
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 33-alt3.cvs20140127
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 33-alt2.cvs20140127
 - Added Requires: gnustep-back
 
