@@ -1,25 +1,22 @@
 Name: xfce4-clipman-plugin
-Version: 1.2.3
-Release: alt3
+Version: 1.2.4
+Release: alt1
 
-Summary: Clipboard history plugin for the XFce panel
-Summary(ru_RU.UTF-8): Менеджер буфера обмена для XFce
+Summary: Clipboard history plugin for the Xfce panel
+Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
-Source1: %name-doc.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libexo-devel libxfce4ui-devel libxfconf-devel libxfce4util-devel
-BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel
-# For documentation
-BuildRequires: gtk-doc itstool gnome-doc-utils
+BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel libqrencode-devel
 
 Requires: xfce4-panel
 
@@ -38,19 +35,11 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 путем сопоставления их с регулярными выражениями.
 
 %prep
-%setup -a1
-# There is no git submodule under doc/ already.
-# Remove it from the auto generated patch
-sed -i '/^diff --git a\/doc b\/doc/,/^-Subproject commit/d' %_sourcedir/%name-%version-%release.patch
+%setup
 %patch -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag project_version_tag configure.ac.in
-
-# Set version 1.2.3. This is not the new version, just 1.2.3
-# with updated translations.
-# MUST BE REMOVED AFTER UPDATE TO THE REAL NEW VERSION!
-sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_version_micro], [3]);' configure.ac.in
 
 %build
 %xfce4reconf
@@ -58,7 +47,7 @@ sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_versio
 	--enable-maintainer-mode \
 	--disable-static \
 	--enable-unique \
-	--enable-gen-doc \
+	--enable-qrencode \
 	--enable-debug=no
 %make_build
 
@@ -72,7 +61,6 @@ sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_versio
 %_bindir/*
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
-%_docdir/%name
 %_iconsdir/hicolor/22x22/apps/*
 %_iconsdir/hicolor/24x24/apps/*
 %_iconsdir/hicolor/scalable/apps/*
@@ -85,6 +73,11 @@ sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_versio
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Feb 03 2014 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Enable QR Code support.
+- Updated to 1.2.4.
+
 * Fri Jun 07 2013 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt3
 - Really update translations.
 
