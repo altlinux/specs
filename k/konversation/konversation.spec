@@ -5,7 +5,7 @@
 %define rname konversation
 Name: %rname
 
-Version: 1.4
+Version: 1.5
 Release: alt1
 %define beta %nil
 
@@ -68,6 +68,12 @@ and much more.
 
 
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.5-alt1
+- new version
+
+* Thu Jun 28 2012 Sergey V Turchin <zerg@altlinux.org> 1.4-alt0.M60P.1
+- built for M60P
+
 * Mon Jun 25 2012 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
 - new version
 
