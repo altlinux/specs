@@ -2,7 +2,7 @@
 
 Name: gnustep-DictionaryReader
 Version: 2006
-Release: alt2
+Release: alt3
 Summary: DictionaryReader is a dictionary application
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: https://www.unix-ag.uni-kl.de/~guenther/gnustep/dictionaryreader.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -39,12 +40,18 @@ and easy to use.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc AUTHORS ChangeLog NEWS TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt2
 - Added Requires: gnustep-back
 
