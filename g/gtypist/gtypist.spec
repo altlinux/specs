@@ -1,5 +1,5 @@
 Name: gtypist
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Summary: GNU Typist is a universal typing tutor
@@ -46,6 +46,7 @@ GNU Typist - клавиатурный тренажер для консоли, с
 %package -n emacs-mode-%name
 Summary: Major mode for editing %name script-files (*.typ)
 Group: Editors
+BuildArch: noarch
 Requires: %name = %version-%release emacs
 
 %description -n emacs-mode-%name
@@ -57,6 +58,7 @@ All Emacs Lisp code is byte-copmpiled, install emacs-mode-%name-el for sources.
 %package -n emacs-mode-%name-el
 Summary: The Emacs Lisp sources for bytecode included in emacs-mode-%name
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description -n emacs-mode-%name-el
@@ -69,7 +71,7 @@ emacs-mode-%name code or see some Lisp examples.
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -128,6 +130,9 @@ __INIT__
 %_emacslispdir/%name-mode.el
 
 %changelog
+* Mon Feb 03 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
+- 2.9.4
+
 * Sun Nov 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
 - 2.9.3
 - updated buildreqs
