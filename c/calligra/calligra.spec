@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.7.5
-Release: alt3
+Release: alt4
 Epoch: 0
 %define libname lib%name
 
@@ -640,6 +640,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt4
+- rebuilt
+
 * Fri Dec 20 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt3
 - require stage for okular odp
 

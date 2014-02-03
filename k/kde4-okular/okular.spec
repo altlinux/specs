@@ -5,8 +5,8 @@
 %define rname okular
 Name: kde4-okular
 %define major 4
-%define minor 11
-%define bugfix 5
+%define minor 12
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -129,6 +129,12 @@ Development files for %name
 
 
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Sat Jan 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 

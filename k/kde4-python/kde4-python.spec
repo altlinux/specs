@@ -2,8 +2,8 @@
 
 %define rname pykde4
 Name: kde4-python
-Version: 4.11.2
-Release: alt2
+Version: 4.12.2
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -79,6 +79,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
 * Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
 - rebuilt with new sip (ALT#29613)
 
