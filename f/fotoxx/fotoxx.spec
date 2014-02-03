@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 14.01.1
+Version: 14.02.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -86,6 +86,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_man1dir/*
 
 %changelog
+* Mon Feb 03 2014 Yuri N. Sedunov <aris@altlinux.org> 14.02.1-alt1
+- 14.02.1
+
 * Fri Jan 17 2014 Yuri N. Sedunov <aris@altlinux.org> 14.01.1-alt1
 - 14.01.1
 
