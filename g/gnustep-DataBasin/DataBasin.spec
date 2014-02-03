@@ -2,7 +2,7 @@
 
 Name: gnustep-DataBasin
 Version: 0.6
-Release: alt2
+Release: alt3
 Summary: Data access tool and for SalesForce.com based on the SOAP API interfaces
 License: GPL / LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.nongnu.org/gap/databasin/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -58,12 +59,18 @@ Features
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog *.txt
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
 - Added Requires: gnustep-back
 
