@@ -1,26 +1,62 @@
-Name: libwmf
+Name:    libwmf
 Version: 0.2.8.4
-Release: alt10.qa1
+Release: alt11
 
 Summary: A library to convert wmf files
 License: GPL
-Group: Text tools
-Url: http://sourceforge.net/projects/wvware
+Group:   Text tools
+Url:     http://sourceforge.net/projects/wvware
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Requires: fonts-type1-urw
+Requires:  fonts-type1-urw
 Obsoletes: wmf-fonts < %version-%release
 
-Source: %name-%version.tar.bz2
+Source:  %name-%version.tar.bz2
 
-Patch0: %name-0.2.6-cflags.patch
-Patch1: libwmf-0.2.8.4-intoverflow.patch
-Patch2: libwmf-0.2.8.3-CAN-2004-0941.patch
-Patch3: libwmf-0.2.8.3-CAN-2004-0990.patch
-Patch4: libwmf-0.2.8.4-CVE2007-2756.patch
-Patch5: libwmf-0.2.8.4-CVE-2007-3473.patch
-Patch6: libwmf-0.2.8.4-CVE-2009-1364.patch
+#wrt CVE-2006-3376/CVE-2009-1364
+#Don't install out of date documentation
+Patch0:  libwmf-0.2.8.3-nodocs.patch
+#Allow use of system install fonts intead of libwmf bundled ones
+Patch1:  libwmf-0.2.8.3-relocatablefonts.patch
+#Set a fallback font of Times for text if a .wmf file don't set any
+Patch2:  libwmf-0.2.8.4-fallbackfont.patch
+#Strip unnecessary extra library dependencies
+Patch3:  libwmf-0.2.8.4-deps.patch
+#convert libwmf-config to a pkg-config to avoid multilib conflicts
+Patch4:  libwmf-0.2.8.4-multiarchdevel.patch
+#CVE-2006-3376 Integer overflow in player.c
+Patch5:  libwmf-0.2.8.4-intoverflow.patch
+#Don't export the modified embedded GD library symbols, to avoid conflicts with
+#the external one
+Patch6:  libwmf-0.2.8.4-reducesymbols.patch
+#CVE-2009-1364, Use-after-free vulnerability in the modified embedded GD
+#library
+Patch7:  libwmf-0.2.8.4-useafterfree.patch
+# adapt to standalone gdk-pixbuf
+Patch8:  libwmf-0.2.8.4-pixbufloaderdir.patch
+# CVE-2007-0455
+Patch9:  libwmf-0.2.8.4-CVE-2007-0455.patch
+# CVE-2007-3472
+Patch10: libwmf-0.2.8.4-CVE-2007-3472.patch
+# CVE-2007-3473
+Patch11: libwmf-0.2.8.4-CVE-2007-3473.patch
+# CVE-2006-2906 affects GIFs, which is not implemented here
+# CVE-2006-4484 affects GIFs, which is not implemented here
+# CVE-2007-3474 affects GIFs, which is not implemented here
+# CVE-2007-3475 affects GIFs, which is not implemented here
+# CVE-2007-3476 affects GIFs, which is not implemented here
+# CVE-2007-3477
+Patch12: libwmf-0.2.8.4-CVE-2007-3477.patch
+# CVE-2007-3478 affects shared ttf files across threads, which is not implemented here
+# CVE-2007-2756
+Patch13: libwmf-0.2.8.4-CVE-2007-2756.patch
+# CAN-2004-0941
+Patch14: libwmf-0.2.8.4-CAN-2004-0941.patch
+# CVE-2009-3546
+Patch15: libwmf-0.2.8.4-CVE-2009-3546.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=925929
+Patch16: libwmf-aarch64.patch
 
 # Automatically added by buildreq on Thu Jan 04 2007
 BuildRequires: ghostscript-common glib2-devel libICE-devel libX11-devel libexpat-devel
@@ -66,48 +102,65 @@ support.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-
-rm -f configure.in
+%patch0  -p1
+%patch1  -p1
+%patch2  -p1
+%patch3  -p1
+%patch4  -p1
+%patch5  -p1
+%patch6  -p1
+%patch7  -p1
+%patch8  -p1
+%patch9  -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 %build
+rm configure.ac
+ln -s patches/acconfig.h acconfig.h
+
 %autoreconf
 %configure \
 	--disable-static \
-	--with-fontdir=%_datadir/fonts/type1/urw \
-	--with-xtrafontmap=%_datadir/%name/fontmap \
-	--with-docdir=%_docdir/%name-%version
+        --with-fontdir=%_datadir/fonts/type1/urw \
+        --with-xtrafontmap=%_datadir/%name/fontmap \
+        --with-docdir=%_docdir/%name-%version \
+	--disable-dependency-tracking
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-
+%makeinstall_std
+find %buildroot -name '*.la' -exec rm -f {} ';'
 install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
-install -p -m644 ChangeLog CREDITS README TODO %buildroot%_docdir/%name-%version
 
 %files
+%doc AUTHORS README
 %_libdir/*.so.*
 %_datadir/%name
 
 %files -n wmf-utils
 %_bindir/wmf2*
+%_bindir/libwmf-fontmap
 
 %files -n wmf-gtk-loader
-%_libdir/gtk-*/*/loaders/*.so
+%_libdir/gdk-pixbuf-2.0/*/loaders/*.so
 
 %files devel
 %_libdir/*.so
 %_bindir/%name-config
 %_includedir/%name
-%_docdir/%name-%version
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Feb 03 2014 Andrey Cherepanov <cas@altlinux.org> 0.2.8.4-alt11
+- Apply security patches from Fedora package
+- Move AUTHORS and README files to library package
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.8.4-alt10.qa1
 - NMU: rebuilt for updated dependencies.
 
