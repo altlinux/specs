@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.9.4
-Release: alt2
+Version: 9.9.5
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -440,6 +440,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Mon Feb 03 2014 Fr. Br. George <george@altlinux.ru> 9.9.5-alt1
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.5/bind-9.9.5.tar.gz
+- Don't package bind9-config (in favour of lib*-export)
+
 * Thu Nov 28 2013 Fr. Br. George <george@altlinux.ru> 9.9.4-alt2
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.4-P1/bind-9.9.4-P1.tar.gz
 - (CVE-2013-6230 is fixed in this version)
