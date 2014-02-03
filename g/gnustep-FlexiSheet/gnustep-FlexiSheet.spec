@@ -2,7 +2,7 @@
 
 Name: gnustep-FlexiSheet
 Version: 0.1
-Release: alt3.cvs20140127
+Release: alt4.cvs20140127
 Summary: A Quantrix-like spreadsheet
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/user-apps/FlexiSheet
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -64,16 +65,22 @@ find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -
 # the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
 find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files docs
 %doc Application/FlexiSheet\ Help
 %doc Documentation
 
 %changelog
+* Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4.cvs20140127
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.cvs20140127
 - Added Requires: gnustep-back
 
