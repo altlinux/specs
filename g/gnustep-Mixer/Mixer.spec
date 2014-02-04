@@ -2,7 +2,7 @@
 
 Name: gnustep-Mixer
 Version: 1.8.0
-Release: alt2
+Release: alt3
 Summary: Mixer application designed for WindowMaker
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.debian.org/ru/squeeze/gnustep/mixer.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: Mixer
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-c++
@@ -44,13 +45,20 @@ For work this application You need run `/sbin/modprobe snd-pcm-oss'.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+mv %buildroot%_bindir/Mixer %buildroot%_bindir/Mixer.app
+install -m755 %SOURCE1 %buildroot%_bindir/
+
 %files
 %doc ChangeLog README
 %_bindir/*
 
 %changelog
+* Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt3
+- Disabled use of /dev/sound/mixer
+- Added script for run program
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2
-- Added Requires: alsa-oss (thnx mik@)
+- Added Requires: alsa-oss (thnx mike@)
 
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Initial build for Sisyphus
