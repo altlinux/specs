@@ -2,11 +2,11 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt6
+Release: alt7
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
-Url: http://www.gnustep.org/
+Url: http://gap.nongnu.org/addresses/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -14,6 +14,7 @@ Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
+BuildPreReq: gnustep-gworkspace-devel gnustep-gsldap-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
@@ -54,6 +55,51 @@ information, email, homepages and whatever.
 
 This package contains development files of GNUstep AddressManager.
 
+%package -n gnustep-VCFInspector
+Summary: A content inspector bundle for GWorkspace
+Group: Graphical desktop/GNUstep
+Requires: %name = %EVR
+Requires: gnustep-gworkspace
+
+%description -n gnustep-VCFInspector
+A content inspector bundle for GWorkspace. It's horribly useful
+nonetheless. You can use it to browse through VCFs and also to drag
+single addresses out of VCFs into the address book, terminal, any
+text field, ...
+
+%package -n gnustep-adgnumailconverter
+Summary: Merge your GNUMail address book into the Addresses database
+Group: Networking/Mail
+Requires: %name = %EVR
+
+%description -n gnustep-adgnumailconverter
+A tool that will merge your GNUMail address book into the Addresses
+database.
+
+%package -n gnustep-adserver
+Summary: A stand-alone Addresses network server
+Group: Networking/Mail
+Requires: %name = %EVR
+
+%description -n gnustep-adserver
+A stand-alone Addresses network server.
+
+%package -n gnustep-adtool
+Summary: A command-line tool for address database manipulation
+Group: Networking/Mail
+Requires: %name = %EVR
+
+%description -n gnustep-adtool
+A command-line tool for address database manipulation
+
+%package -n gnustep-LDAPAddressBook
+Summary: An address book plugin to handle LDAP connections
+Group: Graphical desktop/GNUstep
+Requires: %name = %EVR
+
+%description -n gnustep-LDAPAddressBook
+An address book plugin to handle LDAP connections.
+
 %prep
 %setup
 
@@ -75,6 +121,14 @@ This package contains development files of GNUstep AddressManager.
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS="-lAddresses -lgnustep-gui -lgnustep-base -lobjc2"
+
+ %make_build -C Goodies \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
+	CONFIG_SYSTEM_LIBS="-lAddresses -lgsldap -lgnustep-gui -lgnustep-base -lobjc2"
  
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -94,12 +148,15 @@ for i in Addresses AddressView; do
 done
 popd
 
+%makeinstall_std -C Goodies GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
-%_bindir/*
-%_libdir/GNUstep
+%_bindir/AddressManager
+%_libdir/GNUstep/Applications
+%_libdir/GNUstep/Frameworks
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 %_menudir/*
@@ -113,7 +170,25 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Headers
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
+%files -n gnustep-VCFInspector
+%_libdir/GNUstep/Bundles/VCFViewer.inspector
+
+%files -n gnustep-adgnumailconverter
+%_bindir/adgnumailconverter
+
+%files -n gnustep-adserver
+%_bindir/adserver
+
+%files -n gnustep-adtool
+%_bindir/adtool
+
+%files -n gnustep-LDAPAddressBook
+%_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
+
 %changelog
+* Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt7
+- Built goodies
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt6
 - Added Requires: gnustep-back
 
