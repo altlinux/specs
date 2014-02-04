@@ -1,6 +1,6 @@
 Name: cifs-utils
-Version: 5.7
-Release: alt2
+Version: 6.3
+Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 Group: System/Kernel and hardware
@@ -9,7 +9,9 @@ Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 
 Source: %name-%version.tar
 
-BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel
+Requires: keyutils
+
+BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
 
 Conflicts: samba-client < 3.6.0-alt1
 
@@ -19,20 +21,51 @@ doing and managing mounts of the Linux CIFS filesystem. These programs
 were originally part of Samba, but have now been split off into a
 separate package.
 
+
+%package devel
+Summary: Files needed for building plugins for cifs-utils
+Group: Development/C
+
+%description devel
+The SMB/CIFS protocol is a standard file sharing protocol widely deployed
+on Microsoft Windows machines. This package contains the header file
+necessary for building ID mapping plugins for cifs-utils.
+
+%package -n pam_cifscreds
+Summary: PAM module to manage NTLM credentials in kernel keyring
+Group: System/Base
+
+%description -n pam_cifscreds
+The pam_cifscreds PAM module is a tool for automatically adding
+credentials (username and password) for the purpose of establishing
+sessions in multiuser mounts.
+
+When a cifs filesystem is mounted with the "multiuser" option, and does
+not use krb5 authentication, it needs to be able to get the credentials
+for each user from somewhere. The pam_cifscreds module can be used to
+provide these credentials to the kernel automatically at login.
+
 %prep
 %setup
 
 %build
 %autoreconf
 %configure \
-       --enable-cifsupcall \
-       --enable-cifsidmap \
-       --enable-cifscreds
+	--with-pam-module-dir=/%_lib/security \
+	--with-idmap-plugin=%_libdir/%name/idmap-plugin
 %make_build
 
 %install
 %makeinstall_std
-mv %buildroot/%_sbindir/cifs.upcall %buildroot/sbin/
+mkdir -p %buildroot%_sysconfdir/request-key.d
+install -m 644 contrib/request-key.d/cifs.idmap.conf %buildroot%_sysconfdir/request-key.d
+install -m 644 contrib/request-key.d/cifs.spnego.conf %buildroot%_sysconfdir/request-key.d
+
+
+# Add alternatives for idmap-plugin
+mkdir -p %buildroot/%_altdir
+printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildroot/%_altdir/cifs-idmap-plugin-idmapwb
+
 
 %files
 /sbin/mount.cifs
@@ -41,15 +74,33 @@ mv %buildroot/%_sbindir/cifs.upcall %buildroot/sbin/
 %_bindir/cifscreds
 %_bindir/getcifsacl
 %_bindir/setcifsacl
+%dir %_libdir/%name
+%_libdir/%name/idmapwb.so
+%_altdir/cifs-idmap-plugin-idmapwb
 %_man8dir/cifs.idmap.8*
 %_man8dir/cifs.upcall.8*
 %_man8dir/mount.cifs.8*
+%_man8dir/idmapwb.8.*
 %_man1dir/getcifsacl.1*
 %_man1dir/setcifsacl.1*
 %_man1dir/cifscreds.1*
 %doc AUTHORS ChangeLog README
+%config(noreplace) %_sysconfdir/request-key.d/cifs.idmap.conf
+%config(noreplace) %_sysconfdir/request-key.d/cifs.spnego.conf
+
+%files devel
+%_includedir/*
+
+%files -n pam_cifscreds
+%_pam_modules_dir/pam_cifscreds.so
+%_man8dir/pam_cifscreds.*
 
 %changelog
+* Mon Feb 03 2014 Alexey Shabalin <shaba@altlinux.ru> 6.3-alt1
+- 6.3
+- add pam_cifscreds package
+- add devel package
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 5.7-alt2
 - Build with renamed libwbclient-devel
 

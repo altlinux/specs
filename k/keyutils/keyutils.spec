@@ -1,5 +1,5 @@
 Name: keyutils
-Version: 1.5.1
+Version: 1.5.8
 Release: alt1
 
 Summary: Linux Key Management Utilities
@@ -7,7 +7,7 @@ License: GPL/LGPL
 Group: System/Base
 Url: http://people.redhat.com/~dhowells/keyutils/
 
-Source0: keyutils-%version-%release.tar
+Source0: %name-%version-%release.tar
 
 BuildRequires: glibc-kernheaders
 
@@ -42,7 +42,7 @@ make \
     USRLIBDIR=%_libdir \
     RELEASE=.%release \
     NO_GLIBC_KEYERR=1 \
-    CFLAGS="-Wall $RPM_OPT_FLAGS"
+    CFLAGS="-Wall $RPM_OPT_FLAGS -Werror"
 
 %install
 make \
@@ -56,6 +56,7 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %files
 %doc README LICENCE.GPL
 %config(noreplace) %_sysconfdir/request-key.conf
+%dir %_sysconfdir/request-key.d
 /sbin/*
 /bin/*
 %_datadir/%name
@@ -72,6 +73,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_man3dir/*
 
 %changelog
+* Mon Feb 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5.8-alt1
+- 1.5.8 released
+
 * Fri Aug 19 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.1-alt1
 - 1.5.1 released
 
@@ -142,15 +146,15 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 * Wed Jul 20 2005 David Howells <dhowells@redhat.com> - 0.2-2
 - Bump version to permit building in main repositories.
 
-* Mon Jul 12 2005 David Howells <dhowells@redhat.com> - 0.2-1
+* Tue Jul 12 2005 David Howells <dhowells@redhat.com> - 0.2-1
 - Don't attempt to define the error codes in the header file.
 - Pass the release ID through to the makefile to affect the shared library name.
 
-* Mon Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-3
+* Tue Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-3
 - Build in the perror() override to get the key error strings displayed.
 
-* Mon Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-2
+* Tue Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-2
 - Need a defattr directive after each files directive.
 
-* Mon Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-1
+* Tue Jul 12 2005 David Howells <dhowells@redhat.com> - 0.1-1
 - Package creation.
