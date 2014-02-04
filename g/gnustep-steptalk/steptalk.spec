@@ -2,7 +2,7 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt2.svn20140106
+Release: alt3.svn20140106
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
+BuildPreReq: libreadline-devel libncurses-devel
 
 Requires: lib%name = %version-%release
 Requires: gnustep-back
@@ -60,6 +61,19 @@ Objective-C language provides, goes way beyond mere scripting.
 
 This package contains documentation for StepTalk.
 
+%package stshell
+Summary: Interactive tool for communicating with objects
+Group: Development/Tools
+Requires: %name = %EVR
+
+%description stshell
+StepTalk is a scripting framework for creating scriptable servers or
+applications. StepTalk, when combined with the dynamism that the
+Objective-C language provides, goes way beyond mere scripting.
+
+This package contains StepTalk Shell, an interactive tool for
+communicating with objects.
+
 %prep
 %setup
 
@@ -78,8 +92,24 @@ buildIt
 rm -f $(find ./ -name Smalltalk -type f)
 buildIt $PWD/Frameworks/StepTalk/StepTalk.framework/libStepTalk.so
  
+mkdir -p /usr/src/GNUstep/Libraries
+ln -s $PWD/Frameworks/StepTalk/StepTalk.framework/libStepTalk.so \
+	/usr/src/GNUstep/Libraries/
+TOPDIR=$PWD
+%make_build -C Examples/Shell \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS="-O2 -DGNUSTEP -I$TOPDIR/Frameworks" \
+	CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm" \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+
+%makeinstall_std -C Examples/Shell GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
 pushd %buildroot%_libdir
 for i in *.so*; do
@@ -96,6 +126,7 @@ popd
 %files
 %doc ChangeLog NEWS README TODO WISH
 %_bindir/*
+%exclude %_bindir/stshell
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/StepTalk.framework/Versions/0/Headers
 %exclude %_libdir/GNUstep/Frameworks/StepTalk.framework//Headers
@@ -112,7 +143,14 @@ popd
 %files doc
 %doc Documentation/*
 
+%files stshell
+%doc Examples/Shell/README Examples/Shell/*.txt
+%_bindir/stshell
+
 %changelog
+* Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt3.svn20140106
+- Added stshell
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.svn20140106
 - New snapshot
 
