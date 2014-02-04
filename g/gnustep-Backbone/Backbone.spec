@@ -2,7 +2,7 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt4.git20140115
+Release: alt5.git20140115
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -22,8 +22,8 @@ BuildPreReq: gnustep-gorm-devel
 Requires: lib%name = %EVR
 Requires: gnustep-back
 
-Conflicts: gnustep-terminal
-Conflicts: gnustep-TextEdit
+Requires: gnustep-terminal
+Requires: gnustep-TextEdit
 
 %description
 Backbone is an attempt (our attempt) at creating a Really Good Desktop.
@@ -119,6 +119,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt5.git20140115
+- Disabled built of Terminal and TextEdit
+
 * Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4.git20140115
 - Added menu file (thnx kostyalamer@)
 
