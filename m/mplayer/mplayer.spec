@@ -306,7 +306,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt10
+Release: alt11
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1108,6 +1108,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Feb 04 2014 Led <led@altlinux.ru> 1.1.1-alt11
+- fixed for new (0.34.0) VA API
+
 * Mon Sep 16 2013 Led <led@altlinux.ru> 1.1.1-alt10
 - remove gmplayer subpackage
 
