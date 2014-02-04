@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -30,6 +30,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Sat Feb 01 2014 Michael Shigorin <mike@altlinux.org> 0.3-alt1
+- DHCP timeout set to 3 seconds (thanks msp@ for the question)
+
 * Mon Feb 11 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - resolv.conf (aufs) related workaround
 
