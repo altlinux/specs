@@ -1,6 +1,6 @@
 Name: ossp
 Version: 1.3.2
-Release: alt9
+Release: alt10
 
 Summary: OSS Proxy - emulate OSS device using CUSE
 Group: System/Kernel and hardware
@@ -12,6 +12,9 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Patch: ossp-1.3.2-alt-DSO.patch
 Source1: osspd.service
+Source2: ossp.tmpfiles.conf
+Source3: ossp.modprobe.conf
+Source4: ossp.rules
 
 # Automatically added by buildreq on Sun Apr 10 2011 (-bb)
 # optimized out: elfutils pkg-config
@@ -36,7 +39,12 @@ install -D -m644 osspd.config %buildroot%_sysconfdir/sysconfig/osspd
 install -D -m644 %SOURCE1 %buildroot%_unitdir/osspd.service
 # sysconf/udev policy - /etc is for user
 mkdir -p %buildroot%_udevrulesdir/
+mkdir -p %buildroot/lib/tmpfiles.d
 mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+
+install -D -m644 %SOURCE2 %buildroot/lib/tmpfiles.d/ossp.conf
+install -D -m644 %SOURCE3 %buildroot/etc/modprobe.d/ossp.conf
+cat %SOURCE4 >> %buildroot%_udevrulesdir/98-osscuse.rules
 
 %preun
 %preun_service osspd
@@ -44,6 +52,8 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %post_service osspd
 
 %files
+/etc/modprobe.d/%name.conf
+/lib/tmpfiles.d/%name.conf
 %_udevrulesdir/98-osscuse.rules
 %_sbindir/ossp-alsap
 %_sbindir/ossp-padsp
@@ -54,6 +64,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_unitdir/osspd.service
 
 %changelog
+* Tue Feb 04 2014 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt10
+- auto-start when needed (thanks to led@)
+
 * Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt9
 - repocop fixes
 
