@@ -21,7 +21,7 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 4.11.4
+Version: 4.12.2
 Release: alt1
 
 Group: Networking/Instant messaging
@@ -43,10 +43,10 @@ Patch1: kopete-4.8.3-alt-mobile.patch
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgcrypt-devel libgif-devel libgpg-error libgpg-error-devel libopencore-amrnb0 libopencore-amrwb0 libortp-devel libp11-kit libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel libxml2-devel phonon-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xproto-devel xsltproc zlib-devel
 #BuildRequires: boost-devel-headers fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif gcc-c++ kde4-nepomuk-core-devel kde4base-runtime-core kde4pimlibs-devel libexpat-devel libgadu-devel libidn-devel libjasper-devel libjpeg-devel libmeanwhile-devel libmediastreamer-devel libmsn-devel libotr-devel libqca2-devel libqimageblitz-devel libsqlite3-devel libsrtp libv4l-devel libxslt-devel python-module-distribute rpm-build-python3 rpm-build-ruby samba-client xorg-xf86miscproto-devel zlib-devel-static
 BuildRequires: boost-devel gcc-c++
-BuildRequires: kde4-nepomuk-core-devel kde4base-runtime-devel kde4pimlibs-devel
+BuildRequires: kde4-nepomuk-core-devel kde4base-runtime-devel kde4pimlibs-devel kde4pim-devel
 BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
-BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel
-BuildRequires: libmeanwhile-devel libmediastreamer-devel libmediastreamer-ilbc libmsn-devel libotr-devel
+BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
+BuildRequires: libmeanwhile-devel libmediastreamer-devel libmediastreamer-ilbc libmsn-devel libotr5-devel
 BuildRequires: libqca2-devel libqimageblitz-devel libsqlite3-devel
 BuildRequires: libsrtp libv4l-devel libxslt-devel python-devel
 BuildRequires: kde-common-devel rpm-macros-browser-plugins
@@ -317,6 +317,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 

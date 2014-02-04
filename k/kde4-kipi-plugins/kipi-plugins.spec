@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.5.0
-Release: alt2
+Release: alt3
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -171,6 +171,12 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt3
+- rebuilt
+
+* Mon Oct 14 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt1.M70P.1
+- built for M70P
+
 * Mon Oct 14 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt2
 - fix requires
 

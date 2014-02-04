@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 4.11.5
+Version: 4.12.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -92,6 +92,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
 * Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 

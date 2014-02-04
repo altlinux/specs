@@ -2,7 +2,7 @@
 
 %define rname analitza
 Name: kde4-analitza
-Version: 4.11.4
+Version: 4.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -101,6 +101,12 @@ Development files for %name
 
 
 %changelog
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 

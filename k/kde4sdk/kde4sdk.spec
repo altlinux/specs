@@ -8,8 +8,8 @@
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
-%define minor 11
-%define bugfix 5
+%define minor 12
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -49,7 +49,7 @@ BuildRequires: antlr gcj-antlr antlr-native antlr-native-devel /proc
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
 BuildRequires: kde4libs-devel >= %version kde4base-devel
 BuildRequires: kde4pimlibs-devel >= %version
-BuildRequires: kde4base-workspace-devel >= %version
+BuildRequires: kde4base-workspace-devel
 
 %description
 Software Development Kit for the K Desktop Environment.
@@ -609,6 +609,12 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 

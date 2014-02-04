@@ -3,7 +3,7 @@
 
 %define rname libkdcraw
 Name: libkdcraw4
-Version: 4.11.1
+Version: 4.12.2
 Release: alt1
 
 Group: System/Libraries
@@ -21,6 +21,7 @@ Source: %rname-%version.tar
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libgomp-devel libjpeg-devel liblcms-devel libqt3-devel rpm-build-ruby zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel libgomp-devel libjpeg-devel zlib-devel kde-common-devel
+BuildRequires: libraw-devel
 %if_enabled lcms2
 BuildRequires: liblcms2-devel
 %else
@@ -65,6 +66,12 @@ Development files for %name
 
 
 %changelog
+* Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 

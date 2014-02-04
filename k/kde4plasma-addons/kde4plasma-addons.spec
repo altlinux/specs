@@ -10,8 +10,8 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 11
-%define bugfix 4
+%define minor 12
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -124,7 +124,7 @@ BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel
 %if_enabled desktop
 BuildRequires: kde4edu-devel
 %endif
-BuildRequires: kde4base-workspace-devel >= %version kde4pimlibs-devel >= %version
+BuildRequires: kde4base-workspace-devel kde4pimlibs-devel >= %version
 
 %description
 kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4.
@@ -1322,6 +1322,12 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
