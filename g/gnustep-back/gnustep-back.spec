@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt1.svn20140127
+Release: alt2.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -41,7 +41,11 @@ windowing environments). This package includes development headers too.
 	--libexecdir=%_libdir \
 	--enable-glitz \
 	--enable-server=x11 \
+%ifarch x86_64
 	--enable-graphics=cairo \
+%else
+	--enable-graphics=xlib \
+%endif
 	--with-tiff-library \
 	--with-x \
 	--with-installation-domain=SYSTEM
@@ -115,6 +119,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt2.svn20140127
+- Built with xlib for i586
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt1.svn20140127
 - New snapshot
 
