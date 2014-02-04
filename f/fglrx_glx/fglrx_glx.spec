@@ -1,4 +1,4 @@
-%define cat_ver 13.12
+%define cat_ver 14.1
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -17,15 +17,15 @@
 %define bname fglrx
 Name: %{bname}_glx
 %define ksname %bname
-Epoch: 1
-Version: 13.251
-Release: alt3
+Epoch: 2
+Version: 13.35.1005
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
 License: Proprietary
-Source0: http://www2.ati.com/drivers/beta/amd-catalyst-%cat_ver-linux-x86.x86_64.run
+Source0: http://www2.ati.com/drivers/beta/amd-driver-installer-%version-x86.x86_64.run
 Source2: %bname-switch.c
 Source7: a-ac-aticonfig
 Source8: a-lid-aticonfig
@@ -35,9 +35,6 @@ Source12: aticonfig.1
 Source13: %{bname}_create.xinf
 Source14: xinf2fdi
 Patch0: %bname-13.20.16-printk-loglevel.patch
-Patch1: %bname-13.251-kernel-3.9.patch
-Patch2: %bname-13.251-kernel-3.12.patch
-Patch3: %bname-13.251-kernel-3.13.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -46,7 +43,7 @@ Provides: xorg-drv-%bname
 
 Requires: xorg-server >= 1.5.0
 Requires: libdrm >= 2.4.5-alt2
-Requires: XORG_ABI_VIDEODRV < 15
+Requires: XORG_ABI_VIDEODRV < 16
 Requires: hwdatabase
 Requires: libGL libXrandr libXi libXcursor libXinerama
 
@@ -115,9 +112,6 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -209,7 +203,7 @@ tar -chJ \
 install -pD -m 0755 {,%buildroot%_switchdir/}%bname
 
 install -d -m 0755 %buildroot%_sysconfdir/ati
-install -p -m 0644 common/etc/ati/{*.{blb,default,xml},control,signature} %buildroot%_sysconfdir/ati/
+install -p -m 0644 common/etc/ati/{*.{blb,default},control,signature} %buildroot%_sysconfdir/ati/
 install -p -m 0755 common/etc/ati/*.sh %buildroot%_sbindir/
 %{?x86:install -p -m 0755 common/etc/ati/atiapfxx %buildroot%_sbindir/}
 install -p -m 0644 common/{etc/ati/*.example,usr/share/doc/%bname/*.{TXT,html}} %buildroot%_docdir/%name-%version/
@@ -223,7 +217,7 @@ install -pD -m 0644 {,%buildroot%_fdidir/20-}x11-video-%bname.fdi
 
 chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
-%brp_strip_none %_x11x11libdir/fgl*.so
+%{?brp_strip_none:%brp_strip_none %_x11x11libdir/fgl*.so}
 %set_verify_elf_method textrel=relaxed,unresolved=relaxed,lint=relaxed
 
 
@@ -279,6 +273,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Tue Feb 04 2014 Led <led@altlinux.ru> 2:13.35.1005-alt1
+- 13.35.1005 (Catalyst 14.1 Beta)
+
 * Fri Jan 31 2014 Led <led@altlinux.ru> 1:13.251-alt3
 - fixed requires
 
