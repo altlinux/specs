@@ -4,15 +4,16 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
+%def_enable memphis
 
 Name: %_name
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: Map view library for Clutter
 License: LGPLv2+
 Group: System/Libraries
-Url: http://projects.gnome.org/%name/
+Url: https://wiki.gnome.org/Projects/libchamplain
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
@@ -23,6 +24,7 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.
 %define clutter_ver 1.12
 %define soup_ver 2.33.90
 %define gir_ver 0.10.3
+%define memphis_ver 0.2.1
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -31,7 +33,8 @@ BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libsoup-gnome-devel >= %soup_ver
 BuildRequires: libclutter-gtk3-devel libsoup-devel libsqlite3-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libclutter-gir-devel}
+%{?_enable_memphis:BuildRequires: libmemphis-devel >= %memphis_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libclutter-gir-devel %{?_enable_memphis:libmemphis-gir-devel}}
 
 %description
 Libchamplain is a C library aimed to provide a ClutterActor to display
@@ -129,7 +132,7 @@ This package provides Vala language bindings for the Libchamplain library
 
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 gtkdocize --copy
@@ -137,12 +140,13 @@ gtkdocize --copy
 %configure --disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_disable_vala:--disable-vala-demos} \
-	--enable-introspection=auto
+	--enable-introspection=auto \
+	%{subst_enable memphis}
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -198,6 +202,10 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
+- 0.12.6
+- enabled local rendering support via libmemphis
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt2
 - rebuilt against libcogl.so.15
 
