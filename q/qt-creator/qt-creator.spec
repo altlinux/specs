@@ -1,7 +1,8 @@
 %add_findreq_skiplist *gdbmacros*
+%add_python_req_skip lldb
 
 Name: qt-creator
-Version: 2.7.0
+Version: 2.8.1
 Release: alt1
 Summary: Lightweight and cross-platform IDE for Qt
 
@@ -14,7 +15,7 @@ Packager: Anatoly Lyutin <vostok@altlinux.org>
 Source: %name-%version.tar
 Source1: qtcreator.desktop
 
-Patch: fix_linking_libhelp.patch
+Patch: %name-%version-%release.patch
 
 Requires: %name-data = %version-%release
 
@@ -51,11 +52,12 @@ Data files for %name
 %setup
 subst 's,tools\/qdoc3,bin,' doc/doc.pri
 subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
-%patch0 -p1
+%patch -p1
 
 %build
 export QTDIR=%_qt4dir
 qmake-qt4 IDE_LIBRARY_BASENAME=%_lib
+NPROCS=1
 %make_build
 %make_build docs
 
@@ -93,6 +95,9 @@ done
 %exclude %_datadir/qtcreator/doc
 
 %changelog
+* Sun Feb 02 2014 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.1-alt1
+- update to new version (closes #29569)
+
 * Thu Apr 11 2013 Anatoly Lyutin <vostok@altlinux.org> 2.7.0-alt1
 - new version (closes #28740)
 
