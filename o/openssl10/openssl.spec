@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.1f
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -40,14 +40,9 @@ Patch25: openssl-rh-alt-secure-getenv.patch
 Patch26: openssl-rh-dh-1024.patch
 Patch27: openssl-rh-padlock64.patch
 Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
+Patch29: openssl-rh-3des-strength.patch
 
 %define shlib_soversion 10
-%define compat_shlib_versions 1.0.0 1.0.0a
-%if "%_lib" == "lib64"
-%define lib_suffix ()(64bit)
-%else
-%define lib_suffix %nil
-%endif
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
 %def_enable compat
@@ -66,8 +61,6 @@ Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
 Conflicts: openssh-common < 5.9p1-alt5
 Requires: ca-certificates
-# Backwards compatibility with alien libssl packages.
-Provides: %(for i in %compat_shlib_versions; do echo -n "libcrypto.so.$i%lib_suffix "; done)
 
 %package -n libssl%shlib_soversion
 Summary: OpenSSL libssl shared library
@@ -75,9 +68,6 @@ Group: System/Libraries
 Provides: libssl = %version
 %{?_with_krb:Provides: openssl-krb = %version-%release}
 Requires: libcrypto%shlib_soversion = %version-%release
-Provides: libssl8 = %version-%release
-# Backwards compatibility with alien libssl packages.
-Provides: %(for i in %compat_shlib_versions; do echo -n "libssl.so.$i%lib_suffix "; done)
 
 %package -n libssl-devel
 Summary: OpenSSL include files and development libraries
@@ -253,6 +243,7 @@ on the command line.
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
+%patch29 -p1
 
 find -type f -name \*.orig -delete
 
@@ -340,14 +331,7 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-# Add extra symlinks for compatibility with alien libssl packages.
-for i in %compat_shlib_versions; do
-	for n in crypto ssl; do
-		[ -f %buildroot/%_lib/libcrypto.so.$i ] ||
-			ln -s ../../%_lib/lib$n.so.%version %buildroot%_libdir/lib$n.so.$i
-	done
-done
-
+# Relocate engines.
 mv %buildroot%_libdir/engines %buildroot%_libdir/openssl/
 
 # Relocate openssl.cnf from %%openssldir/ to %_sysconfdir/openssl/.
@@ -416,7 +400,6 @@ fi
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
-%_libdir/libcrypto*.so.*
 %config(noreplace) %_sysconfdir/openssl
 %dir %openssldir
 %openssldir/*.cnf
@@ -426,7 +409,6 @@ fi
 
 %files -n libssl%shlib_soversion
 /%_lib/libssl*
-%_libdir/libssl*.so.*
 
 %files -n libssl-devel
 %_bindir/openssl-config
@@ -459,6 +441,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Tue Feb 04 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1f-alt2
+- Made 3DES strength to be 128 bits instead of 168 (RH#1056616).
+- Dropped delusive compatibility with alien libssl packages.
+
 * Mon Jan 06 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1f-alt1
 - Updated to 1.0.1f
   (fixes CVE-2013-4353, CVE-2013-6449, and CVE-2013-6450).
