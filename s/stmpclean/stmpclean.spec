@@ -1,6 +1,6 @@
 Name: stmpclean
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: A safe temporary directory cleaner
 License: BSD-like
@@ -25,7 +25,7 @@ from the specified directory.  Its typical use is to clean directories
 such as /tmp where old files tend to accumulate.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -45,6 +45,9 @@ install -pD -m700 %SOURCE1 %buildroot%_sysconfdir/cron.daily/%name
 %doc README FAQ
 
 %changelog
+* Tue Feb 04 2014 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt4
+- cron: dropped /var/cache/man and /var/catman processing (closes: #29494).
+
 * Thu Jun 30 2011 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt3
 - Changed algorithm to honor ctime and mtime as well as atime.
 - Raised default timeout from 10 days to 30 days (closes: #24081).
