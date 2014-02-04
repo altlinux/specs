@@ -9,19 +9,23 @@ Version: 4.1
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt8
+Release: alt9
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
 URL: http://www.libreoffice.org
 
-# Change this to -integrated to make LO4 default
-Requires: %name-standalone = %version-%release
+Requires: %name-integrated = %version-%release
 Requires: %name-common = %version-%release
+Requires: %name-mimetypes = %version-%release
+Requires: %name-extensions = %version-%release
+
+Provides: %name-full = %version-%release
+Obsoletes: %name-full < %version-%release
 
 %define with_lang ru de fr uk pt-BR es kk
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
-#Requires: gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-ffmpeg
+Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 
 Source:		libreoffice-%uversion.tar.xz
 Source1:	libreoffice-dictionaries-%uversion.tar.xz
@@ -85,7 +89,7 @@ LibreOffice is a productivity suite that is compatible with other major
 office suites.
 
 This package provides maximum possible installation of %name along winth
-other office packages.
+other office packages, except of language packs and GNOME/KDE bindings.
 
 %package common
 Summary: Basic installation of %name
@@ -94,16 +98,6 @@ AutoReqProv: yes, noshell, nopython
 %description common
 Common part of %name that does not interfere with other packages
 
-%package full
-Summary: LibreOffice Productivity Suite
-Group: Office
-Requires: %name-integrated = %version-%release
-Requires: %name-common = %version-%release
-Requires: %name-mimetypes = %version-%release
-%description full
-Full installation of %name, except of language packs
-and GNOME/KDE bindings.
-
 %package standalone
 Summary: Renamed binaries, icons and desktop files for %name
 Group: Office
@@ -111,7 +105,7 @@ Provides: %uname = %version-%release
 Conflicts: %name-integrated
 Requires: %name-common = %version-%release
 %description standalone
-Wrapper scripts, icons and desktop files for running renamed version if %name
+Wrapper scripts, icons and desktop files for running renamed version of %name
 as lo4write, lo4draw etc.
 
 %package integrated
@@ -288,6 +282,7 @@ test -r %conffile && . %conffile ||:
 	--enable-ext-barcode \
   \
 	--enable-release-build \
+	--with-help \
   \
 	--enable-gtk3 \
 	--enable-gstreamer \
@@ -306,18 +301,20 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %ifdef with_forky
 # TODO prefect forky_max tune
 echo Using forky
-export forky_divider=12
-export forky_max_procs=`awk '/^Max processes/{print int(9*$3/'$forky_divider')}' < /proc/self/limits`
-export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/'$forky_divider')}' < /proc/meminfo`
-export forky_max_rss=$(($forky_max_vsz/3))
+export forky_divider=16
+export forky_max_procs=`awk '/^Max processes/{print int(5*$3/'$forky_divider')}' < /proc/self/limits`
+##export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/'$forky_divider')}' < /proc/meminfo`
+##export forky_max_rss=$(($forky_max_vsz/3))
+export forky_max_rss=6000000
+export forky_max_vsz=$((3*$forky_max_rss))
 export forky_verbose=1
-export LD_PRELOAD=`pwd`/forky.so
 echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
+export LD_PRELOAD=`pwd`/forky.so
 
-%make_build || { tail -100 $HOME/forky.log; wc $HOME/forky.log; false; }
+%make || { tail -100 $HOME/forky.log; head -1 $HOME/forky.log; wc $HOME/forky.log; false; }
 test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
 %else
-%make_build
+%make
 %endif
 
 %install
@@ -386,8 +383,6 @@ install -D libreoffice.config %buildroot%conffile
 
 %files
 
-%files full
-
 %files common -f files.nolang
 %exclude /gid_Module*
 %_bindir/libreoffice%version
@@ -435,6 +430,11 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Tue Feb 04 2014 Fr. Br. George <george@altlinux.ru> 4.1-alt9
+- Merge -full package into general one
+- Buld with help (closes: #29735)
+- Require gst1.0 plugins to install (closes: #29782)
+
 * Thu Dec 26 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt8
 - Build with --enable-release-build
 
