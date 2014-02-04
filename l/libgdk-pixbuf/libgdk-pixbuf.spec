@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -138,7 +138,7 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 %check
 # due to version script
 echo : >>%_name/abicheck.sh
-#%make check
+%make check
 
 %install
 %make DESTDIR=%buildroot install
@@ -214,6 +214,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.4-alt1
+- 2.30.4
+
 * Tue Jan 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.3-alt1
 - 2.30.3
 
