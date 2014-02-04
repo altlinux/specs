@@ -75,7 +75,7 @@
 # }}}
 
 Name: libav
-Version: 9.10
+Version: 9.11
 Release: alt1
 Epoch: 1
 
@@ -574,6 +574,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Tue Feb 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.11-alt1
+- 9.11 released
+
 * Fri Oct 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.10-alt1
 - 9.10 released
 
