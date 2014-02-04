@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.28
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,10 @@ done)
 
 
 %changelog
+* Mon Feb 03 2014 Led <led@altlinux.ru> 3.10.28-alt7
+- updated:
+  + fix-mm
+
 * Sat Feb 01 2014 Led <led@altlinux.ru> 3.10.28-alt6
 - added:
   + fix-net--compat (CVE-2014-0038)
