@@ -1,69 +1,47 @@
-Name:    libwmf
+Name: libwmf
 Version: 0.2.8.4
-Release: alt11
+Release: alt12
 
 Summary: A library to convert wmf files
 License: GPL
-Group:   Text tools
-Url:     http://sourceforge.net/projects/wvware
+Group: Text tools
+Url: http://sourceforge.net/projects/wvware
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires:  fonts-type1-urw
+Requires: fonts-type1-urw
 Obsoletes: wmf-fonts < %version-%release
 
-Source:  %name-%version.tar.bz2
+Source: %name-%version.tar.bz2
+Patch0: libwmf-0.2.6-cflags.patch
+Patch1: libwmf-0.2.8.3-CAN-2004-0941.patch
+Patch2: libwmf-0.2.8.3-CAN-2004-0990.patch
+Patch3: libwmf-0.2.8.4-CVE-2007-0455.patch
+Patch4: libwmf-0.2.8.4-CVE-2007-2756.patch
+Patch5: libwmf-0.2.8.4-CVE-2007-3472.patch
+Patch6: libwmf-0.2.8.4-CVE-2007-3473.patch
+Patch7: libwmf-0.2.8.4-CVE-2007-3477.patch
+Patch8: libwmf-0.2.8.4-CVE-2009-1364.patch
+Patch9: libwmf-0.2.8.4-CVE-2009-3546.patch
+Patch10: libwmf-0.2.8.4-intoverflow.patch
+Patch11: libwmf-0.2.8.4-pixbufloaderdir.patch
+Patch12: libwmf-0.2.8.4-reducesymbols.patch
+Patch13: libwmf-0.2.8.4-fallbackfont.patch
 
-#wrt CVE-2006-3376/CVE-2009-1364
-#Don't install out of date documentation
-Patch0:  libwmf-0.2.8.3-nodocs.patch
-#Allow use of system install fonts intead of libwmf bundled ones
-Patch1:  libwmf-0.2.8.3-relocatablefonts.patch
-#Set a fallback font of Times for text if a .wmf file don't set any
-Patch2:  libwmf-0.2.8.4-fallbackfont.patch
-#Strip unnecessary extra library dependencies
-Patch3:  libwmf-0.2.8.4-deps.patch
-#convert libwmf-config to a pkg-config to avoid multilib conflicts
-Patch4:  libwmf-0.2.8.4-multiarchdevel.patch
-#CVE-2006-3376 Integer overflow in player.c
-Patch5:  libwmf-0.2.8.4-intoverflow.patch
-#Don't export the modified embedded GD library symbols, to avoid conflicts with
-#the external one
-Patch6:  libwmf-0.2.8.4-reducesymbols.patch
-#CVE-2009-1364, Use-after-free vulnerability in the modified embedded GD
-#library
-Patch7:  libwmf-0.2.8.4-useafterfree.patch
-# adapt to standalone gdk-pixbuf
-Patch8:  libwmf-0.2.8.4-pixbufloaderdir.patch
-# CVE-2007-0455
-Patch9:  libwmf-0.2.8.4-CVE-2007-0455.patch
-# CVE-2007-3472
-Patch10: libwmf-0.2.8.4-CVE-2007-3472.patch
-# CVE-2007-3473
-Patch11: libwmf-0.2.8.4-CVE-2007-3473.patch
-# CVE-2006-2906 affects GIFs, which is not implemented here
-# CVE-2006-4484 affects GIFs, which is not implemented here
-# CVE-2007-3474 affects GIFs, which is not implemented here
-# CVE-2007-3475 affects GIFs, which is not implemented here
-# CVE-2007-3476 affects GIFs, which is not implemented here
-# CVE-2007-3477
-Patch12: libwmf-0.2.8.4-CVE-2007-3477.patch
-# CVE-2007-3478 affects shared ttf files across threads, which is not implemented here
-# CVE-2007-2756
-Patch13: libwmf-0.2.8.4-CVE-2007-2756.patch
-# CAN-2004-0941
-Patch14: libwmf-0.2.8.4-CAN-2004-0941.patch
-# CVE-2009-3546
-Patch15: libwmf-0.2.8.4-CVE-2009-3546.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=925929
-Patch16: libwmf-aarch64.patch
-
-# Automatically added by buildreq on Thu Jan 04 2007
-BuildRequires: ghostscript-common glib2-devel libICE-devel libX11-devel libexpat-devel
-BuildRequires: libfreetype-devel libgtk+2-devel libjpeg-devel libpng-devel
+BuildRequires: libICE-devel libexpat-devel libfreetype-devel libgdk-pixbuf-devel libjpeg-devel libpng-devel
 
 %description
 %name is a library for unix like machines that can convert wmf
+files into other formats, currently it supports a gd binding
+to convert to gif, and an X one to draw direct to an X window
+or pixmap.
+
+%package -n %{name}lite
+Summary: A library to convert wmf files
+Group: System/Libraries
+
+%description -n %{name}lite
+%{name}lite is a library for unix like machines that can convert wmf
 files into other formats, currently it supports a gd binding
 to convert to gif, and an X one to draw direct to an X window
 or pixmap.
@@ -87,9 +65,7 @@ WMF file loader for the GTK+ image manipulation library, GDK-pixbuf.
 %package devel
 Summary: A library to convert wmf files - development environment
 Group: Development/C
-Requires: %name = %version-%release
-Requires: libexpat-devel libfreetype-devel libX11-devel
-Requires: libjpeg-devel libpng-devel zlib-devel
+Requires: %name = %version-%release %{name}lite = %version-%release
 
 %description devel
 %name is a library for unix like machines that can convert wmf
@@ -102,50 +78,47 @@ support.
 
 %prep
 %setup -q
-%patch0  -p1
-%patch1  -p1
-%patch2  -p1
-%patch3  -p1
-%patch4  -p1
-%patch5  -p1
-%patch6  -p1
-%patch7  -p1
-%patch8  -p1
-%patch9  -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
+
+rm -f configure.in
 
 %build
-rm configure.ac
-ln -s patches/acconfig.h acconfig.h
-
 %autoreconf
 %configure \
 	--disable-static \
-        --with-fontdir=%_datadir/fonts/type1/urw \
-        --with-xtrafontmap=%_datadir/%name/fontmap \
-        --with-docdir=%_docdir/%name-%version \
-	--disable-dependency-tracking
+	--with-fontdir=%_datadir/fonts/type1/urw \
+	--with-xtrafontmap=%_datadir/%name/fontmap \
+	--with-docdir=%_docdir/%name-%version
 %make_build
 
 %install
-%makeinstall_std
-find %buildroot -name '*.la' -exec rm -f {} ';'
+%make DESTDIR=%buildroot install
+
 install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 
 %files
 %doc AUTHORS README
-%_libdir/*.so.*
+%_libdir/%name-*.so.*
 %_datadir/%name
+
+%files -n %{name}lite
+%_libdir/%{name}lite-*.so.*
 
 %files -n wmf-utils
 %_bindir/wmf2*
-%_bindir/libwmf-fontmap
 
 %files -n wmf-gtk-loader
 %_libdir/gdk-pixbuf-2.0/*/loaders/*.so
@@ -154,9 +127,13 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %_libdir/*.so
 %_bindir/%name-config
 %_includedir/%name
-%_pkgconfigdir/%name.pc
+%_docdir/%name-%version
 
 %changelog
+* Tue Feb 04 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.2.8.4-alt12
+- updated CVE patches (closes: #29788)
+- new subpackage libwmflite (closes: #25254)
+
 * Mon Feb 03 2014 Andrey Cherepanov <cas@altlinux.org> 0.2.8.4-alt11
 - Apply security patches from Fedora package
 - Move AUTHORS and README files to library package
