@@ -4,7 +4,7 @@
 
 %define bname busybox
 Name: %bname-hasher
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 Summary: %bname's static utils for hasher
 License: GPLv2
@@ -128,6 +128,9 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Wed Feb 05 2014 Led <led@altlinux.ru> 1.22.1-alt1
+- 1.22.1
+
 * Wed Jan 08 2014 Led <led@altlinux.ru> 1.22.0-alt1
 - 1.22.0
 - build with musl-gcc
