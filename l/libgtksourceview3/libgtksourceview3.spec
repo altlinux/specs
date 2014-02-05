@@ -1,19 +1,18 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.10
+%define ver_major 3.12
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
 Group: System/Libraries
-Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Projects/GtkSourceView
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -126,6 +125,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Jan 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

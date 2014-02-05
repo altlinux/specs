@@ -1,12 +1,12 @@
 Name: xfce4-weather-plugin
 Version: 0.8.3
-Release: alt2
+Release: alt3
 
-Summary: Weather plugin for the XFce panel
+Summary: Weather plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/panel-plugins/xfce4-weather-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -21,7 +21,7 @@ BuildRequires: intltool libxml2-devel libsoup-devel libupower-devel
 Requires: xfce4-panel >= 4.8.0
 
 %description
-%name is the plugin for the XFce panel, that display weather information
+%name is the plugin for the Xfce panel, that display weather information
 
 %prep
 %setup
@@ -48,6 +48,9 @@ Requires: xfce4-panel >= 4.8.0
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Mar 28 2014 Paul Wolneykien <manowar@altlinux.org> 0.8.3-alt3
+- Rebuild with upower v0.99.0
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt2
 - Don't package *.la files.
 

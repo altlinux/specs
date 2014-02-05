@@ -1,14 +1,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.10.0
+Version: 3.12.0
 Release: alt1
 
 Summary: Disk management application
 License: LGPLv2+
 Group: System/Libraries
 URL: http://git.gnome.org/cgit/gnome-disk-utility
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: udisks2 cryptsetup
 
@@ -17,7 +16,7 @@ Patch: %name-3.8.0-alt-lfs.patch
 
 %define udisks_ver 2.1.1
 %define glib_ver 2.31.0
-%define gtk_ver 3.5.8
+%define gtk_ver 3.10.0
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
 %define gsd_ver 3.6
@@ -53,7 +52,7 @@ RAID, SMART monitoring, etc
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome --output=global.lang %name palimpsest
 
@@ -63,7 +62,6 @@ RAID, SMART monitoring, etc
 %_desktopdir/gnome-disk-image-mounter.desktop
 %_desktopdir/gnome-disks.desktop
 %_desktopdir/gnome-disk-image-writer.desktop
-%_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
 %_iconsdir/HighContrast/*x*/apps/gnome-disks.png
@@ -77,6 +75,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name tali
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -36,11 +36,7 @@ include any or all of your dice.
 %build
 %autoreconf
 %configure \
-    --disable-schemas-compile \
-    --enable-setgid \
-    --with-scores-group=games \
-    --with-scores-user=games
-
+    --disable-schemas-compile
 %make_build
 
 %install
@@ -50,17 +46,19 @@ include any or all of your dice.
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/gtali.desktop
+%_desktopdir/%_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/HighContrast/*x*/apps/%_name.png
 %_iconsdir/hicolor/scalable/apps/%_name.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%config(noreplace) %attr(0664,games,games) %_localstatedir/games/gtali.*
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

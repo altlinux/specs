@@ -11,8 +11,8 @@
 %def_disable libopenraw
 
 Name: gthumb
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.7
+Release: alt1
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -28,8 +28,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %endif
 
 # From configure.in
-%define glib_ver 2.32.0
-%define gtk_ver 3.2.0
+%define glib_ver 2.38.0
+%define gtk_ver 3.10.0
 %define clutter_gtk_ver 1.0.0
 %define gst_ver 1.0
 %define exiv2_ver 0.20
@@ -169,6 +169,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Mar 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.2.7-alt1
+- 3.2.7, built for gnome-3.12
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt2
 - rebuilt against libwebp.so.5
 

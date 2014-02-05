@@ -1,25 +1,28 @@
+%set_automake_version 1.11
+
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.10
+Release: alt1
 Summary: Content discovery framework
 Group: Sound
 License: LGPLv2+
-Url: http://live.gnome.org/Grilo
+Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
+# Patch1: %name-%version-%release.patch
 
 BuildRequires: gnome-common intltool >= 0.40.0
-BuildRequires: glib2-devel >= 2.29.10 libgio-devel
+BuildRequires: glib2-devel >= 2.34 libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
-BuildRequires: libsoup-devel >= 2.39.0 libsoup-gir-devel
+BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
 BuildRequires: liboauth-devel
-BuildRequires: vala-tools libvala-devel
+BuildRequires: vala-tools
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
+BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -84,16 +87,17 @@ Tools for the %name library
 
 %prep
 %setup
-%patch1 -p1
+# %patch1 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure			\
 	--disable-static	\
 	--enable-vala		\
 	--enable-gtk-doc	\
 	--enable-introspection	\
 	--enable-grl-net	\
+	--enable-grl-pls	\
 	--disable-tests
 
 %make_build
@@ -134,6 +138,12 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Wed Mar 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.10-alt1
+- 0.2.10
+
+* Wed Feb 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.9-alt1
+- 0.2.9
+
 * Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.7-alt2
 - fixed build with vala-0.22
 

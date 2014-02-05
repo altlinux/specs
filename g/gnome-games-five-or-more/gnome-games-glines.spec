@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME version of the color lines program
@@ -14,7 +14,6 @@ License: GPLv3+
 Url: http://live.gnome.org/GnomeGames/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-Patch: gnome-games-glines-3.8.0-segfault.patch
 
 Provides:  %_name = %version-%release
 Obsoletes: gnome-games-glines
@@ -35,7 +34,6 @@ possible, and be #1 in the High Scores.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -49,16 +47,18 @@ possible, and be #1 in the High Scores.
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/glines.desktop
+%_desktopdir/%_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/hicolor/scalable/apps/%_name.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%config(noreplace) %attr(0664,games,games) %_localstatedir/games/glines*
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

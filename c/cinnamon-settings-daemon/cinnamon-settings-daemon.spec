@@ -10,7 +10,7 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -189,6 +189,10 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-xsettings
 
 %changelog
+* Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt2
+- build with gnome-3.12
+- port on upower-1.0
+
 * Thu Feb 20 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt1
 - 2.0.10
 - revert gnome keyboard patch

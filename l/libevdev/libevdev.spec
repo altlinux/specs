@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libevdev
-Version: 0.4.1
+Version: 1.1
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -11,7 +11,7 @@ Url: http://www.freedesktop.org/wiki/Software/libevdev
 
 Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
-BuildRequires: libcheck-devel python-modules doxygen
+BuildRequires: glibc-kernheaders libcheck-devel python-modules python-module-setuptools doxygen
 
 %description
 %name is a wrapper library for evdev devices.
@@ -42,6 +42,7 @@ that are needed to write applications that use %name.
 #%make check
 
 %files
+%_bindir/touchpad-edge-detector
 %_libdir/libevdev.so.*
 %doc COPYING
 
@@ -49,8 +50,15 @@ that are needed to write applications that use %name.
 %_includedir/%name-%api_ver/
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_man3dir/%name.3.*
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

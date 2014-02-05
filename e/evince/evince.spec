@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3
 %define so_ver 4
 
@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -24,11 +24,13 @@ Requires: gvfs-backend-recent-files
 Requires: dconf
 
 %define poppler_ver 0.24.0
+%define gtk_ver 3.8.0
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
-BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
-BuildRequires: yelp-tools itstool
-BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
+BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildRequires: gcc-c++ gnome-common gtk-doc
+BuildRequires: intltool yelp-tools itstool
+BuildRequires: gnome-icon-theme libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
@@ -168,6 +170,12 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Wed Mar 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
+- 3.11.92
+
 * Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

@@ -1,9 +1,9 @@
-%define ver_major 2.38
+%define ver_major 2.40
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
 
 Name: glib-networking
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -75,6 +75,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt1
 - 2.38.2
 

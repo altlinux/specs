@@ -1,7 +1,7 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: yelp-xsl
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: XSLT stylesheets for the Yelp, GNOME help browser
@@ -15,7 +15,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 BuildArch: noarch
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
-BuildRequires: libxml2-devel libxslt-devel intltool itstool xsltproc
+BuildRequires: libxml2-devel libxslt-devel intltool itstool xsltproc xmllint
 
 %description
 Yelp is a help browser for the GNOME desktop. Yelp provides a simple
@@ -43,6 +43,9 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

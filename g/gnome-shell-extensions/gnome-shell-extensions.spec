@@ -1,9 +1,9 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.9.91
+Requires: gnome-shell >= 3.11.90
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -195,6 +195,9 @@ __EOF__
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

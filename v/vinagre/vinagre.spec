@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %define panel_api_ver 4.0
 
@@ -8,21 +8,20 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
 Group: Networking/Remote access
 URL: http://www.gnome.org/projects/vinagre
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: dconf gnome-icon-theme
 %{?_enable_rdp:Requires: rdesktop}
 
-BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme desktop-file-utils
+BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme desktop-file-utils appdata-tools
 BuildPreReq: intltool >= 0.35 glib2-devel >= 2.28.0
 BuildPreReq: libgtk+3-devel >= 3.9.6 libgtk3vnc-devel >= 0.4.3-alt2
 BuildRequires: libavahi-gobject-devel libavahi-ui-gtk3-devel libsecret-devel
@@ -66,7 +65,7 @@ export ac_cv_path_RDESKTOP_PROGRAM=%_bindir/rdesktop
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -82,10 +81,14 @@ rm -rf %buildroot%_datadir/doc
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vinagre.service
 %config %_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.Vinagre.convert
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/vinagre.*
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

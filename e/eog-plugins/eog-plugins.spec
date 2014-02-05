@@ -1,11 +1,11 @@
 %define _name eog
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %def_enable map
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EOG plugins
@@ -16,7 +16,14 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: eog >= %ver_major
+Requires: eog >= %ver_major libpeas-python3-loader
+
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/%_name/plugins
+BuildPreReq: rpm-build-python3 python3-devel
+Requires: libpeas-python3-loader
 
 %define libchamplain_ver 0.12
 %define gdata_ver 0.6.0
@@ -51,7 +58,7 @@ Requires: %name = %version-%release
 This package provides Eog plugin for upload pictures to Picasa web albums.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -62,7 +69,7 @@ export ac_cv_path_POSTR=%_bindir/postr
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -92,6 +99,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

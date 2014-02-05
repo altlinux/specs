@@ -11,7 +11,7 @@
 
 Name: lib%_name
 Version: %ver_major.7
-Release: alt3
+Release: alt4
 
 Summary: A clutter widget toolkit
 Group: System/Libraries
@@ -112,6 +112,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt4
+- rebuilt against libcogl.so.20
+
 * Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt3
 - updated to 24efb0c
 - built against libcogl.so.15

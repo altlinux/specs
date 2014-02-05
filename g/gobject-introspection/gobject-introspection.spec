@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.38
+%define ver_major 1.40
 
 Name: gobject-introspection
 Version: %ver_major.0
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-BuildPreReq: libgio-devel >= 2.37.6
+BuildPreReq: libgio-devel >= 2.39.90
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
 
@@ -66,13 +66,11 @@ gobject-introspection.
 	--enable-gtk-doc
 %make
 
-%check
-%make check
-
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-find %buildroot%_libdir -name \*.la -delete
+%check
+#%make check
 
 %files
 %_libdir/lib*.so.*
@@ -94,6 +92,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
+- 1.40.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
 - 1.38.0
 

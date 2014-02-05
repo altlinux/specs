@@ -1,11 +1,11 @@
 %define _name pygobject
-%define major 3.10
+%define major 3.12
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -27,8 +27,8 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 
 %add_typelib_req_skiplist typelib(Foo)
 
-%define glib_ver 2.38.0
-%define gi_ver 1.38.0
+%define glib_ver 2.39.0
+%define gi_ver 1.39.0
 
 BuildRequires: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
@@ -74,6 +74,7 @@ Common development files for %_name used for both python2 and python3.
 %package devel
 Summary: Development files for %name
 Group: Development/Python
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: %name-common-devel = %version-%release
 
@@ -111,6 +112,7 @@ behaved PyGTK application mostly unmodified on top of PyGI.
 %package -n python3-module-%{_name}3-devel
 Summary: Development files for python3-module-%{_name}3
 Group: Development/Python3
+BuildArch: noarch
 Requires: python3-module-%{_name}3 = %version-%release
 Requires: %name-common-devel = %version-%release
 
@@ -165,7 +167,6 @@ popd
 #popd
 
 %files
-%_libdir/libpyglib-gi-2.0-python%__python_version.so.*
 %python_sitelibdir/gi/
 %exclude %python_sitelibdir/gi/pygtkcompat.py*
 %python_sitelibdir/*.egg-info/
@@ -182,10 +183,8 @@ popd
 %doc README AUTHORS NEWS examples
 
 %files devel
-%_libdir/libpyglib-gi-2.0-python%__python_version.so
 
 %files -n python3-module-%{_name}3
-%_libdir/libpyglib-gi-2.0-python3.so.*
 %python3_sitelibdir/gi/
 %exclude %python3_sitelibdir/gi/pygtkcompat.py*
 %python3_sitelibdir/*.egg-info/
@@ -195,7 +194,6 @@ popd
 %python3_sitelibdir/gi/pygtkcompat.py*
 
 %files -n python3-module-%{_name}3-devel
-%_libdir/libpyglib-gi-2.0-python3.so
 
 %exclude %python3_sitelibdir/*/*.la
 
@@ -205,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

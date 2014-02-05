@@ -4,7 +4,7 @@
 %def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.10.0
+Version: 3.12.0
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -16,17 +16,15 @@ Source: %name-%version.tar
 Source2: libgd.tar
 
 # From configure.ac
-%define clutter_gtk_ver 1.3.2
-%define clutter_ver 1.11.14
 %define govirt_ver 0.2.0
-%define glib_ver 2.32.0
-%define gtk_ver 3.9
+%define glib_ver 2.38.0
+%define gtk_ver 3.11
 %define gtk_vnc_ver 0.4.4
 %define libvirt_glib_ver 0.1.7
 %define libxml2_ver 2.7.8
 %define spice_gtk_ver 0.15
 %define gudev_ver 165
-%define osinfo_ver 0.2.6
+%define osinfo_ver 0.2.9
 %define tracker_ver 0.13.1
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
@@ -34,10 +32,8 @@ Source2: libgd.tar
 BuildRequires: intltool >= 0.40.0
 BuildRequires: yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
-BuildRequires: libvala-devel >= 0.21.1
+BuildRequires: libvala-devel >= 0.23.1.1
 BuildRequires: vala-tools
-BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildRequires: libclutter-devel >= %clutter_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 BuildRequires: libgtk3vnc-devel >= %gtk_vnc_ver
@@ -104,6 +100,12 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
+- 3.12.0
+
+* Mon Feb 24 2014 Alexey Shabalin <shaba@altlinux.ru> 3.11.90.1-alt1.git.58bb18
+- upstream snapshot 58bb18a328c2f3db3c3b656edcc8bd93630a2084
+
 * Wed Oct 30 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 - disable govirt support

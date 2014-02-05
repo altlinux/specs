@@ -1,12 +1,12 @@
 %define _name json-glib
-%define ver_major 0.16
+%define ver_major 1.0
 %define api_ver 1.0
 %def_disable gtk_doc
 %def_disable static
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for JavaScript Object Notation format
@@ -16,7 +16,7 @@ Url: http://live.gnome.org/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.31.0
+%define glib_ver 2.38.0
 %define gi_ver 0.10.5
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
@@ -53,7 +53,7 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the JSON-GLib library
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %configure \
@@ -63,7 +63,7 @@ GObject introspection devel data for the JSON-GLib library
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --output=%_name.lang %_name-%api_ver
 
@@ -71,7 +71,11 @@ GObject introspection devel data for the JSON-GLib library
 %make check
 
 %files -f %_name.lang
+%_bindir/%_name-format
+%_bindir/%_name-validate
 %_libdir/*.so.*
+%_man1dir/%_name-format.1.*
+%_man1dir/%_name-validate.1.*
 %doc NEWS
 
 %files devel
@@ -82,13 +86,19 @@ GObject introspection devel data for the JSON-GLib library
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*
+%_typelibdir/Json-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*
+%_girdir/Json-%api_ver.gir
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
+* Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.2-alt1
+- 0.99.2
+
 * Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
 - 0.16.2
 

@@ -1,5 +1,5 @@
 Name: telepathy-gabble
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 
 Summary: Jabber/XMPP connection manager
@@ -33,8 +33,8 @@ with Jabber/XMPP servers, including Google Talk.
 
 
 %build
-# Ahtung, automake-1.13 required
-#%autoreconf
+# automake-1.13 required
+%autoreconf
 %configure \
 	--disable-static \
 	--with-ca-certificates="%_datadir/ca-certificates/ca-bundle.crt"
@@ -69,6 +69,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
+- 0.18.2
+
 * Mon Sep 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
 - 0.18.1
 

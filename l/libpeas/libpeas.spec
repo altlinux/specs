@@ -3,13 +3,13 @@
 %define gtk_api_ver 3.0
 
 %def_disable js
-%def_enable gjs
+%def_disable gjs
 %def_enable vala
 %def_enable gtk_doc
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -181,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Sun Mar 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
+- removed gjs-loader
+
 * Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 

@@ -8,7 +8,7 @@
 
 Name: NetworkManager-pptp
 Version: 0.9.8.4
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -64,7 +64,7 @@ NetworkManager panel applet.
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
 	--with-gtkver=%gtkver \
-	--enable-more-warnings=error
+	--enable-more-warnings=yes
 %make_build
 
 %install
@@ -89,6 +89,10 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt2
+- Temporary don't treat warrnings as errors.
+- Rebuild with NetworkManager-applet-gtk-0.9.9.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.

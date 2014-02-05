@@ -8,7 +8,7 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt5
+Release: alt6
 
 Summary: GNOME Screensaver
 License: GPLv2+
@@ -90,6 +90,9 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Mar 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt6
+- rebuilt against libgnome-desktop-3.so.10
+
 * Sat Sep 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt5
 - rebuilt against libgnome-desktop-3.so.8
 

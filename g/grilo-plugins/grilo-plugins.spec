@@ -1,20 +1,19 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.9
-Release: alt2
+Version: %ver_major.12
+Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
-Url: https://live.gnome.org/Grilo
+Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: %name-%version.tar
 
 BuildRequires: gnome-common intltool >= 0.40.0
-BuildRequires: gnome-doc-utils
-BuildRequires: gtk-doc
-BuildRequires: glib2-devel >= 2.28 libgio-devel
-BuildRequires: libgrilo-devel
+BuildRequires: gtk-doc yelp-tools
+BuildRequires: glib2-devel >= 2.34 libgio-devel
+BuildRequires: libgrilo-devel >= 0.2.10
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -27,10 +26,13 @@ BuildRequires: libgcrypt-devel
 BuildRequires: libgmime-devel
 BuildRequires: tracker-devel
 BuildRequires: liboauth-devel
-BuildRequires: libgnome-online-accounts-devel >= 3.7.1
+BuildRequires: libgnome-online-accounts-devel >= 3.11.4
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
+BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
+BuildRequires: libmediaart-devel
+BuildRequires: librest-devel
 
 Requires: grilo-tools
 Requires: tracker
@@ -61,8 +63,7 @@ This package contains plugins to get information from theses sources:
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure		\
-	--disable-static \
-	--disable-scrollkeeper
+	--disable-static
 
 %make_build
 
@@ -80,6 +81,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Thu Apr 03 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.12-alt1
+- 0.2.12
+
 * Thu Sep 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt2
 - rebuild against libtotem-plparser.so.18
 

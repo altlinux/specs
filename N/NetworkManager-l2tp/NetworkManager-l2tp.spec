@@ -6,7 +6,7 @@
 %define ppp_version 2.4.5
 
 Name: NetworkManager-l2tp
-Version: 0.9.8.5
+Version: 0.9.8.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Requires: NetworkManager   >= %nm_version
 Requires: xl2tpd
 Requires: ppp = %ppp_version
+Requires: strongswan
 
 # Automatically added by buildreq on Thu Aug 14 2008
 BuildRequires: libgnome-keyring-devel
@@ -63,7 +64,8 @@ sed -i '/m4/ d' Makefile.am
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version
+	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+	--enable-more-warnings=yes
 %make_build
 
 %install
@@ -86,6 +88,11 @@ sed -i '/m4/ d' Makefile.am
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt1
+- Temporary don't treat warrnings as errors.
+- Add strongswan to requires.
+- Updated to 0.9.8.6.
+
 * Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.5-alt1
 - Updated BR: Use libnm-glib-vpn-devel.
 - Updated to 0.9.8.5.

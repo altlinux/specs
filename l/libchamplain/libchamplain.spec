@@ -7,7 +7,7 @@
 %def_enable memphis
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -202,6 +202,10 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Feb 07 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
+- 0.12.7
+- built against libcogl.so.19
+
 * Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
 - 0.12.6
 - enabled local rendering support via libmemphis

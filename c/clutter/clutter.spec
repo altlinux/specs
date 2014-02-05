@@ -1,4 +1,4 @@
-%define ver_major 1.16
+%define ver_major 1.18
 
 %def_enable x11_backend
 %def_enable gdk_backend
@@ -15,7 +15,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clutter Core Library
@@ -29,7 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
-%define cogl_ver 1.15.10
+%define cogl_ver 1.17.3
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
 %define cairo_ver 1.10
@@ -49,9 +49,8 @@ BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir
 %{?_enable_wayland_backend:BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(xkbcommon) pkgconfig(gdk-pixbuf-2.0)}
 %{?_enable_wayland_compositor:BuildRequires: pkgconfig(wayland-server)}
 %{?_enable_gdk_backend:BuildRequires: pkgconfig(gdk-3.0) >= %gdk_ver gir(Gdk) = 3.0}
-
 %{?_enable_tslib_input:BuildRequires: pkgconfig(tslib-1.0)}
-%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libevdev)}
+%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libinput)}
 %{?_enable_xinput:BuildRequires: pkgconfig(xi)}
 %{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0)}
 
@@ -140,8 +139,8 @@ gtkdocize
 	%{?_enable_wayland_compositor:--enable-wayland-compositor} \
 	%{?_enable_egl_backend:--enable-egl-backend} \
 	%{?_enable_tslib_input:--enable-tslib-input} \
-	%{?_enable_evdev_input:--enable-evdev-input} \
 	%{?_enable_xinput:--enable-xinput} \
+	%{?_enable_evdev_input:--enable-evdev-input} \
 	%{?_enable_gdk_pixbuf:--enable-gdk-pixbuf} \
 	--enable-gtk-doc \
 	--enable-introspection \
@@ -150,7 +149,7 @@ gtkdocize
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang clutter-1.0
 
 %check
@@ -182,6 +181,9 @@ gtkdocize
 
 
 %changelog
+* Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Sat Jan 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
 - 1.16.4
 

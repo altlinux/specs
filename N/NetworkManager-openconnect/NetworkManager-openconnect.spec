@@ -5,7 +5,7 @@
 
 Name: NetworkManager-openconnect
 Version: 0.9.8.4
-Release: alt3.git.2e653d
+Release: alt4.git.2e653d
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -84,6 +84,9 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt4.git.2e653d
+- Rebuild with NetworkManager-applet-gtk-0.9.9.
+
 * Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.8.4-alt3.git.2e653d
 - rebuild with openconnect-5.99
 - nm-0-9-8 branch snapshot (2e653d7b7636f67a25c084ab095907484ab85208)

@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.10
+%define ver_major 3.11
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.90
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -96,6 +96,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Thu Feb 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.90-alt1
+- 3.11.90
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

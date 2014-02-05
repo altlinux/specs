@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -19,7 +19,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnome-keyring-3.10.1-alt-lfs.patch
 
-%define glib_ver 2.32.0
+%define glib_ver 2.38.0
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
@@ -71,8 +71,8 @@ and start the keyring daemon.
 	%{subst_enable debug} \
 	%{subst_enable valgrind} \
 	%{subst_enable selinux} \
+	--enable-doc \
 	--with-pam-dir=/%_lib/security
-
 
 %make_build
 
@@ -85,7 +85,9 @@ and start the keyring daemon.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/gnome-keyring
+%_bindir/gnome-keyring-3
+%_bindir/gnome-keyring-daemon
 %_datadir/dbus-1/services/org.gnome.keyring.service
 %_datadir/dbus-1/services/org.freedesktop.secrets.service
 %_sysconfdir/xdg/autostart/*.desktop
@@ -94,7 +96,7 @@ and start the keyring daemon.
 %_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring
 %_libdir/pkcs11
-%_man1dir/%name-daemon.1.*
+#%_man1dir/%name-daemon.1.*
 
 %if_enabled pam
 %files -n pam_%name
@@ -108,6 +110,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

@@ -1,5 +1,5 @@
-#define git_date .git20130711
-%define git_date %nil
+%define git_date .git20140327
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -19,11 +19,12 @@
 %def_enable systemd
 %def_disable wimax
 %def_enable introspection
-%def_enable bluez4
+%def_disable teamdctl
+%def_enable nmtui
 
 Name: NetworkManager
-Version: 0.9.8.8
-Release: alt4%git_date
+Version: 0.9.9.1
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -38,6 +39,7 @@ Source6: NetworkManager.sysconfig
 Source7: 30-efw
 Source8: 80-etcnet-post
 Source9: NetworkManager-prestart
+Source10: libgsystem.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -53,6 +55,9 @@ BuildRequires: libgudev-devel
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables libsoup-devel
 BuildRequires: libmm-glib-devel
+BuildRequires: libndp-devel
+%{?_enable_teamdctl:BuildRequires: libteam-devel}
+%{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
@@ -86,6 +91,16 @@ configuration and setup as painless and automatic as possible. If
 using DHCP, NetworkManager is intended to replace default routes,
 obtain IP addresses from a DHCP server, and change name servers
 whenever it sees fit.
+
+
+%package tui
+License: %gpl2plus
+Summary: Curses-based Text User Interface for NetworkManager
+Group: System/Configuration/Networking
+Requires: %name = %version-%release
+
+%description tui
+%summary
 
 %package devel
 License: %gpl2plus
@@ -182,14 +197,17 @@ Requires: libdbus-glib-devel >= %libdbus_glib_version
 This package contains the header and pkg-config files
 for %libnm_util.
 
-%package %name-devel-doc
+%package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
 Obsoletes: NetworkManager-glib-devel-doc < 0.9.8.8-alt3
 Provides: NetworkManager-glib-devel-doc = %version-%release
 BuildArch: noarch
 
-%description %name-devel-doc
+# No comments
+Obsoletes: %name-%name-devel-doc < %version-%release
+
+%description devel-doc
 This package contains development documentation for %name.
 Includes libnm-util and libnm-glib development documentation.
 
@@ -215,7 +233,8 @@ GObject introspection devel data for the NetworkManager.
 
 
 %prep
-%setup
+%setup -a10
+#tar -xf %SOURCE10
 %patch -p1
 
 %build
@@ -228,11 +247,13 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 %configure \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+	--docdir=%_defaultdocdir/%name-%version \
 	--disable-static \
 	--with-crypto=nss \
 	--with-dhclient=/sbin/dhclient \
 	--with-dhcpcd=/sbin/dhcpcd \
-	--enable-doc=yes \
+	--with-dnsmasq=/usr/sbin/dnsmasq \
+	--enable-gtk-doc=yes \
 	--with-resolvconf=/sbin/resolvconf \
 	--enable-concheck \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
@@ -252,7 +273,12 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-ifupdown \
 	--disable-ifnet \
 	--with-modem-manager-1 \
-	%{subst_enable bluez4} \
+	%{subst_enable teamdctl} \
+%if_enabled nmtui
+	--with-nmtui=yes \
+%else
+	--with-nmtui=no \
+%endif
 	--enable-introspection=auto \
 	--enable-more-warnings=error
 
@@ -322,7 +348,6 @@ fi
 
 %files -f %name.lang
 %doc COPYING NEWS AUTHORS README CONTRIBUTING TODO
-%_bindir/nm-tool
 %_bindir/nm-online
 %_bindir/nmcli
 %_libdir/pppd/%ppp_version/nm-pppd-plugin.so
@@ -354,6 +379,11 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+
+%if_enabled nmtui
+%files tui
+%_bindir/nmtui*
+%endif
 
 %files devel
 %dir %_includedir/%name
@@ -394,7 +424,7 @@ fi
 %_pkgconfigdir/libnm-util.pc
 %_libdir/libnm-util.so
 
-%files %name-devel-doc
+%files devel-doc
 %doc %_datadir/gtk-doc/html/%name
 %doc %_datadir/gtk-doc/html/libnm-glib
 %doc %_datadir/gtk-doc/html/libnm-util
@@ -413,6 +443,20 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Mar 27 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.1-alt1.git20140327
+- init script: Updated for new nmcli syntax.
+- Fix devel-doc subpackage name.
+- Don't generate connections for unmanaged devices.
+- etcnet-alt: Add more tests.
+- etcnet-alt: Add initial bridges support.
+- etcnet-alt: Use wifi_utils_is_wifi().
+- Upstream git snapshot (master branch).
+
+* Fri Feb 07 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt1.git20140205
+- Add 'tui' subpackage.
+- Drop --enable-bluez4 configure option.
+- Upstream git snapshot (master branch).
+
 * Wed Dec 11 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt4
 - Fix 'Obsoletes' tags (closes: #29535).
 - Support build with bluez5.

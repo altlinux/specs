@@ -1,5 +1,5 @@
 %define _name nautilus2
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 
 %def_enable exempi
@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -39,20 +39,20 @@ Provides: gnome-volume-manager
 %define glib_ver 2.35.3
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.9.11
+%define gtk_ver 3.11.6
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
-%define tracker_ver 0.12
+%define tracker_ver 0.17
 
 PreReq: lib%name = %version-%release
 PreReq: gnome-icon-theme >= %icon_theme_ver
 
 Requires: shared-mime-info
 Requires: common-licenses
-Requires: gvfs >= 1.9.1
+Requires: gvfs >= 1.19
 
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
@@ -188,6 +188,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 # gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/GConf/gsettings/nautilus.convert
+%_datadir/appdata/%name.appdata.xml
 # docs
 %doc --no-dereference COPYING
 %doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
@@ -218,6 +219,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

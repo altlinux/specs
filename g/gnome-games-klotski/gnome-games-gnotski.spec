@@ -2,7 +2,7 @@
 
 %define _name klotski
 %define __name gnome-%_name
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -14,7 +14,7 @@ Group: Games/Boards
 License: GPLv3+
 Url: http://live.gnome.org/GnomeGames/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
 Provides:  %__name = %version-%release
 Obsoletes: gnome-games-gnotski
@@ -46,7 +46,7 @@ from a game called "Klotski".
 
 %files -f gnome-%_name.lang
 %attr(2711,root,games) %_bindir/%__name
-%_desktopdir/gnotski.desktop
+%_desktopdir/%__name.desktop
 %_datadir/%__name/
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name.svg
@@ -57,6 +57,12 @@ from a game called "Klotski".
 
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Sat Oct 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

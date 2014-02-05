@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,35 +10,32 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0.1
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
 Group: Graphical desktop/GNOME
 
 Url: http://gnome.org
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
-Patch: gnome-settings-daemon-3.10.2-rosa-non-eng-hotkeys.patch
-
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 # From configure.ac
-%define glib2_ver 2.35.3
+%define glib_ver 2.36
 %define gtk_ver 3.7.8
-%define gio_ver 2.29.14
-%define gnome_desktop_ver 3.9.0
+%define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.3.0
+%define gsds_ver 3.11.90
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.4.99
-%define geocode_ver 0.99.3
-%define geoclue_ver 1.99.3
+%define geocode_ver 3.10.0
+%define geoclue_ver 2.1.2
 %define gweather_ver 3.9.5
 
 Requires: dconf >= %dconf_ver
@@ -51,14 +48,15 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: xkeyboard-config
 
 # From configure.ac
-BuildPreReq: glib2-devel >= %glib2_ver
+BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgio-devel >= %gio_ver
+BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: libpulseaudio-devel >= %pulse_ver libcanberra-gtk3-devel
 BuildRequires: libdbus-devel libpolkit1-devel
+BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 %{?_enable_ibus:BuildRequires: libibus-devel >= %ibus_ver}
@@ -99,7 +97,6 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -112,7 +109,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std udevrulesdir=/lib/udev/rules.d
 %find_lang --with-gnome %name
 
 %check
@@ -143,7 +140,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liborientation.so
 %_libdir/%name-%api_ver/libpower.so
 %_libdir/%name-%api_ver/libprint-notifications.so
-%_libdir/%name-%api_ver/libremote-display.so
 %_libdir/%name-%api_ver/librfkill.so
 %_libdir/%name-%api_ver/libscreensaver-proxy.so
 %_libdir/%name-%api_ver/libsmartcard.so
@@ -155,7 +151,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/orientation.gnome-settings-plugin
 %_libdir/%name-%api_ver/power.gnome-settings-plugin
 %_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
-%_libdir/%name-%api_ver/remote-display.gnome-settings-plugin
 %_libdir/%name-%api_ver/rfkill.gnome-settings-plugin
 %_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
 %_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
@@ -182,6 +177,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %{?_enable_ibus:%_datadir/dbus-1/services/org.freedesktop.IBus.service}
+/lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
@@ -202,7 +198,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-mouse
 %_libexecdir/gsd-test-orientation
 %_libexecdir/gsd-test-print-notifications
-%_libexecdir/gsd-test-remote-display
 %_libexecdir/gsd-test-rfkill
 %_libexecdir/gsd-test-screensaver-proxy
 %_libexecdir/gsd-test-smartcard
@@ -214,6 +209,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0.1-alt1
+- 3.12.0.1
+
 * Sat Feb 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt3
 - updated to d4567273 (fixed BGO ##704167, 707790 722753, 712302)
 

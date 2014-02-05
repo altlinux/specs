@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define gtk_api_ver 2.0
 
 Name: gnome-icon-theme
@@ -80,6 +80,9 @@ fi
 %doc AUTHORS README TODO
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

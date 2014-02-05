@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.38
+%define ver_major 2.40
 %define pcre_ver 8.11
 
 %def_disable snapshot
@@ -20,8 +20,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -47,7 +47,7 @@ Source11: glib2.csh
 Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
-Patch2: glib-2.36-add-xvt.patch
+Patch2: glib-2.39.3-alt-add-xvt.patch
 Patch3: glib-2.38.2-alt-lfs.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=707298
 Patch4: glib-2.38-bgo-707298.patch
@@ -214,7 +214,7 @@ the functionality of the installed glib2/libgio packages.
 %setup -n glib-%version
 %patch
 %patch1
-%patch2 -p2
+%patch2
 %patch3 -p1
 %patch4 -p1
 
@@ -354,6 +354,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %doc %_datadir/gtk-doc/html/gobject
 
 %files -n libgio
+%_bindir/gapplication
 %_bindir/gio-querymodules
 %_bindir/gsettings
 %_bindir/glib-compile-schemas
@@ -368,12 +369,14 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_rpmlibdir/gio.filetrigger
 %_rpmlibdir/gsettings.filetrigger
 %_datadir/glib-2.0/schemas/
+%_man1dir/gapplication.1.*
 %_man1dir/gsettings.*
 %_man1dir/glib-compile-schemas.*
 %_man1dir/gresource.*
 %_man1dir/glib-compile-resources.1*
 %_man1dir/gdbus.*
 %_man1dir/gio-querymodules.*
+%_datadir/bash-completion/completions/gapplication
 %_datadir/bash-completion/completions/gresource
 
 %files -n libgio-devel
@@ -403,10 +406,15 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_libexecdir/installed-tests/glib/
 %exclude %_libexecdir/installed-tests/glib/*.a
 %exclude %_libexecdir/installed-tests/glib/*.la
+# exclude empty
+%exclude %_libexecdir/installed-tests/glib/x-content/unix-software/autorun.sh
 %_datadir/installed-tests/glib/
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+
 * Wed Jan 22 2014 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt3
 - applied patch for BGO #707298
 

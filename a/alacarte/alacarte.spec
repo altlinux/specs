@@ -1,7 +1,7 @@
-%define ver_major 3.10
+%define ver_major 3.11
 
 Name: alacarte
-Version: %ver_major.0
+Version: %ver_major.91
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -24,6 +24,7 @@ BuildPreReq: intltool >= 0.40
 BuildPreReq: libgnome-menus-devel >= %menus_ver
 #BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 BuildRequires: python-module-pygobject3-devel
+BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 
 %description
 Alacarte is a menu editor for GNOME using the freedesktop.org menu
@@ -32,7 +33,7 @@ specification.
 Just click and type to edit, add, and delete any menu entry.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -49,9 +50,13 @@ Just click and type to edit, add, and delete any menu entry.
 %_datadir/applications/*
 %_datadir/%name
 %_iconsdir/hicolor/*x*/apps/%name.png
+%_man1dir/%name.1.*
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Mar 03 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.91-alt1
+- 3.11.91
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

@@ -1,7 +1,8 @@
-%set_verify_elf_method textrel=relaxed
+#%%set_verify_elf_method textrel=relaxed
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %add_verify_elf_skiplist %_libexecdir/WebKitPluginProcess
+%define api_ver 3.0
 %define gtk_ver 3.0
 
 %define oname webkit
@@ -12,12 +13,11 @@
 %def_enable introspection
 %def_enable geolocation
 %def_enable web_audio
-%def_disable media_stream
 %def_enable spellcheck
 %def_enable webkit2
 
 Name: libwebkitgtk3
-Version: 2.2.5
+Version: 2.4.0
 Release: alt1
 
 Summary: Web browser engine
@@ -28,6 +28,9 @@ Url: http://www.webkitgtk.org/
 
 Source: %_name-%version.tar.xz
 #Source1: webkit-2.2-symbols.filter
+# https://bugs.webkit.org/show_bug.cgi?id=70610
+Patch: webkitgtk-2.4.0-up-textrel.patch
+Patch1: webkitgtk-2.4.0-alt-link.patch
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -38,7 +41,7 @@ Requires: libjavascriptcoregtk3 = %version-%release
 BuildPreReq: rpm-build-licenses
 
 BuildRequires: gcc-c++ libicu-devel bison perl-Switch zlib-devel
-
+BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
 BuildRequires: libxml2-devel >= 2.6
@@ -65,10 +68,9 @@ BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
 
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel}
-%{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
+%{?_enable_geolocation:BuildPreReq: geoclue2-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
 %{?_enable_webkit2:BuildPreReq: libat-spi2-core-devel >= 2.2.1  libgtk+2-devel libgail-devel}
-%{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
 
 # for check
 BuildRequires: xvfb-run python-module-pygobject3
@@ -213,8 +215,10 @@ Requires: libwebkit2gtk-devel = %version-%release
 GObject introspection data for the Webkit2 library
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 #cp %SOURCE1 Source/autotools/symbols.filter
+%patch -p1
+%patch1
 
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
@@ -241,7 +245,6 @@ gtkdocize --copy
 	%{subst_enable introspection} \
 	%{subst_enable geolocation} \
 	%{?_enable_web_audio:--enable-web-audio} \
-	%{?_enable_media_stream:--enable-media-stream} \
 	%{subst_enable webkit2} \
 	--with-gtk=%gtk_ver
 
@@ -259,50 +262,63 @@ mkdir -p Programs/resources
 %make_install DESTDIR=%buildroot install
 %find_lang WebKitGTK-3.0
 
+mkdir -p %buildroot%_libexecdir/%_name
+install -m755 Programs/{GtkLauncher,MiniBrowser} %buildroot%_libexecdir/%_name/
+
+chrpath --delete %buildroot%_libexecdir/%_name/{GtkLauncher,MiniBrowser}
+
 %check
 #xvfb-run make check
 
 %files -f WebKitGTK-3.0.lang
-%_libdir/libwebkitgtk-3.0.so.*
-%dir %_datadir/webkitgtk-3.0
-%_datadir/webkitgtk-3.0/images
-%_datadir/webkitgtk-3.0/resources
+%_libdir/libwebkitgtk-%api_ver.so.*
+%_libexecdir/%_name/GtkLauncher
+%dir %_datadir/webkitgtk-%api_ver
+%_datadir/webkitgtk-%api_ver/images
+%_datadir/webkitgtk-%api_ver/resources
 
 %files devel
-%_libdir/libwebkitgtk-3.0.so
-%dir %_includedir/webkitgtk-3.0
-%_includedir/webkitgtk-3.0/webkit
-%_includedir/webkitgtk-3.0/webkitdom
-%_pkgconfigdir/webkitgtk-3.0.pc
+%_libdir/libwebkitgtk-%api_ver.so
+%dir %_includedir/webkitgtk-%api_ver
+%_includedir/webkitgtk-%api_ver/webkit
+%_includedir/webkitgtk-%api_ver/webkitdom
+%_pkgconfigdir/webkitgtk-%api_ver.pc
 
 %files devel-doc
 %_gtk_docdir/*
 
 %files -n libjavascriptcoregtk3
-%_libdir/libjavascriptcoregtk-3.0.so.*
+%_libdir/libjavascriptcoregtk-%api_ver.so.*
 
 %files -n libjavascriptcoregtk3-devel
-%_includedir/webkitgtk-3.0/JavaScriptCore
-%_libdir/libjavascriptcoregtk-3.0.so
-%_pkgconfigdir/javascriptcoregtk-3.0.pc
+%_includedir/webkitgtk-%api_ver/JavaScriptCore
+%_libdir/libjavascriptcoregtk-%api_ver.so
+%_pkgconfigdir/javascriptcoregtk-%api_ver.pc
 
 %if_enabled webkit2
 %files -n libwebkit2gtk
-%_libdir/libwebkit2gtk-3.0.so.*
+%_libdir/libwebkit2gtk-%api_ver.so.*
 %_libexecdir/WebKitPluginProcess
 %_libexecdir/WebKitWebProcess
-%_libdir/webkit2gtk-3.0
+%_libexecdir/WebKitNetworkProcess
+%_libexecdir/%_name/MiniBrowser
+%_libdir/webkit2gtk-%api_ver
 
 %files -n libwebkit2gtk-devel
-%_libdir/libwebkit2gtk-3.0.so
-%_includedir/webkitgtk-3.0/webkit2
-%_pkgconfigdir/webkit2gtk-3.0.pc
+%_libdir/libwebkit2gtk-%api_ver.so
+%_includedir/webkitgtk-%api_ver/webkit2
+%_pkgconfigdir/webkit2gtk-%api_ver.pc
+%_pkgconfigdir/webkit2gtk-web-extension-%api_ver.pc
 
+%if_enabled introspection
 %files -n libwebkit2gtk-gir
-%_typelibdir/WebKit2-3.0.typelib
+%_typelibdir/WebKit2-%api_ver.typelib
+%_typelibdir/WebKit2WebExtension-%api_ver.typelib
 
 %files -n libwebkit2gtk-gir-devel
-%_girdir/WebKit2-3.0.gir
+%_girdir/WebKit2-%api_ver.gir
+%_girdir/WebKit2WebExtension-%api_ver.gir
+%endif
 %endif
 
 %files jsc
@@ -310,19 +326,26 @@ mkdir -p Programs/resources
 
 %if_enabled introspection
 %files gir
-%_typelibdir/WebKit-3.0.typelib
+%_typelibdir/WebKit-%api_ver.typelib
 
 %files gir-devel
-%_girdir/WebKit-3.0.gir
+%_girdir/WebKit-%api_ver.gir
 
 %files -n libjavascriptcoregtk3-gir
-%_typelibdir/JavaScriptCore-3.0.typelib
+%_typelibdir/JavaScriptCore-%api_ver.typelib
 
 %files -n libjavascriptcoregtk3-gir-devel
-%_girdir/JavaScriptCore-3.0.gir
+%_girdir/JavaScriptCore-%api_ver.gir
 %endif
 
+
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
+* Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 2.3.92-alt1
+- 2.3.92
+
 * Fri Feb 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.5-alt1
 - 2.2.5
 

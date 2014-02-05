@@ -1,5 +1,5 @@
-%define ver_major 3.10
-%define ver_base 3.10
+%define ver_major 3.12
+%define ver_base 3.12
 %define ver_lib 1.2
 
 %def_disable debug
@@ -8,16 +8,16 @@
 %def_with openldap
 %def_disable static_ldap
 %def_with krb5
-%def_enable nntp
 %def_enable goa
 # Ubuntu online accounts support
 %def_disable uoa
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -31,13 +31,13 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.in
-%define glib_ver 2.34.0
+%define glib_ver 2.36.0
 %define gtk3_ver 3.2.0
-%define libsoup_ver 2.40.3
+%define libsoup_ver 2.42
 %define gcr_ver 3.4
 %define secret_ver 0.5
 %define sqlite_ver 3.5
-%define gweather_ver 3.5.0
+%define gweather_ver 3.8.0
 %define ical_ver 0.43
 %define gdata_ver 0.10
 %define goa_ver 3.8.0
@@ -58,7 +58,7 @@ BuildPreReq: libical-devel >= %ical_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
-BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel
+BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
@@ -123,9 +123,18 @@ Requires: %name = %version-%release
 %description vala
 This package provides Vala language bindings for the EDS libraries
 
+%package tests
+Summary: Tests for the EDS
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed EDS libraries.
+
 
 %define _gtk_docdir %_datadir/gtk-doc/html
-%define _libexecdir %_prefix/libexec/%name
+%define _libexecdir %_prefix/libexec
 
 %add_findprov_lib_path %_libdir/%name-%ver_lib/extensions
 
@@ -176,7 +185,6 @@ export CAMEL_LOCK_HELPER_GROUP=mail
     --enable-file-locking=fcntl \
     --enable-dot-locking=no \
     %ldap_flags \
-    %{subst_enable nntp} \
     %{subst_enable goa} \
     %{subst_enable uoa} \
     --enable-smime \
@@ -187,13 +195,12 @@ export CAMEL_LOCK_HELPER_GROUP=mail
 %endif
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --disable-schemas-compile \
-    %{?_enable_vala:--enable-vala-bindings}
-
-
+    %{?_enable_vala:--enable-vala-bindings} \
+    %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # if unstable
 ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
@@ -204,8 +211,8 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %find_lang --with-gnome --output=%name.lang %name-%ver_base
 
 %files -f %name.lang
-%dir %_libexecdir
 %_libexecdir/*
+%{?_enable_installed_tests:%exclude %_libexecdir/%name/installed-tests/}
 %dir %_libdir/%name/addressbook-backends
 %dir %_libdir/%name/calendar-backends
 %dir %_libdir/%name/camel-providers
@@ -215,7 +222,6 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_datadir/pixmaps/*
-%_datadir/GConf/gsettings/libedataserver.convert
 %_datadir/GConf/gsettings/evolution-data-server.convert
 %_datadir/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
@@ -254,8 +260,19 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %_datadir/vala/vapi/*.vapi
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/%name/installed-tests/
+%_datadir/installed-tests/%name/
+%endif
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Sun Mar 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
+- 3.11.92
+
 * Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
 - 3.10.4
 

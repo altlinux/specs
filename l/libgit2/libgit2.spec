@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: linkable library for Git
@@ -8,7 +8,7 @@ License: GPLv2 with linking exception
 Group: System/Libraries
 URL: http://libgit2.github.com
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake python-modules zlib-devel libssl-devel
@@ -31,8 +31,8 @@ to write native speed custom Git applications in any language which
 supports C bindings.
 This package contains development files.
 
-%prep 
-%setup -q
+%prep
+%setup
 rm -rf deps/{regex,zlib}
 sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 
@@ -57,6 +57,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.19.0-alt1
 - 0.19.0
 

@@ -2,11 +2,11 @@
 
 %define _name sudoku
 %define __name gnome-%_name
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -18,10 +18,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 
 Provides:  %__name = %version-%release
 
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+
 %define glib_ver 2.32.0
 %define gtk_ver 3.4.0
 
-BuildRequires: gnome-common intltool yelp-tools python-module-pygobject3-devel libgio-devel
+BuildRequires: gnome-common intltool yelp-tools libgio-devel 
+BuildRequires: python3 rpm-build-python3 python3-module-pygobject3-devel
 
 %description
 Sudoku is a logic game with a Japanese name that has recently exploded
@@ -29,6 +34,8 @@ in popularity.
 
 %prep
 %setup -n %__name-%version
+# fix DOMAIN
+subst 's/gnome-games/%__name/' src/lib/defaults.py
 
 %build
 %autoreconf
@@ -44,7 +51,7 @@ in popularity.
 %_bindir/%__name
 %_desktopdir/%__name.desktop
 %_datadir/%__name/
-%python_sitelibdir_noarch/gnome_sudoku/
+%python3_sitelibdir_noarch/gnome_sudoku/
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name.svg
 %_iconsdir/HighContrast/*x*/apps/%__name.png
@@ -53,6 +60,9 @@ in popularity.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

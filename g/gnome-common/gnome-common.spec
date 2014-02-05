@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: gnome-common
 Version: %ver_major.0
@@ -40,6 +40,9 @@ cp doc-build/README README.doc
 %doc README* ChangeLog doc/usage.txt
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 - removed obsolete alt-no-libtool-check.patch

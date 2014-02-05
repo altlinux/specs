@@ -1,5 +1,5 @@
 %define _name geocode-glib
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 1.0
 %def_enable introspection
 
@@ -14,7 +14,7 @@ Url: http://www.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: gnome-common libjson-glib-devel >= 0.16.2
+BuildPreReq: gnome-common libjson-glib-devel >= 0.99.2
 BuildRequires: libgio-devel >= 2.34 libsoup-gnome-devel
 BuildRequires: intltool gnome-doc-utils gtk-doc
 %{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel libjson-glib-gir-devel}
@@ -84,6 +84,7 @@ GObject introspection devel data for the %_name library
 
 %files -f %_name.lang
 %_libdir/*.so.*
+%_iconsdir/gnome/scalable/places/*.svg
 %doc AUTHORS NEWS README
 
 %files devel
@@ -103,6 +104,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

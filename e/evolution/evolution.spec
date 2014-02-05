@@ -1,5 +1,5 @@
-%define ver_major 3.10
-%define ver_base 3.10
+%define ver_major 3.12
+%define ver_base 3.12
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -17,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -41,22 +41,23 @@ Patch27: evolution-2.9.1-im-context-reset.patch
 Provides: camel
 
 # from configure.in
-%define glib_ver 2.30.0
-%define gtk_ver 3.2
+%define glib_ver 2.36.0
+%define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.10.4
+%define eds_ver 3.12.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.5.2
-%define libsoup_ver 2.40.3
+%define libsoup_ver 2.42.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
 %define ical_ver 0.43
 %define gdata_ver 0.10.0
 %define champlain_ver 0.12
 %define pst_ver 0.6.54
-%define webkit_ver 1.10.0
+%define webkit_ver 2.0.1
 %define geocode_ver 3.10.0
+%define gcr_ver 3.4
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
@@ -80,13 +81,14 @@ BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
+BuildPreReq: gcr-libs-devel >= %gcr_ver
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
 BuildRequires: python-modules-compiler python-modules-encodings libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
-BuildRequires: zlib-devel libxml2-devel
+BuildRequires: zlib-devel libxml2-devel libgtkspell3-devel
 
 # Some plugins/extensions link with others, resulting in multiple rpath entries
 %set_verify_elf_method rpath=relaxed
@@ -314,6 +316,12 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Sun Mar 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
+- 3.11.92
+
 * Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
 - 3.10.4
 

@@ -1,4 +1,4 @@
-%define ver_major 1.18
+%define ver_major 1.20
 %def_enable http
 %def_enable avahi
 %def_enable cdda
@@ -21,17 +21,16 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.4
-Release: alt0.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
 Group: System/Libraries
 URL: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 #Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.16.0-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
@@ -40,7 +39,7 @@ Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29047
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
-Patch6: gvfs-1.16.3-alt-1-logind-state.patch
+Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -303,7 +302,9 @@ killall -USR1 gvfsd >&/dev/null || :
 
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
-%_libdir/libgvfs*.so.*
+%dir %_libdir/%name
+%_libdir/%name/libgvfs*.so
+%exclude %_libdir/%name/*.la
 %dir %_libexecdir
 # daemon
 %_libexecdir/gvfsd
@@ -374,9 +375,6 @@ killall -USR1 gvfsd >&/dev/null || :
 
 %files devel
 %_includedir/*
-%_libdir/*.so
-#%_pkgconfigdir/*.pc
-#%%_datadir/gtk-doc/html/*
 
 %files -n fuse-gvfs
 %_libexecdir/gvfsd-fuse
@@ -458,6 +456,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Fri Mar 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Mon Jan 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt0.1
 - 1.18.4 snapshot (fixed BGO ##720482, 598092, 720743, 670534..)
 

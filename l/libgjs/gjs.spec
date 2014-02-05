@@ -1,15 +1,15 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 1.38
+%define ver_major 1.40
 %define _name gjs
 %define api_ver 1.0
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -26,12 +26,13 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.38.0
-%define gi_ver 1.38.0
+%define glib_ver 2.39.90
+%define gi_ver 1.39.90
 
-BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs17-devel libcairo-devel
+BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs24-devel libcairo-devel
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
+BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 
 # for check
 BuildRequires: /proc dbus-tools dbus-tools-gui
@@ -65,6 +66,7 @@ the functionality of the installed Gjs library package.
 
 %build
 %autoreconf
+#export GJS_LIBS="$GJS_LIBS `pkg-config --libs nspr`"
 %configure \
     --disable-static \
     %{?_enable_installed_tests:--enable-installed-tests}
@@ -85,7 +87,7 @@ the functionality of the installed Gjs library package.
 %dir %_libdir/%_name/
 %dir %_typelibdir
 %_typelibdir/GjsPrivate-1.0.typelib
-%_datadir/%_name-%api_ver
+#%_datadir/%_name-%api_ver
 %doc COPYING NEWS README
 
 %files devel
@@ -110,6 +112,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
+- 1.40.0
+
 * Sun Jan 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt2
 - new -tests subpackage
 

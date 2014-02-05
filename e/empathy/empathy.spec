@@ -1,6 +1,5 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %def_disable static
-%def_enable sendto
 %def_enable map
 %def_enable goa
 %if_enabled goa
@@ -11,10 +10,9 @@
 %def_enable gudev
 %def_with cheese
 %define gst_api_ver 1.0
-%def_enable gst_1
 
 Name: empathy
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -33,7 +31,7 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 %define gtk_ver 3.9.4
 %define clutter_ver 1.1.2
 %define clutter_gst_ver 1.9.92
-%define tp_glib_ver 0.19.9
+%define tp_glib_ver 0.23.2
 %define tp_logger_ver 0.8.0
 %define tp_gabble_ver 0.16.0
 %define tp_haze_ver 0.6.0
@@ -88,7 +86,6 @@ BuildRequires: libgee0.8-devel gobject-introspection-devel libgtk+3-gir-devel
 # for gnome-control-center-3.0.x
 # BuildPreReq: gnome-control-center-devel
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver libtelepathy-farstream-devel >= %farstream_ver
-%{?_enable_sendto:BuildRequires: nautilus-sendto-devel >= %nst_ver}
 %{?_enable_map:BuildPreReq: libchamplain-devel >= %champlain_ver  libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libtelepathy-mission-control-devel}
 %{?_enable_location:BuildPreReq: geoclue2-devel >= %geoclue2_ver}
@@ -115,18 +112,8 @@ BuildArch: noarch
 %description data
 This package provides noarch data needed for Empathy to work.
 
-%package -n nautilus-sendto-empathy
-Summary: Send files from nautilus to Empathy
-Group: Graphical desktop/GNOME
-Requires: nautilus-sendto >= 2.28.2
-Requires: %name = %version-%release
-Provides: nautilus-sendto-plugin = %version-%release
-
-%description -n nautilus-sendto-empathy
-This application provides integration between nautilus and Empathy.
-
 %prep
-%setup -q
+%setup
 
 rm -f data/%name.desktop
 
@@ -139,11 +126,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{?_enable_geocode:--enable-geocode=yes} \
 	%{?_enable_location:--enable-location=yes} \
 	%{?_enable_gudev:--enable-gudev=yes} \
-	%{subst_with cheese} \
-	%{?_enable_sendto:--enable-nautilus-sendto=yes} \
-	%{?_disable_sendto:--enable-nautilus-sendto=no} \
-	%{?_enable_gst_1:--enable-gst-1.0}
-
+	%{subst_with cheese}
 # SMP-incompatible build
 %make
 
@@ -199,14 +182,12 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS CONTRIBUTORS NEWS README TODO
 
-%if_enabled sendto
-%files -n nautilus-sendto-%name
-%_libdir/nautilus-sendto/plugins/libnst%name.so
-%exclude %_libdir/nautilus-sendto/plugins/libnst%name.la
-%endif
-
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+- removed obsolete nautilus-sendto-empathy subpackage
+
 * Tue Jan 07 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

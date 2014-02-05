@@ -5,12 +5,12 @@
 %def_enable introspection
 %def_enable vala
 %def_disable libsocialweb
-%def_enable tracker
+%def_disable tracker
 %def_enable bluez
 
 Name: lib%_name
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -126,13 +126,13 @@ This package provides vala language bindings for %_name library
 %_typelibdir/Folks-%api_ver.typelib
 %_typelibdir/FolksEds-%api_ver.typelib
 %_typelibdir/FolksTelepathy-%api_ver.typelib
-%_typelibdir/FolksTracker-%api_ver.typelib
+%{?_enable_tracker:%_typelibdir/FolksTracker-%api_ver.typelib}
 
 %files gir-devel
 %_girdir/Folks-%api_ver.gir
 %_girdir/FolksEds-%api_ver.gir
 %_girdir/FolksTelepathy-%api_ver.gir
-%_girdir/FolksTracker-%api_ver.gir
+%{?_enable_tracker:%_girdir/FolksTracker-%api_ver.gir}
 %endif
 
 %if_enabled vala
@@ -144,12 +144,15 @@ This package provides vala language bindings for %_name library
 %{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.vapi}
 %_vapidir/folks-telepathy.deps
 %_vapidir/folks-telepathy.vapi
-%_vapidir/folks-tracker.deps
-%_vapidir/folks-tracker.vapi
+%{?_enable_tracker:%_vapidir/folks-tracker.deps}
+%{?_enable_tracker:%_vapidir/folks-tracker.vapi}
 %_vapidir/folks.vapi
 %endif
 
 %changelog
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt2
+- rebuilt for GNOME-3.12 (temporarily disabled tracker backend)
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
 - 0.9.6
 

@@ -1,7 +1,10 @@
-%define ver_major 3.10
+%define _unpackaged_files_terminate_build 1
+%define _name org.gnome.Photos
+%define ver_major 3.12
+%define _libexecdir %_prefix/libexec
 
 Name: gnome-photos
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -18,9 +21,10 @@ BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildPreReq: libgio-devel >= 2.36.0
 BuildPreReq: libgtk+3-devel >= 3.9.4
 BuildPreReq: libexif-devel >= 0.6.14
+BuildPreReq: tracker-devel >= 0.17.5
 BuildRequires: libbabl-devel libgegl-devel libexempi-devel
-BuildRequires: liblcms2-devel librsvg-devel
-BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel tracker-devel
+BuildRequires: liblcms2-devel librsvg-devel libgfbgraph-devel
+BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel
 BuildRequires: libgrilo-devel zlib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
@@ -44,20 +48,28 @@ patterns and objectives.
 
 %install
 %makeinstall_std
-
+rm -rf %buildroot/%_datadir/doc/%name
 %find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
+%_libexecdir/%name-service
 %_desktopdir/*
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.*
+%_datadir/appdata/%_name.appdata.xml
+%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.photos.gschema.xml
-%_datadir/appdata/%name.appdata.xml
-
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Mon Mar 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
+- 3.11.92
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

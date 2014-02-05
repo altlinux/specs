@@ -1,9 +1,9 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-online-miners
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of miners for online content
@@ -14,11 +14,12 @@ Url: https://git.gnome.org/browse/gnome-online-miners
 Source: ftp://ftp.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.35.1
-%define goa_ver 3.8.0
+%define goa_ver 3.11.5
 %define grilo_ver 0.2.6
 %define gdata_ver 0.13.3
 %define zapojit_ver 0.0.2
-%define tracker_ver 0.16.0
+%define tracker_ver 0.17.1
+%define gfbgraph_ver 0.2.2
 
 Requires: grilo-plugins
 
@@ -29,6 +30,7 @@ BuildPreReq: libgrilo-devel >= %grilo_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libzapojit-devel >= %zapojit_ver
 BuildPreReq: tracker-devel >= %tracker_ver
+BuildPreReq: libgfbgraph-devel >= %gfbgraph_ver
 
 %description
 GNOME Online Miners provides a set of crawlers that go through your
@@ -51,18 +53,23 @@ Flickr, Google, SkyDrive and ownCloud.
 %_libexecdir/gom-gdata-miner
 %_libexecdir/gom-owncloud-miner
 %_libexecdir/gom-zpj-miner
+%_libexecdir/gom-facebook-miner
 %dir %_libdir/%name
 %_libdir/%name/libgom-%api_ver.so
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Flickr.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.GData.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Owncloud.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Zpj.service
+%_datadir/dbus-1/services/org.gnome.OnlineMiners.Facebook.service
 %doc AUTHORS NEWS README
 
 %exclude %_libdir/%name/libgom-%api_ver.la
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Jan 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

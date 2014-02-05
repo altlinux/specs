@@ -1,9 +1,9 @@
 %define _name seahorse
-%define ver_major 3.10
+%define ver_major 3.11
 %def_enable libnotify
 
 Name: %_name-nautilus
-Version: %ver_major.1
+Version: %ver_major.92
 Release: alt1
 
 Summary: PGP encryption and signing for Nautilus
@@ -54,6 +54,9 @@ export GNUPG=/usr/bin/gpg2
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Sun Mar 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt1
+- 3.11.92
+
 * Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

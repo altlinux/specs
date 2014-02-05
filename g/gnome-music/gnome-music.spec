@@ -1,7 +1,7 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: gnome-music
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -20,7 +20,7 @@ AutoReqProv: nopython
 %define gtk_ver 3.9.0
 %define grilo_ver 0.2.6
 
-BuildRequires: intltool libgtk+3-devel >= %gtk_ver libgrilo-devel >= %grilo_ver
+BuildRequires: intltool yelp-tools libgtk+3-devel >= %gtk_ver libgrilo-devel >= %grilo_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: rpm-build-python3 python3-devel
 
@@ -40,7 +40,7 @@ Music playing application for GNOME3.
 %install
 %makeinstall_std
 
-%find_lang %name
+%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/%name
@@ -56,6 +56,9 @@ Music playing application for GNOME3.
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sun Feb 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 
