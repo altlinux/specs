@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Devel/FindPerl.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 0.09
+%define module_version 0.10
 %define module_name Module-Path
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 Summary: get the full path to a locally installed module
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/N/NE/NEILB/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Module-Path-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2
 - regenerated from template by package builder
 
