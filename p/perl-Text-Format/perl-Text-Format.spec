@@ -1,6 +1,6 @@
 %define dist Text-Format
 Name: perl-%dist
-Version: 0.58
+Version: 0.59
 Release: alt1
 
 Summary: Various subroutines to format text
@@ -41,6 +41,9 @@ formatting than what Text::Wrap allows.
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - automated CPAN update
 
