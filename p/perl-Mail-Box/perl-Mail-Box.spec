@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
-Version: 2.110
+Version: 2.111
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -38,6 +38,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.111-alt1
+- automated CPAN update
+
 * Mon Jan 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.110-alt1
 - automated CPAN update
 
