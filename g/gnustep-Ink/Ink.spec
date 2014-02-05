@@ -2,7 +2,7 @@
 
 Name: gnustep-Ink
 Version: 0.1
-Release: alt1.svn20121003
+Release: alt2.svn20121003
 Summary: Ink is the GNUstep editor
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -18,6 +18,7 @@ BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
 Requires: gnustep-back
+Conflicts: gnustep-examples
 
 %description
 Ink is a basic editor for rtf(d) and plain text.
@@ -44,6 +45,9 @@ Ink is a basic editor for rtf(d) and plain text.
 %_libdir/GNUstep
 
 %changelog
+* Wed Feb 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20121003
+- Added explicit conflict with gnustep-examples
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20121003
 - Initial build for Sisyphus
 
