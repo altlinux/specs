@@ -1,9 +1,10 @@
 %define _name gexiv2
-%define ver_major 0.7
-%define api_ver 0.4
+%define ver_major 0.9
+%define api_ver 0.10
+%def_disable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -15,6 +16,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 BuildRequires: gcc-c++ libexiv2-devel libgio-devel gobject-introspection-devel vala-tools
 BuildRequires: python-module-pygobject3-devel rpm-build-python3 python3-module-pygobject3-devel
+BuildRequires: gtk-doc
 
 %description
 gexiv2 is a GObject-based wrapper around the Exiv2 library. It makes the
@@ -32,6 +34,18 @@ basic features of Exiv2 available to GNOME applications.
 This package provides headers and libraries needed to develop
 applications using gexiv2 library.
 
+%package devel-doc
+Summary: Development documentation for gexiv2
+Group: Development/Documentation
+Conflicts: %name < %version-%release
+BuildArch: noarch
+
+%description devel-doc
+gexiv2 is a GObject-based wrapper around the Exiv2 library. It makes the
+basic features of Exiv2 available to GNOME applications.
+
+This package contains development documentation for gexiv2 library.
+
 %package gir
 Summary: GObject introspection data for the gexiv2 library
 Group: System/Libraries
@@ -39,7 +53,6 @@ Requires: %name = %version-%release
 
 %description gir
 GObject introspection data for the gexiv2 library.
-
 
 %package gir-devel
 Summary: GObject introspection devel data for the gexiv2 library
@@ -66,14 +79,18 @@ This package provides Python3 bindings for the gexiv2 library.
 
 %prep
 %setup -n %_name-%version
+# decrease required pkg-config version
+subst 's/0\.26/0.25/' configure*
 
 %build
+%autoreconf
 %configure --disable-static \
-	--enable-introspection
+	--enable-introspection \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
-%makeinstall_std LIB=%_lib
+%makeinstall_std
 
 %files
 %_libdir/%name.so.*
@@ -98,7 +115,15 @@ This package provides Python3 bindings for the gexiv2 library.
 %python3_sitelibdir/gi/overrides/GExiv2.py*
 %python3_sitelibdir/gi/overrides/__pycache__/GExiv2.cpython-*.pyc
 
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/*
+%endif
+
 %changelog
+* Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Fri Dec 06 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 - new -gir{,-devel}, python{,3}-module-* subpackages
