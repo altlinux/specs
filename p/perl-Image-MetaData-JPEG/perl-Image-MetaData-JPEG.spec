@@ -1,14 +1,14 @@
 %define dist Image-MetaData-JPEG
 Name: perl-%dist
-Version: 0.153
-Release: alt2
+Version: 0.155
+Release: alt1
 
 Summary: Perl extension for showing/modifying JPEG (meta)data
 License: GPLv2
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Image-MetaData-JPEG-%{version}.tar.gz
 Patch: %name-fixpod.patch
 
 BuildArch: noarch
@@ -40,6 +40,9 @@ modified and rewritten to disk.
 %perl_vendor_privlib/Image
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.155-alt1
+- automated CPAN update
+
 * Thu Jun 14 2012 Vladimir Lettiev <crux@altlinux.ru> 0.153-alt2
 - Fixed pod lib/Image/MetaData/JPEG/Structures.pod
 
