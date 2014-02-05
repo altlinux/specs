@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Exporter.pm) perl(Fatal.pm) perl(Moose/Exporter.pm) perl(POSIX.pm) perl(Time/HiRes.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-Run
-%define upstream_version 0.0126
+%define upstream_version 0.0302
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_3
+Version:    0.0302
+Release:    alt1
 
 Summary:    Named sprintf according to the
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Test-Run-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Spec.pm)
@@ -60,6 +60,9 @@ same as of
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0302-alt1
+- automated CPAN update
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.0126-alt3_3
 - moved to Sisyphus
 
