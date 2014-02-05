@@ -2,7 +2,7 @@
 
 Name: gnustep-Gridlock
 Version: 1.10
-Release: alt2
+Release: alt3
 Summary: A collection of grid-based board games for GNUstep
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.debian.org/ru/jessie/gridlock.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -46,12 +47,18 @@ done
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README.GNUstep readme.html
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Wed Feb 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt2
 - Added Requires: gnustep-back
 
