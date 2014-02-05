@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXSLT
 Name: perl-%dist
-Version: 1.84
+Version: 1.87
 Release: alt1
 
 Summary: Perl interface to the Gnome libxslt library
@@ -37,6 +37,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.87-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.84-alt1
 - automated CPAN update
 
