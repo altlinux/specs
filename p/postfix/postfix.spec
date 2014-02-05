@@ -1,5 +1,5 @@
 Name: postfix
-Version: 2.10.2
+Version: 2.10.3
 Release: alt1
 Epoch: 1
 
@@ -676,6 +676,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Feb 05 2014 Fr. Br. George <george@altlinux.ru> 1:2.10.3-alt1
+- Autobuild version bump to 2.10.3
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1:2.10.2-alt1
 - Autobuild version bump to 2.10.2
 - Next bugfix release
