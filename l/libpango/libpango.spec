@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -104,7 +104,7 @@ GObject introspection data for the Pango library
 
 %package gir-devel
 Summary: GObject introspection devel data for the Pango library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
 
@@ -122,7 +122,7 @@ the functionality of the installed Pango library.
 
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %patch -p1
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %patch3
@@ -133,12 +133,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %configure \
     %{subst_enable static} \
     %{subst_enable introspection} \
-    --enable-man \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_installed_tests:--enable-installed-tests} \
-    --disable-dependency-tracking \
-    --enable-explicit-deps=yes
-
+    --enable-man
 %make_build
 
 %check
@@ -202,6 +199,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.2-alt1
+- 1.36.2
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.1-alt1
 - 1.36.1
 
