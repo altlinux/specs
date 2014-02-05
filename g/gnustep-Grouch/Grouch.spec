@@ -2,7 +2,7 @@
 
 Name: gnustep-Grouch
 Version: 20061120
-Release: alt2
+Release: alt3
 Summary: Grouch is an AOL Instant MessengerSM and ICQ client for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://sveikauskas.org/projects/grouch/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -75,10 +76,13 @@ done
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -88,6 +92,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Wed Feb 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20061120-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20061120-alt2
 - Added Requires: gnustep-renaissance and Requires: gnustep-back
 
