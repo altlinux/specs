@@ -1,6 +1,6 @@
 %define dist Hash-Util-FieldHash-Compat
 Name: perl-%dist
-Version: 0.03
+Version: 0.04
 Release: alt1
 
 Summary: Use Hash::Util::FieldHash or ties, depending on availability
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Hash-Util-FieldHash-Compat-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,5 +36,8 @@ available it will use that instead.
 %perl_vendor_privlib/Hash
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.03-alt1
 - initial revision
