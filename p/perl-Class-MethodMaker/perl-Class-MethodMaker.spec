@@ -1,6 +1,6 @@
 %define dist Class-MethodMaker
 Name: perl-%dist
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: Easy building of Perl Classes
@@ -32,6 +32,9 @@ accessor methods for your objects that perform standard tasks.
 %perl_vendor_autolib/Class
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
 - automated CPAN update
 
