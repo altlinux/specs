@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(IO/All.pm) perl(List/Util.pm) perl(MRO/Compat.pm) perl(Pod/Usage.pm) perl(Test/Manifest.pm) perl(Test/Run/Base.pm) perl(Test/Run/Iface.pm) perl(Test/Run/Obj.pm) perl(Test/Run/Trap/Obj.pm) perl(base.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-Run-CmdLine
-%define upstream_version 0.0125
+%define upstream_version 0.0126
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_3
+Version:    0.0126
+Release:    alt1
 
 Summary:    Command line front-end for Test-Run
 License:    MIT
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Test-Run-CmdLine-%{version}.tar.gz
 
 # These Requirs are not detected automatically, so we need to add them manually.
 Requires:   perl(MooseX/Getopt/Basic.pm)
@@ -57,6 +57,9 @@ installed or available in the path.
 /usr/bin/runprove
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0126-alt1
+- automated CPAN update
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.0125-alt3_3
 - moved to Sisyphus
 
