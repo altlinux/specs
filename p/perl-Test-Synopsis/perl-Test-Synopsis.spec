@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Synopsis
-Version:	0.06
-Release:	alt3_19
+Version:	0.07
+Release:	alt1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source0:	http://search.cpan.org/CPAN/authors/id/M/MI/MIYAGAWA/Test-Synopsis-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(base.pm)
 BuildRequires:	perl(Carp.pm)
@@ -62,6 +62,9 @@ make test TEST_FILES="xt/*.t"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt3_19
 - Sisyphus build
 
