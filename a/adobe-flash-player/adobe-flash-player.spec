@@ -6,9 +6,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake 11
-%define ver_ix86 11.2.202.335
-%define ver_x86_64 11.2.202.335
-Release: alt24
+%define ver_ix86 11.2.202.336
+%define ver_x86_64 11.2.202.336
+Release: alt25
 Serial: 3
 
 %define ver_real %ver_fake
@@ -72,7 +72,7 @@ fake
 
 
 %prep
-%setup -Tqcn install_flash_player_10_linux
+%setup -Tqcn flash_player_%{version}_linux
 %ifarch x86_64
 %if_enabled include_x86_64
 tar xfv %SOURCE10
@@ -110,7 +110,7 @@ done
 
 # menu
 mkdir -p -m0755 %buildroot/%_desktopdir
-cat %SOURCE2 | sed 's|%%PATH%%|%{_docdir}/%{bin_name}-%{ver_real}/LICENSE.txt|' > adobe_flash_player_eula.desktop
+cat %SOURCE2 | sed 's|%%LICENSE_PATH%%|%{_docdir}/%{bin_name}-%{ver_real}/LICENSE.txt|' > adobe_flash_player_eula.desktop
 install -m0644 adobe_flash_player_eula.desktop %buildroot/%_desktopdir/
 
 %ifarch x86_64
@@ -138,6 +138,10 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Wed Feb 05 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt25
+- new version
+- security fixes: CVE-2014-0497
+
 * Fri Jan 24 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt24
 - 11.2.202.335 (x86,x86-64)
 - security fixes:
