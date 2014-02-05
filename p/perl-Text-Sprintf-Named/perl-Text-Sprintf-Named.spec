@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Sprintf-Named
-%define upstream_version 0.0401
+%define upstream_version 0.0402
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_3
+Version:    0.0402
+Release:    alt1
 
 Summary:    Sprintf-like function with named conversions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SH/SHLOMIF/Text-Sprintf-Named-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Exporter.pm)
@@ -54,6 +54,9 @@ with a width of 4.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0402-alt1
+- automated CPAN update
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.0401-alt3_3
 - moved to Sisyphus
 
