@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.1.3
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -749,8 +749,8 @@ mkdir -p %buildroot%_libexecdir/rpm
 
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vlc.filetrigger
 #!/bin/sh -e
-
-grep -qs '^%vlc_plugindir/.*\.so\$' && %vlc_libdir/vlc-cache-gen %vlc_plugindir
+grep -qs '^%vlc_plugindir/.*\.so\$' || exit 0
+%vlc_libdir/vlc-cache-gen %vlc_plugindir
 __EOF__
 
 chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
@@ -1308,6 +1308,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Feb 06 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.3-alt2
+- filetrigger fixed (closes: #29810)
+
 * Thu Jan 30 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.3-alt1
 - 2.1.3 released
 
