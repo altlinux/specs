@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.28
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,12 @@ done)
 
 
 %changelog
+* Thu Feb 06 2014 Led <led@altlinux.ru> 3.10.28-alt9
+- updated:
+  + fix-net-sunrpc
+- added:
+  + fix-fs-lockd
+
 * Tue Feb 04 2014 Led <led@altlinux.ru> 3.10.28-alt8
 - updated:
   + fix-virt-kvm--kvm
