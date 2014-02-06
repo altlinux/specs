@@ -18,8 +18,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.14.5
-Release: alt3
+Version: 1.15.0
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -28,9 +28,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 14.1
-Provides: XORG_ABI_XINPUT = 19.1
-Provides: XORG_ABI_EXTENSION = 7.0
+Provides: XORG_ABI_VIDEODRV = 15.0
+Provides: XORG_ABI_XINPUT = 20.0
+Provides: XORG_ABI_EXTENSION = 8.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-vesa xorg-drv-evdev
@@ -44,7 +44,10 @@ BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel 
 BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires: xorg-xcmiscproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
 BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
-BuildRequires: xorg-glproto-devel
+BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel
+%if_enabled xephyr
+BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel
+%endif
 
 %description
 X  is  the  generic name for the X Window System display server.  It is
@@ -180,6 +183,8 @@ drivers, input drivers, or other X modules should install this package.
 	--enable-config-udev \
 	--disable-config-dbus \
 	--disable-config-hal \
+	--disable-linux-apm \
+	--disable-linux-acpi \
 	--enable-drv-switch \
 	--with-drv-switch-path=%_libexecdir/X11/drv.d \
 	--enable-record \
@@ -298,6 +303,12 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.0-alt2
+- reenabled xephyr
+
+* Thu Jan 30 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.0-alt1
+- 1.15.0
+
 * Thu Jan 30 2014 Dmitry V. Levin <ldv@altlinux.org> 2:1.14.5-alt3
 - NMU.
 - Reverted to 1.14.5-alt1 due to regressions (closes: #29354, #29747).

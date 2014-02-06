@@ -1,6 +1,6 @@
 Name: xorg-drv-nv
 Version: 2.1.20
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: NVIDIA video driver
 License: MIT/X11
@@ -43,6 +43,9 @@ ports TrueColor in the higher depths.
 %_man4dir/*.4*
 
 %changelog
+* Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1.20-alt4
+- requires XORG_ABI_VIDEODRV = 15.0
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1.20-alt3
 - requires XORG_ABI_VIDEODRV = 14.1
 
