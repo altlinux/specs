@@ -1,4 +1,4 @@
-%set_verify_elf_method unresolved=relaxed
+%set_verify_elf_method unresolved=strict
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -6,10 +6,10 @@
 
 %define teuver 10
 Name: dakota
-Version: 5.3
+Version: 5.4
 %define somver 0
 %define sover %somver.0.0
-Release: alt2
+Release: alt1
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -341,6 +341,10 @@ ln -s ../../default_types.hpp \
 ln -s ../../macros.hpp \
 	%buildroot%_includedir/%name/logging/include
 
+install -m644 \
+	BUILD/packages/surfpack/src/interpreter/libsurfpack_interpreter.so \
+	%buildroot%_libdir/
+
 %files
 %doc COPYRIGHT LICENSE README
 %_bindir/*
@@ -360,6 +364,9 @@ ln -s ../../macros.hpp \
 %_libdir/cmake
 
 %changelog
+* Thu Feb 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.4-alt1
+- Version 5.4
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.3-alt2
 - NMU: added missing Pod dependencies
 
