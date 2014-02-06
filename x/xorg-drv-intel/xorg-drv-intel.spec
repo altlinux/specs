@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
-Version: 2.99.907
-Release: alt2
+Version: 2.99.909
+Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -52,6 +52,12 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Sun Feb 02 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.909-alt1
+- snapshot 2.99.909
+
+* Sat Feb 01 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.908-alt1
+- snapshot 2.99.908
+
 * Thu Jan 09 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.907-alt2
 - requires XORG_ABI_VIDEODRV = 15.0
 
