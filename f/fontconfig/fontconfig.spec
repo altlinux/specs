@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.0
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -118,6 +118,12 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Feb 06 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt3
+- disable only Nimbus fonts for PostScript aliases (ALT#26768)
+
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt1.M70P.1
+- built for M70P
+
 * Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt2
 - add patch from FC to decrease sleep in fc-cache
 
