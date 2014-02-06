@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.7.1
-Release: alt2
+Version: 0.7.2
+Release: alt1
 
 Summary: Alterator preinstall hooks runner module
 License: GPL
@@ -37,6 +37,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Feb 04 2014 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
+- Do not turn off host alteratord during preinstall in autoinstall mode (ALT #29783)
+
 * Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 0.7.1-alt2
 - require installer-scripts-remount-stage2 for remount script
   (moved from installer-common-stage2)
