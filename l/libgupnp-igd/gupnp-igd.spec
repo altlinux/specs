@@ -1,12 +1,12 @@
 %define _name gupnp-igd
 %define api_ver 1.0
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable python
 
 Name: libgupnp-igd
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A library to handle UPnP IGD port mapping
@@ -14,7 +14,7 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
-Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
+Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.gz
 
 BuildPreReq: libgupnp-devel >= 0.13.2
 BuildRequires: glib2-devel >= 2.14 gtk-doc
@@ -87,7 +87,7 @@ The gUPnP API is intended to be easy to use, efficient and flexible.
 This package provides Python bindings for gUPnP-IGD
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -98,10 +98,10 @@ This package provides Python bindings for gUPnP-IGD
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
-#%make check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -129,6 +129,9 @@ This package provides Python bindings for gUPnP-IGD
 %exclude %python_sitelibdir/gupnp/*.la
 
 %changelog
+* Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Mon Dec 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.2-alt1
 - 0.2.2
 
