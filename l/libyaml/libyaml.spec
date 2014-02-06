@@ -1,7 +1,6 @@
-%define oname yaml
 %define abiversion 2
 Name: libyaml
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: A C library for parsing and emitting YAML
@@ -12,7 +11,7 @@ Url: http://pyyaml.org/wiki/LibYAML
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pyyaml.org/download/libyaml/%oname-%version.tar
+Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Sat Oct 02 2010
 BuildRequires: doxygen
@@ -36,11 +35,14 @@ Requires: %name%abiversion = %version-%release
 Header files for the yaml library.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
+
+top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 
 %install
 %makeinstall_std
@@ -50,11 +52,16 @@ Header files for the yaml library.
 %_libdir/lib*.so.*
 
 %files devel
+%doc doc/html
 %_libdir/lib*.so
 %_includedir/*.h
 %_pkgconfigdir/*
 
 %changelog
+* Thu Feb 06 2014 Fr. Br. George <george@altlinux.ru> 0.1.5-alt1
+- Autobuild version bump to 0.1.5 (closes: #29802)
+- Generate and package development documentation
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1
 - Version 0.1.4
 
