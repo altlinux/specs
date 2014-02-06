@@ -26,7 +26,7 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.4.2
+Version: 11.6.1
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
@@ -2082,7 +2082,6 @@ install -d %buildroot%_includedir/PySundance
 cp ../packages/Sundance/python/src/*.hpp \
 	%buildroot%_includedir/PySundance
 
-%if 0
 pushd packages/Sundance/python
 install -d %buildroot%python_sitelibdir/PySundance
 install -p -m644 src/*.py src/*.so \
@@ -2090,17 +2089,14 @@ install -p -m644 src/*.py src/*.so \
 rm -f %buildroot%python_sitelibdir/PySundance/setup.py
 popd
 %endif
-%endif
 
 %if_with docs
-%if 0
 pushd packages/Sundance/python
 install -d %buildroot%_docdir/PySundance
 %make -C example
 cp -fR example \
 	%buildroot%_docdir/PySundance/
 popd
-%endif
 %endif
 
 popd # BUILD
@@ -2431,10 +2427,8 @@ popd
 %endif
 #python_sitelibdir/*PerceptMesh*
 
-%if 0
 %files -n python-module-PySundance
 %python_sitelibdir/PySundance*
-%endif
 
 %files -n libshards%somver
 %_libdir/libshards.so.*
@@ -2593,14 +2587,15 @@ popd
 %dir %_docdir/%truename
 %_docdir/%truename/examples
 
-%if 0
 %files -n python-module-PySundance-examples
 %dir %_docdir/PySundance
 %_docdir/PySundance/example
 %endif
-%endif
 
 %changelog
+* Thu Feb 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt1
+- Version 11.6.1 (with PySundance)
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.4.2-alt1
 - Version 11.4.2
 
@@ -2634,4 +2629,3 @@ popd
 
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2
-
