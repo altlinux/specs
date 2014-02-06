@@ -1,9 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.21
+%define major 1.22
 
 Name: mediawiki
 Version: %major.2
-Release: alt2
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
 
@@ -149,9 +149,11 @@ mkdir -p %buildroot%_mediawikidir
 cp -r * %buildroot%_mediawikidir/
 # Not needed in the package
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
+rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/}
 rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
 rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
+
 
 # do not use follow bundled extension:
 rm -rf %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/
@@ -281,6 +283,9 @@ exit 0
 
 
 %changelog
+* Thu Feb 06 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.2-alt1
+- new version 1.22.2 (with rpmrb script)
+
 * Wed Sep 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.2-alt2
 - drop phpinfo from blacklist (ALT bug #29329)
 - add provides/obsoletes for the bundled extension PdfHandler
