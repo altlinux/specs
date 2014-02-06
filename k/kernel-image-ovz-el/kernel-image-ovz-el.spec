@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt110
+Release: alt111
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab084.17-combined
+Patch0: patch-042stab084.20-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Wed Feb 05 2014 Led <led@altlinux.ru> 2.6.32-alt111
+- Update to 042stab084.20:
+  + Fixes in conntracks
+  + Rework ext4_file_mmap locking to avoid extending struct file_operations
+  + ploop: fix a race condition on relocation of blocks
+
 * Fri Jan 17 2014 Led <led@altlinux.ru> 2.6.32-alt110
 - Update to 042stab084.17
 
