@@ -1,7 +1,7 @@
 %define oname ProofreadPage
 
 Name: mediawiki-extensions-%oname
-Version: 1.20
+Version: 1.22
 Release: alt1
 
 BuildArch: noarch
@@ -15,8 +15,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.20
+Requires: mediawiki-common >= 1.22
 
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-ProofreadPage/legacy.tar.gz/REL1_22
 Source: %name-%version.tar
 
 %description
@@ -37,6 +38,9 @@ in the statistical count of text units.
 %files -f %oname.files
 
 %changelog
+* Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
+- new version (1.22) with rpmgs script
+
 * Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
 - new version (1.20 compatible)
 
