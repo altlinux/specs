@@ -2,7 +2,7 @@
 
 Name: gnustep-GTAMSAnalyzer
 Version: 0.42
-Release: alt3
+Release: alt4
 Summary: GTAMS Analyzer is a complete coding and analysis package
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://tamsys.sourceforge.net/gtams/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -68,15 +69,21 @@ rm -f Source/obj
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ReadMe.* *.html
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files docs
 %doc Documentation/*
 
 %changelog
+* Fri Feb 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt3
 - Added Requires: gnustep-back
 
