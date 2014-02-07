@@ -1,15 +1,14 @@
 Name: multicat
-Version: 1.0
-Release: alt1.qa1
+Version: 2.0
+Release: alt1
 Summary: A set of tools designed to manipulate multicast streams
 License: GPLv2+
 Group: Video
 Url: http://www.videolan.org/projects/multicat.html
-Packager: Konstantin Pavlov <thresh@altlinux.org>
 
-Source: http://downloads.videolan.org/pub/videolan/%name/%version/%name-%version.tar.bz2
+Source: %name-%version.tar
 
-BuildRequires: libdvbpsi-devel
+BuildRequires: libdvbpsi-devel bitstream-headers
 
 %description 
 The multicat package contains a set of tools designed to easily and efficiently
@@ -42,20 +41,26 @@ in tight environments. Memory and CPU usages are kept to a minimum, and they
 feature only one thread of execution.
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %build
 %make
 
 %install
 mkdir -p %buildroot%_bindir
-install -pm755 {aggregartp,desaggregartp,ingests,multicat,offsets}  %buildroot%_bindir/
+mkdir -p %buildroot%_man1dir
+install -pm755 {multicat,ingests,aggregartp,reordertp,offsets,lasts,multicat_validate} %buildroot%_bindir/
+install -pm644 {multicat.1,ingests.1,aggregartp.1,reordertp.1,offsets.1,lasts.1} %buildroot%_man1dir/
 
 %files 
 %doc COPYING README INSTALL Changelog AUTHORS
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Thu Feb 06 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0-alt1
+- New version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
