@@ -2,7 +2,7 @@
 
 Name: gnustep-GSBench
 Version: 0.5.2
-Release: alt2
+Release: alt3
 Summary: Benchmarking tool for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://wiki.gnustep.org/index.php/GSBench.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -40,12 +41,18 @@ A benchmarking tool for GNUstep, originated from NXBench.
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Fri Feb 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt2
 - Added Requires: gnustep-projectcenter and Requires: gnustep-back
 
