@@ -1,9 +1,7 @@
-%define githubver 1.2
-
 %set_verify_elf_method textrel=relaxed
 
 Name: pcsx2
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -15,8 +13,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-#https://codeload.github.com/PCSX2/%name/tar.gz/v%githubver
-Source: %name-%githubver.tar.gz
+#https://codeload.github.com/PCSX2/%name/tar.gz/v%version
+Source: %name-%version.tar.gz
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -330,7 +328,7 @@ Requires: %name = %version-%release
 Chinese language for PCSX2
 
 %prep
-%setup -n %name-%githubver
+%setup
 
 %build
 %__mkdir_p %_target_platform
@@ -480,6 +478,9 @@ popd
 %_datadir/locale/zh_TW/LC_MESSAGES/%{name}*.mo
 
 %changelog
+* Fri Feb 07 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt1
+- Version 1.2.1
+
 * Tue Feb 04 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
 - Version 1.2.0
 
