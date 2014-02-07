@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt111
+Release: alt112
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -36,7 +36,7 @@ Release: alt111
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
 
-%brp_strip_none /boot/*
+%{?brp_strip_none:%brp_strip_none /boot/*}
 
 Summary: The Linux kernel (the core of the Linux operating system)
 License: GPL
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Feb 07 2014 Led <led@altlinux.ru> 2.6.32-alt112
+- updated ipt_NETFLOW to 1.8.2
+
 * Wed Feb 05 2014 Led <led@altlinux.ru> 2.6.32-alt111
 - Update to 042stab084.20:
   + Fixes in conntracks
