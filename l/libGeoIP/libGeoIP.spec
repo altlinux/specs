@@ -1,17 +1,18 @@
-%define origname GeoIP
+%define origname geoip-api-c
 
 # due to hasher network isolation
 %def_disable check
 
-Name: lib%{origname}
-Version: 1.5.0
+Name: libGeoIP
+Version: 1.5.2
 Release: alt1
 
 Summary: GeoIP is a C library find what country an IP address or hostname originates from
 License: LGPLv2.1+
 Group: System/Libraries
 
-URL: http://www.maxmind.com/app/c
+#URL: http://www.maxmind.com/app/c
+URL: https://github.com/maxmind/geoip-api-c/
 Source: http://geolite.maxmind.com/download/geoip/api/c/%origname-%version.tar.gz
 
 # Automatically added by buildreq on Sun Apr 17 2011
@@ -62,11 +63,12 @@ autoupdate.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	--disable-data-files
 %make_build
 
 %check
-make check
+%make check
 
 %install
 %makeinstall_std
@@ -75,9 +77,6 @@ make check
 %config(noreplace) %_sysconfdir/GeoIP.conf
 %exclude %_sysconfdir/GeoIP.conf.default
 %_libdir/*.so.*
-# GeoIP databases updated way more often than library itself. So we will not
-# package DB files
-%exclude %_datadir/%origname
 
 %files devel
 %doc ChangeLog
@@ -90,6 +89,9 @@ make check
 %_man1dir/*
 
 %changelog
+* Fri Feb 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2 (new url/origname)
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
