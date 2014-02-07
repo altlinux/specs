@@ -1,7 +1,7 @@
 %define oname UserMerge
 
 Name: mediawiki-extensions-%oname
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 Serial: 1
 
@@ -17,8 +17,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.20
+Requires: mediawiki-common >= 1.22
 
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-UserMerge/legacy.tar.gz/REL1_22
 Source: %oname-%version.tar
 
 %description
@@ -38,6 +39,9 @@ user_id 0 and ask you to confirm merge to Anonymous.
 %files -f %oname.files
 
 %changelog
+* Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.1-alt1
+- new version 1.8.1 (with rpmrb script)
+
 * Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
 - update to 1.7.0 against MW 1.20
 
