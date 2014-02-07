@@ -1,41 +1,52 @@
-# see as TODO: http://packages.debian.org/sid/xrdp
-# TODO: move to autotools?
-# TODO: write init.d script
-# TODO: move executables from /usr/lib, move data files to share
-# TODO: send patches to upstream
 
-Name: xrdp
-Version: 0.6.0
+Name: 	 xrdp
+Version: 0.6.1
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
-License: GPL
-Group: System/Servers
-Url: http://xrdp.sourceforge.net/
+License: GPLv2+ with exceptions
+Group: 	 System/Servers
+Url: 	 http://xrdp.sourceforge.net/
 
-Packager: Lunar Child <luch@altlinux.org>
-
-# FIXME
-%if %_vendor == "alt"
-%add_findprov_lib_path %_libdir/%name
-%endif
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # Source-url: http://prdownloads.sourceforge.net/%name/%version/%name-v%version.tar
-Source: %name-%version.tar
-Source1: %name-init-gen
-Source2: %name-init-alt
+Source:  %name-%version.tar
+Source1: %name.service
+Source2: %name-sesman.service
+Source3: %name.sysconfig
+Source4: %name.logrotate
+Source5: %name-init-alt
+Source6: xrdp-keygen.8
 
-# manually removed: libnss-mysql 
-# Automatically added by buildreq on Mon Aug 27 2007
-BuildRequires: libpam-devel libssl-devel
+BuildRequires: libpam-devel
+BuildRequires: libssl-devel
+BuildRequires: libX11-devel
+BuildRequires: libXfixes-devel
 
 BuildPreReq: rpm-build-intro
 
-Patch0: xrdp_sesman.patch
-Patch1: xrdp_sesmantools.patch
-Patch2: xrdp_docs.patch
-Patch3: xrdp_Makefile.patch
+Requires: tigervnc-server
+
+# Patches from Fedora
+Patch0: xrdp-pam-auth.patch
+Patch1: xrdp-use-xinitrc-in-startwm-sh.patch
+Patch2: xrdp-pam-session.patch
+# https://sourceforge.net/tracker/?group_id=112022&atid=665248
+# https://bugzilla.redhat.com/show_bug.cgi?id=905411
+Patch3: xrdp-endian.patch
+
+# patches from Debian
+Patch4: xrdp-reuse-session.patch
+Patch5: xrdp-quiet-start.patch
+Patch6: xrdp-default-keymap.patch
+Patch7: xrdp-pidfile-early.patch
+Patch8: xrdp-format-security.patch
+
+# Other patches
+Patch10: xrdp-0.6.1-fix-build.patch
+Patch11: xrdp-add-missing-manpages.patch
 
 %description
 The goal of this project is to provide a fully
@@ -46,65 +57,120 @@ desktop clients.
 
 %prep
 %setup
-%patch0
-%patch1
-%patch2
-%patch3
+%patch0 -p2
+%patch1 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch10 -p2
+%patch11 -p2
 
-%if %_vendor == "alt"
-cp %SOURCE2 %name-init
-%else
-cp %SOURCE1 %name-init
-%endif
+cp %SOURCE5 %name-init
 
-%__subst "s|/usr/lib|%_libdir|g" %name-init
-%__subst "s|DefaultWindowManager=startwm\.sh|DefaultWindowManager=/etc/X11/xdm/Xsession|g" sesman/sesman.ini
-%__subst "s|/usr/share/man|%_mandir|g" docs/Makefile
+subst "s|/usr/lib|%_libdir|g" %name-init
+
+# remove unused modules from xrdp login combobox
+sed -i -e '/\[xrdp2\]/,$d' xrdp/xrdp.ini
+
+#Low is 40 bit key and everything from client to server is encrypted.
+#Medium is 40 bit key, everything both ways is encrypted.
+#High is 128 bit key everything both ways is encrypted.
+
+# increase encryption to 128 bit's
+sed -i 's/crypt_level=low/crypt_level=high/g' xrdp/xrdp.ini
+
+# create 'bash -l' based startwm, to pick up PATH etc.
+echo '#!/bin/bash -l
+. %_sysconfdir/xrdp/startwm.sh' > sesman/startwm-bash.sh
+
+# set 'bash -l' based startwm script as default
+sed -i -e 's/DefaultWindowManager=startwm.sh/DefaultWindowManager=startwm-bash.sh/' sesman/sesman.ini
+
+# Man page for xrdp-keygen
+cp %SOURCE6 docs/man/
+
 
 %build
-%make_build \
-        DESTDIR=%_libdir/xrdp \
-        CFGDIR=%_sysconfdir/xrdp \
-        MANDIR=%_mandir \
-        DOCDIR=%_docdir
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
 # TODO: fix it in make
 mkdir -p %buildroot%_sysconfdir/pam.d
 mkdir -p %buildroot%_man8dir %buildroot%_man5dir
 
-%make_install install \
-        DESTDIR=%buildroot%_libdir/xrdp \
-        CFGDIR=%buildroot%_sysconfdir/xrdp \
-        MANDIR=%buildroot%_mandir \
-        DOCDIR=%buildroot%_docdir
-
-make -C docs installdeb DESTDIRDEB=%buildroot
+%makeinstall_std
 
 rm -f %buildroot/%_libdir/xrdp/startwm.sh
 rm -f %buildroot/%_libdir/xrdp/xrdp_control.sh
 install -D -m755 %name-init %buildroot%_initrddir/%name
 
+# remove .la files
+rm -f %buildroot%_libdir/%name/*.la
+
+# install sesman pam config /etc/pam.d/xrdp-sesman
+install -Dp -m 644 instfiles/pam.d/xrdp-sesman %buildroot%_sysconfdir/pam.d/xrdp-sesman
+
+# install xrdp systemd units
+install -Dp -m 644 %SOURCE1 %buildroot/lib/systemd/system/xrdp.service
+install -Dp -m 644 %SOURCE2 %buildroot/lib/systemd/system/xrdp-sesman.service
+
+# install xrdp sysconfig /etc/sysconfig/xrdp
+install -Dp -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/xrdp
+
+# install logrotate /etc/logrotate.d/xrdp
+install -Dp -m 644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/xrdp
+
+# install log file /var/log/xrdp-sesman.log
+mkdir -p %buildroot%_localstatedir/log/
+touch %buildroot%_localstatedir/log/xrdp-sesman.log
+
+# rsakeys.ini
+touch %buildroot%_sysconfdir/xrdp/rsakeys.ini
+chmod 0600 %buildroot%_sysconfdir/xrdp/rsakeys.ini
+
+# install 'bash -l' startwm script
+install -Dp -m 755 sesman/startwm-bash.sh %buildroot%_sysconfdir/xrdp/startwm-bash.sh
+
 %post
 %post_service %name
-%start_service %name
 
 %preun
 %preun_service %name
 
 %files
-%config %_sysconfdir/pam.d/sesman
+%config %_sysconfdir/pam.d/xrdp-sesman
 %dir %_sysconfdir/xrdp/
+%_sysconfdir/xrdp/km*.ini
+%_sysconfdir/xrdp/startwm*.sh
+%_sysconfdir/xrdp/xrdp.sh
 %_initrddir/xrdp
-%config %_sysconfdir/xrdp/rsakeys.ini
+%config(noreplace) %_sysconfdir/sysconfig/xrdp
+/lib/systemd/system/*.service
+%ghost %_localstatedir/log/xrdp-sesman.log
+%attr(0600,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/rsakeys.ini
 %config %_sysconfdir/xrdp/sesman.ini
 %config %_sysconfdir/xrdp/xrdp.ini
-%_libdir/%name/
+%_bindir/xrdp*
+%_sbindir/xrdp*
+%_libdir/%name/lib*.so*
+%_logrotatedir/%name
+%dir %_datadir/xrdp/
+%_datadir/xrdp/*
 %_man5dir/*
 %_man8dir/*
 
 
 %changelog
+* Fri Feb 07 2014 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- New version (ALT #19193)
+- Use patches and init scripts from Fedora and Debian (ALT #27853)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - new version 0.6.0 (with rpmrb script)
 
