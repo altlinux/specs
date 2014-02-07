@@ -1,7 +1,7 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.15.3
-Release:       	alt1
+Version:        3.15.4
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -24,9 +24,6 @@ Patch5:		nss-fix-objdir.patch
 
 # Fedora patches
 Patch10:	nss-enable-pem.patch
-
-# Upstream patches
-Patch20:	0001-sync-up-with-upstream-softokn-changes.patch
 
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
 BuildRequires:	libnspr-devel >= 4.10.1-alt1
@@ -111,8 +108,6 @@ Netscape Network Security Services Utilities
 %patch5 -p0
 
 %patch10 -p0
-
-%patch20 -p1
 
 %build
 export BUILD_OPT=1 
@@ -249,6 +244,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Thu Feb 06 2014 Alexey Gladkov <legion@altlinux.ru> 3.15.4-alt1
+- New version (3.15.4).
+
 * Wed Nov 20 2013 Alexey Gladkov <legion@altlinux.ru> 3.15.3-alt1
 - New version (3.15.3).
 
