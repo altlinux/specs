@@ -2,7 +2,7 @@
 
 Name: gnustep-IconManager
 Version: 0.3
-Release: alt3
+Release: alt4
 Summary: IconManager is a tool to handle AppIcons and MiniWindows 
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://wiki.gnustep.org/index.php/IconManager.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -47,12 +48,18 @@ This tool let you
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README INSTALL
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Fri Feb 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
 - Added Requires: gnustep-back
 
