@@ -1,7 +1,7 @@
 %define oname Validator
 
 Name: mediawiki-extensions-%oname
-Version: 0.2
+Version: 1.0
 Release: alt1
 
 BuildArch: noarch
@@ -15,10 +15,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.15.1-alt4
+Requires: mediawiki-common >= 1.22
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://code.bn2vs.com/viewtopic.php?mode=attach&id=251
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-Validator/legacy.tar.gz/master
 Source: %oname-%version.tar
 
 %description
@@ -39,5 +39,8 @@ any functionality to the user end.
 %files -f %oname.files
 
 %changelog
+* Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- new version 1.0 (with rpmrb script)
+
 * Tue Feb 02 2010 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
