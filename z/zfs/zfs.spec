@@ -1,11 +1,14 @@
 %def_enable shared
 %def_enable static
+# FIXME script require bash 4
+%def_disable sysvinit
+%def_disable systemd
 %def_with selinux
 
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt31
+Release: alt32
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -68,6 +71,8 @@ This package contains ZFS static libraries.
 Summary: Utilities for doing and managing mounts of the Linux ZFS filesystem
 Group: System/Kernel and hardware
 %{?_enable_shared:Requires: %lname = %version-%release}
+# FIXME init script require bash >= 4
+%{?_enable_sysvinit:BuildRequires: bash >= 4}
 
 %description utils
 ZFS is an advanced file system and volume manager which was originally developed
@@ -116,7 +121,11 @@ tar -C .. \
 	--with-config=user \
 	%{subst_enable shared} \
 	%{subst_enable static} \
+	%{subst_enable sysvinit} \
+	%{subst_enable systemd} \
 	%{subst_with selinux} \
+	--with-systemdunitdir=%_unitdir \
+	--with-systemdpresetdir=%_unitdir-preset \
 	--with-udevdir=/lib/udev \
 	--with-dracutdir=/lib/dracut \
 	--with-gnu-ld
@@ -125,14 +134,13 @@ tar -C .. \
 
 %install
 install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
-%makeinstall_std DEFAULT_INIT_DIR=%_initddir
+%makeinstall_std DEFAULT_INIT_DIR=%_initddir modulesloaddir=/lib/modules-load.d
 
 
 %if_enabled shared
 %files -n %lname
 %_libdir/*.so.*
 %endif
-
 
 
 %files -n %lname-devel
@@ -158,7 +166,12 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 %_datadir/%name
 /lib/udev/rules.d/*
 /lib/udev/*_id
-%exclude %_initddir/*
+%{?_enable_sysvinit:%_initddir/*}
+%if_enabled systemd
+%_unitdir/*
+%exclude %_unitdir-preset
+%exclude /lib/modules-load.d
+%endif
 %exclude /lib/dracut
 %exclude %_datadir/%name/zpios*
 %exclude %_datadir/%name/smb.sh
@@ -169,6 +182,11 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Thu Feb 06 2014 Led <led@altlinux.ru> 0.6.2-alt32
+- upstream fixes
+- added systemd unit files for ZFS startup
+- disabled sysvinit
+
 * Tue Feb 04 2014 Led <led@altlinux.ru> 0.6.2-alt31
 - upstream fixes
 
