@@ -5,7 +5,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.2.5
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -40,6 +40,10 @@ BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 # Build sequence: libsepol -> setools -> policycoreutils
 BuildRequires: libsetools-devel >= 3.3.8-alt3
+
+%add_python_req_skip gnome
+%add_python_req_skip gi
+%add_python_req_skip gtk
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -287,6 +291,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Fri Feb 07 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt2
+- Go away from python gnome module dependency
+
 * Tue Jan 21 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt1
 - new version
 
