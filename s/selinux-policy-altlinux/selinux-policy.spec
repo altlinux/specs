@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.12
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -29,6 +29,9 @@ Requires: setools-console
 
 %define policy_conf %_sysconfdir/selinux/%policy_name
 %define policy_data %_datadir/selinux/%policy_name
+
+%set_findreq_skiplist /lib/systemd/selinux-autorelabel
+%add_findreq_skiplist %_bindir/slrun2
 
 %description
 SELinux %policy_name policy
@@ -257,6 +260,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Fri Feb 07 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.12-alt2
+- Remove dependency from kde4libs & systemd
+
 * Wed Jan 22 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.12-alt1
 - 20140122
 
