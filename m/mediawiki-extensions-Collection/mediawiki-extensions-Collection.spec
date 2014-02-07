@@ -1,8 +1,7 @@
 %define oname Collection
-%define major 1.21
 
 Name: mediawiki-extensions-%oname
-Version: %major.6bbedcf
+Version: 1.22
 Release: alt1
 
 BuildArch: noarch
@@ -16,12 +15,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.21.1-alt1
+Requires: mediawiki-common >= 1.22
 
 Requires: php5-curl
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-Collection/legacy.tar.gz/REL1_21
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-Collection/legacy.tar.gz/REL1_22
 Source: %oname-%version.tar
 
 %description
@@ -42,6 +41,9 @@ This extension allows a user to organize personal selections of pages in a colle
 %files -f %oname.files
 
 %changelog
+* Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
+- new version 1.22 (with rpmrb script)
+
 * Mon Sep 09 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.6bbedcf-alt1
 - new version 1.21.6bbedcf (with rpmrb script)
 
