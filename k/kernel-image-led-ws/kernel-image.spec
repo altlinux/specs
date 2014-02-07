@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.28
-Release: alt9
+Version: 3.10.29
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 28
+%define kernel_stable_version 29
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1803,6 +1803,20 @@ done)
 
 
 %changelog
+* Fri Feb 07 2014 Led <led@altlinux.ru> 3.10.29-alt2
+- updated:
+  + fix-fs-lockd
+
+* Fri Feb 07 2014 Led <led@altlinux.ru> 3.10.29-alt1
+- 3.10.29
+- removed:
+  + fix-drivers-md--raid456
+  + fix-net--compat
+- updated:
+  + fix-mm
+  + fix-mm--hugetlb
+  + fix-virt-kvm--kvm
+
 * Thu Feb 06 2014 Led <led@altlinux.ru> 3.10.28-alt9
 - updated:
   + fix-net-sunrpc
