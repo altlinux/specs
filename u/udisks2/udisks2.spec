@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: 2.1.3
-Release: alt0.1
+Release: alt0.2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -175,6 +175,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 27 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt0.2
+- fixed https://bugs.freedesktop.org/show_bug.cgi?id=71802
+
 * Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt0.1
 - 2.1.3 snapshot (4ce586f)
 
