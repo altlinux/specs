@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 1.63
+Version: 1.64
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -32,7 +31,7 @@ BuildArch: noarch
 # bootstrap: some dependencies have to be re-added manually
 Requires: perl-Class-Load perl-Class-Singleton perl-Params-Validate perl-parent
 %else
-BuildRequires: perl-DateTime
+BuildRequires: perl-DateTime perl(Test/Requires.pm)
 %endif
 
 BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent
@@ -73,6 +72,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.64-alt1
+- automated CPAN update
+
 * Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.63-alt1
 - automated CPAN update
 
