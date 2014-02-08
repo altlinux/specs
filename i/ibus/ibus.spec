@@ -1,6 +1,6 @@
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
-%define ibus_xkb_ver 1.5.0
+%define ibus_xkb_ver 1.5.0.20140114
 
 %def_enable python
 %def_enable dconf
@@ -9,7 +9,7 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -22,12 +22,12 @@ Source1: ibus-xinput
 Source2: ibus-xkb-%ibus_xkb_ver.tar.gz
 
 # fedora's patches
+Patch0: ibus-1.5.5-up.patch
+
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
 Patch3: ibus-530711-preload-sys.patch
 Patch4: ibus-xx-setup-frequent-lang.patch
-
-Patch10: ibus-1.5.4-up.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
@@ -144,6 +144,8 @@ This package contains IBus im module for python.
 
 %prep
 %setup -a2
+%patch -p1
+
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
@@ -157,7 +159,6 @@ done
 %endif
 %patch3 -p1
 %patch4 -p1
-%patch10 -p1
 
 %build
 %autoreconf
@@ -271,6 +272,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Feb 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
+- 1.5.5
+- updated fc patchset
+
 * Wed Oct 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
 - 1.5.4
 - updated fc patchset

@@ -11,18 +11,17 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Url: http://gnome.org
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
-
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Patch: gnome-settings-daemon-3.10.2-rosa-non-eng-hotkeys.patch
+
 
 # From configure.ac
 %define glib2_ver 2.35.3
@@ -49,6 +48,7 @@ Requires: system-config-printer-udev
 Requires: rfkill
 Requires: geoclue2 >= %geoclue_ver
 %{?_enable_ibus:Requires:ibus >= %ibus_ver}
+Requires: xkeyboard-config
 
 # From configure.ac
 BuildPreReq: glib2-devel >= %glib2_ver
@@ -214,6 +214,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Sat Feb 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt3
+- updated to d4567273 (fixed BGO ##704167, 707790 722753, 712302)
+
 * Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
 - try to fix hotkey in non-latin layout (rosa patch)
 

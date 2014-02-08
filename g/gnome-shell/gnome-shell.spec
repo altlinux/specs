@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,8 +13,8 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-#Source: %name-%version.tar
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
@@ -181,6 +181,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sat Feb 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt2
+- updated to a5370ce3 (fixed BGO ##723308, 722840, 722690, 722434, 722547, 723197)
+
 * Thu Jan 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 
