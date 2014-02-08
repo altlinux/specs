@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 %define dist Compress-Snappy
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Perl interface to Google's Snappy (de)compressor
@@ -13,7 +12,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/G/GR/GRAY/Compress-Snappy-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-devel perl-parent
+BuildRequires: perl-devel perl-parent perl(Devel/CheckLib.pm)
 
 %description
 The `Compress::Snappy' module provides an interface to Google's Snappy
@@ -43,6 +42,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Compress
 
 %changelog
+* Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Fri Sep 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
