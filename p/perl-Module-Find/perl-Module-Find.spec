@@ -3,7 +3,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 %define dist Module-Find
 
 Name: perl-Module-Find
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Module::Find - Find and use installed modules in a (sub)category
@@ -13,7 +13,7 @@ Group: Development/Perl
 Url: %CPAN %dist
 
 BuildArch: noarch
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CR/CRENZ/Module-Find-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Mar 23 2007 (-bi)
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -40,6 +40,9 @@ make sure you modify @INC before you call the Module::Find functions.
 %perl_vendor_privlib/Module/Find.pm
 
 %changelog
+* Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Wed Sep 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
 - 0.10 -> 0.11
 - spec cleanup
