@@ -2,7 +2,7 @@
 %add_python_req_skip lldb
 
 Name: qt-creator
-Version: 2.8.1
+Version: 3.0.1
 Release: alt1
 Summary: Lightweight and cross-platform IDE for Qt
 
@@ -95,6 +95,9 @@ done
 %exclude %_datadir/qtcreator/doc
 
 %changelog
+* Fri Feb 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.1-alt1
+- update to newest version with multiple improvements
+
 * Sun Feb 02 2014 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.1-alt1
 - update to new version (closes #29569)
 
