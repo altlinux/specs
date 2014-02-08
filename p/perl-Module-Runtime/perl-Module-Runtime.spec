@@ -1,14 +1,14 @@
 %define dist Module-Runtime
 Name: perl-%dist
-Version: 0.013
-Release: alt2
+Version: 0.014
+Release: alt1
 
 Summary: Runtime module handling
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Module-Runtime-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ modules, which are normally handled at compile time.
 %perl_vendor_privlib/Module
 
 %changelog
+* Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
+- automated CPAN update
+
 * Tue Oct 16 2012 Vladimir Lettiev <crux@altlinux.ru> 0.013-alt2
 - added perl-Math-BigInt builddep
 
