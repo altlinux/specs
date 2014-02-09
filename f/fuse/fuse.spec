@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.3
-Release: alt3
+Release: alt4
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -108,6 +108,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 09 2014 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt4
+- fix wheelonly mode, thanks legion@ (ALT#29814)
+
 * Wed Jan 29 2014 Michael Shigorin <mike@altlinux.org> 2.9.3-alt3
 - drop cuse.conf: conflicts with another one, see #29444 (ALT#29777)
 
