@@ -2,11 +2,10 @@
 %define _localstatedir %_var
 
 %def_enable pam
-%def_enable consolekit
 %def_enable grub2
 
 Name: entrance
-Version: 0.0.4
+Version: 0.0.99
 Release: alt0.1
 Serial: 1
 
@@ -21,19 +20,15 @@ Source1: entrance.wms-method
 # enable LFS support
 Patch: %name-0.0.4-alt-build.patch
 # replace hardcoded sessions desktop dir
-Patch1: %name-0.0.4-alt-sessions_dir.patch
-Patch2: %name-0.0.4-alt-entrance.conf.patch
-# especially for prefdm.service
-Patch3: %name-0.0.4-alt-bad_options.patch
-
-%{?_enable_consolekit:Requires: ConsoleKit-x11}
+Patch1: %name-0.0.5-alt-sessions_dir.patch
+Patch2: %name-0.0.5-alt-entrance.conf.patch
 
 # from configure.ac
 BuildRequires: libeet-devel libecore-devel libevas-devel
 BuildRequires: libefreet-devel libxcb-devel libedje-devel libelementary-devel
 BuildRequires: edje embryo_cc
+BuildRequires: systemd-devel
 %{?_enable_pam:BuildRequires: libpam-devel}
-%{?_enable_consolekit:BuildRequires: libdbus-devel libConsoleKit-devel}
 
 %description
 Entrance is a login/display manager for Enlightenment desktop.
@@ -43,7 +38,6 @@ Entrance is a login/display manager for Enlightenment desktop.
 %patch -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %autoreconf
@@ -55,7 +49,7 @@ Entrance is a login/display manager for Enlightenment desktop.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std systemddir=%systemd_unitdir
 # install external hook for update_wms
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 install -m755 %SOURCE1 %buildroot%_sysconfdir/X11/wms-methods.d/%name
@@ -99,9 +93,13 @@ _PAM_
 %attr(1770,%name,%name) %dir %_localstatedir/lib/%name
 %attr(775,%name,%name) %dir %_localstatedir/cache/%name
 %attr(775,%name,%name) %dir %_localstatedir/cache/%name/users
+%systemd_unitdir/%name.service
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Sun Feb 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.99-alt0.1
+- 0.0.99
+
 * Fri Jan 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.4-alt0.1
 - first preview for Sisyphus (c0b37925acf)
 
