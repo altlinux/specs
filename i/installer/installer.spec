@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.21
+Version: 1.8.23
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,12 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sun Feb 09 2014 Michael Shigorin <mike@altlinux.org> 1.8.23-alt1
+- fixed 65-setup-services.sh
+
+* Sun Jan 12 2014 Evgeny Sinelnikov <sin@altlinux.ru> 1.8.22-alt1
+- add support cifs install method
+
 * Mon Dec 02 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.21-alt1
 - set fallback lang to en_US from POSIX
 
