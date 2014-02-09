@@ -2,7 +2,7 @@
 
 Name: pcsx2
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -151,182 +151,6 @@ Requires: %name = %version-%release
 %description plugin-zzogl-cg
 zzogl-cg plugin for PCSX2
 
-%package lang-ar
-Summary: Arabic language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-ar
-Arabic language for PCSX2
-
-%package lang-cz
-Summary: Czech language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-cz
-Czech language for PCSX2
-
-%package lang-de
-Summary: German language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-de
-German language for PCSX2
-
-%package lang-es
-Summary: Spanish language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-es
-Spanish language for PCSX2
-
-%package lang-fi
-Summary: Finnish language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-fi
-Finnish language for PCSX2
-
-%package lang-fr
-Summary: French language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-fr
-French language for PCSX2
-
-%package lang-hu
-Summary: Hungrian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-hu
-Hungrian language for PCSX2
-
-%package lang-hr
-Summary: Croatian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-hr
-Croatian language for PCSX2
-
-%package lang-id
-Summary: Indonesian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-id
-Indonesian language for PCSX2
-
-%package lang-it
-Summary: Italian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-it
-Italian language for PCSX2
-
-%package lang-jp
-Summary: Japanese language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-jp
-Japanese language for PCSX2
-
-%package lang-kr
-Summary: Korean language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-kr
-Korean language for PCSX2
-
-%package lang-my
-Summary: Malay language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-my
-Malay language for PCSX2
-
-%package lang-nb
-Summary: Norwegian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-nb
-Norwegian language for PCSX2
-
-%package lang-pl
-Summary: Polish language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-pl
-Polish language for PCSX2
-
-%package lang-br
-Summary: Portuguese language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-br
-Portuguese language for PCSX2
-
-%package lang-ru
-Summary: Russian language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-ru
-Russian language for PCSX2
-
-%package lang-se
-Summary: Swedish language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-se
-Swedish language for PCSX2
-
-%package lang-th
-Summary: Thai language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-th
-Thai language for PCSX2
-
-%package lang-tr
-Summary: Turkish language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-tr
-Turkish language for PCSX2
-
-%package lang-cn
-Summary: Chinese language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-cn
-Chenese language for PCSX2
-
-%package lang-tw
-Summary: Chinese language for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description lang-tw
-Chinese language for PCSX2
-
 %prep
 %setup
 
@@ -356,8 +180,9 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 %__rm -rf %buildroot%_defaultdocdir/%name
+%find_lang --output=%name.lang %{name}_{Iconized,Main}
 
-%files
+%files -f %name.lang
 %doc bin/docs/PCSX2_FAQ.pdf bin/docs/PCSX2_Readme.pdf
 %_bindir/%{name}*
 %dir %_libdir/%name
@@ -411,73 +236,13 @@ popd
 %files plugin-zzogl-cg
 %_libdir/%name/libzzogl-cg-0.3.0.so
 
-%files lang-ar
-%_datadir/locale/ar/LC_MESSAGES/%{name}*.mo
-
-%files lang-cz
-%_datadir/locale/cs_CZ/LC_MESSAGES/%{name}*.mo
-
-%files lang-de
-%_datadir/locale/de_DE/LC_MESSAGES/%{name}*.mo
-
-%files lang-es
-%_datadir/locale/es_ES/LC_MESSAGES/%{name}*.mo
-
-%files lang-fi
-%_datadir/locale/fi_FI/LC_MESSAGES/%{name}*.mo
-
-%files lang-fr
-%_datadir/locale/fr_FR/LC_MESSAGES/%{name}*.mo
-
-%files lang-hu
-%_datadir/locale/hu_HU/LC_MESSAGES/%{name}*.mo
-
-%files lang-hr
-%_datadir/locale/hr_HR/LC_MESSAGES/%{name}*.mo
-
-%files lang-id
-%_datadir/locale/id_ID/LC_MESSAGES/%{name}*.mo
-
-%files lang-it
-%_datadir/locale/it_IT/LC_MESSAGES/%{name}*.mo
-
-%files lang-jp
-%_datadir/locale/ja_JP/LC_MESSAGES/%{name}*.mo
-
-%files lang-kr
-%_datadir/locale/ko_KR/LC_MESSAGES/%{name}*.mo
-
-%files lang-my
-%_datadir/locale/ms_MY/LC_MESSAGES/%{name}*.mo
-
-%files lang-nb
-%_datadir/locale/nb_NO/LC_MESSAGES/%{name}*.mo
-
-%files lang-pl
-%_datadir/locale/pl_PL/LC_MESSAGES/%{name}*.mo
-
-%files lang-br
-%_datadir/locale/pt_BR/LC_MESSAGES/%{name}*.mo
-
-%files lang-ru
-%_datadir/locale/ru_RU/LC_MESSAGES/%{name}*.mo
-
-%files lang-se
-%_datadir/locale/sv_SE/LC_MESSAGES/%{name}*.mo
-
-%files lang-th
-%_datadir/locale/th_TH/LC_MESSAGES/%{name}*.mo
-
-%files lang-tr
-%_datadir/locale/tr_TR/LC_MESSAGES/%{name}*.mo
-
-%files lang-cn
-%_datadir/locale/zh_CN/LC_MESSAGES/%{name}*.mo
-
-%files lang-tw
-%_datadir/locale/zh_TW/LC_MESSAGES/%{name}*.mo
-
 %changelog
+* Sun Feb 09 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt2
+- Fix language files for x64
+
+* Sat Feb 08 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt0.M70T.1
+- Build for branch t7
+
 * Fri Feb 07 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 
