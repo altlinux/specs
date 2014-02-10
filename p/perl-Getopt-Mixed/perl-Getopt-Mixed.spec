@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Getopt-Mixed
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: getopt processing with both long and short options
@@ -74,6 +74,9 @@ descriptions.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Mon Feb 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
