@@ -2,7 +2,7 @@
 
 Name: gnustep-Innerspace
 Version: 0.2.0
-Release: alt2
+Release: alt3
 Summary: Innerspace is a screensaver
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://gap.nongnu.org/innerspace/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -41,12 +42,18 @@ modules.
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Feb 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2
 - Added Requires: gnustep-back
 
