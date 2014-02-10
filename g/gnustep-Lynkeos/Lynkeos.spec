@@ -2,7 +2,7 @@
 
 Name: gnustep-Lynkeos
 Version: 1.2
-Release: alt2
+Release: alt3
 Summary: Tool to process planetary astronomical images for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.debian.org/jessie/lynkeos.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel doxygen
@@ -55,15 +56,21 @@ popd
 %makeinstall_std -C Sources GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc Docs/TODO.rtf
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files docs
 %doc Docs/html/*
 
 %changelog
+* Mon Feb 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
 - Added Requires: gnustep-back
 
