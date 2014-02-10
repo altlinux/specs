@@ -9,7 +9,7 @@
 
 Name: %_name-%abi_ver
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -27,7 +27,7 @@ Requires: %name-data = %version-%release
 BuildRequires: gcc-c++ boost-devel libreadline
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel libots-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel libjpeg-devel libxslt-devel
-BuildRequires: libwv-devel libwpd9-devel libwpg-devel libwmf-devel
+BuildRequires: libwv-devel libwpd9-devel libwpg-devel libwmf-devel libexpat-devel
 %{?_enable_spell:BuildRequires: libenchant-devel}
 %{?_with_goffice:BuildRequires: libgnomeoffice0.10-devel}
 %{?_with_champlain:BuildRequires: libchamplain-gtk3-devel}
@@ -115,6 +115,9 @@ Conflicts: %_name-devel %_name-light-devel
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt4
+- updated buildreqs
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt3
 - rebuilt against libical.so.1
 
