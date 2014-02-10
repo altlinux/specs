@@ -1,5 +1,5 @@
 Name:    installer-feature-set-gtk-theme
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Set default GTK 2.x and 3.x theme
@@ -12,6 +12,7 @@ Source:  %name-%version.tar
 
 Requires: libshell
 Requires: gtk3-theme-clearlooks-phenix
+Requires: gnome-icon-theme
 
 %description
 Set default GTK 2.x and 3.x theme.
@@ -28,5 +29,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Feb 10 2014 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Test of existence of gtkrc files
+- Set icon theme too
+
 * Mon Feb 10 2014 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
