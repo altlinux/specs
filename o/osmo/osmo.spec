@@ -6,7 +6,7 @@
 
 Name: osmo
 Version: 0.2.10
-Release: alt5
+Release: alt6
 
 Summary: Personal organizer
 License: GPLv2+
@@ -16,6 +16,7 @@ Source: http://downloads.sourceforge.net/%name-pim/%name-%version.tar.gz
 
 Patch: %name-0.2.8-alt-configure.patch
 Patch1: osmo-0.2.10-libnotify-0.7.0.patch
+Patch2: osmo-0.2.10-alt-libm.patch
 
 BuildRequires: libgtk+2-devel libgtkspell-devel libxml2-devel
 BuildRequires: libnotify-devel libical-devel libgtkhtml2-devel
@@ -34,6 +35,7 @@ meet user preferences.
 %setup -q
 %patch
 %patch1 -p1
+%patch2
 
 %build
 export CFLAGS="$CFLAGS -I%_includedir/libical"
@@ -66,6 +68,9 @@ mv %buildroot%_datadir/pixmaps/%name.png \
 %doc AUTHORS ChangeLog README README.syncml TRANSLATORS
 
 %changelog
+* Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt6
+- explicitly link against libm
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt5
 - rebuilt against libical.so.1
 - use automake-1.11
