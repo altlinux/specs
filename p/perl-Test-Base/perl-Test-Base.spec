@@ -1,7 +1,7 @@
 %define module Test-Base
 
 Name: perl-%module
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: Data driven testing framework for perl
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/I/IN/INGY/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IN/INGY/Test-Base-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ trivial.
 %perl_vendor_privlib/Module/Install/*
 
 %changelog
+* Mon Feb 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Sun Apr 10 2011 Victor Forsiuk <force@altlinux.org> 0.60-alt1
 - 0.60
 
