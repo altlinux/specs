@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.29
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,15 @@ done)
 
 
 %changelog
+* Mon Feb 10 2014 Led <led@altlinux.ru> 3.10.29-alt4
+- updated:
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs
+  + fix-security--security
+  + feat-fs-aufs
+- added:
+  + feat-fs-unionfs
+
 * Sun Feb 09 2014 Led <led@altlinux.ru> 3.10.29-alt3
 - updated:
   + fix-drivers-gpu-drm--radeon
