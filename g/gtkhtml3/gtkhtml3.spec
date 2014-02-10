@@ -11,7 +11,7 @@
 
 Name: gtkhtml3
 Version: %ver_major.2
-Release: alt3
+Release: alt4
 
 Summary: GtkHTML is a HTML rendering/editing library
 License: GPL
@@ -113,6 +113,7 @@ install -p -m644 %SOURCE1 gtkhtml/libgtkhtml.map
 
 %build
 %autoreconf
+export LDFLAGS="$LDFLAGS -lm"
 %configure \
     %{subst_enable static} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -143,6 +144,9 @@ install -p -m644 %SOURCE1 gtkhtml/libgtkhtml.map
 %endif
 
 %changelog
+* Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt4
+- explicitly link against libm
+
 * Tue Apr 03 2012 Yuri N. Sedunov <aris@altlinux.org> 3.32.2-alt3
 - fixed build against glib2 >= 2.32
 
