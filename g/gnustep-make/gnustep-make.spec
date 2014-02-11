@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt10.svn20140116
+Release: alt11.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -111,6 +111,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Tue Feb 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt11.svn20140116
+- Reverted last change
+
 * Fri Feb 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt10.svn20140116
 - Added CONFIG_SYSTEM_LIBS for build of subprojects
 
