@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.29
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -153,9 +153,9 @@ Release: alt4
 %Extra_modules fglrx 13.35.1005
 %Extra_modules vboxhost 4.3.6
 %Extra_modules vboxguest 4.3.6
-%Extra_modules knem 1.1.0
-%Extra_modules exfat 1.2.7
-%Extra_modules ipt_NETFLOW 1.8.2
+#Extra_modules knem 1.1.0
+#Extra_modules exfat 1.2.7
+#Extra_modules ipt_NETFLOW 1.8.2
 #Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
 
@@ -1803,6 +1803,17 @@ done)
 
 
 %changelog
+* Tue Feb 11 2014 Led <led@altlinux.ru> 3.10.29-alt5
+- enabled:
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- added:
+  + feat-drivers-misc--knem
+  + feat-fs-exfat
+- disabled external modules:
+  + exfat
+  + ipt_NETFLOW
+  + knem
+
 * Mon Feb 10 2014 Led <led@altlinux.ru> 3.10.29-alt4
 - updated:
   + fix-drivers-gpu-drm--radeon
