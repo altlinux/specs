@@ -2,7 +2,7 @@
 
 Name: ephoto
 Version: 0.1.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
@@ -12,9 +12,7 @@ URL: http://trac.enlightenment.org/e/wiki/Eve
 
 Source: %name-%version.tar
 
-# from configure.ac
-BuildRequires: libeio-devel libefreet-devel libelementary-devel
-BuildRequires: edje embryo_cc
+BuildRequires: libelementary-devel libexif-devel
 
 %description
 Photo Viewer for Enlightenment desktop.
@@ -39,12 +37,15 @@ Photo Viewer for Enlightenment desktop.
 %_bindir/%{name}_ql
 %_libdir/%{name}_ql.so
 %exclude %_libdir/%{name}_ql.la
-%_datadir/%name/
 %_desktopdir/%name.desktop
 %_datadir/pixmaps/%name.png
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt0.2
+- updated to f3cff05b
+- built for E18
+
 * Mon Jan 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt0.1
 - first preview for Sisyphus (2dad9dc6)
 
