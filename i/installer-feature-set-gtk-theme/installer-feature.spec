@@ -1,5 +1,5 @@
 Name:    installer-feature-set-gtk-theme
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Set default GTK 2.x and 3.x theme
@@ -29,6 +29,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Feb 11 2014 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Fix autodetect requires
+- Run in chroot
+
 * Mon Feb 10 2014 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Test of existence of gtkrc files
 - Set icon theme too
