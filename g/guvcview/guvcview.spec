@@ -1,7 +1,7 @@
 %def_enable pulse
 
 Name: guvcview
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -15,7 +15,8 @@ Source: http://prdownload.sourceforge.net/%name/%name-src-%version.tar.gz
 BuildPreReq: libSDL-devel >= 1.2.10
 BuildRequires: desktop-file-utils intltool
 BuildRequires: libavutil-devel libavcodec-devel
-BuildRequires: libgtk+3-devel libportaudio2-devel libv4l-devel libpng-devel libudev-devel
+BuildRequires: libgtk+3-devel libportaudio2-devel
+BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
@@ -28,10 +29,10 @@ more user friendly GUI
 %setup -n %name-src-%version
 
 %build
+export LIBS="$LIBS -lm"
 %configure --disable-debian-menu \
 	%{?_disable_pulse:--enable-pulse=no}
-
-%make
+%make_build
 
 %install
 %makeinstall
@@ -57,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
