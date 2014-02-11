@@ -6,8 +6,8 @@
 
 
 Name: branding-%brand-%theme
-Version: 20130322
-Release: alt2
+Version: 20140211
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -446,6 +446,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Tue Feb 11 2014 Michael Shigorin <mike@altlinux.org> 20140211-alt1
+- updated license agreement
+
 * Wed Nov 27 2013 Michael Shigorin <mike@altlinux.org> 20130322-alt2
 - fixed graphics subpackage provides
 - added informika-schoolmaster to known variants
