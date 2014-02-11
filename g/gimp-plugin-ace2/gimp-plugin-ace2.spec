@@ -2,19 +2,20 @@
 
 Name: gimp-plugin-ace2
 Version: 0.6.7
-Release: alt1.qa1
+Release: alt2
 
 Summary: Adaptive Contrast Enhancement plugin for Gimp
 License: GPLv2+
 Group: Graphics
 
-Url: http://registry.gimp.org/plugin?id=5221
+Url: http://registry.gimp.org/node/20
 Source: gimp-ace-%version.tar.gz
+Patch: gimp-ace-0.6.7-alt-link.patch
 
 Requires: gimp >= 2.2
 
 # Automatically added by buildreq on Fri Sep 07 2007
-BuildRequires: libgimp-devel perl-XML-Parser
+BuildRequires: libgimp-devel intltool perl-XML-Parser
 
 %description
 The basic "Stretch Contrast" operation takes in the whole image at once, and
@@ -25,8 +26,10 @@ details that most wide-sweeping contrast-enhancements pass over.
 
 %prep
 %setup -n gimp-ace-%version
+%patch
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -39,6 +42,9 @@ details that most wide-sweeping contrast-enhancements pass over.
 %_datadir/gimp-ace
 
 %changelog
+* Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt2
+- explicitly link against libm
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
