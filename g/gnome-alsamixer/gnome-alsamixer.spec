@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: gnome-alsamixer
 Version: 0.9.7
-Release: alt5
+Release: alt6
 
 Summary: %name is an ALSA mixer for GNOME
 Summary(ru_RU.UTF-8): ALSA-микшер для GNOME
@@ -60,6 +60,9 @@ fi
 %doc AUTHORS ChangeLog
 
 %changelog
+* Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt6
+- explicitly link against libm
+
 * Mon Apr 01 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt5
 - fixed build
 
