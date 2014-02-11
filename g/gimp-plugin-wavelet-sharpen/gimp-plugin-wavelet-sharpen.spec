@@ -2,7 +2,7 @@
 
 Name: gimp-plugin-wavelet-sharpen
 Version: 0.1.2
-Release: alt2
+Release: alt3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,6 +12,7 @@ Group: Graphics
 
 Url: http://registry.gimp.org/node/9836
 Source: http://registry.gimp.org/files/wavelet-sharpen-%version.tar.gz
+Patch: wavelet-sharpen-0.1.2-alt-link.patch
 
 Requires: gimp
 # Automatically added by buildreq on Wed Oct 15 2008
@@ -25,6 +26,7 @@ you can choose to sharpen the luminance (YCbCr) channel of the image only.
 
 %prep
 %setup -n wavelet-sharpen-%version
+%patch
 
 %__subst 's/CFLAGS =/CFLAGS = %optflags/' src/Makefile
 
@@ -42,6 +44,9 @@ install -pD -m755 src/wavelet-sharpen %buildroot%gimpplugindir/plug-ins/wavelet-
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt3
+- explicitly link against libm
+
 * Thu Oct 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt2
 - fixed build
 
