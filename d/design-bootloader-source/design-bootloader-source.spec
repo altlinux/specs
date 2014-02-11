@@ -1,7 +1,7 @@
 %define base_name design-bootloader
 
 Name: %base_name-source
-Version: 6.9
+Version: 7.0
 Release: alt1
 
 Group: Graphics
@@ -21,7 +21,7 @@ Sources of macros for generating graphical boot logo. Needed for building packag
 
 
 %prep
-%setup -q
+%setup
 
 %install
 mkdir -p %buildroot/usr/src/%base_name-source
@@ -32,6 +32,11 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Tue Feb 11 2014 Michael Shigorin <mike@altlinux.org> 7.0-alt1
+- updated Spanish, Portuguese and Tatar translations
+  to fix the order broken by adding a few entries
+  in the middle of already existing ones
+
 * Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 6.9-alt1
 - added Kazakh translation by Baurzhan Muftakhidinov (closes: #28715)
 
