@@ -10,8 +10,8 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -86,7 +86,7 @@ spreadsheet program.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %define apps gchem3d-%api_ver gchemcalc-%api_ver gchempaint-%api_ver gchemtable-%api_ver gcrystal-%api_ver gspectrum-%api_ver
 
@@ -132,6 +132,10 @@ spreadsheet program.
 %endif
 
 %changelog
+* Wed Feb 12 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.6-alt1
+- 0.14.6
+- built with new gnumeric-1.12.10
+
 * Fri Nov 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt2
 - rebuilt for new gnumeric-1.12.9
 

@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -15,9 +15,6 @@ License: GPL
 Url: http://projects.gnome.org/gnumeric/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-
-#Obsoletes: libgnomeoffice%api_ver
-#Provides: libgnomeoffice%api_ver = %version-%release
 
 %define glib_ver 2.28.0
 %define gsf_ver 1.14.9
@@ -135,6 +132,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Wed Feb 12 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.10-alt1
+- 0.10.10
+
 * Fri Nov 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.10.9-alt1
 - 0.10.9
 
