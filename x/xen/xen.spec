@@ -2,7 +2,7 @@
 %def_disable vtpm
 %def_without xsm
 # findlib for arm missed
-%def_disable ocaml
+%def_enable ocaml
 
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
@@ -17,7 +17,7 @@ Name: xen
 Version: 4.3.1
 # Hypervisor ABI
 %define hv_abi 4.3
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -94,6 +94,7 @@ Patch29: xsa80.patch
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
 Patch51: %name-4.3.1-alt-libfsimage-link.patch
 Patch52: %name-4.3.1-alt-libxl-link.patch
+Patch53: 0001-libxl-ocaml-guard-x86-specific-functions-behind-an-i.patch
 
 Patch100: %name-configure-xend.patch
 
@@ -130,6 +131,7 @@ Requires: chkconfig
 %def_disable stubdom
 %endif
 
+%{?_with_efi:BuildPreReq: rpm-macros-uefi}
 BuildRequires: libidn-devel zlib-devel libSDL-devel libcurl-devel libX11-devel
 BuildRequires: libncurses-devel libgtk+2-devel libaio-devel
 BuildRequires: python-devel ghostscript texi2html transfig
@@ -160,7 +162,7 @@ BuildRequires: libyajl-devel
 %{?_with_hypervisor:Requires: %name-runtime = %version-%release}
 %{?_enable_ocaml:BuildRequires: ocaml findlib}
 # efi image needs an ld that has -mi386pep option
-%{?_with_efi:BuildRequires: rpm-macros-uefi mingw64-binutils}
+%{?_with_efi:BuildRequires: mingw64-binutils}
 
 %description
 This package contains the XenD daemon and xm command line tools, needed to manage
@@ -289,6 +291,7 @@ manage Xen virtual machines.
 %patch50 -p2
 %patch51 -p1
 %patch52 -p1
+%patch53 -p1
 
 %patch100 -p1
 
@@ -481,8 +484,6 @@ done
 %add_strip_skiplist %_datadir/xen/qemu/* %_datadir/qemu-xen/qemu/*
 %endif
 %add_verify_elf_skiplist %_datadir/xen/qemu/openbios-* /boot/*
-# FIXME
-#add_findreq_skiplist %_initddir/*
 
 
 %post
@@ -712,11 +713,14 @@ done
 
 
 %changelog
+* Wed Feb 12 2014 Led <led@altlinux.ru> 4.3.1-alt2
+- fixed build tools/ocaml for arm arches
+- enabled ocaml
+
 * Sat Feb 08 2014 Led <led@altlinux.ru> 4.3.1-alt1
 - 4.3.1
 - based on Fedora spec 4.3.1-6
 - fixed URL
-- enabled ocaml
 
 * Tue Apr 16 2013 Fr. Br. George <george@altlinux.ru> 4.1.3-alt3.1
 - Fix build (DSO and underinclude)
