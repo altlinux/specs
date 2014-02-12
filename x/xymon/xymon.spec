@@ -60,7 +60,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.13
+Version:	4.3.16
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -277,13 +277,13 @@ Patch500: xymonclient-linux.sh-altlinux.patch
 Patch501: xymongen.tasks.cfg.DIST.patch
 
 # added control for using "ifconfig" and "netstat -rn" in xymonclient-linux.sh
-Patch502: xymonclient-linux.sh-ifconfig-route.altlinux.patch
+Patch502: xymonclient-linux.sh-ifconfig-route.patch
+
+# configurable top and ps (allow to use vzprocps)
+Patch503: xymonclient-linux.sh-various-procps.patch
 
 # build/Makefile.rules bug
-Patch503: xymon-4.3.13-build-rules.patch
-
-# missingalert timecheck bug
-Patch504: xymon-4.3.12-missingalert-timecheck.patch
+Patch504: xymon-4.3.13-build-rules.patch
 
 ##########################################################################
 ##########################################################################
@@ -498,8 +498,8 @@ the Xymon server in NCV format.
 %patch500 -p2
 %patch501 -p0
 %patch502 -p2
-%patch503 -p2
-%patch504 -p0
+%patch503 -p1
+%patch504 -p2
 
 
 %if_disabled trunk
@@ -1277,6 +1277,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Wed Feb 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.3.16-alt1
+- new version
+- added xymonclient-linux.sh-various-procps.patch
+
 * Wed Jan 22 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.3.13-alt1
 - new version (CVE-2013-4173 was fixed in previous 4.3.12)
 - some patches synced with terabithia's xymon-4.3.13-1.fc20.src.rpm
