@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.1.1
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -15,9 +15,9 @@ Url: http://qt-project.org/
 Source: %qt_module-opensource-src-%version.tar
 
 # FC
-Patch1: qtwebkit-save_memory.patch
+Patch1: qtwebkit-opensource-src-5.2.0-save_memory.patch
 # ALT
-Patch10: 5.1.1-alt-flags.patch
+Patch10: 5.2.1-alt-flags.patch
 
 # Automatically added by buildreq on Mon Sep 30 2013 (-bi)
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -41,7 +41,8 @@ BuildRequires: qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+BuildArch: noarch
+Requires: qt5-base-common
 %description common
 Common package for %name
 
@@ -55,9 +56,9 @@ Requires: qt5-declarative-devel
 %summary.
 
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
+BuildArch: noarch
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt5 %qt_module
@@ -99,7 +100,7 @@ done
 echo "nuke bundled code..."
 # nuke bundled code
 mkdir Source/ThirdParty/orig
-mv Source/ThirdParty/{glu/,gtest/,gyp/,mt19937ar.c,qunit/} \
+mv Source/ThirdParty/{gtest/,qunit/} \
    Source/ThirdParty/orig/
 
 %build
@@ -118,10 +119,12 @@ mv Source/ThirdParty/{glu/,gtest/,gyp/,mt19937ar.c,qunit/} \
 
 %files common
 %doc Source/WebCore/LICENSE*
-%doc ChangeLog VERSION
+%doc VERSION
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %files -n libqt5-webkit
 %_qt5_libdir/libQt5WebKit.so.*
@@ -141,6 +144,15 @@ mv Source/ThirdParty/{glu/,gtest/,gyp/,mt19937ar.c,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1.M70P.2
+- build docs
+
+* Mon Nov 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1.M70P.1
+- built for M70P
+
 * Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - build docs
 

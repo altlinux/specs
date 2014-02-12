@@ -2,8 +2,8 @@
 %global qt_module qtscript
 
 Name: qt5-script
-Version: 5.1.1
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtScript component
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+Requires: qt5-base-common
 %description common
 Common package for %name
 
@@ -91,6 +91,12 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1.M70P.1
+- built for M70P
+
 * Tue Oct 29 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - fix package name
 

@@ -2,7 +2,7 @@
 %global qt_module qtimageformats
 
 Name: qt5-imageformats
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -61,11 +61,18 @@ This package contains documentation for Qt5 %qt_module
 
 %files common
 %files
+%doc LGPL_EXCEPTION.txt
 %_qt5_plugindir/imageformats/*.so
 
 %files doc
 %_qt5_docdir/*
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build

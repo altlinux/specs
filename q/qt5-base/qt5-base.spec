@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -19,11 +19,11 @@
 %define gname  qt5
 %define libname  lib%gname
 %define major  5
-%define minor  1
+%define minor  2
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -34,8 +34,8 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
 Patch1: qtbase-opensource-src-5.0.2-lowmem.patch
+Patch2: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 # upstream
-Patch10: xcb-1.9.3.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -301,7 +301,7 @@ Widgets library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .lowmem
-%patch10 -p1 -b .xcb
+%patch2 -p1 -b .QTBUG-35459
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 bin/syncqt.pl -private \
@@ -705,6 +705,12 @@ done
 
 
 %changelog
+* Wed Feb 12 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Wed Nov 27 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3.M70P.1
+- built for M70P
+
 * Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4
 - fix crash whith xcb-1.9.3 ABI change (FDO#71507)
 

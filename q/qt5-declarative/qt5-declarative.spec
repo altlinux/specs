@@ -4,8 +4,8 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.1.1
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -14,7 +14,7 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-jsbackend-devel
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -25,7 +25,7 @@ BuildRequires: qt5-tools
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+Requires: qt5-base-common
 %description common
 Common package for %name
 
@@ -57,6 +57,7 @@ This package contains documentation for Qt5 %qt_module
 Group: System/Libraries
 Summary: Qt5 - library
 Requires: %name-common = %EVR
+Obsoletes: libqt5-v8 < %version-%release
 %description -n libqt5-qml
 %summary
 
@@ -117,11 +118,14 @@ syncqt.pl-qt5 \
 %dir %_qt5_archdatadir/qml/QtQuick/
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
 %_qt5_archdatadir/qml/Qt/labs/folderlistmodel/
+%_qt5_archdatadir/qml/Qt/labs/settings/
 %_qt5_archdatadir/qml/QtQml/Models.2/
 %_qt5_archdatadir/qml/QtQuick/LocalStorage/
 
@@ -160,6 +164,15 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Wed Feb 12 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1.M70P.2
+- build docs
+
+* Mon Nov 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1.M70P.1
+- built for M70P
+
 * Thu Oct 24 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - build docs
 
