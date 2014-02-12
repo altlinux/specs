@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.29
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,10 @@ done)
 
 
 %changelog
+* Wed Feb 12 2014 Led <led@altlinux.ru> 3.10.29-alt6
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+
 * Tue Feb 11 2014 Led <led@altlinux.ru> 3.10.29-alt5
 - enabled:
   + feat-net-ipv4-netfilter--ipt_NETFLOW
