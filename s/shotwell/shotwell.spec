@@ -1,21 +1,27 @@
+%define ver_major 0.17
+%define gst_api_ver 1.0
+
 Name: shotwell
-Version: 0.15.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
 License: LGPL
 Url: http://www.yorba.org/shotwell/
 
-Source: %name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libGConf-devel
+Requires: dconf
+# for video-thumbnailer
+Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
+
+BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel libGConf-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel
 BuildRequires: vala librest-devel libgee0.8-devel desktop-file-utils
-
-Requires: dconf
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -26,8 +32,7 @@ mode, and export them to share with others.
 %define _libexecdir %_prefix/libexec/%name
 
 %prep
-%setup -q
-#%%patch -p1
+%setup
 
 %build
 ./configure --disable-icon-update --prefix=%_prefix --lib=%_lib
@@ -35,7 +40,7 @@ mode, and export them to share with others.
 
 %install
 %makeinstall_std
-%find_lang --output=%name.lang %name %name-extras
+%find_lang --with-gnome --output=%name.lang %name %name-extras
 
 %files -f %name.lang
 %_bindir/%name
@@ -46,13 +51,15 @@ mode, and export them to share with others.
 %_iconsdir/hicolor/*x*/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
-%_datadir/gnome/help/shotwell
 %_datadir/GConf/gsettings/*
 %_datadir/glib-2.0/schemas/*
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.17.0-alt1
+- 0.17.0 snapshot (6321cbf4)
+
 * Tue Jan 21 2014 Vladimir Lettiev <crux@altlinux.ru> 0.15.1-alt2
 - rebuilt with libraw 0.16.0
 
