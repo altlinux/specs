@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt17
-%define erelease 431.3.1.el6
+Release: alt18
+%define erelease 431.5.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,12 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Wed Feb 12 2014 Led <led@altlinux.ru> 2.6.32-alt18
+- 2.6.32-431.5.1.el6:
+  + CVE-2013-2929
+  + CVE-2013-4588
+  + CVE-2013-6405
+
 * Wed Jan 08 2014 Led <led@altlinux.ru> 2.6.32-alt17
 - 2.6.32-431.3.1.el6:
   + CVE-2013-6367
