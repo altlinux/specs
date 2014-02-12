@@ -6,8 +6,8 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 7.0.2
-Release: alt3
+Version: 7.0.3
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -436,6 +436,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Feb 12 2014 Mikhail Efremov <sem@altlinux.org> 7.0.3-alt1
+- Update license texts.
+- theme.plymouth: Fix descriptions.
+- xfce-settings: Drop gnome-mplayer from gconf.
+
 * Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt3
 - xfce settings: Increase the default double-click time.
 - xfce settings: Disable mousewheel-rollup feature in the xfwm4.
