@@ -2,10 +2,11 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
+%define soversion 5
 
 Name: libwebp
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
@@ -26,10 +27,23 @@ container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
 
+%package -n %name%soversion
+Summary: Libraries for the WebP graphics format
+Group: System/Libraries
+Provides: %name = %version-%release
+Obsoletes: %name <= %version-%release
+
+%description -n %name%soversion
+WebP is an image format that does lossy compression of digital
+photographic images. WebP consists of a codec based on VP8, and a
+container based on RIFF. Webmasters, web developers and browser
+developers can use WebP to compress, archive and distribute digital
+images more efficiently.
+
 %package devel
 Summary: Development files for libwebp, a library for the WebP format
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name%soversion = %version-%release
 
 %description devel
 WebP is an image format that does lossy compression of digital
@@ -41,7 +55,7 @@ images more efficiently.
 %package tools
 Summary: The WebP command line tools
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name%soversion = %version-%release
 
 %description tools
 WebP is an image format that does lossy compression of digital
@@ -65,7 +79,7 @@ images more efficiently.
 %install
 %makeinstall_std
 
-%files
+%files -n %name%soversion
 %_libdir/%name.so.*
 %{?_enable_libwebpmux:%_libdir/%{name}mux.so.*}
 %{?_enable_libwebpdemux:%_libdir/%{name}demux.so.*}
@@ -105,6 +119,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_bindir/vwebp}
 
 %changelog
+* Wed Feb 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.0-alt2
+- libwebp: add so version to package name.
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

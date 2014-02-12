@@ -1,6 +1,6 @@
 Name: xpra
 Version: 0.9.6
-Release: alt2
+Release: alt3
 
 Summary: X Persistent Remote Applications
 
@@ -70,6 +70,9 @@ patch -p1 <patches/old-libav.patch
 %_datadir/xpra/
 
 %changelog
+* Wed Feb 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.6-alt3
+- Rebuilt for libwebp5.
+
 * Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.6-alt2
 - rebuilt with recent libx264
 
