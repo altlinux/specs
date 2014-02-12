@@ -9,7 +9,7 @@
 
 Name: ocaml
 Version: 3.12.1
-Release: alt2
+Release: alt3
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -33,6 +33,7 @@ Patch5: ocaml-3.10.0-pld-db4.patch
 Patch6: ocaml-3.12.1-alt-mk-odoc_info-toplevellib_cmxa.patch
 Patch7: ocaml-3.12.0-rpath.patch
 Patch8: ocaml-3.12.1-deb-ocamlopt-arm-add-.type-directive-for-code-symbols.patch
+Patch9: ocaml-3.12.1-alt-arm.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
@@ -204,6 +205,7 @@ with Objective Caml" O'Reilly book translation.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 # grrr ...
 #%__cat <<EOF |ed - emacs/Makefile
@@ -221,9 +223,7 @@ sed -i 's@/usr/X11R6/lib\>@%_x11libdir@g' configure
 
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 ./configure -with-pthread -bindir %_bindir -libdir %_libdir/ocaml -mandir %_mandir
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" world
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" ocamlopt
-make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" opt opt.opt
+make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" world.opt
 make -C ocamldoc stdlib.pdf
 
 install -pD -m644 %SOURCE5 tools/reqprov.ml
@@ -357,6 +357,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc htmlman/* ocamldoc/stdlib.pdf ocaml-refman.pdf ocaml-ora-book.pdf
 
 %changelog
+* Wed Feb 12 2014 Led <led@altlinux.ru> 3.12.1-alt3
+- fixed build native libs for arm arches
+
 * Fri Jun 14 2013 Andrey Bergman <vkni@altlinux.org> 3.12.1-alt2
 - Removed deprecated patches.
 - Removed .menu, added .desktop.
