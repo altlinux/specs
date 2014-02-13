@@ -6,7 +6,7 @@
 
 Name: libwebp
 Version: 0.4.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Library and tools for the WebP graphics format
 License: BSD
@@ -31,6 +31,7 @@ images more efficiently.
 Summary: Libraries for the WebP graphics format
 Group: System/Libraries
 Provides: %name = %version-%release
+Obsoletes: libwebp = 0.4.0-alt1
 
 %description -n %name%soversion
 WebP is an image format that does lossy compression of digital
@@ -118,6 +119,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_bindir/vwebp}
 
 %changelog
+* Thu Feb 13 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.0-alt2.2
+- libwebp5: add O: libwebp = 0.4.0-alt1.
+
 * Wed Feb 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.0-alt2.1
 - libwebp5: remove obsolete.
 
