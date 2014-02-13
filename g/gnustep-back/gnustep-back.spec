@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt2.svn20140127
+Release: alt3.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ Source2: Times.FontInfo.plist
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
-BuildPreReq: libart_lgpl-devel gcc-objc libglitz-devel libcairo-devel
+BuildPreReq: libart_lgpl-devel clang-devel libglitz-devel libcairo-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
 BuildPreReq: fonts-type1-urw
@@ -36,6 +36,8 @@ windowing environments). This package includes development headers too.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -57,20 +59,19 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	shared=yes
 
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=/usr/share/GNUstep/Makefiles
+	messages=yes
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %makeinstall_std -C Documentation \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=/usr/share/GNUstep/Makefiles \
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 rm -rf \
 	%buildroot%_libdir/GNUstep/Documentation/Developer/Back/ReleaseNotes
@@ -119,6 +120,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt3.svn20140127
+- Built with clang
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt2.svn20140127
 - Built with xlib for i586
 
