@@ -2,7 +2,7 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt5.git20140115
+Release: alt6.git20140115
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -13,8 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-gui-devel
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-gui-devel gcc-objc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-gorm-devel
@@ -59,12 +59,17 @@ This package contains development files of Backbone.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh 
+
 cd System
 
 ./bootstrap
+export CC=clang
 %configure
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh 
+
 cd System
 export INSTALL_DIR=%buildroot%_libdir/GNUstep
 
@@ -73,14 +78,12 @@ export INSTALL_DIR=%buildroot%_libdir/GNUstep
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -DHAVE_CONFIG_H' \
-	CONFIG_SYSTEM_LIBS='-lutil -lgnustep-gui -lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS='-DHAVE_CONFIG_H' \
+	CONFIG_SYSTEM_LIBS='-lutil -lgnustep-gui -lgnustep-base -lobjc2'
  
 install -d %buildroot%_libdir/GNUstep/Colors
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	ADDITIONAL_INSTALL_DIRS=%buildroot%_libdir/GNUstep \
 
 pushd %buildroot%_libdir
@@ -119,6 +122,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6.git20140115
+- Built with clang
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt5.git20140115
 - Disabled built of Terminal and TextEdit
 
