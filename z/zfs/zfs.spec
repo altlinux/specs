@@ -8,13 +8,14 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt32
+Release: alt33
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org
 Source: http://archive.zfsonlinux.org/downloads/zfsonlinux/%name/%name-%version.tar
 Patch: %name-%version-%release.patch
+Conflicts: fuse-zfs
 
 BuildRequires: zlib-devel libuuid-devel %{?_with_selinux:libselinux-devel} rpm-build-kernel
 
@@ -182,6 +183,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Wed Feb 12 2014 Led <led@altlinux.ru> 0.6.2-alt33
+- upstream fixes
+
 * Thu Feb 06 2014 Led <led@altlinux.ru> 0.6.2-alt32
 - upstream fixes
 - added systemd unit files for ZFS startup
