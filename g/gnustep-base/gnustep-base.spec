@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt1.svn20140126
+Release: alt2.svn20140126
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -18,7 +18,7 @@ Source1: %name.init
 Requires: lib%name = %epoch:%version-%release
 
 BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel
-BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
+BuildRequires: libgnustep-objc2-devel pkgconfig clang-devel libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
@@ -58,16 +58,13 @@ Libraries and includes files for developing programs based on %name.
 #cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
 %define _libexecdir %_libdir
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
 %undefine __libtoolize
 
 %{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
-export CPPFLAGS="%optflags"
-export CC=gcc
+#export CPPFLAGS="%optflags"
+#export CC=gcc
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -80,7 +77,6 @@ export CC=gcc
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lobjc2 -lffi -licui18n -lxslt -lxml2 -lgnutls -lz'
 
 # very long now
@@ -92,6 +88,8 @@ export LD_LIBRARY_PATH=$PWD/Source/obj
 %endif
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make install \
 	INSTALL_ROOT_DIR=%buildroot \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -148,6 +146,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt2.svn20140126
+- Built with clang
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt1.svn20140126
 - New snapshot
 
