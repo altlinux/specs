@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt11.svn20140116
+Release: alt12.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -8,7 +8,7 @@ Group: Development/Other
 Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
 
-BuildRequires: gcc-objc libgnustep-objc2-devel star
+BuildRequires: clang-devel libgnustep-objc2-devel star
 Requires: gnustep-dirs
 
 %description
@@ -41,13 +41,16 @@ LIB_SUFF=64
 sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
-export CC=gcc CXX=g++ CPP='gcc -E'
+export CC=clang CXX=clang++ CPP='clang -E'
+OBJCFLAGS="%optflags -fobjc-runtime=gnustep-1.7 -fobjc-nonfragile-abi"
+export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
 	--enable-flattened \
 	--with-layout=fhs-system-alt \
-	--with-objc-lib-flag=-lobjc2
+	--with-objc-lib-flag=-lobjc2 \
+	--enable-objc-nonfragile-abi \
 
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
@@ -111,6 +114,10 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt12.svn20140116
+- Set clang as default compiler
+- Added necessary flags for everything GNUstep-software
+
 * Tue Feb 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt11.svn20140116
 - Reverted last change
 
