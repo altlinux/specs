@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.29
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1803,6 +1803,11 @@ done)
 
 
 %changelog
+* Thu Feb 13 2014 Led <led@altlinux.ru> 3.10.29-alt9
+- updated:
+  + fix-fs-dlm
+  + fix-mm--swap
+
 * Wed Feb 12 2014 Led <led@altlinux.ru> 3.10.29-alt8
 - updated:
   + fix-drivers-gpu-drm--i915
