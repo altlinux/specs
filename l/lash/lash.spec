@@ -2,7 +2,7 @@
 
 Name: lash
 Version: 0.6.0
-Release: alt0.20090725.6
+Release: alt0.20090725.7
 
 Summary: A session management system for JACK audio systems
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
@@ -13,6 +13,7 @@ Url: http://www.altlinux.org/SampleSpecs/program
 Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
 Patch0: %name-0.6.0-alt-DSO.patch
+Patch1: lash-0.6.0-alt-linking.patch
 
 BuildPreReq: rpm-build-licenses
 # Automatically added by buildreq on Tue Aug 04 2009
@@ -73,6 +74,7 @@ Python bindings for LASH
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -159,6 +161,9 @@ fi
 %python_sitelibdir/*lash*.pyo
 
 %changelog
+* Thu Feb 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt0.20090725.7
+- Fixed build
+
 * Thu May 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt0.20090725.6
 - restored python-module-lash - required by other packages
 
