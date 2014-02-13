@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: APT Lua script for NVIDIA driver
@@ -37,5 +37,8 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
+- add reminding to apt-get update
+
 * Wed Feb 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
