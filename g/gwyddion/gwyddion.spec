@@ -1,6 +1,6 @@
 %define _gtkdocdir %_datadir/gtk-doc/html
 Name: gwyddion
-Version: 2.31
+Version: 2.34
 Release: alt1
 Summary: An SPM data visualization and analysis tool
 Group: Sciences/Other
@@ -174,12 +174,14 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkglibdir/modules/layer/*.so
 %pkglibdir/modules/process/*.so
 %pkglibdir/modules/tool/*.so
+%pkglibdir/modules/volume/*.so
 %pkglibdir/modules/*.so
 %dir %pkglibdir/modules/file
 %dir %pkglibdir/modules/graph
 %dir %pkglibdir/modules/layer
 %dir %pkglibdir/modules/process
 %dir %pkglibdir/modules/tool
+%dir %pkglibdir/modules/volume
 %dir %pkglibdir/modules
 %dir %pkglibdir
 %_desktopdir/%name.desktop
@@ -253,8 +255,12 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 
 %files -n python-module-pygwy
 %python_sitelibdir/*
+%_datadir/gtksourceview-2.0/language-specs/*.lang
 
 %changelog
+* Thu Feb 13 2014 Evgeny Sinelnikov <sin@altlinux.ru> 2.34-alt1
+- update to new version
+
 * Wed Apr 03 2013 Boris Savelev <boris@altlinux.org> 2.31-alt1
 - new version. closes: #28780
 
