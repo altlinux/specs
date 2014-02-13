@@ -7,12 +7,19 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.12.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
 License: LGPLv2
 Url: http://www.kde.org/
+
+# until KDE-4.11
+Requires: libakonadi4-calendar libakonadi4-contact libakonadi4-kabc libakonadi4-kcal libakonadi4-kmime
+Requires: libakonadi4-notes libgpgmexx4-pthread libgpgmexx4 libkalarmcal4 libkblog4 libkcalcore4
+Requires: libkcalutils4 libkholidays4 libkmbox4 libkontactinterface4 libkpimidentities4 libkpimtextedit4
+Requires: libktnef4 libkxmlrpcclient4 libmicroblog4 libqgpgme4 libsyndication4
+# end until KDE-4.11
 
 Source: %rname-%version.tar
 # upstream
@@ -407,6 +414,9 @@ Requires: %name-common = %version-%release
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt2
+- fix requires
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
