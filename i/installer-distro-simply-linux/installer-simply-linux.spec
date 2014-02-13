@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt9
+Release: alt10
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -115,6 +115,10 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Feb 13 2014 Mikhail Efremov <sem@altlinux.org> 7.0-alt10
+- Disable cups.socket.
+- Disable haspd.service by default.
+
 * Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt9
 - Disbale clamd.service by default.
 

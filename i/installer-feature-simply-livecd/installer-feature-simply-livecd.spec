@@ -1,6 +1,6 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.6
-Release: alt2
+Version: 0.8.7
+Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
 License: GPL
@@ -55,6 +55,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Thu Feb 13 2014 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
+- Disable cups.socket.
+
 * Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt2
 - Drop installer-feature-cpufreq-stage3.
 
