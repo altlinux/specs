@@ -16,7 +16,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.3
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -512,6 +512,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Feb 13 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt2
+- Rebuild with updated gfxboot
+
 * Wed Feb 05 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt1
 - Fix license
 
