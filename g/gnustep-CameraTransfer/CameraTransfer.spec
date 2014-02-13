@@ -2,7 +2,7 @@
 
 Name: gnustep-CameraTransfer
 Version: 0.3
-Release: alt3
+Release: alt4
 Summary: Get pictures from a digital camera
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Source1: BCell.m
 Source2: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -31,17 +31,18 @@ files from the camera etc.
 install -m644 %SOURCE1 .
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE2 %buildroot%_menudir/%name
 
@@ -52,6 +53,9 @@ install -p -D -m644 %SOURCE2 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
+- Built with clang
+
 * Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
 - Added menu file (thnx kostyalamer@)
 
