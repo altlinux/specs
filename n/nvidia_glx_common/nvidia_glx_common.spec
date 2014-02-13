@@ -13,7 +13,7 @@
 %define nv_version 331
 %define nv_release 38
 %define nv_minor %nil
-%define pkg_rel alt131
+%define pkg_rel alt132
 %define set_gl_nvidia_ver 0.10.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -84,6 +84,7 @@ License: GPLv2
 #
 Conflicts: xorg-x11-mesagl <= 6.8.2-alt7
 Requires(post): x11presetdrv
+Requires: apt-scripts-nvidia
 # old
 Conflicts: nvidia_glx_100.14.19-100.14.19 <= alt40
 Conflicts: nvidia_glx_169.07-169.07 <= alt40
@@ -247,6 +248,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt132
+- using apt-scripts-nvidia for nvidia-install-driver
+
 * Tue Jan 21 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt131
 - add libvdpau_nvidia.so.1
 
