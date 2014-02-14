@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt6.git20140101
+Release: alt7.git20140101
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -12,9 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/dbuskit/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libdbus-devel /proc
-BuildPreReq: clang-devel clang
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
@@ -65,16 +64,15 @@ This package cicu of GNUstep interface.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 sed -i 's|@LIBDIR@|%_libdir|g' configure.ac
 
 %build
-export CC=gcc
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+export CC=clang
+export OBJCPP='clang -E'
+export CPP='clang -E'
 %add_optflags -DHAVE_OBJC_RUNTIME_H
-#export OBJCPP=gcc
 %autoreconf
 for i in $(find ./ -type f); do
 	sed -i 's|[0-9a-z_]*alt-linux-gcc|clang|g' $i
@@ -95,8 +93,8 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-		CONFIG_SYSTEM_LIBS="-L$LD_LIBRARY_PATH -lclang -ldbus-1 $1"
+		CONFIG_SYSTEM_LIBS="-L$LD_LIBRARY_PATH -lclang -ldbus-1 $1" \
+		nonstrict=yes
 }
 
 pushd Source
@@ -106,10 +104,11 @@ libDBusKit=$PWD/Source/DBusKit.framework/Versions/Current/libDBusKit.so
 buildIt $libDBusKit
  
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	messages=yes
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
 	messages=yes \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -125,8 +124,7 @@ done
 popd
 
 %makeinstall_std -C Documentation \
-     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-     GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
 %doc ChangeLog README
@@ -150,6 +148,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt7.git20140101
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt6.git20140101
 - Added Requires: gnustep-back
 
