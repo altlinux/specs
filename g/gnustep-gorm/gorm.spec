@@ -2,7 +2,7 @@
 
 Name: gnustep-gorm
 Version: 1.2.20
-Release: alt2.svn20140119
+Release: alt3.svn20140119
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
 
@@ -66,6 +66,7 @@ This package contains documentation for Gorm.
 
 %build
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
 buildIt() {
 	%make_build \
@@ -73,7 +74,6 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base -lobjc2 -lm $1 $2 $3"
 }
 
@@ -101,13 +101,13 @@ buildIt $libGormPrefs $libGormCore $libGorm
 	messages=yes
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %makeinstall_std -C Documentation \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -131,6 +131,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt3.svn20140119
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt2.svn20140119
 - Added Requires: gnustep-back
 
