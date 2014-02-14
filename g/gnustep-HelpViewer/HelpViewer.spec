@@ -2,7 +2,7 @@
 
 Name: gnustep-HelpViewer
 Version: 0.3
-Release: alt3
+Release: alt4
 Summary: HelpViewer is an online help viewer for GNUstep programs
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -27,17 +27,18 @@ XML files, and its goal is to be fast and easy to use.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -48,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
+- Built with clang
+
 * Fri Feb 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
 - Added menu file (thnx kostyalamer@)
 
