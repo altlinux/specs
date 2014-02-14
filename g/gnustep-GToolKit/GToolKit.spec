@@ -2,7 +2,7 @@
 
 Name: gnustep-GToolKit
 Version: 0.9.5
-Release: alt2
+Release: alt3
 Summary: Implements a simple and easy to use ObjC interface to the GTK+ widget set
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,8 +11,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-gui-devel
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-gui-devel gcc-objc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gtk+-devel
@@ -83,11 +83,10 @@ This package contains development documentation for GToolKit.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+export CC=gcc
 %autoreconf
 %configure \
 	--with-gnustep \
@@ -98,14 +97,17 @@ done
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/gtk-1.2' \
+	AUXILIARY_CPPFLAGS='-I%_includedir/gtk-1.2' \
 	CONFIG_SYSTEM_LIBS='-lgtk -lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
-	GNUSTEP_SYSTEM_ROOT=%_datadir/GNUstep
+	GNUSTEP_SYSTEM_ROOT=%_datadir/GNUstep \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std -C GToolKit GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_SYSTEM_ROOT=%_datadir/GNUstep
 
 %files -n lib%name
@@ -121,6 +123,9 @@ done
 %doc html/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
+- Built with gcc
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
 - Change URL
 
