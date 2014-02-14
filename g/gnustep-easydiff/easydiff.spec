@@ -2,7 +2,7 @@
 
 Name: gnustep-easydiff
 Version: 0.4.1
-Release: alt5.git20121210
+Release: alt6.git20121210
 Summary: GNUstep's implementation of the OPENSTEP FileMerge application
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -30,14 +30,17 @@ different SCMSs and is useful in resolving merge conflicts.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
@@ -49,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt6.git20121210
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt5.git20121210
 - Added Requires: gnustep-back
 
