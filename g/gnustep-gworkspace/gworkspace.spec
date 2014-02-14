@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt3.svn20131218
+Release: alt4.svn20131218
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Source1: %name.menu
 Source2: %name.sh
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel /proc
 BuildPreReq: libgnustep-objc2-devel libgnustep-pdfkit-devel
 BuildPreReq: gnustep-systempreferences-devel libsqlite3-devel unzip
 BuildPreReq: gnustep-gui-devel gnustep-gui inotify-tools-devel
@@ -67,8 +67,9 @@ This package contains documentation for GWorkspace.
 %setup
 
 %build
-export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
-export CC=gcc
+#export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+#export CC=gcc
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %autoreconf
 %configure \
@@ -83,7 +84,7 @@ export CC=gcc
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP %incs' \
+	AUXILIARY_CPPFLAGS='%incs' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc2 -lm'
  
 libFSNode="$PWD/FSNode/FSNode.framework/libFSNode.so"
@@ -94,13 +95,14 @@ pushd Inspector
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP %incs' \
+	AUXILIARY_CPPFLAGS='%incs' \
 	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc2"
 popd
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
@@ -146,6 +148,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt4.svn20131218
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.svn20131218
 - Added Requires: gnustep-systempreferences and Requires: gnustep-back
 
