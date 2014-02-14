@@ -2,7 +2,7 @@
 
 Name: gnustep-FlexiSheet
 Version: 0.1
-Release: alt4.cvs20140127
+Release: alt5.cvs20140127
 Summary: A Quantrix-like spreadsheet
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -40,22 +40,19 @@ This package contains documentation for FlexiSheet.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' "$i" ||:
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS="-O2 -DGNUSTEP" \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
@@ -78,6 +75,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Documentation
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt5.cvs20140127
+- Built with clang
+
 * Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4.cvs20140127
 - Added menu file (thnx kostyalamer@)
 
