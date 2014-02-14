@@ -1,8 +1,8 @@
 Name: ntp
-Version: 4.2.4
-%define vers_rc p7
-Release: alt5%{?vers_rc:.%vers_rc}
-%define srcname %name-%version%{?vers_rc:-%vers_rc}
+Version: 4.2.6
+%define vers_rc p5
+Release: alt1
+%define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
 License: BSD-Style
@@ -11,7 +11,7 @@ Url: http://www.ntp.org/
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-Source0: ftp://ftp.udel.edu/pub/ntp/ntp4/%srcname.tar.bz2
+Source0: http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/%srcname.tar.gz
 Source1: ntpd.init
 Source2: ntpd.sysconfig
 Source3: %name.conf
@@ -22,7 +22,7 @@ Source12: ntpd.8
 Source13: ntpdate.8
 Source14: ntpsweep.8
 
-Patch1: %name-4.2.4-p7-alt-compile-dirty-hack-NANO.patch
+Patch1: %name-4.2.6p5-alt-compile-dirty-hack-NANO.patch
 
 Requires: ntp-doc = %version-%release
 Requires: ntp-utils = %version-%release
@@ -42,11 +42,13 @@ BuildRequires: libcap-devel
 Summary: The Network Time Protocol (NTP) auxiliary package
 Group: System/Configuration/Other
 Conflicts: ntp < 4.1.1b
+BuildArch: noarch
 
 %package doc
 Summary: The Network Time Protocol (NTP) documentation
 Group: Development/Other
 Requires: ntp-aux = %version-%release
+BuildArch: noarch
 
 %package utils
 Summary: The Network Time Protocol (NTP) utilities
@@ -236,6 +238,7 @@ fi
 %_mandir/man?/*
 %exclude %_sbindir/ntpd
 %exclude %_sbindir/ntpdate
+%exclude %_man1dir/ntpd.1.gz
 %exclude %_man8dir/ntpd.*
 %exclude %_man8dir/ntpdate.*
 
@@ -252,6 +255,7 @@ fi
 %_sysconfdir/%name
 %_sbindir/ntpd
 %_man8dir/ntpd.*
+%_man1dir/ntpd.1.gz
 
 %defattr(640,root,ntpd,710)
 %dir %ROOT
@@ -263,6 +267,14 @@ fi
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
 %changelog
+* Fri Feb 14 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.6-alt1
+- NMU
+- 4.2.6p5 (closes: #27162)
+- removed unsupported option from ntp.conf (closes: #27162)
+- added "disable monitor" to ntp.conf (CVE-2013-5211)
+- moved man1/ntpd.1.gz to ntpd package (closes: #27948)
+- added "BuildArch: noarch" for ntp-aux and ntp-doc
+
 * Wed May 20 2009 Dmitry Lebkov <dlebkov@altlinux.ru> 4.2.4-alt5.p7
 - 4.2.4p7
 - fix for CVE-2009-1252 (closes: #20099)
