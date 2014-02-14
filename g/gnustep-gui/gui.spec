@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.24.0
-Release: alt2.svn20140126
+Release: alt3.svn20140126
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-gui.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libtiff-devel libjpeg-devel
 BuildPreReq: libpng-devel libcups-devel libaspell-devel
 BuildPreReq: libungif-devel libaudiofile-devel libportaudio2-devel
@@ -23,7 +23,7 @@ BuildPreReq: ImageMagick-tools libsndfile-devel libao-devel
 BuildPreReq: flite-devel libicns-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel
+BuildPreReq: libxslt-devel libffi-devel libdispatch-objc2-devel
 
 Requires: lib%name = %version-%release
 
@@ -87,11 +87,9 @@ This package contains the documentation for %name.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -112,22 +110,22 @@ done
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	AUXILIARY_CPPFLAGS='-I%_includedir/dispatch'
  
 # too long now
 %if 0
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	messages=yes
 %endif
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %if 0
 %makeinstall_std -C Documentation \
-     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-     GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 %endif
 
 for i in ChangeLog*; do
@@ -161,6 +159,9 @@ rm -fR %buildroot%_infodir
 %endif
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt3.svn20140126
+- Rebuilt with clang
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt2.svn20140126
 - New snapshot
 
