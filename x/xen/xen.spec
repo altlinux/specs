@@ -1,7 +1,6 @@
 %def_with efi
 %def_disable vtpm
 %def_without xsm
-# findlib for arm missed
 %def_enable ocaml
 
 %define _localstatedir %_var
@@ -17,7 +16,7 @@ Name: xen
 Version: 4.3.1
 # Hypervisor ABI
 %define hv_abi 4.3
-Release: alt2
+Release: alt3
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -131,17 +130,17 @@ Requires: chkconfig
 %def_disable stubdom
 %endif
 
+%{?_with_hypervisor:Requires: %name-runtime = %version-%release}
+
 %{?_with_efi:BuildPreReq: rpm-macros-uefi}
-BuildRequires: libidn-devel zlib-devel libSDL-devel libcurl-devel libX11-devel
-BuildRequires: libncurses-devel libgtk+2-devel libaio-devel
+BuildRequires: zlib-devel libncurses-devel libaio-devel
 BuildRequires: python-devel ghostscript texi2html transfig
+BuildRequires: pkgconfig(glib-2.0) >= 2.12
 # for the docs
 BuildRequires: perl(Pod/Man.pm) perl(Pod/Text.pm) texinfo graphviz
+BuildRequires: discount perl-devel
 # so that the makefile knows to install udev rules
 BuildRequires: udev
-BuildRequires: %_includedir/gnu/stubs-32.h
-# for the VMX "bios"
-BuildRequires: dev86
 BuildRequires: gettext libgnutls-devel libssl-devel
 # For ioemu PCI passthrough
 BuildRequires: libpci-devel
@@ -157,12 +156,20 @@ BuildRequires: bzlib-devel liblzma-devel
 BuildRequires: libe2fs-devel
 # tools now require yajl
 BuildRequires: libyajl-devel
+%{?_enable_ocaml:BuildRequires: ocaml ocamlbuild ocamldoc findlib}
+%if 0
+BuildRequires: %_includedir/gnu/stubs-32.h
+# for the VMX "bios"
+BuildRequires: dev86
 # xsm policy file needs needs checkpolicy and m4
 %{?_with_xsm:BuildRequires: checkpolicy m4}
-%{?_with_hypervisor:Requires: %name-runtime = %version-%release}
-%{?_enable_ocaml:BuildRequires: ocaml findlib}
 # efi image needs an ld that has -mi386pep option
 %{?_with_efi:BuildRequires: mingw64-binutils}
+%{?_enable_stubdom:Requires: makeinfo}
+%{?_with_hypervisor:Requires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
+%else
+BuildRequires: rpm-build-xen >= %version
+%endif
 
 %description
 This package contains the XenD daemon and xm command line tools, needed to manage
@@ -713,6 +720,9 @@ done
 
 
 %changelog
+* Sat Feb 15 2014 Led <led@altlinux.ru> 4.3.1-alt3
+- fixed BuildRequires
+
 * Wed Feb 12 2014 Led <led@altlinux.ru> 4.3.1-alt2
 - fixed build tools/ocaml for arm arches
 - enabled ocaml
