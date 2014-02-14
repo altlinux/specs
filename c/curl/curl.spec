@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.35.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -141,6 +141,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Fri Feb 14 2014 Anton Farygin <rider@altlinux.ru> 7.35.0-alt2
+- test172 fixed by upstream
+
 * Wed Jan 29 2014 Anton Farygin <rider@altlinux.ru> 7.35.0-alt1
 - new version
 
