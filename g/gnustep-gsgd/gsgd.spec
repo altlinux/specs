@@ -2,7 +2,7 @@
 
 Name: gnustep-gsgd
 Version: r31302
-Release: alt3.git20100910
+Release: alt4.git20100910
 Summary: Objc interface to libgd library
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-gsgd.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel libgd2-devel
 
 %description
@@ -45,6 +45,8 @@ This package contains development files of gsgd.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -55,10 +57,11 @@ This package contains development files of gsgd.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
@@ -70,6 +73,9 @@ This package contains development files of gsgd.
 %_libdir/*.so
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31302-alt4.git20100910
+- Built with clang
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31302-alt3.git20100910
 - Rebuilt with new gnustep-gui
 
