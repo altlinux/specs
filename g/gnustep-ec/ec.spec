@@ -2,7 +2,7 @@
 
 Name: gnustep-ec
 Version: 1.0.2
-Release: alt3.svn20140116
+Release: alt4.svn20140116
 Summary: Enterprise Control Configuration and Logging framework
 License: GPLv3 / LGPLv3
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -63,6 +63,8 @@ Configuration and Logging framework.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--with-readline \
@@ -73,13 +75,12 @@ Configuration and Logging framework.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -99,6 +100,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_docdir/GNUstep
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt4.svn20140116
+- Built with clang
+
 * Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt3.svn20140116
 - Added menu file (thnx kostyalamer@)
 
