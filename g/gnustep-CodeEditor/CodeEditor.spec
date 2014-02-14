@@ -2,7 +2,7 @@
 
 Name: gnustep-CodeEditor
 Version: 0.4.4
-Release: alt3
+Release: alt4
 Summary: CodeEditor is a text and code editor
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -45,17 +45,22 @@ Features:
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+export CC=gcc
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 install -d %buildroot%_bindir
@@ -71,6 +76,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt4
+- Rebuilt
+
 * Mon Feb 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt3
 - Added menu file (thnx kostyalamer@)
 
