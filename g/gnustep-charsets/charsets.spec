@@ -2,7 +2,7 @@
 
 Name: gnustep-charsets
 Version: r29248
-Release: alt6.git20100109
+Release: alt7.git20100109
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-charsets.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libgnustep-ucsdata-devel
 BuildPreReq: /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -41,14 +41,17 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
@@ -56,6 +59,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt7.git20100109
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt6.git20100109
 - Added Requires: gnustep-back
 
