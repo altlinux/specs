@@ -2,7 +2,7 @@
 
 Name: gnustep-CDPlayer
 Version: 0.5.1
-Release: alt4
+Release: alt5
 Summary: Small CD Audio Player for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: libcdaudio-devel gnustep-gui-devel
 BuildPreReq: gnustep-systempreferences-devel
 
@@ -48,20 +48,21 @@ This package contains development files of CDPlayer.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	prefs=sysprefs \
-	CONFIG_SYSTEM_LIBS='-lcdaudio' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	CONFIG_SYSTEM_LIBS='-lcdaudio'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	prefs=sysprefs \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	prefs=sysprefs
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -75,6 +76,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt5
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt4
 - Added Requires: gnustep-systempreferences and Requires: gnustep-back
 
