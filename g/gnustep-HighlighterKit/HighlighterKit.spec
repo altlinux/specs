@@ -2,7 +2,7 @@
 
 Name: gnustep-HighlighterKit
 Version: 0.1.2
-Release: alt3
+Release: alt4
 Summary: Framework needed by Gemas and Project Manager
 License: MIT / FDL
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Requires: lib%name = %EVR
@@ -51,18 +51,19 @@ This package contains development files of GNUstep HighlighterKit.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for i in HighlighterKit; do
@@ -93,6 +94,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt4
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt3
 - Added Requires: gnustep-back
 
