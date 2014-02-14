@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel libid3tag-devel libmad-devel
 BuildPreReq: libvorbis-devel libogg-devel libmpcdec-devel
 BuildPreReq: libaudiofile-devel libflac-devel libtag-devel libesd-devel
@@ -68,6 +68,8 @@ This package contains development files of GNUstep Cynthiune.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 pushd Frameworks/Cynthiune
 %make_build \
 	messages=yes \
@@ -76,9 +78,8 @@ pushd Frameworks/Cynthiune
 	shared=yes \
 	disable-windowsmedia=yes \
 	disable-arts=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug -DGNUSTEP -DMUSEPACK_API_126' \
-	CONFIG_SYSTEM_LIBS='-lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS='-I%_includedir/libmodplug -DMUSEPACK_API_126' \
+	CONFIG_SYSTEM_LIBS='-lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag'
 popd
 
 %make_build \
@@ -88,13 +89,13 @@ popd
 	shared=yes \
 	disable-windowsmedia=yes \
 	disable-arts=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libmodplug -DGNUSTEP -DMUSEPACK_API_126' \
-	CONFIG_SYSTEM_LIBS='-lCynthiune -lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS='-I%_includedir/libmodplug -DMUSEPACK_API_126' \
+	CONFIG_SYSTEM_LIBS='-lCynthiune -lmad -lvorbisfile -laudiofile -ltag_c -lmpcdec -lmodplug -lFLAC -lesd -lid3tag'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	disable-windowsmedia=yes \
 	disable-arts=yes \
 	GNUSTEP_LOCAL_ROOT=%buildroot
@@ -132,6 +133,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt3
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
 - Added Requires: gnustep-back
 
