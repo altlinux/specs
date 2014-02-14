@@ -2,7 +2,7 @@
 
 Name: gnustep-corebase
 Version: 0.2
-Release: alt1.svn20140203
+Release: alt2.svn20140203
 Summary: Open implementation of CoreFoundation
 License: LGPLv2+, GPLv3+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-corebase.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libicu-devel /proc
 BuildPreReq: doxygen graphviz
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -65,11 +65,9 @@ This package contains development files of the GNUstep CoreBase Library.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -80,10 +78,11 @@ done
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
@@ -95,6 +94,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.svn20140203
+- Built with clang
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.svn20140203
 - New snapshot
 
