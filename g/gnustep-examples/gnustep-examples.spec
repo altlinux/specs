@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt3
+Release:        alt4
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -10,8 +10,8 @@ Group:          Graphical desktop/GNUstep
 URL:            http://www.gnustep.org
 Source:         %name-%version.tar
 
-BuildRequires:  gcc-objc libgnustep-objc2-devel gnustep-make-devel
-BuildRequires:  gnustep-base-devel gnustep-gui-devel
+BuildRequires:  clang-devel libgnustep-objc2-devel gnustep-make-devel
+BuildRequires:  gnustep-base-devel gnustep-gui-devel gcc-objc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
@@ -24,17 +24,21 @@ This package contains sample applications for the GNUstep framework.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 cp gui/ExampleTheme/Rhea/COPYING .
 
@@ -45,6 +49,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4
+- Built with gcc
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3
 - Added Requires: gnustep-back
 
