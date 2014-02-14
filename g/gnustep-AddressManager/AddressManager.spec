@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt7
+Release: alt8
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 BuildPreReq: gnustep-gworkspace-devel gnustep-gsldap-devel
 
@@ -111,7 +111,6 @@ An address book plugin to handle LDAP connections.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
 
 %make_build $1 $2 \
@@ -119,7 +118,6 @@ An address book plugin to handle LDAP connections.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS="-lAddresses -lgnustep-gui -lgnustep-base -lobjc2"
 
  %make_build -C Goodies \
@@ -127,7 +125,6 @@ An address book plugin to handle LDAP connections.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS="-lAddresses -lgsldap -lgnustep-gui -lgnustep-base -lobjc2"
  
 %install
@@ -186,6 +183,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt8
+- Built with clang
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt7
 - Built goodies
 
