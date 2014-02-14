@@ -1,6 +1,6 @@
 Name: installer-feature-resolver-bind-stage3
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Setup bind as a main local resolver
 License: GPL
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Feb 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt2
+- exit code fixed
+
 * Tue Feb 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
 - skip if systemd
 
