@@ -1,6 +1,6 @@
 Name: qbs
-Version: 1.1.1
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Qt Build Suite
 License: LGPLv2.1 with exceptions
@@ -119,9 +119,16 @@ Provides examples for using the %name
 %_libdir/%name/plugins/lib%{name}_qt_scanner.so
 
 %files examples
+%dir %_datadir/%name
 %_datadir/%name/examples
 
 %changelog
+* Fri Feb 14 2014 Nazarov Denis <nenderus@altlinux.org> 1.1.2-alt1
+- Version 1.1.2
+
+* Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.1.1-alt1.M70T.1
+- Build for branch t7
+
 * Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.1.1-alt2
 - Fix arch for examples subpackage
 
