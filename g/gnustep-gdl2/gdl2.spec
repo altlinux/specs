@@ -2,7 +2,7 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt4.svn20130819
+Release: alt5.svn20130819
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: RCS_ID.h
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel
 BuildPreReq: postgresql-devel libsqlite3-devel
 BuildPreReq: texinfo texi2html texlive-latex-base
@@ -73,11 +73,9 @@ This package contains documentation for GDL2.
 %setup
 install -m644 %SOURCE1 ./
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -91,19 +89,18 @@ sed -i 'r RCS_ID.h' config.h
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNU_RUNTIME -DGNUSTEP'
+	shared=yes
  
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	messages=yes
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %makeinstall_std -C Documentation \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for i in PostgreSQLEOAdaptor SQLite3EOAdaptor; do
@@ -147,6 +144,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt5.svn20130819
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt4.svn20130819
 - New snapshot from SVN
 
