@@ -2,7 +2,7 @@
 
 Name: gnustep-gsldap
 Version: r31303
-Release: alt2.svn20100910
+Release: alt3.svn20100910
 Summary: Library which provides an Objective-C interface to access LDAP Servers
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/gsldap/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel libldap-devel
 
 %description
@@ -50,15 +50,18 @@ for i in *.h; do
 done
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
@@ -70,6 +73,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31303-alt3.svn20100910
+- Built with clang
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31303-alt2.svn20100910
 - Rebuilt with new gnustep-gui
 
