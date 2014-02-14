@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt112
+Release: alt113
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab084.20-combined
+Patch0: patch-042stab084.25-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Feb 14 2014 Led <led@altlinux.ru> 2.6.32-alt113
+- Update to 042stab084.25:
+  + ploop: roll back alloc_head on ENOSPC
+  + mmap: do not call mmap for directories
+  + ploop: unlock plo->lock in ploop_entry_reloc_a_req
+
 * Fri Feb 07 2014 Led <led@altlinux.ru> 2.6.32-alt112
 - updated ipt_NETFLOW to 1.8.2
 
