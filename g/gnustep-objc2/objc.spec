@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt8.svn20140120
+Release: alt9.svn20140120
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -18,7 +18,7 @@ Source1: Makefile
 Patch: gnustep-objc2-1.6.1-alt-i586.patch
 
 BuildRequires(pre): rpm-macros-make
-BuildPreReq: gnustep-make-devel gcc-objc gcc-c++ libstdc++-devel
+BuildPreReq: gnustep-make-devel gcc-c++ libstdc++-devel
 BuildPreReq: cmake llvm-devel-static clang-devel
 
 %description
@@ -145,6 +145,8 @@ install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
 	selector.h sarray2.h category.h \
 	%buildroot%_includedir/objc2/
 
+ln -s objc2 %buildroot%_includedir/objc
+
 %files -n lib%name
 %doc ANNOUNCE* API README
 %_libdir/*.so.*
@@ -165,6 +167,9 @@ install -p -m644 class.h visibility.h method_list.h ivar.h protocol.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt9.svn20140120
+- Added symlink objc2 -> %_includedir/objc
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt8.svn20140120
 - New snapshot
 
