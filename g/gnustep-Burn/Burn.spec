@@ -2,7 +2,7 @@
 
 Name: gnustep-Burn
 Version: 0.5.0
-Release: alt4.cvs20140123
+Release: alt5.cvs20140123
 Summary: Burn ist a front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -49,17 +49,18 @@ This package contains development files of Burn.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -d %buildroot%_includedir/Burn
 install -m644 *.h Burn/*.h %buildroot%_includedir/Burn/
@@ -76,6 +77,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt5.cvs20140123
+- Built with clang
+
 * Sun Feb 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt4.cvs20140123
 - Added menu file (thnx kostyalamer@)
 
