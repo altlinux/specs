@@ -16,7 +16,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.3
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -512,6 +512,11 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Feb 14 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt3
+- Set light blue background in rEFIt by set correct pixel color in top
+  left corner of background image
+- Remove abandoned web resource planet.altlinux.org from indexhtml
+
 * Thu Feb 13 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt2
 - Rebuild with updated gfxboot
 
