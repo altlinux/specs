@@ -2,7 +2,7 @@
 
 Name: gnustep-gsweb
 Version: 1.3.0
-Release: alt1.svn20131221
+Release: alt2.svn20131221
 Summary: A library which was designed to be compatible with WebObjects 4.x
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: RCS_ID.h
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gdl2-devel libxml2-devel libpng-devel
 BuildPreReq: libwrap-devel
 
@@ -58,6 +58,7 @@ This package contains development files of GNUstepWeb.
 install -m644 %SOURCE1 ./
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
 %autoreconf
@@ -72,7 +73,6 @@ sed -i 'r RCS_ID.h' config.h
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2 -lEOControl -lm'
 
 ldir=$PWD/GSWeb/WebObjects.framework/Versions/1
@@ -81,10 +81,11 @@ ldir=$PWD/GSWeb/WebObjects.framework/Versions/1
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
 	CONFIG_SYSTEM_LIBS="-L$ldir -lWebObjects -lgnustep-base -lobjc2 -lEOControl -lm"
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
@@ -132,6 +133,9 @@ gzip ChangeLog
 %_libdir/GNUstep/Frameworks/*.framework/Headers
 
 %changelog
+* Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.svn20131221
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.svn20131221
 - New snapshot
 
