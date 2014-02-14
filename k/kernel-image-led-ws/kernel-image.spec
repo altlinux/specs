@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.29
-Release: alt9
+Version: 3.10.30
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 29
+%define kernel_stable_version 30
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1803,6 +1803,17 @@ done)
 
 
 %changelog
+* Fri Feb 14 2014 Led <led@altlinux.ru> 3.10.30-alt1
+- 3.10.30
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--cirrus
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-regulator--regulator
+  + fix-mm
+
 * Thu Feb 13 2014 Led <led@altlinux.ru> 3.10.29-alt9
 - updated:
   + fix-fs-dlm
