@@ -1,10 +1,11 @@
 %define _name Cython
+%def_disable debugger
 
 %def_with python3
 
 Name: python-module-%_name
-Version: 0.16
-Release: alt1.1
+Version: 0.20.1
+Release: alt1
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -14,6 +15,7 @@ Url: http://www.cython.org
 Source: http://www.cython.org/release/Cython-%version.tar.gz
 
 Provides: %_name = %version-%release
+Conflicts: python-module-Cython0.18
 
 BuildPreReq: rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
@@ -32,10 +34,57 @@ This makes Cython the ideal language for wrapping for external C
 libraries, and for fast C modules that speed up the execution of Python
 code.
 
+%package tests
+Summary: Cython test suit
+Group: Development/Python
+Requires: %name = %version-%release
+Conflicts: python-module-Cython0.18-tests
+
+%description tests
+Cython is a language that makes writing C extensions for the Python
+language as easy as Python itself. Cython is based on the well-known
+Pyrex, but supports more cutting edge functionality and optimizations.
+
+The Cython language is very close to the Python3 language, but Cython
+additionally supports calling C functions and declaring C types on
+variables and class attributes. This allows the compiler to generate
+very efficient C code from Cython code.
+
+This makes Cython the ideal language for wrapping for external C
+libraries, and for fast C modules that speed up the execution of Python
+code.
+
+This package provides modules for testing Cython using unittest.
+
+%package debugger
+Summary: Cython debugger
+Group: Development/Python
+Requires: %name = %version-%release
+Requires: gdb
+
+%description debugger
+Cython is a language that makes writing C extensions for the Python
+language as easy as Python itself. Cython is based on the well-known
+Pyrex, but supports more cutting edge functionality and optimizations.
+
+The Cython language is very close to the Python3 language, but Cython
+additionally supports calling C functions and declaring C types on
+variables and class attributes. This allows the compiler to generate
+very efficient C code from Cython code.
+
+This makes Cython the ideal language for wrapping for external C
+libraries, and for fast C modules that speed up the execution of Python
+code.
+
+This package provides modules for debugging Cython programms.
+
 %if_with python3
 %package -n python3-module-%_name
 Summary: C-extensions for Python3
 Group: Development/Python3
+# since 0.20.1
+%py3_provides cython
+Conflicts: python3-module-Cython0.18
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 
@@ -52,10 +101,54 @@ very efficient C code from Cython code.
 This makes Cython the ideal language for wrapping for external C
 libraries, and for fast C modules that speed up the execution of Python3
 code.
+
+%package -n python3-module-%_name-tests
+Summary: Cython test suit for Python3
+Group: Development/Python3
+Conflicts: python3-module-Cython0.18-tests
+Requires: python3-module-%_name = %version-%release
+
+%description -n python3-module-%_name-tests
+Cython is a language that makes writing C extensions for the Python3
+language as easy as Python3 itself. Cython is based on the well-known
+Pyrex, but supports more cutting edge functionality and optimizations.
+
+The Cython language is very close to the Python3 language, but Cython
+additionally supports calling C functions and declaring C types on
+variables and class attributes. This allows the compiler to generate
+very efficient C code from Cython code.
+
+This makes Cython the ideal language for wrapping for external C
+libraries, and for fast C modules that speed up the execution of Python3
+code.
+
+This package provides modules for testing Cython using unittest.
+
+%package -n python3-module-%_name-debugger
+Summary: Cython debugger for Python3
+Group: Development/Python3
+Requires: python3-module-%_name = %version-%release
+Requires: gdb
+
+%description -n python3-module-%_name-debugger
+Cython is a language that makes writing C extensions for the Python3
+language as easy as Python3 itself. Cython is based on the well-known
+Pyrex, but supports more cutting edge functionality and optimizations.
+
+The Cython language is very close to the Python3 language, but Cython
+additionally supports calling C functions and declaring C types on
+variables and class attributes. This allows the compiler to generate
+very efficient C code from Cython code.
+
+This makes Cython the ideal language for wrapping for external C
+libraries, and for fast C modules that speed up the execution of Python3
+code.
+
+This package provides modules for debugging Cython programms.
 %endif
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -88,11 +181,17 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %python_sitelibdir/cython.py*
 %doc *.txt Demos Doc Tools
 
-# don't package tests files and debugger
 %exclude %python_sitelibdir/%_name/Tests
-%exclude %python_sitelibdir/%_name/*/Tests
 %exclude %python_sitelibdir/%_name/Debugger
-%exclude %_bindir/cygdb
+
+%files tests
+%python_sitelibdir/%_name/Tests
+
+%if_enabled debugger
+%files debugger
+%python_sitelibdir/%_name/Debugger
+%_bindir/cygdb
+%endif
 
 %if_with python3
 %files -n python3-module-%_name
@@ -103,14 +202,25 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %python3_sitelibdir/__pycache__/cython.*
 %python3_sitelibdir/*egg-info
 
-# don't package tests files and debugger
 %exclude %python3_sitelibdir/%_name/Tests
-%exclude %python3_sitelibdir/%_name/*/Tests
 %exclude %python3_sitelibdir/%_name/Debugger
-%exclude %_bindir/cygdb3
+
+%files -n python3-module-%_name-tests
+%python3_sitelibdir/%_name/Tests
+
+%if_enabled debugger
+%files -n python3-module-%_name-debugger
+%python3_sitelibdir/%_name/Debugger
+%_bindir/cygdb3
+%endif
 %endif
 
 %changelog
+* Fri Feb 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.1-alt1
+- 0.20.1 (ALT #28632)
+- new *-tests subpackages
+- prepared *-debugger subpackages
+
 * Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.16-alt1.1
 - Rebuild with Python-3.3
 
