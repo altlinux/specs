@@ -2,7 +2,7 @@
 
 Name: gnustep-ObjectiveLib
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: A library for Objective-C
 License: LGPLv2
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-c++ gcc-fortran
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -63,14 +63,12 @@ This package contains development documentation for ObjectiveLib.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 rm -f RunTime.h
 ln -s %_includedir/objc2/runtime.h RunTime.h
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure \
 	--enable-static=no \
@@ -89,15 +87,15 @@ ln -s %_includedir/objc2/runtime.h RunTime.h
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/objc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
+	AUXILIARY_CPPFLAGS='-I%_includedir/objc2' \
 	STRIP_PROG=echo
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 install -d %buildroot%_docdir/GNUstep
 
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -110,6 +108,9 @@ install -d %buildroot%_docdir/GNUstep
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
+- Built with clang
+
 * Fri Jan 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
 
