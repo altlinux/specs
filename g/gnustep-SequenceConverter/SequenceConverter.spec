@@ -2,7 +2,7 @@
 
 Name: gnustep-SequenceConverter
 Version: 1.6.0
-Release: alt3
+Release: alt4
 Summary: Biological sequence file format conversion applet for GNUstep
 License: Free
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -33,14 +33,12 @@ framework is written in Cocoa (Objective-C).
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-export CC=gcc
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
  
 %install
@@ -53,6 +51,9 @@ export CC=gcc
 %_libdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt4
+- Built with clang
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3
 - Built with gcc
 
