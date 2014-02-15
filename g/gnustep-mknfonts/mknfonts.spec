@@ -2,7 +2,7 @@
 
 Name: gnustep-mknfonts
 Version: 0.5
-Release: alt2
+Release: alt3
 Summary: Create nfont packages for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel libfreetype-devel
 
 Requires: gnustep-back
@@ -23,23 +23,27 @@ Create nfont packages for GNUstep.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
-	AUXILIARY_CPPFLAGS='-O2' \
 	CONFIG_SYSTEM_LIBS='-lfreetype -lgnustep-base -lobjc2 -lm'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
 %_bindir/*
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3
+- Built with clang
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2
 - Added Requires: gnustep-back
 
