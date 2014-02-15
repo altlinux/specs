@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt4
+Release:        alt5
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -11,7 +11,7 @@ URL:            http://www.gnustep.org
 Source:         %name-%version.tar
 
 BuildRequires:  clang-devel libgnustep-objc2-devel gnustep-make-devel
-BuildRequires:  gnustep-base-devel gnustep-gui-devel gcc-objc
+BuildRequires:  gnustep-base-devel gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
@@ -32,7 +32,6 @@ This package contains sample applications for the GNUstep framework.
 	strip=no \
 	shared=yes \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
 
 %install
@@ -49,6 +48,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt5
+- Built with clang
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4
 - Built with gcc
 
