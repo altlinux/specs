@@ -2,7 +2,7 @@
 
 Name: gnustep-webservices
 Version: 0.5.10
-Release: alt2.git20131212
+Release: alt3.git20131212
 Summary: WebServices framework for GNUstep
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-webservices.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
 BuildPreReq: gnustep-performance-devel
 
@@ -60,17 +60,21 @@ framework for GNUstep.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
@@ -87,6 +91,9 @@ cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.10-alt3.git20131212
+- Built with clang
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.10-alt2.git20131212
 - New snapshot
 
