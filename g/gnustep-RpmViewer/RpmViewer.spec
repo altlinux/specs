@@ -2,7 +2,7 @@
 
 Name: gnustep-RpmViewer
 Version: 2001
-Release: alt3
+Release: alt4
 Summary: Contents Inspector to see the contents of rpm packages
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -26,23 +26,27 @@ RpmViewer is a contents Inspector to see the contents of rpm packages.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_SYSTEM_ROOT=%buildroot
 
 %files
 %_libdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2001-alt4
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2001-alt3
 - Added Requires: gnustep-back
 
