@@ -2,7 +2,7 @@
 
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt7.svn20100910
+Release: alt8.svn20100910
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel /proc
 
 Requires: gnustep-back
@@ -53,15 +53,18 @@ This package contains development files of gnustep-ucsdata.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -d %buildroot%_libdir/GNUstep/Unicode
@@ -79,6 +82,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Unicode/
 %_libdir/*.so
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt8.svn20100910
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt7.svn20100910
 - Added Requires: gnustep-back
 
