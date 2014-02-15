@@ -1,6 +1,6 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt5.svn20130529
+Release: alt6.svn20130529
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/renaissance/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: texlive-latex-base
 
@@ -67,23 +67,25 @@ This package contains documentation for Renaissance.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
 
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	messages=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %makeinstall_std -C Documentation \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 gzip ChangeLog
 
@@ -103,6 +105,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt6.svn20130529
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt5.svn20130529
 - Added Requires: gnustep-back
 
