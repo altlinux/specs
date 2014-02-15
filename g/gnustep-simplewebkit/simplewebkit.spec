@@ -2,7 +2,7 @@
 
 Name: gnustep-simplewebkit
 Version: 0.1.0
-Release: alt1.svn20131216
+Release: alt2.svn20131216
 Summary: Framework which is meant to be a simple, drop-in replacement for WebKit
 License: LGPLv2+
 Group: Networking/WWW
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/simplewebkit/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
 
 Requires: lib%name = %version-%release
@@ -49,15 +49,18 @@ This package contains development files of SimpleWebKit.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
@@ -92,6 +95,9 @@ popd
 %_libdir/GNUstep/Frameworks/SimpleWebKit.framework/Versions/0.1/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.svn20131216
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.svn20131216
 - Added Requires: gnustep-back
 
