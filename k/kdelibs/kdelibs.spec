@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt3
+%define rel alt4
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -174,6 +174,7 @@ Patch5046: tde-3.5.13-SpellDialogSavePersonal.patch
 Patch5047: tdelibs-3.5.13-CUPS_IPP-memoryleak.patch
 Patch5048: tdelibs-3.5.13-use-new-QT-hiden-items-icon-seach.patch
 Patch5049: tdelibs-3.5.13-KJobViewer-crash.patch
+Patch5050: tdelibs-3.5.13-krandrTransl.patch
 # security patches
 # end security patches
 
@@ -318,6 +319,7 @@ subst "s|kde@MAJOR@rc|kde%{major}rc|" kdecore/kconfigbackend.cpp
 %patch5047
 %patch5048 -p1
 %patch5049 -p1
+%patch5050 -p1
 
 # security
 # end security
@@ -658,6 +660,10 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Thu Jan 30 2014 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt4
+- KRandr translation using fix.
+- Save KeepWindowPermanent state of KJobViewer to config and set default to checked.
+
 * Sun Dec 08 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt3
 - KJobViewer crash from system tray on exit is fixed.
 - Icons search crash fix.
