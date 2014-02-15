@@ -2,7 +2,7 @@
 
 Name: gnustep-MusicKit
 Version: 5.6.2
-Release: alt2.git20110723
+Release: alt3.git20110723
 Summary: Software system for building music, sound, signal processing, and MIDI applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://musickit.svn.sourceforge.net/svnroot/musickit/trunk/
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildRequires: rpm-macros-make
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
@@ -121,10 +122,6 @@ This package contains the documentation for %name.
 %prep
 %setup -n MusicKit-%version
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 cp -fR MusicKit/Examples _ex
 
 %install
@@ -141,13 +138,18 @@ autoIt
 %configure
 popd
 
+export CC=gcc
+
 pushd MusicKit/Frameworks/PlatformDependent/MKPerformSndMIDI_portaudio
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
+	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP' \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
@@ -160,7 +162,11 @@ pushd MusicKit/Frameworks/SndKit
 	strip=no \
 	shared=yes \
 	CONFIG_SYSTEM_LIBS='-lMKPerformSndMIDI' \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir'
+	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP  -DHAVE_CONFIG_H -I%buildroot%_includedir' \
+	BUILDLIBROOT=%buildroot%_libdir \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	BUILDLIBROOT=%buildroot%_libdir
@@ -173,7 +179,10 @@ pushd MusicKit/Frameworks/MKDSP_Native
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir'
+	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	BUILDLIBROOT=%buildroot%_libdir
@@ -186,9 +195,12 @@ pushd MusicKit/Frameworks/MusicKit
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir' \
+	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
 	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
-	BUILDLIBROOT=%buildroot%_libdir
+	BUILDLIBROOT=%buildroot%_libdir \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	BUILDLIBROOT=%buildroot%_libdir
@@ -201,9 +213,12 @@ pushd MusicKit
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%buildroot%_includedir' \
+	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
 	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
-	BUILDLIBROOT=%buildroot%_libdir
+	BUILDLIBROOT=%buildroot%_libdir \
+	OBJCFLAGS="%optflags -DGNUSTEP" \
+	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
+	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	BUILDLIBROOT=%buildroot%_libdir
@@ -213,12 +228,10 @@ popd
 pushd MusicKit/Documentation
 touch /tmp/MusicKit_ChangeLog.txt
 %make_build \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	messages=yes
 
 %makeinstall_std \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	DSTROOT=%buildroot
 popd
 
@@ -236,6 +249,8 @@ for j in MKPerformSndMIDI SndKit MKDSP MusicKit; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %_bindir/EnvelopeEd
 %_bindir/Midi*
@@ -247,6 +262,7 @@ popd
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/5/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -273,6 +289,9 @@ popd
 %doc _ex/*
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt3.git20110723
+- Added menu file (thnx kostyalamer@)
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt2.git20110723
 - Added Requires: gnustep-back
 
