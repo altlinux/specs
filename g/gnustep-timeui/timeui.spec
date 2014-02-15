@@ -2,7 +2,7 @@
 
 Name: gnustep-timeui
 Version: r715
-Release: alt1.svn20090220
+Release: alt2.svn20090220
 Summary: Make a bigger time and calendar ui framework
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.savannah.nongnu.org/svn/gap/trunk/libs/timeui/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -57,6 +57,8 @@ This package contains development files of TimeUI.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure
 
@@ -65,13 +67,12 @@ This package contains development files of TimeUI.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2 -lm'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for j in TimeUI; do
@@ -103,6 +104,9 @@ popd
 %_libdir/GNUstep/Frameworks/TimeUI.framework/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt2.svn20090220
+- Built with clang
+
 * Thu Feb 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt1.svn20090220
 - Initial build for Sisyphus
 
