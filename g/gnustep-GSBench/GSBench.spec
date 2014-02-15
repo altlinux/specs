@@ -2,7 +2,7 @@
 
 Name: gnustep-GSBench
 Version: 0.5.2
-Release: alt4
+Release: alt5
 Summary: Benchmarking tool for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-gui-devel gcc-objc
+BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-projectcenter-devel
@@ -30,7 +30,6 @@ A benchmarking tool for GNUstep, originated from NXBench.
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-export CC=gcc
 %make_build \
 	messages=yes \
 	debug=yes \
@@ -38,7 +37,6 @@ export CC=gcc
 	shared=yes \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
  
 %install
@@ -57,6 +55,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt5
+- Built with clang
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt4
 - Built with gcc
 
