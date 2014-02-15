@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.0
+Version: %major.2
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -340,6 +340,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Sat Feb 15 2014 Alexei Takaseev <taf@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Wed Jul 17 2013 Alexei Takaseev <taf@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
