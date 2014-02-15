@@ -1,16 +1,16 @@
 Name: gnustep-performance
 Version: 0.4.0
-Release: alt1.svn20131105
+Release: alt2.svn20131105
 Summary: The GNUstep Performance library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-performance.git
+# http://svn.gna.org/svn/gnustep/libs/performance/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel /proc
 
 %description
@@ -49,18 +49,19 @@ Performance library.
 %prep
 %setup
 
-sed -i 's|objc/|objc2|g' $(find ./ -type f)
-
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
@@ -75,6 +76,9 @@ sed -i 's|objc/|objc2|g' $(find ./ -type f)
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.svn20131105
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.svn20131105
 - New snapshot
 
