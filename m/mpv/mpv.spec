@@ -1,6 +1,6 @@
 Name: mpv
 Version: 0.3.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -14,7 +14,7 @@ Patch0: %name-alt-matriska-big-rat.patch
 Packager: %packager
 
 # Automatically added by buildreq on Fri Feb 14 2014
-BuildRequires: libGL-devel libXext-devel libalsa-devel libavformat-devel libavresample-devel libjpeg-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel
+BuildRequires: libGL-devel libXext-devel libalsa-devel libass-devel libavformat-devel libavresample-devel libjpeg-devel libquvi0.9-devel libswscale-devel patool perl-Encode perl-Math-BigRat python-module-docutils time zlib-devel
 
 %description
 mpv is a movie player based on MPlayer and mplayer2.
@@ -31,7 +31,7 @@ MPlayer и mplayer2. Он поддерживает большое количес
 %patch0 -p1
 
 ls
-./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot --disable-libass
+./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot
 
 %build
 
@@ -61,6 +61,9 @@ install -pm644 RELEASE_NOTES %buildroot%docdir/
 %_desktopdir/*
 
 %changelog
+* Fri Feb 14 2014 Andrey Bergman <vkni@altlinux.org> 0.3.5-alt1.2
+- Enabled support for libass and libquvi.
+
 * Fri Feb 14 2014 Andrey Bergman <vkni@altlinux.org> 0.3.5-alt1.1
 - Removed intersections with system packages.
 
