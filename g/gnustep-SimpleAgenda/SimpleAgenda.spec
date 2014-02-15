@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt6
+Release: alt7
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-dbuskit-devel libical-devel libuuid-devel
 BuildPreReq: gnustep-AddressManager-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
@@ -33,7 +33,8 @@ data if it's really important !
 %setup
 
 %build
-export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %autoreconf
 %configure
 
@@ -42,11 +43,12 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/libical'
+	AUXILIARY_CPPFLAGS='-I%_includedir/libical'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
@@ -57,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt7
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt6
 - Added Requires: gnustep-back
 
