@@ -2,7 +2,7 @@
 
 Name: gnustep-thematic
 Version: 0.2
-Release: alt1.svn20140112
+Release: alt2.svn20140112
 Summary: Theme editor for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/apps/thematic/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -28,17 +28,18 @@ Thematic.app is a theme editor for GNUstep.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	shared=yes
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
 %doc ChangeLog README
@@ -46,6 +47,9 @@ Thematic.app is a theme editor for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.svn20140112
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.svn20140112
 - New snapshot
 
