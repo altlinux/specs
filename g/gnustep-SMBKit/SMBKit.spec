@@ -2,16 +2,17 @@
 
 Name: gnustep-SMBKit
 Version: 20140126
-Release: alt1.cvs20140126
+Release: alt2.cvs20140126
 Summary: GNUstep SMBKit
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://savannah.gnu.org/projects/gnustep/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gnustep co gnustep/dev-libs/SMBKit
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -40,18 +41,20 @@ Development files of GNUstep SMBKit.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -I%_includedir/samba-4.0' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS='-I%_includedir/samba-4.0' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_SYSTEM_ROOT=%buildroot%_libdir/GNUstep
 
 %files -n lib%name
@@ -62,6 +65,9 @@ Development files of GNUstep SMBKit.
 %_libdir/*.so
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140126-alt2.cvs20140126
+- Built with clang
+
 * Sun Jan 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140126-alt1.cvs20140126
 - Initial build for Sisyphus
 
