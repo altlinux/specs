@@ -2,7 +2,7 @@
 
 Name: gnustep-opal
 Version: r37181
-Release: alt2.svn20131001
+Release: alt3.svn20131001
 Summary: Vector drawing library with an API similar to Quartz 2D
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/opal/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-corebase-devel libcairo-devel
 BuildPreReq: liblcms-devel libjpeg-devel libtiff-devel
 
@@ -62,15 +62,18 @@ This package contains development files of Opal.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lX11 -lgnustep-base -lobjc2 -lm'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
@@ -85,6 +88,9 @@ This package contains development files of Opal.
 %_libdir/*.so
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r37181-alt3.svn20131001
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r37181-alt2.svn20131001
 - Added Requires: gnustep-back
 
