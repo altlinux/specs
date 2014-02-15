@@ -2,7 +2,7 @@
 
 Name: libdispatch-objc2
 Version: 1.2
-Release: alt1.svn20140108
+Release: alt2.svn20140108
 Summary: Linux port of Apple's open-source concurrency library
 License: Apache License v2
 Group: System/Libraries
@@ -42,10 +42,6 @@ This package contains development files for libdispatch-objc2.
 %prep
 %setup
 
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 %build
 %add_optflags -I%_includedir/kqueue
 cd libdispatch
@@ -78,6 +74,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_man3dir/*
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.svn20140108
+- Use %_includedir/objc
+
 * Wed Feb 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.svn20140108
 - Initial build for Sisyphus
 
