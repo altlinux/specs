@@ -2,18 +2,18 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt4.svn20140117
+Release: alt5.svn20140117
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/gnustep/gnustep-projectcenter.git
+# http://svn.gna.org/svn/gnustep/apps/projectcenter/trunk/
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -55,29 +55,17 @@ This package contains development files of GNUstep Project Center.
 %setup
 
 %build
-%make_build \
-	messages=yes \
-	debug=yes \
-	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP'
-
-for i in Aggregate Application Bundle Framework Library ResourceSet \
-	Tool ProjectCenter Build Misc
-do
-	rm -f $(find ./ -name $i -type f)
-done
-libProjectCenter=$PWD/Framework/ProjectCenter.framework/libProjectCenter.so
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS="$libProjectCenter"
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_SYSTEM_ROOT=%buildroot
@@ -116,6 +104,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt5.svn20140117
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt4.svn20140117
 - New snapshot
 
