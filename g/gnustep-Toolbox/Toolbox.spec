@@ -2,7 +2,7 @@
 
 Name: gnustep-Toolbox
 Version: 0.8
-Release: alt2
+Release: alt3
 Summary: Collection of tools for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -71,19 +71,22 @@ This package contains development files of Toolbox.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
+	OBJCFLAGS='%optflags -DGNUSTEP' \
+	USE_NONFRAGILE_ABI=no \
 	TOPDIR=$PWD
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 pushd %buildroot%_libdir
@@ -120,6 +123,9 @@ ln -s %_libdir/GNUstep/Headers/Toolbox %buildroot%_includedir/
 %_libdir/GNUstep/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt3
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt2
 - Added Requires: gnustep-back
 
