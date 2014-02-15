@@ -1,13 +1,13 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt4
+Release: alt5
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
 Url: http://wiki.gnustep.org/index.php/PDFKit
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: gcc-c++ libfreetype-devel gcc-objc gnustep-make-devel
+BuildPreReq: gcc-c++ libfreetype-devel clang-devel gnustep-make-devel
 BuildPreReq: gnustep-base-devel libgnustep-objc2-devel gnustep-gui-devel
 
 Source: %name-%version.tar
@@ -44,7 +44,11 @@ This package contains development files of PDFKit.
 
 %build
 export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %add_optflags %optflags_shared
+export CC=clang
+export CXX=clang++
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -57,13 +61,13 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	debug=yes \
 	strip=no \
 	shared=yes \
-	 AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std \
-	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for i in *.so*; do
@@ -114,6 +118,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt5
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt4
 - Added Requires: gnustep-back
 
