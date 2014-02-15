@@ -2,7 +2,7 @@
 
 Name: gnustep-sqlclient
 Version: 1.7.0
-Release: alt2.svn20130910
+Release: alt3.svn20130910
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-java
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
 BuildPreReq: java-devel-default postgresql9.1-devel libsqlite3-devel
 BuildPreReq: libMySQL-devel
@@ -75,6 +75,8 @@ This package contains documentation for SQLClient.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 export LD_LIBRARY_PATH=$(dirname $(find %_jvmdir -name libjvm.so) \
 	|egrep server)
 %autoreconf
@@ -97,7 +99,6 @@ buildIt() {
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 		CONFIG_SYSTEM_LIBS="$1 -lPerformance -lgnustep-base -lobjc2"
 }
 
@@ -109,6 +110,8 @@ done
 buildIt $libSQLClient
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std messages=yes GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
@@ -126,6 +129,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3.svn20130910
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt2.svn20130910
 - Added Requires: gnustep-back
 
