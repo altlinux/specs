@@ -10,8 +10,8 @@
 # note: at sync with fedora rel.28
 
 Name: jdkgcj
-Version: 0.5.9
-Release: alt3
+Version: 0.5.10
+Release: alt1
 
 Summary: A free Java SDK
 License: GPL
@@ -47,8 +47,8 @@ Url: http://www.arklinux.org/projects/jdkgcj
 
 
 # a must for java-1.5.0-gcj-devel
-Requires: libgcj%__gcc_version_base-jar	= %__gcc_version
-Requires: libgcj%__gcc_version_base-plugins	= %__gcc_version
+Requires: libgcj%__gcc_version_base-jar
+Requires: libgcj%__gcc_version_base-plugins
 BuildRequires(pre): alternatives >= 0:0.4
 BuildRequires(pre): rpm-build-java
 
@@ -92,7 +92,7 @@ Summary: JPackage runtime compatibility layer for GCJ
 # due to GC Warning: Couldn't read /proc/stat and errors
 Requires: /proc
 Requires(pre): /proc
-PreReq: gcc%__gcc_version_base-java = %__gcc_version
+PreReq: gcc%__gcc_version_base-java
 Requires: gcc-java-common >= 1.4.12-alt1
 Requires: java-common >= 1.1
 
@@ -138,10 +138,9 @@ rln()
 {
 	local target=$1 && shift
 	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
+	ln -rsnf "%buildroot$target" "%buildroot$source" "$@"
 }
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # install operating system include directory
 install -dm 755 $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/include/linux
@@ -356,6 +355,9 @@ subst s,%_bindir/gcj-dbtool,%_bindir/%_target_platform-gcj-dbtool-%__gcc_version
 %_jvmjardir/jre-%{javaver}-%{origin}
 
 %changelog
+* Fri Feb 14 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.10-alt1
+- Rebuilt with gcc-4.8.
+
 * Fri Sep 28 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.9-alt3
 - rebuilt with gcc-4.7
 
