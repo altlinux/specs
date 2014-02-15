@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt6.svn20130916
+Release: alt7.svn20130916
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 
 Requires: lib%name = %version-%release
@@ -51,15 +51,18 @@ This package contains development files of %name.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
@@ -101,6 +104,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt7.svn20130916
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt6.svn20130916
 - Added Requires: gnustep-back
 
