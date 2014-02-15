@@ -2,7 +2,7 @@
 
 Name: gnustep-webserver
 Version: 1.5.0
-Release: alt2.git20131014
+Release: alt3.git20131014
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-webserver.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
 
 %description
@@ -51,15 +51,18 @@ library.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files -n lib%name
@@ -74,6 +77,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20131014
+- Built with clang
+
 * Mon Jan 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20131014
 - New snapshot
 
