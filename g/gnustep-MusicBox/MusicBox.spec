@@ -2,7 +2,7 @@
 
 Name: gnustep-MusicBox
 Version: 20030331
-Release: alt1.cvs20140130
+Release: alt2.cvs20140130
 Summary: MusicBox is a music manager based on GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,8 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/musicbox co musicbox
 Source: %name-%version.tar
+Source1: %name.menu
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -62,18 +63,20 @@ This package contains development files of MusicBox.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS="-O2 -DGNUSTEP -I$PWD/Mixer" \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
+	AUXILIARY_CPPFLAGS="-I$PWD/Mixer" \
 	MUSICBOX_LIBRARY=$PWD/MusicBox/MusicBox/obj
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
 pushd %buildroot%_libdir
@@ -95,11 +98,14 @@ ln -s %_libdir/GNUstep/Applications/MusicBox.app/MusicBox \
 install -d %buildroot%_includedir
 ln -s %_libdir/GNUstep/Headers/MusicBox %buildroot%_includedir/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog FAQ README TODO USAGE
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -110,6 +116,10 @@ ln -s %_libdir/GNUstep/Headers/MusicBox %buildroot%_includedir/
 %_libdir/GNUstep/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20030331-alt2.cvs20140130
+- Built with clang
+- Added menu file (thnx kostyalamer@)
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20030331-alt1.cvs20140130
 - Initial build for Sisyphus
 
