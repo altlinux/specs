@@ -2,7 +2,7 @@
 
 Name: gnustep-pbxbuild
 Version: 0.1
-Release: alt2.git20120619
+Release: alt3.git20120619
 Summary: This tool converts XCode(tm) projects into GNUmakefiles and builds them
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/gnustep/gnustep-pbxbuild.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -27,14 +27,17 @@ Currently OSX Version 3.9 and 4.2 project files are supported.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	shared=yes
  
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 %files
@@ -42,6 +45,9 @@ Currently OSX Version 3.9 and 4.2 project files are supported.
 %_bindir/*
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20120619
+- Built with clang
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20120619
 - Fixed build
 
