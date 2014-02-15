@@ -2,7 +2,7 @@
 
 Name: gnustep-PopplerKit
 Version: 0.0.20051227svn
-Release: alt2
+Release: alt3
 Summary: GNUstep framework for rendering PDF content
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gcc-c++
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
@@ -63,17 +63,19 @@ for i in $(find ./ -name '*.cc'); do
 done
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP -DPOPPLER_0_20 -DPOPPLER_0_5 -I%_includedir/poppler' \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS='-DPOPPLER_0_20 -DPOPPLER_0_5 -I%_includedir/poppler'
  
 %install
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for j in PopplerKit; do
@@ -105,6 +107,9 @@ popd
 %_libdir/GNUstep/Frameworks/PopplerKit.framework/Headers
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20051227svn-alt3
+- Built with clang
+
 * Thu Jan 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20051227svn-alt2
 - Added Requires: gnustep-back
 
