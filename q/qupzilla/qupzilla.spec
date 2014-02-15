@@ -8,8 +8,8 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.6.1
-Release: alt2
+Version: 1.6.3
+Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -66,6 +66,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Sat Feb 15 2014 Michael Shigorin <mike@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Mon Jan 27 2014 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2
 - BR: gdb (https://github.com/QupZilla/qupzilla/issues/1180)
 - disabled KDE integration, I prefer qupzilla package
