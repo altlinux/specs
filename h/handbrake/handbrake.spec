@@ -1,8 +1,8 @@
-%define svn svn6011
+%define svn svn6031
 
 Name: handbrake
-Version: 0.9.9
-Release: alt2.%svn
+Version: 0.9.9.1
+Release: alt1.%svn.1
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 # #Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
@@ -25,21 +25,20 @@ Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
 Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
 Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
 Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2377-1ca7bb9.tar.gz
+Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2389-956c8d8.tar.gz
 Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
 Patch200: handbrake-svn5891-fdk_aac-autoreconf.patch
+Patch300: handbrake-svn6013-libnotify-gtk3.patch
 
 Url: http://handbrake.fr/
 Group: Video
 License: GPLv2+
 
-# Automatically added by buildreq on Sun Nov 04 2012 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel gtk-update-icon-cache libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libgtk+2-devel libncurses-devel libogg-devel libpango-devel libsoup-devel libstdc++-devel libtinfo-devel libxml2-devel perl-XML-Parser pkg-config python-base python-modules python-modules-compiler python-modules-encodings shared-mime-info xorg-xproto-devel
-BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk2-devel subversion wget zlib-devel
+BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk3-devel subversion wget zlib-devel
 
 %description
 HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video
@@ -70,6 +69,7 @@ This package contains a GTK+ graphical user interface for Handbrake.
 # #%setup -n HandBrake-%version
 %setup -n %name-svn
 %patch200 -p1
+# #%patch300 -p1
 
 # Copy 3rd party dependencies into expected locations:
 %__mkdir download
@@ -116,8 +116,17 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
-* Sun Feb 02 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt2.svn6011
-- fix rules
+* Sat Feb 15 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6031.1
+- fix build
+
+* Sat Feb 15 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6031
+- build svn6031
+
+* Wed Feb 12 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6028
+- build svn6028
+
+* Tue Feb 04 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6013
+- build svn6013 (now GTK3 only)
 
 * Sun Feb 02 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn6011
 - build svn6011
