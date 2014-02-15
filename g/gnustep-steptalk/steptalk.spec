@@ -2,7 +2,7 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt3.svn20140106
+Release: alt4.svn20140106
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.gna.org/svn/gnustep/libs/steptalk/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
 BuildPreReq: libreadline-devel libncurses-devel
 
@@ -78,13 +78,14 @@ communicating with objects.
 %setup
 
 %build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 buildIt() {
 	%make_build \
 		messages=yes \
 		debug=yes \
 		strip=no \
 		shared=yes \
-		AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
 		CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm $1"
 }
 
@@ -101,15 +102,15 @@ TOPDIR=$PWD
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS="-O2 -DGNUSTEP -I$TOPDIR/Frameworks" \
-	CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm" \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+	AUXILIARY_CPPFLAGS="-I$TOPDIR/Frameworks" \
+	CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm"
 
 %install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-%makeinstall_std -C Examples/Shell GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%makeinstall_std -C Examples/Shell GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
 for i in *.so*; do
@@ -148,6 +149,9 @@ popd
 %_bindir/stshell
 
 %changelog
+* Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt4.svn20140106
+- Built with clang
+
 * Tue Feb 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt3.svn20140106
 - Added stshell
 
