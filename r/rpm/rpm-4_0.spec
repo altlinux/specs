@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.75
+Release: alt100.76
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,10 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Sun Feb 16 2014 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.76
+- cpp.req: adapted parser to handle cpp 4.8 output.
+- rpmdb: fixed miscompilation by gcc 4.8.
+
 * Tue Oct 29 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.75
 - platform.in: added %%add_debuginfo_skiplist and related macros.
 - debugedit: enhanced error diagnostics.
