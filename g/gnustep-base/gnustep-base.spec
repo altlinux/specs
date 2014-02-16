@@ -2,13 +2,13 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt2.svn20140126
+Release: alt3.svn20140126
 Epoch: 1
 
 Summary: GNUstep Base library package
 
 License: LGPL
-Group: Development/Other
+Group: Development/Objective-C
 Url: http://www.gnustep.org/
 
 # http://svn.gna.org/svn/gnustep/libs/base/trunk/
@@ -23,7 +23,7 @@ BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
 BuildPreReq: libicu-devel libcommoncpp2-devel /proc
-BuildPreReq: texinfo texi2html texlive-latex-base
+BuildPreReq: texinfo texi2html texlive-latex-base gnustep-back
 
 %description
 The GNUstep Base Library is a powerful fast library of general-purpose,
@@ -46,12 +46,20 @@ Shared libraries of %name.
 
 %package devel
 Summary: Header files and static libraries from %name
-Group: Development/Other
+Group: Development/Objective-C
 Requires: %name = %epoch:%version-%release
 Requires: lib%name = %epoch:%version-%release
 
 %description devel
 Libraries and includes files for developing programs based on %name.
+
+%package devel-doc
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+Development documentation for %name.
 
 %prep
 %setup
@@ -63,29 +71,23 @@ Libraries and includes files for developing programs based on %name.
 %undefine __libtoolize
 
 %{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
-#export CPPFLAGS="%optflags"
-#export CC=gcc
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
 	--enable-pass-arguments \
 	--with-openssl-include=%_includedir/openssl \
-	--with-openssl-library=/%_lib/
+	--with-openssl-library=/%_lib/ \
+	CC=clang CXX=clang++
 
 %make \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lobjc2 -lffi -licui18n -lxslt -lxml2 -lgnutls -lz'
+	shared=yes
 
-# very long now
-%if 0
 export LD_LIBRARY_PATH=$PWD/Source/obj
 %make_build -C Documentation \
-	messages=yes \
-	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
-%endif
+	messages=yes
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -95,11 +97,8 @@ export LD_LIBRARY_PATH=$PWD/Source/obj
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	DESTDIR=%buildroot
 
-%if 0
 %makeinstall_std -C Documentation \
-     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-     GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
-%endif
+     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 install -d %buildroot%_initdir
 sed -e "s!@TOOLSARCHDIR@!%prefix/System/Tools!" %SOURCE1 > %buildroot%_initdir/gdomap
@@ -144,8 +143,15 @@ rm -f /etc/services.orig
 %_includedir/Foundation
 %_includedir/GNUstepBase
 %_includedir/gnustep
+
+%files devel-doc
+%_docdir/GNUstep
+%_infodir/*
  
 %changelog
+* Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt3.svn20140126
+- Added documentation
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt2.svn20140126
 - Built with clang
 
