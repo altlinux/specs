@@ -1,5 +1,5 @@
 Name:		opencpn
-Version:	3.2.0
+Version:	3.2.2
 Release:	alt1
 Summary:	A free and open source software for marine navigation
 
@@ -7,9 +7,12 @@ Group:		Other
 License:	%gpl2only
 URL:		http://opencpn.org
 Source0:	OpenCPN-%{version}-Source.tar.gz
+Source1:	%name.desktop
+
+Requires: %name-data
 
 #Errara
-Patch100: OpenCPN-strncpy-buffer-overflow.patch
+#Patch100:
 
 BuildRequires: rpm-build-licenses
 
@@ -23,10 +26,18 @@ and navigation software, for use underway or as a planning tool. OpenCPN is
 developed by a team of active sailors using real world conditions for program
 testing and refinement.
 
+%package data
+Summary: Architecture independent files for OpenCPN.
+Group: Other
+BuildArch: noarch
+
+%description data
+Architecture independent files for OpenCPN.
+
 %prep
 %setup -q -n OpenCPN-%{version}-Source
 
-%patch100 -p1
+#patch100 -p1
 
 %build
 %cmake
@@ -36,7 +47,9 @@ make
 %install
 cd BUILD
 make install DESTDIR=%{buildroot}
+cp -f %{SOURCE1} %{buildroot}%{_datadir}/applications
 
+# It is copied from %%_builddir by %%doc macro, so removed from %%buildroot
 rm -rf %{buildroot}/%{_datadir}/doc
 rm -rf %{buildroot}/%{_datadir}/%{name}/doc
 rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
@@ -45,11 +58,16 @@ rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
 %find_lang --append --output=%{name}.lang %{name}-dashboard_pi
 %find_lang --append --output=%{name}.lang %{name}-grib_pi
 
-%files -f BUILD/%{name}.lang
+%files
+%dir %{_libdir}/%{name}
+
+%{_bindir}/opencpn
+%{_libdir}/opencpn/*_pi.so
+
+%files data -f BUILD/%{name}.lang
 %doc data/doc/*
 %doc data/license.txt
 
-%dir %{_libdir}/%{name}
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/sounds
 %dir %{_datadir}/%{name}/gshhs
@@ -57,8 +75,6 @@ rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
 %dir %{_datadir}/%{name}/s57data
 %dir %{_datadir}/%{name}/uidata
 
-%{_bindir}/opencpn
-%{_libdir}/opencpn/*_pi.so
 %{_datadir}/%{name}/sounds/*
 %{_datadir}/%{name}/gshhs/*
 %{_datadir}/%{name}/tcdata/*
@@ -70,6 +86,10 @@ rm -f  %{buildroot}/%{_datadir}/%{name}/license.txt
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Sun Feb 16 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.2.2-alt1
+- New version
+- Moved architecture-independent data to noarch subpackage %name-data
+
 * Wed Apr 03 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.0-alt1
 - Initial build for ALT Linux
 
