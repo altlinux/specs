@@ -2,7 +2,7 @@
 
 Name: gnustep-SlideShow
 Version: 0.3
-Release: alt3
+Release: alt4
 Summary: A slideshow viewer
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://wiki.gnustep.org/index.php/SlideShow.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -39,12 +40,18 @@ A slideshow viewer.
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
 - Built with clang
 
