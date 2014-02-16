@@ -2,7 +2,7 @@
 
 Name: gnustep-MusicKit
 Version: 5.6.2
-Release: alt3.git20110723
+Release: alt4.git20110723
 Summary: Software system for building music, sound, signal processing, and MIDI applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Source1: %name.menu
 
 BuildRequires: rpm-macros-make
-BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
+BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-performance-devel /proc
 BuildPreReq: gnustep-gui-devel libalsa-devel
 BuildPreReq: doxygen graphviz ltxml openjade
@@ -138,17 +138,13 @@ autoIt
 %configure
 popd
 
-export CC=gcc
-
 pushd MusicKit/Frameworks/PlatformDependent/MKPerformSndMIDI_portaudio
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP' \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -162,11 +158,8 @@ pushd MusicKit/Frameworks/SndKit
 	strip=no \
 	shared=yes \
 	CONFIG_SYSTEM_LIBS='-lMKPerformSndMIDI' \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP  -DHAVE_CONFIG_H -I%buildroot%_includedir' \
-	BUILDLIBROOT=%buildroot%_libdir \
-	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
-	USE_NONFRAGILE_ABI=no
+	AUXILIARY_CPPFLAGS='-DHAVE_CONFIG_H -I%buildroot%_includedir' \
+	BUILDLIBROOT=%buildroot%_libdir
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	BUILDLIBROOT=%buildroot%_libdir
@@ -179,9 +172,8 @@ pushd MusicKit/Frameworks/MKDSP_Native
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
+	AUXILIARY_CPPFLAGS='-I%buildroot%_includedir' \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -190,16 +182,15 @@ pushd MusicKit/Frameworks/MKDSP_Native
 popd
 
 pushd MusicKit/Frameworks/MusicKit
-%make_build \
+%make \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
+	AUXILIARY_CPPFLAGS='-I%buildroot%_includedir' \
 	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
 	BUILDLIBROOT=%buildroot%_libdir \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -213,11 +204,10 @@ pushd MusicKit
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP -I%buildroot%_includedir' \
+	AUXILIARY_CPPFLAGS='-I%buildroot%_includedir' \
 	CONFIG_SYSTEM_LIBS='-lMKDSP -lSndKit -lMKPerformSndMIDI' \
 	BUILDLIBROOT=%buildroot%_libdir \
 	OBJCFLAGS="%optflags -DGNUSTEP" \
-	INTERNAL_OBJCFLAGS="-fobjc-exceptions -DUSER_NATIVE_OBJC_EXCEPTIONS %optflags_shared" \
 	USE_NONFRAGILE_ABI=no
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
@@ -289,6 +279,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc _ex/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt4.git20110723
+- Built with clang
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt3.git20110723
 - Added menu file (thnx kostyalamer@)
 
