@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt3.svn20140126
+Release: alt4.svn20140126
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -23,7 +23,7 @@ BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
 BuildPreReq: libicu-devel libcommoncpp2-devel /proc
-BuildPreReq: texinfo texi2html texlive-latex-base gnustep-back
+BuildPreReq: texinfo texi2html texlive-latex-base gnustep-make-doc
 
 %description
 The GNUstep Base Library is a powerful fast library of general-purpose,
@@ -53,12 +53,13 @@ Requires: lib%name = %epoch:%version-%release
 %description devel
 Libraries and includes files for developing programs based on %name.
 
-%package devel-doc
+%package doc
 Summary: Documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
+Requires: gnustep-make-doc
 
-%description devel-doc
+%description doc
 Development documentation for %name.
 
 %prep
@@ -144,11 +145,14 @@ rm -f /etc/services.orig
 %_includedir/GNUstepBase
 %_includedir/gnustep
 
-%files devel-doc
+%files doc
 %_docdir/GNUstep
 %_infodir/*
  
 %changelog
+* Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt4.svn20140126
+- BuildPreReq: gnustep-make-doc
+
 * Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt3.svn20140126
 - Added documentation
 
