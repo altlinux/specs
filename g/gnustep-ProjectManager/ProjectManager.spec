@@ -2,7 +2,7 @@
 
 Name: gnustep-ProjectManager
 Version: 0.2
-Release: alt3
+Release: alt4
 Summary: Alternative Integrated Development Environment (IDE) for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://home.gna.org/pmanager/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel doxygen
@@ -57,15 +58,21 @@ doxygen
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc BUGS README TRICKS
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files docs
 %doc Documentation/html/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3
 - Built with clang
 
