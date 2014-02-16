@@ -1,14 +1,16 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt13.svn20140116
+Release: alt14.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
-Group: Development/Other
+Group: Development/Objective-C
 Summary: GNUstep Makefile package
 Url: http://www.gnustep.org/
 
 BuildRequires: clang-devel libgnustep-objc2-devel star
+BuildPreReq: texlive-latex-base texi2html
+
 Requires: gnustep-dirs
 
 %description
@@ -19,7 +21,7 @@ GNUstep filesystem layout.
 
 %package devel
 Summary: Files needed to develop applications with gnustep-make
-Group: Development/Other
+Group: Development/Objective-C
 BuildArch: noarch
 Requires: %name = %version-%release
 
@@ -31,6 +33,13 @@ issues associated with the configuration and installation of the core
 GNUstep libraries. It also allows the user to easily create
 cross-compiled binaries.
 
+%package doc
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+This package contains development documentation for %name.
 
 %prep
 %setup -n %name-%version-%release
@@ -43,7 +52,7 @@ sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 %build
 export CC=clang CXX=clang++ CPP='clang -E'
 OBJCFLAGS="%optflags -fobjc-runtime=gnustep-1.7 -fobjc-nonfragile-abi"
-export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
+export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME -mtune=%_arch"
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -54,45 +63,52 @@ export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 	--enable-native-objc-exceptions \
 	--enable-debug-by-default
 
+%make_build -C Documentation \
+	GNUSTEP_MAKEFILES=$PWD
+
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 %makeinstall_std
 
+%makeinstall_std -C Documentation \
+	GNUSTEP_MAKEFILES=$PWD
+
 %ifarch x86_64
 sed -i 's|-march=i586||g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
 %endif
+sed -i 's|-mtune=generic||g' \
+	%buildroot%_datadir/GNUstep/Makefiles/config.make
 
-if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub -not -name config.make); then
+if grep -Fle %_target_cpu $(find %buildroot%_datadir/GNUstep -type f -not -name config.guess -not -name config.sub -not -name config.make); then
        echo >&2 %buildroot is dirty
        exit 1
 fi
 
-#install -d %buildroot/etc/profile.d
+install -d %buildroot/etc/profile.d
 
-#cat > %buildroot/etc/profile.d/GNUstep.sh << EOF
-##!/bin/sh
-#. %_datadir/GNUstep/Makefiles/GNUstep.sh
-#
-#if [ ! -d \$GNUSTEP_USER_ROOT ]; then
-#        mkdir \$GNUSTEP_USER_ROOT
-#        chmod +rwx \$GNUSTEP_USER_ROOT
-#        . %_datadir/GNUstep/Makefiles/GNUstep.sh
-#fi
-#EOF
+cat > %buildroot/etc/profile.d/GNUstep.sh << EOF
+#!/bin/sh
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-#find %buildroot%_datadir/GNUstep/Makefiles/Instance/Documentation \
-#        -type f ! -name '*.html' ! -name '*.css' ! -name '*.gz' | xargs gzip -9nf 
+if [ ! -d \$GNUSTEP_USER_ROOT ]; then
+        mkdir \$GNUSTEP_USER_ROOT
+        chmod +rwx \$GNUSTEP_USER_ROOT
+        . %_datadir/GNUstep/Makefiles/GNUstep.sh
+fi
+EOF
 
 sed -i 's|\-march=[0-9a-z_]*||g' $(find %buildroot -type f)
-sed -i 's|\-mtune=[0-9a-z_]*||g' $(find %buildroot -type f)
 
 gzip ChangeLog
+
+# broken
+rm -f %buildroot%_infodir/*
 
 %files
 %doc ChangeLog*
 %_sysconfdir/GNUstep/
 %_bindir/*
-#%attr(755,root,root) %_sysconfdir/profile.d/*
+%attr(755,root,root) %_sysconfdir/profile.d/*
 %dir %_datadir/GNUstep
 %dir %_datadir/GNUstep/Makefiles
 %dir %_datadir/GNUstep/Makefiles
@@ -115,7 +131,13 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/install-sh
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
+%files doc
+%_docdir/GNUstep
+
 %changelog
+* Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt14.svn20140116
+- Added documentation
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt13.svn20140116
 - Built as in FreeBSD (thnx Etoile project)
 
