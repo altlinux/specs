@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt12.svn20140116
+Release: alt13.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -51,6 +51,8 @@ export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 	--with-layout=fhs-system-alt \
 	--with-objc-lib-flag=-lobjc2 \
 	--enable-objc-nonfragile-abi \
+	--enable-native-objc-exceptions \
+	--enable-debug-by-default
 
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
@@ -114,6 +116,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt13.svn20140116
+- Built as in FreeBSD (thnx Etoile project)
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt12.svn20140116
 - Set clang as default compiler
 - Added necessary flags for everything GNUstep-software
