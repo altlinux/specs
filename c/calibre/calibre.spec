@@ -2,7 +2,7 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 1.6.0
+Version: 1.24.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -35,8 +35,9 @@ BuildRequires: /proc
 
 BuildRequires: gcc-c++ libX11-devel libXext-devel libjpeg-devel libusb-devel libsqlite3-devel
 
+BuildRequires: python >= 2.7.1
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
-BuildRequires: python-module-sip-devel python-module-apsw
+BuildRequires: python-module-sip-devel
 
 # Note: checked with http://calibre-ebook.com/download_linux 28.08.2013
 BuildRequires: python-module-imaging >= 1.1.6
@@ -58,6 +59,10 @@ BuildRequires: libmtp-devel >= 1.1.5
 BuildRequires: python-module-netifaces >= 0.8
 #Requires: psutil
 BuildRequires: python-module-cssselect >= 0.7.1
+
+# wait for new apsw: https://bugzilla.altlinux.org/show_bug.cgi?id=29828
+BuildRequires: python-module-apsw
+#>= 3.7.17
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -110,8 +115,12 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %python_sitelibdir/*
 %endif
 %_datadir/%name/
+%_datadir/appdata/*.appdata.xml
 
 %changelog
+* Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 1.24.0-alt1
+- new version 1.24.0 (with rpmrb script)
+
 * Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - new version 1.6.0 (with rpmrb script)
 
