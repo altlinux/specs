@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.30
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1134,7 +1134,10 @@ echo "Building kernel %kversion-%flavour-%krelease"
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%{?extra_mods:%make_build -f Makefile.external %extra_mods && echo "External modules built"}
+%ifdef extra_mods
+%{?kgcc_version:export CC=gcc-%kgcc_version}
+%make_build -f Makefile.external %extra_mods && echo "External modules built"
+%endif
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -1803,6 +1806,13 @@ done)
 
 
 %changelog
+* Sun Feb 16 2014 Led <led@altlinux.ru> 3.10.30-alt4
+- fixed gcc version for build external modules
+
+* Sun Feb 16 2014 Led <led@altlinux.ru> 3.10.30-alt3
+- updated:
+  + feat-drivers-block--btier
+
 * Sat Feb 15 2014 Led <led@altlinux.ru> 3.10.30-alt2
 - updated:
   + feat-fs-lustre
