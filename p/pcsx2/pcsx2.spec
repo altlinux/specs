@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: pcsx2
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -237,6 +237,15 @@ popd
 %_libdir/%name/libzzogl-cg-0.3.0.so
 
 %changelog
+* Sun Feb 16 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.2-alt1
+- Version 1.2.2
+
+* Tue Feb 11 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt1.M70P.1
+- Build for branch p7
+
+* Mon Feb 10 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt1.M70T.1
+- Build for branch t7
+
 * Sun Feb 09 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt2
 - Fix language files for x64
 
