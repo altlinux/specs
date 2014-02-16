@@ -2,7 +2,7 @@
 
 Name: gnustep-GToolKit
 Version: 0.9.5
-Release: alt3
+Release: alt4
 Summary: Implements a simple and easy to use ObjC interface to the GTK+ widget set
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
-BuildPreReq: gnustep-gui-devel gcc-objc
+BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gtk+-devel
@@ -86,7 +86,6 @@ This package contains development documentation for GToolKit.
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
-export CC=gcc
 %autoreconf
 %configure \
 	--with-gnustep \
@@ -123,6 +122,9 @@ export CC=gcc
 %doc html/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt4
+- Built with clang
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
 - Built with gcc
 
