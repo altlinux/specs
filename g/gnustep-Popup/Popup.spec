@@ -2,7 +2,7 @@
 
 Name: gnustep-Popup
 Version: 0.5
-Release: alt3.pre1
+Release: alt4.pre1
 Summary: Spaced repetition learning system for pairs of words
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://wiki.gnustep.org/index.php/Popup.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -50,11 +51,17 @@ Features:
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt4.pre1
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3.pre1
 - Built with clang
 
