@@ -1,9 +1,9 @@
 %define Name BTIER
 Name: btier
 %define module_name %name
-Version: 1.2.0
+Version: 1.2.4
 %define rel %nil
-Release: alt2
+Release: alt1
 Summary: %Name - a blockdevice that provides automated tiered storage
 License: GPLv2
 Group: System/Base
@@ -94,6 +94,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Sun Feb 16 2014 Led <led@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Sat Jan 18 2014 Led <led@altlinux.ru> 1.2.0-alt2
 - upstream updates
 
