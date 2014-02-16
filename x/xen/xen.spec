@@ -13,10 +13,10 @@
 
 Summary: Xen is a virtual machine monitor
 Name: xen
-Version: 4.3.1
+Version: 4.3.2
 # Hypervisor ABI
 %define hv_abi 4.3
-Release: alt3
+Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -80,14 +80,6 @@ Patch18: %name.fedora19.buildfix.patch
 Patch19: %name.pygrubtitlefix.patch
 Patch20: %name.xsm.enable.patch
 Patch21: %name.64.bit.hyp.on.ix86.patch
-Patch22: xsa73-4.3-unstable.patch
-Patch23: xsa75-4.3-unstable.patch
-Patch24: xsa78.patch
-Patch25: xsa74-4.3-unstable.patch
-Patch26: xsa76.patch
-Patch27: xsa82.patch
-Patch28: xsa77-unstable.patch
-Patch29: xsa80.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
@@ -168,7 +160,7 @@ BuildRequires: dev86
 %{?_enable_stubdom:Requires: makeinfo}
 %{?_with_hypervisor:Requires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
 %else
-BuildRequires: rpm-build-xen >= %version
+BuildRequires: rpm-build-xen >= 4.3.1
 %endif
 
 %description
@@ -286,14 +278,6 @@ manage Xen virtual machines.
 %patch19 -p1
 %{?_with_xsm:%patch20 -p1}
 %{?_with_hypervisor:%patch21 -p1}
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
 
 %patch50 -p2
 %patch51 -p1
@@ -720,6 +704,9 @@ done
 
 
 %changelog
+* Sun Feb 16 2014 Led <led@altlinux.ru> 4.3.2-alt1
+- 4.3.2
+
 * Sat Feb 15 2014 Led <led@altlinux.ru> 4.3.1-alt3
 - fixed BuildRequires
 
