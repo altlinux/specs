@@ -1,8 +1,8 @@
-%define svn svn6031
+%define svn svn6036
 
 Name: handbrake
 Version: 0.9.9.1
-Release: alt1.%svn.1
+Release: alt1.%svn
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 # #Source: http://prdownloads.sourceforge.net/handbrake/HandBrake-%version.tar.bz2
@@ -32,6 +32,7 @@ Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
 Patch200: handbrake-svn5891-fdk_aac-autoreconf.patch
+Patch250: handbrake-svn6036-category.patch
 Patch300: handbrake-svn6013-libnotify-gtk3.patch
 
 Url: http://handbrake.fr/
@@ -69,6 +70,7 @@ This package contains a GTK+ graphical user interface for Handbrake.
 # #%setup -n HandBrake-%version
 %setup -n %name-svn
 %patch200 -p1
+%patch250 -p1
 # #%patch300 -p1
 
 # Copy 3rd party dependencies into expected locations:
@@ -116,6 +118,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Sun Feb 16 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6036
+- build svn6036
+
 * Sat Feb 15 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.9.1-alt1.svn6031.1
 - fix build
 
