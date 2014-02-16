@@ -2,13 +2,14 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt8
+Release: alt8.svn20131019
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
 Url: http://gap.nongnu.org/addresses/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# http://svn.savannah.nongnu.org/svn/gap/trunk/system-apps/Addresses/
 Source: %name-%version.tar
 Source1: %name.menu
 
@@ -183,6 +184,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt8.svn20131019
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt8
 - Built with clang
 
