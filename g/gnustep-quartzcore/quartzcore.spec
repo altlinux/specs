@@ -2,7 +2,7 @@
 
 Name: gnustep-quartzcore
 Version: 0.1
-Release: alt2.svn20121018
+Release: alt3.svn20121018
 Summary: Implementation of the Core Animation APIs
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/quartzcore/trunk/
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -82,12 +83,15 @@ for j in QuartzCore; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README.markdown
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/QuartzCore.framework/Versions/0/Headers
 %exclude %_libdir/GNUstep/Frameworks/QuartzCore.framework/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -99,6 +103,9 @@ popd
 %_libdir/GNUstep/Frameworks/QuartzCore.framework/Headers
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.svn20121018
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20121018
 - Built with clang
 
