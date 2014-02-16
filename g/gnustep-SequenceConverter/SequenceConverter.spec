@@ -2,7 +2,7 @@
 
 Name: gnustep-SequenceConverter
 Version: 1.6.0
-Release: alt4
+Release: alt5
 Summary: Biological sequence file format conversion applet for GNUstep
 License: Free
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://bioinformatics.org/biococoa/wiki/pmwiki.php
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -46,11 +47,17 @@ framework is written in Cocoa (Objective-C).
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt5
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt4
 - Built with clang
 
