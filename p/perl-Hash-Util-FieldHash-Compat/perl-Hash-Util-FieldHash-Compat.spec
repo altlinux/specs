@@ -1,6 +1,6 @@
 %define dist Hash-Util-FieldHash-Compat
 Name: perl-%dist
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: Use Hash::Util::FieldHash or ties, depending on availability
@@ -36,6 +36,9 @@ available it will use that instead.
 %perl_vendor_privlib/Hash
 
 %changelog
+* Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
