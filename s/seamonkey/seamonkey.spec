@@ -1,5 +1,6 @@
 %def_with	lightning
-%def_without system_mozldap
+%def_without 	system_mozldap
+%def_without 	enigmail
 
 %define sm_prefix	%_libdir/%name
 %define sm_datadir	%_datadir/%name
@@ -13,7 +14,7 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.20
+Version: 2.23
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -37,11 +38,11 @@ Patch:		thunderbird-install-paths.patch
 Patch1:		seamonkey-2.2-alt-machOS-fix.patch
 Patch2:		seamonkey-2.0.14-alt-fix-plugin-path.patch
 Patch3:		xulrunner-noarch-extensions.patch
-#Patch4:		thunderbird-asm-directive.patch
 %if_with system_mozldap
 Patch5:		thunderbird-with-system-mozldap.patch
 %endif
 Patch6:		seamonkey-2.13.2-alt-fix-build.patch
+Patch7:     seamonkey-2.19-elfhack.patch
 
 PreReq:		urw-fonts
 
@@ -78,11 +79,12 @@ BuildRequires: desktop-file-utils libcurl-devel libhunspell-devel libsqlite3-dev
 BuildRequires: autoconf_2.13 chrpath alternatives libGL-devel
 BuildRequires: libstartup-notification-devel libfreetype-devel fontconfig-devel libnotify-devel
 BuildRequires: libffi-devel libgio-devel
+BuildRequires: gst-plugins-devel >= 0.10.25
 
 # Mozilla requires
 BuildRequires:	libnspr-devel       >= 4.9.2-alt1
-BuildRequires:	libnss-devel        >= 3.13.6-alt1
-BuildRequires:	libnss-devel-static >= 3.13.6-alt1
+BuildRequires:	libnss-devel        >= 3.15.1-alt1
+BuildRequires:	libnss-devel-static >= 3.15.1-alt1
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -138,17 +140,19 @@ seamonkey packages by some Alt Linux Team Policy compatible way.
 cd mozilla
 
 ### Moved enigmail to mailnews
+%if_with enigmail
 tar -xf %SOURCE6 -C mailnews/extensions/
+%endif
 
-%patch -p1
+%patch -p2
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
 %if_with system_mozldap
 %patch5 -p1 -b .mozldap
 %endif
 %patch6 -p2
+%patch7 -p2
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -194,6 +198,7 @@ autoconf
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
+%if_with enigmail
 cd mailnews/extensions/enigmail
     ./makemake -r
 cd -
@@ -201,48 +206,14 @@ cd -
 dir="$PWD/objdir"
 
 cd $dir/mailnews/extensions/enigmail
-	%make_build
-	%make_build xpi
-	mv -f -- \
-	$dir/mozilla/dist/bin/enigmail-*.xpi \
-	$dir/mozilla/dist/xpi-stage/enigmail.xpi
-	%make_build clean
+	make \
+		STRIP="/bin/true" \
+		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+	make xpi
+	mv -f -- $dir/mozilla/dist/bin/enigmail-*.xpi $dir/mozilla/dist/xpi-stage/
+	make clean
 cd -
-
-# everybody lie ... 'make clean' lie!
-(set +x
-    for f in \
-	    components/enigprefs-service.js \
-	    components/enigMsgCompFields.js \
-	    components/enigmail.js \
-	    components/enigmail.xpt \
-	    components/ipc.xpt \
-	    components/enigmime.xpt \
-	    components/libipc.so \
-	    components/libenigmime.so \
-	    defaults/preferences/enigmail.js \
-	    defaults/pref/enigmail.js \
-	    chrome/enigmail.jar \
-	    chrome/enigmail-skin.jar \
-	    chrome/enigmail-en-US.jar \
-	    chrome/enigmime.jar \
-	    platform/*/components/libenigmime*.so \
-	    platform/*/components/libipc*.so \
-	    wrappers/gpg-wrapper.sh;
-	do
-	    t="$dir/mozilla/dist/bin/$f"
-
-	    [ -L "$t" -o -f "$t" ] || continue
-
-	    rm -vf -- "$t"
-
-	    t="${t%%/*}"
-	    while [ "$t" != "$dir/mozilla/dist/bin" ]; do
-		rmdir -v -- "$t" ||:
-		t="${t%%/*}"
-	    done
-    done
-)
+%endif
 
 %install
 cd mozilla
@@ -300,10 +271,14 @@ rm -rf -- \
 	%buildroot/%sm_prefix/README.txt \
 	#
 
+dir="$PWD/objdir"
+
 ###From Enigmail
+%if_with enigmail
 mkdir -p %buildroot/%enigmail_ciddir
 unzip -q -u -d %buildroot/%enigmail_ciddir -- \
-    $dir/mozilla/dist/xpi-stage/enigmail.xpi
+    $dir/mozilla/dist/xpi-stage/enigmail*.xpi
+%endif
 
 ###From Lightning
 %if_with lightning
@@ -404,6 +379,52 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Feb 17 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.23-alt1
+- New version of Seamonkey 2.23
+- Security fixes since 2.21:
+  + MFSA 2013-117 Mis-issued ANSSI/DCSSI certificate
+  + MFSA 2013-116 JPEG information leak
+  + MFSA 2013-115 GetElementIC typed array stubs can be generated outside observed typesets
+  + MFSA 2013-114 Use-after-free in synthetic mouse movement
+  + MFSA 2013-113 Trust settings for built-in roots ignored during EV certificate validation
+  + MFSA 2013-112 Linux clipboard information disclosure though selection paste
+  + MFSA 2013-111 Segmentation violation when replacing ordered list elements
+  + MFSA 2013-110 Potential overflow in JavaScript binary search algorithms
+  + MFSA 2013-109 Use-after-free during Table Editing
+  + MFSA 2013-108 Use-after-free in event listeners
+  + MFSA 2013-107 Sandbox restrictions not applied to nested object elements
+  + MFSA 2013-106 Character encoding cross-origin XSS attack
+  + MFSA 2013-104 Miscellaneous memory safety hazards
+  + MFSA 2013-102 Use-after-free in HTML document templates
+  + MFSA 2013-101 Memory corruption in workers
+  + MFSA 2013-100 Miscellaneous use-after-free issues found through ASAN fuzzing
+  + MFSA 2013-98 Use-after-free when updating offline cache
+  + MFSA 2013-97 Writing to cycle collected object during image decoding
+  + MFSA 2013-96 Improperly initialized memory and overflows in some JavaScript functions
+  + MFSA 2013-95 Access violation with XSLT and uninitialized data
+  + MFSA 2013-94 Spoofing addressbar though SELECT element
+  + MFSA 2013-93 Miscellaneous memory safety hazards
+- Disable Enigmail extension (ALT #29678)
+
+* Mon Sep 23 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.21-alt1
+- New version 2.21
+- Security fixes:
+  + MFSA 2013-92 GC hazard with default compartments and frame chain restoration
+  + MFSA 2013-91 User-defined properties on DOM proxies get the wrong "this" object
+  + MFSA 2013-90 Memory corruption involving scrolling
+  + MFSA 2013-89 Buffer overflow with multi-column, lists, and floats
+  + MFSA 2013-88 compartment mismatch re-attaching XBL-backed nodes
+  + MFSA 2013-85 Uninitialized data in IonMonkey
+  + MFSA 2013-83 Mozilla Updater does not lock MAR file after signature verification
+  + MFSA 2013-82 Calling scope for new Javascript objects can lead to memory corruption
+  + MFSA 2013-81 Use-after-free with select element
+  + MFSA 2013-80 NativeKey continues handling key messages after widget is destroyed
+  + MFSA 2013-79 Use-after-free in Animation Manager during stylesheet cloning
+  + MFSA 2013-78 Integer overflow in ANGLE library
+  + MFSA 2013-77 Improper state in HTML5 Tree Builder with templates
+  + MFSA 2013-76 Miscellaneous memory safety hazards
+- Add build requires of Gstreamer
+
 * Thu Aug 08 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.20-alt1
 - New version 2.20
 - Security fixes:
