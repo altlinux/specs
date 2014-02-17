@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.17
+Version: 1.4.18
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -77,6 +77,14 @@ Group: Development/Java
 PreReq: %name = %version-%release
 Conflicts: libgcj < 0:3.3.3-alt6
 
+%package -n gcc-gnat-common
+Summary: Common symlinks for the GNU Ada compiler (GNAT)
+License: GPL
+Group: Development/Other
+BuildArch: noarch
+PreReq: %name = %version-%release
+Conflicts: gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+
 %description
 This package contains common symlinks, directories and selection
 utility for the GNU Compiler Collection.
@@ -98,6 +106,9 @@ This package contains common symlinks for the GNU Java Compiler.
 
 %description -n libgcj-common
 This package contains common files for the GNU Java runtime libraries.
+
+%description -n gcc-gnat-common
+This package contains common symlinks for the GNU Ada compiler (GNAT).
 
 %prep
 %setup -cT
@@ -122,15 +133,17 @@ install -p -m644 {classpath,libgcj}.security %buildroot%_libdir/security/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
-for n in cc cpp g++ gccgo gcj gcov gfortran gtreelang protoize unprotoize; do
+for n in cc cpp g++ gccgo gcj gcov gfortran gnat gtreelang protoize unprotoize; do
 	ln -s gcc "%buildroot%_bindir/$n"
 done
 for n in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gjnih gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert jv-scan; do
 	ln -s gcj "%buildroot%_bindir/$n"
 done
-
 for n in f77 f95 g77; do
 	ln -s gfortran "%buildroot%_bindir/$n"
+done
+for n in gnatbind gnatchop gnatclean gnatfind gnatgcc gnatkr gnatlink gnatls gnatmake gnatname gnatprep gnatxref; do
+	ln -s gnat "%buildroot%_bindir/$n"
 done
 
 ln -s ..%_bindir/cpp %buildroot/lib/cpp
@@ -203,7 +216,13 @@ EOF
 %_libdir/logging.properties
 %_libdir/security
 
+%files -n gcc-gnat-common
+%_bindir/gnat*
+
 %changelog
+* Mon Feb 17 2014 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt1
+- Added gcc-gnat-common subpackage.
+
 * Thu Nov 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.17-alt1
 - gcc_wrapper:
   + cleanup (ldv@).
