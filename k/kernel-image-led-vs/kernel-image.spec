@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.30
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -41,7 +41,7 @@ Release: alt4
 %define kmandir %{_man9dir}l
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.7
+%define kgcc_version	4.8
 
 %def_enable smp
 %def_disable optimize_for_size
@@ -1806,6 +1806,15 @@ done)
 
 
 %changelog
+* Mon Feb 17 2014 Led <led@altlinux.ru> 3.10.30-alt5
+- build with gcc 4.8
+- updated:
+  + fix-drivers-regulator--regulator
+  + fix-fs-btrfs
+  + fix-net-sunrpc
+  + feat-fs-reiser4
+  + feat-tools--kvm
+
 * Sun Feb 16 2014 Led <led@altlinux.ru> 3.10.30-alt4
 - fixed gcc version for build external modules
 
