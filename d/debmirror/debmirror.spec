@@ -1,5 +1,5 @@
 Name: debmirror
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
@@ -16,11 +16,9 @@ Serial: 1
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Jun 01 2012 (-bi)
-# optimized out: perl-Compress-Raw-Zlib perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-INET6 perl-Log-Agent perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-URI perl-libnet perl-podlators python-base
-BuildRequires: perl-Digest-SHA perl-LockFile-Simple perl-Net-INET6Glue perl-Pod-Parser perl-libwww
-
-BuildPreReq: perl-podlators
+# Automatically added by buildreq on Mon Feb 17 2014 (-bi)
+# optimized out: perl-Compress-Raw-Zlib perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-IP perl-Log-Agent perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Socket6 perl-URI perl-libnet python-base python3 python3-base
+BuildRequires: perl-Digest-SHA perl-IO-Socket-INET6 perl-LockFile-Simple perl-Net-INET6Glue perl-libwww perl-podlators
 
 %description
 This program downloads and maintains a partial local Debian mirror. It can
@@ -59,6 +57,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 1:2.16-alt1
+- new version 2.16 (with rpmrb script)
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1:2.15-alt1
 - new version 2.15 (with rpmrb script)
 
