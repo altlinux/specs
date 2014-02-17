@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Env-Sanctify
 Summary:	Lexically scoped sanctification of %%ENV
-Version:	1.10
-Release:	alt2_1
+Version:	1.12
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Env-Sanctify/
-Source0:	http://search.cpan.org/CPAN/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -53,6 +53,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/Env/
 
 %changelog
+* Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_1
 - Sisyphus build
 
