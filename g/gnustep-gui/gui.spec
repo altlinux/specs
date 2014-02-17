@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.24.0
-Release: alt3.svn20140126
+Release: alt4.svn20140126
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -16,16 +16,17 @@ Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libtiff-devel libjpeg-devel
-BuildPreReq: libpng-devel libcups-devel libaspell-devel
+BuildPreReq: libpng-devel libcups-devel libaspell-devel aspell
 BuildPreReq: libungif-devel libaudiofile-devel libportaudio2-devel
 BuildPreReq: libX11-devel libicu-devel imake libImageMagick-devel
 BuildPreReq: ImageMagick-tools libsndfile-devel libao-devel
-BuildPreReq: flite-devel libicns-devel /proc
+BuildPreReq: flite-devel libicns-devel /proc gnustep-base-doc
 BuildPreReq: texinfo texi2html texlive-latex-base
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libdispatch-objc2-devel
 
 Requires: lib%name = %version-%release
+Requires: aspell flite
 
 %description
 The GNUstep GUI library is a library of graphical user interface classes
@@ -72,6 +73,7 @@ Summary: Documentation for %name
 Group: Documentation
 BuildArch: noarch
 License: GFDL
+Requires: gnustep-base-doc
 #Requires: %name = %version-%release
 
 %description doc
@@ -112,21 +114,16 @@ This package contains the documentation for %name.
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-I%_includedir/dispatch'
  
-# too long now
-%if 0
 %make_build -C Documentation \
 	messages=yes
-%endif
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-%if 0
 %makeinstall_std -C Documentation \
      GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
-%endif
 
 for i in ChangeLog*; do
 	gzip $i
@@ -139,9 +136,7 @@ rm -fR %buildroot%_infodir
 %doc ANNOUNCE BUGS ChangeLog* COPYING NEWS README
 %_bindir/*
 %_libdir/GNUstep
-%if 0
 %_man1dir/*
-%endif
 
 %files -n lib%name
 %doc COPYING.LIB
@@ -152,13 +147,14 @@ rm -fR %buildroot%_infodir
 %_libdir/*.so
 %_datadir/GNUstep
 
-%if 0
 %files doc
 #_infodir/*
 %_docdir/GNUstep
-%endif
 
 %changelog
+* Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt4.svn20140126
+- Added documentation
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt3.svn20140126
 - Rebuilt with clang
 
