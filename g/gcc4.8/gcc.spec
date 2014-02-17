@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.8.2
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -55,6 +55,9 @@ Url: http://gcc.gnu.org/
 %define gxx32idir %_includedir/c++/%gcc_branch/%compat_platform
 %define gxx64idir %_includedir/c++/%gcc_branch/%_target_platform
 %endif
+
+%define ada_binaries gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls gnatmake gnatname gnatprep gnatxref
+%define java_binaries gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert
 
 %define libtsan_arches x86_64
 %set_compress_method bzip2
@@ -885,10 +888,10 @@ package includes the static libraries needed for Ada 95 development.
 Summary: Ada 95 support for gcc
 Group: Development/Other
 Provides: gcc-gnat = %version, %_bindir/gnat
-Obsoletes: gcc-gnat < %version
-Conflicts: gcc-gnat > %version
-PreReq: %alternatives_deps, gcc-common >= 1.4.7
-Requires: %name = %EVR, libgnat%gcc_branch-devel = %EVR
+Obsoletes: gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+PreReq: %alternatives_deps, gcc-gnat-common
+Requires: %name = %EVR
+Requires: libgnat%gcc_branch-devel = %EVR
 
 %description gnat
 This package provides support for compiling Ada 95
@@ -1171,6 +1174,24 @@ fi
 %endif #with_java_bootstrap
 %endif #with_java
 
+%if_with ada
+rm -rf ada_hacks
+for n in gnat %ada_binaries; do
+	if [ -f "%_bindir/$n" ]; then
+		continue
+	fi
+	if [ ! -f "%_bindir/$n%psuffix" ]; then
+		echo "%_bindir/$n not found!" >&2
+		exit 1
+	fi
+	mkdir -p ada_hacks
+	ln -s "%_bindir/$n%psuffix" ada_hacks/"$n"
+done
+if [ -d ada_hacks ]; then
+	export PATH="$PWD/ada_hacks${PATH:+:"$PATH"}"
+fi
+%endif
+
 %define _configure_script ../configure
 %define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
 %remove_optflags %optflags_nocpp %optflags_notraceback
@@ -1285,7 +1306,7 @@ mv gnat_ug_unx.pdf gnat_ug.pdf
 
 %if_with ada
 # for testsuite
-(cd %buildtarget/gcc; ln -s ada/rts/libgnat-%gcc_branch.so .)
+(cd %buildtarget/gcc; ln -s ada/rts/libgnat%psuffix.so .)
 %endif
 
 %if_with java_tar
@@ -1368,14 +1389,14 @@ pushd %buildroot%_bindir
 	  gcc gcov \
 	  %{?_with_cxx:g++} \
 	  %{?_with_fortran:gfortran} \
-	  %{?_with_java:gappletviewer gcj gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert} \
+	  %{?_with_java:gcj %java_binaries} \
+	  %{?_with_ada:gnat %ada_binaries} \
 	  %{?_with_go:gccgo} \
 	  ; do
 		[ -f "%gcc_target_platform-$n%psuffix" ] ||
 			mv -v "$n%psuffix" "%gcc_target_platform-$n%psuffix"
 		ln -snf "%gcc_target_platform-$n%psuffix" "$n%psuffix"
 	done
-	%{?_with_ada:ln -s gcc%psuffix gnatgcc}
 popd
 
 %ifdef _cross_platform
@@ -1524,7 +1545,7 @@ mkdir -p %buildroot%gcc_gdb_auto_load
 mv -f %buildroot%_libdir/libstdc++*gdb.py* %buildroot%gcc_gdb_auto_load
 pushd libstdc++-v3/python
 for i in `find . -name \*.py`; do
-  touch -r $i %buildroot%_datadir/gcc-%gcc_branch/python/$i
+  touch -r $i %buildroot%_datadir/gcc%psuffix/python/$i
 done
 touch -r hook.in %buildroot%gcc_gdb_auto_load/libstdc++*gdb.py
 popd
@@ -1566,10 +1587,10 @@ EOF
 %if_with java
 cat >%buildroot%_altdir/java%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gcj	%_bindir/%gcc_target_platform-gcj%psuffix	%priority
-$(for i in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
+$(for i in %java_binaries; do
 	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
-$(for i in gcj gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
+$(for i in gcj %java_binaries; do
 	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 EOF
@@ -1581,6 +1602,15 @@ cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
 %_man1dir/gccgo.1.bz2	%_man1dir/gccgo%psuffix.1.bz2	%_bindir/%gcc_target_platform-gccgo%psuffix
 EOF
 %endif #with_go
+
+%if_with ada
+cat >%buildroot%_altdir/gnat%gcc_branch <<EOF
+%_bindir/%gcc_target_platform-gnat	%_bindir/%gcc_target_platform-gnat%psuffix	%priority
+$(for i in %ada_binaries; do
+	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gnat%psuffix"
+done)
+EOF
+%endif #with_ada
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -1784,8 +1814,8 @@ EOF
 %_libdir/libstdc++.so.*
 %dir %gcc_gdb_auto_load/
 %gcc_gdb_auto_load/libstdc*gdb.py*
-%dir %_datadir/gcc-%gcc_branch/
-%_datadir/gcc-%gcc_branch/python/
+%dir %_datadir/gcc%psuffix/
+%_datadir/gcc%psuffix/python/
 %endif # compat
 
 %ifndef _cross_platform
@@ -1985,7 +2015,9 @@ EOF
 %if_with ada
 %files gnat
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-gnat
-%_bindir/gnat*
+%_altdir/gnat%gcc_branch
+%_bindir/%gcc_target_platform-gnat*%psuffix
+%_bindir/gnat*%psuffix
 %dir %gcc_target_libdir/
 %gcc_target_libdir/ada*
 %dir %gcc_target_libexecdir/
@@ -2064,6 +2096,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Feb 17 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt2
+- gnat: added alternatives support.
+
 * Mon Feb 10 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt1
 - Updated to redhat/gcc-4_8-branch r206854.
 - Synced with Fedora gcc-4.8.2-14 and Debian gcc-4.8.2-15.
