@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 %define module_name	bcmwl
-%define module_version  6.30.223.30
-%define real_version	6.30.223.30
+%define module_version  6.30.223.141
+%define real_version	6.30.223.141
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -36,6 +36,9 @@ BuildArch: noarch
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Feb 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.141-alt1
+- 6.30.223.141
+
 * Wed Aug 07 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt1
 - 6.30.223.30
 
