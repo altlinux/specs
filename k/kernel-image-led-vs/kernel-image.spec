@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.30
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,14 @@ done)
 
 
 %changelog
+* Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt6
+- updated:
+  + fix-drivers--ssbi
+  + fix-drivers-net-wan--farsync
+  + fix-sound-pci-lx6464es--snd-lx6464es
+  + feat-drivers-block--btier
+  + feat-drivers-block--rxdsk
+
 * Mon Feb 17 2014 Led <led@altlinux.ru> 3.10.30-alt5
 - build with gcc 4.8
 - updated:
