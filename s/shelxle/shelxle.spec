@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.651
+Version: 1.0.661
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -32,13 +32,16 @@ qmake-qt4
 %makeinstall INSTALL_ROOT=%buildroot
 
 %files
-%doc LICENSE
+%doc COPYING
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Feb 18 2014 Denis G. Samsonenko <ogion@altlinux.org> 1.0.661-alt1
+- new version
+
 * Thu Nov 21 2013 Denis G. Samsonenko <ogion@altlinux.org> 1.0.651-alt1
 - new version
 
