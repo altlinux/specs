@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Feb 17 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.2-alt1
+- Update grub help (about EFI mode)
+
 * Wed Dec 25 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.1-alt1
 - Add Russian help files for Bacula modules and alterator-console
 - Fix help title for alterator-dhcp
