@@ -3,8 +3,8 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.2.1
-Release: alt2
+Version: 0.3.0
+Release: alt1.git20140217
 
 Summary: Implementation of the freedesktop.org menu specification
 License: %lgpl2plus
@@ -16,14 +16,10 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Fix crash with empty directory-files.
-# From https://bugzilla.xfce.org/show_bug.cgi?id=10381
-Patch1: 0001-Bail-out-of-creating-a-directory-menu-if-it-doesn-t.patch
-
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-devel
 BuildRequires: glib2-devel >= 2.14
 BuildRequires: libgtk+2-devel >= 2.12.0
 BuildRequires: gtk-doc
@@ -58,6 +54,24 @@ BuildArch: noarch
 %description devel-doc
 This package contains development documentation for %name.
 
+%package gtk2
+Summary: Common GTK+2 part of %name
+Group: Graphical desktop/XFce
+Requires: %name = %version-%release
+
+%description gtk2
+%summary
+
+%package gtk2-devel
+Summary: Development files for %name-gtk2
+Group: Development/C
+Requires: %name-gtk2 = %version-%release
+Requires: %name-devel = %version-%release
+Requires: libxfce4ui-devel
+
+%description gtk2-devel
+%summary
+
 %package freedesktop-menu
 Summary: xfce menu shipped by default with %name
 Group: Graphical desktop/XFce
@@ -83,22 +97,27 @@ BuildArch: noarch
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 %xfce4reconf
 %configure \
     --disable-static \
-    --enable-gtk-doc
+    --enable-gtk-doc \
+	--enable-debug=no
 %make_build
 
 %install
 %makeinstall_std
+
+# Remove uz@Latn: it is the same as uz and
+# glibc not support such language in any case.
+rm -rf %buildroot%_datadir/locale/uz@Latn/
+
 %find_lang %_name
 
 %files -f %_name.lang
 %doc AUTHORS NEWS README
-%_libdir/*.so.*
+%_libdir/%name-1.so.*
 
 %if_with builtin_menu
 %files freedesktop-menu
@@ -116,15 +135,29 @@ BuildArch: noarch
 %_datadir/desktop-directories/xfce-system.directory
 
 %files devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_includedir/%_name-1/
+%_libdir/%name-1.so
+%_libdir/pkgconfig/%_name-1.pc
 
 %files devel-doc
 %doc HACKING STATUS TODO
 %doc %_datadir/gtk-doc/html/%_name
 
+%files gtk2
+%_libdir/%name-gtk2-1.so.*
+
+%files gtk2-devel
+%_includedir/%_name-gtk2-1/
+%_libdir/%name-gtk2-1.so
+%_libdir/pkgconfig/%_name-gtk2-1.pc
+
 %changelog
+* Mon Feb 17 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1.git20140217
+- Add libgarcon-gtk2 subpackage.
+- Don't package wrong uz@Latn locale.
+- Drop obsoleted patch.
+- Upstream git snapshot (master branch).
+
 * Tue Dec 03 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt2
 - Fix crash with empty directory-files.
 - Fix Xfce name (XFCE -> Xfce).
