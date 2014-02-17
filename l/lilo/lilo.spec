@@ -1,5 +1,5 @@
 Name: lilo
-Version: 22.8
+Version: 23.2
 Release: alt1
 Summary: The boot loader for Linux and other operating systems
 License: MIT
@@ -7,26 +7,23 @@ Group: System/Kernel and hardware
 Url: http://%name.alioth.debian.org
 Source0: %url/ftp/archiv/%name-%version.tar
 Source1: keytab-lilo.c
-Patch1: lilo-22.8-owl-makefile.patch
-Patch2: lilo-22.7.3-alt-owl-fixes.patch
-Patch3: lilo-22.7.1-owl-tmp.patch
-Patch4: lilo-22.7-deb-owl-man.patch
-Patch5: lilo-22.7.3-enlarge-max-number-of-setupsecs.patch
-Patch11: lilo-22.7.1-mdk-part.patch
-Patch12: lilo-22.7.3-alt-constants.patch
-Patch13: lilo-22.7.1-alt-defaults.patch
-Patch14: lilo-22.7.3-alt-lba32_linear.patch
-Patch15: lilo-22.7.1-alt-mkrescue.patch
-Patch17: lilo-22.8-alt-blkid.patch
-Patch18: lilo-22.7.3-alt-raid_index.patch
+Patch1: lilo-23.2-owl-makefile.patch
+Patch2: lilo-23.2-alt-owl-fixes.patch
+Patch3: lilo-23.2-gcc-4.8.patch
+Patch11: lilo-23.0-mdk-part.patch
+Patch12: lilo-23.0-alt-constants.patch
+Patch13: lilo-23.1-alt-defaults.patch
+Patch14: lilo-23.0-alt-lba32_linear.patch
+Patch15: lilo-23.0-alt-mkrescue.patch
+Patch17: lilo-23.0-alt-blkid.patch
+Patch18: lilo-23.0-alt-raid_index.patch
 Patch19: lilo-22.8-alt-devmapper.patch
 Patch20: lilo-22.8-alt-md-devmapper.patch
-Patch21: lilo-22.8-suse-gfx.patch
-Patch22: lilo-22.8-alt-format.patch
+Patch21: lilo-23.0-suse-gfx.patch
+Patch22: lilo-23.2-alt-format.patch
 ExclusiveArch: %ix86 x86_64
 
-# Automatically added by buildreq on Tue Nov 24 2009
-BuildRequires: dev86 libblkid-devel libdevmapper-devel texlive-latex-base
+BuildRequires: dev86 libblkid-devel libdevmapper-devel texlive-latex-recommended perl(Pod/Text.pm)
 
 %description
 LILO (LInux LOader) is a basic system program which boots your Linux
@@ -55,8 +52,6 @@ This package contains extra documentation for LILO.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %patch11 -p1
 %patch12 -p1
@@ -65,30 +60,29 @@ This package contains extra documentation for LILO.
 %patch15 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p1
-%patch20 -p1
+#patch19 -p1
+#patch20 -p1
 %patch21 -p1
 %patch22 -p1
 
 sed -i 's/\(mkdir \)/\1-p /g' Makefile
 sed -i 's/\(keytab-lilo\)\.pl/\1/g' Makefile doc/user.tex
+sed -i '/^[[:blank:]]*@echo/d' images/Makefile
 
 
 %build
-%make_build OPT="%optflags -Wno-strict-aliasing" all docs
+%make_build CC=%__cc OPT="%optflags -Wno-strict-aliasing" all docs
 %__cc %optflags -o keytab-lilo %SOURCE1
-gzip -9c CHANGES > CHANGES.gz
+gzip -9c CHANGELOG > CHANGELOG.gz
 
 
 %install
-%make_install ROOT=%buildroot MAN_DIR=%_mandir install
+%make_install DESTDIR=%buildroot install
 
 %define docdir %_docdir/%name-%version
-install -d -m 0755 %buildroot%docdir
-install -p -m644 README* CHANGES.* COPYING INCOMPAT QuickInst doc/*.ps %buildroot%docdir/
-for f in doc/*.ps; do
-	gzip -9c "$f" > %buildroot%docdir/$(basename "$f").gz
-done
+install -d -m 0755 %buildroot%docdir/images
+install -p -m 0644 NEWS README* CHANGELOG.* COPYING QuickInst TODO doc/*.pdf %buildroot%docdir/
+install -p -m 0644 images/{README,*.{bmp,dat}} %buildroot%docdir/images/
 
 
 %post
@@ -100,6 +94,9 @@ fi
 
 
 %files
+/boot/*
+%exclude /boot/*
+%exclude %_sysconfdir/*
 /sbin/*
 %_sbindir/*
 %_man5dir/*
@@ -115,6 +112,32 @@ fi
 
 
 %changelog
+* Mon Feb 17 2014 Led <led@altlinux.ru> 23.2-alt1
+- 23.2
+- updated BuildRequires
+- removed:
+  + lilo-23.0-deb-owl-man.patch
+  + lilo-23.0-enlarge-max-number-of-setupsecs.patch
+- updated:
+  + lilo-23.2-owl-makefile.patch
+  + lilo-23.2-alt-owl-fixes.patch
+  + lilo-23.2-alt-format.patch
+- added:
+  + lilo-23.2-gcc-4.8.patch
+
+* Sun Feb 16 2014 Led <led@altlinux.ru> 23.1-alt1
+- 23.1
+- updated:
+  + lilo-23.1-owl-makefile.patch
+  + lilo-23.1-alt-defaults.patch
+  + lilo-23.1-alt-format.patch
+
+* Mon Sep 23 2013 Led <led@altlinux.ru> 23.0-alt1
+- 23.0
+- removed:
+  + lilo-22.7.1-owl-tmp.patch
+- disabled devmapper patches
+
 * Sun Aug 11 2013 Led <led@altlinux.ru> 22.8-alt1
 - 22.8
 - removed:
