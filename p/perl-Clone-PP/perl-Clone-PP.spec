@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name	 Clone-PP
-%define upstream_version 1.02
+%define upstream_version 1.03
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_3
+Version:    1.03
+Release:    alt1
 
 Summary:	Recursively copy Perl datatypes
 License:	Artistic/GPL
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{upstream_name}/
-Source0:	ftp://ftp.perl.org/pub/CPAN/modules/by-module/Clone/%{upstream_name}-%{upstream_version}.tar.bz2
+Source:	http://www.cpan.org/authors/id/N/NE/NEILB/Clone-PP-%{version}.tar.gz
 
 
 BuildArch:	noarch
@@ -45,6 +45,9 @@ variables and objects.
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_3
 - Sisyphus build
 
