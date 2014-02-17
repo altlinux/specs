@@ -1,10 +1,10 @@
 %define xfce_ver 4.10
 
 Name: xfce4-panel
-Version: 4.10.1
-Release: alt1.git20130506
+Version: 4.11.0
+Release: alt1
 
-Summary: Panel for XFce
+Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -13,12 +13,12 @@ Url: http://www.xfce.org/
 # Upstream: git://git.xfce.org/xfce/xfce4-panel
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfce4ui-devel >= %xfce_ver libexo-devel >= 0.6.0 libgarcon-devel
+BuildPreReq: libxfce4ui-devel >= %xfce_ver libexo-devel >= 0.6.0 libgarcon-gtk2-devel
 BuildRequires: gtk-doc libwnck-devel libICE-devel libXext-devel libSM-devel
 
 Requires: libxfce4panel = %version-%release
@@ -27,21 +27,21 @@ Requires: xfce4-common
 Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 
 %description
-%name is the panel for the XFce desktop environment.
+%name is the panel for the Xfce desktop environment.
 
 %description -l ru_RU.UTF-8
 Данный пакет содержит в себе панель для окружения рабочего стола Xfce.
 
 %package -n libxfce4panel
-Summary: Library for XFce panel
+Summary: Library for Xfce panel
 License: %lgpl2plus
 Group: Development/C
 
 %description -n libxfce4panel
-This package contains library for XFce panel plugins.
+This package contains library for Xfce panel plugins.
 
 %package -n libxfce4panel-devel
-Summary: Development files to build XFce panel plugins
+Summary: Development files to build Xfce panel plugins
 License: %lgpl2plus
 Group: Development/C
 PreReq: libxfce4panel = %version-%release
@@ -49,10 +49,10 @@ Provides: %name-devel = %version-%release
 Obsoletes: %name-devel < 4.8.0
 
 %description -n libxfce4panel-devel
-This package contains files to develop plugins for XFce panel.
+This package contains files to develop plugins for Xfce panel.
 
 %package -n libxfce4panel-devel-doc
-Summary: Documentation files to build XFce panel plugins
+Summary: Documentation files to build Xfce panel plugins
 Group: Development/Documentation
 PreReq: libxfce4panel-devel = %version-%release
 Provides: %name-devel-doc = %version-%release
@@ -60,7 +60,7 @@ Obsoletes: %name-devel-doc < 4.8.0
 BuildArch: noarch
 
 %description -n libxfce4panel-devel-doc
-This package contains files to develop plugins for XFce panel.
+This package contains files to develop plugins for Xfce panel.
 
 %prep
 %setup
@@ -113,6 +113,10 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
 
 %changelog
+* Mon Feb 17 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.11.0.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130506
 - Bump version (this snapshot is newer then %name-4.10.1 release).
 - Upstream git snapshot.

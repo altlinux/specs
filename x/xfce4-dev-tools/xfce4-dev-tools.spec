@@ -1,13 +1,14 @@
 Name: xfce4-dev-tools
 Version: 4.10.0
-Release: alt1
+Release: alt2.git20130429
 
-Summary: Development tools for XFce
+Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
 License: %gpl2plus
 Url: http://xfce.org/~benny/projects/xfce4-dev-tools/
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
+# Upstream: git://git.xfce.org/xfce/xfce4-dev-tools
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -18,7 +19,7 @@ BuildRequires: glib2-devel
 Requires: intltool >= 0.50.0
 
 %description
-Development tools for XFce
+Development tools for Xfce
 
 %description -l ru
 Данный пакет содержит в себе инструменты необходимые для разработчика
@@ -29,7 +30,11 @@ Development tools for XFce
 %patch -p1
 
 %build
-sed -e "s/@REVISION@//g" < "configure.in.in" > "configure.in"
+# We can't use xfce4_drop_gitvtag macro:
+# rpm-build-xfce4 uses xfce4-dev-tools itself.
+sed  -e "s/@REVISION@//g" \
+	 -e "s/m4_define(\[xdt_version_tag\], \[git\])/m4_define([xdt_version_tag], [])/g" \
+	   > configure.ac < configure.ac.in
 %autoreconf
 %configure
 %make_build
@@ -45,6 +50,10 @@ sed -e "s/@REVISION@//g" < "configure.in.in" > "configure.in"
 %_datadir/xfce4/dev-tools
 
 %changelog
+* Mon Feb 17 2014 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2.git20130429
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Upstream git snapshot (master branch).
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 
