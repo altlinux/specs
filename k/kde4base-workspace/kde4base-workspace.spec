@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -66,7 +66,7 @@ Patch851: kubuntu_always_show_kickoff_subtext.diff
 Patch1000: kdebase-workspace-4.11.1-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
 Patch1002: kdebase-workspace-4.6.3-alt-kdm-cmd-poweroff.patch
-Patch1003: kdebase-workspace-4.10.0-alt-kdm-defaults.patch
+Patch1003: kdebase-workspace-4.11.6-alt-kdm-defaults.patch
 Patch1004: kdebase-workspace-4.6.5-alt-kdm-wmsession.patch
 Patch1005: kdebase-workspace-4.4.92-alt-kdm-dont-show-nologin-users.patch
 Patch1006: kmenuedit-4.8.0-alt-menueditor.patch
@@ -955,6 +955,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.6-alt2
+- always grab input in kdm
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.6-alt1
 - new version
 - return "-nolisten tcp" to default xserver args while xserverrc not used (see bug 29780)
