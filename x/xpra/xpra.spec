@@ -1,6 +1,6 @@
 Name: xpra
-Version: 0.9.6
-Release: alt3
+Version: 0.11.0
+Release: alt1
 
 Summary: X Persistent Remote Applications
 
@@ -8,11 +8,24 @@ Group: Networking/Remote access
 License: GPLv2
 Url: http://xpra.org/
 
-Source: http://xpra.org/src/%name-%version.tar
+Source: http://winswitch.org/src/%name-%version.tar
+
+Patch: xpra-pygtk.patch
 
 # Automatically added by buildreq on Sat Dec 08 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-module-pygobject-devel python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel python-module-Cython python-module-mwlib python-module-paste python-module-pygtk-devel subversion
+BuildRequires: libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel python-module-Cython python-module-mwlib python-module-paste python-module-pygtk-devel
+
+# See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
+BuildPreReq: python-module-Cython >= 0.20
+
+AutoReq: yes, nomingw
+
+%add_python_req_skip win32security pyopencl
+
+BuildRequires(pre): rpm-build-gir
+# Unity specific?
+%add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3)
 
 # Note: we have no linking requires to libwebp.so.x
 Requires: libwebp xorg-xvfb setxkbmap
@@ -45,17 +58,18 @@ If connecting from a remote machine, you would use something like (or you can al
 
 %prep
 %setup
+%patch -p2
+
 # Fix error: implicit declaration of function 'avcodec_free_frame'
 patch -p1 <patches/old-libav.patch
-
-%__subst "s|pygtk-2.0/pygobject.h|pygtk/pygobject.h|g" wimpiggy/lowlevel/bindings.pyx
-%__subst "s|pygtk-2.0/pygtk/pygtk.h|pygtk/pygtk.h|g" wimpiggy/gdk/gdk_atoms.pyx
+patch -p1 <patches/old-libav-pixfmtconsts.patch
+patch -p1 <patches/old-libav-no0RGB.patch
 
 %build
-%python_build
+%python_build --without-dec_avcodec
 
 %install
-%python_install
+%python_install --without-dec_avcodec
 
 %files
 %dir %_sysconfdir/%name/
@@ -65,11 +79,19 @@ patch -p1 <patches/old-libav.patch
 %_desktopdir/*
 %_iconsdir/*
 %_man1dir/*
-%_datadir/parti/
-%_datadir/wimpiggy/
+#_datadir/parti/
+#_datadir/wimpiggy/
 %_datadir/xpra/
 
 %changelog
+* Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- new version 0.11.0 (with rpmrb script)
+- build with Cython 0.20
+- build without avcodec
+
+* Fri Feb 14 2014 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
+- new version 0.10.0 (with rpmrb script)
+
 * Wed Feb 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.6-alt3
 - Rebuilt for libwebp5.
 
