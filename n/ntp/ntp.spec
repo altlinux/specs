@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.6
 %define vers_rc p5
-Release: alt1
+Release: alt2
 %define srcname %name-%version%{?vers_rc:%vers_rc}
 
 Summary: The Network Time Protocol (NTP)
@@ -267,6 +267,9 @@ fi
 %attr(640,ntpd,ntpd) %ghost %ROOT%_sysconfdir/%name/drift
 
 %changelog
+* Tue Feb 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.6-alt2
+- refactored ntp.conf (temporary solution for ALT #19494)
+
 * Fri Feb 14 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.2.6-alt1
 - NMU
 - 4.2.6p5 (closes: #27162)
