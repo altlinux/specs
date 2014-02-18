@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.2.0
+Version:	24.3.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -458,6 +458,17 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Feb 09 2014 Alexey Gladkov <legion@altlinux.ru> 24.3.0-alt1
+- New version (24.3.0).
+- Fixed:
+  + MFSA 2014-13 Inconsistent JavaScript handling of access to Window objects
+  + MFSA 2014-12 NSS ticket handling issues
+  + MFSA 2014-09 Cross-origin information leak through web workers
+  + MFSA 2014-08 Use-after-free with imgRequestProxy and image proccessing
+  + MFSA 2014-04 Incorrect use of discarded images by RasterImage
+  + MFSA 2014-02 Clone protected content with XBL scopes
+  + MFSA 2014-01 Miscellaneous memory safety hazards (rv:27.0 / rv:24.3)
+
 * Tue Dec 24 2013 Alexey Gladkov <legion@altlinux.ru> 24.2.0-alt1
 - New version (24.2.0).
 - Fixed:

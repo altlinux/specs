@@ -1,8 +1,8 @@
-%define  git_commit 3704cdd
+%define  git_commit 8389ecb
 
 Name: 	 kiwix
 Version: 0.9
-Release: alt0.rc3.git%git_commit.1
+Release: alt0.rc4.1.git%git_commit
 Summary: Kiwix is an offline reader for Web content like Wikipedia
 
 License: GPLv3
@@ -14,7 +14,10 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %name-%version.tar
 Source1: %name.desktop
 
-BuildRequires: aria2
+# Fix build with xulrunner 27.x (see https://bugzilla.mozilla.org/show_bug.cgi?id=951984#c7)
+Patch1:  %name-build-with-xulrunner-27.patch
+
+BuildRequires: aria2 >= 1.18.3
 BuildRequires: bzip2-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -30,14 +33,14 @@ BuildRequires: libxapian-devel
 BuildRequires: libzim-devel
 BuildRequires: python-modules
 BuildRequires: xapian-core
-BuildRequires: xulrunner-devel
+BuildRequires: xulrunner-devel >= 27.0
 BuildRequires: zlib-devel
 
 BuildRequires: zip
 BuildRequires: wget
 BuildRequires: bc
 
-Requires: aria2
+Requires: aria2 >= 1.18.3
 
 %description
 Kiwix is an offline reader for Web content. It's especially intended to
@@ -46,20 +49,20 @@ ZIM files, a highly compressed open format with additional meta-data.
 
 %prep
 %setup -q
+
+%patch1 -p1
+
 # Prepare environment for automake
 touch NEWS
 mv CHANGELOG ChangeLog
 # Copy localized desktop file
 cp -f %SOURCE1 desktop/%name.desktop
-# Fix hardcoded path to aria2c
-subst 's/"aria2c"/"aria2"/' kiwix/chrome/content/main/js/content.js
 
 %build
 %add_optflags -I/usr/include/nspr
 %autoreconf
 %configure --disable-android \
-	   --with-gecko-sdk=%_libdir/xulrunner-devel \
-	   --with-aria2=%_bindir/aria2
+	   --with-gecko-sdk=%_libdir/xulrunner-devel
 %make_build
 
 %install
@@ -82,6 +85,13 @@ ln -s %_libdir/%name/%name %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Fri Feb 14 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc4.1.git8389ecb
+- Update version from upstream
+- Rebuild with new xulrunner
+
+* Tue Jan 21 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc3.git3704cdd.2
+- Remove deprecated fix for bad aria2c binary name
+
 * Mon Jan 20 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc3.git3704cdd.1
 - Put main executable file in /usr/bin
 - Add aria2 as required program

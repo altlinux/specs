@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        26.0
+Version:        27.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -259,6 +259,23 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Feb 07 2014 Alexey Gladkov <legion@altlinux.ru> 27.0-alt1
+- New release (27.0).
+- Fixed:
+  + MFSA 2014-13 Inconsistent JavaScript handling of access to Window objects
+  + MFSA 2014-12 NSS ticket handling issues
+  + MFSA 2014-11 Crash when using web workers with asm.js
+  + MFSA 2014-10 Firefox default start page UI content invokable by script
+  + MFSA 2014-09 Cross-origin information leak through web workers
+  + MFSA 2014-08 Use-after-free with imgRequestProxy and image proccessing
+  + MFSA 2014-07 XSLT stylesheets treated as styles in Content Security Policy
+  + MFSA 2014-06 Profile path leaks to Android system log
+  + MFSA 2014-05 Information disclosure with *FromPoint on iframes
+  + MFSA 2014-04 Incorrect use of discarded images by RasterImage
+  + MFSA 2014-03 UI selection timeout missing on download prompts
+  + MFSA 2014-02 Clone protected content with XBL scopes
+  + MFSA 2014-01 Miscellaneous memory safety hazards (rv:27.0 / rv:24.3)
+
 * Mon Dec 23 2013 Alexey Gladkov <legion@altlinux.ru> 26.0-alt1
 - New release (26.0).
 - Fixed:
