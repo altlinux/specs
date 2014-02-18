@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.30
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt7
+- updated:
+  + feat-drivers-video--bootsplash
+  + feat-net--netatop
+
 * Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt6
 - updated:
   + fix-drivers--ssbi
