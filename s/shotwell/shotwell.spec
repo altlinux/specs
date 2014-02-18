@@ -2,7 +2,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -10,8 +10,8 @@ Group: Graphics
 License: LGPL
 Url: http://www.yorba.org/shotwell/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: dconf
 # for video-thumbnailer
@@ -57,6 +57,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
+- 0.17.1
+
 * Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.17.0-alt1
 - 0.17.0 snapshot (6321cbf4)
 
