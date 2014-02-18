@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
@@ -112,6 +112,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
 - use automake-1.11
 
