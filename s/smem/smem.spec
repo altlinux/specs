@@ -1,5 +1,5 @@
 Name: smem
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Report application memory usage in a meaningful way
@@ -49,6 +49,9 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 %doc smem.html COPYING
 
 %changelog
+* Tue Feb 18 2014 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- new version 1.4 (with rpmrb script)
+
 * Fri Jun 21 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - new version (1.3) with rpmgs script (ALT bug #29082)
 - cleanup spec
