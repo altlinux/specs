@@ -1,5 +1,5 @@
 Version: 1.2.1
-Release: alt1.1
+Release: alt2
 Summary: Console Jabber Client
 Summary(pl):	CJC - konsolowy klient Jabbera
 Name: cjc
@@ -36,6 +36,7 @@ This package provides a module for CJC.
 
 %prep
 %setup -n cjc-%version
+sed -i "/CACERT_FILE_LOCATIONS =/a'/usr/share/ca-certificates/ca-bundle.crt'," cjc/tls.py
 
 %build
 %make prefix=%prefix XSL_DIR=/usr/share/xml/docbook/xsl-stylesheets
@@ -55,6 +56,9 @@ mv %buildroot%_datadir/cjc/cjc %buildroot%python_sitelibdir/
 %_datadir/cjc
 
 %changelog
+* Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 1.2.1-alt2
+- Add ALT ca-certs
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.1-alt1.1
 - Rebuild with Python-2.7
 
