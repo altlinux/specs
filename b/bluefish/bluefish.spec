@@ -1,5 +1,5 @@
 Name: bluefish
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Summary: A GTK2 web development application for experienced users
@@ -74,6 +74,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 2:2.2.5-alt1
+- Autobuild version bump to 2.2.5
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 2:2.2.4-alt1
 - Autobuild version bump to 2.2.4
 - Fix DOS LFs
@@ -209,7 +212,6 @@ cat %{name}_plugin_*.lang >> %name.lang
 - fix menu entry (reported by Guillaume Rousse)
 - update menu entry version
 
-* Thu Aug 24 2000 Götz Waschk <waschk@linux-mandrake.com> 0.5-2mdk
 - uses find_lang for locale files
 - moved configure call to build section
 - fixed english locale file
