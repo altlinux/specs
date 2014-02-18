@@ -6,7 +6,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt1
+Release: alt2
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -36,6 +36,9 @@ BuildArch: noarch
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Feb 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.141-alt2
+- lost sources updated
+
 * Mon Feb 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.141-alt1
 - 6.30.223.141
 
