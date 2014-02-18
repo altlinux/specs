@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -86,13 +86,20 @@ syncqt.pl-qt5 \
 %_qt5_libdir/lib*.so
 %_qt5_libdir/lib*.prl
 %_qt5_libdir/cmake/Qt?Svg/
-%_qt5_libdir/pkgconfig/Qt?Svg.pc
-%_qt5_archdatadir/mkspecs/modules/qt_lib_svg.pri
+%_qt5_libdir/cmake/Qt?Gui/*
+%_qt5_libdir/pkgconfig/Qt5Svg.pc
+%_qt5_archdatadir/mkspecs/modules/qt_lib_svg*.pri
 
 %files doc
 %_qt5_docdir/qtsvg.qch
 %_qt5_docdir/qtsvg/
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt0.M70P.1
+- built for M70P
+
 * Fri Nov 29 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build

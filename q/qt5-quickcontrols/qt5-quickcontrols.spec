@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: %qt_module-opensource-src-%version.tar
 # optimized out: elfutils libGL-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libqt5-xml libstdc++-devel python-base python3 python3-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: gcc-c++ glibc-devel-static python-module-distribute qt5-jsbackend-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
 BuildRequires: gcc-c++ glibc-devel
-BuildRequires: qt5-jsbackend-devel qt5-script-devel qt5-declarative-devel qt5-tools
+BuildRequires: qt5-script-devel qt5-declarative-devel qt5-tools
 
 %description
 The Qt Quick Controls module provides a set of controls that can be used to
@@ -63,5 +63,11 @@ This package contains documentation for Qt5 %qt_module
 %_qt5_docdir/qtquick*s/
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build

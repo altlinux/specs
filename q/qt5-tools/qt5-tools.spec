@@ -4,8 +4,8 @@
 %def_disable bootstrap
 
 Name: qt5-tools
-Version: 5.1.1
-Release: alt6
+Version: 5.2.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -23,12 +23,11 @@ Source23: qdbusviewer.desktop
 Source24: qtconfig.desktop
 
 Patch1: alt-build-qtconfig.patch
-Patch2: alt-cmake-config.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
-BuildRequires: desktop-file-utils gcc-c++ glibc-devel /usr/bin/convert
+BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
 BuildRequires: gstreamer-devel gst-plugins-devel libXext-devel libX11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -142,7 +141,6 @@ Requires: %name-common = %EVR
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
-%patch2 -p1
 syncqt.pl-qt5 \
     -version %version \
     -private \
@@ -196,6 +194,7 @@ done
 %_bindir/qcollectiongenerator*
 %_bindir/qhelpconverter*
 %_bindir/qhelpgenerator*
+%_bindir/qtpaths*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
@@ -203,6 +202,7 @@ done
 %_qt5_bindir/qcollectiongenerator*
 %_qt5_bindir/qhelpconverter*
 %_qt5_bindir/qhelpgenerator*
+%_qt5_bindir/qtpaths*
 
 %files -n qt5-qtconfig
 %_bindir/qtconfig-qt5
@@ -278,6 +278,12 @@ done
 
 
 %changelog
+* Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Wed Jan 29 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt5.M70P.1
+- built for M70P
+
 * Wed Jan 29 2014 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt6
 - fix cmake config file (ALT#29761)
 

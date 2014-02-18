@@ -2,7 +2,7 @@
 %global qt_module qtxmlpatterns
 
 Name: qt5-xmlpatterns
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -21,7 +21,7 @@ and XML Schema validation.
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+Requires: qt5-base-common
 %description common
 Common package for %name
 
@@ -92,5 +92,11 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 29 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
