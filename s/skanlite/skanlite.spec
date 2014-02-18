@@ -1,6 +1,6 @@
 
 Name: skanlite
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Group: Graphics
@@ -49,6 +49,9 @@ sed -i \
 %doc %_K4doc/*/%name
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
+- new version
+
 * Mon May 06 2013 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - new version
 
