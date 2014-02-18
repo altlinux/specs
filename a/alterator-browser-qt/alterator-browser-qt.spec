@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.19.3
+Version: 2.19.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg at altlinux dot org> 2.19.4-alt1
+- using QT_USE_FAST_CONCATENATION and QT_USE_FAST_OPERATOR_PLUS compile flags
+
 * Tue Dec 03 2013 Sergey V Turchin <zerg at altlinux dot org> 2.19.3-alt1
 - don't eat parentless items in checktree
 
