@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: plasma-applet-networkmanager
-Version: 0.9.0.9
+Version: 0.9.0.10
 Release: alt1
 Serial: 1
 
@@ -49,20 +49,21 @@ applet is "Networks" (in e.g. "Add Widgets" dialog).
 %patch103 -p1
 
 subst 's/^.*tests/#&/' CMakeLists.txt
-if ! grep -qe 'add_subdirectory([[:space:]]*po[[:space:]]*)' CMakeLists.txt
-then
-cat >> CMakeLists.txt <<__EOF__
-find_package(Msgfmt REQUIRED)
-find_package(Gettext REQUIRED)
-add_subdirectory( po )
-__EOF__
-fi
 
-if ! [ -d po/ru ]; then
-    mv po-ru po/ru
-    #install -m 0644 %SOURCE10 po/ru/libknetworkmanager.po
-    echo "add_subdirectory(ru)" >> po/CMakeLists.txt
-fi
+#if ! grep -qe 'add_subdirectory([[:space:]]*po[[:space:]]*)' CMakeLists.txt
+#then
+#cat >> CMakeLists.txt <<__EOF__
+#find_package(Msgfmt REQUIRED)
+#find_package(Gettext REQUIRED)
+#add_subdirectory( po )
+#__EOF__
+#fi
+
+#if ! [ -d po/ru ]; then
+#    mv po-ru po/ru
+#    #install -m 0644 %SOURCE10 po/ru/libknetworkmanager.po
+#    echo "add_subdirectory(ru)" >> po/CMakeLists.txt
+#fi
 
 
 %build
@@ -85,17 +86,14 @@ fi
 
 
 %files -f %name.lang
-#%_sysconfdir/dbus-1/system.d/NetworkManager-kde4.conf
-#%_kde4_bindir/knetworkmanager
 %_K4libdir/lib*.so.*
 %_K4libdir/libknm_nm.so
 %_K4libdir/libsolidcontrolfuture.so
 %_K4lib/*.so
 %_K4exec/*
+%_K4iconsdir/oxygen/*/apps/networkmanager.*
 %_K4iconsdir/oxygen/*/devices/network-wire*-*.*
-#%_kde4_iconsdir/hicolor/*/apps/knetworkmanager.*
 %_K4iconsdir/oxygen/*/devices/network-defaultroute.*
-#%_kde4_xdg_apps/knetworkmanager.desktop
 %_K4apps/networkmanagement
 %_K4apps/desktoptheme/default/icons/network2.svgz
 %_K4srv/kded/*.desktop
@@ -105,6 +103,9 @@ fi
 
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.10-alt1
+- new version
+
 * Mon Jul 22 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.9-alt1
 - new version
 
