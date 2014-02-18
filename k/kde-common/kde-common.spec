@@ -1,7 +1,7 @@
 
 %define major 4
 %define minor 12
-%define bugfix 0
+%define bugfix 2
 
 Name: kde-common
 Version: %major.%minor.%bugfix
@@ -162,6 +162,7 @@ mkdir -p %buildroot/%_K4conf
 mkdir -p %buildroot/%_K4cfg
 mkdir -p %buildroot/%_K4libdir/kconf4_update_bin
 mkdir -p %buildroot/%_K4link
+mkdir -p %buildroot/%_libdir/kde4link
 mkdir -p %buildroot/%_K4lib/imports/org/kde
 mkdir -p %buildroot/%_K4lib/platformimports/touch/org/kde/
 mkdir -p %buildroot/%_K4plug/{imageformats,phonon_platform,script,styles}
@@ -226,6 +227,9 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
+- add compatibility directory
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.0-alt1
 - new version
 
