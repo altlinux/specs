@@ -1,5 +1,5 @@
 Name: hyperrogue
-Version: 42
+Version: 43
 Release: alt1
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
@@ -73,6 +73,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 43-alt1
+- Autobuild version bump to 43
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 42-alt1
 - Autobuild version bump to 42
 
