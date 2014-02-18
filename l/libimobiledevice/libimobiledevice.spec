@@ -1,6 +1,6 @@
 Name: libimobiledevice
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
@@ -19,7 +19,7 @@ BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
 
 BuildRequires: gcc-c++ glib2-devel libxml2-devel libusb-devel libplistmm-devel
 BuildRequires: libgnutls-devel libtasn1-devel libgcrypt-devel libssl-devel
-BuildRequires: python-devel python-module-Cython >= %cython_ver python-module-libplist
+BuildRequires: python-devel python-module-Cython0.18 python-module-libplist
 
 %description
 libimobiledevice is a library for connecting to Apple's iPhone or iPod touch devices
@@ -70,6 +70,9 @@ Python bindings for libimobiledevice.
 %exclude %python_sitelibdir/imobiledevice.la
 
 %changelog
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt2
+- use Cython-0.18
+
 * Fri Mar 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
 - 1.1.5 release
 
