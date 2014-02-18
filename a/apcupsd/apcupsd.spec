@@ -3,7 +3,7 @@
 
 Name: apcupsd
 Version: 3.14.11
-Release: alt1
+Release: alt2
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Power management software for APC UPS hardware
@@ -24,6 +24,10 @@ Patch2: %name-3.12.2-config.sub.patch
 Patch3: %name-3.14.8-apctest.date.patch
 
 Patch10: apcupsd-3.14.4-hal_policy-Makefile.patch
+
+#Errata/FR
+Patch100: apcupsd-fix-reporting-model.patch
+Patch101: apcsmart-port-reopen.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -76,6 +80,9 @@ Web status for UPS.
 %patch3 -p2
 
 %patch10 -p0
+
+%patch100 -p3
+%patch101 -p0
 
 tar xzf %{SOURCE1}
 
@@ -182,6 +189,10 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Mon Feb 17 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.11-alt2
+- Fix issue with net driver not reporting MODEL (apcupsd's SVN [r2068])
+- apcsmart port reopen when COMMLOST (patch from adam@kroptech)
+
 * Sat Feb 01 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.11-alt1
 - New version (with MODBUS support)
 
