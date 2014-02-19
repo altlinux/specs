@@ -1,6 +1,6 @@
 Name: cmocka
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 License: ASL 2.0
 Group: Development/Tools
@@ -62,7 +62,7 @@ preferable.
 This is the successor of Google's Cmockery.
 
 %package -n libcmocka-static
-Group: System/Libraries
+Group: Development/C
 Summary: Lightweight library to simplify and generalize unit tests for C
 
 %description -n libcmocka-static
@@ -115,5 +115,8 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt2
+- increased release for Obsoletes package from Autoimports/Sisyphus
+
 * Tue Feb 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt1
 - initial build
