@@ -1,41 +1,48 @@
-Name: admesh
-Summary: A program for processing triangulated solid meshes
-Version: 0.95
-Release: alt2
-Group: Graphics
-License: GPL v2
-URL: http://www.varlog.com/
+Name:    admesh
+Summary: Diagnose and/or repair problems with STereo Lithography files
+Version: 0.97.3
+Release: alt1
+
+Group:   Engineering
+License: GPLv2+
+URL:     https://github.com/admesh/admesh/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.varlog.com/admesh-0.95.tar.gz
+Source: %name-%version.tar.gz
+
+Requires: lib%name = %version-%release
 
 %description
-ADMesh is a program for processing triangulated solid meshes. Currently,
-ADMesh only reads the STL file format that is used for rapid prototyping
-applications, although it can write STL, VRML, OFF, and DXF files.
+ADMesh is a program for diagnosing and/or repairing commonly encountered
+problems with STL (STereo Lithography) data files. It can remove degenerate
+and unconnected facets, connect nearby facets, fill holes by adding facets,
+and repair facet normals. Simple transformations such as scaling,
+translation and rotation are also supported. ADMesh can read both
+ASCII and binary format STL files, while the output can be in
+AutoCAD DXF, Geomview OFF, STL, or VRML format.
 
-Features:
----------
+%package -n lib%name
+Summary:  Runtime library for the %{name} application
+Group:    Development/C
 
- * Read and write binary and ASCII STL files
- * Check STL files for flaws (i.e. unconnected facets, bad normals)
- * Repair facets by connecting nearby facets that are within a given tolerance
- * Fill holes in the mesh by adding facets.
- * Repair normal directions (i.e. facets should be CCW)
- * Repair normal values (i.e. should be perpendicular to facet with length=1)
- * Remove degenerate facets (i.e. facets with 2 or more vertices equal)
- * Translate in x, y, and z directions
- * Rotate about the x, y, and z axes
- * Mirror about the xy, yz, and xz planes
- * Scale the part by a factor
- * Merge 2 STL files into one
- * Write an OFF file 
- * Write a VRML file 
- * Write a DXF file 
- * Calculate the volume of a part
+%description -n lib%name
+This package contains the %{name} runtime library.
+
+%package -n lib%{name}-devel
+Summary:  Development files for the lib%{name} library
+Group:    Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%{name}-devel
+ADMesh is a program for diagnosing and/or repairing commonly encountered
+problems with STL (STereo Lithography) data files.
+
+This package contains the development files needed for building new
+applications that utilize the %{name} library.
 
 %prep
 %setup
+cp README{.md,}
 
 %build
 %autoreconf
@@ -43,14 +50,28 @@ Features:
 %make_build
 
 %install
-install -d %buildroot%_bindir
-install -m755 %name %buildroot%_bindir
+%makeinstall_std
+rm -rf %buildroot%_datadir/doc
 
 %files
-%doc ADMESH.DOC COPYING ChangeLog README *.stl
+%doc COPYING ChangeLog* README *.stl %{name}-doc.txt
 %_bindir/*
+%doc %_man1dir/*
+
+%files -n lib%name
+%doc COPYING
+%_libdir/lib%name.so.*
+
+%files -n lib%{name}-devel
+%_includedir/*
+%_libdir/lib%name.so
+%_libdir/pkgconfig/*
 
 %changelog
+* Wed Feb 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.97.3-alt1
+- New version from upstream Git
+- Add libadmesh and devel packages
+
 * Fri Mar 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.95-alt2
 - Rebuilt for debuginfo
 
