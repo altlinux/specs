@@ -2,8 +2,8 @@
 %define rname	qt
 %define major	3
 %define minor	3
-%define bugfix	4
-%define rlz alt4
+%define bugfix	5
+%define rlz alt5
 
 %define qtname %rname%major
 %define qtdir %_libdir/%qtname
@@ -59,6 +59,9 @@ done
 %_sysconfdir/%qtname
 
 %changelog
+* Wed Feb 19 2014 Fr. Br. George <george@altlinux.ru> 3.3-alt5
+- remove trailing "/" from qt3dir.sh (fix brp-alt debuginfo error)
+
 * Wed Jan 25 2006 Sergey V Turchin <zerg at altlinux dot org> 3.3-alt4
 - fix QTDIR for x86_64
 
