@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.58.0f3a662
+Version: 0.1.114.caf1b31
 Release: alt1
 
 Summary: GNU Portability Library
@@ -43,6 +43,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Wed Feb 19 2014 Dmitry V. Levin <ldv@altlinux.org> 0.1.114.caf1b31-alt1
+- Updated to gnulib snapshot v0.1-114-gcaf1b31.
+
 * Sat Jan 04 2014 Dmitry V. Levin <ldv@altlinux.org> 0.1.58.0f3a662-alt1
 - Updated to gnulib snapshot v0.1-58-g0f3a662.
 
