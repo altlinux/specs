@@ -1,6 +1,6 @@
 Name: alterator-bacula
 Version: 1.2
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -87,6 +87,9 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Wed Feb 19 2014 Andrey Kolotov <qwest@altlinux.org> 1.2-alt3
+- Fix bug with disk in local-backup.
+
 * Fri Dec 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.2-alt2
 - Fix postinstall script to prevent dist-upgrade fail
 
