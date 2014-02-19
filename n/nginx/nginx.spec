@@ -13,8 +13,8 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.4.4
-Release: alt2
+Version: 1.4.5
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -258,6 +258,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Feb 19 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.5-alt1
+- 1.4.5
+
 * Mon Nov 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt2
 - use config(noreplace) for sites-available.d/default.conf (closes: #29607)
 
