@@ -9,7 +9,7 @@
 %define bugfix 3
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 %define theme %name
@@ -479,6 +479,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Feb 19 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt4
+- remove planet.altlinux.org URL from indexhtml
+
 * Wed Feb 12 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt3
 - rebuilt with new design-bootloader-source
 
