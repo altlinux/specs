@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.7.15.2
+Version: 3.8.3.1
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -12,7 +12,13 @@ Source0: sqlite-%version.tar
 
 Patch1: sqlite3-alt-fts3.patch
 Patch2: sqlite3-alt-tcl.patch
-Patch3: sqlite3-alt-version-script.patch
+# See https://bugzilla.redhat.com/show_bug.cgi?id=801981
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=665363
+Patch3: sqlite3-fedora-no-malloc-usable-size.patch
+# On i686 arch the removed test fails with result 2749999.50004681 instead of expected
+# 2749999.5. This patch is temporary workaround and should be dropped as soon as a valid
+# fix is found.
+Patch4: sqlite3-fedora-percentile-test.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
@@ -95,11 +101,12 @@ embedded controllers.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export TCLLIBDIR=%_tcllibdir
 export TCLDATADIR=%_tcldatadir/%name
-export CFLAGS="%optflags -DSQLITE_CORE=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 "
+export CFLAGS="%optflags -DSQLITE_CORE=1 -DSQLITE_SECURE_DELETE=1 -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_ENABLE_FTS3=1 -DSQLITE_ENABLE_UNLOCK_NOTIFY=1 -fno-strict-aliasing "
 autoreconf -i
 %configure \
 	--enable-threadsafe \
@@ -161,6 +168,13 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Wed Feb 19 2014 Mikhail Efremov <sem@altlinux.org> 3.8.3.1-alt1
+- Patches from Fedora:
+  + Temporary workaround for failed percentile test.
+  + Disable malloc_usable_size() usage.
+- Drop sqlite3-alt-version-script.patch.
+- 3.8.3.1.
+
 * Tue Jan 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.7.15.2-alt1
 - 3.7.15.2 (closes: #27231)
 
