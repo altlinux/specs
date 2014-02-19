@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/mirrors
 
 %changelog
+* Wed Feb 19 2014 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
+- Informika mirror is dead, remove it
+
 * Wed Sep 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt1
 - Sisyphus has arepo.
 - Add t6 and t7 branches.
