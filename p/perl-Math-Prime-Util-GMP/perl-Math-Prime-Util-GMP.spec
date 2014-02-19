@@ -1,0 +1,71 @@
+%define module_version 0.18
+%define module_name Math-Prime-Util-GMP
+# BEGIN SourceDeps(oneline):
+BuildRequires: libgmp-devel perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Devel/CheckLib.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Math/Primality.pm) perl(Math/Prime/Util.pm) perl(Math/Prime/Util/ECAffinePoint.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Text/ParseWords.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(base.pm) perl(threads.pm) perl(threads/shared.pm)
+# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+Name: perl-%module_name
+Version: 0.18
+Release: alt2
+Summary: Utilities related to prime numbers, using GMP
+Group: Development/Perl
+License: perl
+URL: https://github.com/danaj/Math-Prime-Util-GMP
+
+Source0: http://cpan.org.ua/authors/id/D/DA/DANAJ/%module_name-%module_version.tar.gz
+
+%description
+A set of utilities related to prime numbers, using GMP.  This includes
+primality tests, getting primes in a range, and factoring.
+
+While it certainly can be used directly, the main purpose of this
+module is for the Math::Prime::Util manpage.  That module will automatically
+load this one if it is installed, greatly speeding up many of its
+operations on big numbers.
+
+Inputs and outputs for big numbers are via strings, so you do not need
+to use a bigint package in your program.  However if you do use bigints,
+inputs will be converted internally so there is no need to convert
+before a call.  Output results are returned as either Perl scalars
+(for native-size) or strings (for bigints).  the Math::Prime::Util manpage tries
+to reconvert all strings back into the callers bigint type if possible,
+which makes it more convenient for calculations.
+
+The various `is_*_pseudoprime' tests are more appropriately called
+`is_*_probable_prime' or `is_*_prp'.  They return 1 if the input is a
+probable prime based on their test.  The naming convention is historical
+and follows Pari, the Math::Primality manpage, and some other math packages.
+The modern definition of pseudoprime is a *composite* that passes the
+test, rather than any number.
+
+
+
+%prep
+%setup -n %module_name-%module_version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc README LICENSE Changes TODO examples
+%perl_vendor_archlib/M*
+%perl_vendor_autolib/*
+
+%changelog
+* Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2
+- moved to Sisyphus for Slic3r (by dd@ request)
+
+* Tue Jan 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- regenerated from template by package builder
+
+* Tue Nov 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- regenerated from template by package builder
+
+* Mon Oct 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- initial import by package builder
+
