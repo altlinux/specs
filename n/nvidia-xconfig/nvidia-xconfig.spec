@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 331.20
+Version: 331.49
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -32,6 +32,12 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Wed Feb 19 2014 Sergey V Turchin <zerg@altlinux.org> 331.49-alt1
+- new version
+
+* Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt0.M70P.1
+- built for M70P
+
 * Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt1
 - new version
 
