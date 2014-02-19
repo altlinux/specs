@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt3.svn20140127
+Release: alt4.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -19,7 +19,7 @@ BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
 BuildPreReq: libart_lgpl-devel clang-devel libglitz-devel libcairo-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
-BuildPreReq: fonts-type1-urw
+BuildPreReq: fonts-type1-urw gnustep-gui-doc
 BuildRequires: texinfo /proc
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel
@@ -31,6 +31,15 @@ This is a back-end for the GNUstep GUI library which allows you to use
 the GNUstep GUI library on an X Windows System (other back-ends will
 be added later to allow you to use the GNUstep GUI Library in other
 windowing environments). This package includes development headers too.
+
+%package doc
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Requires: gnustep-gui-doc
+
+%description doc
+This is develompent documentation for %name.
 
 %prep
 %setup
@@ -113,13 +122,18 @@ gzip ChangeLog
 
 %files
 %doc ANNOUNCE ChangeLog* COPYING* NEWS README
-%doc %_docdir/GNUstep
 %_sysconfdir/profile.d/*
 %_bindir/*
 %_libdir/GNUstep
 %_man1dir/*
 
+%files doc
+%_docdir/GNUstep
+
 %changelog
+* Wed Feb 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt4.svn20140127
+- Moved documetation into separate package
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt3.svn20140127
 - Built with clang
 
