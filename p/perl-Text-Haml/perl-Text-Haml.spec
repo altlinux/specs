@@ -1,22 +1,22 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Path.pm) perl(Test/More.pm) perl-devel perl-podlators perl(Data/Section/Simple.pm)
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Digest/MD5.pm) perl(File/Path.pm) perl(Module/Build.pm) perl(Test/More.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
-%define upstream_version 0.990111
+%define upstream_version 0.990115
 
 Name:       perl-%{upstream_name}
-Version:    0.990111
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/V/VT/VTI/Text-Haml-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
+BuildRequires: perl(Data/Section/Simple.pm)
 BuildRequires: perl(Encode.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Basename.pm)
@@ -40,21 +40,25 @@ features. Do not expect Ruby specific things to work.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-
-%make
+%{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+./Build
 
 %check
-%make test
+./Build test
 
 %install
-%makeinstall_std
+./Build install --destdir=%buildroot
+rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 %files
 %doc META.json META.yml 
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
+
 
 %changelog
+* Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.990115-alt1_1
+- update by mgaimport
+
 * Fri Oct 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.990111-alt1
 - automated CPAN update
 
