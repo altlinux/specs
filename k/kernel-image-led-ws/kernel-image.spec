@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.30
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt8
+- updated:
+  + fix-fs-cifs (CVE-2014-00691)
+
 * Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt7
 - updated:
   + feat-drivers-video--bootsplash
