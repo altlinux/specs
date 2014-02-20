@@ -1,6 +1,6 @@
 Name: qutim
 Version: 0.3.2
-Release: alt1
+Release: alt2
 Epoch: 7
 
 Summary: qutIM Instant Messenger
@@ -471,15 +471,6 @@ Requires: %name = %version-%release
 %description -n %name-plugin-oldcontactdelegate
 Old contact delegate plugin support for qutIM
 
-# Phonon Sound plugin
-%package -n %name-plugin-phononsound
-Summary: Phonon Sound plugin for %name
-Group: Networking/Instant messaging
-Requires: %name = %version-%release
-
-%description -n %name-plugin-phononsound
-Phonon Sound plugin support for qutIM
-
 # Plugman plugin
 %package -n %name-plugin-plugman
 Summary: Plugman plugin for %name
@@ -751,7 +742,6 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DLIB_SUFFIX:STRING='%lib_suffix' \
-	-DPHONON_INCLUDE_DIR:PATH=%_includedir/kde4 \
 	-DSYSTEM_JREEN:BOOL=TRUE \
 	-DKDEINTEGRATION:BOOL=FALSE
 popd
@@ -969,8 +959,11 @@ done
 
 %files -n %name-plugin-docktile
 %_libdir/%name/plugins/libdocktile.so
+%dir %_libdir/qt4/imports/org
+%dir %_libdir/qt4/imports/org/docktile
 %_libdir/qt4/imports/org/docktile/libqmldocktileplugin.so
 %_libdir/qt4/imports/org/docktile/qmldir
+%dir %_libdir/qt4/plugins/docktile
 %_libdir/qt4/plugins/docktile/libunityplugin.so
 
 %files -n libqtdocktile
@@ -1028,9 +1021,6 @@ done
 
 %files -n %name-plugin-oldcontactdelegate
 %_libdir/%name/plugins/liboldcontactdelegate.so
-
-%files -n %name-plugin-phononsound
-%_libdir/%name/plugins/libphononsound.so
 
 %files -n %name-plugin-plugman
 %_libdir/%name/plugins/libplugman.so
@@ -1130,6 +1120,9 @@ done
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Fri Feb 21 2014 Nazarov Denis <nenderus@altlinux.org> 7:0.3.2-alt2
+- Remove broken phononsound plugon
+
 * Wed Feb 19 2014 Nazarov Denis <nenderus@altlinux.org> 7:0.3.2-alt1
 - Version 0.3.2
 
