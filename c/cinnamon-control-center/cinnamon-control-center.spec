@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.9
-Release: alt2
+Release: alt3
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -168,6 +168,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu Feb 20 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt3
+- reenable layouts configuring
+
 * Mon Dec 9 2013 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt2
 - fix region panel using patch from Fedora
 
