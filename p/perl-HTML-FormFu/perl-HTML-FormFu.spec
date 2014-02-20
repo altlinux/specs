@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Config.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Config.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(overload.pm) perl-devel perl-podlators perl(File/ShareDir/Install.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
-Version:        0.09010
-Release:        alt2_4
+Version:        1.00
+Release:        alt1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Captcha/reCAPTCHA.pm)
 BuildRequires:  perl(Carp.pm)
@@ -125,6 +126,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_4
 - update to new release by fcimport
 
