@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt113
+Release: alt114
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Thu Feb 20 2014 Led <led@altlinux.ru> 2.6.32-alt114
+- mmap: call mmap prep only for regular files
+
 * Fri Feb 14 2014 Led <led@altlinux.ru> 2.6.32-alt113
 - Update to 042stab084.25:
   + ploop: roll back alloc_head on ENOSPC
