@@ -1,5 +1,5 @@
 Name: perl-GD
-Version: 2.51
+Version: 2.52
 Release: alt1
 Epoch: 1
 
@@ -47,6 +47,9 @@ sed -i- 's/compare(test6(),6);/print "ok 6 # Skip, we change fonts so byte-compa
 %perl_vendor_archlib/qd.pl
 
 %changelog
+* Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.52-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.51-alt1
 - automated CPAN update
 
