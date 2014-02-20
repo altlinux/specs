@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 5.0.14a
+Version: 6.0.1
 Release: alt1
 
 Summary: Cloud platform
@@ -61,7 +61,6 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %doc AUTHORS
 %doc COPYING-AGPL
 %doc COPYING-README
-%doc README
 #%installdir/3rdparty
 %dir %attr(0775,root,_webserver) %installdir/apps
 %installdir/apps/*
@@ -69,7 +68,6 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %installdir/config
 %_sysconfdir/owncloud/*.php
 %installdir/core
-%installdir/files
 %installdir/l10n
 %installdir/lib
 %installdir/ocs
@@ -77,6 +75,7 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %installdir/settings
 %installdir/tests
 %installdir/*.php
+%installdir/*.html
 %installdir/*.xml
 %dir %attr(0770,root,_webserver) %_localstatedir/owncloud
 %installdir/data
@@ -86,6 +85,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Wed Jan 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.14a-alt1
 - 5.0.14a
 

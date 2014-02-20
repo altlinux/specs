@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/3rdparty
 
 Name: owncloud-3rdparty
-Version: 5.0.14a
+Version: 6.0.1
 Release: alt1
 
 Summary: 3rdparty libs for owncloud
@@ -28,11 +28,15 @@ This package provides a set of 3rdparty libs for owncloud.
 mkdir -p %buildroot%installdir
 
 cp -rp * %buildroot%installdir/
+rm -fr %buildroot%installdir/phpdocx/pdf/tcpdf/fonts/utils
 
 %files
 %installdir/*
 
 %changelog
+* Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Wed Jan 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.14a-alt1
 - 5.0.14
 
