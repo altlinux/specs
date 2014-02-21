@@ -1,5 +1,5 @@
 Name: grep
-Version: 2.17
+Version: 2.18
 Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
@@ -91,6 +91,9 @@ install -pm644 %_sourcedir/GREP_COLORS \
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Fri Feb 21 2014 Dmitry V. Levin <ldv@altlinux.org> 2.18-alt1
+- Updated to v2.18.
+
 * Wed Feb 19 2014 Dmitry V. Levin <ldv@altlinux.org> 2.17-alt1
 - Updated to v2.17.
 - Updated translations from translationproject.org.
