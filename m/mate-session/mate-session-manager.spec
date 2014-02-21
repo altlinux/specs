@@ -8,7 +8,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %define fedora 19
 Name:           mate-session
 Version:        1.6.1
-Release:        alt1_3
+Release:        alt2
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -16,6 +16,7 @@ Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.t
 
 # add systemd-login1 suspend/hibernate love (upstreamable)
 Patch1: mate-session-manager-1.6.1-login1.patch
+Patch2: msm-1.6.1-optional-upower.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -23,7 +24,6 @@ BuildRequires:  gtk2-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
 BuildRequires:  pango-devel
-BuildRequires:  libupower-devel
 BuildRequires:  systemd-devel
 BuildRequires:  xmlto
 BuildRequires:  libXtst-devel
@@ -53,14 +53,17 @@ full-featured user session.
 %setup -n %{oldname}-%{version} -q
 
 %patch1 -p1 -b .login1
+%patch2 -p1
 %patch33 -p1
  
 %build
+autoreconf -fisv
 %configure --disable-static \
            --enable-ipv6 \
            --with-gtk=2.0 \
            --with-default-wm=marco \
            --with-systemd \
+           --disable-upower \
            --docdir=%{_datadir}/doc/%{name}-%{version} \
            --with-x
 
@@ -145,6 +148,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Fri Feb 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.1-alt2
+- disable direct upower support (use logind instead)
+
 * Sat Sep 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3
 - new fc release
 
