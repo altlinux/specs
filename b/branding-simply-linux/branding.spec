@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.3
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -436,6 +436,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 7.0.3-alt2
+- menu: Add cheese.desktop.
+- index.html: Drop reference to planet.altlinux.org.
+
 * Wed Feb 12 2014 Mikhail Efremov <sem@altlinux.org> 7.0.3-alt1
 - Update license texts.
 - theme.plymouth: Fix descriptions.
