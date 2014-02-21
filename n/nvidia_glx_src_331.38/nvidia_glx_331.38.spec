@@ -15,13 +15,13 @@
 %define nv_version 331
 %define nv_release 38
 %define nv_minor %nil
-%define pkg_rel alt125
+%define pkg_rel alt126
 %ifarch x86_64
 %def_disable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -342,6 +342,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 21 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt126
+- don't package kernel module sources
+
 * Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 331.38-alt125
 - fix against absent DEVICE_ACPI_HANDLE on 3.13 kernel
 
