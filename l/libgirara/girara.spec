@@ -1,8 +1,7 @@
 %define _name girara
-%define gtk_ver 2
 
 Name: lib%_name
-Version: 0.1.9
+Version: 0.2.0
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -16,7 +15,7 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgtk+%{gtk_ver}-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: intltool
 
 %description
@@ -27,7 +26,7 @@ simplicity and minimalism.
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libgtk+%{gtk_ver}-devel
+Requires: libgtk+3-devel
 
 %description devel
 This package contains libraries and header files for
@@ -39,13 +38,13 @@ developing applications that use %name.
 
 %build
 export CFLAGS="%optflags"
-%make_build VERBOSE=1 PREFIX=%prefix LIBDIR=%_libdir GIRARA_GTK_VERSION=%gtk_ver
+%make_build VERBOSE=1 PREFIX=%prefix LIBDIR=%_libdir
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir GIRARA_GTK_VERSION=%gtk_ver
-%find_lang %name-gtk%gtk_ver-1
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+%find_lang %name-gtk3-1
 
-%files -f %name-gtk%gtk_ver-1.lang
+%files -f %name-gtk3-1.lang
 %doc AUTHORS README LICENSE
 %_libdir/*.so.*
 
@@ -57,6 +56,10 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Build with GTK+3.
+- Updated to 0.2.0.
+
 * Tue Nov 19 2013 Mikhail Efremov <sem@altlinux.org> 0.1.9-alt1
 - Updated to 0.1.9.
 
