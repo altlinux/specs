@@ -1,6 +1,6 @@
 %define module_name	bcmwl
-%define module_version	6.30.223.30
-%define module_release alt1
+%define module_version	6.30.223.141
+%define module_release alt2
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -86,6 +86,12 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Feb 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt2
+- fixed version
+
+* Mon Feb 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt1
+- new version
 
 * Wed Aug  7 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt1
 - new version
