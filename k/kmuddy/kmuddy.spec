@@ -1,19 +1,20 @@
 %set_verify_elf_method unresolved=relaxed
 %define _kde4_alternate_placement 1
 
+# Build from git://anongit.kde.org/kmuddy
+%define snapshot 87d36d3
+
 Name:      kmuddy
 Version:   1.0.1
-Release:   alt3
+Release:   alt4.git%snapshot
 
 Summary:   MUD client powered by KDE
 License:   GPLv2+
 Group:     Games/Other
 URL:       http://www.kmuddy.com/
-Packager:  Andrey Cherepanov <cas@altlinux.ru>
+Packager:  Andrey Cherepanov <cas@altlinux.org>
 
 Source:    %name-%version.tar.gz
-Patch0:    %name-1.0-install-desktop.patch
-Patch1:	   %name-fix-build.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ 
@@ -37,8 +38,6 @@ This package provides development files for KMuddy.
 
 %prep
 %setup
-%patch0 -p0
-%patch1 -p2
 
 %build
 %K4build
@@ -50,9 +49,7 @@ This package provides development files for KMuddy.
 %files -f %name.lang
 %doc AUTHORS CHANGELOG DESIGN LICENSE README Scripting-HOWTO TODO
 %_kde4_bindir/%name
-#%%_K4applnk/*
 %_kde4_xdg_apps/*.desktop
-#%%_K4iconsdir/*/*/*/*.*
 %_K4srv/*.desktop
 %_K4srvtyp/*.desktop
 %dir %_K4apps/%name
@@ -66,6 +63,10 @@ This package provides development files for KMuddy.
 %_K4includedir/%name
 
 %changelog
+* Fri Feb 21 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt4.git87d36d3
+- Build from git://anongit.kde.org/kmuddy
+- Drop all obsoleted patches
+
 * Fri Jun 08 2012 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt3
 - Explicit link with zlib
 
