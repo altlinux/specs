@@ -1,6 +1,6 @@
 Name: zathura-ps
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Summary: PostScript support for zathura
 License: %bsdstyle
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libcairo-devel libspectre-devel
 
-Requires: zathura >= 0.1.2
+Requires: zathura
 
 %description
 The zathura-ps plugin adds PostScript support to zathura by using
@@ -40,6 +40,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt2
+- Rebuild with new libgirara and zathura for GTK+3.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
 - Package LICENSE.
 - Updated to 0.2.2.

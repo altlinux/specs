@@ -1,7 +1,5 @@
-%define gtk_ver 2
-
 Name: zathura
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -13,11 +11,13 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: intltool libgtk+%{gtk_ver}-devel libgirara-devel libsqlite3-devel python-module-docutils libmagic-devel
+BuildRequires: libgirara-devel >= 0.2.0-alt1
+BuildRequires: intltool libgtk+3-devel libsqlite3-devel python-module-docutils libmagic-devel
 
-Conflicts: zatura-pdf-poppler < 0.1.1-alt2
-Conflicts: zatura-djvu < 0.1.1-alt1
-Conflicts: zatura-ps < 0.1.0-alt2
+Conflicts: zatura-pdf-poppler < 0.2.5-alt1
+Conflicts: zatura-djvu < 0.2.3-alt2
+Conflicts: zatura-ps < 0.2.2-alt2
+Conflicts: zatura-cb < 0.1.2-alt2
 
 %description
 zathura is a highly customizable and functional document viewer based on
@@ -27,7 +27,7 @@ the girara user interface library and several document libraries.
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libgtk+%{gtk_ver}-devel libgirara-devel
+Requires: libgtk+3-devel libgirara-devel
 
 %description devel
 This package contains libraries and header files for
@@ -39,10 +39,10 @@ developing applications that use %name.
 
 %build
 export CFLAGS="%optflags"
-%make VERBOSE=1 LIBDIR=%_libdir ZATHURA_GTK_VERSION=%gtk_ver SFLAGS='' RSTTOMAN=/usr/bin/rst2man.py
+%make VERBOSE=1 LIBDIR=%_libdir SFLAGS='' RSTTOMAN=/usr/bin/rst2man.py
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir ZATHURA_GTK_VERSION=%gtk_ver RSTTOMAN=/usr/bin/rst2man.py
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir RSTTOMAN=/usr/bin/rst2man.py
 mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
 
@@ -53,12 +53,18 @@ mkdir -p %buildroot%_libdir/zathura
 %_desktopdir/*
 %_man1dir/*
 %_man5dir/*
+%_datadir/dbus-1/interfaces/org.pwmt.*
 
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
+- Build with GTK+3.
+- Re-fix build with current libmagic.
+- Updated to 0.2.7.
+
 * Tue Nov 26 2013 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1
 - Updated to 0.2.6.
 
