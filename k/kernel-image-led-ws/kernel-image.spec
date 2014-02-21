@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.31
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Fri Feb 21 2014 Led <led@altlinux.ru> 3.10.31-alt2
+- updated:
+  + fix-include-linux
+  + fix-virt-kvm--kvm
+
 * Fri Feb 21 2014 Led <led@altlinux.ru> 3.10.31-alt1
 - 3.10.31:
 - updated:
