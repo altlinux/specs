@@ -1,7 +1,7 @@
 %define ver_major 3.10
 
 Name: gnome-devel-docs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -51,7 +51,7 @@ This package is a part of %name and provides demos for GNOME developpers
 
 %make_install DESTDIR=%buildroot install
 
-%find_lang --with-gnome --output=%name.lang hig-book integration-guide platform-overview optimization-guide accessibility-devel-guide
+%find_lang --with-gnome --output=%name.lang hig-book integration-guide platform-overview optimization-guide accessibility-devel-guide programming-guidelines
 
 %files -f %name.lang
 %doc AUTHORS README NEWS
@@ -60,6 +60,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Fri Feb 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
