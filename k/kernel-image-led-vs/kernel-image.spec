@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.30
-Release: alt8
+Version: 3.10.31
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 30
+%define kernel_stable_version 31
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1806,6 +1806,12 @@ done)
 
 
 %changelog
+* Fri Feb 21 2014 Led <led@altlinux.ru> 3.10.31-alt1
+- 3.10.31:
+- updated:
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs-btrfs
+
 * Tue Feb 18 2014 Led <led@altlinux.ru> 3.10.30-alt8
 - updated:
   + fix-fs-cifs (CVE-2014-00691)
