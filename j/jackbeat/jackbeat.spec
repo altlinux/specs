@@ -1,6 +1,6 @@
 Name: jackbeat
 Version: 0.7.6
-Release: alt1.2
+Release: alt2
 Summary: Jackbeat is an audio sequencer
 License: GPLv2+
 Group: Sound
@@ -71,6 +71,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Feb 21 2014 Andrey Cherepanov <cas@altlinux.org> 0.7.6-alt2
+- Add missing libm to DSO patch
+
 * Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.7.6-alt1.2
 - Rebuild with new version liblo
 
