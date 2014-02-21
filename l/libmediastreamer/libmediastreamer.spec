@@ -1,6 +1,6 @@
 Name: libmediastreamer
-Version: 2.9.1
-Release: alt2
+Version: 2.10.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Fri Feb 21 2014 Alexei Takaseev <taf@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Wed Oct 23 2013 Alexei Takaseev <taf@altlinux.org> 2.9.1-alt2
 - Fix build with libavcodec54
 
