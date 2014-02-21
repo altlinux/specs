@@ -2,7 +2,7 @@
 
 Name: gnustep-Stepulator
 Version: 1.0
-Release: alt3
+Release: alt4
 Summary: Scientific calculator implementing RPN notation for GNUstep
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.ubuntu.com/ru/lucid/stepulator.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -41,12 +42,18 @@ and MacOS-X (cocoa).
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc LICENSE README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Fri Feb 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3
 - Rebuilt with clang
 
