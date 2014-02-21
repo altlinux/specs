@@ -2,7 +2,7 @@
 
 Name: gnustep-Stepbill
 Version: 2.4
-Release: alt3
+Release: alt4
 Summary: Get rid of those nasty Wingdows viruses
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://packages.debian.org/wheezy/stepbill.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -49,12 +50,18 @@ attempt to run off the screen with your vital software.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_LOCAL_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog StepBill-README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Fri Feb 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt3
 - Built with clang
 
