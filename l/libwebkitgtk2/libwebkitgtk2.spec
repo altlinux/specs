@@ -13,8 +13,8 @@
 %def_enable spellcheck
 
 Name: libwebkitgtk2
-Version: 2.2.3
-Release: alt2
+Version: 2.2.5
+Release: alt1
 
 Summary: Web browser engine
 License: %bsd %lgpl2plus
@@ -273,6 +273,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Sat Feb 22 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.5-alt1
+- 2.2.5
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.3-alt2
 - rebuilt against libwebp.so.5
 
