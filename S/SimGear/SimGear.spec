@@ -1,5 +1,5 @@
 Name: SimGear
-Version: 2.12.1
+Version: 3.0.0
 Release: alt1
 
 Summary: Simulator Construction Tools
@@ -57,6 +57,12 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Sat Feb 22 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
+* Wed Feb 05 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt0.3
+- 3.0.0-rc3
+
 * Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.1-alt1
 - 2.12.1
 
