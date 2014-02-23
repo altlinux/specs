@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.31
-Release: alt2
+Version: 3.10.32
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 31
+%define kernel_stable_version 32
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1806,6 +1806,15 @@ done)
 
 
 %changelog
+* Sun Feb 23 2014 Led <led@altlinux.ru> 3.10.32-alt1
+- 3.10.32
+- removed:
+  + fix-fs-lockd
+- updated:
+  + fix-drivers-gpu-drm--radeon
+  + fix-include-linux
+  + fix-virt-kvm--kvm
+
 * Fri Feb 21 2014 Led <led@altlinux.ru> 3.10.31-alt2
 - updated:
   + fix-include-linux
