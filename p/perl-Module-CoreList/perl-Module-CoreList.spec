@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 3.04
+Version: 3.07
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -35,6 +35,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 3.07-alt1
+- automated CPAN update
+
 * Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.04-alt1
 - automated CPAN update
 
