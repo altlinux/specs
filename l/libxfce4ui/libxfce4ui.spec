@@ -1,14 +1,14 @@
 Name: libxfce4ui
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
-Summary: Various Gtk+2 widgets for XFce
+Summary: Various Gtk+2 widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
 License: %lgpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
 
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/libxfce4ui
 Source: %name-%version.tar
@@ -23,7 +23,7 @@ BuildRequires: gtk-doc intltool libSM-devel libgladeui-devel libstartup-notifica
 Conflicts: xfce-utils < 4.8.3-alt3
 
 %description
-Various Gtk+2 widgets for XFce.
+Various Gtk+2 widgets for Xfce.
 
 %description -l ru_RU.UTF-8
 Набор виджетов GTK 2 для Xfce.
@@ -76,6 +76,10 @@ Header files for the %name library.
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.11.1.
+
 * Mon Sep 23 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
 - Updated to 4.11.0.
 
