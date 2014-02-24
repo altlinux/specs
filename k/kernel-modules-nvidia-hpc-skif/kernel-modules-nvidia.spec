@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	331.38
-%define module_release	alt2
+%define module_version	331.49
+%define module_release	alt1
 %define flavour		hpc-skif
 
 %setup_kernel_module %flavour
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Feb 21 2014 Led <led@altlinux.ru> 331.49-alt1
+- new release (331.49)
 
 * Thu Jan 30 2014 Led <led@altlinux.ru> 331.38-alt2
 - new release (304.119)
