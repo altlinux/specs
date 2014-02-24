@@ -7,7 +7,7 @@
 
 Name: arts
 Version: 1.5.10
-Release: alt5
+Release: alt5.1
 Serial: 1
 
 Source: %name-%version.tar
@@ -52,7 +52,7 @@ BuildRequires: libjpeg-devel libmad-devel libpng-devel
 BuildRequires: libstdc++-devel pkgconfig zlib-devel
 BuildRequires: jackit-devel libaudiofile-devel libmad-devel
 BuildRequires: libogg-devel libvorbis-devel
-BuildRequires: libqt3-devel-cxx = %__gcc_version_base libqt3-devel > 3.0
+BuildRequires: libqt3-devel > 3.0
 # hack against apt
 #BuildRequires: libqt3-qsa > 3.0 libqt3-qsa-devel > 3.0
 
@@ -275,6 +275,9 @@ mv %buildroot/%_includedir/artsc %buildroot/%_K3includedir/
 %endif
 
 %changelog
+* Mon Feb 24 2014 Roman Savochenko <rom_as@altlinux.ru> 1:1.5.10-alt5.1
+- Rebild without dependency to libqt3-devel-cxx
+
 * Tue Jul 30 2013 Roman Savochenko <rom_as@altlinux.ru> 1:1.5.10-alt5
 - Return ARTS build to Sisyphus and branches from trinitydesktop.org
   but best sound for external program call and more programms provide.
