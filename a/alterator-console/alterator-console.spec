@@ -1,5 +1,5 @@
 Name: 	 alterator-console
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -38,5 +38,8 @@ and to return result. It also allow to upload file to an server.
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
+- Add attention about interactive command using
+
 * Fri Dec 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.1-alt1
 - Initial release
