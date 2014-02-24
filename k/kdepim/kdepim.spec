@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt5
+Release: alt5.1
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -97,7 +97,6 @@ BuildRequires: libjpeg-devel liblockdev-devel %libopensync-devel boost-devel
 BuildRequires: libmal-devel libpilot-link-devel libpng-devel libqt3-devel
 BuildRequires: xml-utils zlib-devel libstdc++-devel libsasl2-devel
 BuildRequires: libgpgme-devel >= 1.0.0 libgpg-error-devel >= 1.0
-BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 %if %arts
 BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
 %endif
@@ -999,6 +998,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Mon Feb 24 2014 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt5.1
+- Rebild without dependency to kdelibs-devel-cxx
+
 * Mon Dec 23 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt5
 - kalarm.desktop category set to Qt;KDE;Utility;X-KDE-Utilities-PIM;Office;ProjectManagement;
 - Remove applnk/Applications/kalarm*
