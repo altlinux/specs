@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -293,6 +293,7 @@ cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 # TODO help translation injecting
 
 %build
+
 aclocal -I config-scripts
 autoconf -I config-scripts
 
@@ -336,6 +337,32 @@ done
 install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
 install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 
+alternate() { # priority files \
+p="$1"; shift; \
+for f; do \
+  case "$f" in \
+  	*/sbin/*) man=8;; \
+  	*/bin/*) man=1;; \
+	*/etc/*|*/share/*) man=5;; \
+	*) man=6;; \
+  esac; \
+  mp="%_mandir/man$man"; \
+  n="$(basename "$f")"; fa="$f-%name"; m="$mp/$n.$man"; ma="$mp/$n-%name.$man"; \
+  /bin/echo -e "$f $fa $p\n$m $ma $fa"; \
+  mv "%buildroot$f" "%buildroot$fa"; mv "%buildroot$m" "%buildroot$ma"; \
+done }
+
+alternate 10 \
+	/usr/bin/lpr \
+	/usr/bin/lpq \
+	/usr/bin/lprm \
+	/usr/bin/lp \
+	/usr/bin/cancel \
+	/usr/bin/lpstat \
+	/usr/sbin/lpc > %name.alternative
+
+install -D %name.alternative %buildroot%_altdir/%name
+
 %files
 %doc README*
 %_docdir/%name
@@ -357,6 +384,7 @@ install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 %_datadir/locale/*/*.po
 %_sbindir/*
 %_bindir/*
+%_altdir/%name
 
 %_iconsdir/hicolor/*/apps/*.png
 %_desktopdir/%name.desktop
@@ -391,6 +419,9 @@ install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Mon Feb 24 2014 Fr. Br. George <george@altlinux.ru> 1.7.0-alt2
+- Resurrect alternatives (closes: #29825)
+
 * Tue Dec 17 2013 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
 - Total rebuild from FC and Ubuntu
 - Change packaging scheme
