@@ -2,7 +2,7 @@
 
 Name: gnustep-Toolbox
 Version: 0.8
-Release: alt3
+Release: alt4
 Summary: Collection of tools for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: https://www.freshports.org/deskutils/toolbox/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -108,11 +109,14 @@ ln -s %_libdir/GNUstep/Applications/Toolbox.app/Toolbox \
 install -d %buildroot%_includedir
 ln -s %_libdir/GNUstep/Headers/Toolbox %buildroot%_includedir/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc DEVELOPER README TODO
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -123,6 +127,9 @@ ln -s %_libdir/GNUstep/Headers/Toolbox %buildroot%_includedir/
 %_libdir/GNUstep/Headers
 
 %changelog
+* Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt3
 - Built with clang
 
