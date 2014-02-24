@@ -1,6 +1,6 @@
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 1.10
+Version: 1.11
 Release: alt1
 
 Summary: Perl's Web Services Toolkit
@@ -55,6 +55,9 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 #perl_vendor_privlib/XMLRPC
 
 %changelog
+* Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Sat Jan 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
