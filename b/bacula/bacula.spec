@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt2
+Release: alt3
 
 License: AGPLv3
 Summary: Network based backup program
@@ -635,6 +635,9 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %files
 
 %changelog
+* Mon Feb 24 2014 Andrey Kolotov <qwest@altlinux.org> 5.2.13-alt3
+- update release
+
 * Tue May 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.2.13-alt2
 - tmpfiles.d for bacula added
 
