@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.4-alt1
+- Add attention from alterator-console
+
 * Tue Feb 18 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt1
 - Update grub help (about install on RAID)
 
