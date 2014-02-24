@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/File.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Meta
-Version:        0.19
-Release:        alt2_7
+Version:        0.20
+Release:        alt1
 Summary:        Validation of the META.yml file in a distribution
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-YAML-Meta/
-Source0:        http://www.cpan.org/modules/by-module/Test/Test-YAML-Meta-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/B/BA/BARBIE/Test-YAML-Meta-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/Pod.pm)
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Meta.pm
 
 %changelog
+* Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2_7
 - moved to Sisyphus for Slic3r (by dd@ request)
 
