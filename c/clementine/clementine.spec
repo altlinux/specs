@@ -1,5 +1,5 @@
 Name: clementine
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: A music player and library organiser
 
@@ -13,6 +13,7 @@ Source1: clementine_48.png
 Patch: %name-1.2.0-alt-desktop.patch
 Patch1: %name-1.2.0-chromaprint-avcodec.patch
 Patch2: clementine-0.6-alt-install-icons.patch
+Patch3: %name-1.2.2-alt-unistd.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -34,6 +35,7 @@ advantage of Qt4.
 %patch -p2
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -51,6 +53,9 @@ advantage of Qt4.
 %_datadir/clementine
 
 %changelog
+* Mon Feb 24 2014 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
+- Version 1.2.2
+
 * Fri Dec 13 2013 Vladimir Didenko <cow@altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 
