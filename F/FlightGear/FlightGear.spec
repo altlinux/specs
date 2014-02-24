@@ -1,5 +1,5 @@
 Name: FlightGear
-Version: 2.12.1
+Version: 3.0.0
 Release: alt1
 
 Summary: open-source flight simulator
@@ -95,6 +95,7 @@ rm -rf %buildroot%_datadir/locale
 %files
 %_bindir/*
 %_mandir/*/*
+%_datadir/*/*.txt
 %_iconsdir/*/*/*/%name.png
 %_niconsdir/%name.xpm
 %_liconsdir/%name.xpm
@@ -102,6 +103,12 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Feb 22 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
+* Thu Feb 06 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt0.3
+- 3.0.0-rc3
+
 * Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.1-alt1
 - 2.12.1
 
