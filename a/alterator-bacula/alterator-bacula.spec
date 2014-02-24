@@ -1,6 +1,6 @@
 Name: alterator-bacula
 Version: 1.2
-Release: alt3
+Release: alt4
 
 Source:%name-%version.tar
 
@@ -12,6 +12,7 @@ Summary: module for Bacula backup system
 License: GPL
 Group: System/Configuration/Other
 Requires(pre): shadow-utils
+Requires: bacula-director-common >= 5.2.13-alt3
 Requires: bacula-storage bacula-client bacula-dir
 # require console timeout feature
 Requires: bacula-console >= 3.0.2-alt6
@@ -87,6 +88,9 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Mon Feb 24 2014 Andrey Kolotov <qwest@altlinux.org> 1.2-alt4
+- Backup list is filled in local-backup (closes: #29839).
+
 * Wed Feb 19 2014 Andrey Kolotov <qwest@altlinux.org> 1.2-alt3
 - Fix bug with disk in local-backup.
 
