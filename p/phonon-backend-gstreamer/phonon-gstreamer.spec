@@ -4,7 +4,7 @@
 
 Name: phonon-backend-gstreamer
 Version: 4.7.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -30,7 +30,7 @@ Provides: phonon-backend = %{get_version phonon-devel}
 Provides: phonon-backend-gstreamer = %EVR phonon-gstreamer = %EVR
 Obsoletes: phonon-gstreamer < %EVR
 Obsoletes: phonon-backend-xine < 4.5 phonon-xine < 4.5 phonon-backend-0-xine < 4.5
-Requires: gst-plugins-base gst-plugins-good
+Requires: gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly
 %description -n phonon-backend-5-gstreamer
 Gstreamer phonon backend
 
@@ -52,6 +52,9 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Mon Feb 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt2
+- add more requires to gst-plugins
+
 * Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
 - new version
 
