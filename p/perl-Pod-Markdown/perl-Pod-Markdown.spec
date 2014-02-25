@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
 Version:        2.000
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-Markdown/
-Source:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -17,17 +17,22 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Run-time:
 BuildRequires:  perl(parent.pm)
-BuildRequires:  perl(Pod/ParseLink.pm)
-BuildRequires:  perl(Pod/Parser.pm)
+BuildRequires:  perl(Pod/Simple.pm)
+BuildRequires:  perl(Pod/Simple/Methody.pm)
 # Tests:
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(IPC/Open3.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(Symbol.pm)
 BuildRequires:  perl(Test/Differences.pm)
 BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(utf8.pm)
+BuildRequires:  perl(version.pm)
 Source44: import.info
 
 %description
@@ -55,6 +60,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1
 - automated CPAN update
 
