@@ -1,5 +1,5 @@
 %define module_name knem
-%define module_version 1.1.0
+%define module_version 1.1.1
 %define module_release alt1
 
 %define flavour el-def
@@ -66,6 +66,9 @@ install -m 0644 %ksname-%module_version/*.ko %buildroot%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Feb 25 2014 Led <led@altlinux.ru> 1.1.1-alt1
+- 1.1.1
 
 * Tue Dec 03 2013 Led <led@altlinux.ru> 1.1.0-alt1
 - 1.1.0
