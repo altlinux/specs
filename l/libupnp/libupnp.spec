@@ -1,5 +1,5 @@
 Name: libupnp
-Version: 1.6.18
+Version: 1.6.19
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
@@ -79,6 +79,9 @@ to develop applications using libupnp.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Feb 25 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.19-alt1
+- 1.6.19 released
+
 * Wed Feb 06 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.18-alt1
 - 1.6.18 released
 
