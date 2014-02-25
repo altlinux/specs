@@ -1,52 +1,53 @@
 %add_optflags %optflags_shared
 %define oldname unshield
+# github: https://fedoraproject.org/wiki/Packaging:SourceURL
+%global commit fe6338bd8ec0d9ff2148a134fabab5a0423a0b90
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 Name:           libunshield
-Version:        0.6
-Release:        alt3_7
+Version:        1.0
+Release:        alt1_1
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
 License:        MIT
-URL:            http://synce.sourceforge.net/
-Source0:        http://dl.sf.net/synce/unshield-0.6.tar.gz
+URL:            https://github.com/twogood/unshield
+Source0:        https://github.com/twogood/unshield/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires:  zlib-devel
 BuildRequires:  libtool
+BuildRequires:  autoconf
+BuildRequires:  automake
 Source44: import.info
 Provides: unshield = %{version}-%{release}
 
 %description
-To install a Pocket PC application remotely, an installable
-Microsoft Cabinet File is copied to the /Windows/AppMgr/Install
-directory on the PDA and then the wceload.exe is executed to
-perform the actual install. That is a very simple procedure.
-
-Unfortunately, many applications for Pocket PC are distributed as
-InstallShield installers for Microsoft Windows, and not as
-individual Microsoft Cabinet Files. That is very impractical for
-users of other operating systems, such as Linux or FreeBSD.
+This tool allows the extraction of InstallShield format cabinet files (which
+are different from Microsoft cabinet files). It was initially developed as a
+part of the SynCE project to aid with installing applications for Pocket PC
+devices, which were often contained in InstallShield installers, but these days
+that is rather less likely to be the primary use case.
 
 %package devel
 Group:          Development/C
 Summary:        Files needed for software development with %{oldname}
-Requires:       libunshield = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: unshield-devel = %{version}-%{release}
 
 %description devel
 The %{oldname}-devel package contains the files needed for development with
-%{oldname}
+%{oldname}.
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -q -n %{oldname}-%{commit}
 
 %build
+./bootstrap
 %configure --disable-static --disable-rpath
 make LIBTOOL=%{_bindir}/libtool %{?_smp_mflags}
 
-
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-
 rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 
 %files
@@ -61,6 +62,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_7
 - update to new release by fcimport
 
