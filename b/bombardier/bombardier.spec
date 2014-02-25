@@ -1,6 +1,6 @@
 Name: bombardier
 Version:  0.8.2.2
-Release:  alt2_15
+Release:  alt2_16
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -12,6 +12,7 @@ Source2: bombardier-logo.png
 Patch0: bombardier-height.patch
 Patch1: bombardier-rpm_opt_flags.patch
 Patch2: bombardier-hof-open-mode.patch
+Patch3: bombardier-0.8.2-string-format.patch
 BuildRequires: ncurses-devel desktop-file-utils
 Requires: icon-theme-hicolor
 Source44: import.info
@@ -28,6 +29,7 @@ Fly an ncurses plane over an ncurses city, and try to level the buildings.
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
+%patch3 -p0
 
 # link with --as-needed
 sed -i -e 's,$(LDFLAGS) -o $@ $(OBJS),-o $@ $(OBJS) $(LDFLAGS),' Makefile
@@ -58,6 +60,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_15
 - update to new release by fcimport
 
