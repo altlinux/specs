@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.7
+Version: %ver_major.10
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -152,7 +152,6 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/cinnamon-fallback-mount-helper
 %_libexecdir/csd-backlight-helper
 %_libexecdir/csd-datetime-mechanism
-%_libexecdir/csd-input-sources-switcher
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
@@ -179,7 +178,6 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-a11y-keyboard
 %_libexecdir/csd-test-a11y-settings
 %_libexecdir/csd-test-input-helper
-%_libexecdir/csd-test-keyboard
 %_libexecdir/csd-test-media-keys
 %_libexecdir/csd-test-mouse
 %_libexecdir/csd-test-orientation
@@ -191,6 +189,10 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-xsettings
 
 %changelog
+* Thu Feb 20 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt1
+- 2.0.10
+- revert gnome keyboard patch
+
 * Tue Nov 26 2013 Vladimir Didenko <cow@altlinux.org> 2.0.7-alt1
 - 2.0.7-1-g29c7af5
 
