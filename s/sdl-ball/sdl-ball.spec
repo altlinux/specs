@@ -1,14 +1,12 @@
 %define gimpver 2.0
 Name: sdl-ball
 Version: 1.01
-Release: alt3
+Release: alt4
 Summary: Free/OpenSource brick-breaking game with pretty graphics
 Group: Games/Arcade
 License: GPLv2+
 Url: http://sdl-ball.sourceforge.net/
 Source0: http://dl.sourceforge.net/sourceforge/%name/%name-%version.tar.bz2
-#Source1: %name.png
-#Source2: %name.desktop
 Patch: %name.as-needed.patch
 
 # Automatically added by buildreq on Wed Nov 12
@@ -42,6 +40,7 @@ need that)
 rm -f *.o
 sed -i '/#include <iostream>/a\
 #include <unistd.h>
+s/,;/;/g
 ' main.cpp
 # TODO desktop
 
@@ -67,6 +66,9 @@ cp -a themes %buildroot%_gamesdatadir/%name
 %_libdir/gimp/2.0/plug-ins/*
 
 %changelog
+* Tue Feb 25 2014 Fr. Br. George <george@altlinux.ru> 1.01-alt4
+- Fix build
+
 * Mon Oct 29 2012 Fr. Br. George <george@altlinux.ru> 1.01-alt3
 - Fix build
 
