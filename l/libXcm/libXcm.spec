@@ -1,16 +1,14 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libXcm
-Version:        0.5.1
-Release:        alt1_4
+Version:        0.5.2
+Release:        alt1_1
 Summary:        X Color Management Library
-
-Group:          System/Libraries
 License:        MIT
 URL:            http://www.oyranos.org
 Source0:        http://downloads.sourceforge.net/oyranos/libXcm-%{version}.tar.bz2
-
-BuildRequires: xorg-util-macros
-BuildRequires: autoconf automake libtool
+BuildRequires:  xorg-util-macros
+BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  libXfixes-devel
@@ -19,39 +17,30 @@ BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageprot
 BuildRequires:  xorg-xtrans-devel
 Source44: import.info
 
-
 %description
 The libXcm library is a reference implementation of the net-color spec.
 It allows to attach color regions to X windows to communicate with color
 servers.
 
-
 %package        devel
+Group: Development/C
 Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-The %{name}-devel package contains libraries and header files for
+This package contains libraries and header files for
 developing applications that use %{name}.
-
 
 %prep
 %setup -q
 
-
 %build
-autoreconf -v --install --force
-CFLAGS="$RPM_OPT_FLAGS -fPIC"
-
 %configure --disable-static --enable-shared
 make %{?_smp_mflags}
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-
+make install DESTDIR=%{buildroot} INSTALL="install -p"
+find %{buildroot} -name '*.la' -delete
 
 %files
 %doc AUTHORS COPYING ChangeLog README
@@ -59,14 +48,16 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files devel
 %doc docs/*.txt
-%dir %{_includedir}/X11/Xcm
-%{_includedir}/X11/Xcm/*.h
+%{_datadir}/cmake/Modules/FindXcm.cmake
+%{_includedir}/X11/Xcm/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/xcm.pc
 %{_mandir}/man3/*.3.*
 
-
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_4
 - update to new release by fcimport
 
