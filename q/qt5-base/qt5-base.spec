@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -39,6 +39,7 @@ Patch2: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
+Patch1002: alt-dont-require-plugin-file.patch
 
 # macros
 %define _qt5 %gname
@@ -304,6 +305,7 @@ Widgets library for the Qt%major toolkit
 %patch2 -p1 -b .QTBUG-35459
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
+%patch1002 -p1 -b .plugin-file
 bin/syncqt.pl -private \
     -module QtCore \
     -module QtGui \
@@ -705,6 +707,9 @@ done
 
 
 %changelog
+* Tue Feb 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt3
+- don't require plugin files for cmake scripts (ALT#29844)
+
 * Thu Feb 20 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt2
 - build docs
 
