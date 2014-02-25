@@ -2,8 +2,8 @@
 %def_enable docs
 
 Name: lib%_name
-Version: 1.2.3
-Release: alt1.1
+Version: 1.2.4
+Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -15,8 +15,7 @@ Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
-# fc patches
-Patch: graphite-arm-nodefaultlibs.patch
+# fc patch
 Patch1: graphite2-1.2.0-cmakepath.patch
 
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
@@ -43,7 +42,6 @@ Includes and definitions for developing with Graphite2.
 
 %prep
 %setup -n %_name-%version
-%patch -p1 -b .arm
 %patch1 -p1 -b .cmake
 
 %build
@@ -76,6 +74,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Tue Feb 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1.1
 - obsoletes/provides graphite2 package
 
