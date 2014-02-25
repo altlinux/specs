@@ -4,7 +4,7 @@
 
 Name: perl-FCGI-EV
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Summary:  Perl FastCGI protocol implementation for use in EV-based applications
 
@@ -19,7 +19,9 @@ Source: %real_name-%version.tar
 
 BuildArch: noarch
 
-AutoReqProv: perl, yes
+# This one is missed by find-requires
+Requires: perl(EV/ADNS.pm)
+
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Fri Feb 21 2014
@@ -44,5 +46,8 @@ in EV-based applications.
 %perl_vendor_privlib/FCGI/EV*
 
 %changelog
+* Tue Feb 25 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt2
+- Adding missed dependancy on EV::ADNS module
+
 * Fri Feb 21 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt1
 - Initial build for ALT Linux Sisyphus
