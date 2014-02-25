@@ -2,17 +2,21 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
+%define fedora 20
 Name:		perl-Env-Sanctify
 Summary:	Lexically scoped sanctification of %%ENV
 Version:	1.12
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Env-Sanctify/
-Source:	http://www.cpan.org/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/B/BI/BINGOS/Env-Sanctify-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module
+BuildRequires:	perl(strict.pm)
+BuildRequires:	perl(warnings.pm)
 # Test suite
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(IO/Handle.pm)
@@ -46,13 +50,21 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 # %{_fixperms} %{buildroot}
 
 %check
+# Pod test modules too old prior to RHEL-7
+%if 0%{?fedora} || 0%{?rhel} > 6
 make test AUTHOR_TESTING=1 RELEASE_TESTING=1
+%else
+make test AUTHOR_TESTING=1
+%endif
 
 %files
 %doc Changes LICENSE README examples/
 %{perl_vendor_privlib}/Env/
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
