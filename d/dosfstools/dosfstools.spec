@@ -1,6 +1,6 @@
 Name: dosfstools
-Version: 3.0.24
-Release: alt2
+Version: 3.0.25
+Release: alt1
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
@@ -47,6 +47,9 @@ code.
 %doc doc/*
 
 %changelog
+* Tue Feb 25 2014 Anton Farygin <rider@altlinux.ru> 3.0.25-alt1
+- new version
+
 * Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 3.0.24-alt2
 - synced build options with fedora (thx aen@)
 
