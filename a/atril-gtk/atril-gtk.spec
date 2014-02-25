@@ -6,8 +6,8 @@
 %def_disable introspection
 
 Name:           %_name-gtk
-Version:        1.6.1
-Release:        alt1
+Version:        1.7.90
+Release:        alt1.git20140225
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -25,14 +25,13 @@ BuildRequires:  libglade2-devel
 BuildRequires:  libtiffxx-devel libtiff-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
-BuildRequires:  mate-doc-utils
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-icon-theme-devel
 BuildRequires:  libtool
-BuildRequires:  gtk-doc
 BuildRequires:  intltool
 BuildRequires:  t1lib-devel
+BuildRequires:  yelp-tools
 %{?_enable_introspection:BuildRequires:  gobject-introspection-devel}
 
 BuildRequires:  mate-common
@@ -138,7 +137,8 @@ NOCONFIGURE=1 ./autogen.sh
 	--with-gtk=2.0 \
 	%{subst_enable introspection} \
 	--without-keyring \
-	--disable-caja      
+	--disable-caja \
+	--disable-gtk-doc
 
 %make_build V=1 LIBTOOL=/usr/bin/libtool
 
@@ -160,7 +160,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 
 %files -f %_name.lang
 %{_bindir}/*
-%{_datadir}/mate-document-viewer/
+%{_datadir}/atril/
 %_desktopdir/%_name.desktop
 %{_datadir}/icons/hicolor/*/apps/atril.*
 %{_mandir}/man1/atril*.1.*
@@ -170,9 +170,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
 %{_datadir}/MateConf/gsettings/atril.convert
 %{_datadir}/thumbnailers/atril.thumbnailer
-%{_datadir}/mate/help/atril/
-#%_defaultdocdir/mate/atril/
-%{_datadir}/omf/atril/
+%{_datadir}/help/*/*
 
 %files -n lib%name
 %doc README COPYING NEWS AUTHORS
@@ -223,6 +221,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Tue Feb 25 2014 Mikhail Efremov <sem@altlinux.org> 1.7.90-alt1.git20140225
+- Upstream git snapshot (master branch).
+
 * Mon Aug 12 2013 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt1
 - Fix descriptions.
 - Updated to 1.6.1.
