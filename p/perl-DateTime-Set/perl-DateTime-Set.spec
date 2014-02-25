@@ -4,12 +4,12 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
 Version:        0.3400
-Release:        alt1
+Release:        alt1_1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Set/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
 Patch0:         DateTime-Set-0.32-version.patch
 BuildArch:      noarch
 # Build
@@ -70,6 +70,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Set/
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.3400-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.3400-alt1
 - automated CPAN update
 
