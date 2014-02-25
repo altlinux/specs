@@ -4,7 +4,7 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt1.qa1
+Release: alt2
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: GPL
@@ -17,6 +17,16 @@ Source1: iperf-tcp.init
 Source2: iperf-udp.init
 Source3: iperf.sysconfig
 
+Patch0: high-latency.patch
+Patch1: 006-bidirectional-tcp-server.patch
+Patch2: 001-cast-to-max_size_t-instead-of-int.patch
+Patch3: 002-typo-recieve.patch
+Patch4: 003-fix-hyphen-used-as-minus-sign.patch
+Patch5: 005-iperf-die-on-bind-fail.patch
+Patch6: 010-fix-format-security-ftbfs.patch
+Patch7: 011-ipv6_mcast_check.patch
+
+
 BuildRequires: gcc-c++
 
 %description
@@ -26,6 +36,13 @@ datagram loss.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %configure
@@ -65,6 +82,9 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Mon Feb 24 2014 Evgenii Terechkov <evg@altlinux.org> 2.0.5-alt2
+- sync patches with Debian Wheezy
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
