@@ -16,7 +16,15 @@
 %def_enable bootchart
 %def_enable polkit
 %def_enable efi
-%def_without python
+%def_enable networkd
+%def_disable kdbus
+%def_with python
+%def_enable gtk_doc
+
+%def_disable seccomp
+%def_disable ima
+%def_enable selinux
+%def_disable apparmor
 
 %ifarch ia64 %ix86 ppc64 x86_64
 %define mmap_min_addr 65536
@@ -30,8 +38,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 208
-Release: alt4
+Version: 210
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -58,7 +66,6 @@ Source24: var-run.mount
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source33: udev.filetrigger
-Source29: tmpfile-systemd-startup-nologin.conf
 Source30: 49-coredump-null.conf
 Source31: 60-raw.rules
 # ALTLinux's default preset policy
@@ -84,6 +91,13 @@ Source56: systemd-analyze-bash3
 Source57: systemd-coredumpctl-bash3
 Source58: timedatectl-bash3
 Source59: udevadm-bash3
+Source60: bootctl-bash3
+Source61: busctl-bash3
+Source62: machinectl-bash3
+Source63: systemd-delta-bash3
+
+
+
 
 %define dbus_ver 1.4.6
 
@@ -98,12 +112,14 @@ BuildRequires: libattr-devel
 BuildRequires: xsltproc
 BuildRequires: docbook-style-xsl docbook-dtds
 BuildRequires: libdbus-devel >= %dbus_ver
-BuildRequires: libselinux-devel
+%{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 1.0.0}
+%{?_enable_selinux:BuildRequires: pkgconfig(libselinux) >= 2.1.9}
+%{?_enable_apparmor:BuildRequires: pkgconfig(libapparmor)}
 BuildRequires: libaudit-devel
 BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
-BuildRequires: libkmod-devel >= 14 kmod
+BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 %{?_with_python:BuildRequires: python-devel python-module-sphinx}
 BuildRequires: quota
@@ -117,7 +133,6 @@ BuildRequires: libgcrypt-devel
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
-Requires: libudev1 = %epoch:%version-%release
 Requires: libnss-myhostname = %epoch:%version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
@@ -125,17 +140,12 @@ Requires: acl
 
 # Requires: selinux-policy >= 3.8.5
 
-Requires: libsystemd-daemon = %epoch:%version-%release
-Requires: libsystemd-login = %epoch:%version-%release
-Requires: libsystemd-journal = %epoch:%version-%release
 Requires: %name-utils = %epoch:%version-%release
+Requires: journalctl = %epoch:%version-%release
 
 # /*bin/journalctl is in a subpackage.
 # We want to be able to install a new journalctl and use the old (stable) systemd.
 Conflicts: journalctl < %epoch:%version-%release
-# We (our post-script) expect it to be at this path; it may change in future:
-Requires(post): /sbin/journalctl
-Requires: /sbin/journalctl
 
 # Copy from SysVinit
 PreReq: coreutils
@@ -156,90 +166,51 @@ state, maintains mount and automount points and implements an
 elaborate transactional dependency-based service control logic. It can
 work as a drop-in replacement for sysvinit.
 
-%package -n libsystemd-daemon
+%package -n libsystemd
 Group: System/Libraries
-Summary: Systemd Daemon Utility Library
+Summary: Systemd Library
 
-%description -n libsystemd-daemon
-The sd-daemon library provides a reference implementation of various
+Provides: libsystemd-daemon = %epoch:%version-%release
+Provides: libsystemd-login = %epoch:%version-%release
+Provides: libsystemd-id128 = %epoch:%version-%release
+Provides: libsystemd-journal = %epoch:%version-%release
+
+Obsoletes: libsystemd-daemon < %epoch:%version-%release
+Obsoletes: libsystemd-login < %epoch:%version-%release
+Obsoletes: libsystemd-id128 < %epoch:%version-%release
+Obsoletes: libsystemd-journal < %epoch:%version-%release
+
+%description -n libsystemd
+The libsystemd library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
 
 
-This package contains the development files.
-
-%package -n libsystemd-login
-Group: System/Libraries
-Summary: Systemd Login Utility Library
-Requires: libsystemd-daemon = %epoch:%version-%release
-
-%description -n libsystemd-login
-The libsystemd-login library provides an interface for the
-systemd-logind service which is used to track user sessions and seats.
-
-%package -n libsystemd-id128
-Group: System/Libraries
-Summary: Systemd 128 Bit ID Utility Library
-Requires: libsystemd-daemon = %epoch:%version-%release
-
-%description -n libsystemd-id128
-The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
-
-%package -n libsystemd-journal
-Group: System/Libraries
-Summary: Systemd Journal Utility Library
-Requires: libsystemd-daemon = %epoch:%version-%release
-
-%description -n libsystemd-journal
-The libsystemd-journal library provides an interface for the systemd journal service.
-
-%package -n libsystemd-daemon-devel
+%package -n libsystemd-devel
 Group: Development/C
-Summary: Development headers for systemd Daemon Utility Library
-License: MIT
-Requires: libsystemd-daemon = %epoch:%version-%release
+Summary: Development headers for systemd Library
+License: LGPLv2+ and MIT
 
-%description -n libsystemd-daemon-devel
-The sd-daemon library provides a reference implementation of various
+Requires: libsystemd = %epoch:%version-%release
+
+Provides: libsystemd-daemon-devel = %epoch:%version-%release
+Provides: libsystemd-journal-devel = %epoch:%version-%release
+Provides: libsystemd-login-devel = %epoch:%version-%release
+Provides: libsystemd-id128-devel = %epoch:%version-%release
+
+Obsoletes: libsystemd-daemon-devel < %epoch:%version-%release
+Obsoletes: libsystemd-journal-devel < %epoch:%version-%release
+Obsoletes: libsystemd-login-devel < %epoch:%version-%release
+Obsoletes: libsystemd-id128-devel < %epoch:%version-%release
+
+%description -n libsystemd-devel
+The libsystemd library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
-
-%package -n libsystemd-login-devel
-Group: Development/C
-Summary: Development headers for systemd Login Utility Library
-Requires: libsystemd-login = %epoch:%version-%release
-
-%description -n libsystemd-login-devel
-The libsystemd-login library provides an interface for the
-systemd-logind service which is used to track user sessions and seats.
-
-This package contains the development files.
-
-%package -n libsystemd-id128-devel
-Group: Development/C
-Summary: Development headers for systemd 128 Bit ID Utility Library
-Requires: libsystemd-id128 = %epoch:%version-%release
-
-%description -n libsystemd-id128-devel
-The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
-
-This package contains the development files.
-
-%package -n libsystemd-journal-devel
-Group: Development/C
-Summary: Development headers for systemd Journal Utility Library
-Requires: libsystemd-journal = %epoch:%version-%release
-Requires: libsystemd-id128-devel = %epoch:%version-%release
-
-%description -n libsystemd-journal-devel
-The libsystemd-journal library provides an interface for the systemd journal service.
-
-This package contains the development files.
 
 %package -n libnss-myhostname
 Group: System/Libraries
 Summary: glibc plugin for local system host name resolution
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
-
 
 %description -n libnss-myhostname
 nss-myhostname is a plugin for the GNU Name Service Switch (NSS)
@@ -325,7 +296,7 @@ Tool to query the journal from systemd.
 %package coredump
 Group: System/Servers
 Summary: systemd-coredump and systemd-coredumpctl utils
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description coredump
 systemd-coredump and systemd-coredumpctl utils.
@@ -335,9 +306,9 @@ Summary: Bash completion for systemd utils
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: systemd = %epoch:%version-%release
+Requires: %name = %epoch:%version-%release
 # Not to loose it on upgrades after the split.
-Requires: bash-completion-journalctl
+Requires: bash-completion-journalctl = %epoch:%version-%release
 
 %description -n bash-completion-%name
 Bash completion for %name.
@@ -355,7 +326,7 @@ Summary: Bash completion for journalctl from systemd
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: /sbin/journalctl
+Requires: journalctl = %epoch:%version-%release
 Conflicts: journalctl < %epoch:%version-%release
 # File conflict with the releases before splitting out journalctl.
 # 0:208-alt3 was the first release when the pkg was split in Sisyphus.
@@ -368,7 +339,7 @@ Bash completion for journalctl from systemd.
 Summary: Python Bindings for systemd
 License: LGPLv2+
 Group: Development/Python
-Requires: libsystemd-journal = %epoch:%version-%release
+Requires: libsystemd = %epoch:%version-%release
 
 %description -n python-module-%name
 This package contains python binds for systemd APIs
@@ -377,11 +348,10 @@ This package contains python binds for systemd APIs
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
-PreReq: shadow-utils dmsetup kmod >= 14 util-linux >= 2.20 losetup >= 2.19.1
+PreReq: shadow-utils dmsetup kmod >= 15 util-linux >= 2.20 losetup >= 2.19.1
 PreReq: udev-rules = %epoch:%version-%release
 PreReq: udev-hwdb = %epoch:%version-%release
 PreReq: systemd-utils = %epoch:%version-%release
-Requires: libudev1 = %epoch:%version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %epoch:%version-%release
@@ -401,7 +371,6 @@ Summary: Extra rules and tools for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 Requires: udev = %epoch:%version-%release
-Requires: libudev1 = %epoch:%version-%release
 
 %description -n udev-extras
 The udev-extras package contains an additional rules and tools
@@ -469,7 +438,6 @@ Summary: Shared library to access udev device information
 Group: System/Libraries
 License: LGPLv2.1+
 Conflicts: libudev < 0:181-alt5
-Requires: libsystemd-daemon = %epoch:%version-%release
 
 %description -n libudev1
 This package provides shared library to access udev device information
@@ -482,6 +450,15 @@ Requires: libudev1 = %epoch:%version-%release
 
 %description -n libudev-devel
 Shared library and headers for libudev
+
+%package -n libudev-devel-doc
+Summary: Development documentaion for libudev
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: libudev-devel < %version
+
+%description -n libudev-devel-doc
+This package provides development documentations for libudev.
 
 %package -n libgudev
 Summary: GObject bindings for libudev
@@ -506,6 +483,15 @@ Requires: libgudev = %epoch:%version-%release
 
 %description -n libgudev-devel
 Shared library and headers for libgudev
+
+%package -n libgudev-devel-doc
+Summary: Development documentaion for gudev
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: libgudev-devel < %version
+
+%description -n libgudev-devel-doc
+This package provides development documentations for gudev.
 
 %package -n libgudev-gir-devel
 Summary: GObject introspection devel data for the GUdev library
@@ -541,9 +527,13 @@ intltoolize --force --automake
 	--with-pamlibdir=/%_lib/security \
 	--enable-split-usr \
 	--with-sysvinit-path=/etc/rc.d/init.d \
+	--with-sysvrcnd-path=/etc/rc.d \
 	--with-rc-local-script-path-start=/etc/rc.d/rc.local \
+	--with-debug-shell=/bin/bash \
+	--enable-compat-libs \
 	--with-kbd-loadkeys=/bin/loadkeys \
 	--with-kbd-setfont=/bin/setfont \
+	--with-telinit=/sbin/telinit \
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
 	%{subst_enable vconsole} \
@@ -559,7 +549,14 @@ intltoolize --force --automake
 	%{subst_enable bootchart} \
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
+	%{subst_enable networkd} \
+	%{subst_enable kdbus} \
+	%{subst_enable seccomp} \
+	%{subst_enable ima} \
+	%{subst_enable selinux} \
+	%{subst_enable apparmor} \
 	--with-firmware-path="/lib/firmware/updates:/lib/firmware" \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--enable-introspection
 
 %make_build
@@ -567,11 +564,15 @@ intltoolize --force --automake
 %install
 %make DESTDIR=%buildroot install
 
+%find_lang %name
+
+# fixed upstream wrong symlink
+rm -f %buildroot%_bindir/systemd-stdio-bridge
+ln -r -s %buildroot/lib/systemd/systemd-bus-proxyd %buildroot%_bindir/systemd-stdio-bridge
+
 # Make sure these directories are properly owned
-mkdir -p %buildroot%_unitdir/basic.target.wants
-mkdir -p %buildroot%_unitdir/default.target.wants
-mkdir -p %buildroot%_unitdir/dbus.target.wants
-mkdir -p %buildroot%_unitdir/syslog.target.wants
+mkdir -p %buildroot%_unitdir/{basic,default,dbus,syslog,poweroff,rescue,reboot}.target.wants
+
 
 install -m644 %SOURCE2 %buildroot%_unitdir/rc-local.service
 ln -s rc-local.service %buildroot%_unitdir/local.service
@@ -602,8 +603,8 @@ ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
 # we don't have those directories symlinked
 install -m644 %SOURCE23 %buildroot%_unitdir/var-lock.mount
 install -m644 %SOURCE24 %buildroot%_unitdir/var-run.mount
-ln -s ../var-lock.mount %buildroot%_unitdir/local-fs.target.wants
-ln -s ../var-run.mount %buildroot%_unitdir/local-fs.target.wants
+ln -r -s %buildroot%_unitdir/var-lock.mount %buildroot%_unitdir/local-fs.target.wants
+ln -r -s %buildroot%_unitdir/var-run.mount %buildroot%_unitdir/local-fs.target.wants
 
 # turn off tmp.mount by default (ALT#29066)
 rm -f %buildroot%_unitdir/tmp.mount
@@ -612,14 +613,14 @@ rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
-ln -s ../lib/systemd/systemd %buildroot/sbin/init
-ln -s ../lib/systemd/systemd %buildroot/sbin/systemd
-ln -s ../sbin/systemctl %buildroot/sbin/reboot
-ln -s ../sbin/systemctl %buildroot/sbin/halt
-ln -s ../sbin/systemctl %buildroot/sbin/poweroff
-ln -s ../sbin/systemctl %buildroot/sbin/shutdown
-ln -s ../sbin/systemctl %buildroot/sbin/telinit
-ln -s ../sbin/systemctl %buildroot/sbin/runlevel
+ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/init
+ln -r -s %buildroot/lib/systemd/systemd %buildroot/sbin/systemd
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/reboot
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/halt
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/poweroff
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/shutdown
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/telinit
+ln -r -s %buildroot/sbin/systemctl %buildroot/sbin/runlevel
 
 ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
 ln -r -s %buildroot/sbin/systemctl %buildroot/bin/
@@ -629,20 +630,27 @@ ln -r -s %buildroot/sbin/journalctl %buildroot/bin/
 rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
-ln -s ../remote-fs.target %buildroot%_unitdir/multi-user.target.wants
-ln -s ../systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
-ln -s ../quotaon.service %buildroot%_unitdir/local-fs.target.wants
+ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
+ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
+ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
 mkdir -p %buildroot%_unitdir/getty.target.wants
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty1.service
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty2.service
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty3.service
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.service
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
-ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty1.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty2.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty3.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
+ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
+
+# Temporary workaround for update runlevel
+ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/poweroff.target.wants/
+ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/rescue.target.wants/
+ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/multi-user.target.wants/
+ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/graphical.target.wants/
+ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/reboot.target.wants/
 
 # move systemd-vconsole-setup.service from sysinit.target.wants to getty.target.wants
 rm -f %buildroot%_unitdir/sysinit.target.wants/systemd-vconsole-setup.service
-ln -s ../systemd-vconsole-setup.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup.service
+ln -r -s %buildroot%_unitdir/systemd-vconsole-setup.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup.service
 
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
@@ -699,6 +707,10 @@ install -m644 %SOURCE56 %buildroot%_sysconfdir/bash_completion.d/systemd-analyze
 install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/systemd-coredumpctl
 install -m644 %SOURCE58 %buildroot%_sysconfdir/bash_completion.d/timedatectl
 install -m644 %SOURCE59 %buildroot%_sysconfdir/bash_completion.d/udevadm
+install -m644 %SOURCE60 %buildroot%_sysconfdir/bash_completion.d/bootctl
+install -m644 %SOURCE61 %buildroot%_sysconfdir/bash_completion.d/busctl
+install -m644 %SOURCE62 %buildroot%_sysconfdir/bash_completion.d/machinectl
+install -m644 %SOURCE63 %buildroot%_sysconfdir/bash_completion.d/systemd-delta
 
 # Make sure the ghost-ing below works
 touch %buildroot%_sysconfdir/systemd/system/runlevel2.target
@@ -711,9 +723,10 @@ touch %buildroot%_sysconfdir/systemd/system/runlevel5.target
 touch %buildroot%_sysconfdir/hostname
 touch %buildroot%_sysconfdir/vconsole.conf
 touch %buildroot%_sysconfdir/locale.conf
-touch %buildroot%_sysconfdir/os-release
-touch %buildroot%_sysconfdir/machine-id
 touch %buildroot%_sysconfdir/machine-info
+
+# fix pam.d/systemd-user for ALTLinux
+%__subst 's,system-auth,common-login,g' %buildroot%_sysconfdir/pam.d/systemd-user
 
 # Install ALTLinux default preset policy
 mkdir -p %buildroot/lib/systemd/system-preset
@@ -737,10 +750,6 @@ export SYSTEMD_PAGER="/usr/bin/less -FR"
 EOF
 chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
 
-# move libnss_myhostname to /lib
-mv %buildroot%_libdir/libnss_myhostname.so.2 %buildroot/%_lib/libnss_myhostname.so.2
-
-install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-null.conf
 # rpm posttrans filetriggers
 install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
@@ -771,8 +780,8 @@ ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 #ln -s systemd-udev-settle.service %buildroot%_unitdir/udevd-final.service
 
 # compatibility symlinks to udevd binary
-ln -s ../systemd/systemd-udevd %buildroot/lib/udev/udevd
-ln -s ../lib/systemd/systemd-udevd %buildroot/sbin/udevd
+ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/lib/udev/udevd
+ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/sbin/udevd
 
 install -p -m644 %SOURCE21 %buildroot/lib/udev/rules.d/40-ignore-remove.rules
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
@@ -813,7 +822,7 @@ install -p -m755 %SOURCE42 %buildroot/lib/udev/
 install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
 install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
-ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-name-slot.rules
+ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
@@ -826,10 +835,22 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 %post
 /sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
-/lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
 /sbin/systemctl daemon-reexec >/dev/null 2>&1 || :
 /sbin/journalctl --update-catalog >/dev/null 2>&1 || :
-/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx /var/log/journal/ >/dev/null 2>&1 || :
+
+# Move old stuff around in /var/lib
+[ -d %_localstatedir/lib/systemd/random-seed ] rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/random-seed ] mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/backlight] mv %_localstatedir/lib/backlight %_localstatedir/lib/systemd/backlight >/dev/null 2>&1 || :
+
+/lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
+
+# Make sure new journal files will be owned by the "systemd-journal" group
+chgrp systemd-journal %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+chmod g+s %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+
+# Apply ACL to the journal directory
+/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Try to read default runlevel from the old inittab if it exists
@@ -889,6 +910,10 @@ update_chrooted all
 %_sbindir/groupadd -r -f systemd-journal-gateway ||:
 %_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
     -d %_localstatedir/log/journal -s /dev/null -r systemd-journal-gateway >/dev/null 2>&1 ||:
+
+%post journal-gateway
+%post_service systemd-journal-gatewayd
+
 %endif
 
 %pre -n udev
@@ -903,7 +928,7 @@ update_chrooted all
 %preun -n udev
 %preun_service udevd
 
-%files
+%files -f %name.lang
 %dir %_sysconfdir/systemd
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
@@ -911,7 +936,7 @@ update_chrooted all
 
 %_sysconfdir/profile.d/systemd.sh
 
-/lib/tmpfiles.d/systemd-startup-nologin.conf
+/lib/tmpfiles.d/systemd-nologin.conf
 /lib/tmpfiles.d/systemd.conf
 
 %_sysconfdir/xdg/systemd
@@ -922,12 +947,8 @@ update_chrooted all
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
 %ghost %config(noreplace) %_sysconfdir/locale.conf
-%ghost %config(noreplace) %_sysconfdir/os-release
-%ghost %config(noreplace) %_sysconfdir/machine-id
 %ghost %config(noreplace) %_sysconfdir/machine-info
 
-# Make sure we don't remove runlevel targets from F14 alpha installs,
-# but make sure we don't create then anew.
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel2.target
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel3.target
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel4.target
@@ -978,7 +999,6 @@ update_chrooted all
 %_datadir/systemd
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
-%_datadir/dbus-1/interfaces/*.xml
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %endif
@@ -1036,17 +1056,17 @@ update_chrooted all
 %exclude %_bindir/kernel-install
 %exclude %_man8dir/kernel-install.*
 
-%files -n libsystemd-daemon
-/%_lib/libsystemd-daemon.so.*
+%files -n libsystemd
+/%_lib/*.so.*
+%exclude /%_lib/*udev*.so.*
+%exclude /%_lib/libnss_myhostname.so.2
 
-%files -n libsystemd-login
-/%_lib/libsystemd-login.so.*
-
-%files -n libsystemd-id128
-/%_lib/libsystemd-id128.so.*
-
-%files -n libsystemd-journal
-/%_lib/libsystemd-journal.so.*
+%files -n libsystemd-devel
+%_libdir/*.so
+%exclude %_libdir/*udev*.so
+%_pkgconfigdir/*.pc
+%exclude %_pkgconfigdir/*udev*.pc
+%_includedir/systemd
 
 %if_enabled myhostname
 %files -n libnss-myhostname
@@ -1056,32 +1076,8 @@ update_chrooted all
 
 %files devel
 %doc LICENSE.LGPL2.1 LICENSE.MIT
-%dir %_includedir/systemd
-%_includedir/systemd/sd-shutdown.h
 %_datadir/pkgconfig/systemd.pc
 %_man3dir/*
-
-%files -n libsystemd-daemon-devel
-%doc LICENSE.MIT
-%_libdir/libsystemd-daemon.so
-%_pkgconfigdir/libsystemd-daemon.pc
-%_includedir/systemd/sd-daemon.h
-
-%files -n libsystemd-login-devel
-%_libdir/libsystemd-login.so
-%_pkgconfigdir/libsystemd-login.pc
-%_includedir/systemd/sd-login.h
-
-%files -n libsystemd-id128-devel
-%_libdir/libsystemd-id128.so
-%_pkgconfigdir/libsystemd-id128.pc
-%_includedir/systemd/sd-id128.h
-
-%files -n libsystemd-journal-devel
-%_libdir/libsystemd-journal.so
-%_pkgconfigdir/libsystemd-journal.pc
-%_includedir/systemd/sd-journal.h
-%_includedir/systemd/sd-messages.h
 
 %files sysvinit
 /sbin/init
@@ -1193,6 +1189,9 @@ update_chrooted all
 %_pkgconfigdir/libudev.pc
 %_datadir/pkgconfig/udev.pc
 
+%files -n libudev-devel-doc
+%_datadir/gtk-doc/html/libudev
+
 %files -n libgudev
 %_libdir/libgudev-*.so.*
 
@@ -1200,6 +1199,9 @@ update_chrooted all
 %_includedir/gudev-1.0
 %_libdir/libgudev-*.so
 %_pkgconfigdir/gudev-*.pc
+
+%files -n libgudev-devel-doc
+%_datadir/gtk-doc/html/gudev
 
 %files -n libgudev-gir
 %_libdir/girepository-1.0/*.typelib
@@ -1251,7 +1253,7 @@ update_chrooted all
 /lib/udev/rule_generator.functions
 
 %exclude %_sysconfdir/udev/rules.d/70-persistent-*.rules
-%exclude %_sysconfdir/udev/rules.d/80-net-name-slot.rules
+%exclude %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
 %exclude /lib/udev/rules.d/61-accelerometer.rules
@@ -1273,11 +1275,28 @@ update_chrooted all
 
 %files -n udev-rule-generator-net
 %config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
-%_sysconfdir/udev/rules.d/80-net-name-slot.rules
+%_sysconfdir/udev/rules.d/80-net-setup-link.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Feb 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt1
+- 210
+- build systemd-networkd
+- drop systemd-startup-nologin.conf tmpfile, used upstream systemd-nologin.conf
+- add and define conditions for seccomp(disabled), IMA(disabled), selinux(enabled), apparmor(disabled)
+- updated bash3 completions
+- all systemd-* libraries moved to libsystemd package
+- update %post
+- renamed 80-net-name-slot.rules to 80-net-setup-link.rules
+- give systemd-logind access to /proc when it's mounted with hidepid option
+- /boot -> /boot/efi in efi-boot-generator
+- return time zone setup from /etc/sysconfig/clock
+- return hostname setup from /etc/sysconfig/network
+- build python module
+- build gtk-doc packages (libudev-devel-doc, libgudev-devel-doc)
+- delete old dir /var/lib/systemd/random-seed
+
 * Thu Jan  2 2014 Ivan Zakharyaschev <imz@altlinux.org> 1:208-alt4
 - declare the file conflicts with systemd pkgs before the split of journalctl
   (Epoch 1 for the split pkg, so that the new split journalctl from Sisyphus 
