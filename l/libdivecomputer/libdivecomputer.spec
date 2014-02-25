@@ -5,14 +5,14 @@ Group: Other
 #global        snapver    {snapdate}.git{snaphash}
 
 Name:           libdivecomputer
-Version:        0.4.1
+Version:        0.4.2
 #Release:        2.{snapver}{?dist}
-Release:        alt1_2
+Release:        alt1_1
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
-URL:            http://divesoftware.org/libdc/
-Source0:        http://divesoftware.org/libdc/releases/%{name}-%{version}.tar.gz
+URL:            http://libdivecomputer.org
+Source0:        http://libdivecomputer.org/releases/%{name}-%{version}.tar.gz
 # Sources generated using:
 # git clone git://libdivecomputer.git.sourceforge.net/gitroot/libdivecomputer/libdivecomputer && cd libdivecomputer
 # git archive --format=tar --prefix=libdivecomputer-4bc477b/ 4bc477b | xz -z > libdivecomputer-0.1.0-20120717git4bc477b.tar.xz
@@ -128,7 +128,11 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 %doc
 %{_libdir}/*.a
 
+
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_2
 - update to new release by fcimport
 
