@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(freetype2) pkgconfig(harfbuzz)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(freetype2)
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:		libeasyfc
-Version:	0.12.1
+Version:	0.13.0
 Release:	alt1_1
 Summary:	Easy configuration generator interface for fontconfig
 
@@ -11,9 +12,9 @@ License:	LGPLv3+
 URL:		http://tagoh.bitbucket.org/libeasyfc/
 Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
 
-BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.91 libharfbuzz-devel
+BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel
 BuildRequires:	gettext
-Requires:	fontconfig >= 2.10.91
+Requires:	fontconfig >= 2.10.92
 Source44: import.info
 
 %description
@@ -59,7 +60,6 @@ applications with libeasyfc-gobject.
 %prep
 %setup -q
 
-sed -i -e s,FONTCONFIG_REQUIRED=2.10.92,FONTCONFIG_REQUIRED=2.10.91, requires
 
 %build
 %configure --disable-static
@@ -93,6 +93,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_1
+- update to new release by fcimport
+
 * Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.1-alt1_1
 - fixed build
 
