@@ -1,6 +1,6 @@
 Name: python-module-enchant
 Version: 1.6.5
-Release: alt3
+Release: alt4
 # XXX this is ugly, need to change when python3 macros set developes
 %ifdef setup_python_module
 %setup_python_module enchant
@@ -33,6 +33,7 @@ PyEnchant GUI dialogs
 
 %prep
 %setup -q -n pyenchant-%version
+sed -i '/use_setuptools/d' setup.py
 
 %build
 %python_build
@@ -52,6 +53,9 @@ PyEnchant GUI dialogs
 %endif
 
 %changelog
+* Tue Feb 25 2014 Fr. Br. George <george@altlinux.ru> 1.6.5-alt4
+- Fix build
+
 * Wed May 22 2013 Fr. Br. George <george@altlinux.ru> 1.6.5-alt3
 - Change specsubst scheme
 - Separate GUI dialogs
