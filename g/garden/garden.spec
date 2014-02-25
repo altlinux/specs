@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/update-desktop-database
 # END SourceDeps(oneline)
 Name:           garden
 Version:        1.0.8
-Release:        alt2_8
+Release:        alt2_10
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
 Group:          Games/Other
@@ -11,11 +11,13 @@ License:        GPLv3+
 URL:            http://garden.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:         garden-dso.patch
+Patch1:         garden-printf-format.patch
 
 BuildRequires:  liballegro-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  automake
 BuildRequires:  autoconf
+BuildRequires:  libtool
 Requires:       liballegro4.4
 Source44: import.info
 
@@ -31,8 +33,10 @@ you are dealing with a true piece of art...
 # patch for DSO-linking
 # https://sourceforge.net/tracker/?func=detail&aid=2982590&group_id=242667&atid=1121672
 %patch0 -p1 -b .dso
+%patch1 -p0 -b .format
 
 %build
+autoreconf -if
 %configure 
 make %{?_smp_mflags}
 
@@ -51,6 +55,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_8
 - update to new release by fcimport
 
