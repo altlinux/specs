@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Tue Feb 25 2014 Led <led@altlinux.ru> 3.10.32-alt3
+- updated:
+  + fix-drivers-gpu-drm--nouveau
+  + feat-drivers-misc--knem
+
 * Sun Feb 23 2014 Led <led@altlinux.ru> 3.10.32-alt2
 - build with fixed zfs extmod
 
