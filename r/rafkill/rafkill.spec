@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           rafkill
 Version:        1.2.3
-Release:        alt4_12
+Release:        alt4_13
 Summary:        Top-down shooter with powerups
 Group:          Games/Other
 License:        GPLv2
@@ -15,6 +15,7 @@ Source3:        rafkill.png
 Patch0:         rafkill-1.2.2-shatter-crash.patch
 Patch1:         rafkill-1.2.2-gcc43.patch
 Patch2:		rafkill-1.2.3-gcc470.patch
+Patch3:		rafkill-printf-format.patch
 BuildRequires:  liballegro-devel dumb-devel scons desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -30,6 +31,7 @@ powerups or even a complete new ship with the points you've earned sofar.
 %patch0 -p1 -z .shatter
 %patch1 -p1 -z .gcc43
 %patch2 -p0 -z .gcc470
+%patch3 -p0 -z .format
 # sigh hack hack hack
 FLAGS=""
 for i in $RPM_OPT_FLAGS; do
@@ -75,6 +77,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_13
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt4_12
 - update to new release by fcimport
 
