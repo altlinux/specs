@@ -1,5 +1,5 @@
 Name: perl-DBIx-Class
-Version: 0.08250
+Version: 0.08270
 Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
@@ -12,7 +12,8 @@ Source: http://www.cpan.org/authors/id/F/FR/FREW/DBIx-Class-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Nov 10 2011 (-bi)
-BuildRequires: perl-Module-Install perl-Test-Deep perl-Class-C3 perl-Class-C3-Componentised perl-Class-Trigger perl-Class-Unload perl-Clone perl-Config-Any perl-Context-Preserve perl-DBD-Pg perl-DBD-SQLite perl-DBIx-ContextualFetch perl-Data-Compare perl-Data-Dumper-Concise perl-Data-Page perl-Date-Simple perl-DateTime-Format-Strptime perl-JSON-Any perl-JSON-DWIW perl-Math-Base36 perl-Module-Find perl-MooseX-Getopt perl-MooseX-Types-JSON perl-MooseX-Types-Path-Class perl-PPerl perl-SQL-Abstract perl-SQL-Translator perl-Scope-Guard perl-Test-Exception perl-Test-Memory-Cycle perl-Test-Warn perl-Text-CSV perl-Text-CSV_XS perl-Time-Piece perl-namespace-autoclean perl-podlators perl-threads
+BuildRequires: perl-Module-Install perl-Test-Deep perl-Class-C3 perl-Class-C3-Componentised perl-Class-Trigger perl-Class-Unload perl-Clone perl-Config-Any perl-Context-Preserve perl-DBD-Pg perl-DBD-SQLite perl-DBIx-ContextualFetch perl-Data-Compare perl-Data-Dumper-Concise perl-Data-Page perl-Date-Simple perl-DateTime-Format-Strptime perl-JSON-Any perl-JSON-DWIW perl-Math-Base36 perl-Module-Find perl-MooseX-Getopt perl-MooseX-Types-JSON perl-MooseX-Types-Path-Class perl-PPerl perl-SQL-Abstract perl-SQL-Translator perl-Scope-Guard perl-Test-Exception perl-Test-Memory-Cycle perl-Test-Warn perl-Text-CSV perl-Text-CSV_XS perl-Time-Piece perl-namespace-autoclean perl-podlators perl-threads perl-MooseX-Types-LoadableClass
+
 
 # Avoid dependency on DBD::ADO
 %add_findreq_skiplist */DBIx/Class/Storage/DBI/ADO*
@@ -47,6 +48,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Tue Feb 25 2014 Vladimir Lettiev <crux@altlinux.ru> 0.08270-alt1
+- 0.08270
+
 * Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.08250-alt1
 - 0.08250
 
