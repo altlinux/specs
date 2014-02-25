@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-Test-Version
 Version:	1.002004
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 Group:		Development/Perl
@@ -65,13 +65,9 @@ BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
+BuildRequires:	perl(Test/Spelling.pm) hunspell-en
 BuildRequires:	perl(Test/Synopsis.pm)
 BuildRequires:	perl(Test/Vars.pm)
-# RHEL-7+ package cannot BR: packages from EPEL
-%if ! (0%{?rhel} >= 7)
-BuildRequires:	hunspell-en
-BuildRequires:	perl(Test/Spelling.pm)
-%endif
 %endif
 Source44: import.info
 # ===================================================================
@@ -105,6 +101,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1_3
+- update to new release by fcimport
+
 * Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1_1
 - update to new release by fcimport
 
