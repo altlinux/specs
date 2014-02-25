@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_15
+Release:          alt1_16
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -17,6 +17,7 @@ Source03:         zfs-fuse.sysconfig
 Source04:         zfs-fuse-helper
 Patch0:           zfs-fuse-0.7.0-umem.patch
 Patch1:           zfs-fuse-0.7.0-stack.patch
+Patch2:           zfs-fuse-printf-format.patch
 BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel prelink
 Requires:         fuse >= 2.7.4-1
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
@@ -38,6 +39,7 @@ operating system.
 
 %patch0 -p0
 %patch1 -p1
+%patch2 -p0
 
 f=LICENSE
 %{__mv} $f $f.iso88591
@@ -121,6 +123,9 @@ fi
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_16
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_15
 - update to new release by fcimport
 
