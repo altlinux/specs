@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.4.12
+Version: 1.5.2
 Release: alt1
 
 Summary: Pipe Viewer
@@ -61,6 +61,9 @@ make dep
 %_man1dir/%name.*
 
 %changelog
+* Sun Feb 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.2-alt1
+- New version
+
 * Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.12-alt1
 - New version
 
