@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.76
+Release: alt100.77
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -530,6 +530,12 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue Feb 25 2014 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.77
+- fixup-binconfig:
+  extended library search path stripping algorithm to handle rpaths.
+- pkgconfig.{req,prov}:
+  allowed pkgconfig names to start with "+" (closes: #29737).
+
 * Sun Feb 16 2014 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.76
 - cpp.req: adapted parser to handle cpp 4.8 output.
 - rpmdb: fixed miscompilation by gcc 4.8.
