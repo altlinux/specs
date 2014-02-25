@@ -1,7 +1,7 @@
 Group: System/Libraries
 Name:           avl
-Version:        3.32
-Release:        alt1_4
+Version:        3.35
+Release:        alt1_1
 Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
 # Plotlib is LGPLv2+, the rest is GPLv2+
@@ -12,7 +12,7 @@ Source0:        http://web.mit.edu/drela/Public/web/avl/avl%{version}.tgz
 Source1:        LICENSE.GPL
 Source2:        LICENSE.LGPL
 # Makefile variables and flags
-Patch0:         avl3.32-makefile.patch
+Patch0:         avl3.35-makefile.patch
 
 BuildRequires:  gcc-fortran libX11-devel
 Requires:       fonts-bitmap-misc
@@ -33,7 +33,7 @@ together with specified mass properties.
 
 %prep
 %setup -q -n Avl
-%patch0 -p2
+%patch0 -p1
 cp %{SOURCE1} .
 cp %{SOURCE2} .
 
@@ -57,6 +57,9 @@ make %{?_smp_mflags} -C bin
 
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.35-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.32-alt1_4
 - update to new release by fcimport
 
