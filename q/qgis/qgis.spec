@@ -1,15 +1,16 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
 
-Name: qgis
-Version: 2.0.1
+Name:    qgis
+Version: 2.2.0
 Release: alt1
+
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
-Group: Sciences/Geosciences
-Url: http://qgis.org/
+Group:   Sciences/Geosciences
+Url:     http://qgis.org/
 
-Packager: Andrey Kolotov <qwest@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 # %%name-mapserver-httpd.conf
@@ -18,8 +19,6 @@ Source: %name-%version.tar
 # Fix detection problem for GRASS libraries
 Patch0: %name-1.5.0-fedora-grass.patch
 Patch2: %name-2.0.1-httplib2.patch
-Patch3: %name-2.0.1-sip-4.15.patch
-Patch4: %name-2.0.1-sip-8601.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -125,8 +124,6 @@ Please refer to %name-mapserver-README for details!
 %setup
 %patch0 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # Delete bundled libs
 rm -rf src/core/spatialite
@@ -296,6 +293,9 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_libexecdir/%name
 
 %changelog
+* Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version
+
 * Mon Jan 27 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version (ALT #27790)
 - Fix Grass version to make breakage more visible
