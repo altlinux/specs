@@ -1,35 +1,59 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
+# TODO: BR: perl(Test::Kwalitee::Extra) when available
+
+# noarch, but to avoid debug* files interfering with manifest test:
+%global debug_package %{nil}
+
 Name:		perl-Test-Synopsis
 Version:	0.10
-Release:	alt1
+Release:	alt1_1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source:	http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
-BuildRequires:	perl(base.pm)
-BuildRequires:	perl(Carp.pm)
-BuildRequires:	perl(Cwd.pm)
-BuildRequires:	perl(Exporter.pm)
+# Module Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
+BuildRequires:	perl(base.pm)
 BuildRequires:	perl(ExtUtils/Manifest.pm)
-BuildRequires:	perl(File/Path.pm)
+BuildRequires:	perl(Pod/Parser.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder/Module.pm)
+BuildRequires:	perl(warnings.pm)
+# Test Suite
+BuildRequires:	perl(File/Spec.pm)
+BuildRequires:	perl(IO/Handle.pm)
+BuildRequires:	perl(IPC/Open3.pm)
+BuildRequires:	perl(Test/Builder.pm)
+BuildRequires:	perl(Test/Builder/Tester.pm)
+BuildRequires:	perl(Test/More.pm)
+# Extra Tests; can't run these when bootstrapping or in EL since many
+# of these packages won't be available
+%if 0%{!?perl_bootstrap:1} && 0%{!?rhel:1}
+BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
+BuildRequires:	perl(Pod/Wordlist.pm)
+BuildRequires:	perl(Test/CPAN/Changes.pm)
+BuildRequires:	perl(Test/CPAN/Meta.pm)
+BuildRequires:	perl(Test/DistManifest.pm)
+BuildRequires:	perl(Test/EOL.pm)
+BuildRequires:	perl(Test/MinimumVersion.pm)
+BuildRequires:	perl(Test/Mojibake.pm)
+BuildRequires:	perl(Test/More.pm)
+BuildRequires:	perl(Test/NoTabs.pm)
 BuildRequires:	perl(Test/Pod.pm)
-# Test::Perl::Critic -> Perl::Critic -> List::MoreUtils -> Test::LeakTrace -> Test::Synopsis
-%if 0%{!?perl_bootstrap:1}
-BuildRequires:	perl(Test/Perl/Critic.pm)
+BuildRequires:	perl(Test/Pod/Coverage.pm)
+BuildRequires:	perl(Test/Portability/Files.pm)
+BuildRequires:	perl(Test/Spelling.pm) hunspell-en
+BuildRequires:	perl(Test/Vars.pm)
+BuildRequires:	perl(Test/Version.pm)
 %endif
-# RHEL-7 package cannot have buildreqs from EPEL-7 (aspell-en), so skip the
-# spell check there; we won't need Test::Spelling either in that case
-%if 0%{?rhel} < 7
-BuildRequires:	aspell-en
-BuildRequires:	perl(Test/Spelling.pm)
-%endif
+# Runtime
+Requires:	perl(Pod/Parser.pm)
 Requires:	perl(Test/Builder/Module.pm)
 Source44: import.info
 
@@ -55,13 +79,18 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 
 %check
 make test
-make test TEST_FILES="xt/*.t"
+%if 0%{!?perl_bootstrap:1} && 0%{!?rhel:1}
+make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
+%endif
 
 %files
-%doc Changes README
+%doc Changes LICENSE README README.md
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
