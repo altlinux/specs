@@ -1,6 +1,6 @@
 Name: xfce4-dev-tools
-Version: 4.10.0
-Release: alt2.git20130429
+Version: 4.11.0
+Release: alt1
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
@@ -30,10 +30,7 @@ Development tools for Xfce
 %patch -p1
 
 %build
-# We can't use xfce4_drop_gitvtag macro:
-# rpm-build-xfce4 uses xfce4-dev-tools itself.
 sed  -e "s/@REVISION@//g" \
-	 -e "s/m4_define(\[xdt_version_tag\], \[git\])/m4_define([xdt_version_tag], [])/g" \
 	   > configure.ac < configure.ac.in
 %autoreconf
 %configure
@@ -50,6 +47,9 @@ sed  -e "s/@REVISION@//g" \
 %_datadir/xfce4/dev-tools
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Updated to 4.11.0.
+
 * Mon Feb 17 2014 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2.git20130429
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Upstream git snapshot (master branch).

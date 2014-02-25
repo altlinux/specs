@@ -1,13 +1,13 @@
 Name: xfce4-appfinder
-Version: 4.10.1
-Release: alt1.git20130425
+Version: 4.11.0
+Release: alt1
 
-Summary: Application finder for the XFce4 Desktop Environment
+Summary: Application finder for the Xfce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
 License: %gpl2plus
 Url: http://www.xfce.org/
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfce4-appfinder
 Source: %name-%version.tar
@@ -56,6 +56,10 @@ Desktop entry format.
 %_desktopdir/*
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.11.0.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130425
 - Bump version (this snapshot is newer then %name-4.10.1 release).
 - Upstream git snapshot.

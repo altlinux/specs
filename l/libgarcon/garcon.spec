@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: 0.3.0
-Release: alt1.git20140217
+Release: alt2
 
 Summary: Implementation of the freedesktop.org menu specification
 License: %lgpl2plus
@@ -152,6 +152,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_libdir/pkgconfig/%_name-gtk2-1.pc
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt2
+- Updated to 0.3.0.
+
 * Mon Feb 17 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1.git20140217
 - Add libgarcon-gtk2 subpackage.
 - Don't package wrong uz@Latn locale.

@@ -1,13 +1,13 @@
 Name: xfce4-session
-Version: 4.10.0
-Release: alt8.git20130719
+Version: 4.11.0
+Release: alt1
 
-Summary: Session manager for XFce desktop environment
+Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfce4-session
 Source: %name-%version.tar
@@ -36,37 +36,37 @@ Requires: wm-common-freedesktop
 Obsoletes: xfce-utils < %version
 
 %description
-%name is the session manager for the XFce desktop environment.
+%name is the session manager for the Xfce desktop environment.
 
 %description -l ru
 Данный пакет содержит в себе менеджер сессий, используемый в окружении
 рабочего стола Xfce.
 
 %package -n libxfsm
-Summary: Library for XFce session manager plugins
+Summary: Library for Xfce session manager plugins
 Group: Development/C
 License: GPL
 
 %description -n libxfsm
-This package contains library for XFce session manager.
+This package contains library for Xfce session manager.
 
 %package devel
-Summary: Development files to build XFce session manager plugins
+Summary: Development files to build Xfce session manager plugins
 Group: Development/C
 License: GPL
 PreReq: libxfsm = %version-%release
 
 %description devel
-This package contains files to develop plugins for XFce session manager.
+This package contains files to develop plugins for Xfce session manager.
 
 %package engines
-Summary: Additional splash screen engines for XFce session manager
+Summary: Additional splash screen engines for Xfce session manager
 Group: Graphical desktop/XFce
 License: GPL
 PreReq: %name = %version-%release
 
 %description engines
-Additional splash screen engines for XFce session manager.
+Additional splash screen engines for Xfce session manager.
 
 %prep
 %setup
@@ -122,6 +122,11 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- xflock4: Add mate-screensaver support.
+- Updated to 4.11.0.
+
 * Wed Sep 25 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt8.git20130719
 - Ensure that logind can shutdown/reboot/sleep method (closes: #29224).
 

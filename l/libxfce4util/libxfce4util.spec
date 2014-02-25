@@ -1,6 +1,6 @@
 Name: libxfce4util
-Version: 4.10.1
-Release: alt1.git20130424
+Version: 4.11.0
+Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
@@ -8,7 +8,7 @@ License: %lgpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/
 
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/libxfce4util
 Source: %name-%version.tar
@@ -20,7 +20,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: glib2-devel gtk-doc intltool
 
 %description
-Basic utility non-GUI functions for XFce.
+Basic utility non-GUI functions for Xfce.
 
 %description -l ru_RU.UTF-8
 Основные (не графические) утилиты Xfce.
@@ -58,11 +58,17 @@ Header files for the %name library.
 
 %files devel
 %doc %_datadir/gtk-doc/html/%name
+%dir %_includedir/xfce4/
 %_includedir/xfce4/libxfce4util
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %changelog
+* Mon Feb 24 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Own %_includedir/xfce4.
+- Updated to 4.11.0.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130424
 - Bump version (this snapshot is newer then %name-4.10.1 release).
 - Upstream git snapshot.
