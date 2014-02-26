@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.6
+Version: 5.7
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -155,6 +155,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Wed Feb 26 2014 Michael Shigorin <mike@altlinux.org> 5.7-alt1
+- new version (watch file uupdate)
+
 * Wed Sep 04 2013 Michael Shigorin <mike@altlinux.org> 5.6-alt1
 - new version (watch file uupdate)
 - dropped libssl detection patch, hooray!
