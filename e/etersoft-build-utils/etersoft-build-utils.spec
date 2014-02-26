@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
 
@@ -17,14 +17,14 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 
 BuildArchitectures: noarch
 
-%define altcompat_ver 1.7.25
+%define altcompat_ver 1.7.37
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 0.1
-Requires: eepm >= 1.3.0
-Requires: erc >= 0.3
+Requires: giter >= 0.3
+Requires: eepm >= 1.5.0
+Requires: erc >= 0.5
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Feb 26 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- update all requires version
+- rpmlog: add -e option support for just increment and add empty changelog entry
+- rpmgs: replace custom convertors with erc
+- web: fix download_url()
+
 * Sat Feb 15 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
 - git: set GIRARHOST if empty, get one from ~/.ssh/config
 - web: download_url: force use our output name
