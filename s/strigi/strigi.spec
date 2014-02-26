@@ -1,7 +1,7 @@
 
 Name: strigi
 Version: 0.7.8
-Release: alt2
+Release: alt3
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -16,8 +16,10 @@ Source1: %name.watch
 Source2: strigi-daemon.desktop
 Source3: strigiclient.desktop
 
-# SuSE
-Patch101: bug_304439.diff
+# FC
+Patch101: libstreamanalyzer-0001-Fix-for-non-valid-values-in-Exif-field-ISOSpeedRatin.patch
+Patch102: libstreams-0001-Generate-config.h-after-looking-for-dependencies.patch
+Patch103: libstreams-0003-Build-fix-for-gcc-4.8.patch
 
 
 BuildRequires: boost-devel bzlib-devel cmake cppunit-devel dbus-tools-gui gcc-c++ libattr-devel
@@ -59,8 +61,13 @@ This package contains %name development library and headers.
 
 %prep
 %setup
+pushd libstreamanalyzer
 %patch101 -p1
-#patch102 -p1
+popd
+pushd libstreams
+%patch102 -p1
+%patch103 -p1
+popd
 
 %build
 %Kcmake \
@@ -107,6 +114,9 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt3
+- fix to build with gcc-4.8
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt2
 - rebuild with new exiv2
 
