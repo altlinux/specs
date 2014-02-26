@@ -1,5 +1,5 @@
 Name: dwdiff
-Version: 2.0.5
+Version: 2.0.9
 Release: alt1
 
 Summary: front-end for the diff program that operates at the word level
@@ -43,6 +43,9 @@ rm -rf %buildroot%_mandir/nl*
 %_docdir/%name-%version/
 
 %changelog
+* Wed Feb 26 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
+- new version 2.0.9 (with rpmrb script)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - new version 2.0.5 (with rpmrb script)
 
