@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.7.30
+Version: 1.7.37
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -110,6 +110,35 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Wed Feb 26 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.37-alt1
+- improve distro specific macros detection (use prev. if exits)
+
+* Mon Feb 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.36-alt3
+- add macros for Debian/7
+
+* Wed Dec 18 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.36-alt2
+- add symlink for correct build ROSA specific
+
+* Thu Dec 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.36-alt1
+- fix _initdir for Gentoo (eterbug #9701)
+
+* Tue Oct 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.35-alt1
+- fix fonts install macro
+
+* Tue Oct 15 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.34-alt1
+- python: add --prefix for setup.py
+
+* Fri Oct 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.33-alt1
+- add macro for Gentoo
+
+* Wed Oct 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.32-alt1
+- fixes for _sudoers dir on ALT Linux
+- disable python.env (eterbug # 9477)
+- change macros order for override version specific macros
+
+* Mon Sep 16 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.31-alt1
+- fix _qt4dir for Ubuntu/Debian
+
 * Thu Sep 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.30-alt1
 - add sudoersdir macro for old ALT Linux distros
 - other fixes for _sudoersdir
