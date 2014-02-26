@@ -1,5 +1,5 @@
 Name: crtools
-Version: 1.1
+Version: 1.2
 #define pre -rc2
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -18,6 +18,23 @@ BuildRequires: libprotobuf-c-devel asciidoc xmlto %_bindir/a2x
 An utility to checkpoint/restore tasks.
 
 
+%package -n libcriu
+Summary: Shared library of checkpoint/restore
+Group: System/Libraries
+
+%description -n libcriu
+Shared library of checkpoint/restore.
+
+
+%package -n libcriu-devel
+Summary: Files for development with libcriu
+Group: Development/C
+Requires: libcriu = %version-%release
+
+%description -n libcriu-devel
+Files for development with libcriu.
+
+
 %prep
 %setup -q -n %name-%ver
 %patch -p1
@@ -29,7 +46,7 @@ export CFLAGS="%optflags"
 
 
 %install
-%makeinstall_std PREFIX=%prefix SYSTEMDUNITDIR=%_unitdir
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir SYSTEMDUNITDIR=%_unitdir
 
 
 %files
@@ -37,9 +54,22 @@ export CFLAGS="%optflags"
 %_sbindir/*
 %_man8dir/*
 %_unitdir/*
+%_logrotatedir/*
+
+
+%files -n libcriu
+%_libdir/*.so.*
+
+
+%files -n libcriu-devel
+%_includedir/*
+%_libdir/*.so
 
 
 %changelog
+* Wed Feb 26 2014 Led <led@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Sat Feb 01 2014 Led <led@altlinux.ru> 1.1-alt1
 - 1.1 release
 
