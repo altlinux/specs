@@ -11,7 +11,7 @@
 %define Name 4tH
 Name: 4th
 %define lname lib%name
-Version: 3.62.1
+Version: 3.62.2
 Release: alt1
 Summary: Basic framework for creating application specific scripting languages
 Summary(uk_UA.CP1251): Базова оболонка для створення специфічних для програм мов сценаріїв
@@ -19,7 +19,7 @@ Summary(ru_RU.CP1251): Базовая оболочка для создания специфических для программ 
 License: GPLv3+
 Group: Development/Other
 URL: http://hansoft.come.to/
-Source0: https://%name.googlecode.com/files/%name-%version-unix.tar
+Source0: %name-%version-unix.tar
 Source1: Makefile.ALT
 Patch: %name-%version-%release.patch
 %{?_enable_shared:Requires: %lname = %version-%release}
@@ -377,6 +377,9 @@ __MENU__
 
 
 %changelog
+* Wed Feb 26 2014 Led <led@altlinux.ru> 3.62.2-alt1
+- 3.62.2
+
 * Fri Sep 27 2013 Led <led@altlinux.ru> 3.62.1-alt1
 - 3.62.1
 
