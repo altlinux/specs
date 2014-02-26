@@ -1,5 +1,5 @@
 Name: bozohttpd
-Version: 20140102
+Version: 20140201
 Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
@@ -72,7 +72,7 @@ sed 's@#include "netbsd_queue.h"@#include <bozohttpd/netbsd_queue.h>@' < bozohtt
 %bmake COPTS+="-D_GNU_SOURCE -DNO_LUA_SUPPORT" -C libbozohttpd
 %bmake COPTS+="-D_GNU_SOURCE" -C small
 # XXX syntax errors in upstream in lua/glue.c
-#ln -s libluabozohttpd.so.0.0 lua/libluabozohttpd.so   
+#ln -s libluabozohttpd.so.0.0 lua/libluabozohttpd.so
 #ln -s ../libbozohttpd/libbozohttpd.so.0.0 lua/libbozohttpd.so
 #bmake COPTS+="-D_GNU_SOURCE -I.." LDADD="-L. -lbozohttpd" -C lua
 
@@ -110,6 +110,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 20140201-alt1
+- Autobuild version bump to 20140201
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 20140102-alt1
 - Autobuild version bump to 20140102
 - Cleanup and fix build
