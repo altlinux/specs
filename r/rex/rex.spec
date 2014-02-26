@@ -1,7 +1,7 @@
 # SPEC file for rex package
 
 Name:    rex
-Version: 0.43.7
+Version: 0.44.3
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -22,10 +22,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Dec 01 2013
+# Automatically added by buildreq on Wed Feb 26 2014
 # optimized out: perl-Digest-SHA perl-Encode perl-Encode-Locale perl-HTTP-Date perl-HTTP-Message perl-IO-Stty perl-IO-Tty perl-Term-ANSIColor perl-Types-Serialiser perl-URI perl-YAML perl-common-sense perl-libwww
-BuildRequires: perl-DBI perl-Digest-HMAC perl-Expect perl-JSON-XS perl-Net-SSH2 perl-String-Escape perl-XML-Simple perl-devel perl-Net-SFTP-Foreign subversion wget
-BuildRequires: perl-libwww perl-Net-OpenSSH
+BuildRequires: perl-DBI perl-Digest-HMAC perl-Expect perl-JSON-XS perl-List-MoreUtils perl-Net-SSH2 perl-String-Escape perl-XML-Simple perl-devel subversion wget
+
+BuildRequires: perl-libwww perl-Net-OpenSSH perl-Net-SFTP-Foreign
 
 # Template files does't contains a proper Perl code
 %add_findreq_skiplist */Commands/templates/*
@@ -62,6 +63,9 @@ and software deployment.
 
 
 %changelog
+* Wed Feb 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.44.3-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.43.7-alt1
 - New version
 
