@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -144,21 +144,11 @@ Summary: Meta-package for SQL support of Qt%major GUI toolkit
 Requires: %name-common = %EVR
 Requires: %gname-sql-mysql = %EVR
 Requires: %gname-sql-sqlite = %EVR
-%if_enabled sql_ibase
-Requires: %gname-sql-interbase = %EVR
-%endif
-%if_enabled sql_pgsql
-Requires: %gname-sql-postgresql = %EVR
-%endif
-%if_enabled sql_odbc
-Requires: %gname-sql-odbc = %EVR
-%endif
-%if_enabled sql_tds
-Requires: %gname-sql-tds = %EVR
-%endif
-%if_enabled sql_sqlite2
-Requires: %gname-sql-sqlite2 = %EVR
-%endif
+%{?_enable_sql_ibase:Requires: %gname-sql-interbase = %EVR}
+%{?_enable_sql_pgsql:Requires: %gname-sql-postgresql = %EVR}
+%{?_enable_sql_odbc:Requires: %gname-sql-odbc = %EVR}
+%{?_enable_sql_tds:Requires: %gname-sql-tds = %EVR}
+%{?_enable_sql_sqlite2:Requires: %gname-sql-sqlite2 = %EVR}
 %description -n %gname-sql
 Meta-package for SQL support of Qt%major GUI toolkit
 
@@ -615,7 +605,13 @@ done
 %_pkgconfigdir/Qt%{major}OpenGLExtensions.pc
 %_pkgconfigdir/Qt%{major}PlatformSupport.pc
 
-#%files -n %gname-sql
+%files -n %gname-sql
+
+# packaged with sql library
+#%if_enabled sql_sqlite
+#%files -n %gname-sql-sqlite
+#%_qt5_plugindir/sqldrivers/libqsqlite.so
+#%endif
 
 %if_enabled sql_ibase
 %files -n %gname-sql-interbase
@@ -644,13 +640,6 @@ done
 %files -n %gname-sql-sqlite2
 %_qt5_plugindir/sqldrivers/libqsqlite2.so
 %endif
-
-# packaged with sql library
-#%if_enabled sql_sqlite
-#%files -n %gname-sql-sqlite
-#%_qt5_plugindir/sqldrivers/libqsqlite.so
-#%endif
-
 
 %files -n lib%{gname}-core
 %_qt5_libdir/libQt%{major}Core.so.*
@@ -707,6 +696,9 @@ done
 
 
 %changelog
+* Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt4
+- add sql accumulating subpackage
+
 * Tue Feb 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt3
 - don't require plugin files for cmake scripts (ALT#29844)
 
