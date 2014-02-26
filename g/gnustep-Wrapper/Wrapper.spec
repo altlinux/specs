@@ -2,7 +2,7 @@
 
 Name: gnustep-Wrapper
 Version: 0.1.0
-Release: alt3
+Release: alt4
 Summary: Create GNUstep app-wrappers of non-GNUstep applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
-Requires: gnustep-back
+Requires: gnustep-back gnustep-gworkspace
 
 %description
 GNUstepWrapper provides an easy way to create GNUstep app-wrappers of
@@ -47,7 +47,13 @@ Enrico Sersale's GWorkspace environment.
 %_libdir/GNUstep
 %_libdir/*.so.*
 
+%post
+make_services
+
 %changelog
+* Wed Feb 26 2014 Eugeny A. Rostovtsev <real at altlinux.org> 0.1.0-alt4
+- Added postinstall and Requires: gnustep-gworkspace
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt3
 - Built with clang
 
