@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.41
-Release: alt2
+Version: 1.0.46
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -24,8 +24,12 @@ Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
 Obsoletes: ghostscript-cups
 Provides: ghostscript-cups
+Obsoletes: foomatic-filters
+Provides: foomatic-filters
+Conflicts: foomatic-filters
 
 BuildRequires: cups-devel
+BuildRequires: libdbus-devel
 # pdftopdf
 BuildRequires: libqpdf-devel
 # pdftops
@@ -133,6 +137,7 @@ install -D -m 644 scripting/php/php-cups.ini %buildroot/%php5_extconf/%php5_exte
 install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php5_extension/params
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
+ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 
 %post -n php5-cups
 %php5_extension_postin
@@ -155,9 +160,10 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
 %_datadir/ppd/cupsfilters
-/usr/bin/ttfread
-/usr/sbin/cups-browsed
-/usr/share/man/man*/*
+%_bindir/ttfread
+%_bindir/foomatic-rip
+%_sbindir/cups-browsed
+%_datadir/man/man*/*
 %_unitdir/*
 
 %files -n cups-backend-serial
@@ -182,6 +188,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Feb 26 2014 Anton Farygin <rider@altlinux.ru> 1.0.46-alt1
+- new version
+
 * Tue Nov 05 2013 Andriy Stepanov <stanv@altlinux.ru> 1.0.41-alt2
 - ghostsctip filters, add bannertopdf as PDF form
 

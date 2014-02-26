@@ -12,7 +12,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Version: 3.13.9
-Release: alt1
+Release: alt2
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -59,7 +59,7 @@ BuildRequires: python-devel
 
 %if_enabled PPDs
 #cups-common and foomatic-filters is for cupstestppd
-BuildPreReq: perl cups-common foomatic-filters
+BuildPreReq: perl cups-common cups-filters >= 1.0.46-alt1
 %endif
 
 Source: http://dl.sourceforge.net/hplip/%name-%version.tar
@@ -211,7 +211,7 @@ License: GPL
 Group: Publishing
 Requires: cups-ddk
 Requires: foomatic-db >= 3.0.2-alt7
-Requires: foomatic-filters >= 3.0.2-alt6
+Requires: cups-filters >= 1.0.46-alt1
 Requires: %name = %version-%release
 BuildArch: noarch
 
@@ -259,7 +259,7 @@ Requires: %name-ps-PPDs = %version-%release
 Requires: %name-hpcups-PPDs = %version-%release
 Requires: %name-hpijs-PPDs = %version-%release
 # due to foomatic-rip
-Requires:	foomatic-filters > 3.0.2-alt5
+Requires:	cups-filters >= 1.0.46-alt1
 BuildArch: noarch
 
 %description PPDs
@@ -275,7 +275,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for postscript HP
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	foomatic-filters > 3.0.2-alt5
+Requires:	cups-filters >= 1.0.46-alt1
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
@@ -293,7 +293,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpcups cups d
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	foomatic-filters > 3.0.2-alt5
+Requires:	cups-filters >= 1.0.46-alt1
 Requires: %name-hpcups = %version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -312,7 +312,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpijs cups dr
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	foomatic-filters > 3.0.2-alt5
+Requires:	cups-filters >= 1.0.46-alt1
 Requires: %name-hpijs = %version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -671,7 +671,7 @@ install -p -m644 %{SOURCE202} %{buildroot}%{_man1dir}/
 
 %if_enabled PPDs
 #### Remove the installed /usr/bin/foomatic-rip
-#### because this is provided by the foomatic-filters package:
+#### because this is provided by the cups-filters package:
 ###rm %{buildroot}%{_bindir}/foomatic-rip
 
 ### a piece of ancient wisdom of SuSE
@@ -964,6 +964,10 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Feb 26 2014 Anton Farygin <rider@altlinux.ru> 3.13.9-alt2
+- NMU: fixed requires - foomatic-filters now is 
+  integraded to cups-filters package.
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 3.13.9-alt1
 - new version
 
