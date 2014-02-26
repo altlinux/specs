@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.2.8
+Version: 6.2.9
 Release: alt1
 
 Summary: Source code tag system
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Wed Feb 26 2014 Vitaly Lipatov <lav@altlinux.ru> 6.2.9-alt1
+- new version 6.2.9 (with rpmrb script)
+
 * Thu Apr 18 2013 Vitaly Lipatov <lav@altlinux.ru> 6.2.8-alt1
 - new version 6.2.8 (with rpmrb script)
 - remove emacs build requires
