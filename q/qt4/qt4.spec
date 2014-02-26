@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	5
 %define beta	%nil
-%define rlz alt5
+%define rlz alt6
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -96,16 +96,16 @@ Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
 Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
-Patch208: qt-cupsEnumDests.patch
 #
 Patch209: qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
 Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
-#
-Patch213: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
-Patch214: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
-#
-Patch216: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
+Patch212: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
+Patch213: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
+Patch214: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
+Patch215: 0147-Disallow-deep-or-widely-nested-entity-references.patch
+Patch216: 0162-Fully-expand-entities-to-ensure-deep-or-widely-neste.patch
+Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 # MDV
 # ALT
 # by raorn@altlinux
@@ -753,16 +753,16 @@ Install this package if you want to create RPM packages that use %name
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
-#%patch208 -p1
 #
 %patch209 -p1
 %patch210 -p1
 %patch211 -p1
-#
+%patch212 -p1
 %patch213 -p1
 %patch214 -p1
-#
+%patch215 -p1
 %patch216 -p1
+%patch217 -p1
 # MDV
 # ALT
 %patch501 -p1
@@ -1550,6 +1550,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt6
+- add large XML entities support
+
 * Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5
 - disable mnemonic shortcuts in menus
 
