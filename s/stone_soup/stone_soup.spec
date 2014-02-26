@@ -1,5 +1,5 @@
 Name: stone_soup
-Version: 0.12.3
+Version: 0.13.1
 Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
@@ -7,7 +7,7 @@ License: GPLv2
 Group: Games/Adventure
 Source: %name-%version-nodeps.tar.xz
 Url: http://crawl.develz.org/wordpress/
-Patch: stone_soup-0.12.1-throw.patch
+Patch: stone_soup-0.13.1-throw.patch
 
 Requires: %name-data = %version, %name-tiles = %version
 
@@ -106,6 +106,10 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Thu Feb 20 2014 Fr. Br. George <george@altlinux.ru> 0.13.1-alt1
+- Autobuild version bump to 0.13.1
+- Fix patch
+
 * Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 0.12.3-alt1
 - Autobuild version bump to 0.12.3
 
