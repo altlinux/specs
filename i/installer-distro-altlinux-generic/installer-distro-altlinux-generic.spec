@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-generic
-Version: 7.0.1
+Version: 7.0.3
 Release: alt1
 
 Summary: Installer configuration (generic)
@@ -25,12 +25,10 @@ Group: System/Configuration/Other
 Requires: installer-stage2
 # modules
 Requires: alterator-sysconfig
-Requires: alterator-datetime
 Requires: alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
 Requires: installer-feature-vm-altlinux-generic-stage2
-Requires: x-cursor-theme-jimmac
 
 %description stage2
 This package contains installer configuration hopefully suitable
@@ -43,17 +41,8 @@ Summary: Installer configuration and scripts (stage3 part)
 License: GPL
 Group: System/Configuration/Other
 Provides: installer-altlinux-generic-stage3 = %name-%version
-#Requires: installer-stage3
 # modules
-# FIXME: grub/lilo
-#Requires: alterator-grub
-Requires: alterator-users
 Requires: alterator-root
-Requires: alterator-luks
-Requires: alterator-net-eth dhcpcd
-Requires: alterator-net-general
-#Requires: installer-feature-nfs-server-stage3
-Requires: installer-feature-powerbutton-stage3
 
 %description stage3
 This package contains installer configuration hopefully suitable
@@ -77,6 +66,13 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Feb 26 2014 Michael Shigorin <mike@altlinux.org> 7.0.3-alt1
+- reverted the change in 7.0.1 along with further purge:
+  do not require alterator-{luks,net-*,users} and dhcpcd explicitly
+  so as to minimize the footprint for JeOS case; maybe this warrants
+  yet another flavour but there are altlinux-{desktop,server} for
+  the more involved distros already
+
 * Thu Dec 20 2012 Michael Shigorin <mike@altlinux.org> 7.0.1-alt1
 - added luks step (autoskips if no LUKS containers are created)
 
