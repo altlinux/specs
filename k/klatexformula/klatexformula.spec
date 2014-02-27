@@ -1,10 +1,11 @@
 Name: klatexformula
-Version: 3.2.7
+Version: 3.2.8
 Release: alt1
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
 Source: %name-%version.tar.gz
+Patch: klatexformula-3.2.8-setlocale.patch
 Url: http://klatexformula.sourceforge.net/
 
 # Automatically added by buildreq on Tue Oct 11 2011
@@ -28,9 +29,11 @@ TODO: make shared version of %name-devel.
 %prep
 %setup
 sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/CMakeLists.txt
+%patch -p1
 
 %build
 %cmake -D QT_QMAKE_EXECUTABLE_FINDQT:path=/usr/bin/qmake-qt4 -D QT_QMAKE_EXECUTABLE:path=/usr/bin/qmake-qt4 ..
+# -D KLF_DEBUG=True ..
 ( cd BUILD; %make_build all doc )
 
 %install
@@ -52,6 +55,10 @@ sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/C
 %_libdir/lib*.a
 
 %changelog
+* Thu Feb 27 2014 Fr. Br. George <george@altlinux.ru> 3.2.8-alt1
+- Autobuild version bump to 3.2.8
+- Fix good old RU_ru LC_NUMERIC in postscript files
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 3.2.7-alt1
 - Autobuild version bump to 3.2.7
 - Fix requires
