@@ -1,7 +1,7 @@
 ## SPEC file for Perl module CPAN-Uploader
 
 Name: perl-CPAN-Uploader
-Version: 0.103004
+Version: 0.103006
 Release: alt1
 
 Summary: Perl module to upload things to the CPAN
@@ -44,6 +44,9 @@ Perl module CPAN::Uploader upload things to the CPAN.
 %_bindir/cpan-upload
 
 %changelog
+* Thu Feb 27 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.103006-alt1
+- New version
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103004-alt1
 - New version
 
