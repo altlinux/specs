@@ -1,6 +1,6 @@
 Name: gnome-hearts
 Version: 0.3
-Release: alt3
+Release: alt4
 Summary: Hearts for GNOME
 License: GPL
 Group: Games/Cards
@@ -52,6 +52,9 @@ ln -s %_pixmapsdir/%name.png %buildroot%_liconsdir/
 %_liconsdir/*
 
 %changelog
+* Thu Feb 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4
+- Fixed build with gcc 4.8
+
 * Tue Jan 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
 - Rebuilt with librarian
 
