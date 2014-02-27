@@ -1,5 +1,5 @@
 Name: spatialite-tools
-Version: 4.0.0
+Version: 4.1.1
 Release: alt1
 Summary: A set of useful CLI tools for SpatiaLite
 
@@ -46,8 +46,12 @@ make install DESTDIR=%buildroot
 %_bindir/spatialite_network
 %_bindir/spatialite_osm*
 %_bindir/spatialite_tool
+%_bindir/spatialite_dxf
 
 %changelog
+* Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 4.1.1-alt1
+- 4.1.1
+
 * Sat Feb 02 2013 Ilya Mashkin <oddity@altlinux.ru> 4.0.0-alt1
 - Build for Sisyphus
 
