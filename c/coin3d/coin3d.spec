@@ -1,6 +1,6 @@
 Name: coin3d
 Version: 3.1.3
-Release: alt8
+Release: alt9
 Summary: OpenGL-based, 3D graphics library
 License: GPL
 Group: Development/Tools
@@ -131,7 +131,7 @@ This package contains architecture independent files of Coin3D.
 	--with-opengl \
 	--with-mesa \
 	--enable-system-expat
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -176,6 +176,9 @@ mv %buildroot%_datadir/aclocal/coin.m4 \
 %exclude %_datadir/Coin/conf/coin-default.cfg
 
 %changelog
+* Thu Feb 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt9
+- Fixed build with gcc 4.8
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt8
 - Fixed build with gcc 4.7
 
