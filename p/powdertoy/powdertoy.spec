@@ -1,15 +1,13 @@
 Name: powdertoy
-Version: 89.0.273
+Version: 89.2.281
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 Epoch: 1
 License: GPL
 Url: http://powdertoy.co.uk/
-#Patch: %name-%version-%release.patch
 # GitHub https://github.com/FacialTurd/The-Powder-Toy/tags
 Source: v%version.tar.gz
-Patch: powdertoy-88.1.272-alt-xinit.patch
 Obsoletes: powder
 
 # Automatically added by buildreq on Wed Apr 03 2013
@@ -23,7 +21,9 @@ heat!
 
 %prep
 %setup -n The-Powder-Toy-%version
-%patch -p0
+# Hack out version update messge
+sed -i 's/gameModel->AddNotification.*\("A new.*available.*update"\).*;/fprintf(stderr, "%s\\n", \1);/g' src/gui/game/GameController.cpp
+
 cat > %name.sh <<@@@
 #!/bin/sh
 test -d "\$HOME/.powdertoy" ||
@@ -46,10 +46,6 @@ Comment=%summary
 @@@
 
 %build
-#make_build BUS=64 %name
-#else
-#make_build %name
-#endif
 convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:area].png'
 %ifarch x86_64
 scons -j %__nprocs --lin --64bit
@@ -76,6 +72,10 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Feb 27 2014 Fr. Br. George <george@altlinux.ru> 1:89.2.281-alt1
+- Autobuild version bump to 89.2.281
+- Remove new version ad again
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1:89.0.273-alt1
 - Autobuild version bump to 89.0.273
 
