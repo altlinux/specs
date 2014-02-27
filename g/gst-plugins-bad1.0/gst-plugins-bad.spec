@@ -9,7 +9,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -33,7 +33,7 @@ BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusic
 BuildRequires: libzbar-devel libwayland-client-devel libwebp-devel libopenjpeg-devel libbluez-devel
 BuildRequires: libfluidsynth-devel libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libschroedinger-devel libusb-devel libgudev-devel libopus-devel libcurl-devel
-BuildRequires: libvo-amrwbenc-devel librsvg-devel
+BuildRequires: libvo-amrwbenc-devel librsvg-devel libvo-aacenc-devel
 BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel
 
 %description
@@ -110,6 +110,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Feb 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt2
+- enabled VisualOn AAC support via libvo-aacenc (ALT #29852)
+
 * Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
