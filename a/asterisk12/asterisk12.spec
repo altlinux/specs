@@ -1,4 +1,8 @@
-%define svn_revision 399145.1
+%define svn_revision 399145.2
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 399145.1
+%define svn_revision 399145.2
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -1278,6 +1282,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Thu Feb 27 2014 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.399145.2
+- rebuild
+
 * Thu Nov 07 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.399145.1
 - move /var/lib/asterisk/rest-api to alternatives
 
