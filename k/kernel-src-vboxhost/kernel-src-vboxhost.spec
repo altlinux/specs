@@ -3,7 +3,7 @@
 %{!?x86_64:%define x86_64 x86_64}
 
 Name: kernel-src-%mname
-Version: 4.3.6
+Version: 4.3.8
 Release: alt1
 Summary: Linux VirtualBox host modules sources
 License: GPLv2
@@ -35,6 +35,9 @@ tar -C .. -cJf %kernel_srcdir/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Thu Feb 27 2014 Led <led@altlinux.ru> 4.3.8-alt1
+- 4.3.8
+
 * Thu Dec 19 2013 Led <led@altlinux.ru> 4.3.6-alt1
 - 4.3.6
 
