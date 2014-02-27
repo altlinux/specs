@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Wed Feb 26 2014 Led <led@altlinux.ru> 3.10.32-alt4
+- updated:
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_en
+
 * Tue Feb 25 2014 Led <led@altlinux.ru> 3.10.32-alt3
 - updated:
   + fix-drivers-gpu-drm--nouveau
