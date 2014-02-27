@@ -5,32 +5,28 @@
 %define build_lang uk_UA.KOI8-U
 
 %define oname iceBw
-%define oversion 7_0
-Name: icebw
-Version: 7.0
-Release: alt1.qa1
+%define oversion 9_11
 
+Name:    icebw
+Version: 9.11
+Release: alt1
 Summary: Free financial accounting system with GTK interface
 
-Group: Office
+Group:   Office
 License: GPL
-Url: http://www.iceb.com.ua
+Url:     http://www.iceb.net.ua
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %url/download/%oname.tar
+Source:  %url/download/%name-%oversion.tar.bz2
 
-Patch1: icebw-6_1_alt_gcc.patch
-Patch2: icebw-7_0-fix-overflow.patch
-
-BuildRequires: gcc-c++ libMySQL-devel libgtk+2-devel
+BuildRequires: gcc-c++ libMySQL-devel libgtk+3-devel
 
 %description
 Free financial accounting system.
 
 %prep
 %setup -q -c
-%patch2 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/Makefile
 
 %build
@@ -47,6 +43,10 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Thu Feb 27 2014 Andrey Cherepanov <cas@altlinux.org> 9.11-alt1
+- New version
+- Fix project URL
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.0-alt1.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

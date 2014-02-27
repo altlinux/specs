@@ -1,10 +1,10 @@
 
 %define oname iceB
-%define oversion 12_0
+%define oversion 14_11
 
 Name:    iceb
-Version: 12.0
-Release: alt3
+Version: 14.11
+Release: alt1
 
 Summary: Free financial accounting system (console)
 
@@ -12,15 +12,16 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Group:   Office
 License: GPL
-Url:     http://www.iceb.com.ua
+Url:     http://iceb.net.ua
 
-Source:  %url/download/%oname-%oversion.tar.bz2
+Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name
 Source3: %name.16.xpm
 Source4: %name.32.xpm
 Source5: %name.48.xpm
 
-Patch:   iceb-fix-overflow-buffer.patch
+#Patch:   iceb-fix-overflow-buffer.patch
+Patch1:	 %name-12.11-remove-missing-automake-target.patch
 
 BuildRequires: gcc-c++ glib2-devel libMySQL-devel libncursesw-devel
 
@@ -29,7 +30,8 @@ Free financial accounting system.
 
 %prep
 %setup -q -c
-%patch -p2
+#%%patch -p2
+%patch1 -p2
 
 %build
 %autoreconf
@@ -71,6 +73,10 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %_datadir/%name
 
 %changelog
+* Thu Feb 27 2014 Andrey Cherepanov <cas@altlinux.org> 14.11-alt1
+- New version
+- Fix project URL
+
 * Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 12.0-alt3
 - Rebuild with new libmysqlclient
 
