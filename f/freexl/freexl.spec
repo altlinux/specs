@@ -2,8 +2,8 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: freexl
-Version: 1.0.0d
-Release: alt2
+Version: 1.0.0g
+Release: alt1
 Summary: Library to extract data from within an Excel spreadsheet
 Group: System/Libraries
 License: MPLv1.1 or GPLv2+ or LGPLv2+
@@ -35,7 +35,7 @@ developing applications that use %%{name}.
 
 %prep
 %setup
-%patch33 -p1
+#patch33 -p1
 
 %build
 autoreconf -fisv
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/lib%name.la
 %_libdir/pkgconfig/freexl.pc
 
 %changelog
+* Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.0.0g-alt1
+- 1.0.0g
+
 * Tue Jan 29 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.0d-alt2
 - build for Sisyphus
 
