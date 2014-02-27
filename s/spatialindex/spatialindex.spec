@@ -1,5 +1,5 @@
 Name: spatialindex
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 Summary: Spatial index library
 Group: System/Libraries
@@ -55,6 +55,9 @@ make install DESTDIR=%buildroot
 %_libdir/lib%{name}*.so
 
 %changelog
+* Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Mon Dec 24 2012 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
 - Build for Sisyphus
 
@@ -62,9 +65,6 @@ make install DESTDIR=%buildroot
 - New upstream release
 - New URL
 - License is now MIT
-
-* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.1-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
 * Mon Apr  9 2012 Volker Frohlich <volker27@gmx.at> - 1.7.1-2
 - Patch build system to install to the expected include dir
