@@ -1,14 +1,11 @@
-# TODO: provide autobuild.hack or something alike
-%define snap	20120401
 Name: unnethack
-Version: 4.0.0
+Version: 5.1.0
 Release: alt1
 Summary: An enhancement to the dungeon exploration game NetHack
-Source: %name-%version-20120401.tar.gz
+Source: %name-%version.tar.gz
 Group: Games/Adventure
 Url: http://sourceforge.net/apps/trac/unnethack/
 License: NethackGPL
-Patch: unnethack-asneeded.patch
 
 # Automatically added by buildreq on Sat Nov 26 2011
 # optimized out: libtinfo-devel
@@ -21,8 +18,8 @@ It features more randomness, more levels, more challenges and more fun
 than vanilla NetHack.
 
 %prep
-%setup -n %name-%version-%snap
-%patch -p1
+%setup
+sed -i 's/[$](LFLAGS) \(.*\)[$](LIBS)/\1 $(LFLAGS) $(LIBS)/' sys/autoconf/Makefile.src 
 
 %build
 LIBS=-lgsl %configure --enable-curses-graphics
@@ -44,6 +41,10 @@ mv %buildroot%_datadir/unnethack/unnethack %buildroot%_bindir/unnethack.bin && l
 %attr(664,root,games) %_localstatedir/%name/[^sbl]*
 
 %changelog
+* Thu Feb 27 2014 Fr. Br. George <george@altlinux.ru> 5.1.0-alt1
+- Autobuild version bump to 5.1.0
+- Fix build
+
 * Thu Apr 19 2012 Fr. Br. George <george@altlinux.ru> 4.0.0-alt1
 - Autobuild version bump to 4.0.0
 
