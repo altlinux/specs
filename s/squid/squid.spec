@@ -3,12 +3,10 @@
 %def_enable ecap
 %def_enable esi
 
-%set_automake_version 1.11
-
 Name: squid
-Version: 3.2.13
-Release: alt7
-%define langpack_ver 20121005
+Version: 3.3.11
+Release: alt1
+%define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -143,7 +141,6 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-referer-log \
 	--enable-ident-lookups \
 	--enable-carp \
-	--enable-ntlm-fail-open \
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
 	--enable-auth \
@@ -290,6 +287,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Feb 27 2014 Led <led@altlinux.ru> 3.3.11-alt1
+- 3.3.11
+- langpack 20140220
+
 * Thu Nov 21 2013 Led <led@altlinux.ru> 3.2.13-alt7
 - build with automake 1.11
 
