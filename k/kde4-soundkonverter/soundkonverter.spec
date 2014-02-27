@@ -5,7 +5,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 
 Summary: A frontend to various audio converters
@@ -15,8 +15,6 @@ Group: Sound
 Url: http://gitorious.org/soundkonverter/soundkonverter
 #Url: http://kde-apps.org/content/show.php/soundKonverter?content=29024
 Source: %tname-%version.tar
-Source1: ru.po
-Patch1: alt-fix-linking.patch
 
 Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
 #Requires: faac
@@ -42,9 +40,6 @@ Supported formats are: (encode/decode)
 
 %prep
 %setup -qn %tname-%version
-#%patch1 -p0
-
-[ -e po/ru.po ] || install -m 0644 %SOURCE1 po/
 
 for f in po/*/*.po; do
     newname=`echo $f| sed 's|\(.*/\)[[:alpha:]]*\(\.po\)|\1%tname\2|'`
@@ -74,6 +69,12 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
+- new version
+
+* Fri Sep 13 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt0.M70P.1
+- built for M70P
+
 * Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt1
 - new version
 
