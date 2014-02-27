@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
 Version: 13.35.1005
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -273,6 +273,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Thu Feb 27 2014 Led <led@altlinux.ru> 2:13.35.1005-alt2
+- Catalyst 14.2 Beta
+
 * Tue Feb 04 2014 Led <led@altlinux.ru> 2:13.35.1005-alt1
 - 13.35.1005 (Catalyst 14.1 Beta)
 

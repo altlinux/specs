@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -151,9 +151,9 @@ Release: alt4
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
 %Extra_modules fglrx 13.35.1005
-%Extra_modules vboxhost 4.3.6
-%Extra_modules vboxguest 4.3.6
-#Extra_modules knem 1.1.0
+%Extra_modules vboxhost 4.3.8
+%Extra_modules vboxguest 4.3.8
+#Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.7
 #Extra_modules ipt_NETFLOW 1.8.2
 #Extra_modules netatop 0.3
@@ -1806,6 +1806,12 @@ done)
 
 
 %changelog
+* Thu Feb 27 2014 Led <led@altlinux.ru> 3.10.32-alt5
+- updated:
+  + fix-drivers-usb-core
+- vboxguest 4.3.8
+- vboxhost 4.3.8
+
 * Wed Feb 26 2014 Led <led@altlinux.ru> 3.10.32-alt4
 - updated:
   + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_en

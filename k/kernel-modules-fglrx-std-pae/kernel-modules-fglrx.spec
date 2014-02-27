@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	13.35.1005
-%define module_release alt1
+%define module_release alt2
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -25,7 +25,7 @@ ExclusiveOS: Linux
 Url: http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: kernel-source-%module_name = %module_version-%module_release
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 %{?epoch:Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release}
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Feb 27 2014 Led <led@altlinux.ru> 2:13.35.1005-alt2
+- Catalyst 14.2 Beta
 
 * Tue Feb 04 2014 Led <led@altlinux.ru> 2:13.35.1005-alt1
 - 13.35.1005 (Catalyst 14.1 Beta)
