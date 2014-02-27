@@ -1,9 +1,9 @@
 Name: aria2
 Version: 1.18.3
-Release: alt1
+Release: alt2
 
 Summary: aria2 - a simple utility for downloading files faster
-License: GPL
+License: GPLv2+ with exceptions
 Group: Networking/File transfer
 Url: http://aria2.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -12,6 +12,16 @@ Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Thu Mar 23 2006
 BuildRequires: gcc-c++ libssl-devel libstdc++-devel
+BuildRequires: bison
+BuildRequires: cppunit-devel
+BuildRequires: gettext
+BuildRequires: libcares-devel
+BuildRequires: libgcrypt-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libxml2-devel
+BuildRequires: zlib-devel
+
 
 %description
 aria2 is a download utility with resuming and segmented downloading.
@@ -37,7 +47,19 @@ Currently it has following features:
 %setup -n %name-%version
 
 %build
-%configure
+
+%configure --enable-bittorrent \
+           --enable-metalink \
+           --enable-epoll\
+           --disable-rpath \
+           --with-gnutls \
+           --with-libcares \
+           --with-libxml2 \
+           --with-openssl \
+           --with-libz \
+           --with-sqlite3
+
+
 %make
 
 %install
@@ -45,19 +67,22 @@ Currently it has following features:
 #__install -pD -m755 src/aria2c %buildroot%_bindir/aria2c
 
 %makeinstall
-%find_lang aria2c
+%find_lang aria2
 
 ln -s aria2c  %buildroot%_bindir/%name
 
-%files -f aria2c.lang
+%files -f aria2.lang
 %doc AUTHORS ChangeLog README
 %_bindir/%name
 %_bindir/aria2c
 %_man1dir/aria2c.1.bz2
 #_mandir/*/man1/aria2c.1.gz
-%_datadir/locale/*/LC_MESSAGES/aria2.mo
+#_datadir/locale/*/LC_MESSAGES/aria2.mo
 
 %changelog
+* Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt2
+- Enable more aria2 features (Closes: #29853) Thanks to Andrey Cherepanov
+
 * Mon Jan 20 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt1
 - 1.18.3
 - add aria2c as binary (Closes: #29742)
