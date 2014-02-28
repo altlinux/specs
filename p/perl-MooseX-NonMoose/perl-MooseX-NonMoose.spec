@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-NonMoose
 Name: perl-%dist
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Easy subclassing of non-Moose classes
@@ -44,6 +44,9 @@ anything at all.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
