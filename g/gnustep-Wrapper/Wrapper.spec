@@ -2,7 +2,7 @@
 
 Name: gnustep-Wrapper
 Version: 0.1.0
-Release: alt4
+Release: alt5
 Summary: Create GNUstep app-wrappers of non-GNUstep applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.freshports.org/deskutils/gnustep-wrapper
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -41,16 +42,22 @@ Enrico Sersale's GWorkspace environment.
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_SYSTEM_ROOT=%buildroot%_libdir/GNUstep
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc AUTHORS NEWS README TODO
 %_bindir/*
 %_libdir/GNUstep
 %_libdir/*.so.*
+%_menudir/*
 
 %post
 make_services
 
 %changelog
+* Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt5
+- Added menu file (thnx kostyalamer@)
+
 * Wed Feb 26 2014 Eugeny A. Rostovtsev <real at altlinux.org> 0.1.0-alt4
 - Added postinstall and Requires: gnustep-gworkspace
 
