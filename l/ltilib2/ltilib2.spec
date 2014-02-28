@@ -1,7 +1,9 @@
+%define gver 4.7
+%set_gcc_version %gver
 %define sover 2
 
 Name: ltilib2
-Version: 2.131113
+Version: 2.140227
 Release: alt1
 Summary: Algorithms and data structures frequently used in image processing and computer vision
 License: BSD
@@ -11,8 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ liblapack-devel libX11-devel /proc
-BuildPreReq: valgrind-devel gcc-fortran libf2c-ng-devel libjpeg-devel
+BuildPreReq: gcc%gver-c++ liblapack-devel libX11-devel /proc
+BuildPreReq: valgrind-devel gcc%gver-fortran libf2c-ng-devel libjpeg-devel
 BuildPreReq: libpng-devel libICE-devel libXt-devel gtk+2-devel
 BuildPreReq: xorg-xextproto-devel libXext-devel libfftw3-devel
 BuildPreReq: libdc1394-devel libraw1394-devel rpm-macros-make
@@ -121,7 +123,7 @@ sed -i \
 %build
 pushd linux
 
-DEFS="-U_USE_PHILIPS_TOUCAM -DHAVE_GTK=1"
+DEFS="-U_USE_PHILIPS_TOUCAM -DHAVE_GTK=1 -DHAVE_LAPACK"
 %add_optflags -fno-strict-aliasing $DEFS $(pkg-config gtk+-2.0 --cflags)
 %autoreconf
 %make_build_ext -f Makefile.cvs
@@ -175,6 +177,9 @@ popd
 %doc data/* examples/*
 
 %changelog
+* Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.140227-alt1
+- Version 2.140227
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.131113-alt1
 - Version 2.131113
 
