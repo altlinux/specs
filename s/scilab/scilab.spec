@@ -3,7 +3,7 @@
 
 Name:     scilab
 Version:  5.4.1
-Release:  alt1.1
+Release:  alt2
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -82,7 +82,7 @@ BuildRequires: xml-commons-jaxp-1.3-apis
 BuildRequires: checkstyle
 
 BuildRequires: libncurses-devel
-BuildRequires: libgomp4.7-devel
+BuildRequires: libgomp-devel
 BuildRequires: libatlas-devel
 BuildRequires: libpcre-devel
 
@@ -177,6 +177,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt2
+- Fix build (use unversioned libgomp-devel)
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt1.1
 - Rebuilt with new libhdf5
 
