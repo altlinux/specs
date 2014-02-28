@@ -1,4 +1,4 @@
-%define module_version 0.05
+%define module_version 0.07
 %define module_name Class-Refresh
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Class/Load.pm) perl(Class/Unload.pm) perl(Devel/OverrideGlobalRequire.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(strict.pm) perl(warnings.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(B.pm) perl(Class/Load.pm) perl(Class/Unload.pm) perl(Devel/O
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.07
+Release: alt1
 Summary: refresh your classes during runtime
 Group: Development/Perl
 License: perl
 URL: http://metacpan.org/release/Class-Refresh
 
-Source0: http://cpan.org.ua/authors/id/D/DO/DOY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Class-Refresh-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - uploaded to Sisyphus as Scalar-Does dependency
 
