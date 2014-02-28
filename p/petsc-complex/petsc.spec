@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %def_without mpi4py
 %def_without petsc4py
 %def_with netcdf
@@ -25,7 +28,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4.3
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -48,9 +51,9 @@ Requires: openpdt tau mpe2
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: chrpath python-module-Pyro4 python-module-Scientific
-BuildPreReq: %mpiimpl-devel gcc-fortran libgfortran-devel
-BuildPreReq: libstdc++-devel libsz2-devel libarpack-devel
-BuildPreReq: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
+BuildPreReq: %mpiimpl-devel gcc%gver-fortran libgfortran%gver-devel
+BuildPreReq: libsz2-devel libarpack-devel
+BuildPreReq: liblapack-devel gcc%gver-c++ libscalapack-devel libX11-devel
 BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -124,9 +127,9 @@ Group: Development/Other
 AutoReq: yes, nopython
 Requires: lib%name = %version-%release
 Requires: %oname-common >= %version-%release
-Requires: %mpiimpl-devel gcc-fortran libgfortran-devel
-Requires: libstdc++-devel libsz2-devel libarpack-devel
-Requires: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
+Requires: %mpiimpl-devel gcc%gver-fortran libgfortran%gver-devel
+Requires: libsz2-devel libarpack-devel
+Requires: liblapack-devel gcc%gver-c++ libscalapack-devel libX11-devel
 Requires: libXt-devel libsowing-devel boost-devel python-module-fiat
 Requires: libparmetis-devel libblacs-devel libspooles-devel
 Requires: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -451,7 +454,7 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-ffc-dir=%prefix \
 	--with-hypre=1 \
 	--with-hypre-include=%_includedir/hypre \
-	--with-hypre-lib=[libHYPRE.so,libgomp.so] \
+	--with-hypre-lib=[libHYPRE.so] \
 	--with-expat=1 \
 	--with-expat-lib=[-lexpat] \
 	--with-expat-include=%_includedir \
@@ -790,6 +793,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt2
+- Built with gcc 4.7
+
 * Wed Oct 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt1
 - Version 3.4.3
 
@@ -991,4 +997,3 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-
