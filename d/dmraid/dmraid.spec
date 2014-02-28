@@ -3,11 +3,13 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc14
-Release: alt1.qa1
+Release: alt1.qa2
 License: GPL
 Group: System/Base
 Url: http://people.redhat.com/heinzm/sw/dmraid
 Source: dmraid-%version.tar.bz2
+
+Patch: dmraid-1.0.0.rc14-alt-DSO.patch
 
 BuildRequires: libdevmapper-devel libdevmapper-devel-static 
 # Patch0: maybelater.patch
@@ -20,6 +22,7 @@ properties for ATARAID on Linux >= 2.4 using device-mapper.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure %{subst_enable debug} -enable-static_link
@@ -42,6 +45,9 @@ install -m 755 tools/dmraid.static %buildroot/sbin/dmraid.static
 /sbin/*
 
 %changelog
+* Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.0.rc14-alt1.qa2
+- Fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0.rc14-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
