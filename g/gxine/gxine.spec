@@ -14,7 +14,7 @@ Summary: Mediaplayer - GTK-based GUI for xine libraries
 Summary(uk_UA.CP1251): Медіапрогравач - GTK+ GUI для бібліотек xine
 Summary(ru_RU.CP1251): Медиапроигрыватель - GTK+ GUI для библиотек xine
 Version: 0.5.11
-Release: alt10.3.qa1
+Release: alt10.3.qa2
 License: %gpl2plus
 Group: Video
 URL: http://xinehq.de
@@ -164,6 +164,9 @@ rm -rf %buildroot%_pixmapsdir
 
 
 %changelog
+* Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 0.5.11-alt10.3.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.11-alt10.3.qa1
 - NMU: rebuilt for updated dependencies.
 
