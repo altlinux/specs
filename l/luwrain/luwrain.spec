@@ -1,7 +1,7 @@
 %define _luwraindir /usr/lib/luwrain
 
 Name: luwrain
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: The accessible environment for blind persons
 Url: http://luwrain.org/
@@ -61,6 +61,9 @@ tar xf luwrain-data.tar.gz
 %_luwraindir
 
 %changelog
+* Fri Feb 28 2014 Michael Pozhidaev <msp@altlinux.ru> 0.2.3-alt1
+- New version: 0.2.3
+
 * Wed Feb 12 2014 Michael Pozhidaev <msp@altlinux.ru> 0.2.2-alt1
 - New version: 0.2.2
 
