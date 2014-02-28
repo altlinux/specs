@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Scalar
-Version:        1.27
+Version:        1.28
 Release:        alt1
 Summary:        Basic set operations
 
@@ -47,6 +47,9 @@ make test
 
 
 %changelog
+* Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
