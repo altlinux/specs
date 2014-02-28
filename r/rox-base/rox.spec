@@ -1,7 +1,7 @@
 %define base_name rox-filer
 Name: rox-base
 Version: 2.5
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 
 Summary: ROX desktop enviroment
 License: GNU GPL
@@ -100,6 +100,9 @@ ln -s %buildroot%_mandir/man1/rox.1 %buildroot%_mandir/man1/ROX-Filer.1
 %doc ROX-Filer/Help/README ROX-Filer/Help/TODO ROX-Filer/Help/Changes
 
 %changelog
+* Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1.1.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
