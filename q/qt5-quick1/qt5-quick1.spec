@@ -2,7 +2,7 @@
 %global qt_module qtquick1
 
 Name: qt5-quick1
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -14,6 +14,9 @@ Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
+BuildRequires: libxslt-devel libxml2-devel gstreamer-devel gst-plugins-devel libudev-devel libgio-devel libsqlite3-devel
+BuildRequires: libicu-devel
+
 
 %description
 Qt Quick is a collection of technologies that are designed to help
@@ -29,7 +32,7 @@ with classic Qt applications.
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
-Requires: common-licenses
+Requires: qt5-base-common
 BuildArch: noarch
 %description common
 Common package for %name
@@ -100,11 +103,17 @@ syncqt.pl-qt5 \
 %_qt5_libdir/libQt5Declarative.prl
 %_qt5_libdir/cmake/Qt5Declarative/
 %_qt5_libdir/pkgconfig/Qt5Declarative.pc
-%_qt5_archdatadir/mkspecs/modules/qt_lib_declarative.pri
+%_qt5_archdatadir/mkspecs/modules/qt_lib_declarative*.pri
 
 #%files doc
 #%_qt5_docdir/*
 
 %changelog
+* Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- new version
+
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 29 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
