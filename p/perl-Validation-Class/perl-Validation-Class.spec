@@ -1,4 +1,4 @@
-%define module_version 7.900054
+%define module_version 7.900055
 %define module_name Validation-Class
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Class/Forward.pm) perl(Class/Method/Modifiers.pm) perl(Clone.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Hash/Flatten.pm) perl(Hash/Merge.pm) perl(List/MoreUtils.pm) perl(Module/Find.pm) perl(Module/Runtime.pm) perl(Perl/Critic.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(base.pm) perl(overload.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(Class/Forward.pm) perl(Class/Method/Modifiers.pm) perl(Clone
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 7.900054
-Release: alt2
+Version: 7.900055
+Release: alt1
 Summary: Centralized Data Validation Framework
 Group: Development/Perl
 License: perl
 URL: http://search.cpan.org/dist/Validation-Class/
 
-Source0: http://cpan.org.ua/authors/id/A/AW/AWNCORP/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AW/AWNCORP/Validation-Class-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/V*
 
 %changelog
+* Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 7.900055-alt1
+- automated CPAN update
+
 * Thu Dec 05 2013 Igor Vlasenko <viy@altlinux.ru> 7.900054-alt2
 - uploaded to Sisyphus as Scalar-Does deep dependency
 
