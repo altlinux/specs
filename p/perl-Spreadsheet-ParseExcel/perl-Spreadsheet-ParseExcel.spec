@@ -1,5 +1,5 @@
 Name: perl-Spreadsheet-ParseExcel
-Version: 0.59
+Version: 0.60
 Release: alt1
 Epoch: 1
 
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Spreadsheet-ParseExcel/
-Source: Spreadsheet-ParseExcel-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOUGW/Spreadsheet-ParseExcel-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ XLSX format.  See the Spreadsheet::XLSX module instead.
 %perl_vendor_privlib/Spreadsheet
 
 %changelog
+* Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.60-alt1
+- automated CPAN update
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 1:0.59-alt1
 - 0.2603 -> 0.59
 
