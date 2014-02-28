@@ -6,7 +6,7 @@
 %define oname hermes
 Name: %{oname}xd
 Version: 20110822
-Release: alt11
+Release: alt12
 Summary: hp-FEM library
 License: GPL, BSD
 Group: Sciences/Mathematics
@@ -222,6 +222,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt12
+- Fixed build with gcc 4.8
+
 * Tue Sep 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt11
 - Rebuilt with Trilinos 11.4.1
 
