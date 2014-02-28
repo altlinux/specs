@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt8.svn20131019
+Release: alt9.svn20131019
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -12,6 +12,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.savannah.nongnu.org/svn/gap/trunk/system-apps/Addresses/
 Source: %name-%version.tar
 Source1: %name.menu
+Source2: gnustep-adgnumailconverter.menu
+Source3: gnustep-adserver.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
@@ -148,7 +150,10 @@ popd
 
 %makeinstall_std -C Goodies GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+install -d %buildroot%_menudir
+install -m644 %SOURCE1 %buildroot%_menudir/%name
+install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adgnumailconverter
+install -m644 %SOURCE3 %buildroot%_menudir/gnustep-adserver
 
 %files
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
@@ -157,7 +162,7 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
-%_menudir/*
+%_menudir/%name
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -173,9 +178,11 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files -n gnustep-adgnumailconverter
 %_bindir/adgnumailconverter
+%_menudir/gnustep-adgnumailconverter
 
 %files -n gnustep-adserver
 %_bindir/adserver
+%_menudir/gnustep-adserver
 
 %files -n gnustep-adtool
 %_bindir/adtool
@@ -184,6 +191,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
 
 %changelog
+* Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt9.svn20131019
+- Added menu files for adgnumailconverter and adserver (thnx kostyalamer@)
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt8.svn20131019
 - New snapshot
 
