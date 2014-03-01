@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %define pdir %_libdir/petsc-real
@@ -7,7 +10,7 @@
 
 Name: phaml
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -16,7 +19,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-fortran %mpiimpl-devel
+BuildPreReq: gcc%gver-fortran %mpiimpl-devel
 BuildPreReq: liblapack-devel libslepc-real-devel libparpack-mpi-devel
 BuildPreReq: libexodusii-devel libGLUT-devel libf90gl-devel
 BuildPreReq: libXaw-devel libXmu-devel libXi-devel libXext-devel
@@ -149,6 +152,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.0-alt2
+- Built with gcc 4.7
+
 * Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.0-alt1
 - Version 1.13.0
 
