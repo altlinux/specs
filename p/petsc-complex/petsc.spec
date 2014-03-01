@@ -28,7 +28,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4.3
-Release: alt2
+Release: alt3
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -633,7 +633,7 @@ export PETSC_LDIR=%ldir
 export PETSC_LIB_DIR=%ldir/lib
 export PETSC_SCALAR_TYPE=%scalar_type
 export PETSC_CONFIG_DIR=%ldir/python/%{oname}_config
-export TAU_MAKEFILE=$(rpm -ql libtau-common|grep Makefile)
+export TAU_MAKEFILE=$(rpm -ql libtau-common|grep Makefile.tau)
 export SLEPC_DIR=%ldir
 PATH="\`echo \$PATH|sed 's|:%_libexecdir/%oname-%alttype/bin||g'\`"
 PATH="\`echo \$PATH|sed 's|:%_libdir/%oname-%alttype/bin||g'\`"
@@ -793,6 +793,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt3
+- Fixed /usr/bin/petsc-%scalar_type.sh
+
 * Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt2
 - Built with gcc 4.7
 
@@ -997,3 +1000,4 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
+
