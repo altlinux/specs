@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -9,7 +12,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 3.4.3
-Release: alt1
+Release: alt2
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -24,9 +27,9 @@ Requires: petsc-%scalar_type
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: chrpath libpetsc-%scalar_type-devel
-BuildPreReq: %mpiimpl-devel gcc-fortran libgfortran-devel
-BuildPreReq: libstdc++-devel libatlas-devel libsz2-devel libparpack-mpi-devel
-BuildPreReq: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
+BuildPreReq: %mpiimpl-devel gcc%gver-fortran
+BuildPreReq: libatlas-devel libsz2-devel libparpack-mpi-devel
+BuildPreReq: liblapack-devel gcc%gver-c++ libscalapack-devel libX11-devel
 BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -256,6 +259,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt2
+- Built with gcc 4.7
+
 * Fri Oct 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt1
 - Version 3.4.3
 
@@ -353,4 +359,3 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 
 * Mon Jul 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p4-alt1
 - Initial build for Sisyphus
-
