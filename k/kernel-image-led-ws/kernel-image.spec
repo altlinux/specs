@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Fri Feb 28 2014 Led <led@altlinux.ru> 3.10.32-alt6
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+
 * Thu Feb 27 2014 Led <led@altlinux.ru> 3.10.32-alt5
 - updated:
   + fix-drivers-usb-core
