@@ -10,10 +10,10 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt8
+%define cedet_release alt9
 
 %define cvsdate 20090110
-%define rel_base alt8
+%define rel_base alt9
 
 # subpackages to build;
 %def_enable nox
@@ -858,7 +858,7 @@ export EMACSLOADPATH="$(pwd)"/lisp
 %define _configure_script ../configure
 %if_enabled nox
 pushd build-nox
-%configure --sharedstatedir=/var --with-pop --with-x=no --without-sound --with-gpm --without-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --without-all --with-pop --with-x=no --with-gpm --with-gnutls --with-selinux --with-xml2 --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled athena
@@ -868,7 +868,7 @@ popd
 %endif
 %if_enabled gtk
 pushd build-gtk
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
 popd
 %endif
 %if_enabled motif
@@ -880,7 +880,7 @@ popd
 %endif
 %if_enabled gtk3
 pushd build-gtk3
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
 popd
 %endif
 
@@ -1544,6 +1544,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Sat Mar  1 2014 Terechkov Evgenii <evg@altlinux.org> 24.3-alt9
+- Fix FTBFS with gcc4.8 (disable LTO for gtk build)
+
 * Fri Apr 19 2013 Terechkov Evgenii <evg@altlinux.org> 24.3-alt8
 - Cedet release updated
 
