@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -9,7 +12,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4
-Release: alt1.git20131112
+Release: alt1.git20140214
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -193,6 +196,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140214
+- New snapshot
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20131112
 - New snapshot
 
