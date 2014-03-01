@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %def_without docs
 #ExclusiveArch: %ix86
 %def_without dakota
@@ -26,7 +29,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.6.1
-Release: alt1
+Release: alt2
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
 Group: Sciences/Mathematics
@@ -46,7 +49,7 @@ Source8: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.c
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: gcc-fortran libgfortran-devel gcc-c++ libnumpy-devel
+BuildPreReq: gcc%gver-fortran libgfortran-devel gcc%gver-c++ libnumpy-devel
 BuildPreReq: liblapack-devel doxygen getfemxx binutils-devel
 BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz
 BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel libmatio-devel
@@ -2592,6 +2595,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt2
+- Built with gcc 4.7
+
 * Thu Feb 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt1
 - Version 11.6.1 (with PySundance)
 
