@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Sat Mar 01 2014 Led <led@altlinux.ru> 3.10.32-alt7
+- updated:
+  + fix-drivers-gpu-drm--gma500_gfx
+
 * Fri Feb 28 2014 Led <led@altlinux.ru> 3.10.32-alt6
 - updated:
   + fix-drivers-usb-host--xhci-hcd
