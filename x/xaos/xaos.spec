@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/gsl-config /usr/bin/msgmerge /usr/bin/nasm libICE-devel 
 # END SourceDeps(oneline)
 
 Name: xaos
-Version: 3.5
-Release: alt3
+Version: 3.6
+Release: alt1
 Summary: A real-time fractal zoomer
 Serial: 1
 
@@ -12,7 +12,7 @@ License: GPL
 
 Group: Sciences/Mathematics
 Url: http://xaos.sourceforge.net
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://prdownloads.sourceforge.net/xaos/xaos-%version.tar.gz
 Source1: xaos.png
 Source10: %name.16.xpm.bz2
@@ -123,6 +123,9 @@ cp %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat Mar 01 2014 Ilya Mashkin <oddity@altlinux.ru> 1:3.6-alt1
+- 3.6
+
 * Mon Feb 04 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.5-alt3
 - bugfix release
 
