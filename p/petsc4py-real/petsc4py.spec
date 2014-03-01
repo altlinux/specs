@@ -1,6 +1,8 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-#set_gcc_version 4.5
 
 %def_enable docs
 
@@ -16,7 +18,7 @@
 Name: %oname-%scalar_type
 Version: 3.4
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.git20131106
+Release: alt1.git20140225
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -35,7 +37,7 @@ BuildPreReq: liby12m-devel libsundials-devel libsz2-devel zlib-devel
 BuildPreReq: libexpat-devel libtetgen-devel python-module-mpi4py
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: texlive-latex-base /usr/bin/ssh libdakota-devel
-BuildPreReq: python-module-Cython gcc-c++ gcc-fortran libgomp-devel
+BuildPreReq: python-module-Cython gcc%gver-c++ gcc%gver-fortran libgomp-devel
 %if "%scalar_type" == "complex"
 BuildPreReq: libfftw3-mpi-devel
 %endif
@@ -210,6 +212,9 @@ done
 %endif
 
 %changelog
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140225
+- New snapshot
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20131106
 - New snapshot
 
