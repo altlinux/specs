@@ -1,6 +1,6 @@
 Name: libortp
 Version: 0.22.0
-Release: alt1
+Release: alt3
 
 Group: System/Libraries
 Summary: Real-time Transport Protocol Stack
@@ -63,6 +63,12 @@ develop programs using the oRTP library.
 %_includedir/*
 
 %changelog
+* Mon Mar 03 2014 Alexei Takaseev <taf@altlinux.org> 0.22.0-alt3
+- fix very stupid bugs in various place of oRTP
+
+* Wed Feb 26 2014 Alexei Takaseev <taf@altlinux.org> 0.22.0-alt2
+- Build for linphone 3.7.0
+
 * Thu Jun 13 2013 Alexei Takaseev <taf@altlinux.org> 0.22.0-alt1
 - 0.22.0
 
