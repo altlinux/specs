@@ -2,7 +2,7 @@
 
 Name: gnustep-timeui
 Version: r715
-Release: alt3.svn20090220
+Release: alt4.svn20090220
 Summary: Make a bigger time and calendar ui framework
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -108,6 +108,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/TimeUI.framework/Headers
 
 %changelog
+* Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt4.svn20090220
+- Fixed TestTimeUI
+
 * Sun Feb 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt3.svn20090220
 - Added menu file (thnx kostyalamer@)
 
