@@ -1,25 +1,29 @@
 %define oname UserMerge
 
+%define mwversion 1.22
+# convert version for Source URL (set before Summary:)
+%define REL %(echo "REL%mwversion" | sed -e "s|\\.|_|g")
+
 Name: mediawiki-extensions-%oname
 Version: 1.8.1
-Release: alt1
+Release: alt2
 Serial: 1
 
-BuildArch: noarch
-
-Group: Networking/WWW
 Summary: User Merge and Delete extension allows to merge one Wiki user's account with another one
 
+License: GPL
+Group: Networking/WWW
 Url: http://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+BuildArch: noarch
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
 Requires: mediawiki-common >= 1.22
 
-# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-UserMerge/legacy.tar.gz/REL1_22
+
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-UserMerge/legacy.tar.gz/%REL
 Source: %oname-%version.tar
 
 %description
@@ -39,6 +43,10 @@ user_id 0 and ask you to confirm merge to Anonymous.
 %files -f %oname.files
 
 %changelog
+* Sun Mar 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.1-alt2
+- cleanup spec
+- build with real last sources
+
 * Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.1-alt1
 - new version 1.8.1 (with rpmrb script)
 
