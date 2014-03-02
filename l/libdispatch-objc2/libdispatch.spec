@@ -2,14 +2,14 @@
 
 Name: libdispatch-objc2
 Version: 1.2
-Release: alt2.svn20140108
+Release: alt3.git20140226
 Summary: Linux port of Apple's open-source concurrency library
 License: Apache License v2
 Group: System/Libraries
 Url: http://etoileos.com/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.gna.org/svn/etoile/trunk/Dependencies/libdispatch-objc2
+# https://github.com/etoile/libdispatch-objc2.git
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel libBlocksRuntime-devel cmake
@@ -74,6 +74,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_man3dir/*
 
 %changelog
+* Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.git20140226
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.svn20140108
 - Use %_includedir/objc
 
