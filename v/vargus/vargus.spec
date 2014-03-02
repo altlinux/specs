@@ -1,7 +1,7 @@
 Summary: Vargus - the video surveillance program
 Name: vargus
 Version: 0.9.6
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: Video
 
@@ -20,7 +20,7 @@ BuildPreReq: perl-devel
 BuildPreReq: perl-Filesys-Df perl-Proc-Daemon perl-Privileges-Drop perl-DBI perl-Net-Telnet
 BuildPreReq: perl-Module-Load perl-Encode perl-File-Sync
 BuildPreReq: perl-libnet perl-URI
-Requires: MySQL-server avconv mediainfo perl-DBD-mysql xawtv4-common dbus-tools-gui
+Requires: mysql-server avconv mediainfo perl-DBD-mysql xawtv4-common dbus-tools-gui
 Requires: vlc-plugin-v4l vlc-plugin-ts vlc-plugin-mpeg2 vlc-plugin-live555 vlc-plugin-h264 
 Requires: vlc-plugin-freetype vlc-plugin-ffmpeg vlc-plugin-dbus vlc-mini
 Requires: mp4box v4l-utils
@@ -137,6 +137,10 @@ exit 0
 
 
 %changelog
+* Sun Mar 02 2014 Michael A. Kangin <prividen@altlinux.org> 0.9.6-alt2
+- fix mysql depends (Closes: #29753)
+- change control port to avoid conflict with X11
+
 * Wed Oct 23 2013 Michael A. Kangin <prividen@altlinux.org> 0.9.6-alt1
 - systemd support
 - Multiserver configuration support
