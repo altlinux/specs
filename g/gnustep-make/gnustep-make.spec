@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt14.svn20140116
+Release: alt15.svn20140116
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -75,6 +75,7 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 
 %ifarch x86_64
 sed -i 's|-march=i586||g' $(find %buildroot -type f -not -name config.guess -not -name config.sub)
+sed -i 's|-mtune=i586||g' $(find %buildroot -type f)
 %endif
 sed -i 's|-mtune=generic||g' \
 	%buildroot%_datadir/GNUstep/Makefiles/config.make
@@ -135,6 +136,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt15.svn20140116
+- Removed -mtune=i586 on x86_64
+
 * Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt14.svn20140116
 - Added documentation
 
@@ -159,9 +163,6 @@ rm -f %buildroot%_infodir/*
 
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt7.svn20140116
 - Deleted -march=i586
-
-* Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt6.svn20140116
-- 
 
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt5.svn20140116
 - Other fixes
