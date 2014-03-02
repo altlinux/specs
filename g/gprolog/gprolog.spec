@@ -1,6 +1,6 @@
 Name: gprolog
 Version: 1.4.4
-Release: alt1
+Release: alt2
 Summary: GNU Prolog is a free Prolog compiler
 
 Group: Development/Other
@@ -10,6 +10,9 @@ Url: http://www.gprolog.org
 Source: http://www.gprolog.org/gprolog-%version.tar.gz
 Patch1: gprolog-1.4.0-test.patch
 Patch2: gprolog-1.3.0-linedit.patch
+
+Obsoletes: gprolog-examples < 1.4.0
+Provides: gprolog-examples = %version-%release
 
 #ExclusiveArch: x86_64 %ix86 ppc alpha
 
@@ -45,7 +48,7 @@ Requires: %name = %version-%release
 Documentation for GNU Prolog.
 
 %prep
-%setup -q
+%setup
 #patch1 -p1
 # %patch2 -p1
 
@@ -113,6 +116,9 @@ rm -rf SWI WAMCC XSB YAP
 %doc src/dist-doc/*
 
 %changelog
+* Mon Mar 03 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.4-alt2
+- add Obsoletes/Provides for gprolog-examples
+
 * Sat Mar 01 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 - remove examples
