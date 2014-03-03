@@ -1,15 +1,15 @@
 %define origname granite
 
 Name: libgranite
-Version: 0.2.2
-Release: alt6
+Version: 0.2.3
+Release: alt1
 
 Summary: Extension of GTK+ libraries
 Group: System/Libraries
 License: GPLv3+
 Url: https://launchpad.net/granite
 
-Source0: %origname-%version.tar.gz
+Source0: %origname-%version.tgz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -117,6 +117,9 @@ GObject introspection devel data for the granite library.
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Mon Mar 03 2014 Igor Zubkov <icesik@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Mon Nov 11 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt6
 - Fix FTBFS with new cmake
 
