@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-Gemas
-Version: 0.3
-Release: alt6
+Version: 0.4
+Release: alt1
 Summary: A simple code editor for GNUstepers 
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -61,6 +61,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
+- Version 0.4
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt6
 - Built with clang
 
