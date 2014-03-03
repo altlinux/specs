@@ -1,6 +1,6 @@
 Name: aria2
 Version: 1.18.3
-Release: alt2
+Release: alt3
 
 Summary: aria2 - a simple utility for downloading files faster
 License: GPLv2+ with exceptions
@@ -67,19 +67,32 @@ Currently it has following features:
 #__install -pD -m755 src/aria2c %buildroot%_bindir/aria2c
 
 %makeinstall
-%find_lang aria2
+%find_lang aria2 --with-man
 
 ln -s aria2c  %buildroot%_bindir/%name
+
+bzip2 doc/manual-src/en/_build/man/aria2c.1
+bzip2 doc/manual-src/ru/_build/man/aria2c.1
+bzip2 doc/manual-src/pt/_build/man/aria2c.1
+rm -f %buildroot%_man1dir/aria2c.1.bz2
+install -pD -m644 doc/manual-src/en/_build/man/aria2c.1.bz2 %buildroot%_man1dir/aria2c.1.bz2
+install -pD -m644 doc/manual-src/en/_build/man/aria2c.1.bz2 %buildroot%_mandir/en/man1/aria2c.1.bz2
+install -pD -m644 doc/manual-src/ru/_build/man/aria2c.1.bz2 %buildroot%_mandir/ru/man1/aria2c.1.bz2
+install -pD -m644 doc/manual-src/pt/_build/man/aria2c.1.bz2 %buildroot%_mandir/pt/man1/aria2c.1.bz2
 
 %files -f aria2.lang
 %doc AUTHORS ChangeLog README
 %_bindir/%name
 %_bindir/aria2c
 %_man1dir/aria2c.1.bz2
-#_mandir/*/man1/aria2c.1.gz
+%_mandir/*/man1/aria2c.1.bz2
 #_datadir/locale/*/LC_MESSAGES/aria2.mo
 
+
 %changelog
+* Mon Mar 03 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt3
+- fix locales man pages
+
 * Thu Feb 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt2
 - Enable more aria2 features (Closes: #29853) Thanks to Andrey Cherepanov
 
