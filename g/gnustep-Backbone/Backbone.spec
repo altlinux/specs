@@ -2,7 +2,7 @@
 
 Name: gnustep-Backbone
 Version: 0.1.0
-Release: alt6.git20140115
+Release: alt6.git20140219
 Summary: Backbone is an attempt (our attempt) at creating a Really Good Desktop
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -122,6 +122,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PrefsModule.framework/Versions/1.2.0/Headers
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6.git20140219
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6.git20140115
 - Built with clang
 
