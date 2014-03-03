@@ -11,7 +11,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Control Center
@@ -178,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Mon Mar 03 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
