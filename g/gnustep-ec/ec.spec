@@ -2,7 +2,7 @@
 
 Name: gnustep-ec
 Version: 1.0.2
-Release: alt4.svn20140116
+Release: alt4.svn20140228
 Summary: Enterprise Control Configuration and Logging framework
 License: GPLv3 / LGPLv3
 Group: Graphical desktop/GNUstep
@@ -100,6 +100,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt4.svn20140228
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt4.svn20140116
 - Built with clang
 
