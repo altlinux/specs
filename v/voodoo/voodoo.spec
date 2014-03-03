@@ -1,6 +1,6 @@
 Name: voodoo
 Version: 1.1.3
-Release: alt1
+Release: alt2
 Summary: A compiler for the Voodoo programming language
 License: LGPLv2.1
 Group: Development/Other
@@ -48,6 +48,10 @@ rm -f %buildroot%_docdir/%name/LICENSE
 mv %buildroot%_docdir/%name{,-%version}
 
 
+%check
+%make_build test
+
+
 %files
 %doc %_docdir/%name-%version
 %_bindir/*
@@ -56,5 +60,8 @@ mv %buildroot%_docdir/%name{,-%version}
 
 
 %changelog
+* Mon Mar 03 2014 Led <led@altlinux.ru> 1.1.3-alt2
+- spec: added %%check section
+
 * Mon Mar 03 2014 Led <led@altlinux.ru> 1.1.3-alt1
 - initial build
