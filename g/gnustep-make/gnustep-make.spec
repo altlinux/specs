@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt15.svn20140116
+Release: alt15.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -136,6 +136,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt15.svn20140202
+- New snapshot
+
 * Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.6-alt15.svn20140116
 - Removed -mtune=i586 on x86_64
 
