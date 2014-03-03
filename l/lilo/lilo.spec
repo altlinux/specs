@@ -1,5 +1,5 @@
 Name: lilo
-Version: 23.2
+Version: 24.0
 Release: alt1
 Summary: The boot loader for Linux and other operating systems
 License: MIT
@@ -9,21 +9,21 @@ Source0: %url/ftp/archiv/%name-%version.tar
 Source1: keytab-lilo.c
 Patch1: lilo-23.2-owl-makefile.patch
 Patch2: lilo-23.2-alt-owl-fixes.patch
-Patch3: lilo-23.2-gcc-4.8.patch
+Patch3: lilo-24.0-alt-Makefile.patch
 Patch11: lilo-23.0-mdk-part.patch
 Patch12: lilo-23.0-alt-constants.patch
 Patch13: lilo-23.1-alt-defaults.patch
 Patch14: lilo-23.0-alt-lba32_linear.patch
-Patch15: lilo-23.0-alt-mkrescue.patch
+Patch15: lilo-24.0-alt-mkrescue.patch
 Patch17: lilo-23.0-alt-blkid.patch
 Patch18: lilo-23.0-alt-raid_index.patch
 Patch19: lilo-22.8-alt-devmapper.patch
 Patch20: lilo-22.8-alt-md-devmapper.patch
 Patch21: lilo-23.0-suse-gfx.patch
-Patch22: lilo-23.2-alt-format.patch
+Patch22: lilo-24.0-alt-format.patch
 ExclusiveArch: %ix86 x86_64
 
-BuildRequires: dev86 libblkid-devel libdevmapper-devel texlive-latex-recommended perl(Pod/Text.pm)
+BuildRequires: dev86 libblkid-devel libdevmapper-devel perl(Pod/Text.pm) %_bindir/uudecode
 
 %description
 LILO (LInux LOader) is a basic system program which boots your Linux
@@ -71,7 +71,7 @@ sed -i '/^[[:blank:]]*@echo/d' images/Makefile
 
 
 %build
-%make_build CC=%__cc OPT="%optflags -Wno-strict-aliasing" all docs
+%make_build CC=%__cc OPT="%optflags -Wno-strict-aliasing" all
 %__cc %optflags -o keytab-lilo %SOURCE1
 gzip -9c CHANGELOG > CHANGELOG.gz
 
@@ -80,8 +80,9 @@ gzip -9c CHANGELOG > CHANGELOG.gz
 %make_install DESTDIR=%buildroot install
 
 %define docdir %_docdir/%name-%version
-install -d -m 0755 %buildroot%docdir/images
-install -p -m 0644 NEWS README* CHANGELOG.* COPYING QuickInst TODO doc/*.pdf %buildroot%docdir/
+install -d -m 0755 %buildroot%docdir/{html,images}
+install -p -m 0644 NEWS README* CHANGELOG.* COPYING QuickInst TODO %buildroot%docdir/
+install -p -m 0644 doc/html/* %buildroot%docdir/html/
 install -p -m 0644 images/{README,*.{bmp,dat}} %buildroot%docdir/images/
 
 
@@ -112,6 +113,16 @@ fi
 
 
 %changelog
+* Mon Mar 03 2014 Led <led@altlinux.ru> 24.0-alt1
+- 24.0
+- removed:
+  + lilo-23.2-gcc-4.8.patch
+  + lilo-24.0-alt-format.patch
+- updated:
+  + lilo-24.0-alt-mkrescue.patch
+- added:
+  + lilo-24.0-alt-Makefile.patch
+
 * Mon Feb 17 2014 Led <led@altlinux.ru> 23.2-alt1
 - 23.2
 - updated BuildRequires
