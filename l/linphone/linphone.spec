@@ -1,6 +1,6 @@
 Name: linphone
-Version: 3.6.1
-Release: alt1
+Version: 3.7.0
+Release: alt2
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -10,13 +10,15 @@ Group: Communications
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+#Patch0: %name-%version-%release.patch
 BuildPreReq: libortp-devel >= 0.16
 BuildRequires: gcc-c++
 BuildRequires: doxygen intltool libexosip2-devel libglade-devel libgsm-devel
-BuildRequires: libnotify-devel libssl-devel
+BuildRequires: libnotify-devel libssl-devel libbelle-sip-devel
 BuildRequires: libmediastreamer-devel libreadline-devel libspeex-devel
 BuildRequires: libSDL-devel libosip2-devel >= 3.5.0 libncurses-devel
+BuildRequires: libxml2-devel
+
 Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
 
@@ -68,7 +70,7 @@ This package contains development files for %name.
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 ./autogen.sh
 
 %build
@@ -116,6 +118,12 @@ This package contains development files for %name.
 %_libdir/*.so
 
 %changelog
+* Mon Mar 03 2014 Alexei Takaseev <taf@altlinux.org> 3.7.0-alt2
+- update from git:2c0e4947ccfc1ffa98eb88f21ee295cd13f0e5ec
+
+* Wed Feb 26 2014 Alexei Takaseev <taf@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Thu Jun 27 2013 Alexei Takaseev <taf@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
