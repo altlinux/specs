@@ -1,5 +1,5 @@
 Name: installer-feature-repo-add
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Add the installation media to APT configuration
@@ -10,20 +10,14 @@ Url: http://www.altlinux.org/Installer/beans
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
+Provides: %name-stage2
+Obsoletes: %name-stage2
 
 Conflicts: alterator-pkg < 2.6.18-alt1
 
 %description
 %summary
 
-%package stage2
-Summary: Add the installation media to APT configuration
-License: GPL
-Group: System/Configuration/Other
-Requires: installer-stage2
-
-%description stage2
-%summary
 
 %prep
 %setup
@@ -31,10 +25,14 @@ Requires: installer-stage2
 %install
 %makeinstall
 
-%files stage2
+%files
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Mon Mar 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- use both for cdroms and for flash disks
+- make usable both for stage2 and stage3
+
 * Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - further cdrom restrictions (see #29704)
 
