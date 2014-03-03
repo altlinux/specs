@@ -1,14 +1,14 @@
 %define diethome %_prefix/lib/%name
 
 Name: dietlibc
-%define cvsdate 20121030
+%define cvsdate %nil
 Version: 0.33
-Release: alt0.1
+Release: alt2
 Summary: C library optimized for size
 License: GPLv2+
 Group: Development/C
 Url: http://www.fefe.de/%name/
-%if %cvsdate
+%if 0%{?cvsdate:%cvsdate}
 Source: %name-cvs-%cvsdate.tar
 %else
 Source: ftp://ftp.kernel.org/pub/linux/libs/%name/%name-%version.tar
@@ -21,16 +21,17 @@ Small libc for building embedded applications.
 
 
 %prep
-%if %cvsdate
-%setup -n %name-cvs-%cvsdate
+%if 0%{?cvsdate:%cvsdate}
+%setup -q -n %name-cvs-%cvsdate
 %else
-%setup
+%setup -q
 %endif
 %patch -p1
 
 
 %build
-%add_optflags -fno-stack-protector -U_FORTIFY_SOURCE
+%define _optlevel s
+%add_optflags -fno-stack-protector -U_FORTIFY_SOURCE -fno-asynchronous-unwind-tables
 
 DisableFeatures()
 {
@@ -62,7 +63,7 @@ DisableFeatures \
 EnableFeatures \
 	MALLOC_ZERO
 
-%make_build CC="%__cc %optflags" prefix=%diethome
+%make_build CC="%__cc" CFLAGS="%optflags" prefix=%diethome
 gzip -9c CHANGES > CHANGES.gz
 
 
@@ -79,6 +80,15 @@ install -p -m 0644 %SOURCE1 %buildroot%diethome/Makefile.rules
 
 
 %changelog
+* Mon Mar 03 2014 Led <led@altlinux.ru> 0.33-alt2
+- CVS updates 20140221
+
+* Sat Jan 18 2014 Led <led@altlinux.ru> 0.33-alt1
+- 0.33 + CVS updates 20131203
+
+* Thu Nov 08 2012 Led <led@altlinux.ru> 0.33-alt0.2
+- added x32 as x86_64 compatible
+
 * Thu Nov 08 2012 Led <led@altlinux.ru> 0.33-alt0.1
 - CVS 20121030
 - fixed Url
