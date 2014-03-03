@@ -31,6 +31,7 @@
 %def_enable kernel_pfkey
 %def_enable kernel_klips
 %def_enable nat_transport
+%def_enable ntru
 %def_disable dumm
 %def_disable manager
 %def_enable mediation
@@ -60,7 +61,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.1.0
+Version: 5.1.2
 Release: alt1
 
 Summary: StrongSWAN IPSEC implementation
@@ -71,8 +72,6 @@ Group: System/Servers
 Url: http://www.strongswan.org
 Source0: %name-%version%beta.tar.gz
 Source1: ipsec.init
-Patch0: strongswan-4.4.0-alt-tmpfile.patch
-Patch1: strongswan-4.4.1-alt-makefile.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Jul 02 2012
@@ -109,8 +108,6 @@ of StrongSWAN documentation
 
 %prep
 %setup -n %name-%version%beta
-#patch0 -p1
-%patch1 -p1
 
 %build
 %autoreconf
@@ -148,6 +145,7 @@ of StrongSWAN documentation
 	%{?_enable_kernel_pfkey: --enable-kernel-pfkey} \
 	%{?_enable_kernel_klips: --enable-kernel-klips} \
 	%{?_enable_nat_transport: --enable-nat-transport} \
+	%{subst_enable ntru} \
 	%{subst_enable dumm} \
 	%{subst_enable manager} \
 	%{subst_enable mediation} \
@@ -192,12 +190,18 @@ cp -a testing/ %buildroot%pkgdocdir/
 %attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/cacerts
 %attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/crls
 %attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/private
+%attr(700,root,root) %dir %_sysconfdir/%name/%name.d/*/
+%attr(700,root,root) %dir %_sysconfdir/%name/%name.d/
+%config(noreplace) %_sysconfdir/%name/%name.d/*/*.conf
+%config(noreplace) %_sysconfdir/%name/%name.d/*.conf
 %config(noreplace) %_sysconfdir/%name/ipsec.conf
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_initdir/ipsec
+%_datadir/%name/
 %_libdir/%name/
 %_libdir/ipsec/
 %_sbindir/*
+%_bindir/*
 %_mandir/*/*
 
 %files testing
@@ -208,6 +212,12 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Mon Mar 03 2014 Michael Shigorin <mike@altlinux.org> 5.1.2-alt1
+- 5.1.2: http://wiki.strongswan.org/versions/50
+  + new default configuration file layout is introduced
+  + NTRUEncrypt support
+- dropped patches (done upstream in a slightly different way)
+
 * Wed Aug 07 2013 Michael Shigorin <mike@altlinux.org> 5.1.0-alt1
 - 5.1.0: CVE-2013-5018 fix (charon DoS, see also
   http://www.strongswan.org/blog/2013/08/01/)
