@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-HighlighterKit
-Version: 0.1.2
-Release: alt4
+Version: 0.1.3
+Release: alt1
 Summary: Framework needed by Gemas and Project Manager
 License: MIT / FDL
 Group: Graphical desktop/GNUstep
@@ -94,6 +94,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
+- Version 0.1.3
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt4
 - Built with clang
 
