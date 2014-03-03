@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt4.svn20140127
+Release: alt5.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -131,6 +131,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt5.svn20140127
+- Rebuilt
+
 * Wed Feb 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt4.svn20140127
 - Moved documetation into separate package
 

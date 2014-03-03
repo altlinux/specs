@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt4.svn20140126
+Release: alt4.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -150,6 +150,9 @@ rm -f /etc/services.orig
 %_infodir/*
  
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt4.svn20140226
+- New snapshot
+
 * Mon Feb 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.6-alt4.svn20140126
 - BuildPreReq: gnustep-make-doc
 
