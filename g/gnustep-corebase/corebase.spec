@@ -2,7 +2,7 @@
 
 Name: gnustep-corebase
 Version: 0.2
-Release: alt2.svn20140203
+Release: alt2.svn20140220
 Summary: Open implementation of CoreFoundation
 License: LGPLv2+, GPLv3+
 Group: Graphical desktop/GNUstep
@@ -94,6 +94,9 @@ This package contains development files of the GNUstep CoreBase Library.
 %_libdir/*.so
 
 %changelog
+* Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.svn20140220
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.svn20140203
 - Built with clang
 
