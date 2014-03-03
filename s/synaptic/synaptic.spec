@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt13
+Release: alt14
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -30,6 +30,7 @@ Patch2: synaptic-0.58-alt-build-fix.patch
 Patch3: synaptic-0.58-rgiconlegend-supported.patch
 Patch4: synaptic-0.58-rsources-extraspaces.patch
 Patch5: synaptic-0.58-rsources-vendorparts.patch
+Patch6: synaptic-0.58-cdrom-to-media.patch
 
 BuildPreReq: libapt-devel >= 0.5.15lorg2-alt42
 %if_enabled autotools
@@ -70,6 +71,7 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 %if_with ru_po
 # installing own translation
@@ -124,6 +126,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Mar 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.58-alt14
+- cdrom insertion text changed to media insertion
+
 * Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 0.58-alt13
 - Fixed and enabled LFS support (see #28214).
 

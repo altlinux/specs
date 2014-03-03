@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt42
+Release: alt43
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -70,6 +70,7 @@ Patch59: apt-0.5.15lorg2-alt-gcc4.3.patch
 Patch60: apt-0.5.15lorg2-alt-apt-shell-list_completion.patch
 Patch61: apt-0.5.15lorg2-alt-apt-shell-quit_by_eof.patch
 Patch62: apt-0.5.15lorg2-alt-rpmdbopen.patch
+Patch63: apt-0.5.15lorg2-apt-cdrom-to-media.patch
 
 Patch99: apt-%version-%release.patch
 Patch100: apt-0.5.15lorg2-alt-lfs.patch
@@ -276,6 +277,7 @@ This package contains method 'rsync' for APT.
 %patch60 -p1
 %patch61 -p1
 %patch62 -p1
+%patch63 -p2
 %patch99 -p1
 %patch100 -p1
 
@@ -348,8 +350,6 @@ done
 
 unset RPM_PYTHON
 
-%set_verify_elf_method strict
-
 %files -f %name.lang
 %_bindir/apt-*
 %_libdir/%name
@@ -386,6 +386,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Feb 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5.15lorg2-alt43
+- use apt-cdrom for general distribution media
+- stricted verify-elf removed
+
 * Thu Jan 10 2013 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt42
 - Fixed and enabled LFS support (closes: #28214).
 
