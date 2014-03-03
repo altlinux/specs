@@ -1,5 +1,5 @@
 Name: geary
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Email client
@@ -66,6 +66,9 @@ Geary's development.
 %_datadir/locale/es_419/LC_MESSAGES/geary.mo
 
 %changelog
+* Mon Mar 03 2014 Igor Zubkov <icesik@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
