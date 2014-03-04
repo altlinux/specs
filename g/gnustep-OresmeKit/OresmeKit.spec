@@ -2,14 +2,14 @@
 
 Name: gnustep-OresmeKit
 Version: 0.1
-Release: alt3.cvs20140127
+Release: alt3.svn20140221
 Summary: Oresme is a plotting framework for GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/oresmekit/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/libs/Oresme/OresmeKit
+# http://svn.savannah.nongnu.org/svn/gap/trunk/libs/Oresme/OresmeKit/
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
@@ -102,6 +102,9 @@ popd
 %_libdir/GNUstep/Frameworks/OresmeKit.framework/Headers
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.svn20140221
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.cvs20140127
 - Built with clang
 
