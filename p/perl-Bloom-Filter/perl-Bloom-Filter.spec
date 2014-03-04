@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Bloom-Filter
 Name: perl-%dist
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Sample Perl Bloom filter implementation
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/X/XA/XAERXESS/Bloom-Filter-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Apr 23 2011
-BuildRequires: perl-Digest-SHA1 perl-devel
+BuildRequires: perl-Digest-SHA1 perl-devel perl(Digest/SHA.pm)
 
 %description
 A Bloom filter is a probabilistic algorithm for doing existence tests in
@@ -41,6 +42,9 @@ http://www.perl.com/pub/a/2004/04/08/bloom_filters.html
 %perl_vendor_privlib/Bloom*
 
 %changelog
+* Tue Mar 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated CPAN update
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 1.0-alt1
 - 0.03 -> 1.0
 
