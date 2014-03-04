@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
-Version: 1.1.0
-Release: alt7.svn20130916
+Version: 1.2.0
+Release: alt1.svn20140214
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -104,6 +104,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.svn20140214
+- Version 1.2.0
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt7.svn20130916
 - Built with clang
 
