@@ -2,7 +2,7 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt5.svn20140117
+Release: alt5.svn20140303
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -104,6 +104,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt5.svn20140303
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt5.svn20140117
 - Built with clang
 
