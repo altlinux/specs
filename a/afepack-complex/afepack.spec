@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.8
-Release: alt19
+Release: alt20
 Summary: C++ library for (adaptive) finite element developping (%scalar_type scalars)
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://dsec.pku.edu.cn/~rli/AFEPack-snapshot.tar
 
-%define gccver 4.6
+%define gccver 4.7
 %set_gcc_version %gccver
 BuildPreReq: gcc%gccver gcc%gccver-c++ gcc%gccver-fortran
 BuildPreReq: python-module-petsc-config
@@ -173,6 +173,9 @@ done
 %endif
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt20
+- Built with gcc 4.7
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt19
 - Rebuilt with dealii 8.1.pre
 
@@ -226,3 +229,4 @@ done
 
 * Mon Jan 31 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2
 - Initial build for Sisyphus
+
