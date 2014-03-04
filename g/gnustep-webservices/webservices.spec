@@ -2,7 +2,7 @@
 
 Name: gnustep-webservices
 Version: 0.5.10
-Release: alt3.git20131212
+Release: alt3.git20140201
 Summary: WebServices framework for GNUstep
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -91,6 +91,9 @@ cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.10-alt3.git20140201
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.10-alt3.git20131212
 - Built with clang
 
