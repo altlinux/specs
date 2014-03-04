@@ -5,7 +5,7 @@
 %define Brand ALT Linux
 
 Name: branding-%brand-%theme
-Version: 7.0.3
+Version: 7.0.4
 Release: alt1
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
@@ -366,6 +366,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Mar 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.4-alt1
+- bump version
+
 * Wed Jan 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.3-alt1
 - licence fixed
 
