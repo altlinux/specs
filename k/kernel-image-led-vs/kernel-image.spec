@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Tue Mar 04 2014 Led <led@altlinux.ru> 3.10.32-alt9
+- updated:
+  + fix-fs-btrfs
+  + fix-virt-kvm--kvm
+
 * Sun Mar 02 2014 Led <led@altlinux.ru> 3.10.32-alt8
 - updated:
   + feat-fs-aufs
