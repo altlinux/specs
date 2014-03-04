@@ -2,7 +2,7 @@
 
 Name: gnustep-MusicKit
 Version: 5.6.2
-Release: alt4.git20110723
+Release: alt4.svn20140301
 Summary: Software system for building music, sound, signal processing, and MIDI applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -279,6 +279,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc _ex/*
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt4.svn20140301
+- New snapshot
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt4.git20110723
 - Built with clang
 
