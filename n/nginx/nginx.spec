@@ -11,10 +11,12 @@
 %def_without geoip
 %def_enable cache_purge
 %def_enable ctpp2
+# If you want to update rtmp module -- use rtmp-update.sh
+%def_enable rtmp
 
 Name: nginx
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -30,6 +32,8 @@ Source6: default.conf
 Source7: cache_purge.tar
 Source8: ngx_ctpp2.tar
 Source9: %name.service
+Source10: nginx-rtmp-module.tar
+
 Patch0: alt-mime-types.patch
 Patch1: nginx-0.8-syslog.patch
 
@@ -76,7 +80,7 @@ Provides: webserver
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -a 7 -a 8
+%setup -a 7 -a 8 -a 10
 %patch0 -p1
 %if_with syslog
 %patch1 -p2
@@ -134,6 +138,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %endif
 %if_enabled ctpp2
 	--add-module=ngx_ctpp2 \
+%endif
+%if_enabled rtmp
+	--add-module=nginx-rtmp-module \
 %endif
 	--with-http_mp4_module \
 	--with-http_realip_module \
@@ -258,6 +265,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Tue Mar 04 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.5-alt2
+- add nginx_rtmp module
+
 * Wed Feb 19 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.5-alt1
 - 1.4.5
 
