@@ -1,5 +1,5 @@
 Name: libleveldb
-Version: 1.9.0
+Version: 1.16
 Release: alt1
 
 Summary: A fast and lightweight key/value database library by Google
@@ -51,5 +51,8 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Mar 04 2014 Alexei Takaseev <taf@altlinux.org> 1.16-alt1
+- 1.16
+
 * Tue Apr 16 2013 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
 - Initial build for Sisyphus
