@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
@@ -10,7 +13,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt12
+Release: alt13
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -29,6 +32,7 @@ BuildPreReq: libhypre-devel-doc ghostscript-utils chrpath
 BuildPreReq: libtrilinos-devel libgaleri-devel c2html
 BuildPreReq: transfig tgif rpm-macros-make perl-devel
 BuildPreReq: libdakota-devel perl-podlators
+BuildPreReq: gcc%gver-c++
 
 Requires: lib%name = %version-%release
 
@@ -152,6 +156,9 @@ done
 #endif
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt13
+- Built with gcc 4.7
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt12
 - Fixed build
 
