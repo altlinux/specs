@@ -2,7 +2,7 @@
 
 Name: gnustep-simplewebkit
 Version: 0.1.0
-Release: alt2.svn20131216
+Release: alt2.svn20140201
 Summary: Framework which is meant to be a simple, drop-in replacement for WebKit
 License: LGPLv2+
 Group: Networking/WWW
@@ -95,6 +95,9 @@ popd
 %_libdir/GNUstep/Frameworks/SimpleWebKit.framework/Versions/0.1/Headers
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.svn20140201
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.svn20131216
 - Built with clang
 
