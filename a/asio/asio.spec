@@ -1,5 +1,5 @@
 Name: asio
-Version: 1.4.7
+Version: 1.10.1
 Release: alt1
 
 Summary: C++ library for network programming
@@ -38,6 +38,9 @@ cd include
 %_includedir/asio/
 
 %changelog
+* Tue Mar 04 2014 Ilya Mashkin <oddity@altlinux.ru> 1.10.1-alt1
+- 1.10.1
+
 * Sun Jan 09 2011 Ilya Mashkin <oddity@altlinux.ru> 1.4.7-alt1
 - 1.4.7
 
