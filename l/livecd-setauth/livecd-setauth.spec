@@ -1,6 +1,6 @@
 Name: livecd-setauth
 Version: 0.7
-Release: alt3
+Release: alt4
 
 Summary: Setup krb5 and cifs homes in livecd
 License: GPL
@@ -18,6 +18,8 @@ Setup krb5 auth and cifs homes if there is 'krb5' in /proc/cmdline
 %prep
 %setup -c
 
+%preun
+%preun_service %name
 
 %install
 mkdir -p %buildroot%_initdir/
@@ -31,6 +33,9 @@ install -pD -m0644 livecd-setauth/livecd-setauth.service %buildroot%_unitdir/liv
 
 
 %changelog
+* Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 0.7-alt4
+- Use preun_service.
+
 * Thu Aug 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt3
 - start before dm in systemd
 

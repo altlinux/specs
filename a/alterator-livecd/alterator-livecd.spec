@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
+- Mount /sys/fs/cgroup/* to the newly installed system.
+
 * Mon Jul 08 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
 - Show error message if /mnt/destination is not empty.
 - Don't count size of mounted to the /mnt/destination directories.
