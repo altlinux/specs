@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt9.svn20140120
+Release: alt9.svn20140227
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -167,6 +167,9 @@ ln -s objc2 %buildroot%_includedir/objc
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt9.svn20140227
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt9.svn20140120
 - Added symlink objc2 -> %_includedir/objc
 
