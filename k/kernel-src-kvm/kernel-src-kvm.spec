@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
 Version: 3.10.21
-Release: alt4
+Release: alt5
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,10 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Tue Mar 04 2014 Led <led@altlinux.ru> 3.10.21-alt5
+- updates from linux-3.10.33:
+  + kvm: x86: fix emulator buffer overflow (CVE-2014-0049)
+
 * Fri Feb 21 2014 Led <led@altlinux.ru> 3.10.21-alt4
 - updates from linux-3.10.32:
   + KVM: return an error code in kvm_vm_ioctl_register_coalesced_mmio()
