@@ -1,3 +1,6 @@
+%define gver 4.7
+%set_gcc_version %gver
+
 %define _user _tremulous
 %define _group _tremulous
 %define _home %_localstatedir/%name
@@ -14,8 +17,7 @@
 
 Name: tremulous
 Version: 1.1.0
-Release: alt4.1
-Packager: Timur Batyrshin <erthad@altlinux.org>
+Release: alt4.2
 
 Summary: Tremulous - 3D FPS Strategic Shooter
 License: GPL
@@ -183,6 +185,9 @@ install -d %buildroot%_home
 %attr(775,root,%_group) %dir %_home
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.2
+- Built with gcc 4.7
+
 * Thu Apr 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.1
 - Fixed build
 
