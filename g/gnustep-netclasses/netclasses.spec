@@ -2,13 +2,14 @@
 
 Name: gnustep-netclasses
 Version: 1.06
-Release: alt3
+Release: alt3.svn20131019
 Summary: Asynchronous networking framework for GNUstep and Mac OS X
 License: LGPLv2
 Group: Graphical desktop/GNUstep
 Url: http://netclasses.aeruder.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# http://svn.savannah.nongnu.org/svn/gap/trunk/libs/netclasses/
 Source: %name-%version.tar
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
@@ -117,6 +118,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.06-alt3.svn20131019
+- Snapshot from svn
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.06-alt3
 - Built with clang
 
