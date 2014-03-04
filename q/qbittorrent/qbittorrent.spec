@@ -1,7 +1,7 @@
 Name: qbittorrent
-Version: 3.0.9
+Version: 3.1.9
 Epoch: 1
-Release: alt1.2
+Release: alt1
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написаный на C++ / Qt4, использующий библиотеку libtorrent.
@@ -43,8 +43,22 @@ qBittorrent - клиент bittorrent написаный на C++ / Qt4, исп�
 qBittorrent стремиться быть хорошей альтернативой всем другим bittorrent 
 клиентам. Автор Christophe Dumez, французский студент в области IT.
    
+%package nox
+Summary: qbittorrent version without GUI (WebUI version)
+Group: Networking/File transfer
+
+%description nox
+WebUI version of qbittorrent.
+
+Default is to listen on tcp/8080 with admin/adminadmin credentials
+
+%description -l ru_RU.UTF8 nox
+Веб-интерфейс для qbittorrent
+
+По умолчанию открывается порт 8080 с логином/паролем admin/adminadmin
+
 %prep
-%setup -q
+%setup
 %patch -p0
 #cp -f %SOURCE2 %SOURCE3 src/lang/
 
@@ -62,16 +76,37 @@ subst 's,^#if LIBTORRENT_VERSION_MINOR >= 16,#if LIBTORRENT_VERSION_MAJOR > 0 ||
 
 %install
 %make_install DESTDIR=%buildroot install
+make clean
+%_configure_script --prefix=%buildroot%_usr --qtdir=%_qt4dir --disable-gui
+%make_build
+%make_install DESTDIR=%buildroot install
+
 %find_lang %name
+
+%files nox
+%_bindir/%name-nox
+%_man1dir/%name-nox.1.*
 
 %files -f %name.lang
 %doc AUTHORS COPYING INSTALL NEWS README TODO Changelog
-%_bindir/*
+%_bindir/%name
 %_datadir/applications/*
-%_man1dir/*
+%_man1dir/%name.1.*
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Wed Mar  5 2014 Terechkov Evgenii <evg@altlinux.org> 1:3.1.9-alt1
+- 3.1.9 (ALT #29820)
+
+* Thu Feb 13 2014 Terechkov Evgenii <evg@altlinux.org> 1:3.1.8-alt1
+- 3.1.8 (ALT#29820)
+
+* Fri Jan 24 2014 Terechkov Evgenii <evg@altlinux.org> 1:3.1.5-alt2
+- qbittorrent-nox subpackage
+
+* Fri Jan 24 2014 Terechkov Evgenii <evg@altlinux.org> 1:3.1.5-alt1
+- 3.1.5
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.9-alt1.2
 - Rebuilt with new libtorrent-rasterbar8
 
