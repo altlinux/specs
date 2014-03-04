@@ -3,7 +3,7 @@
 
 Name: man
 Version: 1.6g
-Release: alt2
+Release: alt3
 
 Summary: Programs for formating and displaying the manual pages
 License: GPL
@@ -120,17 +120,27 @@ install -Dp -m755 %SOURCE4 %buildroot%_rpmlibdir/whatis.filetrigger
 ln -snf %name %buildroot%_bindir/manpath
 ln -snf %name.1 %buildroot%_man1dir/manpath.1
 
-mkdir -p %buildroot{%_cachedir/man/{{,{local,perl,X11R6}/}cat{1,2,3,4,5,6,7,8,9,n},tmp},%_lockdir/makewhatis}
-for f in %buildroot%_cachedir/man/{,{local,perl,X11R6}/}whatis; do echo >"$f"; done
+mkdir -p %buildroot%_tmpfilesdir
+{
+	for d in %_cachedir/man{,/{local,perl,X11R6}}; do
+		mkdir -p -- "%buildroot/$d" >&2
+		echo "D $d 3775 root man -"
+	done
+
+	for f in %_cachedir/man/{,{local,perl,X11R6}/}whatis; do
+		echo > "%buildroot/$f"
+		echo "f $f 0644 cacheman man -"
+	done
+
+	mkdir -p -- %buildroot/%_lockdir/makewhatis >&2
+	echo "D %_lockdir/makewhatis 0700 root root -"
+
+	mkdir -p -- %buildroot/%_cachedir/man/tmp >&2
+	echo "D %_cachedir/man/tmp 0700 cacheman man -"
+} > %buildroot%_tmpfilesdir/man.conf
 
 find %buildroot%_mandir -type f -print0 |
 	xargs -r0 chmod 644 --
-
-# See bug ALT#27372 for details
-mkdir -p %buildroot%_tmpfilesdir
-cat > %buildroot%_tmpfilesdir/man.conf <<EOF
-D %_lockdir/makewhatis 0700 root root -
-EOF
 
 # See bug ALT#9364 for details
 mkdir -p %buildroot%_mandir/{ru,uk}
@@ -150,6 +160,8 @@ for man in man man.conf apropos whatis makewhatis; do
 		--with-man \
 		--without-mo
 done
+
+sort -uo %name.lang %name.lang
 
 %pre
 /usr/sbin/useradd -r -g man -d %_cachedir/man -s /dev/null -n cacheman >/dev/null 2>&1 ||:
@@ -181,12 +193,6 @@ echo done.
 %attr(3775,root,man) %dir %_cachedir/man/perl
 %attr(3775,root,man) %dir %_cachedir/man/X11R6
 
-%defattr(644,root,man,2775)
-%_cachedir/man/cat*
-%_cachedir/man/local/cat*
-%_cachedir/man/perl/cat*
-%_cachedir/man/X11R6/cat*
-
 %files whatis
 %attr(754,root,man) %_sbindir/makewhatis
 %_bindir/whatis
@@ -204,6 +210,10 @@ echo done.
 %attr(644,cacheman,man) %ghost %_cachedir/man/X11R6/whatis
 
 %changelog
+* Thu Jan 30 2014 Alexey Gladkov <legion@altlinux.ru> 1.6g-alt3
+- Describe /var/cache/man/* in the /lib/tmpfiles.d/man.conf (ALT#29774).
+- Remove /var/cache/man/*/cat* directories.
+
 * Wed Apr 24 2013 Alexey Gladkov <legion@altlinux.ru> 1.6g-alt2
 - makewhatis: Fix quoting (ALT#28873) (thx Mikhail Efremov).
 
