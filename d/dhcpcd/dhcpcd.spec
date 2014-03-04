@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.2.1
+Version: 6.3.1
 Release: alt1
 
 Summary: DHCP Client
@@ -65,7 +65,16 @@ fi
 /lib/%name/%name-hooks/*
 /lib/%name/%name-run-hooks
 
+# Do not package timezone hook:
+# it should use tzupdate but
+# what about configuration files?
+%exclude /lib/%name/%name-hooks/15-timezone
+
 %changelog
+* Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 1:6.3.1-alt1
+- Do not package timezone hook.
+- Updated to 6.3.1.
+
 * Thu Jan 16 2014 Mikhail Efremov <sem@altlinux.org> 1:6.2.1-alt1
 - dhcpcd.conf: Disable wpa_supplicant hook by default.
 - wpa_supplicant hook: Use wpa_supplicant.conf for the interface.
