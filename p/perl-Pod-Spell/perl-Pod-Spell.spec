@@ -16,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-Pod-Spell
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: A formatter for spellchecking Pod
@@ -71,6 +71,9 @@ and can be supplemented (on a per-document basis) by having
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Mar 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
