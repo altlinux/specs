@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dump.pm) perl(File/ShareDir.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Path/FindDev.pm) perl(Path/IsDev.pm) perl(Sub/Exporter.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm)
 # END SourceDeps(oneline)
-%define module_version 0.5.2
+%define module_version 1.000000
 %define module_name File-ShareDir-ProjectDistDir
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.5.2
+Version: 1.000000
 Release: alt1
 Summary: Simple set-and-forget using of a '/share' directory in your projects root
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/F*
 
 %changelog
+* Tue Mar 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.000000-alt1
+- automated CPAN update
+
 * Sat Sep 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1
 - automated CPAN update
 
