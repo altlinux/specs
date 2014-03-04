@@ -2,7 +2,7 @@
 
 Name: gnustep-webserver
 Version: 1.5.0
-Release: alt3.git20131014
+Release: alt3.git20140224
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -77,6 +77,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20140224
+- New snapshot
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.git20131014
 - Built with clang
 
