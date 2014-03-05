@@ -4,7 +4,7 @@ BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.028
+Version:	0.035
 Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -13,6 +13,7 @@ Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{vers
 BuildArch:	noarch
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
+BuildRequires:	perl(DynaLoader.pm)
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(ExtUtils/CBuilder.pm)
 BuildRequires:	perl(ExtUtils/Config.pm)
@@ -25,6 +26,7 @@ BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(Getopt/Long.pm)
 BuildRequires:	perl(JSON/PP.pm)
 BuildRequires:	perl(Pod/Man.pm)
+#BuildRequires:	perl(TAP/Harness/Env.pm)
 BuildRequires:	perl(TAP/Harness.pm)
 # Test
 BuildRequires:	perl(blib.pm)
@@ -42,11 +44,15 @@ BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(XSLoader.pm)
 # Runtime
+Requires:	perl(DynaLoader.pm)
 Requires:	perl(ExtUtils/CBuilder.pm)
 Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
-Requires:	perl(TAP/Harness.pm) >= 3.0
+#Requires:	perl(TAP/Harness/Env.pm)
+Requires:	perl(TAP/Harness.pm)
 Source44: import.info
+# TMP: drop
+Patch: perl-Module-Build-Tiny-alt-old-Test-Harness.patch
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -59,6 +65,7 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 
 %prep
 %setup -q -n Module-Build-Tiny-%{version}
+%patch -p1
 rm t/simple.t
 
 %build
@@ -76,6 +83,10 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.035-alt1_1
+- update to new release by fcimport
+- tmp patch not to use new Test::Harness::Env
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1_1
 - update to new release by fcimport
 
