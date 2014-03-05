@@ -6,8 +6,8 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.12.2
-Release: alt2
+Version: 4.12.3
+Release: alt1
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -414,6 +414,9 @@ Requires: %name-common = %version-%release
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Wed Mar 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
 * Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt2
 - fix requires
 
