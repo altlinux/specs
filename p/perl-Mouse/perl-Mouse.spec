@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -16,7 +17,7 @@ Source: http://www.cpan.org/authors/id/G/GF/GFUJI/Mouse-%{version}.tar.gz
 %add_findreq_skiplist */Mouse/PurePerl.pm
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bi)
-BuildRequires: perl-HTTP-Message perl-IO-String perl-Locale-US perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Params-Coerce perl-Path-Class perl-Regexp-Common perl-Test-Deep perl-Test-Output perl-autodie perl-threads
+BuildRequires: perl-HTTP-Message perl-IO-String perl-Locale-US perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Params-Coerce perl-Path-Class perl-Regexp-Common perl-Test-Deep perl-Test-Output perl-autodie perl-threads perl(Module/Build/XSUtil.pm) perl(Test/Exception.pm) perl(Test/Requires.pm) perl(Test/Fatal.pm)
 
 %description
 Moose, a powerful metaobject-fuelled extension of the Perl 5 object system,
@@ -36,7 +37,7 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_archlib/Mouse*
 %perl_vendor_autolib/Mouse*
 %perl_vendor_archlib/ouse.pm
@@ -44,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1
 - automated CPAN update
 
