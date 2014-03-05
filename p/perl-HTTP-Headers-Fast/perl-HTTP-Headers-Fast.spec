@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(MIME/Base64.pm) perl(Storable.pm) perl(Test.pm) perl(URI.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    HTTP-Headers-Fast
-%define upstream_version 0.16
+%define upstream_version 0.17
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_2
+Version:    0.17
+Release:    alt1
 
 Summary:    Faster implementation of HTTP::Headers
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/HTTP/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TO/TOKUHIROM/HTTP-Headers-Fast-%{version}.tar.gz
 
 BuildRequires: perl(HTTP/Date.pm)
 BuildRequires: perl(Module/Build.pm)
@@ -41,10 +42,13 @@ The interface is the same as HTTP::Headers.
 ./Build install destdir=%{buildroot}
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes LICENSE META.json META.yml  README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Thu Oct 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3_2
 - build for Sisyphus
 
