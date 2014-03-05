@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Getopt/OptionTypeMap.pm) perl(Sub/Exporter.pm) perl(Test/Builder.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Getopt/OptionTypeMap.pm) perl(Sub/Exporter.pm) perl(Test/Builder.pm) perl-devel perl-podlators perl(Devel/AssertOS.pm)
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Daemonize
-Version:        0.18
+Version:        0.19
 Release:        alt1
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
@@ -17,7 +18,7 @@ BuildRequires:  perl(MooseX/Getopt.pm)
 BuildRequires:  perl(MooseX/Types/Path/Class.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Exception.pm)
-BuildRequires:  perl(Test/Moose.pm) perl(Test/Fatal.pm)
+BuildRequires:  perl(Test/Moose.pm) perl(Test/Fatal.pm) perl(Sub/Exporter/ForMethods.pm)
 
 
 Source44: import.info
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
