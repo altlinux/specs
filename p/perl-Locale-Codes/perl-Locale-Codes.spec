@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Locale-Codes
 Name: perl-%dist
-Version: 3.27
+Version: 3.30
 Release: alt1
 
 Summary: ISO codes for countries, languages, currencies, and scripts
@@ -32,7 +32,7 @@ countries, scripts, and currencies & funds.
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README
+%doc	Changes README
 %dir	%perl_vendor_privlib/Locale
 	%perl_vendor_privlib/Locale/*.pm
 %doc	%perl_vendor_privlib/Locale/*.pod
@@ -41,6 +41,9 @@ countries, scripts, and currencies & funds.
 %doc	%perl_vendor_privlib/Locale/Codes/*.pod
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.30-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1
 - automated CPAN update
 
