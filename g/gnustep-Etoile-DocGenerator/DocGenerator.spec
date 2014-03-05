@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-DocGenerator
 Version: 0.1
-Release: alt1.git20140227
+Release: alt2.git20140227
 Summary: Etoile Doc Generator
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -85,6 +85,9 @@ install -m755 objcrewriter.io %buildroot%_bindir/
 %_libdir/GNUstep
 
 %changelog
+* Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20140227
+- No assertion when build documentation
+
 * Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20140227
 - Initial build for Sisyphus
 
