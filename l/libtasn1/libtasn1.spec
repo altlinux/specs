@@ -1,5 +1,5 @@
 Name: libtasn1
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
@@ -8,9 +8,6 @@ License: LGPLv2.1+
 URL: http://www.gnu.org/software/libtasn1/
 # git://git.altlinux.org/gears/l/libtasn1.git
 Source: %name-%version.tar
-
-# due to gtkdocize
-BuildRequires: gtk-doc
 
 %description
 This is GNU Libtasn1, a library that provides Abstract Syntax Notation
@@ -52,7 +49,7 @@ This package contains simple tools that can decode and encode ASN.1 data.
 %package devel-doc
 Summary: libtasn1 development documentation
 Group: Development/Documentation
-License: LGPLv2+
+License: LGPLv2.1+
 Conflicts: %name-devel < %version
 BuildArch: noarch
 
@@ -68,19 +65,19 @@ This package contains libtasn1 development documentation.
 %setup
 
 %build
-%autoreconf
 %configure --disable-static --disable-silent-rules
+touch doc/stamp_docs
 %make_build
 
 %install
 %makeinstall_std
 
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir/reference/html
-install -pm644 doc/*.html doc/*.pdf %buildroot%docdir/
+%define docdir %_docdir/%name
+mkdir -p %buildroot%docdir
 install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
-install -pm644 doc/reference/*.pdf %buildroot%docdir/reference/
+install -pm644 doc/*.html doc/*.pdf %buildroot%docdir/
+mkdir -p %buildroot%docdir/reference/html
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 
 %set_verify_elf_method strict
@@ -112,6 +109,9 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Wed Mar 05 2014 Dmitry V. Levin <ldv@altlinux.org> 3.4-alt1
+- Updated to 3.4.
+
 * Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt1
 - Updated to 3.3.
 
