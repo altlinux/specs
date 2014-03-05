@@ -4,6 +4,7 @@
 #%%define branch_switch Mxx
 
 %define _localstatedir /var
+%define _libexecdir %_prefix/libexec
 %define qemu_user  _libvirt
 %define qemu_group  vmusers
 
@@ -94,8 +95,10 @@
 # Non-server/HV driver defaults which are always enabled
 %def_with sasl
 
+%def_without wireshark
+
 Name: libvirt
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -142,9 +145,10 @@ Requires: libvirt-client = %version-%release
 %{?_with_hyperv:BuildRequires: libwsman-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
+%{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel}
 
 BuildRequires: bridge-utils libblkid-devel
-BuildRequires: libgcrypt-devel libgnutls-devel
+BuildRequires: libgcrypt-devel libgnutls-devel libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
@@ -153,6 +157,9 @@ BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1
 BuildRequires: python
 BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
+BuildRequires: dmidecode
+BuildRequires: /sbin/rmmod
+BuildRequires: libsystemd-devel
 
 %description
 Libvirt is a C toolkit to interact with the virtualization capabilities
@@ -482,6 +489,15 @@ Conflicts: %name < 0.9.11
 Shared libraries and client binaries needed to access to the
 virtualization capabilities of recent versions of Linux (and other OSes).
 
+%package -n wireshark-plugin-%name
+Summary: Wireshark dissector plugin for libvirt RPC transactions
+Group: Development/Libraries
+Requires: wireshark
+Requires: %name-client = %version-%release
+
+%description -n wireshark-plugin-%name
+Wireshark dissector plugin for better analysis of libvirt RPC traffic.
+
 %package devel
 Summary: Libraries, includes, etc. to compile with the libvirt library
 Group: Development/C
@@ -550,6 +566,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{subst_with audit} \
 		%{?_with_driver_modules:--with-driver-modules} \
 		%{subst_with dtrace} \
+		%{?_with_wireshark:--with-wireshark-dissector} \
 		%{subst_with sasl}
 
 
@@ -559,7 +576,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in domain-events/events-c dominfo domsuspend hellolibvirt openauth xml/nwfilter systemtap
+for i in dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap
 do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
@@ -885,6 +902,11 @@ fi
 
 %endif #if_with libvirtd
 
+%if_with wireshark
+%files -n wireshark-plugin-%name
+%_libdir/wireshark/plugins/*/%name.so
+%endif
+
 %files devel
 %_pkgconfigdir/libvirt.pc
 %_libdir/lib*.so
@@ -895,6 +917,11 @@ fi
 %_datadir/libvirt/api/libvirt-lxc-api.xml
 
 %changelog
+* Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+- fixed CVE-2013-6436, CVE-2013-6456, CVE-2013-6457, CVE-2013-6458, CVE-2014-1447, CVE-2014-0028
+- add wireshark-plugin-libvirt package, but disabled now
+
 * Mon Dec 02 2013 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 - drop python module package
