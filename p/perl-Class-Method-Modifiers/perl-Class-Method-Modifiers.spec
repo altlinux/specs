@@ -1,6 +1,6 @@
 %define dist Class-Method-Modifiers
 Name: perl-Class-Method-Modifiers
-Version: 2.08
+Version: 2.10
 Release: alt1
 
 Summary: provides Moose-like method modifiers
@@ -58,6 +58,9 @@ distribution.
 %perl_vendor_privlib/Class/Method/Modifiers.pm
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Fri Oct 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
 - automated CPAN update
 
