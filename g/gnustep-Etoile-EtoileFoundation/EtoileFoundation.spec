@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-EtoileFoundation
 Version: 0.5
-Release: alt1.git20140227
+Release: alt2.git20140227
 Summary: The core framework for all Etoile projects
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
-BuildPreReq: libssl-devel
+BuildPreReq: libssl-devel gnustep-Etoile-DocGenerator
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
@@ -66,26 +66,43 @@ and significantly better support for reflection.
 
 This package contains development files of EtoileFoundation.
 
+%package docs
+Summary: Documentation for EtoileFoundation
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+EtoileFoundation is the core framework for all Etoile projects,
+providing numerous convenience methods on top of the OpenStep foundation
+and significantly better support for reflection.
+
+This package contains documentation for EtoileFoundation.
+
 %prep
 %setup
 
 cp %_libdir/GNUstep/Etoile/* ~/RPM/
+prepare_docgen
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
+
+export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 
 %make \
 	messages=yes \
 	debug=yes \
 	strip=no \
-	documentation=no \
+	documentation=yes \
 	PROJECT_NAME=EtoileFoundation
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
+export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	documentation=no \
+	documentation=yes \
 	PROJECT_NAME=EtoileFoundation
 
 rm -f \
@@ -104,6 +121,9 @@ for j in EtoileFoundation EtoileXML EtoileThread; do
 	done
 done
 popd
+
+install -d %buildroot%_docdir/GNUstep/EtoileFoundation
+cp -fRP Documentation/* %buildroot%_docdir/GNUstep/EtoileFoundation/
 
 %files
 %doc NEWS README.md TODO
@@ -124,7 +144,13 @@ popd
 %_libdir/GNUstep/Frameworks/EtoileThread.framework/Versions/0/Headers
 %_libdir/GNUstep/Frameworks/EtoileXML.framework/Versions/0/Headers
 
+%files docs
+%_docdir/GNUstep
+
 %changelog
+* Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20140227
+- Added documentation
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20140227
 - Initial build for Sisyphus
 
