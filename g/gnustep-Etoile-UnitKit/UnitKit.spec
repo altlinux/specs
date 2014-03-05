@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-UnitKit
 Version: 1.3
-Release: alt1.git20140301
+Release: alt2.git20140301
 Summary: Minimalistic unit testing framework
 License: Apache License v2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,7 @@ BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
+BuildPreReq: gnustep-Etoile-DocGenerator
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
@@ -128,13 +129,31 @@ UKTest to mark test classes.
 This package contains development files of test framework and test
 bundle of UnitKit.
 
+%package docs
+Summary: Documentation for UnitKit
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+UnitKit is a minimalistic unit testing framework that supports Mac OS X,
+iOS and GNUstep.
+
+The framework is less than 2000 loc, and built around two classes
+UKRunner and UKTestHandler, plus some test macros, and an empty protocol
+UKTest to mark test classes.
+
+This package contains documentation for UnitKit.
+
 %prep
 %setup
 
 cp %_libdir/GNUstep/Etoile/* ~/RPM/
+prepare_docgen
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
+
+export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 
 %make \
 	messages=yes \
@@ -143,14 +162,16 @@ cp %_libdir/GNUstep/Etoile/* ~/RPM/
 	test=yes \
 	testsource=yes \
 	AUXILIARY_CPPFLAGS="-I$PWD/TestSource" \
-	documentation=no \
+	documentation=yes \
 	PROJECT_NAME=UnitKit
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
+export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
+
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	documentation=no \
+	documentation=yes \
 	test=yes \
 	testsource=yes \
 	PROJECT_NAME=UnitKit
@@ -171,6 +192,9 @@ for j in TestFramework UnitKit; do
 	done
 done
 popd
+
+install -d %buildroot%_docdir/GNUstep/UnitKit
+cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
 %files
 %doc NEWS.md NOTICE README.md TODO.md
@@ -205,7 +229,13 @@ popd
 %_libdir/GNUstep/Frameworks/TestFramework.framework/Headers
 %_libdir/GNUstep/Frameworks/TestFramework.framework/Versions/0/Headers
 
+%files docs
+%_docdir/GNUstep
+
 %changelog
+* Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.git20140301
+- Added documentation
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140301
 - Initial build for Sisyphus
 
