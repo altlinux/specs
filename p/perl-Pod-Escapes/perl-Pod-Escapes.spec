@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Pod-Escapes
 Name: perl-%dist
-Version: 1.04
-Release: alt4
+Version: 1.06
+Release: alt1
 
 Summary: Perl module for resolving Pod escape sequences
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Pod-Escapes-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,10 +30,13 @@ sequences.  It is used by Pod parsers and formatters.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %perl_vendor_privlib/Pod
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Sun Nov 13 2011 Alexey Tourbin <at@altlinux.ru> 1.04-alt4
 - rebuilt
 
