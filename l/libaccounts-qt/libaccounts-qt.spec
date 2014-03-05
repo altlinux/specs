@@ -4,14 +4,13 @@ BuildRequires: gcc-c++ libqt4-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaccounts-qt
-Version:	1.6
-Release:	alt1_4
+Version:	1.11
+Release:	alt1_1
 Summary:	Accounts framework Qt bindings
 Group:		System/Libraries
 License:	LGPLv2
 URL:		http://code.google.com/p/accounts-sso/
 Source0:	http://accounts-sso.googlecode.com/files/accounts-qt-%{version}.tar.bz2
-Patch0:		accounts-qt-1.6-do-not-initialize-qstring-to-null.patch
 Patch1:		libaccounts-qt-64bitarchs.patch
 BuildRequires:	qt4-devel libaccounts-glib-devel
 BuildRequires:	doxygen graphviz
@@ -31,7 +30,6 @@ Headers, development libraries and documentation for accounts-qt.
 
 %prep
 %setup -q -n accounts-qt-%{version}
-%patch0 -p1 -b .do-not-initialize-qstring-to-null
 %patch1 -p1 -b .64bitarchs
 
 %build
@@ -62,9 +60,13 @@ mv %{buildroot}%{_docdir}/accounts-qt __tmp_doc
 %{_libdir}/lib*.so
 %{_includedir}/accounts-qt/
 %{_libdir}/pkgconfig/accounts-qt.pc
+%{_libdir}/cmake/AccountsQt
 %doc __tmp_doc/accounts-qt/*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_4
 - update to new release by fcimport
 
