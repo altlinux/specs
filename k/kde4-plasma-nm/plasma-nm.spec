@@ -1,5 +1,5 @@
 Name: kde4-plasma-nm
-Version: 0.9.3.2
+Version: 0.9.3.3
 Release: alt2
 
 Group: Graphical desktop/KDE
@@ -10,9 +10,9 @@ License: LGPLv2+ and GPLv2+
 Requires: NetworkManager >= 0.9.8
 
 Source: plasma-nm-%version.tar
-Source10: 01-altlinux-plasma-nm.js
-
-Patch1: plasma-nm-0.9.3.2-upstream-fixes.patch
+Source10: 01-plasma-nm.js
+# FC
+Patch1: openconnect.patch
 
 # Automatically added by buildreq on Wed Feb 19 2014 (-bi)
 # optimized out: ModemManager-devel automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libmm-qt libnm-qt libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby ruby-stdlibs xdg-utils xorg-kbproto-devel xorg-xproto-devel zlib-devel
@@ -92,7 +92,6 @@ Requires: NetworkManager-pptp
 %setup -n plasma-nm-%version
 %patch1 -p1
 
-
 %build
 %K4build
 
@@ -101,7 +100,7 @@ Requires: NetworkManager-pptp
 %K4install
 
 # migrate to nm plasmoid
-install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-altlinux-plasma-nm.js
+install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plasma-nm.js
 
 %K4find_lang --with-kde --output=%name.lang plasma_applet_org.kde.networkmanagement
 %K4find_lang --with-kde --append --output=%name.lang plasmanetworkmanagement-kded
@@ -129,7 +128,7 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-altl
 %_K4apps/plasma/plasmoids/org.kde.networkmanagement/metadata.desktop
 %_K4srv/plasma-applet-networkmanagement.desktop
 %_K4lib/plugins/designer/plasmanetworkmanagementwidgets.so
-%_K4apps/desktoptheme/default/icons/plasma-networkmanagement.svgz
+%_K4apps/desktoptheme/default/icons/plasma-networkmanagement*.svgz
 %_K4iconsdir/oxygen/*/*/*
 %_K4apps/plasma-desktop/updates/*.js
 # plasma-nm notifications
@@ -174,6 +173,15 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-altl
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Tue Mar 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt2
+- add fix for new openconnect
+
+* Tue Mar 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt1
+- new version
+
+* Tue Mar 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.2-alt3
+- rebuild
+
 * Wed Feb 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.2-alt2
 - add some upstream fixes
 
