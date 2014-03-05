@@ -6,8 +6,8 @@
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
 %define status %nil
 %define status_en %nil
-%define distro_name ALT Linux 7.0.3%status_en School Teacher
-%define distro_name_ru Альт Линукс 7.0.3%status Школьный Учитель
+%define distro_name ALT Linux 7.0.4%status_en School Teacher
+%define distro_name_ru Альт Линукс 7.0.4%status Школьный Учитель
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
@@ -15,8 +15,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%brand-%theme
-Version: 7.0.3
-Release: alt3
+Version: 7.0.4
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -512,6 +512,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Mar 05 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
+- New release
+
 * Fri Feb 14 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.3-alt3
 - Set light blue background in rEFIt by set correct pixel color in top
   left corner of background image
