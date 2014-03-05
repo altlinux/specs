@@ -1,6 +1,9 @@
+# fresh Test::More -not in perl 5.18.2
+%def_without test
+%define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta-YAML
 Name: perl-%dist
-Version: 0.010
+Version: 0.012
 Release: alt1
 
 Summary: Read and write a subset of YAML for CPAN Meta files
@@ -14,6 +17,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 14 2011
 BuildRequires: perl-YAML perl-YAML-Syck perl-devel
+
 
 %description
 This module implements a subset of the YAML specification for use in
@@ -35,6 +39,9 @@ task.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- automated CPAN update
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
