@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.66
-Release: alt2
+Version: 0.69
+Release: alt1
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -35,7 +36,7 @@ mkdir -p %buildroot%_man1dir
 install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 
 %files
-%doc CHANGES README THANKS examples
+%doc Changes README THANKS examples
 %_bindir/*
 %_man1dir/*
 %_libdir/libbtparse.so
@@ -43,6 +44,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.66-alt2
 - built for perl 5.18
 
