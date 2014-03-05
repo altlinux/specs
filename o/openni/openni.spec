@@ -6,7 +6,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.3.2.1
-Release:        alt1_8%{?gitrev}
+Release:        alt1_9%{?gitrev}
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -18,12 +18,14 @@ URL:            http://www.openni.org
 # rm -rf Platform/Win32 Platform/Android
 # git archive --format tar --prefix=openni-1.3.2.1/ HEAD | gzip > ../openni-1.3.2.1.tar.gz
 Source0:        openni-%{version}.tar.gz
+Source1:        libopenni.pc
 Patch0:         openni-1.3.2.1-willow.patch
 Patch1:         openni-1.3.2.1-fedora.patch
 Patch2:         openni-1.3.2.1-disable-sse.patch
 Patch3:         openni-1.3.2.1-silence-assert.patch
 Patch4:         openni-1.3.2.1-fedora-java.patch
-ExclusiveArch:  %{ix86} x86_64
+Patch5:         openni-1.3.2.1-arm.patch
+ExclusiveArch:  %{ix86} x86_64 %{arm}
 
 BuildRequires:  libfreeglut-devel tinyxml-devel libjpeg-devel dos2unix libusb-devel
 BuildRequires:  doxygen graphviz
@@ -88,6 +90,7 @@ The %{name}-examples package contains example programs for OpenNI.
 %patch2 -p1 -b .disable-sse
 %patch3 -p1 -b .silence-assert
 %patch4 -p1 -b .fedora-java
+%patch5 -p1 -b .arm
 
 rm -rf Source/External
 rm -rf Platform/Linux-x86/Build/Prerequisites/*
@@ -105,9 +108,16 @@ dos2unix LGPL.txt
 
 %build
 cd Platform/Linux-x86/CreateRedist
+%ifarch %{arm}
+chmod +x RedistMaker.Arm
+# {?_smp_mflags} omitted, not supported by OpenNI Makefiles
+CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" DEBUG=1 \
+./RedistMaker.Arm
+%else
 # {?_smp_mflags} omitted, not supported by OpenNI Makefiles
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" DEBUG=1 \
 ./RedistMaker
+%endif
 #cat Output/BuildOpenNI.txt
 
 
@@ -121,7 +131,9 @@ INSTALL_JAR=$RPM_BUILD_ROOT%{_libdir}/%{name} \
 ./install.sh -n
 
 install -m 0755 Samples/Bin/Release/libSample-NiSampleModule.so $RPM_BUILD_ROOT%{_libdir}/libNiSampleModule.so
+%ifnarch %{arm}
 install -m 0755 Samples/Bin/Release/NiViewer $RPM_BUILD_ROOT%{_bindir}
+%endif
 install -m 0755 Samples/Bin/Release/Sample-NiAudioSample $RPM_BUILD_ROOT%{_bindir}/NiAudioSample
 install -m 0755 Samples/Bin/Release/Sample-NiBackRecorder $RPM_BUILD_ROOT%{_bindir}/NiBackRecorder
 install -m 0755 Samples/Bin/Release/Sample-NiConvertXToONI $RPM_BUILD_ROOT%{_bindir}/NiConvertXToONI
@@ -129,8 +141,10 @@ install -m 0755 Samples/Bin/Release/Sample-NiCRead $RPM_BUILD_ROOT%{_bindir}/NiC
 install -m 0755 Samples/Bin/Release/Sample-NiRecordSynthetic $RPM_BUILD_ROOT%{_bindir}/NiRecordSynthetic
 install -m 0755 Samples/Bin/Release/Sample-NiSimpleCreate $RPM_BUILD_ROOT%{_bindir}/NiSimpleCreate
 install -m 0755 Samples/Bin/Release/Sample-NiSimpleRead $RPM_BUILD_ROOT%{_bindir}/NiSimpleRead
+%ifnarch %{arm}
 install -m 0755 Samples/Bin/Release/Sample-NiSimpleViewer $RPM_BUILD_ROOT%{_bindir}/NiSimpleViewer
 install -m 0755 Samples/Bin/Release/Sample-NiUserTracker $RPM_BUILD_ROOT%{_bindir}/NiUserTracker
+%endif
 
 popd
 
@@ -142,6 +156,14 @@ install -p -m 0644 Data/SamplesConfig.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_var}/lib/ni
 echo "<Modules/>" > $RPM_BUILD_ROOT%{_var}/lib/ni/modules.xml
+
+mkdir -p %{buildroot}%{_datadir}/pkgconfig
+sed -e 's![@]prefix[@]!%{_prefix}!g' \
+    -e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
+    -e 's![@]libdir[@]!%{_libdir}!g' \
+    -e 's![@]includedir[@]!%{_includedir}!g' \
+    -e 's![@]version[@]!%{version}!g' \
+    %{SOURCE1} > %{buildroot}%{_datadir}/pkgconfig/libopenni.pc
 
 
 %post
@@ -172,6 +194,7 @@ fi
 %doc Documentation/OpenNI_UserGuide.pdf
 %{_includedir}/*
 #{_libdir}/*.so
+%{_datadir}/pkgconfig/libopenni.pc
 
 %files java
 %{_libdir}/%{name}
@@ -188,6 +211,9 @@ fi
 
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_8
 - update to new release by fcimport
 
