@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Wed Mar 05 2014 Alexey Gladkov <legion@altlinux.ru> 0.8.8-alt1
+- initrd: Remove /run size restriction.
+
 * Tue Oct 08 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.7-alt1
 - Add support for mdadm >= 3.3.
 
