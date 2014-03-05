@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-SourceCodeKit
 Version: 0.1
-Release: alt1.git20140207
+Release: alt2.git20140207
 Summary: Etoile's SourceCodeKit
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -100,7 +100,9 @@ popd
 %_libdir/GNUstep/Frameworks/SourceCodeKit.framework/Versions/0/Headers
 
 %changelog
+* Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20140207
+- Added missing headers
+
 * Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20140207
 - Initial build for Sisyphus
-- 
 
