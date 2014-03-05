@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
@@ -9,13 +10,13 @@ BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 %define __isa_bits 32
 %endif
 Name:           perl-Devel-FindRef
-Version:        1.42
-Release:        alt4_20
+Version:        1.422
+Release:        alt1
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-FindRef/
-Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{version}2.tar.gz
+Source:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{version}.tar.gz
 Patch0:         0001-Fix-compiler-warnings.patch
 Patch1:         0001-Fix-64-bit-warnings.patch
 Patch2:         Devel-FindRef-fix.patch
@@ -30,7 +31,7 @@ very hard. Fortunately, perl keeps track of all its values, so tracking
 references "backwards" is usually possible.
 
 %prep
-%setup -q -n Devel-FindRef-%{version}2
+%setup -q -n Devel-FindRef-%{version}
 %patch0 -p1
 %if %{__isa_bits} == 64
 %patch1 -p1
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.422-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.42-alt4_20
 - Sisyphus build
 
