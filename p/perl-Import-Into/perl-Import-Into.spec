@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Import-Into
-Version: 1.002000
+Version: 1.002001
 Release: alt1
 
 Summary: import packages into other packages
@@ -142,6 +142,9 @@ And that's it.
 %perl_vendor_privlib/Import/*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.002001-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.002000-alt1
 - automated CPAN update
 
