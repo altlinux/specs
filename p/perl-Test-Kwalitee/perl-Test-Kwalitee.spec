@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(if.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
-Version:	1.17
-Release:	alt1_1
+Version:	1.18
+Release:	alt1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(Module/Build/Tiny.pm)
@@ -65,6 +65,9 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_1
 - Sisyphus build
 
