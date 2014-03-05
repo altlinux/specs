@@ -1,5 +1,5 @@
 Name: emotion_generic_players
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: A set of players for Emotion
@@ -39,6 +39,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 

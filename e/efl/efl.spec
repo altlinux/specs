@@ -10,7 +10,7 @@
 %def_enable ibus
 
 Name: efl
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -260,6 +260,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
+- 1.8.6
+
 * Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 
