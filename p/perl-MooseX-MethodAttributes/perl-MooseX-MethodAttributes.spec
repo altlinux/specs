@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-MethodAttributes
 Name: perl-%dist
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: code attribute introspection
@@ -16,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */MooseX/MethodAttributes/Role/Meta/Role.pm
 
 # Automatically added by buildreq on Sun Jan 16 2011
-BuildRequires: perl-MooseX-Types perl-Test-Exception perl-namespace-autoclean perl(Test/CheckDeps.pm)
+BuildRequires: perl-MooseX-Types perl-Test-Exception perl-namespace-autoclean perl(Test/CheckDeps.pm) perl(Module/Build/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm)
 
 %description
 This module allows code attributes of methods to be introspected using
@@ -36,6 +37,9 @@ Moose meta method objects.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
