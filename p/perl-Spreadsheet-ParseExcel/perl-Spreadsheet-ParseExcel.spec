@@ -1,5 +1,5 @@
 Name: perl-Spreadsheet-ParseExcel
-Version: 0.60
+Version: 0.61
 Release: alt1
 Epoch: 1
 
@@ -39,6 +39,9 @@ XLSX format.  See the Spreadsheet::XLSX module instead.
 %perl_vendor_privlib/Spreadsheet
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.61-alt1
+- automated CPAN update
+
 * Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.60-alt1
 - automated CPAN update
 
