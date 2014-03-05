@@ -5,11 +5,10 @@
 %define kvm_packages "qemu-kvm,qemu-system"
 %define libvirt_packages "libvirt"
 %define askpass_package "openssh-askpass"
-%define default_graphics "spice"
 
 Name: virt-manager
-Version: 0.10.0
-Release: alt2
+Version: 1.0.0
+Release: alt1.git.7dfdbb
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -19,7 +18,7 @@ BuildArch: noarch
 
 # git://git.fedorahosted.org/virt-manager.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
@@ -27,7 +26,10 @@ Requires: python-module-pygobject3
 Requires: libspice-gtk3-gir
 Requires: libgtk3vnc-gir
 Requires: libvirt-glib-gir
+Requires: python-module-libxml2
 Requires: vte3
+Requires: dconf
+Requires: dbus-tools-gui
 
 BuildRequires: python-devel python-module-distribute
 BuildRequires: libgio
@@ -37,6 +39,7 @@ BuildRequires: /usr/bin/pod2man
 %add_python_req_skip virtconv
 %add_python_req_skip virtinst
 %add_python_req_skip virtcli
+%add_python_req_skip virtxml
 
 %description
 Virtual Machine Manager provides a graphical tool for administering
@@ -64,6 +67,7 @@ Provides: virt-install
 Provides: virt-clone
 Provides: virt-image
 Provides: virt-convert
+Provides: virt-xml
 Obsoletes: python-module-virtinst
 
 %description -n virt-install
@@ -73,7 +77,7 @@ machine).
 
 %prep
 %setup
-%patch -p1
+# %patch -p1
 
 %build
 python setup.py configure \
@@ -82,8 +86,7 @@ python setup.py configure \
 	--libvirt-package-names=%libvirt_packages \
 	--kvm-package-names=%kvm_packages \
 	--preferred-distros=%preferred_distros \
-	--askpass-package-names=%askpass_package \
-	--default-graphics=%default_graphics
+	--askpass-package-names=%askpass_package
 
 #%%python_build
 
@@ -100,6 +103,7 @@ python setup.py install --root=%buildroot
 %_datadir/%name/virtManager
 %_datadir/%name/icons
 %_desktopdir/%name.desktop
+%_datadir/appdata/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/glib-2.0/schemas/*.gschema.xml
 %_man1dir/%name.1*
@@ -116,17 +120,23 @@ python setup.py install --root=%buildroot
 %_bindir/virt-clone
 %_bindir/virt-image
 %_bindir/virt-convert
+%_bindir/virt-xml
 %_datadir/%name/virt-install
 %_datadir/%name/virt-clone
 %_datadir/%name/virt-image
 %_datadir/%name/virt-convert
+%_datadir/%name/virt-xml
 %_man1dir/virt-install.1*
 %_man1dir/virt-clone.1*
 %_man1dir/virt-convert.1*
+%_man1dir/virt-xml.1*
 %_man1dir/virt-image.1*
 %_man5dir/virt-image.5*
 
 %changelog
+* Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1.git.7dfdbb
+- upstream snapshot 7dfdbb3f352817a61fa7c06f463500807840348d
+
 * Thu Aug 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt2
 - add ALT Linux support
 
