@@ -1,6 +1,8 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.42
+Version: 6.43
 Release: alt1
 
 Summary: Date manipulation routines
@@ -24,6 +26,15 @@ manipulation easy to do.  Operations such as comparing two times,
 calculating a time a given amount of time from another, or parsing
 international times are all easily done.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 
@@ -34,7 +45,7 @@ international times are all easily done.
 %perl_vendor_install
 
 %files
-%doc	HISTORY README
+%doc	Changes README
 %dir	%perl_vendor_privlib/Date
 	%perl_vendor_privlib/Date/Manip.pm
 %doc	%perl_vendor_privlib/Date/Manip.pod
@@ -49,7 +60,14 @@ international times are all easily done.
 %dir	%perl_vendor_privlib/Date/Manip/TZ
 	%perl_vendor_privlib/Date/Manip/TZ/*.pm
 
+%files scripts
+%_bindir/*
+
+
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 6.43-alt1
+- automated CPAN update
+
 * Fri Dec 06 2013 Igor Vlasenko <viy@altlinux.ru> 6.42-alt1
 - automated CPAN update
 
