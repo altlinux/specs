@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build/Tiny.pm)
 %define _disable_test 1
 
 Name: perl-MooseX-Types-LoadableClass
-Version: 0.011
+Version: 0.012
 Release: alt1
 
 Summary: ClassName type constraint with coercion to load the class
@@ -57,6 +57,9 @@ Now I don't have to.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- automated CPAN update
+
 * Wed Oct 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
