@@ -1,8 +1,8 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist Archive-Zip
 Name: perl-%dist
-Version: 1.33
+Version: 1.37
 Release: alt1
 
 Summary: Perl module for manipulating Zip archives
@@ -40,7 +40,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
-%doc	Changes examples README
+%doc	Changes examples
 %dir	%perl_vendor_privlib/Archive
 	%perl_vendor_privlib/Archive/Zip.pm
 %dir	%perl_vendor_privlib/Archive/Zip
@@ -53,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
+- automated CPAN update
+
 * Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
