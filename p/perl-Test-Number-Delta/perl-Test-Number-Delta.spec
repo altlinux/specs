@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Number-Delta
 Name: perl-%dist
-Version: 1.03
-Release: alt2
+Version: 1.04
+Release: alt1
 
 Summary: Compare the difference between numbers against a given tolerance
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-Number-Delta-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +26,6 @@ Usage is similar to other test functions described in Test::More.
 
 %prep
 %setup -q -n %dist-%version
-mv Build.PL Build.PL.orig
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ mv Build.PL Build.PL.orig
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt2
 - rebuilt
 
