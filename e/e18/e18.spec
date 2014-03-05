@@ -3,7 +3,7 @@
 %define cvs_date rc2
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt2
+%define rel alt1
 
 %def_disable static
 # only bluez4 supported
@@ -13,7 +13,7 @@
 %def_with pam_helper
 
 Name: e18
-Version: 0.18.3
+Version: 0.18.5
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -28,10 +28,10 @@ Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
 %ifdef cvs_date
-Source: %_name-%version-%cvs_date.tar.xz
+Source: %_name-%version-%cvs_date.tar
 %else
 #Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
-Source: %_name-%version.tar.xz
+Source: %_name-%version.tar
 %endif
 
 Source1: E-18.png
@@ -67,7 +67,7 @@ Requires: altlinux-freedesktop-menu-%_name >= 0.55
 Requires: udisks2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildRequires: efl-libs-devel libelementary-devel >= 1.8.2
+BuildRequires: efl-libs-devel libelementary-devel >= 1.8.5
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: doxygen pm-utils
@@ -184,6 +184,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.5-alt1
+- 0.18.5
+
 * Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.3-alt2
 - 0.18.3
 
