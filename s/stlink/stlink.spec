@@ -1,11 +1,12 @@
 Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2
 Name: stlink
 Version: 2014.03.05
-Release: alt1
+Release: alt2
 License: Other
 Group: Development/Other
 URL: https://github.com/texane/stlink.git
 Source0: %name.tar.bz2
+Patch0: prem-fix.patch
 
 # Automatically added by buildreq on Wed Mar 05 2014
 # optimized out: at-spi2-atk fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libusb-compat libwayland-client libwayland-cursor libwayland-server pkg-config
@@ -24,6 +25,7 @@ called stlink and there are 2 versions:
 
 %prep
 %setup -q -n %name
+%patch0 -p1
 
 %build
 ./autogen.sh
@@ -41,5 +43,8 @@ called stlink and there are 2 versions:
 %_datadir/%name/*
 
 %changelog
+* Wed Mar 05 2014 Grigory Milev <week@altlinux.ru> 2014.03.05-alt2
+- Change 0700 -> 0644 for file saved from flash
+
 * Wed Mar 05 2014 Grigory Milev <week@altlinux.ru> 2014.03.05-alt1
 - Initial build.
