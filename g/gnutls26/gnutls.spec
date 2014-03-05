@@ -1,6 +1,6 @@
 Name: gnutls26
 Version: 2.12.23
-Release: alt1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -11,14 +11,16 @@ Url: http://gnutls.org/
 Source: gnutls-%version.tar
 Patch1: gnutls-2.12.14-rh-tests.patch
 Patch2: gnutls-2.12.21-alt-linkage.patch
+Patch3: gnutls-2.12.23-up-fixes.patch
 
 %define libcxx libgnutlsxx27
 %define libssl libgnutls27-openssl
 %def_disable guile
 %def_with lzo
+%set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
-BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel zlib-devel
+BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
@@ -212,8 +214,13 @@ This package contains the GnuTLS API Reference Manual.
 %setup -n gnutls-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
+# Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
+# tests with @LIBMULTITHREAD@ in --no-as-needed mode.
+sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-as-needed/' gl/tests/Makefile.*
 
 %build
 %autoreconf
@@ -225,7 +232,7 @@ rm aclocal.m4 m4/{libtool,lt*}.m4
 	--with-libgcrypt \
 	%{subst_enable guile} \
 	%{subst_with lzo}
-%make_build LTLIBTASN1=-ltasn1
+%make_build LTLIBTASN1=-ltasn1 MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std LTLIBTASN1=-ltasn1
@@ -312,6 +319,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Wed Mar 05 2014 Dmitry V. Levin <ldv@altlinux.org> 2.12.23-alt2
+- Applied upstream fixes for CVE-2013-2116, CVE-2014-1959, and CVE-2014-0092.
+
 * Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 2.12.23-alt1
 - Updated to 2.12.23.
 
