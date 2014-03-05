@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-Traits
 Name: perl-%dist
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Automatically apply roles at object creation time
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Traits-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-MooseX-Role-Parameterized perl-Pod-Escapes perl-Test-Exception perl-Test-use-ok perl-namespace-autoclean
+BuildRequires: perl-MooseX-Role-Parameterized perl-Pod-Escapes perl-Test-Exception perl-Test-use-ok perl-namespace-autoclean perl(Module/Build/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm)
 
 %description
 Often you want to create components that can be added to a class
@@ -37,5 +38,8 @@ instantiate that.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.11-alt1
 - initial revision
