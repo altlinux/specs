@@ -6,8 +6,8 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 7.0.3
-Release: alt2
+Version: 7.0.4
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -436,6 +436,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Mar 05 2014 Mikhail Efremov <sem@altlinux.org> 7.0.4-alt1
+- Bump version to 7.0.4.
+
 * Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 7.0.3-alt2
 - menu: Add cheese.desktop.
 - index.html: Drop reference to planet.altlinux.org.
