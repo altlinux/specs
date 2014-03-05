@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt9
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Wed Mar 05 2014 Led <led@altlinux.ru> 3.10.32-alt10
+- updated:
+  + fix-drivers-gpu-drm--radeon
+
 * Tue Mar 04 2014 Led <led@altlinux.ru> 3.10.32-alt9
 - updated:
   + fix-fs-btrfs
