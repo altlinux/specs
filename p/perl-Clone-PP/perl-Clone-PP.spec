@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Benchmark.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name	 Clone-PP
-%define upstream_version 1.03
 
 Name:       perl-%{upstream_name}
-Version:    1.03
+Version:    1.05
 Release:    alt1
 
 Summary:	Recursively copy Perl datatypes
@@ -27,7 +27,7 @@ nested hash, array, scalar and reference types, including tied
 variables and objects.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -45,6 +45,9 @@ variables and objects.
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Feb 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
