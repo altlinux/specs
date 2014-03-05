@@ -3,13 +3,14 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtd
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
-Version:	1.8
-Release:	alt1_2
+Version:	1.16
+Release:	alt1_1
 Group:		System/Libraries
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:		https://code.google.com/p/accounts-sso/
 Source0:	https://accounts-sso.googlecode.com/files/%{name}-%{version}.tar.gz
+Patch0:		libaccounts-glib-1.16-build-with-werror.patch
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libsqlite3-devel
@@ -43,6 +44,8 @@ The %{name}-docs package contains documentation for %{name}.
 %prep
 %setup -q
 
+%patch0	-p1 -b .werror
+
 %build
 gtkdocize
 autoreconf -i --force
@@ -50,7 +53,6 @@ autoreconf -i --force
 %configure --disable-static \
 	--disable-gtk-doc
 
-sed -i 's/-Werror//g' libaccounts-glib/Makefile
 make %{?_smp_mflags}
 
 %install
@@ -87,13 +89,19 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{name}
 %{_datadir}/gir-1.0/Accounts-1.0.gir
-%{_datadir}/vala/vapi/accounts.deps
-%{_datadir}/vala/vapi/accounts.vapi
+%{_libdir}/libaccounts-glib
+%{_datadir}/dbus-1/interfaces/*.xml
+%{_datadir}/libaccounts-glib
+%{_datadir}/vala/vapi/libaccounts-glib.deps
+%{_datadir}/vala/vapi/libaccounts-glib.vapi
 
 %files docs
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2
 - update to new release by fcimport
 
