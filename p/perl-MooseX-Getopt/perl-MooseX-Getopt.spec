@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Getopt
 Name: perl-%dist
-Version: 0.58
+Version: 0.61
 Release: alt1
 
 Summary: A Moose role for processing command line options
@@ -35,6 +35,9 @@ objects using parameters passed in from the command line.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - automated CPAN update
 
