@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-SourceCodeKit
 Version: 0.1
-Release: alt2.git20140207
+Release: alt3.git20140207
 Summary: Etoile's SourceCodeKit
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -17,9 +17,9 @@ BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 BuildPreReq: gnustep-Etoile-EtoileFoundation-devel
-BuildPreReq: gcc-c++
+BuildPreReq: gcc-c++ gnustep-Etoile-DocGenerator
 
-Requires: gnustep-back
+Requires: gnustep-back gnustep-Etoile-EtoileFoundation
 
 %description
 Etoile's SourceCodeKit.
@@ -45,10 +45,21 @@ Etoile's SourceCodeKit.
 
 This package contains development files of SourceCodeKit.
 
+%package docs
+Summary: Documentation for SourceCodeKit
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Etoile's SourceCodeKit.
+
+This package contains documentation for SourceCodeKit.
+
 %prep
 %setup
 
 cp %_libdir/GNUstep/Etoile/* ~/RPM/
+prepare_docgen
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
@@ -57,14 +68,14 @@ cp %_libdir/GNUstep/Etoile/* ~/RPM/
 	messages=yes \
 	debug=yes \
 	strip=no \
-	documentation=no \
+	documentation=yes \
 	PROJECT_NAME=SourceCodeKit
 
 %install
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
-	documentation=no \
+	documentation=yes \
 	PROJECT_NAME=SourceCodeKit
 
 rm -f \
@@ -84,6 +95,9 @@ for j in SourceCodeKit; do
 done
 popd
 
+install -d %buildroot%_docdir/GNUstep/SourceCodeKit
+cp -fRP Documentation/* %buildroot%_docdir/GNUstep/SourceCodeKit/
+
 %files
 %doc TODO
 %_libdir/GNUstep
@@ -99,7 +113,13 @@ popd
 %_libdir/GNUstep/Frameworks/SourceCodeKit.framework/Headers
 %_libdir/GNUstep/Frameworks/SourceCodeKit.framework/Versions/0/Headers
 
+%files docs
+%_docdir/GNUstep
+
 %changelog
+* Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20140207
+- Added documentation
+
 * Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20140207
 - Added missing headers
 
