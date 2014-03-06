@@ -13,8 +13,8 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.20
-Release: alt1.2
+Version: 0.23
+Release: alt1
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -40,11 +40,11 @@ BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
 BuildRequires: libcelt051-devel >= 0.5.1.1
-BuildRequires: libdbus-glib-devel
+BuildRequires: libopus-devel >= 0.9.14
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
-%{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.9 libusbredir-devel >= 0.4.2}
+%{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.16 libusbredir-devel >= 0.4.2}
 BuildRequires: libgtk+2-devel
 BuildRequires: libpolkit-devel >= 0.96 libacl-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+2-gir-devel}
@@ -341,6 +341,9 @@ cd ..
 %endif
 
 %changelog
+* Thu Mar 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.23-alt1
+- 0.23
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.20-alt1.2
 - Fixed build
 
