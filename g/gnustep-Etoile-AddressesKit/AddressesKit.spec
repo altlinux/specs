@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-AddressesKit
 Version: 0.4.7
-Release: alt1.svn20140227
+Release: alt2.svn20140227
 Summary: Addresses for GNUstep
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -137,7 +137,7 @@ rm -f \
 	%buildroot%_libdir/GNUstep/Frameworks/*.framework/*.framework
 
 rm -f %buildroot%_includedir/AddressBook
-ln -s Addresses %buildroot%_includedir/AddressBook
+#ln -s Addresses %buildroot%_includedir/AddressBook
 
 pushd %buildroot%_libdir
 for j in AddressView Addresses; do
@@ -196,6 +196,9 @@ install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adserver
 %_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
 
 %changelog
+* Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.7-alt2.svn20140227
+- Excluded %_includedir/AddressBook
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.7-alt1.svn20140227
 - Initial build for Sisyphus
 
