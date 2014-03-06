@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Attribute/Handlers.pm) perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Class/Method/Modifiers.pm) perl(Config.pm) perl(Data/OptList.pm) perl(Devel/PPPort.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FindBin.pm) perl(Hash/Util/FieldHash/Compat.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Params/Util.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Symbol.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(if.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.62
+%define module_version 0.63
 %define module_name Data-Util
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.62
-Release: alt2
+Version: 0.63
+Release: alt1
 Summary: A selection of utilities for data and data types
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/G/GF/GFUJI/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Util-%{version}.tar.gz
 
 %description
 This module provides utility functions for data and data types,
@@ -41,6 +41,9 @@ There are many benchmarks in the DIST-DIR/benchmark/ directory.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.62-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
