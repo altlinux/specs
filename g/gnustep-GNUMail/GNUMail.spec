@@ -2,7 +2,7 @@
 
 Name: gnustep-GNUMail
 Version: 1.2.0
-Release: alt7
+Release: alt8
 Summary: Official GNUstep mail application and a clone of NeXT's Mail.app
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -14,10 +14,10 @@ Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Pantomime-devel
-BuildPreReq: gnustep-AddressManager-devel
+BuildPreReq: gnustep-Etoile-AddressesKit-devel
 
 Requires: lib%name = %EVR
-Requires: gnustep-AddressManager gnustep-Pantomime
+Requires: gnustep-Etoile-AddressManager gnustep-Pantomime
 Requires: gnustep-back
 
 %description
@@ -106,6 +106,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
 
 %changelog
+* Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt8
+- Requires gnustep-Etoile-AddressManager
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt7
 - Built with clang
 
