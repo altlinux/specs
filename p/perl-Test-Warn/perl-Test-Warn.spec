@@ -1,6 +1,6 @@
 %define dist Test-Warn
 Name: perl-%dist
-Version: 0.24
+Version: 0.30
 Release: alt1
 
 Summary: Perl extension to test methods for warnings
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Test-Warn-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ This module provides a few convenience methods for testing warning based code.
 %perl_vendor_privlib/Test
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.24-alt1
 - 0.23 -> 0.24
 - fixed build with Carp >= 1.25
