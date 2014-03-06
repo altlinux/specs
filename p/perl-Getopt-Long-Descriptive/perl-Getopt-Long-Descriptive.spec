@@ -3,7 +3,7 @@ BuildRequires: perl(Test/Fatal.pm)
 BuildRequires: perl(Test/Warnings.pm)
 %define dist Getopt-Long-Descriptive
 Name: perl-%dist
-Version: 0.096
+Version: 0.097
 Release: alt1
 
 Summary: Getopt::Long, but simpler and more powerful
@@ -37,6 +37,9 @@ think about its huge array of options.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.097-alt1
+- automated CPAN update
+
 * Sat Oct 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.096-alt1
 - automated CPAN update
 
