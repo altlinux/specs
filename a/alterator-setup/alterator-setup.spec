@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation
@@ -69,6 +69,9 @@ mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
 ln -sf /lib/systemd/system/setup.target /etc/systemd/system/default.target
 
 %changelog
+* Thu Mar 06 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.1-alt1
+- Remove more packages during cleanup.
+
 * Tue Jul 16 2013 Michael Shigorin <mike@altlinux.org> 0.2.0-alt1
 - made self destruction optional (sysconfig knob)
 - minor spec cleanup
