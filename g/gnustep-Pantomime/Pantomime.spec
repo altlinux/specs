@@ -2,7 +2,7 @@
 
 Name: gnustep-Pantomime
 Version: 1.2.0
-Release: alt6
+Release: alt7
 Summary: GNUMail framework
 License: LGPL
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ BuildPreReq: gnustep-base-devel libssl-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-back
-#Requires: gnustep-GNUMail
+Requires: gnustep-GNUMail
 
 %description
 Pantomime provides a set of Objective-C classes that model a mail
@@ -113,6 +113,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1.2/Headers
 
 %changelog
+* Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt7
+- Requires gnustep-GNUMail again
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt6
 - Don't requires gnustep-GNUMail for bootstrap
 
