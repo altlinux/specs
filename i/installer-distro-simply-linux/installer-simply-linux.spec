@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt10
+Release: alt11
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -77,6 +77,7 @@ Requires: alterator-luks
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
+Requires: installer-feature-repo-add
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-symlinks-from-sbin
 Requires: installer-feature-efi-stage3
@@ -115,6 +116,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Mar 06 2014 Mikhail Efremov <sem@altlinux.org> 7.0-alt11
+- Add installer-feature-repo-add.
+
 * Thu Feb 13 2014 Mikhail Efremov <sem@altlinux.org> 7.0-alt10
 - Disable cups.socket.
 - Disable haspd.service by default.
