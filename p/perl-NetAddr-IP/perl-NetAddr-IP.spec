@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module NetAddr-IP
 
 Name: perl-%module
-Version: 4.071
+Version: 4.072
 Release: alt1
 
 Summary: Manages IP addresses and subnets
@@ -38,6 +39,9 @@ Manages IPv4 and IPv6 addresses and subnets.
 %perl_vendor_autolib/NetAddr
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 4.072-alt1
+- automated CPAN update
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 4.071-alt1
 - automated CPAN update
 
