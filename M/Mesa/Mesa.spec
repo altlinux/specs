@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 10.0.3
+Version: 10.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -196,6 +196,7 @@ framerate information to stdout
 	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi \
 	--enable-vdpau \
 	--enable-xvmc \
+	--enable-dri3 \
 %endif
 	--enable-texture-float \
 	--enable-shared-glapi \
@@ -351,6 +352,18 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Mar 06 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.1-alt1
+- 10.1 release
+
+* Sun Mar 02 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.1-alt0.rc3
+- 10.1 RC3
+
+* Sat Feb 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.1-alt0.rc2
+- 10.1 RC2
+
+* Mon Feb 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.1-alt0.rc1
+- 10.1 RC1
+
 * Tue Feb 04 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.0.3-alt1
 - 10.0.3
 
