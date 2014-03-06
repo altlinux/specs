@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist XML-Twig
 Name: perl-%dist
-Version: 3.45
+Version: 3.46
 Release: alt1
 
 Summary: A perl module for processing huge XML documents in tree mode
@@ -48,6 +48,9 @@ xml_merge	merge back XML files split with xml_split
 	%perl_vendor_privlib/XML/Twig/XPath.pm
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 3.46-alt1
+- automated CPAN update
+
 * Tue Mar 04 2014 Igor Vlasenko <viy@altlinux.ru> 3.45-alt1
 - automated CPAN update
 
