@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Languages
 Version: 0.6
-Release: alt1.git20140226
+Release: alt2.git20140226
 Summary: Abstract syntax tree and compilation framework
 License: MIT / BSD
 Group: Graphical desktop/GNUstep
@@ -64,6 +64,17 @@ for Etoile Pragmatic Smalltalk and EScript.
 
 This package contains development files of LanguageKit.
 
+%package docs
+Summary: Documentation for LanguageKit
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+LanguageKit provides the abstract syntax tree and compilation framework
+for Etoile Pragmatic Smalltalk and EScript.
+
+This package contains documentation for LanguageKit.
+
 %prep
 %setup
 
@@ -71,8 +82,9 @@ mkdir -p /usr/src/GNUstep/Headers
 ln -s $PWD/LanguageKit/Runtime \
 	/usr/src/GNUstep/Headers/LanguageKitRuntime
 
-cp %_libdir/GNUstep/Etoile/* ~/RPM/
+cp %_libdir/GNUstep/Etoile/* $PWD/../
 prepare_docgen
+ln -s ../Developer $PWD/../
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh 
@@ -80,12 +92,11 @@ prepare_docgen
 LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 export LD_LIBRARY_PATH=$LD_LIBRARY_PAYH:$PWD/LanguageKit/Runtime/LanguageKitRuntime.framework/Versions/Current
 
-export documentation=yes
-
 %make \
 	messages=yes \
 	debug=yes \
 	strip=no \
+	documentation=yes \
 	AUXILIARY_CPPFLAGS="-I$PWD"
 
 %install
@@ -115,8 +126,13 @@ do
 done
 popd
 
-#install -d %buildroot%_docdir/GNUstep/UnitKit
-#cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
+install -d %buildroot%_docdir/GNUstep/Languages
+cp -fRP LanguageKit/Documentation \
+	%buildroot%_docdir/GNUstep/Languages/LanguageKit
+cp -fRP LanguageKit/Runtime/Documentation \
+	%buildroot%_docdir/GNUstep/Languages/LanguageKitRuntime
+cp -fRP LanguageKit/CodeGen/Documentation \
+	%buildroot%_docdir/GNUstep/Languages/LanguageKitCodeGen
 
 cp LanguageKit/README README.LanguageKit
 cp Compiler/README README.Compiler
@@ -149,7 +165,13 @@ install -m644 Compiler/*.1 %buildroot%_man1dir/
 %_libdir/GNUstep/Frameworks/LanguageKitRuntime.framework/Versions/0/Headers
 %_libdir/GNUstep/Frameworks/SmalltalkSupport.framework/Versions/0/Headers
 
+%files docs
+%_docdir/GNUstep
+
 %changelog
+* Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.git20140226
+- Added documentation
+
 * Wed Mar 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20140226
 - Initial build for Sisyphus
 
