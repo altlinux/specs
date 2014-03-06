@@ -1,6 +1,6 @@
 Name: ifuse
-Version: 1.1.2
-Release: alt2
+Version: 1.1.3
+Release: alt1
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
@@ -18,7 +18,7 @@ It is using the native Apple "AFC" protocol, over the normal USB cable in order
 to access the iPhone's or iPod Touch's media files under Linux.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -26,7 +26,7 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/ifuse
@@ -34,6 +34,9 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %doc AUTHORS README
 
 %changelog
+* Thu Mar 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt2
 - rebuilt against libimobiledevice.so.4
 
