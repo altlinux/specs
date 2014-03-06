@@ -1,15 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/gzip bzlib-devel gcc-c++
-# END SourceDeps(oneline)
-Summary: Recompression utilities for .PNG, .MNG and .ZIP files
-Name: advancecomp
-Version: 1.15
-Release: alt2_19
-License: GPLv2+
 Group: Emulators
-URL: http://advancemame.sourceforge.net/
-Source: http://downloads.sf.net/advancemame/advancecomp-%{version}.tar.gz
-BuildRequires: zlib-devel
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/gzip /usr/bin/valgrind /usr/bin/wine bzlib-devel gcc-c++
+# END SourceDeps(oneline)
+Name:           advancecomp
+Version:        1.18
+Release:        alt1_1
+Summary:        Recompression utilities for .PNG, .MNG and .ZIP files
+License:        GPLv2+
+URL:            http://advancemame.sourceforge.net/
+Source0:        http://downloads.sf.net/advancemame/advancecomp-%{version}.tar.gz
+BuildRequires:  tofrodos
+BuildRequires:  zlib-devel
 Source44: import.info
 
 %description
@@ -18,27 +19,35 @@ The main features are :
 * Recompress ZIP, PNG and MNG files using the Deflate 7-Zip implementation.
 * Recompress MNG files using Delta and Move optimization.
 
+This package contains:
+* advzip - Recompression and test utility for zip files
+* advpng - Recompression utility for png files
+* advmng - Recompression utility for mng files
+* advdef - Recompression utility for deflate streams in .png, .mng and .gz 
+files
 
 %prep
 %setup -q
-
 
 %build
 %configure
 make %{?_smp_mflags}
 
-
 %install
 make install DESTDIR=%{buildroot}
 
+%check
+make check
 
 %files
 %doc AUTHORS COPYING HISTORY README
 %{_bindir}/*
 %{_mandir}/man1/*
 
-
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt2_19
 - update to new release by fcimport
 
