@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.18
+Version: 1.27
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -14,7 +15,7 @@ Source: http://www.cpan.org/authors/id/E/EC/ECOCODE/Finance-Quote-%{version}.tar
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-CGI perl-Crypt-SSLeay perl-HTML-TableExtract perl-HTML-Tree perl-devel perl-libwww
+BuildRequires: perl-CGI perl-Crypt-SSLeay perl-HTML-TableExtract perl-HTML-Tree perl-devel perl-libwww perl(Date/Calc.pm) perl(JSON.pm)
 
 %description
 This module gets stock quotes from various internet sources, including
@@ -37,6 +38,9 @@ greater flexibility and stability.
 %perl_vendor_privlib/Finance
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
