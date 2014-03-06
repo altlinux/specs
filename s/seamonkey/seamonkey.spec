@@ -14,7 +14,7 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.23
+Version: 2.24
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -379,6 +379,22 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Mar 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.24-alt1
+- New version
+- Security fixes:
+  + MFSA 2014-13 Inconsistent JavaScript handling of access to Window objects
+  + MFSA 2014-12 NSS ticket handling issues
+  + MFSA 2014-11 Crash when using web workers with asm.js
+  + MFSA 2014-09 Cross-origin information leak through web workers
+  + MFSA 2014-08 Use-after-free with imgRequestProxy and image proccessing
+  + MFSA 2014-07 XSLT stylesheets treated as styles in Content Security Policy
+  + MFSA 2014-05 Information disclosure with *FromPoint on iframes
+  + MFSA 2014-04 Incorrect use of discarded images by RasterImage
+  + MFSA 2014-03 UI selection timeout missing on download prompts
+  + MFSA 2014-02 Clone protected content with XBL scopes
+  + MFSA 2014-01 Miscellaneous memory safety hazards
+- Disable firstrun page show
+
 * Mon Feb 17 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.23-alt1
 - New version of Seamonkey 2.23
 - Security fixes since 2.21:
