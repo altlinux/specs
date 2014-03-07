@@ -1,8 +1,8 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.08
-Release: alt5
+Version: 0.09
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ Requires: gear
 %_bindir/*
 
 %changelog
+* Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- support for pure gear tags
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt5
 - NMU: added missing Pod dependencies
 
