@@ -1,7 +1,8 @@
 %define cfg %_builddir/%name-%version/
+%define rev 44302
 
 Name:       lazarus
-Version:    1.0.14
+Version:    1.2.0
 Release:    alt1
 Epoch:      1
 
@@ -22,6 +23,7 @@ Patch1:     %name-set-correct-path-to-xterm.patch
 Patch2:     %name-fix-desktop-file.patch
 Patch3:     %name-fix-install-path-in-Makefile.patch
 Patch4:     %name-1.0.8-fix-fpc-search.patch
+Patch5:     %name-1.2.0-fix-trailing-comma.patch
 
 BuildRequires: fpc >= 2.6.0 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -60,6 +62,7 @@ tar xf %SOURCE2
 %patch3 -p1
 subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch4 -p2
+%patch5 -p2
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -70,6 +73,9 @@ if [ -n "$FPCCfg" ]; then
   MAKEOPTS="$MAKEOPTS -n @$FPCCfg"
 fi
 #CHMHELP:MAKEOPTS="$MAKEOPTS -dUseCHMHelp"
+
+# Put SVN revision into revision.inc
+echo "const RevisionStr = '%rev';" > ide/revision.inc
 
 # Make IDE
 make bigide OPT="$MAKEOPTS" USESVN2REVISIONINC=0
@@ -176,6 +182,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Fri Mar 07 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.0-alt1
+- New version
+
 * Wed Nov 20 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.14-alt1
 - New version
 
