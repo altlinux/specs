@@ -1,19 +1,17 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Config.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(overload.pm) perl-devel perl-podlators perl(File/ShareDir/Install.pm)
+BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/Pg.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        1.00
-Release:        alt1
+Release:        alt1_1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Captcha/reCAPTCHA.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI.pm)
 BuildRequires:  perl(CGI/Simple.pm)
@@ -21,8 +19,6 @@ BuildRequires:  perl(Class/Accessor/Chained/Fast.pm)
 BuildRequires:  perl(Class/MOP/Method.pm)
 BuildRequires:  perl(Clone.pm)
 BuildRequires:  perl(Config/Any.pm)
-BuildRequires:  perl(Crypt/CBC.pm)
-BuildRequires:  perl(Crypt/DES.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(Data/Visitor.pm)
 BuildRequires:  perl(Data/Visitor/Callback.pm)
@@ -39,6 +35,7 @@ BuildRequires:  perl(Fatal.pm)
 BuildRequires:  perl(File/Copy.pm)
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/ShareDir.pm)
+BuildRequires:  perl(File/ShareDir/Install.pm)
 BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Hash/Flatten.pm)
@@ -126,6 +123,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
