@@ -4,12 +4,12 @@ BuildRequires: perl(if.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
 Version:	1.18
-Release:	alt1
+Release:	alt1_1
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://metacpan.org/module/Test::Kwalitee
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Kwalitee-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(Module/Build/Tiny.pm)
@@ -45,7 +45,6 @@ computer science).
 
 %prep
 %setup -q -n Test-Kwalitee-%{version}
-sed -i -e 's,use Module::Build::Tiny 0.030,use Module::Build::Tiny,' Build.PL
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -59,12 +58,15 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 ./Build test
 
 %files
-%doc Changes CONTRIBUTING LICENSE README
+%doc Changes CONTRIBUTING LICENSE README README.md
 %{_bindir}/kwalitee-metrics
 %{perl_vendor_privlib}/Test/
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_1
+- update to new release by fcimport
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
