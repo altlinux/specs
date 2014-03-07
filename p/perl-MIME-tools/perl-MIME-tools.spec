@@ -1,6 +1,6 @@
 %define dist MIME-tools
 Name: perl-%dist
-Version: 5.504
+Version: 5.505
 Release: alt1
 Epoch: 1
 
@@ -37,6 +37,9 @@ messages.
 %perl_vendor_privlib/MIME*
 
 %changelog
+* Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.505-alt1
+- automated CPAN update
+
 * Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.504-alt1
 - 5.503 -> 5.504
 
