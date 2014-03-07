@@ -1,6 +1,6 @@
 %define destname gear-uupdate
 Name: %destname
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -38,6 +38,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- bugfix release
+
 * Sat Aug 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - now works correctly with depth0 archives
 
