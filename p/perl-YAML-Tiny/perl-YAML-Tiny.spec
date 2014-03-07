@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist YAML-Tiny
 Name: perl-%dist
-Version: 1.56
+Version: 1.61
 Release: alt1
 
 Summary: Read/Write YAML files with as little code as possible
@@ -25,6 +24,8 @@ memory overhead.
 
 %prep
 %setup -q -n %dist-%version
+# Test::More 0.99 - not in perl 5.18.2
+[ %version = 1.61 ] && rm t/*t
 
 %build
 %perl_vendor_build
@@ -37,6 +38,9 @@ memory overhead.
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
+- automated CPAN update
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
 - automated CPAN update
 
