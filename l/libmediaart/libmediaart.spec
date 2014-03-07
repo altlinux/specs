@@ -1,11 +1,11 @@
-%define ver_major 0.2
+%define ver_major 0.3
 %define api_ver 1.0
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: libmediaart
 Version: %ver_major.0
-Release: alt0.1
+Release: alt1
 
 Summary: Library for handling media art
 Group: System/Libraries
@@ -99,6 +99,9 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Sat Mar 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.1
 - first build for Sisyphus
 
