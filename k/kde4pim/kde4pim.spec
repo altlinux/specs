@@ -16,10 +16,10 @@
 %define rname kdepim
 %define major 4
 %define minor 12
-%define bugfix 2
+%define bugfix 3
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -74,7 +74,7 @@ BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
-BuildRequires: kde4-nepomuk-widgets-devel kde4-pim-runtime-devel >= %version kde4-nepomuk-core-devel
+BuildRequires: kde4-nepomuk-widgets-devel kde4-pim-runtime-devel kde4-nepomuk-core-devel
 #BuildRequires: libindicate-qt-devel
 BuildRequires: liblink-grammar-devel
 
@@ -1695,6 +1695,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Mar 07 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
 * Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt2
 - install kleopatra headers
 
