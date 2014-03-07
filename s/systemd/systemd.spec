@@ -39,7 +39,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 210
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -95,8 +95,10 @@ Source60: bootctl-bash3
 Source61: busctl-bash3
 Source62: machinectl-bash3
 Source63: systemd-delta-bash3
-
-
+Source64: systemd-cat-bash3
+Source65: systemd-cgls-bash3
+Source66: systemd-cgtop-bash3
+Source67: systemd-detect-virt-bash3
 
 
 %define dbus_ver 1.4.6
@@ -566,10 +568,6 @@ intltoolize --force --automake
 
 %find_lang %name
 
-# fixed upstream wrong symlink
-rm -f %buildroot%_bindir/systemd-stdio-bridge
-ln -r -s %buildroot/lib/systemd/systemd-bus-proxyd %buildroot%_bindir/systemd-stdio-bridge
-
 # Make sure these directories are properly owned
 mkdir -p %buildroot%_unitdir/{basic,default,dbus,syslog,poweroff,rescue,reboot}.target.wants
 
@@ -711,6 +709,10 @@ install -m644 %SOURCE60 %buildroot%_sysconfdir/bash_completion.d/bootctl
 install -m644 %SOURCE61 %buildroot%_sysconfdir/bash_completion.d/busctl
 install -m644 %SOURCE62 %buildroot%_sysconfdir/bash_completion.d/machinectl
 install -m644 %SOURCE63 %buildroot%_sysconfdir/bash_completion.d/systemd-delta
+install -m644 %SOURCE64 %buildroot%_sysconfdir/bash_completion.d/systemd-cat
+install -m644 %SOURCE65 %buildroot%_sysconfdir/bash_completion.d/systemd-cgls
+install -m644 %SOURCE66 %buildroot%_sysconfdir/bash_completion.d/systemd-cgtop
+install -m644 %SOURCE67 %buildroot%_sysconfdir/bash_completion.d/systemd-detect-virt
 
 # Make sure the ghost-ing below works
 touch %buildroot%_sysconfdir/systemd/system/runlevel2.target
@@ -1280,6 +1282,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Mar 07 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt2
+- snapshot of systemd-stable/v210-stable
+- update bash3 completions
+- new distribution-agnostic configs should be redefine old configs
+
 * Tue Feb 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt1
 - 210
 - build systemd-networkd
