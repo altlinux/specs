@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.32
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Thu Mar 06 2014 Led <led@altlinux.ru> 3.10.32-alt11
+- updated:
+  + fix-net-sunrpc
+
 * Wed Mar 05 2014 Led <led@altlinux.ru> 3.10.32-alt10
 - updated:
   + fix-drivers-gpu-drm--radeon
