@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-EtoileUI
 Version: 0.4.1
-Release: alt1.git20140227
+Release: alt2.git20140227
 Summary: Provides a uniform tree representation for graphical objects
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -116,6 +116,8 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	documentation=yes
 
+cp -f EtoileUI/*.h %buildroot%_includedir/EtoileUI/
+
 rm -f \
 	%buildroot%_libdir/GNUstep/Frameworks/*.framework/*.framework
 
@@ -155,6 +157,9 @@ cp -fRP Documentation/* %buildroot%_docdir/GNUstep/EtoileUI/
 %_docdir/GNUstep
 
 %changelog
+* Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.git20140227
+- Added missing headers
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20140227
 - Initial build for Sisyphus
 
