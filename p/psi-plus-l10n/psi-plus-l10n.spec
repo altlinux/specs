@@ -1,5 +1,5 @@
 Name: psi-plus-l10n
-Version: 0.16.287
+Version: 0.16.289
 Release: alt1
 
 Summary: Translations for Psi+
@@ -16,6 +16,8 @@ BuildArch: noarch
 
 BuildPreReq: libqt4-devel
 
+Requires: psi-plus >= %version
+
 %description
 Translations for Psi+
 
@@ -31,8 +33,15 @@ lrelease-qt4 translations/*.ts
 
 %files
 %doc AUTHORS COPYING ChangeLog README
+%dir %_datadir/psi-plus
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Fri Mar 07 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289-alt1
+- Version 0.16.289
+
+* Tue Mar 04 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.287-alt0.M70T.1
+- Build for branch t7
+
 * Mon Mar 03 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.287-alt1
 - Initial release for ALT Linux
