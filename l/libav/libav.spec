@@ -15,6 +15,7 @@
 %def_enable libvorbis
 %def_enable libcdio
 %def_disable libfaac
+%def_enable libfreetype
 %def_enable libpulse
 %def_disable nonfree
 %def_enable libgsm
@@ -37,13 +38,8 @@
 %def_enable libtheora
 %def_disable debug
 %def_enable bzlib
-%ifarch %ix86 x86_64
 %def_enable vaapi
 %def_enable vdpau
-%else
-%def_disable vaapi
-%def_disable vdpau
-%endif
 %def_enable libopencore_amrwb
 %def_enable libopencore_amrnb
 %def_enable libvpx
@@ -76,7 +72,7 @@
 
 Name: libav
 Version: 9.11
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -399,6 +395,7 @@ sed -i 's/UNKNOWN/%version/' version.sh
     %{subst_enable static} \
     %{subst_enable libvorbis} \
     %{subst_enable libfaac} \
+    %{subst_enable libfreetype} \
     %{subst_enable libpulse} \
     %{subst_enable libxvid} \
     %{subst_enable libx264} \
@@ -574,6 +571,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Sat Mar 08 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.11-alt2
+- freetype-based video filters enabled (closes: #29876)
+
 * Tue Feb 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.11-alt1
 - 9.11 released
 
