@@ -1,6 +1,6 @@
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.06
+Version: 1.08
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Install-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -47,6 +47,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt1
 - 1.04 -> 1.06
 
