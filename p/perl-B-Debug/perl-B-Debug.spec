@@ -1,5 +1,5 @@
 Name: perl-B-Debug
-Version: 1.18
+Version: 1.19
 Release: alt1
 Summary: B::Debug - Walk Perl syntax tree, printing debug info about ops
 
@@ -7,7 +7,7 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN B-Debug
 
-Source: B-Debug-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/B-Debug-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: perl-devel
 
@@ -28,6 +28,9 @@ BuildRequires: perl-devel
 %doc Changes README Artistic Copying
 
 %changelog
+* Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.18-alt1
 - 1.17 -> 1.18
 - built as plain srpm
