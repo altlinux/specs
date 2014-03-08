@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist autodie
 Name: perl-%dist
-Version: 2.22
+Version: 2.23
 Release: alt1
 
 Summary: Replace functions with ones that succeed or die with lexical scope
@@ -35,6 +35,9 @@ of 'Fatal'.
 %perl_vendor_privlib/autodie*
 
 %changelog
+* Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
 - automated CPAN update
 
