@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-ProjectManager
 Version: 0.1
-Release: alt1.git20120112
+Release: alt2.git20120112
 Summary: Work-in-progress compositing window manager for the Etoile environment
 License: MIT
 Group: Graphical desktop/GNUstep
@@ -95,6 +95,9 @@ popd
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+mv %buildroot%_bindir/ProjectManager \
+	%buildroot%_bindir/EtoileProjectManager
+
 %files
 %doc README
 %_bindir/*
@@ -112,6 +115,9 @@ popd
 %_libdir/GNUstep/Frameworks/XCBKit.framework/Versions/0/Headers
 
 %changelog
+* Sat Mar 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20120112
+- Renamed %_bindir/ProjectManager -> %_bindir/EtoileProjectManager
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20120112
 - Initial build for Sisyphus
 
