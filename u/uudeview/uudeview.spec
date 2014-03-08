@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt7
+Release: alt8
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -47,7 +47,7 @@ includes a similarly powerful encoder.
 This package includes documentation.
 
 %package -n libuu
-Summary: uulib shared library
+Summary: %name shared library
 License: GPL
 Group: System/Libraries
 
@@ -55,7 +55,7 @@ Group: System/Libraries
 %summary
 
 %package -n libuu-devel
-Summary: Header files for uulib shared library
+Summary: Header files for %name shared library
 License: GPL
 Group: Development/C
 
@@ -103,6 +103,9 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Sat Mar 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.20-alt8
+- tweaked libuu summary line (closes: #27441)
+
 * Sat Jan 18 2014 Michael Shigorin <mike@altlinux.org> 0.5.20-alt7
 - oops, work around weird FTBFS on x86_64 (base_libs broke)
 
