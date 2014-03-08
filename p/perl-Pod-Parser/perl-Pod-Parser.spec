@@ -1,7 +1,7 @@
 %define dist Pod-Parser
 Name: perl-%dist
-Version: 1.61
-Release: alt2
+Version: 1.62
+Release: alt1
 
 Summary: Modules for parsing/translating POD format documents
 License: GPL or Artistic
@@ -39,6 +39,9 @@ so be sure to specify them in the B<use> statement if you need them:
 %perl_vendor_privlib/Pod
 
 %changelog
+* Sat Mar 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1
+- automated CPAN update
+
 * Wed Oct 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.61-alt2
 - added Requires: perl-podlators for compatibility:
   about 40 packages have indirect build dependency
