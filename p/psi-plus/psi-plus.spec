@@ -1,5 +1,5 @@
 Name: psi-plus
-Version: 0.16.289
+Version: 0.16.289.1
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -43,26 +43,26 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 т.д.
 
 # Attention plugin
-%package -n %name-plugin-attention
+%package plugin-attention
 Summary: Attention support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-attention
+%description plugin-attention
 This plugin is designed to send and receive special messages such as Attentions. 
 To work correctly, the plugin requires that the client of the other party supports XEP-0224 (for example: Pidgin, Miranda IM with Nudge plugin).
 
-%description -n %name-plugin-attention -l ru_RU.UTF-8
+%description plugin-attention -l ru_RU.UTF-8
 Данный плагин предназначен для отправки и приёма сообщений типа Attention. 
 Для работы необходимо, чтобы клиент собеседника поддерживал XEP-0224 (например: Pidgin, Miranda IM с плагином Nudge).
 
 # Autoreply plugin
-%package -n %name-plugin-autoreply
+%package plugin-autoreply
 Summary: Autoreply support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-autoreply
+%description plugin-autoreply
 This plugin acts as an auto-answering machine. It has a number of simple configuration options, which you can use to: 
 
  - set a text message for auto-answer
@@ -78,7 +78,7 @@ The list of exceptions for jids has two operating modes:
  - auto-responder is _switched off_ for the list of exceptions, for the others is _switched on_ (Disable mode)
  - auto-responder is _switched on_ for the list of exceptions, for the others is _switched off_ (Enable mode)
 
-%description -n %name-plugin-autoreply -l ru_RU.UTF-8
+%description plugin-autoreply -l ru_RU.UTF-8
 Данный плагин выполняет роль автоответчика. Имеет ряд несложных настроек, с помощью которых можно: 
 
  - задать текст сообщения для автоответа
@@ -95,203 +95,203 @@ The list of exceptions for jids has two operating modes:
  - автоответчик включён для списка исключений, для остальных - выключен (Enable mode)
 
 # Birthday reminder plugin
-%package -n %name-plugin-birthdayreminder
+%package plugin-birthdayreminder
 Summary: Birthdayreminder support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-birthdayreminder
+%description plugin-birthdayreminder
 This plugin is designed to show reminders of upcoming birthdays.
 The first time you install this plugin, you need to log on to all of your accounts, go to the plugin settings and click "Update Birthdays". The plugin will then collect the information about the birthdays of all the users in your roster, but when the 'Use vCards cache' option is selected, the users' vCards that are cached on your hard disk will be used.
 
-%description -n %name-plugin-birthdayreminder -l ru_RU.UTF-8
+%description plugin-birthdayreminder -l ru_RU.UTF-8
 Данный плагин предназначен для напоминаний о приближающихся днях рождения.
 Если плагин установлен впервые, то необходимо выйти всеми своими аккаунтами в «онлайн», затем зайти в настройки плагина и нажать кнопку Update Birthdays. В результате будет собрана доступная информация о днях рождения пользователей из всех аккаунтов ростера, а если выбрать соответствующую опцию, то и информация о пользователях, vCard'ы которых находятся в кэше на локальном диске.
 
 # Captcha forms plugin
-%package -n %name-plugin-captchaforms
+%package plugin-captchaforms
 Summary: Captcha forms support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-captchaforms
+%description plugin-captchaforms
 This plugin is designed to pass of captcha directly from the Psi+. 
 At the moment the functional is very limited. It only works if the image is sent directly to the body of the message (download content from Internet does not work).
 
-%description -n %name-plugin-captchaforms -l ru_RU.UTF-8
+%description plugin-captchaforms -l ru_RU.UTF-8
 Данный плагин предназначен для прохождения капчи непосредственно из Psi+. 
 В данный момент функционал весьма ограничен. Работает только в случае, если картинка посылается непосредственно в теле сообщения (загрузка контента из интернета пока не поддерживается).
 
 # Chess plugin
-%package -n %name-plugin-chess
+%package plugin-chess
 Summary: Chess forms support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-chess
+%description plugin-chess
 This plugin allows you to play chess with your friends. 
 The plugin is compatible with a similar plugin for Tkabber. 
 For sending commands, normal messages are used, so this plugin will always work wherever you are able to log in. 
 To invite a friend for a game, you can use contact menu item or the button on the toolbar in a chat window.
 
-%description -n %name-plugin-chess -l ru_RU.UTF-8
+%description plugin-chess -l ru_RU.UTF-8
 Данный плагин позволяет играть в шахматы с пользователями из ростера. 
 Плагин совместим с аналогичным плагином в jabber-клиенте Tkabber. 
 Для передачи команд используются обычные сообщения, поэтому плагин будет работать везде, где у Вас есть возможность выйти в «онлайн». 
 Чтобы пригласить друга в игру, можно воспользоваться пунктом меню контакта или кнопкой на тулбаре в окне чата.
 
 # Cleaner plugin
-%package -n %name-plugin-cleaner
+%package plugin-cleaner
 Summary: Cleaner support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-cleaner
+%description plugin-cleaner
 This plugin is designed to clear the avatar cache, saved local copies of vCards and history logs. 
 You can preview items before deleting them from your hard drive.
 
-%description -n %name-plugin-cleaner -l ru_RU.UTF-8
+%description plugin-cleaner -l ru_RU.UTF-8
 Данный плагин предназначен для очистки кэша аватар, сохранённых локальных копий vCard, а также логов истории переписки. 
 Имеется возможность предварительного просмотра элементов перед их удалением с локального диска.
 
 # Client switcher plugin
-%package -n %name-plugin-clientswitcher
+%package plugin-clientswitcher
 Summary: Client switcher support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-clientswitcher
+%description plugin-clientswitcher
 This plugin is intended to spoof version of the Jabber client, the name and type of operating system. It is possible to manually specify the version of the client and the operating system or choose from a predefined list. 
 Note: It is recommended to use the plugin only when really necessary. Keep in mind that the substitution of the name and version of the client may have a negative impact on support in their respective conferences.
 
-%description -n %name-plugin-clientswitcher -l ru_RU.UTF-8
+%description plugin-clientswitcher -l ru_RU.UTF-8
 Данный плагин предназначен для подмены версии Jabber-клиента, его названия и типа операционной системы. Имеется возможность вручную указать версию клиента и операционной системы или выбрать их из заданного списка. 
 Примечание: Рекомендуется использовать плагин только в случае реальной необходимости. Следует помнить, что подмена имени и версии клиента может негативно сказаться на поддержке в соответствующих конференциях.
 
 # Conference logger plugin
-%package -n %name-plugin-conferencelogger
+%package plugin-conferencelogger
 Summary: Conference logger support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-conferencelogger
+%description plugin-conferencelogger
 This plugin is designed to save conference logs in which the Psi+ user sits. 
 Conferences logs can be viewed from the plugin settings or by clicking on the appropriate button on the toolbar in the active window/tab with conference. 
 Note: To work correctly, the option options.ui.chat.central-toolbar must be set to true.
 
-%description -n %name-plugin-conferencelogger -l ru_RU.UTF-8
+%description plugin-conferencelogger -l ru_RU.UTF-8
 Данный плагин предназначен для записи (сохранения) логов конференций, в которых находится пользователь Psi+. 
 Логи конференций можно просмотреть из настроек плагина, либо нажав соответствующую кнопку на тулбаре в активном окне/табе конференции. 
 Примечание: Для корректной работы опция options.ui.chat.central-toolbar должна быть установлена в положение true.
 
 # Content downloader plugin
-%package -n %name-plugin-contentdownloader
+%package plugin-contentdownloader
 Summary: Content downloader support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-contentdownloader
+%description plugin-contentdownloader
 This plugin is designed to make it easy to download and install iconsets and other resources for Psi+. 
 This plugin can currently be used to download and install roster iconsets and emoticons.
 
-%description -n %name-plugin-contentdownloader -l ru_RU.UTF-8
+%description plugin-contentdownloader -l ru_RU.UTF-8
 Данный плагин предназначен для скачивания из Интернет наборов иконок и прочих дополнительных ресурсов для Psi+. 
 Примечание: В настоящее время плагин умеет скачивать и устанавливать наборы иконок для ростера и смайлпаки.
 
 # Extended menu
-%package -n %name-plugin-extendedmenu
+%package plugin-extendedmenu
 Summary: Extended menu support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-extendedmenu
+%description plugin-extendedmenu
 This plugin adds roster submenu 'Extended Actions' to contact's context menu. At the moment we have the following items: 'Copy JID', 'Copy the nickname', 'Copy the status message' and 'Ping'.
 
-%description -n %name-plugin-extendedmenu -l ru_RU.UTF-8
+%description plugin-extendedmenu -l ru_RU.UTF-8
 Данный плагин добавляет в контекстное меню контакта ростера подменю «Extended Actions». На данный момент имеются следующие пункты: «Скопировать JID», «Скопировать ник», «Скопировать статусное сообщение» и «Ping».
 
 # Extended options
-%package -n %name-plugin-extendedoptions
+%package plugin-extendedoptions
 Summary: Extended options support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-extendedoptions
+%description plugin-extendedoptions
 This plugin is designed to allow easy configuration of some advanced options in Psi+. 
 This plugin gives you access to advanced application options, which do not have a graphical user interface. 
 Importantly: A large part of the options are important system settings. These require extra attention and proper understanding of the results when changing the option.
 
-%description -n %name-plugin-extendedoptions -l ru_RU.UTF-8
+%description plugin-extendedoptions -l ru_RU.UTF-8
 Данный плагин предназначен для более удобной настройки дополнительных параметров Psi+. 
 Плагин предоставляет доступ к дополнительным настройкам приложения, которые не имеют своего графического интерфейса. 
 Важно: бОльшая часть настроек имеет системный характер и требует внимания и понимания смысла изменяемых функций.
 
 # GMail service plugin
-%package -n %name-plugin-gmailservice
+%package plugin-gmailservice
 Summary: GMail service support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-gmailservice
+%description plugin-gmailservice
 Shows notifications of new messages in your Gmailbox. 
 Note: The plugin only checks the root of your Inbox folder in your Gmailbox for new messages. When using server side mail filtering, you may not be notified about all new messages.
 
-%description -n %name-plugin-gmailservice -l ru_RU.UTF-8
+%description plugin-gmailservice -l ru_RU.UTF-8
 Данный плагин предназначен для работы с уведомлениями о поступлении новых писем в почтовый ящик Gmail, а также с прочими дополнительными сервисами. 
 Примечание: Плагин проверяет корень почтового каталога Inbox в Gmailbox на предмет наличия новых писем. Если фильтрация (пересортировка) писем осуществляется непосредственно на сервере Gmail, то нотификаций о новой почте не будет.
 
 # Gnome 3 support plugin
-%package -n %name-plugin-gnome3support
+%package plugin-gnome3support
 Summary: Gnome 3 support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-gnome3support
+%description plugin-gnome3support
 Gnome 3 support for %name
 
 # GnuPG plugin
-%package -n %name-plugin-gnupg
+%package plugin-gnupg
 Summary: GnuPG support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-gnupg
+%description plugin-gnupg
 GnuPG support for %name
 
 # Gomoku game plugin
-%package -n %name-plugin-gomokugame
+%package plugin-gomokugame
 Summary: Gomoku game support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-gomokugame
+%description plugin-gomokugame
 Gomoku game support plugin for %name
 
-%description -n %name-plugin-gomokugame -l ru_RU.UTF-8
+%description plugin-gomokugame -l ru_RU.UTF-8
 Данный плагин позволяет играть с контактами ростера и конференции в игру Гомоку. Реализована разновидность правил «Международное гомоку». 
 Для передачи команд используются обычные сообщения, поэтому плагин будет работать везде, где есть возможность выйти в онлайн.
 
 # History keeper plugin
-%package -n %name-plugin-historykeeper
+%package plugin-historykeeper
 Summary: History keeper support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-historykeeper
+%description plugin-historykeeper
 This plugin is designed to remove the history of selected contacts when the Psi+ is closed. 
 You can select or deselect a contact for history removal from the context menu of a contact or via the plugin options.
 
-%description -n %name-plugin-historykeeper -l ru_RU.UTF-8
+%description plugin-historykeeper -l ru_RU.UTF-8
 Данный плагин предназначен для удаления истории переписки с отмеченными контактами при выходе из Psi+. 
 Отметить контакт или удалить отметку можно из контекстного меню контакта, либо через окно с настройками плагина.
 
 # ICQ die plugin
-%package -n %name-plugin-icqdie
+%package plugin-icqdie
 Summary: ICQ die support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-icqdie
+%description plugin-icqdie
 This plugin is designed to help you transfer as many contacts as possible from ICQ to Jabber. 
 The plugin has a number of simple settings that can help you: 
 
@@ -301,7 +301,7 @@ The plugin has a number of simple settings that can help you:
  - Disable the message for the active window/tab
  - Disable messages for contacts that are not in your roster
  
-%description -n %name-plugin-icqdie -l ru_RU.UTF-8
+%description plugin-icqdie -l ru_RU.UTF-8
 Данный плагин призван помочь Вам перевести как можно бОльшее количество Ваших контактов с ICQ на Jabber. 
 Плагин имеет ряд несложных настроек, с помощью которых можно: 
 
@@ -312,43 +312,43 @@ The plugin has a number of simple settings that can help you:
  - Отключить сообщения для контактов не из Вашего ростера
  
 # Image plugin
-%package -n %name-plugin-image
+%package plugin-image
 Summary: Image support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-image
+%description plugin-image
 This plugin is designed to send images to roster contacts. 
 Your contact's client must be support XEP-0071: XHTML-IM and support the data:URI scheme. 
 Note: To work correctly, the option options.ui.chat.central-toolbar must be set to true.
 
-%description -n %name-plugin-image -l ru_RU.UTF-8
+%description plugin-image -l ru_RU.UTF-8
 Данный плагин предназначен для отправки собеседнику графического изображения. 
 Клиент собеседника должен поддерживать XEP-0071: XHTML-IM и поддерживать схему data:URI. 
 Примечание: Для корректной работы плагина опция options.ui.chat.central-toolbar должна быть установлена в положение true.
 
 # Jabber disk plugin
-%package -n %name-plugin-jabberdisk
+%package plugin-jabberdisk
 Summary: Jabber disk support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-jabberdisk
+%description plugin-jabberdisk
 Jabber disk support plugin for %name
 
-%description -n %name-plugin-jabberdisk -l ru_RU.UTF-8
+%description plugin-jabberdisk -l ru_RU.UTF-8
 Данный плагин предназначен для комфортной работы с файловыми хранилищами Jabber Disk. 
 Реализовано через соответствующую команду в контекстном меню контакта ростера. 
 Работа с файлами представлена в виде графического интерфейса. 
 Добавлять/удалять/редактировать глобальные настройки плагина можно на вкладке Plugins в настройках приложения.
 
 # Juick plugin
-%package -n %name-plugin-juick
+%package plugin-juick
 Summary: Juick support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-juick
+%description plugin-juick
 This plugin is designed to work efficiently and comfortably with the Juick microblogging service. 
 Currently, the plugin is able to: 
 
@@ -357,7 +357,7 @@ Currently, the plugin is able to:
  - Enable clickable @nick, *tag, #message_id and other control elements to insert them into the typing area
  - Note: To work correctly, the option options.html.chat.render must be set to true.
 
-%description -n %name-plugin-juick -l ru_RU.UTF-8
+%description plugin-juick -l ru_RU.UTF-8
 Плагин предназначен для эффективной и комфортной работы с сервисом микроблогов Juick. 
 На данный момент плагин умеет: 
 
@@ -367,54 +367,54 @@ Currently, the plugin is able to:
  - Примечание: Для корректной работы плагина опция options.html.chat.render («Использовать формат текста отправителя») должна быть установлена в положение true.
 
 # PEP change notify plugin
-%package -n %name-plugin-pepchangenotify
+%package plugin-pepchangenotify
 Summary: PEP change notify support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-pepchangenotify
+%description plugin-pepchangenotify
 The plugin is designed to display popup notifications on change of moods, activities and tunes at the contacts of the roster. In the settings you can choose which ones to include notification of events, specify the time within which a notice will appear, as well as play a sound specify.
 
-%description -n %name-plugin-pepchangenotify -l ru_RU.UTF-8
+%description plugin-pepchangenotify -l ru_RU.UTF-8
 Плагин предназначен для показа всплывающих уведомлений о смене настроений, занятий и мелодий у контактов из ростера. В настройках можно выбрать для каких именно событий включены уведомления, задать время, в течение которого уведомление будет показываться, а также указать проигрываемый звук.
 
 # Pstop plugin
-%package -n %name-plugin-pstop
+%package plugin-pstop
 Summary: Pstop support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-pstop
+%description plugin-pstop
 Pstop support for %name
 
 # QIP X-Statuses plugin
-%package -n %name-plugin-qipxstatuses
+%package plugin-qipxstatuses
 Summary: QIP X-Statuses support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-qipxstatuses
+%description plugin-qipxstatuses
 This plugin is designed to display X-statuses of contacts using the QIP Infium jabber client.
 
-%description -n %name-plugin-qipxstatuses -l ru_RU.UTF-8
+%description plugin-qipxstatuses -l ru_RU.UTF-8
 Данный плагин предназначен для отображения х-статусов контактов, использующих в качестве jabber-клиента QIP Infium.
 
 # Redirector plugin
-%package -n %name-plugin-redirector
+%package plugin-redirector
 Summary: Redirect support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-redirector
+%description plugin-redirector
 Redirect support for %name
 
 # Screenshot plugin
-%package -n %name-plugin-screenshot
+%package plugin-screenshot
 Summary: Screenshot support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-screenshot
+%description plugin-screenshot
 This plugin allows you to make a snapshot (screenshot) of the screen, edit the visible aria to make a screenshot and save the image to a local drive or upload to HTTP/FTP server. 
 The plugin has the following settings: 
 
@@ -424,7 +424,7 @@ The plugin has the following settings:
 
 The address of FTP server is specified as ftp://ftp.domain.tld/path1/path2.
 
-%description -n %name-plugin-screenshot -l ru_RU.UTF-8
+%description plugin-screenshot -l ru_RU.UTF-8
 Данный плагин позволяет делать снимок (скриншот) экрана, редактировать видимую область на сделанном скриншоте и сохранять снимок на локальный диск или загружать на HTTP/FTP-сервер. 
 Плагин имеет следующие настройки: 
 
@@ -436,12 +436,12 @@ The address of FTP server is specified as ftp://ftp.domain.tld/path1/path2.
 Примечание: Для работы со скриншотами также можно использовать отдельное (самостоятельное) приложение qScreenshot. Доступно на различных платформах (в т.ч. и под MS Windows).
 
 # Skins plugin
-%package -n %name-plugin-skins
+%package plugin-skins
 Summary: Skins support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-skins
+%description plugin-skins
 This plugin is designed to create, store and apply skins to Psi+. 
 Skin - a set of custom settings. 
 In order to apply a new skin for Psi+ you can use different methods: 
@@ -458,7 +458,7 @@ In most cases, to be sure that the skin is applied correctly, you must perform a
 
 This will enable all settings (icons, toolbars, status) to pick up correctly.
  
-%description -n %name-plugin-skins -l ru_RU.UTF-8
+%description plugin-skins -l ru_RU.UTF-8
 Данный плагин предназначен для создания и использования скинов в Psi+. 
 Скин - это набор пользовательских настроек. 
 Для того, чтобы применить новый скин для Psi+, можно использовать различные способы: 
@@ -476,12 +476,12 @@ This will enable all settings (icons, toolbars, status) to pick up correctly.
 Такая последовательность действий позволит всем настройкам (иконкам, положению панелей инструментов) примениться правильно и до конца.
  
 # Stop spam plugin
-%package -n %name-plugin-stopspam
+%package plugin-stopspam
 Summary: Stop spam support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-stopspam
+%description plugin-stopspam
 This plugin is designed to block spam messages and other unwanted information from Psi+ users. 
 The functionality of the plugin is based on the principle of "question - answer". 
 With the plugin settings you can: 
@@ -504,7 +504,7 @@ The plugin keeps a log of blocked messages, which you can view through the plugi
 The Reset button deletes the log and resets the counter of blocked messages. 
 WARNING!!! Before registering a new transport, it is recommended to add its jid to transport exceptions. This is due to the fact that after the transport registration, authorization requests for all contacts will be sent and if the transport was not added to as an exception, the plugin will block all the requests.
 
-%description -n %name-plugin-stopspam -l ru_RU.UTF-8
+%description plugin-stopspam -l ru_RU.UTF-8
 Данный плагин предназначен для блокировки получения в ростер пользователя Psi+ рассылок спама и другой нежелательной информации. 
 Функционал плагина основан на принципе «вопрос - ответ». 
 С помощью настроек плагина можно: 
@@ -529,40 +529,40 @@ WARNING!!! Before registering a new transport, it is recommended to add its jid 
 ВНИМАНИЕ!!! Перед регистрацией на новом транспорте рекомендуется добавить JID транспорта в исключения. Это связано с тем, что после регистрации транспорт запрашивает авторизацию для всех контактов и если его не добавить в исключения, то плагин заблокирует все запросы.
 
 # Storage notes plugin
-%package -n %name-plugin-storagenotes
+%package plugin-storagenotes
 Summary: Storage notes support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-storagenotes
+%description plugin-storagenotes
 This plugin is an implementation of XEP-0049: Private XML Storage. 
 The plugin is fully compatible with notes saved using Miranda IM. 
 The plugin is designed to keep notes on the jabber server with the ability to access them from anywhere using Psi+ or Miranda IM.
  
-%description -n %name-plugin-storagenotes -l ru_RU.UTF-8
+%description plugin-storagenotes -l ru_RU.UTF-8
 Данный плагин представляет собой реализацию XEP-0049: Private XML Storage. 
 Плагин полностью совместим с заметками, сохранёнными из клиента Miranda IM. 
 Плагин предназначен для хранения заметок на jabber-сервере с возможностью доступа к ним из любого места через клиент Psi+ или Miranda IM.
  
 # Translate plugin
-%package -n %name-plugin-translate
+%package plugin-translate
 Summary: Translation support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-translate
+%description plugin-translate
 This plugin allows you to convert selected text into another language.
 
-%description -n %name-plugin-translate -l ru_RU.UTF-8
+%description plugin-translate -l ru_RU.UTF-8
 Данный плагин позволяет конвертировать выделенный текст в другую языковую раскладку.
 
 # Video status plugin
-%package -n %name-plugin-videostatus
+%package plugin-videostatus
 Summary: Video status support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-videostatus
+%description plugin-videostatus
 This plugin is designed to set the custom status when you see the video in selected video player. 
 Communication with players made by D-Bus. 
 Note: This plugin is designed to work in Linux family operating systems ONLY. 
@@ -572,7 +572,7 @@ Note: This plugin is designed to work in Linux family operating systems ONLY.
  - To work with Kaffeine player you must have player version (>= 1.0), additional configuration is not needed
  - To work with GNOME MPlayer additional configuration is not needed
  
-%description -n %name-plugin-videostatus -l ru_RU.UTF-8
+%description plugin-videostatus -l ru_RU.UTF-8
 Плагин предназначен для установки заданного статуса во время просмотра видео в указанном видеопроигрывателе. 
 Связь с проигрывателями осуществляется посредством D-Bus. 
 Важно: Работа с видеопроигрывателями осуществляется ТОЛЬКО в операционных системах семейства Linux/BSD. В MS Windows реализовано ТОЛЬКО определение полноэкранного режима работы другого приложения на машине пользователя. 
@@ -583,18 +583,18 @@ Note: This plugin is designed to work in Linux family operating systems ONLY.
  - Для работы с GNOME MPlayer дополнительных настроек не нужно.
  
 # Watcher plugin
-%package -n %name-plugin-watcher
+%package plugin-watcher
 Summary: Watcher support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-watcher
+%description plugin-watcher
 This plugin is designed to monitor the status of specific roster contacts, as well as for substitution of standard sounds of incoming messages. 
 On the first tab set up a list of contacts for the status of which is monitored. When the status of such contacts changes a popup window will be shown and when the status changes to online a custom sound can be played.  
 On the second tab is configured list of items, the messages are being monitored.
 Each element can contain a regular expression to check for matches with JID, from which the message arrives, a list of regular expressions to check for matches with the text of an incoming message, the path to sound file which will be played in case of coincidence, as well as the setting, whether the sound is played always, even if the global sounds off.
  
-%description -n %name-plugin-watcher -l ru_RU.UTF-8
+%description plugin-watcher -l ru_RU.UTF-8
 Данный плагин предназначен для наблюдения за статусом определённых пользователей в ростере, а также для подмены стандартных звуковых событий входящих сообщений. 
 На первой вкладке настраивается список контактов, за статусом которых осуществляется наблюдение. При смене статуса таких контактов будет показываться всплывающее окно, а при смене статуса на «онлайн» - ещё и проигрываться указанный звук. 
 На второй вкладке настраивается список элементов, за сообщениями которых ведётся наблюдение. 
@@ -606,15 +606,15 @@ Each element can contain a regular expression to check for matches with JID, fro
  - Настройку для воспроизведения звукового файла всегда, даже если глобальные звуки выключены.
  
 # Yandex.Narod plugin
-%package -n %name-plugin-yandexnarod
+%package plugin-yandexnarod
 Summary: Yandex.Narod support for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
 
-%description -n %name-plugin-yandexnarod
+%description plugin-yandexnarod
 Yandex.Narod support for %name
 
-%description -n %name-plugin-yandexnarod -l ru_RU.UTF-8
+%description plugin-yandexnarod -l ru_RU.UTF-8
 Данный плагин является портированной версией соответсвующего плагина для QutIM. 
 Плагин позволяет передавать файлы с помощью сервиса Яндекс.Диск (через пункт меню контакта). 
 Также плагин позволяет управлять файлами, загруженными на данных сервис (пункт меню аккаунта). 
@@ -884,11 +884,15 @@ popd
 %files
 %doc COPYING ChangeLog INSTALL README TODO
 %_bindir/%name
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
 %_iconsdir/hicolor/128x128/apps/%name.png
 %dir %_datadir/%name
 %_datadir/%name/certs
@@ -897,130 +901,136 @@ popd
 %_datadir/%name/themes
 
 # Attention plugin
-%files -n %name-plugin-attention
+%files plugin-attention
 %_libdir/%name/plugins/libattentionplugin.so
 
 # Autoreply plugin
-%files -n %name-plugin-autoreply
+%files plugin-autoreply
 %_libdir/%name/plugins/libautoreplyplugin.so
 
 # Birthday reminder plugin
-%files -n %name-plugin-birthdayreminder
+%files plugin-birthdayreminder
 %_libdir/%name/plugins/libbirthdayreminderplugin.so
 
 # Capthcha forms plugin
-%files -n %name-plugin-captchaforms
+%files plugin-captchaforms
 %_libdir/%name/plugins/libcaptchaformsplugin.so
 
 # Chess plugin
-%files -n %name-plugin-chess
+%files plugin-chess
 %_libdir/%name/plugins/libchessplugin.so
 
 # Cleaner plugin
-%files -n %name-plugin-cleaner
+%files plugin-cleaner
 %_libdir/%name/plugins/libcleanerplugin.so
 
 # Client switcher plugin
-%files -n %name-plugin-clientswitcher
+%files plugin-clientswitcher
 %_libdir/%name/plugins/libclientswitcherplugin.so
 
 # Conference logger plugin
-%files -n %name-plugin-conferencelogger
+%files plugin-conferencelogger
 %_libdir/%name/plugins/libconferenceloggerplugin.so
 
 # Content downloader plugin
-%files -n %name-plugin-contentdownloader
+%files plugin-contentdownloader
 %_libdir/%name/plugins/libcontentdownloaderplugin.so
 
 # Extended menu plugin
-%files -n %name-plugin-extendedmenu
+%files plugin-extendedmenu
 %_libdir/%name/plugins/libextendedmenuplugin.so
 
 # Extended options plugin
-%files -n %name-plugin-extendedoptions
+%files plugin-extendedoptions
 %_libdir/%name/plugins/libextendedoptionsplugin.so
 
 # Gmail service plugin
-%files -n %name-plugin-gmailservice
+%files plugin-gmailservice
 %_libdir/%name/plugins/libgmailserviceplugin.so
 
 # Gnome 3 support plugin
-%files -n %name-plugin-gnome3support
+%files plugin-gnome3support
 %_libdir/%name/plugins/libgnome3supportplugin.so
 
 # Gomoku game plugin
-%files -n %name-plugin-gomokugame
+%files plugin-gomokugame
 %_libdir/%name/plugins/libgomokugameplugin.so
 
 # History keeper plugin
-%files -n %name-plugin-historykeeper
+%files plugin-historykeeper
 %_libdir/%name/plugins/libhistorykeeperplugin.so
 
 # ICQ die plugin
-%files -n %name-plugin-icqdie
+%files plugin-icqdie
 %_libdir/%name/plugins/libicqdieplugin.so
 
 # Image plugin
-%files -n %name-plugin-image
+%files plugin-image
 %_libdir/%name/plugins/libimageplugin.so
 
 # Jabber disk plugin
-%files -n %name-plugin-jabberdisk
+%files plugin-jabberdisk
 %_libdir/%name/plugins/libjabberdiskplugin.so
 
 # Juick plugin
-%files -n %name-plugin-juick
+%files plugin-juick
 %_libdir/%name/plugins/libjuickplugin.so
 
 # PEP change notify plugin
-%files -n %name-plugin-pepchangenotify
+%files plugin-pepchangenotify
 %_libdir/%name/plugins/libpepchangenotifyplugin.so
 
 # Pstop plugin
-%files -n %name-plugin-pstop
+%files plugin-pstop
 %_libdir/%name/plugins/libpstoplugin.so
 
 # QIP X-Statuses plugin
-%files -n %name-plugin-qipxstatuses
+%files plugin-qipxstatuses
 %_libdir/%name/plugins/libqipxstatusesplugin.so
 
 # Redirector plugin
-%files -n %name-plugin-redirector
+%files plugin-redirector
 %_libdir/%name/plugins/libredirectplugin.so
 
 # Screenshot plugin
-%files -n %name-plugin-screenshot
+%files plugin-screenshot
 %_libdir/%name/plugins/libscreenshotplugin.so
 
 # Skins plugin
-%files -n %name-plugin-skins
+%files plugin-skins
 %_libdir/%name/plugins/libskinsplugin.so
 
 # Stopspam plugin
-%files -n %name-plugin-stopspam
+%files plugin-stopspam
 %_libdir/%name/plugins/libstopspamplugin.so
 
 # Storagenotes plugin
-%files -n %name-plugin-storagenotes
+%files plugin-storagenotes
 %_libdir/%name/plugins/libstoragenotesplugin.so
 
 # Translate plugin
-%files -n %name-plugin-translate
+%files plugin-translate
 %_libdir/%name/plugins/libtranslateplugin.so
 
 # Video status plugin
-%files -n %name-plugin-videostatus
+%files plugin-videostatus
 %_libdir/%name/plugins/libvideostatusplugin.so
 
 # Watcher plugin
-%files -n %name-plugin-watcher
+%files plugin-watcher
 %_libdir/%name/plugins/libwatcherplugin.so
 
 # Yandex.Narod plugin
-%files -n %name-plugin-yandexnarod
+%files plugin-yandexnarod
 %_libdir/%name/plugins/libyandexnarodplugin.so
 
 %changelog
+* Sat Mar 08 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289.1-alt1
+- Version 0.16.289.1
+
+* Tue Mar 04 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289-alt0.M70T.1
+- Build for branch t7
+
 * Mon Mar 03 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.289-alt1
 - Version 0.16.289
 
