@@ -1,6 +1,10 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: syskeeper
 Summary: %name
-Version: 0.9
+Version: 0.10
 Release: alt1
 License: GPL
 Group: System/Base
@@ -168,6 +172,10 @@ mkdir -p %buildroot%_initdir/
 %files ve
 
 %changelog
+* Sun Mar 09 2014 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt1
+- add GPT backup
+- add mdadm config backup support
+
 * Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 0.9-alt1
 - remove kernelbootlog subpackage
 
