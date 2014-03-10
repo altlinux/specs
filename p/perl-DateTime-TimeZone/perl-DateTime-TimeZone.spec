@@ -2,7 +2,7 @@
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 1.64
+Version: 1.65
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -72,6 +72,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.65-alt1
+- automated CPAN update
+
 * Sat Feb 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.64-alt1
 - automated CPAN update
 
