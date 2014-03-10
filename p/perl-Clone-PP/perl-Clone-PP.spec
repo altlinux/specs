@@ -1,24 +1,30 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name	 Clone-PP
+%define upstream_version 1.05
 
 Name:       perl-%{upstream_name}
-Version:    1.05
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
-Summary:	Recursively copy Perl datatypes
-License:	Artistic/GPL
-Group:		Development/Perl
-Url:		http://search.cpan.org/dist/%{upstream_name}/
-Source:	http://www.cpan.org/authors/id/N/NE/NEILB/Clone-PP-%{version}.tar.gz
+Summary:    Recursively copy Perl datatypes
+License:    Artistic/GPL
+Group:      Development/Perl
+Url:        http://search.cpan.org/dist/%{upstream_name}/
+Source0:    ftp://ftp.perl.org/pub/CPAN/modules/by-module/Clone/%{upstream_name}-%{upstream_version}.tar.gz
 
-
-BuildArch:	noarch
+BuildRequires: perl(Benchmark.pm)
+BuildRequires: perl(Carp.pm)
+BuildRequires: perl(Data/Dumper.pm)
+BuildRequires: perl(Exporter.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(strict.pm)
+BuildRequires: perl(vars.pm)
+BuildRequires: perl(warnings.pm)
+BuildArch:  noarch
 Source44: import.info
-
 
 %description
 This module provides a general-purpose clone function to make deep
@@ -27,7 +33,7 @@ nested hash, array, scalar and reference types, including tied
 variables and objects.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -41,10 +47,13 @@ variables and objects.
 
 %files
 %defattr(644,root,root,755)
-%doc README
+%doc Changes META.json META.yml  README
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_1
+- update by mgaimport
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
