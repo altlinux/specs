@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Filter-Simple
 Name: perl-%dist
-Version: 0.88
+Version: 0.91
 Release: alt1
 
 Summary: Simplified source filtering
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Filter-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 20 2012
-BuildRequires: perl-Filter perl-Text-Balanced perl-devel
+BuildRequires: perl-Filter perl-Text-Balanced perl-devel perl(parent.pm)
 
 %description
 The Filter::Simple module provides a simplified interface to
@@ -33,6 +34,9 @@ Filter::Util::Call; one that is sufficient for most common cases.
 %perl_vendor_privlib/Filter
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 0.88-alt1
 - 0.87 -> 0.88
 
