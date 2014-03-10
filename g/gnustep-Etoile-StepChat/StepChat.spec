@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-StepChat
 Version: 0.2
-Release: alt1.git20131126
+Release: alt2.git20131126
 Summary: A instant messenger for jabber
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/StepChat.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -67,15 +68,21 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 install -d %buildroot%_docdir/GNUstep/StepChat
 cp -fRP Documentation/* %buildroot%_docdir/GNUstep/StepChat/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README LICENSE
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files docs
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.git20131126
+- Added menu file (thnx kostyalamer@)
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20131126
 - Initial build for Sisyphus
 
