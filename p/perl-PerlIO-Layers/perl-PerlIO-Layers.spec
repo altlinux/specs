@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(PerlIO.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-PerlIO-Layers
-Version:        0.010
-Release:        alt3_6
+Version:        0.011
+Release:        alt1
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/PerlIO-Layers/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
 BuildRequires:  perl(Module/Build.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.010-alt3_6
 - moved to Sisyphus for Slic3r (by dd@ request)
 
