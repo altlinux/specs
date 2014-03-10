@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Sandbox
 Version: r8406
-Release: alt1.svn20130530
+Release: alt2.svn20130530
 Summary: Simple text editor using llvm for syntax highlighting, code completion
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # svn://svn.gna.org/svn/etoile/trunk/Etoile/Developer/Services/Sandbox/
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -59,12 +60,18 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r8406-alt2.svn20130530
+- Added menu file (thnx kostyalamer@)
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r8406-alt1.svn20130530
 - Initial build for Sisyphus
 
