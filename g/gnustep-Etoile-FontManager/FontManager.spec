@@ -2,15 +2,16 @@
 
 Name: gnustep-Etoile-FontManager
 Version: 0.1
-Release: alt1.svn20121130
+Release: alt2.svn20121130
 Summary: App for the purpose of (guess what) managing fonts
 License: BSD
 Group: Graphical desktop/GNUstep
 Url: http://etoileos.com/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# svn://svn.gna.org/svn/etoile/trunk/Etoile/Services/User/FontManager/
+# https://github.com/etoile/FontManager.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -56,12 +57,18 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog COPYING README
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20121130
+- Added menu file (thnx kostyalamer@)
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20121130
 - Initial build for Sisyphus
 
