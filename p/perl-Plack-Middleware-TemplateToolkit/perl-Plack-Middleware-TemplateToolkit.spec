@@ -2,7 +2,7 @@
 %def_without test
 
 Name: perl-%dist
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Middleware to allow your Plack-based application to serve files processed through Template Toolkit (TT).
@@ -32,6 +32,9 @@ BuildRequires: perl-Plack perl-Plack-Middleware-Debug perl-Template
 %doc README example
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
