@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist local-lib
 Name: perl-%dist
-Version: 1.008023
+Version: 2.000006
 Release: alt1
 
 Summary: Create and use a local lib/ for perl modules with PERL5LIB
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/local-lib-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/H/HA/HAARG/local-lib-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ shell configuration file.
 %doc %perl_vendor_privlib/POD2
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.000006-alt1
+- automated CPAN update
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.008023-alt1
 - automated CPAN update
 
