@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Inbox
 Version: r7769
-Release: alt1.git20120717
+Release: alt2.git20120717
 Summary: Unified messaging system
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/Inbox.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -56,12 +57,18 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r7769-alt2.git20120717
+- Added menu file (thnx kostyalamer@)
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r7769-alt1.git20120717
 - Initial build for Sisyphus
 
