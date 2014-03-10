@@ -6,7 +6,7 @@
 %define _disable_test 1
 
 Name: perl-Locale-Maketext-Lexicon
-Version: 0.99
+Version: 1.00
 Release: alt1
 
 Summary: Locale::Maketext::Lexicon - Use other catalog formats in Maketext
@@ -46,6 +46,9 @@ for extracting translatable strings from source files.
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 
