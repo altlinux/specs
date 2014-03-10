@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Bloom-Filter
 Name: perl-%dist
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Sample Perl Bloom filter implementation
@@ -42,6 +42,9 @@ http://www.perl.com/pub/a/2004/04/08/bloom_filters.html
 %perl_vendor_privlib/Bloom*
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
+- automated CPAN update
+
 * Tue Mar 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
 - automated CPAN update
 
