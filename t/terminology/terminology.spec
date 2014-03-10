@@ -1,4 +1,4 @@
-%define ver_major 0.4
+%define ver_major 0.5
 
 Name: terminology
 Version: %ver_major.0
@@ -60,6 +60,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Mon Mar 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Sun Dec 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0 for E18
 
