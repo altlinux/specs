@@ -1,6 +1,6 @@
 %define dist Apache-Session
 Name: perl-%dist
-Version: 1.91
+Version: 1.92
 Release: alt1
 
 Summary: A persistence framework for session data
@@ -36,6 +36,9 @@ altogether.
 %perl_vendor_privlib/Apache
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.92-alt1
+- automated CPAN update
+
 * Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.91-alt1
 - automated CPAN update
 
