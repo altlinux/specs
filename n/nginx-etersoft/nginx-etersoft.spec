@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -58,6 +58,15 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Mon Mar 10 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2.7-alt1
+- fix limit name
+- improve stop-injection
+- static-fallback: remove json and xml from rules
+- add static-icons and disable nocache for first pages
+- static-fallback: update video formats
+- add stat-apache file
+- ssl fixes
+
 * Sat Oct 19 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.6-alt1
 - use /var/lib/vz/private
 - fix expires
