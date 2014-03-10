@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Attribute-Handlers
 Name: perl-%dist
-Version: 0.93
+Version: 0.96
 Release: alt1
 
 Summary: Simpler definition of attribute handlers
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Attribute-Handlers-%{versio
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Oct 03 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(parent.pm)
 
 %description
 This module, when inherited by a package, allows that package's class to
@@ -37,6 +38,9 @@ the compilation phases (i.e. in a BEGIN, CHECK, INIT, or END block).
 %perl_vendor_privlib/Attribute
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
 - automated CPAN update
 
