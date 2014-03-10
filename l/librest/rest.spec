@@ -5,19 +5,15 @@
 %def_disable tests
 
 Name: lib%_name
-Version: %ver_major.90
+Version: %ver_major.91
 Release: alt1
 
 Summary: A library for access to RESTful web services
 Group: System/Libraries
 License: LGPLv2
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-
-# from fedora
-Patch: rest-fixdso.patch
 
 Requires: ca-certificates
 
@@ -70,8 +66,7 @@ This package contains development documentation for the %_name library.
 
 
 %prep
-%setup -q -n %_name-%version
-%patch -p1 -b .fixdso
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -85,7 +80,7 @@ This package contains development documentation for the %_name library.
 %{?_enable_tests:%make check}
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/librest-%ver_major.so.*
@@ -112,6 +107,9 @@ This package contains development documentation for the %_name library.
 %_datadir/gtk-doc/html/%{_name}*%ver_major/
 
 %changelog
+* Mon Mar 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.91-alt1
+- 0.7.91
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.90-alt1
 - 0.7.90
 
