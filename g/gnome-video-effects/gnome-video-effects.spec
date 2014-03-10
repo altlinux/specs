@@ -1,8 +1,9 @@
 %define ver_major 0.4
+%define gst_api_ver 1.0
 
 Name: gnome-video-effects
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A collection of GStreamer video effects
 License: GPLv2
@@ -14,6 +15,9 @@ BuildArch: noarch
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
 Requires: frei0r-plugins
 
 BuildPreReq: intltool >= 0.40.0
@@ -30,14 +34,14 @@ Requires: %name = %version-%release
 This package provides .pc file needed to build apllications using %name
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -50,6 +54,9 @@ This package provides .pc file needed to build apllications using %name
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Mar 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Tue Nov 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
 - frei0r-plugins are required for some effects
 
