@@ -9,13 +9,13 @@ BuildRequires: perl-devel perl-podlators
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Helpers
-Version:	0.021
-Release:	alt2_4
+Version:	0.022
+Release:	alt1
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Helpers
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
 Patch2:		ExtUtils-Helpers-0.016-old-Text::ParseWords.patch
 Patch3:		ExtUtils-Helpers-0.021-old-Test::More.patch
 BuildArch:	noarch
@@ -80,6 +80,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
+- automated CPAN update
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_4
 - update to new release by fcimport
 
