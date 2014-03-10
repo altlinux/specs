@@ -1,6 +1,6 @@
 %define dist Event-RPC
 Name: perl-%dist
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: Event based transparent Client/Server RPC framework
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JR/JRED/Event-RPC-%{version}.tar.gz
 Patch: perl-Event-RPC-ipv6.patch
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ an extensible API. Currently Event and Glib are implemented.
 %perl_vendor_privlib/Event
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Tue Oct 08 2013 Ilya Mashkin <oddity@altlinux.ru> 1.03-alt1
 - 1.03
 
