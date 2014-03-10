@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-System
 Version: 0.1
-Release: alt1.git20121130
+Release: alt2.git20121130
 Summary: Etoile main system process
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/System.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -84,9 +85,12 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README
 %_bindir/*
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -96,6 +100,9 @@ export LD_LIBRARY_PATH=%_libdir/io/addons/Range/_build/dll
 %_libdir/*.so
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20121130
+- Added menu file (thnx kostyalamer@)
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20121130
 - Initial build for Sisyphus
 
