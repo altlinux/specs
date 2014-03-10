@@ -1,11 +1,11 @@
 Name: shc
-Version: 3.8.6
+Version: 3.8.9
 Release: alt1
 
 Summary: Generic shell script compiler
-License: GPL
+License: GPLv2
 Group: Development/Other
-URL: http://www.datsi.fi.upm.es/~frosal/
+Url: http://www.datsi.fi.upm.es/~frosal/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tgz
 
@@ -20,15 +20,19 @@ generated source code is then compiled and linked to produce a
 stripped binary executable. Use with care.
 
 %prep
-%setup -q -n %name-%version
-%patch0
+%setup -n %name-%version
+#patch0
 
 %build
+mv shc-3.8.9.c shc.c
 %make
 
 %install
 %__mkdir_p $RPM_BUILD_ROOT{%_bindir,%_man1dir}
-%makeinstall
+#make_install
+
+install -c -s %name %buildroot%_bindir
+install -c -m 644 %name.1 %buildroot%_man1dir
 
 %files
 %_bindir/*
@@ -36,6 +40,9 @@ stripped binary executable. Use with care.
 %_mandir/man?/*
 
 %changelog
+* Thu Mar 11 2014 Ilya Mashkin <oddity@altlinux.ru> 3.8.9-alt1
+- 3.8.9 (Closes: #25694)
+
 * Wed Oct 22 2008 Ilya Mashkin <oddity@altlinux.ru> 3.8.6-alt1
 - 3.8.6
 
