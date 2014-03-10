@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-ProjectManager
 Version: 0.1
-Release: alt2.git20120112
+Release: alt3.git20120112
 Summary: Work-in-progress compositing window manager for the Etoile environment
 License: MIT
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/ProjectManager.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -98,12 +99,15 @@ popd
 mv %buildroot%_bindir/ProjectManager \
 	%buildroot%_bindir/EtoileProjectManager
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/XCBKit.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/XCBKit.framework/Versions/0/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -115,6 +119,9 @@ mv %buildroot%_bindir/ProjectManager \
 %_libdir/GNUstep/Frameworks/XCBKit.framework/Versions/0/Headers
 
 %changelog
+* Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20120112
+- Added menu file (thnx kostyalamer@)
+
 * Sat Mar 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20120112
 - Renamed %_bindir/ProjectManager -> %_bindir/EtoileProjectManager
 
