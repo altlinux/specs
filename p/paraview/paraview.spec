@@ -1,18 +1,12 @@
-%define pv_maj 3
-%define pv_min 8
-%define pv_patch 0
-%define pv_majmin %pv_maj.%pv_min
-#set_gcc_version 4.5
-
 Name: paraview
-Version: 4.0.1
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Summary: Parallel visualization application
 License: BSD
 Group: Sciences/Other
 
 Url: http://www.paraview.org
-Source: %url/files/v%pv_majmin/ParaView-%version.tar.gz
+Source: ParaView-%version.tar.gz
 Source1: paraview_22x22.png
 %define pixfile paraview_22x22.png
 Source2: paraview.xml
@@ -55,7 +49,7 @@ BuildPreReq: libnetcdf-devel chrpath
 BuildPreReq: libsilo-devel libGLU-devel python-devel libprotobuf-devel
 BuildPreReq: libgl2ps-devel libxml2-devel libogg-devel libtheora-devel
 BuildPreReq: libGLUT-devel python-module-sphinx-devel protobuf-compiler
-BuildPreReq: libnetcdf_c++-devel
+BuildPreReq: libnetcdf_c++-devel jsoncpp-devel
 Requires: %name-doc = %version-%release
 
 %description
@@ -101,7 +95,7 @@ BuildArch: noarch
 %setup -n ParaView-%version
 
 #Remove included thirdparty sources just to be sure
-for x in autobahn vtkmpi4py vtkprotobuf twisted zope
+for x in vtkmpi4py vtkprotobuf
 do
   rm -r ThirdParty/*/${x}
 done
@@ -109,6 +103,9 @@ for x in expat freetype gl2ps hdf5 jpeg libxml2 netcdf oggtheora png sqlite tiff
 do
   rm -r VTK/ThirdParty/${x}/vtk${x}
 done
+rm -r VTK/ThirdParty/AutobahnPython/autobahn \
+	VTK/ThirdParty/Twisted/twisted \
+	VTK/ThirdParty/ZopeInterface/zope
 
 %build
 mkdir altlinux
@@ -132,7 +129,8 @@ cmake .. \
 				-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 				-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
 				-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
-				-DVTK_PYTHON_SETUP_ARGS="--prefix=%prefix --root=%buildroot"
+				-DVTK_PYTHON_SETUP_ARGS="--prefix=%prefix --root=%buildroot" \
+				-DNETCDF_INCLUDE_DIR="%_libdir/hdf5-seq/include/netcdf"
 cmake ..
 export LD_LIBRARY_PATH=$PWD/bin
 %make VERBOSE=1
@@ -206,6 +204,9 @@ rm -f %buildroot%_libdir/paraview/*.a
 %doc Documentation/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0 (ALT #29880)
+
 * Fri Dec 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
 - Fixed build
 
