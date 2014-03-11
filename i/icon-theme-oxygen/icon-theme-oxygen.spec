@@ -1,7 +1,7 @@
 %define theme oxygen
 
 Name: icon-theme-%theme
-Version: 4.11.1
+Version: 4.12.3
 Release: alt1
 
 Summary: A set of Icons for KDE
@@ -87,6 +87,9 @@ done < %SOURCE10
 %_iconsdir/%theme/???x???
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
 * Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 - set small icons size to 22 by default
