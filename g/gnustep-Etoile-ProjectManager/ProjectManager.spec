@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-ProjectManager
 Version: 0.1
-Release: alt3.git20120112
+Release: alt4.git20120112
 Summary: Work-in-progress compositing window manager for the Etoile environment
 License: MIT
 Group: Graphical desktop/GNUstep
@@ -119,6 +119,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/XCBKit.framework/Versions/0/Headers
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4.git20120112
+- Fixed menu file (by kostyalamer@)
+
 * Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20120112
 - Added menu file (thnx kostyalamer@)
 
