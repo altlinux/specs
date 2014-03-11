@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.7.5
-Release: alt4
+Release: alt5
 Epoch: 0
 %define libname lib%name
 
@@ -640,6 +640,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Wed Mar 12 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt5
+- rebuilt with new marble
+
 * Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt4
 - rebuilt
 

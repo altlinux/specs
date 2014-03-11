@@ -7,8 +7,8 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 11
-%define bugfix 4
+%define minor 12
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -50,9 +50,8 @@ Requires: %name-marble = %version-%release
 Requires: %name-rocs = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
-Patch1: kdeedu-4.8.0-alt-marble-install.patch
+Patch1: kdeedu-4.12.3-alt-marble-install.patch
 Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
-Patch3: kdeedu-4.11.1-alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
@@ -64,8 +63,7 @@ BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobi
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data)
 BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
-BuildRequires: kde4base-workspace-devel >= %version
-BuildRequires: kde4base-runtime-devel >= %version
+BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel
 
 %description
 %name metapackage, which contains:
@@ -132,6 +130,7 @@ makes. Complete the sequence in the right order to win.
 Summary: Graph - Editor and a Programming Enviroment
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
+Requires: kde4-kwrite
 %ifdef _kde_alternate_placement
 %else
 #Provides: kdeedu-rocs = %version-%release
@@ -412,6 +411,7 @@ Summary: A program for learning touch typing
 Url: http://edu.kde.org/ktouch
 Group: Education
 Requires: %name-common = %version-%release
+Requires: libqt4-sql-sqlite
 %ifdef _kde_alternate_placement
 %else
 #Provides: kdeedu-ktouch = %version-%release
@@ -593,7 +593,6 @@ Files needed to build applications based on %name.
 %setup -q -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %if 0
 echo "cmake_minimum_required(VERSION 2.8)" > CMakeLists.txt
@@ -692,6 +691,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4iconsdir/hicolor/*/apps/cantor.*
 %_K4iconsdir/hicolor/*/apps/maximabackend.*
 %_K4iconsdir/hicolor/*/apps/octavebackend.*
+%_K4iconsdir/hicolor/*/apps/pythonbackend.*
 %_K4iconsdir/hicolor/*/apps/rbackend.*
 %_K4iconsdir/hicolor/*/apps/sagebackend.*
 %_K4iconsdir/hicolor/*/apps/qalculatebackend.*
@@ -707,6 +707,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4cfg/maximabackend.kcfg
 %_K4cfg/sagebackend.kcfg
 %_K4cfg/octavebackend.kcfg
+%_K4cfg/python2backend.kcfg
 %_K4cfg/qalculatebackend.kcfg
 %_K4cfg/scilabbackend.kcfg
 %_K4conf/cantor.knsrc
@@ -1008,16 +1009,14 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %files marble
 %ifdef _kde_alternate_placement
 %_kde4_bindir/marble
-%_kde4_bindir/tilecreator
-%_kde4_bindir/routing-instructions
 %_kde4_bindir/marble-touch
+%_kde4_bindir/marble-mobile
 %_kde4_xdg_apps/marble*.desktop
 %else
 %_K4bindir/marble
 %_K4bindir/marble-qt
-%_K4bindir/tilecreator
-%_K4bindir/routing-instructions
 %_K4bindir/marble-touch
+%_K4bindir/marble-mobile
 %_K4xdg_apps/marble*.desktop
 %endif
 %dir %_qt4dir/imports/org/
@@ -1036,6 +1035,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4srv/plasma-applet-kworldclock.desktop
 %_K4srv/plasma-runner-marble.desktop
 %_K4doc/*/marble
+# tools
+#%_kde4_bindir/tilecreator
+#%_kde4_bindir/routing-instructions
 
 
 %files rocs
@@ -1076,8 +1078,15 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4apps/cmake/modules/*
 #%_K4libdir/cmake/libkdeedu
 %_K4dbus_interfaces/*
+%_K4lib/plugins/designer/*.so
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
