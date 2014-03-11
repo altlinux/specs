@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -71,6 +71,9 @@ fi
 %exclude /lib/%name/%name-hooks/15-timezone
 
 %changelog
+* Tue Mar 11 2014 Mikhail Efremov <sem@altlinux.org> 1:6.3.1-alt2
+- Fix crash with '--dumplease' option.
+
 * Tue Mar 04 2014 Mikhail Efremov <sem@altlinux.org> 1:6.3.1-alt1
 - Do not package timezone hook.
 - Updated to 6.3.1.
