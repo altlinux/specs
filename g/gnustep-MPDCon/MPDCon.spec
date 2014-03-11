@@ -2,7 +2,7 @@
 
 Name: gnustep-MPDCon
 Version: 1.5.1
-Release: alt3
+Release: alt4
 Summary: A GNUstep MPD client
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -57,6 +57,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt4
+- Fixed menu file (by kostyalamer@)
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt3
 - Built with clang
 
