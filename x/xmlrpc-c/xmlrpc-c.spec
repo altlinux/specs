@@ -1,8 +1,8 @@
 %define libname libxmlrpc
 
 Name: xmlrpc-c
-Version: 1.27.0
-Release: alt1.svn2145
+Version: 1.32.5
+Release: alt1.svn2451
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-style
@@ -14,7 +14,7 @@ Patch0: %name-cmake.patch
 Patch1: %name-1.12.00-alt-configure-fixes.patch
 Patch2: %name-30x-redirect.patch
 Patch3: %name-uninit-curl.patch
-Patch4: %name-curl-types.h.patch
+# Patch4: %name-curl-types.h.patch
 Patch5: %name-longlong.patch
 Patch6: %name-check-vasprintf-return-value.patch
 Patch7: %name-include-string_int.h.patch
@@ -77,7 +77,7 @@ The header file for developing applications that use
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+# %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -113,6 +113,7 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 %_bindir/xmlrpc_transport
 %_bindir/xml-rpc-api2cpp
 %_bindir/xmlrpc_cpp_proxy
+%_bindir/xmlrpc_parsecall
 %exclude %_bindir/xml-rpc-api2txt
 
 %files -n %libname
@@ -126,10 +127,13 @@ mv %buildroot%prefix%_pkgconfigdir/*.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 
 %files -n %libname++
-%_libdir/*.so.7*
+%_libdir/*.so.8*
 
 
 %changelog
+* Tue Mar 11 2014 Timur Aitov <timonbl4@altlinux.org> 1.32.5-alt1.svn2451
+- 1.32.5
+
 * Wed Sep 28 2011 Aeliya Grevnyov <gray_graff@altlinux.org> 1.27.0-alt1.svn2145
 - update to 1.27.0 (svn2145) (ALT#26363)
 - enable cplusplus, abyss-server, cgi-server (ALT#26364)
