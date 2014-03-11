@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.19
+Version: 0.1.20
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.20-alt1
+- fix Status and Pull utilites
+
 * Thu Aug 29 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.19-alt1
 - gear-rel -- cleanup and -f (force) flag support
 
