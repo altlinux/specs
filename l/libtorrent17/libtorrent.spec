@@ -1,9 +1,9 @@
 %define _optlevel s
-%define abiversion 0.13
+%define abiversion 17
 
 Name: libtorrent%{abiversion}
 Epoch: 3
-Version: 0.13.2
+Version: 0.13.3
 Release: alt1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
@@ -19,7 +19,6 @@ Patch1: libtorrent-%version-%release.patch
 
 BuildRequires: gcc-c++ libsigc++2.0-devel libssl-devel
 BuildRequires: cppunit-devel
-Obsoletes: librtorrent <= 0.12.2-alt1
 
 %def_disable static
 
@@ -48,7 +47,7 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n libtorrent-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C
-Requires: %name = %epoch:%version-%release
+Requires: %name = %version-%release
 Conflicts: libtorrent-rasterbar0.13-devel
 
 %description -n libtorrent-devel
@@ -83,8 +82,5 @@ rm %buildroot%_libdir/*.la
 %_libdir/pkgconfig/*
 
 %changelog
-* Wed Apr 10 2013 Denis Smirnov <mithraen@altlinux.ru> 3:0.13.2-alt1
-- first build for Sisyphus, based on libtorrent0.12 spec
-
-
-
+* Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 3:0.13.3-alt1
+- 0.13.3

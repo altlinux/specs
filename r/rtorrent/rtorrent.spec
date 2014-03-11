@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: rtorrent
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -17,7 +17,6 @@ BuildRequires: cppunit-devel
 BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
 
 BuildRequires: libtorrent-devel >= 0.12.6-alt1
-Requires: libtorrent0.13 >= 0.13.2-alt1
 
 %description
 rTorrent is a ncurses based client and is therefor ideal to use with
@@ -51,9 +50,12 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %doc AUTHORS doc/rtorrent.rc
 
 %_bindir/%name
-%_man1dir/*
+#%_man1dir/*
 
 %changelog
+* Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.9.3-alt1
+- 0.9.3
+
 * Wed Apr 10 2013 Denis Smirnov <mithraen@altlinux.ru> 0.9.2-alt1
 - 0.9.2
 
