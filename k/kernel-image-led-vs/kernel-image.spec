@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.32
-Release: alt11
+Version: 3.10.33
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 32
+%define kernel_stable_version 33
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1806,6 +1806,19 @@ done)
 
 
 %changelog
+* Mon Mar 10 2014 Led <led@altlinux.ru> 3.10.33-alt1
+- updated:
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs-cifs
+  + fix-net-core
+  + fix-net-sunrpc
+  + fix-virt-kvm--kvm
+  + feat-fs-exfat
+- added:
+  + fix-net-ipv4--syncookies
+  + fix-net-ipv6--syncookies
+
 * Thu Mar 06 2014 Led <led@altlinux.ru> 3.10.32-alt11
 - updated:
   + fix-net-sunrpc
@@ -1817,7 +1830,7 @@ done)
 * Tue Mar 04 2014 Led <led@altlinux.ru> 3.10.32-alt9
 - updated:
   + fix-fs-btrfs
-  + fix-virt-kvm--kvm
+  + fix-virt-kvm--kvm (CVE-2014-0049)
 
 * Sun Mar 02 2014 Led <led@altlinux.ru> 3.10.32-alt8
 - updated:
