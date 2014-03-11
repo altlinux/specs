@@ -3,13 +3,13 @@
 %add_findreq_skiplist %_K4apps/lokalize/scripts/*.py
 %add_findreq_skiplist %_K4bindir/kdedoc
 %add_findreq_skiplist %_K4bindir/package_crystalsvg
-%def_enable antlr
+%def_disable antlr
 
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
 %define minor 12
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -49,7 +49,7 @@ BuildRequires: antlr gcj-antlr antlr-native antlr-native-devel /proc
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
 BuildRequires: kde4libs-devel >= %version kde4base-devel
 BuildRequires: kde4pimlibs-devel >= %version
-BuildRequires: kde4base-workspace-devel
+BuildRequires: kde4base-workspace-devel libkomparediff2-devel
 
 %description
 Software Development Kit for the K Desktop Environment.
@@ -283,24 +283,29 @@ Requires: %name-common = %version-%release
 %prep
 %setup -q -n %rname-%version
 #%patch1 -p1
+
+
+%build
 ls -d1 * | \
 while read d
 do
-    [ "$d" == "${d#lib}" ] || continue
-    [ -d "$d" ] || continue
-    [ -f "$d/CMakeLists.txt" ] || continue
-    echo "add_subdirectory($d)" >> CMakeLists.txt
+    [ -f "$d"/CMakeLists.txt ] || continue
+    pushd $d
+    %K4build \
+	-DHUNSPELL_INCLUDE_DIR=%_includedir \
+	-DHUNSPELL_LIBRARIES=%_libdir/libhunspell.so
+    popd
 done
 
-%build
-%K4cmake \
-    -DHUNSPELL_INCLUDE_DIR=%_includedir \
-    -DHUNSPELL_LIBRARIES=%_libdir/libhunspell.so
-%K4make
-
-
 %install
-%K4install
+ls -d1 * | \
+while read d
+do
+    [ -f "$d"/CMakeLists.txt ] || continue
+    pushd $d
+    %K4install
+    popd
+done
 
 # fix scripts for strong /usr/lib/rpm/find-requires
 pushd %buildroot/%_K4bindir
@@ -428,7 +433,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/create_makefiles
 %_K4bindir/create_svnignore
 %_K4bindir/cvs-clean
-#%_K4bindir/cvs2dist
 %_K4bindir/cvsaddcurrentdir
 %_K4bindir/cvsbackport
 %_K4bindir/cvsblame
@@ -462,6 +466,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/png2mng.pl
 %_K4bindir/pruneemptydirs
 %_K4bindir/qtdoc
+%_K4bindir/reviewboard-am
 %_K4bindir/svnclean
 %_K4bindir/svnbackport
 %_K4bindir/svnchangesince
@@ -474,39 +479,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/svnversions
 %_K4bindir/wcgrep
 %_K4bindir/zonetab2pot.py
-%ifndef _kde_alternate_placement
-#%_man1dir/adddebug.*
-#%_man1dir/cheatmake.*
-#%_man1dir/create_cvsignore.*
-#%_man1dir/create_makefile.*
-#%_man1dir/create_makefiles.*
-#%_man1dir/cvscheck.*
-#%_man1dir/cvslastchange.*
-#%_man1dir/cvslastlog.*
-#%_man1dir/cvsrevertlast.*
-#%_man1dir/cxxmetric.*
-#%_man1dir/demangle.*
-#%_man1dir/extend_dmalloc.*
-#%_man1dir/extractrc.*
-#%_man1dir/fixincludes.*
-#%_man1dir/po2xml.*
-#%_man1dir/pruneemptydirs.*
-#%_man1dir/qtdoc.*
-#%_man1dir/reportview.*
-#%_man1dir/split2po.*
-#%_man1dir/swappo.*
-#%_man1dir/transxx.*
-#%_man1dir/xml2pot.*
-#%_man1dir/zonetab2pot.py.*
-%endif
-
-#%files kbugbuster
-#%_K4bindir/kbugbuster
-#%_K4xdg_apps/kbugbuster.desktop
-#%_K4apps/kbugbuster/
-#%_K4iconsdir/*/*/*/kbugbuster*
-#%_K4libdir/kde4/kcal_bugzilla.so
-#%_K4srv/kresources/kcal/bugzilla.desktop
 
 %files strigi-analyzer
 %_K4libdir/strigi/strigi*
@@ -537,10 +509,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_datadir/dbus-1/interfaces/org.kde.cervisia.cvsloginjob.xml
 %_datadir/dbus-1/interfaces/org.kde.cervisia.cvsservice.xml
 %_datadir/dbus-1/interfaces/org.kde.cervisia.repository.xml
-%ifdef _kde_alternate_placement
-%else
-#%_man1dir/cervisia.*
-%endif
 %_K4libdir/libkdeinit4_cervisia.so
 %_K4libdir/kde4/kded_ksvnd.so
 %_K4libdir/kde4/kio_svn.so
@@ -563,7 +531,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4libdir/kde4/komparenavtreepart.so
 %_K4libdir/kde4/komparepart.so
 %_K4libdir/libkomparedialogpages.so.*
-%_K4libdir/libkomparediff2.so.*
 %_K4xdg_apps/kompare.desktop
 %_K4apps/kompare/
 %_K4iconsdir/hicolor/*/apps/kompare.*
@@ -609,6 +576,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
 * Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 
