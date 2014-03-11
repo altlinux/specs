@@ -7,7 +7,7 @@
 
 Name: typo3_src
 Version: 4.5.32
-Release: alt1
+Release: alt2
 
 Summary: A free, feature rich, Content Management Framework/System
 License: GPL
@@ -51,7 +51,7 @@ Requires: php5-mysql
 Requires: php5-gd2
 Requires: php5-curl
 Requires: php5-mbstring
-Requires: php5-eaccelerator
+#Requires: php5-eaccelerator
 
 %description -n typo3-apache
 apache 1.3/php 5.x dependency package
@@ -90,6 +90,11 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Tue Mar 11 2014 Michael Shigorin <mike@altlinux.org> 4.5.32-alt2
+- apache subpackage: dropped strict php5-eaccelerator
+  to ease php5 package upgrade (still opcode cache
+  is strongly recommended for production)
+
 * Tue Dec 10 2013 Michael Shigorin <mike@altlinux.org> 4.5.32-alt1
 - 4.5.32: medium security fixes, see
   http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2013-004/
