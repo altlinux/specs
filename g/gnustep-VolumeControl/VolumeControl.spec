@@ -2,7 +2,7 @@
 
 Name: gnustep-VolumeControl
 Version: 0.5
-Release: alt4
+Release: alt5
 Summary: Audio mixer for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt5
+- Fixed menu file (by kostyalamer@)
+
 * Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt4
 - Added menu file (thnx kostyalamer@)
 
