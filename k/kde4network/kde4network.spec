@@ -10,7 +10,7 @@
 
 %define rname kdenetwork
 %define major 4
-%define minor 11
+%define minor 12
 %define bugfix 3
 Name: kde4network
 Version: %major.%minor.%bugfix
@@ -64,12 +64,11 @@ BuildRequires: libfreerdp-devel xfreerdp
 BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjasper-devel
 BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libmms-devel
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
-BuildRequires: libotr-devel libmeanwhile-devel libv4l-devel libmsn-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel
 BuildRequires: rpm-macros-browser-plugins
 BuildRequires: libktorrent-devel libtelepathy-qt4-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
-BuildRequires: kde4base-workspace-devel >= %version kde4base-devel >= %version
+BuildRequires: kde4base-workspace-devel kde4base-devel
 BuildRequires: shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso soprano
 BuildRequires: kde4-nepomuk-core kde4-nepomuk-core-devel kde4-nepomuk-widgets-devel
 
@@ -379,6 +378,12 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 
