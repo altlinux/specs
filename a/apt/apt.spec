@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt43
+Release: alt44
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -386,6 +386,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Tue Mar 11 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt44
+- libapt: enlarged integer types in pkgCache::Version (closes: #29514).
+
 * Fri Feb 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5.15lorg2-alt43
 - use apt-cdrom for general distribution media
 - stricted verify-elf removed

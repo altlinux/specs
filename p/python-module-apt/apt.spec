@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.5.15cnc6
-Release: alt5
+Release: alt5.1
 
 Summary: Python module for APT
 Group: Development/Python
@@ -38,6 +38,9 @@ install -m644 python/*.so python/*.py %buildroot%python_sitelibdir
 %python_sitelibdir/*
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.15cnc6-alt5.1
+- NMU: rebuild with libapt
+
 * Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.15cnc6-alt5
 - Rebuilt with updated apt
 

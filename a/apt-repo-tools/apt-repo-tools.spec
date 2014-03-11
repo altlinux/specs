@@ -1,6 +1,6 @@
 Name: apt-repo-tools
 Version: 0.6.0.17
-Release: alt1
+Release: alt2
 
 Summary: Utilities to create APT repositories
 License: GPLv2+
@@ -40,6 +40,9 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Tue Mar 11 2014 Dmitry V. Levin <ldv@altlinux.org> 0.6.0.17-alt2
+- Rebuilt.
+
 * Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 0.6.0.17-alt1
 - Enabled LFS support.
 
