@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -16,8 +16,8 @@ Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
-Requires: eepm >= 1.2.4
-Requires: etersoft-build-utils >= 2.0.27
+Requires: eepm >= 1.5.1
+Requires: etersoft-build-utils >= 2.1.0
 Requires: alien >= 8.86-alt3
 
 %description
@@ -46,6 +46,13 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Tue Mar 11 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.6-alt1
+- many fixes
+- simply experiment's with build for Windows in Korinf
+- alfa-release code of build TBZ2 for Gentoo with debug functions
+- korlogin: update hasher support (pass arch, root mode, initialize only if first time)
+- message: do not cut .failed file if called second time (eterbug #9553)
+
 * Tue Oct 22 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
 - korinf/mount: improve: make /tmp from tmpfs, fix devpts mount
 - korinf: fix options parsing (do options really unpositional)
