@@ -2,7 +2,7 @@
 
 Name: gnustep-CDPlayer
 Version: 0.5.1
-Release: alt5
+Release: alt6
 Summary: Small CD Audio Player for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -76,6 +76,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt6
+- Fixed menu file (by kostyalamer@)
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt5
 - Built with clang
 
