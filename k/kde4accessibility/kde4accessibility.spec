@@ -4,7 +4,7 @@
 %define rname kdeaccessibility
 Name: kde4accessibility
 %define major 4
-%define minor 11
+%define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -33,7 +33,7 @@ Patch1: jovie-4.10.3-alt-fix-build.patch
 #BuildRequires: festival flite
 BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: gcc-c++ libalsa-devel libspeechd-devel libqaccessibilityclient-devel
-BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel >= %version
+BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel
 
 %description
 KDE Accessibility Aids:
@@ -211,6 +211,12 @@ done
 #%_K4link/*.so
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 
