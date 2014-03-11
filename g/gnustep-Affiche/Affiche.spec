@@ -2,7 +2,7 @@
 
 Name: gnustep-Affiche
 Version: 0.6.0
-Release: alt4
+Release: alt5
 Summary: An application to "stick" little notes on the desktop
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt5
+- Fixed menu file (by kostyalamer@)
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt4
 - Built with clang
 
