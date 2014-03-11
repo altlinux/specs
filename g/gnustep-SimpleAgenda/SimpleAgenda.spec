@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt7
+Release: alt8
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -14,11 +14,11 @@ Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-dbuskit-devel libical-devel libuuid-devel
-BuildPreReq: gnustep-AddressManager-devel
+BuildPreReq: gnustep-Etoile-AddressesKit-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 
-Requires: gnustep-dbuskit
+Requires: gnustep-dbuskit gnustep-Etoile-AddressesKit
 Requires: gnustep-back
 
 %description
@@ -59,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt8
+- Fixed build
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt7
 - Built with clang
 
