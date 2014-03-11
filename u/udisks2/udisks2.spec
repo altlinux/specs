@@ -7,15 +7,15 @@
 
 Name: %{_name}2
 Version: 2.1.3
-Release: alt0.2
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: %_name-%version.tar
-#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+#Source: %_name-%version.tar
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Source1: %name.control
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
@@ -175,6 +175,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 11 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
+- 2.1.3 release
+
 * Mon Jan 27 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt0.2
 - fixed https://bugs.freedesktop.org/show_bug.cgi?id=71802
 
