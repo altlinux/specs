@@ -5,8 +5,8 @@
 %define rname kdegames
 Name: kde4games
 %define major 4
-%define minor 11
-%define bugfix 5
+%define minor 12
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -597,7 +597,9 @@ done
 
 
 %build
-%K4build
+%K4build \
+    -DKDE4_BUILD_TESTS=OFF \
+    #
 
 
 %install
@@ -907,17 +909,18 @@ done
 
 %files knavalbattle
 %ifdef _kde_alternate_placement
-%_kde4_bindir/kbattleship
-%_kde4_xdg_apps/kbattleship.desktop
-%_kde4_iconsdir/hicolor/*/apps/kbattleship.png
+%_kde4_bindir/knavalbattle
+%_kde4_xdg_apps/knavalbattle.desktop
+%_kde4_iconsdir/hicolor/*/apps/knavalbattle.png
 %else
-%_K4bindir/kbattleship
-%_K4xdg_apps/kbattleship.desktop
-%_K4iconsdir/hicolor/*/apps/kbattleship.png
+%_K4bindir/knavalbattle
+%_K4xdg_apps/knavalbattle.desktop
+%_K4iconsdir/hicolor/*/apps/knavalbattle.png
 %endif
-%_K4apps/kbattleship/
-%_K4srv/kbattleship.protocol
-%_K4doc/*/kbattleship
+%_K4apps/knavalbattle/
+%_K4conf_update/knavalbattle.upd
+%_K4srv/knavalbattle.protocol
+%_K4doc/*/knavalbattle
 
 %files kiriki
 %ifdef _kde_alternate_placement
@@ -1211,6 +1214,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt0.M70P.1
+- built for M70P
+
 * Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.5-alt1
 - new version
 
