@@ -13,9 +13,9 @@
 
 Summary: Xen is a virtual machine monitor
 Name: xen
-Version: 4.3.2
+Version: 4.4.0
 # Hypervisor ABI
-%define hv_abi 4.3
+%define hv_abi 4.4
 Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
@@ -64,7 +64,7 @@ Source48: libexec.xendomains
 Source49: tmpfiles.d.xen.conf
 Source50: oxenstored.service
 
-Patch1: %name-initscript.patch
+Patch1: xen-initscript.patch
 Patch4: %name-dumpdir.patch
 Patch5: %name-net-disable-iptables-on-bridge.patch
 
@@ -72,9 +72,7 @@ Patch10: pygrubfix.patch
 Patch11: xend.catchbt.patch
 Patch12: xend-pci-loop.patch
 Patch13: xend.selinux.fixes.patch
-Patch14: %name.use.fedora.seabios.patch
 Patch15: %name.use.fedora.ipxe.patch
-Patch16: qemu-%name.tradonly.patch
 Patch17: %name.fedora.efi.build.patch
 Patch18: %name.fedora19.buildfix.patch
 Patch19: %name.pygrubtitlefix.patch
@@ -85,7 +83,6 @@ Patch21: %name.64.bit.hyp.on.ix86.patch
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
 Patch51: %name-4.3.1-alt-libfsimage-link.patch
 Patch52: %name-4.3.1-alt-libxl-link.patch
-Patch53: 0001-libxl-ocaml-guard-x86-specific-functions-behind-an-i.patch
 
 Patch100: %name-configure-xend.patch
 
@@ -270,9 +267,7 @@ manage Xen virtual machines.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 %patch15 -p1
-%patch16 -p1
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
@@ -282,7 +277,6 @@ manage Xen virtual machines.
 %patch50 -p2
 %patch51 -p1
 %patch52 -p1
-%patch53 -p1
 
 %patch100 -p1
 
@@ -309,6 +303,9 @@ export GIT=$(which true)
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--enable-xen \
+	--enable-xend \
+	--with-system-seabios=%_datadir/seabios/bios.bin \
+	--with-system-qemu=yes \
 	%{subst_enable stubdom} \
 %if_enabled vtpm
 	--enable-vtpm-stubdom \
@@ -603,6 +600,7 @@ done
 %endif
 
 # man pages
+%_man1dir/xenstore*
 %_man1dir/xentop.*
 %_man1dir/xentrace_format.*
 %_man8dir/xentrace.*
@@ -704,6 +702,9 @@ done
 
 
 %changelog
+* Tue Mar 11 2014 Led <led@altlinux.ru> 4.4.0-alt1
+- 4.4.0
+
 * Sun Feb 16 2014 Led <led@altlinux.ru> 4.3.2-alt1
 - 4.3.2
 
