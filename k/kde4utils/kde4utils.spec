@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 11
-%define bugfix 4
+%define minor 12
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -62,7 +62,7 @@ BuildRequires: liblirc-devel libqca2-devel liblzma-devel qjson-devel
 %ifarch %ix86
 #BuildRequires: libtpctl-devel
 %endif
-BuildRequires: kde4base-workspace-devel >= %version kde4pimlibs-devel >= %version
+BuildRequires: kde4base-workspace-devel kde4pimlibs-devel >= %version
 BuildRequires: kde4base-devel
 
 %description
@@ -432,6 +432,7 @@ done
 
 %files kwallet
 %_K4bindir/kwalletmanager
+%_K4exec/kcm_kwallet_helper
 %_K4lib/kcm_kwallet.so
 %_K4apps/kwalletmanager/
 %_K4xdg_apps/kwalletmanager-kwalletd.desktop
@@ -440,6 +441,10 @@ done
 %_K4srv/kwalletmanager_show.desktop
 %_K4iconsdir/hicolor/*/apps/kwalletmanager*.*
 %_K4doc/*/kwallet
+%_K4dbus_system/org.kde.kcontrol.kcmkwallet.conf
+%_K4dbus_sys_services/org.kde.kcontrol.kcmkwallet.service
+%_datadir/polkit-1/actions/org.kde.kcontrol.kcmkwallet.policy
+
 
 %files superkaramba
 %_K4bindir/superkaramba
@@ -493,6 +498,12 @@ done
 
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Wed Dec 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
