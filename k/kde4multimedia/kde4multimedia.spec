@@ -4,7 +4,7 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 11
+%define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -44,7 +44,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavdevice-devel libswscale-devel libpostproc-devel
 #BuildRequires: libgstreamer-plugins-base-devel
-BuildRequires: kde4base-workspace-devel >= %version
+BuildRequires: kde4base-workspace-devel
 BuildRequires: libkcompactdisc4-devel libkcddb4-devel desktop-file-utils
 
 %description
@@ -277,6 +277,12 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
+- new version
+
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 - fix desktop-files (ALT#29565)
