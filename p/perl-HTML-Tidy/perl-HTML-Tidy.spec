@@ -1,14 +1,14 @@
 %define dist HTML-Tidy
 Name: perl-%dist
-Version: 1.54
-Release: alt2
+Version: 1.56
+Release: alt1
 
 Summary: HTML validation in a Perl object
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/HTML-Tidy-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libtidyp-devel perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
@@ -33,6 +33,9 @@ as a replacement for HTML::Lint.
 %perl_vendor_archlib/HTML
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.54-alt2
 - built for perl 5.18
 
