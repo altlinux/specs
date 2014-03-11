@@ -1,6 +1,6 @@
 Name: libfreetype
-Version: 2.5.2
-Release: alt3
+Version: 2.5.3
+Release: alt1
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -15,7 +15,7 @@ Source3: ftconfig.h
 
 Patch5: freetype-2.4.10-osh.patch
 
-Patch2: freetype-2.5.1-alt-freetype-config.patch
+Patch2: freetype-2.5.3-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.5.1-alt-snprintf.patch
 
@@ -31,7 +31,7 @@ Obsoletes: freetype2 < %version
 
 %def_disable static
 
-BuildRequires: libX11-devel libpng-devel zlib-devel
+BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
 
 %description
 The FreeType engine is a free and portable TrueType font rendering
@@ -134,7 +134,7 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 
 %set_verify_elf_method strict
 
-%triggerin devel -- %name-devel < 2.5.2-alt2
+%triggerin devel -- %name-devel < 2.5.2-alt3
 [ ! -d %_includedir/freetype2/freetype ] || \
 	rm -fr %_includedir/freetype2/freetype
 
@@ -159,6 +159,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Tue Mar 11 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.5.3-alt1
+- 2.5.3
+
 * Fri Dec 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.2-alt3
 - %name-devel: real fixed problem upgrading
 
