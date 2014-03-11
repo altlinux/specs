@@ -1,14 +1,14 @@
 %define dist WWW-Curl
 Name: perl-%dist
-Version: 4.15
-Release: alt4
+Version: 4.17
+Release: alt1
 
 Summary: Perl extension interface for libcurl 
 License: MPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZBALINT/WWW-Curl-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: libcurl-devel perl-Test-Pod perl-Test-Pod-Coverage
@@ -39,6 +39,9 @@ rm t/19multi.t
 %perl_vendor_autolib/WWW
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 4.17-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 4.15-alt4
 - built for perl 5.18
 
