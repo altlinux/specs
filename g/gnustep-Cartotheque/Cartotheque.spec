@@ -2,7 +2,7 @@
 
 Name: gnustep-Cartotheque
 Version: 0.1
-Release: alt4
+Release: alt5
 Summary: Managing notes on small cards
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -51,6 +51,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt5
+- Fixed menu file (by kostyalamer@)
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4
 - Built with clang
 
