@@ -1,7 +1,10 @@
 %def_with efi
 %def_disable vtpm
 %def_without xsm
-%def_enable ocaml
+%def_enable ocamltools
+%def_enable monitors
+%def_enable xend
+%def_enable xenapi
 
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
@@ -16,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -64,7 +67,10 @@ Source48: libexec.xendomains
 Source49: tmpfiles.d.xen.conf
 Source50: oxenstored.service
 
-Patch1: xen-initscript.patch
+Patch0: %name-%version-%release.patch
+
+# Fedora
+Patch1: %name-initscript.patch
 Patch4: %name-dumpdir.patch
 Patch5: %name-net-disable-iptables-on-bridge.patch
 
@@ -81,8 +87,6 @@ Patch21: %name.64.bit.hyp.on.ix86.patch
 
 # ALT
 Patch50: %name-4.0.0-libfsimage-soname-alt.patch
-Patch51: %name-4.3.1-alt-libfsimage-link.patch
-Patch52: %name-4.3.1-alt-libxl-link.patch
 
 Patch100: %name-configure-xend.patch
 
@@ -145,7 +149,8 @@ BuildRequires: bzlib-devel liblzma-devel
 BuildRequires: libe2fs-devel
 # tools now require yajl
 BuildRequires: libyajl-devel
-%{?_enable_ocaml:BuildRequires: ocaml ocamlbuild ocamldoc findlib}
+%{?_enable_ocamltools:BuildRequires: ocaml ocamlbuild ocamldoc findlib}
+%{?_enable_xenapi:BuildRequires: libxml2-devel}
 %if 0
 BuildRequires: %_includedir/gnu/stubs-32.h
 # for the VMX "bios"
@@ -154,8 +159,8 @@ BuildRequires: dev86
 %{?_with_xsm:BuildRequires: checkpolicy m4}
 # efi image needs an ld that has -mi386pep option
 %{?_with_efi:BuildRequires: mingw64-binutils}
-%{?_enable_stubdom:Requires: makeinfo}
-%{?_with_hypervisor:Requires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
+%{?_enable_stubdom:BuildRequires: makeinfo}
+%{?_with_hypervisor:BuildRequires: flex discount libfdt-devel libgcrypt-devel liblzo2-devel libvde-devel perl-HTML-Parser perl-devel}
 %else
 BuildRequires: rpm-build-xen >= 4.3.1
 %endif
@@ -233,7 +238,7 @@ This package contains the license files from the source used
 to build the xen packages.
 
 
-%if_enabled ocaml
+%if_enabled ocamltools
 %package ocaml
 Summary: Ocaml libraries for Xen tools
 Group: Development/Other
@@ -259,6 +264,8 @@ manage Xen virtual machines.
 %setup -q -a1 -a2
 #ln -s ../qemu-upstream-%version tools/qemu-xen
 #ln -s ../qemu-%name-%version tools/qemu-xen-traditional
+%patch0 -p1
+
 %patch1 -p1
 %patch4 -p1
 %patch5 -p1
@@ -275,8 +282,6 @@ manage Xen virtual machines.
 %{?_with_hypervisor:%patch21 -p1}
 
 %patch50 -p2
-%patch51 -p1
-%patch52 -p1
 
 %patch100 -p1
 
@@ -297,15 +302,18 @@ export XEN_VENDORVERSION="-%release"
 export EXTRA_CFLAGS_XEN_TOOLS="%optflags"
 export EXTRA_CFLAGS_QEMU_TRADITIONAL="%optflags"
 export EXTRA_CFLAGS_QEMU_XEN="%optflags"
+%{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
 ./configure \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
 	--enable-xen \
-	--enable-xend \
 	--with-system-seabios=%_datadir/seabios/bios.bin \
-	--with-system-qemu=yes \
+	--with-system-qemu \
+	%{subst_enable xend} \
+	%{subst_enable xenapi} \
+	%{subst_enable monitors} \
 	%{subst_enable stubdom} \
 %if_enabled vtpm
 	--enable-vtpm-stubdom \
@@ -314,11 +322,7 @@ export GIT=$(which true)
 	--disable-vtpm-stubdom \
 	--disable-vtpmmgr-stubdom \
 %endif
-%if_enabled ocaml
-	--enable-ocamltools \
-%else
-	--disable-ocamltools \
-%endif
+	%{subst_enable ocamltools} \
 	--enable-tools \
 	--disable-kernels \
 	--enable-docs
@@ -335,7 +339,7 @@ export EXTRA_CFLAGS_QEMU_TRADITIONAL="%optflags"
 export EXTRA_CFLAGS_QEMU_XEN="%optflags"
 export WGET=$(which true)
 export GIT=$(which true)
-%{?_enable_ocaml:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
+%{?_enable_ocamltools:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
 %{?_with_efi:install -d -m 0755 %buildroot/boot/efi/efi/altlinux}
 %make_install DESTDIR=%buildroot %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
 %{?_with_efi:mv %buildroot/boot/efi/efi %buildroot/boot/efi/EFI}
@@ -435,7 +439,7 @@ install -p -m 0644 %SOURCE44 %buildroot%_unitdir/xend.service
 install -p -m 0644 %SOURCE45 %buildroot%_unitdir/xenconsoled.service
 install -p -m 0644 %SOURCE46 %buildroot%_unitdir/xen-watchdog.service
 install -p -m 0644 %SOURCE47 %buildroot%_unitdir/xendomains.service
-%{?_enable_ocaml:install -p -m 0644 %SOURCE50 %buildroot%_unitdir/oxenstored.service}
+%{?_enable_ocamltools:install -p -m 0644 %SOURCE50 %buildroot%_unitdir/oxenstored.service}
 
 install -pD -m 0644 %SOURCE49 %buildroot/lib/tmpfiles.d/xen.conf
 
@@ -493,7 +497,7 @@ done
 %preun_service xenstored
 
 
-%if_enabled ocaml
+%if_enabled ocamltools
 %post ocaml
 %post_service oxenstored
 
@@ -507,41 +511,48 @@ done
 %doc %_docdir/%name-%version/COPYING
 %doc %_docdir/%name-%version/README
 %_bindir/xencons
-%_sbindir/xend
-%_sbindir/xm
 %python_sitelibdir/%name
 %python_sitelibdir/xen-*.egg-info
-%_man1dir/xm.*
-%_man5dir/xend-config.sxp.*
-%_man5dir/xmdomain.cfg.*
+
+%dir %_localstatedir/lib/%name
+
+%if_enabled xend
+%_sbindir/xend
+%_sbindir/xm
 %dir %_datadir/%name
 %_datadir/%name/create.dtd
-
-# Startup script
-%_initddir/xend
-%_initddir/xendomains
-%dir %attr(0700,root,root) %_sysconfdir/%name
-# Guest config files
-%config(noreplace) %_sysconfdir/%name/xmexample*
 # Daemon config
 %config(noreplace) %_sysconfdir/%name/xend-*
 # xm config
 %config(noreplace) %_sysconfdir/%name/xm-*
-# Guest autostart links
-%dir %attr(0700,root,root) %_sysconfdir/%name/auto
-# Autostart of guests
-%config(noreplace) %_sysconfdir/sysconfig/xendomains
-
+# Guest config files
+%config(noreplace) %_sysconfdir/%name/xmexample*
+%_man1dir/xm.*
+%_initddir/xend
 %_unitdir/xend.service
-%_unitdir/xendomains.service
-%_libexecdir/xendomains
-
-%dir %_localstatedir/lib/%name
 # Persistent state for XenD
 %dir %_localstatedir/lib/%name/xend-db/
 %dir %_localstatedir/lib/%name/xend-db/domain
 %dir %_localstatedir/lib/%name/xend-db/migrate
 %dir %_localstatedir/lib/%name/xend-db/vnet
+%else
+%exclude %_man1dir/xm.*
+%exclude %_initddir/xend
+%exclude %_unitdir/xend.service
+%endif
+
+%_man5dir/xend-config.sxp.*
+%_man5dir/xmdomain.cfg.*
+
+%_initddir/xendomains
+%dir %attr(0700,root,root) %_sysconfdir/%name
+# Guest autostart links
+%dir %attr(0700,root,root) %_sysconfdir/%name/auto
+# Autostart of guests
+%config(noreplace) %_sysconfdir/sysconfig/xendomains
+
+%_unitdir/xendomains.service
+%_libexecdir/xendomains
 
 
 %files -n lib%name
@@ -640,14 +651,17 @@ done
 %dir %_localstatedir/lib/xenstored
 # Xenstore runtime state
 %ghost %_localstatedir/run/xenstored
+
+%_sbindir/*
+%if_enabled xend
+%exclude %_sbindir/xend
+%exclude %_sbindir/xm
 # XenD runtime state
 %ghost %attr(0700,root,root) %dir %_runtimedir/xend
 %ghost %attr(0700,root,root) %_runtimedir/xend/boot
+%endif
 
-%_sbindir/*
-%{?_enable_ocaml:%exclude %_sbindir/oxenstored}
-%exclude %_sbindir/xend
-%exclude %_sbindir/xm
+%{?_enable_ocamltools:%exclude %_sbindir/oxenstored}
 %_bindir/*
 %exclude %_bindir/xencons
 
@@ -683,7 +697,7 @@ done
 %_docdir/%name-%version/licenses
 
 
-%if_enabled ocaml
+%if_enabled ocamltools
 %files ocaml
 %_libdir/ocaml/site-lib/%{name}*
 %exclude %_libdir/ocaml/site-lib/%{name}*/*.a
@@ -702,6 +716,9 @@ done
 
 
 %changelog
+* Tue Mar 11 2014 Led <led@altlinux.ru> 4.4.0-alt2
+- enabled xenapi
+
 * Tue Mar 11 2014 Led <led@altlinux.ru> 4.4.0-alt1
 - 4.4.0
 
