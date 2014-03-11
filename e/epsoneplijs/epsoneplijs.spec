@@ -1,38 +1,35 @@
-Summary: Ghostscript IJS Plugin for the Epson EPL-5700L/5800L/5900L/6100L/6200L printers
 
-Name: epsoneplijs
-Version: 0.4.0
-Release: alt1.1
+Name:     epsoneplijs
+Version:  0.4.1
+Release:  alt1
+Summary:  Ghostscript IJS Plugin for the Epson EPL-5700L/5800L/5900L/6100L/6200L printers
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Group: Publishing
-License: BSD
+Group:    Publishing
+License:  BSD
 
-URL: http://sourceforge.net/projects/epsonepl/
+URL:      http://sourceforge.net/projects/epsonepl/
 
-Source:	http://osdn.dl.sourceforge.net/sourceforge/epsonepl/epsoneplijs-%{version}.tgz
-Patch: epsoneplijs-0.4.0-mdk-use_system_libs.patch
-Patch1: epsoneplijs-0.4.0-alt-fortify-source.patch
-Patch2: epsoneplijs-0.4.0-alt-no-Werror.patch
+Source:	  http://osdn.dl.sourceforge.net/sourceforge/epsonepl/epsoneplijs-%{version}.tgz
+Patch:    epsoneplijs-0.4.1-mdk-use_system_libs.patch
+Patch1:   epsoneplijs-0.4.0-alt-fortify-source.patch
 
-Requires:	ghostscript >= 6.53
+Requires: ghostscript >= 6.53
 
-# Automatically added by buildreq on Wed Nov 07 2007
 BuildRequires: libieee1284-devel libusb-devel
 
 %description
-Support for the Epson EPL-5700L/5800L/5900L/6100L/6200L printer family under
-linux and other unix-like systems.
+Support for the Epson EPL-5700L/5800L/5900L/6100L/6200L printer family
+under linux and other unix-like systems.
 It is known to work for at least one user for each of 5700L, 5800L,
 5900L, and 6100L. 6100L and 6200L support is new.
 
 %prep
 
 %setup -q
-%patch -p1
+%patch -p2
 %patch1 -p1
-%patch2 -p2
 
 find . -type d -perm 0700 -exec chmod 755 {} \;
 find . -type f -perm 0555 -exec chmod 755 {} \;
@@ -40,7 +37,7 @@ find . -type f -perm 0444 -exec chmod 644 {} \;
 
 
 %build
-%__autoreconf
+%autoreconf
 
 %configure \
     --with-kernelusb \
@@ -48,14 +45,14 @@ find . -type f -perm 0444 -exec chmod 644 {} \;
     --with-libusb \
     --with-libieee1284 
 
-%make
+%make_build
 
 %install
-%__install -d %buildroot/%_bindir
+install -d %buildroot/%_bindir
 
 %makeinstall
 
-%__install -d %buildroot%_datadir/cups/model/
+install -d %buildroot%_datadir/cups/model/
 cp -a cups/*.ppd* %buildroot%_datadir/cups/model/
 
 %files
@@ -64,6 +61,9 @@ cp -a cups/*.ppd* %buildroot%_datadir/cups/model/
 %_datadir/cups/model/*
 
 %changelog
+* Tue Mar 11 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
+- New version (ALT #29458)
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.1
 - Fixed build
 
