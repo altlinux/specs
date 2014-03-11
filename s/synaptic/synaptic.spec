@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt14
+Release: alt14.1
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -126,6 +126,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.58-alt14.1
+- NMU: rebuild with libapt
+
 * Mon Mar 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.58-alt14
 - cdrom insertion text changed to media insertion
 

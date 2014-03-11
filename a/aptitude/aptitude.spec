@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt6
+Release: alt6.1
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -85,6 +85,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt6.1
+- NMU: rebuild with libapt
+
 * Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt6
 - Fixed and enabled LFS support (see #28214).
 
