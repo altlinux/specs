@@ -4,8 +4,8 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 3.2.6
-Release: alt2
+Version: 3.3.5
+Release: alt1
 
 Summary: Open source Ticket Request System
 Group: Networking/WWW
@@ -76,7 +76,6 @@ mkdir -p %buildroot%installdir
 cp -rp * %buildroot%installdir/
 
 #install docs
-chmod -x CHANGES
 install -pD -m0644 %SOURCE1 README.ALT
 mv %buildroot%installdir/doc/OTRSDatabaseDiagram.mwb OTRSDatabaseDiagram.mwb
 mv %buildroot%installdir/doc/OTRSDatabaseDiagram.png OTRSDatabaseDiagram.png
@@ -100,8 +99,9 @@ cd %buildroot%installdir/var/cron/
 for foo in *.dist; do cp $foo `basename $foo .dist`; done
 
 # all needed files packaged from %%builddir
+rm -f %buildroot%installdir/AUTHORS.md
 rm -f %buildroot%installdir/ARCHIVE
-rm -f %buildroot%installdir/CHANGES
+rm -f %buildroot%installdir/CHANGES.md
 rm -f %buildroot%installdir/COPYING-Third-Party
 rm -f %buildroot%installdir/CREDITS
 rm -f %buildroot%installdir/Custom/README
@@ -136,9 +136,10 @@ rm -rf %_docdir/%name-%version/
 %post_apache2_rpma2chkconfigfile
 
 %files
+%doc AUTHORS.md
 %doc COPYING
 %doc RELEASE
-%doc CHANGES
+%doc CHANGES.md
 %doc COPYING-Third-Party
 %doc OTRSDatabaseDiagram.mwb
 %doc OTRSDatabaseDiagram.png
@@ -171,6 +172,9 @@ rm -rf %_docdir/%name-%version/
 %endif
 
 %changelog
+* Wed Mar 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.5-alt1
+- New version
+
 * Fri May 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.6-alt2
 - added to Requires:
   perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML
