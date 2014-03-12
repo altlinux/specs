@@ -2,7 +2,7 @@
 
 Name: gnustep-ec
 Version: 1.0.2
-Release: alt4.svn20140228
+Release: alt5.svn20140228
 Summary: Enterprise Control Configuration and Logging framework
 License: GPLv3 / LGPLv3
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/ec/trunk/
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -82,12 +82,12 @@ Configuration and Logging framework.
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc ChangeLog README*
 %_bindir/*
-%_menudir/*
+#_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -100,6 +100,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_docdir/GNUstep
 
 %changelog
+* Wed Mar 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt5.svn20140228
+- Removed menu file
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt4.svn20140228
 - New snapshot
 
