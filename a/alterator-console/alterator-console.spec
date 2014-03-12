@@ -1,5 +1,5 @@
 Name: 	 alterator-console
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -38,6 +38,10 @@ and to return result. It also allow to upload file to an server.
 %_alterator_datadir/ui/*/*
 
 %changelog
+* Wed Mar 12 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
+- Reset TERM environment variable to prevent run of interactive program
+- Remove attention message
+
 * Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
 - Add attention about interactive command using
 
