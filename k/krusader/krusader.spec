@@ -1,5 +1,5 @@
 %define version 1.90.0
-%define altrelease 13.1
+%define altrelease 13.2
 
 %define appname krusader
 %define srcname %appname-%{?cvs:cvs-%cvs}%{!?cvs:%version%{?pre:-%pre}}
@@ -25,7 +25,7 @@ License: GPL
 Url: http://krusader.sourceforge.net
 
 # Automatically added by buildreq on Mon Sep 29 2008
-BuildRequires: gcc-c++ imake kdebase-devel kdebindings-kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
+BuildRequires: gcc4.7-c++ imake kdebase-devel kdebindings-kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
 
 %description
 Krusader is an advanced twin-panel (commander-style) file-manager for KDE 3.x (similar to Midnight or Total Commander) but with many extras.
@@ -88,6 +88,9 @@ cp %buildroot/%_kde3_iconsdir/locolor/16x16/apps/%appname.png %buildroot/%_kde3_
 # %_man1dir/*
 
 %changelog
+* Wed Mar 12 2014 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt13.2
+- Rebuild force by gcc4.7.
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt13.1
 - Build for Automake 1.13 and 1.14 is added.
 
