@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.46
+Version: 1.0.47
 Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
@@ -54,6 +54,7 @@ BuildRequires: php5-devel
 BuildRequires: python-module-cups
 
 Requires: poppler-utils
+Requires: /usr/bin/gs
 
 %package libs
 Summary: OpenPrinting CUPS filters and backends - cupsfilters and fontembed libraries
@@ -114,6 +115,7 @@ serial backend for cups
 %configure --disable-static \
            --disable-silent-rules \
 	   --without-php \
+	   --with-gs-path=/usr/bin/gs \
            --with-pdftops=pdftops
 
 %make
@@ -188,6 +190,11 @@ ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Mar 12 2014 Anton Farygin <rider@altlinux.ru> 1.0.47-alt1
+- new version with security fixes: CVE-2013-6474, CVE-2013-6475,
+  CVE-2013-6476 and CVE-2013-6473
+- fixed ghostscript path (closes: #29884)
+
 * Wed Feb 26 2014 Anton Farygin <rider@altlinux.ru> 1.0.46-alt1
 - new version
 
