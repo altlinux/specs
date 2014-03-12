@@ -1,5 +1,5 @@
 Name:		boinc
-Version: 7.2.41
+Version: 7.3.12
 Release: alt1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
@@ -29,7 +29,8 @@ Patch21:	make_clientgui_resources.patch
 #Patch22:	refactor_sched_vda.patch
 Patch23:	install_appmgr.patch
 
-BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static libwxGTK-devel python-devel xsltproc libssl-devel zlib-devel libgtk+2-devel libnotify-devel
+BuildRequires: docbook-dtds docbook2X gcc-c++ gcc-fortran libGL-devel libMySQL-devel libSM-devel libXi-devel libXmu-devel libcurl-devel libfreeglut-devel libjpeg-devel libsqlite3-devel libstdc++-devel-static python-devel xsltproc libssl-devel zlib-devel libgtk+2-devel libnotify-devel
+BuildRequires: libwxGTK3.0-devel
 
 %description
 The Berkeley Open Infrastructure for Network Computing (BOINC) is an open-
@@ -224,6 +225,9 @@ grep -rHsl -m 1 -e 'bin/env' html/* |
         sed -e '1 s,^#!/usr/bin/env[[:space:]]\+\(.*\)$,#!/usr/bin/\1,' -i "$f"
     done
 
+# Copy the icons to the expected place
+cp -vf packages/generic/sea/boincmgr.*.png clientgui/res/
+
 %build
 # On some architectures it is required to change the BOINC platform of the
 # core client (with the --with-boinc-platform configure option) to match the
@@ -306,15 +310,9 @@ popd
 #      %buildroot%{_sysconfdir}/boinc-client/remote_hosts.cfg
 
 # Install the icons.
-    mkdir -p -m0755 %buildroot%{_datadir}/icons/hicolor/16x16/apps
-    mv %buildroot%{_datadir}/boinc/boincmgr.16x16.png \
-      %buildroot%{_datadir}/icons/hicolor/16x16/apps/boincmgr.png
-    mkdir -p -m0755 %buildroot%{_datadir}/icons/hicolor/32x32/apps
-    mv %buildroot%{_datadir}/boinc/boincmgr.32x32.png \
-      %buildroot%{_datadir}/icons/hicolor/32x32/apps/boincmgr.png
-    mkdir -p -m0755 %buildroot%{_datadir}/icons/hicolor/48x48/apps
-    mv %buildroot%{_datadir}/boinc/boincmgr.48x48.png \
-      %buildroot%{_datadir}/icons/hicolor/48x48/apps/boincmgr.png
+install -m0644 -D clientgui/res/boincmgr.16x16.png %buildroot%{_datadir}/icons/hicolor/16x16/apps/boincmgr.png
+install -m0644 -D clientgui/res/boincmgr.32x32.png %buildroot%{_datadir}/icons/hicolor/32x32/apps/boincmgr.png
+install -m0644 -D clientgui/res/boincmgr.48x48.png %buildroot%{_datadir}/icons/hicolor/48x48/apps/boincmgr.png
 
 # Install the desktop and menu files
     install -D -m 0644 ../%name-conffiles-%version/boinc-manager.desktop \
@@ -461,6 +459,7 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_bindir}/boincmgr
 %{_datadir}/applications/boinc-manager.desktop
 #%{_datadir}/locale/*/LC_MESSAGES/*.mo
+%_datadir/boinc/boincmgr.*.png
 %{_datadir}/icons/hicolor/16x16/apps/boincmgr.png
 %{_datadir}/icons/hicolor/32x32/apps/boincmgr.png
 %{_datadir}/icons/hicolor/48x48/apps/boincmgr.png
@@ -482,6 +481,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_libdir}/libsched.so
 
 %changelog
+* Wed Mar 12 2014 Paul Wolneykien <manowar@altlinux.ru> 7.3.12-alt1
+- Fresh up to v7.3.12 with the help of cronbuild and update-source-functions.
+
 * Mon Feb 03 2014 Cronbuild Service <cronbuild@altlinux.org> 7.2.41-alt1
 - Fresh up to v7.2.41 with the help of cronbuild and update-source-functions.
 
