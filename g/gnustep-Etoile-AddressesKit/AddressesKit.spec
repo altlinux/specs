@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-AddressesKit
 Version: 0.4.7
-Release: alt2.svn20140227
+Release: alt3.svn20140227
 Summary: Addresses for GNUstep
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -11,8 +11,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # svn://svn.gna.org/svn/etoile/trunk/Etoile/Frameworks/AddressesKit/
 Source: %name-%version.tar
-Source1: gnustep-adgnumailconverter.menu
-Source2: gnustep-adserver.menu
+#Source1: gnustep-adgnumailconverter.menu
+#Source2: gnustep-adserver.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -157,8 +157,8 @@ popd
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
 install -d %buildroot%_menudir
-install -m644 %SOURCE1 %buildroot%_menudir/gnustep-adgnumailconverter
-install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adserver
+#install -m644 %SOURCE1 %buildroot%_menudir/gnustep-adgnumailconverter
+#install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adserver
 
 %files
 %doc AUTHORS ChangeLog NEWS README THANKS TODO*
@@ -183,11 +183,11 @@ install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adserver
 
 %files -n gnustep-Etoile-adgnumailconverter
 %_bindir/adgnumailconverter
-%_menudir/gnustep-adgnumailconverter
+#_menudir/gnustep-adgnumailconverter
 
 %files -n gnustep-Etoile-adserver
 %_bindir/adserver
-%_menudir/gnustep-adserver
+#_menudir/gnustep-adserver
 
 %files -n gnustep-Etoile-adtool
 %_bindir/adtool
@@ -196,6 +196,9 @@ install -m644 %SOURCE2 %buildroot%_menudir/gnustep-adserver
 %_libdir/GNUstep/Bundles/LDAPAddressBook.abclass
 
 %changelog
+* Wed Mar 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.7-alt3.svn20140227
+- Removed unnecessary menu files
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.7-alt2.svn20140227
 - Excluded %_includedir/AddressBook
 
