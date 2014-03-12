@@ -1,6 +1,6 @@
 Name: python-module-qt
 Version: 3.18.2
-Release: alt1.29855a84d8b6.3
+Release: alt1.29855a84d8b6.4
 %setup_python_module qt
 Summary: Python bindings for Qt
 License: GPLv2
@@ -11,6 +11,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 # http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/PyQt-x11-gpl-%version.tar.gz
 Source: PyQt-x11-gpl-%version.tar
 Patch: python-module-qt-3.18.2-alt-python-module-sip-4.14.2.patch
+Patch1: python-qt3-with-sip-4.15.diff
 
 #Requires: libqscintilla >= 1.4
 %py_package_requires sip >= 4.4
@@ -23,7 +24,7 @@ Obsoletes: python-module-PyQt
 BuildPreReq: %py_package_dependencies sip-devel >= 4.8
 
 # Manually edited by morozov@
-BuildRequires: gcc-c++ libGL-devel libXmu-devel libqt3-devel
+BuildRequires: gcc4.6-c++ libGL-devel libXmu-devel libqt3-devel
 
 %description
 Python bindings for the Qt C++ class library.  Also includes a PyQt backend
@@ -57,6 +58,7 @@ This package contains PyQt examples
 %prep
 %setup -n PyQt-x11-gpl-%version
 %patch -p2
+%patch1 -p0
 
 %build
 %add_optflags -DANY=void
@@ -84,6 +86,9 @@ export QTDIR=%_qt3dir
 %doc examples3
 
 %changelog
+* Wed Mar 12 2014 Fr. Br. George <george@altlinux.ru> 3.18.2-alt1.29855a84d8b6.4
+- Add Hans-Peter Jansen patch (fix build with new sip)
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18.2-alt1.29855a84d8b6.3
 - Fixed build with python-module-sip 4.14.2
 
