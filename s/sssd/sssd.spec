@@ -1,13 +1,16 @@
 
 Name: sssd
 Version: 1.11.4
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
 Url: http://fedorahosted.org/sssd/
 Source: %name-%version.tar
 Source2: %name.init
+Source3: system-auth-sss.pam
+Source4: system-auth-use_first_pass-sss.pam
+
 Patch: %name-%version-%release.patch
 
 ### Patches ###
@@ -18,6 +21,7 @@ Patch: %name-%version-%release.patch
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
+%define _pamdir %_sysconfdir/pam.d
 
 %define sssdstatedir %_localstatedir/lib/sss
 %define dbpath %sssdstatedir/db
@@ -98,6 +102,8 @@ Summary: Userspace tools for use with the SSSD
 Group: System/Configuration/Networking
 License: GPLv3+
 Requires: %name = %version-%release
+Requires: python-module-sssdconfig = %version-%release
+Requires: python-module-sss = %version-%release
 
 %description tools
 Provides userspace tools for manipulating users, groups, and nested groups in
@@ -132,6 +138,7 @@ Summary: SSSD helpers needed for Kerberos and GSSAPI authentication
 Group: System/Servers
 License: GPLv3+
 Requires: %name = %version-%release
+Requires: libsasl2-plugin-gssapi
 
 %description krb5-common
 Provides helper processes that the LDAP and Kerberos back ends can use for
@@ -163,6 +170,7 @@ Group: System/Servers
 License: GPLv3+
 Requires: %name-krb5-common = %version-%release
 Requires: %name-pac = %version-%release
+Requires: libipa_hbac = %version-%release
 
 %description ipa
 Provides the IPA back end that the SSSD can utilize to fetch identity data
@@ -264,6 +272,7 @@ be used by Python applications.
 Summary: Python bindings for sss
 Group: Development/Python
 License: LGPLv3+
+Requires: %name = %version-%release
 
 %description -n python-module-sss
 The python-module-sss contains the bindings so that sss can
@@ -310,6 +319,8 @@ touch %buildroot%mcpath/group
 
 install -D -m644 src/sysv/systemd/sssd.service %buildroot%_unitdir/%name.service
 install -D -m755 %SOURCE2 %buildroot%_initdir/%name
+install -D -m644 %SOURCE3 %buildroot%_pamdir/system-auth-sss
+install -D -m644 %SOURCE4 %buildroot%_pamdir/system-auth-use_first_pass-sss
 
 # Remove .la files created by libtool
 find %buildroot -name "*.la" -exec rm -f {} \;
@@ -427,6 +438,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_datadir/%name/sssd.api.d/sssd-proxy.conf
 
 %files client
+%config(noreplace) %_pamdir/*-sss
 /%_lib/libnss_sss.so.2
 /%_lib/security/pam_sss.so
 %_libdir/krb5/plugins/libkrb5/sssd_krb5_locator_plugin.so
@@ -479,6 +491,10 @@ unset CK_TIMEOUT_MULTIPLIER
 %python_sitelibdir/pysss_nss_idmap.so
 
 %changelog
+* Wed Mar 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.4-alt2
+- add pam config files
+- add libsasl2-plugin-gssapi to Requires for krb5-common
+
 * Tue Feb 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.4-alt1
 - 1.11.4
 
