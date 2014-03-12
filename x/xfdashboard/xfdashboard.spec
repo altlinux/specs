@@ -1,11 +1,11 @@
 Name: xfdashboard
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Url: https://github.com/gmc-holle/xfdashboard
+Url: http://xfdashboard.froevel.de/
 
 # Upstream: https://github.com/gmc-holle/xfdashboard.git
 Source: %name-%version.tar
@@ -19,9 +19,12 @@ BuildPreReq: libxfconf-devel libgarcon-devel
 BuildRequires: libwnck-devel libclutter-devel libdbus-glib-devel
 
 %description
-Maybe a Gnome shell like dashboard for Xfce.
-A quick'n'dirty guide:
-http://gmc-holle.github.io/xfdashboard/
+xfdashboard provides a GNOME shell dashboard like interface for use with
+Xfce desktop. It can be configured to run to any keyboard shortcut and
+when executed provides an overview of applications currently open
+enabling the user to switch between different applications. The search
+feature works like Xfce's app finder which makes it convenient to search
+for and start applications.
 
 %prep
 %setup
@@ -47,6 +50,10 @@ mkdir m4
 %_datadir/themes/%name/
 
 %changelog
+* Wed Mar 12 2014 Mikhail Efremov <sem@altlinux.org> 0.1.5-alt1
+- Updated url and description.
+- Updated to 0.1.5.
+
 * Tue Feb 25 2014 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1
 - Updated to 0.1.4.
 
