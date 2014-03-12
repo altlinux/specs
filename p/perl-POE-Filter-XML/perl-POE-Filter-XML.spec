@@ -1,6 +1,6 @@
 %define dist POE-Filter-XML
 Name: perl-%dist
-Version: 1.102960
+Version: 1.140700
 Release: alt1
 
 Summary: XML parsing for the POE framework
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NP/NPEREZ/POE-Filter-XML-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ strategy for POE::Wheels that will be dealing with XML streams.
 %perl_vendor_privlib/POE
 
 %changelog
+* Wed Mar 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.140700-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 1.102960-alt1
 - 0.38 -> 1.102960
 
