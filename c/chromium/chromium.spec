@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.22
+%define v8_ver 3.23
 
 %def_disable debug
 %def_disable nacl
@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        32.0.1700.102
+Version:        33.0.1750.149
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -27,52 +27,66 @@ Source99:       chrome-wrapper
 Source100:      %name.sh
 Source101:      chromium.desktop
 Source102:      chromium-browser.xml
-Source104:      chromium-icons.tar
 Source200:      %name.default
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
 
 ## Start Patches
-# Many changes to the gyp systems so we can use system libraries
-# PATCH-FIX-OPENSUSE patches in system zlib library
-Patch8:         chromium-codechanges-zlib.patch
+# Patches from SUSE
+# PATCH-FIX-OPENSUSE Don't use -m32 for the ARM builds
+Patch5:	 	chromium-fix-arm-icu.patch
+# PATCH-FIX-OPENSUSE Fix the WEBRTC cpu-features for the ARM builds
+Patch6:	 	chromium-arm-webrtc-fix.patch
 # PATCH-FIX-OPENSUSE removes build part for courgette
-Patch13:        chromium-no-courgette.patch
+Patch13:	chromium-no-courgette.patch
 # PATCH-FIX-OPENSUSE enables reading of the master preference
-Patch14:        chromium-master-prefs-path.patch
-# PATCH-FIX-OPENSUSE patches in system glew library
-Patch17:        chromium-system-glew.patch
-# PATCH-FIX-OPENSUSE disables the requirement for ffmpeg
-Patch20:        chromium-6.0.425.0-ffmpeg-no-pkgconfig.patch
-# PATCH-FIX-OPENSUSE patches in system speex library
-Patch28:        chromium-system-speex.patch
-# PATCH-FIX-OPENSUSE patches in the system libvpx library
-Patch32:        chromium-7.0.542.0-system-libvpx.patch
-# PATCH-FIX-OPENSUSE remove the rpath in the libraries
-Patch62:        chromium-norpath.patch
-# PATCH-FIX-OPENSUSE patches in the system v8 library
-Patch63:        chromium-23.0.1271.64-system-gyp-v8.patch
+Patch14:	chromium-master-prefs-path.patch
+# PATCH-FIX-OPENSUSE Fix some includes specifically for the GCC version used
+Patch20:	chromium-gcc-fixes.patch
+# PATCH-FIX-UPSTREAM Add more charset aliases
+Patch64:	chromium-more-codec-aliases.patch
 # PATCH-FIX-OPENSUSE Compile the sandbox with -fPIE settings
-Patch66:        chromium-sandbox-pie.patch
-# PATCH-FIX-OPENSUSE Compile with the standard gold linker
-Patch67:        chromium_use_gold.patch
+Patch66:	chromium-sandbox-pie.patch
+
+# TODO Obsoleted patches from SUSE
+# PATCH-FIX-OPENSUSE patches in system zlib library
+Patch8:		chromium-codechanges-zlib.patch
+# PATCH-FIX-OPENSUSE patches in system glew library
+Patch17:	chromium-system-glew.patch
+# PATCH-FIX-OPENSUSE patches in system speex library
+Patch28:	chromium-system-speex.patch
+# PATCH-FIX-OPENSUSE patches in the system libvpx library
+Patch32:	chromium-system-libvpx.patch
+# PATCH-FIX-OPENSUSE patches in the system v8 library
+Patch63:	chromium-system-v8.patch
+
+# Patches from other vendors
 # ALT: Fix krb5 includes path
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
-Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
+Patch71:	chromium-set-desktop-file-name.patch
+Patch72:	chromium-gn-r0.patch
 
 # Patches from Debian
-Patch80:	nspr.patch
-Patch81:	nss.patch
-Patch82:	expat.patch
-Patch84:	ffmpeg_arm.patch
-Patch85:	fix-manpage.patch
-Patch87:	cups1.5.patch
-Patch88:	arm-no-float-abi.patch
-Patch90:	gcc4.7.patch
-Patch91:	arm.patch
+Patch80:	chromium-nspr.patch
+Patch81:	chromium-nss.patch
+Patch82:	chromium-expat.patch
+Patch85:	chromium-fix-manpage.patch
+Patch86:	chromium-icon.patch
+# Old, but specific
+Patch87:	chromium-cups1.5.patch
+Patch88:	chromium-arm-no-float-abi.patch
+Patch90:	chromium-gcc4.7.patch
+Patch91:	chromium-arm.patch
+# New from Debian
+Patch92:	chromium-third-party-cookies-off-by-default.patch
+Patch93:	chromium-ps-print.patch
+Patch94:	chromium-window-placement.patch
 
 # Patches from upstream
+
+# Patches from ALT Linux
+Patch100:	chromium-fix-doubled-delimiters-in-path.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -104,6 +118,7 @@ BuildRequires:  libhunspell-devel
 BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
+BuildRequires:  libopus-devel
 BuildRequires:  libpam-devel
 BuildRequires:  libpci-devel
 BuildRequires:  libpng12-devel
@@ -149,8 +164,6 @@ BuildRequires:  subversion
 BuildRequires:  wdiff
 BuildRequires:  yasm
 #BuildRequires:  zlib-devel
-
-#Requires:       libv8 >= %v8_ver
 
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -201,29 +214,35 @@ to Gnome's Keyring.
 %prep
 %setup -q -n %name
 
-#%%patch62 -p1
 %patch63 -p2
-%patch8 -p2
+%patch5  -p0 -d src
+%patch6  -p0 -d src
+%patch8  -p2
 %patch13 -p2
 %patch14 -p2
 %patch17 -p1
-#%%patch20 -p1
+%patch20 -p0 -d src
 %patch28 -p2
-#%%patch32 -p1
+%patch64 -p0 -d src
 %patch66 -p1
-#%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
+%patch72 -p0 -d src
 
 %patch80 -p2
 %patch81 -p1
 %patch82 -p1
-#%%patch84 -p1
 %patch85 -p1
+%patch86 -p1
 %patch87 -p1
 %patch88 -p1
 %patch90 -p1
 %patch91 -p1
+%patch92 -p1
+%patch93 -p1
+%patch94 -p1
+
+%patch100 -p0
 
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
@@ -238,50 +257,53 @@ cp -a src/AUTHORS src/LICENSE .
 
 PARSED_OPT_FLAGS=`echo \'%optflags -DUSE_SYSTEM_LIBEVENT -fPIC -fno-ipa-cp -fno-strict-aliasing \' | sed "s/ /',/g" | sed "s/',/', '/g"`
 for i in src/build/common.gypi; do
-        sed -i "s|'-march=pentium4',||g" $i
+	sed -i "s|'-march=pentium4',||g" $i
 %ifnarch x86_64
-        sed -i "s|'-mfpmath=sse',||g" $i
+	sed -i "s|'-mfpmath=sse',||g" $i
 %endif
-        sed -i "s|'-O<(debug_optimize)',||g" $i
-        sed -i "s|'-m32',||g" $i
-        sed -i "s|'-fno-exceptions',|$PARSED_OPT_FLAGS|g" $i
-        sed -i "s|'-Werror'|'-Wno-error'|g" $i
+	sed -i "s|'-O<(debug_optimize)',||g" $i
+	sed -i "s|'-m32',||g" $i
+	sed -i "s|'-fno-exceptions',|$PARSED_OPT_FLAGS|g" $i
+	sed -i "s|'-Werror'|'-Wno-error'|g" $i
 done
 
+# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
+# Note: these are for ALT Linux use ONLY. For your own distribution,
+# please get your own set of keys.
+_google_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY'
+_google_default_client_id='1018394967181.apps.googleusercontent.com'
+_google_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
 
 pushd src
 
 ./build/gyp_chromium -f make build/all.gyp \
-	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
-	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
 	-Dbuild_ffmpegsumo=1 \
-	-Duse_system_bzip2=1 \
-	-Duse_system_ffmpeg=0 \
-	-Duse_system_flac=1 \
-	-Duse_system_icu=0 \
-	-Duse_system_libbz2=1 \
-	-Duse_system_libevent=1 \
-	-Duse_system_libjpeg=0 \
-	-Duse_system_libpng=0 \
-	-Duse_system_libwebp=0 \
-	-Duse_system_libxml=1 \
-	-Duse_system_libxslt=1 \
-	-Duse_system_speex=1 \
-	-Duse_system_sqlite=0 \
-	-Duse_system_v8=1 \
-	-Duse_system_vpx=0 \
-	-Duse_system_xdg_utils=0 \
-	-Duse_system_yasm=1 \
-	-Duse_system_zlib=0 \
-	-Dremove_webcore_debug_symbols=1 \
-	-Dproprietary_codecs=1 \
 %if_disabled nacl
-    -Ddisable_nacl=1 \
+	-Ddisable_nacl=1 \
 %endif
-	-Dlinux_fpic=1 \
 %ifnarch x86_64
 	-Ddisable_sse2=1 \
 %endif
+	-Denable_plugin_installation=0 \
+	-Dgoogle_api_key="$_google_api_key" \
+	-Dgoogle_default_client_id="$_google_default_client_id" \
+	-Dgoogle_default_client_secret="$_google_default_client_secret" \
+	-Dffmpeg_branding=Chrome \
+	-Djavascript_engine=v8 \
+	-Dlinux_fpic=1 \
+	-Dlinux_link_gsettings=1 \
+	-Dlinux_link_libpci=1 \
+	-Dlinux_link_libspeechd=1 \
+	-Dlibspeechd_h_prefix=speech-dispatcher/ \
+	-Dlinux_link_pulseaudio=1 \
+	-Dlinux_strip_binary=1 \
+	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
+	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
+	-Dlinux_use_gold_binary=0 \
+	-Dlinux_use_gold_flags=0 \
+	-Dlogging_like_official_build=1 \
+	-Dproprietary_codecs=1 \
+	-Dremove_webcore_debug_symbols=1 \
 %ifarch x86_64
 	-Dtarget_arch=x64 \
 %endif
@@ -305,21 +327,33 @@ pushd src
 	-Darm_neon=0 \
 %endif
 %endif
-	-Dlinux_use_gold_flags=0 \
-	-Dlinux_use_gold_binary=0 \
-    -Dlinux_link_libpci=1 \
-    -Dlinux_link_libspeechd=1 \
-    -Dlibspeechd_h_prefix=speech-dispatcher/ \
-	-Denable_plugin_installation=0 \
-	-Dlinux_use_tcmalloc=0 \
 	-Duse_pulseaudio=1 \
-	-Djavascript_engine=v8 \
-	-Dgoogle_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY' \
-	-Dgoogle_default_client_id='1018394967181.apps.googleusercontent.com' \
-	-Dgoogle_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
-# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
-# Note: these are for ALT Linux use ONLY. For your own distribution,
-# please get your own set of keys.
+	-Duse_system_bzip2=1 \
+	-Duse_system_ffmpeg=0 \
+	-Duse_system_flac=1 \
+	-Duse_system_icu=0 \
+	-Duse_system_libbz2=1 \
+	-Duse_system_libexif=1 \
+	-Duse_system_libevent=1 \
+	-Duse_system_libjpeg=0 \
+	-Duse_system_libmtp=0 \
+	-Duse_system_libopus=1 \
+	-Duse_system_libpng=0 \
+	-Duse_system_libwebp=0 \
+	-Duse_system_libyuv=1 \
+	-Duse_system_libxml=1 \
+	-Duse_system_libxslt=1 \
+	-Duse_system_nspr=1 \
+	-Duse_system_protobuf=0 \
+	-Duse_system_speex=1 \
+	-Duse_system_sqlite=0 \
+	-Duse_system_v8=1 \
+	-Duse_system_vpx=0 \
+	-Duse_system_xdg_utils=0 \
+	-Duse_system_yasm=1 \
+	-Duse_system_zlib=0
+# Unused flags
+#	-Dlinux_use_tcmalloc=0 \
 
 # Limit number of threads
 export NPROCS=1
@@ -373,14 +407,18 @@ cp -a libppGoogleNaClPluginChrome.so %buildroot%_libdir/chromium/
 %endif
 popd
 
-mkdir -p %buildroot%_datadir/icons/
-pushd %buildroot%_datadir/icons/
-tar -xf %SOURCE104
-mv oxygen hicolor
-popd
+# Icons
+for size in 22 24 48 64 128 256; do
+	install -Dm644 "src/chrome/app/theme/chromium/product_logo_$size.png" \
+		"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%{name}.png"
+done
+for size in 16 32; do
+	install -Dm644 "src/chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
+		"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%{name}.png"
+done
 
-mkdir -p %buildroot%_desktopdir
-install -m0644 %SOURCE101 %buildroot%_desktopdir
+# Desktop file
+install -Dm0644 %SOURCE101 %buildroot%_desktopdir/%{name}.desktop
 
 mkdir -p %buildroot%_datadir/gnome-control-center/default-apps/
 cp -a %SOURCE102 %buildroot%_datadir/gnome-control-center/default-apps/
@@ -423,10 +461,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %attr(755,root,root) %_libdir/chromium/xdg-settings
 %attr(755,root,root) %_libdir/chromium/xdg-mime
 %_libdir/chromium/*.pak
-%_mandir/man1/chrom*
-%_datadir/applications/*.desktop
+%_man1dir/chrom*
+%_desktopdir/%name.desktop
 %_datadir/gnome-control-center/default-apps/chromium-browser.xml
-%_iconsdir/hicolor/*/apps/chromium-browser.*
+%_iconsdir/hicolor/*/apps/chromium.*
 %_altdir/%name
 %_altdir/%name-generic
 
@@ -439,6 +477,34 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Mar 12 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.149-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1700: Use-after-free in speech.
+  - High CVE-2014-1701: UXSS in events.
+  - High CVE-2014-1702: Use-after-free in web database.
+
+* Tue Mar 04 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.146-alt1
+- New version
+- Security fixes:
+  - High CVE-2013-6663: Use-after-free in svg images.
+  - High CVE-2013-6664: Use-after-free in speech recognition.
+  - High CVE-2013-6665: Heap buffer overflow in software rendering.
+  - Medium CVE-2013-6666: Chrome allows requests in flash header request.
+
+* Fri Feb 21 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.117-alt1
+- New version
+- Security fixes:
+  - High CVE-2013-6653: Use-after-free related to web contents.
+  - High CVE-2013-6654: Bad cast in SVG.
+  - High CVE-2013-6655: Use-after-free in layout.
+  - High CVE-2013-6656: Information leak in XSS auditor.
+  - Medium CVE-2013-6657: Information leak in XSS auditor.
+  - Medium CVE-2013-6658: Use-after-free in layout.
+  - Medium CVE-2013-6659: Issue with certificates validation in TLS handshake.
+  - Low CVE-2013-6660: Information leak in drag and drop.
+- Update patches from SUSE, Debian and Arch
+
 * Tue Jan 28 2014 Andrey Cherepanov <cas@altlinux.org> 32.0.1700.102-alt1
 - New version
 - Security fixes:
