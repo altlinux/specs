@@ -1,12 +1,17 @@
+%def_disable static
+
 Name: libfreetype
 Version: 2.5.3
-Release: alt1
-
+Release: alt2
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
 Url: http://www.freetype.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+PreReq: libharfbuzz
+Provides: freetype2 = %version
+Obsoletes: freetype2 < %version
 
 Source0: http://download.savannah.gnu.org/releases/freetype/freetype-%version.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%version.tar.bz2
@@ -14,22 +19,14 @@ Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.ta
 Source3: ftconfig.h
 
 Patch5: freetype-2.4.10-osh.patch
-
 Patch2: freetype-2.5.3-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
 Patch6: ft2demos-2.5.1-alt-snprintf.patch
-
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
 Patch14: freetype-2.5.1-rh-pkgconfig.patch
-
 Patch21: ft2demos-2.4.10-deb-fixes.patch
-
-Provides: freetype2 = %version
-Obsoletes: freetype2 < %version
-
-%def_disable static
 
 BuildRequires: bzlib-devel libX11-devel libharfbuzz-devel libpng-devel zlib-devel
 
@@ -99,7 +96,8 @@ ln -s ft2demos-%version ft2demos
 
 %build
 %add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
-%configure %{subst_enable static}
+%configure \
+	%{subst_enable static}
 
 # get rid of RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
@@ -108,7 +106,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %make_build -C ft2demos-%version TOP_DIR=..
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 for f in ft2demos-%version/bin/ft*; do
 	builds/unix/libtool --mode=install install -m755 $f %buildroot%_bindir/
@@ -159,6 +157,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Mar 12 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.5.3-alt2
+- prereq libharfbuzz
+
 * Tue Mar 11 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.5.3-alt1
 - 2.5.3
 
