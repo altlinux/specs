@@ -2,7 +2,7 @@
 
 Name: gnustep-DisplayCalibrator
 Version: 0.7
-Release: alt4
+Release: alt5
 Summary: Gamma calibration for GNUstep
 License: Free
 Group: Graphical desktop/GNUstep
@@ -49,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Mar 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt5
+- Fixed
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt4
 - Built with clang
 
