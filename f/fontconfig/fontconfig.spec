@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.0
-Release: alt3
+Release: alt4
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -78,7 +78,7 @@ while read CONF ; do
 done
 
 %post
-[ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name
+[ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name ||:
 
 %triggerin -- %name < 2.10.91-alt2
 find %_datadir/fonts -depth -type f -name fonts.cache-1 -delete
@@ -118,6 +118,12 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Mar 12 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt4
+- don't fail post-script with broken freetype
+
+* Thu Feb 06 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt2.M70P.1
+- built for M70P
+
 * Thu Feb 06 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt3
 - disable only Nimbus fonts for PostScript aliases (ALT#26768)
 
