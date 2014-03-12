@@ -2,7 +2,7 @@
 
 Name: gnustep-BatMon
 Version: 0.7
-Release: alt3
+Release: alt4
 Summary: Battery monitor for laptops
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -49,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Mar 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt4
+- Fixed menu file
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt3
 - Built with clang
 
