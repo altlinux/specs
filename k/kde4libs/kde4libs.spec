@@ -17,7 +17,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -107,7 +107,7 @@ Patch1025: kdelibs-4.7.1-alt-find-hupnp.patch
 Patch1026: kdelibs-4.7.1-alt-find-pulseaudio.patch
 Patch1027: kdelibs-4.10.0-alt-no-hal.patch
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
-Patch1029: kdelibs-4.8.1-alt-fix-build.patch
+Patch1029: kdelibs-4.12.3-alt-fix-build.patch
 Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
@@ -277,6 +277,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 #[ -f %buildroot/%_K4apps/kssl/ca-bundle.crt ] || exit 1
 #ln -sf `relative %buildroot/%_datadir/ca-certificates/ca-bundle.crt %buildroot/%_K4apps/kssl/ca-bundle.crt` %buildroot/%_K4apps/kssl/ca-bundle.crt
 
+# disable annoing autostart
+mkdir -p %buildroot/%_K4start/
+for n in tracker-miner-fs tracker-store ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K4start/$n.desktop
+done
+
 
 %files
 %doc AUTHORS README TODO
@@ -302,6 +308,7 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %exclude %_K4apps/cmake/
 %exclude %_K4apps/kdewidgets/
 %exclude %_K4datadir/apps/ksgmltools2/
+%_K4start/*
 %_K4conf/*
 %_K4dbus_interfaces/*
 %_K4xdg_mime/*
@@ -339,6 +346,16 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt3
+- fix to build
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1.M70P.1
+- built for M70P
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2
+- disable tracker autostart
+- update from 4.12 branch
+
 * Wed Mar 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
