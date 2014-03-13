@@ -2,8 +2,8 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.1.2
-Release: alt4
+Version: 0.1.3
+Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Other
@@ -49,6 +49,10 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Thu Mar 13 2014 Led <led@altlinux.ru> 1:0.1.3-alt1
+- 0.1.3:
+  + ruby.macros: fix %%ruby_ri_sitedir macro
+
 * Wed Dec 12 2012 Led <led@altlinux.ru> 1:0.1.2-alt4
 - removed temp symlink
 
