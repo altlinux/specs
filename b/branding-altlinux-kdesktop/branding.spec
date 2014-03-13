@@ -9,7 +9,7 @@
 %define bugfix 3
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 %define theme %name
@@ -294,7 +294,7 @@ for n in fedora redhat system; do
 done
 # os-release
 mkdir -p %buildroot/%_datadir/%name
-cat >>%buildroot/%_datadir/%name/os-release <<__EOF__
+cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%distribution"
 VERSION="%version %Theme %status_en (%codename)"
 ID=altlinux
@@ -435,13 +435,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_sysconfdir/*-*
 %_sysconfdir/buildreqs/packages/ignore.d/*
 %dir %_datadir/%name/
-%_datadir/%name/os-release
 
-%post release
-if ! [ -e %_sysconfdir/os-release -a -s %_sysconfdir/os-release ] ; then
-    cat %_datadir/%name/os-release > %_sysconfdir/os-release ||:
-    chmod 0644 %_sysconfdir/os-release ||:
-fi
 
 %files notes
 %_datadir/alt-notes/*
@@ -479,6 +473,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Mar 13 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt5
+- package static os-release
+
 * Wed Feb 19 2014 Sergey V Turchin <zerg at altlinux dot org> 7.0.3-alt4
 - remove planet.altlinux.org URL from indexhtml
 
