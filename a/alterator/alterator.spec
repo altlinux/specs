@@ -1,6 +1,6 @@
 Name: alterator
 Version: 4.24
-Release: alt2
+Release: alt3
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -92,7 +92,7 @@ cat >%buildroot%_rpmmacrosdir/%name<<EOF
 EOF
 
 cat >%buildroot%_sysconfdir/tmpfiles.d/%name.conf<<EOF
-d /var/run/alteratord 0755 root root -
+d /var/run/alteratord 0710 root _alteratord -
 EOF
 
 %pre
@@ -126,7 +126,7 @@ EOF
 %_sbindir/*
 %_initdir/*
 %_mandir/man?/*
-%dir /var/run/alteratord
+%attr(710,root,_alteratord) %dir /var/run/alteratord
 
 %_unitdir/alteratord.service
 %_unitdir/alteratord.socket
@@ -140,6 +140,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Mar 13 2014 Mikhail Efremov <sem@altlinux.org> 4.24-alt3
+- Fix permissions for /var/run/alteratord/.
+
 * Thu Dec 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.24-alt2
 - change alteratord socket name in alteratord.socket
 
