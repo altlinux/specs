@@ -29,10 +29,10 @@
 %define Name OpenCV
 %define sover 2.4
 Name: lib%bname%sover
-Version: 2.4.9
-%define trunk 20130204
-Release: alt5.git%trunk
-Summary:  Intel(R) Open Source Computer Vision Library
+Version: 2.4.8.1
+Release: alt4
+Epoch: 1
+Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
 URL: http://opencv.org
@@ -158,6 +158,7 @@ Conflicts: python-module-%{bname}2 < %version-%release
 Obsoletes: python-module-%{bname}2 < %version-%release
 Conflicts: python-module-%{bname}2.3
 Obsoletes: python-module-%{bname}2.3
+Provides: python%{__python_version}(%bname)
 
 %description -n python-module-%bname%sover
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -192,32 +193,11 @@ This package contains %Name examples.
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
 
-for i in $(egrep -R cxtypes interfaces/swig/|awk -F : '{print $1}')
-do
-	sed -i 's|.*cxtypes.*||' $i
-done
-for i in $(egrep -R cvtypes interfaces/swig/|awk -F : '{print $1}')
-do
-	sed -i 's|.*cvtypes.*||' $i
-done
-
-rm -f interfaces/swig/python/_*.cpp interfaces/swig/python/cv.py \
-	interfaces/swig/python/highgui.py interfaces/swig/python/ml.py
-#rm -fR interfaces/swig/general
-
 %prepare_sphinx .
 cp -f doc/conf.py ./
 cp doc/opencv-logo2.png ./
 
 %build
-SWIG_FEATURES="-I$PWD/include/opencv"
-for i in core ml imgproc video features2d flann calib3d objdetect \
-	legacy highgui photo
-do
-	SWIG_FEATURES="$SWIG_FEATURES -I$PWD/modules/$i/include"
-done
-export SWIG_FEATURES
-%add_optflags $SWIG_FEATURES
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DBUILD_PACKAGE:BOOL=ON \
@@ -241,6 +221,7 @@ cmake \
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DBUILD_opencv_ts:BOOL=OFF \
 %ifarch x86_64
 	-DLIB_SUFFIX:STRING=64 \
 %endif
@@ -249,10 +230,6 @@ cmake \
 
 %install
 %makeinstall_std
-
-%makeinstall_std -C interfaces/swig/python
-
-rm -f	%buildroot%python_sitelibdir/%bname/matlab_syntax.py*
 
 install -d %buildroot%_docdir/%name
 mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
@@ -264,9 +241,9 @@ sed -i \
 	%buildroot%_pkgconfigdir/opencv.pc
 
 %files
-%doc README
+%doc README.md
 %_libdir/*.so.*
-%dir %_datadir/%bname
+# %dir %_datadir/%bname
 %dir %_datadir/%Name
 %_datadir/%Name/haarcascades
 %_datadir/%Name/lbpcascades
@@ -288,11 +265,25 @@ sed -i \
 %python_sitelibdir/*
 
 %files examples
-%dir %_datadir/%bname
+# %dir %_datadir/%bname
 %dir %_datadir/%Name
 %_datadir/*/samples
 
 %changelog
+* Fri Mar 21 2014 Dmitry Derjavin <dd@altlinux.org> 1:2.4.8.1-alt4
+- Added pythonX.Y(opencv) require to the python module package.
+
+* Tue Mar 18 2014 Dmitry Derjavin <dd@altlinux.org> 1:2.4.8.1-alt3
+- opencv_ts disabled;
+- more spec cleanup.
+
+* Tue Feb 11 2014 Dmitry Derjavin <dd@altlinux.org> 1:2.4.8.1-alt2
+- Old (really?) SWIG related stuff removed from spec;
+- Files section spec file cleanup.
+
+* Tue Feb 04 2014 Dmitry Derjavin <dd@altlinux.org> 1:2.4.8.1-alt1
+- Switched to the current upstream.
+
 * Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt5.git20130204
 - Fixed OpenCVConfig.cmake (ALT #29345)
 
