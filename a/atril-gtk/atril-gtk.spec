@@ -4,10 +4,11 @@
 %define _name atril
 
 %def_disable introspection
+%def_disable libs_subpackage
 
 Name:           %_name-gtk
-Version:        1.7.90
-Release:        alt1.git20140225
+Version:        1.8.0
+Release:        alt1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -36,7 +37,7 @@ BuildRequires:  yelp-tools
 
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libgxps) pkgconfig(libxml-2.0) pkgconfig(mate-keyring-1) pkgconfig(sm) pkgconfig(x11) zlib-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libgxps) pkgconfig(libxml-2.0) pkgconfig(sm) pkgconfig(x11) zlib-devel
 
 # for the caja properties page
 #BuildRequires: mate-file-manager-devel
@@ -45,7 +46,16 @@ BuildRequires: libkpathsea-devel
 # for the djvu backend
 BuildRequires: libdjvu-devel
 
+%if_enabled libs_subpackage
 Requires: lib%{name} = %{version}-%{release}
+%else
+Provides: lib%{name} = %{version}-%{release}
+Obsoletes: lib%{name} < %{version}-%{release}
+Conflicts: mate-document-viewer-libs
+
+%add_findprov_skiplist %_libdir/*
+%filter_from_requires /^\(debug\(64\)\?(\)\?libatril\(document\|view\)\.so\.[[:digit:]]/d
+%endif
 
 Conflicts: mate-document-viewer
 
@@ -172,7 +182,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/thumbnailers/atril.thumbnailer
 %{_datadir}/help/*/*
 
+%if_enabled libs_subpackage
 %files -n lib%name
+%endif
 %doc README COPYING NEWS AUTHORS
 %{_libdir}/libatrilview.so.*
 %{_libdir}/libatrildocument.so.*
@@ -192,6 +204,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/girepository-1.0/AtrilView-*.typelib
 %endif
 
+%if_enabled libs_subpackage
 %files -n lib%name-devel
 %dir %{_includedir}/atril
 %{_includedir}/atril/%apiversion
@@ -202,6 +215,11 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %if_enabled introspection
 %{_datadir}/gir-1.0/AtrilDocument-*.gir
 %{_datadir}/gir-1.0/AtrilView-*.gir
+%endif
+%else
+%exclude %_includedir/atril/
+%exclude %_libdir/pkgconfig/atril-*.pc
+%exclude %_libdir/libatril*.so
 %endif
 
 %files dvi
@@ -221,6 +239,10 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Wed Mar 12 2014 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Don't package atril libs as separate subpackage.
+- Updated to 1.8.0.
+
 * Tue Feb 25 2014 Mikhail Efremov <sem@altlinux.org> 1.7.90-alt1.git20140225
 - Upstream git snapshot (master branch).
 
