@@ -1,6 +1,6 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt7.svn20130529
+Release: alt8.svn20130529
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -9,7 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.gna.org/svn/gnustep/libs/renaissance/trunk/
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
@@ -90,13 +90,13 @@ This package contains documentation for Renaissance.
 
 gzip ChangeLog
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc AUTHORS ChangeLog* NEWS README TODO
 %_bindir/*
 %_libdir/GNUstep
-%_menudir/*
+#_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -109,6 +109,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_docdir/GNUstep
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt8.svn20130529
+- Removed menu file
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt7.svn20130529
 - Added menu file (thnx kostyalamer@)
 
