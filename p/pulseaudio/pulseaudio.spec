@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 4.0
+Version: 5.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -18,14 +18,11 @@ BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-devel libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libsystemd-daemon-devel libsystemd-login-devel
+BuildRequires: libsystemd-devel xen-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
 Requires: %name-gconf = %version-%release
-
-Provides: polypaudio = %version
-Obsoletes: polypaudio < %version
 
 %description
 PulseAudio is a networked sound server, similar in theory to the Enlightened
@@ -110,24 +107,23 @@ Summary: PulseAudio -- JACK part
 Group: Sound
 Requires: %name-daemon = %version-%release
 
+%package xen
+Summary: PulseAudio -- XEN PV support
+Group: Sound
+Requires: %name-daemon = %version-%release
+
 %package -n lib%name
 Summary: PulseAudio shared libraries
 Group: System/Libraries
-Provides: libpolypaudio = %version
-Obsoletes: libpolypaudio < %version
 
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C
 Requires: lib%name = %version-%release
-Provides: libpolypaudio-devel = %version
-Obsoletes: libpolypaudio-devel < %version
 
 %package -n lib%name-devel-doc
 Summary: Development documentation for %name
 Group: Development/C
-Provides: libpolypaudio-devel-doc = %version
-Obsoletes: libpolypaudio-devel-doc < %version
 BuildArch: noarch
 
 %description daemon
@@ -181,6 +177,13 @@ numerous features.
 
 This package contains JACK modules of PulseAudio.
 
+%description xen
+PulseAudio is a networked sound server, similar in theory to the Enlightened
+Sound Daemon (EsounD). PulseAudio is however much more advanced and has
+numerous features.
+
+This package contains XEN PV driver.
+
 %description -n lib%name
 PulseAudio is a networked sound server, similar in theory to the Enlightened
 Sound Daemon (EsounD). PulseAudio is however much more advanced and has
@@ -230,7 +233,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-4.0
+%define pulselibdir %_libdir/pulse-5.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -260,22 +263,28 @@ find %buildroot%_libdir -name \*.la -delete
 
 %_datadir/pulseaudio
 
-%_libdir/libpulsecore-4.0.so
+%_libdir/libpulsecore-5.0.so
 
 %dir %pulselibdir
 %dir %pulsemoduledir
 
 %pulsemoduledir/*.so
 
-%exclude %pulsemoduledir/libbluetooth-util.so
-%exclude %pulsemoduledir/module-bluetooth-device.so
+%exclude %pulsemoduledir/libbluez4-util.so
+%exclude %pulsemoduledir/module-bluez4-device.so
+%exclude %pulsemoduledir/module-bluez4-discover.so
+%exclude %pulsemoduledir/libbluez5-util.so
+%exclude %pulsemoduledir/module-bluez5-device.so
+%exclude %pulsemoduledir/module-bluez5-discover.so
 %exclude %pulsemoduledir/module-bluetooth-discover.so
-%exclude %pulsemoduledir/module-bluetooth-proximity.so
+%exclude %pulsemoduledir/module-bluetooth-policy.so
 
 %exclude %pulsemoduledir/module-gconf.so
 
 %exclude %pulsemoduledir/module-jack-sink.so
 %exclude %pulsemoduledir/module-jack-source.so
+
+%exclude %pulsemoduledir/module-xenpv-sink.so
 
 %_man1dir/pactl.1*
 %_man1dir/esdcompat.1*
@@ -322,11 +331,14 @@ find %buildroot%_libdir -name \*.la -delete
 %files bluez
 %dir %pulselibdir
 %dir %pulsemoduledir
-%_libexecdir/pulse/proximity-helper
-%pulsemoduledir/libbluetooth-util.so
-%pulsemoduledir/module-bluetooth-device.so
+%pulsemoduledir/libbluez4-util.so
+%pulsemoduledir/module-bluez4-device.so
+%pulsemoduledir/module-bluez4-discover.so
+%pulsemoduledir/libbluez5-util.so
+%pulsemoduledir/module-bluez5-device.so
+%pulsemoduledir/module-bluez5-discover.so
 %pulsemoduledir/module-bluetooth-discover.so
-%pulsemoduledir/module-bluetooth-proximity.so
+%pulsemoduledir/module-bluetooth-policy.so
 
 %files gconf
 %dir %pulselibdir
@@ -340,6 +352,11 @@ find %buildroot%_libdir -name \*.la -delete
 %pulsemoduledir/module-jack-sink.so
 %pulsemoduledir/module-jack-source.so
 
+%files xen
+%dir %pulselibdir
+%dir %pulsemoduledir
+%pulsemoduledir/module-xenpv-sink.so
+
 %files -n lib%name -f %name.lang
 %doc LICENSE README todo
 
@@ -351,7 +368,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-4.0.so
+%_libdir/pulseaudio/libpulsecommon-5.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -360,12 +377,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-4.0.so
+%exclude %_libdir/libpulsecore-5.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Thu Mar 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt1
+- 5.0 released
+
 * Tue Sep 17 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0-alt1
 - 4.0 released
 
