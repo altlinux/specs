@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.24.0
-Release: alt5.svn20140127
+Release: alt6.svn20140127
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -131,6 +131,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt6.svn20140127
+- Set default font as Helvetica, and Courier for mono space font
+
 * Mon Mar 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt5.svn20140127
 - Rebuilt
 
