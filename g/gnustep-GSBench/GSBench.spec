@@ -2,7 +2,7 @@
 
 Name: gnustep-GSBench
 Version: 0.5.2
-Release: alt5
+Release: alt6
 Summary: Benchmarking tool for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -26,6 +26,11 @@ A benchmarking tool for GNUstep, originated from NXBench.
 
 %prep
 %setup
+
+%ifarch x86_64
+LIBSUFF=64
+%endif
+sed -i "s|@64@|$LIBSUFF|g" App/BundleController.m
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -55,6 +60,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt6
+- Fixed path to bundles
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt5
 - Built with clang
 
