@@ -2,7 +2,7 @@
 %define major 1.22
 
 Name: mediawiki
-Version: %major.2
+Version: %major.4
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
@@ -15,7 +15,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 BuildArch: noarch
 
-Source0: http://download.wikimedia.org/mediawiki/%major/%name-%version.tar
+Source0: http://releases.wikimedia.org/mediawiki/%major/%name-%version.tar
 Source1: mediawiki-apache2-alt-configs.tar
 Source2: README.ALT-ru_RU.UTF-8
 Source3: install_php_config.sh
@@ -34,7 +34,8 @@ BuildPreReq: rpm-build-mediawiki >= 0.3
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
-Requires: php5-apc php5-dom ImageMagick
+# In php prev to 5.5 you can use php5-apc
+Requires: php5-dom ImageMagick
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -149,6 +150,7 @@ mkdir -p %buildroot%_mediawikidir
 cp -r * %buildroot%_mediawikidir/
 # Not needed in the package
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
+rm -rf %buildroot%_mediawikidir/maintenance/cssjanus/
 rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/}
 rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
@@ -231,7 +233,15 @@ if [ -d %_datadir/%name/images -a ! -L %_datadir/%name/images ]; then
 		echo "%_datadir/%name/images saved as %_datadir/%name/images.rpmsave"
 	}
 fi
-		
+
+%post -n %name-common
+if [ $1 -eq 2 ] ; then
+	cat <<EOF
+After MediaWiki update run:
+ # php maintenance/update.php
+Check full upgrading manual on https://www.mediawiki.org/wiki/Manual:Upgrading
+EOF
+fi
 
 %post -n %name-apache2
 %_sbindir/a2chkconfig >/dev/null
@@ -283,6 +293,13 @@ exit 0
 
 
 %changelog
+* Thu Mar 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.4-alt1
+- new version 1.22.4 (with rpmrb script)
+- drop php5-apc requires
+
+* Mon Mar 03 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.3-alt1
+- new version 1.22.3 (with rpmrb script)
+
 * Thu Feb 06 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.2-alt1
 - new version 1.22.2 (with rpmrb script)
 
