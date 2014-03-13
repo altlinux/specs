@@ -2,7 +2,7 @@
 
 Name: gnustep-GSKrab
 Version: 0.0.1
-Release: alt4
+Release: alt5
 Summary: GNUstep Keyboard Grabber
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,7 +10,7 @@ Url: http://wiki.gnustep.org/index.php/GSKrab
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -93,7 +93,7 @@ for j in GSKrab; do
 done
 popd
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc README
@@ -101,7 +101,7 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/GSKrab.framework/Versions/0/Headers
 %exclude %_libdir/GNUstep/Frameworks/GSKrab.framework/Headers
-%_menudir/*
+#_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -113,6 +113,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/GSKrab.framework/Headers
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt5
+- Removed menu file
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt4
 - Built with clang
 
