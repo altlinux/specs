@@ -19,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt2
+Release: alt3
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -337,12 +337,20 @@ export XEN_VENDORVERSION="-%release"
 export EXTRA_CFLAGS_XEN_TOOLS="%optflags"
 export EXTRA_CFLAGS_QEMU_TRADITIONAL="%optflags"
 export EXTRA_CFLAGS_QEMU_XEN="%optflags"
+%{?_enable_xenapi:export XML=$(which xml2-config)}
 export WGET=$(which true)
 export GIT=$(which true)
 %{?_enable_ocamltools:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
 %{?_with_efi:install -d -m 0755 %buildroot/boot/efi/efi/altlinux}
 %make_install DESTDIR=%buildroot %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
+
+# FIXME
+%ifarch %arm aarch64
+cp -a %name/include/public/arch-arm %buildroot%_includedir/%name/
+%endif
+
 %{?_with_efi:mv %buildroot/boot/efi/efi %buildroot/boot/efi/EFI}
+
 %if_with xsm
 # policy file should be in /boot/flask
 install -d -m 0755 %buildroot/boot/flask
@@ -716,6 +724,9 @@ done
 
 
 %changelog
+* Thu Mar 13 2014 Led <led@altlinux.ru> 4.4.0-alt3
+- add missed ARM-specific headers
+
 * Tue Mar 11 2014 Led <led@altlinux.ru> 4.4.0-alt2
 - enabled xenapi
 
