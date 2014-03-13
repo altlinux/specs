@@ -10,7 +10,7 @@
 %define bugfix 3
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -32,7 +32,7 @@ Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
 Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
-Patch1007: kdebase-runtime-4.10.5-alt-use-kwallet.patch
+Patch1007: kdebase-runtime-4.12.3-alt-use-kwallet.patch
 
 BuildRequires(pre): kde4pimlibs-devel attica-devel
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
@@ -229,6 +229,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2
+- don't offer gpg for kwallet by default
+
 * Thu Mar 06 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
