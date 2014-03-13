@@ -3,11 +3,12 @@
 
 #define snapshot_version 20030512
 %define cross_arch avr
+%define build_dir gcc
 
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
-Version: 4.7.2
-Release: alt3
+Version: 4.8.1
+Release: alt1
 
 Copyright: GPL
 Group: Development/Other
@@ -15,8 +16,9 @@ URL: http://gcc.gnu.org
 
 Source0: avr-gcc-%version.tar.gz
 
-# Automatically added by buildreq on Thu Oct 24 2002
-BuildRequires: avr-binutils flex
+# Automatically added by buildreq on Thu Mar 13 2014
+# optimized out: avr-binutils avr-gcc avr-gcc-c++ libgmp-devel libmpfr-devel libstdc++-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
+BuildRequires: avr-libc cuneiform expect flex gcc-c++ glibc-devel-static libmpc-devel perl-podlators ruby ruby-stdlibs zlib-devel
 
 BuildRequires: avr-binutils >= 2:2.23.1-alt1
 BuildRequires: zlib-devel libmpc-devel libmpfr-devel libgmp-devel
@@ -45,7 +47,7 @@ on the mega128 devices.
 
 
 %prep
-%setup -q -n gcc-%version
+%setup -q -n %build_dir
 contrib/gcc_update --touch
 #cd %_builddir/gcc-%version/gcc
 
@@ -124,7 +126,7 @@ echo timestamp > gcc/cstamp-h
 rename cpp.1 %cross_arch-cpp.1 %buildroot%_man1dir/*
 rename gcov.1 %cross_arch-gcov.1 %buildroot%_man1dir/*
 %__rm -f %buildroot%_man1dir/%cross_arch-g++*
-%__rm %buildroot/usr/libexec/gcc/avr/4.7.2/liblto_plugin.la
+%__rm %buildroot/usr/libexec/gcc/avr/%version/liblto_plugin.la
 
 #%__mv %buildroot%_libdir/bin/* %buildroot%_bindir/
 %__ln_s -f %cross_arch-gcc.1.bz2 %buildroot%_man1dir/%cross_arch-g++.1.bz2
@@ -135,7 +137,7 @@ rename avr-avr avr %buildroot%_man1dir/*
 %__rm -rf %buildroot{%_infodir,%_man7dir} %buildroot%libavrdir/libiberty.a %buildroot%_libdir/libiberty.a %buildroot%libavrdir/%version/plugin
 
 # Copy specs file to /usr/lib/avr/gcc/avr/*/
-%__cp %_builddir/gcc-%version/obj-avr-%_target_platform/gcc/specs %buildroot%libavrdir/%version/
+%__cp %_builddir/%build_dir/obj-avr-%_target_platform/gcc/specs %buildroot%libavrdir/%version/
 
 %files
 %doc gcc/README* gcc/*ChangeLog*
@@ -172,6 +174,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Thu Mar 13 2014 Grigory Milev <week@altlinux.ru> 4.8.1-alt1
+- New version released
+
 * Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 4.7.2-alt3
 - Updated version with Atmel patches
 
