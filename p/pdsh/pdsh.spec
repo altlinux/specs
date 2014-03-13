@@ -1,3 +1,4 @@
+%def_with dshgroups
 %def_with exec
 %def_without mrsh
 %def_without qshell
@@ -13,7 +14,7 @@
 
 Name: pdsh
 Version: 2.26
-Release: alt2
+Release: alt3
 
 Summary: Parallel remote shell program
 License: GPL
@@ -400,6 +401,9 @@ fi
 ##############################################################################
 
 %changelog
+* Thu Mar 13 2014 Michael Shigorin <mike@altlinux.org> 2.26-alt3
+- enabled dshgroups per legion@'s request
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 2.26-alt2
 - added watch file
 
