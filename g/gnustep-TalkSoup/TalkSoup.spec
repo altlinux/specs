@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-TalkSoup
-Version: 1.0
-Release: alt4.alpha
+Version: 1.1
+Release: alt1.svn20131121
 Summary: GNUstep IRC client
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -140,6 +140,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.svn20131121
+- Version 1.1
+
 * Fri Feb 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.alpha
 - Added menu file (thnx kostyalamer@)
 
