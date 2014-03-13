@@ -1,10 +1,10 @@
-%set_verify_elf_method unresolved=strict
+#set_verify_elf_method unresolved=strict
 
 Name: gnustep-Innerspace
-Version: 0.2.0
-Release: alt4
+Version: 1.0.0
+Release: alt1.svn20120120
 Summary: Innerspace is a screensaver
-License: GPL
+License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
 Url: http://gap.nongnu.org/innerspace/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -52,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.svn20120120
+- Version 1.0.0
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt4
 - Built with clang
 
