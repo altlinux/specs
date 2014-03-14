@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: A Fast, Enjoyable HTML Parser for Ruby
 Group: Development/Ruby
@@ -23,12 +23,14 @@ be very accommodating (like Tanaka Akira's HTree) and to have a very
 helpful library (like some JavaScript libs -- JQuery, Prototype -- give
 you.)  The XPath and CSS parser, in fact, is based on John Resig's JQuery.
 
+
 %package doc
 Summary: Documentation files for %name
-Group: Documentation
+Group: Development/Documentation
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
+
 
 %prep
 %setup -n %pkgname-%version
@@ -38,6 +40,7 @@ sed -i -r -e '/ruby_digitmap\[\]/s/^([[:blank:]]*).*$/\1static const char digitm
 	ext/fast_xs/fast_xs.c
 %update_setup_rb
 
+
 %build
 %ruby_config
 pushd ext/hpricot_scan
@@ -45,23 +48,33 @@ pushd ext/hpricot_scan
   ragel hpricot_css.rl -G2 -o hpricot_css.c
 popd
 %ruby_build
-for t in test/test_*; do
-  testrb -Iext/hpricot_scan:ext/fast_xs:lib "$t"
-done
+
 
 %install
 %ruby_install
 %rdoc lib/
+
+
+%check
+for t in test/test_*; do
+  testrb -Iext/hpricot_scan:ext/fast_xs:lib "$t"
+done
+
 
 %files
 %doc README
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
 
+
 %files doc
 %ruby_ri_sitedir/Hpricot*
 
+
 %changelog
+* Fri Mar 14 2014 Led <led@altlinux.ru> 0.8-alt1.2
+- test: fixed for ruby >= 2.0
+
 * Sun Dec 09 2012 Led <led@altlinux.ru> 0.8-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - fix build with libruby 1.9.x
