@@ -71,8 +71,8 @@
 # }}}
 
 Name: libav
-Version: 9.11
-Release: alt2
+Version: 9.12
+Release: alt1
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -571,6 +571,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Fri Mar 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.12-alt1
+- 9.12 released
+
 * Sat Mar 08 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.11-alt2
 - freetype-based video filters enabled (closes: #29876)
 
