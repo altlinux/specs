@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt114
+Release: alt115
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Mar 14 2014 Led <led@altlinux.ru> 2.6.32-alt115
+- Update to 042stab085.17
+
 * Thu Feb 20 2014 Led <led@altlinux.ru> 2.6.32-alt114
 - mmap: call mmap prep only for regular files
 

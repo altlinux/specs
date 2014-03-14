@@ -1,6 +1,6 @@
 %define module_name	pf_ring
 %define module_version	5.5.2
-%define module_release	alt1
+%define module_release	alt2
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
 %define flavour		ovz-el
@@ -19,6 +19,8 @@ License: GPL
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch0: pf_ring-5.5.2-rhel.patch
 
 ExclusiveOS: Linux
 URL: http://www.ntop.org/PF_RING.html
@@ -56,6 +58,7 @@ Standard drivers that have been enhanced with PF_RING native support
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch0 -p1
 
 
 %build
@@ -102,7 +105,10 @@ EOF
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Build for kernel-image-%flavour-%kversion-%krelease.
+- Build for kernel-image-%flavour-%kversion-%krelease
+
+* Fri Mar 14 2014 Led <led@altlinux.ru> 5.5.2-alt2
+- fixed build with EL kernel >= 6.5
 
 * Sat Mar 02 2013 Led <led@altlinux.ru> 5.5.2-alt1
 - 5.5.2
