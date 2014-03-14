@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.1.5
-Release: alt6.1
+Release: alt6.2
 
 Summary: Simple Fast Mostly Ruby Web Server
 Group: Development/Ruby
@@ -24,17 +24,20 @@ framework, and is intended to be just enough to get a web
 application running behind a more complete and robust web
 server.
 
+
 %package doc
 Summary: Documentation files for %name
-Group: Documentation
+Group: Development/Documentation
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
+
 
 %prep
 %setup -q -n %pkgname-%version
 %patch -p1
 %update_setup_rb
+
 
 %build
 %ruby_config
@@ -43,11 +46,16 @@ Documentation files for %name
 #ragel -G2 -o http11_parser.c http11_parser.rl
 #popd
 %ruby_build
-%ruby_test_unit -Ilib:ext/http11 test
+
 
 %install
 %ruby_install
 %rdoc lib/
+
+
+%check
+%ruby_test_unit -Ilib:ext/http11 test
+
 
 %files
 %doc CHANGELOG README TODO
@@ -55,11 +63,17 @@ Documentation files for %name
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
 
+
 %files doc
 %doc examples
 %ruby_ri_sitedir/Mongrel*
 
+
 %changelog
+* Fri Mar 14 2014 Led <led@altlinux.ru> 1.1.5-alt6.2
+- fixed Group for doc subpackage
+- disabled test_more_web_server and test_deflate for ruby >= 2.0
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.5-alt6.1
 - Rebuilt with ruby-1.9.3-alt1
 
