@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-IconKit
 Version: 0.2
-Release: alt1.git20130801
+Release: alt2.git20130801
 Summary: Provides icon theming and various facilities to create icons at run-time
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -107,6 +107,11 @@ popd
 #install -d %buildroot%_docdir/GNUstep/UnitKit
 #cp -fRP Documentation/* %buildroot%_docdir/GNUstep/UnitKit/
 
+install -d %buildroot%_libdir/GNUstep/Themes/Icon
+ln -s \
+	%_libdir/GNUstep/Frameworks/IconKit.framework/Resources/GNUstep.icontheme \
+	%buildroot%_libdir/GNUstep/Themes/Icon/
+
 %files
 %doc ChangeLog NEWS README TODO
 %_libdir/GNUstep
@@ -123,6 +128,9 @@ popd
 %_libdir/GNUstep/Frameworks/IconKit.framework/Versions/0/Headers
 
 %changelog
+* Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.git20130801
+- Added link for path to icons
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20130801
 - Initial build for Sisyphus
 
