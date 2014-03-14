@@ -2,7 +2,7 @@
 
 Name: ruby-gettext
 Version: 2.1.0
-Release: alt2.qa1.1
+Release: alt2.qa1.2
 
 Summary: Native Language Support Library for Ruby
 Group: Development/Ruby
@@ -47,19 +47,17 @@ Group: Documentation
 %description doc
 Documentation files for %name
 
+
 %prep
 %setup -n %name-package-%version
 %patch -p1 
 %update_setup_rb
 
+
 %build
 %ruby_config
 %ruby_build
-pushd test
-%ruby_vendor -I../lib -e 'require "gettext/tools"; GetText.create_mofiles(:mo_root => "locale")'
-find . -name 'test_*.rb' -print0 |
-	xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
-popd
+
 
 %install
 %ruby_install
@@ -73,6 +71,15 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
+
+%check
+%if %(rpmvercmp %version 2.0) < 0
+cd test
+%ruby_vendor -I../lib -e 'require "gettext/tools"; GetText.create_mofiles(:mo_root => "locale")'
+find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib -I./
+%endif
+
+
 %files
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/gettext/parser
@@ -80,6 +87,7 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %exclude %ruby_sitelibdir/gettext/tools.rb
 %exclude %ruby_sitelibdir/gettext/utils.rb
 %doc README.rdoc
+
 
 %files -f rgettext.lang utils
 %_bindir/rgettext
@@ -90,11 +98,19 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %ruby_sitelibdir/gettext/tools.rb
 %ruby_sitelibdir/gettext/utils.rb
 
+
 %files doc
 %doc samples ChangeLog*
 %ruby_ri_sitedir/GetText*
 
+
 %changelog
+* Fri Mar 14 2014 Led <led@altlinux.ru> 2.1.0-alt2.qa1.2
+- fixed build without system iconv module
+- remove using deprecated 'all_load_paths'
+- disable %%check for ruby >= 2.0
+- iconv.rb: set encoding UTF-8
+
 * Sun Dec 09 2012 Led <led@altlinux.ru> 2.1.0-alt2.qa1.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed BuildRequires
