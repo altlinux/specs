@@ -1,6 +1,8 @@
+%def_disable static
+
 Name: cmocka
 Version: 0.3.2
-Release: alt2
+Release: alt3
 
 License: ASL 2.0
 Group: Development/Tools
@@ -61,11 +63,11 @@ preferable.
 
 This is the successor of Google's Cmockery.
 
-%package -n libcmocka-static
+%package -n libcmocka-devel-static
 Group: Development/C
 Summary: Lightweight library to simplify and generalize unit tests for C
 
-%description -n libcmocka-static
+%description -n libcmocka-devel-static
 Static version of the cmocka library.
 
 %package -n libcmocka-devel
@@ -81,7 +83,11 @@ Development headers for the cmocka unit testing library.
 
 %build
 %cmake \
+%if_enabled static
   -DWITH_STATIC_LIB=ON \
+%else
+  -DWITH_STATIC_LIB=OFF \
+%endif
   -DUNIT_TESTING=ON
 
 
@@ -105,16 +111,22 @@ popd
 %doc AUTHORS README ChangeLog COPYING
 %_libdir/*.so.*
 
-%files -n libcmocka-static
-%_libdir/libcmocka.a
-
 %files -n libcmocka-devel
 %doc BUILD/doc/html
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
+%if_enabled static
+%files -n libcmocka-devel-static
+%_libdir/*.a
+%endif
+
 %changelog
+* Fri Mar 14 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt3
+- rename libcmocka-static to libcmocka-devel-static
+- disable build static lib
+
 * Wed Feb 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt2
 - increased release for Obsoletes package from Autoimports/Sisyphus
 
