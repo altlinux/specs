@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -46,6 +46,9 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
 
 %changelog
+* Fri Mar 14 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.0-alt2
+- Revert wrongly patched files to tag v1.5.0
+
 * Wed Mar  5 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.0-alt1
 - 1.5.0 (ALT #29865)
 
