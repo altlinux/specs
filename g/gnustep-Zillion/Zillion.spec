@@ -2,7 +2,7 @@
 
 Name: gnustep-Zillion
 Version: 0.1
-Release: alt4
+Release: alt5
 Summary: Zillion distributed computing Project
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -10,7 +10,7 @@ Url: http://zillion.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -54,14 +54,17 @@ features are as follows:
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %_bindir/*
 %_libdir/GNUstep
-%_menudir/*
+#_menudir/*
 
 %changelog
+* Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt5
+- Removed menu file
+
 * Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4
 - Added menu file (thnx kostyalamer@)
 
