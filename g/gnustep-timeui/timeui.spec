@@ -2,7 +2,7 @@
 
 Name: gnustep-timeui
 Version: r715
-Release: alt4.svn20090220
+Release: alt5.svn20090220
 Summary: Make a bigger time and calendar ui framework
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://svn.savannah.nongnu.org/svn/gap/trunk/libs/timeui/
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -89,14 +89,14 @@ for j in TimeUI; do
 done
 popd
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/TimeUI.framework/Versions/0/Headers
 %exclude %_libdir/GNUstep/Frameworks/TimeUI.framework/Headers
-%_menudir/*
+#_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -108,6 +108,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/TimeUI.framework/Headers
 
 %changelog
+* Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt5.svn20090220
+- Removed menu file
+
 * Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r715-alt4.svn20090220
 - Fixed TestTimeUI
 
