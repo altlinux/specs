@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Thu Mar 13 2014 Led <led@altlinux.ru> 3.10.33-alt3
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-net-sunrpc
+
 * Wed Mar 12 2014 Led <led@altlinux.ru> 3.10.33-alt2
 - updated:
   + feat-drivers-block--btier
