@@ -1,6 +1,6 @@
 %define module_name	omnibook
 %define module_version  20110911 
-%define module_release alt1
+%define module_release alt2
 
 %define flavour		ovz-el
 BuildRequires(pre): rpm-build-kernel
@@ -20,6 +20,7 @@ Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch0: kernel-source-omnibook-0.0-alt.patch
+Patch1: omnibook-20110911-rhel6.patch
 
 ExclusiveOS: Linux
 Url: http://omnibook.sourceforge.net/
@@ -43,6 +44,7 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch0 -p1
+%patch1 -p1
 
 
 %build
@@ -64,7 +66,10 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Build for kernel-image-%flavour-%kversion-%krelease.
+- Build for kernel-image-%flavour-%kversion-%krelease
+
+* Fri Mar 14 2014 Led <led@altlinux.ru> 20110911-alt2
+- fixed build with EL kernel >= 6.5
 
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 20110911-alt1
 - build with kernel 3.10 fixed
