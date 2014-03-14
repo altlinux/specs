@@ -3,7 +3,7 @@ Name: appliance-web-mediawiki
 Summary: Virtual package for MediaWiki install
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 
@@ -13,7 +13,6 @@ Requires: appliance-ve-std
 # PHP-modules
 Requires: apache-mod_php5
 Requires: php5-dom
-Requires: php5-eaccelerator
 Requires: php5-mbstring
 Requires: php5-mysql
 Requires: php5-sockets
@@ -34,6 +33,9 @@ Requires: texvc
 %files
 
 %changelog
+* Thu Mar 13 2014 Anton Farygin <rider@altlinux.ru> 4.0.1-alt3
+- php5-eaccelerator removed from requires
+
 * Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - add Url tag
 

@@ -2,7 +2,7 @@
 
 Name: php5-ctpp
 Version: 2.6.0
-Release: alt9.%php5_version.%php5_release
+Release: alt10.%php5_version.%php5_release
 
 Summary: PHP ctpp2 template engine driver
 License: BSD
@@ -16,7 +16,7 @@ Patch0: php5-ctpp-2.6.0-alt-fix_php5.4.patch
 BuildRequires: gcc-c++ libctpp-devel
 
 BuildRequires(pre): rpm-build-php5
-BuildRequires: rpm-build-php5 = %php5_version
+BuildRequires: rpm-build-php5
 BuildRequires: php5-devel = %php5_version
 BuildRequires: libctpp-devel
 Prereq: php5-libs = %php5_version

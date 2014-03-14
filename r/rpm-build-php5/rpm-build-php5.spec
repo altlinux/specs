@@ -1,16 +1,10 @@
-%define php5_name      php5
-%define _php5_version  5.4.17
-%define _php5_major  5.4
-%define _php5_snapshot 20130704
-%define php5_release   alt1
+%define php5_name php5
 
-%define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
-
-Name:		rpm-build-%php5_name
-Version:	%rpm_build_version
-Release:	%php5_release
+Name:		rpm-build-php5
+Version:	5.5
+Release:	alt2
 Summary:	RPM helper macros to rebuild PHP5 packages
-
+Requires:	rpm-build-php-version
 Group:		Development/Other
 License:	GPL
 BuildArch:	noarch
@@ -26,16 +20,16 @@ PHP5 packages by some Alt Linux Team Policy compatible way.
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 cp %SOURCE0 %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
 
-subst 's,@php5_name@,%php5_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
-subst 's,@_php5_version@,%_php5_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
-subst 's,@php5_major@,%_php5_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
-subst 's,@_php5_snapshot@,%_php5_snapshot,' %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
-subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php5_name
-
 %files
 %_sysconfdir/rpm/macros.d/%php5_name
 
 %changelog
+* Sat Mar 01 2014 Anton Farygin <rider@altlinux.ru> 5.5-alt2
+- required rpm-build-php-version
+
+* Thu Feb 27 2014 Anton Farygin <rider@altlinux.ru> 5.5-alt1
+- php versions from this package moved to rpm-build-php-version
+
 * Fri Jul 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.4.17.20130704-alt1
 - new version
 

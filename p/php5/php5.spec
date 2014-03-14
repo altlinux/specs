@@ -2,17 +2,25 @@
 %add_findreq_skiplist %_usrsrc/php5-devel/*
 
 Summary: The PHP5 scripting language
-Name:	 %php5_name
-Version: %php5_version
-Release: %php5_release
+Name:	 php5
+Version: 5.5.9
+Release: alt1
+
+%define php5_name      %name
+%define _php5_version  %version
+%define _php5_major  5.5
+%define _php5_snapshot 20140205
+%define php5_release   %release
+%define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
+
 License: PHP
 Group:	 Development/Other
 
 Source0: php5-source.tar
+Source1: phpver.rpm.macros.standalone
 Source2: php-packaging.readme
 Source3: php.ini
 Source4: phpinfo.tar
-Source5: php.rpm.macros.standalone
 
 Patch1: php-version.patch
 Patch2: php-shared-1.patch
@@ -40,11 +48,12 @@ Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
 Patch52: php-5.4.15-alt-modules-syms-visibility.patch
 Patch60: php-5.4.15-alt-bison-2.7.1.patch
-
+Patch61: php5-5.5.9-phar-phppath.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
 Provides: php-engine = %version-%release
+Provides: %name = %rpm_build_version-%release
 
 # Automatically added by buildreq on Mon Mar 21 2011 (-bi)
 BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel
@@ -53,7 +62,6 @@ BuildRequires(pre): rpm-build-php5
 
 BuildRequires: libtool_1.5 chrpath
 %set_libtool_version 1.5
-%set_autoconf_version 2.5
 
 %description
 PHP5 is a widely-used general-purpose scripting language that is
@@ -61,16 +69,30 @@ especially suited for Web development and can be embedded into HTML.
 The most common use of PHP coding is probably as a replacement
 for CGI scripts.
 
+%package -n rpm-build-php-version
+Summary:	RPM helper macros to rebuild PHP5 packages
+
+Group:		Development/Other
+License:	GPL
+BuildArch:	noarch
+
+%description -n rpm-build-php-version
+These helper macros provide possibility to rebuild
+PHP5 packages by some Alt Linux Team Policy compatible way.
+
+
 %package devel
 Group: Development/C
 Summary: Development package for PHP5
 
 Requires: php5-libs = %version-%release
-Requires: rpm-build-php5 = %php5_version-%php5_release
+Requires: rpm-build-php5
+Requires: rpm-build-php-version = %version-%release
 # for phpize
 Requires: libtool, autoconf, automake
 
 Provides: php-devel
+Provides: %name-devel = %rpm_build_version-%release
 Provides: php-engine-devel = %version-%release
 
 %description devel
@@ -112,6 +134,7 @@ Provides: php5-xml = %php5_version-%php5_release
 Provides: php5-xmlreader = %php5_version-%php5_release
 Provides: php5-xmlwriter = %php5_version-%php5_release
 Provides: php5-zlib = %php5_version-%php5_release
+Provides: php5-libs = %php5_version-%release
 
 
 Obsoletes: php5-simplexml php5-mhash
@@ -144,6 +167,7 @@ in use by other PHP5-related packages.
 %patch51 -p2
 %patch52 -p2
 %patch60 -p2
+%patch61 -p1
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
@@ -157,6 +181,7 @@ export LIBS CFLAGS
 
 subst "s,./vcsclean,," build/buildcheck.sh
 subst "s,./stamp=$,," build/buildcheck.sh
+
 
 %autoreconf -I build
 ./buildconf --force
@@ -283,6 +308,20 @@ install -m644 -D ext/pdo/php_pdo_driver.h %buildroot%_includedir/php/%_php5_vers
 # clean rpath in phpinfo
 chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 
+# install correct phar
+ln -sf phar.phar %buildroot%_bindir/phar
+
+# rpm macros 
+mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
+cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+
+subst 's,@php5_name@,%php5_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+subst 's,@_php5_version@,%_php5_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+subst 's,@php5_major@,%_php5_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+subst 's,@_php5_snapshot@,%_php5_snapshot,' %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+
+
 %post
 %php5_sapi_postin
 
@@ -292,14 +331,20 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %files
 %_altdir/php5
 %_bindir/php-%_php5_version
+%_bindir/phar*
 %_bindir/phpinfo-%_php5_version
 %php5_sysconfdir/%php5_sapi
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %_man1dir/php-%_php5_version.1*
+%_man1dir/php.1*
+%_man1dir/phar.1*
 %php5_servicedir/cli
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
 %doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
 %doc UPGRADING*
+
+%files -n rpm-build-php-version
+%_sysconfdir/rpm/macros.d/%php5_name-ver
 
 %files libs
 %dir %php5_sysconfdir
@@ -323,6 +368,15 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Sat Mar 01 2014 Anton Farygin <rider@altlinux.ru> 5.5.9-alt1
+- new version
+- add phar binary to php package
+- include version information for php rpm macros into rpm-build-php-version package
+- build from upstream git repository
+
+* Thu Feb 27 2014 Anton Farygin <rider@altlinux.ru> 5.5.5-alt1
+- new version 
+
 * Fri Jul  5 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.4.17.20130704-alt1
 - new version
 

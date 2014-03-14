@@ -76,6 +76,7 @@ phpize
 	$CGI_BUILD_VARS 
 
 %php5_make 
+cp php-cgi.1.in php-cgi.1
 
 %install
 mkdir -p \
@@ -108,6 +109,7 @@ php_weight="$(echo "%_php5_version" | sed 's,[^[:digit:]],,g')"
 cat << EOF > %buildroot/%_altdir/php5-%php5_sapi
 %_bindir/php-%php5_sapi	%_bindir/php-%php5_sapi-%_php5_version	$php_weight
 EOF
+rm -rf %buildroot%_mandir/*/*
 
 %post
 %php5_sapi_postin
@@ -137,7 +139,7 @@ EOF
 - Rebuild with php5-5.3.17.20120913-alt1
 
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1
-Rebuild with 5.3.10.20120202-alt1
+- Rebuild with 5.3.10.20120202-alt1
 
 * Mon Sep 12 2011 Anton Farygin <rider@altlinux.ru> 5.3.8.20110823-alt2
 - commented out extension_dir in default php config

@@ -3,12 +3,11 @@ Name: appliance-devel-php5-modules
 Summary: PHP5 modules
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2.1
+Release: alt2.2
 License: GPL
 Group: System/Base
 
 # It needs anywere with PHP5
-Requires: php5-eaccelerator
 
 Requires: php5-bz2
 Requires: php5-calendar
@@ -54,6 +53,9 @@ Requires: php5-xdebug
 %files
 
 %changelog
+* Wed Mar 12 2014 Anton Farygin <rider@altlinux.ru> 4.0.1-alt2.2
+- php5-eaccelerator removed
+
 * Wed Feb 26 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.1-alt2.1
 - php5-ffmpeg removed to remove from sisyphus
 

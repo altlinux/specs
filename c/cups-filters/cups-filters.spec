@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.47
+Version: 1.0.48
 Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
@@ -190,6 +190,9 @@ ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Thu Mar 13 2014 Anton Farygin <rider@altlinux.ru> 1.0.48-alt1
+- new version
+
 * Wed Mar 12 2014 Anton Farygin <rider@altlinux.ru> 1.0.47-alt1
 - new version with security fixes: CVE-2013-6474, CVE-2013-6475,
   CVE-2013-6476 and CVE-2013-6473
