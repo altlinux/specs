@@ -6,7 +6,7 @@
 
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
-Version: 2.23.1
+Version: 2.23.2
 Release: alt1
 Serial: 2
 Copyright: GPL
@@ -20,8 +20,9 @@ Patch1: 30-binutils-2.20.1-avr-size.patch
 %define libavrdir %_libdir/%cross_arch
 %define includeavrdir %_includedir/%cross_arch
 
-# Automatically added by buildreq on Mon Nov 29 2010
-BuildRequires: avr-gcc-c++ expect flex gcc-c++ glibc-devel-static perl-Pod-Parser zlib-devel
+# Automatically added by buildreq on Thu Mar 13 2014
+# optimized out: avr-binutils avr-gcc makeinfo
+BuildRequires: avr-gcc-c++ expect flex gcc-c++ glibc-devel-static libstdc++-devel ruby ruby-stdlibs zlib-devel
 
 %description
 Avr-Binutils is a collection of binary utilities, including avr-ar (for
@@ -37,7 +38,7 @@ addresses to file and line).
 This package is for cross-development of AVR programs.
 
 %prep
-%setup -n binutils-%version -q
+%setup -n binutils -q
 #%patch1
 #%patch0 -p1
 #%patch0 -p1 -b .avrinfo
@@ -119,6 +120,9 @@ done
 %_man1dir/*
 
 %changelog
+* Thu Mar 13 2014 Grigory Milev <week@altlinux.ru> 2:2.23.2-alt1
+- New version released
+
 * Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 2:2.23.1-alt1
 - Build last version from Atmel with most of 8 bits AVR controllers supported
 
