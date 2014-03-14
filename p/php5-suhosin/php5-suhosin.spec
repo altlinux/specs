@@ -1,9 +1,8 @@
 %define		php5_extension	suhosin
-%define		php5_extension_snapshot	20120520195803
 
 Name:	 	php5-%php5_extension
-Version:	0.9.34
-Release:	alt%php5_version.%php5_release.%php5_extension_snapshot
+Version:	0.9.35
+Release:	alt%php5_version.%php5_release
 
 Summary:	Advanced PHP5 protection system
 Group:		System/Servers
@@ -53,6 +52,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Thu Mar 06 2014 Anton Farygin <rider@altlinux.ru> 0.9.35-alt5.4.17.20130704.alt1
+- new version
 
 * Fri May 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.34-alt5.3.25.20130509.alt1.20120520195803
 - 0.9.34

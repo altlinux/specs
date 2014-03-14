@@ -10,11 +10,9 @@ License: PHP
 Group: Development/Other
 
 Url: http://pecl.php.net/package/%php5_extension
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 # Source: http://pecl.php.net/get/%php5_extension-%version.tgz
 Source: %name-%version.tar
-Source10: %name-alt-makefile-test.patch
 
 Requires: pear-core
 
@@ -36,7 +34,6 @@ cd %php5_extension-%version
 cd %php5_extension-%version
 phpize
 %pecl_configure '--with-php-config=%_bindir/php-config'
-patch -p1 <%SOURCE10
 %make_build
 
 %install

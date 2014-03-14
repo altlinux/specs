@@ -14,7 +14,7 @@ Source2: php-%php5_extension-params.sh
 
 # Automatically added by buildreq on Wed Nov 22 2006
 BuildRequires(pre): rpm-build-php5
-BuildRequires: rpm-build-php5 = %php5_version
+BuildRequires: rpm-build-php5
 BuildRequires: php5-devel = %php5_version
 Prereq: php5-libs = %php5_version
 
