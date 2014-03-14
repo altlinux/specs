@@ -1,4 +1,4 @@
-Version: 2.8.2
+Version: 2.9.1
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -131,6 +131,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Fri Mar 14 2014 Alexey Shabalin <shaba@altlinux.ru> 2.9.1-alt1
+- 2.9.1
+
 * Tue Jan 14 2014 Alexey Shabalin <shaba@altlinux.ru> 2.8.2-alt1
 - 2.8.2
 
