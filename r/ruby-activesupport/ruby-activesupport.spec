@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1.1
+Release: alt1.2
 Summary: Support and utility classes used by the Rails framework
 License: MIT
 Group: Development/Ruby
@@ -60,6 +60,9 @@ ruby -Ilib:test:. -e 'Dir["test/**/*_test.rb"].sort.each { |f| require f }'
 %ruby_ri_sitedir/ActiveSupport*
 
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 2.3.11-alt1.2
+- disabled iconv for ruby > 1.9.3
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - disabled check
