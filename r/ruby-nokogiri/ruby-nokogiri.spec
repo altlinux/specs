@@ -1,7 +1,7 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.5.9
+Version: 1.6.1
 Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
@@ -62,18 +62,14 @@ DisableTest()
 }
 
 DisableTest test_convert_xpath multiple_filters
-DisableTest html/test_node css_path_round_trip path_round_trip
+DisableTest css/test_nthiness last_of_type nth_last_of_type nth_of_type
 
 %update_setup_rb
 
 
 %build
-%ruby_config
+%ruby_config -- --use-system-libraries
 %ruby_build
-
-# XXX@stanv: next lines are taken from Rakefile:
-racc -l -o lib/%bname/css/generated_parser.rb lib/%bname/css/parser.y
-rexical --independent -o lib/%bname/css/generated_tokenizer.rb lib/%bname/css/tokenizer.rex
 
 
 %install
@@ -83,7 +79,7 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %check
-%ruby_vendor -I. -Ilib:ext:test setup.rb test
+%ruby_vendor -Ilib:ext:test setup.rb test
 
 
 %files
@@ -103,6 +99,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Fri Apr 12 2013 Led <led@altlinux.ru> 1.5.9-alt1
 - 1.5.9
 - updated URL
