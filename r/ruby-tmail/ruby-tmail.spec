@@ -1,10 +1,12 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname tmail
 
 Name: ruby-%pkgname
 Version: 1.2.3.1
-Release: alt3.3
+Release: alt3.4
 
 Summary: Mail handling library for Ruby
 License: GPL
@@ -72,6 +74,9 @@ cd lib/tmail
 
 
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 1.2.3.1-alt3.4
+- disabled %%check
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 1.2.3.1-alt3.3
 - don't use iconv for ruby > 1.9.3
 
