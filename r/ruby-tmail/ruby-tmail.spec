@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.2.3.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: Mail handling library for Ruby
 License: GPL
@@ -26,10 +26,11 @@ and write data to mail following by RFC procedures.
 
 %package doc
 Summary: Documentation files for %name
-Group: Documentation
+Group: Development/Documentation
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
+
 
 %prep
 %setup -q -n %pkgname-%version
@@ -43,27 +44,37 @@ rm -f lib/tmail/parser.rb
 # epic fail
 rm -f test/test_encode.rb
 
+
 %build
 %ruby_config --without-ext
 %ruby_build
-pushd lib/tmail
+cd lib/tmail
 %make_build parser.rb
-popd
-%ruby_test_unit test
+
 
 %install
 %ruby_install
 %rdoc lib/
 
+
+%check
+%ruby_test_unit test
+
+
 %files
 %doc CHANGES LICENSE NOTES README
 %ruby_sitelibdir/*
+
 
 %files doc
 %doc sample
 %ruby_ri_sitedir/TMail*
 
+
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 1.2.3.1-alt3.2
+- fixed tests
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 1.2.3.1-alt3.1
 - Rebuilt with ruby-1.9.3-alt1
 
