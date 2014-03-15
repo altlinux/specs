@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.5.0
-Release: alt0.10
+Release: alt0.11
 
 Summary: Console player
 Group: Sound
@@ -324,6 +324,9 @@ EOF
 %endif
 
 %changelog
+* Sat Mar 15 2014 Alexey Gladkov <legion@altlinux.ru> 2.5.0-alt0.11
+- New version (2.5.0-beta2)
+
 * Fri May 25 2012 Alexey Gladkov <legion@altlinux.ru> 2.5.0-alt0.10
 - New snapshot from trunk (2.5.0 r2425)
 
