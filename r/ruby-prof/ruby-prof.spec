@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 0.9.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
@@ -12,6 +12,7 @@ License: MIT/Ruby
 Url: http://rubyforge.org/projects/ruby-prof/
 
 Source: %pkgname-%version.tar
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Nov 10 2008 (-bi)
 BuildRequires: libruby-devel ruby-tool-setup ruby-test-unit
@@ -28,6 +29,7 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
+%patch -p1
 %update_setup_rb
 
 %build
@@ -50,6 +52,9 @@ Documentation files for %name
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 0.9.2-alt1.2
+- fix ruby 2.0 compile error
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.9.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
