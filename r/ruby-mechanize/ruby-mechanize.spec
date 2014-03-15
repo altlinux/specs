@@ -1,13 +1,14 @@
 Name: ruby-mechanize
 Version: 0.9.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: WWW::Mechanize, a handy web browsing ruby object
 License: GPLv2
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/mechanize/
 
-Source0: mechanize-%version.tgz
+Source: mechanize-%version.tgz
+Patch: mechanize-0.9.3-no-iconv.patch
 
 BuildArch: noarch
 
@@ -30,6 +31,7 @@ Documentation files for %name.
 
 %prep
 %setup -q -n mechanize-%version
+%patch -p1
 %update_setup_rb
 
 %build
@@ -50,6 +52,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/WWW
 
 %changelog
+* Sat Mar 15 2014 Led <led@altlinux.ru> 0.9.3-alt1.2
+- don't use iconf for ruby >= 1.9.2
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 0.9.3-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
