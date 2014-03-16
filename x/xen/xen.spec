@@ -19,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt3
+Release: alt4
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -724,6 +724,9 @@ done
 
 
 %changelog
+* Sun Mar 16 2014 Led <led@altlinux.ru> 4.4.0-alt4
+- upstream fixes
+
 * Thu Mar 13 2014 Led <led@altlinux.ru> 4.4.0-alt3
 - add missed ARM-specific headers
 
