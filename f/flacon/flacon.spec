@@ -1,5 +1,5 @@
 Name: flacon
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Audio File Encoder
@@ -55,6 +55,12 @@ popd
 %_man1dir/%name.1.gz
 
 %changelog
+* Sun Mar 16 2014 Nazarov Denis <nenderus@altlinux.org> 0.9.4-alt1
+- Version 0.9.4
+
+* Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt0.M70T.1
+- Build for branch t7
+
 * Thu Jan 16 2014 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt1
 - Version 0.9.3
 
