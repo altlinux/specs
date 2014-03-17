@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt8
+Release: alt9
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -14,6 +14,7 @@ Patch2: xdg-su-added-lxde-and-gksu-support.patch
 Patch3: detect-mate.patch
 Patch4: mate-screensaver.patch
 Patch5: xdg-open-generic-mimeapps.patch
+Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 
 BuildArch: noarch
 
@@ -50,12 +51,17 @@ http://portland.freedesktop.org/wiki/TestSuite
 
 %prep
 %setup
+pushd scripts
+# we should _never_ patch generated files
+ls *.in | sed -e 's,\(.*\)\.in$,\1,' | xargs rm -f
+popd
 %patch0 -p2
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
 %patch5 -p1
+%patch6 -p2
 
 %build
 %autoreconf
@@ -80,6 +86,10 @@ http://portland.freedesktop.org/wiki/TestSuite
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Mon Mar 17 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt9
+- Drop patches for obsolete version of xdg-su.
+- xdg-su: use gnomesu or su_generic for xfce.
+
 * Wed Aug 28 2013 Fr. Br. George <george@altlinux.ru> 1.1.0-alt8
 - Add support for "first wins" mimeapps.list query
 
