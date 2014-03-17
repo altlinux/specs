@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.7
-Release: alt1
+Release: alt2
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -13,7 +13,7 @@ Group: Monitoring
 
 Url: http://mmonit.com/monit
 Source0: %url/dist/%name-%version%beta.tar.gz
-Source1: monit.init.2_2
+Source1: %name.sysconfig
 Source2: monit.init
 Source3: monitrc
 Source4: %name.cnf
@@ -34,13 +34,13 @@ BuildRequires: flex libpam-devel libssl-devel
 %define _ssldir %_var/lib/ssl
 %define _pemdir %_ssldir/certs
 
-Summary(ru_RU.KOI8-R): õÔÉÌÉÔÁ ÄÌÑ ÍÏÎÉÔÏÒÉÎÇÁ ÚÁÐÕÝÅÎÎÙÈ ÐÒÏÃÅÓÓÏ×
-Summary(uk_UA.KOI8-U): õÔÉÌ¦ÔÁ ÄÌÑ ÍÏÎ¦ÔÏÒÉÎÇÕ ÐÒÏÃÅÓ¦× Õ ÓÉÓÔÅÍ¦
+Summary(ru_RU.UTF-8): Ð£Ñ‚Ð¸Ð»Ð¸Ñ‚Ð° Ð´Ð»Ñ Ð¼Ð¾Ð½Ð¸Ñ‚Ð¾Ñ€Ð¸Ð½Ð³Ð° Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ð²
+Summary(uk_UA.UTF-8): Ð£Ñ‚Ð¸Ð»Ñ–Ñ‚Ð° Ð´Ð»Ñ Ð¼Ð¾Ð½Ñ–Ñ‚Ð¾Ñ€Ð¸Ð½Ð³Ñƒ Ð¿Ñ€Ð¾Ñ†ÐµÑÑ–Ð² Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ–
 
 %package base
 Summary: Directory for monit configuration files
-Summary(ru_RU.KOI8-R): ëÁÔÁÌÏÇ ÄÌÑ ËÏÎÆÉÇÕÒÁÃÉÏÎÎÙÈ ÆÁÊÌÏ× monit
-Summary(uk_UA.KOI8-U): ôÅËÁ ÄÌÑ ËÏÎÆ¦ÇÕÒÁÃ¦ÊÎÉÈ ÆÁÊÌ¦× monit
+Summary(ru_RU.UTF-8): ÐšÐ°Ñ‚Ð°Ð»Ð¾Ð³ Ð´Ð»Ñ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ñ… Ñ„Ð°Ð¹Ð»Ð¾Ð² monit
+Summary(uk_UA.UTF-8): Ð¢ÐµÐºÐ° Ð´Ð»Ñ ÐºÐ¾Ð½Ñ„Ñ–Ð³ÑƒÑ€Ð°Ñ†Ñ–Ð¹Ð½Ð¸Ñ… Ñ„Ð°Ð¹Ð»Ñ–Ð² monit
 Group: System/Servers
 Provides: /etc/monitrc.d
 BuildArch: noarch
@@ -55,32 +55,32 @@ and restart programs not responding.  Many checks can be performed:
   - resource usage (cpu/ram)
   - process interdependencies
 
-%description -l ru_RU.KOI8-R
-Monit ÐÒÅÄÎÁÚÎÁÞÅÎ ÄÌÑ ÓÌÅÖÅÎÉÑ ÚÁ ×ÙÐÏÌÎÅÎÉÅÍ ÐÒÏÃÅÓÓÏ× (ÏÂÙÞÎÏ ÓÅÒ×ÉÓÏ×),
-ÚÁÐÕÝÅÎÎÙÈ × ÓÉÓÔÅÍÅ UNIX. Monit ÍÏÖÅÔ ÓÌÅÄÉÔØ ÚÁ ÎÅÓËÏÌØËÉÍÉ ÐÁÒÁÍÅÔÒÁÍÉ:
-  - ÓÕÝÅÓÔ×Ï×ÁÎÉÅ ÐÒÏÃÅÓÓÁ
-  - ×ÏÚÍÏÖÎÏÓÔØ ÕÓÔÁÎÏ×ÌÅÎÉÑ ÓÏÅÄÉÎÅÎÉÑ(ÉÊ)
-  - ÒÁÂÏÔÏÓÐÏÓÏÂÎÏÓÔØ ÐÒÏÔÏËÏÌÁ (SMTP,POP3,IMAP,NNTP,HTTP,SSH,FTP,SIP)
-  - ÉÓÐÏÌØÚÏ×ÁÎÉÅ ÐÒÏÃÅÓÓÏÍ ÐÁÍÑÔÉ É ×ÙÞÉÓÌÉÔÅÌØÎÙÈ ÒÅÓÕÒÓÏ×
-  - ÚÁ×ÉÓÉÍÏÓÔÉ ÍÅÖÄÕ ÐÒÏÃÅÓÓÁÍÉ
+%description -l ru_RU.UTF-8
+Monit Ð¿Ñ€ÐµÐ´Ð½Ð°Ð·Ð½Ð°Ñ‡ÐµÐ½ Ð´Ð»Ñ ÑÐ»ÐµÐ¶ÐµÐ½Ð¸Ñ Ð·Ð° Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸ÐµÐ¼ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ð² (Ð¾Ð±Ñ‹Ñ‡Ð½Ð¾ ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð²),
+Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½Ð½Ñ‹Ñ… Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ UNIX. Monit Ð¼Ð¾Ð¶ÐµÑ‚ ÑÐ»ÐµÐ´Ð¸Ñ‚ÑŒ Ð·Ð° Ð½ÐµÑÐºÐ¾Ð»ÑŒÐºÐ¸Ð¼Ð¸ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼Ð¸:
+  - ÑÑƒÑ‰ÐµÑÑ‚Ð²Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ°
+  - Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÑŒ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ(Ð¸Ð¹)
+  - Ñ€Ð°Ð±Ð¾Ñ‚Ð¾ÑÐ¿Ð¾ÑÐ¾Ð±Ð½Ð¾ÑÑ‚ÑŒ Ð¿Ñ€Ð¾Ñ‚Ð¾ÐºÐ¾Ð»Ð° (SMTP,POP3,IMAP,NNTP,HTTP,SSH,FTP,SIP)
+  - Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ð¼ Ð¿Ð°Ð¼ÑÑ‚Ð¸ Ð¸ Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ñ… Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð²
+  - Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¼ÐµÐ¶Ð´Ñƒ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ°Ð¼Ð¸
 
-%description -l uk_UA.KOI8-U
-Monit ÚÁÓÔÏÓÏ×Õ¤ÔØÓÑ ÄÌÑ ÓÔÅÖÅÎÎÑ ÚÁ ×ÉËÏÎÁÎÎÑÍ ÐÒÏÃÅÓ¦× (ÚÁÚ×ÉÞÁÊ ÓÅÒ×¦Ó¦×),
-ÝÏ ÚÁÐÕÝÅÎ¦ Õ ÓÉÓÔÅÍ¦ UNIX. Monit ÍÏÖÅ ÓÌ¦ÄËÕ×ÁÔÉ ÚÁ ÄÅË¦ÌØËÏÍÁ ÐÁÒÁÍÅÔÒÁÍÉ:
-  - ¦ÓÎÕ×ÁÎÎÑ ÐÒÏÃÅÓÕ
-  - ÍÏÖÌÉ×¦ÓÔØ ×ÓÔÁÎÏ×ÌÅÎÎÑ Ú'¤ÄÎÁÎÎÑ
-  - ÒÏÂÏÔÏÚÄÁÔÎ¦ÓÔØ ÐÒÏÔÏËÏÌÕ (SMTP,POP3,IMAP,NNTP,HTTP,SSH,FTP,SIP)
-  - ×ÉËÏÒÉÓÔÁÎÎÑ ÐÒÏÃÅÓÏÍ ÐÁÍ'ÑÔ¦ ÔÁ ÏÂÞÉÓÌÀ×ÁÌØÎÉÈ ÒÅÓÕÒÓ¦×
-  - ÚÁÌÅÖÎÏÓÔ¦ Í¦Ö ÐÒÏÃÅÓÁÍÉ
+%description -l uk_UA.UTF-8
+Monit Ð·Ð°ÑÑ‚Ð¾ÑÐ¾Ð²ÑƒÑ”Ñ‚ÑŒÑÑ Ð´Ð»Ñ ÑÑ‚ÐµÐ¶ÐµÐ½Ð½Ñ Ð·Ð° Ð²Ð¸ÐºÐ¾Ð½Ð°Ð½Ð½ÑÐ¼ Ð¿Ñ€Ð¾Ñ†ÐµÑÑ–Ð² (Ð·Ð°Ð·Ð²Ð¸Ñ‡Ð°Ð¹ ÑÐµÑ€Ð²Ñ–ÑÑ–Ð²),
+Ñ‰Ð¾ Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½Ñ– Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ– UNIX. Monit Ð¼Ð¾Ð¶Ðµ ÑÐ»Ñ–Ð´ÐºÑƒÐ²Ð°Ñ‚Ð¸ Ð·Ð° Ð´ÐµÐºÑ–Ð»ÑŒÐºÐ¾Ð¼Ð° Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼Ð¸:
+  - Ñ–ÑÐ½ÑƒÐ²Ð°Ð½Ð½Ñ Ð¿Ñ€Ð¾Ñ†ÐµÑÑƒ
+  - Ð¼Ð¾Ð¶Ð»Ð¸Ð²Ñ–ÑÑ‚ÑŒ Ð²ÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð½Ñ Ð·'Ñ”Ð´Ð½Ð°Ð½Ð½Ñ
+  - Ñ€Ð¾Ð±Ð¾Ñ‚Ð¾Ð·Ð´Ð°Ñ‚Ð½Ñ–ÑÑ‚ÑŒ Ð¿Ñ€Ð¾Ñ‚Ð¾ÐºÐ¾Ð»Ñƒ (SMTP,POP3,IMAP,NNTP,HTTP,SSH,FTP,SIP)
+  - Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð°Ð½Ð½Ñ Ð¿Ñ€Ð¾Ñ†ÐµÑÐ¾Ð¼ Ð¿Ð°Ð¼'ÑÑ‚Ñ– Ñ‚Ð° Ð¾Ð±Ñ‡Ð¸ÑÐ»ÑŽÐ²Ð°Ð»ÑŒÐ½Ð¸Ñ… Ñ€ÐµÑÑƒÑ€ÑÑ–Ð²
+  - Ð·Ð°Ð»ÐµÐ¶Ð½Ð¾ÑÑ‚Ñ– Ð¼Ñ–Ð¶ Ð¿Ñ€Ð¾Ñ†ÐµÑÐ°Ð¼Ð¸
 
 %description base
 Directory for monit configuration files
 
-%description -l ru_RU.KOI8-R base
-ëÁÔÁÌÏÇ ÄÌÑ ËÏÎÆÉÇÕÒÁÃÉÏÎÎÙÈ ÆÁÊÌÏ× monit
+%description -l ru_RU.UTF-8 base
+ÐšÐ°Ñ‚Ð°Ð»Ð¾Ð³ Ð´Ð»Ñ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ñ… Ñ„Ð°Ð¹Ð»Ð¾Ð² monit
 
-%description -l uk_UA.KOI8-U base
-ôÅËÁ ÄÌÑ ËÏÎÆ¦ÇÕÒÁÃ¦ÊÎÉÈ ÆÁÊÌ¦× monit
+%description -l uk_UA.UTF-8 base
+Ð¢ÐµÐºÐ° Ð´Ð»Ñ ÐºÐ¾Ð½Ñ„Ñ–Ð³ÑƒÑ€Ð°Ñ†Ñ–Ð¹Ð½Ð¸Ñ… Ñ„Ð°Ð¹Ð»Ñ–Ð² monit
 
 %prep
 %setup -n %name-%version%beta
@@ -89,8 +89,7 @@ Directory for monit configuration files
 sh bootstrap
 %autoreconf
 %configure \
-	%{subst_enable optimized} \
-	%{subst_with pam} \
+	%{subst_with pam}
 
 %make_build
 
@@ -100,6 +99,9 @@ sh bootstrap
 # see also #27990
 install -pD %buildroot{%_bindir,/bin}/monit
 ln -sf ../../bin/monit %buildroot%_bindir/monit
+
+mkdir -p %buildroot%_sysconfdir/sysconfig/
+install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
 
 cat %SOURCE3 >>monitrc
 install -pDm755 %SOURCE2  %buildroot%_initdir/%name
@@ -139,6 +141,7 @@ fi
 %config(noreplace) %_sysconfdir/monitrc.d/templates/*
 %config(noreplace) %_sysconfdir/monitrc
 %config(noreplace) %_ssldir/%name.cnf
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/monitrc.d/EXAMPLES
 %_sysconfdir/monit.d
 %_man1dir/%name.1.*
@@ -155,6 +158,14 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Mon Mar 17 2014 Michael Shigorin <mike@altlinux.org> 5.7-alt2
+- fixes/enhancements by icesik@:
+  + converted spec to utf8 (closes: #28406)
+  + added sample sysconfig file (closes: #28407)
+  + dropped ancient style initscript (for ALM2.2 and before)
+  + do not build with explicit optimization to fix debuginfo subpackage
+    (closes: #28408)
+
 * Wed Feb 26 2014 Michael Shigorin <mike@altlinux.org> 5.7-alt1
 - new version (watch file uupdate)
 
