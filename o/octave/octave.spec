@@ -1,6 +1,6 @@
 Name: octave
-Version: 3.8.0
-Release: alt2
+Version: 3.8.1
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -30,7 +30,6 @@ Source1: octave.filetrigger
 
 Patch0: octave-include-pcre.patch
 Patch1: desktop-force-run-gui.patch
-Patch2: fix_depends-pattern.patch
 
 Requires: gnuplot
 
@@ -83,7 +82,6 @@ This package contains extra documentation for GNU Octave.
 %setup
 %patch0 -p2
 %patch1 -p2
-%patch2 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -143,6 +141,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Mar 12 2014 Paul Wolneykien <manowar@altlinux.ru> 3.8.1-alt1
+- repocop cronbuild 20140312. At your service.
+
 * Wed Jan 15 2014 Paul Wolneykien <manowar@altlinux.org> 3.8.0-alt2
 - Own unowned dirs.
 
