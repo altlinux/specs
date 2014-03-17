@@ -1,5 +1,5 @@
 Name: libFS
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Library Interface to the X Font Server
 License: MIT/X11
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 17 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.6-alt1
+- 1.0.6
+
 * Tue Jul 16 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.5-alt1
 - 1.0.5
 
