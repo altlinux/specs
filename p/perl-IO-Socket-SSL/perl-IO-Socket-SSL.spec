@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 1.968
+Version: 1.969
 Release: alt1
 
 Summary: SSL socket interface class
@@ -37,6 +37,9 @@ interface methods.
 %perl_vendor_privlib/IO
 
 %changelog
+* Mon Mar 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.969-alt1
+- automated CPAN update
+
 * Sat Mar 15 2014 Igor Vlasenko <viy@altlinux.ru> 1.968-alt1
 - automated CPAN update
 
