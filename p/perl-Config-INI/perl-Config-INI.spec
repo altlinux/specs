@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Config::INI
 
 Name: perl-Config-INI
-Version: 0.022
+Version: 0.023
 Release: alt1
 
 Summary: Perl module to work with simple .ini-file format
@@ -43,6 +43,9 @@ simple .ini-file format.
 %perl_vendor_privlib/Config/INI*
 
 %changelog
+* Mon Mar 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1
+- automated CPAN update
+
 * Wed Feb 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.022-alt1
 - New version
 
