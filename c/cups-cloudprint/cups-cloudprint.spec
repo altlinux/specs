@@ -1,7 +1,7 @@
 Name: cups-cloudprint
-Version: 20131017
+Version: 20140308
 Release: alt1
-Summary: Google Cloud Print driver for CUPS, allows printing to printers hosted on Google Cloud Print
+Summary: Print via Google Cloud print using CUPS
 
 License: GPLv3+
 Url: http://ccp.niftiestsoftware.com
@@ -15,7 +15,9 @@ Requires: cups ghostscript-cups system-config-printer ImageMagick-tools
 BuildArch: noarch
 
 %description
-Google Cloud Print driver for CUPS, allows printing to printers hosted on Google Cloud Print.
+Google Cloud Print driver for UNIX-like operating systems.
+It allows any application which prints via CUPS to print to Google Cloud 
+Print directly.
 
 %prep
 %setup
@@ -28,23 +30,28 @@ Google Cloud Print driver for CUPS, allows printing to printers hosted on Google
 
 %install
 %makeinstall_std NOPERMS=1
-mkdir -p %buildroot{%_bindir,%_sysconfdir}
-install -Dpm 640 cloudprint.conf.example %buildroot%_sysconfdir/cups/cloudprint.conf
-ln -r -s %buildroot%_prefix/lib/cloudprint-cups/setupcloudprint.py %buildroot%_bindir/setupcloudprint
+mkdir -p %buildroot{%_bindir,%_var/log/cups}
+ln -r -s %buildroot%_datadir/cloudprint-cups/setupcloudprint.py %buildroot%_bindir/setupcloudprint
+touch %buildroot%_var/log/cups/cloudprint_log
 
 %post
 if [ $1 -gt 2 ] ; then
-%_prefix/lib/cloudprint-cups/upgrade.py
+%_datadir/cloudprint-cups/upgrade.py
 fi
 
 %files
 %_bindir/setupcloudprint
-%config(noreplace) %attr(0640,root,lp) %_sysconfdir/cups/cloudprint.conf
-%_prefix/lib/cloudprint-cups
+%_datadir/cloudprint-cups
 %_prefix/lib/cups/backend/cloudprint
 %_prefix/lib/cups/driver/cupscloudprint
 %ghost %attr(0660,root,lp) %_var/log/cups/cloudprint_log
+%exclude %_datadir/cloudprint-cups/test_*
+%exclude %_datadir/cloudprint-cups/full-test.sh
+%exclude %_datadir/cloudprint-cups/testfiles
 
 %changelog
+* Mon Mar 17 2014 Alexey Shabalin <shaba@altlinux.ru> 20140308-alt1
+- 20140308
+
 * Mon Oct 21 2013 Alexey Shabalin <shaba@altlinux.ru> 20131017-alt1
 - inital build
