@@ -1,6 +1,8 @@
+%def_with zlib
+
 Name: mbootpack
 Version: 0.6a
-Release: alt1
+Release: alt2
 Summary: A tool that takes a multiboot kernel and modules
 License: GPLv2
 Group: System/Kernel and hardware
@@ -9,6 +11,8 @@ Source: %url/%name-%version.tar
 Patch: %name-%version-%release.patch
 ExclusiveOS: Linux
 ExclusiveArch: %ix86 x86_64
+
+%{?_with_zlib:BuildRequires: zlib-devel}
 
 %description
 %name is a tool that takes a multiboot kernel and modules (e.g. a Xen VMM,
@@ -24,7 +28,7 @@ a bzImage linux kernel. The aim is to allow you to boot multiboot kernels
 
 
 %build
-%make_build CFLAGS="%optflags"
+%make_build CC="%__cc" CFLAGS="%optflags" %{?_with_zlib:WITH_ZLIB=1}
 
 
 %install
@@ -37,5 +41,10 @@ install -pD -m 0755 {,%buildroot%_bindir/}%name
 
 
 %changelog
+* Mon Mar 17 2014 Led <led@altlinux.ru> 0.6a-alt2
+- added CFLAGS for mbootpack compiling
+- added optional build with zlib
+- build with zlib
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0.6a-alt1
 - initial build
