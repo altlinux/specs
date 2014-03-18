@@ -1,7 +1,7 @@
 
 Name: accerciser
 Version: 3.8.2
-Release: alt1
+Release: alt2
 
 Summary: An interactive Python tool for querying accessibility information
 Url: http://live.gnome.org/Accerciser
@@ -25,9 +25,6 @@ BuildRequires: desktop-file-utils libat-spi2-core-devel
 
 BuildArch: noarch
 Source: %name-%version.tar
-
-# debian watch file (for automation)
-Source100: %name.watch
 
 Requires: python3-module-%name = %version-%release
 
@@ -81,6 +78,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Mar 12 2014 Paul Wolneykien <manowar@altlinux.org> 3.8.2-alt2
+- Update the sources via script. Skip unstable branches.
+
 * Tue May 14 2013 Paul Wolneykien <manowar@altlinux.org> 3.8.2-alt1
 - new version 3.8.2
 
