@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 119
 %define nv_minor %nil
-%define pkg_rel alt117
+%define pkg_rel alt118
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -364,6 +364,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 18 2014 Sergey V Turchin <zerg@altlinux.org> 304.119-alt118
+- don't package kernel module sources
+
 * Tue Jan 28 2014 Sergey V Turchin <zerg@altlinux.org> 304.119-alt117
 - fix against absent DEVICE_ACPI_HANDLE on 3.13 kernel
 
