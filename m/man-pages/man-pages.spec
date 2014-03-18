@@ -1,6 +1,6 @@
 Name: man-pages
-Version: 3.32
-Release: alt3
+Version: 3.61
+Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
 Summary(ru_RU.UTF8): Руководства пользователя Linux Documentation Project
@@ -10,10 +10,10 @@ Url: http://www.kernel.org/doc/man-pages/
 Packager: Slava Semushin <php-coder@altlinux.ru>
 
 # http://www.kernel.org/pub/linux/docs/man-pages/%name-%version.tar.bz2
-Source: %name-%version.tar
-Source3: netman-cvs.tar
+Source: %name-%version.tar.gz
+#Source3: netman-cvs.tar
 # Where to find it ????
-Source4: man9-19971126.tar
+#Source4: man9-19971126.tar
 #Source5: %name-goodies.tar
 Source6: %name-extra.tar
 
@@ -24,7 +24,7 @@ Patch7: man-pages-1.39-owl-ccldso.patch
 
 Requires: man >= 1.5i2-alt4
 BuildArch: noarch
-Obsoletes: man9 gnumaniak
+Obsoletes: gnumaniak
 
 # due to major.3/minor.3 (see #19717)
 Conflicts: libSDL_sound-devel <= 1.0.3-alt1
@@ -47,7 +47,6 @@ following sections:
 	6:  Games (intro only)
 	7:  Conventions, macro packages, etc.
 	8:  System administration (intro only)
-	9:  Kernel internal routines
 
 %description -l ru_RU.UTF8
 Большая коллекция справочного материала разработанного в рамках Linux
@@ -60,10 +59,9 @@ Documentation Project (LDP). Материалы сгруппированы по 
 	6:  Игры (только введение)
 	7:  Соглагшения, макропакеты, и т.д.
 	8:  Системное администрирование (только введение)
-	9:  Встроенные службы ядра
 
 %package utils
-Summary: The scripts for man-pages maintenance tasks.
+Summary: The scripts for man-pages maintenance tasks
 Summary(ru_RU.UTF8): The scripts for man-pages maintenance tasks.
 Group: System/Internationalization
 
@@ -72,57 +70,43 @@ The scripts for man-pages maintenance tasks.
 They may be useful for downstream man-pages package maintainers or for
 man-pages translators.
 
-%description -l ru_RU.UTF8 
+%description -l ru_RU.UTF8
 The scripts for man-pages maintenance tasks.
 They may be useful for downstream man-pages package maintainers or for
 man-pages translators.
 
 %prep
-%setup -a3 -a4 -a6
-
+%setup -b6
 %patch7 -p1
-
-mv *.4 man4
-for f in `find man -type f |sed -e 's|^man/||g'`; do
-	install -D -p -m644 "man/$f" "$f"
-done
 
 find man3 -type f -print0 |
 	xargs -r0 grep -l '.*\.3 '|
 	xargs -r perl -pi -e 's/\.3 /.3/'
 
-find man9 -type f -print0 |
-	xargs -r0 grep -l '^\.so:' |
-	xargs -r perl -pi -e 's/^\.so:/.so /'
-
-# su.1: moved to su package based on SimplePamApps.
-find -type f -name su.1 -print0 |
-    xargs -r0 rm -f --
-
 %build
-# coreutils
-rm -fv man1/{chgrp,chmod,chown,cp,dd,df,dircolors,du,install}.1
-rm -fv man1/{ln,ls,mkdir,mkfifo,mknod,mv,rm,rmdir,touch}.1
-rm -fv man1/{dir,vdir,hostname}.1
-
-# diffutils
-rm -fv man1/diff.1
-
 # quota
 rm -f man*/quota*
 
-# console-tools
-rm -rf man4/console.4
-
 # fdutils
-rm -rf man4/fd.4
-# ld.so
-#rm -rf man3/{dlclose,dlerror,dlopen,dlsym}.3
-
-#mv man1/README README.GNU-INFOvsMAN
+rm -f man4/fd.4
 
 # libattr-devel
-rm -rf man2/{fgetxattr,flistxattr,fremovexattr,fsetxattr,getxattr,lgetxattr,listxattr,llistxattr,lremovexattr,lsetxattr,removexattr,setxattr}.2
+rm -f man2/{fgetxattr,flistxattr,fremovexattr,fsetxattr,getxattr,lgetxattr,listxattr,llistxattr,lremovexattr,lsetxattr,removexattr,setxattr}.2
+
+# Refer to original crypt(3)
+%define cryptpfx std
+mv man3/crypt.3 man3/crypt-%cryptpfx.3
+sed -r '/^[.]SH DESCRIPTION/a\
+This is Openwall version of\
+.BR crypt (3)\
+manual page, focused mostly on the particular implementation. For more general and \
+probably more recent information please look at\
+.BR crypt-%cryptpfx (3)\
+manual page.\
+.sp
+/^[.]SH SEE ALSO/a\
+.BR crypt-%cryptpfx (3),
+' < man3/crypt-owl.3 > man3/crypt.3
 
 %install
 mkdir -p %buildroot{%_mandir,%_datadir/%name}
@@ -136,13 +120,22 @@ install %SOURCE101 %buildroot%_man1dir/
 find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.sh
 
 %files
-%doc README* *.Announce FIXME *.lsm
+%doc README* *.Announce *.lsm
 %_mandir/man?/*
+%exclude %_man3dir/crypt-owl*
 
 %files utils
 %_datadir/%name/
 
 %changelog
+* Wed Mar 05 2014 Fr. Br. George <george@altlinux.ru> 3.61-alt1
+- Autobuild version bump to 3.61
+
+* Wed Mar 05 2014 Fr. Br. George <george@altlinux.ru> 3.60-alt1
+- Long delayed update to 3.60.
+- Remove some pages now provided by upstream.
+- Refer to original crypt.3 probably containing more recent information.
+
 * Fri Aug 12 2011 Dmitry V. Levin <ldv@altlinux.org> 3.32-alt3
 - Updated crypt.3 from crypt_blowfish-1.2.
 
@@ -249,7 +242,7 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 
 * Tue Dec 12 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.43-alt1
 - 2.43
-- New and updated pages: 
+- New and updated pages:
   brk.2, futex.2, ioperm.2, open.2, ptrace.2
   getaddrinfo.3, getnameinfo.3, strerror.3, syslog.3, wcwidth.3
   rtc.4
@@ -268,8 +261,8 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 
 * Sun Nov 05 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.40-alt1
 - 2.40
-- New and updated pages: clone.2, execve.2, faccessat.2, fchmodat.2, fchownat.2, fork.2, 
-  fstatat.2, futimesat.2, linkat.2, mkdirat.2, mknodat.2, openat.2, readlinkat.2, renameat.2, 
+- New and updated pages: clone.2, execve.2, faccessat.2, fchmodat.2, fchownat.2, fork.2,
+  fstatat.2, futimesat.2, linkat.2, mkdirat.2, mknodat.2, openat.2, readlinkat.2, renameat.2,
   symlinkat.2, set_mempolicy.2, write.2
   getcwd.3
   proc.5
@@ -293,13 +286,13 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
   CPU_ISSET.3, CPU_CLR.3, CPU_SET.3, CPU_ZERO.3, FD_CLR.3, FD_ISSET.3, FD_SET.3,
   FD_ZERO.3, mq_setattr.3, mq_timedreceive.3, mq_timedsend.3, offsetof.3, rpmatch.3,
   sigandset.3, sigisemptyset.3, sigorset.3, strchrnul.3
-- Updated: _exit.2, acct.2, chmod.2, fcntl.2, inotify_add_watch.2, inotify_init.2, 
-  inotify_rm_watch.2, mmap.2, mount.2, mremap.2, msync.2, open.2, pipe.2, posix_fadvise.2, 
-  read.2, readahead.2, sched_setaffinity.2, select.2, select_tut.2, send.2, setsid.2, 
+- Updated: _exit.2, acct.2, chmod.2, fcntl.2, inotify_add_watch.2, inotify_init.2,
+  inotify_rm_watch.2, mmap.2, mount.2, mremap.2, msync.2, open.2, pipe.2, posix_fadvise.2,
+  read.2, readahead.2, sched_setaffinity.2, select.2, select_tut.2, send.2, setsid.2,
   shmctl.2, stat.2, statfs.2, umask.2, write.2
-- __setfpucw.3, assert_perror.3, bindresvport.3, difftime.3, fts.3, ftw.3, getline.3, 
-  getrpcent.3, getrpcport.3, inet.3, isalpha.3, mktemp.3, mkstemp.3, mq_open.3, 
-  mq_notify.3, printf.3, readdir.3, re_comp.3, rpc.3, scandir.3, setlocale.3, stdio.3, 
+- __setfpucw.3, assert_perror.3, bindresvport.3, difftime.3, fts.3, ftw.3, getline.3,
+  getrpcent.3, getrpcport.3, inet.3, isalpha.3, mktemp.3, mkstemp.3, mq_open.3,
+  mq_notify.3, printf.3, readdir.3, re_comp.3, rpc.3, scandir.3, setlocale.3, stdio.3,
   strchr.3, strtoul.3, tmpnam.3, tmpfile.3, undocumented.3, unlocked_stdio.3, xdr.3
 - null.4, console_codes.4
 - rpc.5
@@ -310,27 +303,27 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 * Sat May 20 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.32-alt1
 - 2.32
 - New pages: faccessat.2, fchmodat.2, fchownat.2, futimesat.2
-- Updated: access.2, capget.2, chmod.2, chown.2, mmap.2, openat.2, shmget.2, 
+- Updated: access.2, capget.2, chmod.2, chown.2, mmap.2, openat.2, shmget.2,
   truncate.2, utime.2
   fopen.3, futimes.3, qsort.3, termios.3
   capabilities.7
 
 * Fri May 12 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.31-alt1
 - 2.31
-- New pages: 
+- New pages:
   fstatat.2
   adjtime.3, error.3, error_at_line.3, error_message_count.3, error_on_per_line.3,
   error_print_progname.3, program_invocation_name.3, program_invocation_short_name.3,
   sockatmark.3
   ftm.7, time.7
 - Updated:
-  accept.2, adjtimex.2, chown.2, chdir.2, fsync.2, getgroups.2, getitimer.2, 
+  accept.2, adjtimex.2, chown.2, chdir.2, fsync.2, getgroups.2, getitimer.2,
   gettimeofday.2, mount.2, nanosleep.2, openat.2, recv.2, rmdir.2, select.2,
-  semget.2, shmget.2, sigwaitinfo.2, stat.2, syscall.2, time.2, times.2, utime.2, 
+  semget.2, shmget.2, sigwaitinfo.2, stat.2, syscall.2, time.2, times.2, utime.2,
   wait4.2
   confstr.3, ctanh.3, ctime.3, dirfd.3, err.3, errno.3, fmemopen.3, getdate.3,
   getline.3, initgroups.3, perror.3, printf.3, scanf.3, strerror.3, strtod.3,
-  strtoul.3, strtol.3, tmpfile.3, 
+  strtoul.3, strtol.3, tmpfile.3,
   rtc.4
   ip.7, signal.7
   ld.so.8
@@ -338,7 +331,7 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 * Mon May 01 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.30-alt1
 - 2.30
 - New pages: linkat.2, renameat.2, symlinkat.2, unlinkat.2
-- Updated: 
+- Updated:
   link.2, openat.2, rename.2, rmdir.2, symlink.2, unlink.2
   termios.3
   full.4
@@ -348,13 +341,12 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 - 2.29
 - Added ldd.1 patch by php-coder
 - New pages: mkdirat.2, mkfifoat.3, mknodat.2, core.5
-- Updated: 
-  accept.2, fcntl.2, getpeername.2, getrlimit.2, getsockname.2, mkdir.2, mknod.2, 
+- Updated:
+  accept.2, fcntl.2, getpeername.2, getrlimit.2, getsockname.2, mkdir.2, mknod.2,
   open.2, openat.2, prctl.2, recv.2, shmop.2, sigaction.2, unshare.2
   mkfifo.3
   elf.5, proc.5
   ip.7, sem_overview.7, signal.7
-
 
 * Sat Apr 01 2006 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.28-alt1
 - 2.28
@@ -404,10 +396,10 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 - Updated man-pages-deb.patch
 
 * Tue Jun 28 2005 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 2.05-alt2
-  Changes from 2.03: 
+  Changes from 2.03:
 - New pages: pthreads.7
 - Updated pages: _exit.2, epoll_ctl.2 close.2 dup.2 fcntl.2 flock.2 fpclassify.3
-  getgid.2 getuid.2 getitimer.2 getpriority.2 getrlimit.2 getrusage.2 nice.2 
+  getgid.2 getuid.2 getitimer.2 getpriority.2 getrlimit.2 getrusage.2 nice.2
   open.2 atexit.3 exit.3 getloadavg.3 getopt.3 hsearch.3 log1p.3 log2.3 makecontext.3
   on_exit.3 rand.3 readdir.3 realpath.3 rcmd.3 scanf.3 stdin.3 strerror.3 strtod.3
   sysconf.3 tdestroy.3 tsearch.3 mem.4 null.4 vcs.4 proc.5 ip.7 tcp.7 signal.7 urn.7
@@ -495,17 +487,17 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 * Sun May 23 2004 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.67-alt1
 - Differences from version 1.66:
   the man pages are new or have been updated:
-  
+
   capget.2 epoll_ctl.2 execve.2 fcntl.2 getrlimit.2 ioctl.2
   mincore.2 mmap.2 mremap.2 open.2 sched_setaffinity.2
   setresuid.2 sigpause.2 utime.2
-  
+
   getmntent.3 gets.3 hsearch.3 login.3 scandir.3
-  
+
   epoll.4
-  
+
   proc.5
-  
+
   ascii.7 LDP.7 packet.7 socket.7 unix.7
 
 * Mon Feb 23 2004 Aleksandr Blokhin (Sass) <sass@altlinux.ru> 1.66-alt2
