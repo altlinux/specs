@@ -1,6 +1,6 @@
 Name: libwpd9
-Version: 0.9.7
-Release: alt2
+Version: 0.9.9
+Release: alt1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
 
@@ -10,7 +10,7 @@ Url: http://libwpd.sf.net/
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: libwpd-%version.tar
+Source: libwpd-%version.tar.xz
 
 BuildRequires: doxygen gcc-c++ libgsf-devel zlib-devel
 
@@ -61,6 +61,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 18 2014 Fr. Br. George <george@altlinux.ru> 0.9.9-alt1
+- Autobuild version bump to 0.9.9
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2
 - drop broken requires on libwpd, cleanup spec
 
