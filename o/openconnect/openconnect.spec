@@ -1,6 +1,12 @@
+%def_with libproxy
+%def_without stoken
+%def_without liboath
+# openssl or gnutls
+%def_with openssl
+%def_without gnutls
 
 Name: openconnect
-Version: 4.07
+Version: 5.99
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -12,14 +18,17 @@ Source: %name-%version.tar
 Patch0: openconnect-snapshot.patch
 
 Requires: lib%name = %version-%release
-
-BuildRequires: libssl-devel >= 0.9.8l-alt4
-BuildRequires: libxml2-devel libproxy-devel zlib-devel
-BuildRequires: libp11-kit-devel
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(zlib)
+%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 2.12.16 pkgconfig(p11-kit-1)}
+%{?_with_openssl:BuildRequires: pkgconfig(openssl)}
+%{?_with_libproxy:BuildRequires: pkgconfig(libproxy-1.0)}
+%{?_with_stoken:BuildRequires: pkgconfig(stoken)}
+%{?_with_liboath:BuildRequires: pkgconfig(liboath)}
 BuildRequires: vpnc-script
 BuildRequires: python-modules python-modules-xml groff-extra
 Requires: vpnc-script
-Requires: openssl >= 0.9.8l-alt4
+%{?_with_openssl:Requires: openssl >= 1.0.1e}
 
 %description
 This package provides a client for Cisco's "AnyConnect" VPN, which uses
@@ -47,7 +56,13 @@ developing applications that use %name.
 
 %build
 %autoreconf
-%configure --enable-static=no --with-system-cafile=/usr/share/ca-certificates/ca-bundle.crt
+%configure \
+	--enable-static=no \
+	%{subst_with libproxy} \
+	%{subst_with stoken} \
+	%{subst_with liboath} \
+	--with-system-cafile=/usr/share/ca-certificates/ca-bundle.crt
+
 echo "const char *openconnect_version_str = \"v%version\";" > version.c
 %make_build
 
@@ -69,6 +84,14 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 5.99-alt1
+- 5.99
+- switch to openssl back
+
+* Wed Sep 04 2013 Alexey Shabalin <shaba@altlinux.ru> 5.01-alt1
+- 5.01
+- switch to gnutls
+
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 4.07-alt1
 - 4.07
 
