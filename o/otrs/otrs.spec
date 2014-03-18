@@ -5,7 +5,7 @@
 
 Name: otrs
 Version: 3.3.5
-Release: alt1
+Release: alt2
 
 Summary: Open source Ticket Request System
 Group: Networking/WWW
@@ -18,7 +18,8 @@ BuildArch: noarch
 
 Requires(pre): %{_sbindir}/useradd
 Requires(post): perl
-Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML
+Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML perl-Time-Piece
+
 BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2 >= 3.9
 BuildRequires: perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib
 
@@ -172,6 +173,9 @@ rm -rf %_docdir/%name-%version/
 %endif
 
 %changelog
+* Tue Mar 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.5-alt2
+- added to Requires: perl-Time-Piece
+
 * Wed Mar 12 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.5-alt1
 - New version
 
