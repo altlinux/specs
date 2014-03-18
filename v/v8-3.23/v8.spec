@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     23
 %define BUILD_NUMBER      17
-%define PATCH_LEVEL       14
+%define PATCH_LEVEL       23
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 
@@ -61,6 +61,7 @@ sed -i 's|build/gyp/gyp|gyp|g' Makefile
     mode=release \
     library=shared \
     snapshot=on \
+    i18nsupport=off \
     soname_version=%{soversion} \
 %ifarch armh
     armfloatabi=hard
@@ -84,6 +85,17 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Tue Mar 18 2014 Andrey Cherepanov <cas@altlinux.org> 3.23.17.23-alt1
+- new version
+- security fixes:
+  + CVE-2014-1705: Memory corruption in V8
+
+* Thu Mar 13 2014 Andrey Cherepanov <cas@altlinux.org> 3.23.17.22-alt1
+- new version
+- security fixes:
+  + CVE-2014-1704: Multiple vulnerabilities in V8
+- Disable i18n support
+
 * Fri Feb 21 2014 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.23.17.14-alt1
 - new version (Closes: #29837)
 
