@@ -1,14 +1,14 @@
 %define dist X11-GUITest
 Name: perl-%dist
-Version: 0.27
-Release: alt2
+Version: 0.28
+Release: alt1
 
 Summary: Collection of functions for X11 GUI testing/interaction
 License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/P/PE/PECASTRO/X11-GUITest-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/C/CT/CTRONDLP/X11-GUITest-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: libXt-devel libXtst-devel perl-devel perl-podlators
@@ -38,6 +38,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/X11
 
 %changelog
+* Tue Mar 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.27-alt2
 - built for perl 5.18
 
