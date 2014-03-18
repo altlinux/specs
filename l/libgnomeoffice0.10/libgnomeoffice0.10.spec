@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.11
+Version: %ver_major.13
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -26,7 +26,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgsf-devel >= %gsf_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
-BuildRequires: libXext-devel libXrender-devel libxml2-devel librsvg-devel
+BuildRequires: libXext-devel libXrender-devel libxml2-devel libxslt-devel librsvg-devel
 BuildRequires: intltool gtk-doc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgtk+3-gir-devel}
 %{?_with_lasem:BuildRequires: liblasem-devel >= %lasem_ver}
@@ -110,6 +110,10 @@ GObject introspection devel data for the Goffice library.
 %_libdir/goffice/%version/plugins/reg_linear/
 %_libdir/goffice/%version/plugins/reg_logfit/
 %_libdir/goffice/%version/plugins/smoothing/
+%_libdir/goffice/%version/plugins/lasem/
+%dir %_datadir/goffice
+%dir %_datadir/goffice/%version
+%_datadir/goffice/%version/mmlitex/
 %doc AUTHORS NEWS README
 
 %exclude %_libdir/%_name/%version/plugins/*/*.la
@@ -132,6 +136,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Wed Mar 19 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.13-alt1
+- 0.10.13
+
 * Sun Feb 16 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.11-alt1
 - 0.10.11
 
