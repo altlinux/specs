@@ -1,6 +1,10 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.67
+Version: 0.68
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -221,6 +225,9 @@ done
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Tue Mar 18 2014 Denis Smirnov <mithraen@altlinux.ru> 0.68-alt1
+- start asterisk after postgresql and mysql
+
 * Tue Aug 27 2013 Denis Smirnov <mithraen@altlinux.ru> 0.67-alt1
 - /var/lib/asterisk/documentation symlink to /usr/share/asterisk/documentation
 
