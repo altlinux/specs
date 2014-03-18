@@ -1,6 +1,6 @@
 Name:    1c-preinstall
 Version: 8.3
-Release: alt7
+Release: alt8
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -14,6 +14,7 @@ Requires: libwebkitgtk2
 Requires: xorg-server
 Requires: cups
 Requires: libImageMagick
+Requires: libgsf
 
 Source1:  xdg-current-desktop.sh 
 
@@ -58,6 +59,9 @@ ln -rs %buildroot%_datadir/fonts/ttf/ms %buildroot%_datadir/fonts/msttcorefonts
 %exclude %_datadir/fonts/ttf/ms
 
 %changelog
+* Tue Mar 18 2014 Andrey Cherepanov <cas@altlinux.org> 8.3-alt8
+- Require libgsf for support save to XLS
+
 * Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt7
 - New version of 1C:Enterprise wants libWand.so
 
