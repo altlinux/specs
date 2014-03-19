@@ -2,21 +2,17 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-# We don't really need Text::ParseWords a.. 3.24
-%global old_tpw %(perl -MText::ParseWords -e 'print (($Text::ParseWords::VERSION) < 3.24 ? 1 : 0);' 2>/dev/null || echo 0)
-
 # Test suite needs patching if we have Test::More < 0.88
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Helpers
 Version:	0.022
-Release:	alt1
+Release:	alt1_1
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Helpers
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
-Patch2:		ExtUtils-Helpers-0.016-old-Text::ParseWords.patch
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
 Patch3:		ExtUtils-Helpers-0.021-old-Test::More.patch
 BuildArch:	noarch
 # Build
@@ -29,11 +25,15 @@ BuildRequires:	perl(File/Basename.pm)
 BuildRequires:	perl(File/Copy.pm)
 BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(Module/Load.pm)
+BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Text/ParseWords.pm)
+BuildRequires:	perl(warnings.pm)
 # Test Suite
 BuildRequires:	perl(Cwd.pm)
-BuildRequires:	perl(File/Find.pm)
-BuildRequires:	perl(File/Temp.pm)
+BuildRequires:	perl(File/Spec.pm)
+BuildRequires:	perl(IO/Handle.pm)
+BuildRequires:	perl(IPC/Open3.pm)
+BuildRequires:	perl(lib.pm)
 BuildRequires:	perl(Test/More.pm)
 # Release Tests
 # perl-Pod-Coverage-TrustPod -> perl-Pod-Eventual -> perl-Mixin-Linewise ->
@@ -52,11 +52,6 @@ modules.
 
 %prep
 %setup -q -n ExtUtils-Helpers-%{version}
-
-# We don't really need Text::ParseWords ≥ 3.24
-%if %{old_tpw}
-%patch2
-%endif
 
 # Test suite needs patching if we have Test::More < 0.88
 %if %{old_test_more}
@@ -80,6 +75,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1
 - automated CPAN update
 
