@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 
 Name: perl-%module
 Version: 0.54
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -43,6 +43,10 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.54-alt5
+- bugfix release
+- bumped fc version to 21
+
 * Wed Nov 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.54-alt4
 - bumped fc version to 20
 
