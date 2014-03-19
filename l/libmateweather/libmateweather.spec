@@ -1,6 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize glib2-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsoup-gnome-2.4) pkgconfig(libxml-2.0) python-devel
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize glib2-devel libgio-devel python-devel pkgconfig(libxml-2.0)
 # END SourceDeps(oneline)
 # for --enable-python
 BuildRequires: python-module-pygobject-devel
@@ -9,16 +10,18 @@ BuildRequires: python-module-pygtk-devel
 
 %define _libexecdir %_prefix/libexec
 Name:          libmateweather
-Version:       1.6.2
-Release:       alt1_3
+Version:       1.8.0
+Release:       alt1_1
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+ and LGPLv2+
 URL:           http://mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:       http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
 BuildRequires: gtk2-devel
 BuildRequires: libsoup-devel
 BuildRequires: mate-common
+BuildRequires: python-module-pygtk-devel
+BuildRequires: python-module-pygobject-devel
 
 Requires:      %{name}-data = %{version}-%{release}
 Source44: import.info
@@ -52,10 +55,11 @@ Development files for libmateweather
 
 %build
 autoreconf -fisv
-%configure --enable-python --disable-static       \
-           --disable-schemas-compile \
-           --with-gnu-ld          \
-           --enable-gtk-doc-html
+%configure --enable-python --disable-static           \
+           --disable-schemas-compile  \
+           --with-gtk=2.0             \
+           --enable-gtk-doc-html      \
+           --enable-python
 
 # fix unused-direct-shlib-dependency
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool 
@@ -68,7 +72,7 @@ make %{?_smp_mflags} V=1
 find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 find %{buildroot} -name '*.a' -exec rm -fv {} ';'
 
-%find_lang %{name} %{name}-locations
+%find_lang %{name} %{name}-locations --with-gnome --all-name
 cat libmateweather-locations.lang >> %{name}.lang
 
 
@@ -76,6 +80,7 @@ cat libmateweather-locations.lang >> %{name}.lang
 %doc AUTHORS COPYING README
 %{_datadir}/glib-2.0/schemas/org.mate.weather.gschema.xml
 %{_libdir}/libmateweather.so.1*
+%{python_sitelibdir}/mateweather/
 
 %files data -f %{name}.lang
 %{_datadir}/icons/mate/*/status/*
@@ -89,6 +94,9 @@ cat libmateweather-locations.lang >> %{name}.lang
 
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_3
 - new fc release
 
