@@ -1,22 +1,22 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
-Version:        1.6.1
-Release:        alt1_2
+Version:        1.8.0
+Release:        alt1_1
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  gtk2-devel
+BuildRequires:  libICE-devel
 BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
-BuildRequires:  mate-doc-utils
 Source44: import.info
 Requires: iso-codes
 
@@ -37,7 +37,10 @@ Development libraries for libmatekbd
 
 %build
 autoreconf -fisv
-%configure \
+# To work around rpath issue
+autoreconf -fi
+
+%configure                   \
    --disable-static          \
    --with-gtk=2.0            \
    --disable-schemas-compile \
@@ -45,12 +48,17 @@ autoreconf -fisv
   
 make %{?_smp_mflags} V=1
 
+
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
-%find_lang %{name} --all-name
+# remove needless gsettings convert file
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
+
+%find_lang %{name} --with-gnome --all-name
+
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -58,7 +66,6 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_datadir}/glib-2.0/schemas/org.mate.peripherals-keyboard-xkb.gschema.xml
 %{_libdir}/libmatekbd.so.4*
 %{_libdir}/libmatekbdui.so.4*
-%{_datadir}/MateConf/gsettings/matekbd.convert
 
 %files devel
 %{_includedir}/libmatekbd
@@ -68,6 +75,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 
