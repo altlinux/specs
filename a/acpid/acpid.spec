@@ -1,11 +1,11 @@
 Name: acpid
-Version: 2.0.17
+Version: 2.0.22
 Release: alt1
 Epoch: 1
 Summary: ACPI kernel daemon and control utility
 License: GPL
 Group: System/Servers
-Url: http://www.tedfelix.com/linux/acpid-netlink.html
+Url: http://sourceforge.net/projects/acpid2/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 PreReq: sysvinit-utils
@@ -79,6 +79,15 @@ fi
 %config(noreplace) %_sysconfdir/acpi/events/power
 
 %changelog
+* Wed Mar 19 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.22-alt1
+- 2.0.22
+
+* Sun Sep 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.19-alt1
+- 2.0.19
+
+* Tue Feb 26 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.18-alt1
+- 2.0.18
+
 * Sun Oct 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.17-alt1
 - 2.0.17
 
