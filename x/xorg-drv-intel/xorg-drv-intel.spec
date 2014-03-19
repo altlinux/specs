@@ -1,5 +1,5 @@
 Name: xorg-drv-intel
-Version: 2.99.910
+Version: 2.99.911
 Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
@@ -14,7 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel xorg-inputproto-devel xorg-fontsproto-devel xorg-randrproto-devel
+BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
+BuildRequires: libXrandr-devel libXtst-devel xorg-inputproto-devel xorg-fontsproto-devel xorg-randrproto-devel
 BuildRequires: xorg-renderproto-devel xorg-xextproto-devel xorg-xf86driproto-devel xorg-dri2proto-devel xorg-xineramaproto-devel
 BuildRequires: libXrender-devel libxcbutil-devel xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
@@ -36,6 +37,7 @@ and 24 for the 830M and later
 %build
 %autoreconf
 %configure \
+	--libexecdir=%_prefix/libexec \
 	--with-xorg-module-dir=%_x11modulesdir \
 	--enable-dri \
 	--disable-static
@@ -47,11 +49,17 @@ and 24 for the 830M and later
 
 %files
 %doc AUTHORS README NEWS
+%_bindir/intel-virtual-output
 %_libdir/*.so.*
 %_x11modulesdir/drivers/*.so
+%_prefix/libexec/xf86-video-intel-backlight-helper
+%_datadir/polkit-1/actions/org.x.xf86-video-intel.backlight-helper.policy
 %_man4dir/i*.4*
 
 %changelog
+* Wed Mar 19 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.911-alt1
+- snapshot 2.99.911
+
 * Mon Feb 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.910-alt1
 - snapshot 2.99.910
 
