@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.3
+Version: 0.9.9.4
 Release: alt1
 
 Summary: The system startup scripts
@@ -164,6 +164,9 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Wed Mar 19 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.4-alt1
+- rc.sysinit: remount /proc and /sys.
+
 * Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.3-alt1
 - rc.sysinit: determine selinuxfs mountpoint at runtime.
 - init.d/netfs: added glusterfs support
