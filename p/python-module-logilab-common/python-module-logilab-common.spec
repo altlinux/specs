@@ -3,8 +3,8 @@
 
 %define oname logilab-common
 Name: python-module-%oname
-Version: 0.59.0
-Release: alt2.hg20130215
+Version: 0.61.0
+Release: alt1.hg20140211
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -103,7 +103,7 @@ touch build/lib/logilab/__init__.py
 PYTHONPATH=$(pwd)/build/lib/ \
     $(pwd)/build/scripts-%_python_version/pytest \
     -t test \
-    -s test_knownValues_is_standard_module_4
+    -s test_4
 rm -f build/lib/logilab/__init__.py
 
 %files
@@ -122,6 +122,9 @@ rm -f build/lib/logilab/__init__.py
 %endif
 
 %changelog
+* Wed Mar 19 2014 Timur Aitov <timonbl4@altlinux.org> 0.61.0-alt1.hg20140211
+- Version 0.61.0
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.59.0-alt2.hg20130215
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
