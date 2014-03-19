@@ -1,6 +1,6 @@
 Name: turbovnc
 Version: 1.2.1
-Release: alt2
+Release: alt3
 
 %define vnc_name turbovnc
 
@@ -140,13 +140,16 @@ popd
 # %_usr/libexec/%name
 # %doc %_datadir/doc/%name-server-data-%version
 
-%post
+%post server
 %post_service tvncserver
 
-%preun
+%preun server
 %preun_service tvncserver
 
 %changelog
+* Wed Mar 19 2014 Dmitry Derjavin <dd@altlinux.org> 1.2.1-alt3
+- post and preun were assigned to the wrong package (closes: 29893).
+
 * Fri Mar 07 2014 Dmitry Derjavin <dd@altlinux.org> 1.2.1-alt2
 - post and preun service scripts added.
 
