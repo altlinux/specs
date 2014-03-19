@@ -1,3 +1,4 @@
+%define fedora 20
 # spec file for package asl
 # 
 # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
@@ -6,12 +7,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld89
+%global patchlevel bld92
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.16.%{patchlevel}
+Release:        alt2_0.19.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -20,8 +21,12 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
-BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended
+BuildRequires: /usr/bin/latex texlive-latex-recommended
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+BuildRequires:  texlive-latex-recommended
+%endif
 Source44: import.info
+
 
 %description
 AS is a portable macro cross-assembler for a variety of
@@ -82,6 +87,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.19.bld92
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.16.bld89
 - update to new release by fcimport
 
