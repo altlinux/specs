@@ -8,12 +8,13 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt1_5
+Release:	alt1_6
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
 URL:		http://flaw.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0:		flaw-aarch64.patch
 
 BuildRequires:	libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL-devel fonts-ttf-gnu-freefont-serif
 BuildRequires:	libSDL_gfx-devel desktop-file-utils fonts-ttf-gnu-freefont-sans gettext intltool
@@ -30,19 +31,24 @@ that provide special abilities.
 
 %prep
 %setup -q
+#patch to build on aarch64, upstream notified to use autoconf 2.69
+%patch0 -p 1
 
 # Fix spurious executable permissions
 chmod 644 src/*.cc
 chmod 644 src/*.h
 
+# Remove deprecated tag Enconding from flaw.desktop
+sed -i -e '2d' data/flaw.desktop
+
 %build
-%configure --docdir=%{_pkgdocdir} --enable-fontpath=%{_datadir}/fonts/ttf/gnu-free/
+%configure --docdir=%{_pkgdocdir}
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 %find_lang %{name}
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
 %{_bindir}/flaw
@@ -53,6 +59,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 %doc %{_pkgdocdir}
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_6
+- update to new release by fcimport
+
 * Tue Nov 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_5
 - update to new release by fcimport
 
