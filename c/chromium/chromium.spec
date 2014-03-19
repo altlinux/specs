@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        33.0.1750.149
+Version:        33.0.1750.152
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -477,6 +477,13 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Mar 18 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.152-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1713: Use-after-free in Blink bindings
+  - High CVE-2014-1705: Memory corruption in V8
+  - High CVE-2014-1715: Directory traversal issue
+
 * Wed Mar 12 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.149-alt1
 - New version
 - Security fixes:
