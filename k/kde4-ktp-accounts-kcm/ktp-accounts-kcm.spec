@@ -3,7 +3,7 @@
 
 %define rname ktp-accounts-kcm
 Name: kde4-ktp-accounts-kcm
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -18,7 +18,7 @@ Patch1: 0.7.0-alt-autoconnect.patch
 # Automatically added by buildreq on Mon Apr 16 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4-ktp-common-internals-devel kde4libs-devel libicu libqt3-devel python-module-distribute rpm-build-ruby zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel kde4-ktp-common-internals-devel kde4libs-devel
+BuildRequires: gcc-c++ glib2-devel kde4-ktp-common-internals-devel kde4libs-devel libmm-qt-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -82,6 +82,12 @@ done
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
+- new version
+
+* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 

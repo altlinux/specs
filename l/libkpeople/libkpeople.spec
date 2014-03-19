@@ -1,14 +1,14 @@
 
-%define kpeople_sover 1
-%define kpeople_libver 0.1
+%define kpeople_sover 3
+%define kpeople_libver 0.2.1
 %define libkpeople libkpeople%kpeople_sover
-%define kpeoplewidgets_sover 1
-%define kpeoplewidgets_libver 0.1
+%define kpeoplewidgets_sover 3
+%define kpeoplewidgets_libver 0.2.1
 %define libkpeoplewidgets libkpeoplewidgets%kpeoplewidgets_sover
 
 Name: libkpeople
 Summary: Meta-contact aggregation library
-Version: 0.1.0
+Version: 0.2.1
 Release: alt1
 
 Group: System/Libraries
@@ -22,17 +22,15 @@ Source: %name-%version.tar
 #BuildRequires: ctest gcc-c++ glib2-devel kde4-nepomuk-core-devel libicu50 libqt3-devel python-module-distribute rpm-build-python3 rpm-build-ruby soprano xorg-xf86miscproto-devel zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel
 BuildRequires: kde4-nepomuk-core-devel soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel shared-desktop-ontologies-devel
-BuildRequires: kde4libs-devel kde-common-devel
+BuildRequires: kde4libs-devel kde4pimlibs-devel kde-common-devel
 
 %description
 A library that provides access to all contacts and the people who hold them.
 
 %package common
-BuildArch: noarch
 Summary: Common %name files
-Group: System/Libraries
-Conflicts: libktorrent1
-Conflicts: libktorrent3 <= 1.1.0-alt2
+Group: System/Configuration/Other
+BuildArch: noarch
 %description common
 Common %name files
 
@@ -53,14 +51,14 @@ This package contains the development files for %name.
 %package -n %libkpeople
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkpeople
 %name library
 
 %package -n %libkpeoplewidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkpeoplewidgets
 %name library
 
@@ -80,7 +78,7 @@ Requires: %name-common = %EVR
 %files core
 %_K4apps/kpeople/
 %_K4lib/*plugin.so
-%_K4lib/imports/org/kde/people/
+#%_K4lib/imports/org/kde/people/
 %_K4srv/*.desktop
 %_K4srvtyp/*.desktop
 
@@ -97,8 +95,14 @@ Requires: %name-common = %EVR
 %_K4includedir/kpeople/
 %_K4includedir/KPeople/
 %_K4link/lib*.so
-%_K4apps/cmake/modules/*.cmake
+%_libdir/cmake/KPeople
 
 %changelog
+* Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
+- new version
+
+* Tue Dec 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial package

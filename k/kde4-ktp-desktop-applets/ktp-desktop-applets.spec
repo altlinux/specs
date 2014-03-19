@@ -3,7 +3,7 @@
 
 %define rname ktp-desktop-applets
 Name: kde4-ktp-desktop-applets
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,12 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
+- new version
+
+* Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 
