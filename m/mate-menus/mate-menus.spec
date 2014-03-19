@@ -1,28 +1,25 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
-Version:        1.6.0
-Release:        alt1_5
+Version:        1.8.0
+Release:        alt1_1
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
-Source1: 		mate-preferences-categories.menu
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+Source1:        mate-preferences-categories.menu
 
-# patch in upstream
-# https://github.com/mate-desktop/mate-menus/commit/e5734e2b6017c36fca8ab2403ed6cabfa7ef0d23
-Patch0:         mate-menus_preferences-menu.patch
-
+BuildRequires:  chrpath
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  python-devel
 
-Requires:		libmate-menus = %{version}-%{release}
+Requires:       libmate-menus = %{version}-%{release}
 
 # we don't want to provide private python extension libs
 %{echo 
@@ -63,15 +60,13 @@ Development files for mate-menus
 
 %prep
 %setup -q
-%patch0 -p1 -b .preferences
 
 # fedora specific
 # fix for usage of multimedia-menus package
 sed -i -e '/<!-- End Other -->/ a\  <MergeFile>applications-merged/multimedia-categories.menu</MergeFile>' layout/mate-applications.menu
-
-NOCONFIGURE=1 ./autogen.sh
 %patch33 -p0
 %patch34 -p1
+
 
 
 %build
@@ -84,11 +79,14 @@ make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
+
 install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/xdg/menus
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
-%find_lang %{name}
+chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
+
+%find_lang %{name} --with-gnome --all-name
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -111,6 +109,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_5
 - new fc release
 
