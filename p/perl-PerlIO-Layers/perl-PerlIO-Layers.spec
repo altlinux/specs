@@ -1,49 +1,51 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(PerlIO.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-PerlIO-Layers
 Version:        0.011
-Release:        alt1
+Release:        alt1_1
 Summary:        Querying your file handle capabilities
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/PerlIO-Layers/
-Source:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/PerlIO-Layers-%{version}.tar.gz
+BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(PerlIO.pm)
 BuildRequires:  perl(XSLoader.pm)
 # Tests
 BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(IO/Handle.pm)
+BuildRequires:  perl(IPC/Open3.pm)
 BuildRequires:  perl(Test/More.pm)
-# Optional tests
-BuildRequires:  perl(Test/Script.pm)
 
 
 Source44: import.info
 
 %description
-Perl file handles are implemented as a stack of layers, with the bottom-
-most usually doing the actual IO and the higher ones doing buffering,
-encoding/decoding or transformations. PerlIO::Layers allows you to query
-the file handle properties concerning these layers.
+Perl file handles are implemented as a stack of layers, with the bottom-most
+usually doing the actual IO and the higher ones doing buffering,
+encoding/decoding or transformations. PerlIO::Layers allows you to query the
+file handle properties concerning these layers.
 
 %prep
 %setup -q -n PerlIO-Layers-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -55,6 +57,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/PerlIO*
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
 - automated CPAN update
 
