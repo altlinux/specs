@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Tue Mar 18 2014 Led <led@altlinux.ru> 3.10.33-alt4
+- enabled:
+  + FRAMEBUFFER_CONSOLE_ROTATION
+
 * Thu Mar 13 2014 Led <led@altlinux.ru> 3.10.33-alt3
 - updated:
   + fix-drivers-gpu-drm--i915
