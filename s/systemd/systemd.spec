@@ -39,7 +39,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 210
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -978,7 +978,6 @@ update_chrooted all
 /lib/udev/rules.d/73-seat-late.rules
 /lib/udev/rules.d/99-systemd.rules
 /%_lib/security/pam_systemd.so
-%_rpmlibdir/systemd-tmpfiles.filetrigger
 %_man1dir/*
 %exclude %_man1dir/init.*
 %exclude %_man1dir/journalctl.*
@@ -1100,6 +1099,7 @@ update_chrooted all
 
 %files utils
 /sbin/systemd-tmpfiles
+%_rpmlibdir/systemd-tmpfiles.filetrigger
 %_unitdir/systemd-tmpfiles-clean.service
 %_unitdir/systemd-tmpfiles-setup.service
 %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
@@ -1282,6 +1282,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Mar 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:210-alt3
+- systemd-tmpfiles.filetrigger:
+ + Skip filetrigger if root is fake (e.g. in hasher) (ALT#29895).
+ + Move to utils subpackage.
+
 * Fri Mar 07 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt2
 - snapshot of systemd-stable/v210-stable
 - update bash3 completions
