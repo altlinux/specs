@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mysql_config /usr/bin/pg_config /usr/bin/re2c libssl-devel
+BuildRequires: /usr/bin/mysql_config /usr/bin/pg_config /usr/bin/re2c gcc-c++ libssl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 19
+%define fedora 20
 Name:           libzdb
-Version:        2.8.1
-Release:        alt3_5
+Version:        3.0
+Release:        alt1_1
 Summary:        Small, fast, and easy to use database API
 
 Group:          System/Libraries
@@ -58,11 +58,15 @@ Developer header files & libraries for libzdb database API.
 %files devel
 %{_includedir}/zdb
 %{_libdir}/%{name}.so
+%{_libdir}/pkgconfig/zdb.pc
 %doc doc/api-docs
 
 
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt3_5
 - update to new release by fcimport
 
