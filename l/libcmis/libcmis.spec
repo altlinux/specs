@@ -1,7 +1,7 @@
 
 Name: libcmis
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: A C++ client library for the CMIS interface
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
@@ -70,6 +70,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Thu Mar 20 2014 Fr. Br. George <george@altlinux.ru> 0.4.1-alt2
+- fix incorrectly formed patch
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.4.1-alt1
 - new version
 

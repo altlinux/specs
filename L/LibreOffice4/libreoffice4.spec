@@ -1,15 +1,17 @@
-# 4.1.4.2
-%define with_forky yes
+# 4.2.3.1
+%def_with forky
+%def_with parallelism
+%def_without fetch
 
 Name: LibreOffice4
-Version: 4.1
-%define urelease 4.2
+Version: 4.2
+%define urelease 3.1
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt9
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -35,33 +37,36 @@ Source3:	libreoffice-translations-%uversion.tar.xz
 
 Source10:	libreoffice-ext_sources.%uversion.tar
 Source100:	forky.c
+Source200:	update_from_fc
 
-Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
-Patch2: libreoffice-4-alt-drop-gnome-open.patch
-Patch3: alt-002-tmpdir.patch
+Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
+Patch402: libreoffice-4-alt-drop-gnome-open.patch
+Patch403: alt-002-tmpdir.patch
 
-# FC patches
-Patch201: 0001-do-not-build-LibreOffice_Test.patch
-Patch202: 0001-Resolves-rhbz-968892-force-render-full-grapheme-with.patch
-Patch203: 0001-Related-rhbz-968892-discard-impossible-languages-for.patch
-Patch204: 0002-Related-rhbz-968892-discard-impossible-languages-for.patch
-Patch205: 0001-Resolves-fdo-48835-application-menu-for-LibreOffice.patch
-Patch206: 0001-Make-charmap.cxx-compile-with-icu-4.4.patch
-Patch207: 0001-select-sheet-menu-as-a-right-click-popup-to-the-prev.patch
-Patch208: 0001-Resolves-rhbz-1013480-crash-in-EditLineList-operator.patch
-Patch209: 0001-Resolves-rhbz-1015281-crash-on-clicking-custom-anima.patch
-Patch210: 0001-Resolves-rhbz-996162-apparent-NULL-bullet-font.patch
-Patch211: 0001-fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
-Patch212: 0001-WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
-Patch213: 0001-Related-rhbz-1020712-wrong-default-font-shown-in-edi.patch
-Patch214: 0001-Related-rhbz-919070-display-1-means-span-all-display.patch
-Patch215: 0001-fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
-Patch216: 0001-Resolves-rhbz-1021915-force-menubar-menus-to-be-up-d.patch
-Patch217: 0001-fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
-Patch218: 0001-resolved-fdo-56209-reviving-FilterFormulaParser.patch
-Patch219: 0001-update-libmwaw-to-0.2.0.patch
-Patch220: 0001-rhbz-1031989-Accept-pt-in-addition-to-deprecated-pt.patch
-Patch221: 0001-Related-rhbz-1014990-valgrind-reports-uninitialized-.patch
+# FC patches files
+Patch11: 0001-Related-rhbz-1032774-bodge-around-reported-NULL-valu.patch
+Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch13: 0001-Resolves-rhbz-912529-Kerkis-SmallCaps-shown-instead-.patch
+Patch14: 0001-Resolves-rhbz-1038189-refresh-printer-list-when-prin.patch
+Patch15: 0001-disable-firebird-unit-test.patch
+Patch16: 0001-never-run-autogen.sh.patch
+Patch17: 0001-Related-rhbz-1065807-rework-i66157-for-multiple-writ.patch
+Patch18: 0001-Resolves-rhbz-1065807-use-xdg-Templates-for-default-.patch
+Patch19: 0001-explictly-list-common-lang-independant-template-dir.patch
+Patch20: 0001-rhbz-1057977-avoid-use-of-invalidated-pointers.patch
+Patch21: 0001-fdo-75540-setProcessServiceFactory-must-be-called-be.patch
+Patch22: 0001-KDE-don-t-throw-on-TemplatePathVariable.patch
+Patch23: 0001-Resolves-rhbz-1007697-Update-on-a-Window-triggering-.patch
+Patch24: 0001-Wizards-should-look-for-templates-in-Template_intern.patch
+Patch25: 0001-actively-search-for-wizards-dir-in-all-internal-temp.patch
+Patch26: 0002-rhbz-988516-DOCX-import-fix-context-stack-when-impor.patch
+Patch27: 0001-fdo-74787-rhbz-1072553-Fix-deselection-problems-of-t.patch
+Patch28: 0001-rhbz-1072607-hopefully-fix-crash-in-SvxRuler-MouseMo.patch
+Patch29: 0001-rhbz-1043551-sw-avoid-division-by-0-in-Text-Grid-pai.patch
+Patch30: 0001-writerfilter-salvage-a-field-parameter-parsing-train.patch
+Patch31: 0001-RTF-import-fix-spurious-page-breaks-at-doc-end-relat.patch
+Patch32: 0001-Related-rhbz-1076264-intermittent-a11y-crash-in-calc.patch
+
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
@@ -76,10 +81,16 @@ BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-dev
 BuildRequires: xulrunner-devel
 BuildRequires: graphite2-devel
 BuildRequires: libexttextcat-devel
-BuildRequires: tomcat-servlet-3.0-api sac pentaho-libxml flute pentaho-reporting-flow-engine liblayout libloader libformula librepository libserializer libbase apache-commons-codec apache-commons-lang apache-commons-httpclient apache-commons-logging bsh rhino
+BuildRequires: sac pentaho-libxml flute pentaho-reporting-flow-engine liblayout libloader libformula librepository libserializer libbase apache-commons-codec apache-commons-lang apache-commons-httpclient apache-commons-logging bsh rhino
 
 # 4.1
 BuildRequires: libharfbuzz-devel liblangtag-devel
+
+# to remove in 4.2
+BuildRequires: tomcat-servlet-3.0-api
+
+# 4.2
+BuildRequires: libe-book-devel libetonyek-devel libfreehand-devel libabw-devel mdds-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -168,42 +179,52 @@ Provides additional %{langname} translations and resources for %name. \
 %{nil}
 
 %prep
-%ifdef with_forky
+%if_with forky
 echo Using forky
 %else
 echo Direct build
 %endif
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
-%patch1 -p0
-%patch2 -p1
-%patch3 -p2
+%patch401 -p0
+%patch402 -p1
+%patch403 -p2
 
-# FC (## -- unsuccsessful but seems meaningful)
-%patch201 -p1 -b .do-not-build-LibreOffice_Test.patch
-#patch202 -p1 -b .rhbz-968892-force-render-full-grapheme-with.patch
-#patch203 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
-#patch204 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
-%patch205 -p1 -b .fdo-48835-application-menu-for-LibreOffice.patch
-%patch206 -p1 -b .Make-charmap.cxx-compile-with-icu-4.4.patch
-%patch207 -p1 -b .select-sheet-menu-as-a-right-click-popup-to-the-prev.patch
-%patch208 -p1 -b .rhbz-1013480-crash-in-EditLineList-operator.patch
-%patch209 -p1 -b .rhbz-1015281-crash-on-clicking-custom-anima.patch
-#patch210 -p1 -b .rhbz-996162-apparent-NULL-bullet-font.patch
-#patch211 -p1 -b .fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
-#patch212 -p1 -b .WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
-#patch213 -p1 -b .rhbz-1020712-wrong-default-font-shown-in-edi.patch
-%patch214 -p1 -b .rhbz-919070-display-1-means-span-all-display.patch
-#patch215 -p1 -b .fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
-%patch216 -p1 -b .rhbz-1021915-force-menubar-menus-to-be-up-d.patch
-#patch217 -p1 -b .fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
-#patch218 -p1 -b .resolved-fdo-56209-reviving-FilterFormulaParser.patch
-#patch219 -p1 -b .update-libmwaw-to-0.2.0.patch
-#patch220 -p1 -b .rhbz-1031989-Accept-pt-in-addition-to-deprecated-pt.patch
-#patch221 -p1 -b .rhbz-1014990-valgrind-reports-uninitialized-.patch
+# FC patches applying (## -- unsuccsessful but seems meaningful)
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+#patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+#patch21 -p1
+%patch22 -p1
+#patch23 -p1
+%patch24 -p1
+%patch25 -p1
+#patch26 -p1
+#patch27 -p1
+#patch28 -p1
+#patch29 -p1
+#patch30 -p1
+#patch31 -p1
+%patch32 -p1
 
+
+# Long-term FC patches applying
 %patch300 -p1
 %patch301 -p1
 %patch302 -p1
+
+# Hack GCC_VERSION usage
+sed -i '
+s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1`/
+/if test "\${*GCC_VERSION}*" -lt 0401/,/fi/d
+/elif test "\${GCC_VERSION\?}" -ge 0403; then/d
+' configure.ac
 
 rm -fr %name-tnslations/git-hooks
 
@@ -233,19 +254,12 @@ test -r %conffile && . %conffile ||:
 /# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
 
 %build
-# XXX
-#sed -i 's/MDDS_CPPFLAGS="-std=gnu++0x"/MDDS_CPPFLAGS=""/
-#s/CXXFLAGS -std=gnu++0x/CXXFLAGS/
-#' configure.in
-# XXX
-#sed -i 's/test \([$]enable_mergelibs\)/test "\1"/' configure.in
-
-## --with-system-mozilla, --enable-ext-report-builder, --with-system-mysql, --enable-ext-mysql-connector
 ./autogen.sh \
         --with-vendor="ALT Linux Team" \
         --disable-gnome-vfs \
         --disable-odk \
         --disable-systray \
+	--disable-firebird-sdbc \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
@@ -254,16 +268,12 @@ test -r %conffile && . %conffile ||:
         --without-fonts \
         --without-myspell-dicts \
         --without-ppds \
-        --with-system-libs \
-        --without-system-mdds \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
-	\
-	--with-parallelism \
 	\
 	--enable-kde4 \
 	\
@@ -277,7 +287,6 @@ test -r %conffile && . %conffile ||:
 	--enable-ext-validator \
 	--enable-ext-watch-window \
 	--enable-ext-wiki-publisher \
-	--with-servlet-api-jar=/usr/share/java/tomcat-servlet-api.jar \
 	--enable-ext-ct2n \
 	--enable-ext-barcode \
   \
@@ -287,18 +296,24 @@ test -r %conffile && . %conffile ||:
 	--enable-gtk3 \
 	--enable-gstreamer \
 	--disable-gstreamer-0-10 \
+%if_with parallelism
+	--with-parallelism \
+%endif
+%if_with fetch
+	--enable-fetch-external
+%else
+        --with-system-libs \
 	--disable-fetch-external
+%endif
 
-# Far TODO --with-branding
-# --with-extra-buildid="Tinderbox: Win-x86@6, Branch:master, Date:2012-11-26_00.29.34"
-# --with-build-version="Built by Jim"
-
+%if_with forky
 # Make forky
 gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
+%endif
 
 %make bootstrap
 
-%ifdef with_forky
+%if_with forky
 # TODO prefect forky_max tune
 echo Using forky
 export forky_divider=16
@@ -388,7 +403,7 @@ install -D libreoffice.config %buildroot%conffile
 %_bindir/libreoffice%version
 %config %conffile
 %lodir/share/extensions/package.txt
-%lodir/share/extensions/presentation-minimizer
+#lodir/share/extensions/presentation-minimizer
 %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files standalone
@@ -414,7 +429,7 @@ install -D libreoffice.config %buildroot%conffile
 %files extensions
 %lodir/share/extensions/*
 %exclude %lodir/share/extensions/package.txt
-%exclude %lodir/share/extensions/presentation-minimizer
+#exclude %lodir/share/extensions/presentation-minimizer
 
 %files mimetypes
 %_datadir/mime-info/*
@@ -430,6 +445,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt1
+- Version up
+
 * Tue Feb 04 2014 Fr. Br. George <george@altlinux.ru> 4.1-alt9
 - Merge -full package into general one
 - Buld with help (closes: #29735)
