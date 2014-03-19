@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:      libmkv
 Version:   0.6.5.1
-Release:   alt2_4
+Release:   alt2_5
 Summary:   An alternative to the official libmatroska library
 
 Group:     System/Libraries
@@ -10,16 +10,21 @@ URL:       https://github.com/saintdev/libmkv
 # https://github.com/saintdev/libmkv/tarball/0.6.5.1
 Source0:   %{name}-%{version}.tar.gz
 
+# From HandBrake sources
+Patch0:    A01-hbmv-pgs.patch
+
+
 BuildRequires: autoconf automake libtool
 Source44: import.info
 
 %description
 This library is meant to be an alternative to the official libmatroska library.
-It is writen in plain C, and is intended to be very portable.
+It is written in plain C, and is intended to be very portable.
 
 %prep
 %setup -q -n saintdev-libmkv-d2906c0
 
+%patch0 -p1 -b .hbmv_pgm
 
 %build
 # bug in autotools requires missing m4 directory
@@ -52,6 +57,9 @@ development files.
 %{_libdir}/libmkv.so
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_5
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_4
 - update to new release by fcimport
 
