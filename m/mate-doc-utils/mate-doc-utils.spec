@@ -6,16 +6,21 @@ BuildRequires: python-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-doc-utils
 Summary:        MATE Desktop doc utils
-Version:        1.6.1
-Release:        alt1_2
+Version:        1.6.2
+Release:        alt1_1
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+BuildArch:      noarch
 
-#For users upgrading from the unofficial MATE desktop Fedora repo
-Obsoletes: mate-doc-utils-stylesheets < %{version}-%{release}
-Provides: mate-doc-utils-stylesheets = %{version}-%{release}
+BuildRequires:  mate-common
+BuildRequires:  pkgconfig(libxslt)
+BuildRequires:  pkgconfig(rarian)
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  python-module-libxml2
 
+Requires:       mate-common
+Requires:       gnome-doc-utils
 # for /usr/share/aclocal
 Requires: automake
 # for the validation with xsltproc to use local dtds
@@ -26,16 +31,9 @@ Requires: xml-common
 # for /usr/share/xml/mallard
 Requires: gnome-doc-utils-xslt
 
-BuildArch:      noarch
-
-BuildRequires:  mate-common
-BuildRequires:  pkgconfig(libxslt)
-BuildRequires:  pkgconfig(rarian)
-BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(gnome-doc-utils)
-
-Requires:       mate-common
-Requires:       gnome-doc-utils
+#For users upgrading from the unofficial MATE desktop Fedora repo
+Obsoletes: mate-doc-utils-stylesheets < %{version}-%{release}
+Provides: mate-doc-utils-stylesheets = %{version}-%{release}
 Source44: import.info
 Patch33: mate-doc-utils-0.14.0-package.patch
 
@@ -54,17 +52,18 @@ XSLT style sheets that were once distributed with Yelp.
 make %{?_smp_mflags} V=1
 
 %install
-make DESTDIR=%{buildroot} install
-%find_lang %{name}
+%{makeinstall_std}
+
 #Remove unnecessary python sitepackages provided by gnome-doc-utils
 rm -rf $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/*
 rm -rf $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/xml2po/
-rm -rf %{buildroot}/%{_mandir}/man1/*
+rm -rf $RPM_BUILD_ROOT/%{_mandir}/man1/*
 rm -rf $RPM_BUILD_ROOT/%{_datadir}/xml/mallard
 rm -rf $RPM_BUILD_ROOT/%{_bindir}/xml2po
 rm -rf $RPM_BUILD_ROOT/%{_datadir}/pkgconfig/xml2po.pc
-#Debian script not needed
-rm -rf $RPM_BUILD_ROOT/%{_datadir}/mate-doc-utils/mate-debian.sh
+
+%find_lang %{name}
+
 
 %files -f %{name}.lang
 %doc AUTHORS README NEWS COPYING COPYING.GPL COPYING.LGPL
@@ -79,7 +78,11 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/mate-doc-utils/mate-debian.sh
 %{_datadir}/xml/mate
 %{_datadir}/pkgconfig/mate-doc-utils.pc
 
+
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 
