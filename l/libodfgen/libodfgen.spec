@@ -1,6 +1,6 @@
 
 Name: libodfgen
-Version: 0.0.2
+Version: 0.0.4
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libwpg-0.2) pkgconfig(libwpd-0.9)
+BuildRequires: libetonyek-devel doxygen
 
 %description
 %name is a library for generating ODF (text and vector drawing formats
@@ -46,10 +47,14 @@ mkdir -p m4
 
 
 %files devel
+%doc %_defaultdocdir/%name
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.0.4-alt1
+- new version
+
 * Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.0.2-alt1
 - initial build
