@@ -3,13 +3,14 @@ BuildRequires: /usr/bin/pkg-config
 # END SourceDeps(oneline)
 Name:           amora
 Version:        1.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        A mobile remote assistant
 
 Group:          Communications
 License:        GPLv2+
 URL:            http://code.google.com/p/amora
 Source0:        http://amora.googlecode.com/files/amora-server-%{version}.tar.gz
+Patch0:         amora-aarch64.patch
 
 BuildRequires:  libbluez-devel
 BuildRequires:  libdbus-devel
@@ -34,6 +35,8 @@ http://code.google.com/p/amora/
 
 %prep
 %setup -q -n amora-server-%{version}
+#patch to build on aarch64, upstream notified to use autoconf 2.69
+%patch0 -p 1
 
 
 %build
@@ -52,6 +55,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11
 - update to new release by fcimport
 
