@@ -1,6 +1,8 @@
+%def_disable openswan
+
 Name: kde4-plasma-nm
 Version: 0.9.3.3
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Plasma applet written in QML for managing network connections
@@ -23,6 +25,23 @@ BuildRequires: pkgconfig(ModemManager) pkgconfig(NetworkManager) pkgconfig(libnm
 %description
 Plasma applet and editor for managing your network connections in KDE 4 using
 the default NetworkManager service.
+
+%package maxi
+Group: Graphical desktop/KDE
+Summary: Mobile support for %name
+Obsoletes: plasma-applet-networkmanager
+Requires: %name-connect-mobile
+Requires: %name-connect-openvpn
+Requires: %name-connect-vpnc
+Requires: %name-connect-openconnect
+%if_enabled openswan
+Requires: %name-connect-openswan
+%endif
+Requires: %name-connect-strongswan
+Requires: %name-connect-l2tp
+Requires: %name-connect-pptp
+%description maxi
+%summary.
 
 %package connect-mobile
 Group: Graphical desktop/KDE
@@ -156,9 +175,11 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4lib/plasmanetworkmanagement_openconnectui.so
 %_K4srv/plasmanetworkmanagement_openconnectui.desktop
 
-#%files connect-openswan -f plasmanetworkmanagement_openswanui.lang
-#%_K4lib/plasmanetworkmanagement_openswanui.so
-#%_K4srv/plasmanetworkmanagement_openswanui.desktop
+%if_enabled openswan
+%files connect-openswan -f plasmanetworkmanagement_openswanui.lang
+%_K4lib/plasmanetworkmanagement_openswanui.so
+%_K4srv/plasmanetworkmanagement_openswanui.desktop
+%endif
 
 %files connect-strongswan -f plasmanetworkmanagement_strongswanui.lang
 %_K4lib/plasmanetworkmanagement_strongswanui.so
@@ -173,6 +194,10 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt3
+- add maxi subpackage
+- obsolete plasma-applet-networkmanager
+
 * Tue Mar 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt2
 - add fix for new openconnect
 
