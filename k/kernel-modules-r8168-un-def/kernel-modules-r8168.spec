@@ -1,5 +1,5 @@
 %define module_name	r8168
-%define module_version	8.037.00
+%define module_version	8.038.00
 %define module_release	alt1
 
 %define flavour		un-def
@@ -60,6 +60,9 @@ install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Mar 19 2014 Nazarov Denis <nenderus@altlinux.org> 8.038.00-alt1
+- Version 8.038.00
 
 * Tue Oct 01 2013 Nazarov Denis <nenderus@altlinux.org> 8.037.00-alt1
 - Version 8.037.00
