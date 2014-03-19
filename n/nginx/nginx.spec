@@ -15,8 +15,8 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.4.5
-Release: alt2
+Version: 1.4.7
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -265,6 +265,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Mar 19 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt1
+- 1.4.7
+- CVE-2014-0133
+
 * Tue Mar 04 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.5-alt2
 - add nginx_rtmp module
 
