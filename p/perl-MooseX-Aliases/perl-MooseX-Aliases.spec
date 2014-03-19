@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Moose/Exporter.pm) perl(Scalar/Util.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1
+Release:        alt1_1
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/MooseX-Aliases/
-Source:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
 BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Moose.pm)
+BuildRequires:  perl(Moose/Exporter.pm)
 BuildRequires:  perl(Moose/Role.pm)
 BuildRequires:  perl(Moose/Util/TypeConstraints.pm)
 BuildRequires:  perl(Pod/Coverage/TrustPod.pm)
+BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/EOL.pm)
 BuildRequires:  perl(Test/Fatal.pm)
@@ -27,7 +29,6 @@ BuildRequires:  perl(Test/NoTabs.pm)
 BuildRequires:  perl(Test/Output.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(Test/Requires.pm)
 BuildRequires:  perl(Test/Script.pm)
 BuildRequires:  perl(warnings.pm)
 Requires:       perl(Moose.pm) >= 1.09
@@ -54,15 +55,19 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 RELEASE_TESTING=1 make test
 
 %files
 %doc Changes LICENSE README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
