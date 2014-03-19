@@ -4,17 +4,20 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgcon
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-dialogs
-Version:        1.6.0
-Release:        alt1_2
+Version:        1.8.0
+Release:        alt1_1
 Summary:        Displays dialog boxes from shell scripts
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+
+# To generate tarball
+# wget http://git.mate-desktop.org/%%{name}/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
+#Source0: http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
+
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
 BuildRequires:  gtk2-devel
 BuildRequires:  mate-common
-BuildRequires:  mate-doc-utils
-BuildRequires:  rarian-compat
 BuildRequires:  libnotify-devel
 Source44: import.info
 
@@ -24,33 +27,30 @@ Displays dialog boxes from shell scripts.
 %prep
 %setup -q
 
-
 %build
-NOCONFIGURE=1 ./autogen.sh
-
-%configure --disable-static \
-           --disable-scrollkeeper 
+%configure --disable-scrollkeeper \
+           --with-gtk=2.0
 
 make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
-%find_lang %{name} --with-gnome
+%find_lang %{name}
 
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
-%{_bindir}/gdialog
 %{_bindir}/matedialog
 %{_mandir}/man1/*
-%{_datadir}/mate/help/matedialog
-%{_datadir}/omf/matedialog
 %{_datadir}/matedialog
-%exclude %_bindir/gdialog
+%{_datadir}/help/*/matedialog
 
 %changelog
+* Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 
