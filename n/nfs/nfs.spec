@@ -1,5 +1,5 @@
 Name: nfs
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 Epoch: 1
 
@@ -11,9 +11,8 @@ Url: http://nfs.sourceforge.net/
 Source0: %name-%version-%release.tar
 
 BuildRequires: libblkid-devel libevent-devel libnfsidmap-devel >= 0.23 libwrap-devel
-BuildRequires: libkrb5-devel librpcsecgss-devel >= 0.19 libsqlite3-devel
+BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
-BuildRequires: libdevmapper-devel
 
 %package clients
 Summary: The Linux NFS client
@@ -221,8 +220,6 @@ touch /var/lock/subsys/rpc.svcgssd
 /sbin/osd_login
 %_bindir/showmount
 %_sbindir/rpcdebug
-%_sbindir/gss_clnt_send_err
-%_sbindir/gss_destroy_creds
 
 %_man5dir/nfs.*
 %_man8dir/rpcdebug.*
@@ -237,6 +234,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Thu Mar 20 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.9-alt1
+- 1.2.9 released
+
 * Tue Apr 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.8-alt1
 - 1.2.8 released
 
