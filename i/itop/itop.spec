@@ -2,7 +2,7 @@
 
 
 Name: itop
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 
@@ -65,7 +65,7 @@ PHP5 dependencies for %name
 install -pD -m0644 %_sourcedir/apache.conf %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
-# install glpi
+# install itop
 mkdir -p %buildroot%installdir
 mkdir -p %buildroot%installdir/conf
 mkdir -p %buildroot%installdir/data
@@ -139,6 +139,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Wed Dec 18 2013 Pavel Zilke <zidex at altlinux dot org> 2.0.2-alt1
+- New version 2.0.2
+
 * Sat Jun 15 2013 Pavel Zilke <zidex at altlinux dot org> 2.0.1-alt1
 - Initial build for ALT Linux
 
