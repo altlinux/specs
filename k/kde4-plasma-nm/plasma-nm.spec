@@ -2,7 +2,7 @@
 
 Name: kde4-plasma-nm
 Version: 0.9.3.3
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: Plasma applet written in QML for managing network connections
@@ -29,6 +29,7 @@ the default NetworkManager service.
 %package maxi
 Group: Graphical desktop/KDE
 Summary: Mobile support for %name
+BuildArch: noarch
 Obsoletes: plasma-applet-networkmanager
 Requires: %name-connect-mobile
 Requires: %name-connect-openvpn
@@ -134,6 +135,8 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %K4find_lang --with-kde plasmanetworkmanagement_pptpui
 
 
+%files maxi
+
 %files -f %name.lang
 # kde-nm-connection-editor
 %_K4bindir/kde-nm-connection-editor
@@ -194,6 +197,9 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Thu Mar 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt4
+- fix maxi subpackage
+
 * Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt3
 - add maxi subpackage
 - obsolete plasma-applet-networkmanager
