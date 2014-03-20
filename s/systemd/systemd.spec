@@ -39,7 +39,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 210
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1282,6 +1282,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Mar 20 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt4
+- v210-stable snapshot (28be65e12016d365783ac9646bf588ec68352b75)
+
 * Wed Mar 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:210-alt3
 - systemd-tmpfiles.filetrigger:
  + Skip filetrigger if root is fake (e.g. in hasher) (ALT#29895).
