@@ -4,7 +4,7 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
@@ -149,7 +149,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python
+%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python --disable-gcrypt-pbkdf2
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -216,6 +216,10 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Thu Mar 20 2014 Alexey Shabalin <shaba@altlinux.ru> 1.6.4-alt1
+- 1.6.4
+- Unpatched PBKDF2 in gcrypt is slow, disable it and use internal one
+
 * Mon Dec 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.3-alt1
 - 1.6.3
 
