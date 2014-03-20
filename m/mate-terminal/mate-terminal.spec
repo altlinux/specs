@@ -1,15 +1,15 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(vte-2.90) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-gettextize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(vte-2.90) pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
-Version:        1.6.1
-Release:        alt1_11
+Version:        1.8.0
+Release:        alt1_1
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
 #Default to black bg white fg, unlimited scrollback, turn off use theme default
 Patch0:        mate-terminal_better_defaults.patch
@@ -19,12 +19,10 @@ BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel
 BuildRequires: gtk2-devel
 BuildRequires: libSM-devel
-BuildRequires: mate-doc-utils
 BuildRequires: mate-common
-BuildRequires: rarian-compat
-BuildRequires: librarian-devel
 BuildRequires: libvte-devel
 
+# needed to get a gsettings schema, rhbz #908105
 Requires:      libmate-desktop
 Requires:      gsettings-desktop-schemas
 Source44: import.info
@@ -38,25 +36,24 @@ clickable URLs.
 %prep
 %setup -q
 %patch0 -p1
-NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static                \
            --with-gtk=2.0                  \
-           --disable-scrollkeeper          \
            --disable-schemas-compile       
 
 make %{?_smp_mflags} V=1
 
 
 %install
-make DESTDIR=%{buildroot} install
-%find_lang %{name}
+%{makeinstall_std}
 
-desktop-file-install							\
-	--delete-original						\
-	--dir=%{buildroot}%{_datadir}/applications			\
+desktop-file-install                                                    \
+        --delete-original                                               \
+        --dir=%{buildroot}%{_datadir}/applications                      \
 %{buildroot}%{_datadir}/applications/mate-terminal.desktop
+
+%find_lang %{name} --with-gnome --all-name
 # alternatives
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
@@ -66,16 +63,19 @@ EOF
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README ChangeLog
-%{_mandir}/man1/*
 %{_bindir}/mate-terminal
-%{_datadir}/mate-terminal
-%{_datadir}/mate/help/mate-terminal
-%{_datadir}/omf/mate-terminal
+%{_bindir}/mate-terminal.wrapper
+%{_datadir}/mate-terminal/
 %{_datadir}/applications/mate-terminal.desktop
 %{_datadir}/glib-2.0/schemas/org.mate.terminal.gschema.xml
+%{_mandir}/man1/*
 %_altdir/%name
 
+
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Sat Aug 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_11
 - new fc release
 
