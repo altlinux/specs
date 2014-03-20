@@ -1,12 +1,12 @@
 Name: luajit
-Version: 2.0.1
+Version: 2.0.3
 Release: alt1
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
 Group: Development/Other
 Url: http://luajit.org
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Packager: Vladimir Didenko <cow@altlinux.org>
 # git://git.altlinux.org/gears/l/luajit.git
 Source: %name-%version.tar
 Requires: lib%name = %EVR
@@ -73,6 +73,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %_libdir/*.a
 
 %changelog
+* Thu Mar 20 2014 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- new version
+
 * Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
 - NMU: updated v2.0.1-fixed-14-gb1327bc, fixed build.
 
