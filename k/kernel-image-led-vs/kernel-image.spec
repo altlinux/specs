@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,12 @@ done)
 
 
 %changelog
+* Fri Mar 21 2014 Led <led@altlinux.ru> 3.10.33-alt7
+- updated:
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-drm--ttm
+  + fix-virt-kvm--kvm_amd
+
 * Thu Mar 20 2014 Led <led@altlinux.ru> 3.10.33-alt6
 - added:
   + fix-net-netfilter--nf_conntrack_proto_dccp (CVE-2014-2523)
