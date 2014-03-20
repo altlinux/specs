@@ -3,23 +3,39 @@ Group: Graphical desktop/Other
 BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%global _internal_version  3fc43dd
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-themes
+%define version 1.8.1
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+#%%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.8
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit 5a900efff53ab69e6427c71ecae859c07618774a}
+%{!?rel_build:%global commit_date 20140304}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-themes
-Version:        1.6.2
-Release:        alt1_0.2.git%{_internal_version}
+Version:        %{branch}.1
+Release:        alt1_0.1.git20140304.5a900ef
+#Release:        1%{?dist}
 Summary:        MATE Desktop themes
 License:        GPLv2+
 URL:            http://mate-desktop.org
 
-# To generate tarball
-# wget http://git.mate-desktop.org/mate-themes/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
-
-Source0:       http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
+# for downloading the tarball use 'spectool -g -R mate-themes.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  icon-naming-utils
 BuildRequires:  mate-common
-BuildRequires:  mate-doc-utils
 BuildRequires:  mate-icon-theme-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  libgdk-pixbuf-devel
@@ -39,8 +55,11 @@ MATE Desktop themes
 
 
 %prep
-%setup -q -n %{name}-%{_internal_version}
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
+# needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
+
 
 %build
 %configure --enable-all-themes   \
@@ -51,10 +70,12 @@ make %{?_smp_mflags} V=1
 
 
 %install
-make DESTDIR=%{buildroot} install
+%{makeinstall_std}
+
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
-%find_lang %{name}
+
+%find_lang %{name} --with-gnome --all-name
 
 
 %post
@@ -81,7 +102,8 @@ fi
 %doc AUTHORS COPYING README
 %{_datadir}/themes/GreenLaguna/
 %{_datadir}/themes/Menta/
-%{_datadir}/themes/Menta-Black/
+%{_datadir}/themes/BlueMenta/
+%{_datadir}/themes/BlackMenta/
 %{_datadir}/themes/BlackMATE/
 %{_datadir}/themes/Fog/
 %{_datadir}/themes/PrintLarge/
@@ -112,6 +134,9 @@ fi
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_0.1.git20140304.5a900ef
+- new fc release
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_0.2.git3fc43dd
 - new fc release
 
