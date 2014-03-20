@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 4.7.0
-Release: alt1
+Release: alt1.1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
@@ -22,6 +22,7 @@ capable of fully buffering both the the request and response in between Unicorn 
 %package doc
 Summary: Documentation files for %pkgname
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %pkgname
@@ -51,6 +52,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 4.7.0-alt1.1
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sat Dec 07 2013 Anton Gorlov <stalker@altlinux.ru> 4.7.0-alt1
 - update to  new version 
 

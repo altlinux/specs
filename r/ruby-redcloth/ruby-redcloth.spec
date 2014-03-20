@@ -2,7 +2,7 @@
 
 Name: ruby-redcloth
 Version: 4.2.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Textile parser for Ruby
 Group: Development/Ruby
@@ -19,12 +19,13 @@ BuildRequires: libruby-devel ruby-tool-setup
 
 %description
 RedCloth is a module for using Textile in Ruby. Textile is a text format.
-A very simple text format. Another stab at making readable text that can 
+A very simple text format. Another stab at making readable text that can
 be converted to HTML.
 
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name
@@ -55,6 +56,9 @@ find . -name '._*' -print0 |
 %ruby_ri_sitedir/RedCloth*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 4.2.2-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 4.2.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

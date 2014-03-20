@@ -60,7 +60,7 @@
 Name: vim
 %define branch 7.3
 Version: %branch.353
-Release: alt3
+Release: alt4
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1025,6 +1025,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu Mar 20 2014 Led <led@altlinux.ru> 4:7.3.353-alt4
+- Rebuilt with ruby-2.0.0-alt1
+- add upstream fixes for build with Ruby 2.0
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 4:7.3.353-alt3
 - built for perl 5.18
 

@@ -21,7 +21,7 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer.
 Name: obexftp
 Version: 0.23
-Release: alt5.git76127
+Release: alt5.git76127.1
 
 License: GPL
 Group: Communications
@@ -226,6 +226,9 @@ chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
 %endif
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.23-alt5.git76127.1
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt5.git76127
 - built for perl 5.18
 
@@ -341,5 +344,3 @@ chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
 
 * Tue Dec 17 2002 Grigory Milev <week@altlinux.ru> 0.9.3-alt1
 - initial build for ALT linux
-
-

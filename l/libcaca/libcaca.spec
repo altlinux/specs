@@ -1,6 +1,6 @@
 Name: libcaca
 Version: 0.99
-Release: alt13.beta17.1
+Release: alt13.beta17.2
 
 Summary: Text mode graphics library
 Group: System/Libraries
@@ -137,6 +137,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.99-alt13.beta17.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 0.99-alt13.beta17.1
 - Rebuilt with ruby-1.9.3-alt1
 

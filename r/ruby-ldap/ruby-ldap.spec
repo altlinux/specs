@@ -2,7 +2,7 @@
 
 Name: ruby-ldap
 Version: 0.9.11
-Release: alt2.2
+Release: alt2.3
 
 Summary: Ruby LDAP library
 Group: Development/Ruby
@@ -50,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/LDAP*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.11-alt2.3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Mar 14 2014 Led <led@altlinux.ru> 0.9.11-alt2.2
 - ldif.rb: set encoding for fixing build with ruby >= 2.0
 
@@ -99,4 +102,3 @@ Documentation files for %name
 
 * Tue Nov 19 2002 Serge A. Volkov <vserge@altlinux.ru> 0.7.2-alt1
 - Initial packaging for ALT Linux Team
-

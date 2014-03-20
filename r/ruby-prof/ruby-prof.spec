@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 0.9.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
@@ -23,6 +23,7 @@ ruby-prof is a fast code profiler for Ruby.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name
@@ -52,6 +53,9 @@ Documentation files for %name
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.2-alt1.3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 0.9.2-alt1.2
 - fix ruby 2.0 compile error
 
@@ -66,4 +70,3 @@ Documentation files for %name
 
 * Mon Nov 10 2008 Sir Raorn <raorn@altlinux.ru> 0.6.1-alt1
 - Built for Sisyphus
-

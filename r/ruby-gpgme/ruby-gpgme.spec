@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 1.0.6
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby interface to GnuPG Made Easy
 Group: Development/Ruby
@@ -23,6 +23,7 @@ Ruby interface to GnuPG Made Easy (GPGME).
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name
@@ -49,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/GPGME*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 1.0.6-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.0.6-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
@@ -61,4 +65,3 @@ Documentation files for %name
 
 * Tue Aug 31 2004 Sir Raorn <raorn@altlinux.ru> 0.2-alt1
 - Built for Sisyphus
-

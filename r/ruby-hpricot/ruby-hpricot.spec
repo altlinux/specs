@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.8
-Release: alt1.2
+Release: alt1.3
 
 Summary: A Fast, Enjoyable HTML Parser for Ruby
 Group: Development/Ruby
@@ -27,6 +27,7 @@ you.)  The XPath and CSS parser, in fact, is based on John Resig's JQuery.
 %package doc
 Summary: Documentation files for %name
 Group: Development/Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name.
@@ -72,6 +73,9 @@ done
 
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.8-alt1.3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Mar 14 2014 Led <led@altlinux.ru> 0.8-alt1.2
 - test: fixed for ruby >= 2.0
 
@@ -84,4 +88,3 @@ done
 
 * Wed Aug 20 2008 Sir Raorn <raorn@altlinux.ru> 0.5.140-alt1
 - Built for Sisyphus
-

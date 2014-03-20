@@ -2,7 +2,7 @@
 %define bname nokogiri
 Name: ruby-%bname
 Version: 1.6.1
-Release: alt1
+Release: alt2
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
@@ -99,6 +99,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 1.6.1-alt2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
@@ -133,4 +136,3 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 * Thu Sep 25 2008 Grigory Batalov <bga@altlinux.ru> 1.1.0-alt1
 - Initial build for ALT Linux.
-
