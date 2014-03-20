@@ -1,16 +1,40 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-Name:           mate-control-center
-Version:        1.6.1
-Release:        alt1_2
-Summary:        MATE Desktop control-center
-License:        LGPLv2+ and GPLv2+
-URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+%define fedora 21
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-control-center
+%define version 1.8.1
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.8
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit 922d0e0219b1bedcece8624e4b5fd7e15e7a9bd5}
+%{!?rel_build:%global commit_date 20131113}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
+Name:          mate-control-center
+Version:       %{branch}.1
+Release:       alt1_0
+#Release:       0.6%{?git_rel}%{?dist}
+Summary:       MATE Desktop control-center
+License:       LGPLv2+ and GPLv2+
+URL:           http://mate-desktop.org
+
+# for downloading the tarball use 'spectool -g -R mate-control-center.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
@@ -23,7 +47,6 @@ BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86misc-devel
 BuildRequires: mate-common
 BuildRequires: mate-desktop-devel
-BuildRequires: mate-doc-utils
 BuildRequires: mate-menus-devel
 BuildRequires: mate-settings-daemon-devel
 BuildRequires: mate-window-manager-devel
@@ -31,20 +54,25 @@ BuildRequires: libunique-devel
 
 Requires: gsettings-desktop-schemas
 Requires: icon-theme-hicolor
+# keyring support
+#%if 0%{?fedora} > 19
+#Requires: gnome-keyring
+#%else
+Requires: mate-keyring
+#%endif
 Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
-
-
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
 
 
 %description 
-MATE Control Center configures system settings such as themes, keyboards shortcuts, etc.
+MATE Control Center configures system settings such as themes,
+keyboards shortcuts, etc.
 
 %package filesystem
 Group: Graphical desktop/Other
-Summary: MATE Control Center directories
+Summary:      MATE Control Center directories
 # NOTE: this is an "inverse dep" subpackage. It gets pulled in
 # NOTE: by the main package an MUST not depend on the main package
 
@@ -56,7 +84,7 @@ utilities.
 
 %package devel
 Group: Development/C
-Summary:        Development files for mate-settings-daemon
+Summary:      Development files for mate-settings-daemon
 Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
 Requires: libslab-devel
 %description devel
@@ -84,16 +112,22 @@ MATE Control Center configures system settings such as themes, keyboards shortcu
 
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
+# To work around rpath
+autoreconf -fi
 %patch33 -p1
 %patch34 -p1
 
+# needed for git snapshots
+#NOCONFIGURE=1 ./autogen.sh
+
 %build
 autoreconf -fisv
-%configure --disable-static          \
+%configure                           \
+           --disable-static          \
            --disable-schemas-compile \
-           --disable-update-mimedb   \
-           --disable-scrollkeeper
+           --disable-update-mimedb
 
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
@@ -102,23 +136,23 @@ make %{?_smp_mflags} V=1
 
 
 %install
-make DESTDIR=%{buildroot} install
+%{makeinstall_std}
 
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
-desktop-file-install									\
-	--delete-original								\
-	--dir=%{buildroot}%{_datadir}/applications					\
+desktop-file-install                                \
+    --delete-original                               \
+    --dir=%{buildroot}%{_datadir}/applications      \
 %{buildroot}%{_datadir}/applications/*.desktop
 
 # delete mime cache
 rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 
-# remove needless gsettings convert file to avoid slow session start
+# remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome --all-name
 
 
 %files -f %{name}.lang
@@ -135,14 +169,12 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/mate-control-center/*
 %{_datadir}/mate/cursor-fonts/*.pcf
-%{_datadir}/mate/help/mate-control-center
 %{_datadir}/mime/packages/mate-theme-package.xml
 %{_datadir}/thumbnailers/mate-font-viewer.thumbnailer
-%{_datadir}/omf/mate-control-center
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
-%{_mandir}/man1/mate-about-me.1*
-%{_mandir}/man1/mate-appearance-properties.1*
-%{_mandir}/man1/mate-default-applications-properties.1*
+%{_mandir}/man1/mate-about-me.1.*
+%{_mandir}/man1/mate-appearance-properties.1.*
+%{_mandir}/man1/mate-default-applications-properties.1.*
 # %%files filesystem
 %dir %{_datadir}/mate-control-center
 %dir %{_datadir}/mate-control-center/keybindings
@@ -164,6 +196,10 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1-alt1_0
+- new fc release
+- TODO: drop mate-keyring
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.1-alt1_2
 - new fc release
 
