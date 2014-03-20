@@ -1,24 +1,20 @@
+BuildRequires: chrpath
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize /usr/bin/scrollkeeper-config gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libgtop-2.0) pkgconfig(xext) zlib-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libgtop-2.0) pkgconfig(xext) zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
-Version:        1.6.0
-Release:        alt1_7
+Version:        1.8.0
+Release:        alt1_1
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
-
-# upstream patch
-# https://github.com/mate-desktop/mate-utils/commit/a59fda7d006b856ac5982750f2ffdefd24191be0
-# fix rhbz #975199
-Patch0:         mate-utils_fix-save-path-selection_screenshot.patch
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
-BuildRequires: e2fsprogs-devel libe2fs-devel
+BuildRequires:  e2fsprogs-devel
 BuildRequires:  hardlink
 BuildRequires:  libcanberra-devel
 BuildRequires:  libgtop2-devel
@@ -26,15 +22,20 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
-BuildRequires:  mate-doc-utils
 BuildRequires:  mate-panel-devel
 BuildRequires:  libGL-devel
 BuildRequires:  popt-devel
-BuildRequires:  rarian-compat
 BuildRequires:  consolehelper
+BuildRequires:  yelp-tools
 
-Requires: libmate-desktop
+Requires: mate-dictionary = %{version}-%{release}
+Requires: mate-screenshot = %{version}-%{release}
+Requires: mate-search-tool = %{version}-%{release}
+Requires: mate-system-log = %{version}-%{release}
+Requires: mate-disk-usage-analyzer = %{version}-%{release}
 Source44: import.info
+Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
+Conflicts: mate-utils-libs < 1.5.0-alt2_1
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
 
@@ -43,10 +44,20 @@ The mate-utils package contains a set of small "desk accessory" utility
 applications for MATE, such as a dictionary, a disk usage analyzer,
 a screen-shot tool and others.
 
+%package common
+Group: File tools
+Summary: Common files for %{name}
+BuildArch: noarch
+%description common
+%{summary}.
+
 %package devel
 Group: Development/C
 Summary: Development files for mate-utils
-Requires:  %{name}%{?_isa} = %{version}-%{release}
+# short-lived mate-dictionary-devel subpkg
+Obsoletes: mate-dictionary-devel < 1.6.0-8
+#Provides:  mate-dictionary-devel = %{version}-%{release}
+Requires:  mate-dictionary%{?_isa} = %{version}-%{release}
 %description devel
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
@@ -54,67 +65,60 @@ needed to develop programs using the libraries contained in mate-utils.
 %package -n mate-system-log
 Group: File tools
 Summary: A log file viewer for the MATE desktop
+Requires: %{name}-common = %{version}-%{release}
 Requires: consolehelper
+# rhbz (#1016935)
+Requires: libmate-desktop
 %description -n mate-system-log
 An application that lets you view various system log files.
 
 %package -n mate-screenshot
 Group: File tools
 Summary: A utility to take a screen-shot of the desktop
-Requires: consolehelper
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop.
 
 %package -n mate-dictionary
 Group: File tools
 Summary: A dictionary for MATE Desktop
-Requires: consolehelper
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop.
-
-%package -n mate-dictionary-devel
-Group: File tools
-Summary: Development files for mate-utils
-Requires:  mate-dictionary%{?_isa} = %{version}-%{release}
-%description -n mate-dictionary-devel
-The mate-dictionary-devel package contains header files and other resources
-needed to develop programs using the libraries contained in mate-dictionary.
 
 %package -n mate-search-tool
 Group: File tools
 Summary: A file searching tool for MATE Desktop
+Requires: %{name}-common = %{version}-%{release}
 Requires: libmate-desktop
-
 %description -n mate-search-tool
 An application to search for files on your computer.
 
 %package -n mate-disk-usage-analyzer
 Group: File tools
 Summary: A disk usage analyzing tool for MATE Desktop
+Requires: %{name}-common = %{version}-%{release}
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage.
 
 %prep
 %setup -q
-%patch0 -p1 -b .save-path-selection
-NOCONFIGURE=1 ./autogen.sh
-
 
 %build
 %configure \
     --disable-static            \
-    --disable-scrollkeeper      \
     --disable-schemas-compile   \
     --enable-gdict-applet       \
     --enable-gtk-doc-html       \
     --enable-ipv6=yes           \
-    --disable-schemas-compile   \
+    --enable-maintainer-flags=no  \
+    --with-gtk=2.0              \
     --with-x
 
 make %{?_smp_mflags} V=1
 
 %install
-make DESTDIR=%{buildroot} install 
+%{makeinstall_std}
 
 # make mate-system-log use consolehelper until it starts using polkit
 mkdir -p %{buildroot}%{_sysconfdir}/pam.d
@@ -137,76 +141,39 @@ mkdir -p  %{buildroot}%{_sbindir}
 mv %{buildroot}%{_bindir}/mate-system-log %{buildroot}%{_sbindir}
 ln -s %{_bindir}/consolehelper %{buildroot}%{_bindir}/mate-system-log
 
-rm -fv $RPM_BUILD_ROOT%{_libdir}/*.la
-rm -fv $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/*.convert
+rm -fv %{buildroot}%{_libdir}/*.la
+rm -fv %{buildroot}%{_datadir}/MateConf/gsettings/*.convert
 
 desktop-file-install                          \
-  --remove-category="MATE"                    \
-  --add-category="X-Mate"                     \
   --delete-original                           \
   --dir %{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/*
 
-# save space by linking identical images in translated docs
-hardlink -c -v %{buildroot}%{_datadir}/mate/help
-
-%find_lang %{name} --with-gnome
-%find_lang mate-disk-usage-analyzer --with-gnome
-%find_lang mate-dictionary --with-gnome
-%find_lang mate-search-tool --with-gnome
-%find_lang mate-system-log --with-gnome
-
-cat mate-disk-usage-analyzer.lang >> %{name}.lang
-cat mate-dictionary.lang >> %{name}.lang
-cat mate-search-tool.lang >> %{name}.lang
+%find_lang %{name} --with-gnome --all-name
+%find_lang mate-disk-usage-analyzer --with-gnome --all-name
+%find_lang mate-dictionary --with-gnome --all-name
+%find_lang mate-search-tool --with-gnome --all-name
+%find_lang mate-system-log --with-gnome --all-name
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+	chrpath -d $i ||:
+done
 
 
-%files -f %{name}.lang
-%doc COPYING NEWS README
-%doc mate-dictionary/AUTHORS
-%doc mate-dictionary/README
-%doc baobab/AUTHORS
-%doc baobab/README
-%{_bindir}/mate-dictionary
-%{_bindir}/mate-panel-screenshot
-%{_bindir}/mate-screenshot
-%{_bindir}/mate-search-tool
-%{_bindir}/mate-disk-usage-analyzer
-%{_datadir}/applications/mate-dictionary.desktop
-%{_datadir}/applications/mate-screenshot.desktop
-%{_datadir}/applications/mate-search-tool.desktop
-%{_datadir}/applications/mate-disk-usage-analyzer.desktop
-%{_datadir}/mate-dict
-%{_datadir}/mate-dictionary
-%{_datadir}/mate-screenshot
-%{_datadir}/mate-disk-usage-analyzer
-%{_datadir}/pixmaps/mate-search-tool
-%{_libdir}/libmatedict.so.*
-%{_libexecdir}/mate-dictionary-applet
-%{_mandir}/man1/mate-dictionary.1*
-%{_mandir}/man1/mate-search-tool.1*
-%{_mandir}/man1/mate-screenshot.1*
-%{_mandir}/man1/mate-disk-usage-analyzer.1*
-%{_datadir}/mate/help/mate-dictionary
-%{_datadir}/mate/help/mate-disk-usage-analyzer
-%{_datadir}/mate/help/mate-search-tool
-%{_datadir}/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
-%{_datadir}/glib-2.0/schemas/org.mate.dictionary.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.mate.disk-usage-analyzer.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.mate.screenshot.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.mate.search-tool.gschema.xml
-%{_datadir}/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
-%{_datadir}/icons/mate/*/apps/baobab.*
+%files
+# empty
 
+%files common -f %{name}.lang
+%doc COPYING COPYING.libs
+%doc NEWS README
 
 %files devel
 %{_libdir}/libmatedict.so
 %{_libdir}/pkgconfig/mate-dict.pc
-%{_includedir}/mate-dict
-
+%{_includedir}/mate-dict/
+%{_datadir}/gtk-doc/html/mate-dict/
 
 %files -n mate-system-log -f mate-system-log.lang
-%doc COPYING
 %{_bindir}/mate-system-log
 %{_sbindir}/mate-system-log
 %{_sysconfdir}/security/console.apps/mate-system-log
@@ -214,60 +181,52 @@ cat mate-search-tool.lang >> %{name}.lang
 %{_datadir}/mate-utils/
 %{_datadir}/glib-2.0/schemas/org.mate.system-log.gschema.xml
 %{_datadir}/applications/mate-system-log.desktop
-%{_datadir}/mate/help/mate-system-log
-%{_mandir}/man1/mate-system-log.1.*
+%{_mandir}/man1/mate-system-log.1*
 
-%files -n mate-screenshot -f %{name}.lang
-%doc COPYING
+%files -n mate-screenshot
 %{_bindir}/mate-screenshot
 %{_bindir}/mate-panel-screenshot
 %{_datadir}/applications/mate-screenshot.desktop
 %{_datadir}/mate-screenshot
-%{_mandir}/man1/mate-screenshot.1.*
+%{_mandir}/man1/mate-screenshot.1*
 %{_datadir}/glib-2.0/schemas/org.mate.screenshot.gschema.xml
 
 %files -n mate-dictionary -f mate-dictionary.lang
-%doc COPYING
 %doc mate-dictionary/AUTHORS
 %doc mate-dictionary/README
 %{_bindir}/mate-dictionary
-%{_datadir}/mate-dict
-%{_datadir}/mate-dictionary
+%{_datadir}/applications/mate-dictionary.desktop
+%{_datadir}/mate-dict/
+%{_datadir}/mate-dictionary/
 %{_libexecdir}/mate-dictionary-applet
 %{_libdir}/libmatedict.so.*
-%{_mandir}/man1/mate-dictionary.1.*
-%{_datadir}/mate/help/mate-dictionary
+%{_mandir}/man1/mate-dictionary.1*
 %{_datadir}/glib-2.0/schemas/org.mate.dictionary.gschema.xml
 %{_datadir}/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
 %{_datadir}/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
 
-%files -n mate-dictionary-devel
-%{_libdir}/libmatedict.so
-%{_libdir}/pkgconfig/mate-dict.pc
-%{_includedir}/mate-dict
-
 %files -n mate-search-tool -f mate-search-tool.lang
-%doc COPYING
 %{_bindir}/mate-search-tool
 %{_datadir}/applications/mate-search-tool.desktop
-%{_mandir}/man1/mate-search-tool.1.*
-%{_datadir}/mate/help/mate-search-tool
+%{_mandir}/man1/mate-search-tool.1*
 %{_datadir}/glib-2.0/schemas/org.mate.search-tool.gschema.xml
+%{_datadir}/pixmaps/mate-search-tool/
 
 %files -n mate-disk-usage-analyzer -f mate-disk-usage-analyzer.lang
-%doc COPYING
 %doc baobab/AUTHORS
 %doc baobab/README
 %{_bindir}/mate-disk-usage-analyzer
 %{_datadir}/applications/mate-disk-usage-analyzer.desktop
 %{_datadir}/mate-disk-usage-analyzer
-%{_mandir}/man1/mate-disk-usage-analyzer.1.*
-%{_datadir}/mate/help/mate-disk-usage-analyzer
+%{_mandir}/man1/mate-disk-usage-analyzer.1*
 %{_datadir}/glib-2.0/schemas/org.mate.disk-usage-analyzer.gschema.xml
-%{_datadir}/icons/mate/*/apps/baobab.*
+%{_datadir}/icons/hicolor/*/apps/mate-disk-usage-analyzer.*
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_7
 - new fc release
 
