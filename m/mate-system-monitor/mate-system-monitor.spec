@@ -1,30 +1,27 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0)
+BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtkmm-3.0) pkgconfig(libgtop-2.0) pkgconfig(libwnck-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.6.1
+Version:        1.8.0
 Release:        alt1_1
 Summary:        Process and resource monitor
 
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
-BuildRequires: libgtop2-devel
+BuildRequires: libdbus-glib-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libmatewnck-devel
 BuildRequires: gtk2-devel
 BuildRequires: libgtkmm2-devel
-BuildRequires: rarian-compat
-BuildRequires: mate-icon-theme-devel
+BuildRequires: libgtop2-devel
 BuildRequires: librsvg-devel
+BuildRequires: libwnck-devel
 BuildRequires: libxml2-devel
-BuildRequires: mate-doc-utils
 BuildRequires: mate-common
-BuildRequires: libdbus-glib-devel
-BuildRequires: hardlink
+BuildRequires: mate-icon-theme-devel
 
 Requires: mate-desktop
 Source44: import.info
@@ -41,7 +38,7 @@ such as CPU and memory.
 %build
 %configure \
         --disable-static \
-        --disable-scrollkeeper \
+        --with-gtk=2.0 \
         --disable-schemas-compile 
 
 make %{?_smp_mflags} V=1
@@ -54,26 +51,24 @@ desktop-file-install --delete-original             \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
   $RPM_BUILD_ROOT%{_datadir}/applications/mate-system-monitor.desktop
 
-# save space by linking identical images in translated docs
-hardlink -c -v $RPM_BUILD_ROOT%{_datadir}/mate/help/%{name}
-
 # remove needless gsettings convert file
 rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome --all-name
 
 %files -f %{name}.lang
 %doc AUTHORS NEWS COPYING README
 %{_bindir}/mate-system-monitor
 %{_datadir}/applications/mate-system-monitor.desktop
-%{_datadir}/pixmaps/mate-system-monitor
+%{_datadir}/pixmaps/mate-system-monitor/
 %{_datadir}/glib-2.0/schemas/org.mate.system-monitor.*.xml
-%{_datadir}/mate/help/mate-system-monitor/
 %{_mandir}/man1/*
-%{_datadir}/omf/mate-system-monitor/
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 
