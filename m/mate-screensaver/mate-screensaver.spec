@@ -1,44 +1,72 @@
 Group: Toys
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libsystemd-login)
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 19
+%define fedora 21
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-screensaver
+%define version 1.8.0
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.8
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit d5b35083e4de1d7457ebd937172bb0054e1fa089}
+%{!?rel_build:%global commit_date 20140125}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
 Name:           mate-screensaver
-Version:        1.6.1
-Release:        alt1_2
+Version:        %{branch}.0
+Release:        alt1_1
+#Release:        0.1%{?git_rel}%{?dist}
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+
+# for downloading the tarball use 'spectool -g -R mate-screensaver.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 Requires:       altlinux-freedesktop-menu-common
-Requires:       mate-keyring-pam
 
-BuildRequires:  gtk2-devel
+# switch to gnome-keyring > f19
+%if 0%{?fedora} > 19
+Requires:       pam_gnome-keyring
+%else
+Requires:       mate-keyring-pam
+%endif
+
 BuildRequires:  libdbus-glib-devel
-BuildRequires:  mate-menus-devel
-BuildRequires:  mate-desktop-devel
-BuildRequires:  pam-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gtk2-devel
+BuildRequires:  libX11-devel
 BuildRequires:  libXScrnSaver-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXmu-devel
-BuildRequires:  libmatekbd-devel
-BuildRequires:  libnotify-devel
-BuildRequires:  libGL-devel
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-BuildRequires:  mate-common
+BuildRequires:  libXtst-devel
 BuildRequires:  libXxf86misc-devel
 BuildRequires:  libXxf86vm-devel
-BuildRequires:  libXtst-devel
-BuildRequires:  desktop-file-utils
+BuildRequires:  libmatekbd-devel
+BuildRequires:  libnotify-devel
 BuildRequires:  mate-common
-BuildRequires:  libX11-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-menus-devel
+BuildRequires:  libGL-devel
+BuildRequires:  pam-devel
 BuildRequires:  systemd-devel
-Buildrequires:  xmlto
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
+BuildRequires:  xmlto
 Source44: import.info
-Patch33: gnome-screensaver-2.28.0-alt-pam.patch
+Patch33: mate-screensaver-1.8.0-alt-pam.patch
 Source45: unix2_chkpwd.c
 
 %description
@@ -56,21 +84,26 @@ Development files for mate-screensaver
 
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
 %patch33 -p1
 
+# needed for git snapshots
+#NOCONFIGURE=1 ./autogen.sh
+
 %build
-%configure \
-            --with-x \
-            --with-mit-ext \
-            --with-xf86gamma-ext \
-            --with-shadow \
-            --with-console-kit \
-            --enable-docbook-docs \
+%configure                          \
+            --with-x                \
+            --with-gtk=2.0          \
+            --disable-schemas-compile \
+            --enable-docbook-docs   \
+            --with-mit-ext          \
+            --with-xf86gamma-ext    \
+            --with-libgl            \
+            --with-shadow           \
             --enable-authentication-scheme=helper \
            --with-passwd-helper=%_libexecdir/%name/%name-chkpwd-helper \
-	   --enable-locking \
-            --with-systemd \
+	   --enable-locking        \
+            --with-systemd          \
             
 
 make %{?_smp_mflags} V=1
@@ -78,7 +111,7 @@ gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
 
 
 %install
-make DESTDIR=%{buildroot} install
+%{makeinstall_std}
 
 desktop-file-install --delete-original             \
   --dir %{buildroot}%{_datadir}/applications    \
@@ -92,15 +125,11 @@ desktop-file-install                                          \
 # remove needless gsetting convert file
 rm -f %{buildroot}%{_datadir}/MateConf/gsettings/org.mate.screensaver.gschema.migrate
 
-# move doc dir for > f19
-%if 0%{?fedora} > 19
-mkdir -p %{buildroot}%{_datadir}/doc/%{name}
-mv -f %{buildroot}%{_datadir}/doc/%{name}-%{version}/spec/mate-screensaver.html %{buildroot}%{_datadir}/doc/%{name}/mate-screensaver.html
-%else
-mv -f %{buildroot}%{_datadir}/doc/%{name}-%{version}/spec/mate-screensaver.html %{buildroot}%{_datadir}/doc/%{name}-%{version}/mate-screensaver.html
-%endif
+# fix versioned doc dir
+mkdir -p %{buildroot}%{_datadir}/doc/mate-screensaver
+mv %{buildroot}%{_datadir}/doc/mate-screensaver-%{version}/mate-screensaver.html %{buildroot}%{_datadir}/doc/mate-screensaver/mate-screensaver.html
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome --all-name
 install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 %files -f %{name}.lang
@@ -110,12 +139,13 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 %{_sysconfdir}/xdg/menus/mate-screensavers.menu
 %{_sysconfdir}/xdg/autostart/mate-screensaver.desktop
 %{_libexecdir}/mate-screensaver-*
-%{_libexecdir}/mate-screensaver
+%{_libexecdir}/mate-screensaver/
 %{_datadir}/applications/mate-screensaver-preferences.desktop
 %{_datadir}/applications/screensavers/*.desktop
-%{_datadir}/mate-screensaver
+%{_datadir}/mate-screensaver/
 %{_datadir}/backgrounds/cosmos/
 %{_datadir}/pixmaps/mate-logo-white.svg
+%{_datadir}/pixmaps/gnome-logo-white.svg
 %{_datadir}/desktop-directories/mate-screensaver.directory
 %{_datadir}/glib-2.0/schemas/org.mate.screensaver.gschema.xml
 %{_datadir}/mate-background-properties/cosmos.xml
@@ -128,6 +158,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 
