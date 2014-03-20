@@ -9,11 +9,11 @@
 
 Name: ruby
 %define lname lib%name
-%define branch 1.9
-%define ver_teeny 3
-%define _pl p545
+%define branch 2.0
+%define ver_teeny 0
+%define _pl p458
 Version: %branch.%ver_teeny
-Release: alt47
+Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -36,7 +36,7 @@ BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: tk-devel zlib-devel libyaml-devel
 BuildRequires: ruby ruby-stdlibs
-BuildRequires: rpm-build-ruby >= 1:0.1.2
+BuildRequires: rpm-build-ruby >= 1:0.1.3
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 
 %description
@@ -93,15 +93,15 @@ Summary: Standard Ruby libraries
 Group: Development/Ruby
 Requires: %lname = %version-%release
 Provides: %name-libs = %version-%release
-Provides: %name-json = 1.5.5
+Provides: %name-json = 1.7.7
 Obsoletes: %name-json
-Provides: %name-minitest = 2.5.1
+Provides: %name-minitest = 4.3.2
 Obsoletes: %name-minitest
 #Provides: %name-module-test-unit = 2.2.0
 #Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
 #Obsoletes: %name-racc-runtime
-Provides: %{name}gems = 1.8.23.2
+Provides: %{name}gems = 2.0.14
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
@@ -151,17 +151,17 @@ Summary: Ruby tools
 Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
-Provides: gem = 1.8.23.2
+Provides: gem = 2.0.14
 #Provides: testrb
-Provides: %name-rake = 0.9.2.2
-Provides: rake = 0.9.2.2
+Provides: %name-rake = 0.9.6
+Provides: rake = 0.9.6
 Obsoletes: %name-rake
 Provides: rdoc = %version-%release
 Obsoletes: rdoc < %version-%release
 %obsolete %name-tool-rdoc
 #Provides: %name-test-unit = 2.2.0
 #Obsoletes: %name-test-unit
-Provides: %{name}gems = 1.8.24
+Provides: %{name}gems = 2.0.14
 Obsoletes: %{name}gems
 
 %description tools
@@ -221,13 +221,15 @@ rm -f lib/rss/xmlscanner.rb
 # Remove unneeded shebang
 sed -i '/^#!/d' lib/minitest/spec.rb
 # More strict shebang
-sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' {lib/{abbrev,set},ext/tk/lib/tkextlib/pkg_checker}.rb
+sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' {lib/{abbrev,set},ext/tk/lib/tkextlib/pkg_checker}.rb bin/*
 # Remove $ruby_version from libs path
 sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
-sed -i 's|/\${ruby_version}||' template/%name.pc.in
+sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.in
 sed -i -r "s/File.join[[:blank:]]+(RbConfig::CONFIG\['ridir'\]),[[:blank:]]*version/\1/" lib/rdoc/ri/paths.rb
 sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
 sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
+# capi-docs
+sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' tool/rbinstall.rb
 
 
 %build
@@ -252,7 +254,7 @@ install -p -m 0755 %{S:1} %buildroot%_bindir/update-ri-cache
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
 mv %buildroot%_pkgconfigdir/%name{-%branch,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
-install -p -m 0644 COPYING* LEGAL NEWS README* ToDo %buildroot%_docdir/%name-%version/
+install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
 
 # RI filetrigger
 install -d -m 0755 %buildroot%_rpmlibdir
@@ -264,9 +266,9 @@ exec %_bindir/update-ri-cache %ridir/site
 __EOF__
 chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
 
-%define __ruby %buildroot%_bindir/%name
 %define ruby_libdir %libdir
 %define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch %buildroot%_bindir/%name
 export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch
 export LD_LIBRARY_PATH=%buildroot%_libdir
 
@@ -284,7 +286,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc %_docdir/%name-%version/NEWS
 %doc %_docdir/%name-%version/README
 %doc %_docdir/%name-%version/README.EXT
-%doc %_docdir/%name-%version/ToDo
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
 %_man1dir/%name.*
@@ -333,7 +334,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %files -n irb
-%doc doc/irb/irb.rd
 %lang(ja) %doc doc/irb/*.ja
 %_bindir/irb
 %_man1dir/irb.*
@@ -350,6 +350,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 2.0.0-alt1
+- 2.0.0 p458 upstream patchlevel
+
 * Mon Feb 24 2014 Led <led@altlinux.ru> 1.9.3-alt47
 - p545 upstream patchlevel
 

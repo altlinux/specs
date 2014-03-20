@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 0.2.6
-Release: alt1.2
+Release: alt1.3
 
 Summary: Ruby C bindings to libbzip2
 Group: Development/Ruby
@@ -38,6 +38,9 @@ Ruby C bindings to libbzip2.
 %ruby_sitearchdir/*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.2.6-alt1.3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sun Mar 16 2014 Led <led@altlinux.ru> 0.2.6-alt1.2
 - fixed build with ruby >= 2.0
 

@@ -1,6 +1,6 @@
 Name: libxml-ruby
 Version: 2.6.0
-Release: alt2
+Release: alt3
 Summary: Ruby language bindings for the GNOME Libxml2 XML toolkit
 Group: Development/Ruby
 License: MIT
@@ -60,6 +60,9 @@ gzip -9c HISTORY > %buildroot%_docdir/%name-%version/HISTORY.gz
 
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 2.6.0-alt3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 2.6.0-alt2
 - upstream fixes
 

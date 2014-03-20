@@ -2,7 +2,7 @@
 
 Name: ruby-pg
 Version: 0.9.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby interface to PostgreSQL RDBMS
 Group: Development/Ruby
@@ -26,6 +26,7 @@ but not tested at all.
 Summary: Documentation files for %name
 Group: Documentation
 Conflicts: ruby-postgres-doc
+BuildArch: noarch
 
 %description doc
 Documentation files for %name
@@ -55,6 +56,9 @@ mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
 %ruby_ri_sitedir/PG*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.0-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Sun Dec 08 2012 Led <led@altlinux.ru> 0.9.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed build doc
@@ -71,4 +75,3 @@ mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
 
 * Sun Aug 31 2008 Sir Raorn <raorn@altlinux.ru> 0.7.9.2008.08.17-alt1
 - Built for Sisyphus
-

@@ -2,7 +2,7 @@
 
 Name: %pkgname
 Version: 1.0.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: POSIX Message Queues for Ruby.
 Group: Development/Ruby
@@ -23,9 +23,10 @@ message queues, but provides similar functionality.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
 
 %prep
 %setup -q -n %pkgname-%version
@@ -55,6 +56,9 @@ Documentation files for %name
 %ruby_ri_sitedir/POSIX_MQ*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 1.0.0-alt2.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Thu Dec 06 2012 Led <led@altlinux.ru> 1.0.0-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
@@ -63,7 +67,3 @@ Documentation files for %name
 
 * Thu Aug 11 2011 Anton Gorlov <stalker@altlinux.ru> 1.0.0-alt1
 - initial build for ALTLinux
-
-
-
-

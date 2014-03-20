@@ -1,6 +1,6 @@
 Name: xapian-bindings
 Version: 1.2.16
-Release: alt1
+Release: alt1.1
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -80,6 +80,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 # - package docs/examples properly
 
 %changelog
+* Thu Mar 20 2014 Led <led@altlinux.ru> 1.2.16-alt1.1
+- Rebuilt with ruby-2.0.0-alt1
+
 * Thu Dec 05 2013 Michael Shigorin <mike@altlinux.org> 1.2.16-alt1
 - 1.2.16
 - merged standalone python-module-xapian and ruby-xapian packages

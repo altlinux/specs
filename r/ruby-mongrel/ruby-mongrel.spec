@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.1.5
-Release: alt6.2
+Release: alt6.3
 
 Summary: Simple Fast Mostly Ruby Web Server
 Group: Development/Ruby
@@ -28,6 +28,7 @@ server.
 %package doc
 Summary: Documentation files for %name
 Group: Development/Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name.
@@ -70,6 +71,9 @@ Documentation files for %name.
 
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 1.1.5-alt6.3
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Mar 14 2014 Led <led@altlinux.ru> 1.1.5-alt6.2
 - fixed Group for doc subpackage
 - disabled test_more_web_server and test_deflate for ruby >= 2.0
@@ -94,4 +98,3 @@ Documentation files for %name.
 
 * Wed Aug 27 2008 Sir Raorn <raorn@altlinux.ru> 1.1.5-alt1
 - Built for Sisyphus
-

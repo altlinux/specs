@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 0.7.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
@@ -27,7 +27,7 @@ Group: Documentation
 BuildArch: noarch
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
 
 %prep
 %setup -n %pkgname-%version
@@ -51,9 +51,11 @@ Documentation files for %name
 %ruby_ri_sitedir/Yajl*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.7.5-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 0.7.5-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
 * Sun Apr 11 2010 Alexey I. Froloff <raorn@altlinux.org> 0.7.5-alt1
 - Built for Sisyphus
-

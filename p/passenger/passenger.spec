@@ -9,7 +9,7 @@
 
 Name: passenger
 Version: 4.0.10
-Release: alt1
+Release: alt1.1
 
 Summary: Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нгинкс
@@ -189,6 +189,9 @@ fi
 %apache2_libexecdir/%real_name.so
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 4.0.10-alt1.1
+- Rebuilt with ruby-2.0.0-alt1
+
 * Wed Aug 14 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.10-alt1
 - Update to new 4.0.x release
 - Rename library and data directories from phusion-passenger to passenger

@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.4.6
-Release: alt2.1
+Release: alt2.2
 # It has to be newer than old ruby-module-racc-runtime 1.8 to workaround apt bug
 Serial: 1
 
@@ -39,9 +39,10 @@ by Racc.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
 
 %prep
 %setup -n %pkgname-%version
@@ -76,6 +77,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Racc*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 1:1.4.6-alt2.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 1:1.4.6-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
@@ -84,4 +88,3 @@ Documentation files for %name
 
 * Mon Jul 06 2009 Alexey I. Froloff <raorn@altlinux.org> 1:1.4.6-alt1.1
 - Built for Sisyphus
-

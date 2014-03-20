@@ -1,6 +1,6 @@
 Name: ruby-fcgi
 Version: 0.8.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: FastCGI for ruby
 Group: Development/Ruby
@@ -39,6 +39,9 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 %doc README README.signals
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.8.8-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.8.8-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 

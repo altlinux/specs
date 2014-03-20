@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.6.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
@@ -23,6 +23,7 @@ A Ruby foreign function interface.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation files for %name
@@ -52,6 +53,9 @@ sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layou
 %ruby_ri_sitedir/FFI*
 
 %changelog
+* Wed Mar 19 2014 Led <led@altlinux.ru> 0.6.3-alt1.2
+- Rebuilt with ruby-2.0.0-alt1
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 0.6.3-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed build
