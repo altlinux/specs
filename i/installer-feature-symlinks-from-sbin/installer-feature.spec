@@ -1,6 +1,6 @@
 Name: installer-feature-symlinks-from-sbin
 Version: 0.2
-Release: alt4
+Release: alt5
 
 Summary: Make some useful programs from /sbin and /usr/sbin available to user
 License: GPL
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Mar 20 2014 Andrey Cherepanov <cas@altlinux.org> 0.2-alt5
+- Add resolvconf
+
 * Tue Oct 09 2012 Andrey Cherepanov <cas@altlinux.org> 0.2-alt4
 - Remove arp, add lsof. Supress error output.
 
