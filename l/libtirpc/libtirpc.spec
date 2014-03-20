@@ -1,5 +1,5 @@
 Name: libtirpc
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: transport-independent RPC library
@@ -32,7 +32,7 @@ This package holds development part of %name library
 
 %build
 [ ! -f autogen.sh ] || sh autogen.sh
-%configure --enable-gss --disable-static
+%configure --disable-static
 %make_build
 
 %install
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Thu Mar 20 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.4-alt1
+- 0.2.4 released
+
 * Tue Apr 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt1
 - 0.2.3 released
 
