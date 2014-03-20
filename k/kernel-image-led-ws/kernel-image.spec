@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Thu Mar 20 2014 Led <led@altlinux.ru> 3.10.33-alt6
+- added:
+  + fix-net-netfilter--nf_conntrack_proto_dccp (CVE-2014-2523)
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 3.10.33-alt5
 - updated:
   + fix-fs-btrfs
