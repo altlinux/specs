@@ -1,29 +1,24 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(upower-glib) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
-%define fedora 19
 Name:           mate-session
-Version:        1.6.1
-Release:        alt2
+Version:        1.8.1
+Release:        alt1_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.tar.xz
-
-# add systemd-login1 suspend/hibernate love (upstreamable)
-Patch1: mate-session-manager-1.6.1-login1.patch
-Patch2: msm-1.6.1-optional-upower.patch
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
-BuildRequires:  pango-devel
+BuildRequires:  libpangox-compat-devel
 BuildRequires:  systemd-devel
 BuildRequires:  xmlto
 BuildRequires:  libXtst-devel
@@ -51,26 +46,23 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-
-%patch1 -p1 -b .login1
-%patch2 -p1
 %patch33 -p1
- 
+
 %build
-autoreconf -fisv
-%configure --disable-static \
-           --enable-ipv6 \
-           --with-gtk=2.0 \
-           --with-default-wm=marco \
-           --with-systemd \
-           --disable-upower \
-           --docdir=%{_datadir}/doc/%{name}-%{version} \
-           --with-x
+%configure                    \
+    --disable-static          \
+    --enable-ipv6             \
+    --with-gtk=2.0            \
+    --with-default-wm=marco   \
+    --with-systemd            \
+    --enable-docbook-docs     \
+    --disable-schemas-compile \
+    --with-x
 
 make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 desktop-file-install                               \
         --delete-original                          \
@@ -80,7 +72,7 @@ desktop-file-install                               \
 # remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-session.convert
 
-%find_lang %{oldname}
+%find_lang %{oldname} --with-gnome --all-name
 
 cat <<__START_MATE__ >startmate
 #!/bin/sh
@@ -148,6 +140,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
+- new fc release
+
 * Fri Feb 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.1-alt2
 - disable direct upower support (use logind instead)
 
