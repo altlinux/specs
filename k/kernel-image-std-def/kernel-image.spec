@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.10
 %define kernel_sublevel	.33
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Mar 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.33-alt2
+- CVE-2014-2523 fixed
+
 * Tue Mar 11 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.33-alt1
 - 3.10.33
 
