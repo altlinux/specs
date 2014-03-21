@@ -1,6 +1,6 @@
 Name: python-module-xpresser
 Version: 1.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Python library to script Graphic User Interfaces
 Group: Development/Python
@@ -32,6 +32,9 @@ Graphic User Interfaces (GUIs) via image matching algorithms.
 %doc README
 
 %changelog
+* Thu Mar 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt1.1.1
+- NMU: rebuild with libopencv-2.4.8.1;
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt1.1
 - Rebuild with Python-2.7
 

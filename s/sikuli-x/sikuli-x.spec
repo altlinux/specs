@@ -1,6 +1,6 @@
 Name: sikuli-x
 Version: 1.0
-Release: alt3.rc3
+Release: alt3.rc3.1
 
 Summary: GUI control scripting tool
 License: MIT
@@ -116,6 +116,9 @@ chmod 0755 %buildroot%_bindir/sikuli
 %_datadir/java/sikuli-script.jar
 
 %changelog
+* Thu Mar 13 2014 Dmitry Derjavin <dd@altlinux.org> 1.0-alt3.rc3.1
+- NMU: rebuild with libopencv-2.4.8.1;
+
 * Wed Feb 20 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0-alt3.rc3
 - Fix/improve the startup script.
 - Extract the sikuli-script from the sikuli-ide (main) package.
