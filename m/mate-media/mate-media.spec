@@ -1,33 +1,26 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-audio-0.10) pkgconfig(gstreamer-interfaces-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmatepanelapplet-4.0) pkgconfig(unique-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
-Version:        1.6.0
-Release:        alt2_3
+Version:        1.8.0
+Release:        alt1_0.gstreamer
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
 
-BuildRequires:  libclutter-gst2.0-devel
-BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
-BuildRequires:  gstreamer-devel
-BuildRequires:  gst-plugins-devel
+BuildRequires:  libxml2-devel
 BuildRequires:  libcanberra-devel
-BuildRequires:  mate-control-center-devel
-BuildRequires:  mate-doc-utils
-BuildRequires:  rarian-compat
+BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-common
 BuildRequires:  libpulseaudio-devel
-BuildRequires:  mate-panel-devel
 BuildRequires:  libunique-devel
-BuildRequires:  xmlto
 Source44: import.info
-Patch33: mate-media-1.5.2-alt-gst-mixer.patch
+Patch33: mate-media-1.8.0-alt-gst-mixer.patch
 Patch34: gnome-media-2.29.91-gst-mix_and_new_gvc_no_conflict.patch
 Patch35: gnome-media-2.32.0-g_debug.patch
 Patch36: gnome-media-alt-desktop-ru.po.patch
@@ -40,27 +33,26 @@ including a volume control.
 
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
 
-
 %build
 %configure \
         --disable-static \
-        --enable-gstmix \
         --disable-schemas-compile \
-        --disable-scrollkeeper \
+        --with-gtk=2.0 \
+        --enable-gstmix \
         --enable-gst-mixer-applet \
-        --enable-pulseaudio \
-        --enable-gstreamer 
+        --enable-gstreamer \
+        --enable-pulseaudio
 
 make %{?_smp_mflags} V=1
 
 %install
-make DESTDIR=%{buildroot} install
+%{makeinstall_std}
+
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 
 desktop-file-install                                                    \
@@ -68,31 +60,24 @@ desktop-file-install                                                    \
         --dir=%{buildroot}%{_datadir}/applications                      \
 %{buildroot}%{_datadir}/applications/mate-volume-control.desktop
 
+%find_lang %{name} --with-gnome --all-name
 
-%find_lang %{name} --all-name
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
+%{_mandir}/man1/*
 %{_bindir}/mate-volume-control
 %{_bindir}/mate-volume-control-applet
 %{_sysconfdir}/xdg/autostart/mate-volume-control-applet.desktop
-%{_datadir}/icons/mate/*/*/*.png
 %{_datadir}/mate-media/
 %{_datadir}/sounds/mate/
-%{_datadir}/glib-2.0/schemas/org.mate.volume-control.gschema.xml
 %{_datadir}/applications/mate-volume-control.desktop
-%{_datadir}/mate/help/mate-volume-control
-%{_datadir}/omf/mate-volume-control
-%{_libexecdir}/mixer_applet2
-%{_datadir}/dbus-1/services/org.mate.panel.applet.MixerAppletFactory.service
-%{_datadir}/glib-2.0/schemas/org.mate.panel.applet.mixer.gschema.xml
-%{_datadir}/mate-2.0/ui/mixer-applet-menu.xml
-%{_datadir}/mate-panel/applets/org.mate.applets.MixerApplet.mate-panel-applet
-%{_datadir}/mate/help/mate-mixer_applet2
-%{_datadir}/omf/mate-mixer_applet2
-%{_datadir}/MateConf/gsettings/mate-volume-control.convert
+
 
 %changelog
+* Fri Mar 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0.gstreamer
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_3
 - new fc release
 
