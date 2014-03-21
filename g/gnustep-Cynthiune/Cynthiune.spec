@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 1.0.0
-Release: alt4
+Release: alt5
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -133,6 +133,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt5
+- Menu file: Video Players -> Audio Players
+
 * Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt4
 - Fixed menu file (by kostyalamer@)
 
