@@ -2,7 +2,7 @@
 
 Name: wdm
 Version: 1.28
-Release: alt12.3
+Release: alt15
 
 Summary: WINGs Display Manager
 License: GPL
@@ -12,6 +12,8 @@ Url: http://voins.program.ru/wdm
 Source0: %name-%version-%release.tar.bz2
 Source1: %wdm_config.tar.bz2
 Source2: wdm-alt-logo.png
+Source3: wdmLocale
+Source4: wdm.firsttime
 Patch: wdm-config.patch
 
 Requires: %_bindir/xvt
@@ -30,7 +32,7 @@ session manager in selecting and starting a window manager. Optionally,
 wdm can shutdown (reboot or halt) the system.
 
 %prep
-%setup -q -a 1 -n %name-%version-%release
+%setup -a 1 -n %name-%version-%release
 %patch -p1
 
 
@@ -91,14 +93,22 @@ EOF
 
 %find_lang %name
 
+install -pDm755 %SOURCE3 %buildroot%_bindir/wdmLocale
+install -pDm755 %SOURCE4 %buildroot%_sysconfdir/firsttime.d/wdm
+
 %pre
 [ -d %_sysconfdir/X11/wdm/authdir -a -L %_sysconfdir/X11/wdm/authdir ] ||
   rm -rf -- %_sysconfdir/X11/wdm/authdir
 
+%post
+[ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/wdm ||:
+
 %files -f %name.lang
 %_bindir/wdm
 %_bindir/wdmLogin
+%_bindir/wdmLocale
 %_man1dir/*
+%_sysconfdir/firsttime.d/wdm
 %_sysconfdir/logrotate.d/wdm
 %_sysconfdir/X11/wms-methods.d/wdm
 %dir %_sysconfdir/X11/wdm
@@ -114,6 +124,16 @@ EOF
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Sat Mar 22 2014 Michael Shigorin <mike@altlinux.org> 1.28-alt15
+- (whoops, misrebased the fix in -alt14) -
+
+* Fri Mar 21 2014 Michael Shigorin <mike@altlinux.org> 1.28-alt14
+- Fixed macro use in 1.28-alt10 changelog record (ouch!).
+
+* Fri Mar 21 2014 Michael Shigorin <mike@altlinux.org> 1.28-alt13
+- Removed kludge hardwiring Russian in as the default language
+  (rather derive wdmLocale from LANG via firsttime script).
+
 * Thu Sep 12 2013 Andrey Bergman <vkni@altlinux.org> 1.28-alt12.3
 - Updated release for rebuild.
 
@@ -140,7 +160,7 @@ EOF
   + made pam_console fully optional;
   + added fully optional pam_ck_connector.
 - /etc/X11/wdm/X*:
-  + marked config files as %config(noreplace) (by Igor Vlasenko).
+  + marked config files as %%config(noreplace) (by Igor Vlasenko).
 
 * Mon Oct 12 2009 Igor Vlasenko <viy@altlinux.ru> 1.28-alt9
 - applied DualSeat-SequentialXserverLaunch.patch
