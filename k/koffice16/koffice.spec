@@ -1,3 +1,4 @@
+%set_gcc_version 4.7
 %set_automake_version 1.11
 
 %define __libtoolize true
@@ -27,7 +28,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt27.1
+%define rlz alt27.2
 %define beta %nil
 Serial: 4
 
@@ -76,7 +77,7 @@ Patch32: tde-3.5.13-disable-arts.patch
 BuildRequires(pre): kdelibs-devel
 BuildRequires: bzlib-devel doxygen openexr-devel
 BuildPreReq: libX11-devel libXaw-devel libXext-devel libXv-devel libICE-devel
-BuildRequires: fontconfig-devel freetype2-devel gcc-c++ glib2-devel
+BuildRequires: fontconfig-devel freetype2-devel gcc4.7-c++ glib2-devel
 BuildRequires: libImageMagick-devel
 %if_enabled gmagick
 BuildRequires: libGraphicsMagick-c++-devel
@@ -908,6 +909,9 @@ mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 ###%endif
 
 %changelog
+* Wed Mar 12 2014 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt27.2
+- Rebuild force by gcc4.7.
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4:1.6.3-alt27.1
 - Fixed build
 
