@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 1.1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Pure Ruby LDAP library
 Group: Development/Ruby
@@ -54,6 +54,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/BER
 
 %changelog
+* Fri Mar 21 2014 Led <led@altlinux.ru> 1.1.0-alt1.2
+- fixed tests
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.0-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
