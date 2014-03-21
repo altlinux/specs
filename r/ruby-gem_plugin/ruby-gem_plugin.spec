@@ -1,10 +1,10 @@
-# vim: set ft=spec: -*- rpm-spec -*
+%def_disable check
 
 %define pkgname gem_plugin
 
 Name: ruby-%pkgname
 Version: 0.2.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: Gem Based Plugin System
 Group: Development/Ruby
@@ -44,13 +44,15 @@ Documentation files for %name
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib test
 
 %install
 mkdir -p %buildroot%_datadir/%pkgname/gem_plugin
 %ruby_install
 cp -dpR resources %buildroot%_datadir/%pkgname/gem_plugin/
 %rdoc lib/
+
+%check
+%ruby_test_unit -Ilib test
 
 %files
 %doc CHANGELOG README
@@ -63,6 +65,9 @@ cp -dpR resources %buildroot%_datadir/%pkgname/gem_plugin/
 %ruby_ri_sitedir/GemPlugin*
 
 %changelog
+* Fri Mar 21 2014 Led <led@altlinux.ru> 0.2.3-alt2.2
+- disabled %%check
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.2.3-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
