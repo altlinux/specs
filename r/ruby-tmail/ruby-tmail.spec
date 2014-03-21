@@ -1,12 +1,10 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%def_disable check
-
 %define pkgname tmail
 
 Name: ruby-%pkgname
 Version: 1.2.3.1
-Release: alt3.4
+Release: alt3.5
 
 Summary: Mail handling library for Ruby
 License: GPL
@@ -15,8 +13,7 @@ URL: http://tmail.rubyforge.org/
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Jul 08 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-racc ruby-test-unit ruby-tool-rdoc ruby-tool-setup
+BuildRequires: rpm-build-ruby ruby-racc ruby-test-unit ruby-tool-rdoc ruby-tool-setup ruby(iconv)
 
 # http://rubyforge.org/frs/?group_id=4512
 Source: %pkgname-%version.tar
@@ -74,6 +71,10 @@ cd lib/tmail
 
 
 %changelog
+* Fri Mar 21 2014 Led <led@altlinux.ru> 1.2.3.1-alt3.5
+- revert to use iconv for all Ruby versions
+- enabled %%check
+
 * Sat Mar 15 2014 Led <led@altlinux.ru> 1.2.3.1-alt3.4
 - disabled %%check
 
