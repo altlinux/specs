@@ -2,7 +2,7 @@
 
 Name: gnustep-LoginPanel
 Version: 20140127
-Release: alt4.cvs20140127
+Release: alt5.cvs20140127
 Summary: GNUstep login panel
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # cvs -d:pserver:anonymous@cvs.sv.gnu.org:/sources/gap co gap/system-apps/loginpanel
 Source: %name-%version.tar
-Source1: %name.menu
+#Source1: %name.menu
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -41,15 +41,18 @@ GNUstep login panel.
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc ChangeLog README*
 %_bindir/*
 %_libdir/GNUstep
-%_menudir/*
+#_menudir/*
 
 %changelog
+* Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt5.cvs20140127
+- Removed menu file
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt4.cvs20140127
 - Built with clang
 
