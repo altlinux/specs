@@ -5,7 +5,7 @@
 %define libname_openqube libavogadro-openqube%sover_oq
 
 Name: avogadro
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Group: Sciences/Chemistry
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 # FC
 Patch1: avogadro-1.0.3-mkspecs-dir.patch
 Patch2: avogadro-1.0.3-no-strip.patch
+Patch3: avogadro-1.1.1-pkgconfig_eigen.patch
 # ALT
 Patch100: avogadro-1.1.0-alt-config.patch
 Patch101: avogadro-1.0.3-alt-desktopfile.patch
@@ -63,6 +64,7 @@ Development Avogadro files.
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -76,11 +78,14 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 #done
 
 %build
-%add_optflags -DPIC -fPIC
+%add_optflags -DPIC -fPIC -I%_includedir/eigen2
 %Kcmake \
+    -DENABLE_TESTS:BOOL=OFF \
     -DENABLE_RPATH:BOOL=OFF \
     -DENABLE_GLSL:BOOL=ON \
-    -DENABLE_PYTHON:BOOL=ON
+    -DENABLE_PYTHON:BOOL=ON \
+    -DENABLE_VERSIONED_PLUGIN_DIR:BOOL=OFF \
+    #
 %Kmake
 
 %install
@@ -91,11 +96,10 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_bindir/%name
 %_bindir/avopkg
 %dir %_libdir/%name
-%dir %_libdir/%name/1_1
-%_libdir/%name/*/colors
-%_libdir/%name/*/extensions
-%_libdir/%name/*/engines
-%_libdir/%name/*/tools
+%_libdir/%name/colors
+%_libdir/%name/extensions
+%_libdir/%name/engines
+%_libdir/%name/tools
 %_datadir/%name
 %_datadir/lib%name
 %_datadir/pixmaps/%name-icon.png
@@ -116,11 +120,13 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_pkgconfigdir/avogadro.pc
 %_libdir/lib*.so
 %_libdir/%name/*.cmake
-%_libdir/%name/*/*.cmake
-%_libdir/%name/*/cmake
+%_libdir/%name/cmake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Fri Mar 21 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - new version
 
