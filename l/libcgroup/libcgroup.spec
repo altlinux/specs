@@ -1,10 +1,8 @@
-%define soversion 1.0.38
-%define soversion_major 1
 
 Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
-Version: 0.38.0
+Version: 0.41
 Release: alt1
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
@@ -58,9 +56,7 @@ provide scripts to manage that configuration.
 %build
 %autoreconf
 %configure \
-	--bindir=/bin \
-	--sbindir=/sbin \
-	--libdir=%_libdir \
+	--disable-static \
 	--enable-initscript-install \
 	--enable-pam-module-dir=/%_lib/security \
 	--enable-opaque-hierarchy=name=systemd
@@ -79,19 +75,12 @@ cp samples/cgrules.conf %buildroot/%_sysconfdir/cgrules.conf
 cp samples/cgsnapshot_blacklist.conf %buildroot/%_sysconfdir/cgsnapshot_blacklist.conf
 
 rm -f %buildroot/%_lib/security/pam_cgroup.la
-
-# move the libraries  to /
-mkdir -p %buildroot/%_lib
-mv -f %buildroot/%_libdir/libcgroup.so.%soversion %buildroot/%_lib
-rm -f %buildroot/%_libdir/libcgroup.so.%soversion_major
-ln -sf libcgroup.so.%soversion %buildroot/%_lib/libcgroup.so.%soversion_major
-ln -sf ../../%_lib/libcgroup.so.%soversion %buildroot/%_libdir/libcgroup.so
 rm -f %buildroot/%_libdir/*.la
 
 # install unit and sysconfig files
-install -d %buildroot%systemd_unitdir
-install -m 644 cgconfig.service %buildroot%systemd_unitdir/
-install -m 644 cgred.service %buildroot%systemd_unitdir/
+install -d %buildroot%_unitdir
+install -m 644 cgconfig.service %buildroot%_unitdir/
+install -m 644 cgred.service %buildroot%_unitdir/
 
 %pre -n cgroup
 %_sbindir/groupadd -r -f cgred 2> /dev/null ||:
@@ -105,7 +94,7 @@ install -m 644 cgred.service %buildroot%systemd_unitdir/
 %preun_service cgconfig
 
 %files
-/%_lib/libcgroup.so.*
+%_libdir/*.so.*
 
 %files -n cgroup
 %doc COPYING INSTALL README README_daemon README_systemd
@@ -114,23 +103,16 @@ install -m 644 cgred.service %buildroot%systemd_unitdir/
 %config(noreplace) %_sysconfdir/cgconfig.conf
 %config(noreplace) %_sysconfdir/cgrules.conf
 %config(noreplace) %_sysconfdir/cgsnapshot_blacklist.conf
-%attr(2711, root, cgred) /bin/cgexec
-/bin/cgclassify
-/bin/cgcreate
-/bin/cgget
-/bin/cgset
-/bin/cgdelete
-/bin/lscgroup
-/bin/lssubsys
-/bin/cgsnapshot
-/sbin/*
+%attr(2711, root, cgred) %_bindir/cgexec
+%_bindir/*
+%_sbindir/*
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
 %config %_initdir/cgconfig
 %config %_initdir/cgred
-%systemd_unitdir/cgconfig.service
-%systemd_unitdir/cgred.service
+%_unitdir/cgconfig.service
+%_unitdir/cgred.service
 
 %files -n pam_cgroup
 %_pam_modules_dir/pam_cgroup.so
@@ -138,12 +120,14 @@ install -m 644 cgred.service %buildroot%systemd_unitdir/
 %files devel
 %doc COPYING INSTALL
 %_includedir/libcgroup.h
-%dir %_includedir/libcgroup
-%_includedir/libcgroup/*.h
-%_libdir/libcgroup.*
+%_includedir/libcgroup
+%_libdir/*.so
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Fri Mar 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.41-alt1
+- 0.41
+
 * Mon Mar 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.38.0-alt1
 - 0.38 release
 
