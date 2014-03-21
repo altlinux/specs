@@ -1,11 +1,11 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.8
-%define		svn svn4101
+%define		svn svn4183
 
 Version:	%branch.0.1
 Name:		qmmp-plugin-pack
-Release:	alt1.%svn.2
+Release:	alt1.%svn
 Summary:	Plugin pack is a set of extra plugins for Qmmp.
 Summary(ru_RU.UTF8): Набор дополнительных модулей для Qmmp.
 Summary(uk_UA.UTF8): Набір додаткових модулів для Qmmp.
@@ -111,6 +111,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Fri Mar 21 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn4183
+- build svn4183
+
 * Sat Jan 18 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn4101.2
 - set_verify_elf_method textrel to relaxed for asm optimization
 
