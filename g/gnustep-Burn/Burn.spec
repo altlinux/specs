@@ -2,7 +2,7 @@
 
 Name: gnustep-Burn
 Version: 0.5.0
-Release: alt5.cvs20140123
+Release: alt6.cvs20140123
 Summary: Burn ist a front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -22,6 +22,7 @@ BuildPreReq: gnustep-CDPlayer-devel libao-devel libmad-devel
 
 Requires: gnustep-CDPlayer
 Requires: gnustep-back
+Requires: cdrdao wodim genisoimage cdparanoia
 
 %description
 Burn.app is a GNUstep based CD burning program for GNU/Linux. It serves
@@ -77,6 +78,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt6.cvs20140123
+- Added Requires: cdrdao wodim genisoimage cdparanoia
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt5.cvs20140123
 - Built with clang
 
