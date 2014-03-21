@@ -1,5 +1,5 @@
 %define branch 0.8
-%define svn svn4041
+%define svn svn4183
 
 Version: %branch.0.1
 Epoch: 1
@@ -511,6 +511,15 @@ Requires: qmmp = %version-%release
 Qmmp Global Hotkey Plugin. This plugin adds support
 for multimedia keys or global key combinations
 
+%package -n %name-gnomehotkey
+Summary: Qmmp Gnome Hotkey Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-gnomehotkey
+Qmmp Gnome Hotkey Plugin. This plugin adds
+support of the GNOME/Cinnamon hotkeys
+
 %package -n %name-fileops
 Summary: Qmmp file operations Plugin
 Group: Sound
@@ -586,7 +595,7 @@ Requires: qmmp qmmp-in-wavpack qmmp-mpris qmmp-notifier
 Requires: qmmp-eff-srconverter qmmp-in-ffmpeg qmmp-in-mplayer
 Requires: qmmp-in-flac qmmp-out-pulseaudio qmmp-in-modplug qmmp-in-midi
 Requires: qmmp-in-musepack qmmp-statusicon qmmp-in-sndfile qmmp-in-cue
-Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey
+Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey qmmp-gnomehotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
@@ -776,6 +785,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-hotkey
 %_libdir/%name/General/libhotkey*
 
+%files -n %name-gnomehotkey
+%_libdir/%name/General/libgnomehotkey*
+
 %files -n %name-fileops
 %_libdir/%name/General/libfileops*
 
@@ -811,6 +823,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Mar 21 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn4183
+- 0.8.0 svn4183 version
+
 * Fri Jan 17 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn4041
 - 0.8.0 svn4041 version
 
