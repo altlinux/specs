@@ -1,34 +1,78 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-Summary: Mate user file sharing
-Name:    mate-user-share
-Version: 1.6.0
-Release: alt2_4
-License: GPLv2+
-Group:   System/Libraries
-URL:     http://mate-desktop.org
-Source0: http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+%define fedora 21
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-user-share
+%define version 1.8.0
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
 
-BuildRequires: gtk2-devel
-BuildRequires: httpd apache2-mod_dnssd
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.8
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit c0f0c63c670d799dee4fa7577083d0cbace56db4}
+%{!?rel_build:%global commit_date 20140210}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
+Summary:         Mate user file sharing
+Name:            mate-user-share
+Version:         %{branch}.0
+Release:         alt1_0
+#Release:         0.1%{?git_rel}%{?dist}
+License:         GPLv2+
+Group:           System/Libraries
+URL:             http://mate-desktop.org
+
+# for downloading the tarball use 'spectool -g -R mate-user-share.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  yelp-tools
+BuildRequires:  gtk2-devel
+BuildRequires:  httpd
+BuildRequires:  libcanberra-devel
+BuildRequires:  libICE-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  libselinux-devel
+BuildRequires:  libSM-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  apache2-mod_dnssd
+BuildRequires:  perl(XML/Parser.pm)
+BuildRequires:  libunique-devel
+
+# disable bluetooth support for bluez5
+%if 0%{?fedora} > 19
 BuildRequires: mate-bluetooth-devel
-BuildRequires: libcanberra-devel
-BuildRequires: desktop-file-utils
-BuildRequires: mate-doc-utils
-BuildRequires: libselinux-devel
-BuildRequires: libdbus-glib-devel
-BuildRequires: libnotify-devel
+%else
+BuildRequires:  mate-bluetooth-devel
+%endif
+%if 0%{?fedora} > 20
 BuildRequires: mate-file-manager-devel
-BuildRequires: libunique-devel
-BuildRequires: perl(XML/Parser.pm)
-BuildRequires: mate-common
+%else
+BuildRequires: mate-file-manager-devel
+%endif
+
 
 Requires: httpd
+# obsolete with bluez5
+%if 0%{?fedora} > 19
 Requires: obex-data-server
+%else
+Requires: obex-data-server
+%endif
 Requires: apache2-mod_dnssd
-Requires: icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -45,19 +89,29 @@ up in the Network location in MATE.
 The program also allows to share files using ObexFTP over Bluetooth.
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
 # nedded to create missing configure and make files
-NOCONFIGURE=1 ./autogen.sh
+# for git snapshot builds, comment out for release builds
+#NOCONFIGURE=1 ./autogen.sh
 
 %build
+# disable bluetooth support for bluez5
+%if 0%{?fedora} > 19
+%configure \
+    --disable-static \
+    --disable-schemas-compile
+%else
+#    --disable-bluetooth \
 %configure \
     --disable-scrollkeeper \
-    --disable-static
-
+    --disable-static \
+    --disable-schemas-compile
+%endif
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%{makeinstall_std}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0/*.la
 
@@ -65,10 +119,20 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0/*.la
 # because Mate started with gsettings in f17/18
 rm -f $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-user-share.convert
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome --all-name
 
+# disable bluetooth support for bluez5
+%if 0%{?fedora} > 19
+rm -f ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
+rm -f desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
 desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
-desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
+%else
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
+%endif
 
 %files -f %{name}.lang
 %doc README COPYING NEWS
@@ -76,13 +140,24 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 %{_libexecdir}/mate-user-share
 %{_datadir}/mate-user-share/
 %{_datadir}/applications/mate-user-share-properties.desktop
-%{_sysconfdir}/xdg/autostart/mate-user-share.desktop
+# disable bluetooth support for bluez5
+%if 0%{?fedora} > 19
+%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
+%else
+%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
+%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
+%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
+%endif
 %{_datadir}/icons/hicolor/*/apps/mate-obex-server.png
 %{_libdir}/caja/extensions-2.0/*.so
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
+%{_mandir}/man1/mate-file-share-properties.1.*
 
 
 %changelog
+* Fri Mar 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_4
 - new fc release
 
