@@ -6,24 +6,22 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-de
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-sensors-applet
-Version:        1.6.0
-Release:        alt1_4
+Version:        1.8.0
+Release:        alt1_1
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.7/%{name}-%{version}.tar.xz
 
-BuildRequires:  mate-panel-devel
-BuildRequires:  libnotify-devel
-BuildRequires:  lm_sensors3-devel
-BuildRequires:  mate-doc-utils
-BuildRequires:  libXNVCtrl-devel
-BuildRequires:  libatasmart-devel
-BuildRequires:  mate-common
 BuildRequires:  libdbus-glib-devel
+BuildRequires:  libatasmart-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  libXNVCtrl-devel
+BuildRequires:  lm_sensors3-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-panel-devel
 Source44: import.info
-
 
 %description
 MATE Sensors Applet is an applet for the MATE Panel to display readings
@@ -46,16 +44,13 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The mate-sensors-applet-devel package contains libraries and header files for
 developing applications that use mate-sensors-applet.
 
-
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
 
 %build
-
+NOCONFIGURE=1 ./autogen.sh
 %configure \
     --disable-static \
-    --disable-scrollkeeper \
     --disable-schemas-compile \
     --enable-libnotify \
     --with-nvidia
@@ -67,10 +62,11 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
+
 find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome --all-name
 
 
 %files -f %{name}.lang
@@ -79,7 +75,6 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 %{_libdir}/libmate-sensors-applet-plugin.so.*
 %{_libdir}/mate-sensors-applet/
 %{_datadir}/mate-sensors-applet/ui/
-%{_datadir}/mate/help/mate-sensors-applet/
 %{_datadir}/pixmaps/mate-sensors-applet/
 %{_datadir}/icons/hicolor/*/*/*.png
 %{_datadir}/dbus-1/services/org.mate.panel.applet.SensorsAppletFactory.service
@@ -93,6 +88,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
 - new fc release
 
