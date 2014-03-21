@@ -1,5 +1,5 @@
 Name: dosfstools
-Version: 3.0.25
+Version: 3.0.26
 Release: alt1
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
@@ -47,6 +47,9 @@ code.
 %doc doc/*
 
 %changelog
+* Fri Mar 21 2014 Anton Farygin <rider@altlinux.ru> 3.0.26-alt1
+- new version
+
 * Tue Feb 25 2014 Anton Farygin <rider@altlinux.ru> 3.0.25-alt1
 - new version
 
