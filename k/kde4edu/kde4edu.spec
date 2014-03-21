@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -625,6 +625,7 @@ do
     [ -d "$d" ] || continue
     pushd $d
     %K4build \
+	-DBoostPython_FOUND=ON \
 	-DKDE4_BUILD_TESTS:BOOL=OFF \
 	-DNOVA_INCLUDE_DIR=%_includedir/libnova \
 	-DNOVA_LIBRARIES="-lnova" \
@@ -1081,6 +1082,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Fri Mar 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2
+- rebuilt with new avogadro
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
