@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.6.0
+Version:        1.8.0
 Release:        alt1_0
 Summary:        Python bindings for Caja
 
@@ -22,7 +22,7 @@ BuildRequires: 	mate-common
 BuildRequires: 	python-module-pygtk-devel
 #BuildRequires: 	python-module-mate-devel
 
-Requires:       mate-file-manager >= 1.1.0
+Requires:       mate-file-manager
 
 Obsoletes: 		caja-python
 Provides:  		python-caja
@@ -71,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_datadir}/doc/*
 
 %changelog
+* Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
+- new version
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
 - new version
 
