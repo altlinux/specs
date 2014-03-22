@@ -18,8 +18,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.15.0
-Release: alt2
+Version: 1.15.0.901
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -303,6 +303,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Sat Mar 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.0.901-alt1
+- 1.15.1 RC1
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.0-alt2
 - reenabled xephyr
 
