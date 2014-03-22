@@ -1,6 +1,6 @@
 Name: vdr
-Version: 2.0.4
-Release: alt2
+Version: 2.0.6
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -541,6 +541,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sat Mar 22 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt1
+- 2.0.6 released
+
 * Tue Mar 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.4-alt2
 - updated vnsi and streamdev plugins
 - fixed sc plugin build on i586
