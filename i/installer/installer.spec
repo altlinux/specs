@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.23
+Version: 1.8.24
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Mar 22 2014 Michael Shigorin <mike@altlinux.org> 1.8.24-alt1
+- survive missing locale(1)
+
 * Sun Feb 09 2014 Michael Shigorin <mike@altlinux.org> 1.8.23-alt1
 - fixed 65-setup-services.sh
 
