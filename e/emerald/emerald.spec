@@ -1,6 +1,6 @@
 Name: emerald
 Version: 0.8.99
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/Other
 Summary: Themeable window decorator and compositing manager for Compiz
@@ -35,7 +35,7 @@ the themeable window decorator for compiz.
 
 %build
 %autoreconf
-CFLAGS='-ldl'
+CFLAGS='-ldl -lm'
 %configure \
 	--disable-static \
 	--enable-librsvg \
@@ -67,6 +67,9 @@ CFLAGS='-ldl'
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Mar 22 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.99-alt3
+- Fix build in Sisyphus (missing libm in linked libs)
+
 * Thu Oct 10 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.99-alt2
 - fix Requires
 
