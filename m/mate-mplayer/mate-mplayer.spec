@@ -12,8 +12,8 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(dbus-1) p
 %bcond_without minimal
 
 Name:           mate-mplayer
-Version:        1.0.7
-Release:        alt3_0101
+Version:        1.0.8
+Release:        alt1_0
 Summary:        An MPlayer GUI, a full-featured binary
 
 License:        GPLv2+
@@ -23,7 +23,7 @@ Source0:        https://github.com/downloads/NiceandGently/mate-mplayer/%{name}-
 BuildRequires:  libalsa-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  libgmtk-devel == %{version}
+BuildRequires:  libgmtk-devel
 BuildRequires:  libgtk+3-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgpod-devel
@@ -114,7 +114,7 @@ popd
 
 %build
 pushd generic
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--with-libnotify \
 	--enable-gtk3 \
@@ -124,16 +124,18 @@ NOCONFIGURE=1 ./autogen.sh
 	--with-pulseaudio \
 	--with-libgpod \
 	--with-libmusicbrainz3 \
-	--with-gio
+	--with-gio \
+	--disable-schemas-compile
+
 make %{?_smp_mflags}
 popd
 
 %if %{with minimal}
 pushd minimal
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure --program-suffix=-minimal --without-gio --without-libnotify \
     --without-libgpod --without-libmusicbrainz3 --disable-caja --enable-gtk3 \
-	--with-dbus --with-alsa --with-pulseaudio
+	--with-dbus --with-alsa --with-pulseaudio --disable-schemas-compile --without-libgda
 make %{?_smp_mflags}
 popd
 %endif
@@ -171,8 +173,8 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/mate-mplayer.deskt
 
 %files common -f %{name}.lang
 %doc generic/COPYING generic/ChangeLog generic/README generic/DOCS/keyboard_shortcuts.txt generic/DOCS/tech/*
-%{_datadir}/glib-2.0/schemas/apps.gecko-mediaplayer.preferences.gschema.xml
-%{_datadir}/glib-2.0/schemas/apps.mate-mplayer.preferences.*
+%{_datadir}/glib-2.0/schemas/org.mate.gecko-mediaplayer.preferences.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.mate-mplayer.preferences.*
 %{_datadir}/icons/hicolor/*/apps/mate-mplayer.*
 %{_mandir}/man1/mate-mplayer.1*
 
@@ -188,6 +190,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/mate-mplayer.deskt
 
 
 %changelog
+* Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_0
+- new version (closes: 29887)
+
 * Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt3_0101
 - added mplayer dep (closes: 28929)
 
