@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt115
+Release: alt116
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab084.25-combined
+Patch0: patch-042stab085.17-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sat Mar 22 2014 Led <led@altlinux.ru> 2.6.32-alt116
+- netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages (CVE-2014-2523)
+
 * Fri Mar 14 2014 Led <led@altlinux.ru> 2.6.32-alt115
 - Update to 042stab085.17
 
