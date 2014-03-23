@@ -1,5 +1,5 @@
 Name: psi-plus
-Version: 0.16.298
+Version: 0.16.309
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -1025,6 +1025,9 @@ popd
 %_libdir/%name/plugins/libyandexnarodplugin.so
 
 %changelog
+* Sun Mar 23 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.309-alt1
+- Version 0.16.309
+
 * Tue Mar 18 2014 Nazarov Denis <nenderus@altlinux.org> 0.16.298-alt1
 - Version 0.16.298
 
