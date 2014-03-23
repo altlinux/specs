@@ -1,6 +1,6 @@
 Name: livecd-fgfs
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: start FlightGear
 License: Public domain
@@ -11,6 +11,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
 Requires: xinit
+Conflicts: livecd-webkiosk
 
 %define skeldir %_sysconfdir/skel
 %define xsfile %skeldir/.xsession
@@ -44,6 +45,9 @@ chmod +x %buildroot%xsfile
 %xsfile
 
 %changelog
+* Sun Mar 23 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt2
+- added Conflicts: indeed
+
 * Thu Mar 20 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release
 
