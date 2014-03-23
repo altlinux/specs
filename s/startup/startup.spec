@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.4
+Version: 0.9.9.5
 Release: alt1
 
 Summary: The system startup scripts
@@ -26,8 +26,8 @@ Requires: hwclock >= 1:2.14-alt1
 Requires: sysvinit-utils
 # due to fsck in rc.sysinit (ALT#22410)
 Requires: /sbin/fsck
-# due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load.
-Requires: systemd-utils >= 204-alt4
+# due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load (see ALT#29537).
+Requires: systemd-utils >= 209
 
 # due to update_wms
 Conflicts: xinitrc < 0:2.4.13-alt1
@@ -164,6 +164,10 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Sun Mar 23 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.5-alt1
+- scripts/cleanup: pass --boot to systemd-tmpfiles --remove --create
+  (once more closes: #29537)
+
 * Wed Mar 19 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.4-alt1
 - rc.sysinit: remount /proc and /sys.
 
