@@ -1,18 +1,13 @@
 Name: openssh
-Version: 5.9p1
-Release: alt7
+Version: 6.6p1
+Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
 Group: Networking/Remote access
 Url: http://www.openssh.com/portable.html
-
-Source: ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-%version.tar
-
-Source1: ssh-copy-id.tar
-Source2: alt.tar
-
-Patch: openssh-%version-%release.patch
+# git://git.altlinux.org/gears/o/openssh.git
+Source: %name-%version-%release.tar
 
 %define confdir %_sysconfdir/%name
 %define _chrootdir /var/empty
@@ -21,6 +16,7 @@ Patch: openssh-%version-%release.patch
 %def_with libedit
 %def_with libaudit
 %def_with kerberos5
+%def_with selinux
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
@@ -33,6 +29,7 @@ BuildRequires: libssl-devel libwrap-devel pam_userpass-devel zlib-devel
 %{?_with_libedit:BuildRequires: libedit-devel}
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
+%{?_with_selinux:BuildRequires: libselinux-devel}
 
 %package common
 Summary: OpenSSH common files
@@ -156,16 +153,15 @@ These dialogs are intended to be called from the ssh-add program and
 not invoked directly.
 
 %prep
-%setup -a1 -a2
-rm *.0
-%patch -p1
+%setup -n %name-%version-%release
 bzip2 -9k ChangeLog
 
 %build
 %autoreconf
 
-sed -i 's/-lpam/& -lpam_userpass/g' configure*
-sed -i 's/-ledit \+-lcurses/-ledit/g' configure*
+mkdir build
+cd build
+%define _configure_script ../configure
 
 export ac_cv_path_LOGIN_PROGRAM_FALLBACK=/bin/login
 export ac_cv_path_NROFF=/usr/bin/nroff
@@ -187,12 +183,13 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	--with-superuser-path=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin \
 	%{subst_with kerberos5} \
 	%{subst_with libedit} \
+	%{subst_with selinux} \
 	%{?_with_libaudit:--with-audit=linux} \
 	#
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 
 mkdir -p %buildroot{%_libexecdir,%_sysconfdir{,/X11}/profile.d,%systemd_unitdir}
 mkdir -p %buildroot%confdir/authorized_keys{,2}
@@ -346,6 +343,9 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Mar 20 2014 Dmitry V. Levin <ldv@altlinux.org> 6.6p1-alt1
+- Updated to 6.6p1.
+
 * Fri Nov 08 2013 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt7
 - sshd: applied upstream initialization fix (CVE-2013-4548).
 
