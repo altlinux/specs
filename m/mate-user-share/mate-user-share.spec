@@ -23,7 +23,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary:         Mate user file sharing
 Name:            mate-user-share
 Version:         %{branch}.0
-Release:         alt1_0
+Release:         alt2_0
 #Release:         0.1%{?git_rel}%{?dist}
 License:         GPLv2+
 Group:           System/Libraries
@@ -54,7 +54,7 @@ BuildRequires:  libunique-devel
 
 # disable bluetooth support for bluez5
 %if 0%{?fedora} > 19
-BuildRequires: mate-bluetooth-devel
+#BuildRequires: mate-bluetooth-devel
 %else
 BuildRequires:  mate-bluetooth-devel
 %endif
@@ -155,6 +155,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Sun Mar 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_0
+- no bluetooth for now
+
 * Fri Mar 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
 - new fc release
 
