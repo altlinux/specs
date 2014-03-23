@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,10 @@ done)
 
 
 %changelog
+* Sat Mar 22 2014 Led <led@altlinux.ru> 3.10.33-alt8
+- added:
+  + fix-drivers-scsi--hv_storvsc
+
 * Fri Mar 21 2014 Led <led@altlinux.ru> 3.10.33-alt7
 - updated:
   + fix-drivers-gpu-drm--radeon
