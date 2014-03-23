@@ -1,5 +1,5 @@
 Name: libvorbis
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: The Vorbis General Audio Compression Codec
@@ -105,6 +105,9 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Mon Mar 24 2014 Dmitry V. Levin <ldv@altlinux.org> 1.3.4-alt1
+- Updated to 1.3.4.
+
 * Wed Feb 15 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.3-alt1
 - Updated to 1.3.3.
 
