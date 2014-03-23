@@ -1,5 +1,5 @@
 Name: SDL2
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -9,7 +9,7 @@ Group: System/Libraries
 Url: http://www.libsdl.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.libsdl.org/release/%name-%version.tar.gz
+Source: http://www.libsdl.org/release/%name-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel
@@ -79,6 +79,12 @@ to develop SDL applications.
 %_aclocaldir/sdl2.m4
 
 %changelog
+* Sun Mar 23 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1
+- Version 2.0.3
+
+* Sun Mar 09 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt0.M70T.1
+- Build for branch t7
+
 * Sun Mar 09 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1
 - Version 2.0.2
 
