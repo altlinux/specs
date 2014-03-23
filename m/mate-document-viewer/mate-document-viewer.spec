@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libxml-2.0) pkgconfig(sm) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libxml-2.0) pkgconfig(sm) pkgconfig(x11) pkgconfig(libsecret-1) pkgconfig(zlib) zlib-devel
 # END SourceDeps(oneline)
 ## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
 Requires: mate-desktop
@@ -10,17 +10,17 @@ Requires: mate-desktop
 %define apiversion 1.5.0
 
 Name:           mate-document-viewer
-Version:        1.6.1
+Version:        1.8.0
 Release:        alt1_0
 Summary:        Document viewer
 License:        GPLv2+ and LGPLv2+ and MIT
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.8/atril-%{version}.tar.xz
 
 BuildRequires:  gtk2-devel
 BuildRequires:  libpoppler-glib-devel
 BuildRequires:  libXt-devel
-BuildRequires:  libmatekeyring-devel
+#BuildRequires:  libmatekeyring-devel
 BuildRequires:  libglade2-devel
 BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libjpeg-devel
@@ -45,7 +45,6 @@ BuildRequires:  libdjvu-devel
 Requires: %{name}-libs = %{version}-%{release}
 Patch33: mate-document-viewer-1.4.0-alt-link.patch
 Patch34: evince-2.32.0-alt.patch
-Patch35: mate-document-viewer-1.6.1-help-path.patch
 
 %description
 Mate-document-viewer is simple document viewer.
@@ -130,10 +129,9 @@ caja file manager.
 It adds an additional tab called "Document" to the file properties dialog.
 
 %prep
-%setup -n %{name}-%{version} -q
+%setup -n atril-%{version} -q
 %patch33 -p0
 %patch34 -p1
-%patch35 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -177,22 +175,22 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/atril.desktop
 %files -f atril.lang
 %doc README COPYING NEWS AUTHORS
 %{_bindir}/*
-%dir %{_datadir}/mate-document-viewer
-%{_datadir}/mate-document-viewer/*
+%dir %{_datadir}/atril
+%{_datadir}/atril/*
 %{_datadir}/applications/atril.desktop
 %{_datadir}/icons/hicolor/*/apps/atril.*
 %{_libexecdir}/atril-convert-metadata
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
-%{_datadir}/omf/atril/
 %{_datadir}/thumbnailers/atril.thumbnailer
-%{_datadir}/mate/help/atril/
 %dir %{_datadir}/gtk-doc/html
 %dir %{_datadir}/gtk-doc/html/atril
 %{_datadir}/gtk-doc/html/*
 %{_mandir}/man1/atril-*.1.*
 %{_mandir}/man1/atril.1.*
+#### TODO: LANG!!!
+%{_datadir}/help/*/atril
 
 %files libs
 %{_libdir}/libatrilview.so.*
@@ -245,6 +243,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/atril.desktop
 #%{_libdir}/atril/3/backends/impressdocument.atril-backend
 
 %changelog
+* Sun Mar 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
+- new version
+
 * Sun Aug 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_0
 - new version
 
