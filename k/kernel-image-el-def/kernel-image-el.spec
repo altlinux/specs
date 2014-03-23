@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt18
+Release: alt19
 %define erelease 431.5.1.el6
 
 %define kernel_req %nil
@@ -548,6 +548,9 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Sat Mar 22 2014 Led <led@altlinux.ru> 2.6.32-alt19
+- netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages (CVE-2014-2523)
+
 * Wed Feb 12 2014 Led <led@altlinux.ru> 2.6.32-alt18
 - 2.6.32-431.5.1.el6:
   + CVE-2013-2929
