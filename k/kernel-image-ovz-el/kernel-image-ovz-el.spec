@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt116
+Release: alt117
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sun Mar 23 2014 Led <led@altlinux.ru> 2.6.32-alt117
+- fix a bug in the VFS lookup code could cause a kernel panic
+
 * Sat Mar 22 2014 Led <led@altlinux.ru> 2.6.32-alt116
 - netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages (CVE-2014-2523)
 
