@@ -1,7 +1,7 @@
-%define origname AssaultCube_v1.1.0.4
+%define origname AssaultCube_v1.2.0.2
 Name: assaultcube
-Version: 1.1.0.4
-Release: alt1.svn6897
+Version: 1.2.0.2
+Release: alt1.svn7688
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
@@ -13,8 +13,9 @@ Source2: assaultcube_server.sh
 Source3: %name.desktop
 Source4: %name.png
 
-# Automatically added by buildreq on Sun Oct 10 2010
-BuildRequires: gcc-c++ libGL-devel libSDL_image-devel libX11-devel libjpeg-devel libopenal-devel libvorbis-devel zlib-devel
+# Automatically added by buildreq on Sun Mar 23 2014
+# optimized out: libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libogg-devel llvm xorg-xproto-devel
+BuildRequires: clang libSDL_image-devel libcurl-devel libopenal-devel libstdc++-devel libvorbis-devel zlib-devel
 
 Requires: %name-data = %version
 
@@ -28,7 +29,7 @@ game is all about team oriented multiplayer fun.
 %setup -q -n %origname
 
 %build
-%make_build -C source/src CFLAGS="%optflags" CXXOPTFLAGS="%optflags"
+%make_build -C source/src CFLAGS="%optflags" CXXOPTFLAGS="%optflags" 
 
 %install
 mkdir -p %buildroot%_bindir
@@ -57,6 +58,9 @@ mv %_builddir/%origname/README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Sun Mar 23 2014 Andrew Clark <andyc@altlinux.org> 1.2.0.2-alt1.svn7688
+- version update to 1.2.0.2-alt1.svn7688
+
 * Thu Oct 4 2012 Andrew Clark <andyc@altlinux.org> 1.1.0.4-alt1.svn6897
 - version update to 1.1.0.4-alt1.svn6897
 
