@@ -1,12 +1,10 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-%def_disable check
-
 %define pkgname i18n
 
 Name: ruby-%pkgname
 Version: 0.3.7
-Release: alt2.1
+Release: alt2.2
 
 Summary: I18n and localization solution for Ruby
 Group: Development/Ruby
@@ -57,6 +55,10 @@ Documentation files for %name
 %ruby_ri_sitedir/I18n*
 
 %changelog
+* Sat Mar 22 2014 Led <led@altlinux.ru> 0.3.7-alt2.2
+- add true to respond_to? for 1.9.3 compatibility
+- enabled %%check
+
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.3.7-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 - disabled check
