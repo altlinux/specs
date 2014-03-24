@@ -1,21 +1,20 @@
 # TODO:fix build Python bindings
 %def_disable python
 
-
-Name: gnucash
-Version: 2.6.1
+Name: 	 gnucash
+Version: 2.6.2
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
 
 License: GPL
-Group: Office
-Url: http://www.gnucash.org
+Group:   Office
+Url: 	 http://www.gnucash.org
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
+Source:  %name-%version.tar
 Source5: %name-README.RU
 Source7: conv_gnucash2.sh
 
@@ -35,7 +34,7 @@ BuildRequires: zlib-devel
 BuildRequires: libxslt-devel
 BuildRequires: aqbanking-devel
 BuildRequires: libwebkitgtk2-devel
-%ifdef python
+%if_enabled python
 BuildRequires: python-devel
 %endif
 
@@ -98,7 +97,7 @@ fetch and update.
 
 %build
 %autoreconf
-%ifdef python
+%if_enabled python
 sed -i 's|get_python_lib(0|get_python_lib(1|g' configure
 export PYTHON=/usr/bin/python
 %endif
@@ -108,7 +107,7 @@ export PYTHON=/usr/bin/python
 	   --with-html-engine=webkit \
 	   --enable-locale-specific-tax \
 	   --enable-dbi \
-%ifdef python
+%if_enabled python
 	   --enable-python \
 %endif
 	   --disable-static
@@ -170,6 +169,10 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Mon Mar 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
+- New version
+- Fix check for build python bindings
+
 * Thu Jan 30 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
 - New version
 - Replace GConf2 bt dconf
