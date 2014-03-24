@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Spreadsheet-ParseExcel
-Version: 0.64
+Version: 0.65
 Release: alt1
 Epoch: 1
 
@@ -39,6 +40,9 @@ XLSX format.  See the Spreadsheet::XLSX module instead.
 %perl_vendor_privlib/Spreadsheet
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.65-alt1
+- automated CPAN update
+
 * Wed Mar 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.64-alt1
 - automated CPAN update
 
