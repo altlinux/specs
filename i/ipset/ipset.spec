@@ -2,8 +2,8 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.20.1
-Release: alt3
+Version: 6.21.1
+Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -96,6 +96,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Mon Mar 24 2014 Anton Farygin <rider@altlinux.ru> 6.21.1-alt1
+- new version
+
 * Fri Nov 15 2013 Anton Farygin <rider@altlinux.ru> 6.20.1-alt3
 - repack kernel-source-package for new ipset modules build scheme
 
