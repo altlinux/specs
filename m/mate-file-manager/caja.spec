@@ -24,7 +24,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-up
 Name:        mate-file-manager
 Summary:     File manager for MATE
 Version:     %{branch}.0
-Release:     alt1_1
+Release:     alt1_2
 #Release:     0.1%{?git_rel}%{?dist}
 License:     GPLv2+ and LGPLv2+
 Group:       Graphical desktop/Other
@@ -35,16 +35,17 @@ URL:         http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
-Source1:    caja-autostart.desktop
-Source2:    caja-autostart-without-delay
 
 # upstream patches
 # fix https://github.com/mate-desktop/mate-file-manager/issues/122
-# https://github.com/mate-desktop/mate-file-manager/pull/180
+# http://git.mate-desktop.org/caja/commit/?id=910b9141ac634a86d8f53fda534e33787a160efb
 Patch1:    caja_allow-dropping-files-to-bookmarks.patch
-# https://github.com/mate-desktop/mate-file-manager/pull/180
+# http://git.mate-desktop.org/caja/commit/?id=60d4f83b0fab7633e73e8f4689f4c6931927c2ba
 Patch2:    caja_rearranged-caja-sidebar-to-1.4-style.patch
-Patch4:    caja_x-caja-window-surpress.patch
+# http://git.mate-desktop.org/caja/commit/?id=4f1e756e08e61840eb9a52de4debee30006ea31e
+Patch3:    caja_x-caja-windows-fix.patch
+# http://git.mate-desktop.org/caja/commit/?id=06264fc91212150d3b741a723422955e7e97614c
+Patch4:    caja_remove-ck-usage.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -72,10 +73,10 @@ Requires:       mate-file-manager-extensions = %{version}-%{release}
 # needed for using mate-text-editor as stanalone in another DE
 Requires:       mate-file-manager-schemas = %{version}-%{release}
 
-%if 0%{?fedora} && 0%{?fedora} <= 25
-#Provides: mate-file-manager%{?_isa} = %{version}-%{release}
-#Provides: mate-file-manager = %{version}-%{release}
-#Obsoletes: mate-file-manager < %{version}-%{release}
+%if 0%{?fedora} && 0%{?fedora} > 20
+Provides: mate-file-manager%{?_isa} = %{version}-%{release}
+Provides: mate-file-manager = %{version}-%{release}
+Obsoletes: mate-file-manager < %{version}-%{release}
 %endif
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
@@ -94,7 +95,7 @@ It is also responsible for handling the icons on the MATE desktop.
 Group: Development/C
 Summary:  Mate-file-manager extensions library
 Requires: mate-file-manager = %{version}-%{release}
-%if 0%{?fedora} && 0%{?fedora} <= 25
+%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-extensions%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-extensions = %{version}-%{release}
 Obsoletes: mate-file-manager-extensions < %{version}-%{release}
@@ -108,7 +109,7 @@ This package provides the libraries used by caja extensions.
 Group: Development/C
 Summary:  Mate-file-manager schemas
 License:  LGPLv2+
-%if 0%{?fedora} && 0%{?fedora} <= 25
+%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-schemas%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-schemas = %{version}-%{release}
 Obsoletes: mate-file-manager-schemas < %{version}-%{release}
@@ -121,7 +122,7 @@ This package provides the gsettings schemas for caja.
 Group: Development/C
 Summary:  Support for developing mate-file-manager extensions
 Requires: mate-file-manager = %{version}-%{release}
-%if 0%{?fedora} && 0%{?fedora} <= 25
+%if 0%{?fedora} && 0%{?fedora} > 20
 Provides: mate-file-manager-devel%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-devel = %{version}-%{release}
 Obsoletes: mate-file-manager-devel < %{version}-%{release}
@@ -134,13 +135,10 @@ for developing caja extensions.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-# use the caja-autostart script for autorestart caja if killed, fix spawning x-caja-windows
-# rhbz #886029
-sed -i -e 's,Exec=caja -n,Exec=/usr/bin/caja-autostart,g' data/caja.desktop.in.in data/caja.desktop.in.in
-
 %patch1 -p1 -b .bookmarks
 %patch2 -p1 -b .1.4-style
-%patch4 -p1 -b .surpress-x-caja-desktops
+%patch3 -p1 -b .x-caja-windows-fix
+%patch4 -p1 -b .remove-ck-usage
 
 # needed for git snapshots
 %patch33 -p1
@@ -177,8 +175,6 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/.icon-theme.cache
 
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0
 
-desktop-file-install --dir=$RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart %{SOURCE1}
-
 desktop-file-install                              \
     --delete-original                             \
     --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -187,12 +183,7 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 # remove needless gsettings convert file
 rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/caja.convert
 
-# script that add a delay to start/restart caja, to fix spawning x-caja-windows
-# fix rhbz #886029
-install -m 755 -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/caja-autostart
-
-
-%find_lang caja
+%find_lang %{oldname}
 
 
 %files
@@ -209,14 +200,13 @@ install -m 755 -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/caja-autostart
 %{_libexecdir}/caja-convert-metadata
 %{_datadir}/mime/packages/caja.xml
 %{_datadir}/dbus-1/services/org.mate.freedesktop.FileManager1.service
-%{_sysconfdir}/xdg/autostart/caja-autostart.desktop
 
 %files extensions
 %{_datadir}/gtk-doc/html/libcaja-extension
 %{_libdir}/libcaja-extension.so.*
 %{_libdir}/girepository-1.0/*.typelib
 
-%files schemas -f caja.lang
+%files schemas -f %{oldname}.lang
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 
 %files devel
@@ -227,6 +217,9 @@ install -m 755 -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/caja-autostart
 
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
+- new fc release
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
