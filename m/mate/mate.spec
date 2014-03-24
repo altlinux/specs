@@ -1,8 +1,8 @@
-%define ver_major 1.6
+%define ver_major 1.7
 
 Name: mate
 Version: %ver_major.0
-Release: alt4
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -111,7 +111,8 @@ Requires: %name-minimal = %version-%release
 ## Color manager
 #Requires: mate-color-manager
 ## Password keeper
-Requires: mate-keyring
+#Requires: mate-keyring
+Requires: gnome-keyring
 # Encryption keys management
 Requires: seahorse
 #Requires: seahorse-agent
@@ -184,7 +185,7 @@ Requires: mate-menu-editor
 Requires: mate-power-manager >= %ver_major
 #Requires: NetworkManager-mate >= %network_manager_ver
 ## Bluetooth pairing and control applet
-Requires: mate-bluetooth
+#Requires: mate-bluetooth
 ## frontend for various networking tools
 #Requires: mate-nettool
 # user settings utility
@@ -384,6 +385,9 @@ itself).
 #%files a11y
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
+- preparations for 1.8
+
 * Sun Aug 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt4
 - mate-document-viewer-impress dropped upstream
 
