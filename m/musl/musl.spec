@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Mon Mar 24 2014 Led <led@altlinux.ru> 1.0.0-alt3
+- fixes and updates from upstream's SCM
+
 * Sun Mar 23 2014 Led <led@altlinux.ru> 1.0.0-alt2
 - removed GNU qsort_r
 
