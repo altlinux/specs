@@ -2,7 +2,7 @@
 %define dist Net-Domain-TLD
 
 Name: perl-%dist
-Version: 1.70
+Version: 1.72
 Release: alt1
 
 Summary: Gives ability to retrieve currently available TLD
@@ -34,6 +34,9 @@ top level domain names including new ICANN additions and ccTLDs
 %perl_vendor_privlib/Net/Domain
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.70-alt1
 - automated CPAN update
 
