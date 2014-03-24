@@ -1,6 +1,6 @@
 %define dist Data-Dumper-Concise
 Name: perl-%dist
-Version: 2.021
+Version: 2.022
 Release: alt1
 
 Summary: Less indentation and newlines plus sub deparsing
@@ -35,6 +35,9 @@ return the Data::Dumper object it's created.
 %perl_vendor_privlib/Devel*
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.022-alt1
+- automated CPAN update
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.021-alt1
 - automated CPAN update
 
