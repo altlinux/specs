@@ -1,5 +1,5 @@
 Name: xinitrc
-Version: 2.4.39
+Version: 2.4.40
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
@@ -70,6 +70,10 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Mon Mar 24 2014 Michael Shigorin <mike@altlinux.org> 2.4.40-alt1
+- xrootwarn.real: fallback from gxmessage to xmessage,
+  no need to pull libgtk+2 with all the family in (see #28111).
+
 * Thu Mar 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.39-alt1
 - xrootwarn: replaced xmessage with gxmessage (closes: #28111).
 - Dropped no longer needed update_wms startup script (closes: #28103).
