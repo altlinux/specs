@@ -1,5 +1,5 @@
 Name: tdb
-Version: 1.2.12
+Version: 1.2.13
 Release: alt1
 
 Summary: A trivial database system
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/libtdb.a
 %python_sitelibdir/tdb.so
 
 %changelog
+* Mon Mar 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.13-alt1
+- 1.2.13
+
 * Wed Jul 03 2013 Alexey Shabalin <shaba@altlinux.ru> 1.2.12-alt1
 - 1.2.12
 
