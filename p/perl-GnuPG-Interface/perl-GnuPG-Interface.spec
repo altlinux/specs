@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module GnuPG-Interface
 
 Name: perl-%module
-Version: 0.46
+Version: 0.50
 Release: alt1
 
 Summary: Supply object methods for interacting with GnuPG
@@ -14,7 +15,7 @@ Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/GnuPG-Interface-%{version}.ta
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Jul 23 2011
-BuildRequires: gnupg perl-Any-Moose perl-Math-BigInt-GMP perl-Module-Install perl-Mouse perl-autodie
+BuildRequires: gnupg perl-Any-Moose perl-Math-BigInt-GMP perl-Module-Install perl-Mouse perl-autodie perl(Moo.pm) perl(MooX/late.pm) perl(MooX/HandlesVia.pm) perl(Data/Perl/Role/Collection/Array.pm)
 BuildRequires: perl-Math-BigInt
 
 %description
@@ -40,6 +41,9 @@ rm -f t/get_secret_keys.t
 %perl_vendor_privlib/GnuPG
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
