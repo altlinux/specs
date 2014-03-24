@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.33
-Release: alt8
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,22 @@ done)
 
 
 %changelog
+* Mon Mar 24 2014 Led <led@altlinux.ru> 3.10.33-alt10
+- added:
+  + fix-drivers-block--loop
+- BLK_DEV_LOOP_DEFAULT_MAX_PART=15
+
+* Sun Mar 23 2014 Led <led@altlinux.ru> 3.10.33-alt9
+- removed:
+  + fix-drivers-media-dvb-ttpci--budget-av
+  + fix-drivers-media-video-gspca--pac7302
+- updated:
+  + fix-fs-f2fs
+- added:
+  + fix-drivers-media-pci-ttpci--budget-av
+  + fix-drivers-media-usb-gspca--gspca_pac7302
+  + fix-drivers-media-usb-gspca--gspca_sn9c20x
+
 * Sat Mar 22 2014 Led <led@altlinux.ru> 3.10.33-alt8
 - added:
   + fix-drivers-scsi--hv_storvsc
