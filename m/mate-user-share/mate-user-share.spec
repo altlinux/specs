@@ -23,7 +23,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary:         Mate user file sharing
 Name:            mate-user-share
 Version:         %{branch}.0
-Release:         alt2_0
+Release:         alt2_1
 #Release:         0.1%{?git_rel}%{?dist}
 License:         GPLv2+
 Group:           System/Libraries
@@ -68,7 +68,7 @@ BuildRequires: mate-file-manager-devel
 Requires: httpd
 # obsolete with bluez5
 %if 0%{?fedora} > 19
-Requires: obex-data-server
+#Requires: obex-data-server
 %else
 Requires: obex-data-server
 %endif
@@ -100,9 +100,9 @@ The program also allows to share files using ObexFTP over Bluetooth.
 %if 0%{?fedora} > 19
 %configure \
     --disable-static \
+    --disable-bluetooth \
     --disable-schemas-compile
 %else
-#    --disable-bluetooth \
 %configure \
     --disable-scrollkeeper \
     --disable-static \
@@ -155,6 +155,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- new fc release
+
 * Sun Mar 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_0
 - no bluetooth for now
 
