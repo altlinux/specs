@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/db2html
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
 Version:	1.7.0
-Release:	alt1_0
+Release:	alt1_1
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -87,11 +87,6 @@ rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2011
 rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2012
 rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/MAINTAINERS
 
-# move doc dir for > f19
-%if 0%{?fedora} > 19
-#mv -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version} \
-#$RPM_BUILD_ROOT%_pkgdocdir
-%endif
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -115,17 +110,6 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 %files doc -f %{oldname}.lang
 %doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
-#if 0%{?fedora} > 19
-#%{_docdir}/caja-actions/html/
-#%{_docdir}/caja-actions/pdf/
-#%{_docdir}/caja-actions/objects-hierarchy.odg
-#%{_docdir}/caja-actions/AUTHORS
-#%{_docdir}/caja-actions/COPYING
-#%{_docdir}/caja-actions/COPYING-DOCS
-#%{_docdir}/caja-actions/ChangeLog
-#%{_docdir}/caja-actions/NEWS
-#%{_docdir}/caja-actions/README
-#else
 %{_docdir}/caja-actions-%{version}/html/
 %{_docdir}/caja-actions-%{version}/pdf/
 %{_docdir}/caja-actions-%{version}/objects-hierarchy.odg
@@ -135,7 +119,6 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 %{_docdir}/caja-actions-%{version}/ChangeLog
 %{_docdir}/caja-actions-%{version}/NEWS
 %{_docdir}/caja-actions-%{version}/README
-#endif
 
 %files devel
 %{_includedir}/caja-actions/
@@ -143,6 +126,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_1
+- new fc release
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_0
 - new fc release
 
