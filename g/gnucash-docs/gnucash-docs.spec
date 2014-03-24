@@ -1,5 +1,5 @@
 Name: gnucash-docs
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Documentation for the Gnucash
@@ -19,7 +19,6 @@ Requires(postun): scrollkeeper
 
 Source: http://prdownloads.sourceforge.net/gnucash/gnucash-docs/%version/%name-%version.tar
 
-# Automatically added by buildreq on Thu Dec 28 2006
 BuildRequires: scrollkeeper xsltproc
 
 %description
@@ -34,6 +33,7 @@ This is the documentation module for GnuCash.
 %setup
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -46,6 +46,10 @@ This is the documentation module for GnuCash.
 %_datadir/omf/gnucash-*/
 
 %changelog
+* Mon Mar 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
+- New version
+- Build from upstream Git repository
+
 * Thu Jan 30 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
 - New version
 
