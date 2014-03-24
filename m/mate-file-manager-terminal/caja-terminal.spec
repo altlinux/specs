@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:           mate-file-manager-terminal
 Version:        0.8.1
-Release:        alt1_0
+Release:        alt1_5
 Summary:        Terminal embedded in Caja
 
 Group:          Shells
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
 %{_libdir}/caja/extensions-2.0/python/%{oldname}.py*
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_5
+- new fc release
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_0
 - new fc release
 
