@@ -1,17 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBD/DBM.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
-Version:        1.11
-Release:        alt3_8
+Version:        1.112
+Release:        alt1
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Database/
-Source0:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
-# Fix POD encoding, CPAN RT#85198
-Patch0:         Test-Database-1.11-Fix-POD-encoding-in-Test-Database-Driver-mysql.patch
+Source:        http://www.cpan.org/authors/id/B/BO/BOOK/Test-Database-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(DBD/SQLite.pm)
@@ -44,27 +43,22 @@ configuration.
 
 %prep
 %setup -q -n Test-Database-%{version}
-%patch0 -p1
-rm -f t/pod.t
+#rm -f t/pod.t
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-./Build
+%perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
 %install
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
-
-%check
-./Build test
+%perl_vendor_install
 
 %files
 %doc Changes eg README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.112-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt3_8
 - update to new release by fcimport
 
