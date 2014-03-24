@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.33
-Release: alt10
+Version: 3.10.34
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 33
+%define kernel_stable_version 34
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1806,6 +1806,19 @@ done)
 
 
 %changelog
+* Mon Mar 24 2014 Led <led@altlinux.ru> 3.10.34-alt1
+- 3.10.34
+- removed:
+  + fix-drivers-scsi--hv_storvsc
+- updated:
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-drm--ttm
+  + fix-fs-fuse--cuse
+  + fix-lib--btree
+  + fix-virt-kvm--kvm_amd
+- added:
+  + fix-lib--crc32
+
 * Mon Mar 24 2014 Led <led@altlinux.ru> 3.10.33-alt10
 - added:
   + fix-drivers-block--loop
