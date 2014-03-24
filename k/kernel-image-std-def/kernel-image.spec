@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.10
-%define kernel_sublevel	.33
+%define kernel_sublevel	.34
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Mar 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.34-alt1
+- 3.10.34
+
 * Thu Mar 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.33-alt2
 - CVE-2014-2523 fixed
 
