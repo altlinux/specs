@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Group: Networking/Other
@@ -17,8 +17,6 @@ Requires: samba-client cifs-utils
 Requires: %libsmb4kcore = %version-%release
 
 Source: %rname-%version.tar
-# FC
-Patch1: smb4k-0.10.9-sudo.patch
 
 # Automatically added by buildreq on Fri Apr 30 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby
@@ -47,28 +45,37 @@ Developemnt files for %name
 
 %prep
 %setup -q -n %rname-%version
-#%patch1 -p1
 
 
 %build
-%K4build \
-    -DINSTALL_PLASMOID=false
+%K4build
 
 %install
 %K4install
 %K4find_lang --with-kde %rname
 
+# move plasmoid module
+mkdir -p  %buildroot/%_K4lib/smb4k/
+mv \
+    %buildroot/%_K4apps/plasma/plasmoids/smb4k-qml/contents/plugin/libsmb4kqml.so \
+    %buildroot/%_K4lib/smb4k/
+ln -s \
+    `relative %_K4lib/smb4k/libsmb4kqml.so %_K4apps/plasma/plasmoids/smb4k-qml/contents/plugin/libsmb4kqml.so` \
+    %buildroot/%_K4apps/plasma/plasmoids/smb4k-qml/contents/plugin/libsmb4kqml.so
 
 %files -f %rname.lang
 %_kde4_bindir/*
 %_K4libdir/libkdeinit4_smb4k.so
 %_K4lib/*.so
+%_K4lib/smb4k/
 %_K4exec/mounthelper
 %_K4conf_update/*
 %_K4libdir/libsmb4ktooltips.so
 %_kde4_xdg_apps/smb4k.desktop
-%_K4apps/smb4k
+%_K4apps/smb4k/
+%_K4apps/plasma/plasmoids/smb4k-qml/
 %_K4cfg/smb4k.kcfg
+%_K4srv/plasma-applet-smb4k-qml.desktop
 %_kde4_iconsdir/hicolor/*/*/*.*
 %_K4iconsdir/oxygen/*/apps/*.*
 %_K4dbus_system/net.sourceforge.smb4k.mounthelper.conf
@@ -81,6 +88,9 @@ Developemnt files for %name
 
 
 %changelog
+* Mon Mar 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
 * Wed Jan 15 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - new version
 
