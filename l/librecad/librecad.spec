@@ -1,17 +1,17 @@
-Name: librecad
-Version: 2.0.2
-Release: alt1
+Name:     librecad
+Version:  2.0.3
+Release:  alt1
 
-Summary: Computer-aided design (CAD) system
+Summary:  Computer-aided design (CAD) system
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Url: http://www.librecad.org
-License: GPLv2
-Group: Graphics
+Url: 	  http://www.librecad.org
+License:  GPLv2
+Group:    Graphics
 
-Source: librecad-%version.tar
-Patch: 0001-Adding-DXF-.desktop-file.patch
-Patch1: librecad-1.0.0-mdv-desktop.patch
+Source:   librecad-%version.tar
+Patch:    0001-Adding-DXF-.desktop-file.patch
+Patch1:   librecad-1.0.0-mdv-desktop.patch
 
 Requires: librecad-data
 #Suggests:	librecad-doc
@@ -124,6 +124,9 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Mon Mar 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
+- New version
+
 * Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
 - New version
 
