@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Want
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: A generalisation of "wantarray"
@@ -32,6 +33,9 @@ is going to be immediately used.
 %perl_vendor_autolib/Want
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
