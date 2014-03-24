@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.27
+Version: 1.1.28
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Mar 24 2014 Michael Shigorin <mike@altlinux.org> 1.1.28-alt1
+- install2: more cleanups
+
 * Mon Mar 17 2014 Michael Shigorin <mike@altlinux.org> 1.1.27-alt1
 - don't insist on k-m-r8168
 - codebase deduplication
