@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Switch
 Name: perl-%dist
-Version: 2.16
-Release: alt2
+Version: 2.17
+Release: alt1
 
 Summary: A switch statement for Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: Switch-2.16-rt-60380.patch
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Switch-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,6 @@ mechanism for Perl.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -35,6 +34,9 @@ mechanism for Perl.
 %perl_vendor_privlib/Switch.pm
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
+- automated CPAN update
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 2.16-alt2
 - applied patch from rt.cpan.org #60380
 
