@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -61,7 +61,7 @@ This package contains help files for HomeBank. The manual is easy to
 read and rather useful for a first time user.
 
 %prep
-%setup -q -n %name-%_version
+%setup -n %name-%_version
 
 %build
 %configure \
@@ -70,7 +70,7 @@ read and rather useful for a first time user.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -94,6 +94,9 @@ read and rather useful for a first time user.
 %exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 4.5.6-alt1
+- 4.5.6
+
 * Thu Jan 30 2014 Yuri N. Sedunov <aris@altlinux.org> 4.5.5-alt1
 - 4.5.5
 
