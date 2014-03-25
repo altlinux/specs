@@ -1,6 +1,6 @@
 Name:    qt-gstreamer
-Version: 0.10.2
-Release: alt4
+Version: 0.10.3
+Release: alt1
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -62,7 +62,7 @@ for %name.
 %files devel
 %doc HACKING
 %_includedir/QtGStreamer
-%_libdir/QtGStreamer
+%_libdir/cmake/QtGStreamer
 %_libdir/libQtGLib-2.0.so
 %_libdir/libQtGStreamer-0.10.so
 %_libdir/libQtGStreamerUi-0.10.so
@@ -72,6 +72,9 @@ for %name.
 
 
 %changelog
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt1
+- new version
+
 * Fri May 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.10.2-alt4
 - fix package url
 
