@@ -1,7 +1,7 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
 Version: 1.8.13
-Release: alt2
+Release: alt3
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
@@ -54,6 +54,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Tue Mar 25 2014 Anton Farygin <rider@altlinux.ru> 1.8.13-alt3
+- rebuild with new freeipmi
+
 * Thu Oct 24 2013 Anton Farygin <rider@altlinux.ru> 1.8.13-alt2
 - add patch from upstream bugzilla for fix sdr list on some HP servers (closes: #29491)
 
