@@ -1,6 +1,6 @@
 Name: phlipple
 Version: 0.8.5
-Release: alt2
+Release: alt3
 Summary: Reduce a 3D shape to a single square
 Group: Games/Puzzles
 License: GPLv3
@@ -23,6 +23,8 @@ orientation in 3D.
 %prep
 %setup
 for N in 16 24 32 48 128; do convert extra/%name.png $N.png; done
+# hack in -lm
+sed -i '/LIBS = @LIBS@/s/$/ -lm/' src/Makefile.in
 
 %build
 %configure
@@ -43,6 +45,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 0.8.5-alt3
+- Fix build
+
 * Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 0.8.5-alt2
 - Fix icons location
 
