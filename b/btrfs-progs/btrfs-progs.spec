@@ -1,17 +1,15 @@
 Name: btrfs-progs
-Version: 0.19
-Release: alt3.1
+Version: 3.12
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 Url: btrfs.wiki.kernel.org/
-Packager: Kiriil A. Shutemov <kas@altlinux.org>
 
 Source: %name-%version-%release.tar
-Patch: btrfs-progs-0.19-alt-no-Werror.patch
 
-BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel
+BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel
 
 %description
 Btrfs (B-tree FS or usually pronounced "Butter FS") is a copy-on-write
@@ -25,21 +23,56 @@ Btrfs claims a "focus on fault tolerance, repair and easy administration.
 
 This package contains utilities for managing the Btrfs filesystem
 
+%package -n libbtrfs-devel
+Summary:	btrfs filesystem-specific libraries and headers
+Group:		Development/C
+Requires:	libbtrfs = %version-%release
+Provides:	%name-devel
+
+%description -n libbtrfs-devel
+btrfs-progs-devel contains the libraries and header files needed to
+develop btrfs filesystem-specific programs.
+
+You should install btrfs-progs-devel if you want to develop
+btrfs filesystem-specific programs.
+
+
+%package -n libbtrfs
+Summary:	btrfs filesystem-specific libraries and headers
+Group:		System/Kernel and hardware
+
+%description -n libbtrfs
+btrfs-progs-devel contains shared libraries needed to
+btrfs filesystem-specific programs.
+
+
 %prep
 %setup -q -n %name-%version-%release
-%patch -p1
 
 %build
-%make_build all convert
+%make_build
 
 %install
-%makeinstall bindir=%buildroot/sbin
+%makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib
+mkdir -p %buildroot%_libdir
+LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
+ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
 
 %files
 /sbin/*
 %_man8dir/*
 
+%files -n libbtrfs
+/%_lib/*.so.*
+
+%files -n libbtrfs-devel
+%_libdir/*.so
+%_includedir/btrfs
+
 %changelog
+* Tue Mar 25 2014 Anton Farygin <rider@altlinux.ru> 3.12-alt1
+- new version
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.19-alt3.1
 - Fixed build
 
