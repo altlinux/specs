@@ -1,6 +1,6 @@
 Name: qrencode
-Version: 3.3.1
-Release: alt1.1
+Version: 3.4.3
+Release: alt1
 
 Summary: Generate QR 2D barcodes
 License: LGPLv2+
@@ -9,8 +9,10 @@ Group: File tools
 URL: http://megaui.net/fukuchi/works/qrencode/index.en.html
 Source: http://megaui.net/fukuchi/works/qrencode/qrencode-%version.tar.gz
 
-# Automatically added by buildreq on Tue Dec 27 2011 (-bi)
-BuildRequires: chrpath libSDL-devel libpng-devel
+# Automatically added by buildreq on Tue Mar 25 2014 (-bi)
+# optimized out: elfutils gnu-config libcloog-isl4 pkg-config python-base ruby ruby-stdlibs
+#BuildRequires: glibc-devel-static libSDL-devel libpng-devel rpm-build-ruby
+BuildRequires: glibc-devel libSDL-devel libpng-devel
 
 %description
 Qrencode is a utility to encode string data in a QR Code and save as a PNG image.
@@ -38,16 +40,21 @@ This package contains the development files for the qrencode library.
 
 %prep
 %setup
+echo -e "#! /bin/sh\n\ntrue" > use/config.rpath
+mkdir m4
+./autogen.sh
 
 %build
-%configure --with-tests
+%configure \
+    --disable-rpath \
+    --with-tests \
+    #
 %make_build
 cd ./tests
 ./test_all.sh
 
 %install
 %makeinstall_std
-chrpath --delete %buildroot%_bindir/qrencode
 
 %files
 %_bindir/*
@@ -62,6 +69,9 @@ chrpath --delete %buildroot%_bindir/qrencode
 %_pkgconfigdir/*
 
 %changelog
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 3.4.3-alt1
+- new version
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1.1
 - Rebuilt with libpng15
 
