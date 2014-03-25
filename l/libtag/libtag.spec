@@ -1,13 +1,13 @@
 %define rname taglib
 
 Name: libtag
-Version: 1.8
-Release: alt2
+Version: 1.9.1
+Release: alt1
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
 License: LGPL / MPL
 Group: System/Libraries
-Url: http://ktown.kde.org/~wheeler/taglib/
+Url: http://taglib.github.io/
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Provides: %rname = %version-%release
@@ -17,7 +17,7 @@ Source2: version-script.libtag
 
 # SuSE
 Patch2: taglib-1.8-ds-rusxmms-r2.patch
-Patch3: taglib-1.8-version_fix.patch
+Patch3: taglib-1.8-strip-rpath.patch
 # ALT
 Patch10: taglib-1.8-alt-versioning.patch
 
@@ -55,8 +55,8 @@ library.
 %prep
 %setup -q -n %rname-%version
 install -m0644 %SOURCE2 ./
-%patch2 -p1
-%patch3 -p1
+#%patch2 -p1
+%patch3 -p0
 %patch10 -p1
 
 
@@ -87,6 +87,12 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
+- new version
+
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.8-alt1.M60P.1
+- built for M60P (ALT#28700)
+
 * Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.8-alt2
 - sync patches with SuSE (return rusxmms patch)
 
