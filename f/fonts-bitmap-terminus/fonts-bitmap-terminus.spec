@@ -7,7 +7,7 @@
 
 Name: fonts-bitmap-%cname
 Version: 4.38
-Release: alt2
+Release: alt3
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
 License: OFL
@@ -19,9 +19,11 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 
 Source0: %cname-font-%version.tar.gz
 Source1: %cname-FAQ
+Source2: ibm-866.uni
 
 Patch0: %cname-4.38-alt-12pt_ve_fix.patch
 Patch1: %cname-4.38-alt-be2.patch
+Patch2: terminus-ALT-cp866.patch
 
 Provides: terminus-font = %version-%release
 
@@ -89,6 +91,9 @@ xterm.
 %setup -n %cname-font-%version
 %patch0
 %patch1
+%patch2 -p1
+cp %SOURCE2 uni/
+touch dup/ibm-866.dup
 
 %build
 patch < alt/ge2.diff
@@ -121,6 +126,9 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 4.38-alt3
+- Add cp866 encoding
+
 * Thu Nov 01 2012 Ivan Ovcherenko <asdus@altlinux.org> 4.38-alt2
 - Update specfile
 - Some enhancement in the "ve" character
