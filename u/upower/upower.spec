@@ -2,7 +2,8 @@
 
 Name: upower
 Version: 0.99.0
-Release: alt1
+Release: alt2
+
 Summary: Power Management Service
 License: GPLv2+
 Group: System/Libraries
@@ -119,6 +120,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Fri Jun 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt2
+- rebuilt against libplist.so.2
+
 * Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt1
 - 0.99.0
 
