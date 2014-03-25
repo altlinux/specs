@@ -1,22 +1,24 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
+Group: System/Libraries
 %define _libexecdir %_prefix/libexec
 %define fedora 21
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        1.8.0
-Release:        alt1_0
+Release:        alt2_0
+Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-1.8.0.tar.xz
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
+
 # fix fedora backgrounds and
 # workaround for x-caja-desktop window issue
 Source1:        mate-fedora.gschema.override
 Source2:        gnu-cat.gif
 Source3:        gnu-cat_navideno_v3.png
 Source4:        mate-fedora-f20.gschema.override
+Source5:        mate-fedora-f21.gschema.override
 
 #enable gnucat
 %if 0%{?fedora} > 20
@@ -28,11 +30,14 @@ Patch0:         mate-desktop_enable_gnucat.patch
 
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  itstool
 BuildRequires:  mate-common
-BuildRequires:  mate-doc-utils
 BuildRequires:  libstartup-notification-devel
 BuildRequires:  libunique-devel
+%if 0%{?fedora} > 20
+BuildRequires:  itstool
+%else
+BuildRequires:  mate-doc-utils
+%endif
 
 Requires: lib%{name} = %{version}-%{release}
 Requires: altlinux-freedesktop-menu-common
@@ -51,8 +56,6 @@ Obsoletes: libmatecomponentui
 Obsoletes: libmatecomponentui-devel
 Obsoletes: libmateui
 Obsoletes: libmateui-devel
-#Obsoletes: libmatewnck
-#Obsoletes: libmatewnck-devel
 Obsoletes: mate-conf
 Obsoletes: mate-conf-devel
 Obsoletes: mate-conf-editor
@@ -64,19 +67,22 @@ Obsoletes: mate-vfs-devel
 Obsoletes: mate-vfs-smb
 # switch to gnome-keyring > f19
 %if 0%{?fedora} > 19
-#Obsoletes: libmatekeyring
-#Obsoletes: libmatekeyring-devel
-#Obsoletes: mate-keyring
-#Obsoletes: mate-keyring-pam
-#Obsoletes: mate-keyring-devel
+Obsoletes: libmatekeyring
+Obsoletes: libmatekeyring-devel
+Obsoletes: mate-keyring
+Obsoletes: mate-keyring-pam
+Obsoletes: mate-keyring-devel
 %endif
-
 # temporarily solution for f20 until mate-bluetooth
 # is ported to bluez5
 %if 0%{?fedora} > 19
-#Obsoletes: mate-bluetooth < 1:1.6.0-6
-#Obsoletes: mate-bluetooth-libs < 1:1.6.0-6
-#Obsoletes: mate-bluetooth-devel < 1:1.6.0-6
+Obsoletes: mate-bluetooth < 1:1.6.0-6
+Obsoletes: mate-bluetooth-libs < 1:1.6.0-6
+Obsoletes: mate-bluetooth-devel < 1:1.6.0-6
+%endif
+%if 0%{?fedora} > 20
+Obsoletes: libmatewnck
+Obsoletes: libmatewnck-devel
 %endif
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
@@ -119,8 +125,7 @@ cp %SOURCE3 mate-about/gnu-cat_navideno_v3.png
 autoreconf -fi
 
 %build
-#We are using disable-desktop-docs because docbook docs configure with Gnome 3
-#https://github.com/mate-desktop/mate-desktop/issues/68
+%if 0%{?fedora} > 20
 %configure                                                 \
      --enable-desktop-docs                                 \
      --disable-schemas-compile                             \
@@ -130,8 +135,19 @@ autoreconf -fi
      --enable-unique                                       \
      --enable-mpaste                                       \
      --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
-     --with-omf-dir=%{_datadir}/omf/mate-desktop           \
      --enable-gtk-doc-html
+%else
+%configure \
+     --disable-scrollkeeper                                \
+     --disable-schemas-compile                             \
+     --with-gtk=2.0                                        \
+     --with-x                                              \
+     --disable-static                                      \
+     --enable-unique                                       \
+     --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
+     --with-omf-dir=%{_datadir}/omf/mate-desktop           \
+     --enable-gnucat
+%endif
 
 make %{?_smp_mflags} V=1
 
@@ -147,24 +163,32 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-about.desktop
 
+%if 0%{?fedora} > 20
 desktop-file-install                                         \
         --delete-original                                    \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-user-guide.desktop
+%endif
 
 %if 0%{?fedora} > 19
+%if 0%{?fedora} > 20
+install -D -m 0644 %SOURCE5 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%else
 install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%endif
 %else
 install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 %endif
 
-# remove needless gsettings convert file to avoid slow session start
+# remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
 
+%if 0%{?fedora} > 20
 # remove conflicting files with gnome
 rm -fr %{buildroot}%{_datadir}/help/*/fdl
 rm -fr %{buildroot}%{_datadir}/help/*/gpl
 rm -fr %{buildroot}%{_datadir}/help/*/lgpl
+%endif
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -173,6 +197,7 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 %files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
+%if 0%{?fedora} > 20
 %{_bindir}/mate-about
 %{_bindir}/mate-gsettings-toggle
 %{_bindir}/mpaste
@@ -184,6 +209,18 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %{_datadir}/pixmaps/gnu-cat.gif
 %{_datadir}/pixmaps/gnu-cat_navideno_v3.png
 %{_datadir}/help/*/mate-user-guide
+%else
+%{_bindir}/mate-about
+%{_bindir}/mate-gsettings-toggle
+%{_datadir}/applications/mate-about.desktop
+%{_datadir}/mate
+%{_datadir}/omf/mate-desktop
+%{_datadir}/mate-about
+%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%{_mandir}/man1/*
+%{_datadir}/pixmaps/gnu-cat.gif
+%{_datadir}/pixmaps/gnu-cat_navideno_v3.png
+%endif
 
 %files -n libmate-desktop -f %{name}.lang
 %{_libdir}/libmate-desktop-2.so.*
@@ -197,6 +234,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Tue Mar 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_0
+- intermediat build
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
 - new fc release
 
