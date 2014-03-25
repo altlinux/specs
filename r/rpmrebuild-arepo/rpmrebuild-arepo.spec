@@ -1,5 +1,5 @@
 Name: rpmrebuild-arepo
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
@@ -44,6 +44,12 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_bindir/arepo_pre.py
 
 %changelog
+* Fri Mar 21 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt1
+- rpmrebuild-arepo.conf: added /usr/lib/gdk-pixbuf-[[:digit:].]+/ to
+  lib_files.
+- arepo.sh: added *.so(*)* to provides_filter whitelist
+  (e.g. "libnss3.so(NSS_3.14.3)").
+
 * Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.4-alt1
 - rpmrebuild-arepo.conf: added /usr/lib/pango/ to lib_files.
 - arepo.sh: changed scripts filtering in 'lib' mode to copy scripts
