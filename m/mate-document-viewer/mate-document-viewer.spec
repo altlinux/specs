@@ -11,27 +11,29 @@ Requires: mate-desktop
 
 Name:           mate-document-viewer
 Version:        1.8.0
-Release:        alt1_0
+Release:        alt2_0
 Summary:        Document viewer
 License:        GPLv2+ and LGPLv2+ and MIT
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.8/atril-%{version}.tar.xz
+# fix rhbz (#999912)
+Patch1:         atril_djvu-fix-case-sensitive-search.patch
 
 BuildRequires:  gtk2-devel
 BuildRequires:  libpoppler-glib-devel
 BuildRequires:  libXt-devel
-#BuildRequires:  libmatekeyring-devel
+BuildRequires:  libsecret-devel
 BuildRequires:  libglade2-devel
 BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
-BuildRequires:  mate-doc-utils
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-icon-theme-devel
 BuildRequires:  t1lib-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
+BuildRequires:  yelp-tools
 
 # for the xps back-end
 BuildRequires:  libgxps-devel
@@ -43,6 +45,8 @@ BuildRequires:  libkpathsea-devel
 BuildRequires:  libdjvu-devel
 
 Requires: %{name}-libs = %{version}-%{release}
+#  fix (#974791)
+Requires:       libmate-desktop
 Patch33: mate-document-viewer-1.4.0-alt-link.patch
 Patch34: evince-2.32.0-alt.patch
 
@@ -130,6 +134,8 @@ It adds an additional tab called "Document" to the file properties dialog.
 
 %prep
 %setup -n atril-%{version} -q
+
+%patch1 -p1 -b .djvu
 %patch33 -p0
 %patch34 -p1
 
@@ -137,7 +143,7 @@ It adds an additional tab called "Document" to the file properties dialog.
 NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
-        --disable-scrollkeeper \
+        --disable-schemas-compile \
         --enable-introspection \
         --enable-comics \
         --enable-dvi=yes \
@@ -243,6 +249,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/atril.desktop
 #%{_libdir}/atril/3/backends/impressdocument.atril-backend
 
 %changelog
+* Tue Mar 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_0
+- added patch1
+
 * Sun Mar 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_0
 - new version
 
