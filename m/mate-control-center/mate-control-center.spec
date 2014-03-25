@@ -24,7 +24,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update
 
 Name:          mate-control-center
 Version:       %{branch}.1
-Release:       alt2_0
+Release:       alt2_1
 #Release:       0.6%{?git_rel}%{?dist}
 Summary:       MATE Desktop control-center
 License:       LGPLv2+ and GPLv2+
@@ -196,6 +196,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1-alt2_1
+- new fc release
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1-alt2_0
 - use gnome-keyring
 
