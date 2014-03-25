@@ -1,9 +1,9 @@
 Name:		zaz
 Version:	1.0.0
-Release:	alt1.qa1
+Release:	alt3
 Group:		Games/Arcade
 License:	GPLv3
-Source:		http://sunet.dl.sourceforge.net/project/%name/%name-%version.tar.gz
+Source:		http://sunet.dl.sourceforge.net/project/%name/%name-%version.tar.bz2
 Summary:	A puzzle game where the player has to arrange balls in triplets.
 URL:		http://sourceforge.net/projects/zaz
 Packager:	Fr. Br. George <george@altlinux.ru>
@@ -13,6 +13,7 @@ Requires:	%name-data = %version
 BuildRequires: ImageMagick-tools gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libtheora-devel libvorbis-devel
 
 BuildRequires: pkgconfig(ftgl) >= 2.1.3
+BuildRequires: gnulib
 
 %description
 Zaz ain't Z*** is a puzzle game where the player has to arrange balls in triplets.
@@ -44,6 +45,9 @@ exec "\$0.bin"
 @@@
 
 %build
+cp %_datadir/gnulib/build-aux/po/Makefile.in.in po
+sed -i 's/vorbisfile theoraenc/vorbisfile vorbis theoraenc/' configure.ac
+%autoreconf
 %configure
 %make_build
 convert extra/%name.xpm -resize 48x48 x48.xpm
@@ -70,6 +74,12 @@ install -m755 %name.sh %buildroot%_bindir/%name
 
 
 %changelog
+* Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 1.0.0-alt3
+- Fix DSO underlinkage
+
+* Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2
+- Fix build
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
