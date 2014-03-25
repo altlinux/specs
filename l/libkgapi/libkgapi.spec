@@ -1,8 +1,15 @@
 %add_findpackage_path %_kde4_bindir
 
+%define kgapi_sover 1
+%define kgapi_libver 2
+%define libkgapi libkgapi%kgapi_sover
+%define kgapi2_sover 2
+%define kgapi2_libver 2
+%define libkgapi2 libkgapi2%kgapi2_sover
+
 %define rname libkgapi
 Name: libkgapi
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Group: System/Libraries
@@ -28,18 +35,18 @@ Group: System/Configuration/Other
 %description common
 %name common package
 
-%package -n libkgapi1
+%package -n %libkgapi
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %EVR
-%description -n libkgapi1
+%description -n %libkgapi
 %name library.
 
-%package -n libkgapi22
+%package -n %libkgapi2
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %EVR
-%description -n libkgapi22
+%description -n %libkgapi2
 %name library.
 
 %package devel
@@ -67,26 +74,32 @@ Development files for %name
 %files common
 %doc README
 
-%files -n libkgapi1
-%_K4libdir/libkgapi.so.1
-%_K4libdir/libkgapi.so.2.*
+#%files -n %libkgapi
+#%_K4libdir/libkgapi.so.%kgapi_sover
+#%_K4libdir/libkgapi.so.%kgapi_libver.*
 
-%files -n libkgapi22
-%_K4libdir/libkgapi2.so.2
-%_K4libdir/libkgapi2.so.2.*
+%files -n %libkgapi2
+%_K4libdir/libkgapi2.so.%kgapi2_sover
+%_K4libdir/libkgapi2.so.%kgapi2_libver.*
 
 %files devel
-%_libdir/cmake/LibKGAPI/
+%_K4link/lib*.so
+#%_libdir/cmake/LibKGAPI/
+#%_K4includedir/libkgapi/
+#%_pkgconfigdir/libkgapi.pc
 %_libdir/cmake/LibKGAPI2/
-%_K4includedir/libkgapi/
 %_K4includedir/libkgapi2/
 %_K4includedir/LibKGAPI2/
-%_K4link/lib*.so
-%_pkgconfigdir/libkgapi.pc
-%_pkgconfigdir/libkgapi2.pc
+#%_pkgconfigdir/libkgapi2.pc
 
 
 %changelog
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
+- new version
+
+* Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
 - new version
 
