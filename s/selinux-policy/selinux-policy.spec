@@ -1,7 +1,7 @@
 %define distro redhat
 %define polyinstatiate n
 %define monolithic n
-%define POLICYVER 27
+%define POLICYVER 29
 %define POLICYCOREUTILSVER 2.1.9
 %define CHECKPOLICYVER 2.1.10
 
@@ -12,7 +12,7 @@
 Summary: SELinux policy configuration
 Name: selinux-policy
 Version: 3.11.1
-Release: alt3
+Release: alt4
 License: GPLv2+
 Group: System/Base
 Source: serefpolicy-%version.tar
@@ -277,7 +277,6 @@ Install()
 		touch %buildroot%_sysconfdir/selinux/$1/modules/semanage.$i.LOCK
 	done
 	rm -rf %buildroot%_sysconfdir/selinux/$1/booleans
-	touch %buildroot%_sysconfdir/selinux/$1/policy/policy.%POLICYVER
 	touch %buildroot%_sysconfdir/selinux/$1/contexts/files/file_contexts.subs
 	install -m 0644 selinux_config/securetty_types-$1 \
 		%buildroot%_sysconfdir/selinux/$1/contexts/securetty_types
@@ -333,6 +332,13 @@ echo "xdg-open file:///usr/share/doc/selinux-policy-%version/html/index.html" > 
 chmod 0755 %buildroot%_datadir/selinux/devel/policyhelp
 
 install -d -m 0755 %buildroot%_datadir/selinux/packages
+
+for d in minimum mls targeted; do
+	l="%buildroot%_sysconfdir/selinux/$d/modules/active/policy.kern"
+	[ -L "$l" ] || continue
+	t="$(readlink "$l")"
+	[ "$t" = "${t#/}" ] || ln -srf "$t" "$l"
+done
 
 %find_lang --with-man --all-name %name
 
@@ -499,6 +505,10 @@ exit 0
 
 
 %changelog
+* Wed Mar 26 2014 Led <led@altlinux.ru> 3.11.1-alt4
+- fixed symlinks at %%_sysconfdir
+- updated POLICYVER
+
 * Tue Oct 16 2012 Led <led@altlinux.ru> 3.11.1-alt3
 - attempt to fix the %%postin script of selinux-policy package
 
