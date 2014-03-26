@@ -1,6 +1,6 @@
 
 Name: raptor2
-Version: 2.0.9
+Version: 2.0.13
 Release: alt1
 
 Group: Development/Other
@@ -78,6 +78,9 @@ sed -i -e 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
 
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.13-alt1
+- new version
+
 * Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.9-alt1
 - new version
 
