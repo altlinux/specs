@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.35.0
-Release: alt2
+Version: 7.36.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -9,6 +9,7 @@ Group: Networking/File transfer
 Url: http://curl.haxx.se
 
 Source: %url/download/%name-%version.tar
+Source1: %name.watch
 Patch0: curl-%version-%release.patch
 
 Requires: lib%name = %version-%release
@@ -141,6 +142,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Mar 26 2014 Anton Farygin <rider@altlinux.ru> 7.36.0-alt1
+- new version
+- added watch file
+
 * Fri Feb 14 2014 Anton Farygin <rider@altlinux.ru> 7.35.0-alt2
 - test172 fixed by upstream
 
