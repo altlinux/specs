@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.11.0
-Release: alt4
+Version: 2.11.1
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -118,6 +118,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt1
+- new version
+
 * Wed Mar 12 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt4
 - don't fail post-script with broken freetype
 
