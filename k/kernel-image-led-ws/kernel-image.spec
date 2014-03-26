@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.34
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1806,6 +1806,11 @@ done)
 
 
 %changelog
+* Wed Mar 26 2014 Led <led@altlinux.ru> 3.10.34-alt3
+- updated:
+  + fix-fs-btrfs
+  + feat-firmware-rtl_nic
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 3.10.34-alt2
 - removed
   + fix-virt-kvm--kvm_amd
