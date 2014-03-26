@@ -6,14 +6,11 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%def_disable libdrm_intel
-%def_disable libdrm_radeon
-%def_disable libdrm_nouveau
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.8.8
-Release: alt4.git.054d29
+Release: alt5.git.37d2e4
 License: GPLv2+
 Group: System/Base
 
@@ -27,6 +24,10 @@ Requires(post): plymouth-scripts
 Requires: lib%name = %version-%release
 
 BuildRequires: libdrm-devel
+BuildRequires: systemd-devel
+BuildRequires: libudev-devel
+BuildRequires: xsltproc docbook-dtds docbook-style-xsl
+
 Conflicts: bootsplash
 Conflicts: systemd < 186-alt1
 
@@ -270,15 +271,14 @@ Plymouth. It features a small spinner on a dark background.
 # %__subst 's/fade-in/charge/g' src/plymouthd.defaults
 
 %build
+export SYSTEMD_ASK_PASSWORD_AGENT="/sbin/systemd-tty-ask-password-agent"
+export UDEVADM="/sbin/udevadm"
+
 %autoreconf
 %configure \
 	--enable-tracing				\
-	--disable-libkms				\
 	--enable-drm-renderer				\
-	%{subst_enable libdrm_intel}			\
-	%{subst_enable libdrm_radeon}			\
-	%{subst_enable libdrm_nouveau}			\
-	--disable-tests					\
+	--enable-documentation				\
 	--without-default-plugin			\
 	--with-logo=%_pixmapsdir/altlinux.png		\
 	--with-background-start-color-stop=0x0073B3	\
@@ -389,8 +389,10 @@ fi \
 %plymouthdaemon_execdir/plymouthd
 %plymouthdaemon_execdir/plymouth-update
 %plymouthclient_execdir/plymouth
+%_bindir/plymouth
 %_libdir/plymouth/details.so
 %_libdir/plymouth/text.so
+%_libdir/plymouth/tribar.so
 %_libdir/plymouth/renderers/drm*
 %_libdir/plymouth/renderers/frame-buffer*
 %_datadir/plymouth/default-boot-duration
@@ -400,6 +402,8 @@ fi \
 %_datadir/plymouth/themes/details/details.plymouth
 %dir %_datadir/plymouth/themes/text
 %_datadir/plymouth/themes/text/text.plymouth
+%dir %_datadir/plymouth/themes/tribar
+%_datadir/plymouth/themes/tribar/tribar.plymouth
 %_datadir/plymouth/plymouthd.defaults
 %_localstatedir/run/plymouth
 %_localstatedir/spool/plymouth
@@ -484,6 +488,9 @@ fi \
 %files system-theme
 
 %changelog
+* Wed Mar 26 2014 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt5.git.37d2e4
+- upstream snapshot 37d2e400d25e6b4716d77d26fb7d40de8a8c1a8a
+
 * Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt4.git.054d29
 - upstream snapshot 054d29019d03fe787eeb26267774743d2a849777
 - revert buggy commit "move to daemon in real system"
