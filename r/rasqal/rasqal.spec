@@ -2,7 +2,7 @@
 
 %define sover 3
 Name: rasqal
-Version: 0.9.30
+Version: 0.9.32
 Release: alt1
 
 Group: System/Libraries
@@ -89,6 +89,9 @@ cp -f %_datadir/automake/config.* .
 #%_libdir/librasqal.a
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.32-alt1
+- new version
+
 * Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.30-alt1
 - new version
 
