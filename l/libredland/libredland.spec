@@ -5,7 +5,7 @@
 %define oname redland
 
 Name: libredland
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: Redland - a library that provides a high-level interface for RDF
@@ -114,6 +114,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_gtkdocdir/redland/
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.17-alt1
+- new version
+
 * Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.16-alt1
 - new version
 
