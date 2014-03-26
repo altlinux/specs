@@ -2,9 +2,9 @@
 
 Name: alterator-setup
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
-Summary: Perform initial setup of an OEM installation
+Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
 Group: System/Configuration/Other
 
@@ -31,6 +31,12 @@ Requires(preun): chkconfig
 
 %description
 %summary
+
+WARNING: you really don't want to install this package
+into an already configured system as it may spoil the
+next boot!  Given that its sole purpose is the _initial_
+configuration of a new system (like setting root password)
+nobody should need that on an up-and-running host.
 
 %prep
 %setup
@@ -69,6 +75,9 @@ mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
 ln -sf /lib/systemd/system/setup.target /etc/systemd/system/default.target
 
 %changelog
+* Wed Mar 26 2014 Michael Shigorin <mike@altlinux.org> 0.2.1-alt2
+- added a warning to description
+
 * Thu Mar 06 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.1-alt1
 - Remove more packages during cleanup.
 
