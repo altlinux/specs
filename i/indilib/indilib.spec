@@ -1,11 +1,13 @@
 %define shortname indi
 
-%add_verify_elf_skiplist %_libdir/libindidriver.so.*
-%add_verify_elf_skiplist %_libdir/libindimain.so.*
 
 Name: indilib
-Version: 0.9.6
+Version: 0.9.8
 Release: alt1
+
+%add_verify_elf_skiplist %_libdir/libindidriver.so.%version
+%add_verify_elf_skiplist %_libdir/libindimain.so.%version
+%add_verify_elf_skiplist %_libdir/libAlignmentDriver.so
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -17,14 +19,12 @@ Conflicts: kde4edu-kstars < 4.1.60
 Conflicts: kdeedu-kstars <= 3.5.10-alt2
 
 Source: http://nchc.dl.sourceforge.net/sourceforge/indi/lib%{shortname}_%version.tar.gz
-# SuSE
-Patch1: no-return-in-nonvoid-function.patch
-Patch2: udev_rules_dir_configurable.patch
 
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
+BuildRequires: libusb-devel libjpeg-devel libgsl-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -64,8 +64,6 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %prep
 %setup -q -n lib%{shortname}_%version
-%patch1 -p1
-%patch2 -p0
 
 %build
 %Kbuild \
@@ -75,22 +73,30 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %install
 %Kinstall
 
+mkdir -p %buildroot/%_libdir/%shortname/MathPlugins/
+mv %buildroot/%_datadir/%shortname/MathPlugins/*.so %buildroot/%_libdir/%shortname/MathPlugins/
+for f in %buildroot/%_libdir/%shortname/MathPlugins/*.so
+do
+    fname=`basename $f`
+    ln -s `relative %buildroot/%_libdir/%shortname/MathPlugins/$fname %buildroot/%_datadir/%shortname/MathPlugins/$fname` %buildroot/%_datadir/%shortname/MathPlugins/$fname
+done
 
 %files
-%doc ChangeLog NEWS README TODO
+%doc ChangeLog README
 %_bindir/*
-%_datadir/%shortname
+%_libdir/%shortname/
+%_datadir/%shortname/
 %_udevrulesdir/*.rules
 
 %files -n lib%shortname
-%doc ChangeLog NEWS README TODO
+%doc ChangeLog README
 %_libdir/lib*.so.*
 
 #%files -n libsbigudrv
 #%_libdir/libsbigudrv.so.*
 
 %files -n lib%shortname-devel
-%doc ChangeLog README.*
+%doc ChangeLog TODO README
 #%doc src/examples
 %_libdir/*.so
 %_libdir/*.a
@@ -98,6 +104,12 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
+- new version
+
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt0.M70P.1
+- built for M70P
+
 * Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
 - new version
 

@@ -1,6 +1,6 @@
 
 Name: cfitsio
-Version: 3.350
+Version: 3.360
 Release: alt1
 %define sversion %(echo %version | tr -d .)
 
@@ -12,14 +12,15 @@ Url: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/
 
 Source: ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/%name-%version.tar.gz
 # SuSE
-Patch1: implicit-pointer-decl.patch
-Patch2: no-return-in-nonvoid-function.patch
+Patch1: cfitsio-zlib.patch
+# FC
+Patch5: cfitsio-pkgconfig.patch
 # ALT
-Patch10: cfitsio-3.350-autotools.patch
+Patch10: cfitsio-3.360-autotools.patch
 Patch11: cfitsio-3.350-alt-pkgconfig.patch
+Patch12: cfitsio-3.360-soname.patch
 
-
-BuildRequires: flex gcc-c++ gcc-fortran glibc-devel
+BuildRequires: flex gcc-c++ gcc-fortran glibc-devel zlib-devel
 
 %description
 CFITSIO is a library of C and Fortran subroutines for reading and
@@ -83,21 +84,29 @@ community.
 the cfits library.
 
 %prep
-%setup -q
-%patch1 -p0
-%patch2 -p0
+%setup
+%patch1 -p1
+%patch5 -p1
 %patch10 -p0
-%patch11 -p0
-%autoreconf
+#%patch11 -p0
+%patch12 -p0
+#autoreconf
 
 %build
 %configure --disable-static --enable-shared --enable-reentrant
-%make_build
+%make_build shared
+%make_build fpack
+%make_build funpack
 
 %install
-install -d %buildroot/{%_libdir,%_includedir}
-%makeinstall CFITSIO_LIB=%buildroot/%_libdir CFITSIO_INCLUDE=%buildroot/%_includedir
-
+install -d %buildroot/{%_bindir,%_libdir,%_includedir/%name}
+%make \
+    LIBDIR=%_libdir \
+    INCLUDEDIR=%_includedir/%name \
+    CFITSIO_LIB=%buildroot%_libdir \
+    CFITSIO_INCLUDE=%buildroot%_includedir/%name \
+install
+install -m755 f{,un}pack %buildroot/%_bindir/
 
 %files
 %_bindir/*
@@ -115,6 +124,12 @@ install -d %buildroot/{%_libdir,%_includedir}
 #%_libdir/*.a
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 3.360-alt1
+- new version
+
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 3.350-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 3.350-alt1
 - new version
 

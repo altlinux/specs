@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1082,6 +1082,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt3
+- rebuilt with new cfitsio
+
+* Fri Mar 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1.M70P.1
+- built for M70P
+
 * Fri Mar 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2
 - rebuilt with new avogadro
 

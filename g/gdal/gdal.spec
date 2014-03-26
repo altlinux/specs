@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.10.1
-Release: alt3
+Release: alt3.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -103,6 +103,7 @@ Perl modules for GDAL/OGR.
 %build
 %configure \
         --enable-static=no \
+        --disable-rpath \
 	--datadir=%_datadir/%name \
 	--includedir=%_includedir/%name \
 	--with-libz \
@@ -120,7 +121,7 @@ Perl modules for GDAL/OGR.
 	--with-gif \
 	--with-jpeg \
 	--with-ogr \
-	--with-hdf5=%_libdir/hdf5-seq/\
+	--with-hdf5=%_libdir/hdf5-seq \
 	--with-geos \
 	--with-jasper\
 	--with-odbc \
@@ -197,6 +198,9 @@ done
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.10.1-alt3.1
+- NMU: rebuilt with new cfitsio
+
 * Fri Jan 31 2014 Dmitry Derjavin <dd@altlinux.org> 1.10.1-alt3
 - libproj: fixed hardcoded library path and dependency added
 
