@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     1
 %define postgresql_subminor  11
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -38,6 +38,7 @@ Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch7: 0001-Apply-chroot-patch.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
+Patch9: 0008-ALT-SeLinux-user-name.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -257,6 +258,7 @@ database.
 %patch6 -p2
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %autoreconf
@@ -701,6 +703,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Mar 26 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.11-alt2
+- SeLinux username system_u -> generic_u
+
 * Fri Jan 17 2014 Alexei Takaseev <taf@altlinux.org> 9.1.11-alt1
 - 9.1.11
 
