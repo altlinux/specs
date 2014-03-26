@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt20
+Release: alt21
 %define erelease 431.11.2.el6
 
 %define kernel_req %nil
@@ -548,6 +548,28 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Wed Mar 26 2014 Led <led@altlinux.ru> 2.6.32-alt21
+- updated:
+  + fix-firmware-radeon
+- added:
+  + fix-drivers-net--tehuti
+  + fix-firmware-iwlwifi
+  + feat-firmware--aic94xx
+  + feat-firmware--ctefx
+  + feat-firmware--lbtf_usb
+  + feat-firmware--phanfw
+  + feat-firmware--rt73
+  + feat-firmware-agere
+  + feat-firmware-bfa
+  + feat-firmware-i2400m
+  + feat-firmware-ipw2100
+  + feat-firmware-ipw2200
+  + feat-firmware-mwl8k
+  + feat-firmware-ql2xxx
+  + feat-firmware-rt61pci
+  + feat-firmware-ti-connectivity
+  + feat-firmware-zd1211
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 2.6.32-alt20
 - 2.6.32-431.11.2.el6:
   + CVE-2013-1860
