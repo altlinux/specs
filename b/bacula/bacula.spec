@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt3
+Release: alt4
 
 License: AGPLv3
 Summary: Network based backup program
@@ -446,6 +446,9 @@ fi
 echo "Updating bacula < 5.2.0, catalog upgrade required!
 use appropriate %_datadir/bacula/scripts/update_*_tables script"
 
+%triggerpostun director-common -- bacula-director-common < 5.2.13-alt4
+test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || echo '@/etc/bacula/job/bacula.conf' >> /etc/bacula/bacula-dir.conf
+
 %preun director-sqlite3
 %preun_service bacula-dir
 
@@ -635,6 +638,9 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %files
 
 %changelog
+* Thu Feb 27 2014 Andrey Kolotov <qwest@altlinux.org> 5.2.13-alt4
+- fixed bug in the config for a local-backup
+
 * Mon Feb 24 2014 Andrey Kolotov <qwest@altlinux.org> 5.2.13-alt3
 - update release
 
