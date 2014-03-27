@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.16
+%define ver_major 3.18
 %define api_ver 2.0
 
 Name: glade
@@ -20,7 +20,7 @@ Requires: libgladeui%api_ver = %version-%release
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 # From configure.ac
 BuildPreReq: intltool >= 0.50
-BuildPreReq: libgtk+3-devel >= 3.9.11
+BuildPreReq: libgtk+3-devel >= 3.11.90
 BuildRequires: gnome-common gtk-doc yelp-tools
 BuildRequires: libxml2-devel
 BuildRequires: python-module-pygobject3-devel
@@ -132,6 +132,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-2.0.gir
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Thu Dec 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.16.1-alt1
 - 3.16.1
 
