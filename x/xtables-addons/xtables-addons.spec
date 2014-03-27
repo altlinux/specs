@@ -1,5 +1,5 @@
 Name: xtables-addons
-Version: 1.47.1
+Version: 2.4
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
@@ -21,45 +21,6 @@ ExclusiveArch: %ix86 x86_32 x86_64
 %description
 Xtables-addons is the proclaimed successor to patch-o-matic(-ng).
 It contains extensions that were not accepted in the main Xtables
-
-%package ipset
-Summary: Tools for managing sets of IP or ports with iptables
-License: GPLv2
-Group: System/Kernel and hardware
-Requires: libipset = %version-%release
-Conflicts: ipset
-
-%description ipset
-IP sets are a framework inside the Linux 2.6.x+ kernel,
-which can be administered by the ipset utility.
-Depending on the type, currently an IP set may store IP addresses,
-(TCP/UDP) port numbers or IP addresses with MAC addresses in a way,
-which ensures lightning speed when matching an entry against a set.
-
-ipset may be the proper tool for you, if you want to
- * store multiple IP addresses or port numbers and match against the
-   collection by iptables at one swoop;
- * dynamically update iptables rules against IP addresses or ports
-   without performance penalty;
- * express complex IP address and ports based rulesets with one single
-   iptables rule and benefit from the speed of IP sets
-
-%package -n libipset
-Summary: Linux ipset library
-License: GPLv2
-Group: System/Libraries
-
-%description -n libipset
-ipset library
-
-%package -n libipset-devel
-Summary: Linux ipset library
-License: GPLv2
-Group: Development/C
-Requires: libipset = %version-%release
-
-%description -n libipset-devel
-ipset library
 
 %package geoip-utils
 Summary: Tools for build and update geoip data
@@ -112,6 +73,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Thu Mar 27 2014 Anton Farygin <rider@altlinux.ru> 2.4-alt1
+- New version
+
 * Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.47.1-alt1
 - Updated to v1.47.1-2-gdf9d3c9.
 - Built with libxtables.so.10.
