@@ -1,6 +1,6 @@
 
 Name: libmwaw
-Version: 0.1.10
+Version: 0.2.0
 Release: alt1
 Summary: Import library for some old mac text documents
 Group: System/Libraries
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libwpd-0.9) pkgconfig(libwpd-stream-0.9)
 
-BuildRequires: doxygen
+BuildRequires: doxygen libwpg-devel
 
 %description
 libmwaw contains some import filters for old mac text documents
@@ -83,5 +83,8 @@ rm -f %buildroot/%_bindir/mwawFile
 %_bindir/*
 
 %changelog
+* Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.2.0-alt1
+- new version
+
 * Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.10-alt1
 - initial build
