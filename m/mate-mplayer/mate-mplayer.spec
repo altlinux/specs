@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(dbus-1) p
 
 Name:           mate-mplayer
 Version:        1.0.8
-Release:        alt1_0
+Release:        alt2_0
 Summary:        An MPlayer GUI, a full-featured binary
 
 License:        GPLv2+
@@ -160,6 +160,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/mate-mplayer
 #kill the libtool archives
 find $RPM_BUILD_ROOT -name *.la -exec rm -f {} \;
 
+sed -i -e s,apps.gecko-mediaplayer.preferences,org.mate.gecko-mediaplayer.preferences, %buildroot%{_datadir}/glib-2.0/schemas/org.mate.gecko-mediaplayer.preferences.gschema.xml
 
 %check
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/mate-mplayer.desktop
@@ -190,6 +191,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/mate-mplayer.deskt
 
 
 %changelog
+* Thu Mar 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_0
+- quickfix for apps.gecko-mediaplayer.preferences
+- TODO: proper fix
+
 * Sat Mar 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_0
 - new version (closes: 29887)
 
