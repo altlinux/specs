@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	27.0
+Version:	28.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -72,6 +72,7 @@ BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
 BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libopus-devel
+BuildRequires: libpulseaudio-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -358,6 +359,28 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Fri Mar 21 2014 Alexey Gladkov <legion@altlinux.ru> 28.0-alt1
+- New release (28.0).
+- Fixed:
+  + MFSA 2014-32 Out-of-bounds write through TypedArrayObject after neutering
+  + MFSA 2014-31 Out-of-bounds read/write through neutering ArrayBuffer objects
+  + MFSA 2014-30 Use-after-free in TypeObject
+  + MFSA 2014-29 Privilege escalation using WebIDL-implemented APIs
+  + MFSA 2014-28 SVG filters information disclosure through feDisplacementMap
+  + MFSA 2014-27 Memory corruption in Cairo during PDF font rendering
+  + MFSA 2014-26 Information disclosure through polygon rendering in MathML
+  + MFSA 2014-25 Firefox OS DeviceStorageFile object vulnerable to relative path escape
+  + MFSA 2014-24 Android Crash Reporter open to manipulation
+  + MFSA 2014-23 Content Security Policy for data: documents not preserved by session restore
+  + MFSA 2014-22 WebGL content injection from one domain to rendering in another
+  + MFSA 2014-21 Local file access via Open Link in new tab
+  + MFSA 2014-20 onbeforeunload and Javascript navigation DOS
+  + MFSA 2014-19 Spoofing attack on WebRTC permission prompt
+  + MFSA 2014-18 crypto.generateCRMFRequest does not validate type of key
+  + MFSA 2014-17 Out of bounds read during WAV file decoding
+  + MFSA 2014-16 Files extracted during updates are not always read only
+  + MFSA 2014-15 Miscellaneous memory safety hazards (rv:28.0 / rv:24.4)
+
 * Fri Feb 07 2014 Alexey Gladkov <legion@altlinux.ru> 27.0-alt1
 - New release (27.0).
 - Fixed:

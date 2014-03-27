@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        27.0
+Version:        28.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -28,7 +28,6 @@ Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
 #Patch17:	firefox-disable-installer.patch
-Patch20:	mozilla-938730.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -53,6 +52,7 @@ BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: libpulseaudio-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -111,7 +111,6 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p1
 #patch17 -p1
-%patch20 -p1 -b .938730
 
 #echo firefox_version > browser/config/version.txt
 
@@ -259,6 +258,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sat Mar 22 2014 Alexey Gladkov <legion@altlinux.ru> 28.0-alt1
+- New release (28.0).
+- Fixed:
+  + MFSA 2014-32 Out-of-bounds write through TypedArrayObject after neutering
+  + MFSA 2014-31 Out-of-bounds read/write through neutering ArrayBuffer objects
+  + MFSA 2014-30 Use-after-free in TypeObject
+  + MFSA 2014-29 Privilege escalation using WebIDL-implemented APIs
+  + MFSA 2014-28 SVG filters information disclosure through feDisplacementMap
+  + MFSA 2014-27 Memory corruption in Cairo during PDF font rendering
+  + MFSA 2014-26 Information disclosure through polygon rendering in MathML
+  + MFSA 2014-25 Firefox OS DeviceStorageFile object vulnerable to relative path escape
+  + MFSA 2014-24 Android Crash Reporter open to manipulation
+  + MFSA 2014-23 Content Security Policy for data: documents not preserved by session restore
+  + MFSA 2014-22 WebGL content injection from one domain to rendering in another
+  + MFSA 2014-21 Local file access via Open Link in new tab
+  + MFSA 2014-20 onbeforeunload and Javascript navigation DOS
+  + MFSA 2014-19 Spoofing attack on WebRTC permission prompt
+  + MFSA 2014-18 crypto.generateCRMFRequest does not validate type of key
+  + MFSA 2014-17 Out of bounds read during WAV file decoding
+  + MFSA 2014-16 Files extracted during updates are not always read only
+  + MFSA 2014-15 Miscellaneous memory safety hazards (rv:28.0 / rv:24.4)
+
 * Fri Feb 07 2014 Alexey Gladkov <legion@altlinux.ru> 27.0-alt1
 - New release (27.0).
 - Fixed:
