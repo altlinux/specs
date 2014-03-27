@@ -1,9 +1,11 @@
+%ifndef _gtkdocdir
 %define _gtkdocdir %_datadir/gtk-doc/html
+%endif
 
 %define sover 3
 Name: rasqal
 Version: 0.9.32
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Rasqal RDF Query Library
@@ -17,7 +19,7 @@ Patch1: rasqal-0.9.29-alt-automake.patch
 # optimized out: elfutils libgmp-devel libxml2-devel pkg-config
 #BuildRequires: flex glibc-devel-static gtk-doc libmpfr-devel libpcre-devel raptor2-devel
 BuildRequires: flex glibc-devel gtk-doc libmpfr-devel libpcre-devel raptor2-devel
-BuildRequires: rpm-build-intro libuuid-devel
+BuildRequires: libuuid-devel
 
 %description
 RDF Query Language.
@@ -89,6 +91,9 @@ cp -f %_datadir/automake/config.* .
 #%_libdir/librasqal.a
 
 %changelog
+* Thu Mar 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.32-alt2
+- clean build requires
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.32-alt1
 - new version
 
