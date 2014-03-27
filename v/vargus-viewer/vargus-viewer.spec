@@ -1,6 +1,6 @@
 Name: vargus-viewer
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: Qt4 client for vargus server
 
@@ -43,6 +43,9 @@ cp lang/lang_ru.qm %buildroot%_datadir/%name/lang/
 %_datadir/%name/
 
 %changelog
+* Thu Mar 27 2014 Michael A. Kangin <prividen@altlinux.org> 1.0.2-alt1
+- Fixed request for information about the last camera
+
 * Mon Oct 07 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt2
 - build for ALT Linux Sisyphus
 
