@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -69,7 +69,7 @@ Requires: mate-menus >= %ver_major
 # MATE Utilities
 #Requires: mate-search-tool >= %ver_major
 Requires: mate-system-monitor >= %ver_major
-Requires: mate-character-map
+Requires: gucharmap
 Requires: mate-calc >= %ver_major
 
 # Applications
@@ -385,6 +385,9 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Mar 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt2
+- dropped mate-character-map in favor of gucharmap
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
 - preparations for 1.8
 
