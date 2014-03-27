@@ -1,7 +1,7 @@
 
 Name:	 python-module-cli
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: A CLI construction toolkit for Python
 
 License: MIT
@@ -37,5 +37,8 @@ It is similar in scope to Python's "cmd", "cmd2", and pyCLI.
 %python_sitelibdir/*
 
 %changelog
+* Thu Mar 27 2014 Andrey Cherepanov <cas@altlinux.org> 1.2-alt2
+- Rebuild to prevent autoimports conflict
+
 * Wed Mar 26 2014 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - Initial build for ALT Linux
