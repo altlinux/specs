@@ -3,7 +3,7 @@
 
 Name: 	 openerp
 Version: 7.0
-Release: alt1.20140326
+Release: alt2.20140326
 
 Summary: Business Applications Server
 
@@ -45,14 +45,12 @@ Patch3: openerp-unbundle-fonts.patch
 
 BuildArch: noarch
 
-#%%py_requires _imaging pygraphviz feedparser gdata pychart vatnumber vobject _xmlplus xlwt ZSI json
+%py_requires feedparser gdata vatnumber vobject xlwt
 
-#%%add_python_req_skip ir netsvc osv report sql_db tools wizard printscreen pooler schoolbell
 # TODO remove unmets from code
-%add_python_req_skip com netsvc osv pooler pythonloader SendtoServer tools uno unohelper xlrd xlutils
-
-# Mageia requires
-#Requires: python-pillow
+%add_python_req_skip com pythonloader SendtoServer uno unohelper
+# internal modules
+%add_python_req_skip netsvc osv pooler tools
 
 # Fedora requires
 # https://fedorahosted.org/fpc/ticket/171
@@ -66,6 +64,7 @@ BuildArch: noarch
 #Requires: mnmlicons-fonts
 
 BuildPreReq:   rpm-build-python 
+BuildPreReq:   rsync
 BuildPreReq:   unzip 
 BuildRequires: python-devel 
 BuildRequires: postgresql9.1-python
@@ -76,6 +75,8 @@ BuildRequires: python-module-distribute
 BuildRequires: python-module-docutils 
 BuildRequires: python-module-feedparser 
 BuildRequires: python-module-gdata 
+BuildRequires: python-module-GitPython
+	       # TODO python-module-imaging should be replaced by python-module-pillow
 BuildRequires: python-module-imaging 
 BuildRequires: python-module-jinja2
 BuildRequires: python-module-ldap 
@@ -98,9 +99,8 @@ BuildRequires: python-module-unittest2
 BuildRequires: python-module-vatnumber 
 BuildRequires: python-module-vobject 
 BuildRequires: python-module-werkzeug
-BuildRequires: python-module-xlwt 
+BuildRequires: python-module-xlutils
 BuildRequires: python-module-yaml 
-BuildRequires: python-module-ZSI 
  
 Provides:  tinyerp-server = %version-%release 
 Obsoletes: tinyerp-server <= %version-%release 
@@ -164,7 +164,7 @@ Summary: OpenERP project, task connector with Git OpenERP Project management & G
 License: AGPLv3+
 Group:   Other
 Requires: openerp
-#Requires: python-gitpython >= 0.3.1
+Requires: python-module-GitPython
 
 %description -n openerp-git
 OpenERP project, task connector with Git OpenERP Project management &
@@ -178,8 +178,7 @@ Summary: This module provides the necessary tools to create and manage your gap-
 License: AGPLv3+
 Group:   Other
 Requires: openerp
-#Requires: python-xlwt
-#Requires: python-xlutils
+Requires: python-module-xlutils
 
 %description -n openerp-gap-analysis
 This module provides the necessary tools to create and manage your
@@ -285,9 +284,9 @@ subst 's|%buildroot|/|g' %buildroot%_bindir/openerp-server
 
 rm %buildroot/usr/openerp/.apidoc
 
-# Move all content from /usr/openerp to python sutelibdir
-rm -r %buildroot%python_sitelibdir/openerp
-mv %buildroot/usr/openerp %buildroot%python_sitelibdir
+# Move all missing content from /usr/openerp to python sitelibdir
+rsync -vaP %buildroot/usr/openerp %buildroot%python_sitelibdir/
+rm -rf %buildroot/usr/openerp
 
 install -m 644 -D install/openerp-server.conf  \
     %buildroot%_sysconfdir/openerp/openerp-server.conf
@@ -300,8 +299,8 @@ install -D -m 755 %SOURCE6 %buildroot%_initdir/openerp
 install -D -m 755 %SOURCE2 %buildroot%_sbindir/openerp-gen-cert
 install -m 644 %SOURCE3 %SOURCE4 .
 
-install -d %buildroot%_datadir/openerp/pixmaps
-install -m 644 -D install/*.png  %buildroot%_datadir/openerp/pixmaps
+install -d %buildroot%python_sitelibdir/openerp/pixmaps
+install -m 644 -D install/*.png  %buildroot%python_sitelibdir/openerp/pixmaps
 
 install -D -m 644 install/openerp-server.1   %buildroot%_man1dir/openerp-server.1
 install -D -m 644 install/openerp_serverrc.5 %buildroot%_man5dir/openerp-serverrc.5
@@ -319,9 +318,6 @@ install -d %buildroot%python_sitelibdir/openerp/addons/base/security
 install -m 644 openerp/addons/base/security/* \
     %buildroot%python_sitelibdir/openerp/addons/base/security
 
-install -d %{buildroot}/%{_datadir}/openerp/pixmaps
-install -m 644 -D install/*.png  %{buildroot}/%{_datadir}/openerp/pixmaps
-
 # Fix title in OpenEduCat
 sed -i -e "s!<title>OpenEduCat</title>!!" \
    %buildroot%addonsdir/openeducat_erp/controllers/main.py
@@ -336,9 +332,6 @@ echo "oerp_project_git" > %buildroot%_datadir/openerp/git.modules
 echo "gap_analysis,gap_analysis_project,gap_analysis_project_long_term" > %buildroot%_datadir/openerp/gap-analysis.modules
 echo "risk_management" > %buildroot%_datadir/openerp/risk-management.modules
 echo "smsclient,planning_management_capacity_planning,planning_management_shared_calendar" > %buildroot%_datadir/openerp/extras.modules
-
-# Clean pixmaps
-rm -f %buildroot%_datadir/openerp/pixmaps/*.png
 
 %find_lang %name
 
@@ -425,6 +418,11 @@ getent passwd openerp > /dev/null || \
 %files full
 
 %changelog
+* Fri Mar 28 2014 Andrey Cherepanov <cas@altlinux.org> 7.0-alt2.20140326
+- Add missing requires
+- Do not remove compiled Python files
+- Place pixmaps to main directory
+
 * Thu Mar 27 2014 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1.20140326
 - New version 7.0 (ALT #27570) syncronized with Mageia and Fedora
 - Rename package and service to openerp
