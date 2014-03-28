@@ -1,6 +1,6 @@
 Name: cutter
 Version: 1.03
-Release: alt1
+Release: alt2
 
 Summary: TCP/IP Connection Cutter
 License: GPLv2+
@@ -9,6 +9,8 @@ Group: Networking/Other
 Url: http://www.lowth.com/cutter/
 Source: http://www.lowth.com/cutter/software/cutter-%version.tgz
 Patch: cutter-missing_headers.patch
+
+Conflicts: wesnoth-tools
 
 %description
 "Cutter" is an open source program that allows Linux firewall
@@ -30,6 +32,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Mar 28 2014 Michael Shigorin <mike@altlinux.org> 1.03-alt2
+- added Conflicts: thanks to repocop
+
 * Thu Mar 27 2014 Michael Shigorin <mike@altlinux.org> 1.03-alt1
 - initial build for ALT Linux Sisyphus
 
