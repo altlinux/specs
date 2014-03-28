@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 1.5.1
+Version: 1.8.3
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch1: %name-%version-%release.patch
 
 Requires: lightdm
-Requires: gnome-icon-theme
+Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
 Requires: /usr/share/design/current
 
 Provides: lightdm-greeter
@@ -57,9 +57,14 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_altdir/lightdm-gtk-greeter
 %_sbindir/lightdm-gtk-greeter
 %_datadir/xgreeters/lightdm-gtk-greeter.desktop
+%_datadir/doc/lightdm-gtk-greeter/sample-lightdm-gtk-greeter.css
+%_datadir/icons/hicolor/scalable/places/*.svg
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Fri Mar 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
+- 1.8.3
+
 * Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
