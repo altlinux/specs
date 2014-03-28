@@ -1,8 +1,8 @@
 %def_disable check
 
 Name: pylint
-Version: 0.21.3
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 
 Summary: Python code static checker
 License: GPLv2+
@@ -12,7 +12,6 @@ BuildArch: noarch
 
 Url: http://www.logilab.org/project/name/pylint
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
@@ -20,7 +19,7 @@ Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
 %setup_python_module %name
 #%%py_requires logilab.astng
-Requires: python-module-logilab-common >= 0.50.1 python-module-logilab-astng >= 0.20.1
+Requires: python-module-astroid >= 1.0.1
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest %py_dependencies logilab.astng unittest2 }}
 
@@ -40,7 +39,6 @@ Additionally, it is possible to write plugins to add your own checks.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %python_build
@@ -59,6 +57,9 @@ PYTHONPATH=$(pwd)/build/lib/ pytest -t test
 %doc ChangeLog README doc/
 
 %changelog
+* Wed Mar 19 2014 Timur Aitov <timonbl4@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.21.3-alt1.1
 - Rebuild with Python-2.7
 
