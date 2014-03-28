@@ -13,11 +13,11 @@
 
 %define major 4
 %define minor 12
-%define bugfix 3
+%define bugfix 4
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -107,7 +107,7 @@ Patch1025: kdelibs-4.7.1-alt-find-hupnp.patch
 Patch1026: kdelibs-4.7.1-alt-find-pulseaudio.patch
 Patch1027: kdelibs-4.10.0-alt-no-hal.patch
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
-Patch1029: kdelibs-4.12.3-alt-fix-build.patch
+#
 Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
@@ -206,7 +206,7 @@ applications for KDE 4.
 %patch1026 -p1
 %patch1027 -p1
 %patch1028 -p1
-%patch1029 -p1
+#
 %patch1030 -p1
 %patch1031 -p1
 %patch1032 -p1
@@ -346,6 +346,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2.M70P.1
+- built for M70P
+
 * Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt3
 - fix to build
 
