@@ -1,6 +1,6 @@
 Name: autofs
-Version: 5.0.7
-Release: alt3
+Version: 5.0.9
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -13,7 +13,7 @@ Requires(post): %post_service
 Requires(preun): %preun_service
 
 BuildRequires: bison flex
-BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
+BuildRequires: libkrb5-devel libldap-devel libsasl2-devel libtirpc-devel
 BuildRequires: libssl-devel libxml2-devel
 
 %package ldap
@@ -51,9 +51,9 @@ export ac_cv_path_MODPROBE=/sbin/modprobe
 export ac_cv_path_MOUNT=/bin/mount
 export ac_cv_path_UMOUNT=/bin/umount
 export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
-%configure --with-systemd --disable-mount-locking \
-	--enable-ignore-busy --enable-forced-shutdown
-%make_build DONTSTRIP=1
+%configure --with-libtirpc --with-systemd --disable-mount-locking \
+	--enable-ignore-busy --enable-sloppy-mount
+%make_build
 
 %install
 %make_install install INSTALLROOT=%buildroot
@@ -116,6 +116,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Fri Mar 28 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.9-alt1
+- 5.0.9 released
+
 * Mon Oct 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.7-alt3
 - rebuilt with recent sasl
 
