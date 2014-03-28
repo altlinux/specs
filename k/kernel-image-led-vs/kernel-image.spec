@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.34
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -151,8 +151,8 @@ Release: alt3
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
 %Extra_modules fglrx 13.35.1005
-%Extra_modules vboxhost 4.3.8
-%Extra_modules vboxguest 4.3.8
+%Extra_modules vboxhost 4.3.10
+%Extra_modules vboxguest 4.3.10
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.7
 #Extra_modules ipt_NETFLOW 1.8.2
@@ -1344,6 +1344,15 @@ sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_oprofile:%add_verify_elf_skiplist %modules_dir/vmlinux}
 
+%if_with firmware
+%ifdef brp_strip_none
+%brp_strip_none %firmware_dir/*
+%else
+%add_strip_skiplist %firmware_dir/*
+%endif
+%add_verify_elf_skiplist %firmware_dir/*
+%endif
+
 
 %if 0
 %post
@@ -1698,50 +1707,7 @@ done)
 %if_with firmware
 %files -n firmware-kernel-%flavour
 %dir /lib/firmware
-%dir %firmware_dir
-%{?_enable_atm:%{?_enable_pci:%firmware_dir/atm*}}
-%firmware_dir/3com
-%firmware_dir/acenic
-%firmware_dir/adaptec
-%firmware_dir/advansys
-%firmware_dir/bnx2*
-%{?_enable_pcmcia:%firmware_dir/cis}
-%firmware_dir/cxgb3
-%firmware_dir/e100
-%firmware_dir/edgeport
-%{?_enable_sound:%firmware_dir/emi*}
-%firmware_dir/kaweth
-%firmware_dir/keyspan*
-%firmware_dir/mts_*
-%{?_enable_pcmcia:%firmware_dir/ositech}
-%firmware_dir/qlogic
-%firmware_dir/rtl_nic
-%firmware_dir/sun
-%firmware_dir/tehuti
-%firmware_dir/ti_*
-%firmware_dir/tigon
-%firmware_dir/ctefx*
-%{?_enable_hamradio:%firmware_dir/yam}
-%firmware_dir/whiteheat*
-%if_enabled alsa
-%{?_enable_pci:%firmware_dir/ess}
-%{?_enable_pci:%firmware_dir/korg}
-%ifarch %ix86
-%firmware_dir/sb16
-%endif
-%{?_enable_pci:%firmware_dir/yamaha}
-%endif
-%if_enabled drm
-%firmware_dir/matrox
-%firmware_dir/r128
-%firmware_dir/radeon
-%endif
-%if_enabled media
-%firmware_dir/av7110
-%firmware_dir/cpia2
-%firmware_dir/ttusb*
-%firmware_dir/vicam
-%endif
+%firmware_dir
 %endif
 
 
@@ -1806,6 +1772,113 @@ done)
 
 
 %changelog
+* Fri Mar 28 2014 Led <led@altlinux.ru> 3.10.34-alt4
+- vboxguest 4.3.10
+- vboxhost 4.3.10
+- disabled PRISM54
+- removed:
+  + fix-firmware--vicam
+  + feat-firmware--ctefx
+  + feat-firmware-rtl_nic
+- added:
+  + fix-drivers-base--firmware_class
+  + fix-firmware--bnx2
+  + fix-firmware--cxgb3
+  + fix-firmware--gspca_vicam
+  + feat-firmware--aic94xx
+  + feat-firmware--ar5523
+  + feat-firmware--at76c50x-usb
+  + feat-firmware--ath10k
+  + feat-firmware--ath3k
+  + feat-firmware--ath6k
+  + feat-firmware--ath9k_htc
+  + feat-firmware--atmel
+  + feat-firmware--b43
+  + feat-firmware--b43legacy
+  + feat-firmware--bcm203x
+  + feat-firmware--bfa
+  + feat-firmware--bfusb
+  + feat-firmware--bna
+  + feat-firmware--brcmfmac
+  + feat-firmware--bt3c_cs
+  + feat-firmware--btmrvl_sdio
+  + feat-firmware--carl9170
+  + feat-firmware--cxgb4
+  + feat-firmware--echoaudio
+  + feat-firmware--ipw2100
+  + feat-firmware--ipw2200
+  + feat-firmware--isci
+  + feat-firmware--isicom
+  + feat-firmware--iwl3945
+  + feat-firmware--iwl4965
+  + feat-firmware--iwlwifi
+  + feat-firmware--libertas_cs
+  + feat-firmware--libertas_sdio
+  + feat-firmware--libertas_tf_usb
+  + feat-firmware--moxa
+  + feat-firmware--mwifiex_pcie
+  + feat-firmware--mwifiex_sdio
+  + feat-firmware--mwifiex_usb
+  + feat-firmware--mwl8k
+  + feat-firmware--myri10ge
+  + feat-firmware--orinoco
+  + feat-firmware--orinoco_usb
+  + feat-firmware--p54pci
+  + feat-firmware--p54usb
+  + feat-firmware--phanfw
+  + feat-firmware--prism54
+  + feat-firmware--qla2xxx
+  + feat-firmware--r8169
+  + feat-firmware--r8192e_pci
+  + feat-firmware--r8192u_usb
+  + feat-firmware--r8712u
+  + feat-firmware--rp2
+  + feat-firmware--rt2800pci
+  + feat-firmware--rt2800usb
+  + feat-firmware--rt61pci
+  + feat-firmware--rt73usb
+  + feat-firmware--rtl8188ee
+  + feat-firmware--rtl8192ce
+  + feat-firmware--rtl8192cu
+  + feat-firmware--rtl8192de
+  + feat-firmware--rtl8192se
+  + feat-firmware--rtl8723ae
+  + feat-firmware--slicoss
+  + feat-firmware--snd-asihpi
+  + feat-firmware--snd-darla20
+  + feat-firmware--snd-darla24
+  + feat-firmware--snd-echo3g
+  + feat-firmware--snd-emu10k1
+  + feat-firmware--snd-gina20
+  + feat-firmware--snd-gina24
+  + feat-firmware--snd-hda-codec-ca0132
+  + feat-firmware--snd-hdsp
+  + feat-firmware--snd-indigo
+  + feat-firmware--snd-indigodj
+  + feat-firmware--snd-indigodjx
+  + feat-firmware--snd-indigoio
+  + feat-firmware--snd-indigoiox
+  + feat-firmware--snd-layla20
+  + feat-firmware--snd-layla24
+  + feat-firmware--snd-mia
+  + feat-firmware--snd-mixart
+  + feat-firmware--snd-mona
+  + feat-firmware--snd-pcxhr
+  + feat-firmware--snd-riptide
+  + feat-firmware--snd-usb-6fire
+  + feat-firmware--snd-vx-lib
+  + feat-firmware--ti_usb_3410_5052
+  + feat-firmware--ums-eneub6250
+  + feat-firmware--usb8xxx
+  + feat-firmware--vt6656
+  + feat-firmware--wl1251
+  + feat-firmware--wl12xx
+  + feat-firmware--wl18xx
+  + feat-firmware--wlcore
+  + feat-firmware--zd1201
+  + feat-firmware--zd1211rw
+  + feat-firmware-mrvl
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 3.10.34-alt3
 - updated:
   + fix-fs-btrfs
