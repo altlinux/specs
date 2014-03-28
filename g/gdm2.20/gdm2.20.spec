@@ -15,7 +15,7 @@
 
 Name: gdm2.20
 Version: %ver_major.8
-Release: alt9
+Release: alt10
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -180,6 +180,9 @@ install -pDm755 %SOURCE4 %buildroot%_sbindir/gdm-termok-command
 %exclude %_libdir/gtk-2.0/modules/lib*.la
 
 %changelog
+* Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt10
+- Fix DSO linking.
+
 * Thu Jan 17 2013 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt9
 - Use gdm-termok-command for poweroff and reboot (closes: #28178).
 - Added gdm-termok-command script.
