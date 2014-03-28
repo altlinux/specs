@@ -1,6 +1,6 @@
 
 Name: grantlee
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -103,6 +103,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee-apidocs
 %_docdir/HTML/en/grantlee-apidocs/
 
 %changelog
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- new version
+
 * Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - new version
 
