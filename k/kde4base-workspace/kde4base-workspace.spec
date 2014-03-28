@@ -23,7 +23,7 @@
 
 %define major 4
 %define minor 11
-%define bugfix 7
+%define bugfix 8
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
@@ -955,6 +955,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.7-alt0.M70P.1
+- built for M70P
+
 * Thu Mar 06 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.7-alt1
 - new version
 
