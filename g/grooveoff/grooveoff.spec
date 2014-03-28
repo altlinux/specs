@@ -1,5 +1,5 @@
 Name:		grooveoff
-Version:	0.1.8
+Version:	0.1.9
 Release:	alt1
 License:	GPLv3+
 Summary:	GrooveOff is an unofficial client for grooveshark.com
@@ -37,5 +37,8 @@ make DESTDIR=%buildroot install
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Mar 28 2014 Motsyo Gennadi <drool@altlinux.ru> 0.1.9-alt1
+- 0.1.9
+
 * Tue Dec 10 2013 Motsyo Gennadi <drool@altlinux.ru> 0.1.8-alt1
 - initial build for ALT Linux
