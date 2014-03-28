@@ -23,7 +23,7 @@
 
 Name: syncevolution
 Version: %ver_major.99.6
-Release: alt1
+Release: alt2
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
 Group: Office
@@ -33,6 +33,8 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
 Source2: libsynthesis.tar
+
+Patch1: syncevolution-1.3.99.6-fix-build-with-akonadi.patch
 
 Requires: %name-libs = %version-%release
 Requires: ca-certificates
@@ -110,6 +112,7 @@ SyncEvolution plugins.
 
 %prep
 %setup -q -a2
+%patch1 -p1
 sed -i '/^ACLOCAL_AMFLAGS/{ /m4-repo/!s/$/ -I m4-repo/ }' Makefile*.am
 
 %build
@@ -194,6 +197,9 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Tue Mar 11 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.99.6-alt2
+- rebuild with new xmlrpc-c
+
 * Thu Nov 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.3.99.6-alt1
 - 1.3.99.6
 
