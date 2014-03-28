@@ -4,8 +4,8 @@
 %def_with pam
 
 Name: monit
-Version: 5.7
-Release: alt2
+Version: 5.8
+Release: alt1
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -128,6 +128,10 @@ if [ ! -f %name.pem ]; then
 		-config %_ssldir/%name.cnf \
 		-keyout %name.pem -out %name.pem &>/dev/null
 fi
+
+grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
+  echo "** WARNING: add 'set pidfile /var/run/monit.pid' to /etc/monitrc" >&2
+
 %post_service %name
 
 %preun
@@ -158,6 +162,10 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Fri Mar 28 2014 Michael Shigorin <mike@altlinux.org> 5.8-alt1
+- new version (watch file uupdate)
+- seems it's now requisite set pidfile location explicitly
+
 * Mon Mar 17 2014 Michael Shigorin <mike@altlinux.org> 5.7-alt2
 - fixes/enhancements by icesik@:
   + converted spec to utf8 (closes: #28406)
