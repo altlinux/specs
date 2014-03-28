@@ -1,61 +1,80 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest gcc-c++
 # END SourceDeps(oneline)
-%define fedora 19
+%set_compress_method off
+%define fedora 21
 
-%define build_all 1
-%define build_alpha %{build_all}
-%define build_arm %{build_all}
-%define build_aarch64 %{build_all}
-%define build_avr32 %{build_all}
-%define build_blackfin %{build_all}
-%define build_c6x %{build_all}
-%define build_cris %{build_all}
-%define build_frv %{build_all}
-%define build_h8300 %{build_all}
-%define build_hppa64 %{build_all}
-%define build_ia64 %{build_all}
-%define build_m32r %{build_all}
-%define build_m68k %{build_all}
-%define build_microblaze %{build_all}
-%define build_mips64 %{build_all}
-%define build_mn10300 %{build_all}
-%define build_openrisc %{build_all}
-%define build_powerpc64 %{build_all}
-%define build_s390x %{build_all}
-%define build_score %{build_all}
-%define build_sh %{build_all}
-%define build_sh64 %{build_all}
-%define build_sparc64 %{build_all}
-%define build_tile %{build_all}
-%define build_x86_64 %{build_all}
-%define build_xtensa %{build_all}
+%define cross cross
+%define rpmprefix %{nil}
+
+%define build_all		1
+%define build_alpha		%{build_all}
+%define build_arm		%{build_all}
+%define build_aarch64		%{build_all}
+%define build_avr32		%{build_all}
+%define build_blackfin		%{build_all}
+%define build_c6x		%{build_all}
+%define build_cris		%{build_all}
+%define build_frv		%{build_all}
+%define build_h8300		%{build_all}
+%define build_hppa		%{build_all}
+%define build_hppa64		%{build_all}
+%define build_ia64		%{build_all}
+%define build_m32r		%{build_all}
+%define build_m68k		%{build_all}
+%define build_microblaze	%{build_all}
+%define build_mips64		%{build_all}
+%define build_mn10300		%{build_all}
+%define build_openrisc		%{build_all}
+%define build_powerpc64		%{build_all}
+%define build_s390x		%{build_all}
+%define build_score		%{build_all}
+%define build_sh		%{build_all}
+%define build_sh64		%{build_all}
+%define build_sparc64		%{build_all}
+%define build_tile		%{build_all}
+%define build_x86_64		%{build_all}
+%define build_xtensa		%{build_all}
 
 # 32-bit packages we don't build as we can use the 64-bit package instead
-%define build_hppa 0
-%define build_i386 0
-%define build_mips 0
-%define build_powerpc 0
-%define build_s390 0
-%define build_sparc 0
-%define build_sh4 0
+%define build_i386		0
+%define build_mips		0
+%define build_powerpc		0
+%define build_s390		0
+%define build_sparc		0
+%define build_sh4		0
 
 # not available in binutils-2.22
-%define build_hexagon 0
-%define build_unicore32 0
+%define build_hexagon		0
+%define build_unicore32		0
 
 Summary: A GNU collection of cross-compilation binary utilities
-Name: cross-binutils
-Version: 2.23.51.0.3
-Release: alt2_1
+Name: %{cross}-binutils
+# Note - this version number is a lie.  It should actually be 2.23.2 since
+# that is the version of the base sources.  But we have decided to switch
+# from tracking the Linux Kernel binutils releases to tracking the FSF
+# binutils releases half way through the FSF binutils release cycle.  The
+# version prior to this change was 2.23.52.0.1, but if we just set the new
+# version definition to be 2.23.2 then we would have a regression in the
+# binutils rpm numbers, which would break the rpm update mechanism.  So
+# instead we create a bogus, higher, version number here.  Once the next
+# official binutils release happens (2.24.0) we will be able to restore
+# Version to an honest value and everything will be good again.
+Version: 2.23.88.0.1
+%define srcdir binutils-2.23.2
+Release: alt1_2
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
 
-Source: ftp://ftp.kernel.org/pub/linux/devel/binutils/binutils-%{version}.tar.xz
-# The ftp.kernel.org/pub/linux/devel/binutils/ page is (temporarily) unavailable
-# so we use the GNU site instead.
-# Source: http://ftp.gnu.org/gnu/binutils/binutils-%{version}.tar.bz2
+# Note - see comment about the definition of Version above.  Once Version is
+# restored to a proper value the definition of Source below should be changed
+# to use %{version} instead of 2.23.2
+#
+# Note - the Linux Kernel binutils releases are too unstable and contain too
+# many controversial patches so we stick with the official FSF version
+# instead.
+Source: http://ftp.gnu.org/gnu/binutils/binutils-2.23.2.tar.bz2
 Source2: binutils-2.19.50.0.1-output-format.sed
 Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-ppc64-pie.patch
@@ -70,10 +89,31 @@ Patch08: binutils-2.22.52.0.1-relro-on-by-default.patch
 Patch09: binutils-2.22.52.0.1-export-demangle.h.patch
 # Disable checks that config.h has been included before system headers.  BZ #845084
 Patch10: binutils-2.22.52.0.4-no-config-h-check.patch
-# Renames ARM LDRALT insn to LDALT.  BZ# 869025
-Patch11: binutils-2.23.51.0.3-arm-ldralt.patch
+# Fix the creation of the index table in 64-bit thin archives.
+Patch11: binutils-2.23.52.0.1-64-bit-thin-archives.patch
+# Fix errors reported by version 5.0 of texinfo in gas documentation
+Patch12: binutils-2.23.52.0.1-as-doc-texinfo-fixes.patch
+# Fix addr2line to use the dynamic symbol table if it could not find any ordinary symbols.
+Patch13: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
+# Check regular references without non-GOT references when building shared libraries.
+Patch14: binutils-2.23.52.0.1-check-regular-ifunc-refs.patch
+# Fix errors reported by version 5.0 of texinfo in ld documentation
+Patch15: binutils-2.23.2-ld-texinfo-fixes.patch
+Patch16: binutils-2.23.2-kernel-ld-r.patch
+Patch17: binutils-2.23.2-bfd-texinfo-fixes.patch
+# Add support for the alternate debug info files created by the DWZ program.
+Patch18: binutils-2.23.2-dwz-alt-debuginfo.patch
+# Correct bug introduced by patch 16
+Patch19: binutils-2.23.2-aarch64-em.patch
+# Add support for the .machinemode pseudo-op to the S/390 assembler.
+patch20: binutils-2.23.2-s390-gas-machinemode.patch
+
+# Fix for xtensa memset length
+Patch100: cross-binutils-2.23.2-xtensa-memset.patch
 
 BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
+# BZ 920545: We need pod2man in order to build the manual pages.
+BuildRequires: /usr/bin/pod2man
 # Required for: ld-bootstrap/bootstrap.exp bootstrap with --static
 # It should not be required for: ld-elf/elf.exp static {preinit,init,fini} array
 Conflicts: gcc-c++ < 4.0.0
@@ -96,21 +136,32 @@ of an object or archive file), strings (for listing printable strings
 from files), strip (for discarding symbols), and addr2line (for
 converting addresses to file and line).
 
-%package -n cross-binutils-common
+%package -n %{cross}-binutils-common
 Summary: Cross-build binary utility documentation and translation files
 Group: Development/Tools
 BuildArch: noarch
-%description -n cross-binutils-common
+%description -n %{cross}-binutils-common
 Documentation, manual pages and translation files for cross-build binary image
 generation, manipulation and query tools.
 
 %define do_package() \
 %if %2 \
-%package -n binutils-%1 \
+%package -n %{rpmprefix}binutils-%1 \
 Summary: Cross-build binary utilities for %1 \
 Group: Development/Tools \
-Requires: cross-binutils-common == %{version}-%{release} \
-%description -n binutils-%1 \
+Requires: %{cross}-binutils-common == %{version}-%{release} \
+%description -n %{rpmprefix}binutils-%1 \
+Cross-build binary image generation, manipulation and query tools. \
+%endif
+
+%define do_symlink() \
+%if %2 \
+%package -n %{rpmprefix}binutils-%1 \
+Summary: Cross-build binary utilities for %1 \
+Group: Development/Tools \
+Requires: binutils-%3 == %{version}-%{release} \
+Provides: /usr/lib/%3 \
+%description -n %{rpmprefix}binutils-%1 \
 Cross-build binary image generation, manipulation and query tools. \
 %endif
 
@@ -137,6 +188,8 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package openrisc-linux-gnu	%{build_openrisc}
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
+%do_symlink ppc-linux-gnu	%{build_powerpc}	powerpc-linux-gnu
+%do_symlink ppc64-linux-gnu	%{build_powerpc64}	powerpc64-linux-gnu
 %do_package s390-linux-gnu	%{build_s390}
 %do_package s390x-linux-gnu	%{build_s390x}
 %do_package score-linux-gnu	%{build_score}
@@ -150,11 +203,8 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package x86_64-linux-gnu	%{build_x86_64}
 %do_package xtensa-linux-gnu	%{build_xtensa}
 
-# Where the binaries aimed at gcc will live (ie. /usr/<target>/bin/)
-#%define auxbin_prefix %{_exec_prefix}
 # ALTLinux: Where the binaries aimed at gcc will live (ie. /usr/lib/<target>/bin/)
 %define auxbin_prefix %{_libexecdir}
-
 
 ###############################################################################
 #
@@ -163,7 +213,6 @@ Cross-build binary image generation, manipulation and query tools. \
 ###############################################################################
 %prep
 
-%define srcdir binutils-%{version}
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
 %patch01 -p0 -b .libtool-lib64~
@@ -182,7 +231,18 @@ cd %{srcdir}
 %endif
 %patch09 -p0 -b .export-demangle-h~
 %patch10 -p0 -b .no-config-h-check~
-%patch11 -p0 -b .arm-ldralt~
+%patch11 -p0 -b .64bit-thin-archives~
+%patch12 -p0 -b .gas-texinfo~
+%patch13 -p0 -b .addr2line~
+%patch14 -p0 -b .check-ifunc~
+%patch15 -p0 -b .ld-texinfo~
+%patch16 -p0 -b .kernel-ld-r~
+%patch17 -p0 -b .bfd-texinfo~
+%patch18 -p0 -b .dwz~
+%patch19 -p0 -b .aarch64~
+%patch20 -p0 -b .machinemode~
+
+%patch100 -p1 -b .xtensa~
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -190,7 +250,7 @@ cd %{srcdir}
 sed -i -e '/#define.*ELF_COMMONPAGESIZE/s/0x1000$/0x10000/' bfd/elf*ppc.c
 # LTP sucks
 perl -pi -e 's/i\[3-7\]86/i[34567]86/g' */conf*
-sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
+sed -i -e 's/%''{release}/%{release}/g' bfd/Makefile{.am,.in}
 sed -i -e '/^libopcodes_la_\(DEPENDENCIES\|LIBADD\)/s,$, ../bfd/libbfd.la,' opcodes/Makefile.{am,in}
 # Build libbfd.so and libopcodes.so with -Bsymbolic-functions if possible.
 if gcc %{optflags} -v --help 2>&1 | grep -q -- -Bsymbolic-functions; then
@@ -198,7 +258,7 @@ sed -i -e 's/^libbfd_la_LDFLAGS = /&-Wl,-Bsymbolic-functions /' bfd/Makefile.{am
 sed -i -e 's/^libopcodes_la_LDFLAGS = /&-Wl,-Bsymbolic-functions /' opcodes/Makefile.{am,in}
 fi
 # $PACKAGE is used for the gettext catalog name.
-sed -i -e 's/^ PACKAGE=/ PACKAGE=cross-/' */configure
+sed -i -e 's/^ PACKAGE=/ PACKAGE=%{cross}-/' */configure
 # Undo the name change to run the testsuite.
 for tool in binutils gas ld
 do
@@ -211,7 +271,7 @@ function prep_target () {
     target=$1
     cond=$2
 
-    if [ $cond = 1 ]
+    if [ $cond != 0 ]
     then
 	echo $1 >&5
     fi
@@ -278,7 +338,7 @@ fi
 function config_target () {
     arch=$1
     prefix=$arch-
-    build_dir=$arch
+    build_dir=${1%%%%-*}
 
     case $arch in
 	arm-*)		target=arm-linux-gnueabi;;
@@ -300,11 +360,6 @@ function config_target () {
     echo $arch: target is $target
     export CFLAGS="$RPM_OPT_FLAGS"
     CARGS=
-
-    case $target in hppa64*)
-	    CARGS="$CARGS --enable-targets=hppa-linux-gnu"
-	    ;;
-    esac
 
     case $target in i?86*|sparc*|ppc*|s390*|sh*|arm*)
 	    CARGS="$CARGS --enable-64-bit-bfd"
@@ -360,7 +415,6 @@ function config_target () {
 	--program-prefix=$prefix \
 	--disable-shared \
 	--disable-install_libbfd \
-	--disable-werror \
 	$CARGS \
 	--with-bugurl=http://bugzilla.altlinux.org/
     cd ..
@@ -372,8 +426,8 @@ do
 done
 
 function build_target () {
-    arch=$1
-    make -C $arch %{_smp_mflags} tooldir=%{_prefix} all
+    build_dir=${1%%%%-*}
+    make -C $build_dir %{_smp_mflags} tooldir=%{_prefix} all
 }
 
 for target in `cat target.list`
@@ -382,8 +436,8 @@ do
 done
 
 # for documentation purposes only
-mkdir cross-binutils
-cd cross-binutils
+mkdir %{cross}-binutils
+cd %{cross}-binutils
 ../%{srcdir}/configure \
     --disable-dependency-tracking \
     --disable-silent-rules \
@@ -400,9 +454,8 @@ cd cross-binutils
     --sharedstatedir=%{_sharedstatedir} \
     --mandir=%{_mandir} \
     --infodir=%{_infodir} \
-    --program-prefix=cross- \
+    --program-prefix=%{cross}- \
     --disable-shared \
-    --disable-werror \
     --with-bugurl=http://bugzilla.altlinux.org/
 make %{_smp_mflags} tooldir=%{_prefix} all
 cd ..
@@ -415,8 +468,33 @@ cd ..
 %install
 
 function install_bin () {
-    cross=$1
-    make install -C $cross DESTDIR=%{buildroot}
+    cpu=${1%%%%-*}
+    build_dir=$cpu
+    make install -C $build_dir DESTDIR=%{buildroot}
+
+    # We want links for ppc and ppc64 also if we make powerpc or powerpc64
+    case $cpu in
+	powerpc*)
+	    cd %{buildroot}/usr/bin
+	    for i in $cpu-*
+	    do
+		ln -s $i ppc${i#powerpc}
+	    done
+	    cd -
+	    cd %{buildroot}%{auxbin_prefix}
+	    for i in $cpu-*
+	    do
+		ln -s $i ppc${i#powerpc}
+	    done
+	    cd -
+	    cd %{buildroot}/usr/share/man/man1
+	    for i in $cpu-*
+	    do
+		ln -s $i ppc${i#powerpc}
+	    done
+	    cd -
+	    ;;
+    esac
 }
 
 for target in `cat target.list`
@@ -430,19 +508,23 @@ do
 #    fi
 done
 
-#echo "=== INSTALL man targets ==="
-#make install-man1 -C cross-binutils/binutils/doc DESTDIR=%{buildroot}
-#make install-man1 -C cross-binutils/gas/doc DESTDIR=%{buildroot}
-#make install-man1 -C cross-binutils/ld DESTDIR=%{buildroot}
-#make install-man1 -C cross-binutils/gprof DESTDIR=%{buildroot}
+echo "=== INSTALL man targets ==="
+make install-man1 -C %{cross}-binutils/binutils/doc DESTDIR=%{buildroot}
+make install-man1 -C %{cross}-binutils/gas/doc DESTDIR=%{buildroot}
+make install-man1 -C %{cross}-binutils/ld DESTDIR=%{buildroot}
+make install-man1 -C %{cross}-binutils/gprof DESTDIR=%{buildroot}
 
 echo "=== INSTALL po targets ==="
-make install -C cross-binutils/binutils/po DESTDIR=%{buildroot}
-make install -C cross-binutils/gas/po DESTDIR=%{buildroot}
-make install -C cross-binutils/ld/po DESTDIR=%{buildroot}
-make install -C cross-binutils/gprof/po DESTDIR=%{buildroot}
-make install -C cross-binutils/bfd/po DESTDIR=%{buildroot}
-make install -C cross-binutils/opcodes/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/binutils/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/gas/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/ld/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/gprof/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/bfd/po DESTDIR=%{buildroot}
+make install -C %{cross}-binutils/opcodes/po DESTDIR=%{buildroot}
+
+# Add the additional symlink-only targets
+grep ^powerpc target.list | sed -e s/powerpc/ppc/ >symlink-target.list
+cat symlink-target.list >>target.list
 
 # For cross-binutils we drop the documentation.
 echo "=== REMOVE documentation ==="
@@ -472,13 +554,16 @@ function build_file_list () {
     esac
 
     (
-#	echo '%%defattr(-,root,root,-)'
+	echo '%%defattr(-,root,root,-)'
 	echo %{_bindir}/$arch-[!l]\*
 	echo %{_bindir}/$arch-ld\*
-	echo '%dir' %{auxbin_prefix}/$target_cpu-*
-	echo '%dir' %{auxbin_prefix}/$target_cpu-*/bin
-	echo %{auxbin_prefix}/$target_cpu-*/bin/\*
-#	echo %{_mandir}/man1/$arch-\*
+	if [ -L %{buildroot}%{auxbin_prefix}/$target_cpu-* ]
+	then
+	    echo %{auxbin_prefix}/$target_cpu-*
+	else
+	    echo %{auxbin_prefix}/$target_cpu-*/bin/\*
+	fi
+	echo %{_mandir}/man1/$arch-\*
     ) >files.$arch
 }
 
@@ -489,46 +574,46 @@ done
 
 # All the installed manual pages and translation files for each program are the
 # same, so symlink them to the core package
-#echo "=== CROSSLINK man pages ==="
-#cd %{buildroot}%{_mandir}/man1
-#for i in cross-*.1*
-#do
-#    j=${i#cross-}
-#
-#    for k in *-$j
-#    do
-#	if [ $k != $i ]
-#	then
-#	    ln -sf $i $k
-#	fi
-#    done
-#done
+echo "=== CROSSLINK man pages ==="
+cd %{buildroot}%{_mandir}/man1
+for i in %{cross}-*.1*
+do
+    j=${i#%{cross}-}
+
+    for k in *-$j
+    do
+	if [ $k != $i ]
+	then
+	    ln -sf $i $k
+	fi
+    done
+done
 
 
 # Add ld.bfd manual pages
-#find * -name "*ld.1*" -a ! -name "cross-ld.1*" -print |
-#while read x
-#do
-#    y=`echo $x | sed -e s/ld[.]1/ld.bfd.1/`
-#    ln -s $x $y
-#done
+find * -name "*ld.1*" -a ! -name "%{cross}-ld.1*" -print |
+while read x
+do
+    y=`echo $x | sed -e s/ld[.]1/ld.bfd.1/`
+    ln -s $x $y
+done
 
-#cd -
+cd -
 
 # Find the language files which only exist in the common package
 (
-    %find_lang cross-binutils
-    %find_lang cross-opcodes
-    %find_lang cross-bfd
-    %find_lang cross-gas
-    %find_lang cross-ld
-    %find_lang cross-gprof
-    cat cross-binutils.lang
-    cat cross-opcodes.lang
-    cat cross-bfd.lang
-    cat cross-gas.lang
-    cat cross-ld.lang
-    cat cross-gprof.lang
+    %find_lang %{cross}-binutils
+    %find_lang %{cross}-opcodes
+    %find_lang %{cross}-bfd
+    %find_lang %{cross}-gas
+    %find_lang %{cross}-ld
+    %find_lang %{cross}-gprof
+    cat %{cross}-binutils.lang
+    cat %{cross}-opcodes.lang
+    cat %{cross}-bfd.lang
+    cat %{cross}-gas.lang
+    cat %{cross}-ld.lang
+    cat %{cross}-gprof.lang
 ) >files.cross
 
 
@@ -538,14 +623,14 @@ done
 # Cleanup
 #
 ###############################################################################
-%files -n cross-binutils-common -f files.cross
+%files -n %{cross}-binutils-common -f files.cross
 %doc %{srcdir}/README
 %doc %{srcdir}/COPYING*
-#%{_mandir}/man1/cross-*
+%{_mandir}/man1/%{cross}-*
 
 %define do_files() \
 %if %2 \
-%files -n binutils-%1 -f files.%1 \
+%files -n %{rpmprefix}binutils-%1 -f files.%1 \
 %endif
 
 %do_files alpha-linux-gnu	%{build_alpha}
@@ -571,6 +656,8 @@ done
 %do_files openrisc-linux-gnu	%{build_openrisc}
 %do_files powerpc-linux-gnu	%{build_powerpc}
 %do_files powerpc64-linux-gnu	%{build_powerpc64}
+%do_files ppc-linux-gnu		%{build_powerpc}
+%do_files ppc64-linux-gnu	%{build_powerpc64}
 %do_files s390-linux-gnu	%{build_s390}
 %do_files s390x-linux-gnu	%{build_s390x}
 %do_files score-linux-gnu	%{build_score}
@@ -585,6 +672,9 @@ done
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Fri Mar 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.23.88.0.1-alt1_2
+- new version
+
 * Thu Aug 15 2013 Alexey Shabalin <shaba@altlinux.ru> 2.23.51.0.3-alt2_1
 - fix build
 
