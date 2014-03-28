@@ -1,12 +1,12 @@
 
 %define _kde_alternate_placement 1
-%def_enable mp4v2
+%define mp3gain_ver %{get_version mp3gain}
 
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: A frontend to various audio converters
 License: GPLv2
@@ -15,13 +15,14 @@ Group: Sound
 Url: http://gitorious.org/soundkonverter/soundkonverter
 #Url: http://kde-apps.org/content/show.php/soundKonverter?content=29024
 Source: %tname-%version.tar
+Patch1: alt-mp3gain1.4.patch
 
 Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
 #Requires: faac
 
 # Automatically added by buildreq on Mon Mar 15 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcdparanoia-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby xorg-xf86vidmodeproto-devel
-BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): kde4libs-devel mp3gain
 BuildRequires: gcc-c++ kde4multimedia-devel libcdparanoia-devel libtag-devel
 #BuildRequires: libmediainfo-devel libzen-devel
 BuildRequires: glib2-devel glibc-devel
@@ -40,6 +41,9 @@ Supported formats are: (encode/decode)
 
 %prep
 %setup -qn %tname-%version
+%_K_if_ver_lt %mp3gain_ver 1.5
+%patch1 -p1
+%endif
 
 for f in po/*/*.po; do
     newname=`echo $f| sed 's|\(.*/\)[[:alpha:]]*\(\.po\)|\1%tname\2|'`
@@ -69,6 +73,12 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- don't use new mp3gain options
+
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt0.M70P.1
+- built for M70P
+
 * Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
 
