@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.48
-Release: alt2
+Version: 1.0.50
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -16,7 +16,9 @@ License: GPLv2 and GPLv2+ and GPLv3 and MIT
 
 Group: System/Servers
 
-Source: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
+Source0: %name.watch
+Source1: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
+Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
@@ -103,7 +105,7 @@ Group: System/Servers
 serial backend for cups
 
 %prep
-%setup
+%setup -T -b 1
 %patch0 -p2
 %patch1 -p2
 
@@ -137,6 +139,7 @@ popd
 install -D -m 755 scripting/php/.libs/cups.so %buildroot/%php5_extdir/cups.so
 install -D -m 644 scripting/php/php-cups.ini %buildroot/%php5_extconf/%php5_extension/config
 install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php5_extension/params
+install -D -m 755 %SOURCE2 %buildroot/%_initdir/cups-browsed
 mkdir -p %buildroot/%_unitdir/
 install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
@@ -151,6 +154,7 @@ ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %doc README AUTHORS NEWS
 %config(noreplace) %_sysconfdir/fonts/conf.d/99pdftoopvp.conf
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
+%config(noreplace) %_initdir/cups-browsed
 %attr(0755,root,root) %_cups_serverbin/filter/*
 %_cups_serverbin/filter/gstopxl
 %_cups_serverbin/filter/gstoraster
@@ -190,6 +194,11 @@ ln -s ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Mar 28 2014 Anton Farygin <rider@altlinux.ru> 1.0.50-alt1
+- new version
+- watch file added
+- initscript added (closes: #29524)
+
 * Fri Mar 21 2014 Anton Farygin <rider@altlinux.ru> 1.0.48-alt2
 - rebuild with php-5.5.10
 
