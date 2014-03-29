@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.34
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -362,6 +362,7 @@ BuildRequires: module-init-tools >= 3.1
 BuildRequires: patch >= 2.6.1-alt1
 %{?_with_src:BuildRequires: pxz}
 
+%{?_with_firmware:BuildRequires: hardlink}
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
 %{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
@@ -1345,30 +1346,13 @@ sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
 %{?_enable_oprofile:%add_verify_elf_skiplist %modules_dir/vmlinux}
 
 %if_with firmware
+hardlink -c %buildroot%firmware_dir
 %ifdef brp_strip_none
 %brp_strip_none %firmware_dir/*
 %else
 %add_strip_skiplist %firmware_dir/*
 %endif
 %add_verify_elf_skiplist %firmware_dir/*
-%endif
-
-
-%if 0
-%post
-[ -x /usr/lib/rpm/boot_kernel.filetrigger ] || /sbin/installkernel %kversion-%flavour-%krelease
-
-%preun
-/sbin/installkernel --remove %kversion-%flavour-%krelease
-%endif
-
-
-%if 0
-%post -n kernel-headers-%flavour
-%post_kernel_headers %kversion-%flavour-%krelease
-
-%postun -n kernel-headers-%flavour
-%postun_kernel_headers %kversion-%flavour-%krelease
 %endif
 
 
@@ -1772,6 +1756,25 @@ done)
 
 
 %changelog
+* Sat Mar 29 2014 Led <led@altlinux.ru> 3.10.34-alt5
+- updated:
+  + feat-firmware--atmel
+  + feat-firmware--bcm203x
+  + feat-firmware--bfusb
+  + feat-firmware--btmrvl_sdio
+  + feat-firmware--carl9170
+  + feat-firmware--iwlwifi
+  + feat-firmware--libertas_cs
+  + feat-firmware--libertas_sdio
+  + feat-firmware--mwl8k
+  + feat-firmware--rtl8723ae
+  + feat-firmware--snd-indigoiox
+  + feat-firmware--usb8xxx
+  + feat-firmware-mrvl
+- added:
+  + feat-firmware--isight_firmware
+  + feat-fs-tux3
+
 * Fri Mar 28 2014 Led <led@altlinux.ru> 3.10.34-alt4
 - vboxguest 4.3.10
 - vboxhost 4.3.10
