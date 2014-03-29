@@ -16,7 +16,7 @@
 
 Name: nginx
 Version: 1.4.7
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -193,6 +193,7 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m644 %SOURCE6 %buildroot%nginx_etc/sites-available.d/default.conf
 install -pD -m644 %SOURCE9 %buildroot%_unitdir/%name.service
+install -pD -m644 nginx-rtmp-module/stat.xsl %buildroot%nginx_etc/stat.xsl
 
 subst s!@nginx_user@!%nginx_user!g %configs
 subst s!@nginx_etc@!%nginx_etc!g %configs
@@ -218,6 +219,10 @@ rm -rf %buildroot/html/
 %dir %nginx_etc/conf-available.d
 
 %config(noreplace) %nginx_etc/sites-available.d/default.conf
+
+%if_enabled rtmp
+%nginx_etc/stat.xsl
+%endif
 
 # these are private; should also confirm to SPP (#12647)
 %attr(0700,root,root) %dir %_lockdir/%name
@@ -265,6 +270,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Sat Mar 29 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt2
+- add stat.xsl (ALT #29917)
+
 * Wed Mar 19 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt1
 - 1.4.7
 - CVE-2014-0133
