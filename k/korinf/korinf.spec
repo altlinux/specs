@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -43,9 +43,13 @@ This package contains Korinf multidistro build system.
 %config(noreplace) %_sysconfdir/eterbuild/rpmopt/*
 %config(noreplace) %_sysconfdir/eterbuild/korinf
 %config(noreplace) %_sysconfdir/eterbuild/linked
+%config(noreplace) %_sysconfdir/eterbuild/remote
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Mar 29 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
+- update system lists
+
 * Tue Mar 11 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.6-alt1
 - many fixes
 - simply experiment's with build for Windows in Korinf
