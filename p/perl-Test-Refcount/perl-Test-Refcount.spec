@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/Builder/Module.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Refcount
-Version:        0.07
-Release:        alt2_11
+Version:        0.08
+Release:        alt1
 Summary:        Assert reference counts on objects
 
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-Refcount/
-Source0:        http://search.cpan.org/CPAN/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/P/PE/PEVANS/Test-Refcount-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -57,6 +58,9 @@ make test
 
 
 %changelog
+* Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Thu Oct 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2_11
 - Sisyphus build
 
