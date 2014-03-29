@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm)
 # END SourceDeps(oneline)
-%define module_version 1.31
+%define module_version 1.32
 %define module_name String-Parity
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.31
-Release: alt2
+Version: 1.32
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/W/WI/WINKO/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/String-Parity-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.31-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
