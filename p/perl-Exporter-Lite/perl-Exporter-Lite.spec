@@ -3,7 +3,7 @@
 %define m_name		Exporter::Lite
 %define m_author_id	MSCHWERN
 Name: perl-%module
-Version: 0.02
+Version: 0.04
 Release: alt1
 
 Summary: Exporter::Lite - Lightweight exporting of variables
@@ -14,7 +14,7 @@ License: Unknown
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://search.cpan.org/dist/%m_distro/
-Source: http://www.cpan.org/authors/id/M/MS/MSCHWERN/Exporter-Lite-0.02.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Exporter-Lite-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Exporter/
 
 %changelog
+* Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 
