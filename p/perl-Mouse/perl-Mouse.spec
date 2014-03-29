@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1
 - automated CPAN update
 
