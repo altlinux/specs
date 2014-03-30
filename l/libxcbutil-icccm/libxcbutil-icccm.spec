@@ -1,5 +1,5 @@
 Name: libxcbutil-icccm
-Version: 0.3.9
+Version: 0.4.1
 Release: alt1
 Summary: Client and window-manager helper library on top of libxcb
 License: MIT
@@ -51,5 +51,8 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 30 2014 Terechkov Evgenii <evg@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Wed Sep  5 2012 Terechkov Evgenii <evg@altlinux.org> 0.3.9-alt1
 - Initial build for ALT Linux Sisyphus

@@ -1,5 +1,5 @@
 Name: libxcbutil-proto
-Version: 1.7.1
+Version: 1.10
 Release: alt1
 Summary: XCB protocol descriptions
 License: MIT
@@ -37,8 +37,11 @@ the protocol.
 %_datadir/xcb/*.xsd
 %_datadir/xcb/*.xml
 %python_sitelibdir/xcbgen
-%doc COPYING NEWS README TODO doc/xml-xcb.txt
+%doc COPYING NEWS README TODO HACKING doc/xml-xcb.txt
 
 %changelog
+* Sun Mar 30 2014 Terechkov Evgenii <evg@altlinux.org> 1.10-alt1
+- 1.10 (ALT #29918)
+
 * Wed Sep  5 2012 Terechkov Evgenii <evg@altlinux.org> 1.7.1-alt1
 - Initial build for ALT Linux Sisyphus
