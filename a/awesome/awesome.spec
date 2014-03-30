@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Sun Mar 30 2014 Terechkov Evgenii <evg@altlinux.org> 3.5.3-alt1
+- 3.5.3 (Crazy)
+
 * Fri Nov 15 2013 Terechkov Evgenii <evg@altlinux.org> 3.5.2-alt1
 - 3.5.2 (The Fox)
 
