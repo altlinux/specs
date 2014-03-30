@@ -1,7 +1,7 @@
 %define dist GDGraph
 Name: perl-GD-Graph
-Version: 1.44
-Release: alt2
+Version: 1.48
+Release: alt1
 Epoch: 1
 
 Summary: Create charts using GD
@@ -14,7 +14,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-GD-Text perl-devel
+BuildRequires: perl-GD-Text perl-devel perl(CGI.pm) perl(Config.pm) perl(DBI.pm) perl(Data/Dumper.pm) perl(GD.pm)  perl(Test.pm) perl(Test/More.pm) perl(Text/ParseWords.pm)
 
 %description
 This is GDGraph, a package to generate charts, using Lincoln Stein's
@@ -34,6 +34,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Sun Mar 30 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.48-alt1
+- new version
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 1:1.44-alt2
 - rebuilt
 
