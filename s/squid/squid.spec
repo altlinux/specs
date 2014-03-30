@@ -4,7 +4,7 @@
 %def_enable esi
 
 Name: squid
-Version: 3.3.12
+Version: 3.4.4
 Release: alt1
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
@@ -45,8 +45,8 @@ BuildRequires: w3c-libwww-devel cppunit-devel
 BuildRequires: libkrb5-devel
 %{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0-alt3}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
-# Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
-BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
+BuildRequires: perl-libnet perl-DBI
+BuildRequires: perl(Authen/Smb.pm) perl(Crypt/OpenSSL/X509.pm)
 
 %description
 Squid is a high-performance proxy caching server for Web clients,
@@ -287,6 +287,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Sun Mar 30 2014 Led <led@altlinux.ru> 3.4.4-alt1
+- 3.4.4 (ALT#29914)
+
 * Sun Mar 16 2014 Led <led@altlinux.ru> 3.3.12-alt1
 - 3.3.12
 
