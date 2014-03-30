@@ -1,12 +1,12 @@
 Name: zzuf
-Version: 0.12
-Release: alt1.qa1
+Version: 0.13
+Release: alt1
 Summary: Transparent application input fuzzer
 License: DWTFYWTPL
 Group: Toys
 URL: http://sam.zoy.org/zzuf
 
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: %name-%version.tar.gz
 
 %description
@@ -35,8 +35,12 @@ find %buildroot -type f -name "*.la" -delete
 %_bindir/*
 %_libdir/%name
 %_man1dir/*
+%_man3dir/*
 
 %changelog
+* Sun Mar 30 2014 Ilya Mashkin <oddity@altlinux.ru> 0.13-alt1
+- 0.13
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
