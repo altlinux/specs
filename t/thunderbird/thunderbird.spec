@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.3.0
+Version:	24.4.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -458,6 +458,20 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Mar 23 2014 Alexey Gladkov <legion@altlinux.ru> 24.4.0-alt1
+- New version (24.4.0).
+- Fixed:
+  + MFSA 2014-32 Out-of-bounds write through TypedArrayObject after neutering
+  + MFSA 2014-31 Out-of-bounds read/write through neutering ArrayBuffer objects
+  + MFSA 2014-30 Use-after-free in TypeObject
+  + MFSA 2014-29 Privilege escalation using WebIDL-implemented APIs
+  + MFSA 2014-28 SVG filters information disclosure through feDisplacementMap
+  + MFSA 2014-27 Memory corruption in Cairo during PDF font rendering
+  + MFSA 2014-26 Information disclosure through polygon rendering in MathML
+  + MFSA 2014-17 Out of bounds read during WAV file decoding
+  + MFSA 2014-16 Files extracted during updates are not always read only
+  + MFSA 2014-15 Miscellaneous memory safety hazards (rv:28.0 / rv:24.4)
+
 * Sun Feb 09 2014 Alexey Gladkov <legion@altlinux.ru> 24.3.0-alt1
 - New version (24.3.0).
 - Fixed:
