@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	13.35.1005
-%define module_release alt2
+%define module_release alt3
 
 %define flavour ovz-el
 BuildRequires(pre): kernel-headers-modules-ovz-el
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Mar 30 2014 Led <led@altlinux.ru> 2:13.35.1005-alt3
+- Catalyst 14.3 Beta
 
 * Thu Feb 27 2014 Led <led@altlinux.ru> 2:13.35.1005-alt2
 - Catalyst 14.2 Beta
