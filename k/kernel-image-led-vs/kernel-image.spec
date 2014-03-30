@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.34
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1756,6 +1756,15 @@ done)
 
 
 %changelog
+* Sat Mar 29 2014 Led <led@altlinux.ru> 3.10.34-alt6
+- updated:
+  + feat-firmware--ath10k
+  + feat-firmware--libertas_cs
+  + feat-firmware--libertas_sdio
+  + feat-firmware--usb8xxx
+- added:
+  + fix-firmware--keyspan
+
 * Sat Mar 29 2014 Led <led@altlinux.ru> 3.10.34-alt5
 - updated:
   + feat-firmware--atmel
