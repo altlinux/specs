@@ -3,7 +3,7 @@
 Name: dietlibc
 %define cvsdate %nil
 Version: 0.33
-Release: alt2
+Release: alt3
 Summary: C library optimized for size
 License: GPLv2+
 Group: Development/C
@@ -80,6 +80,9 @@ install -p -m 0644 %SOURCE1 %buildroot%diethome/Makefile.rules
 
 
 %changelog
+* Mon Mar 31 2014 Led <led@altlinux.ru> 0.33-alt3
+- CVS updates 20140329
+
 * Mon Mar 03 2014 Led <led@altlinux.ru> 0.33-alt2
 - CVS updates 20140221
 
