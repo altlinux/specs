@@ -2,8 +2,8 @@
 %def_disable cgi
 
 Name: apcupsd
-Version: 3.14.11
-Release: alt3
+Version: 3.14.12
+Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Power management software for APC UPS hardware
@@ -17,7 +17,7 @@ Source2: apcupsd-makesymlinks
 Source3: apcupsd-upsdmessages
 Source4: apcupsdmessages
 Source5: apcupsd-get_killpower_delay
-Source6: apcupsd-README.ALT.koi8-r
+Source6: apcupsd-README.ALT.utf8
 
 Patch1: %name-3.14.6-alt-specific-configure.in.patch
 Patch2: %name-3.12.2-config.sub.patch
@@ -26,9 +26,7 @@ Patch3: %name-3.14.8-apctest.date.patch
 Patch10: apcupsd-3.14.4-hal_policy-Makefile.patch
 
 #Errata/FR
-Patch100: apcupsd-fix-reporting-model.patch
-Patch101: apcsmart-port-reopen.patch
-Patch102: apcupsd-3.14.11-eeprom.patch
+#Patch100:
 
 BuildRequires: rpm-build-licenses
 
@@ -82,9 +80,7 @@ Web status for UPS.
 
 %patch10 -p0
 
-%patch100 -p3
-%patch101 -p0
-%patch102 -p1
+#patch100 -p1
 
 tar xzf %{SOURCE1}
 
@@ -150,7 +146,7 @@ pushd $RPM_BUILD_ROOT/%_sysconfdir/%name
 	sh %{SOURCE2}
 popd
 
-cp %{SOURCE6} README.ALT.koi8-r
+cp %{SOURCE6} README.ALT.utf8
 
 cp $RPM_BUILD_DIR/%name-%version/src/apctest $RPM_BUILD_ROOT/%_sbindir/
 
@@ -177,7 +173,7 @@ gzip ChangeLog
 %_mandir/man?/*
 %ghost %_sysconfdir/%name/powerfail
 %ghost %_sysconfdir/nologin
-%doc ChangeLog.gz Developers ReleaseNotes README.ALT.koi8-r
+%doc ChangeLog.gz Developers ReleaseNotes README.ALT.utf8
 %exclude %_datadir/hal/fdi/policy/20thirdparty/80-apcupsd-ups-policy.fdi
 
 #files locales -f %name.lang
@@ -191,6 +187,11 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Sun Mar 30 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.12-alt1
+- New version
+- converted README.ALT to UTF8
+- added possibility to set options through sysconfig/apcupsd
+
 * Wed Feb 26 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.14.11-alt3
 - Fixed write to eeprom by apctest (based on apcupsd's SVN [r2097])
 
