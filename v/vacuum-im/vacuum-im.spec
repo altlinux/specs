@@ -3,7 +3,7 @@
 %define sname vacuum
 
 Name: %sname-im
-Version: 1.2.0
+Version: 1.2.4
 Release: alt1
 
 Summary: Crossplatform Jabber/XMPP client
@@ -12,7 +12,7 @@ Group: Networking/Instant messaging
 Url: http://www.vacuum-im.org
 Source: %sname-%version.tar.xz
 
-Packager: Evgenii Terechkov <evg@altlinux.org>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # Automatically added by buildreq on Sun May 23 2010 (-bi)
 BuildRequires: gcc-c++ libX11-devel phonon-devel libXScrnSaver-devel
@@ -41,11 +41,15 @@ rm -rf %buildroot%_datadir/%name/resources/emoticons/kolobok*
 %_desktopdir/%name.desktop
 %_libdir/%name
 %_libdir/lib*.so.*
+%_libdir/libvacuumutils.so
 %_pixmapsdir/%name.png
 
 %doc README CHANGELOG AUTHORS TRANSLATORS
 
 %changelog
+* Mon Mar 31 2014 Ilya Mashkin <oddity@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Fri Aug  3 2012 Terechkov Evgenii <evg@altlinux.org> 1.2.0-alt1
 - 1.2.0 (ALT#27591)
 
