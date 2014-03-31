@@ -1,7 +1,10 @@
+%filter_from_requires /^perl.Apache.pm./d
+# TODO: drop apache2 dependency?
+#filter_from_requires /^perl.Apache2.RequestUtil.pm./d
 %define dist Apache-Session
 Name: perl-%dist
 Version: 1.92
-Release: alt1
+Release: alt2
 
 Summary: A persistence framework for session data
 License: GPL or Artistic
@@ -9,6 +12,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Apache-Session-%{version}.tar.gz
+# https://bugzilla.redhat.com/bugzilla/attachment.cgi?id=118577, from Chris Grau
+Patch0:         Apache-Session-mp2.patch
 
 BuildArch: noarch
 
@@ -24,6 +29,8 @@ altogether.
 
 %prep
 %setup -q -n %dist-%version
+find -type f -exec perl -pi -e 's/\r\n/\n/g' {} \;
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -36,6 +43,9 @@ altogether.
 %perl_vendor_privlib/Apache
 
 %changelog
+* Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.92-alt2
+- dropped dependency on apache-mod_perl-base (closes: #29932)
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.92-alt1
 - automated CPAN update
 
