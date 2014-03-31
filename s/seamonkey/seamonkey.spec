@@ -14,7 +14,7 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.24
+Version: 2.25
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -80,6 +80,7 @@ BuildRequires: autoconf_2.13 chrpath alternatives libGL-devel
 BuildRequires: libstartup-notification-devel libfreetype-devel fontconfig-devel libnotify-devel
 BuildRequires: libffi-devel libgio-devel
 BuildRequires: gst-plugins-devel >= 0.10.25
+BuildRequires: libpulseaudio-devel
 
 # Mozilla requires
 BuildRequires:	libnspr-devel       >= 4.9.2-alt1
@@ -379,6 +380,25 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Mar 30 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.25-alt1
+- New version
+- Security fixes:
+  + MFSA 2014-32 Out-of-bounds write through TypedArrayObject after neutering
+  + MFSA 2014-31 Out-of-bounds read/write through neutering ArrayBuffer objects
+  + MFSA 2014-30 Use-after-free in TypeObject
+  + MFSA 2014-29 Privilege escalation using WebIDL-implemented APIs
+  + MFSA 2014-28 SVG filters information disclosure through feDisplacementMap
+  + MFSA 2014-27 Memory corruption in Cairo during PDF font rendering
+  + MFSA 2014-26 Information disclosure through polygon rendering in MathML
+  + MFSA 2014-23 Content Security Policy for data: documents not preserved by session restore
+  + MFSA 2014-22 WebGL content injection from one domain to rendering in another
+  + MFSA 2014-20 onbeforeunload and Javascript navigation DOS
+  + MFSA 2014-19 Spoofing attack on WebRTC permission prompt
+  + MFSA 2014-18 crypto.generateCRMFRequest does not validate type of key
+  + MFSA 2014-17 Out of bounds read during WAV file decoding
+  + MFSA 2014-16 Files extracted during updates are not always read only
+  + MFSA 2014-15 Miscellaneous memory safety hazards
+
 * Thu Mar 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.24-alt1
 - New version
 - Security fixes:
