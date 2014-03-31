@@ -1,21 +1,17 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-
-# devel packages are provided by higher PostgreSQL version
-%def_without devel
-
-# PostgreSQL 9.1 and 9.3 provides same libecpg.
-# Sometimes, with same so-name. Switcher to build it on not.
-# Before toggle, make sure libraries are same, e.g.:
-# $ rpmsodiff libecpg6.3-9.1.11-alt2.x86_64.rpm libecpg6.3-9.3.4-alt1.x86_64.rpm
-%def_without libecpg
+%def_with devel
 
 %define prog_name            postgresql
 %define postgresql_major     9
-%define postgresql_minor     1
-%define postgresql_subminor  11
-%define postgresql_altrel    3
+%define postgresql_minor     3
+%define postgresql_subminor  4
+%define postgresql_altrel    1
+
+# Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
-%define libpq_minor          4
+%define libpq_minor          6
+
+# Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
 %define libecpg_minor        3
 
@@ -39,12 +35,12 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 Source0: %name-%version.tar
 
-Patch1: 0001-9.0-Fix-searching-for-autoconf.patch
+Patch1: 0001-9.3-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
-Patch7: 0001-Apply-chroot-patch.patch
+#Patch7: 0001-Apply-chroot-patch.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
 
@@ -53,11 +49,11 @@ Requires: libpq%libpq_major >= %version-%release
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
-Conflicts: %{prog_name}8.0
-Conflicts: %{prog_name}8.1
-Conflicts: %{prog_name}8.2
-Conflicts: %{prog_name}8.3
+Conflicts: %{prog_name}8.4
 Conflicts: %{prog_name}9.0
+Conflicts: %{prog_name}9.1
+Conflicts: %{prog_name}9.2
+Conflicts: %{prog_name}9.4
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -259,14 +255,14 @@ database.
 %prep
 %setup
 
-%patch1 -p2
+%patch1 -p1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
 %patch6 -p2
-%patch7 -p1
+#patch7 -p1
 %patch8 -p1
-%patch9 -p1
+#%%patch9 -p1
 
 %build
 %autoreconf
@@ -289,9 +285,9 @@ database.
     --with-readline \
     --with-python \
     --with-libxml \
+    --with-selinux \
     --with-libxslt \
     --with-gnu-ld \
-    --with-selinux \
     --with-ossp-uuid
 
 %make_build pkglibdir=%_libdir/%PGSQL
@@ -316,10 +312,10 @@ pushd altlinux
 
 # The initscripts....
 install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
-install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
-install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
-install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
-install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
+#install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
+#install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
+#install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
+#install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
@@ -332,13 +328,13 @@ popd
 sed -i 's,@VERSION@,%postgresql_major.%postgresql_minor,' %buildroot%_initdir/%prog_name
 sed -i 's,@FULLVERSION@,%version,' %buildroot%_initdir/%prog_name
 
-pushd %buildroot%_sysconfdir/chroot.d
-for f in %prog_name.*; do
- if [ -f "$f" ]; then
-   subst -p 's|@LIB@|%_lib|g' $f
- fi
-done
-popd
+#pushd %buildroot%_sysconfdir/chroot.d
+#for f in %prog_name.*; do
+# if [ -f "$f" ]; then
+#   subst -p 's|@LIB@|%_lib|g' $f
+# fi
+#done
+#popd
 
 # PGDATA needs removal of group and world permissions due to pg_pwd hole.
 install -d -m700 %buildroot%_localstatedir/%PGSQL/data
@@ -352,14 +348,14 @@ cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 
 # Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,/usr/lib/locale}
+mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
 
-mksock %buildroot%ROOT/dev/log
-mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
-ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
+#mksock %buildroot%ROOT/dev/log
+#mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
+#ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
 
 mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
-ln -s $(relative %ROOT%_localstatedir/%PGSQL %_localstatedir/) %buildroot%_localstatedir/%PGSQL
+install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
@@ -446,31 +442,21 @@ chown postgres:postgres ~postgres/.bash_profile
 
 SYSLOGD_SCRIPT=/etc/init.d/syslogd
 SYSLOGD_CONFIG=/etc/sysconfig/syslogd
-if grep -qs '^SYSLOGD_OPTIONS=.*-a %ROOT/dev/log' "$SYSLOGD_CONFIG"; then
-    subst 's|^\(SYSLOGD_OPTIONS=.*\) \?-a %ROOT/dev/log|\1|' "$SYSLOGD_CONFIG"
-    if [ -x "$SYSLOGD_SCRIPT" ]; then
-        "$SYSLOGD_SCRIPT" condreload ||:
-    fi
-fi
+#if grep -qs '^SYSLOGD_OPTIONS=.*-a %ROOT/dev/log' "$SYSLOGD_CONFIG"; then
+#    subst 's|^\(SYSLOGD_OPTIONS=.*\) \?-a %ROOT/dev/log|\1|' "$SYSLOGD_CONFIG"
+#    if [ -x "$SYSLOGD_SCRIPT" ]; then
+#        "$SYSLOGD_SCRIPT" condreload ||:
+#    fi
+#fi
 
-if [ $1 -eq 2 ]; then
-	%_sysconfdir/chroot.d/%prog_name.all force
-fi
+#if [ $1 -eq 2 ]; then
+#	%_sysconfdir/chroot.d/%prog_name.all force
+#fi
 
 %post_service %prog_name
 
 %preun server
 %preun_service %prog_name
-
-%triggerpostun -- %{prog_name}8.2-server
-if [ "$2" -eq 0 ]; then
-	%post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}8.3-server
-if [ "$2" -eq 0 ]; then
-	%post_service %prog_name
-fi
 
 %triggerpostun -- %{prog_name}8.4-server
 if [ "$2" -eq 0 ]; then
@@ -480,6 +466,23 @@ fi
 %triggerpostun -- %{prog_name}9.0-server
 if [ "$2" -eq 0 ]; then
 	%post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}9.1-server
+if [ "$2" -eq 0 ]; then
+	%post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}9.2-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+# $2, holds the number of instances of the target package that will remain
+# after the operation if $2 is 0, the target package will be removed
+%triggerpostun -- %{prog_name}9.3-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
 fi
 
 %files -f main.lang
@@ -498,6 +501,8 @@ fi
 %_bindir/vacuumdb
 %_bindir/pg_basebackup
 %_bindir/pg_test_fsync
+%_bindir/pg_test_timing
+%_bindir/pg_isready
 %_man1dir/clusterdb.1*
 %_man1dir/createdb.1*
 %_man1dir/createlang.1*
@@ -508,10 +513,13 @@ fi
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
 %_man1dir/pg_dumpall.1*
+%_man1dir/pg_test_fsync.1*
+%_man1dir/pg_test_timing.1*
 %_man1dir/psql.1*
 %_man1dir/reindexdb.1*
 %_man1dir/vacuumdb.1*
 %_man1dir/pg_basebackup.1*
+%_man1dir/pg_isready.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -537,6 +545,14 @@ fi
 %_bindir/pgbench
 %_bindir/vacuumlo
 %_bindir/pg_archivecleanup
+%_bindir/pg_xlogdump
+
+%_man1dir/oid2name.1*
+%_man1dir/pg_archivecleanup.1*
+%_man1dir/pg_standby.1*
+%_man1dir/pgbench.1*
+%_man1dir/vacuumlo.1*
+%_man1dir/pg_xlogdump.1.gz
 
 %dir %_libdir/pgsql
 %_libdir/pgsql/_int.so
@@ -573,6 +589,7 @@ fi
 %_libdir/pgsql/seg.so
 %_libdir/pgsql/sslinfo.so
 %_libdir/pgsql/tablefunc.so
+%_libdir/pgsql/tcn.so
 %_libdir/pgsql/test_parser.so
 %_libdir/pgsql/timetravel.so
 %_libdir/pgsql/tsearch2.so
@@ -582,25 +599,26 @@ fi
 %_libdir/pgsql/dummy_seclabel.so
 %_libdir/pgsql/file_fdw.so
 %_libdir/pgsql/sepgsql.so
+%_libdir/pgsql/postgres_fdw.so
+%_libdir/pgsql/worker_spi.so
 
 %files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
-%if_with libecpg
 %files -f ecpg.lang -n %libecpg_name
 %_libdir/libecpg.so.%libecpg_major
 %_libdir/libecpg.so.%libecpg_major.*
 %_libdir/libecpg_compat.so.*
 %_libdir/libpgtypes.so.*
-%endif
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-%config %_sysconfdir/chroot.d/%prog_name.*
+#%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
 %_bindir/pg_controldata
 %_bindir/pg_ctl
+%_bindir/pg_receivexlog
 %_bindir/pg_resetxlog
 %_bindir/postgres
 %_bindir/postmaster
@@ -608,8 +626,10 @@ fi
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
+%_man1dir/pg_receivexlog.1.*
 %_man1dir/pg_resetxlog.1*
 %_man1dir/pg_ctl.1*
+%_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
 %_man1dir/postmaster.1*
 %dir %_libdir/%PGSQL
@@ -637,12 +657,12 @@ fi
 %_datadir/%PGSQL/snowball_create.sql
 %_datadir/%PGSQL/unknown.pltcl
 %_datadir/%PGSQL/extension
-%_datadir/%PGSQL/contrib
-%_datadir/%PGSQL/contrib/sepgsql.sql
 %_localstatedir/%PGSQL
-%_sysconfdir/syslog.d/%prog_name
+#_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
+%_datadir/%PGSQL/contrib
+%_datadir/%PGSQL/contrib/sepgsql.sql
 
 %attr(751,root,root)  %dir %ROOT
 %attr(751,root,root)  %dir %ROOT/bin
@@ -653,15 +673,14 @@ fi
 %attr(1777,root,root) %dir %ROOT/tmp
 %attr(751,root,root)  %dir %ROOT/usr
 %attr(751,root,root)  %dir %ROOT/var
-%attr(751,root,root)  %dir %ROOT/usr/lib
-%attr(751,root,root)  %dir %ROOT/usr/lib/locale
 %attr(751,root,root)  %dir %ROOT%_libdir
 %attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
+%attr(751,root,root)  %dir %ROOT%_libdir/locale
 %attr(751,root,root)  %dir %ROOT%_localstatedir
 %attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
 %attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
 %attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/data
-%attr(666,root,root) %ghost %ROOT/dev/log
+#attr(666,root,root) %ghost %ROOT/dev/log
 
 %if_with devel
 %files -f devel.lang devel
@@ -713,34 +732,11 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
-* Fri Mar 28 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.11-alt3
-- devel packages are provided by higher PostgreSQL version
+* Fri Mar 28 2014 Andriy Stepanov <stanv@altlinux.ru> 9.3.4-alt1
+- Jump to 9.3.x
 
-* Wed Mar 26 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.11-alt2
-- SeLinux username system_u -> generic_u
-
-* Fri Jan 17 2014 Alexei Takaseev <taf@altlinux.org> 9.1.11-alt1
-- 9.1.11
-
-* Thu Jan 16 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.10-alt2
-- Build with selinux
-
-* Sat Nov 23 2013 Alexei Takaseev <taf@altlinux.org> 9.1.10-alt1
-- 9.1.10
-
-* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 9.1.9-alt2
-- built for perl 5.18
-
-* Fri Apr 05 2013 Alexei Takaseev <taf@altlinux.org> 9.1.9-alt1
-- 9.1.9
-
-* Mon Feb 18 2013 Alexei Takaseev <taf@altlinux.org> 9.1.8-alt2
-- Remove /tmp/.s.PGSQL.* after shutdown server
-- Small fix spec (locate localedir into chroot)
-- fix chroot symlink
-
-* Fri Feb 08 2013 Alexei Takaseev <taf@altlinux.org> 9.1.8-alt1
-- 9.1.8
+* Sat Jan 12 2013 Alexei Takaseev <taf@altlinux.org> 9.2.2-alt1
+- 9.2.2
 
 * Sat Dec 29 2012 Alexei Takaseev <taf@altlinux.org> 9.1.7-alt1
 - 9.1.7
