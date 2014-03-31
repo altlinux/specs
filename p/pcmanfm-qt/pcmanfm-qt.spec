@@ -2,7 +2,7 @@
 
 Name:    pcmanfm-qt
 Version: 0.1.0
-Release: alt3.git%rev
+Release: alt4.git%rev
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPLv2+
@@ -52,6 +52,9 @@ install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_libdir/libfm-qt.so.*
 
 %changelog
+* Mon Mar 31 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt4.gitf58b1b7
+- Increase release number to backport to p7 branch
+
 * Tue Mar 18 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt3.gitf58b1b7
 - New snapshot
 - Fix requirement on development packages
