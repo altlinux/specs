@@ -7,7 +7,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.8.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -50,6 +50,7 @@ full-featured user session.
 
 %build
 %configure                    \
+    --disable-upower          \
     --disable-static          \
     --enable-ipv6             \
     --with-gtk=2.0            \
@@ -140,6 +141,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_1
+- disabled upower support (not compatible with upower 0.99)
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
 - new fc release
 
