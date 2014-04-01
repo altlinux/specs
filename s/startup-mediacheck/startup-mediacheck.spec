@@ -1,5 +1,5 @@
 Name: startup-mediacheck
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: The system startup scripts for mediacheck (warning!)
@@ -32,6 +32,10 @@ install -pm755 rc.sysinit.mediacheck %buildroot%_sysconfdir/rc.d/
 %_sysconfdir/rc.d/rc.sysinit.mediacheck
 
 %changelog
+* Tue Apr 01 2014 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- look for 'mediacheck=1' in cmdline, not just 'mediacheck'
+- display .disk/info too
+
 * Mon Mar 31 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release (based on startup-rescue 0.15-alt1)
 
