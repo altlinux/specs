@@ -1,5 +1,5 @@
 Name: latex2rtf
-Version: 2.3.3
+Version: 2.3.6
 Release: alt1
 
 Summary: Convert a LaTeX file to an RTF file
@@ -28,6 +28,7 @@ information is translated to RTF.
 
 %build
 %make_build DESTDIR=%prefix
+make -C doc latex2rtf.html
 
 %install
 make install DESTDIR=%buildroot%prefix
@@ -39,6 +40,9 @@ make install DESTDIR=%buildroot%prefix
 %_man1dir/*
 
 %changelog
+* Tue Apr 01 2014 Vitaly Lipatov <lav@altlinux.ru> 2.3.6-alt1
+- new version 2.3.6 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
 - new version 2.3.3 (with rpmrb script)
 
