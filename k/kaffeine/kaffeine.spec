@@ -10,7 +10,7 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt9.1
+Release: alt9.2
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
@@ -163,6 +163,9 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %endif
 
 %changelog
+* Tue Apr 01 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9.2
+- Build fix for vorbisenc by append vorbis and ogg for check pkgconfig.
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9.1
 - Build for Automake 1.13 and 1.14 is added.
 
