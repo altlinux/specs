@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  4
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -13,7 +13,7 @@
 
 # Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
-%define libecpg_minor        3
+%define libecpg_minor        5
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
@@ -732,6 +732,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Apr 01 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt2
+- Fix name libecpg6.3 to libecpg6.5
+
 * Fri Mar 28 2014 Andriy Stepanov <stanv@altlinux.ru> 9.3.4-alt1
 - Jump to 9.3.x
 
