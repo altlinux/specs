@@ -3,11 +3,11 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-DPath
-%define upstream_version 0.49
+%define upstream_version 0.50
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ no description found
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_1
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1_3
 - update by mgaimport
 
