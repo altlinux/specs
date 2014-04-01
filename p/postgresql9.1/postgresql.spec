@@ -1,19 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-
-# devel packages are provided by higher PostgreSQL version
 %def_without devel
-
-# PostgreSQL 9.1 and 9.3 provides same libecpg.
-# Sometimes, with same so-name. Switcher to build it on not.
-# Before toggle, make sure libraries are same, e.g.:
-# $ rpmsodiff libecpg6.3-9.1.11-alt2.x86_64.rpm libecpg6.3-9.3.4-alt1.x86_64.rpm
-%def_without libecpg
 
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  11
-%define postgresql_altrel    3
+%define postgresql_subminor  13
+%define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -58,6 +50,8 @@ Conflicts: %{prog_name}8.1
 Conflicts: %{prog_name}8.2
 Conflicts: %{prog_name}8.3
 Conflicts: %{prog_name}9.0
+Conflicts: %{prog_name}9.2
+Conflicts: %{prog_name}9.3
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -323,6 +317,7 @@ install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%pr
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
+install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
 
 popd
 ##### end ALT-stuff
@@ -587,13 +582,11 @@ fi
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
-%if_with libecpg
 %files -f ecpg.lang -n %libecpg_name
 %_libdir/libecpg.so.%libecpg_major
 %_libdir/libecpg.so.%libecpg_major.*
 %_libdir/libecpg_compat.so.*
 %_libdir/libpgtypes.so.*
-%endif
 
 %files -f server.lang server
 %config %_initdir/%prog_name
@@ -642,6 +635,7 @@ fi
 %_localstatedir/%PGSQL
 %_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
+%docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
 
 %attr(751,root,root)  %dir %ROOT
@@ -713,6 +707,11 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Apr 01 2014 Alexei Takaseev <taf@altlinux.org> 9.1.13-alt1
+- 9.1.13
+- Disable devel
+- Rollback changes from 9.1.11-alt3
+
 * Fri Mar 28 2014 Andriy Stepanov <stanv@altlinux.ru> 9.1.11-alt3
 - devel packages are provided by higher PostgreSQL version
 
