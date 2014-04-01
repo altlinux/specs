@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/db2html
 %define fedora 21
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
-Version:	1.7.0
+Version:	1.7.1
 Release:	alt1_1
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
@@ -16,7 +16,7 @@ License:	GPLv2+ and LGPLv2+
 # web-browser, in result fedora-rewiew-tool will fail.
 # so i decided to release on fedorapeople to have a valid download link
 URL:		https://github.com/NiceandGently/caja-actions
-Source0:	http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.gz
+Source0:	http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.xz
 
 %if 0%{?fedora} > 20
 BuildRequires:	mate-file-manager-devel
@@ -32,7 +32,7 @@ BuildRequires:	yelp-tools
 BuildRequires:	libgtop2-devel
 BuildRequires:	dblatex
 
-Requires:       %{name}-doc = %{version}-%{release}
+Requires:       mate-file-manager-actions-doc = %{version}-%{release}
 Source44: import.info
 
 
@@ -96,6 +96,7 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %files
+%doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
 %{_bindir}/caja-actions-run
 %{_bindir}/caja-actions-config-tool
 %{_bindir}/caja-actions-new
@@ -109,16 +110,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 %{_datadir}/applications/cact.desktop
 
 %files doc -f %{oldname}.lang
-%doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
 %{_docdir}/caja-actions-%{version}/html/
 %{_docdir}/caja-actions-%{version}/pdf/
 %{_docdir}/caja-actions-%{version}/objects-hierarchy.odg
-%{_docdir}/caja-actions-%{version}/AUTHORS
-%{_docdir}/caja-actions-%{version}/COPYING
-%{_docdir}/caja-actions-%{version}/COPYING-DOCS
-%{_docdir}/caja-actions-%{version}/ChangeLog
-%{_docdir}/caja-actions-%{version}/NEWS
-%{_docdir}/caja-actions-%{version}/README
 
 %files devel
 %{_includedir}/caja-actions/
@@ -126,6 +120,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_1
+- new fc release
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1_1
 - new fc release
 
