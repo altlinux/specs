@@ -5,7 +5,7 @@
 %define what bin
 Name: %rname-%what
 Version: 0.2.1
-Release: alt2
+Release: alt3
 
 Group: Games/Adventure
 Summary: Mod sequel to Star Control II: The Ur-Quan Masters
@@ -49,7 +49,7 @@ This package contains binary executable program for this game.
 %setup -c -n %rname-%version
 
 %build
-export CFLAGS="%optflags" LDFLAGS="%optflags"
+export CFLAGS="%optflags" LDFLAGS="%optflags -lm"
 
 cd sc2
 rm -f config.state
@@ -119,6 +119,9 @@ install -m 644 %SOURCE10 %buildroot/%_liconsdir/%rname.png
 %_liconsdir/%rname.png
 
 %changelog
+* Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt3
+- added -lm -- fixed linkage
+
 * Wed May 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2
 - dropped hires desktop - misleading as switch to hires x4 is manual
 
