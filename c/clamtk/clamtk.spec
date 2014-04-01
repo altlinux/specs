@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 4.45
+Version: 5.05
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -12,14 +12,18 @@ Url: http://clamtk.sourceforge.net/
 
 BuildArch: noarch
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+#Source: http://prdownloads.sf.net/%name/%name-%version.tar
+Source: https://bitbucket.org/dave_theunsub/clamtk/downloads/%name-%version.tar
 Patch: %name-gtk.patch
 
 Requires: clamav >= 0.83
 Requires(post,postun): desktop-file-utils
 
-# Automatically added by buildreq on Sun Feb 07 2010 (-bi)
-BuildRequires: perl-Date-Calc perl-File-Find-Rule perl-Gtk2 perl-Locale-gettext perl-Net-DNS perl-libwww vixie-cron
+# manually removed: rpm-build-python3 ruby ruby-stdlibs vixie-cron
+
+# Automatically added by buildreq on Tue Apr 01 2014 (-bi)
+# optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Encode perl-Glib perl-HTTP-Date perl-HTTP-Message perl-JSON-XS perl-Pango perl-Time-Piece perl-Types-Serialiser perl-URI perl-common-sense python-base python3 python3-base
+BuildRequires: perl-Digest-SHA perl-Gtk2 perl-JSON perl-Locale-gettext perl-Text-CSV perl-Text-CSV_XS perl-libwww
 
 %description
 ClamTk is a front-end, point and click gui for ClamAV on Linux systems.
@@ -55,6 +59,10 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Apr 01 2014 Vitaly Lipatov <lav@altlinux.ru> 5.05-alt1
+- new version (5.05) with rpmgs script
+- update buildreqs
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 4.45-alt1
 - new version 4.45 (with rpmrb script)
 
