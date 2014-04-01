@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     0
-%define postgresql_subminor  15
+%define postgresql_subminor  17
 %define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          3
@@ -48,6 +48,8 @@ Conflicts: %{prog_name}8.2
 Conflicts: %{prog_name}8.3
 Conflicts: %{prog_name}8.4
 Conflicts: %{prog_name}9.1
+Conflicts: %{prog_name}9.2
+Conflicts: %{prog_name}9.3
 
 # Automatically added by buildreq on Thu Oct 20 2011 (-bi)
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
@@ -689,6 +691,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Apr 01 2014 Alexei Takaseev <taf@altlinux.org> 9.0.17-alt1
+- 9.0.17
+
 * Fri Jan 17 2014 Alexei Takaseev <taf@altlinux.org> 9.0.15-alt1
 - 9.0.15
 
