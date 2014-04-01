@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.4.4
-Release: alt2
+Release: alt3
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -98,6 +98,7 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 ./bootstrap.sh
 %configure \
 	CPPFLAGS="$(pkg-config --cflags-only-I libxml-2.0)" \
+	--disable-arch-native \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
 	--sysconfdir=%_sysconfdir/%name \
@@ -286,6 +287,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Apr 01 2014 Led <led@altlinux.ru> 3.4.4-alt3
+- dsabled arch-native
+
 * Tue Apr 01 2014 Led <led@altlinux.ru> 3.4.4-alt2
 - fixed Requires
 
