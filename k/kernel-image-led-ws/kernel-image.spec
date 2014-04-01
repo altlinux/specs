@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.34
-Release: alt6
+Version: 3.10.35
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 34
+%define kernel_stable_version 35
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1756,6 +1756,15 @@ done)
 
 
 %changelog
+* Tue Apr 01 2014 Led <led@altlinux.ru> 3.10.35-alt1
+- 3.10.35
+- removed:
+  + fix-drivers-net-ethernet-intel--e100
+  + fix-virt-kvm--kvm-intel
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-virt-kvm--kvm
+
 * Sat Mar 29 2014 Led <led@altlinux.ru> 3.10.34-alt6
 - updated:
   + feat-firmware--ath10k
