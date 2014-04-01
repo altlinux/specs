@@ -1,5 +1,6 @@
+%define major 3.2
 Name: glabels
-Version: 3.0.1
+Version: %major.0
 Release: alt1
 
 Summary: glabels is a GNOME program to create labels and business cards
@@ -12,16 +13,16 @@ Url: http://glabels.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Source: http://ftp.gnome.org/pub/GNOME/sources/glabels/3.0/%name-%version.tar
+Source: http://ftp.gnome.org/pub/GNOME/sources/glabels/%major/%name-%version.tar
 Patch: %name-1.93.3-crop.patch
 Patch1: %name-2.2.0-etersoft.patch
 Patch2: %name-3.0.0-build.patch
 
-# Automatically added by buildreq on Sat Aug 03 2013
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gtk-update-icon-cache libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-distribute python-module-libxml2 python-module-zope python-modules python-modules-compiler python-modules-encodings
-BuildRequires: glibc-devel gnome-doc-utils gtk-doc intltool libgtk+3-devel librsvg-devel libxml2-devel python-module-mwlib time
+# Automatically added by buildreq on Wed Apr 02 2014
+# optimized out: at-spi2-atk fontconfig glib2-devel gtk-update-icon-cache libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-distribute python-module-libxml2 python-module-zope python-modules python-modules-compiler python-modules-encodings python3-base xml-utils
+BuildRequires: glibc-devel gtk-doc intltool itstool libgtk+3-devel librsvg-devel libxml2-devel python-module-cmd2 python-module-mwlib python-module-protobuf time
 
-BuildPreReq: intltool libxml2-devel
+BuildPreReq: yelp-tools
 
 Requires: lib%name = %version-%release
 
@@ -62,10 +63,7 @@ Requires: lib%name = %version-%release
 This package contains headers files for development with glabels library.
 
 %prep
-%setup -q
-#%patch0 -p0
-#%patch1
-#patch2 -p2
+%setup
 
 %build
 %autoreconf
@@ -88,9 +86,10 @@ ln -s %name-3 %buildroot%_bindir/%name
 %_desktopdir/*
 %_datadir/%name-3.0
 %_datadir/glib-2.0/schemas/*
-%_datadir/gnome/help/%name-3.0/
 %_iconsdir/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/mime/packages/*
+%_datadir/appdata/*
 %_man1dir/*
 
 %files -n lib%name
@@ -104,6 +103,9 @@ ln -s %name-3 %buildroot%_bindir/%name
 %_datadir/gtk-doc/html/lib*/
 
 %changelog
+* Tue Apr 01 2014 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version (3.2.0) with rpmgs script
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - new version 3.0.1 (with rpmrb script)
 
