@@ -1,7 +1,7 @@
 Summary: Command-line Python utility to select the default ALSA sound card
 Name: asoundconf
-Version: 0.0.bzr8
-Release: alt1.1.1
+Version: 0.1
+Release: alt1
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: GPL
 Group: Sound
@@ -40,6 +40,11 @@ install -m644 asoundconf.1 ${RPM_BUILD_ROOT}%_man1dir/
 %_man1dir/asoundconf.1*
 
 %changelog
+* Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1
+- synced changes from aur.archlinux.org/packages/asoundconf (1.0.1-3)
+  (see also http://wiki.marklesh.com/How-to/Asoundconf)
+- (closes: #29795)
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.bzr8-alt1.1.1
 - Rebuild with Python-2.7
 
