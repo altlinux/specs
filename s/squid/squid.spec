@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.4.4
-Release: alt1
+Release: alt2
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -78,8 +78,7 @@ This package contains documentation for Squid.
 %package helpers
 Summary: Squid helpers
 Group: System/Servers
-Requires: %name >= 3.1
-Conflicts: %name <= 2.5.STABLE9-alt3
+Requires: %name = %version-%release
 Provides: %name-helpers-perl = %version-%release
 Obsoletes: %name-helpers-perl
 
@@ -287,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Apr 01 2014 Led <led@altlinux.ru> 3.4.4-alt2
+- fixed Requires
+
 * Sun Mar 30 2014 Led <led@altlinux.ru> 3.4.4-alt1
 - 3.4.4 (ALT#29914)
 
