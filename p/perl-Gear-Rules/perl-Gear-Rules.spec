@@ -1,7 +1,7 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.09
+Version: 0.10
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ Requires: gear
 %_bindir/*
 
 %changelog
+* Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- bugfix release
+
 * Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - support for pure gear tags
 
