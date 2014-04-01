@@ -1,12 +1,12 @@
 %define Theme Server Light
-%define codename Collybia confluens
+%define codename confutuere et ratio
 %define brand sisyphus
-%define Brand Sisyphus
-%define variants altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
+%define Brand sisyphus
+%define variants altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
 
 
 Name: branding-%brand-server-light
-Version: 1.1.5
+Version: 1.9.1
 Release: alt1
 BuildArch: noarch
 
@@ -15,8 +15,8 @@ BuildArch: noarch
 %define design_graphics_abi_major 12
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
-%define status r5
-%define status_en r5
+%define status beta
+%define status_en beta
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -244,23 +244,8 @@ echo $lang > lang
 %_desktopdir/*
 
 %changelog
-* Mon Apr 18 2011 Anton Farygin <rider@altlinux.ru> 1.1.5-alt1
-- version UP
+* Fri Mar 28 2014 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
+- new version for sisyphus
 
-* Fri Apr 01 2011 Anton Farygin <rider@altlinux.ru> 1.1.4-alt1
-- fixed color theme in alterator-vm (thnx dkr@)
-
-* Wed Feb 23 2011 Anton Farygin <rider@altlinux.ru> 1.1.3-alt1
-- color palette changed to B/W
-
-* Wed Dec 01 2010 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
-- removed images from slideshow
-
-* Wed Nov 24 2010 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
-- codename changed
-
-* Wed Nov 10 2010 Anton Farygin <rider@altlinux.ru> 1.1.1-alt1
-- version UP
-
-* Fri Dec 04 2009 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
-- first build for Sisyphus, based on kdesktop branding
+* Tue May 24 2011 Anton Farygin <rider@altlinux.ru> 1.1.6-alt1
+- first build for p6
