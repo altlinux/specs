@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.35
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1756,6 +1756,12 @@ done)
 
 
 %changelog
+* Tue Apr 01 2014 Led <led@altlinux.ru> 3.10.35-alt2
+- updated:
+  + fix-arch-x86
+- added:
+  + fix-drivers-net-wireless-ath-ath9k--ath9k
+
 * Tue Apr 01 2014 Led <led@altlinux.ru> 3.10.35-alt1
 - 3.10.35
 - removed:
