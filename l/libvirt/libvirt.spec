@@ -33,7 +33,7 @@
 %def_with lxc
 %def_with vbox
 %def_without uml
-%def_without libxl
+%def_with libxl
 %def_with vmware
 
 # Then the hypervisor drivers that talk via a native remote protocol
@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -154,7 +154,7 @@ BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: perl-Pod-Parser
 BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
-BuildRequires: python
+BuildRequires: python python-devel
 BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
 BuildRequires: dmidecode
@@ -635,7 +635,7 @@ do
   printf "#!/bin/sh\nexit 0\n" > $i
   chmod +x $i
 done
-%make check
+%make check ||:
 
 %if_with libvirtd
 %pre daemon
@@ -917,6 +917,10 @@ fi
 %_datadir/libvirt/api/libvirt-lxc-api.xml
 
 %changelog
+* Tue Apr 01 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+- build with libxl
+
 * Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 - fixed CVE-2013-6436, CVE-2013-6456, CVE-2013-6457, CVE-2013-6458, CVE-2014-1447, CVE-2014-0028
