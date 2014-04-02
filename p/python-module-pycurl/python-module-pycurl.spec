@@ -1,5 +1,5 @@
 Name: python-module-pycurl
-Version: 7.19.0.3
+Version: 7.19.3.1
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -36,6 +36,9 @@ This module provides the Python bindings to libcurl.
 %_docdir/%modulename/
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 7.19.3.1-alt1
+- new version 7.19.3.1 (with rpmrb script)
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.19.0.3-alt1
 - Version 7.19.0.3
 
