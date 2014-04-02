@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
 Version: 3.10.21
-Release: alt6
+Release: alt7
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,12 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.21-alt7
+- updates from linux-3.10.35:
+  + KVM: MMU: handle invalid root_hpa at __direct_map
+  + KVM: x86: handle invalid root_hpa everywhere
+  + KVM: VMX: fix use after free of vmx->loaded_vmcs
+
 * Fri Mar 21 2014 Led <led@altlinux.ru> 3.10.21-alt6
 - updates from linux-3.10.34:
   + KVM: SVM: fix cr8 intercept window
