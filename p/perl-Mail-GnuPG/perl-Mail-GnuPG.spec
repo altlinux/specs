@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.19
-Release: alt1
+Release: alt2
 
 Summary: Process email with GPG
 License: Perl
@@ -14,7 +14,7 @@ Url: %CPAN %module
 Source: http://www.cpan.org/authors/id/D/DD/DDB/Mail-GnuPG-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Dec 17 2010
-BuildRequires: gnupg perl-GnuPG-Interface perl-MIME-tools perl-Module-Build perl-Mouse perl-Test-Pod
+BuildRequires: gnupg perl-GnuPG-Interface perl-MIME-tools perl-Module-Build perl-Mouse perl-Test-Pod perl(Data/Perl/Role/Collection/Array.pm)
 
 %description
 Use GnuPG::Interface to process or create PGP signed or encrypted email.
@@ -32,6 +32,9 @@ Use GnuPG::Interface to process or create PGP signed or encrypted email.
 %perl_vendor_privlib/Mail
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
+- fixed build
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
