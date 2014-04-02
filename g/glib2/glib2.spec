@@ -2,7 +2,7 @@
 %define ver_major 2.40
 %define pcre_ver 8.11
 
-%def_disable snapshot
+%def_enable snapshot
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
@@ -21,7 +21,7 @@
 
 Name: glib2
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -412,6 +412,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Apr 02 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1.1
+- updated to c7a661988e
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 

@@ -1,4 +1,4 @@
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver 1.0
 %def_enable introspection
 %def_enable gtk_doc
@@ -99,6 +99,9 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Wed Apr 02 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sat Mar 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
