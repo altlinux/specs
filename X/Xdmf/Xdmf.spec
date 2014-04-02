@@ -5,7 +5,7 @@
 
 Name: Xdmf
 Version: 20100923
-Release: alt22
+Release: alt23
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -27,7 +27,7 @@ BuildPreReq: libXft-devel libXinerama-devel libXrandr-devel
 BuildPreReq: libXrender-devel libXt-devel libXpm-devel libXv-devel
 BuildPreReq: libXxf86misc-devel flex libxml2-devel libmetis0-devel
 BuildPreReq: libmysqlclient-devel libvtk-python-devel libvtk-tcl-devel
-BuildPreReq: libpq5.4-devel libjpeg-devel libtiff-devel libqt4-devel
+BuildPreReq: libpq-devel libjpeg-devel libtiff-devel libqt4-devel
 BuildPreReq: vtk-python tcl-devel tk-devel libmpe2-devel libsz2-devel
 BuildPreReq: libgomp-devel libexodusii-devel libnetcdf-mpi-devel
 BuildPreReq: libXScrnSaver-devel
@@ -236,6 +236,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Wed Apr 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt23
+- Rebuilt with postgresql9.3
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt22
 - Rebuilt with new libhdf5
 
