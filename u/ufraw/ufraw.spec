@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.19.2
-Release: alt1
+Release: alt2
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -11,9 +11,22 @@ Group: Graphics
 Url: http://ufraw.sourceforge.net/
 Source: http://downloads.sourceforge.net/ufraw/ufraw-%version.tar.gz
 # Default path to curves and color profiles
-Patch1: ufraw-0.16-defaults.patch
+Patch: ufraw-0.16-defaults.patch
+# fc patches
+# Decode and pass on EXIF metadata to GIMP.
+# https://sourceforge.net/p/ufraw/bugs/353/
+Patch1: ufraw-0.19.2-gimp-exif-decode.patch
+# Register necessary magic values to work with GIMP >= 2.9.x
+# https://sourceforge.net/p/ufraw/bugs/346/
+Patch2: ufraw-0.19.2-gimp-file-load-magic.patch
+# Use lcms 2.x.
+# https://sourceforge.net/p/ufraw/bugs/356/
+Patch3: ufraw-0.19.2-lcms2.patch
+# Harden against corrupt input files.
+# https://sourceforge.net/p/ufraw/bugs/361/
+Patch4: ufraw-0.19.2-CVE-2013-1438.patch
 
-BuildPreReq: liblcms-devel >= 1.14
+BuildPreReq: liblcms2-devel
 BuildPreReq: liblensfun-devel >= 0.2.5
 BuildPreReq: libexiv2-devel >= 0.20
 BuildRequires: gcc-c++ libgimp-devel libgomp-devel libgtkimageview-devel
@@ -38,10 +51,18 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 
 %prep
 %setup
+%patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-%configure --enable-contrast --enable-openmp
+%autoreconf
+%configure --enable-contrast \
+	--enable-openmp \
+	--enable-mime \
+	--enable-extras
 %make_build
 
 %install
@@ -60,12 +81,17 @@ install -pD -m644 icons/ufraw.png %buildroot%_liconsdir/ufraw.png
 %_desktopdir/*
 %_liconsdir/*
 %_pixmapsdir/*
+%_datadir/gconf/schemas/%name.schemas
 %doc MANIFEST README
 
 %files -n gimp-plugin-ufraw
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt2
+- applied some patches from ufraw bugtracker
+- built against liblcms2 (ALT #29942)
+
 * Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt1
 - 0.19.2
 - built against libexiv2.so.13
