@@ -3,20 +3,20 @@ BuildRequires: libgmp-devel
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(overload.pm) perl(subs.pm)
 #BuildRequires: perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/MPFR.pm)
 # END SourceDeps(oneline)
-%define module_version 0.37
+%define module_version 0.38
 %define module_name Math-GMPz
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.37
-Release: alt2
+Version: 0.38
+Release: alt1
 Summary: perl interface to the GMP library's integer (mpz) functions..
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/S/SI/SISYPHUS/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-GMPz-%{version}.tar.gz
 
 %description
 A bignum module utilising the Gnu MP (GMP) library..
@@ -43,6 +43,9 @@ A bignum module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
