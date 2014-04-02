@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.35
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1455,7 +1455,6 @@ done)
 %exclude %modules_dir/kernel/fs/efs
 %exclude %modules_dir/kernel/fs/freevxfs
 %exclude %modules_dir/kernel/fs/gfs2
-%exclude %modules_dir/kernel/fs/hfs*
 %exclude %modules_dir/kernel/fs/hpfs
 %exclude %modules_dir/kernel/fs/lustre
 %exclude %modules_dir/kernel/fs/minix
@@ -1557,7 +1556,6 @@ done)
 %modules_dir/kernel/fs/efs
 %modules_dir/kernel/fs/freevxfs
 %modules_dir/kernel/fs/gfs2
-%modules_dir/kernel/fs/hfs*
 %modules_dir/kernel/fs/hpfs
 %modules_dir/kernel/fs/lustre
 %modules_dir/kernel/fs/minix
@@ -1756,6 +1754,12 @@ done)
 
 
 %changelog
+* Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.35-alt3
+- updated:
+  + feat-mm--zbud
+  + feat-mm--zswap
+- move hfs from kernel-modules-extra-fs-* to kernel-image-*
+
 * Tue Apr 01 2014 Led <led@altlinux.ru> 3.10.35-alt2
 - updated:
   + fix-arch-x86
