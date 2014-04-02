@@ -1,8 +1,9 @@
+%add_findreq_skiplist %perl_vendor_archlib/Readonly/XS.pm
 %define dist Readonly-XS
 
 Name: perl-%dist
 Version: 1.05
-Release: alt3
+Release: alt4
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -34,6 +35,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt4
+- fixed build
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt3
 - built for perl 5.18
 
