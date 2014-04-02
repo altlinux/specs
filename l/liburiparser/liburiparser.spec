@@ -1,6 +1,6 @@
 %define oname uriparser
 Name: liburiparser
-Version: 0.7.9
+Version: 0.8.0
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -32,6 +32,7 @@ Header files for uriparser.
 %setup -n %oname-%version
 
 %build
+%autoreconf
 %configure --disable-static --disable-doc
 %make_build
 
@@ -40,6 +41,7 @@ Header files for uriparser.
 
 %files
 %doc doc/*.{htm,txt} AUTHORS ChangeLog
+%_bindir/uriparse
 %_libdir/lib*.so.*
 
 %files devel
@@ -48,6 +50,9 @@ Header files for uriparser.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.0-alt1
+- new version 0.8.0 (with rpmrb script)
+
 * Sat Sep 14 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.9-alt1
 - new version 0.7.9 (with rpmrb script)
 
