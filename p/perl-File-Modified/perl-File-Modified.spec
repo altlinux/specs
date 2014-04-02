@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-File-Modified
-Version: 0.07
-Release: alt2.1
+Version: 0.08
+Release: alt1
 
 Summary: %m_name - checks intelligently if files have changed
 
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/File-Modified/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/File-Modified-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 08 2008 (-bi)
 BuildRequires: perl-Digest-MD2 perl-Digest-SHA1 perl-devel
@@ -49,6 +49,9 @@ cannot be loaded.
 %doc Changes README
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
