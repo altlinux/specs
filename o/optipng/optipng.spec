@@ -1,5 +1,5 @@
 Name: optipng
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: Optimizer for png files
@@ -33,6 +33,7 @@ achieve this goal, OptiPNG performs the following tasks:
 %setup
 
 %build
+# non autotools configure
 ./configure --prefix=%prefix --mandir=%_mandir \
 	--with-system-libpng --with-system-zlib
 %make_build
@@ -49,6 +50,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.7.5-alt1
+- new version 0.7.5 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt1
 - new version 0.7.4 (with rpmrb script)
 - build with system libpng
