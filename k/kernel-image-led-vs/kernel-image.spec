@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.35
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1754,6 +1754,13 @@ done)
 
 
 %changelog
+* Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.35-alt4
+- updated:
+  + fix-fs-btrfs
+  + fix-mm
+  + fix-virt-kvm--kvm
+  + feat-mm--uksm
+
 * Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.35-alt3
 - updated:
   + feat-mm--zbud
