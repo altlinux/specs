@@ -7,8 +7,8 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.0.0
-Release: alt1.git.7dfdbb
+Version: 1.0.1
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -23,13 +23,24 @@ Source: %name-%version.tar
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
 Requires: python-module-pygobject3
-Requires: libspice-gtk3-gir
-Requires: libgtk3vnc-gir
-Requires: libvirt-glib-gir
 Requires: python-module-libxml2
 Requires: vte3
 Requires: dconf
 Requires: dbus-tools-gui
+Requires: librsvg
+# add requires based on "from gi.repository import foo"
+Requires: typelib(GObject)
+Requires: typelib(LibvirtGLib)
+Requires: typelib(Gtk)
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(Pango)
+Requires: typelib(GLib)
+Requires: typelib(Gio)
+Requires: typelib(GtkVnc)
+Requires: typelib(SpiceClientGtk)
+Requires: typelib(SpiceClientGLib)
+Requires: typelib(Vte)
 
 BuildRequires: python-devel python-module-distribute
 BuildRequires: libgio
@@ -134,6 +145,10 @@ python setup.py install --root=%buildroot
 %_man5dir/virt-image.5*
 
 %changelog
+* Wed Apr 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+- updare Requires (#29396, #22760)
+
 * Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1.git.7dfdbb
 - upstream snapshot 7dfdbb3f352817a61fa7c06f463500807840348d
 
