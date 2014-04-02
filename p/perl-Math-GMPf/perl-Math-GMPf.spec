@@ -3,20 +3,20 @@ BuildRequires: libgmp-devel
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 #BuildRequires: perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/MPFR.pm)
-%define module_version 0.36
+%define module_version 0.37
 %define module_name Math-GMPf
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.36
-Release: alt2
+Version: 0.37
+Release: alt1
 Summary: perl interface to the GMP library's floating point (mpf) functions..
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/S/SI/SISYPHUS/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-GMPf-%{version}.tar.gz
 
 %description
 A bigfloat module utilising the Gnu MP (GMP) library..
@@ -43,6 +43,9 @@ A bigfloat module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.36-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
