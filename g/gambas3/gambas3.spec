@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.5.2
-Release:	alt1
+Release:	alt1.1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -67,7 +67,7 @@ BuildRequires:	libxslt-devel
 BuildRequires:	libXtst-devel
 BuildRequires:	llvm-devel
 BuildRequires:	pkg-config
-BuildRequires:	postgresql9.1-devel
+BuildRequires:	postgresql-devel
 BuildRequires:	qt4-devel
 BuildRequires:	xdg-utils
 BuildRequires:	zlib-devel
@@ -1346,6 +1346,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Wed Apr 02 2014 Alexei Takaseev <taf@altlinux.org> 3.5.2-alt1.1
+- Fix BuildReq postgresql-devel9.1 to postgresql-devel
+
 * Mon Jan 13 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.2-alt1
 - New version
 
