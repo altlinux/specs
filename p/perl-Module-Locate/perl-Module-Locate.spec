@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Locate
-Version: 1.78
+Version: 1.79
 Release: alt1
 
 Summary: locate modules in the same fashion as "require" and "use"
@@ -54,6 +54,9 @@ the module itself (except for "get_source") and are available for import.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.79-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.78-alt1
 - automated CPAN update
 
