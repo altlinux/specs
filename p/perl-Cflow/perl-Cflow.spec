@@ -1,6 +1,6 @@
 Name: perl-Cflow
 Version: 1.053
-Release: alt3
+Release: alt4
 Summary: Find flows in raw IP flow files
 Group: Development/Perl
 License: GPLv2+
@@ -10,7 +10,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 Source: http://net.doit.wisc.edu/~plonka/Cflow/Cflow-%version.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011
-BuildRequires: libflow-tools-devel perl-devel perl-podlators
+BuildRequires: libflow-tools-ng-devel perl-devel perl-podlators
 
 %description
 Cflow with flow-tools support.  This module implements an API for
@@ -34,6 +34,9 @@ routers and written into flow files.
 %perl_vendor_autolib/Cflow
 
 %changelog
+* Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.053-alt4
+- fixed build
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.053-alt3
 - built for perl 5.18
 
