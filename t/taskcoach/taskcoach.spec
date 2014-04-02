@@ -1,6 +1,6 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.3.30
+Version: 1.3.36
 Release: alt1
 
 Summary: Your friendly task manager
@@ -23,7 +23,7 @@ BuildRequires: python-module-mwlib
 
 BuildPreReq: rpm-build-intro
 
-Requires: lsb-release
+Requires: lsb-release xprop
 
 AutoProv: no
 # wait for correct build python-module-pysyncml
@@ -64,6 +64,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.3.36-alt1
+- new version 1.3.36 (with rpmrb script)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3.30-alt1
 - new version 1.3.30 (with rpmrb script)
 
