@@ -1,5 +1,5 @@
 Name: python-module-bibtex
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Python extension to parse BibTeX files
@@ -46,6 +46,9 @@ This module contains two extensions needed for pybliographer:
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.6-alt1
+- new version 1.2.6 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt1
 - new version 1.2.5 (with rpmrb script)
 
