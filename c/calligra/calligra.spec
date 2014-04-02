@@ -9,7 +9,7 @@
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -622,6 +622,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/TextDocument.*
 %_K4tmpl/.source/TextDocument.*
 %_K4xdg_apps/words.desktop
+%_K4xdg_apps/calligrawords_ascii.desktop
 %_K4srv/wordspart.desktop
 %_K4lib/calligra_filter_applixword2odt.so
 %_K4lib/calligra_filter_ascii2words.so
@@ -673,6 +674,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Wed Apr 02 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.1-alt1
+- new version
+
+* Wed Apr 02 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.0-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.0-alt1
 - new version
 
