@@ -1,5 +1,5 @@
 Name:    alt-test
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Test environment based on Tapper
@@ -24,6 +24,7 @@ Test environment based on Tapper
 
 %prep
 %setup
+subst 's/@version@/%version/' alt-test
 
 %install
 install -m 0755 -D %name %buildroot%_bindir/%name
@@ -36,6 +37,14 @@ cp -av tests/* %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Wed Apr 02 2014 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- Version check support for test_package
+- Rename TESTED_PACKAGE_SOURCE environment variable to TEST_PACKAGE_SOURCE
+- Add many tests for SPT
+
+* Mon Nov 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt2
+- Automatically use package version for alt-test script
+
 * Fri Nov 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - Put in result successful tests too
 - Put each test name in comment
