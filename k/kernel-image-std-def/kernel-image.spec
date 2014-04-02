@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.10
-%define kernel_sublevel	.34
+%define kernel_base_version	3.12
+%define kernel_sublevel	.15
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,82 +547,73 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Fri Mar 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.15-alt1
+- 3.12.15
+
 * Mon Mar 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.34-alt1
 - 3.10.34
 
-* Thu Mar 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.33-alt2
-- CVE-2014-2523 fixed
+* Thu Jan 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.8-alt1
+- 3.12.8
 
-* Tue Mar 11 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.33-alt1
-- 3.10.33
-
-* Mon Feb 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.32-alt1
-- 3.10.32
-
-* Fri Feb 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.31-alt1
-- 3.10.31
-
-* Fri Feb 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.30-alt1
-- 3.10.30
-
-* Fri Feb 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.29-alt1
-- 3.10.29
-
-* Mon Jan 27 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.28-alt1
-- 3.10.28
-
-* Thu Jan 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.27-alt1
-- 3.10.27
-
-* Fri Jan 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.26-alt1
-- 3.10.26
+* Fri Jan 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.7-alt1
+- 3.12.7
 - "drm/radeon: 0x9649 is SUMO2 not SUMO" patch applied
 
-* Sat Dec 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.25-alt1
-- 3.10.25
+* Fri Dec 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.6-alt1
+- 3.12.6
 
-* Thu Dec 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.24-alt1
-- 3.10.24
+* Thu Dec 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.5-alt1
+- 3.12.5
 
-* Mon Dec 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.23-alt1
-- 3.10.23
-- fedora patches for logistech devices
+* Mon Dec 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.4-alt1
+- 3.12.4
 
-* Thu Dec 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.22-alt1
-- 3.10.22
+* Thu Dec 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.3-alt1
+- 3.12.3
 
-* Sun Dec 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.21-alt1
-- 3.10.21
+* Tue Dec 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.2-alt1
+- 3.12.2
 
-* Thu Nov 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.20-alt1
-- 3.10.20
+* Fri Nov 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.1-alt1
+- 3.12.1
 
-* Wed Nov 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.19-alt1
-- 3.10.19
+* Thu Nov 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.9-alt1
+- 3.11.9
 
-* Mon Nov 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.18-alt1
-- 3.10.18
+* Wed Nov 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.0-alt1
+- 3.12.0
 
-* Sat Oct 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.17-alt1
-- 3.10.17
+* Wed Nov 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.8-alt1
+- 3.11.8
 
-* Mon Oct 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.16-alt1
-- 3.10.16
+* Mon Nov 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.7-alt1
+- 3.11.7
 
-* Sun Oct 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.15-alt1
-- 3.10.15
+* Sat Oct 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.6-alt1
+- 3.11.6
 
-* Tue Oct 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.14-alt1
-- 3.10.14
+* Mon Oct 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.5-alt1
+- 3.11.5
 
-* Fri Sep 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.13-alt1
-- 3.10.13
-- build INTEL_ME as module
-- INTEL_PSTATE disabled (closes #29324)
+* Sun Oct 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.4-alt1
+- 3.11.4
+
+* Tue Oct 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.3-alt1
+- 3.11.3
+
+* Fri Sep 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.2-alt1
+- 3.11.2
+
+* Wed Sep 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.1-alt2
 - CONFIG_DEBUG_ATOMIC_SLEEP disabled
+- aufs fixed
 
-* Sun Sep 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.12-alt1
-- 3.10.12
+* Sun Sep 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.1-alt1
+- 3.11.1
+
+* Fri Sep 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.0-alt1
+- 3.11
 
 * Tue Sep 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.11-alt1
 - 3.10.11
