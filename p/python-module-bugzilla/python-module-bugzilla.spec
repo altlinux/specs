@@ -2,7 +2,7 @@
 
 
 Name: python-module-bugzilla
-Version: 0.9.0
+Version: 1.0.0
 Release: alt1
 
 Summary: A python library.. for bugzilla!
@@ -50,6 +50,9 @@ ad-hoc bugzilla jiggery-pokery.
 %python_sitelibdir/python_bugzilla*.egg-info
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version 0.9.0 (with rpmrb script)
 
