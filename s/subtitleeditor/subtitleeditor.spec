@@ -1,4 +1,4 @@
-%define major 0.40
+%define major 0.41
 Name: subtitleeditor
 Version: %major.0
 Release: alt1
@@ -30,7 +30,7 @@ Subtitle Editor is free software released under the GNU General Public License (
 
 %prep
 %setup
-%patch0 -p2
+#patch0 -p2
 
 %build
 %configure
@@ -57,6 +57,9 @@ rm -f %buildroot%_iconsdir/hicolor/24x24/apps/subtitleeditor.png
 %_niconsdir/*
 
 %changelog
+* Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.41.0-alt1
+- new version 0.41.0 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.40.0-alt1
 - new version 0.40.0 (with rpmrb script)
 
