@@ -1,11 +1,11 @@
 %define _kde4_alternate_placement 1
 %define libbasketcommon libbasketcommon4
 %define rname basket
-%define git_rev 372776a
+%define git_rev 79c422a
 
 Name: 	 kde4-%rname
 Version: 1.90
-Release: alt1.git%git_rev
+Release: alt2.git%git_rev
 
 Summary: multi-purpose note-taking application
 License: GPLv2+
@@ -52,6 +52,9 @@ KDE 4 core library.
 %K4install
 %K4find_lang --with-kde %rname
 
+# Remove development files
+rm -f %buildroot%_K4link/libbasketcommon.so
+
 %files -f %rname.lang
 %doc AUTHORS README TODO
 %_kde4_bindir/*
@@ -59,19 +62,20 @@ KDE 4 core library.
 %_K4lib/kcm_basket.so
 %_kde4_xdg_apps/basket.desktop
 %_K4apps/basket
-#%_K4conf/magic/basket.magic
 %_kde4_iconsdir/hicolor/*/apps/basket.*
 %_kde4_iconsdir/hicolor/*/actions/likeback_*.png
 %_kde4_iconsdir/hicolor/*/actions/tag_*.png
 %_K4srv/basket_config_*.desktop
 %_K4srv/basketthumbcreator.desktop
-#/usr/share/mimelnk/application/x-basket-archive.desktop
-#/usr/share/mimelnk/application/x-basket-template.desktop
 
 %files -n %libbasketcommon
 %_K4libdir/libbasketcommon.so.*
 
 %changelog
+* Thu Apr 03 2014 Andrey Cherepanov <cas@altlinux.org> 1.90-alt2.git79c422a
+- Fix Link note bugs
+- Append creation time to basket and note files
+
 * Wed Mar 19 2014 Andrey Cherepanov <cas@altlinux.org> 1.90-alt1.git372776a
 - New version with changes from https://github.com/gl-bars/basket.git
 - Provides basket
