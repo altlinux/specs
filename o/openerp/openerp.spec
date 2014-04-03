@@ -3,7 +3,7 @@
 
 Name: 	 openerp
 Version: 7.0
-Release: alt2.20140326
+Release: alt3.20140326
 
 Summary: Business Applications Server
 
@@ -40,15 +40,13 @@ Patch1: openerp-unbundle-pyftpdlib.patch
         # Patch is not usable upstream.
 Patch2: openerp-server.conf.patch
         # https://bugs.launchpad.net/openerp-web/+bug/1177027
-Patch3: openerp-unbundle-fonts.patch
+#Patch3: openerp-unbundle-fonts.patch
 
 
 BuildArch: noarch
 
 %py_requires feedparser gdata vatnumber vobject xlwt
 
-# TODO remove unmets from code
-%add_python_req_skip com pythonloader SendtoServer uno unohelper
 # internal modules
 %add_python_req_skip netsvc osv pooler tools
 
@@ -58,10 +56,10 @@ BuildArch: noarch
 # See BZ 817268
 # Requires:   python-faces
           # https://bugzilla.redhat.com/show_bug.cgi?id=956127
-#Requires: entypo-fonts
+#Requires: fonts-ttf-entypo
 #Requires: ghostscript
           # https://bugzilla.redhat.com/show_bug.cgi?id=956134
-#Requires: mnmlicons-fonts
+#Requires: fonts-ttf-mnmlicons
 
 BuildPreReq:   rpm-build-python 
 BuildPreReq:   rsync
@@ -233,7 +231,7 @@ OpenERP with all additional modules.
 %patch -p1
 %patch1 -p1
 %patch2 -p0
-%patch3 -p1
+#%%patch3 -p1
 
 # Unpack addition components
 unzip %SOURCE10 -d openerp/addons
@@ -257,8 +255,8 @@ sed -i -e '1i#!/usr/bin/env python' \
 rm -f openerp/addons/auth_oauth/static/lib/zocial/css/zocial-regular-webfont*
 
 # Remove bundled fonts packaged as dependencies, see patch3.
-rm -f openerp/addons/web/static/src/font/entypo-webfont*
-rm -f openerp/addons/web/static/src/font/mnmliconsv21-webfont*
+#rm -f openerp/addons/web/static/src/font/entypo-webfont*
+#rm -f openerp/addons/web/static/src/font/mnmliconsv21-webfont*
 
 # Empty and of no use.
 rm openerp/addons/base_report_designer/openerp_sxw2rml/office.dtd
@@ -332,6 +330,9 @@ echo "oerp_project_git" > %buildroot%_datadir/openerp/git.modules
 echo "gap_analysis,gap_analysis_project,gap_analysis_project_long_term" > %buildroot%_datadir/openerp/gap-analysis.modules
 echo "risk_management" > %buildroot%_datadir/openerp/risk-management.modules
 echo "smsclient,planning_management_capacity_planning,planning_management_shared_calendar" > %buildroot%_datadir/openerp/extras.modules
+
+# TODO Package LibreOffice plugin in separate package
+rm -rf %buildroot%python_sitelibdir/openerp/addons/base_report_designer/plugin/openerp_report_designer
 
 %find_lang %name
 
@@ -418,6 +419,10 @@ getent passwd openerp > /dev/null || \
 %files full
 
 %changelog
+* Thu Apr 03 2014 Andrey Cherepanov <cas@altlinux.org> 7.0-alt3.20140326
+- Use bundled fonts for icons on buttons
+- Remove LibreOffice plugin from server distribution
+
 * Fri Mar 28 2014 Andrey Cherepanov <cas@altlinux.org> 7.0-alt2.20140326
 - Add missing requires
 - Do not remove compiled Python files
