@@ -12,12 +12,13 @@
 
 Name: ModemManager
 Version: 1.2.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: http://cgit.freedesktop.org/ModemManager/ModemManager/
 Source: %name-%version.tar
+Source1: ModemManager.init
 Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
@@ -37,6 +38,9 @@ BuildRequires: gtk-doc
 
 # For tests
 BuildRequires: /dev/pts
+
+# Because of starting from the init script
+Conflicts: NetworkManager < 0.9.8.9
 
 %description
 ModemManager provides a DBus interface to communicate with
@@ -141,23 +145,14 @@ make check
 %makeinstall_std
 %find_lang %name
 
+# Install initscript
+install -Dm0755 %SOURCE1 %buildroot%_initdir/ModemManager
+
 %post
-SYSTEMCTL=systemctl
-if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-	"$SYSTEMCTL" daemon-reload ||:
-	if [ "$1" -eq 1 ]; then
-		"$SYSTEMCTL" -q preset "%name.service" ||:
-	else
-		"$SYSTEMCTL" try-restart "%name.service" ||:
-	fi
-fi
+%post_service %name
 
 %preun
-SYSTEMCTL=systemctl
-if [ "$1" -eq 0 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-		"$SYSTEMCTL" --no-reload -q disable "%name.service"
-		"$SYSTEMCTL" stop "%name.service"
-fi
+%preun_service %name
 
 %files -f %name.lang
 %doc ChangeLog NEWS AUTHORS README
@@ -172,6 +167,7 @@ fi
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
 %_unitdir/*.service
+%_initdir/ModemManager
 %doc %_man8dir/*.*
 
 %exclude %_libdir/ModemManager/*.la
@@ -208,6 +204,10 @@ fi
 %endif
 
 %changelog
+* Thu Apr 03 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
+- Use post_service/preun_service.
+- Add init script.
+
 * Fri Jan 31 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
