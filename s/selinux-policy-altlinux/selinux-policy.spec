@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20140122
+%define date 20140403
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.12
-Release: alt2
+Version: 0.0.14
+Release: alt1
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -260,6 +260,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Thu Apr 03 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.14-alt1
+- 20140403
+
 * Fri Feb 07 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.12-alt2
 - Remove dependency from kde4libs & systemd
 
