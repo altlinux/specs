@@ -3,14 +3,14 @@
 
 Name: lightdm-qt-greeter
 Version: 1.1.1
-Release: alt1
+Release: alt3
 Summary: LightDM QT Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/lightdm-qt-greeter
 #To get source code use the command "bzr branch lp:lightdm-qt-greeter"
 Source: %name-%version.tar
-# Patch1: %name-%version-%release.patch
+Patch1: %name-%version-%release.patch
 
 Requires: lightdm
 Provides: lightdm-greeter
@@ -24,7 +24,7 @@ This package provides a QT-based LightDM greeter engine.
 
 %prep
 %setup
-# %patch1 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -50,6 +50,12 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/xgreeters/lightdm-qt-greeter.desktop
 
 %changelog
+* Mon Mar 31 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt3
+- rebuild with liblightdm-qt-3.pc
+
+* Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt2
+- rebuild with liblightdm-qt-3.so.0
+
 * Wed Mar 07 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 - initial package

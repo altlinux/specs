@@ -4,7 +4,7 @@
 %define rname lightdm-kde
 Name: lightdm-kde-greeter
 Version: 0.3.2.1
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/Other
 Summary: LightDM KDE4 Greeter
@@ -15,6 +15,7 @@ Requires: lightdm
 Provides: lightdm-greeter
 
 Source: %rname-%version.tar
+Patch1: findlightdm.patch
 
 # Automatically added by buildreq on Wed Jul 25 2012 (-bi)
 # optimized out: alternatives automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins liblightdm-gobject liblightdm-qt libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -28,6 +29,7 @@ This package provides a KDE-based LightDM greeter engine.
 
 %prep
 %setup -qn %rname-%version
+%patch1 -p1
 
 %build
 %K4build
@@ -60,6 +62,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Mon Mar 31 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2.1-alt3
+- rebuild with liblightdm-qt-3.pc
+
 * Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.2.1-alt2
 - fix requires (ALT#29053)
 

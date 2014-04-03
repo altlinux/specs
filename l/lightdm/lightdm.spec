@@ -5,7 +5,7 @@
 %def_enable qt
 
 Name: lightdm
-Version: 1.5.3
+Version: 1.9.13
 Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
@@ -24,12 +24,12 @@ Source8: %name.rules
 
 Patch1: %name-%version-%release.patch
 
-Requires: %name-greeter
+# Requires: %name-greeter
 # Requires: accountsservice
 Requires: dbus-tools-gui
 
 BuildRequires: gcc-c++ intltool gnome-common
-BuildRequires: glib2-devel libgio-devel >= 2.26
+BuildRequires: glib2-devel libgio-devel >= 2.30
 BuildRequires: libxcb-devel libXdmcp-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: gtk-doc yelp-tools itstool
@@ -133,6 +133,7 @@ This package provides a Qt-based LightDM greeter engine.
 %endif
 %if_enabled qt
 	--enable-liblightdm-qt \
+	--disable-liblightdm-qt5 \
 %endif
 	--with-user-session=default \
 	--libexecdir=%_libexecdir \
@@ -144,13 +145,16 @@ This package provides a Qt-based LightDM greeter engine.
 %install
 %makeinstall_std
 
+mkdir -p %buildroot%_sysconfdir/%name/lightdm.conf.d
+mkdir -p %buildroot%_datadir/%name/lightdm.conf.d
+mkdir -p %buildroot%_datadir/%name/remote-sessions
 mkdir -p %buildroot%_sysconfdir/%name/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 mkdir -p %buildroot%_sysconfdir/pam.d
 mkdir -p %buildroot%_localstatedir/log/%name
 mkdir -p %buildroot%_localstatedir/cache/%name
 mkdir -p %buildroot%_localstatedir/run/%name
-mkdir -p %buildroot%_localstatedir/lib/ldm
+mkdir -p %buildroot%_localstatedir/lib/{lightdm-data,ldm}
 
 # install pam config
 install -p -m 644 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
@@ -163,8 +167,9 @@ install -m755 %SOURCE4 %buildroot%_sysconfdir/X11/wms-methods.d/%name
 # install script to launch dbus
 ##install -m755 %%SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 
-install -Dpm 644 %SOURCE6 %buildroot%_prefix/lib/tmpfiles.d/lightdm.conf
+install -Dpm 644 %SOURCE6 %buildroot/lib/tmpfiles.d/lightdm.conf
 install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
+echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_environment
 
 %find_lang --with-gnome %name
 
@@ -181,14 +186,16 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 %config(noreplace) %_sysconfdir/%name/*.conf
 %config(noreplace) %_sysconfdir/pam.d/%{name}*
 %_sbindir/%name
-%_man1dir/%{name}*
+%_man1dir/*
 %_bindir/dm-tool
 %_libexecdir/*
 %attr(775,root,_ldm) %dir %_localstatedir/log/%name
 %attr(775,_ldm,_ldm) %dir %_localstatedir/cache/%name
 %attr(750,_ldm,_ldm) %dir %_localstatedir/lib/ldm
+%attr(640,_ldm,_ldm) %_localstatedir/lib/ldm/.pam_environment
+%attr(750,_ldm,_ldm) %dir %_localstatedir/lib/lightdm-data
 %attr(775,_ldm,_ldm) %dir %_localstatedir/run/%name
-%_prefix/lib/tmpfiles.d/lightdm.conf
+/lib/tmpfiles.d/lightdm.conf
 %_datadir/polkit-1/rules.d/lightdm.rules
 
 %if_enabled gobject
@@ -219,6 +226,12 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Mar 31 2014 Alexey Shabalin <shaba@altlinux.ru> 1.9.13-alt1
+- 1.9.13
+
+* Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
