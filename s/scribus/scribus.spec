@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.4.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -19,7 +19,7 @@ Patch1: FindFreetype.cmake.diff
 
 # Automatically added by buildreq on Tue Aug 25 2009
 BuildRequires: boost-devel cmake gcc-c++ libXfixes-devel libcairo-devel
-BuildRequires: libcups-devel libhyphen-devel libjpeg-devel liblcms-devel
+BuildRequires: libcups-devel libhyphen-devel libjpeg-devel liblcms2-devel
 BuildRequires: qt4-devel libxml2-devel python-devel libpixman-devel
 BuildRequires: aspell libaspell-devel hunspell libhunspell-devel desktop-file-utils phonon-devel
 BuildPreReq: lib2geom-devel libpodofo-devel xml-utils fontconfig-devel
@@ -168,6 +168,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu Apr 03 2014 Paul Wolneykien <manowar@altlinux.org> 1:1.4.3-alt2
+- Rebuild with lcms2.
+
 * Tue Dec 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.4.3-alt1
 - Fresh up to v1.4.3 with the help of cronbuild and update-source-functions.
 
