@@ -1,4 +1,4 @@
-%define ver_major 1.9
+%define ver_major 1.10
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -9,7 +9,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -181,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sun Mar 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
 - removed gjs-loader
 
