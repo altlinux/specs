@@ -4,7 +4,7 @@
 
 Name: glib-networking
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Networking support for GIO
 Group: System/Libraries
@@ -12,7 +12,8 @@ License: LGPLv2+
 Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
@@ -39,9 +40,10 @@ the functionality of the installed %name package.
 
 
 %prep
-%setup -q
+%setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--with-libproxy \
@@ -51,7 +53,7 @@ the functionality of the installed %name package.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -75,6 +77,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Wed Apr 02 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1.1
+- updated to fbfd53fcce
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 

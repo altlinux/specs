@@ -17,8 +17,8 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -26,8 +26,8 @@ Group: Graphical desktop/GNOME
 URL: http://www.gnome.org/projects/evolution/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.in
@@ -267,6 +267,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt0.1
+- 3.12.1 snapshot (8476b8abe)
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
