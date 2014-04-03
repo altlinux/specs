@@ -22,6 +22,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define build_ia64		%{build_all}
 %define build_m32r		%{build_all}
 %define build_m68k		%{build_all}
+%define build_metag		%{build_all}
 %define build_microblaze	%{build_all}
 %define build_mips64		%{build_all}
 %define build_mn10300		%{build_all}
@@ -44,37 +45,23 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define build_sparc		0
 %define build_sh4		0
 
-# not available in binutils-2.22
+# not available in binutils-2.24
 %define build_hexagon		0
 %define build_unicore32		0
 
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
-# Note - this version number is a lie.  It should actually be 2.23.2 since
-# that is the version of the base sources.  But we have decided to switch
-# from tracking the Linux Kernel binutils releases to tracking the FSF
-# binutils releases half way through the FSF binutils release cycle.  The
-# version prior to this change was 2.23.52.0.1, but if we just set the new
-# version definition to be 2.23.2 then we would have a regression in the
-# binutils rpm numbers, which would break the rpm update mechanism.  So
-# instead we create a bogus, higher, version number here.  Once the next
-# official binutils release happens (2.24.0) we will be able to restore
-# Version to an honest value and everything will be good again.
-Version: 2.23.88.0.1
-%define srcdir binutils-2.23.2
+Version: 2.24
 Release: alt1_2
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
 
-# Note - see comment about the definition of Version above.  Once Version is
-# restored to a proper value the definition of Source below should be changed
-# to use %{version} instead of 2.23.2
-#
 # Note - the Linux Kernel binutils releases are too unstable and contain too
 # many controversial patches so we stick with the official FSF version
 # instead.
-Source: http://ftp.gnu.org/gnu/binutils/binutils-2.23.2.tar.bz2
+Source: http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.bz2
+
 Source2: binutils-2.19.50.0.1-output-format.sed
 Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-ppc64-pie.patch
@@ -89,27 +76,20 @@ Patch08: binutils-2.22.52.0.1-relro-on-by-default.patch
 Patch09: binutils-2.22.52.0.1-export-demangle.h.patch
 # Disable checks that config.h has been included before system headers.  BZ #845084
 Patch10: binutils-2.22.52.0.4-no-config-h-check.patch
-# Fix the creation of the index table in 64-bit thin archives.
-Patch11: binutils-2.23.52.0.1-64-bit-thin-archives.patch
-# Fix errors reported by version 5.0 of texinfo in gas documentation
-Patch12: binutils-2.23.52.0.1-as-doc-texinfo-fixes.patch
 # Fix addr2line to use the dynamic symbol table if it could not find any ordinary symbols.
-Patch13: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
-# Check regular references without non-GOT references when building shared libraries.
-Patch14: binutils-2.23.52.0.1-check-regular-ifunc-refs.patch
-# Fix errors reported by version 5.0 of texinfo in ld documentation
-Patch15: binutils-2.23.2-ld-texinfo-fixes.patch
-Patch16: binutils-2.23.2-kernel-ld-r.patch
-Patch17: binutils-2.23.2-bfd-texinfo-fixes.patch
-# Add support for the alternate debug info files created by the DWZ program.
-Patch18: binutils-2.23.2-dwz-alt-debuginfo.patch
-# Correct bug introduced by patch 16
-Patch19: binutils-2.23.2-aarch64-em.patch
-# Add support for the .machinemode pseudo-op to the S/390 assembler.
-patch20: binutils-2.23.2-s390-gas-machinemode.patch
+Patch11: binutils-2.23.52.0.1-addr2line-dynsymtab.patch
+Patch12: binutils-2.23.2-kernel-ld-r.patch
+# Correct bug introduced by patch 12
+Patch13: binutils-2.23.2-aarch64-em.patch
+# Fix building opcodes library with -Werror=format-security
+Patch14: binutils-2.24-s390-mkopc.patch
+# Import fixes for IFUNC and PLT handling for AArch64.
+Patch15: binutils-2.24-elfnn-aarch64.patch
+# Fix decoding of abstract instance names using DW_FORM_ref_addr.
+Patch16: binutils-2.24-DW_FORM_ref_addr.patch
 
-# Fix for xtensa memset length
-Patch100: cross-binutils-2.23.2-xtensa-memset.patch
+# Fix formatless sprintfs in Score-specific code.
+Patch100: cross-binutils-2.24-score-sprintf.patch
 
 BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
 # BZ 920545: We need pod2man in order to build the manual pages.
@@ -181,6 +161,7 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package ia64-linux-gnu	%{build_ia64}
 %do_package m32r-linux-gnu	%{build_m32r}
 %do_package m68k-linux-gnu	%{build_m68k}
+%do_package metag-linux-gnu	%{build_metag}
 %do_package microblaze-linux-gnu %{build_microblaze}
 %do_package mips-linux-gnu	%{build_mips}
 %do_package mips64-linux-gnu	%{build_mips64}
@@ -213,6 +194,7 @@ Cross-build binary image generation, manipulation and query tools. \
 ###############################################################################
 %prep
 
+%define srcdir binutils-%{version}
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
 %patch01 -p0 -b .libtool-lib64~
@@ -231,18 +213,14 @@ cd %{srcdir}
 %endif
 %patch09 -p0 -b .export-demangle-h~
 %patch10 -p0 -b .no-config-h-check~
-%patch11 -p0 -b .64bit-thin-archives~
-%patch12 -p0 -b .gas-texinfo~
-%patch13 -p0 -b .addr2line~
-%patch14 -p0 -b .check-ifunc~
-%patch15 -p0 -b .ld-texinfo~
-%patch16 -p0 -b .kernel-ld-r~
-%patch17 -p0 -b .bfd-texinfo~
-%patch18 -p0 -b .dwz~
-%patch19 -p0 -b .aarch64~
-%patch20 -p0 -b .machinemode~
+%patch11 -p0 -b .addr2line~
+%patch12 -p0 -b .kernel-ld-r~
+%patch13 -p0 -b .aarch64~
+%patch14 -p0 -b .mkopc~
+%patch15 -p0 -b .elf-aarch64~
+%patch16 -p0 -b .ref-addr~
 
-%patch100 -p1 -b .xtensa~
+%patch100 -p1 -b .score~
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -295,6 +273,7 @@ cd ..
     prep_target ia64-linux-gnu		%{build_ia64}
     prep_target m32r-linux-gnu		%{build_m32r}
     prep_target m68k-linux-gnu		%{build_m68k}
+    prep_target metag-linux-gnu		%{build_metag}
     prep_target microblaze-linux-gnu	%{build_microblaze}
     prep_target mips-linux-gnu		%{build_mips}
     prep_target mips64-linux-gnu	%{build_mips64}
@@ -350,10 +329,12 @@ function config_target () {
 	mn10300-*)	target=am33_2.0-linux;;
 	m68knommu-*)	target=m68k-linux;;
 	openrisc-*)	target=openrisc-elf;;
+	parisc-*)	target=hppa-linux;;
 	score-*)	target=score-elf;;
 	sh64-*)		target=sh64-linux;;
 	tile-*)		target=tilegx-linux;;
 	v850-*)		target=v850e-linux;;
+	x86-*)		target=x86_64-linux;;
 	*)		target=$arch;;
     esac
 
@@ -415,6 +396,7 @@ function config_target () {
 	--program-prefix=$prefix \
 	--disable-shared \
 	--disable-install_libbfd \
+	--with-sysroot=%{auxbin_prefix}/$arch/sys-root \
 	$CARGS \
 	--with-bugurl=http://bugzilla.altlinux.org/
     cd ..
@@ -500,6 +482,7 @@ function install_bin () {
 for target in `cat target.list`
 do
     echo "=== INSTALL target $target ==="
+    mkdir -p %{buildroot}%{auxbin_prefix}/$target/sys-root
     install_bin $target
 
 #    if [ $target = sh64-linux-gnu ]
@@ -564,6 +547,7 @@ function build_file_list () {
 	    echo %{auxbin_prefix}/$target_cpu-*/bin/\*
 	fi
 	echo %{_mandir}/man1/$arch-\*
+	echo %{auxbin_prefix}/$arch/sys-root
     ) >files.$arch
 }
 
@@ -615,6 +599,8 @@ cd -
     cat %{cross}-ld.lang
     cat %{cross}-gprof.lang
 ) >files.cross
+# inside a symlink - not for rpm404
+sed -i -e /sys-root/d files.ppc64-linux-gnu
 
 
 
@@ -649,6 +635,7 @@ cd -
 %do_files ia64-linux-gnu	%{build_ia64}
 %do_files m32r-linux-gnu	%{build_m32r}
 %do_files m68k-linux-gnu	%{build_m68k}
+%do_files metag-linux-gnu	%{build_metag}
 %do_files microblaze-linux-gnu	%{build_microblaze}
 %do_files mips-linux-gnu	%{build_mips}
 %do_files mips64-linux-gnu	%{build_mips64}
@@ -672,6 +659,9 @@ cd -
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Thu Apr 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_2
+- new version
+
 * Fri Mar 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.23.88.0.1-alt1_2
 - new version
 
