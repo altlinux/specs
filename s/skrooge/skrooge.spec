@@ -1,6 +1,6 @@
 Name: 		skrooge
 Version: 	1.8.0
-Release: 	alt1
+Release: 	alt2
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KDE4
 Group: 		Office
@@ -55,10 +55,13 @@ and intuitive.
 %_K4xdg_apps/*
 %_K4doc/pt_BR/%name/*
 %_datadir/akonadi/agents/skroogeakonadiresource.desktop
-%_K4plug/grantlee/0.3/grantlee_skgfilters.so
+%_K4plug/grantlee/*/grantlee_skgfilters.so
 %_K4link/*.so
 
 %changelog
+* Thu Apr 03 2014 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt2
+- Rebuild with new version of grantlee
+
 * Sun Nov 24 2013 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
 - New version
 - Build with libofx-0.9.9
