@@ -1,5 +1,5 @@
 Name: installer-feature-selinux
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Installer selinux hooks
@@ -7,17 +7,11 @@ License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
 Source: %name-%version.tar
+Provides: %name-stage2
 
 %description
 This package contains selinux hooks for installer.
 
-%package stage2
-Summary: Installer stage2 selinux hook
-License: GPL
-Group: System/Configuration/Other
-
-%description stage2
-This package contains selinux hook for installer stage2.
 
 %prep
 %setup
@@ -28,11 +22,14 @@ mkdir -p %buildroot%hookdir/{initinstall,preinstall,postinstall}.d
 install -pm755 preinstall.sh %buildroot%hookdir/preinstall.d/90-selinux.sh
 install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 
-%files stage2
+%files
 %hookdir/preinstall.d/*
 %hookdir/postinstall.d/*
 
 %changelog
+* Thu Apr 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
+- make stage indifferent
+
 * Wed Apr 02 2014 Timur Aitov <timonbl4@altlinux.org> 0.4-alt1
 - [0.4]
 
