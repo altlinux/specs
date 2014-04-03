@@ -1,6 +1,6 @@
 Name: repocop-report-distrodb
 Version: 0.17
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -39,6 +39,9 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Thu Apr 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2
+- no perl(CPANPLUS) in distrodb hack
+
 * Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - support for repocop > 0.67
 
