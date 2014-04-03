@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  4
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -319,9 +319,19 @@ install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
 
 # README.ALT
 install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
+install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
+
+install -p -m 644 -D postgresql.service %buildroot%_unitdir/postgresql.service
+
 
 popd
 ##### end ALT-stuff
+
+sed -e 's|^PGVERSION=.*$|PGVERSION=%version|' \
+        -e 's|^PGDOCDIR=.*$|PGDOCDIR=%docdir|' \
+        < altlinux/postgresql-check-db-dir >postgresql-check-db-dir
+touch -r postgresql-check-db-dir postgresql-check-db-dir
+install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-dir
 
 # Fix initscript versions
 
@@ -616,6 +626,7 @@ fi
 %config %_initdir/%prog_name
 #%config %_sysconfdir/chroot.d/%prog_name.*
 %_bindir/initdb
+%_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
 %_bindir/pg_ctl
 %_bindir/pg_receivexlog
@@ -660,9 +671,11 @@ fi
 %_localstatedir/%PGSQL
 #_sysconfdir/syslog.d/%prog_name
 %docdir/README.ALT-ru_RU.UTF-8
+%docdir/README.rpm-dist
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
 %_datadir/%PGSQL/contrib
 %_datadir/%PGSQL/contrib/sepgsql.sql
+%_unitdir/*
 
 %attr(751,root,root)  %dir %ROOT
 %attr(751,root,root)  %dir %ROOT/bin
@@ -695,12 +708,16 @@ fi
 
 %files -n %libpq_name-devel
 %_libdir/libpq*.so
+%_libdir/pkgconfig/libpq.pc
 %_sysconfdir/buildreqs/packages/substitute.d/%libpq_name-devel
 
 %files -n %libecpg_name-devel
 %_bindir/ecpg
 %_libdir/libecpg*.so
 %_libdir/libpgtypes.so
+%_libdir/pkgconfig/libecpg.pc
+%_libdir/pkgconfig/libecpg_compat.pc
+%_libdir/pkgconfig/libpgtypes.pc
 %_man1dir/ecpg.*
 %_sysconfdir/buildreqs/packages/substitute.d/%libecpg_name-devel
 
@@ -732,6 +749,11 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Apr 03 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt3
+- Add postgresql.service
+- Add postgresql-check-db-dir for correct start under systemd
+- Fix ALT#28562
+
 * Tue Apr 01 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt2
 - Fix name libecpg6.3 to libecpg6.5
 
