@@ -1,5 +1,5 @@
 Name: gtk-doc
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
@@ -137,6 +137,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Sun Feb 16 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20-alt1
+- 1.20
+
 * Wed Jun 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.19-alt1
 - 1.19
 

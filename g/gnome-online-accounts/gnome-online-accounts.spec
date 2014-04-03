@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -11,18 +11,18 @@
 %def_enable imap_smtp
 %def_enable windows_live
 %def_enable telepathy
+%def_enable pocket
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
 License: LGPLv2+
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -32,8 +32,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: lib%name = %version-%release
 
-%define glib_ver 2.35
-%define gtk_ver 3.5.1
+%define glib_ver 2.36
+%define gtk_ver 3.11.1
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
 %define soup_ver 2.41
@@ -116,6 +116,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable google} \
 	%{subst_enable flickr} \
 	%{subst_enable telepathy} \
+	%{subst_enable pocket} \
 	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
@@ -163,6 +164,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

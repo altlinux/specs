@@ -2,11 +2,11 @@
 
 %define _name nibbles
 %define __name gnome-%_name
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A cute little game that has no short description
@@ -40,10 +40,7 @@ it.
 %build
 %autoreconf
 %configure \
-    --disable-schemas-compile \
-    --enable-setgid \
-    --with-scores-group=games \
-    --with-scores-user=games
+    --disable-schemas-compile
 
 %make_build
 
@@ -54,17 +51,19 @@ it.
 
 %files -f gnome-%_name.lang
 %attr(2711,root,games) %_bindir/%__name
-%_desktopdir/gnibbles.desktop
+%_desktopdir/%__name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name.svg
 %_iconsdir/HighContrast/*x*/apps/%__name.png
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%config(noreplace) %attr(0664,games,games) %_localstatedir/games/%__name.*
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sat Oct 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

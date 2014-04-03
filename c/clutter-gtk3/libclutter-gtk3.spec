@@ -1,11 +1,11 @@
 %define _name clutter-gtk
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Library integrating clutter with GTK+3
 License: LGPL v2+
@@ -15,7 +15,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://source.clutter-project.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: libgtk+3-devel >= 3.6.0 libclutter-devel >= 1.13.7
+BuildRequires: libgtk+3-devel >= 3.6.0 libclutter-devel >= 1.15.1
 %{?_enable_introspection:BuildRequires: libjson-glib-gir-devel libclutter-gir-devel libgtk+3-gir-devel}
 
 %description
@@ -102,6 +102,12 @@ touch AUTHORS
 %endif
 
 %changelog
+* Wed Feb 19 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
+* Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt3
+- rebuilt against libcogl.so.19
+
 * Mon Aug 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt2
 - rebuilt against libcogl.so.15
 

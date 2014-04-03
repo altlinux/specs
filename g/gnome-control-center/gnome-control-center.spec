@@ -2,16 +2,17 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 2.0
 
 %def_disable debug
 %def_disable static
 %def_without libsocialweb
 %def_with cheese
+%def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -41,12 +42,14 @@ Patch1: %name-3.10.1-alt-background_build.patch
 %define acc_ver 0.6.30
 %define sett_daemon_ver 3.9.5
 %define cheese_ver 3.9.5
-%define bt_ver 3.9.3
+%define bt_ver 3.12.0
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.5.2
 %define colord_ver 1.0
 %define pwq_ver 1.2.2
+%define upower_ver 0.99.0
+%define grilo_ver 0.2.9
 
 Requires: %name-data = %version-%release
 
@@ -73,7 +76,7 @@ BuildPreReq: libcolord-gtk-devel
 BuildPreReq: libsoup-devel
 BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
-BuildRequires: libupower-devel libpolkit1-devel
+BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel
 BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
@@ -86,12 +89,13 @@ BuildRequires: libnm-gtk-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
-BuildRequires: libgnome-bluetooth-devel >= %bt_ver
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libclutter-gtk3-devel
 BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
+BuildRequires: libgrilo-devel >= %grilo_ver
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
+%{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -126,7 +130,7 @@ you'll want to install this package.
 %prep
 %setup
 %patch -p1 -b .lfs
-%patch1
+#%patch1
 
 %build
 %if_enabled snapshot
@@ -142,7 +146,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %files
@@ -178,6 +182,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Mar 03 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

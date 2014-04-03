@@ -9,7 +9,7 @@
 
 Name: %_name%api_ver
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -111,6 +111,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.10-alt2
+- rebuilt against libcogl.so.19
+
 * Fri Jan 10 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.10-alt1
 - 2.0.10
 

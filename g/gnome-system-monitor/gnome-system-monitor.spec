@@ -1,24 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.10
+%define ver_major 3.12
 %def_enable systemd
 %def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
 License: GPLv2+
 Group: Monitoring
-Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
+Url: https://wiki.gnome.org/Apps/SystemMonitor
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-# From configure.in
 %define glib_ver 2.37.3
 %define gtk_ver 3.9.5
 %define glibmm_ver 2.28.0
@@ -31,10 +29,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define systemd_ver 38
 
 BuildPreReq: rpm-build-gnome
-
-# From configure.in
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= 0.35.0
+BuildRequires: gcc-c++ gnome-common appdata-tools
+BuildRequires: intltool yelp-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -43,9 +39,7 @@ BuildPreReq: libgtop-devel >= %libgtop_ver
 BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
 BuildPreReq: libxml2-devel >= %libxml_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
-BuildPreReq: gnome-doc-utils gnome-common
-BuildRequires: yelp-tools
-BuildRequires: gcc-c++
+
 %{?_enable_wnck:BuildPreReq: libwnck3-devel >= %libwnck_ver}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
@@ -53,7 +47,7 @@ BuildRequires: gcc-c++
 Gnome-system-monitor is a simple process and system monitor.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -82,6 +76,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

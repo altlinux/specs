@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -9,8 +9,8 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -36,7 +36,7 @@ BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
 BuildRequires: iso-codes-devel
-BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
+BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
@@ -108,7 +108,7 @@ GObject introspection devel data for the %_name library
 
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -122,7 +122,7 @@ GObject introspection devel data for the %_name library
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome --output=%_name.lang %_name-%api_ver fdl gpl lgpl
 
@@ -157,6 +157,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
 - fixed reqs
 

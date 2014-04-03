@@ -2,11 +2,11 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A game based on Tetravex
@@ -47,7 +47,6 @@ times are stored in a system-wide scoreboard.
 %files -f %__name.lang
 %_bindir/%__name
 %_desktopdir/%__name.desktop
-%_datadir/%__name/
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/HighContrast/*x*/apps/*.png
@@ -57,6 +56,9 @@ times are stored in a system-wide scoreboard.
 
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sat Oct 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

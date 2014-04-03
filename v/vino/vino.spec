@@ -1,7 +1,7 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: vino
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A remote desktop system for GNOME
@@ -13,7 +13,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
-BuildRequires: libgio-devel libgtk+3-devel libsoup-devel libdbus-devel
+BuildRequires: libgio-devel libgtk+3-devel libdbus-devel
 BuildRequires: libXdamage-devel libXtst-devel libSM-devel xorg-cf-files xorg-inputproto-devel
 BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel libsecret-devel
 BuildRequires: libjpeg-devel libnotify-devel >= 0.7 zlib-devel
@@ -24,22 +24,20 @@ Vino is a VNC server for GNOME. It allows remote users to
 connect to a running GNOME session using VNC.
 
 %prep
-%setup -q
+%setup
 
 %build
-export LDFLAGS="$LDFLAGS -lgcrypt"
 %configure \
 	--disable-http-server \
 	--disable-schemas-compile
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
 %_libexecdir/vino-server
 %_sysconfdir/xdg/autostart/vino-server.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vino.service
@@ -49,6 +47,9 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

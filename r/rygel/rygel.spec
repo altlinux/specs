@@ -1,4 +1,6 @@
-%define ver_major 0.20
+%set_automake_version 1.11
+
+%define ver_major 0.22
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -17,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -29,10 +31,10 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.tar
 
 %define libxml_ver 2.7
-%define vala_ver 0.20.0
+%define vala_ver 0.22.0
 %define gssdp_ver 0.13.0
 %define gupnp_ver 0.19.0
-%define gupnp_av_ver 0.11.4
+%define gupnp_av_ver 0.12.4
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
 %define gst_pbu_ver 1.0
@@ -41,7 +43,7 @@ Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.ta
 %define gio_ver 2.26
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
-%define libsoup_ver 2.34.0
+%define libsoup_ver 2.42.0
 %define gtk_ver 3.0
 %define libsqlite3_ver 3.5
 
@@ -145,6 +147,9 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.0-alt1
+- 0.22.0
+
 * Wed Jan 15 2014 Alexey Shabalin <shaba@altlinux.ru> 0.20.3-alt1
 - 0.20.3
 

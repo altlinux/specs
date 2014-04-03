@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -17,11 +17,12 @@
 %def_with xdmcp
 %def_with tcp_wrappers
 %def_with selinux
-%def_with systemd
 %def_with libaudit
 %def_with plymouth
 %def_without xevie
 %def_disable split_authentication
+%def_with systemd
+%def_disable wayland
 
 Name: gdm
 Version: %ver_major.0
@@ -33,7 +34,7 @@ URL: ftp://ftp.gnome.org/
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -45,10 +46,8 @@ Source13: gdm-launch-environment.pam
 #Source11: gdm-smartcard.pam
 #Source12: gdm-fingerprint.pam
 
-Patch2: gdm-3.2.1.1-alt-Xsession.patch
+Patch2: gdm-3.11.90-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
-Patch9: gdm-3.2.2-alt-link.patch
-Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
 
 Obsoletes: %name-gnome
@@ -72,8 +71,11 @@ Obsoletes: %name-user-switch-applet
 
 PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
+Requires: %name-data = %version-%release
 Requires: gnome-shell
-Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release shadow-utils
+Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
+# since 3.11.92
+Requires: caribou
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
@@ -84,7 +86,8 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libupower-devel >= %upower_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
-%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel}
+BuildPreReq: dconf
+%{?_with_systemd:BuildRequires: systemd-devel libsystemd-devel}
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
@@ -109,6 +112,14 @@ Gdm (the GNOME Display Manager) is a highly configurable
 reimplementation of xdm, the X Display Manager. Gdm allows you to log
 into your system with the X Window System running and supports running
 several different X sessions on your local machine at the same time.
+
+%package data
+Summary: Arch independent files for GDM
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for GDM to work.
 
 %package libs
 Summary: GDM libraries
@@ -204,11 +215,9 @@ several different X sessions on your local machine at the same time.
 Install this package for use with GNOME desktop.
 
 %prep
-%setup -q
+%setup
 %patch2 -p1
 %patch7 -p1
-#%%patch9 -p1 -b .link
-#%%patch10 -p1 -b .shells
 %patch11 -p1 -b .lfs
 
 # just copy our PAM config files to %default_pam_config directory
@@ -241,7 +250,8 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
 	--with-authentication-agent-directory=%_libexecdir/polkit-1 \
 	--with-dmconfdir=%_sysconfdir/X11/sessions \
 	--disable-dependency-tracking \
-	%{?_enable_fallback_greeter:--enable-fallback-greeter}
+	%{?_enable_fallback_greeter:--enable-fallback-greeter} \
+	%{?_enable_wayland:--enable-wayland-support}
 
 %make_build
 
@@ -250,9 +260,6 @@ mkdir -p %buildroot%_sysconfdir/X11/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 
 %makeinstall_std
-
-# create empty default dconf database updated from dconf posttrans filetrigger
-touch %buildroot/%_sysconfdir/dconf/db/gdm
 
 # install external hook for update_wms
 install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
@@ -266,10 +273,6 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
-# tests
-#mkdir -p %_libexecdir/%name/tests
-#find ./ -executable -type f -name "*test*" -print0| xargs -r0 install -pD -m 755 -t %_libexecdir/%name/tests/ --
-
 %check
 xvfb-run %make check
 
@@ -279,8 +282,16 @@ xvfb-run %make check
 %post
 %post_control -s disabled gdm_xdmcp
 
-%files -f %name.lang
+%files
+%_sbindir/gdm
+%_bindir/gdm-screenshot
+%_bindir/gdmflexiserver
+%_libexecdir/gdm-host-chooser
+%_libexecdir/gdm-session-worker
+%_libexecdir/gdm-simple-chooser
 %doc AUTHORS ChangeLog NEWS README TODO
+
+%files data -f %name.lang
 %config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
 %config %_sysconfdir/pam.d/gdm-password
@@ -288,27 +299,19 @@ xvfb-run %make check
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %config(noreplace) %_sysconfdir/X11/%name
-%config %_sysconfdir/dconf/profile/gdm
-%ghost %_sysconfdir/dconf/db/gdm
-%dir %_sysconfdir/dconf/db/gdm.d
-%_sysconfdir/dconf/db/gdm.d/00-upstream-settings
-%dir %_sysconfdir/dconf/db/gdm.d/locks
-%_sysconfdir/dconf/db/gdm.d/locks/00-upstream-settings-locks
 %dir %_sysconfdir/X11/sessions
 %config %_controldir/gdm_xdmcp
 %_sysconfdir/X11/wms-methods.d/%name
 %_unitdir/gdm.service
-%_bindir/*
-%_sbindir/*
-%_libexecdir/*
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
 %_datadir/%name/%name.schemas
 %dir %_datadir/%name/greeter
 %dir %_datadir/%name/greeter/applications
-%dir %_datadir/%name/greeter/autostart
 %_datadir/%name/greeter/applications/polkit-gnome-authentication-agent-1.desktop
+%_datadir/%name/greeter-dconf-defaults
+%_datadir/dconf/profile/%name
 %_pixmapsdir/*
 %_datadir/icons/*/*/*/*.*
 %dir %_localstatedir/log/gdm
@@ -317,13 +320,13 @@ xvfb-run %make check
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
-
-# obsolete -gnome subpackage
 %_datadir/gdm/greeter/applications/gnome-shell.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %_datadir/gnome-session/sessions/gdm-shell.session
+%dir %_datadir/%name/greeter/autostart
+%_datadir/%name/greeter/autostart/caribou-autostart.desktop
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %if_enabled split_authentication
@@ -366,6 +369,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 - removed ConsoleKit support

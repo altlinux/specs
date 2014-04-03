@@ -4,13 +4,13 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
-%define fedora 20
+%define fedora 21
 #%%global _internal_version  bc54d96
 
 Name:          mate-power-manager
 Version:       1.8.0
 #Release:       0.4.git%%{_internal_version}%{?dist}
-Release:       alt1_1
+Release:       alt2_1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
@@ -127,6 +127,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- rebuild with new upower
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

@@ -1,13 +1,13 @@
 Name: xfce4-power-manager
 Version: 1.2.0
-Release: alt6
+Release: alt7.git20140319
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
 Group: Graphical desktop/XFce
 License: %gpl2plus
 Url: http://goodies.xfce.org/projects/applications/%name
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfce4-power-manager
 Source0: %name-%version.tar
@@ -40,6 +40,8 @@ scaling.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfpm_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
@@ -67,6 +69,13 @@ scaling.
 %_mandir/man?/*
 
 %changelog
+* Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt7.git20140319
+- logind support: treat "challenge" responses as true.
+- Port to upower-0.99 D-Bus interface.
+- Drop obsoleted patch.
+- Fix Xfce name (XFCE -> Xfce).
+- Upstream git snapshot (master branch).
+
 * Thu Aug 29 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt6
 - Use xfsm-shutdown-helper for suspend/hibernate.
 

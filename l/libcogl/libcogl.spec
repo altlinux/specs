@@ -1,5 +1,5 @@
 %define oname cogl
-%define ver_major 1.16
+%define ver_major 1.18
 %define gst_api_ver 1.0
 
 %ifarch %arm
@@ -25,14 +25,15 @@
 %def_enable xlib_egl
 
 Name: libcogl
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
-License: LGPLv2+
+License: MIT
 Url: http://www.clutter-project.org/
 
+#Source: %oname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%oname/%ver_major/%oname-%version.tar.xz
 Patch: cogl-1.16.1-alt-gles2.patch
 
@@ -63,7 +64,8 @@ Conflicts: libclutter < 1.8.0
 %{?_enable_xlib_egl:BuildRequires: pkgconfig(egl) pkgconfig(x11) pkgconfig(xext) pkgconfig(xfixes) >= %xfixes_ver pkgconfig(xdamage) pkgconfig(xcomposite) >= %xcomposite_ver pkgconfig(xrandr) >= %xrandr_ver}
 %{?_enable_gst:BuildRequires: gst-plugins%gst_api_ver-devel}
 BuildRequires: gtk-doc >= %gtk_doc_ver
-BuildRequires: gobject-introspection-devel >= %gi_ver  gir(GL) = 1.0 gir(GObject) = 2.0 gir(Pango) = 1.0 gir(PangoCairo) = 1.0
+BuildRequires: gobject-introspection-devel >= %gi_ver  gir(GL) = 1.0 gir(GObject) = 2.0
+BuildRequires: gir(Pango) = 1.0 gir(PangoCairo) = 1.0 gir(Gst) = 1.0
 
 %description
 Cogl is a small open source library for using 3D graphics hardware to draw
@@ -173,6 +175,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Mon Jan 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 - enabled gstreamer support

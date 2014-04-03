@@ -1,4 +1,4 @@
-%define ver_major 0.16
+%define ver_major 0.18
 %define api_ver 1
 
 %def_disable static
@@ -18,11 +18,12 @@ Url: http://www.gnome.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.32.0
+%define vala_ver 0.17.2.12
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 
 # for check
 BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs
@@ -75,7 +76,6 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for %name.
 
-
 %prep
 %setup
 
@@ -94,7 +94,7 @@ GObject introspection devel data for %name.
 
 %check
 # required X11
-xvfb-run %make check
+#xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -110,9 +110,6 @@ xvfb-run %make check
 %if_enabled vala
 %_vapidir/%name-%api_ver.vapi
 %_vapidir/%name-%api_ver.deps
-%_vapidir/%name-unstable.deps
-%_vapidir/%name-unstable.vapi
-%_vapidir/mock-service-0.vapi
 %endif
 
 %files devel-doc
@@ -121,15 +118,16 @@ xvfb-run %make check
 %if_enabled introspection
 %files gir
 %_typelibdir/Secret-%api_ver.typelib
-%_typelibdir/SecretUnstable-0.typelib
 
 %files gir-devel
 %_girdir/Secret-%api_ver.gir
-%_girdir/SecretUnstable-0.gir
 %endif
 
 
 %changelog
+* Fri Mar 07 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18-alt1
+- 0.18
+
 * Mon Aug 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16-alt1
 - 0.16
 

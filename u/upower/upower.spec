@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec/upower
 
 Name: upower
-Version: 0.9.23
+Version: 0.99.0
 Release: alt1
 Summary: Power Management Service
 License: GPLv2+
@@ -65,7 +65,7 @@ Obsoletes: libdevkit-power-gir-devel < 016
 GObject introspection devel data for the UPower library
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 rm -f acinclude.m4
@@ -85,6 +85,10 @@ rm -f acinclude.m4
 
 %find_lang %name
 
+%check
+# system bus wanted
+#%make check
+
 %files -f %name.lang
 %doc AUTHORS NEWS README
 %dir %_sysconfdir/UPower
@@ -92,11 +96,9 @@ rm -f acinclude.m4
 %_sysconfdir/dbus-1/system.d/*.conf
 %_unitdir/*
 /lib/udev/rules.d/*.rules
-/lib/systemd/system-sleep/notify-upower.sh
 %_bindir/*
 %_libexecdir
 %_datadir/dbus-1/system-services/*.service
-%_datadir/polkit-1/actions/*.policy
 %_mandir/man?/*
 %dir %_var/lib/%name
 
@@ -117,6 +119,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt1
+- 0.99.0
+
 * Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.23-alt1
 - 0.9.23
 

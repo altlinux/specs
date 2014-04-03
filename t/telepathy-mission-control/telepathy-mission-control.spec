@@ -1,13 +1,14 @@
 %define api_ver 5.5
 %def_enable gnome_keyring
 #monitor device suspending and resuming
-%def_enable upower
+%def_disable upower
 # NetworkManager support
 %def_enable nm
+%def_disable check
 
 Name: telepathy-mission-control
 Version: 5.16.1
-Release: alt1
+Release: alt2
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
@@ -21,9 +22,10 @@ BuildRequires: gtk-doc libgio-devel >= 2.28.0 libdbus-glib-devel libtelepathy-gl
 %{?_enable_nm:BuildRequires: NetworkManager-glib-devel}
 %{?_enable_gnome_keyring:BuildRequires: libgnome-keyring-devel}
 
-# for check
+%if_enabled check
 BuildRequires: python-modules-encodings python-module-twisted-words python-module-twisted-core-gui
 BuildRequires: python-module-dbus python-module-zope.interface telepathy-logger /proc dbus-tools-gui
+%endif
 
 %description
 Mission Control, or MC, is a Telepathy component providing a way for
@@ -56,7 +58,7 @@ Provides: %name-devel = %version-%release
 Development libraries and header files for %name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -69,10 +71,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
-#%%make check
+%{?_enable_check:%make check}
 
 %files -n lib%name
 %_bindir/*
@@ -91,6 +93,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.1-alt2
+- rebuilt for GNOME-3.12 (temporarily disabled upower support)
+
 * Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.1-alt1
 - 5.16.1
 

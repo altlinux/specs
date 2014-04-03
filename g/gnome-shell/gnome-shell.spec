@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.10
+%define ver_major 3.12
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -15,15 +15,14 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 #Source: %name-%version.tar
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch1: %name-3.7.92-alt-gir.patch
+Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
-
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define clutter_ver 1.13.6
 %define gjs_ver 1.38.0
-%define mutter_ver 3.10.3
+%define mutter_ver 3.11.90
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
@@ -31,7 +30,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
-%define bluetooth_ver 3.2.0
+%define bluetooth_ver 3.11.3
 %define folks_ver 0.5.2
 %define gi_ver 0.10.1
 %define sn_ver 0.11
@@ -48,8 +47,45 @@ Requires: mutter-gnome >= %mutter_ver
 Requires: gnome-session >= %ver_major
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit caribou
+# since 3.11.x requires org.gnome.login-screen schema
+Requires: gdm-data
+# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(AccountsService)
+Requires: typelib(Atk)
+Requires: typelib(Atspi)
+Requires: typelib(Caribou)
+Requires: typelib(Clutter)
+Requires: typelib(Cogl)
+Requires: typelib(Gcr)
+Requires: typelib(GDesktopEnums)
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(Gdm)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GnomeBluetooth)
+Requires: typelib(GnomeDesktop)
+Requires: typelib(GObject)
+Requires: typelib(Gtk)
+Requires: typelib(Gvc)
+Requires: typelib(IBus)
+Requires: typelib(Meta)
+Requires: typelib(NetworkManager)
+Requires: typelib(NMClient)
+Requires: typelib(NMGtk)
+Requires: typelib(Pango)
+Requires: typelib(Polkit)
+Requires: typelib(PolkitAgent)
+Requires: typelib(Shell)
+Requires: typelib(ShellJS)
+Requires: typelib(ShellMenu)
+Requires: typelib(Soup)
+Requires: typelib(St)
+Requires: typelib(TelepathyGLib)
+Requires: typelib(TelepathyLogger)
+Requires: typelib(UPowerGlib)
 
-BuildRequires: gnome-common intltool gtk-doc
+BuildRequires: gcc-c++ gnome-common intltool gtk-doc
 BuildRequires: python-devel
 BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
@@ -90,6 +126,7 @@ BuildRequires: gsettings-desktop-schemas-devel >= 0.1.7
 BuildRequires: NetworkManager-glib-devel >= 0.8.995 NetworkManager-glib-gir-devel
 BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
+BuildRequires: libsystemd-journal-devel
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
 
@@ -121,8 +158,8 @@ GNOME Shell.
 %set_typelibdir %_libdir/%name
 
 %prep
-%setup -q
-%patch1 -p1 -b .gir
+%setup
+#%%patch1 -p1 -b .gir
 %patch3 -b .shells
 %patch4
 
@@ -134,7 +171,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%make DESTDIR=%buildroot \
+%makeinstall_std \
 	mozillalibdir=%browser_plugins_path install
 
 rm -f %buildroot%_libdir/%name/*.la
@@ -181,6 +218,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Thu Feb 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
 - 3.10.4
 

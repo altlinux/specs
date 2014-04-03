@@ -1,6 +1,6 @@
 Name: xfdashboard
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
@@ -50,6 +50,9 @@ mkdir m4
 %_datadir/themes/%name/
 
 %changelog
+* Mon Mar 31 2014 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt2
+- Rebuild with libcogl-1.18.0.
+
 * Thu Mar 20 2014 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1
 - Updated to 0.1.6.
 

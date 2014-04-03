@@ -1,10 +1,10 @@
 %define _name org.gnome.Weather.Application
 
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -20,9 +20,9 @@ Requires: libgweather-gir
 
 %add_typelib_req_skiplist typelib(Gd)
 
-%define gtk_ver 3.7.10
+%define gtk_ver 3.11.4
 %define gi_ver 1.35.9
-%define gweather_ver 3.9.91
+%define gweather_ver 3.11.92
 
 BuildRequires: rpm-build-gnome gnome-common intltool
 BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel libgweather-devel >= %gweather_ver
@@ -78,6 +78,9 @@ This package provides noarch data needed for %name to work.
 %_datadir/appdata/org.gnome.Weather.Application.appdata.xml
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

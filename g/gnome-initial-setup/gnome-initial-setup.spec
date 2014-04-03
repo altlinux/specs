@@ -1,10 +1,10 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -16,21 +16,23 @@ Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: dconf gdm
 
-%global nm_ver 0.9
-%global glib_ver 2.29.4
-%global gtk_ver 3.9.11
+%define nm_ver 0.9
+%define glib_ver 2.36.0
+%define gtk_ver 3.11.3
+%define secret_ver 0.18
 
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: NetworkManager-devel >= %nm_ver libnm-gtk-devel
 BuildRequires: libkrb5-devel libpwquality-devel
-BuildRequires: libxkbfile-devel libibus-devel
+BuildRequires: libxkbfile-devel libibus-devel librest-devel
 BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
 BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst2.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libsecret-devel >= %secret_ver
 
 %description
 GNOME Initial Setup is an alternative to firstboot, providing
@@ -41,10 +43,6 @@ you through configuring it. It is integrated with gdm.
 %setup
 
 %build
-pushd egg-list-box
-%configure --disable-static
-popd
-
 %configure --disable-static
 %make_build
 
@@ -72,10 +70,12 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
 %attr(1770, %name, %name) %dir %_localstatedir/lib/%name
 %attr(1777, root, %name) %dir %_localstatedir/run/%name
-%_sysconfdir/xdg/autostart/gnome-initial-setup-first-login.desktop
 %doc README NEWS
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1.1-alt1
 - 3.10.1.1
 

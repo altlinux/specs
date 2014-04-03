@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.6
-Release: alt2
+Release: alt3
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -21,6 +21,7 @@ Source4: start%{_name}
 Source5: start%{_name}2d
 Source6: 02Cinnamon
 Source7: 02Cinnamon2D
+Patch: %name-%version-%release.patch
 
 # From configure.in
 %define glib_ver 2.33.4
@@ -67,6 +68,7 @@ This package provides the Cinnamon session manager.
 
 %prep
 %setup -q
+%patch0 -p1
 
 [ ! -d m4 ] && mkdir m4
 
@@ -118,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.6-alt3
+- build with gnome-3.12
+
 * Tue Nov 26 2013 Vladimir Didenko <cow@altlinux.org> 2.0.6-alt2
 - add cinnamon polkit agent to required components
 

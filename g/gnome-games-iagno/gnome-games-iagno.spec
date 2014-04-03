@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name iagno
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of Othello (Reversi) board game
@@ -48,9 +48,12 @@ Othello.
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-#%_datadir/appdata/%_name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sat Oct 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

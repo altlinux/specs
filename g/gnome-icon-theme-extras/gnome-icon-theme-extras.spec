@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.12
 
 Name: gnome-icon-theme-extras
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Extra GNOME icons for specific devices and file types
@@ -36,7 +36,7 @@ render them. If a -symbolic icon is missing, the app will fall back to
 the regular name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -52,6 +52,9 @@ the regular name.
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

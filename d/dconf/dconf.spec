@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.18
+%define ver_major 0.20
 %def_disable introspection
 %def_enable gtk_doc
 
@@ -25,7 +25,7 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel >= 3.4 libxml2-devel vala-tools >= 0.17.0
+BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel >= 3.4 libxml2-devel vala-tools >= 0.18.0
 BuildRequires: libdbus-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
@@ -122,9 +122,9 @@ This package provides Vala language bindings  for the dconf library
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-mkdir -p %buildroot%_sysconfdir/%name/{profile,db}
+mkdir -p %buildroot{%_datadir,%_sysconfdir}/%name/{profile,db}
 
 # rpm posttrans filetrigger
 install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.filetrigger
@@ -140,6 +140,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/profile
 %dir %_sysconfdir/%name/db
+%dir %_datadir/%name
+%dir %_datadir/%name/profile
+%dir %_datadir/%name/db
 %_man1dir/%name-service.1.*
 %_man1dir/%name.1.*
 %_man7dir/%name.7.*
@@ -162,6 +165,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_iconsdir/hicolor/*/apps/*.*
 %_iconsdir/HighContrast/*/apps/dconf-editor.png
 %_man1dir/dconf-editor.1.*
+%_datadir/appdata/dconf-editor.appdata.xml
 %config %_datadir/glib-2.0/schemas/ca.desrt.dconf-editor.gschema.xml
 
 %if_enabled introspection
@@ -179,6 +183,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
 - 0.18.0
 

@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -45,8 +45,6 @@ Requires: pulseaudio-daemon alsa-plugins-pulse
 Requires: nemo nemo-share
 # Control Center
 Requires: cinnamon-control-center
-# We still need gnome-control-center to configure keyboard layouts
-Requires: gnome-control-center
 # Default terminal
 Requires: gnome-terminal 
 # Screensaver
@@ -126,6 +124,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2
+- remove gnome-control-center from deps
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - 2.0.0
 - added nemo-share

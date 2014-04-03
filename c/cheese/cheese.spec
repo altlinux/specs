@@ -1,4 +1,5 @@
-%define ver_major 3.10
+%define _unpackaged_files_terminate_build 1
+%define ver_major 3.12
 %define api_ver 3.0
 %define gst_api_ver 1.0
 %def_disable static
@@ -6,7 +7,7 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -17,8 +18,8 @@ Url: http://www.gnome.org/projects/cheese
 Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.tar.xz
 
 # from configure.ac
-%define glib_ver 2.28.0
-%define gtk_ver 3.4.4
+%define glib_ver 2.38.0
+%define gtk_ver 3.12.0
 %define desktop_ver 3.0.0
 %define gst_ver 0.11
 %define vala_ver 0.18.0
@@ -26,6 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.t
 
 Requires: lib%name = %version-%release
 Requires: gnome-video-effects
+Requires: gst-plugins-base%gst_api_ver
 # camerabin used for taking photos and videos
 Requires: gst-plugins-bad%gst_api_ver
 # matroska (webmmux), vp8enc
@@ -41,7 +43,7 @@ BuildPreReq: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildPreReq: gst-plugins-good%gst_api_ver >= %gst_ver
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: vala-tools >= %vala_ver
-BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils
+BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils appdata-tools
 BuildRequires: librsvg-devel libcanberra-gtk3-devel
 BuildRequires: libgudev-devel
 BuildRequires: libX11-devel libXtst-devel libXext-devel
@@ -105,7 +107,7 @@ GObject introspection devel data for the Cheese library.
 
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -127,8 +129,8 @@ GObject introspection devel data for the Cheese library.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/cheese/
 %_datadir/icons/hicolor/*/*/*.*
+%_datadir/appdata/%name.appdata.xml
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
@@ -153,6 +155,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

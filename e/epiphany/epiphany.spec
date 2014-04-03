@@ -1,9 +1,10 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.10
 %define ua_ver %ver_major
+%define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -18,20 +19,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.2.0
+%define webkit_ver 2.3.90
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 Requires: libwebkitgtk3-webinspector
 
 BuildRequires: gnome-common yelp-tools
 BuildPreReq: intltool >= 0.50.0
-BuildPreReq: libgio-devel >= 2.35.6
-BuildPreReq: libgtk+3-devel >= 3.9.12
+BuildPreReq: libgio-devel >= 2.38.0
+BuildPreReq: libgtk+3-devel >= 3.11.6
 BuildPreReq: libSM-devel
 BuildPreReq: libxml2-devel >= 2.6.12
 BuildPreReq: libxslt-devel >= 1.1.7
 BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libsoup-gnome-devel >= 2.41.3
+BuildPreReq: libsoup-gnome-devel >= 2.42.1
 BuildPreReq: libsecret-devel
 BuildPreReq: gcr-libs-devel >= 3.5.5
 BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
@@ -80,6 +81,7 @@ This package contains common noarch files needed for Epiphany.
 %files
 %_bindir/%name
 %_bindir/ephy-profile-migrator
+%_libexecdir/%name-search-provider
 #%dir %_libdir/%name/%ua_ver/extensions
 %dir %_libdir/%name/%ua_ver/web-extensions
 %_libdir/%name/%ua_ver/web-extensions/libephywebextension.so
@@ -98,6 +100,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
 - 3.10.3
 

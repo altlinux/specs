@@ -1,13 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.10
+%define ver_major 3.12
 %define parser_ver 3.9.5
 %define gst_api_ver 1.0
 %define gst_ver 0.11.99
 %define gst_plugins_ver 0.11.93
-%define gtk_ver 3.5.2
-%define grilo_ver 0.2.0
-%define glib_ver 2.35.0
+%define gtk_ver 3.11.5
+%define grilo_ver 0.2.9
+%define glib_ver 2.36.0
+%define clutter_ver 1.17.3
 
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
@@ -20,7 +21,6 @@
 %endif
 %def_enable introspection
 %def_enable nautilus
-%def_enable grilo
 %def_enable lirc
 %def_disable tracker
 %def_enable python
@@ -36,8 +36,8 @@
 %endif
 
 Name: totem
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -48,7 +48,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
 Obsoletes: %name-plugins-bemused  %name-plugins-youtube
-Obsoletes: %name-plugins-publish  %name-plugins-iplayer
+Obsoletes: %name-plugins-publish  %name-plugins-iplayer %name-plugins-grilo
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
@@ -71,6 +71,7 @@ Source1: totem-bin-backend-ondemand.sh
 
 BuildPreReq: rpm-build-gnome gnome-common gtk-doc
 BuildPreReq: intltool >= 0.40.0
+BuildRequires: appdata-tools
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
 
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
@@ -85,6 +86,8 @@ BuildPreReq: iso-codes-devel gnome-icon-theme
 BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= 0.7.3
 BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
 BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-xproto-devel
+BuildPreReq: libclutter-devel >= %clutter_ver
+BuildRequires: libgrilo-devel >= %grilo_ver
 
 %{?_enable_python:BuildRequires: python-devel python-module-pygobject3-devel pylint}
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
@@ -92,7 +95,6 @@ BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop
 %{?_enable_lirc:BuildRequires: liblirc-devel}
 %{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
-%{?_enable_grilo:BuildRequires: libgrilo-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
 
@@ -172,15 +174,6 @@ A default plugins for Totem:
 	pythonconsole
 	opensubtitles
 	chapters
-
-%package plugins-grilo
-Summary: Grilo browser for Totem
-Group: Video
-Requires: %name = %version-%release
-
-%description plugins-grilo
-A plugin to let you browse media content from various sources using
-Grilo.
 
 %package plugins-lirc
 Summary: LIRC (Infrared remote) plugin for Totem
@@ -342,7 +335,7 @@ find %buildroot%_libdir -name \*.la -delete
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
-#%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 %files -n lib%name
@@ -370,7 +363,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/properties/
 %_libdir/%name/plugins/media-player-keys/
 %_libdir/%name/plugins/pythonconsole/
-%_libdir/%name/plugins/opensubtitles/
+#%_libdir/%name/plugins/opensubtitles/
 %_libdir/%name/plugins/screenshot/
 %_libdir/%name/plugins/chapters/
 %_libdir/%name/plugins/save-file/
@@ -383,11 +376,6 @@ find %buildroot%_libdir -name \*.la -delete
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
 %_datadir/GConf/gsettings/opensubtitles.convert
 %_datadir/GConf/gsettings/pythonconsole.convert
-
-%if_enabled grilo
-%files plugins-grilo
-%_libdir/%name/plugins/grilo/
-%endif
 
 %if_enabled lirc
 %files plugins-lirc
@@ -445,6 +433,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+- temporarily removed opensubtitles plugin
+
 * Thu Jan 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt2
 - updated to 2dc3096 (fixed BGO ##721054, 712153, 709905... )
 - moved totem-video-thumbnailer to separate subpackage

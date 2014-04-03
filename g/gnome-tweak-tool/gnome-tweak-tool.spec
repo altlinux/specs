@@ -1,9 +1,9 @@
 %def_disable snapshot
 
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -69,6 +69,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 

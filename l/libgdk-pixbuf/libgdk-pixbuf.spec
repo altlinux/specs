@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.7
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -23,7 +23,6 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 Source1: %_name.map
 Source2: %_name.lds
-Source3: gdk-pixbuf-loaders.filetrigger
 
 %define glib_ver 2.37.6
 %define gi_ver 0.9.5
@@ -143,8 +142,18 @@ echo : >>%_name/abicheck.sh
 %install
 %make DESTDIR=%buildroot install
 
+ln %buildroot%_bindir/%_name-query-loaders %buildroot%_libdir/%_name-%api_ver/%binary_ver/
+
 # rpm posttrans filetriggers
-install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gdk-pixbuf-loaders.filetrigger
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger << '@@@'
+#!/bin/sh -efu
+
+LC_ALL=C sed -rn 's|(^/usr/lib(64)?)/gdk-pixbuf.*/loaders/.*|\1|p' | sort -u | while read L; do
+       $L/%_name-%api_ver/%binary_ver/%_name-query-loaders --update-cache
+done
+@@@
+chmod 755 %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 %find_lang %_name
@@ -155,6 +164,7 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %dir %_libdir/%_name-%api_ver
 %dir %_libdir/%_name-%api_ver/%binary_ver
 %dir %_libdir/%_name-%api_ver/%binary_ver/loaders
+%_libdir/%_name-%api_ver/%binary_ver/%_name-query-loaders
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ani.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-bmp.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-gif.so
@@ -214,6 +224,19 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.7-alt1
+- 2.30.7
+
+* Tue Mar 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.6-alt1
+- 2.30.6
+- glebfm@:
+  packaged %%_libdir/%%_name-%%api_ver/%%binary_ver/%%_name-query-loaders
+  hard link to %%_bindir/gdk-pixbuf-query-loaders, changed filetrigger
+  to use this hardlink.
+
+* Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.5-alt1
+- 2.30.5
+
 * Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.4-alt1
 - 2.30.4
 

@@ -1,21 +1,19 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: devhelp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
-Summary(be_BY.UTF-8): Сыстэма даведкі для распрацоўніка ў асяродьдзі GNOME
-Summary(ru_RU.UTF-8): Справочная система для разработчика в среде GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 License: %gpl2plus
 Group: Development/Other
-Url: http://www.gnome.org
-#VCS: git:git://git.gnome.org/devhelp
+Url: https://wiki.gnome.org/Apps/Devhelp
+#VCS: git://git.gnome.org/devhelp
 Source: %name-%version.tar
 
 # From configure.in
-%define gtk_ver 3.9.8
+%define gtk_ver 3.9.10
 
 Requires: lib%name = %version-%release
 
@@ -23,54 +21,33 @@ BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
 BuildPreReq: rpm-build-licenses
 BuildPreReq: gtk-doc
 
-# From configure.in
+# From configure.ac
 BuildPreReq: intltool >= 0.40.0
-BuildPreReq: libgio-devel >= 2.37.3
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libwebkitgtk3-devel libwebkit2gtk-devel >= 2.0.0
-BuildPreReq: zlib-devel
-BuildPreReq: gettext-tools
+BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.9.10
+BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
+BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
+BuildRequires: zlib-devel
+BuildRequires: gettext-tools
 
 %description
 A developers help program.
 
-%description -l be_BY.UTF-8
-Даведкавая сыстэма для распрацоўніка у асяродзьдзі GNOME.
-
-%description -l ru_RU.UTF-8
-Справочная система для разработчика в среде GNOME.
-
 %package -n lib%name
 Summary: Devhelp widgets library
-Summary(be_BY.UTF-8): Бібліятэка віджэтаў Devhelp
-Summary(ru_RU.UTF-8): Библиотека виджетов Devhelp
 Group: System/Libraries
 
 %description -n lib%name
 This package provides shared library required for Devhelp to work.
 
-%description -l be_BY.UTF-8 -n lib%name
-Гэты пакет утрымлівае неабходную для працы Devhelp бібіліятэку.
-
-%description -l ru_RU.UTF-8 -n lib%name
-Пакет предостовляет необходимую для работы  Devhelp библиотеку.
-
 %package -n lib%name-devel
 Summary: Devhelp widgets headers
-Summary(be_BY.UTF-8):	Файлы распрацоўкі патрэбныя для пабудовы дастасаваньняў з %name
-Summary(ru_RU.UTF-8):	Файлы разработки нужные для построения приложений с %name
 Group: Development/C
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 This package provides files required to develop programs that use
 Devhelp widgets.
-
-%description -n lib%name-devel -l be_BY.UTF-8
-Файлы распрацоўкі патрэбныя для пабудовы дастасаваньняў з %name
-
-%description -n lib%name-devel -l ru_RU.UTF-8
-Файлы разработки нужные для построения приложений с %name
 
 %package -n gedit-plugin-%name
 Summary: DevHelp integration into GEdit
@@ -109,6 +86,7 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_iconsdir/hicolor/*/apps/devhelp.*
 %_datadir/GConf/gsettings/*.convert
 %_datadir/glib-2.0/schemas/*.gschema.xml
+%_datadir/appdata/*.appdata.xml
 %doc AUTHORS COPYING NEWS README
 
 %files -n lib%name
@@ -123,6 +101,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 18 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
 - 3.10.2
 

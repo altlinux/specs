@@ -1,9 +1,10 @@
-%define ver_major 3.10
+%define _name org.gnome.Documents
+%define ver_major 3.12
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -22,9 +23,9 @@ Requires: gnome-online-miners
 %set_girdir %pkgdatadir
 
 %define glib_ver 2.37.0
-%define gtk_ver 3.9.11
+%define gtk_ver 3.11.4
 %define evince_ver 3.7.4
-%define tracker_ver 0.15.2
+%define tracker_ver 0.17.2
 %define goa_ver 3.2.0
 %define gdata_ver 0.13.3
 %define soup_ver 2.41.3
@@ -100,6 +101,7 @@ GObject introspection devel data for the %name library.
 
 %files
 %_bindir/%name
+%_libexecdir/%name-service
 %dir %pkglibdir
 %pkglibdir/*.so
 %exclude %pkglibdir/*.la
@@ -114,16 +116,19 @@ GObject introspection devel data for the %name library.
 %files data -f %name.lang
 %pkgdatadir/
 %exclude %pkgdatadir/gir-1.0
-%_datadir/applications/%name.desktop
-%_datadir/dbus-1/services/org.gnome.Documents.SearchProvider.service
-%_datadir/glib-2.0/schemas/org.gnome.Documents.enums.xml
+%_datadir/applications/%_name.desktop
+%_datadir/dbus-1/services/%_name.service
+%_datadir/glib-2.0/schemas/%_name.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
-%_datadir/gnome-shell/search-providers/gnome-documents-search-provider.ini
+%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_iconsdir/hicolor/*/apps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Mar 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

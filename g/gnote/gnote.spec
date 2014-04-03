@@ -4,7 +4,7 @@
 %def_without x11_support
 
 Name: gnote
-Version: 3.10.3
+Version: 3.12.0
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -14,8 +14,8 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.tar
 
-%define gtk_ver 3.6
-%define gtkmm_ver 3.6
+%define gtk_ver 3.10
+%define gtkmm_ver 3.10
 %define glibmm_ver 2.32
 %define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
@@ -79,6 +79,9 @@ desktop-file-install \
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 
 %changelog
+* Wed Mar 26 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
+- 3.12.0
+
 * Mon Feb 24 2014 Alexey Shabalin <shaba@altlinux.ru> 3.10.3-alt1
 - 3.10.3
 

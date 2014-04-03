@@ -1,16 +1,15 @@
 %define _name vte
-%define ver_major 0.34
+%define ver_major 0.36
+%define api_ver 2.90
 
 Name: %{_name}3
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 %def_enable pty_helper
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
-%define gtk_api_ver 3.0
-%define vte_api_ver 2.90
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -146,7 +145,7 @@ install -p -m644 doc/openi18n/*.txt %buildroot%pkgdocdir/
 # Remove unpackaged files
 find %buildroot -type f -name '*.la' -delete
 
-%find_lang %_name-%vte_api_ver --output=%name.lang
+%find_lang %_name-%api_ver --output=%name.lang
 
 %files
 %_bindir/*
@@ -178,7 +177,7 @@ find %buildroot -type f -name '*.la' -delete
 %pkgdocdir/*.txt
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/%_name-%vte_api_ver.pc
+%_libdir/pkgconfig/%_name-%api_ver.pc
 
 %files -n lib%name-devel-doc
 %doc %_datadir/gtk-doc/html/*
@@ -190,13 +189,19 @@ find %buildroot -type f -name '*.la' -delete
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/*
+%_typelibdir/Vte-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*
+%_girdir/Vte-%api_ver.gir
 %endif
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
+* Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.35.90-alt1
+- 0.35.90
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.9-alt1
 - 0.34.9
 

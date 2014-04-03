@@ -1,18 +1,17 @@
 %define oldname eog2
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
 License: %gpl2plus
 Group: Graphics
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.7.91-alt-gir.patch
@@ -20,13 +19,19 @@ Patch: %name-3.7.91-alt-gir.patch
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.14.2-alt1
 
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libdir/%name/plugins
+BuildPreReq: rpm-build-python3 python3-devel
+
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
 # From configure.in
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gtk-doc
-BuildPreReq: libgtk+3-devel >= 3.7.8
-BuildPreReq: libgio-devel >= 2.31.0
+BuildPreReq: libgtk+3-devel >= 3.10.6
+BuildPreReq: libgio-devel >= 2.38.0
 BuildPreReq: libgnome-desktop3-devel >= 2.91.91
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
@@ -80,7 +85,7 @@ GObject introspection devel data for the Eye of GNOME
 
 
 %prep
-%setup -q
+%setup
 %patch -p1 -b .gir
 
 %build
@@ -103,7 +108,7 @@ GObject introspection devel data for the Eye of GNOME
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
-%_datadir/%name
+%_datadir/%name/
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
@@ -112,6 +117,7 @@ GObject introspection devel data for the Eye of GNOME
 %config %_datadir/glib-2.0/schemas/org.gnome.eog.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.eog.enums.xml
 %_datadir/GConf/gsettings/eog.convert
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS HACKING MAINTAINERS NEWS
 %doc README THANKS TODO
 
@@ -134,6 +140,9 @@ GObject introspection devel data for the Eye of GNOME
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

@@ -1,8 +1,7 @@
-%define ver_major 3.10
-%def_without newtranslations
+%define ver_major 3.12
 
 Name: gnome-calculator
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -10,19 +9,16 @@ License: %gpl2plus
 Group: Sciences/Mathematics
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-%if_with newtranslations
-Source1: %name-0.4.16.ru.po.bz2
-%endif
 
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
-# Taken from configure.in
 BuildPreReq: intltool yelp-tools itstool
-BuildPreReq: libgtk+3-devel >= 3.0.7
-BuildRequires: libgio-devel >= 2.31.0 libxml2-devel vala-tools >= 0.18
+BuildPreReq: libgtk+3-devel >= 3.10
+BuildRequires: libgio-devel >= 2.31.0 libxml2-devel vala-tools >= 0.22
+BuildRequires: libgtksourceview3-devel
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -34,11 +30,7 @@ of Professor Richard Brent.
 A single graphics driver for GTK included with this package.
 
 %prep
-%setup -q
-
-%if_with newtranslations
-bzcat %SOURCE1 po/ru.po
-%endif
+%setup
 
 %build
 %configure \
@@ -46,13 +38,11 @@ bzcat %SOURCE1 po/ru.po
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-
+%makeinstall_std
 # man page
 install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 
 %find_lang --with-gnome %name
-
 
 %files -f %name.lang
 %_bindir/*
@@ -63,6 +53,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc NEWS
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 2.0.14
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -232,6 +232,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt2
+- build with gnome-3.12
+
 * Thu Dec 5 2013 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt1
 - 2.0.14-2-gf297108
 - fix path to cinnamon-settings-users

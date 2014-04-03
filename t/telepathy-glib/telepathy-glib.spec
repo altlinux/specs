@@ -4,10 +4,10 @@
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
-%def_enable installed_tests
+%def_disable installed_tests
 
 Name: telepathy-glib
-Version: 0.22.0
+Version: 0.24.0
 Release: alt1
 
 Summary: Telepathy framework - GLib connection manager library
@@ -17,7 +17,7 @@ Url: http://telepathy.freedesktop.org/wiki/TelepathyGLib
 
 Source: http://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
 
-%define glib_ver 2.32.0
+%define glib_ver 2.36.0
 %define dbus_ver 0.90
 %define gir_ver 0.10.3
 %define vala_ver 0.16.0
@@ -103,7 +103,7 @@ This package provides tests programs that can be used to verify
 the functionality of the installed %name library package.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -161,6 +161,9 @@ the functionality of the installed %name library package.
 %endif
 
 %changelog
+* Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Wed Oct 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - 0.22.0
 

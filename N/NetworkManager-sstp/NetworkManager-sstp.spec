@@ -6,7 +6,7 @@
 
 Name: NetworkManager-sstp
 Version: 0.9.8.0
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -86,6 +86,9 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt2
+- Rebuild with NetworkManager-applet-gtk-0.9.9.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.

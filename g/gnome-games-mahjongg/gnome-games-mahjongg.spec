@@ -2,11 +2,11 @@
 
 %define _name mahjongg
 %define __name gnome-%_name
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classic Chinese Tile Game
@@ -14,7 +14,7 @@ Group: Games/Boards
 License: GPLv3+
 Url: http://live.gnome.org/GnomeGames/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
 Provides:  %__name = %version-%release
 
@@ -43,7 +43,7 @@ version of the classic Eastern tile game, Mahjongg.
 
 %files -f gnome-%_name.lang
 %_bindir/%__name
-%_desktopdir/%_name.desktop
+%_desktopdir/%__name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_iconsdir/hicolor/scalable/apps/%__name.svg
@@ -55,6 +55,9 @@ version of the classic Eastern tile game, Mahjongg.
 
 
 %changelog
+* Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 

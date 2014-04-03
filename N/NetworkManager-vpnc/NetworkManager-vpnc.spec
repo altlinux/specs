@@ -7,7 +7,7 @@
 
 Name: NetworkManager-vpnc
 Version: 0.9.8.6
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -60,7 +60,7 @@ NetworkManager panel applet.
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-gtkver=%gtkver \
-	--enable-more-warnings=error
+	--enable-more-warnings=yes
 %make_build
 
 %install
@@ -90,6 +90,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt2
+- Temporary don't treat warrnings as errors.
+- Rebuild with NetworkManager-applet-gtk-0.9.9.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt1
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.

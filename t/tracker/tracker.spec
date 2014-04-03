@@ -1,5 +1,5 @@
-%define ver_major 0.16
-%define ver_api 0.16
+%define ver_major 1.0
+%define ver_api 1.0
 
 %add_verify_elf_skiplist %_bindir/tracker-needle
 
@@ -7,9 +7,8 @@
 %def_disable hal
 %def_enable upower
 %def_enable libxml2
-%def_enable gdkpixbuf
-%def_enable libsecret
 %def_enable network_manager
+%def_enable libmediaart
 %def_disable evolution
 %def_disable rss
 %def_enable preferences
@@ -28,7 +27,6 @@
 %def_disable gtk_doc
 %def_enable taglib
 %def_enable needle
-%def_disable qt
 %def_enable libgif
 %def_enable libcue
 %def_enable abiword
@@ -41,14 +39,16 @@
 %def_enable libosinfo
 %def_enable playlist
 
-
 # Unicode support library? (libunistring|libicu)
 %define unicode_support libicu
+
+# mediaextractor (gstreamer|libav|mplayer|external)
+%define generic_media_extractor gstreamer
 
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -64,41 +64,39 @@ Obsoletes: lib%name-client
 Requires: lib%name = %version-%release
 
 %define dbus_ver 1.3.1
-%define glib_ver 2.35.1
+%define glib_ver 2.38.0
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
 %define libxml2_ver 2.6
 %define hal_ver 0.5
 %define upower_ver 0.9.0
-%define gdkpixbuf_ver 2.12.0
-%define qt_ver 4.7.1
 %define poppler_ver 0.16.0
 %define cairo_ver 1.0
 %define gdk_ver 1.0
 %define vorbis_ver 0.22
 %define flac_ver 1.2.1
 %define libexif_ver 0.6
-%define libgfs_ver 1.14.24
+%define libgsf_ver 1.14.24
 %define exempi_ver 2.1.0
 %define evo_ver 2.32.0
 %define eds_ver 2.32.0
 %define gee_ver 0.3
 %define taglib_ver 1.6
-%define libsecret_ver 0.5
 %define libgrss_ver 0.5
 %define rest_ver 0.7
 %define nm_ver 0.8
 %define gst_ver 0.10.31
 %define gupnp_dlna_ver 0.9.4
-%define sqlite3_ver 3.7.9
-%define libosinfo_ver 0.0.2
+%define libosinfo_ver 0.2.9
 %define libpng_ver 0.89
+%define libmediaart_ver 0.1.0
 
 BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
 BuildPreReq: glibc-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
+%{?_enable_libmediaart:BuildPreReq: libmediaart-devel >= %libmediaart_ver}
 BuildPreReq: libicu-devel libunistring-devel
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -110,19 +108,19 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 %{?_enable_libpng:BuildPreReq: libpng-devel >= %libpng_ver}
 BuildPreReq: libuuid-devel
 BuildPreReq: libenca-devel >= 1.9
-BuildPreReq: vala >= 0.12.0
+BuildPreReq: vala >= 0.18.0
 BuildPreReq: intltool >= 0.35.0
-BuildPreReq: sqlite3 libsqlite3-devel >= %sqlite3_ver
+BuildPreReq: sqlite3 libsqlite3-devel
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
-%{?_enable_libsecret:BuildPreReq: libsecret-devel >= %libsecret_ver}
+BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel >= 0.8.4  libavutil-devel >= 0.8.4
 %{?_enable_rss:BuildPreReq: libgrss-devel >= %libgrss_ver}
 BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_poppler:BuildPreReq: libpoppler-glib-devel >= %poppler_ver}
 %{?_enable_libgxps:BuildPreReq: libgxps-devel}
 %{?_enable_libexif:BuildPreReq: libexif-devel >= %libexif_ver}
 %{?_enable_libiptcdata:BuildPreReq: libiptcdata-devel}
-%{?_enable_libgsf:BuildPreReq: libgsf-devel >= %libgfs_ver}
+%{?_enable_libgsf:BuildPreReq: libgsf-devel >= %libgsf_ver}
 %{?_enable_libjpeg:BuildPreReq: libjpeg-devel}
 %{?_enable_libtiff:BuildPreReq: libtiff-devel}
 %{?_enable_libvorbis:BuildPreReq: libvorbis-devel >= %vorbis_ver}
@@ -132,7 +130,6 @@ BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_nautilus_extension:BuildPreReq: libnautilus-devel}
 %{?_enable_taglib:BuildPreReq: libtag-devel >= %taglib_ver}
 %{?_enable_gtk_doc:BuildPreReq: gtk-doc docbook-utils graphviz}
-%{?_enable_qt:BuildPreReq: libqt4-devel}
 %{?_enable_libgif:BuildPreReq: libgif-devel}
 %{?_enable_libcue:BuildPreReq: libcue-devel}
 %{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
@@ -246,12 +243,10 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable hal} \
 	%{subst_enable upower} \
 	--with-unicode-support=%unicode_support \
+	--enable-generic-media-extractor=%generic_media_extractor \
 	%{?_enable_network_manager:--enable-network-manager} \
 	%{subst_enable libxml2} \
-	%{subst_enable gdkpixbuf} \
-	%{subst_enable qt} \
 	%{subst_enable unac} \
-	%{subst_enable libsecret} \
 	%{?_enable_rss:--enable-miner-rss} \
 	%{?_enable_evolition:--enable-miner-evolution} \
 	%{?_enable_nautilus_extension:--enable-nautilus-extension} \
@@ -292,6 +287,7 @@ NOCONFIGURE=1 ./autogen.sh
 find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 %find_lang %name
+rm -rf %buildroot%_datadir/tracker-tests
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING NEWS README
@@ -305,7 +301,7 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_libexecdir/*
 
 %_datadir/dbus-1/services/*.service
-%_man1dir/tracker-miner-fs.1.gz
+%_man1dir/tracker-miner-fs.*
 
 %dir %_datadir/%name
 %_datadir/%name/*.xml
@@ -314,14 +310,12 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_datadir/%name/ontologies
 %_datadir/%name/extract-rules
 
-%_man1dir/tracker-extract.1.gz
-%_man1dir/tracker-writeback.1.gz
-%_man1dir/tracker-store.1.gz
+%_man1dir/tracker-extract.*
+%_man1dir/tracker-writeback.*
+%_man1dir/tracker-store.*
 
 %files -n lib%name
-%_libdir/libtracker-extract*.so.*
-%_libdir/libtracker-miner*.so.*
-%_libdir/libtracker-sparql*.so.*
+%_libdir/*.so.*
 %_libdir/%name-%ver_api/*.so.*
 
 %files utils
@@ -332,13 +326,13 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_bindir/tracker-sparql
 %_bindir/tracker-stats
 %_bindir/tracker-tag
-%_man1dir/tracker-import.1.gz
-%_man1dir/tracker-info.1.gz
-%_man1dir/tracker-control.1.gz
-%_man1dir/tracker-search.1.gz
-%_man1dir/tracker-sparql.1.gz
-%_man1dir/tracker-stats.1.gz
-%_man1dir/tracker-tag.1.gz
+%_man1dir/tracker-import.*
+%_man1dir/tracker-info.*
+%_man1dir/tracker-control.*
+%_man1dir/tracker-search.*
+%_man1dir/tracker-sparql.*
+%_man1dir/tracker-stats.*
+%_man1dir/tracker-tag.*
 
 %files search-tool
 %_bindir/tracker-preferences
@@ -347,8 +341,8 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_datadir/icons/*/*/apps/tracker.*
 %_datadir/%name/tracker-preferences.ui
 %_datadir/%name/tracker-needle.ui
-%_man1dir/tracker-preferences.1.gz
-%_man1dir/tracker-needle.1.gz
+%_man1dir/tracker-preferences.*
+%_man1dir/tracker-needle.*
 
 %files devel
 %_libdir/%name-%ver_api/*.so
@@ -383,6 +377,12 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
+* Wed Feb 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.17.2-alt1
+- 0.17.2
+
 * Wed Dec 11 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.4-alt1
 - 0.16.4
 

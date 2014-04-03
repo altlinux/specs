@@ -1,4 +1,5 @@
-%define ver_major 3.10
+%define ver_major 3.12
+%define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable introspection
@@ -17,15 +18,16 @@ Url: https://live.gnome.org/GnomeBluetooth
 Provides: bluez-gnome = %version
 Obsoletes: bluez-gnome < %version
 Conflicts: blueman < 1.10-alt4
-Requires: lib%name = %version-%release bluez obex-data-server obexd rfkill
+#Requires:  bluez >= 5
+Requires: lib%name = %version-%release rfkill
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-# https://bugzilla.redhat.com/show_bug.cgi?id=514798
-Source1: 61-gnome-bluetooth-rfkill.rules
-Patch: %name-3.7.4-alt-gir.patch
+#Source: %name-%version.tar
+
+%define gtk_ver 3.11.2
 
 BuildRequires: gnome-common gtk-doc intltool yelp-tools itstool
-BuildRequires: libgio-devel libgtk+3-devel libnotify-devel libXi-devel libdbus-glib-devel
+BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libudev-devel libnotify-devel
 %{?_enable_geoclue:BuildRequires: libgeoclue-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -76,8 +78,6 @@ GObject introspection devel data for the GNOME Bluetooth library
 
 %prep
 %setup -q
-%patch -p1
-
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -90,14 +90,12 @@ GObject introspection devel data for the GNOME Bluetooth library
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-
-install -pD -m0644 %{SOURCE1} %buildroot/lib/udev/rules.d/61-gnome-bluetooth-rfkill.rules
+%makeinstall_std
 
 # temporarily fix for gnome-shell that requires libgnome-bluetooth-applet library
-for f in %buildroot%_libdir/%name/lib%name-applet*; do
-ln -s %name/`basename $f` %buildroot%_libdir/`basename $f`
-done
+#for f in %buildroot%_libdir/%name/lib%name-applet*; do
+#ln -s %name/`basename $f` %buildroot%_libdir/`basename $f`
+#done
 
 mv %buildroot%_bindir/bluetooth-sendto %buildroot%_bindir/%name-sendto
 mkdir -p %buildroot%_altdir
@@ -114,38 +112,41 @@ find %buildroot -name "*.la" -delete
 %doc AUTHORS README NEWS
 %_altdir/%name
 %_bindir/*
-%dir %_libdir/%name
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/*.so
-/lib/udev/rules.d/61-gnome-bluetooth-rfkill.rules
 %_desktopdir/*.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*.1*
 
 %files -n lib%name
-%_libdir/*.so.*
-%_libdir/%name/lib%name-applet.so.*
+%_libdir/lib%name.so.*
 
 %files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/%name/lib%name-applet.so
-%_pkgconfigdir/*
+%_includedir/%name/
+%_libdir/lib%name.so
+%_pkgconfigdir/%name-%api_ver.pc
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/GnomeBluetoothApplet-1.0.typelib
-%_typelibdir/GnomeBluetooth-1.0.typelib
+%_typelibdir/GnomeBluetooth-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/GnomeBluetooth-1.0.gir
+%_girdir/GnomeBluetooth-%api_ver.gir
 %endif
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
+* Mon Dec 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2.1
+- removed obex-data-server from rqs
+
+* Sun Dec 01 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
+- 3.10_60b39bce9
+- improved 61-gnome-bluetooth-rfkill.rules
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

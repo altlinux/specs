@@ -1,9 +1,9 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %def_enable privatelib
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -22,19 +22,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildPreReq: rpm-build-gnome gnome-common
 BuildPreReq: intltool >= 0.34.90
 BuildPreReq: gobject-introspection-devel >= 0.9.5
-BuildRequires: libgtk+3-devel >= 3.3.7
+BuildRequires: libgtk+3-devel >= 3.9.11
 BuildRequires: glib2-devel  libgio-devel >= 2.25.10
 BuildRequires: libpango-devel >= 1.2.0
 BuildRequires: libcairo-devel >= 1.10.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.15.8
+BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.17.1
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
-BuildRequires: libgnome-desktop3-devel libupower-devel
+BuildRequires: libgnome-desktop3-devel libupower-devel >= 0.99.0
 
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
@@ -98,7 +98,7 @@ Conflicts: %name < %version
 Development docs package for mutter
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -154,6 +154,12 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.12.0-alt1
+- 3.12.0
+
+* Thu Mar 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.11.92-alt1
+- 3.11.92
+
 * Thu Feb 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.10.4-alt1
 - 3.10.4
 

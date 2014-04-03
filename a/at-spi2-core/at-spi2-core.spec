@@ -1,10 +1,11 @@
-%define ver_major 2.10
+%define ver_major 2.12
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
+%def_enable x11
 
 Name: at-spi2-core
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -13,15 +14,13 @@ License: LGPLv2+
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
 Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-2.2.0-alt-introspection.patch
 
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
-BuildRequires: libgio-devel >= 2.35.0
-BuildRequires: libdbus-devel gobject-introspection-devel
-BuildRequires: libXtst-devel libXext-devel libXi-devel
-BuildRequires: libXevie-devel libICE-devel libSM-devel
+BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libXevie-devel libICE-devel libSM-devel}
 BuildRequires: intltool gtk-doc
 
 %description
@@ -80,12 +79,12 @@ This package contains documentation for developing applications that use
 
 %prep
 %setup
-#%%patch
 
 %build
 %autoreconf
 %configure \
     --with-dbus-daemondir=/bin \
+    %{subst_enable x11} \
     %{?_disable_introspection:--enable-introspection=no}
 
 %make_build
@@ -124,6 +123,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
 - 2.10.2
 

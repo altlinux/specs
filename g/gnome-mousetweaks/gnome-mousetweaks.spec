@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define _name mousetweaks
 
 Name: gnome-%_name
@@ -73,6 +73,9 @@ gnome-panel.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

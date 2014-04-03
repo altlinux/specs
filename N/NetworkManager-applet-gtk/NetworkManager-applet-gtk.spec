@@ -1,11 +1,15 @@
-%define nm_version 0.9.8.0
-#define git_date .git20120315
-%define git_date %nil
+%define nm_version 0.9.9.0
+%define git_date .git20140327
+#define git_date %nil
+
+# Always must be '3' now
 %define gtkver 3
 
+%def_without bluetooth
+
 Name: NetworkManager-applet-gtk
-Version: 0.9.8.8
-Release: alt1%git_date
+Version: 0.9.9.0
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -25,7 +29,7 @@ BuildRequires: libnm-util-devel >= %nm_version
 BuildRequires: libnm-glib-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: NetworkManager-glib-gir-devel >= %nm_version
-BuildRequires: libgnome-bluetooth-devel
+%{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel}
 BuildRequires: iso-codes-devel
 BuildRequires: gnome-common
 BuildRequires: libgudev-devel
@@ -102,12 +106,12 @@ GObject introspection devel data for the libnm-gtk.
 %build
 %autoreconf
 %configure \
-    --disable-static \
-    --libexecdir=%_libexecdir/NetworkManager \
+	--disable-static \
+	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-    --with-gtkver=%gtkver \
-    --with-modem-manager-1 \
-    --enable-more-warnings=error
+	--with-modem-manager-1 \
+	%{subst_with bluetooth} \
+	--enable-more-warnings=yes
 
 %make_build
 
@@ -133,9 +137,11 @@ make check
 
 %_datadir/applications/*.desktop
 %dir %_datadir/gnome-vpn-properties
-%_libdir/gnome-bluetooth/plugins/*.so
 
+%if_with bluetooth
+%_libdir/gnome-bluetooth/plugins/*.so
 %exclude %_libdir/gnome-bluetooth/plugins/*.la
+%endif
 
 %files -n libnm-gtk
 %_libdir/*.so.*
@@ -153,6 +159,15 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt2.git20140327
+- Disable gnome-bluetooth support.
+- Temporary don't treat warrnings as errors again.
+- Upstream git snapshot (master branch)
+
+* Fri Feb 07 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt1.git20140205
+- Drop --with-gtkver configure option.
+- Upstream git snapshot (master branch)
+
 * Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt1
 - Updated to 0.9.8.8.
 

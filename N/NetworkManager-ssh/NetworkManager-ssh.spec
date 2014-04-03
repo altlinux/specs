@@ -7,7 +7,7 @@
 
 Name: NetworkManager-ssh
 Version: 0.9.1
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -58,7 +58,7 @@ NetworkManager panel applet.
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-gtkver=%gtkver \
-	--enable-more-warnings=error
+	--enable-more-warnings=no
 %make_build
 
 %install
@@ -83,6 +83,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt4
+- Temporary don't treat warrnings as errors.
+- Rebuild with NetworkManager-applet-gtk-0.9.9.
+
 * Thu Oct 03 2013 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt3
 - Fix build: Avoid deprecation warnings.
 

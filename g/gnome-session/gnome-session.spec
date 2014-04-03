@@ -1,11 +1,11 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 
 Name: gnome-session
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -13,8 +13,8 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Source1: gnome.svg
 
 Patch: %name-2.91.6-alt-autosave_session.patch
@@ -50,7 +50,8 @@ BuildPreReq: intltool >= 0.35.0 libGConf-devel
 BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
-BuildPreReq: libupower-devel >= %upower_ver
+# https://bugzilla.gnome.org/show_bug.cgi?id=710383
+# BuildPreReq: libupower-devel >= %upower_ver
 BuildRequires: libpangox-compat-devel libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
@@ -59,7 +60,6 @@ BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
 
 %description
-
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
 applications and desktop tools to be used in conjunction with a window
 manager for the X Window System.
@@ -194,18 +194,15 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %files -f %name.lang
 %_bindir/gnome-session
 %_bindir/gnome-session-inhibit
-%_bindir/gnome-session-properties
 %_bindir/gnome-session-quit
 %_bindir/startgnome
 %_libexecdir/gnome-session-check-accelerated
 %_libexecdir/gnome-session-check-accelerated-helper
 %_libexecdir/gnome-session-failed
-%_desktopdir/*.desktop
 %dir %_datadir/%name
-#%_datadir/%name/gsm-inhibit-dialog.ui
-%_datadir/%name/session-properties.ui
 %_datadir/%name/hardware-compatibility
 %_datadir/%name/startgnome-common
+%_datadir/%name/session-properties.ui
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
@@ -215,7 +212,6 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 %_man1dir/gnome-session-inhibit.*
-%_man1dir/gnome-session-properties.*
 %_man1dir/gnome-session-quit.*
 %_man1dir/gnome-session.*
 %doc AUTHORS NEWS README
@@ -238,6 +234,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sun Jan 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt3
 - fixed problem with "classic" session when auto-save-session is set to true
 

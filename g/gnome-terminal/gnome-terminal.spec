@@ -1,10 +1,10 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -14,9 +14,9 @@ Url: http://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.34
+%define glib_ver 2.38
 %define gtk_ver 3.9.9
-%define vte_ver 0.34.7
+%define vte_ver 0.36.0
 
 Provides: xvt
 
@@ -24,7 +24,7 @@ PreReq: libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
-BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
+BuildRequires: gnome-common intltool yelp-tools desktop-file-utils appdata-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
@@ -34,6 +34,8 @@ BuildRequires: libdconf-devel libuuid-devel
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
 # for migration
 BuildRequires: libGConf-devel
+# %%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
+Buildrequires: gnome-shell-data
 
 %description
 GNOME terminal emulator application.
@@ -48,7 +50,7 @@ This package provides integration with the GNOME Terminal for the
 Nautilus file manager.
 
 %prep
-%setup -q
+%setup
 
 # license
 %__rm -f COPYING
@@ -82,6 +84,8 @@ EOF
 %_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.gnome.Terminal.service
 %config %_datadir/glib-2.0/schemas/org.gnome.Terminal.gschema.xml
+%_datadir/gnome-shell/search-providers/%name-search-provider.ini
+%_datadir/appdata/%name.appdata.xml
 %_altdir/%name
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS
@@ -93,6 +97,9 @@ EOF
 %endif
 
 %changelog
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
