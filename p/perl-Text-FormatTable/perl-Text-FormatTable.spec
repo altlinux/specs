@@ -1,7 +1,7 @@
 %define dist Text-FormatTable
 Name: perl-%dist
 Version: 1.03
-Release: alt1
+Release: alt2
 
 Summary: Format text tables
 License: GPL or Artistic
@@ -23,6 +23,7 @@ you render the table as text.
 
 %prep
 %setup -q -n %dist-%version
+rm example.pl
 
 %build
 %perl_vendor_build
@@ -35,6 +36,9 @@ you render the table as text.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Thu Apr 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2
+- removed %%perl_vendor_privlib/Text/example.pl
+
 * Fri Apr 30 2010 Alexey Tourbin <at@altlinux.ru> 1.03-alt1
 - 1.01 -> 1.03
 
