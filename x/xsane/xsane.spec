@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt1
+Release: alt2
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -17,11 +17,12 @@ Source1: %name-16x16.xpm
 Patch: %name-0.99-debian.patch
 Patch1: %name-0.996-ubuntu.patch
 Patch2: %name-0.998-alt-libpng15.patch
+Patch3: xsane-0.999-lcms2.patch
 
 BuildPreReq: libjpeg-devel libusb-devel libpng-devel
 
 # Automatically added by buildreq on Fri Jul 10 2009
-BuildRequires: libgimp-devel libgphoto2-devel libjpeg-devel liblcms-devel libsane-devel libtiff-devel
+BuildRequires: libgimp-devel libgphoto2-devel libjpeg-devel liblcms2-devel libsane-devel libtiff-devel
 
 # for po recoding
 BuildPreReq: recode
@@ -79,6 +80,7 @@ Documentation for XSANE
 %patch -p1
 #%patch1 -p1
 %patch2 -p2
+%patch3 -p1
 #cp -f %%SOURCE3 po/ru.po
 
 # Set browser by default
@@ -121,6 +123,9 @@ install -p -m644 -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Thu Apr 03 2014 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt2
+- build with liblcms2 (ALT bug #29938)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt1
 - new version 0.999 (with rpmrb script)
 
