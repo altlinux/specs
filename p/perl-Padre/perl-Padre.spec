@@ -1,7 +1,7 @@
 %define dist Padre
 Name: perl-Padre
 Version: 1.00
-Release: alt1
+Release: alt2
 
 Summary: Padre - Perl Application Development and Refactoring Environment
 License: Perl
@@ -10,6 +10,7 @@ Group: Development/Perl
 Url: %CPAN %dist
 Source: %dist-%version.tar.gz
 Source1: padre.desktop
+Patch: %dist-%version-new_pod_perldoc.patch
 
 %add_findreq_skiplist */Padre/Wx/About.pm
 %add_findreq_skiplist */auto/share/dist/Padre/*
@@ -27,8 +28,7 @@ Requires: perl-POD2-Base perl(CGI.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(C
 
 %prep
 %setup -q -n %dist-%version
-#temporary skip falling test
-#rm t/12_mime.t
+%patch -p2
 
 %build
 xvfb-run -a perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
@@ -59,6 +59,9 @@ cp %SOURCE1 %buildroot%_desktopdir
 %doc Changes README Artistic COPYING
 
 %changelog
+* Fri Apr 04 2014 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt2
+- Fixed build with Pod::Perldoc >= 3.21
+
 * Thu Nov 14 2013 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt1
 - 1.00
 
