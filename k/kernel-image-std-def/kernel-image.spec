@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.12
-%define kernel_sublevel	.15
+%define kernel_sublevel	.16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,6 +547,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Fri Apr 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.16-alt1
+- 3.12.16
+- Revert "usb: ehci: fix deadlock when threadirqs option is used"
+
 * Fri Mar 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.15-alt1
 - 3.12.15
 
