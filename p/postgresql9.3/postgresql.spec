@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  4
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -749,6 +749,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Apr 04 2014 Andriy Stepanov <stanv@altlinux.ru> 9.3.4-alt4
+- Remove chroot logic from sysvinit scrtipt
+
 * Thu Apr 03 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt3
 - Add postgresql.service
 - Add postgresql-check-db-dir for correct start under systemd
