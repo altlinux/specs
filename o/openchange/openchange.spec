@@ -5,7 +5,7 @@
 
 Name: openchange
 Version: 2.0
-Release: alt3.git.2bd45
+Release: alt4
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -238,6 +238,10 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %changelog
+* Thu Apr 03 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt4
+- revert to 2.0-alt2
+- add patches from upstream
+
 * Mon Mar 24 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt3.git.2bd45
 - upstream snapshot (2bd458a0c3fdcaf861cf44eb86a1edde28992d7b)
 
