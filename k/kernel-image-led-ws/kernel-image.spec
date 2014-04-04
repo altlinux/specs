@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.35
-Release: alt4
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1095,7 +1095,6 @@ config_disable \
 	OLPC \
 	MFD_88PM860X \
 	AB3100_CORE AB8500_CORE \
-	MFD_DA9052_SPI MFD_DA9052_I2C MFD_DA9055 \
 	MFD_LP8788 \
 	MFD_MAX77686 MFD_MAX77693 MFD_MAX8925 MFD_MAX8997 MFD_MAX8998 \
 	MFD_PALMAS \
@@ -1754,6 +1753,15 @@ done)
 
 
 %changelog
+* Thu Apr 03 2014 Led <led@altlinux.ru> 3.10.35-alt6
+- fixed configs
+
+* Thu Apr 03 2014 Led <led@altlinux.ru> 3.10.35-alt5
+- disabled DEBUG_SECTION_MISMATCH
+- added:
+  + fix-drivers-mfd--da9052
+  + fix-drivers-mfd--da9055
+
 * Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.35-alt4
 - updated:
   + fix-fs-btrfs
