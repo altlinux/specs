@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.3
+Version: 3.5.4
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Fri Apr  4 2014 Terechkov Evgenii <evg@altlinux.org> 3.5.4-alt1
+- 3.5.4
+
 * Sun Mar 30 2014 Terechkov Evgenii <evg@altlinux.org> 3.5.3-alt1
 - 3.5.3 (Crazy)
 
