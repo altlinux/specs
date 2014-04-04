@@ -1,8 +1,10 @@
+
 Name: gcompris
-Version: 13.11
+Version: 14.03
 Release: alt1
-Summary: Educational suite for kids 3-10 years old
-Summary(ru_RU.UTF8): Набор образовательных игр для детей от 3-х до 10 лет
+Summary: Educational suite for kids 2-10 years old
+Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
+
 License: GPLv3
 Group: Games/Educational
 URL: http://www.gcompris.net
@@ -15,8 +17,7 @@ Source6: %name-48x48.png
 Source10: voices-%version.tar
 Patch: %name-%version-%release.patch
 
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Obsoletes: %name-devel %name-gst-plugin
 
@@ -36,8 +37,8 @@ Provides: python%__python_version(_gcompris_timer) python%__python_version(_gcom
 BuildRequires: desktop-file-utils
 
 %description
-GCompris - is an educationnal game for children starting at 3.
-More than 50 different activities are proposed:
+GCompris / I Got IT is an educationnal game for children starting at 2.
+More than 140 different activities are proposed:
 * Click on the animals => learn the mouse/click usage
 * Type the falling letters => learn the keyboard usage
 * Falling Dices
@@ -47,25 +48,24 @@ More than 50 different activities are proposed:
 * Puzzle game with famous paintings
 * Drive Plane to catch clouds in increasing number
 * Balance the scales
-* And much more ...
+* And much more...
 
-The Game is included in the Main desktop menu in 'Games'.
-You should install it only if you have children using this computer.
+Some activities make use of sounds.  For those you'll have to install
+the gcompris-voices-XX package for the languages you intend to use.
 
 %description -l ru_RU.UTF8
-GCompris - набор образовательных игр и программ для детей от 3-х лет
-Предоставляется более 50 различных обучающих игр:
-* Выбери животное => обучение исрользованию мыши
-* Падающие буквы => обучение использованию клавиатуры
-* Падающие кости
+GCompris - набор образовательных игр и программ для детей от двух лет
+Предоставляется более 140 различных обучающих игр:
+* Обучение использованию мыши
+* Обучение использованию клавиатуры
+* Падающие кубики
 * Падающие слова
 * Основы счёта
-* Обучение (стрелочным) часам
-* Головоломка с известными картинами
+* Обучение времени
+* Паззл с известными картинами
 * На летящем самолёте ловить облака с возрастающими цифрами
-* И многое другое ...
+* И многое другое...
 
-Устанавливать есть смысл только если есть дети, использующие компьютер
 К играм есть обширное голосовое сопровождение в пакете %name-voices-ru
 
 %package voices-en
@@ -598,6 +598,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Fri Apr 04 2014 Andrey Cherepanov <cas@altlinux.org> 14.03-alt1
+- New version (ALT #29947)
+- Fix missing pictures (ALT #29870)
+
 * Sun Nov 24 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 13.11-alt1
 - Update to 13.11 (ALT#29592)
 - Add package voices-{gd,lt,sk}
