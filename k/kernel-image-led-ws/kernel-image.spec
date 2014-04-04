@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.35
-Release: alt6
+Version: 3.10.36
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 35
+%define kernel_stable_version 36
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -343,7 +343,7 @@ ExcludeArch: i386
 %endif
 %endif
 
-%define perf_make_opts %{?_enable_verbose:V=1} prefix=%_prefix perfexecdir=%_libexecdir/perf WERROR=0 EXTRA_CFLAGS="%optflags %{?_disable_debug:-g0}"
+%define perf_make_opts %{?_enable_verbose:V=1} prefix=%_prefix perfexecdir=%_libexecdir/perf WERROR=0 EXTRA_CFLAGS="%optflags %{?_disable_debug:-g0}" NO_GTK2=1
 %define lkvm_make_opts %{?_enable_verbose:V=1} LTO=1 prefix=%_prefix EXTRA_CFLAGS="%optflags %{?_disable_debug:-g0}"
 
 %if "x%extra_modules" != "x"
@@ -365,7 +365,7 @@ BuildRequires: patch >= 2.6.1-alt1
 %{?_with_firmware:BuildRequires: hardlink}
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
-%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
+%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 libnewt-devel perl-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
 %{?_with_lkvm:BuildRequires: binutils-devel libvncserver-devel libSDL-devel zlib-devel libaio-devel libgtk+3-devel}
 
 Requires: bootloader-utils >= 0.4.21
@@ -1090,6 +1090,8 @@ config_disable SCHED_SMT NET_DMA PCH_DMA
 
 # FIXME
 config_disable ISCSI_IBFT_FIND FIRMWARE_MEMMAP GPIO_SX150X
+# Timberdale is a companion chip for Atom CPUs in embedded in-car infotainment systems. Are we need that?
+config_disable \.*_TIMBERDALE
 # non-modularized mfd drivers
 config_disable \
 	OLPC \
@@ -1097,7 +1099,6 @@ config_disable \
 	AB3100_CORE AB8500_CORE \
 	MFD_LP8788 \
 	MFD_MAX77686 MFD_MAX77693 MFD_MAX8925 MFD_MAX8997 MFD_MAX8998 \
-	MFD_PALMAS \
 	MFD_RC5T583 \
 	MFD_SEC_CORE MFD_STMPE \
 	MFD_TC3589X MFD_TPS6586X MFD_TPS65090 MFD_TPS65910 MFD_TPS65912_I2C MFD_TPS65912_SPI \
@@ -1753,6 +1754,22 @@ done)
 
 
 %changelog
+* Fri Apr 04 2014 Led <led@altlinux.ru> 3.10.36-alt1
+- 3.10.36
+- updated:
+  + fix-arch-x86
+  + fix-mm
+  + fix-net-netfilter--nf_conntrack_proto_dccp
+  + fix-virt-kvm--kvm
+  + feat-kernel-vserver
+- added:
+  + fix-drivers-gpio--gpio-palmas
+  + fix-drivers-mfd--palmas
+- disabled *_TIMBERDALE
+- perf:
+  + disabled GTK2
+  + enabled perl scripts
+
 * Thu Apr 03 2014 Led <led@altlinux.ru> 3.10.35-alt6
 - fixed configs
 
