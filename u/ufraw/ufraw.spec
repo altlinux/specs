@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.19.2
-Release: alt2
+Release: alt2.1
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -76,7 +76,8 @@ install -pD -m644 icons/ufraw.png %buildroot%_liconsdir/ufraw.png
 
 %files -f ufraw.lang
 %_bindir/*
-%_datadir/ufraw
+%exclude  %_bindir/dcraw
+%_datadir/%name/
 %_man1dir/*
 %_desktopdir/*
 %_liconsdir/*
@@ -88,6 +89,9 @@ install -pD -m644 icons/ufraw.png %buildroot%_liconsdir/ufraw.png
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri Apr 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt2.1
+- exclude dcraw extras executable
+
 * Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt2
 - applied some patches from ufraw bugtracker
 - built against liblcms2 (ALT #29942)
