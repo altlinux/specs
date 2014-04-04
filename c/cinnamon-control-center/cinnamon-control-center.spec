@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.9
-Release: alt5
+Release: alt6
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -138,7 +138,7 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libcolor.so
 %_libdir/%{name}-1/panels/libdisplay.so
 %_libdir/%{name}-1/panels/libnetwork.so
-%exclude %_libdir/%{name}-1/panels/libpower.so
+%_libdir/%{name}-1/panels/libpower.so
 %_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libscreen.so
 %_libdir/%{name}-1/panels/libsoundnua.so
@@ -168,6 +168,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Apr 5 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt6
+- reenable power panel
+
 * Tue Apr 1 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt5
 - temporary disable power panel
 
