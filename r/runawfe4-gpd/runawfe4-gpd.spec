@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Runawfe Graphic Process Designer
 
@@ -24,11 +24,11 @@ Provides: osgi(ru.runa.gpd.form.ftl)
 BuildRequires: chrpath
 
 %define runauser _runa
-%define runadir /usr/lib/runawfe4-gpd
+%define runadir %_libdir/runawfe4-gpd
 
 %description
-RunaWFE is a free OpenSource business process management system. It is delivered 
-under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich 
+RunaWFE is a free OpenSource business process management system. It is delivered
+under LGPL licence. RunaWFE is based on JBoss jBPM and Activiti. It provides rich
 web interface with tasklist, form player, graphical process designer, bots and more.
 
 %prep
@@ -37,17 +37,17 @@ web interface with tasklist, form player, graphical process designer, bots and m
 %build
 #take binary from http://sourceforge.net/projects/runawfe/files/SRC%20and%20BIN%20files/4.1.0/RunaWFE%20Developer%20Studio/
 
-%install 
+%install
 mkdir -p %buildroot/%runadir/
-mkdir -p %buildroot/usr/share/pixmaps/
-mkdir -p %buildroot/usr/share/applications/
+mkdir -p %buildroot%_pixmapsdir/
+mkdir -p %buildroot%_desktopdir/
 
 #in gpd/ dir
-cp %SOURCE1 %buildroot/usr/share/applications/
-cp %SOURCE2 %buildroot/usr/share/pixmaps/
+cp %SOURCE1 %buildroot%_desktopdir/
+cp %SOURCE2 %buildroot%_pixmapsdir/
 #cp -a ./* %buildroot/%runadir/ #default gpd copy path for x86 arch
 
-#gpd copy path for multi arch 
+#gpd copy path for multi arch
 %ifarch x86_64
 chrpath -d gpd_x86_64/libcairo-swt.so
 cp -a gpd_x86_64/* %buildroot/%runadir/
@@ -67,16 +67,18 @@ EOF
 %check
 
 %pre
-
 %files
 %attr(755,root,root) %dir %runadir/
 %runadir/*
-/usr/share/pixmaps/*
-/usr/share/applications/*
+%_pixmapsdir/*
+%_desktopdir/*
 %attr(755,root,root) %_bindir/runawfe4-gpd
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Fri Apr 04 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt2
+- Clean spec with rpmcs, added categories to desktop
+
 * Wed Mar 26 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt1
 - GPD 4.1.0 binary
 
