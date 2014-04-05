@@ -10,7 +10,7 @@ BuildRequires: perl(Date/HolidayParser/iCalendar.pm) perl(Digest/MD5.pm) perl(Ex
 Name: dayplanner
 Summary: An easy and clean Day Planner
 Version: 0.11
-Release: alt1
+Release: alt2
 Source:  https://github.com/downloads/zerodogg/%{name}/%{name}-%{version}.tar.bz2
 Url: http://www.day-planner.org/
 Group: Office
@@ -20,6 +20,7 @@ BuildArch: noarch
 BuildRequires: perl-Gtk2 perl-Locale-gettext
 BuildRequires: perl-autodie
 BuildRequires: gettext desktop-file-utils perl-devel
+Requires: perl(Moose.pm)
 
 %define _perl_lib_path %_datadir/%name/modules/dayplanner
 %add_perl_lib_path %_datadir/%name/modules/DP-iCalendar/lib
@@ -70,6 +71,9 @@ find %{buildroot}%{_datadir}/%{name} -name \*.pm -exec chmod 0644 {} \;
 %{_mandir}/man1/dayplanner*.1*
 
 %changelog
+* Sat Apr 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2
+- fixed requires thanks to mike@
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - new version
 
