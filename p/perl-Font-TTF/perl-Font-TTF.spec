@@ -16,7 +16,7 @@
 
 Name: perl-Font-TTF
 Version: 1.04
-Release: alt1
+Release: alt2
 
 Summary: TTF font support for Perl
 
@@ -50,6 +50,9 @@ None.
 %perl_vendor_privlib/ttfmod.pl
 
 %changelog
+* Sat Apr 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt2
+- bugfix (https://rt.cpan.org/Ticket/Display.html?id=93597)
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
