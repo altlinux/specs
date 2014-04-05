@@ -1,7 +1,8 @@
 Name:		xfce-themes-plasma
 Summary:	Xfce Gtk+-2.0, Gtk+-3.0 and xfwm4 Plasma themes.
-Version:	1.05
-Release:	alt1.1
+Version:	1.3
+Release:	alt1
+Epoch:		1
 License:	GPLv2+
 Url:		http://xfce-look.org/content/show.php/Plasma+Bolt%2C+Fire%2C+Shock?content=158436
 Source:		158436-plasma-bundle.tar.gz
@@ -64,6 +65,9 @@ cp -a "./Plasma Shock" %buildroot%_datadir/themes/Plasma_Shock
 %_datadir/themes/Plasma_Shock/*
 
 %changelog
+* Sat Apr 05 2014 Motsyo Gennadi <drool@altlinux.ru> 1:1.3-alt1
+- 1.3
+
 * Wed Feb 05 2014 Motsyo Gennadi <drool@altlinux.ru> 1.05-alt1.1
 - fix build
 
