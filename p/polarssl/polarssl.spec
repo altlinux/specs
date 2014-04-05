@@ -1,5 +1,5 @@
 Name: polarssl
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -88,6 +88,12 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Sat Apr 05 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.5-alt1
+- Version 1.3.5
+
+* Sat Feb 08 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.4-alt0.M70T.1
+- Build for branch t7
+
 * Sat Feb 01 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.4-alt1
 - Version 1.3.4
 
