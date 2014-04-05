@@ -6,7 +6,7 @@
 %def_with libgsf
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -24,7 +24,7 @@ BuildRequires: libunique-devel python-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_libchm:BuildRequires: libchm-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
-%{?_with_poppler:BuildRequires: libpoppler-devel}
+%{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
 
 %description
@@ -64,6 +64,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sat Apr 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Mon Mar 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
