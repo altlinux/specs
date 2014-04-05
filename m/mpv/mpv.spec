@@ -1,6 +1,6 @@
 Name: mpv
 Version: 0.3.7
-Release: alt1
+Release: alt1.1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -49,6 +49,7 @@ install -pm644 RELEASE_NOTES %buildroot%docdir/
 
 %files
 
+%dir %docdir/*
 %doc %docdir/*
 %config /etc/mpv/encoding-profiles.conf
 %_bindir/*
@@ -59,6 +60,9 @@ install -pm644 RELEASE_NOTES %buildroot%docdir/
 %_desktopdir/*
 
 %changelog
+* Sat Apr 05 2014 Andrey Bergman <vkni@altlinux.org> 0.3.7-alt1.1
+- Added docdir ownership.
+
 * Sat Apr 05 2014 Andrey Bergman <vkni@altlinux.org> 0.3.7-alt1
 - Version update.
 
