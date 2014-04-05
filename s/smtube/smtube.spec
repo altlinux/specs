@@ -1,5 +1,5 @@
 Name:		smtube
-Version:	1.8
+Version:	2.1
 Release:	alt1
 Summary:	Youtube Browser for SMPlayer
 Summary(ru_RU.UTF8):	Браузер YouTube для SMPlayer
@@ -13,7 +13,7 @@ Source0:	http://downloads.sourceforge.net/smplayer/SMTube/%version/%name-%versio
 
 BuildRequires:	gcc-c++ libqt4-devel
 
-Patch0:		%name-1.8_ru-uk_desktop.diff
+Patch0:		%name-2.1_ru-uk_desktop.diff
 
 %description
 SMTube is a tool for searching and downloading videos from YouTube.
@@ -58,5 +58,8 @@ cd ./src && qmake "QMAKE_CXXFLAGS+=%optflags -DTRANSLATION_PATH=%_datadir/%name/
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Sat Apr 05 2014 Motsyo Gennadi <drool@altlinux.ru> 2.1-alt1
+- 2.1 version
+
 * Wed Oct 09 2013 Motsyo Gennadi <drool@altlinux.ru> 1.8-alt1
 - initial build for ALT Linux (alt bug #29438)
