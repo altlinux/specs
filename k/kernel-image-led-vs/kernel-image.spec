@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1089,20 +1089,19 @@ config_disable SCHED_SMT NET_DMA PCH_DMA
 %endif
 
 # FIXME
-config_disable ISCSI_IBFT_FIND FIRMWARE_MEMMAP GPIO_SX150X
+config_disable ISCSI_IBFT_FIND FIRMWARE_MEMMAP
 # Timberdale is a companion chip for Atom CPUs in embedded in-car infotainment systems. Are we need that?
 config_disable \.*_TIMBERDALE
+%ifarch %ix86 %x86_64
+# Nokia Retu and Tahvo multi-function device found on Nokia Internet Tablets (770, N800 and N810).
+config_disable MFD_RETU
+# Maxim 1586/1587 voltage regulator is suitable for PXA27x chips.
+config_disable REGULATOR_MAX1586
+# non-x86 devices
+config_disable MFD_TI_AM335X_TSCADC TWL6040_CORE UCB1400_CORE MFD_WM8994
+%endif
 # non-modularized mfd drivers
-config_disable \
-	OLPC \
-	MFD_88PM860X \
-	AB3100_CORE AB8500_CORE \
-	MFD_LP8788 \
-	MFD_MAX77686 MFD_MAX77693 MFD_MAX8925 MFD_MAX8997 MFD_MAX8998 \
-	MFD_RC5T583 \
-	MFD_SEC_CORE MFD_STMPE \
-	MFD_TC3589X MFD_TPS6586X MFD_TPS65090 MFD_TPS65910 MFD_TPS65912_I2C MFD_TPS65912_SPI \
-	MFD_WM831X_I2C MFD_WM831X_SPI MFD_WM8350_I2C MFD_WM8400
+config_disable OLPC
 
 %if_enabled debug
 config_enable \
@@ -1754,6 +1753,46 @@ done)
 
 
 %changelog
+* Sun Apr 06 2014 Led <led@altlinux.ru> 3.10.36-alt2
+- removed:
+  + fix-drivers-mfd--arizona-core
+- updated:
+  + fix-drivers-regulator--88pm8607
+  + fix-drivers-regulator--lp872x
+  + feat-mm--zcache
+  + feat-mm--zswap
+- added:
+  + fix-drivers-gpio--gpio-rc5t583
+  + fix-drivers-gpio--gpio-stmpe
+  + fix-drivers-gpio--gpio-sx150x
+  + fix-drivers-gpio--gpio-tc3589x
+  + fix-drivers-gpio--gpio-tps6586x
+  + fix-drivers-gpio--gpio-tps65910
+  + fix-drivers-iio-adc--lp8788-adc
+  + fix-drivers-mfd
+  + fix-drivers-mfd--88pm860x
+  + fix-drivers-mfd--ab3100
+  + fix-drivers-mfd--abx500
+  + fix-drivers-mfd--arizona
+  + fix-drivers-mfd--lp8788
+  + fix-drivers-mfd--max776xx
+  + fix-drivers-mfd--max8925
+  + fix-drivers-mfd--max899x
+  + fix-drivers-mfd--stmpe
+  + fix-drivers-mfd--stmpe-i2c
+  + fix-drivers-mfd--stmpe-spi
+  + fix-drivers-mfd--tc3589x
+  + fix-drivers-mfd--tps65090
+  + fix-drivers-mfd--tps6586x
+  + fix-drivers-mfd--tps65910
+  + fix-drivers-mfd--wm831x
+  + fix-drivers-mfd--wm831x-i2c
+  + fix-drivers-mfd--wm831x-spi
+  + fix-drivers-mfd--wm8350
+  + fix-drivers-mfd--wm8350-i2c
+  + fix-drivers-mfd--wm8400
+  + fix-drivers-regulator--lp8788
+
 * Fri Apr 04 2014 Led <led@altlinux.ru> 3.10.36-alt1
 - 3.10.36
 - updated:
