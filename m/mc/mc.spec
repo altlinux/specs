@@ -1,5 +1,5 @@
 Name: mc
-Version: 4.8.11
+Version: 4.8.12
 Release: alt1
 
 License: %gpl3plus
@@ -174,6 +174,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Sun Apr 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 4.8.12-alt1
+- 4.8.12
+
 * Wed Dec 04 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.11-alt1
 - 4.8.11
 - diabled savannah-edit-homekey.patch (many changes in mcedit)
