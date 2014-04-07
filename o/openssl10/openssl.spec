@@ -1,6 +1,6 @@
 Name: openssl10
-Version: 1.0.1f
-Release: alt2
+Version: 1.0.1g
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -441,6 +441,9 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Apr 07 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1g-alt1
+- Updated to 1.0.1g (fixes CVE-2014-0076 and CVE-2014-0160).
+
 * Tue Feb 04 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1f-alt2
 - Made 3DES strength to be 128 bits instead of 168 (RH#1056616).
 - Dropped delusive compatibility with alien libssl packages.
