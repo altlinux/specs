@@ -1,5 +1,5 @@
 Name: gphoto2
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Group: Graphics
@@ -58,6 +58,9 @@ gPhoto - универсальный комплект программ и биб�
 %doc %_docdir/%name/test-hook.sh
 
 %changelog
+* Mon Apr 07 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.4-alt1
+- 2.5.4
+
 * Fri Jan 31 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.3-alt1
 - 2.5.3
 

@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.3.1
+Version: 2.5.4
 Release: alt1
 
 Group: System/Libraries
@@ -177,6 +177,9 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Mon Apr 07 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.4-alt1
+- 2.5.4
+
 * Fri Jan 31 2014 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.3.1-alt1
 - 2.5.3.1
 
