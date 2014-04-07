@@ -1,23 +1,26 @@
 Name: paprefs
-Version: 0.9.8
-Release: alt1.1.qa1
+Version: 0.9.10
+Release: alt1
 
 Summary: PulseAudio Preferences
 License: GPL
 Group: Sound
-Url: http://0pointer.de/lennart/projects/paprefs/
+Url: http://freedesktop.org/software/pulseaudio/%name
+Source0: http://freedesktop.org/software/pulseaudio/%name/%name-%version.tar.xz
 
-Source0: %name-%version.tar.gz
 Source1: %name.desktop
 
 Patch0: paprefs-0.9.6-alt-desktop-file.patch
+
+Patch1: %name-%version-modules-path.patch
+Patch2: %name-%version-module-combine-sink.patch
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Requires: pulseaudio >= 0.9.5
 
 # Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: gcc-c++ intltool libgconfmm2-devel libglademm-devel lynx libpulseaudio-devel
+BuildRequires: gcc-c++ intltool libgconfmm2-devel libglademm-devel lynx libpulseaudio-devel libdbus-glib-devel
 
 %description
 PulseAudio Preferences (paprefs) is a simple GTK based configuration dialog for
@@ -28,8 +31,13 @@ that a special module module-gconf is loaded in the sound server. (Since
 PulseAudio 0.9.5 this modules is loaded by default.)
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
+
+touch -r configure.ac configure.ac.stamp
+%patch1 -p1 -b .modules-path
+touch -r configure.ac.stamp configure.ac
+%patch2 -p1 -b .module-combine-sink
 
 %build
 %configure
@@ -47,6 +55,11 @@ PulseAudio 0.9.5 this modules is loaded by default.)
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Mon Apr 07 2014 Ilya Mashkin <oddity@altlinux.ru> 0.9.10-alt1
+- 0.9.10
+- add patches
+- fix url
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
