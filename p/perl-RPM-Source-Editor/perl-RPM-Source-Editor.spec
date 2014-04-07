@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.826
+Version: 0.830
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -19,7 +19,7 @@ Url: http://search.cpan.org/dist/%module
 # Automatically added by buildreq on Wed Nov 06 2010
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM perl(Clone.pm)
 # for RPM::Source::Tools
-BuildRequires: perl-upstreamwatch perl-DistroMap
+BuildRequires: perl-upstreamwatch perl-DistroMap perl(Pod/Strip.pm)
 
 Obsoletes: hashertarbuild < 0.73
 Conflicts: hashertarbuild < 0.73
@@ -77,6 +77,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 %_man1dir/hashertarbuild*
 
 %changelog
+* Mon Apr 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.830-alt1
+- development release
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.826-alt1
 - bugfix release
 
