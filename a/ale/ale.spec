@@ -1,6 +1,6 @@
 Name: ale
 Version: 0.9.0.3
-Release: alt4
+Release: alt5
 
 Summary: Combining multiple inputs representing the same scene
 License: GPLv3+
@@ -34,6 +34,9 @@ capture: combining multiple inputs representing the same scene.
 %_man1dir/*
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.9.0.3-alt5
+- Rebuild with new libImageMagick
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 0.9.0.3-alt4
 - Rebuild with new libImageMagick
 

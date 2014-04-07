@@ -2,7 +2,7 @@
 
 Name: gnustep-IMImage
 Version: 2004
-Release: alt5
+Release: alt6
 Summary: IMImage image Inspector for GWorkspace.app to preview many types of graphics formats
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -51,6 +51,9 @@ can also be used to preview Type 1 and TrueType fonts.
 %_libdir/GNUstep
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 2004-alt6
+- Rebuild with new ImageMagick
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2004-alt5
 - Built with clang
 

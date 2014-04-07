@@ -10,10 +10,10 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt9
+%define cedet_release alt10.1
 
 %define cvsdate 20090110
-%define rel_base alt9
+%define rel_base alt10.1
 
 # subpackages to build;
 %def_enable nox
@@ -1544,6 +1544,12 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Mon Apr  7 2014 Terechkov Evgenii <evg@altlinux.org> 24.3-alt10.1
+- Cedet release updated
+
+* Thu Apr  3 2014 Terechkov Evgenii <evg@altlinux.org> 24.3-alt10
+- Rebuild with new libImageMagick
+
 * Sat Mar  1 2014 Terechkov Evgenii <evg@altlinux.org> 24.3-alt9
 - Fix FTBFS with gcc4.8 (disable LTO for gtk build)
 

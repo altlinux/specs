@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt1
+Release: alt2
 
 Summary: A linux video stream processing utility
 
@@ -237,6 +237,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 1.1.7-alt2
+- rebuild with new ImageMagick
+
 * Mon Jan 27 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.7-alt1
 - new version
 - sync patches with Gentoo
