@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.69
+Version: 0.70
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Mon Apr 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1
+- support for fresh RPM::Source::Editor
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
 - TestDB interface
 
