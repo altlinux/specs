@@ -31,7 +31,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt7
+Release: alt8
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -259,8 +259,7 @@ This package contains command line tools for GNOME VFS.
 
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
-#export ac_cv_prog_AWK=/bin/awk
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure \
         %{subst_enable static} \
         %{subst_enable howl} \
@@ -369,6 +368,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Mon Apr 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt8
+- fixed build with gnome-common-3.12
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt7
 - use automake_1.11
 
