@@ -1,6 +1,6 @@
 Name: libfprint
 Version: 0.4.0
-Release: alt2
+Release: alt3
 Summary: Tool kit for fingerprint scanner
 Group: System/Libraries
 License: LGPLv2+
@@ -64,6 +64,9 @@ popd
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.4.0-alt3
+- Rebuild with new libImageMagick
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 0.4.0-alt2
 - Rebuild with new libImageMagick
 

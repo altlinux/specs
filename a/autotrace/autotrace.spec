@@ -3,7 +3,7 @@
 
 Name: autotrace
 Version: 0.31.1
-Release: alt4
+Release: alt5
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -131,6 +131,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.31.1-alt5
+- Rebuild with new libImageMagick
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 0.31.1-alt4
 - Rebuild with new libImageMagick
 

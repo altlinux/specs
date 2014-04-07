@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 1.24.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -118,6 +118,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 1.24.0-alt2
+- rebuild with new ImageMagick
+
 * Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 1.24.0-alt1
 - new version 1.24.0 (with rpmrb script)
 

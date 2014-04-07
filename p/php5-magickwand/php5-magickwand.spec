@@ -4,7 +4,7 @@
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release.2
+Release:	%php5_release.3
 
 Summary:	PHP5 extension to access the ImageMagick MagickWand API
 
@@ -75,6 +75,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 5.5.10.20140305-alt1.3
+- rebuild with ImageMagick 6.8.8.10-alt1 
 
 * Thu Apr 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.3.24.20130412-alt1.2
 - rebuild with ImageMagick 6.8.4.10-alt1

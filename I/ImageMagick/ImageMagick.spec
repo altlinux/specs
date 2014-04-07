@@ -1,5 +1,5 @@
 %define mversion	6
-%define dversion	%mversion.8.7
+%define dversion	%mversion.8.8
 %define drelease	10
 %define qlev		Q16
 %define mgkdir		ImageMagick
@@ -18,12 +18,13 @@ Url: http://www.imagemagick.org/
 
 Packager: Anton Farygin <rider@altlinux.ru>
 
-Source0: ftp://ftp.imagemagick.org/pub/ImageMagick/%name-%dversion-%drelease.tar
+Source0: ftp://ftp.imagemagick.org/pub/ImageMagick/%name-%dversion-%drelease.tar.xz
 
 Source1: %name.desktop
 Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
+Source5: %name.watch
 Patch1: ImageMagick-depends.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
@@ -33,7 +34,7 @@ BuildPreReq: libpng-devel
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: ImageMagick-tools bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
 
-BuildRequires: libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent
+BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent
 %if_enabled librsvg
 BuildRequires: librsvg-devel libpixman-devel
 %endif
@@ -170,12 +171,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %_man1dir/%name.1*
 %_man1dir/[a-z]*.1*
 # display, menu and icons to be moved into subpackage
-%_bindir/display
 %_datadir/applications/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
-%_man1dir/display*.1*
 
 %files doc
 %dir %_docdir/%name-%dversion
@@ -222,6 +221,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Apr 02 2014 Anton Farygin <rider@altlinux.ru> 6.8.8.10-alt1
+- new version
+- build with libjpeg, liblcms2, liblzma, libwebp and libgraphviz
+
 * Tue Dec 17 2013 Anton Farygin <rider@altlinux.ru> 6.8.7.10-alt1
 - new version
 
