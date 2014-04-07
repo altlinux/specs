@@ -8,7 +8,7 @@
 
 Name: tinyca2
 Version: 0.7.5
-Release: alt3
+Release: alt4
 
 Summary: graphical tool for managing a Certification Authority
 Summary(ru_RU.UTF-8): графическая утилита для управления Certification Authority
@@ -89,7 +89,7 @@ TinyCA2 поддерживает:
 %patch1 -p1
 %patch2
 %patch3
-%patch4
+%patch4 -p2
 
 %if "%with_ru" == "1"
   /bin/install -m 0644 %SOURCE2 po/ru.po
@@ -146,6 +146,9 @@ done
 %_liconsdir/%{name}*
 
 %changelog
+* Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.7.5-alt4
+- updated debian fix for OpenSSL 1.0.1e
+
 * Tue May 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5-alt3
 - Fix to work with OpenSSL 1.0.1e
 
