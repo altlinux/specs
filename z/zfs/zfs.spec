@@ -8,7 +8,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt38
+Release: alt39
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -165,6 +165,7 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 %_man8dir/*
 %_sysconfdir/%name
 %_datadir/%name
+%_libexecdir/%name
 /lib/udev/rules.d/*
 /lib/udev/*_id
 %{?_enable_sysvinit:%_initddir/*}
@@ -183,6 +184,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Mon Apr 07 2014 Led <led@altlinux.ru> 0.6.2-alt39
+- upstream updates and fixes
+
 * Mon Mar 24 2014 Led <led@altlinux.ru> 0.6.2-alt38
 - upstream updates and fixes
 
