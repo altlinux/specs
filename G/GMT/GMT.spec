@@ -23,7 +23,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        5.1.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -133,7 +133,7 @@ pushd build
 %{fedora_cmake} \
   -DGSHHG_ROOT=%{_prefix} \
   -DFLOCK=on \
-  -DGMT_INSTALL_MODULE_LINKS=off \
+  -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
   -DGMT_MANDIR=%{_mandir} \
   -DLICENSE_RESTRICTED=LGPL \
@@ -199,6 +199,9 @@ find $RPM_BUILD_ROOT -name \*.bat -delete
 
 
 %changelog
+* Mon Apr 07 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt2_1
+- DGMT_INSTALL_MODULE_LINKS=on
+
 * Sat Apr 05 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt1_1
 - import
 
