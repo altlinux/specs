@@ -32,8 +32,8 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.10.7
-Release: alt3
+Version: 2.10.9
+Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -446,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.10.9-alt1
+- New version (#29937).
+
 * Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.7-alt3
 - rebuild with new libsasl2-3
 
