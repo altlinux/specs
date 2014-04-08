@@ -2,7 +2,7 @@
 
 Name: libccfits
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: A C++ interface for cfitsio
 Group: System/Libraries
@@ -46,7 +46,8 @@ This package contains the full API documentation for %name.
 rm -rf html/*.pl
 
 %build
-%configure --disable-static
+%configure --disable-static \
+	--with-cfitsio-include=%_includedir/cfitsio
 %make_build
 
 %install
@@ -68,6 +69,9 @@ cp -R html %buildroot%_datadir/doc/%name/
 %_datadir/doc/%name/
 
 %changelog
+* Tue Apr 08 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt2
+- fixed build with new libcfitsio-3.280-alt1
+
 * Fri Jan 31 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - fc package adapted for Sisyphus
 
