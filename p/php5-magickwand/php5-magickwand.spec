@@ -4,7 +4,7 @@
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
-Release:	%php5_release.3
+Release:	%php5_release
 
 Summary:	PHP5 extension to access the ImageMagick MagickWand API
 
