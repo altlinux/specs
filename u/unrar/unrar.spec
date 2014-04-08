@@ -1,5 +1,5 @@
 Name: unrar
-Version: 5.0.14
+Version: 5.1.2
 Release: alt1
 
 Summary: RAR unarchiver
@@ -31,6 +31,9 @@ install -pD -m755 unrar %buildroot%_bindir/unrar
 %doc *.txt
 
 %changelog
+* Tue Apr 08 2014 Fr. Br. George <george@altlinux.ru> 5.1.2-alt1
+- Autobuild version bump to 5.1.2
+
 * Mon Jan 13 2014 Fr. Br. George <george@altlinux.ru> 5.0.14-alt1
 - Autobuild version bump to 5.0.14
 
