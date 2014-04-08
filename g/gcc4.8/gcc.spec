@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.8.2
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -143,7 +143,9 @@ Patch113: gcc48-pr56564.patch
 Patch114: gcc48-pr56493.patch
 Patch115: gcc48-color-auto.patch
 Patch116: gcc48-pr28865.patch
-Patch117: gcc48-aarch64-define-TRY_EMPTY_VM_SPACE.patch
+Patch118: gcc48-pr60137.patch
+Patch119: gcc48-pr60010.patch
+Patch120: gcc48-pr60046.patch
 
 # Debian patches.
 Patch200: gcc-d-lang.diff
@@ -175,7 +177,7 @@ Patch223: libjava-armel-unwind.diff
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
 Patch701: alt-install.patch
 Patch702: alt-nowrap.patch
-Patch703: alt/alt-libatomic-makefile.patch
+Patch703: alt-libatomic-makefile.patch
 Patch704: alt-libgfortran-makefile.patch
 Patch705: alt-libjava-disable-static.patch
 Patch706: alt-libjava-makefile.patch
@@ -996,7 +998,9 @@ version %version.
 %patch114 -p0
 %patch115 -p0
 %patch116 -p0
-%patch117 -p0
+%patch118 -p0
+%patch119 -p0
+%patch120 -p0
 
 # Debian patches.
 %patch200 -p2
@@ -1566,6 +1570,9 @@ EOF
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
 %_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcc-ar	%_bindir/%gcc_target_platform-gcc-ar%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcc-nm	%_bindir/%gcc_target_platform-gcc-nm%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcc-ranlib	%_bindir/%gcc_target_platform-gcc-ranlib%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
 %_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
 EOF
@@ -1620,8 +1627,14 @@ EOF
 %gcc_doc_dir/gcc/
 %_bindir/gcc%psuffix
 %_bindir/gcov%psuffix
+%_bindir/gcc-ar%psuffix
+%_bindir/gcc-nm%psuffix
+%_bindir/gcc-ranlib%psuffix
 %_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcov%psuffix
+%_bindir/%gcc_target_platform-gcc-ar%psuffix
+%_bindir/%gcc_target_platform-gcc-nm%psuffix
+%_bindir/%gcc_target_platform-gcc-ranlib%psuffix
 %_man1dir/gcc%psuffix.*
 %_man1dir/gcov%psuffix.*
 %dir %gcc_target_libdir/
@@ -2096,6 +2109,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Tue Apr 08 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt3
+- Synced with Fedora gcc-4.8.2-15.
+- Packaged %_bindir/gcc-{ar,nm,ranlib}-4.8 (reported by led@).
+
 * Mon Feb 17 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt2
 - gnat: added alternatives support.
 
