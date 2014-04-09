@@ -1,4 +1,4 @@
-%define module_version 0.036
+%define module_version 0.038
 %define module_name Exporter-Tiny
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Mo
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.036
+Version: 0.038
 Release: alt1
 Summary: an exporter with the features of Sub::Exporter but only core dependencies
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/E*
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.038-alt1
+- automated CPAN update
+
 * Wed Mar 12 2014 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
 - automated CPAN update
 
