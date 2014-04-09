@@ -4,26 +4,27 @@
 %define gccbootstrap 0
 
 Name: llvm
-Version: 3.3
-Release: alt2
+Version: 3.4
+Release: alt1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
 Url: http://llvm.org/
 
 Source0: http://llvm.org/releases/%version/llvm-%version.src.tar.gz
-Source1: http://llvm.org/releases/%version/cfe-%version.src.tar.gz
+Source1: http://llvm.org/releases/%version/clang-%version.src.tar.gz
 Source2: http://llvm.org/releases/%version/compiler-rt-%version.src.tar.gz
 Source3: http://llvm.org/releases/%version/clang-tools-extra-%version.src.tar.gz
 
-Patch1: llvm+clang-3.3-alt-add-alt-triplet.patch
+Patch1: llvm+clang-3.4-alt-add-alt-triplet.patch
+Patch2: llvm+clang-3.3-alt-arm-default-to-hardfloat.patch
 
 BuildPreReq: /proc
 
 %if %gccbootstrap
 BuildRequires: gcc-c++
 %else
-BuildRequires: clang
+BuildRequires: clang gcc-c++
 %endif
 
 # Automatically added by buildreq on Thu Aug 29 2013 (-ba)
@@ -76,7 +77,6 @@ Documentation for the LLVM compiler infrastructure.
 Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
-Requires: gcc = %__gcc_version
 
 %description -n clang
 clang: noun
@@ -155,6 +155,18 @@ Requires: ocaml
 The %name-ocaml-devel package contains libraries and signature files
 for developing applications that use %name-ocaml.
 
+%package ocaml-devel-static
+Summary: Static libraries for %name-ocaml
+Group: Development/Functional
+Requires: %name-devel = %version-%release
+Requires: %name-devel-static = %version-%release
+Requires: %name-ocaml = %version-%release
+Requires: %name-ocaml-devel = %version-%release
+
+%description ocaml-devel-static
+The %name-ocaml-devel-static package contains static libraries
+for developing applications that use %name-ocaml.
+
 %package ocaml-doc
 Summary: Documentation for LLVM's OCaml binding
 Group: Documentation
@@ -167,12 +179,16 @@ HTML documentation for LLVM's OCaml binding.
 %add_python_req_skip AppKit
 
 %prep
-%setup -n llvm-%version.src -a1 -a2 -a3
-mv cfe-%version.src tools/clang
-mv clang-tools-extra-%version.src tools/clang/tools/extra
-mv compiler-rt-%version.src projects/compiler-rt
+%setup -n llvm-%version -a1 -a2 -a3
+mv clang-%version tools/clang
+mv clang-tools-extra-%version tools/clang/tools/extra
+mv compiler-rt-%version projects/compiler-rt
 
 %patch1 -p1
+%ifarch armh
+%patch2 -p1
+%endif
+
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
 
@@ -204,7 +220,7 @@ export CC CXX
         --enable-shared \
         --enable-libffi \
 	%{subst_enable doxygen} \
-        --with-c-include-dirs=%_includedir:%_libdir/gcc/%_arch-%_vendor-%_os/%__gcc_version/include
+	#
 
 # FIXME file this
 # configure does not properly specify libdir
@@ -239,14 +255,19 @@ cd build
 # Static analyzer not installed by default:
 # http://clang-analyzer.llvm.org/installation#OtherPlatforms
 mkdir -p %buildroot%_libdir/clang-analyzer
+
+pushd ../tools/clang/tools
+cp -pr scan-{build,view} %buildroot%_libdir/clang-analyzer/
+sed -r -i -e 's,(.*\$Clang.*=.*)\$RealBin/bin(.*),\1/usr/bin\2,' \
+	%buildroot%_libdir/clang-analyzer/scan-build/scan-build
+rm %buildroot%_libdir/clang-analyzer/*/*.bat
+mv %buildroot%_libdir/clang-analyzer/scan-build/scan-build.1 %buildroot%_man1dir/
+popd
+
 # create launchers
 for f in scan-{build,view}; do
   ln -s %_libdir/clang-analyzer/$f/$f %buildroot%_bindir/$f
 done
-
-pushd ../tools/clang/tools
-cp -pr scan-{build,view} %buildroot%_libdir/clang-analyzer/
-popd
 
 # Move documentation back to build directory
 rm -rf moredocs
@@ -275,6 +296,7 @@ rm -f %buildroot%_libdir/*BugpointPasses.*
 
 file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
+file %buildroot%_libdir/ocaml/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 
 # remove documentation makefiles:
 # they require the build directory to work
@@ -289,15 +311,16 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %doc CREDITS.TXT LICENSE.TXT README.txt build/llvm-testlog.txt
 %_bindir/bugpoint
 %_bindir/llc
-%_bindir/lli
+%_bindir/lli*
 %exclude %_bindir/llvm-config
 %_bindir/llvm*
 %_bindir/opt
 %_bindir/macho-dump
 %_libdir/*.so
 %exclude %_libdir/libclang.so
-%_mandir/man1/*.1.*
-%exclude %_mandir/man1/clang.1.*
+%_man1dir/*.1.*
+%exclude %_man1dir/clang.1.*
+%exclude %_man1dir/scan-build.1*
 
 %files devel
 %_bindir/llvm-config
@@ -311,11 +334,11 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %files -n clang
 %doc build/clang-docs/* build/tools/clang/clang-testlog.txt
 %_bindir/clang*
-%_bindir/cpp11-migrate
 %_bindir/c-index-test
+%_bindir/pp-trace
 %prefix/lib/clang
 %_libdir/libclang.so
-%_mandir/man1/clang.1.*
+%_man1dir/clang.1.*
 
 %files -n clang-devel
 %_includedir/clang
@@ -325,6 +348,7 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/scan-build
 %_bindir/scan-view
 %_libdir/clang-analyzer
+%_mandir/man1/scan-build.1*
 
 %if_with ocaml
 %files ocaml
@@ -332,10 +356,15 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_libdir/ocaml/*.cmi
 
 %files ocaml-devel
-%_libdir/ocaml/META.llvm
+%_libdir/ocaml/META.llvm*
 %_libdir/ocaml/*.a
+%exclude %_libdir/ocaml/libLLVM*.a
 %_libdir/ocaml/*.cmx*
 %_libdir/ocaml/*.mli
+%_libdir/ocaml/dllllvm*.so
+
+%files ocaml-devel-static
+%_libdir/ocaml/libLLVM*.a
 
 %files ocaml-doc
 %doc build/moredocs/ocamldoc/html/*
@@ -356,15 +385,21 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Thu Jan 09 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4-alt1
+- New version (#29710).
+- clang: drop versioned R: gcc.
+- Updated ALT triplet patch.
+- Packaged symlinks in ocaml-devel-static subpackage.
+
 * Fri Aug 30 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt2
-- build with clang
-- clang: add versioned R: gcc
+- Built with clang.
+- clang: added versioned R: gcc.
 - llvm:
- + drop ld.so.conf file
- + package static libraries in devel-static subpackage
+ + Dropped ld.so.conf file.
+ + Packaged static libraries in devel-static subpackage.
 
 * Mon Aug 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt1
-- New version
+- New version.
 
 * Tue Apr 23 2013 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt3
 - Fixed build to enable proper debuginfo information.
