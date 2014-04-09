@@ -1,6 +1,6 @@
 %define dist Math-BigRat
 Name: perl-%dist
-Version: 0.2602
+Version: 0.2606
 Release: alt1
 
 Summary: Arbitrarily big rational numbers
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/Math-BigRat-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ by providing support for arbitrarily big rational numbers.
 %perl_vendor_privlib/Math
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.2606-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.2602-alt1
 - 0.26 -> 0.2602
 
