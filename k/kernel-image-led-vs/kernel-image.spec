@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -54,6 +54,7 @@ Release: alt2
 %def_enable htmldocs
 %def_enable man
 %def_disable compat
+%def_disable lto
 %def_enable relocatable
 %def_enable x32
 %def_enable cr
@@ -881,8 +882,6 @@ GCC_VERSION="$(%__cc --version | head -1 | cut -d' ' -f3 | cut -d. -f1-2)"
 %endif
 echo -n "export GCC_VERSION=$GCC_VERSION" > gcc_version.inc
 
-sed -i 's/CC.*$(CROSS_COMPILE)gcc/CC\t\t:= '"gcc-$GCC_VERSION/g" Makefile
-
 %if_with src
 cd ..
 find linux-%kversion -type f -or -type l -not -name '*.orig' -not -name '*~' -not -name '.git*' > kernel-src-%flavour.list
@@ -1048,6 +1047,7 @@ config_disable \
 	%{?_enable_ext4_for_ext2:EXT2_FS} %{?_enable_ext4_for_ext3:EXT3_FS}
 
 config_enable \
+	%{?_disable_lto:LTO_DISABLE} \
 	%{?_enable_relocatable:RELOCATABLE} \
 %ifarch i486 i586 i686
 	X86_GENERIC \
@@ -1122,6 +1122,8 @@ config_enable \
 
 echo "Building kernel %kversion-%flavour-%krelease"
 
+. gcc_version.inc
+export CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION
 %make_build oldconfig
 %make_build %{?_enable_verbose:V=1} bzImage modules
 
@@ -1151,6 +1153,9 @@ echo "Kernel docs built %kversion-%flavour-%krelease"
 
 %install
 cd linux-%version
+
+. gcc_version.inc
+export CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION
 
 install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krelease
 install -Dp -m644 arch/%base_arch/boot/bzImage %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease
@@ -1753,6 +1758,21 @@ done)
 
 
 %changelog
+* Tue Apr 08 2014 Led <led@altlinux.ru> 3.10.36-alt3
+- removed:
+  + fix-drivers-usb-chipidea
+- updated:
+  + fix-drivers-scsi--scsi_mod
+  + feat-drivers-block--btier
+  + feat-drivers-platform--omnibook
+  + feat-lib--unwind
+- added:
+  + fix-drivers-gpu-drm--drm_kms_helper
+  + fix-drivers-gpu-host1x--drm
+  + fix-drivers-scsi--ch
+  + fix-drivers-video-backlight--max8925_bl
+  + fix-drivers-virtio--virtio_ballon
+
 * Sun Apr 06 2014 Led <led@altlinux.ru> 3.10.36-alt2
 - removed:
   + fix-drivers-mfd--arizona-core
