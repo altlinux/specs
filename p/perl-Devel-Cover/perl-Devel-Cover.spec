@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -11,7 +12,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/P/PJ/PJCJ/Devel-Cover-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 12 2011 (-bi)
-BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn rpm-build-ruby
+BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn rpm-build-ruby perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm)
 
 %description
 This module provides code coverage metrics for Perl. Code coverage
@@ -46,6 +47,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Mon Mar 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
