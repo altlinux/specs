@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 40801
+%define svnrev 44101
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -302,6 +302,7 @@ install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%n
 install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.conf
 
 # frontends
+mv frontends/php/locale/*.sh .
 cp -r frontends %buildroot%webserver_webappsdir/%name/
 
 # apache config
@@ -439,6 +440,7 @@ fi
 
 %files phpfrontend-engine
 %webserver_webappsdir/%name
+%doc add_new_language.sh make_mo.sh update_po.sh
 
 %files phpfrontend-php5
 %files phpfrontend-apache
@@ -455,6 +457,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Apr 10 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.3-alt1
+- 2.2.3 release
+
 * Thu Feb 13 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.2-alt1
 - 2.2.2 release
 
