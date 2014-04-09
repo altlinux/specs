@@ -8,14 +8,14 @@
 %define bname nilfs
 %define lname lib%bname
 Name: %bname-utils
-Version: 2.1.6
+Version: 2.2.0
 Release: alt1
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
 Url: http://www.%bname.org
 Source: http://www.%bname.org/download/%name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 Provides: %{bname}2-utils = %version-%release
 %{!?_disable_shared:Requires: %lname = %version-%release}
 
@@ -65,7 +65,7 @@ This package contains NILFS v2 static libraries.
 
 %prep
 %setup -q
-%patch -p1
+#patch -p1
 
 
 %build
@@ -124,6 +124,9 @@ done
 
 
 %changelog
+* Wed Apr 09 2014 Led <led@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Sat Feb 01 2014 Led <led@altlinux.ru> 2.1.6-alt1
 - 2.1.6
 
