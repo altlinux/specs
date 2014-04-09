@@ -2,14 +2,14 @@
 %define origname %module-Perl
 
 Name: perl-%module
-Version: 0.81
-Release: alt1.1
+Version: 0.83
+Release: alt1
 
 Summary: %{module} module for perl
 License: GPL or Artistic
 Group: Development/Perl
 
-Source: %origname-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/CONKLIN/MIDI-Perl-%{version}.tar.gz
 BuildArch: noarch
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
@@ -40,6 +40,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/MIDI*
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.81-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
