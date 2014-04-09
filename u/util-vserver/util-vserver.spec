@@ -14,8 +14,8 @@
 Name: util-vserver
 Summary: Linux-VServer utilities
 Version: 0.30.216
-%define pre -pre3054
-Release: alt0.4
+%define pre -pre3060
+Release: alt0.5
 License: GPLv2+
 Group: System/Base
 URL: http://savannah.nongnu.org/projects/%name/
@@ -179,6 +179,9 @@ fi
 
 
 %changelog
+* Wed Apr 09 2014 Led <led@altlinux.ru> 0.30.216-alt0.5
+- 0.30.216-pre3060
+
 * Tue Nov 26 2013 Led <led@altlinux.ru> 0.30.216-alt0.4
 - 0.30.216-pre3054
 
