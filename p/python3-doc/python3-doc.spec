@@ -1,5 +1,5 @@
 Name: python3-doc
-Version: 3.3.4
+Version: 3.4.0
 Release: alt1
 
 Summary: Documentation for the Python 3 programming language
@@ -31,6 +31,9 @@ and bundled module library in the HTML format.
 %doc *
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 3.4.0-alt1
+- Autobuild version bump to 3.4.0
+
 * Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 3.3.4-alt1
 - Autobuild version bump to 3.3.4
 
