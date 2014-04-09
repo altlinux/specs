@@ -1,6 +1,6 @@
 Name: meandmyshadow
-Version: 0.4
-Release: alt1.qa1
+Version: 0.4.1
+Release: alt1
 License: GPLv3
 Summary: Puzzle/platform game with two protagonists performing shared task
 Url: http://meandmyshadow.sourceforge.net/
@@ -56,6 +56,9 @@ done
 %_datadir/%name/*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.4.1-alt1
+- Autobuild version bump to 0.4.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
 - NMU: rebuilt with libarchive.so.13.
 
