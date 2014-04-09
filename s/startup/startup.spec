@@ -1,6 +1,6 @@
 Name: startup
 Version: 0.9.9.5
-Release: alt1
+Release: alt1.2
 
 Summary: The system startup scripts
 License: GPLv2+
@@ -164,6 +164,12 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.5-alt1.2
+- inittab: don't run getty on tty1 only when runlevel 5 (closes: #29960)
+
+* Wed Apr 09 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.5-alt1.1
+- inittab: don't run getty on tty1
+
 * Sun Mar 23 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.5-alt1
 - scripts/cleanup: pass --boot to systemd-tmpfiles --remove --create
   (once more closes: #29537)
