@@ -2,7 +2,7 @@
 
 Name: libselinux
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Wed Apr 09 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.2-alt2
+- rpm_execcon helper for rpm acts as it doesn't exist at all
+
 * Tue Jan 21 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.2-alt1
 - new version
 
