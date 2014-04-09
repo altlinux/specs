@@ -1,14 +1,14 @@
 %define dist Math-BigInt
 Name: perl-%dist
-Version: 1.997
-Release: alt7
+Version: 1.9993
+Release: alt1
 
 Summary: Arbitrary size integer math package
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/Math-BigInt-%{version}.tar.gz
 Patch: perl-Math-BigInt-1.997-alt-FastCalc.patch
 
 # enable XS routines for more speed
@@ -42,6 +42,9 @@ sed -i- 's/eval " require/eval " die/' Makefile.PL
 %perl_vendor_privlib/Math
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.9993-alt1
+- automated CPAN update
+
 * Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 1.997-alt7
 - re-enabled dependency on perl-Math-BigInt-FastCalc
 
