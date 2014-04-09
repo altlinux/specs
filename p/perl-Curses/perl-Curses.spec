@@ -1,14 +1,14 @@
 %define dist Curses
 Name: perl-%dist
-Version: 1.28
-Release: alt4
+Version: 1.29
+Release: alt1
 
 Summary: Terminal screen handling and optimization
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tgz
+Source: http://www.cpan.org/authors/id/G/GI/GIRAFFED/Curses-%{version}.tgz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libncursesw-devel perl-devel
@@ -40,6 +40,9 @@ perl -Mblib -MCurses -e1
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt4
 - built for perl 5.18
 
