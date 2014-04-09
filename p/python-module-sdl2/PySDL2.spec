@@ -1,5 +1,5 @@
 Name: python-module-sdl2
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 Group: Development/Python
 License: Public Domain
@@ -12,7 +12,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Mon Mar 03 2014
 # optimized out: python-base python-modules python-modules-compiler python-modules-email
 BuildRequires: python-devel
-Requires: libSDL2_gfx libSDL2_image libSDL2_mixer libSDL2_ttf libSDL2 
+Requires: libSDL2_gfx libSDL2_image libSDL2_mixer libSDL2_ttf libSDL2
 
 %description
 PySDL2 is a wrapper around the SDL2 library and as such similar to the
@@ -33,6 +33,9 @@ restrictions, nor does it rely on C code, but uses ctypes instead.
 %python_sitelibdir_noarch/sdl2*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.9.1-alt1
+- Autobuild version bump to 0.9.1
+
 * Mon Mar 03 2014 Fr. Br. George <george@altlinux.ru> 0.8.0-alt1
 - Autobuild version bump to 0.8.0
 
