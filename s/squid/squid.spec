@@ -2,10 +2,11 @@
 %def_enable epoll
 %def_enable ecap
 %def_enable esi
+%def_with nettle
 
 Name: squid
 Version: 3.4.4
-Release: alt3
+Release: alt4
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -45,6 +46,7 @@ BuildRequires: w3c-libwww-devel cppunit-devel
 BuildRequires: libkrb5-devel
 %{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0-alt3}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
+%{?_with_nettle:BuildRequires: libnettle-devel}
 BuildRequires: perl-libnet perl-DBI
 BuildRequires: perl(Authen/Smb.pm) perl(Crypt/OpenSSL/X509.pm)
 
@@ -121,6 +123,7 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	%{subst_enable epoll} \
 	%{subst_enable esi} \
 	%{subst_enable ecap} \
+	%{subst_with nettle} \
 	--enable-ipv6 \
 	--enable-unlinkd \
 	--enable-cachemgr-hostname=localhost \
@@ -287,8 +290,12 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Apr 09 2014 Led <led@altlinux.ru> 3.4.4-alt4
+- upstream updates and fixes
+- with nettle
+
 * Tue Apr 01 2014 Led <led@altlinux.ru> 3.4.4-alt3
-- dsabled arch-native
+- disabled arch-native
 
 * Tue Apr 01 2014 Led <led@altlinux.ru> 3.4.4-alt2
 - fixed Requires
