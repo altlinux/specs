@@ -1,11 +1,11 @@
-Name:		python-module-pylibmc
-Version:	1.2.3
-Release:	alt1
-Summary:	Quick and small memcached client for Python
-License:	BSD
-Group:		Development/Python
-URL:		https://pypi.python.org/pypi/pylibmc
-Source:		pylibmc-%version.tar.gz
+Name: python-module-pylibmc
+Version: 1.3.0
+Release: alt1
+Summary: Quick and small memcached client for Python
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/pylibmc
+Source: pylibmc-%version.tar.gz
 
 %setup_python_module pylibmc
 
@@ -31,6 +31,9 @@ written in C.
 %python_sitelibdir/*pylibmc*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
+- Autobuild version bump to 1.3.0
+
 * Wed Jul 17 2013 Fr. Br. George <george@altlinux.ru> 1.2.3-alt1
 - Initial build from upstream PKG-INFO
 
