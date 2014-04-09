@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Slurp.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Uncompress/AnyInflate.pm) perl(Iterator/Simple.pm) perl(Locale/TextDomain.pm) perl(Math/Complex.pm) perl(Pod/Simple.pm) perl(Readonly.pm) perl(Regexp/Common.pm) perl(SDBM_File.pm) perl(Smart/Comments.pm) perl(Socket.pm) perl(Test/Without/Module.pm) perl(Text/Tabs.pm) perl(Tie/IxHash.pm) perl(blib.pm) perl(lib/abs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
-Version:        80
-Release:        alt2_1
+Version:        81
+Release:        alt1
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Perl-Critic-Pulp/
-Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Perl-Critic-Pulp-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Perl-Critic-Pulp-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -111,6 +111,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 81-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 80-alt2_1
 - Sisyphus build
 
