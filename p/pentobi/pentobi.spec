@@ -1,9 +1,9 @@
 Name: pentobi
-Version: 7.2
+Version: 8.0
 Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
-Source: %name-%version.tar.gz
+Source: %name-%version.tar.xz
 Group: Games/Boards
 Url: http://pentobi.sourceforge.net/
 
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_sysconfdir
 %_man6dir/*
 
 %changelog
+* Thu Apr 10 2014 Fr. Br. George <george@altlinux.ru> 8.0-alt1
+- Autobuild version bump to 8.0
+
 * Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 7.2-alt1
 - Autobuild version bump to 7.2
 
