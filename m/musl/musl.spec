@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.0.0
-Release: alt6
+Release: alt7
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Apr 10 2014 Led <led@altlinux.ru> 1.0.0-alt7
+- fixed search past the end of haystack in memmem
+
 * Wed Apr 09 2014 Led <led@altlinux.ru> 1.0.0-alt6
 - fixes and updates from upstream's SCM
 
