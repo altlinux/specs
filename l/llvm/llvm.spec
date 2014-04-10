@@ -5,7 +5,7 @@
 
 Name: llvm
 Version: 3.4
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -77,6 +77,7 @@ Documentation for the LLVM compiler infrastructure.
 Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
+Requires: gcc
 
 %description -n clang
 clang: noun
@@ -385,6 +386,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Thu Apr 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4-alt2
+- clang: add R: gcc (any gcc).
+
 * Thu Jan 09 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4-alt1
 - New version (#29710).
 - clang: drop versioned R: gcc.
