@@ -1,6 +1,6 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
-Version: 2013.62
+Version: 2014.63
 Release: alt1
 License: MIT-style
 Group: System/Servers
@@ -76,6 +76,9 @@ install -D dropbearconvert.1 %buildroot%_man1dir/dropbearconvert.1
 %_bindir/scp
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 2014.63-alt1
+- Autobuild version bump to 2014.63
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 2013.62-alt1
 - Autobuild version bump to 2013.62
 - Update "fingerprint expose" patch
