@@ -1,13 +1,13 @@
 Name: xfce4-mixer
-Version: 4.10.0
-Release: alt2.git20130324
+Version: 4.11.0
+Release: alt1
 
-Summary: Audio mixer plugin for the XFce panel
+Summary: Audio mixer plugin for the Xfce panel
 Summary (ru_RU.UTF-8): Звуковой микшер для панели рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/projects/xfce4-mixer
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 # git://git.xfce.org/apps/xfce4-mixer
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -21,7 +21,7 @@ BuildRequires: gst-plugins-devel intltool libxml2-devel libunique-devel libkeybi
 Requires: xfce4-panel >= 4.10 gst-plugins-base
 
 %description
-%name is the volume control plugin for the XFce panel.
+%name is the volume control plugin for the Xfce panel.
 Includes a simple sound mixer.
 
 %description -l ru_RU.UTF-8
@@ -59,6 +59,10 @@ Includes a simple sound mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Apr 10 2014 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Fix Xfce name (XFce -> Xfce,XFCE).
+- Updated to 4.11.0.
+
 * Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2.git20130324
 - Fix he.po.
 - Upstream git snapshot.
