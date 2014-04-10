@@ -1,5 +1,5 @@
 Name: pudb
-Version: 2013.5.1
+Version: 2014.1
 Release: alt1
 %setup_python_module %name
 Summary: A full-screen, console-based Python debugger
@@ -54,6 +54,9 @@ install -D -m755 %name.sh %buildroot/%_bindir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 2014.1-alt1
+- Autobuild version bump to 2014.1
+
 * Mon Feb 24 2014 Fr. Br. George <george@altlinux.ru> 2013.5.1-alt1
 - Autobuild version bump to 2013.5.1
 
