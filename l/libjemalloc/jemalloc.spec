@@ -1,6 +1,6 @@
 %define title jemalloc
 Name: libjemalloc
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
@@ -83,6 +83,9 @@ mv %buildroot%_bindir/pprof %buildroot%_bindir/pprof.%title
 %_libdir/debug/lib*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 3.6.0-alt1
+- Autobuild version bump to 3.6.0
+
 * Thu Feb 20 2014 Fr. Br. George <george@altlinux.ru> 3.5.0-alt1
 - Autobuild version bump to 3.5.0
 - Hack out "restrict" keywords (GCC doesn't compile this)
