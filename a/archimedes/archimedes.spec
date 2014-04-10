@@ -1,19 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dvipdf gcc-c++ texlive-base-bin
+BuildRequires: /usr/bin/dvipdf /usr/bin/latex gcc-c++ texlive-base-bin
 # END SourceDeps(oneline)
-Summary:	      2D Quantum Monte Carlo simulator for semiconductor devices
-Name:		      archimedes
-Version:	      2.0.0
-Release:	      alt2_3
-License:	      GPLv3+
-Group:		   Engineering
-URL:		      http://www.gnu.org/software/archimedes/
-Source0:	      ftp://ftp.gnu.org/gnu/archimedes/%{name}-%{version}.tar.gz
-
+Summary:	2D Quantum Monte Carlo simulator for semiconductor devices
+Name:		archimedes
+Version:	2.0.1
+Release:	alt1_1
+License:	GPLv3+
+Group:		Engineering
+URL:		http://www.gnu.org/software/archimedes/
+Source0:	ftp://ftp.gnu.org/gnu/archimedes/%{name}-%{version}.tar.gz
 
 BuildRequires:	dos2unix
-BuildRequires:	ghostscript-utils ghostscript
-BuildRequires:	/usr/bin/latex texlive-latex-recommended
 Source44: import.info
 
 %description
@@ -29,35 +26,34 @@ simulation of quite general semiconductor devices.
 %prep
 %setup -q
 
-# Suppress rpmlint error.
-dos2unix COPYING
-
 # Use tests as user examples
-cp -pr tests/ examples/
+mv tests/ examples/
+rm -rf examples/*/.log
+
+# Suppress rpmlint errors
+dos2unix COPYING doc/* doc/*/*
+# Fix spurious-executable-perm warning
+chmod 644 doc/*/*
+
 
 %build
-%configure --enable-manual
+%configure
 make %{?_smp_mflags}
 
+
 %install
+rm -rf ${buildroot}
+%makeinstall_std
 
-make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
-
-# We don't want 3 documents to explain the same thing
-rm -f ${buildroot}%{_docdir}/%{name}.{dvi,ps}
 
 %files
-%doc AUTHORS
-%doc ChangeLog
-%doc COPYING
-%doc NEWS
-%doc README
-%doc THANKS
-%doc doc/%{name}.pdf
-%doc examples/
 %{_bindir}/%{name}
+%doc AUTHORS ChangeLog COPYING doc examples NEWS README THANKS
 
 %changelog
+* Thu Apr 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_3
 - update to new release by fcimport
 
