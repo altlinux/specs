@@ -1,6 +1,6 @@
 %define abiversion 2
 Name: libyaml
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: A C library for parsing and emitting YAML
@@ -58,6 +58,9 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.1.6-alt1
+- Autobuild version bump to 0.1.6
+
 * Thu Feb 06 2014 Fr. Br. George <george@altlinux.ru> 0.1.5-alt1
 - Autobuild version bump to 0.1.5 (closes: #29802)
 - Generate and package development documentation
