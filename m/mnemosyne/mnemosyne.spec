@@ -1,15 +1,15 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.2.1
-Release:	alt1_2
+Version:	2.3
+Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
-Group:		Games/Other
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	python-devel
@@ -53,7 +53,6 @@ popd
 %doc ChangeLog README
 #%%doc docmnemosyne/libmnemosyne/LICENSE
 %{_bindir}/%{name}
-%{_bindir}/mnemosyne-webserver
 %{python_sitelibdir_noarch}/mnemosyne
 %{python_sitelibdir_noarch}/Mnemosyne-%{version}-*.egg-info
 %{python_sitelibdir_noarch}/openSM2sync
@@ -61,6 +60,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Thu Apr 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_2
 - update to new release by fcimport
 
