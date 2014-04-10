@@ -1,6 +1,6 @@
 Name:           fluid-soundfont
 Version:        3.1
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Pro-quality GM/GS soundfont
 Group:          Sound
 License:        MIT
@@ -114,10 +114,12 @@ sed -i 's|FluidR3_GS-|%{_datadir}/soundfonts/%{name}-lite-patches/FluidR3_GS-|g'
 %install
 # The actual soundfonts:
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/soundfonts
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/sounds/sf2
 install -p -m 644 FluidR3_GM.sf2 $RPM_BUILD_ROOT%{_datadir}/soundfonts
 install -p -m 644 FluidR3_GS.sf2 $RPM_BUILD_ROOT%{_datadir}/soundfonts
 # Create a symlink to denote that this is the Fedora default soundfont
 ln -s FluidR3_GM.sf2 $RPM_BUILD_ROOT%{_datadir}/soundfonts/default.sf2
+ln -s ../../soundfonts/default.sf2 $RPM_BUILD_ROOT%{_datadir}/sounds/sf2
 
 # timidity++.cfg files for usage of the sf2 files with the real timidity
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}
@@ -142,6 +144,7 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 %{_datadir}/soundfonts/default.sf2
 %{_datadir}/soundfonts/fluid3gm.cfg
 %{_datadir}/soundfonts/fluid_altassign.cfg
+%{_datadir}/sounds/sf2
 
 %files gs
 %{_datadir}/soundfonts/FluidR3_GS.sf2
@@ -153,6 +156,9 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 
 
 %changelog
+* Thu Apr 10 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_11
 - update to new release by fcimport
 
