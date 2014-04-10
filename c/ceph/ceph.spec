@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.74
+Version: 0.79
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -16,7 +16,8 @@ BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
-BuildRequires: libleveldb-devel libsnappy-devel libs3-devel
+BuildRequires: libleveldb-devel libsnappy-devel libs3-devel libblkid-devel
+BuildRequires: libxfs-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -112,8 +113,14 @@ object storage.
 rm -rf ceph-object-corpus
 ln -s ceph-object-corpus_sub ceph-object-corpus
 
-#rm -rf src/libs3
-#ln -s libs3_sub src/libs3
+rm -rf src/civetweb
+ln -s civetweb_sub src/civetweb
+
+rm -rf src/erasure-code/jerasure/gf-complete
+ln -s gf-complete_sub src/erasure-code/jerasure/gf-complete
+
+rm -rf src/erasure-code/jerasure/jerasure
+ln -s jerasure_sub src/erasure-code/jerasure/jerasure
 
 %build
 ./autogen.sh
@@ -263,6 +270,15 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Apr 10 2014 Alexei Takaseev <taf@altlinux.org> 0.79-alt1
+- 0.79
+
+* Tue Mar 04 2014 Alexei Takaseev <taf@altlinux.org> 0.77-alt1
+- 0.77
+
+* Wed Jan 15 2014 Alexei Takaseev <taf@altlinux.org> 0.75-alt1
+- 0.75
+
 * Sun Jan 05 2014 Alexei Takaseev <taf@altlinux.org> 0.74-alt1
 - 0.74
 
