@@ -1,6 +1,6 @@
 Name: liblangtag
-Version: 0.5.2
-Release: alt2
+Version: 0.5.3
+Release: alt1
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
@@ -71,6 +71,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.5.3-alt1
+- Autobuild version bump to 0.5.3
+
 * Thu Oct 17 2013 Fr. Br. George <george@altlinux.ru> 0.5.2-alt2
 - Override fcimport release
 
