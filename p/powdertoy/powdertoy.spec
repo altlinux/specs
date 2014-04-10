@@ -1,5 +1,5 @@
 Name: powdertoy
-Version: 89.2.281
+Version: 89.2.283
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
@@ -72,6 +72,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 1:89.2.283-alt1
+- Autobuild version bump to 89.2.283
+
 * Thu Feb 27 2014 Fr. Br. George <george@altlinux.ru> 1:89.2.281-alt1
 - Autobuild version bump to 89.2.281
 - Remove new version ad again
