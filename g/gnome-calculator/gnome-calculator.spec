@@ -1,7 +1,7 @@
 %define ver_major 3.12
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -53,6 +53,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc NEWS
 
 %changelog
+* Thu Apr 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
