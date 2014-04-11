@@ -1,8 +1,8 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.20
-Release: alt3
+Version: 0.21
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_bindir/distrodb*
 
 %changelog
+* Fri Apr 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- cpan support
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt3
 - NMU: added missing Pod dependencies
 
