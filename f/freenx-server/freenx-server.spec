@@ -1,7 +1,7 @@
 %define cups_root %_prefix/lib
 Name: freenx-server
 Version: 0.7.4
-Release: alt31.1
+Release: alt32
 
 Summary: Freenx application/thin-client server
 Group: Networking/Remote access
@@ -42,6 +42,8 @@ NoMachine nx is the next-generation X compression and roundtrip suppression
 scheme. It can operate remote X11 sessions over 56k modem dialup links
 or anything better. This package contains a free (GPL) implementation
 of the nxserver component.
+
+NB: install net-tools to enable session shadowing.
 
 %prep
 %setup
@@ -143,6 +145,9 @@ fi
 %_datadir/%name/
 
 %changelog
+* Fri Apr 11 2014 Michael Shigorin <mike@altlinux.org> 0.7.4-alt32
+- amend description to mention net-tools (closes: #29985)
+
 * Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.4-alt31.1
 - move sudo config to /etc/sudoers.d
 
