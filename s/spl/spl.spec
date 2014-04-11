@@ -1,6 +1,6 @@
 Name: spl
 Version: 0.6.2
-Release: alt11
+Release: alt12
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -89,6 +89,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Apr 12 2014 Led <led@altlinux.ru> 0.6.2-alt12
+- upstream fixes
+
 * Thu Apr 10 2014 Led <led@altlinux.ru> 0.6.2-alt11
 - De-inline spl_kthread_create()
 

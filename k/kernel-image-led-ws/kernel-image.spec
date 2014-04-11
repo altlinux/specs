@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -875,12 +875,13 @@ cd linux-%version
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
+echo -n "export GCC_VERSION=" > gcc_version.inc
 %ifdef kgcc_version
-GCC_VERSION="%kgcc_version"
+echo "%kgcc_version" \
 %else
-GCC_VERSION="$(%__cc --version | head -1 | cut -d' ' -f3 | cut -d. -f1-2)"
+%__cc -dumpversion | cut -d. -f1-2 \
 %endif
-echo -n "export GCC_VERSION=$GCC_VERSION" > gcc_version.inc
+	>> gcc_version.inc
 
 %if_with src
 cd ..
@@ -1125,12 +1126,9 @@ echo "Building kernel %kversion-%flavour-%krelease"
 . gcc_version.inc
 export CC=gcc-$GCC_VERSION
 %make_build oldconfig
-%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION bzImage modules
+%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs bzImage modules
 
-%if_with perf
-%make_build -C tools/perf %perf_make_opts
-%make_build -C tools/perf %{?_enable_verbose:V=1} man
-%endif
+%{?_with_perf:%make_build -C tools/perf %{?_enable_verbose:V=1} %perf_make_opts all man}
 
 %{?_with_lkvm:%make_build -C tools/kvm %lkvm_make_opts}
 
@@ -1756,6 +1754,21 @@ done)
 
 
 %changelog
+* Fri Apr 11 2014 Led <led@altlinux.ru> 3.10.36-alt5
+- updated:
+  + fix-drivers-base
+  + fix-fs
+  + fix-fs-f2fs
+  + feat-scripts--lto
+  + feat-tools--kvm
+- added:
+  + fix-crypto--glue_helper
+  + fix-drivers-char-tpm--tpm
+  + fix-drivers-media-pci-cx23885--altera-ci
+  + fix-drivers-net-wireless--libertas_tf
+  + fix-drivers-scsi--libsas
+  + fix-fs-nfs--nfsv4
+
 * Thu Apr 10 2014 Led <led@altlinux.ru> 3.10.36-alt4
 - updated:
   + fix-security--selinux
