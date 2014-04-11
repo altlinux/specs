@@ -1,6 +1,6 @@
 Name: klibc
 Version: 2.0.3
-Release: alt1
+Release: alt2
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -182,6 +182,9 @@ strip -g %buildroot%klibcdir/lib/libc.so
 
 
 %changelog
+* Fri Apr 11 2014 Led <led@altlinux.ru> 2.0.3-alt2
+- upstream fixes
+
 * Thu Dec 19 2013 Led <led@altlinux.ru> 2.0.3-alt1
 - 2.0.3
 
