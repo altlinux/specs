@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Languages
 Version: 0.6
-Release: alt2.git20140226
+Release: alt3.git20140226
 Summary: Abstract syntax tree and compilation framework
 License: MIT / BSD
 Group: Graphical desktop/GNUstep
@@ -169,6 +169,9 @@ install -m644 Compiler/*.1 %buildroot%_man1dir/
 %_docdir/GNUstep
 
 %changelog
+* Fri Apr 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3.git20140226
+- Rebuilt with llvm 3.4 (thnx glebfm@)
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.git20140226
 - Added documentation
 
