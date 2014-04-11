@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -54,7 +54,7 @@ Release: alt3
 %def_enable htmldocs
 %def_enable man
 %def_disable compat
-%def_disable lto
+%def_enable lto
 %def_enable relocatable
 %def_enable x32
 %def_enable cr
@@ -1123,9 +1123,9 @@ config_enable \
 echo "Building kernel %kversion-%flavour-%krelease"
 
 . gcc_version.inc
-export CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION
+export CC=gcc-$GCC_VERSION
 %make_build oldconfig
-%make_build %{?_enable_verbose:V=1} bzImage modules
+%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION bzImage modules
 
 %if_with perf
 %make_build -C tools/perf %perf_make_opts
@@ -1136,10 +1136,7 @@ export CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%ifdef extra_mods
-%{?kgcc_version:export CC=gcc-%kgcc_version}
-%make_build -f Makefile.external %extra_mods && echo "External modules built"
-%endif
+%{?extra_mods:%make_build -f Makefile.external %extra_mods && echo "External modules built"}
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -1155,7 +1152,7 @@ echo "Kernel docs built %kversion-%flavour-%krelease"
 cd linux-%version
 
 . gcc_version.inc
-export CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION
+export CC=gcc-$GCC_VERSION
 
 install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krelease
 install -Dp -m644 arch/%base_arch/boot/bzImage %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease
@@ -1207,14 +1204,15 @@ for f in \
 	Makefile \
 	Module.symvers \
 	scripts/Kbuild.include \
-	scripts/Makefile{,.{build,clean,host,lib,mod*}} \
+	scripts/Makefile{,.{build,clean,host,lib,lto,mod*}} \
 	scripts/bin2c \
 	scripts/check{includes,version}.pl \
 	scripts/conmakehash \
 	scripts/depmod.sh \
 	scripts/extract-ikconfig \
-	scripts/gcc-*.sh \
+	scripts/gcc-* \
 	scripts/kallsyms \
+	scripts/ld-*.sh \
 	scripts/makelst \
 	scripts/mk{compile_h,makefile,version} \
 	scripts/module-common.lds \
@@ -1758,6 +1756,15 @@ done)
 
 
 %changelog
+* Thu Apr 10 2014 Led <led@altlinux.ru> 3.10.36-alt4
+- updated:
+  + fix-security--selinux
+- added:
+  + feat-scripts--lto
+  + feat-tools--kvm
+- disabled SYN_COOKIES (ws)
+- enabled lto
+
 * Tue Apr 08 2014 Led <led@altlinux.ru> 3.10.36-alt3
 - removed:
   + fix-drivers-usb-chipidea
