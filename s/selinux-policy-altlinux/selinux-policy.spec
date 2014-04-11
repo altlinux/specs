@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20140410
+%define date 20140411
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.17
+Version: 0.0.18
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -260,6 +260,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Fri Apr 11 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.18-alt1
+- 20140411
+
 * Thu Apr 10 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.17-alt1
 - 20140410
 
