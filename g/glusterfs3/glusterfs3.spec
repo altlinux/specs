@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.2
+Version: %major.3
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -45,7 +45,7 @@ Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Nov 19 2012
 BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
-BuildRequires: librdmacm-devel
+BuildRequires: librdmacm-devel libaio-devel
 
 Conflicts: %oname
 
@@ -340,6 +340,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Sat Apr 12 2014 Alexei Takaseev <taf@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Sat Feb 15 2014 Alexei Takaseev <taf@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
