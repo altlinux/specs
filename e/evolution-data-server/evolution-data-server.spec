@@ -18,7 +18,7 @@
 
 Name: evolution-data-server
 Version: %ver_major.1
-Release: alt0.1
+Release: alt1
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -26,8 +26,8 @@ Group: Graphical desktop/GNOME
 URL: http://www.gnome.org/projects/evolution/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.in
@@ -267,6 +267,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Sun Apr 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1 release
+
 * Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt0.1
 - 3.12.1 snapshot (8476b8abe)
 
