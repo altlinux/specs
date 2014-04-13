@@ -5,7 +5,7 @@
 %def_without gnome
 
 Name: viewnior
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Elegant image viewer
@@ -13,12 +13,14 @@ License: GPLv3+
 Group: Graphics
 
 Url: http://xsisqox.github.com/Viewnior
-Source: http://cloud.github.com/downloads/xsisqox/Viewnior/%name-%version.tar.gz
+Source0: %name-%version.tar.gz
+Source1: %name.watch
 Patch: viewnior-0.7-dsofix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Fri Apr 02 2010
-BuildRequires: intltool libgtk+2-devel
+# Automatically added by buildreq on Sun Apr 13 2014
+# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config
+BuildRequires: gcc-c++ intltool libexiv2-devel libgtk+2-devel
 
 %if_with gnome
 BuildRequires: libGConf-devel
@@ -63,6 +65,11 @@ chmod 644 AUTHORS ChangeLog COPYING NEWS README TODO src/*
 %_datadir/%name/
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1.4-alt1
+- added watch file
+- new version (watch file uupdate)
+- NB: source hosted on dropbox had to be downloaded by hand :-/
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1.3-alt1
 - 1.3
 
