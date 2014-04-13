@@ -1,7 +1,5 @@
-%def_enable xinerama
-
 Name: qiv
-Version: 2.2.4
+Version: 2.3.1
 Release: alt1
 Serial: 1
 
@@ -10,32 +8,32 @@ License: GPL2
 Group: Graphics
 
 Url: http://spiegl.de/qiv
-Source: %url/download/%name-%version.tgz
+Source0: %url/download/%name-%version.tgz
+Source1: %name.watch
 # dfo:
 Patch: %name-jumping.patch
 
-BuildRequires: imlib2-devel libgtk+2-devel libmagic-devel
-%{?_enable_xinerama:BuildRequires: libXinerama-devel}
+# Automatically added by buildreq on Sun Apr 13 2014
+# optimized out: fontconfig glib2-devel imlib2 libX11-devel libXext-devel libcairo-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: imlib2-devel libexif-devel libgtk+2-devel libjpeg-devel liblcms2-devel libmagic-devel libtiff-devel
 
-Summary(ru_RU.CP1251): Быстрая программа просмотра изображений
-Summary(uk_UA.CP1251): Швидкий проглядач зображень
+Summary(ru_RU.UTF-8): Р‘С‹СЃС‚СЂР°СЏ РїСЂРѕРіСЂР°РјРјР° РїСЂРѕСЃРјРѕС‚СЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№
+Summary(uk_UA.UTF-8): РЁРІРёРґРєРёР№ РїСЂРѕРіР»СЏРґР°С‡ Р·РѕР±СЂР°Р¶РµРЅСЊ
 
 %description
 %name is a small and fast image viewer for X based on gdk and imlib2.
 
-%description -l ru_RU.CP1251
-%name - это небольшая и быстрая программа просмотра изображений для X,
-основанная на gdk и imlib2.
+%description -l ru_RU.UTF-8
+%name - СЌС‚Рѕ РЅРµР±РѕР»СЊС€Р°СЏ Рё Р±С‹СЃС‚СЂР°СЏ РїСЂРѕРіСЂР°РјРјР° РїСЂРѕСЃРјРѕС‚СЂР° РёР·РѕР±СЂР°Р¶РµРЅРёР№ РґР»СЏ X,
+РѕСЃРЅРѕРІР°РЅРЅР°СЏ РЅР° gdk Рё imlib2.
 
-%description -l uk_UA.CP1251
-%name - це малий та швидкий проглядач зображень для X, оснований на gdk
-та imlib2.
+%description -l uk_UA.UTF-8
+%name - С†Рµ РјР°Р»РёР№ С‚Р° С€РІРёРґРєРёР№ РїСЂРѕРіР»СЏРґР°С‡ Р·РѕР±СЂР°Р¶РµРЅСЊ РґР»СЏ X, РѕСЃРЅРѕРІР°РЅРёР№ РЅР° gdk
+С‚Р° imlib2.
 
 %prep
-%setup -n %name-%version
+%setup
 %patch -p1
-
-%{?_disable_xinerama:subst 's/^GTD_XINERAMA/#&/' Makefile}
 
 %build
 %define _optlevel 3
@@ -43,17 +41,27 @@ Summary(uk_UA.CP1251): Швидкий проглядач зображень
 %make_build CFLAGS="%optflags"
 
 %install
-install -pdm0755 %buildroot/{%_bindir,%_man1dir}
-install -pm0755 %name %buildroot/%_bindir/
-install -pm0644 %name.1 %buildroot/%_man1dir/
-bzip2 --best --keep --force Changelog
+install -pDm0755 %name %buildroot/%_bindir/%name
+install -pDm0644 %name.1 %buildroot/%_man1dir/%name.1
+gzip -9f Changelog
 
 %files
-%doc README Changelog.* README.TODO %name-command.example
+%doc README Changelog.* README.TODO contrib/%name-command.example
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1:2.3.1-alt1
+- new version (watch file uupdate)
+- built against lib{exif,jpeg,lcms2,tiff}
+- dropped xinerama knob (just enable it)
+- buildreq
+
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1:2.2.4-alt2
+- added watch file
+- changed metadata encoding to utf8
+- minor spec cleanup
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 1:2.2.4-alt1
 - 2.2.4
 
