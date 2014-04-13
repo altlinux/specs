@@ -1,16 +1,16 @@
 Name: xournal
-Version: 0.4.5
-Release: alt5
+Version: 0.4.7
+Release: alt1
 
 Summary: Xournal - application for notetaking, sketching, keeping a journal using a stylus
 License: GPL
 Group: Office
 
 Url: http://xournal.sourceforge.net
-Source: http://dl.sourceforge.net/xournal/%name-%version.tar.gz
-Patch0: xournal-0.4.2.1-alt-desktop-file.patch
-Patch1: xournal-no-copy-dt-needed-entries.patch
-Patch2: xournal-poppler-0.18.patch
+Source0: http://dl.sourceforge.net/xournal/%name-%version.tar.gz
+Source1: %name.watch
+Source2: %name.1
+Patch: xournal-0.4.2.1-alt-desktop-file.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Mar 08 2009
@@ -30,9 +30,7 @@ Journal czy innych alternatyw takich jak Jarnal i Gournal.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
+%patch -p1
 
 %build
 %autoreconf
@@ -40,18 +38,29 @@ Journal czy innych alternatyw takich jak Jarnal i Gournal.
 %make
 
 %install
-%makeinstall_std
+%makeinstall_std desktop-install
 %find_lang %name
 install -pDm644 %name.desktop %buildroot%_desktopdir/%name.desktop
 install -pDm644 %name.glade %buildroot%_datadir/%name/%name.glade
+install -pDm644 %SOURCE2 %buildroot%_man1dir/%name.1
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README src/TODO
 %_bindir/*
 %_datadir/%name
+%_man1dir/%name.1*
 %_desktopdir/%name.desktop
+%_iconsdir/hicolor/scalable/*/*.svg
+%_xdgmimedir/*/*.xml
+%_datadir/mimelnk/application/x-xoj.desktop
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 0.4.7-alt1
+- added watch file and manpage from debian
+- new version (watch file uupdate)
+  + dropped patch1 (fails to apply), patch2 (merged upstream)
+- install desktop icons and configuration files
+
 * Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 0.4.5-alt5
 - rebuilt without libgnomeprintui-devel
 
