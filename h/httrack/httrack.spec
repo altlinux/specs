@@ -6,7 +6,7 @@
 %define origver 3.45-3
 
 Name: httrack
-Version: 3.45.3
+Version: 3.48.3
 Release: alt1
 
 Summary: An easy-to-use offline browser utility
@@ -16,13 +16,15 @@ Group: Networking/File transfer
 Url: http://www.httrack.com
 Source0: %name-%version.tar.gz
 Source1: %name.conf
+Source2: %name.watch
 Patch: httrack-3.47.3-alt-makefile.patch
 Packager: Led <led@altlinux.ru>
 
 %{?_enable_shared:Requires: %lname = %version-%release}
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Mar 04 2008
-BuildRequires: gcc-c++ zlib-devel ImageMagick
+# Automatically added by buildreq on Sun Apr 13 2014
+# optimized out: libcloog-isl4 libcom_err-devel libkrb5-devel libstdc++-devel
+BuildRequires: gcc-c++ libssl-devel zlib-devel
 
 %set_automake_version 1.10
 BuildRequires: desktop-file-utils
@@ -82,31 +84,32 @@ Offline browser: copy websites to a local directory.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 
 %build
 ACLOCAL="aclocal -I m4" %autoreconf
 %configure %{subst_enable shared} %{subst_enable static}
 %make_build
-convert -depth 8 html/server/div/web%name.xpm web%{name}_48.png
-for s in 32 24 16; do
-    convert -resize ${s}x$s -depth 8 html/server/div/web%name.xpm web%{name}_$s.png
-done
 
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 mv %buildroot%_docdir/%name{,-%version}
-install -m 0644 AUTHORS README %buildroot%_docdir/%name-%version/
-install -D -m644 %SOURCE1 %buildroot/%_sysconfdir/%name.conf
-for s in 48 32 24 16; do
-    install -D -m 0644 {web%{name}_$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/web%name}.png
+install -pm644 AUTHORS README %buildroot%_docdir/%name-%version/
+install -pDm644 %SOURCE1 %buildroot/%_sysconfdir/%name.conf
+for s in 48 32 16; do
+	install -pDm644 html/server/div/${s}x${s}/%name.png \
+		%buildroot%_iconsdir/hicolor/${s}x$s/apps/web%name.png
 done
 rm %buildroot%_libdir/%name/*.la
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=FileTransfer \
 	%buildroot%_desktopdir/WebHTTrack.desktop
+
+# debianism fixup (might break some day)
+rm %buildroot%_datadir/%name/html
+ln -s ../doc/%name-%version %buildroot%_datadir/%name/html
 
 
 %files
@@ -114,7 +117,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_datadir/%name
 %exclude %_datadir/%name/libtest
-%exclude %_datadir/%name/icons
+#exclude %_datadir/%name/icons
 %_man1dir/%name.1*
 %config(noreplace) %_sysconfdir/%name.conf
 
@@ -146,13 +149,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_bindir/%name
 %_man1dir/*
 %exclude %_man1dir/%name.1*
-%_datadir/%name/icons
+#_datadir/%name/icons
 %_pixmapsdir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 3.48.3-alt1
+- added watch file
+- new version (watch file uupdate)
+- dropped patch
+- buildreq
+- NB: webhttrack has been reworked somewhat, regressions possible
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 3.45.3-alt1
 - 3.45.3 (moved back to srpm)
 
