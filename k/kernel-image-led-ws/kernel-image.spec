@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -54,11 +54,12 @@ Release: alt5
 %def_enable htmldocs
 %def_enable man
 %def_disable compat
-%def_enable lto
+%def_disable lto
 %def_enable relocatable
 %def_enable x32
 %def_enable cr
 %def_enable bld
+%def_disable mptcp
 %def_enable debugfs
 %def_enable coredump
 %def_enable olpc
@@ -67,7 +68,6 @@ Release: alt5
 %def_enable acpi
 %def_enable pci
 %def_disable vme
-%def_disable mca
 %def_disable math_emu
 %def_disable pae
 %def_disable x86_extended_platform
@@ -119,7 +119,6 @@ Release: alt5
 %def_enable bootsplash
 %def_disable crasher
 %def_disable logo
-%def_enable zcache
 %def_enable taskstats
 %def_enable security
 %def_enable audit
@@ -875,13 +874,18 @@ cd linux-%version
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
-echo -n "export GCC_VERSION=" > gcc_version.inc
 %ifdef kgcc_version
-echo "%kgcc_version" \
+GCC_VERSION="%kgcc_version"
 %else
-%__cc -dumpversion | cut -d. -f1-2 \
+GCC_VERSION="$(%__cc -dumpversion | cut -d. -f1-2)"
 %endif
-	>> gcc_version.inc
+echo -n "export GCC_VERSION=$GCC_VERSION" > gcc_version.inc
+
+sed -i -r \
+	-e '/^CC[[:blank:]]*=/s/(gcc)[[:blank:]]*$/\1-'$GCC_VERSION/ \
+	-e '/^AR[[:blank:]]*=/s/(gcc-ar)[[:blank:]]*$/\1-'$GCC_VERSION/ \
+	-e '/^NM[[:blank:]]*=/s/(gcc-nm)[[:blank:]]*$/\1-'$GCC_VERSION/ \
+	Makefile
 
 %if_with src
 cd ..
@@ -903,26 +907,43 @@ done
 %build
 cd linux-%version
 
+config_fix()
+{
+	local a
+	local e
+	a=$1
+	shift
+	while [ -n "$1" ]; do
+		e="$e -$a $1"
+		shift
+	done
+	scripts/config $e
+}
+
 config_disable()
 {
-local e
-while [ -n "$1" ]; do
-	e="$e"'/^CONFIG_'$1'=/s|^\(.*\)=.*$|# \1 is not set|;'
-	shift
-done
-sed -i "$e" .config
+	echo "DISABLE=<$@>"
+	config_fix d $@
 }
 
 config_enable()
 {
-local e s a
-while [ -n "$1" ]; do
-	a=${1%%=*}
-	[ "$a" = "$1" ] && s="=y" || s=
-	e="$e"'/^#[[:blank:]]*CONFIG_'$a'[[:blank:]]/s/^#[[:blank:]]*\(CONFIG_'$a'\) .*$/\1'$s'/;'
-	shift
-done
-sed -i "$e" .config
+	config_fix e $@
+}
+
+config_module()
+{
+	config_fix m $@
+}
+
+config_val()
+{
+	scripts/config --set-val $@
+}
+
+config_str()
+{
+	scripts/config --set-str $@
 }
 
 if [ -f %flavour-%kernel_branch.%_target_cpu.config ]; then
@@ -932,201 +953,199 @@ else
 %ifdef kernel_cpu
 %if "%base_arch" != "%_target_cpu"
 	config_disable %kernel_base_cpu
-	config_enable M%kernel_cpu
+	config_enable m%kernel_cpu
 %endif
 %endif
 fi
 
-sed -i '/^CONFIG_LOCALVERSION=/s/=.*$/="-%flavour-%krelease"/' .config
+config_str localversion -%flavour-%krelease
 
 %ifarch atom
-sed -i '/^CONFIG_NR_CPUS=/s/^\(.*=\).*$/\14/' .config
+config_val nr_cpus 4
 %endif
 
 %ifarch %intel_64 %intel_32
-config_disable CPU_SUP_\.*
-config_enable CPU_SUP_INTEL
+config_disable cpu_sup_{amd,centaur,{cyrix,transmeta,umc}_32}
+config_enable cpu_sup_intel
 %endif
 
 %ifarch %amd_64 %amd_32
-config_disable CPU_SUP_\.*
-config_enable CPU_SUP_AMD
+config_disable cpu_sup_{centaur,intel,{cyrix,transmeta,umc}_32}
+config_enable cpu_sup_amd
 %endif
 
 %ifarch %via_64 %via_32
-config_disable CPU_SUP_\.*
-config_enable CPU_SUP_CENTAUR
+config_disable cpu_sup_{amd,intel,{cyrix,transmeta,umc}_32}
+config_enable cpu_sup_centaur
 %endif
 
 %ifarch %ix86
 %ifnarch i486 i586
-config_disable EISA
+config_disable eisa
 %endif
 %endif
 
 config_disable \
 %if_disabled sound
-	SOUND USB_EMI\.* \
+	sound usb_emi{26,62} \
 %else
-	%{?_disable_oss:SOUND_PRIME} %{?_disable_alsa:SND}
+	%{?_disable_oss:sound_prime} %{?_disable_alsa:snd} \
 %endif
-config_disable \
-	%{?_disable_smp:SMP} \
-	%{?_disable_modversions:MODVERSIONS} \
-	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS EDAC_LEGACY_SYSFS X86_ACPI_CPUFREQ_CPB} \
-	%{?_disable_x32:X86_X32} \
-	%{?_disable_pae:HIGHMEM64G} %{?_enable_pae:HIGHMEM4G} \
-	%{?_disable_bld:BLD} \
-	%{?_disable_coredump:COREDUMP} \
-	%{?_disable_olpc:OLPC} \
-	%{?_disable_numa:NUMA} \
-	%{?_disable_video:FB VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
-	%{?_disable_drm:DRM VGA_SWITCHEROO} \
-	%{?_disable_ipv6:IPV6} \
-	%{?_disable_apei:ACPI_APEI} \
-	%{?_disable_edac:EDAC} \
-	%{?_disable_arcnet:ARCNET} \
-	%{?_disable_caif:CAIF} \
-	%{?_disable_can:CAN} \
-	%{?_disable_hippi:HIPPI} \
-	%{?_disable_fusion:FUSION} \
-	%{?_disable_ide:IDE} \
-	%{?_disable_pata:PATA_.\*} \
-	%{?_disable_firewire:FIREWIRE} \
-	%{?_disable_irda:IRDA} \
-	%{?_disable_joystick:INPUT_JOYSTICK} \
-	%{?_disable_tablet:INPUT_TABLET} \
-	%{?_disable_touchscreen:INPUT_TOUCHSCREEN} \
-	%{?_disable_lirc:LIRC} \
-	%{?_disable_gameport:GAMEPORT} \
-	%{?_disable_usb_gadget:USB_GADGET} \
-	%{?_disable_pcmcia:PCCARD PCMCIA} \
-	%{?_disable_atm:ATM} \
-	%{?_disable_fddi:FDDI} \
-	%{?_disable_hamradio:HAMRADIO} \
-	%{?_disable_w1:W1} \
-	%{?_disable_iio:IIO} \
-	%{?_disable_watchdog:WATCHDOG} \
-	%{?_disable_spi:SPI} \
-	%{?_disable_mfd:MFD_\.*} \
-	%{?_disable_regulator:REGULATOR} \
-	%{?_disable_mtd:MTD} \
-	%{?_disable_rapidio:RAPIDIO} \
-	%{?_disable_media:MEDIA_SUPPORT} \
-	%{?_disable_mmc:MMC} \
-	%{?_disable_isdn:ISDN} \
-	%{?_disable_telephony:PHONE} \
-	%{?_disable_taskstats:TASKSTATS} \
-	%{?_disable_security:SECURITY} \
-	%{?_disable_audit:AUDIT} \
-	%{?_disable_selinux:SECURITY_SELINUX} \
-	%{?_disable_tomoyo:SECURITY_TOMOYO} \
-	%{?_disable_apparmor:SECURITY_APPARMOR} \
-	%{?_disable_smack:SECURITY_SMACK} \
-	%{?_disable_yama:SECURITY_YAMA} \
-	%{?_disable_thp:TRANSPARENT_HUGEPAGE} \
-	%{?_disable_guest:VIRTIO DRM_KVM_CIRRUS DRM_VMWGFX VMWARE_BALLOON} \
-	%{?_disable_kvm:KVM} \
-	%{?_disable_hypervisor_guest:HYPERVISOR_GUEST} \
-	%{?_disable_hyperv:HYPERV} \
-	%{?_disable_kvm_guest:KVM_GUEST} \
-	%{?_disable_bootsplash:BOOTSPLASH} \
-	%{?_disable_crasher:CRASHER} \
-	%{?_disable_logo:LOGO} \
-	%{?_disable_zcache:ZCACHE} \
-	%{?_disable_pci:PCI} \
-	%{?_disable_vme:VME_BUS} \
-	%{?_disable_acpi:ACPI} \
-	%{?_disable_pcsp:SND_PCSP=m} \
-	%{?_disable_nfs_swap:NFS_SWAP} \
-	%{?_disable_hotplug_memory:MEMORY_HOTPLUG} \
-	%{?_disable_math_emu:MATH_EMULATION} \
-	%{?_disable_kallsyms:KALLSYMS} \
-	%{?_disable_oprofile:PROFILING OPROFILE} \
-	%{?_disable_fatelf:BINFMT_FATELF} \
-	%{?_enable_simple_ext2:EXT2_FS_XATTR EXT2_FS_POSIX_ACL EXT2_FS_SECURITY} \
-	%{?_enable_ext4_for_ext2:EXT2_FS} %{?_enable_ext4_for_ext3:EXT3_FS}
+	%{?_disable_smp:smp} \
+	%{?_disable_modversions:modversions} \
+	%{?_disable_compat:sysctl_syscall acpi_proc_event compat_vdso i2c_compat proc_pid_cpuset sysfs_deprecated usb_devicefs isb_device_class edac_legacy_sysfs x86_acpi_cpufreq_cpb} \
+	%{?_disable_x32:x86_x32} \
+	%{?_disable_pae:highmem64g} %{?_enable_pae:highmem4g} \
+	%{?_disable_bld:bld} \
+	%{?_disable_coredump:coredump} \
+	%{?_disable_olpc:olpc} \
+	%{?_disable_numa:numa} \
+	%{?_disable_video:fb video_output_control backlight_lcd_support} \
+	%{?_disable_drm:drm vga_switcheroo} \
+	%{?_disable_ipv6:ipv6} \
+	%{?_disable_apei:acpi_apei} \
+	%{?_disable_edac:edac} \
+	%{?_disable_arcnet:arcnet} \
+	%{?_disable_caif:caif} \
+	%{?_disable_can:can} \
+	%{?_disable_hippi:hippi} \
+	%{?_disable_fusion:fusion} \
+	%{?_disable_ide:ide} \
+	%{?_disable_firewire:firmware} \
+	%{?_disable_irda:irda} \
+	%{?_disable_joystick:input_joystick} \
+	%{?_disable_tablet:input_tablet} \
+	%{?_disable_touchscreen:input_touchscreen} \
+	%{?_disable_lirc:lirc} \
+	%{?_disable_gameport:gameport} \
+	%{?_disable_usb_gadget:usb_gadget} \
+	%{?_disable_pcmcia:pccard pcmcia} \
+	%{?_disable_atm:atm} \
+	%{?_disable_fddi:fddi} \
+	%{?_disable_hamradio:hamradio} \
+	%{?_disable_w1:w1} \
+	%{?_disable_iio:iio} \
+	%{?_disable_watchdog:watchdog} \
+	%{?_disable_spi:spi} \
+	%{?_disable_regulator:regulator} \
+	%{?_disable_mtd:mtd} \
+	%{?_disable_rapidio:rapidio} \
+	%{?_disable_media:media_support} \
+	%{?_disable_mmc:mmc} \
+	%{?_disable_isdn:isdn} \
+	%{?_disable_telephony:phone} \
+	%{?_disable_taskstats:taskstats} \
+	%{?_disable_security:security} \
+	%{?_disable_audit:audir} \
+	%{?_disable_selinux:security_selinux} \
+	%{?_disable_tomoyo:securyty_tomoyo} \
+	%{?_disable_apparmor:security_apparmor} \
+	%{?_disable_smack:security_smack} \
+	%{?_disable_yama:securyty_yama} \
+	%{?_disable_thp:transparent_hugepage} \
+	%{?_disable_guest:virtio drm_{cirrus_qemu,vmwgfx} vmware_balloon} \
+	%{?_disable_kvm:kvm} \
+	%{?_disable_hypervisor_guest:hypervisor_guest} \
+	%{?_disable_hyperv:hyperv} \
+	%{?_disable_kvm_guest:kvm_guest} \
+	%{?_disable_bootsplash:bootsplash} \
+	%{?_disable_crasher:crasher} \
+	%{?_disable_logo:logo} \
+	%{?_disable_pci:pci} \
+	%{?_disable_vme:vme_bus} \
+	%{?_disable_acpi:acpi} \
+	%{?_disable_pcsp:snd_pcsp} \
+	%{?_disable_nfs_swap:nfs_swap} \
+	%{?_disable_hotplug_memory:memory_hotplug} \
+	%{?_disable_math_emu:math_emulation} \
+	%{?_disable_kallsyms:kallsyms} \
+	%{?_disable_oprofile:profiling oprofile} \
+	%{?_disable_fatelf:binfmt_fatelf} \
+	%{?_enable_simple_ext2:ext2_fs_{xattr,posix_acl,security}} \
+	%{?_enable_ext4_for_ext2:ext2_fs} %{?_enable_ext4_for_ext3:ext3_fs}
+
+%{?_disable_pata:config_disable $(sed -n '/^CONFIG_PATA_/s/^CONFIG_\(PATA_.*\)=.*$/\1/p' .config | tr '[[:upper:]]\n' '[[:lower:]] ')}
+# FIXME MFD_* may be selected with other options
+%{?_disable_mfd:config_disable $(sed -n '/^config[[:blank:]]/s/^config[[:blank:]]*\(.*\)[[:blank:]]*$/\1/p' drivers/mfd/Kconfig | tr '[[:upper:]]\n' '[[:lower:]] ')}
 
 config_enable \
-	%{?_disable_lto:LTO_DISABLE} \
-	%{?_enable_relocatable:RELOCATABLE} \
+	%{?_disable_lto:lto_disable} \
+	%{?_enable_relocatable:relocatable} \
 %ifarch i486 i586 i686
-	X86_GENERIC \
-	%{?_enable_optimize_for_size:CC_OPTIMIZE_FOR_SIZE} \
+	x86_generic \
+	%{?_enable_optimize_for_size:cc_optimize_for_size} \
 %endif
-	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
-	%{?_enable_modversions:MODVERSIONS} \
-	%{?_enable_pae:HIGHMEM64G} \
-	%{?_enable_bld:BLD} \
-	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
-	%{?_enable_ext4_for_ext2:EXT4_USE_FOR_EXT2} %{?_enable_ext4_for_ext3:EXT4_USE_FOR_EXT3} \
-	%{?_enable_mca:MCA} \
-	%{?_enable_debugfs:DEBUG_FS} \
-	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
-	%{?_enable_kvm_ext:KVM_EXTERNAL} \
-	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
-	%{?_enable_kallsyms:KALLSYMS} \
+	%{?_enable_debug_section_mismatch:debug_section_mismatch} \
+	%{?_enable_modversions:modversions} \
+	%{?_enable_pae:highmem64g} \
+	%{?_enable_bld:bld} \
+	%{?_enable_mptcp:mptcp} \
+	%{?_enable_x86_extended_platform:x86_extended_platform} \
+	%{?_enable_ext4_for_ext2:ext4_use_for_ext2} %{?_enable_ext4_for_ext3:ext4_use_for_ext3} \
+	%{?_enable_debugfs:debug_fs} \
+	%{?_enable_secrm:{ext{2,3,4},fat}_secrm} \
+	%{?_enable_kvm_ext:kvm_external} \
+	%{?_enable_lnfs:nfs{,d}_v4_security_label} \
+	%{?_enable_kallsyms:kallsyms} \
 %ifarch %x86_64
-	%{?_enable_cr:CHECKPOINT_RESTORE PROC_PAGE_MONITOR} \
+	%{?_enable_cr:checkpoint_restore proc_page_monitor} \
 %endif
 	%{?allocator:%allocator}
 
 # arch-specific
 %ifarch corei7 nehalem
-config_disable CRYPTO_CRC32C
+config_disable crypto_crc32c
 %endif
 %ifarch i486
-config_enable CRYPTO_AES=m CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
+config_module crypto_{aes,twofish,salsa20}
 %endif
 
 %ifarch %intel_64 %via_64 %via_32
-config_disable USB_OHCI_HCD
+config_disable usb_ohci_hcd
 %endif
 %ifarch K9 K10 barcelona phenom
-config_disable USB_UHCI_HCD
+config_disable usb_uhci_hcd
 %endif
 %ifarch %amd_64 %amd_32 %via_64 %via_32
-config_disable SCHED_SMT NET_DMA PCH_DMA
+config_disable sched_smt net_dma pch_dma
 %endif
 
 # FIXME
-config_disable ISCSI_IBFT_FIND FIRMWARE_MEMMAP
+config_disable iscsi_ibft_find firmware_memmap
 # Timberdale is a companion chip for Atom CPUs in embedded in-car infotainment systems. Are we need that?
-config_disable \.*_TIMBERDALE
+config_disable {mfd,serial,video}_timberdale
 %ifarch %ix86 %x86_64
 # Nokia Retu and Tahvo multi-function device found on Nokia Internet Tablets (770, N800 and N810).
-config_disable MFD_RETU
+config_disable mfd_retu
 # Maxim 1586/1587 voltage regulator is suitable for PXA27x chips.
-config_disable REGULATOR_MAX1586
+config_disable regulator_max1586
 # non-x86 devices
-config_disable MFD_TI_AM335X_TSCADC TWL6040_CORE UCB1400_CORE MFD_WM8994
+config_disable mfd_ti_am335x_tscadc twl6040_core ucb1400_core mfd_wm8994
 %endif
 # non-modularized mfd drivers
-config_disable OLPC
+config_disable olpc
 
 %if_enabled debug
 config_enable \
-	KALLSYMS_ALL \
-	DEBUG_KERNEL \
-	LOCKUP_DETECTOR \
-	BOOTPARAM_SOFTLOCKUP_PANIC_VALUE=0 \
-	DEBUG_MUTEXES \
-	DEBUG_SLAB DEBUG_SLAB_LEAK \
-	SLUB_DEBUG SLUB_STATS \
-	LOCKDEP_SUPPORT LOCKDEP DEBUG_LOCKDEP \
-	DEBUG_BUGVERBOSE \
-	DEBUG_INFO \
-	DEBUG_WRITECOUNT \
-	CRASH_DUMP PROC_VMCORE \
-	KGDB
+	kallsyms_all \
+	slub_{debug,stats} \
+	lockup{,_{detector,support}} \
+	debug_{lockdep,kernel,mutexes,bugverbose,info,writecount,slab{,_leak}} \
+	crash_dump proc_vmcore \
+	kgdb
+config_val bootparam_softlockup_panic_value 0
 %endif
+
+. gcc_version.inc
+export CC="gcc-$GCC_VERSION"
 
 echo "Building kernel %kversion-%flavour-%krelease"
 
-. gcc_version.inc
-export CC=gcc-$GCC_VERSION
 %make_build oldconfig
-%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs bzImage modules
+%make_build \
+	%{?_enable_verbose:V=1} \
+	%{?_enabled_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
+	bzImage modules
 
 %{?_with_perf:%make_build -C tools/perf %{?_enable_verbose:V=1} %perf_make_opts all man}
 
@@ -1754,6 +1773,12 @@ done)
 
 
 %changelog
+* Sun Apr 13 2014 Led <led@altlinux.ru> 3.10.36-alt6
+- added:
+  + fix-net-ipv4-netfilter--ip_tables
+  + fix-net-ipv6-netfilter--ip6_tables
+- disabled lto
+
 * Fri Apr 11 2014 Led <led@altlinux.ru> 3.10.36-alt5
 - updated:
   + fix-drivers-base
