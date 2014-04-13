@@ -3,7 +3,7 @@
 
 Name: TiMidity++
 Version: 2.14.0
-Release: alt3%prerel
+Release: alt4%prerel
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -14,6 +14,7 @@ Source0: http://prdownloads.sourceforge.net/timidity/%name-%version%prerel.tar.b
 Source1: timidity.init
 Source2: timidity.sysconfig
 Source3: timidity.desktop
+Source100: TiMidity++.watch
 Patch0: TiMidity++-2.13.0-alt-config.patch
 Patch4: TiMidity++-2.14.0-tcltk-link.patch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -24,15 +25,15 @@ Packager: Michael Shigorin <mike@altlinux.org>
 Requires: timidity-instruments
 Requires: tcl >= %tcl_ver, tk >= %tk_ver
 
-# Automatically added by buildreq on Tue Feb 20 2007
-BuildRequires: emacs-common esound-devel jackit-devel libXaw-devel libXaw3d-devel libalsa-devel libao-devel libflac-devel libgtk+2-devel libncurses-devel liboggflac-devel libslang2-devel libspeex-devel openmotif-devel tk-devel
+# Automatically added by buildreq on Sun Apr 13 2014
+# optimized out: emacs-base emacs-common fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libX11-locales libXext-devel libXmu-devel libXt-devel libatk-devel libaudiofile-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libp11-kit libpango-devel libpng-devel libtinfo-devel libwayland-client libwayland-server pkg-config tcl-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: emacs-nox libXaw3d-devel libalsa-devel libao-devel libesd-devel libflac-devel libgtk+2-devel libjack-devel libopenmotif-devel libslang2-devel libspeex-devel tk-devel
 
 BuildRequires: tcl-devel >= %tcl_ver, tk-devel >= %tk_ver
-BuildRequires: libpng-devel
 BuildRequires: libogg-devel libvorbis-devel
 
-Summary(ru_RU.KOI8-R): Конвертер/проигрыватель MIDI-файлов
-Summary(uk_UA.KOI8-U): Конвертер/програвач MIDI-файл╕в
+Summary(ru_RU.UTF-8): п п╬п╫п╡п╣я─я┌п╣я─/п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ MIDI-я└п╟п╧п╩п╬п╡
+Summary(uk_UA.UTF-8): п п╬п╫п╡п╣я─я┌п╣я─/п©я─п╬пЁя─п╟п╡п╟я┤ MIDI-я└п╟п╧п╩я√п╡
 
 %description
 TiMidity++ is a converter that converts some of MIDI files
@@ -45,20 +46,20 @@ file for processing, or played in real time through an audio device. In
 real time playing, TiMidity if able to show the lyric contained in KAR
 file or WRD file.
 
-%description -l ru_RU.KOI8-R
-TiMidity++ -- проигрыватель MIDI-файлов, не требующий аппаратной
-поддержки MIDI и использующий для синтеза внешнюю wavetable в
-виде так называемых патчей (patch files) -- совместимых со
-стандартом Gravis Ultrasound .pat-файлов (по одному на
-инструмент). Коллекции патчей находятся в пакетах
-timidity-instruments и timidity-eaw-patches.
+%description -l ru_RU.UTF-8
+TiMidity++ -- п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ MIDI-я└п╟п╧п╩п╬п╡, п╫п╣ я┌я─п╣п╠я┐я▌я┴п╦п╧ п╟п©п©п╟я─п╟я┌п╫п╬п╧
+п©п╬п╢п╢п╣я─п╤п╨п╦ MIDI п╦ п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╧ п╢п╩я▐ я│п╦п╫я┌п╣п╥п╟ п╡п╫п╣я┬п╫я▌я▌ wavetable п╡
+п╡п╦п╢п╣ я┌п╟п╨ п╫п╟п╥я▀п╡п╟п╣п╪я▀я┘ п©п╟я┌я┤п╣п╧ (patch files) -- я│п╬п╡п╪п╣я│я┌п╦п╪я▀я┘ я│п╬
+я│я┌п╟п╫п╢п╟я─я┌п╬п╪ Gravis Ultrasound .pat-я└п╟п╧п╩п╬п╡ (п©п╬ п╬п╢п╫п╬п╪я┐ п╫п╟
+п╦п╫я│я┌я─я┐п╪п╣п╫я┌). п п╬п╩п╩п╣п╨я├п╦п╦ п©п╟я┌я┤п╣п╧ п╫п╟я┘п╬п╢я▐я┌я│я▐ п╡ п©п╟п╨п╣я┌п╟я┘
+timidity-instruments п╦ timidity-eaw-patches.
 
-%description -l uk_UA.KOI8-U
-TiMidity++ -- програвач MIDI-файл╕в, що не потребу╓ апаратно╖
-п╕дтримки MIDI та використову╓ для синтезу зовн╕шню wavetable у
-вигляд╕ т.н.  патч╕в (patch files) -- сум╕сних ╕з стандартом
-Gravis Ultrasound .pat-файл╕в (по одному на ╕нструмент). Колекц╕╖
-патч╕в знаходяться у пакунках timidity-instruments та
+%description -l uk_UA.UTF-8
+TiMidity++ -- п©я─п╬пЁя─п╟п╡п╟я┤ MIDI-я└п╟п╧п╩я√п╡, я┴п╬ п╫п╣ п©п╬я┌я─п╣п╠я┐я■ п╟п©п╟я─п╟я┌п╫п╬я≈
+п©я√п╢я┌я─п╦п╪п╨п╦ MIDI я┌п╟ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ п╢п╩я▐ я│п╦п╫я┌п╣п╥я┐ п╥п╬п╡п╫я√я┬п╫я▌ wavetable я┐
+п╡п╦пЁп╩я▐п╢я√ я┌.п╫.  п©п╟я┌я┤я√п╡ (patch files) -- я│я┐п╪я√я│п╫п╦я┘ я√п╥ я│я┌п╟п╫п╢п╟я─я┌п╬п╪
+Gravis Ultrasound .pat-я└п╟п╧п╩я√п╡ (п©п╬ п╬п╢п╫п╬п╪я┐ п╫п╟ я√п╫я│я┌я─я┐п╪п╣п╫я┌). п п╬п╩п╣п╨я├я√я≈
+п©п╟я┌я┤я√п╡ п╥п╫п╟я┘п╬п╢я▐я┌я▄я│я▐ я┐ п©п╟п╨я┐п╫п╨п╟я┘ timidity-instruments я┌п╟
 timidity-eaw-patches.
 
 %prep
@@ -118,6 +119,11 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt4
+- added watch file just in case
+- converted description to utf8
+- buildreq
+
 * Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2.14.0-alt3
 - Built with libslang2-devel.
 
@@ -296,14 +302,14 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
   and timidity.cgf is now in /usr/share/timidity with the other
   files; you need timidity-instruments-1.0-4mdk with this package.
 
-* Fri Aug  6 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Fri Aug  6 1999 Bernhard Rosenkrп■nzer <bero@mandrakesoft.com>
 - 2.3.0
 - fix download URL
 
-* Fri Jul 16 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Fri Jul 16 1999 Bernhard Rosenkrп■nzer <bero@mandrakesoft.com>
 - 2.1.1
 
-* Mon May 10 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Mon May 10 1999 Bernhard Rosenkrп■nzer <bero@mandrakesoft.com>
 - Change paths to match the timidity-instruments package
 
 * Wed Apr 28 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
