@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt2
+Release: alt3
 %define erelease 54.0.1.el7
 
 %define kernel_req %nil
@@ -402,7 +402,7 @@ for f in \
 	scripts/mk{compile_h,makefile,version} \
 	scripts/module-common.lds \
 	scripts/pnmtologo \
-	scripts/recordmcount.pl \
+	scripts/recordmcount* \
 	scripts/basic/fixdep \
 	scripts/genksyms/genksyms \
 	scripts/kconfig/conf \
@@ -552,6 +552,9 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Sun Apr 13 2014 Led <led@altlinux.ru> 3.10.0-alt3
+- kernel-headers-modules: added missed files
+
 * Sat Apr 12 2014 Led <led@altlinux.ru> 3.10.0-alt2
 - enabled:
   + FB_UVESA
