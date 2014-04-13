@@ -3,7 +3,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 4.56
+Version: 5.01
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -132,6 +132,9 @@ rm -f  -- %buildroot%_sysconfdir/stunnel/stunnel.pem
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
 %changelog
+* Sun Apr 13 2014 Alexey Gladkov <legion@altlinux.ru> 5.01-alt1
+- New version (5.01).
+
 * Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 4.56-alt1
 - New version (4.56).
 
