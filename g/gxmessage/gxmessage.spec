@@ -1,5 +1,5 @@
 Name: gxmessage
-Version: 2.20.0
+Version: 2.20.1
 Release: alt1
 
 Summary: GTK2 based xmessage clone
@@ -37,7 +37,13 @@ running a mostly GTK desktop.
 %_man1dir/*
 %doc README NEWS TODO AUTHORS ChangeLog examples/
 
+# TODO:
+# - consider building gtk2/gtk3 versions as conflicting/alternatives
+
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.20.1-alt1
+- 2.20.1
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 2.20.0-alt1
 - 2.20.0
 
