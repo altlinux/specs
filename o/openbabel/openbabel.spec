@@ -1,18 +1,20 @@
 Name: openbabel
-Version: 2.3.1
-Release: alt1.1.1
+Version: 2.3.2
+Release: alt1
 
 Summary: Chemistry software file format converter
 License: GPL
 Group: Sciences/Chemistry
 
 Url: http://openbabel.sourceforge.net
-Source: http://dl.sf.net/%name/%name-%version.tar.gz
+Source0: http://dl.sf.net/%name/%name-%version.tar.gz
+Source1: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Thu Dec 15 2011
-# optimized out: cmake-modules libstdc++-devel pkg-config python-base
-BuildRequires: cmake gcc-c++ libxml2-devel zlib-devel
+# Automatically added by buildreq on Sun Apr 13 2014
+# optimized out: cmake-modules fontconfig libcloog-isl4 libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server pkg-config python-base zlib-devel
+BuildRequires: cmake eigen2 gcc-c++ libcairo-devel libwxGTK-devel libxml2-devel python-devel xml-utils
+
 BuildPreReq: python-devel eigen2
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
@@ -74,7 +76,6 @@ Python bindings for Open Babel.
 
 %prep
 %setup
-
 echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
@@ -85,6 +86,11 @@ gzip -9nf ChangeLog
 
 %install
 %makeinstall_std
+
+# FIXME: 2.3.2 kludge, argh
+mkdir -p %buildroot%python_sitelibdir
+mv %buildroot%_libdir/{_openbabel.so,*.py*} \
+   %buildroot%python_sitelibdir/
 
 %if_enabled static
 %else
@@ -120,9 +126,14 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %endif
 
 # TODO:
-# - build GUI (wxWidgets)
+# - BR: eigen3 (FTBFS as of 20140413)
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.3.2-alt1
+- added watch file
+- new version (watch file uupdate)
+- enabled wxGTK GUI
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
