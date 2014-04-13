@@ -1,5 +1,5 @@
 Name: lft
-Version: 3.33
+Version: 3.35
 Release: alt1
 Serial: 1
 
@@ -60,6 +60,9 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/%name
 %doc CHANGELOG COPYING README TODO
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1:3.35-alt1
+- 3.35
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1:3.33-alt1
 - 3.33
 
