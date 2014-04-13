@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.19.9
+Version: 1.19.12p1
 Release: alt1
 
 Summary: A personal full text search package
@@ -16,6 +16,7 @@ Source1: recoll_ru.ts
 Source2: recoll_ru.qm
 Source3: recoll_uk.ts
 Source4: recoll_uk.qm
+Source100: recoll.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ libqt4-devel qt4-settings libXt-devel libaspell-devel xorg-cf-files ImageMagick
@@ -25,6 +26,7 @@ BuildRequires: rpm-build-licenses
 BuildRequires: perl-Image-ExifTool
 BuildRequires: python-devel
 
+%add_findreq_skiplist %_datadir/%name/filters/*
 %add_findreq_skiplist %_datadir/%name/examples/*
 
 %description
@@ -91,7 +93,8 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 %_libdir/%name
 %_datadir/%name
 %exclude %_datadir/%name/filters/rcllyx
-%exclude %_datadir/%name/filters/hotrecoll.py
+%exclude %_datadir/%name/filters/*.py
+%exclude %_datadir/%name/filters/*.zip
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 %_desktopdir/*
@@ -101,7 +104,8 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 
 %files extras
 %_datadir/%name/filters/rcllyx
-%_datadir/%name/filters/hotrecoll.py
+%_datadir/%name/filters/*.py
+%_datadir/%name/filters/*.zip
 
 %files full
 
@@ -110,6 +114,11 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1.19.12p1-alt1
+- 1.19.12p1
+- suppress findreq for filters (bundled msodumper workaround)
+- added watch file
+
 * Tue Nov 12 2013 Michael Shigorin <mike@altlinux.org> 1.19.9-alt1
 - 1.19.9
 
