@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.36
-Release: alt7
+Version: 3.10.37
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 36
+%define kernel_stable_version 37
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -41,7 +41,7 @@ Release: alt7
 %define kmandir %{_man9dir}l
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.8
+%define kgcc_version 4.8
 
 %def_enable smp
 %def_disable optimize_for_size
@@ -1773,6 +1773,19 @@ done)
 
 
 %changelog
+* Mon Apr 14 2014 Led <led@altlinux.ru> 3.10.37-alt1
+- 3.10.37
+- updated:
+  + fix-kernel--futex
+  + fix-net-ipv6
+  + fix-security--selinux
+- added:
+  + fix-drivers-isdn-hardware-mISDN--hfcpci
+  + fix-drivers-net-can--janz-ican3
+  + fix-drivers-net-wireless--wl3501_cs
+  + fix-drivers-net-wireless-rtlwifi--rtl8192de
+  + fix-net-ipv6
+
 * Mon Apr 14 2014 Led <led@altlinux.ru> 3.10.36-alt7
 - updated:
   + feat-fs-tux3
