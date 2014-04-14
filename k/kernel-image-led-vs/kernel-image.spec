@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.36
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1773,6 +1773,12 @@ done)
 
 
 %changelog
+* Mon Apr 14 2014 Led <led@altlinux.ru> 3.10.36-alt7
+- updated:
+  + feat-fs-tux3
+- added:
+  + fix-drivers-scsi--advansys
+
 * Sun Apr 13 2014 Led <led@altlinux.ru> 3.10.36-alt6
 - added:
   + fix-net-ipv4-netfilter--ip_tables
