@@ -1,14 +1,13 @@
 %define ver_major 3.12
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A collection of GNOME backgrounds
 License: GPLv2
 Group: Graphical desktop/GNOME
 URL: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
@@ -21,14 +20,14 @@ to use for your desktop background which are packaged
 with the GNOME desktop.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -38,6 +37,9 @@ with the GNOME desktop.
 %doc NEWS README
 
 %changelog
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
