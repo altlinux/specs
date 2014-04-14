@@ -1,7 +1,7 @@
 Name: dnsmasq
-Version: 2.68
+Version: 2.69
 
-Release: alt2
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -16,7 +16,11 @@ Patch: %name-%version-%release.patch
 BuildPreReq: glibc-kernheaders
 BuildRequires(pre): rpm-build-licenses
 
+# IDN
 BuildRequires: libidn-devel
+
+# DNSSEC
+BuildRequires: libnettle-devel libgmp-devel
 
 %define sysconfig_file %_sysconfdir/sysconfig/%name
 
@@ -62,6 +66,9 @@ sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
 #enable IDN support
 sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
 
+#enable DNSSEC support
+sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
+
 %build
 %make_build
 %make_build -C contrib/wrt
@@ -81,6 +88,9 @@ install -pD -m 755 contrib/wrt/dhcp_release %buildroot%_bindir/dhcp_release
 install -pD -m 644 contrib/wrt/dhcp_release.1 %buildroot%_man1dir/dhcp_release.1
 install -pD -m 755 contrib/wrt/dhcp_lease_time %buildroot%_bindir/dhcp_lease_time
 install -pD -m 644 contrib/wrt/dhcp_lease_time.1 %buildroot%_man1dir/dhcp_lease_time.1
+
+# For DNSSEC support
+install -pD -m 644 trust-anchors.conf %buildroot%_datadir/%name/trust-anchors.conf
 
 %pre
 # Upgrade configuration from previous versions
@@ -102,6 +112,8 @@ fi
 %files
 %doc CHANGELOG FAQ doc.html setup.html CHANGELOG.archive
 %config(noreplace) %_sysconfdir/%name.conf
+%dir %_datadir/%name/
+%config(noreplace) %_datadir/%name/trust-anchors.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %dir %_sysconfdir/dnsmasq.conf.d
 %_unitdir/%name.service
@@ -115,6 +127,12 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Apr 14 2014 Mikhail Efremov <sem@altlinux.org> 2.69-alt1
+- Fix conf-file path for DNSSEC.
+- Enable DNSSEC support.
+- Cleanup changelog.
+- Updated to 2.69.
+
 * Wed Jan 15 2014 Mikhail Efremov <sem@altlinux.org> 2.68-alt2
 - Add 'utils' subpackage (thx Denis Pynkin) (closes: #29726).
 
@@ -229,98 +247,98 @@ fi
 - updated to new version 2.37
 - cleanup specfile from obsoleted ALM22-related stuff
 
-* Mon Jan 22 2007 Ilya Evseev <evseev@altlinux.ru> 2.36-alt1%release_tag
+* Mon Jan 22 2007 Ilya Evseev <evseev@altlinux.ru> 2.36-alt1
 - updated to new version 2.36
 
-* Thu Jan  4 2007 Ilya Evseev <evseev@altlinux.ru> 2.35-alt2%release_tag
+* Thu Jan  4 2007 Ilya Evseev <evseev@altlinux.ru> 2.35-alt2
 - adopt build for modern Sisyphus without kernel-std-up
 
-* Sun Oct 29 2006 Ilya Evseev <evseev@altlinux.ru> 2.35-alt1%release_tag
+* Sun Oct 29 2006 Ilya Evseev <evseev@altlinux.ru> 2.35-alt1
 - updated to new version 2.35
 
-* Tue Oct 17 2006 Ilya Evseev <evseev@altlinux.ru> 2.34-alt1%release_tag
+* Tue Oct 17 2006 Ilya Evseev <evseev@altlinux.ru> 2.34-alt1
 - updated to new version 2.34
 
-* Tue Aug  8 2006 Ilya Evseev <evseev@altlinux.ru> 2.33-alt1%release_tag
+* Tue Aug  8 2006 Ilya Evseev <evseev@altlinux.ru> 2.33-alt1
 - updated to new version 2.33
 
-* Tue Jul 25 2006 Ilya Evseev <evseev@altlinux.ru> 2.32-alt1%release_tag
+* Tue Jul 25 2006 Ilya Evseev <evseev@altlinux.ru> 2.32-alt1
 - updated to new version 2.32
 
-* Fri May 12 2006 Ilya Evseev <evseev@altlinux.ru> 2.31-alt1%release_tag
+* Fri May 12 2006 Ilya Evseev <evseev@altlinux.ru> 2.31-alt1
 - updated to new version 2.31
 
-* Thu Apr 20 2006 Ilya Evseev <evseev@altlinux.ru> 2.28-alt2%release_tag
+* Thu Apr 20 2006 Ilya Evseev <evseev@altlinux.ru> 2.28-alt2
 - specfile bugfixes: added dependency from kernel headers
 
-* Tue Apr 18 2006 Ilya Evseev <evseev@altlinux.ru> 2.28-alt1%release_tag
+* Tue Apr 18 2006 Ilya Evseev <evseev@altlinux.ru> 2.28-alt1
 - updated to new version 2.28
 
-* Fri Mar 17 2006 Ilya Evseev <evseev@altlinux.ru> 2.27-alt1%release_tag
+* Fri Mar 17 2006 Ilya Evseev <evseev@altlinux.ru> 2.27-alt1
 - updated to new version 2.27
 
-* Sun Jan 22 2006 Ilya Evseev <evseev@altlinux.ru> 2.26-alt1%release_tag
+* Sun Jan 22 2006 Ilya Evseev <evseev@altlinux.ru> 2.26-alt1
 - updated to new version 2.26
 
-* Sun Jan 15 2006 Ilya Evseev <evseev@altlinux.ru> 2.25-alt1%release_tag
+* Sun Jan 15 2006 Ilya Evseev <evseev@altlinux.ru> 2.25-alt1
 - updated to new version 2.25
 
-* Tue Nov 29 2005 Ilya Evseev <evseev@altlinux.ru> 2.24-alt1%release_tag
+* Tue Nov 29 2005 Ilya Evseev <evseev@altlinux.ru> 2.24-alt1
 - update to new version 2.24
 - new option 'localise-query' is now enabled by default
 - some stuff from contrib/ is added to docs/.
 
-* Tue Aug 30 2005 Ilya Evseev <evseev@altlinux.ru> 2.23-alt1%release_tag
+* Tue Aug 30 2005 Ilya Evseev <evseev@altlinux.ru> 2.23-alt1
 - update to new version 2.23
 
-* Mon Jul 11 2005 Ilya Evseev <evseev@altlinux.ru> 2.22-alt2%release_tag
+* Mon Jul 11 2005 Ilya Evseev <evseev@altlinux.ru> 2.22-alt2
 - bugfix #7223: use '/sbin/ip route' instead 'sbin/route' in service script
 - service script bugfix: m4 previously intercepts 'shift' as keyword
 
-* Sun Apr  3 2005 Ilya Evseev <evseev@altlinux.ru> 2.22-alt1%release_tag
+* Sun Apr  3 2005 Ilya Evseev <evseev@altlinux.ru> 2.22-alt1
 - Updated to version 2.22, patch #1 is no more needed
 
-* Fri Mar 25 2005 Ilya Evseev <evseev@altlinux.ru> 2.21-alt1%release_tag
+* Fri Mar 25 2005 Ilya Evseev <evseev@altlinux.ru> 2.21-alt1
 - Updated to version 2.21
 - Added includes patch (P1)
 
-* Tue Jan 25 2005 Ilya Evseev <evseev@altlinux.ru> 2.20-alt1%release_tag
+* Tue Jan 25 2005 Ilya Evseev <evseev@altlinux.ru> 2.20-alt1
 - 2.20
 - URL is changed back from mantainer site to author site
 
-* Sat Dec 18 2004 Ilya Evseev <evseev@altlinux.ru> 2.19-alt1%release_tag
+* Sat Dec 18 2004 Ilya Evseev <evseev@altlinux.ru> 2.19-alt1
 - version 2.19
 - IMPORTANT bugfixes in service script
 
-* Thu Nov 25 2004 Ilya Evseev <evseev@altlinux.ru> 2.18-alt1%release_tag
+* Thu Nov 25 2004 Ilya Evseev <evseev@altlinux.ru> 2.18-alt1
 - version 2.18
 
-* Wed Oct 27 2004 Ilya Evseev <evseev@altlinux.ru> 2.16-alt1%release_tag
+* Wed Oct 27 2004 Ilya Evseev <evseev@altlinux.ru> 2.16-alt1
 - version 2.16
 
-* Wed Sep 22 2004 Ilya Evseev <evseev@altlinux.ru> 2.15-alt1%release_tag
+* Wed Sep 22 2004 Ilya Evseev <evseev@altlinux.ru> 2.15-alt1
 - version 2.15
 
-* Sun Sep 12 2004 Ilya Evseev <evseev@altlinux.ru> 2.14-alt1%release_tag
+* Sun Sep 12 2004 Ilya Evseev <evseev@altlinux.ru> 2.14-alt1
 - version 2.14
 
-* Tue Sep  7 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt4%release_tag
+* Tue Sep  7 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt4
 - service script bugfixes:
    + domain name detection: added 'hostname --domain'
    + options are previously not passed to daemon
 - sysconfig: added listening on 127.0.0.1 only for better security
 - dnsmasq.conf: domain-needed and expand-hosts are enabled by default
 
-* Sat Aug 28 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt3%release_tag
+* Sat Aug 28 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt3
 - more once attempt to fit hasher restrictions:
    + detection rule is changed again
    + removed 'BuildPreReq: initscripts'
 
-* Fri Aug 27 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt2%release_tag
+* Fri Aug 27 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt2
 - added 'BuildPreReq: initscripts' for correct platform detection
   in build environment like hasher/sisyphus_check; changed detection rule.
 
-* Sun Aug 22 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt1%release_tag
+* Sun Aug 22 2004 Ilya Evseev <evseev@altlinux.ru> 2.13-alt1
 - new release
 - also update configuration file
 - service script is generated separately
