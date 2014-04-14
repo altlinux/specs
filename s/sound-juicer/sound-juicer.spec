@@ -1,8 +1,8 @@
-%define ver_major 3.5
+%define ver_major 3.11
 %define gst_api_ver 1.0
 
 Name: sound-juicer
-Version: %ver_major.0
+Version: %ver_major.90
 Release: alt1
 
 Summary: Clean and lean CD ripper
@@ -12,21 +12,20 @@ Url: http://live.gnome.org/SoundJuicer
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
+Requires: iso-codes
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: gnome-common
-BuildRequires: intltool desktop-file-utils gcc-c++
-BuildRequires: gnome-doc-utils-xslt gnome-doc-utils
+BuildRequires: intltool yelp-tools desktop-file-utils gcc-c++
 BuildRequires: libgio-devel >= 2.32
 BuildRequires: libbrasero-devel >= 3.0.0
 BuildRequires: libgtk+3-devel >= 2.90.0
-BuildRequires: GConf libGConf-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
 BuildRequires: libgnome-media-profiles-devel >= 3.0.0
-BuildRequires: libmusicbrainz5-devel  >= 5.0.1 libdiscid-devel
+BuildRequires: libmusicbrainz5-devel  >= 5.0.1 libdiscid-devel iso-codes-devel
 
 %description
 GStreamer-based CD ripping tool. Saves audio CDs to audio formats,
@@ -39,9 +38,7 @@ subst 's/0\.10/1.0/' configure
 %build
 %configure \
 	--disable-static \
-	--disable-schemas-install \
-	--disable-scrollkeeper
-
+	--disable-schemas-compile
 %make_build
 
 %install
@@ -54,24 +51,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=GTK \
 	%buildroot%_desktopdir/sound-juicer.desktop
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-    %gconf2_uninstall %name
-fi
-
 %files -f %name.lang
 %_bindir/*
 %_datadir/%name
 %_datadir/applications/*
 %_datadir/icons/*/*/*/*
+%_datadir/GConf/gsettings/%name.convert
+%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_man1dir/*
-%config %_sysconfdir/gconf/schemas/*
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.90-alt1
+- 3.11.90
+
 * Fri Dec 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
 - 3.5.0
 
