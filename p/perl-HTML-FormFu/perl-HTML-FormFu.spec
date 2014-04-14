@@ -4,13 +4,13 @@ BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(C
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
-Version:        1.00
-Release:        alt1_1
+Version:        2.00
+Release:        alt1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI.pm)
@@ -123,6 +123,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_1
 - update to new release by fcimport
 
