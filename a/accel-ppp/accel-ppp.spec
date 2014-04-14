@@ -2,7 +2,7 @@
 
 Name: accel-ppp
 Version: 1.7.3
-Release: alt7
+Release: alt8
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -85,6 +85,13 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Mon Apr 14 2014 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt8
+- update upstream to git:0d5e6d03c74f3ab6b83d2333480b2441df9a6522
+    * ppp: don't unconditionaly load pppoe/pptp/l2tp modules,
+      fixes false start warning if they're running already
+    * pppoe: check for tag format validity in PADR messages
+    * increase size of buffer for netlink messages
+
 * Wed Nov 20 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt7
 - Fix rpath
 
