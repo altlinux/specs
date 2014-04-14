@@ -1,7 +1,7 @@
 %define dist Inline
 Name: perl-%dist
 Version: 0.54
-Release: alt1
+Release: alt2
 
 Summary: Write Perl subroutines in other programming languages
 License: GPL or Artistic
@@ -12,6 +12,7 @@ Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Inline-%{version}.tar.gz
 
 BuildArch: noarch
 Requires: gcc >= 4.1
+Requires: perl(Parse/RecDescent.pm)
 
 # Automatically added by buildreq on Mon Nov 14 2011
 BuildRequires: perl-Inline-Files perl-Parse-RecDescent perl-Test-Warn
@@ -47,6 +48,9 @@ can just run your Perl script like normal.
 	%perl_vendor_privlib/auto/Inline/*
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.54-alt2
+- added Requires: perl(Parse/RecDescent.pm)
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - automated CPAN update
 
