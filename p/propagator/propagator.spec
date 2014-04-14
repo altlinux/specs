@@ -2,8 +2,8 @@
 %def_with splash
 
 Name: propagator
-Version: 20130822
-Release: alt2
+Version: 20140414
+Release: alt1
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Apr 14 2014 Michael Shigorin <mike@altlinux.org> 20140414-alt1
+- optimize filesystem probing order (iso9660 first, ntfs last)
+
 * Wed Nov 06 2013 Michael Shigorin <mike@altlinux.org> 20130822-alt2
 - rebuilt for Sisyphus
 
