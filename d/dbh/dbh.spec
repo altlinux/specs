@@ -1,17 +1,18 @@
 Name: dbh
-Version: 4.5.0
-Release: alt1.qa1
+Version: 5.0.15
+Release: alt1
 
 Summary: Disk based hash library
 License: GPL
 Group: Databases
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://dbh.sourceforge.net
 
-Source: %name-%version.tar.gz
+Source: libdbh2-%version.tar.gz
+Patch0: %name-5.0.13-bigendian.patch
 
 # Automatically added by buildreq on Tue Nov 07 2006
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ glib2-devel
 
 %description
 Disk based hashes is a method to create multidimensional binary trees on disk.
@@ -40,10 +41,11 @@ This package contains development files required for packaging
 libdbh-based software.
 
 %prep
-%setup -q
+%setup -n lib%{name}2-%version
+%patch0 -p1 -b .bigendian
 
 %build
-autoreconf -vifs
+#autoreconf -vifs
 export LDFLAGS="$LDFLAGS -lm"
 %configure \
 	--enable-debug=no \
@@ -54,17 +56,25 @@ export LDFLAGS="$LDFLAGS -lm"
 %makeinstall
 #mv %buildroot%_pkgconfigdir/%name.pc %buildroot%_pkgconfigdir/%name-1.0.pc
 
+mv $RPM_BUILD_ROOT/usr/share/gtk-doc .
+rm -rf $RPM_BUILD_ROOT/usr/share/dbh
+
 %files -n lib%name
-%doc AUTHORS ChangeLog doc/dbh-hash-tables.html
-%_libdir/libdbh*.so.*
+%doc AUTHORS COPYING ChangeLog README
+%_libdir/*.so.*
 
 %files -n lib%name-devel
+%doc examples/*.c examples/Makefile* doc/html gtk-doc
+%_libdir/lib*.so
+%_libdir/pkgconfig/*
 %_includedir/*
-%_pkgconfigdir/*
-%_libdir/*.so
-%exclude %_libdir/*.a
+#%_mandir/man1/dbh*
+%_man3dir/dbh*
 
 %changelog
+* Mon Apr 14 2014 Ilya Mashkin <oddity@altlinux.ru> 5.0.15-alt1
+- 5.0.15
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
