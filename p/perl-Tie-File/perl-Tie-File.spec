@@ -1,6 +1,6 @@
 %define dist Tie-File
 Name: perl-%dist
-Version: 0.98
+Version: 1.00
 Release: alt1
 
 Summary: Access the lines of a disk file via a Perl array
@@ -32,6 +32,9 @@ Each element in the array corresponds to a record in the file.
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
 - automated CPAN update
 - dropped perl-Tie-File-0.96-0.97_02.patch (already upstream)
