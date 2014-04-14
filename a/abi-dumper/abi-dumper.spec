@@ -1,11 +1,11 @@
 Name: abi-dumper
-Version: 0.99.5
+Version: 0.99.8
 Release: alt1
 Group: Development/Other
 License: GPLv2
 Summary: A tool to dump ABI of an ELF object containing DWARF debug info
 Source: %version.tar.gz
-URL: https://github.com/lvc/abi-dumper
+Url: https://github.com/lvc/abi-dumper
 BuildArch: noarch
 
 %description
@@ -26,6 +26,9 @@ perl Makefile.pl -install --prefix=%buildroot%prefix
 %_bindir/*
 
 %changelog
+* Mon Apr 14 2014 Fr. Br. George <george@altlinux.ru> 0.99.8-alt1
+- Autobuild version bump to 0.99.8
+
 * Mon Sep 16 2013 Fr. Br. George <george@altlinux.ru> 0.99.5-alt1
 - Autobuild version bump to 0.99.5
 
