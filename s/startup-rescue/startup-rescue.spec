@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -26,10 +26,10 @@ This package contains scripts used to boot your system from rescue disk.
 %install
 mkdir -p -- %buildroot{%_bindir,/sbin,/etc/rc.d}
 
-install -m755 rescue-shell %buildroot%_bindir/
-install -m755 fixmbr mount-system *-fstab %buildroot/sbin
-install -m644 inittab.rescue %buildroot/etc/
-install -m755 rc.sysinit.rescue %buildroot/etc/rc.d/
+install -pm755 rescue-shell %buildroot%_bindir/
+install -pm755 fixmbr mount-system *-fstab %buildroot/sbin
+install -pm644 inittab.rescue %buildroot/etc/
+install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
 install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 
 %files
@@ -40,6 +40,13 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 %_initdir/sysreport
 
 %changelog
+* Mon Apr 14 2014 Michael Shigorin <mike@altlinux.org> 0.17-alt1
+- forensic mode support:
+  + boot process will not auto-assemble mdraid
+    or auto-activate discovered swap partitions
+  + mount-system will mount filesystems as "ro,loop"
+  + rescue-shell tips adjusted appropriately
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 0.16-alt1
 - extended user advice
 
