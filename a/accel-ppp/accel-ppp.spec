@@ -1,8 +1,6 @@
-%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=FALSE
-
 Name: accel-ppp
-Version: 1.7.3
-Release: alt8
+Version: 1.8.0
+Release: alt0.beta.1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -15,7 +13,8 @@ Patch0: %name-%version-%release.patch
 Requires: snmp-mibs-std
 AutoProv: yes
 
-BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel
+BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel liblua5-devel glibc-kernheaders
+BuildPreReq: rpm-build-kernel
 
 %description
 The ACCEL-PPP is completly new implementation of PPTP/PPPoE/L2TP
@@ -25,6 +24,7 @@ manages all connections. ACCEL-PPP uses only kernel-mode implementations
 of pptp/l2tp/pppoe.
 
 Features:
+- IPoE server
 - PPTP server
 - PPPoE server
 - L2TPv2 server
@@ -34,9 +34,20 @@ Features:
 - SNMP
 - IPv6 (including builtin Neighbor Discovery and DHCPv6)
 
+%package -n kernel-source-%name
+Summary: Kernel module for accel-ppp IPoE
+License: GPLv2
+Group: Development/Kernel
+BuildArch: noarch
+
+%description -n kernel-source-%name
+Provide accel-ppp ipoe kernel module
+
+
 %prep
 %setup
 %patch0 -p1
+tar -cjf ../%name-%version.tar.bz2 ../%name-%version
 
 %build
 %cmake \
@@ -47,7 +58,10 @@ Features:
       -DRADIUS=TRUE \
       -DNETSNMP=TRUE \
       -DLOG_PGSQL=FALSE \
-      -DBUILD_INSTALL_PREFIX=%buildroot
+      -DLUA=TRUE \
+      -DBUILD_INSTALL_PREFIX=%buildroot \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DMEMDEBUG=TRUE
 
 %cmake_build
 
@@ -59,10 +73,18 @@ install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
 install -pDm0644 alt-linux/%name.sysconfig	%buildroot%_sysconfdir/sysconfig/%name
 install -pDm0755 alt-linux/%name.init		%buildroot%_initdir/%name
 install -pDm0644 alt-linux/%name.logrotate	%buildroot%_sysconfdir/logrotate.d/%name
-echo "0" > %buildroot%_runtimedir/accel-ppp/seq
+
+mkdir -p %kernel_srcdir
+install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
-%doc COPYING README accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt
+%doc COPYING README accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt
 %config(noreplace) %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/logrotate.d/*
@@ -75,16 +97,15 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %_mandir/man1/accel-cmd*
 %_mandir/man5/accel-ppp.conf.5*
 %_runtimedir/accel-ppp/
-%_runtimedir/accel-ppp/*
 %_logdir/accel-ppp/
 
-%post
-%post_service %name
-
-%preun
-%preun_service %name
+%files -n kernel-source-%name
+%attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Apr 14 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt0.beta.1
+- Build with IPoE
+
 * Mon Apr 14 2014 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt8
 - update upstream to git:0d5e6d03c74f3ab6b83d2333480b2441df9a6522
     * ppp: don't unconditionaly load pppoe/pptp/l2tp modules,
