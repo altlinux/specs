@@ -1,4 +1,4 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %def_disable static
 %def_disable docbook
 %def_enable consolekit
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -85,6 +85,12 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt2
+- git20140327
+
 * Tue Oct 29 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
 - 2.0.3
 

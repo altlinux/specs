@@ -1,4 +1,4 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -136,6 +136,7 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libdir/%name-%api_ver/libsound.so
 %_libdir/%name-%api_ver/libxrandr.so
 %_libdir/%name-%api_ver/libxsettings.so
+%_libdir/%name-%api_ver/libautomount.so
 %_libdir/%name-%api_ver/media-keys.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/mouse.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/orientation.cinnamon-settings-plugin
@@ -146,17 +147,16 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libdir/%name-%api_ver/sound.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/xrandr.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/xsettings.cinnamon-settings-plugin
+%_libdir/%name-%api_ver/automount.cinnamon-settings-plugin
 %_libexecdir/%name
 %_libexecdir/csd-locate-pointer
 %_libexecdir/csd-printer
-%_libexecdir/cinnamon-fallback-mount-helper
 %_libexecdir/csd-backlight-helper
 %_libexecdir/csd-datetime-mechanism
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/applications/%name.desktop
-%_datadir/applications/cinnamon-fallback-mount-helper.desktop
 %_sysconfdir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 
 
@@ -187,8 +187,18 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-smartcard
 %_libexecdir/csd-test-sound
 %_libexecdir/csd-test-xsettings
+%_libexecdir/csd-test-automount
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
+* Wed Apr 9 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt4
+- return locale setting
+
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt3
+- git20140322
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt2
 - build with gnome-3.12
 - port on upower-1.0

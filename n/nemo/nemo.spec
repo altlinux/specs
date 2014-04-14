@@ -1,4 +1,4 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 3.0
 
 %def_enable exempi
@@ -8,8 +8,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -66,6 +66,7 @@ BuildPreReq: libexif-devel >= %exif_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
+BuildRequires: python-module-polib python-module-pygobject3
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -208,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.7-alt2
 - build with gnome-3.12
 

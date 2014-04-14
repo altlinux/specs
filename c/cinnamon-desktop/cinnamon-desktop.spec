@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
 License: %gpl2plus, %fdl
@@ -18,6 +18,7 @@ Url: https://github.com/linuxmint/cinnamon-desktop
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 Requires: icon-theme-hicolor
@@ -96,6 +97,7 @@ GObject introspection devel data for the %name library
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p1
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -141,6 +143,15 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
+* Thu Apr 10 2014 Vladimir Didenko <cow@altlinux.org> 2.0.4-alt4
+- return org.cinnamon.system.locale schema
+
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.0.4-alt3
+- git20140324
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.4-alt2
 - build with gnome-3.12
 
