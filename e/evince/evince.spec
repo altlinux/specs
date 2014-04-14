@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document viewer
@@ -85,7 +85,7 @@ Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
 GObject introspection devel data for the Evince library
 
 %prep
-%setup -q
+%setup
 
 [ ! -d m4 ] && mkdir m4
 
@@ -170,6 +170,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
