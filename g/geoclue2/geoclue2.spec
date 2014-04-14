@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -16,7 +16,6 @@ License: LGPLv2
 Url: http://geoclue.freedesktop.org/
 
 Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
-Patch: geoclue-2.1.2-alt-demo.patch
 
 %define glib_ver 2.34
 %define nm_ver 0.9.9.0
@@ -63,10 +62,9 @@ This package contains demo programs for GeoClue.
 
 
 %prep
-%setup -q -n %_name-%version
-#%%patch
+%setup -n %_name-%version
 rm -f demo/*.desktop.in
-#subst 's/\(libsoup\) /\1-2.4 /' src/%_name-%api_ver.pc.in
+
 
 %build
 %autoreconf
@@ -98,8 +96,8 @@ mkdir -p %buildroot%_localstatedir/%_name
 %_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.conf
 %_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.Agent.conf
 %_datadir/dbus-1/system-services/org.freedesktop.GeoClue2.service
-%_datadir/%_name-%api_ver/%_name-interface.xml
-%_datadir/%_name-%api_ver/geoclue-agent-interface.xml
+%_datadir/dbus-1/interfaces/org.freedesktop.GeoClue2.Agent.xml
+%_datadir/dbus-1/interfaces/org.freedesktop.GeoClue2.xml
 %systemd_unitdir/%_name.service
 %config %_sysconfdir/%_name/%_name.conf
 %attr(1770, %_name, %_name) %dir %_localstatedir/%_name
@@ -117,6 +115,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
+- 2.1.7
+
 * Fri Mar 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
 - 2.1.6
 
