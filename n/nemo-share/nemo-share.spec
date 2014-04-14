@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name:           nemo-share
-Version:        1.0.0
-Release:        alt2
+Version:        2.2.0
+Release:        alt1
 Packager:       Vladimir Didenko <cow@altlinux.org>
 License:        GPLv2+
 Summary:        Nemo Share allows you to quickly share a folder from the Cinnamon Nemo file manager without requiring root access.
@@ -63,6 +63,9 @@ make install DESTDIR=%buildroot
 %_libdir/nemo/extensions-%api_ver/*
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Fri Apr 5 2013 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt2
 - rebuilt for nemo-1.7.1
 

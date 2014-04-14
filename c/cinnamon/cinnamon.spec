@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 2.0.14
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -10,7 +10,6 @@ Url: http://cinnamon.linuxmint.com
 # To generate tarball
 # wget https://github.com/linuxmint/Cinnamon/tarball/1.6.4 -O cinnamon-1.6.4.tar.gz
 Source0: %name-%version.tar
-Source1: %name-menu.png
 Source2: org.%name.settings-users.policy
 Source3: polkit-%name-authentication-agent-1.desktop
 
@@ -61,11 +60,11 @@ BuildPreReq: libgnome-bluetooth-devel >= %bt_ver
 #BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
 #BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 #BuildPreReq: libfolks-devel >= %folks_ver
-BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libgnome-menus-devel libstartup-notification-devel
+BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel libstartup-notification-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-glib-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
-BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libgnome-menus-gir-devel NetworkManager-glib-gir-devel
+BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel NetworkManager-glib-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -138,9 +137,7 @@ sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
   files/usr/share/cinnamon-looking-glass/cinnamon-looking-glass.py
 #rm -rf files/usr/lib
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor 
-# replace menu image
-rm -f data/theme/menu.png
-cp %SOURCE1 data/theme/menu.png
+
 # remove and replace the session files as they don't work with alt linux (can't be bothered to patch it)
 rm -f files/usr/share/xsessions/cinnamon.desktop \
  files/usr/share/cinnamon-session/sessions/cinnamon2d.session \
@@ -214,7 +211,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/applications/cinnamon-settings.desktop
 %_datadir/applications/cinnamon-add-panel-launcher.desktop
 %_datadir/applications/cinnamon-menu-editor.desktop
-%_datadir/applications/cinnamon-settings-users.desktop
+%_datadir/applications/cinnamon-settings-*.desktop
 %_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
 %_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
@@ -226,12 +223,26 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/cinnamon-desktop-editor/
 %_datadir/cinnamon-json-makepot/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%_datadir/icons/hicolor/scalable/categories/*.svg
+%_datadir/icons/hicolor/scalable/emblems/*.svg
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_mandir/man1/*.1.*
 %doc NEWS README
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- 2.2.1-2-gb7e9d8f
+
+* Wed Apr 9 2014 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt5
+- use c-c-c region panel instead mintlocale
+
+* Tue Apr 8 2014 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt4
+- fix label trancation
+
+* Tue Apr 8 2014 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt3
+- git20140406
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt2
 - build with gnome-3.12
 

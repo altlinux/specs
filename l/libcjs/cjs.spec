@@ -1,4 +1,4 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define _name cjs
 %define api_ver 1.0
 
@@ -6,7 +6,7 @@ Name: lib%_name
 Version: %ver_major.0
 Release: alt1
 
-Summary: Javascript Bindings for GNOME
+Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
 # The following files contain code from Mozilla which
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
@@ -83,6 +83,12 @@ Files for development with %name.
 %doc examples/*
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2
+- git20140405
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

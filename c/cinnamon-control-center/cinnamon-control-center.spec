@@ -1,4 +1,4 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 1.0
 
 %def_disable debug
@@ -9,8 +9,8 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.9
-Release: alt6
+Version: %ver_major.2
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -72,6 +72,8 @@ BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcur
 BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
 BuildRequires: libpwquality-devel libkrb5-devel
 BuildRequires: libgnomekbd-devel libxklavier-devel
+BuildRequires: libwacom-devel
+BuildRequires: libcinnamon-menus-devel
 
 # for test-endianess
 BuildRequires: glibc-i18ndata
@@ -130,6 +132,7 @@ you'll want to install this package.
 %install
 %make_install DESTDIR=%buildroot install
 
+%find_lang %name-timezones
 
 %files
 #cinnamon-control-center binary doesn't work at x64 so temporary disable it. 
@@ -143,15 +146,18 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libscreen.so
 %_libdir/%{name}-1/panels/libsoundnua.so
 %_libdir/%{name}-1/panels/libuniversal-access.so
+%_libdir/%{name}-1/panels/libwacom-properties.so
+%_libdir/%{name}-1/panels/libdate_time.so
 #%_libdir/%{name}-1/panels/libuser-accounts.so
 %_libdir/*.so.*
 
 %exclude %_libdir/%{name}-1/panels/*.la
 
-%files data 
+%files data -f %name-timezones.lang
 %dir %_datadir/%name
 %_datadir/%name/ui
 %_datadir/%name/icons/
+%_datadir/%name/datetime
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/menus/cinnamoncc.menu
 %_datadir/desktop-directories/*
@@ -168,6 +174,15 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
+- 2.2.2-1-g8867794
+
+* Wed Apr 9 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt8
+- renable locale configuring
+
+* Tue Apr 8 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt7
+- git20140329
+
 * Fri Apr 5 2014 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt6
 - reenable power panel
 

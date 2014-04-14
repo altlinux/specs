@@ -1,8 +1,8 @@
-%define ver_major 2.0
+%define ver_major 2.2
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -124,6 +124,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt2
 - remove gnome-control-center from deps
 

@@ -1,11 +1,11 @@
-%define ver_major 2.0
+%define ver_major 2.2
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.6
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -54,6 +54,7 @@ BuildRequires: libpangox-compat-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
+BuildRequires: libcanberra-devel
 BuildRequires: libcinnamon-desktop-devel
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libpolkit-devel}
 
@@ -120,6 +121,12 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
+- 2.2.0-1-g6a4aeb2
+
+* Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.0.6-alt4
+- git20140402
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.6-alt3
 - build with gnome-3.12
 
