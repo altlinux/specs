@@ -2,19 +2,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(XSLoader.pm) perl(Test/Warn.pm)
 # END SourceDeps(oneline)
-%define module_version 2.06
+%define module_version 2.11
 %define module_name Sereal-Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.06
+Version: 2.11
 Release: alt1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Sereal-Decoder-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/Y/YV/YVES/Sereal-Decoder-%{version}.tar.gz
 
 %description
 This library implements a deserializer for an efficient, compact-output,
@@ -52,6 +52,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
