@@ -6,13 +6,18 @@
 %def_disable qt3
 %def_enable policykit
 # udev >= 145
+# note: flag dropped upstream
 %def_enable udevacl
 %def_disable halacl
-
+%if_with backport
+%define cups_filters foomatic-filters
+%else
+%define cups_filters cups-filters >= 1.0.46-alt1
+%endif
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.13.9
-Release: alt2
+Version: 3.14.3
+Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -59,7 +64,7 @@ BuildRequires: python-devel
 
 %if_enabled PPDs
 #cups-common and foomatic-filters is for cupstestppd
-BuildPreReq: perl cups-common cups-filters >= 1.0.46-alt1
+BuildPreReq: perl cups-common %{cups_filters}
 %endif
 
 Source: http://dl.sourceforge.net/hplip/%name-%version.tar
@@ -83,10 +88,9 @@ Source101: hpcups-update-ppds.sh
 Source201: hp-toolbox.wrapper
 Source202: hpijs.1
 
-#Patch0: 
 Patch1: hplip-3.12.9-alt-urlhandler.patch
+# dead patch 2
 Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
-Patch3: hplip-3.13.9-alt-fix-udev-rules-usbdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
@@ -94,29 +98,21 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.13.9-2-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.13.9-2-hplip-strstr-const.patch
-Patch103: fedora-3.13.9-2-hplip-ui-optional.patch
-Patch104: fedora-3.13.9-2-hplip-no-asm.patch
-Patch105: fedora-3.13.9-2-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.13.9-2-hplip-mucks-with-spooldir.patch
-Patch107: fedora-3.13.9-2-hplip-udev-rules.patch
-Patch108: fedora-3.13.9-2-hplip-retry-open.patch
-Patch109: fedora-3.13.9-2-hplip-snmp-quirks.patch
-Patch110: fedora-3.13.9-2-hplip-discovery-method.patch
-Patch111: fedora-3.13.9-2-hplip-hpijs-marker-supply.patch
-Patch112: fedora-3.13.9-2-hplip-clear-old-state-reasons.patch
-Patch113: fedora-3.13.9-2-hplip-hpcups-sigpipe.patch
-Patch114: fedora-3.13.9-2-hplip-logdir.patch
-Patch115: fedora-3.13.9-2-hplip-bad-low-ink-warning.patch
-Patch116: fedora-3.13.9-2-hplip-deviceIDs-ppd.patch
-Patch117: fedora-3.13.9-2-hplip-ppd-ImageableArea.patch
-Patch118: fedora-3.13.9-2-hplip-addprinter.patch
-Patch119: fedora-3.13.9-2-hplip-makefile-chgrp.patch
-Patch120: fedora-3.13.9-2-hplip-hpaio-localonly.patch
-Patch121: fedora-3.13.9-2-hplip-check.patch
-Patch122: fedora-3.13.9-2-hplip-mkstemp.patch
-Patch123: fedora-3.13.9-2-hplip-CVE-2013-4325.patch
+Patch101: fedora-3.14.3-2-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.14.3-2-hplip-strstr-const.patch
+Patch103: fedora-3.14.3-2-hplip-ui-optional.patch
+Patch104: fedora-3.14.3-2-hplip-no-asm.patch
+Patch105: fedora-3.14.3-2-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.14.3-2-hplip-udev-rules.patch
+Patch107: fedora-3.14.3-2-hplip-retry-open.patch
+Patch108: fedora-3.14.3-2-hplip-snmp-quirks.patch
+Patch109: fedora-3.14.3-2-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.14.3-2-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.14.3-2-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.14.3-2-hplip-logdir.patch
+Patch113: fedora-3.14.3-2-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.14.3-2-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.14.3-2-hplip-ppd-ImageableArea.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -211,7 +207,7 @@ License: GPL
 Group: Publishing
 Requires: cups-ddk
 Requires: foomatic-db >= 3.0.2-alt7
-Requires: cups-filters >= 1.0.46-alt1
+Requires: %{cups_filters}
 Requires: %name = %version-%release
 BuildArch: noarch
 
@@ -229,9 +225,7 @@ recommended for use with hplip.
 Summary: Hewlett-Packard Co. Inkjet Driver Project
 License: GPL
 Group: Publishing
-%if_enabled udevacl
 Conflicts: udev-extras < 0.20090516-alt4
-%endif
 
 %description common
 HPLIP is an HP developed solution for printing, scanning, and faxing
@@ -259,7 +253,7 @@ Requires: %name-ps-PPDs = %version-%release
 Requires: %name-hpcups-PPDs = %version-%release
 Requires: %name-hpijs-PPDs = %version-%release
 # due to foomatic-rip
-Requires:	cups-filters >= 1.0.46-alt1
+Requires:	%{cups_filters}
 BuildArch: noarch
 
 %description PPDs
@@ -275,7 +269,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for postscript HP
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	cups-filters >= 1.0.46-alt1
+Requires:	%{cups_filters}
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
@@ -293,7 +287,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpcups cups d
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	cups-filters >= 1.0.46-alt1
+Requires:	%{cups_filters}
 Requires: %name-hpcups = %version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -312,7 +306,7 @@ Summary: PPDs for Hewlett-Packard Co. Inkjet Printers and MFPs for hpijs cups dr
 License: MIT
 Group: Publishing
 # due to foomatic-rip
-Requires:	cups-filters >= 1.0.46-alt1
+Requires:	%{cups_filters}
 Requires: %name-hpijs = %version-%release
 Conflicts: %name-PPDs < %version
 BuildArch: noarch
@@ -365,7 +359,6 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 %patch1 -p2
 # let keep it as is.
 #patch2 -p2
-%patch3 -p2
 
 # # Fix desktop file.
 %patch4 -p1 -b .desktop
@@ -416,37 +409,30 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
        prnt/drv/hpijs.drv.in.deviceIDs-drv-hpijs \
        > prnt/drv/hpijs.drv.in
 
-# Stopped hpcups pointlessly trying to read spool files
-# directly (bug #552572).
-%patch106 -p1 -b .mucks-with-spooldir
-
 # Don't add printer queue, just check plugin.
 # Move udev rules from /etc/ to /usr/lib/ (bug #748208).
-%patch107 -p1 -b .udev-rules
+%patch106 -p1 -b .udev-rules
 
 # Retry when connecting to device fails (bug #532112).
-%patch108 -p1 -b .retry-open
+%patch107 -p1 -b .retry-open
 
 # Mark SNMP quirks in PPD for HP OfficeJet Pro 8500 (bug #581825).
-%patch109 -p1 -b .snmp-quirks
-
-# Fixed hp-setup traceback when discovery page is skipped (bug #523685).
-%patch110 -p1 -b .discovery-method
+%patch108 -p1 -b .snmp-quirks
 
 # Fixed bogus low ink warnings from hpijs driver (bug #643643).
-%patch111 -p1 -b .hpijs-marker-supply
+%patch109 -p1 -b .hpijs-marker-supply
 
 # Clear old printer-state-reasons we used to manage (bug #510926).
-%patch112 -p1 -b .clear-old-state-reasons
+%patch110 -p1 -b .clear-old-state-reasons
 
 # Avoid busy loop in hpcups when backend has exited (bug #525944).
-%patch113 -p1 -b .hpcups-sigpipe
+%patch111 -p1 -b .hpcups-sigpipe
 
 # CUPS filters should use TMPDIR when available (bug #865603).
-%patch114 -p1 -b .logdir
+%patch112 -p1 -b .logdir
 
 # Fixed Device ID parsing code in hpijs's dj9xxvip.c (bug #510926).
-%patch115 -p1 -b .bad-low-ink-warning
+%patch113 -p1 -b .bad-low-ink-warning
 
 # LaserJet 1200 (bug #577308)
 # LaserJet 1320 series (bug #579920)
@@ -465,30 +451,10 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Designjet T770 (bug #747957)
 # Color LaserJet CM4540 MFP (bug #968177)
 # Color LaserJet cp4005 (bug #980976)
-%patch116 -p1 -b .deviceIDs-ppd
+%patch114 -p1 -b .deviceIDs-ppd
 
 # Fix ImageableArea for Laserjet 8150/9000 (bug #596298).
-%patch117 -p1 -b .ImageableArea
-
-# Call cupsSetUser in cupsext's addPrinter method before connecting so
-# that we can get an authentication callback (bug #538352).
-%patch118 -p1 -b .addprinter
-
-# Don't run 'chgrp lp /var/log/hp' and 'chgrp lp /var/log/hp/tmp' in makefile
-%patch119 -p1 -b .chgrp
-
-# Pay attention to the SANE localOnly flag in hpaio (bug #743593).
-%patch120 -p1 -b .hpaio-localonly
-
-# Various adjustments to make 'hp-check' run more smoothly (bug #683007).
-%patch121 -p1 -b .check
-
-# Avoid several bugs in createTempFile (bug #925032).
-%patch122 -p1 -b .mkstemp
-
-# Applied patch to avoid unix-process authorization subject when using
-# polkit as it is racy (CVE-2013-4325).
-%patch123 -p1 -b .CVE-2013-4325
+%patch115 -p1 -b .ImageableArea
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -568,9 +534,6 @@ EOF
     --with-mimedir=%{_datadir}/cups/mime \
     --disable-foomatic-rip-hplip-install \
     --enable-pp-build \
-%if_enabled udevacl
-    --enable-udev-acl-rules \
-%endif
 %if_enabled PPDs
     --enable-foomatic-ppd-install \
     --enable-foomatic-drv-install \
@@ -627,6 +590,17 @@ mkdir -p $RPM_BUILD_ROOT%_sysconfdir/hp
 
 # Create /var/run/hplip
 mkdir -p %buildroot%_runtimedir/hplip
+## Create /run/hplip
+#mkdir -p %{buildroot}/run/hplip
+
+# install /usr/lib/tmpfiles.d/hplip.conf (bug #1015831)
+mkdir -p %{buildroot}%{_tmpfilesdir}
+cat > %{buildroot}%{_tmpfilesdir}/hplip.conf <<EOF
+# See tmpfiles.d(5) for details
+
+d /run/hplip 0775 root lp -
+EOF
+
 
 ### add to doc install
 cp COPYING $RPM_BUILD_ROOT%_docdir/%name-%version/
@@ -764,7 +738,6 @@ fi
 %{_bindir}/hp-devicesettings
 %{_bindir}/hp-diagnose_plugin
 %{_bindir}/hp-diagnose_queues
-%{_bindir}/hp-doctor
 %{_bindir}/hp-fab
 %{_bindir}/hp-faxsetup
 %{_bindir}/hp-firmware
@@ -774,7 +747,6 @@ fi
 %{_bindir}/hp-logcapture
 %{_bindir}/hp-makecopies
 %{_bindir}/hp-makeuri
-%{_bindir}/hp-mkuri
 %if_enabled policykit
 %{_bindir}/hp-pkservice
 %endif
@@ -800,7 +772,6 @@ fi
 %{_datadir}/hplip/devicesettings.py*
 %{_datadir}/hplip/diagnose_plugin.py*
 %{_datadir}/hplip/diagnose_queues.py*
-%{_datadir}/hplip/doctor.py*
 %{_datadir}/hplip/fab.py*
 %{_datadir}/hplip/fax
 #exclude %{_datadir}/hplip/fax/pstotiff*
@@ -852,8 +823,8 @@ fi
 %{_datadir}/hplip/scan
 %dir %_localstatedir/hp
 #%_localstatedir/hp/hplip.state
-%dir %attr(0775,root,lp) %{_var}/log/hp
-%dir %attr(1775,root,lp) %{_var}/log/hp/tmp
+#%dir %attr(0775,root,lp) %{_var}/log/hp
+#%dir %attr(1775,root,lp) %{_var}/log/hp/tmp
 %dir %attr(0775,root,lp) %_runtimedir/hplip
 #%{_sysconfdir}/cron.daily/hplip_cron
 %endif
@@ -882,11 +853,13 @@ fi
 # window), so don't ship the launcher yet.
 #/etc/xdg/autostart/hplip-systray.desktop
 #_bindir/hp-*
+%{_bindir}/hp-doctor
 %{_bindir}/hp-print
 %{_bindir}/hp-systray
 #%{_bindir}/hp-toolbox.wrapper
 %{_bindir}/hp-toolbox
 # Files
+%{_datadir}/hplip/doctor.py*
 %{_datadir}/hplip/print.py*
 %{_datadir}/hplip/toolbox.py*
 %{_datadir}/hplip/systray.py*
@@ -934,6 +907,7 @@ fi
 %_libdir/libhpip*so*
 %_libdir/libhpmud*so*
 /lib/udev/rules.d/*.rules
+%{_tmpfilesdir}/hplip.conf
 
 %files hpijs
 #doc prnt/hpijs/COPYING
@@ -964,6 +938,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.3-alt1
+- new version
+
 * Wed Feb 26 2014 Anton Farygin <rider@altlinux.ru> 3.13.9-alt2
 - NMU: fixed requires - foomatic-filters now is 
   integraded to cups-filters package.
