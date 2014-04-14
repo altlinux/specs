@@ -1,8 +1,8 @@
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/M/ML/MLEHMANN/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Async-Interrupt-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel
@@ -37,6 +37,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1:1.1-alt2
 - built for perl 5.18
 
