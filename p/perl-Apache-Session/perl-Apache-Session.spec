@@ -3,8 +3,8 @@
 #filter_from_requires /^perl.Apache2.RequestUtil.pm./d
 %define dist Apache-Session
 Name: perl-%dist
-Version: 1.92
-Release: alt2
+Version: 1.93
+Release: alt1
 
 Summary: A persistence framework for session data
 License: GPL or Artistic
@@ -43,6 +43,9 @@ find -type f -exec perl -pi -e 's/\r\n/\n/g' {} \;
 %perl_vendor_privlib/Apache
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.93-alt1
+- automated CPAN update
+
 * Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.92-alt2
 - dropped dependency on apache-mod_perl-base (closes: #29932)
 
