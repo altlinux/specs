@@ -10,13 +10,13 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) pe
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 Name:           perl-Graph-Easy
-Version:        0.73
-Release:        alt2_3
+Version:        0.75
+Release:        alt1
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Graph-Easy/
-Source0:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/Graph-Easy-%{version}.tar.gz
 Patch0:         graph-easy-undefined-lc.patch
 BuildArch:      noarch
 BuildRequires:  perl
@@ -84,6 +84,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.73-alt2_3
 - moved to Sisyphus for Slic3r (by dd@ request)
 
