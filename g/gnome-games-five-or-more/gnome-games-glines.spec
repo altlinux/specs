@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME version of the color lines program
@@ -56,6 +56,9 @@ possible, and be #1 in the High Scores.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
