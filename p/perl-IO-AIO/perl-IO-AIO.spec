@@ -1,8 +1,8 @@
 Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.2
-Release: alt2
+Version: 4.3
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -43,6 +43,9 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.3-alt1
+- automated CPAN update
+
 * Sat Jan 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.2-alt2
 - bumped serial
 
