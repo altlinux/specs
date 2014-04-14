@@ -1,21 +1,22 @@
 
 Name: instead
-Version: 1.9.0
+Version: 2.0.3
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
 Summary: STEAD text adventures/visual novels engine
 Summary(ru_RU.UTF-8): Интерпретатор текстовых приключение и визуальных новелл STEAD
-Url: http://instead.googlecode.com
-Source: %{name}_%version.tar.gz
+Url: http://instead.syscall.ru
+Source: %name-%version.tar.gz
 Patch: %name-1.7.0-Rules.make.system.patch
 
-# Automatically added by buildreq on Wed Sep 08 2010
-BuildRequires: ImageMagick-tools libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel liblua5-devel libncurses-devel libreadline-devel zlib-devel
+# Automatically added by buildreq on Mon Apr 14 2014
+# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server zlib-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libgtk+2-devel liblua5-devel
 
 %description
 INSTEAD was designed to interpret the games that are the mix of visual novels,
-text quests and classical 90'ss quests.
+text quests and classical 90's quests.
 
 %description -l ru_RU.UTF-8
 Интерпретатор STEAD (Simple Text Adventure) позволяет проигрывать игры, которые
@@ -50,25 +51,21 @@ sed -i --follow-symlinks -e '\${x;s/./&/;x;t;q 1};'"\$1"';T;x;s/.*/./;x' "\$2"
 @@@
 chmod +x subst
 
-./subst s/[.]png$// desktop/instead.desktop.in
-ln -sf Rules.make.system Rules.make
 for N in 16 32 48 64 128; do convert -resize ${N}x${N} icon/sdl_%name.png ${N}x${N}.png; done
 ./subst 's@char \*games_sw = NULL@char *games_sw = "%_localstatedir/%name/games"@' src/sdl-instead/main.c
-./subst 's@src/sdl-instead@src/instead src/sdl-instead@' Makefile
-sed -i '/LN/{h;d};${x;s/./&/;x;t;q 1}' src/sdl-instead/Makefile
-echo "2
-/usr" | ./configure.sh
 
 %build
-%make_build EXTRA_LDFLAGS=-lm
+%cmake
+%cmake_build
 
 %install
-%makeinstall DESTDIR=%buildroot
+%cmakeinstall_std
 for N in 16 32 48 64 128; do install -pD ${N}x${N}.png %buildroot/%_iconsdir/hicolor/${N}x${N}/apps/sdl_%name.png; done
 mkdir -p %buildroot%_localstatedir/%name/games
 
 %files
 %doc %_defaultdocdir/%name
+%doc doc/examples
 %dir %_datadir/%name
 %dir %attr(1775,root,games) %_localstatedir/%name/games
 %_datadir/%name/*
@@ -82,6 +79,10 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Apr 14 2014 Fr. Br. George <george@altlinux.ru> 2.0.3-alt1
+- Autobuild version bump to 2.0.3
+- Fix build (switch to cmake)
+
 * Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Autobuild version bump to 1.9.0
 
