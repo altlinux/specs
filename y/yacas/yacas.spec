@@ -1,5 +1,5 @@
 Name: yacas
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: Yet Another Computer Algebra System
@@ -61,6 +61,9 @@ rm -rf %buildroot%_datadir/%name/include
 # - JavaYacas?
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
+- new version (watch file uupdate)
+
 * Tue Oct 08 2013 Michael Shigorin <mike@altlinux.org> 1.3.3-alt1
 - new version (watch file uupdate)
 
