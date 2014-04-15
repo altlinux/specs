@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.12
 %def_enable python
 %define gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_compile_include %gedit_pluginsdir
@@ -25,8 +25,9 @@ AutoReqProv: nopython
 %define glib_ver 2.31.0
 %define gtk_ver 3.3.7
 %define gtksourceview_ver 3.3.0
-%define gedit_ver 3.9.92
+%define gedit_ver 3.12.1
 %define peas_ver 1.7.0
+%define git2_ver 0.0.12
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
@@ -39,11 +40,11 @@ BuildPreReq: gedit-devel >= %gedit_ver
 BuildPreReq: libpeas-devel >= %peas_ver
 BuildRequires: yelp-tools
 # for git plugin
-BuildRequires: libgit2-glib-devel
+BuildRequires: libgit2-glib-devel >= %git2_ver
 # for Charmap plugin
 BuildPreReq: libgucharmap-devel >= 3.0.0
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
-BuildRequires: libSM-devel libxml2-devel python3-module-dbus-devel libvte3-devel
+BuildRequires: libSM-devel libxml2-devel python3-module-dbus-devel libvte3-gir-devel
 
 %description
 gEdit is a small but powerful text editor designed expressly for GNOME.
@@ -56,7 +57,7 @@ small at its core, multiple document editing through the use of a
 This package contains various plugins for gEdit, including Charmap, Terminal, and others.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -66,7 +67,7 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang --with-gnome --output=%name.lang gedit %name
 
@@ -81,6 +82,12 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
