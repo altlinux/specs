@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.37
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1773,6 +1773,11 @@ done)
 
 
 %changelog
+* Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt2
+- updated:
+  + feat-drivers-block--btier
+  + feat-drivers-hwmon--ipmisensors
+
 * Mon Apr 14 2014 Led <led@altlinux.ru> 3.10.37-alt1
 - 3.10.37
 - updated:
