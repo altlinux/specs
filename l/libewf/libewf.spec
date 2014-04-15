@@ -1,5 +1,5 @@
 Name: libewf
-Version: 20130416
+Version: 20140406
 Release: alt1
 
 Summary: Library and tools to support the Expert Witness Compression Format
@@ -8,7 +8,7 @@ Url: http://code.google.com/p/libewf
 Group: System/Libraries
 License: BSD
 
-# Source-url: https://googledrive.com/host/0B3fBvzttpiiSMTdoaVExWWNsRjg/libewf-20130416.tar.gz
+# Source-url: https://googledrive.com/host/0B3fBvzttpiiSMTdoaVExWWNsRjg/libewf-20140406.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jan 10 2008
@@ -78,6 +78,9 @@ This package contains python bindings for libewf.
 %python_sitelibdir/*.so
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 20140406-alt1
+- NMU: 20140406
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 20130416-alt1
 - new version 20130416 (with rpmrb script)
 
