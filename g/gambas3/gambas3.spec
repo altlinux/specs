@@ -2,8 +2,8 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.5.2
-Release:	alt1.2
+Version:	3.5.3
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -76,7 +76,7 @@ Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
-Patch5:		%name-3.5.0-remove-undefined-symbols.patch
+Patch5:		%name-3.5.3-remove-undefined-symbols.patch
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -1346,6 +1346,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Apr 15 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.3-alt1
+- New version
+
 * Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.2-alt1.2
 - Rebuilt with LLVM 3.4.
 
