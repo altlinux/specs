@@ -1,7 +1,7 @@
 %define Name BTIER
 Name: btier
 %define module_name %name
-Version: 1.2.5
+Version: 1.2.7
 %define rel %nil
 Release: alt1
 Summary: %Name - a blockdevice that provides automated tiered storage
@@ -94,6 +94,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Tue Apr 15 2014 Led <led@altlinux.ru> 1.2.7-alt1
+- 1.2.7
+
 * Wed Mar 12 2014 Led <led@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
