@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -40,6 +40,10 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 %_initdir/sysreport
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 0.18-alt1
+- find-fstab: *fix* forensic mode support (invert condition)
+- improve user interaction too
+
 * Mon Apr 14 2014 Michael Shigorin <mike@altlinux.org> 0.17-alt1
 - forensic mode support:
   + boot process will not auto-assemble mdraid
