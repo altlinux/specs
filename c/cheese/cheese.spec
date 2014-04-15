@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -155,6 +155,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
