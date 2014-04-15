@@ -4,13 +4,13 @@
 %define api_ver 3.0
 
 Name: ghex
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
 License: GPLv2+
-Url: https://live.gnome.org/Ghex
+Url: https://wiki.gnome.org/Apps/Ghex
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: ghex-3.7.90-alt-lfs.patch
@@ -71,6 +71,9 @@ developing applications that use GtkGHex library.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
