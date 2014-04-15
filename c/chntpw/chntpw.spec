@@ -1,5 +1,5 @@
 Name: chntpw
-Version: 110511
+Version: 140201
 Release: alt1
 
 Summary: Offline Windows NT password & registry editor
@@ -7,19 +7,22 @@ License: GPLv2+
 Group: System/Configuration/Other
 
 Url: http://pogostick.net/~pnh/ntpasswd/
-Source: http://pogostick.net/~pnh/ntpasswd/chntpw-source-%version.zip
+Source0: http://pogostick.net/~pnh/ntpasswd/chntpw-source-%version.zip
+Source1: chntpw.watch
 
 # Automatically added by buildreq on Sat Jun 11 2011
 BuildRequires: libssl-devel unzip
 
 %description
-This little program will enable you to view some information and change user
-passwords in a Windows NT SAM userdatabase file (NT/2k/XP/Vista etc system).
+This little program will enable you to view some information
+and change user passwords in a Windows NT SAM userdatabase file
+(NT/2k/XP/Vista etc system).
 
-You do not need to know the old passwords. However, you need to get at the file
-some way or another yourself. In addition it contains a simple registry editor
-with full write support, and hex-editor which enables you to fiddle around with
-bits&bytes in the file as you wish yourself.
+You do not need to know the old passwords. However, you need to
+get at the file some way or another yourself. In addition it contains
+a simple registry editor with full write support, and a hex-editor
+which enables you to fiddle around with bits&bytes in the file
+as you wish.
 
 %prep
 %setup -n %name-%version
@@ -38,6 +41,11 @@ install -pm755 chntpw cpnt reged %buildroot%_bindir/
 %doc README.txt WinReg.txt regedit.txt syskey.txt
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 140201-alt1
+- added watch file
+- new version (watch file uupdate)
+- tweaked description
+
 * Sat Jun 11 2011 Victor Forsiuk <force@altlinux.org> 110511-alt1
 - Release from 2011-05-11.
 
