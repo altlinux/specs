@@ -1,8 +1,8 @@
 %define srcname tpc
 
 Name: TurionPowerControl
-Version: 0.42.2
-Release: alt0.2
+Version: 0.43
+Release: alt0.1
 
 Summary: Utility to tweak AMD processors parameters
 License: BSD like
@@ -10,7 +10,7 @@ Group: System/Configuration/Hardware
 URL: http://code.google.com/p/turionpowercontrol/downloads/list
 #Url: http://http://amdath800.dyndns.org/amd/
 
-Source: http://amdath800.dyndns.org/amd/tpc/tpc-0.422.tar.gz
+Source: http://amdath800.dyndns.org/amd/tpc/tpc-0.43.tar.gz
 Source1: tpc.init
 
 BuildRequires: gcc-c++
@@ -45,6 +45,9 @@ modprobe msr ||:
 %_initdir/tpc
 
 %changelog
+* Wed Apr 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.43-alt0.1
+- updated version
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.42.2-alt0.2
 - bugfix release
 
