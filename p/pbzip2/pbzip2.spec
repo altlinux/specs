@@ -1,12 +1,12 @@
 Name: pbzip2
-Version: 1.1.6
+Version: 1.1.9
 Release: alt1
 
 Summary: Parallel implementation of bzip2
 License: BSD-like
 Group: Archiving/Compression
 
-URL: http://compression.ca/pbzip2
+Url: http://compression.ca/pbzip2
 Source0: %url/pbzip2-%version.tar.gz
 
 # Automatically added by buildreq on Mon Apr 04 2011
@@ -35,6 +35,12 @@ install -pD -m644 pbzip2.1 %buildroot%_man1dir/pbzip2.1
 %_man1dir/pbzip2.*
 
 %changelog
+* Tue Apr 15 2014 Fr. Br. George <george@altlinux.ru> 1.1.9-alt1
+- Autobuild version bump to 1.1.9
+
+* Tue Apr 15 2014 Fr. Br. George <george@altlinux.ru> 1.1.8-alt1
+- Autobuild version bump to 1.1.8
+
 * Sat Nov 12 2011 Victor Forsiuk <force@altlinux.org> 1.1.6-alt1
 - 1.1.6
 
