@@ -1,13 +1,13 @@
 Name: lrzip
-Version: 0.612
+Version: 0.616
 Release: alt1
 
 Summary: Long Range ZIP or Lzma RZIP
 License: GPLv2+
 Group: File tools
 
-URL: http://ck.kolivas.org/apps/lrzip/
-Source: http://ck.kolivas.org/apps/lrzip/lrzip-%version.tar.bz2
+Url: http://ck.kolivas.org/apps/lrzip/
+Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Fri Mar 09 2012 (-bi)
 BuildRequires: bzlib-devel doxygen gcc-c++ liblzo2-devel nasm perl-Pod-Parser zlib-devel
@@ -69,6 +69,9 @@ install -pDm644 Lrzip.h %buildroot%_includedir/Lrzip.h
 %_libdir/*.so
 
 %changelog
+* Tue Apr 15 2014 Fr. Br. George <george@altlinux.ru> 0.616-alt1
+- Autobuild version bump to 0.616
+
 * Sun Apr 01 2012 Victor Forsiuk <force@altlinux.org> 0.612-alt1
 - 0.612
 
