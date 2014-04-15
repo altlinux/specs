@@ -15,7 +15,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Clutter Core Library
@@ -26,10 +26,9 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
-%define cogl_ver 1.17.3
+%define cogl_ver 1.17.5
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
 %define cairo_ver 1.10
@@ -125,8 +124,7 @@ the functionality of the installed lib%name package.
 
 
 %prep
-%setup -q
-#%%patch -p1
+%setup
 
 %build
 gtkdocize
@@ -181,6 +179,9 @@ gtkdocize
 
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
+- 1.18.2
+
 * Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
