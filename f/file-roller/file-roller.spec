@@ -1,3 +1,4 @@
+%define _name org.gnome.FileRoller
 %define ver_major 3.12
 %def_disable packagekit
 %def_disable magic
@@ -6,7 +7,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -18,7 +19,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
-Patch2: %name-3.9.90-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.12.1-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -119,7 +120,8 @@ rm -f data/%name.desktop{,.in}
 %_libexecdir/%name/rpm2cpio
 %dir %_datadir/%name
 %_datadir/%name/*
-%_datadir/dbus-1/services/org.gnome.FileRoller.service
+%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%_name.ArchiveManager1.service
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/%name.png
 %config %_datadir/glib-2.0/schemas/*
@@ -130,6 +132,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
