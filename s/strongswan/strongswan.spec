@@ -61,7 +61,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.1.2
+Version: 5.1.3
 Release: alt1
 
 Summary: StrongSWAN IPSEC implementation
@@ -72,6 +72,7 @@ Group: System/Servers
 Url: http://www.strongswan.org
 Source0: %name-%version%beta.tar.gz
 Source1: ipsec.init
+Source100: strongswan.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Jul 02 2012
@@ -212,6 +213,13 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 5.1.3-alt1
+- new version (watch file uupdate)
+- fixes CVE-2014-2338 (authentication bypass via rekeying)
+
+* Sun Mar 09 2014 Michael Shigorin <mike@altlinux.org> 5.1.2-alt2
+- added watch file
+
 * Mon Mar 03 2014 Michael Shigorin <mike@altlinux.org> 5.1.2-alt1
 - 5.1.2: http://wiki.strongswan.org/versions/50
   + new default configuration file layout is introduced
