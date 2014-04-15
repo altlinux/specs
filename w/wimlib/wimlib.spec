@@ -2,7 +2,7 @@
 
 Name: wimlib
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: Library to extract, create, modify, and mount WIM files
 License: GPLv3+
@@ -41,7 +41,7 @@ Development files for wimlib.
 %package -n wimtools
 Summary: Tools to create, extract, modify, and mount WIM files
 Group: File tools
-Requires: %libname = %version-%release
+Requires: syslinux, %libname = %version-%release
 
 %description -n wimtools
 Tools to create, extract, modify, and mount files in the
@@ -87,6 +87,9 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.6.2-alt2
+- wimtools: explicit syslinux dependency
+
 * Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.6.2-alt1
 - NMU: 1.6.2
 - minor spec cleanup
