@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-StepChat
 Version: 0.2
-Release: alt2.git20131126
+Release: alt3.git20131126
 Summary: A instant messenger for jabber
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -80,6 +80,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_docdir/GNUstep
 
 %changelog
+* Tue Apr 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3.git20131126
+- Fixed build with clang 3.4
+
 * Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.git20131126
 - Added menu file (thnx kostyalamer@)
 
