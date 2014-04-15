@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.37
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1114,6 +1114,8 @@ config_disable sched_smt net_dma pch_dma
 config_disable iscsi_ibft_find firmware_memmap
 # Timberdale is a companion chip for Atom CPUs in embedded in-car infotainment systems. Are we need that?
 config_disable {mfd,serial,video}_timberdale
+# I2C access to the SI470X radio chip is only needed on embedded systems
+config_disable i2c_si470x
 %ifarch %ix86 %x86_64
 # Nokia Retu and Tahvo multi-function device found on Nokia Internet Tablets (770, N800 and N810).
 config_disable mfd_retu
@@ -1773,6 +1775,11 @@ done)
 
 
 %changelog
+* Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt3
+- added:
+  + fix-drivers-watchdog--sbc8360
+- disabled I2C_SI470X
+
 * Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt2
 - updated:
   + feat-drivers-block--btier
@@ -1821,9 +1828,9 @@ done)
 * Thu Apr 10 2014 Led <led@altlinux.ru> 3.10.36-alt4
 - updated:
   + fix-security--selinux
+  + feat-tools--kvm
 - added:
   + feat-scripts--lto
-  + feat-tools--kvm
 - disabled SYN_COOKIES (ws)
 - enabled lto
 
