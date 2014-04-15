@@ -1,8 +1,9 @@
 # TODO:fix build Python bindings
 %def_disable python
+%define  git_rev 166cbb7
 
 Name: 	 gnucash
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -30,6 +31,7 @@ BuildRequires: libdbi-drivers-dbd-pgsql
 #if_disabled goffice_internal
 BuildPreReq: libgnomeoffice-devel
 #endif
+BuildRequires: swig
 BuildRequires: zlib-devel
 BuildRequires: libxslt-devel
 BuildRequires: aqbanking-devel
@@ -97,11 +99,18 @@ fetch and update.
 
 %build
 %autoreconf
+%add_optflags -Wno-error=deprecated-declarations
+
 %if_enabled python
 sed -i 's|get_python_lib(0|get_python_lib(1|g' configure
 export PYTHON=/usr/bin/python
 %endif
-%configure --with-gnome \
+
+# Print fake revision to build from VCS
+echo -e '#!/bin/sh\ntest $1 = "-r" && echo "%git_rev"\ntest $1 = "-t" && echo "git"\nexit 0' > util/gnc-scm-info
+export PATH=util:$PATH
+
+%configure \
 	   --enable-ofx \
 	   --enable-aqbanking \
 	   --with-html-engine=webkit \
@@ -169,6 +178,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Fri Apr 11 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.3-alt1
+- New version
+
 * Mon Mar 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
 - New version
 - Fix check for build python bindings
