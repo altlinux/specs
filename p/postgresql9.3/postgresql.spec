@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  4
-%define postgresql_altrel    4
+%define postgresql_altrel    5
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -218,6 +218,15 @@ The postgresql-devel package contains the header files needed to compile applica
 which will directly interact with a PostgreSQL database management server.
 You need to install this package if you want to develop applications which will interact
 with a PostgreSQL server.
+
+%package devel-static
+Summary:  Development static library for postgresql-devel
+Group: Development/Databases
+Requires: postgresql-devel = %version-%release
+Provides: postgresql-devel-static = %version-%release
+
+%description devel-static
+Development static library for postgresql-devel
 %endif
 
 %package tcl
@@ -706,6 +715,9 @@ fi
 %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 %_man3dir/*
 
+%files devel-static
+%_libdir/libpgcommon.a
+
 %files -n %libpq_name-devel
 %_libdir/libpq*.so
 %_libdir/pkgconfig/libpq.pc
@@ -749,6 +761,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Apr 16 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt5
+- Add postgresql-devel-static subpackage
+
 * Fri Apr 04 2014 Andriy Stepanov <stanv@altlinux.ru> 9.3.4-alt4
 - Remove chroot logic from sysvinit scrtipt
 
