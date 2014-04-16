@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.37
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -252,7 +252,7 @@ ExcludeArch: i386
 %set_without tools
 %endif
 
-%ifnarch %base_arch
+%ifnarch x86_64 i486 i586 i686
 %set_without tools
 %endif
 
@@ -1123,6 +1123,8 @@ config_disable mfd_retu
 config_disable regulator_max1586
 # non-x86 devices
 config_disable mfd_ti_am335x_tscadc twl6040_core ucb1400_core mfd_wm8994
+# Cadence devices only for ARM?
+config_disable net_cadence
 %endif
 # non-modularized mfd drivers
 config_disable olpc
@@ -1775,6 +1777,11 @@ done)
 
 
 %changelog
+* Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt4
+- added:
+  + fix-kernel-apic--apic
+- fixed spec
+
 * Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt3
 - added:
   + fix-drivers-watchdog--sbc8360
