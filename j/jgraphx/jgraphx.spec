@@ -3,22 +3,22 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+
 Name:           jgraphx
-Version:        1.9.2.5
-Release:        alt1_2jpp7
+Version:        2.5.1.0
+Release:        alt1
 Summary:        Java Graph Drawing Component
 
 Group:          Development/Java
 License:        BSD
-URL:            http://www.jgraph.com/jgraph.html
-Source0:        http://www.jgraph.com/downloads/jgraphx/archive/%{name}-1_9_2_5.zip
+URL:            https://github.com/jgraph/jgraphx
+Source0:        %{name}-%{version}.tar
 
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
 Requires:       jpackage-utils
 
 BuildArch:      noarch
-Source44: import.info
 
 %description
 JGraphX is the a powerful, easy-to-use and feature-rich graph drawing
@@ -37,7 +37,7 @@ JavaDoc documentation for %{name}
 
 
 %prep
-%setup -q -n %{name}
+%setup
 find -name '*.jar' -delete
 rm -rf docs/api
 
@@ -70,6 +70,12 @@ cp -a docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Mon Apr 14 2014 Andrey Cherepanov <cas@altlinux.org> 2.5.1.0-alt1
+- New version (ALT #30003)
+
+* Tue May 28 2013 Andrey Cherepanov <cas@altlinux.org> 1.9.2.5-alt1_2jpp6.M60P.1
+- Backport new version to p6 branch
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.9.2.5-alt1_2jpp7
 - new version
 

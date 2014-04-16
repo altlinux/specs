@@ -1,9 +1,11 @@
 %set_verify_elf_method unresolved=relaxed
 %define hdf5_version 1.8.9
+# TODO problem with package freehep-util
+%def_without freehep
 
 Name:     scilab
-Version:  5.4.1
-Release:  alt2
+Version:  5.5.0
+Release:  alt1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -19,10 +21,13 @@ Source1: scilab-desktop-ru.tar
 Patch1:  scilab-5.4.0-find-jhall.patch
 Patch2:  scilab-5.4.0-find-jgoodies-looks.patch
 Patch3:  scilab-5.4.0-find-xml-apis-ext.patch
-Patch4: scilab-port-to-matio-1.5.patch
+Patch4:	 scilab-fix-make-doc-ja_JP.patch
 
 URL: http://www.scilab.org
 AutoReq: yes, noshell
+
+# See https://bugzilla.redhat.com/show_bug.cgi?id=993239
+ExcludeArch:   %{arm}
 
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-fortran
@@ -56,6 +61,10 @@ BuildRequires: fop
 BuildRequires: jeuclid
 BuildRequires: batik
 BuildRequires: xmlgraphics-commons
+%if_with freehep
+BuildRequires: freehep-graphics2d
+BuildRequires: freehep-util
+%endif
 
 # TCL/TK features
 BuildRequires: tcl-devel
@@ -85,6 +94,7 @@ BuildRequires: libncurses-devel
 BuildRequires: libgomp-devel
 BuildRequires: libatlas-devel
 BuildRequires: libpcre-devel
+BuildRequires: libcurl-devel
 
 # For generated documentation
 BuildRequires: fonts-ttf-liberation
@@ -106,6 +116,10 @@ Requires: batik
 Requires: xmlgraphics-commons
 Requires: xml-commons-jaxp-1.3-apis
 Requires: libfftw3
+%if_with freehep
+Requires: freehep-graphics2d
+Requires: freehep-util
+%endif
 
 #Requires: jgoodies-looks skinlf ant-commons-logging avalon-framework
 #Requires: docbook-style-xsl saxon
@@ -128,7 +142,6 @@ tar xf %SOURCE1
 # Update saxon dependency
 # http://bugzilla.scilab.org/show_bug.cgi?id=8479
 sed -i "s/com.icl.saxon.Loader/net.sf.saxon.Version/g" m4/docbook.m4 configure
-rm modules/helptools/src/java/org/scilab/modules/helptools/BuildDocObject.java
 
 # Fix Class-Path in manifest
 sed -i '/name="Class-Path"/d' build.incl.xml
@@ -150,6 +163,10 @@ aclocal
            --with-tcl-library=%_libdir \
            --with-tk-library=%_libdir \
            --with-pic \
+%if_without freehep
+	   --without-emf \
+%endif
+	   --disable-static-system-lib \
            --enable-build-help
 
 %make
@@ -177,6 +194,10 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Apr 14 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1
+- New version
+- Do not use freehep* package for EMF support
+
 * Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt2
 - Fix build (use unversioned libgomp-devel)
 
