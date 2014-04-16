@@ -1,8 +1,8 @@
-%define kernel_base_version 3.13
+%define kernel_base_version 3.14
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
-Version: 0
+Version: %kernel_base_version
 Release: alt1
 Summary:  HyperV daemons suite
 License: GPLv2
@@ -11,7 +11,7 @@ URL: http://www.kernel.org
 
 
 # git://git.altlinux.org/gears/h/%name.git
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 Patch2: %name-altlinux.patch
 
 Source5: hv_get_dhcp_info.sh
@@ -82,7 +82,7 @@ functionality for Linux.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar.*
 cd %kernel_source
-%patch -p1
+# %patch -p1
 %patch2 -p1
 
 %build
@@ -132,8 +132,8 @@ mkdir -p %buildroot%_sharedstatedir/hyperv
 if [ $1 -eq 1 ]; then
     board_vendor=
     product_name=
-    [-r /sys/class/dmi/id/board_vendor ] && board_vendor="`cat /sys/class/dmi/id/board_vendor`"
-    [-r /sys/class/dmi/id/product_name ] && board_vendor="`cat /sys/class/dmi/id/product_name`"
+    [ -r /sys/class/dmi/id/board_vendor ] && board_vendor="`cat /sys/class/dmi/id/board_vendor`"
+    [ -r /sys/class/dmi/id/product_name ] && board_vendor="`cat /sys/class/dmi/id/product_name`"
 
     if test "${board_vendor}" = "Microsoft Corporation" -a "${product_name}" = "Virtual Machine"; then
 	echo "Enabling hypervkvpd on '${product_name}' from '${board_vendor}'"
@@ -149,8 +149,8 @@ fi
 if [ $1 -eq 1 ]; then
     board_vendor=
     product_name=
-    [-r /sys/class/dmi/id/board_vendor ] && board_vendor="`cat /sys/class/dmi/id/board_vendor`"
-    [-r /sys/class/dmi/id/product_name ] && board_vendor="`cat /sys/class/dmi/id/product_name`"
+    [ -r /sys/class/dmi/id/board_vendor ] && board_vendor="`cat /sys/class/dmi/id/board_vendor`"
+    [ -r /sys/class/dmi/id/product_name ] && board_vendor="`cat /sys/class/dmi/id/product_name`"
 
     if test "${board_vendor}" = "Microsoft Corporation" -a "${product_name}" = "Virtual Machine"; then
 	echo "Enabling hypervvssd on '${product_name}' from '${board_vendor}'"
@@ -192,5 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Wed Apr 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14-alt1
+- up version to %%kernel_base_version
+- sem@: hv_set_ifconfig: Improve script
+
 * Tue Apr 08 2014 Alexey Shabalin <shaba@altlinux.ru> 0-alt1
 - Initial build
