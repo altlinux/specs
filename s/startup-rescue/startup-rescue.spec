@@ -1,27 +1,29 @@
 Name: startup-rescue
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
 License: GPL
 Group: System/Base
+
+Url: http://en.altlinux.org/Rescue
+Source: rescue-%version.tar
+
 BuildArch: noarch
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
-
-Source: rescue-%version.tar
 
 Requires(post): %post_service
 Requires(preun): %preun_service
 Requires: sfdisk console-vt-tools libshell system-report
 
-#Optional requires
+# Optional requires
 Requires: dmidecode ddcprobe
 
 %description
 This package contains scripts used to boot your system from rescue disk.
 
 %prep
-%setup -q -n rescue-%version
+%setup -n rescue-%version
 
 %install
 mkdir -p -- %buildroot{%_bindir,/sbin,/etc/rc.d}
@@ -40,6 +42,10 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 %_initdir/sysreport
 
 %changelog
+* Wed Apr 16 2014 Michael Shigorin <mike@altlinux.org> 0.19-alt1
+- rescue-shell: propose read-only mdraid assembly
+- added an Url:
+
 * Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 0.18-alt1
 - find-fstab: *fix* forensic mode support (invert condition)
 - improve user interaction too
