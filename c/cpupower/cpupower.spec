@@ -1,120 +1,138 @@
-Name:           cpupower
-Version:        3.5.4
-Release:        alt2
-Summary:        Linux kernel tool to examine and tune power saving related features of your processor
-Group:          System/Kernel and hardware
-License:        GPLv2
-URL:            http://www.kernel.org/
-Source0:        cpupower-%{version}.tar
-Source1:        Makefile
-Patch0:         power-x86-destdir.patch
-Packager: Andriy Stepanov <stanv@altlinux.ru>
-BuildRequires: libpci-devel gettext
+%define kernel_base_version 3.14
+%define kernel_source kernel-source-%kernel_base_version
 
-Provides:  cpufrequtils = 009
-Obsoletes: cpufrequtils < 008
-Obsoletes: cpuspeed < 1.5
+Name: cpupower
+Version: %kernel_base_version.1
+Release: alt1
+
+Summary: Linux kernel tool to examine and tune power saving related features of your processor
+License: GPLv2
+Group: System/Kernel and hardware
+URL: http://www.kernel.org/
+
+Patch: %name-%version-%release.patch
+
+Requires: lib%name = %version-%release
+
+Provides: cpufrequtils = 009-%release
+Obsoletes: cpufrequtils < 009-%release
+
+BuildRequires: libpci-devel
+BuildRequires: rpm-build-kernel
+BuildRequires: %kernel_source = 1.0.0
 
 %description
 This package contains the tools/power directory from the kernel source
 and the supporting document
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
-Conflicts:      libcpufreq-devel
+%package -n lib%name
+Summary: Library for %name
+License: GPLv2
+Group: System/Libraries
 
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+Conflicts: %name < %version-%release
 
+%description -n lib%name
+This packages contains some library needed by %name.
+
+%package -n lib%name-devel
+Summary: Development files for %name
+Group: Development/C
+Requires: lib%name = %version-%release
+Provides: %name-devel = %version-%release
+Obsoletes:%name-devel < %version-%release
+
+%description -n lib%name-devel
+The lib%name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -q -c -n %name-%version/tools/power
-%patch0 -p3
-
-# Fetch version
-install -m0644 -p %{S:1} %_builddir/%name-%version
-
+%setup -cT
+tar -xf %kernel_src/%kernel_source.tar.*
+cd %kernel_source
+%patch -p1
 
 %build
-%make -C cpupower CPUFREQ_BENCH=false
+chmod +x %kernel_source/tools/power/cpupower/utils/version-gen.sh
+%make_build -C %kernel_source/tools/power/cpupower CPUFREQ_BENCH=false
 
 %ifarch %{ix86}
-    cd cpupower/debug/i386
-    %make centrino-decode powernow-k8-decode
-    cd -
+    pushd %kernel_source/tools/power/cpupower/debug/i386
+    %make_build centrino-decode powernow-k8-decode
+    popd
 %endif
 
 %ifarch x86_64
-    cd cpupower/debug/x86_64
-    %make centrino-decode powernow-k8-decode
-    cd -
+    pushd %kernel_source/tools/power/cpupower/debug/x86_64
+    %make_build centrino-decode powernow-k8-decode
+    popd
 %endif
 
 %ifarch %{ix86} x86_64
-   cd x86/x86_energy_perf_policy/
-   %make
-   cd -
-   cd x86/turbostat
-   %make
-   cd -
+   pushd %kernel_source/tools/power/x86/x86_energy_perf_policy
+   %make_build
+   popd
+   pushd %kernel_source/tools/power/x86/turbostat
+   %make_build
+   popd
 %endif
 
 
 %install
-%make -C cpupower DESTDIR=$RPM_BUILD_ROOT libdir=%{_libdir} mandir=%{_mandir} CPUFREQ_BENCH=false install
-rm -f %{buildroot}%{_libdir}/*.{a,la}
-chmod 0755 %{buildroot}%{_libdir}/libcpupower.so*
+%make -C %kernel_source/tools/power/cpupower DESTDIR=%buildroot libdir=%_libdir mandir=%_mandir CPUFREQ_BENCH=false install
+rm -f %buildroot%_libdir/*.{a,la}
 %find_lang cpupower
 
 %ifarch %{ix86}
-    cd cpupower/debug/i386
-    install -m755 centrino-decode %{buildroot}%{_bindir}/centrino-decode
-    install -m755 powernow-k8-decode %{buildroot}%{_bindir}/powernow-k8-decode
-    cd -
+    pushd %kernel_source/tools/power/cpupower/debug/i386
+    install -m755 centrino-decode %buildroot%_bindir/centrino-decode
+    install -m755 powernow-k8-decode %buildroot%_bindir/powernow-k8-decode
+    popd
 %endif
 
 %ifarch x86_64
-    cd cpupower/debug/x86_64
-    install -m755 centrino-decode %{buildroot}%{_bindir}/centrino-decode
-    install -m755 powernow-k8-decode %{buildroot}%{_bindir}/powernow-k8-decode
-    cd -
+    pushd %kernel_source/tools/power/cpupower/debug/x86_64
+    install -m755 centrino-decode %buildroot%_bindir/centrino-decode
+    install -m755 powernow-k8-decode %buildroot%_bindir/powernow-k8-decode
+    popd
 %endif
 
 %ifarch %{ix86} x86_64
-   mkdir -p %{buildroot}%{_mandir}/man8
-   cd x86/x86_energy_perf_policy
-   make DESTDIR=%{buildroot} install
-   cd -
-   cd x86/turbostat
-   make DESTDIR=%{buildroot} install
-   cd -
+   mkdir -p %buildroot%_mandir/man8
+   pushd %kernel_source/tools/power/x86/x86_energy_perf_policy
+   make DESTDIR=%buildroot install
+   popd
+   pushd %kernel_source/tools/power/x86/turbostat
+   make DESTDIR=%buildroot install
+   popd
 %endif
 
 %files -f cpupower.lang
-%{_bindir}/cpupower
-%{_libdir}/libcpupower.so.0
-%{_libdir}/libcpupower.so.0.0.0
-%{_mandir}/man[1-8]/cpupower*
+%_bindir/cpupower
+%_mandir/man[1-8]/cpupower*
 
 %ifarch %{ix86} x86_64
-%{_bindir}/centrino-decode
-%{_bindir}/powernow-k8-decode
-%{_bindir}/x86_energy_perf_policy
-%{_mandir}/man8/x86_energy_perf_policy*
-%{_bindir}/turbostat
-%{_mandir}/man8/turbostat*
+%_bindir/centrino-decode
+%_bindir/powernow-k8-decode
+%_bindir/x86_energy_perf_policy
+%_man8dir/x86_energy_perf_policy*
+%_bindir/turbostat
+%_man8dir/turbostat*
 %endif
 
-%files devel
-%defattr(-,root,root,-)
-%{_libdir}/libcpupower.so
-%{_includedir}/cpufreq.h
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_includedir/*
 
 %changelog
+* Wed Apr 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.1-alt1
+- build from kernel-source-3.14
+- add libcpupower package
+- rename cpupower-devel package to libcpupower-devel
+
 * Thu Oct 18 2012 Andriy Stepanov <stanv@altlinux.ru> 3.5.4-alt2
 - Bug 27867
 
