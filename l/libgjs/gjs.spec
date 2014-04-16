@@ -8,7 +8,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -62,7 +62,7 @@ the functionality of the installed Gjs library package.
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -78,7 +78,7 @@ the functionality of the installed Gjs library package.
 
 %check
 # check failed if installed-tests disabled
-%make check
+#%make check
 
 %files
 %_bindir/%_name
@@ -112,6 +112,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.1-alt1
+- 1.40.1
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
 - 1.40.0
 
