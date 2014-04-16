@@ -1,17 +1,17 @@
-# 4.2.3.1
+# 4.2.3.3
 %def_with forky
 %def_with parallelism
 %def_without fetch
 
 Name: LibreOffice4
 Version: 4.2
-%define urelease 3.1
+%define urelease 3.3
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -23,6 +23,7 @@ Requires: %name-mimetypes = %version-%release
 Requires: %name-extensions = %version-%release
 
 Provides: %name-full = %version-%release
+Provides: libreoffice = %version-%release
 Obsoletes: %name-full < %version-%release
 
 %define with_lang ru de fr uk pt-BR es kk
@@ -221,7 +222,7 @@ echo Direct build
 
 # Hack GCC_VERSION usage
 sed -i '
-s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1`/
+s/\(GCC_VERSION=`echo $_gcc_version\)[^`]*`/\1|cut -d. -f1-2`/
 /if test "\${*GCC_VERSION}*" -lt 0401/,/fi/d
 /elif test "\${GCC_VERSION\?}" -ge 0403; then/d
 ' configure.ac
@@ -445,6 +446,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed Apr 16 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt2
+- Version up to 4.2.3.3
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt1
 - Version up
 
