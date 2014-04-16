@@ -1,21 +1,26 @@
 Name: catfish
-Version: 0.3.2
-Release: alt3
+Version: 1.0.2
+Release: alt1
 Summary: A handy file search tool
 
 Group: File tools
 License: GPLv2+
 Url: http://www.twotoasts.de/index.php/catfish/
-Source: http://www.twotoasts.de/media/catfish/%name-%version.tar.gz
+Source: %name-%version.tar.bz2
 BuildArch: noarch
 
-BuildRequires: gettext
+BuildRequires: intltool
 # search engine
 Requires: %_bindir/locate
 Requires: %_bindir/find
-Requires: python-module-pygtk-libglade
+# This is dirty icon hack
+Requires: gnome-icon-theme-symbolic
 
-%define _python_req_method normal
+#define _python_req_method normal
+
+# Automatically added by buildreq on Thu Oct 10 2013
+# optimized out: at-spi2-atk fontconfig gobject-introspection libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libpango-gir libwayland-client libwayland-cursor libwayland-server python-base python-module-pygobject3 python-modules python-modules-compiler python-modules-email python-modules-logging python-modules-xml
+BuildRequires: libgtk+3-gir python-module-PyXML python-module-distribute python-module-zeitgeist2.0
 
 %description
 A handy file search tool using different backends which is
@@ -25,43 +30,15 @@ This program acts as a frontend for different file search engines.
 The interface is intentionally lightweight and simple. But it takes
 configuration options from the command line.
 
-# TODO invent something (e. g. %name-<engine> packages)
-#package engines
-#Summary: Metapackage to install all supported engines
-#Group: Applications/File
-#License: GPLv2+
-
-#Requires: %name = %version-%release
-#Requires:	beagle
-#Requires: doodle
-#Requires: pinot
-#Requires: strigi
-#Requires: tracker
-
-#%description engines
-#This is a metapackage to install all engines supported by %name.
+%define symicons %_datadir/%name/data/icons/gnome
 
 %prep
-%setup -q -n %name-%version
-# Fix up permissions...
-chmod 0644 po/* [A-Z]* catfish*
-
-# Some configulation changes
-#
-# msgfmt is fixed.
-# Linking is still broken...
-sed -i.misc \
-	-e '/svg/s|install|install -m 644|' \
-	-e '/glade/s|install| install -m 644|' \
-	-e 's|install |install -p |' \
-	-e 's|pyc|py|' \
-	-e 's|^\([ \t]*\)ln |\1: ln |' \
-	-e 's|cp -rf|cp -prf|' \
-	Makefile.in
-
-sed -i.byte \
-	-e 's|pyc|py|' \
-	%name.in
+%setup -n %name-%version
+# This is dirty icon hack
+sed -i '/Gtk.IconTheme.get_default/{
+p
+s@ *=.*@.append_search_path("%symicons")@
+}' catfish/CatfishWindow.py
 
 %build
 # This configure accepts only the option --prefix
@@ -69,18 +46,13 @@ sed -i.byte \
 ./configure --prefix=%prefix
 
 %install
-
-#__make install DESTDIR=%buildroot
 %makeinstall DESTDIR=%buildroot
+rm -rf %buildroot%_defaultdocdir/%name
 
 install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 
-# Remove all unnecessary documentation
-rm -rf %buildroot%_datadir/doc/%name
-
-# and.. manually link..
-ln -s -f ../icons/hicolor/scalable/apps/%name.svg %buildroot%_datadir/%name/
-ln -s -f ../locale/ %buildroot%_datadir/%name/
+# This is dirty icon hack
+mkdir -p %buildroot/%symicons && ln -s %_iconsdir/gnome %buildroot/%symicons/hicolor
 
 %find_lang %name
 
@@ -89,12 +61,19 @@ ln -s -f ../locale/ %buildroot%_datadir/%name/
 
 %_bindir/%name
 %_desktopdir/%name.desktop
-%dir %_datadir/%name
-%_datadir/%name/*
+%_datadir/%name
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 #files engines
 %changelog
+* Wed Apr 16 2014 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
+- Autobuild version bump to 1.0.2
+
+* Thu Oct 10 2013 Fr. Br. George <george@altlinux.ru> 0.8.2-alt1
+- Autobuild version bump to 0.8.2
+- Mass upstream version update
+- Catch icon_not_found exception again
+
 * Wed May 29 2013 Fr. Br. George <george@altlinux.ru> 0.3.2-alt3
 - Catch icon_not_found exception (Closes: 26027)
 
