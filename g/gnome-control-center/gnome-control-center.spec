@@ -7,12 +7,11 @@
 
 %def_disable debug
 %def_disable static
-%def_without libsocialweb
 %def_with cheese
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -94,7 +93,6 @@ BuildRequires: libclutter-gtk3-devel
 BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
 BuildRequires: libgrilo-devel >= %grilo_ver
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
-%{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
 %{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bt_ver}
 
 %description
@@ -140,7 +138,6 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 %configure \
     %{subst_enable static} \
-    %{subst_with libsocialweb} \
     %{subst_with cheese}
 
 %make_build
@@ -182,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Apr 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
