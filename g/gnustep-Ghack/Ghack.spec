@@ -2,14 +2,14 @@
 
 Name: gnustep-Ghack
 Version: 0.2
-Release: alt4.git20130613
+Release: alt4.git20140409
 Summary: Graphical nethack
 License: GPLv2
 Group: Graphical desktop/GNUstep
-Url: http://www.gnustep.org/
+Url: http://wiki.gnustep.org/index.php/Ghack.app
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/v-zor/ninjacode.git
+# https://github.com/enrytheermit/ghack.git
 Source: %name-%version.tar
 Source1: %name.menu
 
@@ -21,7 +21,8 @@ BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
 Requires: gnustep-back
 
 %description
-Minimal tile engine graphics support.
+Ghack is a GNUstep/Objective-C graphical nethack program (as in
+http://nethack.org).
 
 %prep
 %setup
@@ -49,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4.git20140409
+- New snapshot
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4.git20130613
 - Built with clang
 
