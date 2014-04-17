@@ -1,4 +1,8 @@
-%define svn_revision 405363
+%define svn_revision 412466
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk13
 Summary: Open source PBX
 Version: 13
@@ -66,10 +70,11 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 405363
+%define svn_revision 412466
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
+%def_without voicemail
 %def_without hoard
 %def_without addons
 %def_without corosync
@@ -153,6 +158,7 @@ Requires: %name-res_crypto = %version-%release
 mini voicemail application
 
 
+%if_with voicemail
 %package app_voicemail
 Summary: Asterisk voicemail module
 Group: %group
@@ -161,6 +167,7 @@ Requires: %name = %version-%release
 %description app_voicemail
 VoiceMail for Asterisk
 
+%endif
 
 %package calendar
 Summary: Calendar support for Asterisk
@@ -321,7 +328,9 @@ BuildArch: noarch
 Requires: aelparse13 = %version-%release
 Requires: %name-ael = %version-%release
 Requires: %name-fax = %version-%release
+%if_with voicemail
 Requires: %name-app_voicemail = %version-%release
+%endif
 Requires: %name-calendar = %version-%release
 Requires: %name-cdr_radius = %version-%release
 Requires: %name-chan_iax2 = %version-%release
@@ -656,6 +665,9 @@ menuselect/menuselect  \
     --enable chan_misdn \
     --enable res_jabber \
     --enable chan_gtalk \
+    --enable res_mwi_external \
+    --enable res_mwi_external_ami \
+    --enable res_stasis_mailbox \
 %if_with corosync
     --enable res_corosync \
 %endif
@@ -802,7 +814,6 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %astmodule app_chanisavail
 %astmodule app_controlplayback
 %astmodule app_db
-%astmodule app_directory
 %astmodule app_disa
 %astmodule app_echo
 %astmodule app_exec
@@ -984,6 +995,10 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %astmodule res_parking
 %astsample res_parking
 %astmodule res_format_attr_opus
+%astmodule func_periodic_hook
+%astmodule func_sorcery
+%astmodule res_mwi_external
+%astmodule res_mwi_external_ami
 %if_without corosync
 %exclude %astsample res_corosync
 %endif
@@ -1007,10 +1022,12 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %astsample minivm
 %astsample extensions_minivm
 
+%if_with voicemail
 %files app_voicemail
 %dir %attr(3770,root,_asterisk) /var/spool/asterisk/voicemail
 %astmodule app_voicemail
 %astsample voicemail
+%endif
 
 %files calendar
 %astmodule res_calendar
@@ -1277,6 +1294,12 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Thu Apr 17 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.412466
+- update from svn revision 412466
+
+* Sun Apr 06 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.411779
+- update from svn revision 411779
+
 * Mon Jan 13 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.405363
 - update from svn revision 405363
 
