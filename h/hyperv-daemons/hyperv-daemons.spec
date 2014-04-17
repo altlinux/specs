@@ -3,7 +3,7 @@
 
 Name: hyperv-daemons
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 Summary:  HyperV daemons suite
 License: GPLv2
 Group: Emulators
@@ -192,6 +192,10 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Thu Apr 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14-alt2
+- sem@: hv_get_dns_info: Use resolvconf for retrieving DNS servers
+- patch from fedora: Fix for long file names from readdir
+
 * Wed Apr 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14-alt1
 - up version to %%kernel_base_version
 - sem@: hv_set_ifconfig: Improve script
