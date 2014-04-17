@@ -1,13 +1,14 @@
 Name: isomaster
-Version: 1.3.8
-Release: alt1.qa1
+Version: 1.3.11
+Release: alt1
 
 Summary: An open-source, graphical CD image editor
 License: GPL
 Group: File tools
 
 Url: http://littlesvr.ca/isomaster
-Source: %url/releases/isomaster-%version.tar.bz2
+Source: %url/releases/%name-%version.tar.bz2
+Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Jan 05 2010 (-bi)
@@ -25,6 +26,7 @@ ISO Master: an ISO9660 remastering utility
 %make PREFIX=%prefix
 
 %install
+mkdir -p %buildroot%_defaultdocdir/bkisofs
 %makeinstall_std PREFIX=%prefix
 %find_lang %name
 rm -rf %buildroot%_defaultdocdir/bkisofs
@@ -37,8 +39,18 @@ rm -rf %buildroot%_defaultdocdir/bkisofs
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Apr 17 2014 Michael Shigorin <mike@altlinux.org> 1.3.11-alt1
+- new version (watch file uupdate)
+- merged 1.3.8-alt1.qa1 changelog record
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
+
+* Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.3.9-alt2
+- added watch file
+
+* Tue Jan 24 2012 Michael Shigorin <mike@altlinux.org> 1.3.9-alt1
+- 1.3.9
 
 * Thu Jan 06 2011 Michael Shigorin <mike@altlinux.org> 1.3.8-alt1
 - 1.3.8
