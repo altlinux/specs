@@ -1,6 +1,6 @@
 Name: hello
-Version: 2.4
-Release: alt2.qa1
+Version: 2.9
+Release: alt1
 
 Summary: GNU hello, THE greeting printing program
 Group: Development/C
@@ -8,16 +8,14 @@ License: GPLv3+
 
 Url: ftp://ftp.gnu.org/gnu/hello/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
-Source: %url/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 
 %description
 The GNU `hello' program produces a familiar, friendly greeting.  It
 allows nonprogrammers to use a classic computer science tool which
 would otherwise be unavailable to them.  Because it is protected by the
 GNU General Public License, users are free to share and change it.
-   
+
 %prep
 %setup
 
@@ -36,11 +34,14 @@ GNU General Public License, users are free to share and change it.
 %_mandir/man?/*
 
 %changelog
+* Thu Apr 17 2014 Fr. Br. George <george@altlinux.ru> 2.9-alt1
+- Autobuild version bump to 2.9
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
 * Thu May 21 2009 Andrey Rahmatullin <wrar@altlinux.ru> 2.4-alt2
-- remove obsolete %%{,un}install_info calls 
+- remove obsolete %%{,un}install_info calls
 
 * Sat Dec 13 2008 Andrey Rahmatullin <wrar@altlinux.ru> 2.4-alt1
 - 2.4
