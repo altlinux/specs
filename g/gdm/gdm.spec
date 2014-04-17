@@ -8,7 +8,7 @@
 #%%define default_pam_config altlinux
 %define default_pam_config redhat
 # Initial virtual terminal to use
-%define vt_nr 7
+%define vt_nr 1
 
 %def_disable static
 %def_disable debug
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -372,6 +372,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Thu Apr 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt3
+- set initial vt number to 1 for "flicker-free plymouth transition"
+
 * Thu Apr 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt2
 - add compatibility with xdm "-nodaemon" option
 
