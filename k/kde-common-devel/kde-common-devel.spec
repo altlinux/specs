@@ -6,7 +6,7 @@
 %define rpm_ver %{get_SVR rpm}
 
 Name: kde-common-devel
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -48,6 +48,9 @@ install -D -m 0644 %SOURCE11 %buildroot/%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.0-alt1
 - new version
 - turn off build verbosity by default
