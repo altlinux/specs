@@ -1,6 +1,6 @@
 
 Name: akonadi
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Group: Databases
@@ -198,6 +198,12 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 1.12.1-alt1
+- new version
+
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.12.0-alt0.M70P.1
+- built for M70P
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.12.0-alt1
 - new version
 
