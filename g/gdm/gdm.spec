@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -49,6 +49,7 @@ Source13: gdm-launch-environment.pam
 Patch2: gdm-3.11.90-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
+Patch12: gdm-3.12.1-fix-daemonize-regression.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
@@ -104,6 +105,7 @@ BuildPreReq: libnss-devel >= %nss_ver
 BuildRequires:  gcc-c++ libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
+BuildRequires: libdaemon-devel
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run
 
@@ -219,6 +221,7 @@ Install this package for use with GNOME desktop.
 %patch2 -p1
 %patch7 -p1
 %patch11 -p1 -b .lfs
+%patch12 -p1
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
@@ -369,6 +372,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Thu Apr 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt2
+- add compatibility with xdm "-nodaemon" option
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
