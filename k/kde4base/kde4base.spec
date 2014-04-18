@@ -7,8 +7,8 @@
 
 %define rname kdebase
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -51,7 +51,8 @@ BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
 BuildRequires: libqimageblitz-devel soprano soprano-backend-redland libsoprano-devel libstrigi-devel
 BuildRequires: libungif-devel xml-utils glib2-devel
 BuildRequires: kde4libs-devel >= %version
-BuildRequires: kde4pimlibs-devel kde4-nepomuk-core-devel kde4-nepomuk-widgets-devel
+BuildRequires: kde4pimlibs-devel
+BuildRequires: kde4-kfilemetadata-devel kde4-baloo-devel kde4-baloo-widgets-devel
 BuildRequires: kde4base-workspace-devel
 BuildRequires: desktop-file-utils
 
@@ -605,6 +606,12 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Tue Apr 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

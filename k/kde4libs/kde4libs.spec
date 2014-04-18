@@ -12,8 +12,8 @@
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
 
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -346,6 +346,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

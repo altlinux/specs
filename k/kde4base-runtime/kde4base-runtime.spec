@@ -6,11 +6,11 @@
 
 %define rname kdebase-runtime
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 13
+%define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -28,7 +28,7 @@ Patch1: kdebase-runtime-4.6.0-canberra.patch
 # ALT
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
-#
+Patch1003: kdebase-runtime-4.12.3-alt-find-libssh.patch
 Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
@@ -36,10 +36,10 @@ Patch1007: kdebase-runtime-4.12.3-alt-use-kwallet.patch
 
 BuildRequires(pre): kde4pimlibs-devel attica-devel
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
-BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel
+BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel libgcrypt-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
 BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
-BuildRequires: kde4-nepomuk-core-devel kde4-kactivities-devel
+BuildRequires: kde4-kactivities-devel
 BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
 BuildRequires: libopenslp-devel libqca2-devel libgpgme-devel
@@ -81,7 +81,7 @@ KDE 4 library.
 %package devel
 Summary: Headers files for %name
 Group: Development/KDE and QT
-Requires: kde4libs-devel kde4-nepomuk-core-devel
+Requires: kde4libs-devel
 Requires: %libname = %EVR
 %description devel
 Headers files needed to build applications based on kdegames applications.
@@ -101,7 +101,7 @@ Menu resources for the original KDE menu.
 #
 %patch1001 -p1
 %patch1002 -p1
-#
+%patch1003 -p1
 %patch1004 -p1
 %patch1005 -p1
 %patch1006 -p1
@@ -229,6 +229,18 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Thu Mar 27 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1.M70P.3
+- fix find libssh with old cmake (ALT#29911)
+
+* Thu Mar 27 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1.M70P.2
+- rebuilt with new libssh
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1.M70P.1
+- built for M70P
+
 * Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt2
 - don't offer gpg for kwallet by default
 

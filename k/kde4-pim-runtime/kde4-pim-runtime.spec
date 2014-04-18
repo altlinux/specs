@@ -3,8 +3,8 @@
 
 %define rname kdepim-runtime
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -30,12 +30,11 @@ Patch50: kdepim-runtime-4.4.93-show_akonadi_kcm.patch
 # ALT
 Patch102: kdepim-4.12.2-alt-akonadi-sqlite3.patch
 #
-Patch104: kdepim-4.8.0-alt-def-mixedmaildir-path.patch
-Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
+Patch104: kdepim-4.13.0-alt-def-mixedmaildir-path.patch
+Patch105: kdepim-4.13.0-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
-Patch107: kdepim-4.10.2-alt-maildir-checks.patch
-Patch108: kdepim-4.7.4-alt-mixedmaildir-show-error.patch
-Patch109: kdepim-4.11.1-alt-def-nepomuk.patch
+Patch107: kdepim-4.13.0-alt-maildir-checks.patch
+Patch108: kdepim-4.11.1-alt-def-nepomuk.patch
 
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
@@ -43,7 +42,7 @@ BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
-BuildRequires: libkgapi-devel qjson-devel kde4-nepomuk-core-devel libkfbapi-devel
+BuildRequires: libkgapi-devel qjson-devel libkfbapi-devel
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
@@ -116,6 +115,14 @@ Requires: %name-common = %version-%release
 %description -n libkdepim4-runtime-dms-copy
 KDE 4 library
 
+%package -n libfolderarchivesettings4
+Summary: KDE 4 library
+Group: System/Libraries
+License: LGPLv2
+Requires: %name-common = %version-%release
+%description -n libfolderarchivesettings4
+KDE 4 library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -136,8 +143,7 @@ based on kdepim.
 %patch105 -p2
 %patch106 -p2
 %patch107 -p1
-%patch108 -p2
-%patch109 -p1
+#%patch108 -p1
 
 %build
 %K4build \
@@ -154,7 +160,7 @@ based on kdepim.
 %_K4xdg_mime/kdepim-mime.xml
 %_K4iconsdir/hicolor/*/*/*
 %_K4xdg_mime/x-vnd.akonadi.socialnotification.xml
-%_datadir/ontology/kde/aneo.*
+#%_datadir/ontology/kde/aneo.*
 
 %files
 #  mobile
@@ -170,8 +176,9 @@ based on kdepim.
 %_K4bindir/kaddressbookmigrator
 %_K4bindir/kjotsmigrator
 %_K4bindir/kmail-migrator
+%_K4bindir/knotes-migrator
 %_K4bindir/kres-migrator
-%_K4bindir/nepomukpimindexerutility
+#%_K4bindir/nepomukpimindexerutility
 %_K4lib/accountwizard_plugin.so
 %_K4lib/kcal_akonadi.so
 %_K4lib/kio_akonadi.so
@@ -187,7 +194,7 @@ based on kdepim.
 %_K4apps/akonadi/plugins/serializer/akonadi_serializer_*.desktop
 %_K4apps/akonadi/accountwizard/
 %_K4apps/akonadi_*/
-%_K4apps/nepomukpimindexerutility/
+#%_K4apps/nepomukpimindexerutility/
 %_K4conf/kmail-migratorrc
 %_K4conf/kres-migratorrc
 %_K4conf/accountwizard.knsrc
@@ -202,9 +209,9 @@ based on kdepim.
 %_K4srv/kcm_akonadi_server.desktop
 %_K4srv/kresources/kabc/akonadi.desktop
 %_K4srv/kresources/kcal/akonadi.desktop
-%_K4srv/nepomuk*.desktop
+#%_K4srv/nepomuk*.desktop
 %_K4srvtyp/davgroupwareprovider.desktop
-%_K4srvtyp/akonadinepomukfeeder.desktop
+#%_K4srvtyp/akonadinepomukfeeder.desktop
 
 %files -n libkdepim4-copy
 %_K4libdir/libkdepim-copy.so.*
@@ -214,6 +221,8 @@ based on kdepim.
 %_K4libdir/libakonadi-filestore.so.*
 %files -n libkmindexreader4
 %_K4libdir/libkmindexreader.so.*
+%files -n libfolderarchivesettings4
+%_K4libdir/libfolderarchivesettings.so.*
 
 %files devel
 %_K4link/*.so
@@ -223,6 +232,12 @@ based on kdepim.
 
 
 %changelog
+* Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

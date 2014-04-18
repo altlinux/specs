@@ -3,8 +3,8 @@
 
 %define rname konsole
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 13
+%define bugfix 0
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -82,12 +82,18 @@ __EOF__
 %_K4apps/konsole/
 %_K4conf_update/*
 %_K4srv/konsolepart.desktop
-%_K4srv/ServiceMenus/konsolehere.desktop
+%_K4srv/ServiceMenus/konsole*.desktop
 %_K4srvtyp/terminalemulator.desktop
 %_K4doc/en/konsole/
 
 
 %changelog
+* Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
