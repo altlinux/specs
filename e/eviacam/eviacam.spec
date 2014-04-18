@@ -1,7 +1,7 @@
 Summary: Mouse replacement software that moves the pointer as you move your head
 Name: eviacam
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: System/Base
 License: GPLv3
@@ -23,7 +23,7 @@ is required. Based on the award winning Facial Mouse software.
 %build
 %autoreconf
 #For temp fix https://bugzilla.altlinux.org/29231
-%configure LIBS=" -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_stitching -lopencv_ts -lopencv_video -lopencv_videostab"
+%configure LIBS=" -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_stitching -lopencv_video -lopencv_videostab"
 %make_build
 
 %install
@@ -39,6 +39,9 @@ is required. Based on the award winning Facial Mouse software.
 %_datadir/pixmaps/*
 
 %changelog
+* Fri Apr 18 2014 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt2
+- Do not link with obsoleted library libopencv_ts
+
 * Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.7.0-alt1
 - New version
 
