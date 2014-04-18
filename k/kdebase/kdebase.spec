@@ -36,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt7.1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -1058,6 +1058,9 @@ fi
 %triggerpostun kdm -- kdebase-kdm < %major.%minor
 %_K3bindir/genkdmconf --old-confs --old-scripts --in %x11confdir/kdm ||:
 
+%triggerpostun common -- kdebase-common <= 3.5.13.2-alt7
+[ "`grep '^ServerVTs=' %_K3conf/kdm/kdmrc | sed 's|ServerVTs=\(.*\)|\1|'`" != "-7" ] \
+    || sed -i 's|^ServerVTs=.*|ServerVTs=-1,-7|' %_K3conf/kdm/kdmrc ||:
 
 %files
 
@@ -2000,6 +2003,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Fri Apr 11 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt7.1
+- fix plymouth support
+
 * Wed Jan 01 2014 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt7
 - Some default configs changed.
 - TSAK build disable

@@ -14,7 +14,7 @@
 
 Name: mint-display-manager
 Version: 1.0.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: The Mint Display Manager
 License: %gpl2plus
@@ -27,6 +27,8 @@ Source2: mdm-termok-command
 
 Patch: %name-%version-%release.patch
 Patch1: mint-display-manager-alt-noWerror.patch
+Patch2: mint-display-manager-alt-vt1.patch
+Patch3: mint-display-manager-alt-fix-linking.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: desktop-file-utils intltool gnome-common gnome-doc-utils libglade-devel libxml2-devel
@@ -63,6 +65,8 @@ This package contains user documentation for Mint Display Manager.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 %patch -p1
 
 %build
@@ -149,6 +153,9 @@ useradd -r -N -c 'MDM' -g %base_name -d /var/lib/mdm -s /dev/null %base_name >/d
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Mon Apr 14 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt1.2
+- start X on vt1
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1.1
 - Fixed build
 

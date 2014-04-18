@@ -5,7 +5,7 @@
 
 Name: lxde-%upstreamname
 Version: 0.3.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -18,6 +18,7 @@ Source: %upstreamname-%version.tar.gz
 Patch3: lxdm-alt-session-name.patch
 Patch4: lxdm-nonolisten.patch
 Patch5: lxdm-buildfix_syswait.patch
+Patch6: lxdm-0.4.1-old-plymouth.patch
 
 Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
@@ -38,6 +39,7 @@ KDM in LXDE distros. It's still in very early stage of development.
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p1
 
 %build
 autoreconf -fisv
@@ -74,6 +76,9 @@ install -m755 %SOURCE3 %{buildroot}%{_sysconfdir}/%{upstreamname}/Xsession
 %_datadir/%upstreamname
 
 %changelog
+* Fri Apr 11 2014 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt2.2
+- fix plymouth support
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.1
 - Fixed build
 

@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -58,7 +58,8 @@ Patch24: kdebase-workspace-4.11.1-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
 Patch26: kde-workspace-4.10.90-kde#171685.patch
 Patch27: kde-workspace-4.11.0-backlight_actual_brightness.patch
-Patch28: kde-workspace-4.11.1-kdm-logind-multiseat.patch
+Patch28: kde-workspace-4.11.1-kdm_plymouth081.patch
+Patch29: kde-workspace-4.11.1-kdm-logind-multiseat.patch
 # Ubuntu
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_always_show_kickoff_subtext.diff
@@ -522,8 +523,9 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%if_enabled systemd
 %patch28 -p1
+%if_enabled systemd
+%patch29 -p1
 %endif
 #
 %patch850 -p1
@@ -706,6 +708,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 
 %post kdm
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/kdm4
+
+%triggerpostun kdm -- kde4base-workspace-kdm <= 4.11.8-alt1
+[ "`grep '^ServerVTs=' %x11confdir/kdm4/kdmrc | sed 's|ServerVTs=\(.*\)|\1|'`" != "-7" ] \
+    || sed -i 's|^ServerVTs=.*|ServerVTs=-1,-7|' %x11confdir/kdm4/kdmrc ||:
 %endif
 
 
@@ -955,6 +961,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Apr 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt2
+- add plymouth support
+
+* Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt1
 - new version
 
