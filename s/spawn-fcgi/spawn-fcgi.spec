@@ -3,7 +3,7 @@
 
 Name: spawn-fcgi
 Version: 1.6.3
-Release: alt2
+Release: alt3
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -60,6 +60,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Fri Apr 18 2014 Anton Farygin <rider@altlinux.ru> 1.6.3-alt3
+- tune default config and initscript for run fcgiwrap instead of php5-cgi
+
 * Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 1.6.3-alt2
 - fixed condrestart and condreload targets in initscript (closes: #29456)
 
