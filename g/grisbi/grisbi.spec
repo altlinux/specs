@@ -1,80 +1,57 @@
-Name: grisbi
-Version: 0.5.9
-Release: alt2.qa2
+Name: 	 grisbi
+Version: 1.0.0
+Release: alt1
 
-Summary: Personal accounting application
-Summary(ru_RU.KOI8-R): Программа персонального учёта финансов
+Summary: Personal finance application
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п©п╣я─я│п╬п╫п╟п╩я▄п╫п╬пЁп╬ я┐я┤я▒я┌п╟ я└п╦п╫п╟п╫я│п╬п╡
 License: GPL
-Group: Office 
-URL: http://www.grisbi.org
+Group:   Office 
+URL:     http://www.grisbi.org
 
-Source: http://prdownloads.sourceforge.net/grisbi/%name-%version.tar.bz2
-Patch0: grisbi-0.5.9-alt-intl.patch
-Patch1: grisbi-0.5.6-alt-docdir.patch
-Patch2: grisbi-0.5.8-alt-no_toupper.patch
-Patch3: grisbi-0.5.5-alt-rouble.patch
-Patch4: grisbi-0.5.9-alt-link.patch
+Source:  http://prdownloads.sourceforge.net/grisbi/%name-%version.tar.bz2
+# VCS    git://git.code.sf.net/p/grisbi/code
 
-# Added on Tue Jul 05 2005
-BuildRequires: glib2-devel libatk-devel libgtk+2-devel libpango-devel libxml2-devel pkgconfig zlib-devel
+BuildRequires: glib2-devel libatk-devel libgtk+2-devel libpango-devel libxml2-devel pkgconfig zlib-devel intltool
 
 %description
-Grisbi is a personal accounting application for Linux, written
+Grisbi is a personal finance application for Linux, written
 with Gnome and Gtk, and is released under the GPL licence.
 
-%description -l ru_RU.KOI8-R
-Grisbi - это программа персонального учёта финансов для Linux,
-написанная под Gnome и Gtk и распространяемая на условиях GPL.
-
+%description -l ru_RU.UTF-8
+Grisbi - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п©п╣я─я│п╬п╫п╟п╩я▄п╫п╬пЁп╬ я┐я┤я▒я┌п╟ я└п╦п╫п╟п╫я│п╬п╡ п╢п╩я▐ Linux,
+п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п©п╬п╢ Gnome п╦ Gtk п╦ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣п╪п╟я▐ п╫п╟ я┐я│п╩п╬п╡п╦я▐я┘ GPL.
 
 %prep
 %setup -q
-%patch0 -p1
-rm -fR intl
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-touch config.rpath
 
 %build
-autoreconf -ifsv
-%configure --without-included-gettext
-%make_build docdir='%_defaultdocdir/%name-%version'
+%autoreconf
+%configure
+%make_build 
 
 %install
-%makeinstall docdir='%buildroot%_defaultdocdir/%name-%version'
-install -m 644 ABOUT-NLS AUTHORS COPYING INSTALL NEWS OLDNEWS README \
-    %buildroot%_defaultdocdir/%name-%version/
-
-# menu stuff JONS GTK
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Grisbi
-GenericName=Personal accounting application
-Comment=Grisbi is a personal accounting application for Linux, written with Gnome and Gtk
-Icon=%{name}
-Exec=%name
-Terminal=false
-Categories=Office;Finance;
-EOF
+%makeinstall_std 
 
 %find_lang %name
 
 %files -f %name.lang
-%doc %_defaultdocdir/%name-%version
-%_datadir/pixmaps/%name
-%_man1dir/%name.1.gz
+%doc ABOUT-NLS AUTHORS COPYING INSTALL NEWS OLDNEWS README
+%_bindir/%name
+%_datadir/%name/*
 %_datadir/mime-info/%name.keys
 %_datadir/mime-info/%name.mime
+%_datadir/mime/packages
 %_desktopdir/%name.desktop
-%_bindir/%name
+%_pixmapsdir/%{name}*
+%_iconsdir/hicolor/scalable/apps/grisbi.svg
+%doc %_docdir/%name/*
+%doc %_man1dir/%name.1.gz
 
 %changelog
+* Thu Apr 17 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- New version
+- Build from upstream git
+
 * Sat Apr 09 2011 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt2.qa2
 - NMU: menu converted to .desktop file
 
