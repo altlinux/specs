@@ -1,8 +1,8 @@
 %set_automake_version 1.4
 
-Name: cfdg-fe
+Name: 	 cfdg-fe
 Version: v20061127
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Frontend for CFDG
 License: GPLv2
@@ -15,7 +15,6 @@ Source1: %name.desktop.conf
 
 BuildRequires(pre): ImageMagick-tools
 
-# Automatically added by buildreq on Sat Apr 18 2009
 BuildRequires: libgtk+2-devel
 
 Requires: cfdg
@@ -23,13 +22,13 @@ BuildRequires: desktop-file-utils
 
 %description
 A frontend for CFDG
-  
+
 %prep
 %setup
 
 %build
 %configure
-%make_build
+%make_build LIBS='-lm'
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -51,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_liconsdir/%name.png
 
 %changelog
+* Fri Apr 18 2014 Andrey Cherepanov <cas@altlinux.org> v20061127-alt1.qa2
+- Link with m library explicitly
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> v20061127-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
