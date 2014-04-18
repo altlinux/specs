@@ -1,7 +1,7 @@
 %define module Source-Package
 
 Name: perl-%module
-Version: 0.03
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ Conflicts: perl-Source-Repository < 0.12
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Apr 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- added Source::Package::Comparators::Raw
+
 * Fri Apr 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - added Source::Package::Pair
 
