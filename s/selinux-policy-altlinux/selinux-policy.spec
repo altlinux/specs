@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20140411
+%define date 20140418
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.18
+Version: 0.0.19
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -75,6 +75,7 @@ install -D -m0644 "$tmpfile" %buildroot/%policy_conf/policy/policy.29
 # modules
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/modules/dolphin.pp
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/modules/xorg.pp
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/modules/psql.pp
 
 
 #
@@ -199,6 +200,7 @@ exit 0 # End of %%preun section
 %policy_conf/contexts/x_contexts
 %policy_conf/contexts/netfilter_contexts
 %policy_conf/contexts/securetty_types
+%policy_conf/contexts/sepgsql_contexts
 
 %policy_conf/contexts/users/*
 
@@ -258,8 +260,12 @@ exit 0 # End of %%preun section
 # modules
 %ghost %policy_conf/modules/active/modules/dolphin.pp
 %ghost %policy_conf/modules/active/modules/xorg.pp
+%ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Fri Apr 18 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.19-alt1
+- Add Postgres module
+
 * Fri Apr 11 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.18-alt1
 - 20140411
 
