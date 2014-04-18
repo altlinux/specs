@@ -9,7 +9,7 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -174,6 +174,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Apr 18 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt1
+- 2.2.3-1-gf566167
+
 * Mon Apr 14 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
 - 2.2.2-1-g8867794
 
