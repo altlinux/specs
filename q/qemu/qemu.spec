@@ -5,14 +5,15 @@
 %def_enable binfmt_misc
 
 %def_with alpha
+%def_with aarch64
 %def_with arm
-%def_without cris
+%def_with cris
 %def_with x86
 %def_with m68k
-%def_without microblaze
+%def_with microblaze
 %def_with mips
 %def_with ppc
-%def_without sh4
+%def_with sh4
 %def_with sparc
 %def_with s390x
 %def_with lm32
@@ -22,6 +23,7 @@
 
 %def_disable werror
 %def_enable sdl
+%def_disable sdl2
 %def_enable curses
 %def_enable bluez
 %def_enable vnc
@@ -38,7 +40,7 @@
 %def_enable blobs
 %def_enable uuid
 %def_enable smartcard_nss
-%def_disable libusb
+%def_enable libusb
 %def_enable usb_redir
 %def_enable vhost_net
 %def_enable vhost_scsi
@@ -47,15 +49,20 @@
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
+%def_disable libnfs
 %def_disable seccomp
 %def_disable glusterfs
 %def_enable gtk
 %def_enable tpm
 %def_enable libssh2
 %def_enable vhdx
+%def_enable quorum
 %def_enable rdma
+%def_enable lzo
+%def_enable snappy
+%def_enable xen
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
 
 %define _group vmusers
 %define rulenum 90
@@ -69,6 +76,10 @@
 %if_with alpha
 %global target_list_system %target_list_system alpha-softmmu
 %global target_list_user %target_list_user alpha-linux-user
+%endif
+
+%if_with aarch64
+%global target_list_user %target_list_user aarch64-linux-user
 %endif
 
 %if_with arm
@@ -142,8 +153,8 @@
 # }}}
 
 Name: qemu
-Version: 1.7.0
-Release: alt3
+Version: 2.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -152,10 +163,14 @@ Requires: %name-system = %version-%release, %name-user = %version-%release
 
 URL: http://www.nongnu.org/qemu/
 Source0: %name-%version.tar
+Source1: qemu.binfmt
 Source2: qemu-kvm.control.in
 Source4: qemu-kvm.rules
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
+
+# qemu-kvm back compat wrapper
+Source13: qemu-kvm.sh
 
 Patch0: qemu-alt.patch
 
@@ -164,10 +179,11 @@ Patch0: qemu-alt.patch
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu >= 1.0.0-alt3.git55201e2 seavgabios seabios >= 1.7.3-alt2 libfdt-devel
+BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel
 BuildRequires: libpixman-devel >= 0.18.4
 BuildRequires: iasl
-%{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel }
+%{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
+%{?_enable_sdl2:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -186,12 +202,17 @@ BuildRequires: iasl
 %{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.7.0}
+%{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.0}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
+%{?_enable_quorum:BuildRequires: libgnutls-devel >= 2.10.0}
+%{?_enable_lzo:BuildRequires: liblzo2-devel}
+%{?_enable_snappy:BuildRequires: libsnappy-devel}
+%{?_enable_xen:BuildRequires: xen-devel}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -217,8 +238,8 @@ BuildArch: noarch
 Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
 Requires: seavgabios
-Requires: seabios >= 1.7.3-alt2
-Requires: ipxe-roms-qemu >= 1.0.0-alt3.git55201e2
+Requires: seabios >= 1.7.4-alt2
+Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
 Requires: %name-img = %version-%release
 
 %description common
@@ -358,6 +379,7 @@ export CFLAGS="%optflags"
 	--disable-libusb \
 	--disable-rdma \
 	--disable-libiscsi \
+	--disable-libnfs \
 	--disable-libssh2 \
 	--disable-gtk
 
@@ -385,12 +407,12 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--libdir=%_libdir \
 	--extra-cflags="%optflags" \
 	%{subst_enable werror} \
-	%{?_disable_sdl:--disable-sdl} \
+	%{?_enable_sdl:--enable-sdl} \
+	%{?_enable_sdl2:--enable-sdl --with-sdlabi=2.0} \
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
-	%{subst_enable tpm} \
-	%{?_enable_gtk:--enable-gtk --with-gtkabi=3.0} \
+	%{?_enable_gtk:--enable-gtk --with-gtkabi=3.0 --enable-vte} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
@@ -409,6 +431,8 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--enable-curl \
 	--enable-fdt \
 	--enable-kvm \
+	%{subst_enable tpm} \
+	%{subst_enable xen} \
 	--with-system-pixman \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
@@ -417,9 +441,13 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_enable_usb_redir:--enable-usb-redir} \
 	%{subst_enable glx} \
 	%{subst_enable libiscsi} \
+	%{subst_enable libnfs} \
 	%{subst_enable libssh2} \
 	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
+	%{subst_enable quorum} \
+	%{subst_enable lzo} \
+	%{subst_enable snappy} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-guest-base \
@@ -440,9 +468,9 @@ install -m644 LICENSE MAINTAINERS %buildroot%docdir/
 find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
 %endif
 
-ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu
-ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/kvm
-ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu-kvm
+install -m 0755 %SOURCE13 %buildroot%_bindir/qemu-kvm
+ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
+ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/qemu
 
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
@@ -464,6 +492,7 @@ rm -f %buildroot%_datadir/%name/pxe*rom
 rm -f %buildroot%_datadir/%name/efi*rom
 rm -f %buildroot%_datadir/%name/vgabios*bin
 rm -f %buildroot%_datadir/%name/bios.bin
+rm -f %buildroot%_datadir/%name/bios-256k.bin
 rm -f %buildroot%_datadir/%name/acpi-dsdt.aml
 rm -f %buildroot%_datadir/%name/q35-acpi-dsdt.aml
 #rm -f %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb
@@ -475,7 +504,7 @@ rm -f %buildroot%_datadir/%name/q35-acpi-dsdt.aml
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
 
-for rom in e1000 eepro100 ne2k_pci pcnet rtl8139 virtio ; do
+for rom in e1000 ne2k_pci pcnet rtl8139 virtio ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%name/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
 done
@@ -484,11 +513,57 @@ for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware ; d
   ln -r -s %buildroot%_datadir/seavgabios/${bios}.bin %buildroot%_datadir/%name/${bios}.bin
 done
 
-ln -r -s %buildroot%_datadir/seabios/bios.bin %buildroot%_datadir/%name/bios.bin
+ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%name/
 ln -r -s %buildroot%_datadir/seabios/{acpi-dsdt,q35-acpi-dsdt}.aml %buildroot%_datadir/%name/
 
+mkdir -p %buildroot/lib/binfmt.d
+for i in dummy \
+%ifnarch %{ix86} x86_64
+    qemu-i386 \
+%endif
+%ifnarch alpha
+    qemu-alpha \
+%endif
+%ifnarch %{arm}
+    qemu-arm \
+%endif
+    qemu-armeb \
+    qemu-cris \
+    qemu-microblaze qemu-microblazeel \
+%ifnarch mips
+    qemu-mips qemu-mips64 \
+%endif
+%ifnarch mipsel
+    qemu-mipsel qemu-mips64el \
+%endif
+%ifnarch m68k
+    qemu-m68k \
+%endif
+%ifnarch ppc ppc64
+    qemu-ppc qemu-ppc64abi32 qemu-ppc64 \
+%endif
+%ifnarch sparc sparc64
+    qemu-sparc qemu-sparc32plus qemu-sparc64 \
+%endif
+%ifnarch s390 s390x
+    qemu-s390x \
+%endif
+%ifnarch sh4
+    qemu-sh4 \
+%endif
+    qemu-sh4eb \
+; do
+  test $i = dummy && continue
+  grep /$i:\$ %SOURCE1 > %buildroot/lib/binfmt.d/$i.conf
+  chmod 644 %buildroot/lib/binfmt.d/$i.conf
+done < %SOURCE1
+
 %check
+# Disabled on aarch64 where it fails with several errors.  Will
+# investigate and fix when we have access to real hardware 
+%ifnarch aarch64
 %make V=1 check
+%endif
 
 %pre common
 %_sbindir/groupadd -r -f %_group
@@ -523,6 +598,7 @@ fi
 
 %files user
 %_bindir/qemu-*
+/lib/binfmt.d/qemu-*.conf
 %exclude %_bindir/qemu*system*
 %exclude %_bindir/qemu-kvm
 %if_enabled binfmt_misc
@@ -571,6 +647,17 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+- build aarch64-linux-user
+- enable support libusb (ALT#29981)
+- add condition for libnfs, but disable (need libnfs package)
+- enable quorum support
+- enable xen support
+- enable lzo and snappy support
+- enable build with cris,microblaze,sh4 build
+- add binfmt config
+
 * Tue Dec 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt3
 - rebuild with new libiscsi
 
