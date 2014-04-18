@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,10 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Fri Apr 18 2014 Led <led@altlinux.ru> 1.1.0-alt2
+- updates from upstream's SCM
+- added dummy '--verify' option when explicitly invoking dynamic loader
+
 * Wed Apr 16 2014 Led <led@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
