@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.22.1
-Release: alt3
+Release: alt4
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,10 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Sat Apr 19 2014 Led <led@altlinux.ru> 1.22.1-alt4
+- upstream updates for vi
+- added support FEATURE_VI_REGEX_SEARCH without GNU regex (using POSIX one)
+
 * Tue Feb 11 2014 Led <led@altlinux.ru> 1.22.1-alt3
 - upstream updates and fixes
 
