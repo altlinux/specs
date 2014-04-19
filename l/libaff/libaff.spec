@@ -1,12 +1,13 @@
 Name: libaff
-Version: 3.7.2
+Version: 3.7.4
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
 
 Group: System/Libraries
 License: BSD
-Url: http://www.afflib.org/
+# afflib.org unavailable, refs dropped by recent commits
+Url: http://digitalcorpora.org/downloads/afflib/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -22,8 +23,8 @@ Technology that implements the AFF standard. AFFLIB is distributed under
 4-clause Berkeley License and may be freely incorporated into both Open
 Source and Proprietary software.
 
-In addition to the library, AFFLIB also comes with the AFF Tools, a set of
-programs for creating and manipulating AFF files.
+In addition to the library, AFFLIB also comes with the AFF Tools,
+a set of programs for creating and manipulating AFF files.
 
 %package devel
 Summary: Header files for the afflib library
@@ -38,35 +39,50 @@ Source and Proprietary software.
 
 This package contains the header files.
 
+%package -n aff-tools
+Summary: AFFLIB tools
+Group: File tools
+Requires: %name = %version-%release
+
+%description -n aff-tools
+AFFLIB is an open source library developed by Simson Garfinkel and Basis
+Technology that implements the AFF standard. AFFLIB is distributed under
+4-clause Berkeley License and may be freely incorporated into both Open
+Source and Proprietary software.
+
+This package contains AFF Tools.
+
 %prep
 %setup
-#%patch0 -p1
-#%patch1 -p0
-#%patch2
 
 %build
-%__subst "s|-static.*||g" tools/Makefile.am lib/Makefile.am
 mkdir -p m4
 %autoreconf
 
+# EWF support has been dropped upstream
 %configure \
-    --enable-libewf=yes \
     --enable-s3=yes \
     --enable-fuse=yes \
     --with-curl=%prefix \
     --enable-qemu=no \
     --disable-static
 
+# Remove rpath from libtool
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+# clean unused-direct-shlib-dependencies
+sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+
 %make_build
 
 %install
 %makeinstall_std
 
-# install headers as well
-#install -d %buildroot%_includedir/afflib
-#install -m0644 lib/*.h %buildroot%_includedir/afflib/
-
 %files
+%_libdir/*.so.*
+
+%files -n aff-tools
 %_bindir/affcat
 %_bindir/affcompare
 %_bindir/affcrypto
@@ -84,7 +100,6 @@ mkdir -p m4
 %_bindir/affdiskprint
 %_man1dir/*
 %doc AUTHORS BUGLIST.txt COPYING ChangeLog NEWS README* doc/*
-%_libdir/*.so.*
 
 %files devel
 %dir %_includedir/afflib/
@@ -93,6 +108,11 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 3.7.4-alt1
+- 3.7.4
+  + borrowed rpath cleanup from fedora's 3.7.3-1 spec
+- NB: utilities moved from libaff to aff-tools
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
 - new version 3.7.2 (with rpmrb script)
 
