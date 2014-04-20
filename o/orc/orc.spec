@@ -1,6 +1,6 @@
 Name: orc
-Version: 0.4.18
-Release: alt2
+Version: 0.4.19
+Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -126,6 +126,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt1
+- 0.4.19
+
 * Tue Dec 24 2013 Paul Wolneykien <manowar@altlinux.org> 0.4.18-alt2
 - Switch to building from tarballs, assisted by cronbuild and the
   update-source-functions.
