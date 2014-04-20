@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.1.0
-Release: alt3
+Release: alt4
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Apr 20 2014 Led <led@altlinux.ru> 1.1.0-alt4
+- expose public execvpe interface
+
 * Sat Apr 19 2014 Led <led@altlinux.ru> 1.1.0-alt3
 - fixed false negatives with periodic needles in strstr, wcsstr, and memmem
 
