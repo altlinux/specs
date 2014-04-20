@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: libdmapsharing
-Version: 2.9.24
+Version: 2.9.25
 Release: alt1
 
 Summary: A DMAP client and server library
@@ -65,12 +65,16 @@ This package contains development documentation for the %name library.
 %_libdir/pkgconfig/%name-%api_ver.pc
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
+#%_vapidir/%name-%api_ver.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
 
 
 %changelog
+* Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9.25-alt1
+- 2.9.25
+
 * Fri Nov 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.24-alt1
 - 2.9.24
 
