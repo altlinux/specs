@@ -1,6 +1,6 @@
 Name: openssh
 Version: 6.6p1
-Release: alt1
+Release: alt2
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -343,6 +343,9 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Apr 21 2014 Dmitry V. Levin <ldv@altlinux.org> 6.6p1-alt2
+- Updated to 6.6.1p1 (fixes curve25519 KEX portability).
+
 * Thu Mar 20 2014 Dmitry V. Levin <ldv@altlinux.org> 6.6p1-alt1
 - Updated to 6.6p1.
 
