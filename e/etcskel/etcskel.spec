@@ -1,5 +1,5 @@
 Name: etcskel
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 %def_enable langify
@@ -55,6 +55,9 @@ done
 %config(noreplace) %_sysconfdir/skel
 
 %changelog
+* Tue Apr 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.14-alt1
+- .mutt/set: dropped default tmpdir.
+
 * Tue Feb 15 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0.13-alt1
 - Removed "Documents" and "tmp" directories (closes: #6323).
 - .bash_profile: Removed exporting of XDG_* variables (closes: #21419).
