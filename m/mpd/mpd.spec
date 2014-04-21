@@ -26,7 +26,7 @@
 %def_enable mikmod
 %def_disable modplug
 %def_enable faad
-%def_enable mpc
+%def_disable mpc
 %def_disable ffmpeg
 %def_disable mp4
 %def_enable wavpack
@@ -54,21 +54,23 @@
 %endif
 %{!?zeroconf:%define zeroconf no}
 
-%define Name MPD
-Name: mpd
-Version: 0.17.0
-%define prerel %nil
-Release: alt0.3.git050212
+%define  Name MPD
+Name: 	 mpd
+Version: 0.18.10
+Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
+
 License: %gpl2plus
-Group: Sound
-URL: http://musicpd.org
-Source0: %url/uploads/files/%name-%version%prerel.tar
+Group:   Sound
+URL:     http://musicpd.org
+
+Source0: %name-%version.tar
+# VCS:   git://git.musicpd.org/master/mpd.git
 Source1: %name.conf
 Source2: %name.sys.conf.in
 Source3: %name.init.in
 Source4: %name.logrotate
-Patch: %name-%version-%release.patch
+Patch:   %name-%version-%release.patch
 Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -150,7 +152,7 @@ This package contains %Name's API documentation.
 
 
 %prep
-%setup -n %name-%version%prerel
+%setup
 %patch -p1
 [ $(rpmvercmp %{get_version libflac-devel} 1.1.3) -lt 0 ] || sed -i 's/AM_PATH_LIBOGGFLAC/AM_PATH_LIBFLAC/' configure.ac
 # libmad.pc describes 'libmad', not 'mad'
@@ -279,6 +281,10 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Fri Apr 18 2014 Andrey Cherepanov <cas@altlinux.org> 0.18.10-alt1
+- New version
+- Disable mpc support to build new version
+
 * Wed Feb 08 2012 Alexey Morsov <swi@altlinux.ru> 0.17.0-alt0.3.git050212
 - new git version
 - disable ffmpeg
