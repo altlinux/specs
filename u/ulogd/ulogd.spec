@@ -1,5 +1,5 @@
 Name: ulogd
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 %def_disable nfacct
@@ -19,6 +19,9 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpcap-devel zlib-devel libMySQL-devel postgresql-devel libsqlite3-devel libdbi-devel
 BuildRequires: libnfnetlink-devel libmnl-devel libnetfilter_log-devel libnetfilter_conntrack-devel
 %{?_enable_nfacct:BuildRequires: libnetfilter_acct-devel}
+
+# For JSON plugin
+BuildRequires: libjansson-devel
 
 # For documentation
 BuildRequires: linuxdoc-tools OpenSP
@@ -75,6 +78,7 @@ firewall information through a libdbi interface.
 %configure \
 	--disable-static \
 	--with-dbi-lib=%_libdir \
+	--with-jansson \
 	%{subst_enable nfacct}
 
 make DESTDIR=%buildroot
@@ -155,6 +159,10 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Mon Apr 21 2014 Mikhail Efremov <sem@altlinux.org> 2.0.4-alt1
+- Enable JSON plugin.
+- Updated to 2.0.4.
+
 * Tue Nov 26 2013 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
 - Drop obsoleted patches.
 - Updated to 2.0.3.
