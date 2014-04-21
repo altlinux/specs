@@ -3,11 +3,11 @@
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
-%def_enable server
 %def_enable gtk_doc
+%def_enable network_manager
 
 Name: %{_name}2
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -23,10 +23,9 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 %define geoip_ver 1.5.1
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
-BuildRequires: libjson-glib-devel libsoup-devel
-BuildRequires: libnm-glib-devel >= %nm_ver libmm-glib-devel >= %mm_ver
+BuildRequires: libjson-glib-devel libsoup-devel libmm-glib-devel >= %mm_ver
+%{?_enable_network_manager:BuildRequires: libnm-glib-devel >= %nm_ver}
 BuildRequires: libxml2-devel libnotify-devel systemd-devel
-%{?_enable_server:BuildRequires: libGeoIP-devel >= %geoip_ver}
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -69,9 +68,9 @@ rm -f demo/*.desktop.in
 %build
 %autoreconf
 %configure --disable-static \
-	%{?_enable_server:--enable-geoip-server=yes} \
 	--with-dbus-service-user=%_name \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{?_enable_network_manager:--enable-network-manager} \
 	--with-dbus-service-user=%_name \
 	--enable-demo-agent
 %make_build
@@ -90,8 +89,6 @@ mkdir -p %buildroot%_localstatedir/%_name
     -c 'User for GeoClue service' %_name >/dev/null || :
 
 %files
-%_bindir/geoip-lookup
-%_bindir/geoip-update
 %_libexecdir/%_name
 %_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.conf
 %_sysconfdir/dbus-1/system.d/org.freedesktop.GeoClue2.Agent.conf
@@ -115,6 +112,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Mon Apr 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
+- 2.1.8
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
 - 2.1.7
 
