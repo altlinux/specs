@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.37
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1148,7 +1148,7 @@ echo "Building kernel %kversion-%flavour-%krelease"
 %make_build oldconfig
 %make_build \
 	%{?_enable_verbose:V=1} \
-	%{?_enabled_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
+	%{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
 	bzImage modules
 
 %{?_with_perf:%make_build -C tools/perf %{?_enable_verbose:V=1} %perf_make_opts all man}
@@ -1777,6 +1777,13 @@ done)
 
 
 %changelog
+* Mon Apr 21 2014 Led <led@altlinux.ru> 3.10.37-alt5
+- updated:
+  + feat-drivers-block--btier
+- added:
+  + fix-drivers-char-ipmi--ipmi_si
+  + fix-kernel--user_namespace
+
 * Tue Apr 15 2014 Led <led@altlinux.ru> 3.10.37-alt4
 - added:
   + fix-kernel-apic--apic
