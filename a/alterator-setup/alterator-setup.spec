@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.2.1
-Release: alt2
+Version: 0.3.0
+Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -57,6 +57,7 @@ EOF
 %files
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
+%_initdir/setup
 %_sbindir/%name
 %_alterator_datadir/steps/*
 %_alterator_datadir/ui/*
@@ -70,11 +71,18 @@ EOF
 # triggered by successful completion of the module
 # as it can be reused now (doesn't self destruct)
 %post
+%post_service setup
 [ -d /etc/systemd/system ] || exit 0
 mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
 ln -sf /lib/systemd/system/setup.target /etc/systemd/system/default.target
 
+%preun
+%preun_service setup
+
 %changelog
+* Mon Apr 21 2014 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
+- sysvinit support
+
 * Wed Mar 26 2014 Michael Shigorin <mike@altlinux.org> 0.2.1-alt2
 - added a warning to description
 
