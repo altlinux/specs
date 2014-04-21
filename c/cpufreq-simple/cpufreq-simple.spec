@@ -1,5 +1,5 @@
 Name: cpufreq-simple
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
@@ -11,7 +11,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-Requires: cpufrequtils libshell
+Requires: cpupower libshell
 
 %description
 Install this package if you would like it to attempt
@@ -47,6 +47,9 @@ install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 %_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Mon Apr 21 2014 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Use cpupower instead of cpufrequtils.
+
 * Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Move cpufreq-simple from %%_bindir to %%_sbindir.
 - Ensure that PATH is correct.
