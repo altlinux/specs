@@ -1,6 +1,6 @@
 Name: aimage
 Version: 3.2.5
-Release: alt1
+Release: alt3
 
 Summary: Advanced Disk Imager
 License: BSD with advertising
@@ -37,6 +37,9 @@ NB: it's been obsoleted by guymager,
 %_bindir/aimage
 
 %changelog
+* Mon Apr 21 2014 Michael Shigorin <mike@altlinux.org> 3.2.5-alt3
+- bumped Release: to look newer than autoimports package
+
 * Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 3.2.5-alt1
 - initial build for ALT Linux Sisyphus (based on fedora package)
 
