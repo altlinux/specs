@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-CheckOS
-Version:        1.71
-Release:        alt2_3
+Version:        1.72
+Release:        alt1
 Summary:        Check what OS we're running on
 License:        GPLv2 or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-CheckOS/
-Source0:        http://www.cpan.org/authors/id/D/DC/DCANTRELL/Devel-CheckOS-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DC/DCANTRELL/Devel-CheckOS-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -65,6 +65,9 @@ make test
 %{_mandir}/man1/use-devel-assertos.1*
 
 %changelog
+* Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
+- automated CPAN update
+
 * Wed Oct 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.71-alt2_3
 - Sisyphus build
 
