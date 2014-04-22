@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(ExtUtils/MakeMaker/CPANfile.pm)
 # END SourceDeps(oneline)
 %define fedora 19
 Name:		perl-Archive-Any-Lite
-Version:	0.07
-Release:	alt1_2
+Version:	0.09
+Release:	alt1
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://metacpan.org/release/Archive-Any-Lite
-Source0:	http://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -73,6 +74,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_2
 - Sisyphus build
 
