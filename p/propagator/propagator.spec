@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20140419
+Version: 20140423
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 20140423-alt1
+- digest check refactoring (ldv@)
+
 * Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 20140419-alt1
 - initial stage2 digest check
 
