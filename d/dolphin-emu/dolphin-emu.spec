@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -63,6 +63,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Tue Apr 22 2014 Nazarov Denis <nenderus@altlinux.org> 4.0.2-alt2
+- Rebuild with new polarssl
+
 * Sat Feb 01 2014 Nazarov Denis <nenderus@altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
