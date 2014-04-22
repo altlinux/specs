@@ -5,8 +5,8 @@
 %define rname kactivities
 Name: kde4-kactivities
 %define major 4
-%define minor 12
-%define bugfix 2
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -26,7 +26,6 @@ Patch2: alt-ontologies-dir.patch
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel kde-common-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
-BuildRequires: kde4-nepomuk-core-devel
 
 %description
 KDE activity manager
@@ -87,16 +86,16 @@ done
 %files
 %_kde4_bindir/kactivitymanagerd
 %_K4lib/*activitymanager*.so
-%_K4lib/kio_activities.so
+#%_K4lib/kio_activities.so
 %_K4lib/kcm_activities.so
-%_K4lib/imports/org/kde/activities/models/
+#%_K4lib/imports/org/kde/activities/models/
 %_K4srv/activitymanager-plugin-*.desktop
 %_K4srv/kactivitymanagerd.desktop
 #%_K4apps/plasma/packages/org.kde.ActivityManager.UiHandler/
 %_K4apps/activitymanager/
 #%_K4srv/kded/activitymanager.desktop
-%_K4srv/activities.protocol
-%_K4srv/kactivitymanagerd_fileitem_linking_plugin.desktop
+#%_K4srv/activities.protocol
+#%_K4srv/kactivitymanagerd_fileitem_linking_plugin.desktop
 %_K4srv/kcm_activities.desktop
 %_K4srvtyp/activitymanager-plugin.desktop
 %_datadir/ontology/kde/*
@@ -105,18 +104,24 @@ done
 %_K4libdir/libkactivities.so.%sover_kactivities
 %_K4libdir/libkactivities.so.%sover_kactivities.*
 
-%files -n libkactivities-models%sover_models
-%_K4libdir/libkactivities-models.so.%sover_models
-%_K4libdir/libkactivities-models.so.%sover_models.*
+#%files -n libkactivities-models%sover_models
+#%_K4libdir/libkactivities-models.so.%sover_models
+#%_K4libdir/libkactivities-models.so.%sover_models.*
 
 %files devel
 %_libdir/cmake/KActivities/
-%_libdir/cmake/KActivities-Models/
+#%_libdir/cmake/KActivities-Models/
 %_libdir/pkgconfig/*
 %_K4includedir/*
 %_K4link/*.so
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt0.M70P.1
+- built for M70P
+
 * Thu Jan 30 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.2-alt1
 - new version
 

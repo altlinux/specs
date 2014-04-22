@@ -1,12 +1,12 @@
 %define _kde_alternate_placement 1
 %define ical_req 0.33
-%define akonadi_req 1.5
+%define akonadi_req 1.12.1
 
 %add_findpackage_path %_kde4_bindir
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.12.4
+Version: 4.13.0
 Release: alt1
 
 Group: System/Libraries
@@ -35,7 +35,7 @@ BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel
 BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
 BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
-BuildRequires: akonadi-devel >= %akonadi_req kde4-nepomuk-core-devel
+BuildRequires: akonadi-devel >= %akonadi_req
 BuildRequires: kde4libs-devel >= %version
 
 %description
@@ -303,17 +303,19 @@ Requires: %name-common = %version-%release
 %setup -q -n %rname-%version
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
+#%patch12 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4build \
-    -DKDE4_ENABLE_FPIE:BOOL=ON
+    -DKDE4_BUILD_TESTS=OFF \
+    -DKDE4_ENABLE_FPIE:BOOL=ON \
+    #
 
 %install
 %K4install
-
+mkdir -p %buildroot/%_datadir/akonadi/agents/
 
 %files common
 
@@ -329,7 +331,7 @@ Requires: %name-common = %version-%release
 %_K4srvtyp/*
 %_K4apps/libkholidays/
 %_K4apps/akonadi/
-%_K4apps/akonadi_knut_resource/
+#%_K4apps/akonadi_knut_resource/
 %_K4xdg_mime/kdepimlibs-mime.xml
 %_K4xdg_mime/x-vnd.akonadi.socialfeeditem.xml
 %_datadir/akonadi/
@@ -414,6 +416,12 @@ Requires: %name-common = %version-%release
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

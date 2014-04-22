@@ -15,8 +15,8 @@
 
 %define rname kdepim
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -74,7 +74,8 @@ BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
-BuildRequires: kde4-nepomuk-widgets-devel kde4-pim-runtime-devel kde4-nepomuk-core-devel
+BuildRequires: kde4-pim-runtime-devel
+BuildRequires: kde4-baloo-devel kde4-baloo-widgets-devel
 #BuildRequires: libindicate-qt-devel
 BuildRequires: liblink-grammar-devel
 
@@ -1097,6 +1098,13 @@ Requires: %name-common = %version-%release
 %description -n libknotesprivate4
 %name library
 
+%package  -n libnoteshared4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libnoteshared4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1111,7 +1119,7 @@ based on kdepim.
 %setup -q -n %rname-%version
 %patch1 -p1
 ###%patch101 -p1
-%patch102 -p1
+#%patch102 -p1
 #%patch103 -p1
 #%patch104 -p1
 
@@ -1134,7 +1142,7 @@ based on kdepim.
 %files environment-mobile
 %files common
 %dir %_K4apps/libkleopatra/
-%_datadir/ontology/kde/*
+#%_datadir/ontology/kde/*
 %_K4conf/ksieve_script.knsrc
 
 %files core
@@ -1144,27 +1152,31 @@ based on kdepim.
 %_K4bindir/contactthemeeditor
 %_K4apps/contactthemeeditor/
 %_K4xdg_apps/contactthemeeditor.desktop
+%_K4doc/en/contactthemeeditor/
 #
 %_K4bindir/calendarjanitor
 %_K4bindir/kabc2mutt
 %_K4bindir/kabcclient
 %_K4bindir/konsolekalendar
 %_K4bindir/pimsettingexporter
-%_K4lib/kcm_pimactivity.so
-%_K4lib/grammar_link.so
+%_K4bindir/storageservicemanager
+#%_K4lib/kcm_pimactivity.so
+#%_K4lib/grammar_link.so
 %_K4lib//plugins/grantlee/
 #%_K4libdir/strigi/*
 %_K4apps/composereditor/
 %_K4apps/pimsettingexporter/
+%_K4apps/storageservicemanager/
 %_K4conf/messageviewer_header_themes.knsrc
 %_K4conf_update/grantleetheme.upd
 %_K4xdg_apps/konsolekalendar.desktop
+%_K4xdg_apps/storageservicemanager.desktop
 %_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 %_K4srv/kontact/
-%_K4srv/kcmpimactivity.desktop
-%_K4srv/grammar_link.desktop
+#%_K4srv/kcmpimactivity.desktop
+#%_K4srv/grammar_link.desktop
 %_K4doc/en/konsolekalendar
 %_K4doc/en/kabcclient
 %_K4doc/en/pimsettingexporter/
@@ -1364,6 +1376,7 @@ based on kdepim.
 %files kaddressbook
 %_K4bindir/kaddressbook
 %_K4xdg_apps/kaddressbook.desktop
+%_K4xdg_apps/kaddressbook-importer.desktop
 %_K4lib/kaddressbookpart.so
 %_K4lib/kontact_kaddressbookplugin.so
 %_K4lib/kcm_ldap.so
@@ -1413,18 +1426,22 @@ based on kdepim.
 %_K4bindir/kmail_clamav.sh
 %_K4bindir/kmail_fprot.sh
 %_K4bindir/kmail_sav.sh
+%_K4bindir/sieveeditor
 %_K4lib/kcm_kmail.so
 %_K4lib/kmailpart.so
 %_K4lib/kontact_kmailplugin.so
 %_K4lib/ktexteditorkabcbridge.so
 %_K4xdg_apps/KMail2.desktop
 %_K4xdg_apps/kmail_view.desktop
+%_K4xdg_apps/sieveeditor.desktop
 %_K4conf_update/kmail*
 %_K4conf_update/upgrade-signature.pl
 %_K4conf_update/upgrade-transport.pl
 #%_K4apps/kmail/
 %_K4apps/kmail2/
 %_K4apps/kontact/ksettingsdialog/kmail.setdlg
+%_K4apps/sieve/
+%_K4apps/sieveeditor/
 %_K4cfg/customtemplates_kfg.kcfg
 %_K4cfg/kmail.kcfg
 #%_K4cfg/replyphrases.kcfg
@@ -1440,6 +1457,7 @@ based on kdepim.
 %_K4srv/ServiceMenus/kmail_addattachmentservicemenu.desktop
 %_K4srvtyp/dbusmail.desktop
 %_K4doc/en/kmail
+%_K4doc/en/sieveeditor/
 #
 %_K4bindir/kmailcvt
 %_K4apps/kmailcvt/
@@ -1463,17 +1481,21 @@ based on kdepim.
 %files knotes
 %_K4bindir/knotes
 %_K4lib/kontact_knotesplugin.so
-%_K4lib/knotes_local.so
+#%_K4lib/knotes_local.so
+%_K4lib/kcm_knotessummary.so
 %_K4lib/kcm_knote.so
 #%_K4lib/knotes_scalix.so
 %_K4xdg_apps/knotes.desktop
-%_K4cfg/knoteconfig.kcfg
+%_K4conf/knotes_printing_theme.knsrc
+#%_K4cfg/knoteconfig.kcfg
 %_K4cfg/knotesglobalconfig.kcfg
+%_K4apps/kconf_update/noteglobalsettings.upd
 %_K4apps/knotes/
 %_K4apps/kontact/ksettingsdialog/knotes.setdlg
-%_K4srv/kresources/knotes/local.desktop
-%_K4srv/kresources/knotes_manager.desktop
+#%_K4srv/kresources/knotes/local.desktop
+#%_K4srv/kresources/knotes_manager.desktop
 %_K4srv/knote_config_*.desktop
+%_K4srv/kcmknotessummary.desktop
 %_K4doc/en/knotes
 
 #%files -n libkpinterfaces4
@@ -1556,8 +1578,8 @@ based on kdepim.
 %_K4srvtyp/calendardecoration.desktop
 %_K4srvtyp/calendarplugin.desktop
 %_K4srvtyp/dbuscalendar.desktop
-%_K4srvtyp/korganizerpart.desktop
-%_K4srvtyp/korgprintplugin.desktop
+#%_K4srvtyp/korganizerpart.desktop
+#%_K4srvtyp/korgprintplugin.desktop
 %_K4xdg_apps/korganizer-import.desktop
 %_K4xdg_apps/korganizer.desktop
 %doc %_K4doc/*/korganizer
@@ -1669,14 +1691,8 @@ based on kdepim.
 %_K4libdir/libpimcommon.so.*
 %files -n libcomposereditorng4
 %_K4libdir/libcomposereditorng.so.*
-%files -n libgrammar4
-%_K4libdir/libgrammar.so.*
-%files -n libpimactivity4
-%_K4libdir/libpimactivity.so.*
 %files -n libsendlater4
 %_K4libdir/libsendlater.so.*
-%files -n libfolderarchive4
-%_K4libdir/libfolderarchive.so.*
 %files -n libgrantleetheme4
 %_K4libdir/libgrantleetheme.so.*
 %files -n libgrantleethemeeditor4
@@ -1685,6 +1701,8 @@ based on kdepim.
 %_K4libdir/libkaddressbookgrantlee.so.*
 %files -n libknotesprivate4
 %_K4libdir/libknotesprivate.so.*
+%files -n libnoteshared4
+%_K4libdir/libnoteshared.so.*
 
 %files devel
 %_K4link/*.so
@@ -1695,6 +1713,12 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Apr 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

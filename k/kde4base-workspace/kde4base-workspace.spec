@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -140,7 +140,7 @@ BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
-BuildRequires: kde4-kactivities-devel kde4-nepomuk-core-devel
+BuildRequires: kde4-kactivities-devel
 BuildRequires: python-module-sip python-devel libselinux-devel
 %if_enabled systemd
 BuildRequires: libsystemd-login-devel libsystemd-journal-devel libsystemd-id128-devel libsystemd-daemon-devel systemd-devel
@@ -197,7 +197,7 @@ Obsoletes: kdebase-wm < %version-%release
 %endif
 Requires: udev udisks2 upower media-player-info usbids
 Requires: kde4base-runtime >= %version
-Requires: kde4-icon-theme-oxygen kde4-kactivities kde4-nepomuk-core
+Requires: kde4-icon-theme-oxygen kde4-kactivities
 Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
 Requires: kde4-kscreen
@@ -205,6 +205,7 @@ Requires: kde4-kscreen
 #Requires: google-gadgets-qt
 %endif
 Requires: polkit-kde-agent-1
+Requires: kde4-baloo
 Provides: kde4base-kinfocenter = %version-%release
 Obsoletes: kde4base-kinfocenter < %version-%release
 %description core
@@ -377,20 +378,6 @@ Group: System/Libraries
 Requires: %name-common = %version-%release
 Requires: /usr/sbin/lsof
 %description -n liblsofui4
-KDE 4 library
-
-%package -n libnepomukqueryclient4
-Summary: KDE 4 library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libnepomukqueryclient4
-KDE 4 library
-
-%package -n libnepomukquery4
-Summary: KDE 4 library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libnepomukquery4
 KDE 4 library
 
 %package -n libplasma4_applet-system-monitor
@@ -961,6 +948,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt3
+- update from 4.11 branch
+
 * Wed Apr 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt2
 - add plymouth support
 
