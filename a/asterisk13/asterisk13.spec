@@ -1,4 +1,4 @@
-%define svn_revision 412466
+%define svn_revision 412900
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 412466
+%define svn_revision 412900
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -654,6 +654,7 @@ export CC=gcc
 make -C menuselect libdir=%_libdir
 make menuselect.makeopts \
     libdir=%_libdir ||:
+make menuselect/menuselect libdir=%_libdir ||:
 menuselect/menuselect  \
     --enable DONT_OPTIMIZE \
     --enable DEBUG_THREADS \
@@ -1294,6 +1295,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Wed Apr 23 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.412900
+- update from svn revision 412900
+
 * Thu Apr 17 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.412466
 - update from svn revision 412466
 
