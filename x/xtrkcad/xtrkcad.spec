@@ -1,6 +1,6 @@
 Name: xtrkcad
 Version: 4.0.3a
-Release: alt1.1
+Release: alt2
 Group: Games/Educational
 License: GPL
 Summary: XTrkCad Model Railroad CAD
@@ -60,6 +60,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Apr 22 2014 Fr. Br. George <george@altlinux.ru> 4.0.3a-alt2
+- Fix build
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3a-alt1.1
 - Fixed build
 
