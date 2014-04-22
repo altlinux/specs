@@ -1,6 +1,9 @@
+%define mver 0.9.20
+%define rver 5
+
 Name: hedgewars
-Version: 0.9.19.3
-Release: alt2
+Version: %mver.%rver
+Release: alt1
 
 Summary: Game with heavily armed fighting hedgehogs
 License: GPLv2
@@ -11,13 +14,13 @@ Packager: Denis G. Samsonenko <ogion@altlinux.org>
 
 Source0: %name-src-%version.tar.bz2
 Patch0: %name-no-bytestring.patch
-Patch1: %name-compiler-opts.patch
 
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Fri Jul 19 2013
 # optimized out: cmake-modules fontconfig fpc-compiler fpc-units-base fpc-units-db fpc-units-fcl fpc-units-gfx fpc-units-misc fpc-units-net fpc-units-rtl ghc7.6.1 ghc7.6.1-common ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-text ghc7.6.1-transformers libSDL-devel libXi-devel libavcodec-devel libavutil-devel libffi-devel libgmp-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel pkg-config zlib-devel
-BuildRequires: cmake fpc-units-fv fpc-units-gtk2 fpc-units-math fpc-units-multimedia gcc-c++ ghc7.6.1-dataenc ghc7.6.1-hslogger ghc7.6.1-random ghc7.6.1-utf8-string ghc7.6.1-vector libGLUT-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libavformat-devel liblua5-devel phonon-devel
+BuildRequires: cmake fpc-units-fv fpc-units-gtk2 fpc-units-math fpc-units-multimedia gcc-c++ ghc7.6.1-dataenc ghc7.6.1-hslogger ghc7.6.1-random ghc7.6.1-utf8-string ghc7.6.1-vector libGLUT-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libavformat-devel liblua5-devel phonon-devel chrpath
+BuildRequires: chrpath
 
 %description
 Each player controls a team of several hedgehogs. During the course of the 
@@ -53,17 +56,18 @@ This package contains all the data files for %name.
 
 
 %prep
-%setup -q -n %name-src-%version
+%setup -q -n %name-src-%mver
 %patch0 -p1
-%patch1 -p1
 
 %build
-#PATH="/usr/lib/qt4/bin/:$PATH" cmake -DCMAKE_INSTALL_PREFIX="%_prefix" -DWITH_SERVER=1 -DDATA_INSTALL_DIR=%_datadir/%name CMakeLists.txt
-PATH="/usr/lib/qt4/bin/:$PATH" %cmake_insource -DWITH_SERVER=1 -DDATA_INSTALL_DIR=%_datadir/%name -DFPFLAGS="-k/%_lib/libgcc_s.so.1"
+%cmake_insource -DWITH_SERVER=1 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir"
 %make_build VERBOSE=true
 
 %install
 %make_install DESTDIR=%buildroot install
+
+# fix verify-elf's RPATH error
+chrpath --delete %buildroot%_bindir/hwengine
 
 # replace font copies with symlinks to system versions
 rm -f %buildroot%_datadir/%name/Data/Fonts/DejaVuSans-Bold.ttf
@@ -95,6 +99,7 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 %files
 %doc README ChangeLog.txt CREDITS
 %_bindir/*
+%_libdir/*.so*
 %_mandir/man6/*
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
@@ -105,6 +110,10 @@ install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 
 %changelog
+* Wed Apr 23 2014 Denis G. Samsonenko <ogion@altlinux.org> 0.9.20.5-alt1
+- new version
+- %name-compiler-opts.patch removed
+
 * Sat Jul 20 2013 Denis G. Samsonenko <ogion@altlinux.org> 0.9.19.3-alt2
 - %name-data subpackage
 - font copies replaced with symlinks to system versions (#25350)
