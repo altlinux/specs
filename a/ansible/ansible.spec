@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Group: System/Libraries
@@ -46,6 +46,12 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
 
 %changelog
+* Tue Apr 22 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.5-alt1
+- 1.5.5
+
+* Tue Apr  8 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.4-alt2
+- Fix for apt-rpm module (changed run_command behavior)
+
 * Wed Apr  2 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.4-alt1
 - 1.5.4
 
