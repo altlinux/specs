@@ -13,7 +13,7 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.23
+Version: 0.25
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -41,6 +41,8 @@ BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
 BuildRequires: libcelt051-devel >= 0.5.1.1
 BuildRequires: libopus-devel >= 0.9.14
+BuildRequires: libsoup-devel
+BuildRequires: libphodav-devel
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
@@ -341,6 +343,10 @@ cd ..
 %endif
 
 %changelog
+* Mon Apr 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.25-alt1
+- 0.25
+- build with libphodav support
+
 * Thu Mar 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.23-alt1
 - 0.23
 

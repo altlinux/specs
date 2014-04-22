@@ -1,20 +1,18 @@
 %define formats rom
 # PCI IDs (vendor,product) of the ROMS we want for QEMU
 #
-# 8086:100e -> pxe-e1000.rom intel
-# 8086:1209 -> pxe-eepro100.rom eepro100
-# 1050:0940 -> pxe-ne2k_pci.rom ns8390
 # 1022:2000 -> pxe-pcnet.rom pcnet32
+# 10ec:8029 -> pxe-ne2k_pci.rom ne2k_pci
+# 8086:100e -> pxe-e1000.rom e1000
 # 10ec:8139 -> pxe-rtl8139.rom rtl8139
 # 1af4:1000 -> pxe-virtio.rom virtio-net
 
-# %define qemuroms intel(was e1000) eepro100 ns8390 pcnet32 rtl8139 virtio-net
-%define qemuroms 8086100e 80861209 10500940 10222000 10ec8139 1af41000
-%define hash 55201e2
+%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000
+%define hash 93acb5d
 
 Name: ipxe
 Version: 1.0.0
-Release: alt3.git%{hash}
+Release: alt4.git%{hash}
 
 Summary: PXE boot firmware
 License: GPLv2 and BSD
@@ -30,6 +28,7 @@ Patch: %name-%version-%release.patch
 
 Requires: ipxe-bootimgs
 BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
+BuildRequires: binutils-devel
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 
 %description
@@ -98,14 +97,17 @@ mkdir .git
 touch .git/index
 export ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin
 
-cd src 
+cd src
 # ath9k drivers are too big for an Option ROM
 rm -rf drivers/net/ath/ath9k
 
-make all allroms \
-	V=1 NO_WERROR=1 \
+%make_build \
+	bin/undionly.kpxe bin/ipxe.{dsk,iso,usb,lkrn} allroms \
 	ISOLINUX_BIN=${ISOLINUX_BIN} \
-	GITVERSION=%hash
+	NO_WERROR=1 \
+	V=1 \
+	GITVERSION=%hash \
+	CROSS_COMPILE=x86_64-linux-gnu-
 
 
 # build roms with efi support for qemu
@@ -121,6 +123,7 @@ for rom in %qemuroms; do
          -ec bin-i386-efi/${rom}.efidrv \
          -ec bin-x86_64-efi/${rom}.efidrv \
          -o  bin-combined/${rom}.rom
+
   EfiRom -d  bin-combined/${rom}.rom
 done
 
@@ -130,7 +133,7 @@ mkdir -p %buildroot%_datadir/%name.efi
 
 pushd src/bin/
 
-install -pm0644 ipxe.{dsk,iso,usb,lkrn,pxe} undionly.kpxe %buildroot%_datadir/%name
+install -pm0644 undionly.kpxe ipxe.{iso,usb,dsk,lkrn}  %buildroot%_datadir/%name
 
 for fmt in %formats; do
  for img in *.${fmt}; do
@@ -161,8 +164,7 @@ pxe_link() {
 }
 
 pxe_link 8086100e e1000
-pxe_link 80861209 eepro100
-pxe_link 10500940 ne2k_pci
+pxe_link 10ec8029 ne2k_pci
 pxe_link 10222000 pcnet
 pxe_link 10ec8139 rtl8139
 pxe_link 1af41000 virtio
@@ -175,7 +177,6 @@ pxe_link 1af41000 virtio
 %_datadir/%name/ipxe.usb
 %_datadir/%name/ipxe.dsk
 %_datadir/%name/ipxe.lkrn
-%_datadir/%name/ipxe.pxe
 %_datadir/%name/undionly.kpxe
 %doc COPYING COPYRIGHTS
 
@@ -190,6 +191,9 @@ pxe_link 1af41000 virtio
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt4.git93acb5d
+- upstream git snapshot 93acb5d8d0635b8f7726bd993cde4a90a6b1d723
+
 * Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt3.git55201e2
 - upstream git snapshot 55201e2d0e60003edfd7e2c7c4c592136b000f44
 - build UEFI drivers for QEMU

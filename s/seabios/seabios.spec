@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.7.4
-Release: alt1
+Release: alt2
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -12,12 +12,17 @@ Url: http://www.seabios.org
 
 # git://git.seabios.org/seabios.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Source10: config.vga.cirrus
 Source11: config.vga.isavga
 Source12: config.vga.qxl
 Source13: config.vga.stdvga
 Source14: config.vga.vmware
+Source15: config.csm
+Source16: config.coreboot
+Source17: config.seabios-128k
+Source18: config.seabios-256k
 
 BuildRequires: python-base python-modules iasl
 BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
@@ -40,6 +45,8 @@ SeaVGABIOS is an open-source VGABIOS implementation.
 
 %prep
 %setup -q
+%patch -p1
+
 echo %version > .version
 sed -i '/VERSION="${VERSION}-.*"$/d' scripts/buildversion.sh
 
@@ -47,15 +54,11 @@ sed -i '/VERSION="${VERSION}-.*"$/d' scripts/buildversion.sh
 export CFLAGS="$RPM_OPT_FLAGS"
 mkdir -p binaries
 
-# seabios
-echo 'CONFIG_DEBUG_LEVEL=%debug_level' > config.template
-echo 'CONFIG_QEMU_HARDWARE=y' >> config.template
-echo 'CONFIG_PERMIT_UNALIGNED_PCIROM=y' >> config.template
 
 build_bios() {
-	%make clean
-	cp config.template .config
-	echo CONFIG_`echo $1 | tr a-z A-Z`=y >> .config
+	make clean distclean
+	cp $1 .config
+	echo "CONFIG_DEBUG_LEVEL=%{debug_level}" >> .config
 	make oldnoconfig V=1
 	make V=1 \
 		HOSTCC=gcc \
@@ -64,37 +67,28 @@ build_bios() {
 		LD=x86_64-linux-gnu-ld \
 		OBJCOPY=x86_64-linux-gnu-objcopy \
 		OBJDUMP=x86_64-linux-gnu-objdump \
-		STRIP=x86_64-linux-gnu-strip
-	cp out/$2 binaries/bios-$1.bin
+		STRIP=x86_64-linux-gnu-strip $4
+
+	cp out/$2 binaries/$3
 }
 
-build_bios csm Csm16.bin
-build_bios coreboot bios.bin.elf
-build_bios qemu bios.bin
+# seabios
+build_bios %SOURCE15 Csm16.bin bios-csm.bin
+build_bios %SOURCE16 bios.bin.elf bios-coreboot.bin
+build_bios %SOURCE17 bios.bin bios.bin
+build_bios %SOURCE18 bios.bin bios-256k.bin
 cp out/src/fw/*dsdt*.aml binaries
 
 # seavgabios
 for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14; do
 	name=${config#*config.vga.}
-	%make clean distclean
-	cp ${config} .config
-	echo "CONFIG_DEBUG_LEVEL=%{debug_level}" >> .config
-	%make oldnoconfig
-	%make V=1 \
-		HOSTCC=gcc \
-		CC=x86_64-linux-gnu-gcc \
-		AS=x86_64-linux-gnu-as \
-		LD=x86_64-linux-gnu-ld \
-		OBJCOPY=x86_64-linux-gnu-objcopy \
-		OBJDUMP=x86_64-linux-gnu-objdump \
-		STRIP=x86_64-linux-gnu-strip \
-		out/vgabios.bin
-	cp out/vgabios.bin binaries/vgabios-${name}.bin
+	build_bios ${config} vgabios.bin vgabios-${name}.bin out/vgabios.bin
 done
 
 %install
 mkdir -p %buildroot%_datadir/%name
-install -m 0644 binaries/bios-qemu.bin %buildroot%_datadir/%name/bios.bin
+install -m 0644 binaries/bios.bin %buildroot%_datadir/%name/bios.bin
+install -m 0644 binaries/bios-256k.bin %buildroot%_datadir/%name/bios-256k.bin
 install -m 0644 binaries/bios-csm.bin %buildroot%_datadir/%name/bios-csm.bin
 install -m 0644 binaries/bios-coreboot.bin %buildroot%_datadir/%name/bios-coreboot.bin
 install -m 0644 binaries/*.aml %buildroot%_datadir/%name/
@@ -114,6 +108,10 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt2
+- upstream snapshot 0784d04cb6f6e5c893aaf368091f20326fb847fe
+- build 256k bios images for qemu 2.0
+
 * Wed Jan 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 

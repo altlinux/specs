@@ -1,8 +1,13 @@
 %set_automake_version 1.11
 
+%def_disable celt051
+%def_enable opus
+%def_disable client
+%def_disable gui
+
 Name: SPICE
 Version: 0.12.4
-Release: alt1.2
+Release: alt2.gite3da0c4
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -16,12 +21,15 @@ Patch1: fix-alt.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
 ExclusiveArch: %ix86 x86_64 armh
 
-BuildRequires: cegui06-devel gcc-c++ 
-BuildRequires: libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXinerama-devel
-BuildRequires: libalsa-devel libcelt051-devel libjpeg-devel libpixman-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libjpeg-devel libpixman-devel zlib-devel
 BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing
 BuildRequires: libcacard-devel >= 0.1.2
 BuildRequires: glib2-devel >= 2.22
+%{?_enable_celt051:BuildRequires: libcelt051-devel >= 0.5.1.1}
+%{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
+%{?_enable_client:BuildRequires: libalsa-devel libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXinerama-devel}
+%{?_enable_gui:BuildRequires: cegui06-devel}
 
 %description
 The Simple Protocol for Independent Computing Environments (SPICE) is
@@ -69,7 +77,7 @@ using spice-server, you will need to install spice-server-devel.
 
 %prep
 %setup
-tar -xf %SOURCE2 
+tar -xf %SOURCE2
 tar -xf %SOURCE3 -C spice-common
 %patch1 -p1
 # version in .tarball-version file
@@ -79,8 +87,9 @@ echo "%version" > .tarball-version
 rm -f GITVERSION
 %autoreconf
 %configure			\
-	--enable-client		\
-	--enable-gui		\
+	%{subst_enable celt051}	\
+	%{subst_enable client}	\
+	%{subst_enable gui}	\
 	--enable-smartcard	\
 	--enable-static=no	\
 	--with-sasl
@@ -92,10 +101,11 @@ rm -f GITVERSION
 rm -f %buildroot%_libdir/libspice-server.a
 rm -f %buildroot%_libdir/libspice-server.la
 
+%if_enabled client
 %files -n spice-client
 %doc COPYING README NEWS
 %_bindir/spicec
-
+%endif
 
 %files -n libspice-server
 %doc COPYING README NEWS
@@ -107,6 +117,11 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.4-alt2.gite3da0c4
+- upstream git snapshot e3da0c4f01f16e504d48793bb9a5b37b65fa345e
+- switch from celt051 to opus
+- disable build spice-client
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.4-alt1.2
 - Fixed build
 
