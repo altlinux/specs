@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Embperl
 Name: perl-%dist
-Version: 2.4.0
-Release: alt4
+Version: 2.5.0
+Release: alt1
 
 Summary: Building dynamic Websites with Perl
 License: GPL
 Group: System/Libraries
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GRICHTER/Embperl-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011 (-bi)
-BuildRequires: apache2-httpd-prefork apache2-mod_perl-devel libxslt-devel perl-CGI perl-Date-Calc perl-Filter-Simple perl-libwww
+BuildRequires: apache2-httpd-prefork apache2-mod_perl-devel libxslt-devel perl-CGI perl-Date-Calc perl-Filter-Simple perl-libwww perl(Data/Clone.pm)
 
 %description
 Embperl gives you the power to embed Perl code in your HTML documents
@@ -57,6 +58,9 @@ rm %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
 %perl_vendor_autolib/Embperl
 
 %changelog
+* Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.4.0-alt4
 - built for perl 5.18
 
