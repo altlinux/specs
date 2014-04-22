@@ -5,8 +5,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jlatexmath
-Version:        1.0.2
-Release:        alt1_1jpp7
+Version:        1.0.3
+Release:        alt1
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Java
@@ -92,6 +92,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
+- new version
+
 * Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp7
 - new version (closes: 29019)
 
