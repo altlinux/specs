@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.8.0
-Release: alt0.beta.1
+Release: alt0.beta.2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 22 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt0.beta.2
+- update upstream to git:b1a4c68fa51d69283deb9e22c370349ee36d3cca
+
 * Mon Apr 14 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt0.beta.1
 - Build with IPoE
 
