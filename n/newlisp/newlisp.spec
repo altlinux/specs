@@ -5,7 +5,7 @@
 
 %define Name newLISP
 Name: newlisp
-Version: 10.2.8
+Version: 10.6.0
 Release: alt1
 Summary: Lisp-like, general purpose scripting language
 License: %gpl3only
@@ -18,11 +18,17 @@ Patch0: %name-9.4.4-test.patch
 Patch1: %name-9.4.4-shebang.patch
 Patch2: %name-9.4.4-ext_pcre.patch
 
+Patch3:         %{name}-0001-Support-64bit.patch
+Patch4:         %{name}-0003-Don-t-strip-the-resulting-binary.patch
+
+
 # Automatically added by buildreq on Sat Aug 02 2008
 #BuildRequires: libpcre-devel libreadline-devel
 %{?_with_readline:BuildRequires: libreadline-devel}
 %{?_with_ext_pcre:BuildRequires: libpcre-devel}
-BuildRequires: rpm-build-licenses vim-devel
+BuildRequires: rpm-build-licenses vim-devel libffi-devel openssl-devel 
+BuildRequires: libgmp-devel libgsl-devel libmysqlclient-devel libsqlite-devel postgresql-devel zlib-devel
+
 
 %description
 %Name is a LISP-like scripting language for doing things you
@@ -96,21 +102,24 @@ Requires: vim-common
 This package contains VIm syntax for %Name.
 
 
-%package -n nano-%name-syntax
-Summary: nano syntax for %Name
-Group: Development/Lisp
-BuildArch: noarch
-Requires: nano
+#package -n nano-%name-syntax
+#Summary: nano syntax for %Name
+#Group: Development/Lisp
+#BuildArch: noarch
+#Requires: nano
 
-%description -n nano-%name-syntax
-This package contains nano syntax for %Name.
+#description -n nano-%name-syntax
+#This package contains nano syntax for %Name.
 
 
 %prep
 %setup
 #patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
+%patch3 -p1 -b .64bit-support
+%patch4 -p1 -b .stop-binary-strip
+
 install -m 0644 %SOURCE1 ./Makefile.alt
 
 
@@ -129,17 +138,39 @@ CFLAGS = %optflags
 LIBS=%{?_with_readline:-lreadline} %{?_with_ext_pcre:-lpcre}
 OBJS=%{?_with_utf8:nl-utf8.o} %{!?_with_ext_pcre:pcre.o}
 __EOF__
-%make_build -f Makefile.alt
-%{?_enable_check:%make_build test}
+#make_build -f Makefile
+#make_build -f Makefile.alt
+
+#{?_enable_check:%make_build test}
+
+
+
+%configure
+
+%if %{_lib} == lib64
+CFLAGS="%{optflags} -c -DREADLINE -DSUPPORT_UTF8 -DLINUX -DNEWLISP64" \
+        make -f makefile_linuxLP64_utf8 %{?_smp_mflags}
+%else
+CFLAGS="%{optflags} -c -DREADLINE -DSUPPORT_UTF8 -DLINUX" \
+        make -f makefile_linux_utf8 %{?_smp_mflags}
+%endif
+
 
 
 %install
+
+
+#make install_home HOME=%{buildroot}/usr/
+
+
+
+
 install -d -m 0755 %buildroot{%_bindir,%vim_syntax_dir,%_datadir/nano}
 %make_install bindir=%buildroot%_bindir datadir=%buildroot%_datadir install
 chmod 755 %buildroot%_datadir/%name/guiserver/*
 mv %buildroot%_docdir/%name{,-%version}
 mv %buildroot{%_datadir/%name/util,%vim_syntax_dir}/%name.vim
-mv %buildroot%_datadir/{%name/util/,nano/%name.}nanorc
+#mv %buildroot%_datadir/{%name/util/,nano/%name.}nanorc
 rm -f %buildroot%_docdir/%name-%version/{,*/}COPYING
 
 rm -f %buildroot%_bindir/%name
@@ -150,6 +181,7 @@ ln -s %name-%version %name
 %_bindir/*
 %dir %_datadir/%name
 %_datadir/%name/util
+#attr(0755,-,-) %{_datadir}/%{name}/util/syntax.cgi
 
 
 %files modules
@@ -165,18 +197,23 @@ ln -s %name-%version %name
 %_docdir/%name-%version
 %dir %_datadir/%name
 %_datadir/%name/guiserver
-%_datadir/%name/init.lsp.example
+#_datadir/%name/init.lsp.example
 
 
 %files -n vim-plugin-%name-syntax
 %vim_syntax_dir/*
 
 
-%files -n nano-%name-syntax
-%_datadir/nano/*
+#files -n nano-%name-syntax
+#_datadir/nano/*
 
 
 %changelog
+* Tue Apr 22 2014 Ilya Mashkin <oddity@altlinux.ru> 10.6.0-alt1
+- 10.6.0
+- drop old patches
+- drop nano syntax
+
 * Sat Dec 18 2010 Ilya Mashkin <oddity@altlinux.ru> 10.2.8-alt1
 - 10.2.8
 
