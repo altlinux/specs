@@ -1,5 +1,5 @@
 Name: bird
-Version: 1.4.0
+Version: 1.4.3
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -106,6 +106,9 @@ install %SOURCE1 %buildroot%_initdir/%name
 %_sbindir/%{name}cl6
 
 %changelog
+* Tue Apr 22 2014 Vladimir Lettiev <crux@altlinux.ru> 1.4.3-alt1
+- New version 1.4.3
+
 * Mon Nov 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.4.0-alt1
 - New version 1.4.0
 - Packed light client birdcl{,6}
