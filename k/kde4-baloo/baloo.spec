@@ -3,7 +3,7 @@
 %define rname baloo
 Name: kde4-baloo
 Version: 4.13.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -35,7 +35,7 @@ Requires: kde-common
 %package devel
 Group: Development/KDE and QT
 Summary: Developer files for %name
-Requires: kde4libs-devel
+Requires: kde4libs-devel kde4-kfilemetadata-devel
 %description devel
 %summary.
 
@@ -133,5 +133,8 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooxapian.so.*
 
 %changelog
+* Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt2
+- fix requires
+
 * Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - initial build
