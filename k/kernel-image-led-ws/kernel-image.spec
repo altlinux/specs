@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.10
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -54,7 +54,7 @@ Release: alt7
 %def_enable htmldocs
 %def_enable man
 %def_disable compat
-%def_disable lto
+%def_enable lto
 %def_enable relocatable
 %def_enable x32
 %def_enable cr
@@ -1161,7 +1161,13 @@ sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tool
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%{?extra_mods:%make_build -f Makefile.external %extra_mods && echo "External modules built"}
+%ifdef extra_mods
+%make_build -f Makefile.external \
+	%{?_enable_verbose:V=1} \
+	%{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
+	%extra_mods &&
+	echo "External modules built"
+%endif
 
 
 # psdocs, pdfdocs don't work yet
@@ -1787,6 +1793,11 @@ done)
 
 
 %changelog
+* Tue Apr 22 2014 Led <led@altlinux.ru> 3.13.10-alt8
+- added:
+  + fix-kernel--user_namespace
+- enabled lto
+
 * Sun Apr 20 2014 Led <led@altlinux.ru> 3.13.10-alt7
 - updated:
   + fix-tools-lib--traceevent
