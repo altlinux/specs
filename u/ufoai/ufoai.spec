@@ -1,6 +1,8 @@
+%set_gcc_version 4.7
+
 Name: ufoai
 Version: 2.4
-Release: alt1.2
+Release: alt1.3
 Source: %name-%version.tar
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
@@ -9,7 +11,9 @@ Url: http://ufoai.sf.net
 Packager: Roman Savochenko <rom_as@altlinux.ru>
 Requires: %name-data = %version
 
-BuildPreReq: gcc4.5-c++ zlib-devel libcurl-devel libjpeg-devel libpng-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libogg-devel libvorbis-devel
+Patch1: ufoai-DSO.patch
+
+BuildPreReq: gcc4.7-c++ zlib-devel libcurl-devel libjpeg-devel libpng-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libogg-devel libvorbis-devel
 BuildPreReq: libtheora-devel libgtk+2-devel libgtkglext-devel libxml2-devel libgtksourceview-devel libopenal-devel texlive-latex-extra
 #BuildPreReq: libSDL-devel libmesa-devel libxvid-devel
 
@@ -68,6 +72,8 @@ scripts for modelling.
 
 %prep
 %setup -q -n %srcname
+
+%patch1 -p1
 
 %build
 #autoreconf
@@ -255,6 +261,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot/%_man6dir
 #/usr/share/games/ufoai/base/maps
 
 %changelog
+* Tue Apr 22 2014 Roman Savochenko <rom_as@altlinux.ru> 2.4-alt1.3
+- DSO fix.
+
 * Mon Mar 03 2014 Roman Savochenko <rom_as@altlinux.ru> 2.4-alt1.2
 - Rebuild.
 
