@@ -4,8 +4,8 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -244,6 +244,7 @@ done
 %files kmix
 %_K4bindir/kmix
 %_K4bindir/kmixctrl
+%_K4bindir/kmixremote
 %_K4libdir/libkdeinit4_kmix*
 %_K4lib/kded_kmixd.so
 %_K4apps/kmix/
@@ -277,6 +278,12 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 

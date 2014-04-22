@@ -5,11 +5,10 @@
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
 
-%def_enable GTL
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -52,11 +51,7 @@ BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libg
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
 BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd9-devel libwps-devel libodfgen-devel
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano kde4-nepomuk-core-devel
-%if_enabled GTL
-BuildRequires: pkgconfig(GTLCore) >= 0.9.16
-BuildRequires: pkgconfig(QtGTL)
-%endif
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
 %summary.
@@ -271,7 +266,7 @@ cp -ar %SOURCE1 cmake/modules/
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
     -DEIGEN2_INCLUDE_DIR:PATH=%_includedir/eigen2 \
-    -DNEPOMUK=ON \
+    -DNEPOMUK=OFF \
     -DPACKAGERS_BUILD=OFF \
     -DKDE4_BUILD_TESTS=OFF \
     #
@@ -674,6 +669,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.2-alt1
+- new version
+
+* Thu Apr 03 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.1-alt0.M70P.1
+- built for M70P
+
 * Wed Apr 02 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.1-alt1
 - new version
 
