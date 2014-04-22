@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-UNIVERSAL-require
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: require() modules from a variable
@@ -62,6 +62,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/UNIVERSAL/*
 
 %changelog
+* Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
