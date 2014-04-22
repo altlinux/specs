@@ -1,4 +1,4 @@
-%define git_date .git20140327
+%define git_date .git20140422
 #define git_date %nil
 
 %define dbus_version 1.2.12-alt2
@@ -443,6 +443,24 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Apr 22 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.1-alt1.git20140422
+- etcnet-alt: Use nm-platform.h instead of wifi-utils.h.
+- etcnet-alt: Ignore more suffixes in the config files names.
+- etcnet-alt: Update copyrights.
+- etcnet-alt: Use macros for type cast.
+- etcnet-alt: Fix profiled connections reading.
+- etcnet-alt: Use default 'options' file for device type.
+- etcnet-alt: Print message in case of unmanaged devices.
+- dhcp-manager: downgrade warning about unhandled STOP DHCP
+  event too.
+- etcnet-alt: Refactor device config reading code.
+- init script: Drop NM_STOP_MODEMMANAGER support.
+- etcnet-alt: switch from $(INCLUDES) to $(AM_CPPFLAGS).
+- etcnet-alt: Add reload_connections() function.
+- etcnet-alt: Support monitor-connection-files config option.
+- etcnet-alt: Fix plugin type name and cleanup.
+- Upstream git snapshot (master branch).
+
 * Thu Mar 27 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.1-alt1.git20140327
 - init script: Updated for new nmcli syntax.
 - Fix devel-doc subpackage name.

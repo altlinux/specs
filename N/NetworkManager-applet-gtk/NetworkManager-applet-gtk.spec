@@ -1,5 +1,5 @@
 %define nm_version 0.9.9.0
-%define git_date .git20140327
+%define git_date .git20140422
 #define git_date %nil
 
 # Always must be '3' now
@@ -159,6 +159,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Apr 22 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt2.git20140422
+- Upstream git snapshot (master branch).
+
 * Fri Mar 28 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt2.git20140327
 - Disable gnome-bluetooth support.
 - Temporary don't treat warrnings as errors again.
