@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20140414
+Version: 20140419
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 20140419-alt1
+- initial stage2 digest check
+
 * Mon Apr 14 2014 Michael Shigorin <mike@altlinux.org> 20140414-alt1
 - optimize filesystem probing order (iso9660 first, ntfs last)
 
