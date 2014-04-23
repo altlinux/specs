@@ -1,5 +1,5 @@
 Name: perl-Amon2-Lite
-Version: 0.08
+Version: 0.12
 Release: alt1
 
 Summary: Amon2::Lite - Sinatra-ish framework on Amon2
@@ -31,6 +31,9 @@ BuildArch: noarch
 %doc LICENSE Changes
 
 %changelog
+* Wed Apr 23 2014 Vladimir Lettiev <crux@altlinux.ru> 0.12-alt1
+- 0.08 -> 0.12
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - 0.07 -> 0.08
 
