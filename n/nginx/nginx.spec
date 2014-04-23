@@ -16,7 +16,7 @@
 
 Name: nginx
 Version: 1.4.7
-Release: alt2
+Release: alt3
 
 Summary: Fast HTTP server
 License: BSD
@@ -270,6 +270,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Apr 23 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt3
+- fix logrotate script (ALT #30018)
+
 * Sat Mar 29 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt2
 - add stat.xsl (ALT #29917)
 
