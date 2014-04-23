@@ -39,7 +39,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 210
-Release: alt4.2
+Release: alt7
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -53,7 +53,7 @@ Source4: prefdm.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source15: network.service
+Source14: systemd-vconsole-setup@.service
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
@@ -65,11 +65,12 @@ Source23: var-lock.mount
 Source24: var-run.mount
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
-Source33: udev.filetrigger
 Source30: 49-coredump-null.conf
 Source31: 60-raw.rules
+Source33: udev.filetrigger
 # ALTLinux's default preset policy
-Source32: 99-default.preset
+Source35: 90-default.preset
+Source36: 99-default-disable.preset
 
 # udev rule generator
 Source41: rule_generator.functions
@@ -586,8 +587,6 @@ ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wan
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
-install -m644 %SOURCE15 %buildroot%_unitdir/network.service
-ln -s ../network.service %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE16 %buildroot%_unitdir/altlinux-kmsg-loglevel.service
 ln -s ../altlinux-kmsg-loglevel.service %buildroot%_unitdir/sysinit.target.wants
 install -m755 %SOURCE18 %buildroot/lib/systemd/altlinux-save-dmesg
@@ -631,13 +630,19 @@ rm -rf %buildroot%_docdir/systemd
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
 ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
 ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
-mkdir -p %buildroot%_unitdir/getty.target.wants
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty1.service
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty2.service
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty3.service
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.service
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
-ln -r -s %buildroot%_unitdir/getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
+
+# add workaround for localize ttyX
+install -m644 %SOURCE14 %buildroot%_unitdir/systemd-vconsole-setup@.service
+mkdir -p %buildroot%_unitdir/getty@.service.requires
+ln -r -s %buildroot%_unitdir/systemd-vconsole-setup@.service %buildroot%_unitdir/getty@.service.requires/systemd-vconsole-setup@.service
+
+# create drop-in to prevent tty1 to be cleared
+mkdir -p %buildroot%_unitdir/getty@tty1.service.d
+cat > %buildroot%_unitdir/getty@tty1.service.d/noclear.conf << EOF
+[Service]
+# ensure tty1 isn't cleared
+TTYVTDisallocate=no
+EOF
 
 # Temporary workaround for update runlevel
 ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/poweroff.target.wants/
@@ -646,9 +651,8 @@ ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_un
 ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/graphical.target.wants/
 ln -r -s %buildroot%_unitdir/systemd-update-utmp-runlevel.service %buildroot%_unitdir/reboot.target.wants/
 
-# move systemd-vconsole-setup.service from sysinit.target.wants to getty.target.wants
-rm -f %buildroot%_unitdir/sysinit.target.wants/systemd-vconsole-setup.service
-ln -r -s %buildroot%_unitdir/systemd-vconsole-setup.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup.service
+# don't enable wall ask password service, it spams every console
+rm -f %buildroot%_unitdir/multi-user.target.wants/systemd-ask-password-wall.path
 
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
@@ -736,7 +740,8 @@ mkdir -p %buildroot%_sysconfdir/systemd/system-preset
 mkdir -p %buildroot/lib/systemd/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
 mkdir -p %buildroot/usr/lib/systemd/user-preset
-install -m 0644 %SOURCE32 %buildroot/lib/systemd/system-preset/
+install -m 0644 %SOURCE35 %buildroot/lib/systemd/system-preset/
+install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
 
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
@@ -841,11 +846,15 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 /sbin/journalctl --update-catalog >/dev/null 2>&1 || :
 
 # Move old stuff around in /var/lib
-[ -d %_localstatedir/lib/systemd/random-seed ] rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/random-seed ] mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/backlight] mv %_localstatedir/lib/backlight %_localstatedir/lib/systemd/backlight >/dev/null 2>&1 || :
+[ -d %_localstatedir/lib/systemd/random-seed ] && rm -rf %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir/lib/systemd/random-seed >/dev/null 2>&1 || :
+[ -e %_localstatedir/lib/backlight ] && mv %_localstatedir/lib/backlight %_localstatedir/lib/systemd/backlight >/dev/null 2>&1 || :
 
 /lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
+
+# rm symlinks for network.service after drop network.service
+[ -L %_sysconfdir/systemd/system/network.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/network.target.wants/network.service  >/dev/null 2>&1 || :
+[ -L %_sysconfdir/systemd/system/multi-user.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/multi-user.target.wants/network.service  >/dev/null 2>&1 || :
 
 # Make sure new journal files will be owned by the "systemd-journal" group
 chgrp systemd-journal %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
@@ -1282,6 +1291,20 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt7
+- v210-stable snapshot (1ba98e163ed872d8744ff644e3d255b4be171bc6)
+- fixed typo, /lib/systemd/network should work fine
+- revert patch "udev always rename network"
+- start systemd-sysctl.service after systemd-module-load.service
+- start systemd-ask-password-wall.service after getty@tty1.service
+- drop default enabled getty.target.wants/getty@tty*.service
+- add systemd-vconsole-setup@.service for another way localize ttyX
+- add config with "TTYVTDisallocate=no" for getty@tty1.service
+- apply 1003-udev-netlink-null-rules.patch from opensuse
+- drop network.service unit - use sysvinit script
+- rename 99-default.preset to 99-default-disable.preset
+- add 90-default.preset
+
 * Mon Apr 14 2014 Sergey V Turchin <zerg@altlinux.org> 1:210-alt4.2
 - NMU: don't disable getty for tty1 because prefdm have conflict
 - NMU: don't disable plymouth-quit for xdm-like
