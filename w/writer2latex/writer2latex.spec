@@ -1,18 +1,19 @@
 Name: writer2latex
-Version: 1.1.5
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 Summary: Flexible tool to convert OpenOffice documents into LaTeX2e and XHTML formats
 License: LGPL
 Group: Development/Java
 Url: http://writer2latex.sourceforge.net/
-Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
-
-BuildRequires(pre): /proc rpm-build-java rpm-build-texmf java-1.6.0-sun-devel
+Patch1: XDocumentPropertiesSupplier.patch
+Patch2: XDocumentPropertiesSupplier-writer2xhtml.patch
+BuildRequires(pre): /proc rpm-build-java rpm-build-texmf
+#java-1.6.0-sun-devel
 # Automatically added by buildreq on Sat Jun 09 2007
-BuildRequires: ant junit libreoffice xml-commons-resolver12
+BuildRequires: ant junit LibreOffice4-common xml-commons-resolver12
 
 #Requires: java-1.6.0-sun
 
@@ -46,6 +47,8 @@ standard and sample config files for tuning output and documentation.
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1 
+%patch2 -p1 
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.zip" -exec rm -f {} \;
@@ -56,8 +59,8 @@ find . -name "*.zip" -exec rm -f {} \;
 export CLASSPATH=$(build-classpath junit) 
 
 %ant \
-           -DURE_CLASSES %_libdir/libreoffice/ure/share/java \
-           -DOFFICE_CLASSES=%_libdir/libreoffice/program/classes \
+           -DURE_CLASSES %_libdir/LibreOffice4/ure/share/java \
+           -DOFFICE_CLASSES=%_libdir/LibreOffice4/program/classes \
 	jar
 
 sed -i 's,^W2LPATH=.*,W2LPATH=%_javadir,' source/distro/w2l
@@ -98,6 +101,10 @@ install -m 644 source/distro/latex/*.sty source/distro/latex/obsolete/*.sty %bui
 #%doc %_javadocdir/%name
 
 %changelog
+* Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
+- Version up
+- Rebuild with LOO4 (FC patches applied)
+
 * Wed Sep 19 2012 Fr. Br. George <george@altlinux.ru> 1.1.5-alt3
 - Rebuild with java-sun
 
