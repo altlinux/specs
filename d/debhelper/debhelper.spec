@@ -1,5 +1,5 @@
 Name: debhelper
-Version: 9.20130518
+Version: 9.20140228
 Release: alt1
 
 Summary: Tools for Debian Packages
@@ -59,6 +59,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 9.20140228-alt1
+- Updated to 9.20140228 (fix build)
+
 * Wed May 22 2013 Dmitry V. Levin <ldv@altlinux.org> 9.20130518-alt1
 - Updated to 9.20130518 (fixes "find -perm" usage).
 
