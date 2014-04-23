@@ -1,5 +1,5 @@
 %define branch 0.8
-%define svn svn4183
+%define svn svn4266
 
 Version: %branch.0.1
 Epoch: 1
@@ -823,6 +823,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Wed Apr 23 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn4266
+- 0.8.0 svn4266 version
+
 * Fri Mar 21 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn4183
 - 0.8.0 svn4183 version
 

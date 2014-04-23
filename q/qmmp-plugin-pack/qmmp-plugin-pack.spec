@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.8
-%define		svn svn4183
+%define		svn svn4266
 
 Version:	%branch.0.1
 Name:		qmmp-plugin-pack
@@ -111,6 +111,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Wed Apr 23 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn4266
+- build svn4266
+
 * Fri Mar 21 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn4183
 - build svn4183
 
