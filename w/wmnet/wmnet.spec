@@ -1,19 +1,19 @@
-Name:		wmnet
-Version:	1.06
-Release:	alt4.qa1
-Packager:	Alexey Voinov <voins@altlinux.ru>
+Name: wmnet
+Version: 1.06
+Release: alt5
+Packager: Alexey Voinov <voins@altlinux.ru>
 
-Summary:	Applet that monitors the network
-Group:		Graphical desktop/Window Maker
-License: 	GPL
-Url: 		http://www.digitalkaos.net/linux/wmnet/
-Source0: 	%name-%version.tar.bz2
-Source1: 	%name.menu
+Summary: Applet that monitors the network
+Group: Graphical desktop/Window Maker
+License: GPL
+Url: http://www.digitalkaos.net/linux/wmnet/
+Source0: %name-%version.tar.bz2
+Source1: %name.menu
 
 # Automatically added by buildreq on Fri Jul 25 2008
 BuildRequires: imake libX11-devel libXext-devel xorg-cf-files
 
-%description 
+%description
 Wmnet uses ip accounting in the Linux kernel
 to monitor your network.
 
@@ -22,20 +22,24 @@ to monitor your network.
 
 %build
 xmkmf
-make CFLAGS="$RPM_OPT_FLAGS"
+make CFLAGS="%optflags"
 
 %install
-install -p -D -m 755 wmnet $RPM_BUILD_ROOT%_bindir/%name
-install -p -D -m 644 wmnet.man $RPM_BUILD_ROOT%_man1dir/wmnet.1x
-install -p -D -m 644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
+install -pDm755 wmnet %buildroot%_bindir/%name
+install -pDm644 wmnet.man %buildroot%_man1dir/wmnet.1
+install -pDm644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc README Changelog
 %_bindir/wmnet
-%_man1dir/wmnet.1x*
+%_man1dir/wmnet.1*
 %_menudir/*
 
 %changelog
+* Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 1.06-alt5
+- fixed menu file to reference %_bindir/%name
+- minor spec cleanup
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.06-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -70,7 +74,6 @@ install -p -D -m 644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 
 * Mon Aug 07 2000 Frederic Lepied <flepied@mandrakesoft.com> 1.05-8mdk
 - automatically added BuildRequires
-
 
 * Wed Jul 26 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 1.05-7mdk
 - let spechelcompress man pages
