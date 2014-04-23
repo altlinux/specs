@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.19
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -20,7 +20,6 @@ Requires(pre): policycoreutils-newrole
 Requires: policycoreutils-newrole
 Requires: checkpolicy
 Requires: policycoreutils-mcstransd
-Requires: policycoreutils-gui
 Requires: policycoreutils-restorecond
 Requires: libshell
 Requires: m4
@@ -263,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Wed Apr 23 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.19-alt2
+- Remove policycoreutils-gui build requirements
+
 * Fri Apr 18 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.19-alt1
 - Add Postgres module
 
