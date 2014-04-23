@@ -2,7 +2,7 @@
 
 Name: blender2.49
 Version: 2.49b
-Release: alt11.3
+Release: alt12
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -75,6 +75,8 @@ Languages support for blender
 %patch7 -p1
 %patch8 -p2
 
+sed -i 's|BulletSoftBody//|BulletSoftBody/|' source/gameengine/Physics/Bullet/CcdPhysicsController.cpp
+
 sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
 sed -i '36a\#include <GL/gl.h>' \
 	source/blender/ftfont/intern/FTF_TTFont.h
@@ -90,7 +92,7 @@ WITH_BF_OPENAL = 'true'
 
 WITH_BF_QUICKTIME = 'false'
 
-WITH_BF_FFMPEG = 'true'
+WITH_BF_FFMPEG = 'false'
 BF_FFMPEG = '%_usr'
 BF_FFMPEG_INC = '%_includedir'
 BF_FFMPEG_LIBPATH='%_libdir'
@@ -202,6 +204,9 @@ popd
 %_datadir/%name/.Blanguages
 
 %changelog
+* Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 2.49b-alt12
+- Rebuilt without ffmpeg (blender2.49 is used for python2.7 modules only)
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.49b-alt11.3
 - Rebuilt with libpng15
 
