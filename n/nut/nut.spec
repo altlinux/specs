@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt4
+%define release_pre alt5
 
 # for distr selected
 %def_without M24
@@ -88,6 +88,7 @@ Patch20: nut-2.6.2-snmp-noAES.patch
 Patch21: nut-2.6.0-upsd-listen.patch
 Patch22: nut-2.6.0-usb_submit_urb.patch
 Patch23: nut-2.6.5-alt-systemd.patch
+Patch24: nut-2.6.5-bcmxcp.patch
 
 # Fedora patches
 Patch103: nut-2.6.5-quickfix.patch
@@ -324,7 +325,7 @@ live status tracking on web pages, and more.
 This package includes header files and C programming manuals for nut.
 
 %prep
-%setup -q
+%setup
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -337,6 +338,7 @@ This package includes header files and C programming manuals for nut.
 %if_with M24
 %patch22 -p1
 %endif
+%patch24 -p1
 
 %patch103 -p1 -b .quickfix
 %patch104 -p1 -b .ipmifix
@@ -692,6 +694,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt5
+- added bcmxcp patch by Alex Moskalenko (closes: #29847)
+
 * Tue Mar 25 2014 Anton Farygin <rider@altlinux.ru> 2.6.5-alt4
 - rebuild with new freeipmi
 
