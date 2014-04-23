@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.13.10
-Release: alt8
+Version: 3.13.11
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.13
-%define kernel_stable_version 10
+%define kernel_stable_version 11
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1793,6 +1793,13 @@ done)
 
 
 %changelog
+* Wed Apr 23 2014 Led <led@altlinux.ru> 3.13.11-alt1
+- 3.13.11
+- removed:
+  + fix-kernel--user_namespace
+- updated:
+  + feat-tools--kvm
+
 * Tue Apr 22 2014 Led <led@altlinux.ru> 3.13.10-alt8
 - added:
   + fix-kernel--user_namespace
