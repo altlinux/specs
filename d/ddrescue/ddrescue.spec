@@ -1,7 +1,7 @@
 %def_without static
 
 Name: ddrescue
-Version: 1.15
+Version: 1.17
 Release: alt1
 
 Summary: Data copying in presence of I/O errors
@@ -9,22 +9,19 @@ License: GPLv3+
 Group: Archiving/Backup
 
 URL: http://www.gnu.org/software/ddrescue/ddrescue.html
-Source: http://ftp.gnu.org/gnu/ddrescue/ddrescue-%version.tar.gz
-Patch1: http://cvs.pld-linux.org/cgi-bin/cvsweb/SOURCES/ddrescue-patch.txt
-# This patch was originally from:
-# http://guru.multimedia.cx/wp-content/uploads/2006/08/ddrescue-patch.txt
-# Patch not maintained and about to drop next time.
+Source0: http://ftp.gnu.org/gnu/ddrescue/%{name}-%{version}.tar.lz
+Source1: ddrescue.watch
 
 # Automatically added by buildreq on Wed Dec 31 2008
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ lzip
 %{?_with_static: BuildRequires: libstdc++-devel-static}
 
 %description
-ddrescue copies data from one file or block device (hard disk, cdrom, etc)
+ddrescue copies data from one file or block device (hard disk, cdrom...)
 to another, trying hard to rescue data in case of read errors.
 
-ddrescue does not truncate the output file if not asked to. So, everytime
-you run it on the same output file, it tries to fill in the gaps.
+ddrescue does not truncate the output file if not asked to. So everytime
+you run it on the same output file it tries to fill in the gaps.
 
 If you have two or more copies of a damaged file, cdrom, etc, and run
 ddrescue on all of them, one at a time, with the same output file, you
@@ -35,14 +32,13 @@ Summary: Statically built ddrescue (data recovery tool)
 Group: Archiving/Backup
 
 %description static
-ddrescue copies data from one file or block device (hard disk, cdrom, etc)
+ddrescue copies data from one file or block device (hard disk, cdrom...)
 to another, trying hard to rescue data in case of read errors.
 
 This package contains statically built ddrescue utility.
 
 %prep
 %setup
-#%patch1 -p1
 
 %build
 ./configure --prefix=%_prefix --infodir=%_infodir --mandir=%_mandir
@@ -50,8 +46,8 @@ This package contains statically built ddrescue utility.
 make check
 
 %install
-%make_install install install-man DESTDIR=%buildroot
-%{?_with_static: install -pD -m755 sddrescue %buildroot/bin/sddrescue}
+%makeinstall_std install-man
+%{?_with_static: install -pDm755 sddrescue %buildroot/bin/sddrescue}
 
 %files
 %_bindir/ddrescue
@@ -66,6 +62,12 @@ make check
 %endif
 
 %changelog
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 1.17-alt1
+- new version (watch file uupdate)
+
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- new version (watch file uupdate)
+
 * Tue Jan 03 2012 Victor Forsiuk <force@altlinux.org> 1.15-alt1
 - 1.15
 
