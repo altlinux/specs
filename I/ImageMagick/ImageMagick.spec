@@ -7,9 +7,10 @@
 
 %def_enable librsvg
 %def_enable x
+
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -31,8 +32,11 @@ Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
 
 BuildPreReq: libpng-devel
 
+# found by buildreq; this might breaq when building against updated libraries
+#BuildRequires: ImageMagick-tools
+
 # Automatically added by buildreq on Wed Nov 03 2010
-BuildRequires: ImageMagick-tools bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
+BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
 
 BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent
 %if_enabled librsvg
@@ -221,6 +225,10 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 6.8.8.10-alt2
+- NMU: rebuilt against current libgraphviz
+- drop self-requires for build
+
 * Wed Apr 02 2014 Anton Farygin <rider@altlinux.ru> 6.8.8.10-alt1
 - new version
 - build with libjpeg, liblcms2, liblzma, libwebp and libgraphviz

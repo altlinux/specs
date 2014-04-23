@@ -1,18 +1,21 @@
-
-Summary: Graphical tool for designing finite state machine
 Name: qfsm
 Version: 0.53.0
-Release: alt1
+Release: alt1.1
+
+Summary: Graphical tool for designing finite state machine
+License: GPL
 Group: Education
 
-License: GPL
 Url: http://qfsm.sourceforge.net/
 Source: %name-%version-Source.tar.bz2
 Patch: %name.desktop.patch
 
 # Automatically added by buildreq on Thu Jul 26 2012
 # optimized out: cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config
-BuildRequires: cmake gcc-c++ libgraphviz-devel phonon-devel
+BuildRequires: cmake gcc-c++ phonon-devel
+
+# cgraph change
+#BuildRequires: libgraphviz-devel < 2.30.0
 
 %description
 Qfsm is a graphical tool for designing finite state machine.
@@ -33,12 +36,15 @@ Features include:
 %setup -n %name-%version-Source
 %patch -p0
 
+# needs porting to cgraph: https://sourceforge.net/p/qfsm/feature-requests/12/
+sed -i 's, \${graphviz_[A-Z]*_LIBRARY},,g' CMakeLists.txt
+
 %build
 cmake .
 %make_build
 
 %install
-%makeinstall DESTDIR=%buildroot
+%makeinstall_std
 #mkdir -p %buildroot/usr/
 #make package
 #cp -rp _CPack_Packages/Linux/TGZ/qfsm-0.51.0-Linux/* %buildroot/usr/
@@ -58,6 +64,9 @@ ln -s %name-%version/user %buildroot%_defaultdocdir/%name
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.53.0-alt1.1
+- NMU: rebuilt without graphviz (cgraph support missing)
+
 * Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 0.53.0-alt1
 - Autobuild version bump to 0.53.0
 

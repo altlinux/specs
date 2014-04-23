@@ -3,7 +3,7 @@
 
 Name: cfengine
 Version: 3.1.1
-Release: alt3.3
+Release: alt3.3.1
 Group: System/Base
 Summary: Atomation framework for system administration or IT Management.
 License: %gpl3only
@@ -18,7 +18,8 @@ Patch1: cfengine-3-alt-config.patch
 Patch2: cfengine-3-alt-build.patch
 Patch3: cfengine-3.1.1-alt-DSO.patch
 
-BuildRequires: flex libacl-devel libssl-devel glibc-devel-static libdb4-devel libgraphviz-devel libmysqlclient-devel libpcre-devel
+#BuildRequires: libgraphviz-devel
+BuildRequires: flex libacl-devel libssl-devel glibc-devel-static libdb4-devel libmysqlclient-devel libpcre-devel
 BuildRequires: rpm-build-licenses
 
 %description
@@ -29,7 +30,7 @@ common platforms, and designed with security in mind, from the ground up.
 
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch1
 %patch2 -p1
 %patch3 -p0
@@ -45,10 +46,11 @@ common platforms, and designed with security in mind, from the ground up.
 
 export CFLAGS="%optflags"
 
+%autoreconf
 %configure \
         %{subst_enable debug} \
         --with-workdir=%workdir \
-        --with-graphviz
+        --without-graphviz
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 export LD_LIBRARY_PATH=$PWD/src/.libs
 %make_build
@@ -104,6 +106,10 @@ fi
 %_initdir/*
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 3.1.1-alt3.3.1
+- NMU: rebuilt without graphviz (cgraph support needed)
+- this package needs a proper maintainer
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt3.3
 - Fixed build
 
