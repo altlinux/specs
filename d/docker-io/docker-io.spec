@@ -1,5 +1,5 @@
 Name: docker-io
-Version: 0.7.3
+Version: 0.10.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -12,25 +12,30 @@ Conflicts: docker
 
 # https://github.com/crosbymichael/docker
 Source0: %name-%version.tar
-Source1: docker.service
-Source2: docker.init
 
-BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static
+BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
-BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3) golang(github.com/syndtr/gocapability/capability)
+BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3) golang(github.com/syndtr/gocapability/capability) golang(github.com/godbus/dbus) golang(github.com/coreos/go-systemd/activation)
 
 Requires: tar lxc xz
 Provides: lxc-docker
 
-%global commit 8502ad4ba7b5410eb55f3517a801b33f61b1f625
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%define commit dc9c28f51d669d6b09e81c2381f800f1a33bb659
+%define shortcommit %(c=%commit; echo ${c:0:7})
 
-%global gopath          %_datadir/gocode
-%global __find_debuginfo_files /bin/true
-%add_verify_elf_skiplist /usr/bin/docker
-%add_verify_elf_skiplist %_usr/libexec/docker/dockerinit
-%brp_strip_none /usr/bin/*
-%brp_strip_none %_usr/libexec/docker/*
+%define gopath %_datadir/gocode
+
+%define __find_debuginfo_files %nil
+
+# do not strip
+%brp_strip_none %_bindir/docker /usr/libexec/docker/dockerinit
+
+# do not run debugedit for them
+%add_debuginfo_skiplist /usr/bin/docker
+%add_debuginfo_skiplist /usr/libexec/docker/dockerinit
+
+#%%add_verify_elf_skiplist /usr/bin/docker
+#%%add_verify_elf_skiplist /usr/libexec/docker/dockerinit
 
 %description
 Docker is an open-source engine that automates the deployment of any
@@ -43,46 +48,58 @@ and tests on a laptop will run at scale, in production*, on VMs, bare-metal
 servers, OpenStack clusters, public instances, or combinations of the above.
 
 %prep
-%setup -q
-rm -rf vendor
+%setup
+find vendor/src/ -mindepth 3 -maxdepth 3 -type d | \
+	egrep -v '(code.google.com/p/go)' | xargs echo rm -rf
 
 %build
 mkdir _build
+
 pushd _build
-
-mkdir -p src/github.com/dotcloud
-ln -s $(dirs +1 -l) src/github.com/dotcloud/docker
-export GOPATH=$(pwd):%gopath
-
-# passing version information build flags BZ #1017186
-export LDFLAGS="-X main.GITCOMMIT '%shortcommit/%release' -X main.VERSION '%version' -w"
-export BUILDFLAGS='-tags netgo'
-# dockerinit still needs to be a static binary, even if docker is dynamic
-CGO_ENABLED=0 go build -v -a -ldflags "$LDFLAGS -d" $BUILDFLAGS github.com/dotcloud/docker/dockerinit
-# sha1 our new dockerinit to ensure separate docker and dockerinit always run in a perfect pair compiled for one another
-export DOCKER_INITSHA1="$(sha1sum dockerinit | cut -d' ' -f1)"
-# exported so that "dyntest" can easily access it later without recalculating it
-go build -v -a -ldflags "$LDFLAGS -X github.com/dotcloud/docker/utils.INITSHA1 \"$DOCKER_INITSHA1\"" $BUILDFLAGS github.com/dotcloud/docker/docker
-
+  mkdir -p src/github.com/dotcloud
+  ln -s $(dirs +1 -l) src/github.com/dotcloud/docker
 popd
 
-make -C docs/ man
+export DOCKER_GITCOMMIT="%shortcommit/%version"
+export GOPATH=$(pwd)/_build:%gopath
+
+hack/make.sh dynbinary
+cp contrib/syntax/vim/LICENSE LICENSE-vim-syntax
+cp contrib/syntax/vim/README.md README-vim-syntax.md
 
 %install
-install -d -m 700 %buildroot%_sharedstatedir/docker
-install -p -D -m 755 _build/docker %buildroot%_bindir/docker
-install -p -D -m 755 _build/dockerinit %buildroot%_usr/libexec/docker/dockerinit
-install -d %buildroot%_mandir/man1
-install -p -m 644 docs/_build/man/docker.1 %buildroot%_man1dir/
+# install binary
+install -d %buildroot%_bindir
+install -p -m 755 bundles/%version/dynbinary/docker-%version %buildroot%_bindir/docker
+# install dockerinit
+install -d %buildroot/usr/libexec/docker
+install -p -m 755 bundles/%version/dynbinary/dockerinit-%version %buildroot/usr/libexec/docker/dockerinit
+# install manpage
+install -d %buildroot%_man1dir
+install -p -m 644 contrib/man/man1/docker*.1 %buildroot%_man1dir
+# install bash completion
 install -d %buildroot%_sysconfdir/bash_completion.d
 install -p -m 644 contrib/completion/bash/docker %buildroot%_sysconfdir/bash_completion.d/docker.bash
+# install zsh completion
 install -d %buildroot%_datadir/zsh/site-functions
 install -p -m 644 contrib/completion/zsh/_docker %buildroot%_datadir/zsh/site-functions
+# install vim syntax highlighting
+install -d %buildroot%_datadir/vim/vimfiles/{doc,ftdetect,syntax}
+install -p -m 644 contrib/syntax/vim/doc/dockerfile.txt %buildroot%_datadir/vim/vimfiles/doc
+install -p -m 644 contrib/syntax/vim/ftdetect/dockerfile.vim %buildroot%_datadir/vim/vimfiles/ftdetect
+install -p -m 644 contrib/syntax/vim/syntax/dockerfile.vim %buildroot%_datadir/vim/vimfiles/syntax
+# install udev rules
+install -d %buildroot/lib/udev/rules.d
+install -p -m 755 contrib/udev/80-docker.rules %buildroot/lib/udev/rules.d
+# install storage dir
+install -d -m 700 %buildroot%_sharedstatedir/docker
+# install systemd/init scripts
 install -d %buildroot%_unitdir
-install -p -m 644 %SOURCE1 %buildroot%_unitdir
-install -d %buildroot%_initdir
-install -p -m 755 %SOURCE2 %buildroot%_initdir/docker
-
+install -p -m 644 contrib/init/systemd/docker.service %buildroot%_unitdir
+%if 0
+install -d %buildroot%_initddir
+install -p -m 755 contrib/init/sysvinit-debian/docker %buildroot%_initddir/docker
+%endif
 install -d %buildroot%_sysctldir
 cat > %buildroot%_sysctldir/docker.conf <<EOF
 net.ipv4.ip_forward = 1
@@ -113,9 +130,11 @@ OPTIONS='-r -s=devicemapper -b="none"'
 
 EOF
 
+%if 0
 %pre
 getent group docker > /dev/null || %_sbindir/groupadd -r docker
 exit 0
+%endif
 
 %post
 %post_service docker
@@ -125,19 +144,33 @@ exit 0
 
 %files
 %doc AUTHORS CHANGELOG.md CONTRIBUTING.md FIXME LICENSE MAINTAINERS NOTICE README.md
-%config(noreplace) %_sysconfdir/sysconfig/docker
-%_initdir/*
-%_bindir/*
-%_usr/libexec/docker
-%_unitdir/docker.service
+%doc LICENSE-vim-syntax README-vim-syntax.md
 %_sysctldir/docker.conf
-%_man1dir/docker.1*
+%_man1dir/docker*.1.*
+%_bindir/docker
+%dir /usr/libexec/docker
+/usr/libexec/docker/dockerinit
+%_unitdir/docker.service
+%if 0
+%_initddir/docker
+%endif
+%config(noreplace) %_sysconfdir/sysconfig/docker
 %dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/docker.bash
 %_datadir/zsh/site-functions/_docker
 %dir %_sharedstatedir/docker
+/lib/udev/rules.d/80-docker.rules
+%dir %_datadir/vim/vimfiles/doc
+%_datadir/vim/vimfiles/doc/dockerfile.txt
+%dir %_datadir/vim/vimfiles/ftdetect
+%_datadir/vim/vimfiles/ftdetect/dockerfile.vim
+%dir %_datadir/vim/vimfiles/syntax
+%_datadir/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Tue Apr 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.0-alt1
+- New version.
+
 * Mon Jan 06 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.3-alt1
 - New version
 
