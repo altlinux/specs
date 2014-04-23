@@ -9,13 +9,13 @@
 %define lname lib%bname
 Name: %bname-utils
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
 Url: http://www.%bname.org
 Source: http://www.%bname.org/download/%name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 Provides: %{bname}2-utils = %version-%release
 %{!?_disable_shared:Requires: %lname = %version-%release}
 
@@ -65,13 +65,14 @@ This package contains NILFS v2 static libraries.
 
 %prep
 %setup -q
-#patch -p1
+%patch -p1
 
 
 %build
 %autoreconf
 %configure \
 	--libdir=%libdir \
+	--sbindir=/sbin \
 	--enable-largefile \
 	%{subst_enable static} \
 	%{subst_with blkid} \
@@ -100,6 +101,7 @@ done
 %doc AUTHORS ChangeLog.*
 %config(noreplace) %_sysconfdir/%{bname}_cleanerd.conf
 /sbin/*
+%_sbindir/*
 %_bindir/*
 %_man1dir/*
 %_man5dir/*
@@ -124,6 +126,9 @@ done
 
 
 %changelog
+* Wed Apr 23 2014 Led <led@altlinux.ru> 2.2.0-alt2
+- upstream fixes
+
 * Wed Apr 09 2014 Led <led@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
