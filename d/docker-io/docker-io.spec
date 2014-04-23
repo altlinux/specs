@@ -1,6 +1,6 @@
 Name: docker-io
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -25,17 +25,15 @@ Provides: lxc-docker
 
 %define gopath %_datadir/gocode
 
-%define __find_debuginfo_files %nil
-
 # do not strip
 %brp_strip_none %_bindir/docker /usr/libexec/docker/dockerinit
+
+# do not extract debuginfo
+%define __find_debuginfo_files %nil
 
 # do not run debugedit for them
 %add_debuginfo_skiplist /usr/bin/docker
 %add_debuginfo_skiplist /usr/libexec/docker/dockerinit
-
-#%%add_verify_elf_skiplist /usr/bin/docker
-#%%add_verify_elf_skiplist /usr/libexec/docker/dockerinit
 
 %description
 Docker is an open-source engine that automates the deployment of any
@@ -130,11 +128,9 @@ OPTIONS='-r -s=devicemapper -b="none"'
 
 EOF
 
-%if 0
 %pre
 getent group docker > /dev/null || %_sbindir/groupadd -r docker
 exit 0
-%endif
 
 %post
 %post_service docker
@@ -168,6 +164,9 @@ exit 0
 %_datadir/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Wed Apr 23 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.0-alt2
+- %%post: restored creation of docker group.
+
 * Tue Apr 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.0-alt1
 - New version.
 
