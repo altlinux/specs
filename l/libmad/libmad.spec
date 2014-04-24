@@ -1,6 +1,6 @@
 Name: libmad
 Version: 0.15.1b
-Release: alt7
+Release: alt8
 
 Summary: High quality MPEG audio decoder library
 License: GPL
@@ -28,7 +28,7 @@ This package contains development files required for packaging
 MAD-based software.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
@@ -46,6 +46,8 @@ touch AUTHORS NEWS ChangeLog
 
 %install
 %makeinstall
+# audacity can't find it otherwise
+ln -s libmad.pc %buildroot%_pkgconfigdir/mad.pc
 
 %files
 %doc CHANGES README CREDITS COPYRIGHT
@@ -57,6 +59,9 @@ touch AUTHORS NEWS ChangeLog
 %_includedir/mad.h
 
 %changelog
+* Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.15.1b-alt8
+- NMU: symlink libmad.pc as mad.pc for enhanced compatibility
+
 * Thu Feb 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.1b-alt7
 - fixed build on arm
 
