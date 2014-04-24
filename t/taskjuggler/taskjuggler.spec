@@ -1,81 +1,66 @@
+
 Name:          taskjuggler
-Version:       2.4.3
-Release:       alt2
+Version:       3.5.0
+Release:       alt1
 Summary:       Project management tool
 
 Group:         Office
 License:       GPLv2
 URL:           http://www.taskjuggler.org
 Source0:       http://www.taskjuggler.org/download/%{name}-%{version}.tar.bz2
-Source1:       %{name}.xml
 
-Patch:         taskjuggler-2.4.3-alt-DSO.patch
-Patch1:        taskjuggler-2.4.3-fix-reading-gzipped-xml.patch
-Patch2:        taskjuggler-2.4.3-fix-segfault-in-destructor.patch
+Patch:         %name-%version-%release.patch
 
+BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-kde-common-devel
-BuildRequires: gcc-c++
-BuildRequires: kdepim-devel libqt3-devel libjpeg-devel
-Buildrequires: xmlto libical-devel
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-tool-setup
+BuildRequires: ruby-term-ansicolor
+BuildRequires: ruby-mail
 
 %description
-TaskJuggler is a modern and powerful project management tool. Its new approach
-to project planning and tracking is far superior to the commonly used Gantt
-chart editing tools. It has already been successfully used in many projects
-and scales easily to projects with hundreds of resources and thousands of
-tasks. It covers the complete spectrum of project management tasks from the
-first idea to the completion of the project. It assists you during project
-scoping, resource assignment, cost and revenue planning, and risk and
+TaskJuggler is a modern and powerful project management tool. Its new
+approach to project planning and tracking is far superior to the
+commonly used Gantt chart editing tools. It has already been
+successfully used in many projects and scales easily to projects with
+hundreds of resources and thousands of tasks. It covers the complete
+spectrum of project management tasks from the first idea to the
+completion of the project. It assists you during project scoping,
+resource assignment, cost and revenue planning, and risk and
 communication management.
 
 %prep
 %setup -q
-%patch -p2
-%patch1 -p1
-%patch2 -p1
-#/foo/bar timezone is completely valid and interpreted as UTC,skipping test
-rm -f TestSuite/Syntax/Errors/Timezone.tjp
-
+%patch -p1
+%update_setup_rb
 
 %build
-%add_optflags -I%_includedir/tqtinterface
-%K3configure --with-kde-support=yes --libdir=%_K3lib
-%make_build
-
-#generate manpages with xmlto
-xmlto man --skip-validation man/en/taskjuggler.xml
-xmlto man --skip-validation man/en/TaskJugglerUI.xml
-
+%ruby_config --datadir=%_datadir/%name
+%ruby_build
 
 %install
-%K3install
+%ruby_install
+%rdoc lib/
+# Remove unnecessary files
+rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 
-mkdir -p %buildroot%_mandir/man1
-cp -p *.1 %buildroot%_mandir/man1
-rm %buildroot%_K3lib/libtaskjuggler.{la,so}
+%check
+%ruby_test_unit -Ilib:test test ||:
 
-# install mime type definition
-install %SOURCE1 -Dpm 644 %buildroot%_K3xdg_mime/%name.xml
-
-%K3find_lang %name
-
-%files -f %name.lang
-%doc AUTHORS COPYING ChangeLog README TODO
-%_K3bindir/TaskJugglerUI
-%_K3bindir/taskjuggler
-%_K3lib/libtaskjuggler.*
-%_K3xdg_apps/*.desktop
-%_K3apps/katepart/syntax/%name.xml
-%_K3apps/%name/
-%_K3conf/taskjugglerrc
-%_K3mimelnk/application/*.desktop
-%_K3xdg_mime/%name.xml
-%_kde3_iconsdir/hicolor/*/apps/%name.png
-%_datadir/icons/crystalsvg/*/mimetypes/*.png
-%_mandir/man1/*
+%files
+%doc README.rdoc TODO
+%_bindir/*
+%ruby_sitelibdir/*
+%ruby_ri_sitedir/*
+%_datadir/%name/*
 
 %changelog
+* Wed Apr 23 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version
+
+* Wed Feb 06 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version 3.4.0
+
 * Wed Feb 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt2
 - Fix build in Sisyphus
 - Apply Fedora patches
