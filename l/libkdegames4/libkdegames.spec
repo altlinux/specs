@@ -3,8 +3,8 @@
 %define rname libkdegames
 Name: libkdegames4
 %define major 4
-%define minor 11
-%define bugfix 1
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -93,6 +93,12 @@ Development files for %name
 
 
 %changelog
+* Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
