@@ -1,9 +1,10 @@
-%define lvm2version 2.02.104
-%define dmversion 1.02.83
+%define lvm2version 2.02.106
+%define dmversion 1.02.85
 
 %def_disable cluster
 %def_enable selinux
 %def_enable lvmetad
+%def_disable blkid_wiping
 
 Summary: Userland logical volume management tools
 Name: lvm2
@@ -35,6 +36,7 @@ BuildRequires: libreadline-devel, libtinfo-devel libudev-devel CUnit-devel
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
 
 %description
 LVM2 includes all of the support for handling read/write operations
@@ -223,6 +225,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--enable-udev-systemd-background-jobs \
 %endif
 	--enable-udev_sync \
+	%{subst_enable blkid_wiping} \
 	--with-dmeventd-path="/sbin/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-tmpfilesdir=/lib/tmpfiles.d
@@ -314,7 +317,7 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %exclude %_mandir/man8/clvm*
 %endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
-%_sysconfdir/lvm/profile/default.profile
+%config %_sysconfdir/lvm/profile/*.profile
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
 %_initdir/blk-availability
@@ -389,13 +392,8 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 
 %files -n libdevmapper-event
 /%_lib/libdevmapper-event.so.*
-%_libdir/libdevmapper-event-lvm2.so*
-%_libdir/libdevmapper-event-lvm2mirror.so
-%_libdir/libdevmapper-event-lvm2raid.so
-%_libdir/libdevmapper-event-lvm2snapshot.so
-%_libdir/device-mapper/libdevmapper-event-lvm2mirror.so*
-%_libdir/device-mapper/libdevmapper-event-lvm2raid.so*
-%_libdir/device-mapper/libdevmapper-event-lvm2snapshot.so*
+%_libdir/libdevmapper-event-*.so*
+%_libdir/device-mapper/libdevmapper-event-*.so*
 
 %files -n libdevmapper-event-devel
 %_libdir/libdevmapper-event.so
@@ -403,6 +401,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Wed Apr 23 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.106-alt1
+- 2.02.106
+
 * Sun Jan 19 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.104-alt1
 - 2.02.104
 
