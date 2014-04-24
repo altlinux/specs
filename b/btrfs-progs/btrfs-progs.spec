@@ -1,6 +1,6 @@
 Name: btrfs-progs
-Version: 3.12
-Release: alt2
+Version: 3.14.1
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -50,7 +50,7 @@ btrfs filesystem-specific programs.
 %setup -q -n %name-%version-%release
 
 %build
-%make_build CFLAGS='%optflags'
+%make_build CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
 
 %install
 %makeinstall bindir=%buildroot/sbin libdir=%buildroot/%_lib
@@ -70,6 +70,12 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Mon Apr 21 2014 Anton Farygin <rider@altlinux.ru> 3.14.1-alt1
+- new version
+
+* Fri Apr 18 2014 Anton Farygin <rider@altlinux.ru> 3.14-alt1
+- new version
+
 * Wed Mar 26 2014 Anton Farygin <rider@altlinux.ru> 3.12-alt2
 - fixed build on ARM
 
