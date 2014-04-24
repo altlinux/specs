@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.0.5
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -20,13 +20,11 @@ Packager: Alex Karpov <karpov@altlinux.ru>
 
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 
-#BuildRequires: gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel mt-st
+# Automatically added by buildreq on Thu Apr 24 2014
+# optimized out: cmake cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libatk-devel libcairo-devel libcloog-isl4 libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config zlib-devel
+BuildRequires: ccmake ctest gcc-c++ libalsa-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel liblame-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel
 
-# Automatically added by buildreq on Mon Feb 25 2013
-# optimized out: cmake cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libatk-devel libavcodec-devel libavutil-devel libcairo-devel libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config zlib-devel
-BuildRequires: ccmake ctest gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel ruby ruby-stdlibs
-
-BuildRequires: libportaudio2-devel
+BuildRequires: libopencore-amrnb0 libopencore-amrwb0
 BuildRequires: desktop-file-utils shared-mime-info
 
 %description
@@ -53,14 +51,34 @@ grep -Irl "libmp3lame.so" . | xargs sed -i "s/libmp3lame.so/libmp3lame.so.0.0/"
 rm -f src/.depend
 rm -f src/.gchdepend
 # ffmpeg: http://forum.audacityteam.org/viewtopic.php?f=19&t=71586
-%configure --disable-dynamic-loading --without-ffmpeg
-#--enable-unicode=yes --with-portmixer=no
+%configure \
+	--disable-dynamic-loading \
+	--with-expat=system \
+	--without-ffmpeg \
+	--with-lame=system \
+	--with-libflac=system \
+	--with-libid3tag=system \
+	--with-libmad=system \
+	--without-libresample \
+	--without-libsamplerate \
+	--with-libsndfile=system \
+	--with-libtwolame=system \
+	--with-libvamp=system \
+	--with-libvorbis=system \
+	--with-soundtouch=system \
+	#
+	#--enable-unicode=yes \
+	#--with-portmixer=no
+	#--with-portaudio=system \
+	#--with-libsoxr=system \
+	#--with-sbsms=system \
+	#
 %make
 
 %install
-%makeinstall DESTDIR=%buildroot
+%makeinstall_std
 install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.xpm
-install -pD -m644 %SOURCE3 %buildroot%_iconsdir/%name.xpm
+install -pD -m644 %SOURCE3 %buildroot%_niconsdir/%name.xpm
 install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.xpm
 mkdir %buildroot%_datadir/%name/help
 tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
@@ -72,14 +90,19 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 #exclude %_docdir/%name-%version
 %_bindir/*
 %_mandir/man?/*
-%_iconsdir/*.xpm
+%_iconsdir/*/*/apps/%name.*
 %_liconsdir/*
+%_niconsdir/*.xpm
 %_miconsdir/*
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.0.5-alt4
+- try to recover MP3 processing capability (debian configure options)
+- tweaked icons installation
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt3
 - Restored in Sisyphus
 
