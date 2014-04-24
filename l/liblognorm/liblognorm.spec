@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: liblognorm
-Version: 0.3.5
+Version: 1.0.0
 Release: alt1
 
 Summary: liblognorm is a tool to normalize log data.
@@ -10,8 +10,8 @@ Group: System/Libraries
 Url: http://www.liblognorm.com/
 
 Source: %name-%version.tar
-BuildRequires: libestr-devel
-BuildRequires: libee-devel >= 0.3.2
+BuildRequires: pkgconfig(libestr)
+BuildRequires: pkgconfig(json)
 
 %description
 Liblognorm shall help to make sense out of syslog data, or, actually, any event data that is present in text form.
@@ -24,7 +24,6 @@ Requires: %name = %version-%release
 %description devel
 Headers for building software that uses %name
 
-%if_enabled static
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
@@ -32,7 +31,6 @@ Requires: %name-devel = %version-%release
 
 %description devel-static
 Static libs for building statically linked software that uses %name
-%endif
 
 %prep
 %setup
@@ -61,6 +59,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.5-alt1
 - 0.3.5
 

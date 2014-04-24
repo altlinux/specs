@@ -1,7 +1,8 @@
 %def_disable static
+%def_enable tls
 
 Name: librelp
-Version: 1.0.7
+Version: 1.2.5
 Release: alt1
 
 Summary: The RELP (reliable event logging protocol) core protocol library
@@ -10,6 +11,8 @@ Group: System/Libraries
 Url: http://www.librelp.com/
 
 Source: %name-%version.tar
+
+%{?_enable_tls:BuildRequires: pkgconfig(gnutls) >= 2.0.0}
 
 %description
 librelp is an easy to use library for the RELP protocol. RELP in turn
@@ -24,7 +27,6 @@ Requires: %name = %version-%release
 %description devel
 Headers for building software that uses %name
 
-%if_enabled static
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
@@ -32,25 +34,27 @@ Requires: %name-devel = %version-%release
 
 %description devel-static
 Static libs for building statically linked software that uses %name
-%endif
 
 %prep
 %setup
 
 %build
 %autoreconf
-%configure %{subst_enable static}
+%configure \
+	%{subst_enable static} \
+	%{subst_enable tls}
+
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %_libdir/%name.so.*
 %doc AUTHORS ChangeLog doc/relp.html
 
 %files devel
-%_pkgconfigdir/relp.pc
+%_pkgconfigdir/*.pc
 %_libdir/%name.so
 %_includedir/%name.h
 
@@ -60,6 +64,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Thu Jul 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 

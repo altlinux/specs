@@ -1,7 +1,9 @@
+%def_disable gssapi
+%def_disable mmcount
 
 Name: rsyslog
-Version: 7.4.8
-Release: alt3
+Version: 8.2.1
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -23,14 +25,14 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel >= 1.0.3
+BuildRequires: librelp-devel >= 1.2.5
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
-BuildRequires: libee-devel >= 0.4.0
+BuildRequires: liblogging-devel >= 1.0.3
 BuildRequires: libjson-devel
-BuildRequires: liblognorm-devel >= 0.3.1
+BuildRequires: liblognorm-devel >= 1.0.0
 BuildRequires: libmongo-client-devel >= 0.1.4
 BuildRequires: libuuid-devel
 BuildRequires: libcurl-devel
@@ -199,13 +201,23 @@ message modification supporting Linux audit format in various settings.
 
  o mmaudit.so - This module provides message modification supporting Linux audit format.
 
+%package mmcount
+Summary: Message counting support for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmcount
+This module provides the capability to count log messages by severity
+or json property of given app-name.  The count value is added into the
+log message in json property named 'mmcount'
+
 %package mmjsonparse
 Summary: JSON enhanced logging support
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description mmjsonparse
-The rsyslog-mmaudit package contains a dynamic shared object that will add
+The rsyslog-mmjsonparse package contains a dynamic shared object that will add
 capability to recognize and parse JSON enhanced syslog messages.
 
  o mmjsonparse.so - This module provides the capability to recognize and parse JSON enhanced
@@ -217,10 +229,23 @@ Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description mmnormalize
-The rsyslog-mmaudit package contains a dynamic shared object that will add
+The rsyslog-mmnormalize package contains a dynamic shared object that will add
 normalize log messages via liblognorm.
 
  o mmnormalize.so  - This module provides the capability to normalize log messages via liblognorm.
+
+%package mmanon
+Summary: mmanon output module for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmanon
+IP Address Anonimization Module (mmanon).
+It is a message modification module that actually changes the IP address
+inside the message, so after calling mmanon, the original message can
+no longer be obtained. Note that anonymization will break digital
+signatures on the message, if they exist.
+
 
 %package elasticsearch
 Summary: ElasticSearch output module for rsyslog
@@ -228,7 +253,7 @@ Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description elasticsearch
-The rsyslog-mmaudit package contains a dynamic shared object that will add
+The rsyslog-elasticsearch package contains a dynamic shared object that will add
 feed logs directly into Elasticsearch.
 
  o omelasticsearch.so - This module provides the capability for rsyslog to feed logs directly into
@@ -240,8 +265,8 @@ Group: System/Kernel and hardware
 Requires: %name = %version-%release
 
 %description hiredis
-The rsyslog-mmaudit package contains a dynamic shared object that will add
-feed logs directly into Elasticsearch.
+The rsyslog-hiredis package contains a dynamic shared object that will add
+feed logs directly into hiredis.
 
  o omhiredis.so - This module provides output to Redis.
 
@@ -272,13 +297,6 @@ all other functions:
  o impstats.so           - Input Module to Generate Periodic Statistics of Internal Counters
  o omstdout.so           - stdout output module (stdout)
 
-%package docs-html
-Summary: HTML documentation for rsyslog
-Group: Documentation
-BuildArch: noarch
-
-%description docs-html
-This package contains the HTML documentation for rsyslog.
 
 %prep
 %setup -q
@@ -295,31 +313,33 @@ export HIREDIS_LIBS=-lhiredis
 	--disable-static \
 	--disable-testbench \
 	--enable-elasticsearch \
+	%{subst_enable mmcount} \
 	--enable-gnutls \
-	--enable-gssapi-krb5 \
+	%{?_enable_gssapi:--enable-gssapi-krb5} \
 	--enable-imdiag \
 	--enable-imfile \
+	--enable-imjournal \
 	--enable-impstats \
 	--enable-imptcp \
 	--enable-imttcp \
 	--enable-inet \
 	--enable-klog \
 	--enable-kmsg \
-	--enable-imjournal \
 	--enable-largefile \
 	--enable-libdbi \
 	--enable-mail \
+	--enable-mmanon \
 	--enable-mmaudit \
 	--enable-mmjsonparse \
 	--enable-mmnormalize \
 	--enable-mmsnmptrapd \
 	--enable-mysql \
 	--enable-omhiredis \
+	--enable-omjournal \
 	--enable-ommongodb \
 	--enable-omprog \
 	--enable-omruleset \
 	--enable-omstdout \
-	--enable-omjournal \
 	--enable-omudpspoof \
 	--enable-omuxsock \
 	--enable-pgsql \
@@ -344,11 +364,6 @@ rm -f %buildroot%mod_dir/*.la
 
 mkdir -p %buildroot{%_sysconfdir/{sysconfig,%name.d},%_initdir,%_var/spool/%name}
 
-# fix html docs
-rm -rf html_docs; mkdir -p html_docs
-cp doc/*.html doc/*.jpg html_docs/
-chmod 644 html_docs/*
-
 install -m640 rsyslog.conf.alt %buildroot%_sysconfdir/%name.conf
 install -m640 rsyslogd.alt %buildroot%_sysconfdir/sysconfig/rsyslogd
 install -m755 rsyslogd.init %buildroot%_initdir/rsyslogd
@@ -370,7 +385,7 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %preun_service rsyslogd
 
 %files
-%doc AUTHORS ChangeLog README  doc/rsyslog-example.conf
+%doc AUTHORS ChangeLog README
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/%name.conf
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/syslog.conf
 %dir %_sysconfdir/%name.d/
@@ -429,11 +444,13 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mongo.conf
 %mod_dir/ommongodb.so
 
+%if_enabled gssapi
 %files gssapi
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_gssapi.conf
 %mod_dir/omgssapi.so
 %mod_dir/imgssapi.so
 %mod_dir/lmgssutil.so
+%endif
 
 %files gnutls
 %mod_dir/lmnsd_gtls.so
@@ -458,11 +475,19 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %files mmaudit
 %mod_dir/mmaudit.so
 
+%if_enabled mmcount
+%files mmcount
+%mod_dir/mmcount.so
+%endif
+
 %files mmjsonparse
 %mod_dir/mmjsonparse.so
 
 %files mmnormalize
 %mod_dir/mmnormalize.so
+
+%files mmanon
+%mod_dir/mmanon.so
 
 %files elasticsearch
 %mod_dir/omelasticsearch.so
@@ -486,10 +511,10 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/pmsnare.so
 %mod_dir/mmsnmptrapd.so
 
-%files docs-html
-%doc html_docs/*
-
 %changelog
+* Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 8.2.1-alt1
+- 8.2.1
+
 * Fri Jan 10 2014 Alexey Shabalin <shaba@altlinux.ru> 7.4.8-alt3
 - drop SysSock.Unlink=off option (ALT#29666)
 
