@@ -1,11 +1,7 @@
-#TODO: systemd, polkit and system-config-selinux
-
-%def_with gui
-
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.2.5
-Release: alt2
+Release: alt4
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -33,6 +29,7 @@ BuildPreReq: rpm-build-xdg
 BuildRequires: libaudit-devel libcap-devel libpam-devel
 BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
 BuildRequires: python-devel
+BuildRequires: python-module-pygnome
 BuildRequires: desktop-file-utils
 BuildRequires: python-module-sepolgen
 BuildRequires: glib2-devel libdbus-glib-devel
@@ -40,10 +37,6 @@ BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 # Build sequence: libsepol -> setools -> policycoreutils
 BuildRequires: libsetools-devel >= 3.3.8-alt3
-
-%add_python_req_skip gnome
-%add_python_req_skip gi
-%add_python_req_skip gtk
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -105,7 +98,16 @@ mcstrans provides an translation daemon to translate SELinux categories
 from internal representations to user defined representation.
 
 
-%if_with gui
+%package devel
+Requires: %name = %version-%release
+Summary: SELinux policy core policy devel utilities
+Group: System/Base
+
+%description devel
+The policycoreutils-devel package contains the management tools use to
+develop policy in an SELinux environment.
+
+
 %package gui
 Summary: SELinux configuration GUI
 Group: System/Base
@@ -115,7 +117,6 @@ Requires: selinux-policy
 
 %description gui
 system-config-selinux is a utility for managing the SELinux environment.
-%endif
 
 
 %prep
@@ -187,54 +188,104 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %preun_service mcstrans
 
 %add_python_req_skip yum
+# May also add: gnome, gi, gtk
 
+#
+# stanv@ note:
+# Fedora spec file has additional sub-packages: -python, -python3. 
+# Put it contents here, to main policycoreutils package
+#
 %files -f %name.lang
 /sbin/restorecon
 /sbin/fixfiles
 /sbin/setfiles
+%_sbindir/load_policy
 /sbin/load_policy
 %_sbindir/genhomedircon
 %_sbindir/setsebool
 %_sbindir/semodule
-%_sbindir/semanage
-%_sbindir/load_policy
 %_sbindir/sestatus
-%_sbindir/run_init
-%_sbindir/open_init_pty
-%_bindir/sepolgen-ifgen*
+%_bindir/secon
+%config(noreplace) %_sysconfdir/sestatus.conf
+
+#
+# Fedora python sub-package
+#
+%_sbindir/semanage
+%_bindir/chcat
 %_bindir/audit2allow
 %_bindir/audit2why
-%_bindir/chcat
-%_bindir/secon
-%_bindir/semodule_*
-%_bindir/sepolicy
-%_man1dir/*
-%_man5dir/*
-%_man8dir/*
-%exclude %_man1dir/newrole.*
-%exclude %_man8dir/sandbox.*
-%exclude %_man8dir/restorecond.*
-%exclude %_man8dir/mcs.*
-%exclude %_man8dir/mcstransd.*
-%exclude %_man8dir/setrans.conf.*
-%config(noreplace) %_sysconfdir/pam.d/run_init
-%config(noreplace) %_sysconfdir/sestatus.conf
-%_libdir/python?.?/site-packages/seobject.py*
+%_bindir/semodule_package
+%python_sitelibdir/seobject.py*
+%dir %python_sitelibdir/sepolicy
+%{python_sitelibdir}/sepolicy/*so
+%{python_sitelibdir}/sepolicy/templates
+%{python_sitelibdir}/sepolicy/__init__.py*
+%{python_sitelibdir}/sepolicy/booleans.py*
+%{python_sitelibdir}/sepolicy/communicate.py*
+%{python_sitelibdir}/sepolicy/interface.py*
+%{python_sitelibdir}/sepolicy/manpage.py*
+%{python_sitelibdir}/sepolicy/network.py*
+%{python_sitelibdir}/sepolicy/transition.py*
+%{python_sitelibdir}/sepolicy/sedbus.py*
+
+#
+# Policy Kit config, send_destination="org.selinux"
+#
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.selinux.conf
+%{python_sitelibdir}/sepolicy*.egg-info
 %dir /var/lib/selinux
-%_datadir/bash-completion/completions/*
+
+#
+# Fedora doesn't pack them.
+# run_init isn't required for systemd
+%_sbindir/run_init
+%_sbindir/open_init_pty
+%config(noreplace) %_sysconfdir/pam.d/run_init
+
+%_datadir/bash-completion/completions/semanage
+%_datadir/bash-completion/completions/setsebool
+
+%_man5dir/selinux_config.*
+%_man5dir/sestatus.conf*
+%_man8dir/fixfiles.*
+%_man8dir/load_policy.*
+%_man8dir/restorecon.*
+%_man8dir/semodule.*
+%_man8dir/sestatus.*
+%_man8dir/setsebool.*
+%_man8dir/setfiles.*
+%_man1dir/audit2allow.*
+%_man1dir/audit2why.*
+%_man8dir/chcat.*
+%_man8dir/semanage.*
+%_man8dir/semanage-*.*
+%_man8dir/semodule_package.*
+%_man1dir/secon.*
+%_man8dir/genhomedircon.*
+# Remove ?
+%_man8dir/open_init_pty.*
+%_man8dir/run_init.*
+
 
 %files newrole
 %config(noreplace) %_sysconfdir/pam.d/newrole
 %attr(4511,root,root) %_bindir/newrole
 %_man1dir/newrole.*
 
-
+#
+# stanv@:
+# sandbox - useless for selinux-policy-altlinux.
+# Leave it for ref-policy.
+#
 %files sandbox
 %_bindir/sandbox
 %_sbindir/seunshare
 %_initddir/sandbox
 %config(noreplace) %_sysconfdir/sysconfig/sandbox
+%_man5dir/sandbox.*
 %_man8dir/sandbox.*
+%_man8dir/seunshare.*
 
 
 %files sandbox-x
@@ -242,14 +293,12 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %files restorecond
+%_unitdir/restorecond.service
+%_datadir/dbus-1/services/org.selinux.Restorecond.service
 %_sbindir/restorecond
 %_initddir/restorecond
-%_unitdir/restorecond.service
 %config(noreplace) %_sysconfdir/selinux/restorecond*
 %_man8dir/restorecond.*
-#%_datadir/dbus-1/services/*
-#%config %_xdgconfigdir/autostart/*
-
 
 %files mcstransd
 /sbin/mcstransd
@@ -261,36 +310,89 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_man8dir/setrans.conf.*
 %_datadir/mcstrans
 
+# stanv@
+# generate.py does:
+# --> from templates import executable
+# But, 'templates' is a part of 'sepolicy' python module, as a generate.py
+# So /usr/lib/rpm/python.req.py generates wrong dependency:
+# python2.7(templates)
+# Easiest way do next and add explicit requires.
+%add_python_req_skip templates
 
-%if_with gui
-%files gui
+%files devel
 %_bindir/sepolgen
+%_bindir/sepolgen-ifgen
+%_bindir/sepolgen-ifgen-attr-helper
+%_bindir/sepolicy
+%python_sitelibdir/sepolicy/generate.py*
+%_bindir/semodule_deps
+%_bindir/semodule_expand
+%_bindir/semodule_link
+%_bindir/semodule_unpackage
+
+%_datadir/bash-completion/completions/sepolicy
+
+%_man8dir/sepolgen.*
+%_man8dir/sepolicy-booleans.*
+%_man8dir/sepolicy-generate.*
+%_man8dir/sepolicy-interface.*
+%_man8dir/sepolicy-network.*
+%_man8dir/sepolicy.*
+%_man8dir/sepolicy-communicate.*
+%_man8dir/sepolicy-manpage.*
+%_man8dir/sepolicy-transition.*
+%_man8dir/semodule_deps.*
+%_man8dir/semodule_expand.*
+%_man8dir/semodule_link.*
+%_man8dir/semodule_unpackage.*
+
+
+%files gui
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
+
 %_datadir/applications/system-config-selinux.desktop
-%_xdgconfigdir/autostart/restorecond.desktop
 %_datadir/applications/selinux-polgengui.desktop
+
 %_iconsdir/hicolor/24x24/apps/system-config-selinux.png
+%_pixmapsdir/system-config-selinux.png
+
+%dir %_datadir/system-config-selinux
 %_datadir/system-config-selinux/*.py*
-#%_datadir/system-config-selinux/selinux.tbl
 %_datadir/system-config-selinux/*png
 %_datadir/system-config-selinux/*.glade
-%dir %python_sitelibdir/sepolicy
-%dir %python_sitelibdir/sepolicy/templates
-%python_sitelibdir/sepolicy/*.py*
-%python_sitelibdir/sepolicy/templates/*.py*
-%python_sitelibdir/sepolicy/*.so
-%python_sitelibdir/*.egg-info
-%_datadir/dbus-1/services/org.selinux.Restorecond.service
-%dir %_datadir/system-config-selinux
+
+%_xdgconfigdir/autostart/restorecond.desktop
+
+%python_sitelibdir/sepolicy/gui.py*
+%python_sitelibdir/sepolicy/sepolicy.glade
+
+%dir %python_sitelibdir/sepolicy/help
+%python_sitelibdir/sepolicy/help/*.py*
+%python_sitelibdir/sepolicy/help/*.txt
+%python_sitelibdir/sepolicy/help/*.png
+
 %config(noreplace) %_sysconfdir/pam.d/system-config-selinux
 %config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
 %config(noreplace) %_sysconfdir/security/console.apps/system-config-selinux
 %config(noreplace) %_sysconfdir/security/console.apps/selinux-polgengui
-%endif
+
+%_datadir/polkit-1/actions/org.selinux.policy
+%_datadir/polkit-1/actions/org.selinux.config.policy
+%_datadir/dbus-1/system-services/org.selinux.service
+
+%_man8dir/system-config-selinux.*
+%_man8dir/selinux-polgengui.*
+%_man8dir/sepolicy-gui*
 
 
 %changelog
+* Thu Apr 24 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt4
+- Add devel package, adjust spec according to Fedora spec
+
+* Wed Apr 23 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt3
+- Add BuildRequires to python-module-pygnome
+
 * Fri Feb 07 2014 Andriy Stepanov <stanv@altlinux.ru> 2.2.5-alt2
 - Go away from python gnome module dependency
 
