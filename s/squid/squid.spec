@@ -5,8 +5,8 @@
 %def_with nettle
 
 Name: squid
-Version: 3.4.4
-Release: alt5
+Version: 3.4.4.2
+Release: alt1
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -290,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Apr 24 2014 Led <led@altlinux.ru> 3.4.4.2-alt1
+- 3.4.4.2
+
 * Tue Apr 15 2014 Led <led@altlinux.ru> 3.4.4-alt5
 - upstream fixes
 
