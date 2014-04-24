@@ -38,9 +38,9 @@
 %define rname	qt
 %define major	4
 %define minor	8
-%define bugfix	5
+%define bugfix	6
 %define beta	%nil
-%define rlz alt6
+%define rlz alt1
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -103,8 +103,7 @@ Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
 Patch212: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
 Patch213: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
 Patch214: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
-Patch215: 0147-Disallow-deep-or-widely-nested-entity-references.patch
-Patch216: 0162-Fully-expand-entities-to-ensure-deep-or-widely-neste.patch
+#
 Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 # MDV
 # ALT
@@ -121,7 +120,7 @@ Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
 Patch510: qt-4.8.0-alt-ldflags.patch
 Patch511: qt-4.3.2-alt-checkbox-indicator-plastique.patch
 Patch512: qt-4.3.4-alt-uitools-shared.patch
-Patch513: qt-4.5.2-alt-fix-ssl-loading.patch
+Patch513: qt-4.8.6-alt-fix-ssl-loading.patch
 Patch514: qt-4.8.5-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
@@ -760,8 +759,7 @@ Install this package if you want to create RPM packages that use %name
 %patch212 -p1
 %patch213 -p1
 %patch214 -p1
-%patch215 -p1
-%patch216 -p1
+#
 %patch217 -p1
 # MDV
 # ALT
@@ -854,7 +852,7 @@ CNFGR="\
 %endif
 	\
 	-graphicssystem %graphicssystem -opengl %opengl_type \
-	-system-zlib -cups -openssl-linked \
+	-system-zlib -cups -openssl \
 	-webkit -xmlpatterns -scripttools \
 	-multimedia -declarative \
 	-no-nas-sound -no-nis -iconv \
@@ -1550,6 +1548,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt1
+- new version
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5.M70P.1
+- built for M70P
+
 * Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt6
 - add large XML entities support
 
