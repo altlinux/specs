@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1
+Release: alt2
 
 Summary: Python module to generate QR Codes
 
@@ -14,6 +14,7 @@ Url: https://github.com/lincolnloop/python-qrcode
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
 # Source-url: https://pypi.python.org/packages/source/q/qrcode/qrcode-4.0.4.tar.gz
 Source: %oname-%version.tar
+Patch: %name-4.0.4-alt-python-version.patch
 BuildArch: noarch
 
 BuildPreReq: rpm-build-python
@@ -42,6 +43,7 @@ to generate QR Codes.
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 %if_with python3
 rm -rf ../python3
@@ -84,5 +86,8 @@ popd
 %endif
 
 %changelog
+* Thu Apr 24 2014 Vladimir Didenko <cow@altlinux.ru> 4.0.4-alt2
+- explicitly set python version for sample application
+
 * Thu Jan 16 2014 Vladimir Didenko <cow@altlinux.ru> 4.0.4-alt1
 - initial build for Sisyphus
