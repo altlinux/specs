@@ -1,10 +1,11 @@
 
 %add_findpackage_path %_kde4_bindir
-%add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
-%add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
-%add_findreq_skiplist %_K4apps/kate/pate/*_utils/*/*.py
-%add_findreq_skiplist %_K4apps/kate/pate/*_utils/*.py
-%add_findreq_skiplist %_K4apps/kate/pate/python_autocomplete/*.py
+#add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
+#add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
+#add_findreq_skiplist %_K4apps/kate/pate/*_utils/*/*.py
+#add_findreq_skiplist %_K4apps/kate/pate/*_utils/*.py
+#add_findreq_skiplist %_K4apps/kate/pate/python_autocomplete/*.py
+%add_python_req_skip pate jedi pyflakes pyplete 
 
 %ifarch %arm
 %def_disable desktop
@@ -14,8 +15,8 @@
 
 %define rname kate
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -193,7 +194,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4srv/katexmltools.desktop
 %_K4srv/katesql.desktop
 %_K4srv/katesearch.desktop
+%_K4srv/katepate_*.desktop
 %_K4srvtyp/kateplugin.desktop
+%_K4srvtyp/katepythonplugin.desktop
 #%_K4doc/*/kate-plugins
 %_K4doc/*/kate
 %_K4iconsdir/hicolor/*/apps/kate.*
@@ -219,6 +222,12 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Tue Apr 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 

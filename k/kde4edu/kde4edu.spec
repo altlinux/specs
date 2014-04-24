@@ -7,10 +7,10 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -25,6 +25,8 @@ Url: http://edu.kde.org
 #Obsoletes: kdeedu < %version-%release
 %endif
 
+Requires: %name-artikulate = %version-%release
+Requires: %name-kqtquickcharts = %version-%release
 Requires: %name-blinken = %version-%release
 Requires: %name-cantor = %version-%release
 Requires: %name-kalgebra = %version-%release
@@ -56,12 +58,12 @@ Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4base-workspace-devel
-BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 facile gcc-c++ libindi-devel
+BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 eigen3 facile gcc-c++ libindi-devel
 BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
-BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
+BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel qt-gstreamer-devel
 BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
-BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data)
+BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data) shared-mime-info
 BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
 BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel
 
@@ -109,6 +111,23 @@ Requires: %name-common = %version-%release
 %endif
 %description core
 Core files for %name
+
+%package artikulate
+Summary: Language learning application
+Url: http://edu.kde.org/artikulate
+Group: Education
+Requires: %name-common = %version-%release
+%description artikulate
+Artikulate is a language learning application that helps improving pronunciation skills for
+various languages. This repository maintains the application and language specifications.
+
+%package kqtquickcharts
+Summary: QtQuick plugin for interactive charts
+Url: http://edu.kde.org/artikulate
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description kqtquickcharts
+A QtQuick plugin to render beautiful and interactive charts.
 
 %package blinken
 Summary: Simon Says Game
@@ -588,6 +607,26 @@ Requires: %name-common = %version-%release
 %description devel
 Files needed to build applications based on %name.
 
+%package -n libartikulatecore4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libartikulatecore4
+KDE 4 library
+
+%package -n libartikulatelearnerprofile4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libartikulatelearnerprofile4
+KDE 4 library
+
+%package -n libastro4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libastro4
+KDE 4 library
 
 %prep
 %setup -q -n %rname-%version
@@ -661,6 +700,30 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
+%files -n libartikulatecore4
+%_K4libdir/libartikulatecore.so.*
+%files -n libartikulatelearnerprofile4
+%_K4libdir/libartikulatelearnerprofile.so.*
+%files -n libastro4
+%_K4libdir/libastro.so.*
+
+%files artikulate
+%ifdef _kde_alternate_placement
+%_kde4_bindir/artikulate
+%_kde4_xdg_apps/artikulate.desktop
+%else
+%_K4bindir/artikulate
+%_K4xdg_apps/artikulate.desktop
+%endif
+%_K4apps/artikulate/
+%_K4apps/artikulateui.rc
+%_K4conf/artikulate.knsrc
+%_K4cfg/artikulate.kcfg
+%_K4doc/en/artikulate/
+
+
+%files kqtquickcharts
+%_K4lib/imports/org/kde/charts/
 
 %files blinken
 %ifdef _kde_alternate_placement
@@ -928,7 +991,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_kde4_xdg_apps/ktouch.desktop
 %else
 %_K4bindir/ktouch
-%_K4lib/imports/org/kde/ktouch/
+#%_K4lib/imports/org/kde/ktouch/
 %_K4xdg_apps/ktouch.desktop
 %endif
 %_K4iconsdir/hicolor/*/apps/ktouch.*
@@ -1076,12 +1139,16 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 #%_includedir/rocs/
 %_K4link/*.so
 %_K4includedir/*
+%_includedir/astro/
 %_K4apps/cmake/modules/*
 #%_K4libdir/cmake/libkdeedu
 %_K4dbus_interfaces/*
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt3
 - rebuilt with new cfitsio
 

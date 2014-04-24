@@ -1,6 +1,6 @@
 Name: libkgeomap
 Version: 2.0.0
-Release: alt8
+Release: alt9
 
 Group: System/Libraries
 Summary: Libkgeomap is a wrapper around different world-map components
@@ -71,6 +71,12 @@ rm -rf %buildroot/%_K4i18n/*/*/digikam*
 
 
 %changelog
+* Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt9
+- rebuilt with new KDE
+
+* Fri Mar 14 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt7.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt8
 - rebuilt with new KDE
 

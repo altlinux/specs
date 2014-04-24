@@ -10,8 +10,8 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -117,7 +117,7 @@ Requires: plasma-qmlwallpapers = %version-%release
 #BuildRequires: gcc-c++ kde4base-workspace-core kde4base-workspace-devel kde4network-kopete kde4pim-kmail kde4pimlibs-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libldap-devel libxkbfile-devel nvidia_glx_173.14.12 python-modules-xml rpm-build-ruby shared-mime-info xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel libqalculate-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
+BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: python-modules-xml shared-mime-info libibus-devel libgio-devel
 BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
 BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel
@@ -1322,6 +1322,12 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
