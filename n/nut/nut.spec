@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt5
+%define release_pre alt6
 
 # for distr selected
 %def_without M24
@@ -510,8 +510,7 @@ fi
 %_initdir/upsmon
 %_unitdir/nut-monitor.service
 %_unitdir/upsmon.service
-# What is ?
-#/lib/systemd/system-shutdown/nutshutdown
+/lib/systemd/system-shutdown/nutshutdown
 
 %_bindir/upsc
 %_bindir/upscmd
@@ -694,6 +693,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt6
+- packaged systemd shutdown helper script
+
 * Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt5
 - added bcmxcp patch by Alex Moskalenko (closes: #29847)
 
