@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.1.0
-Release: alt5
+Release: alt6
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Apr 24 2014 Led <led@altlinux.ru> 1.1.0-alt6
+- added '-Wa,-mimplicit-it=thumb' for arm* when ASMSUBARCH == hf (by sbolshakov@)
+
 * Tue Apr 22 2014 Led <led@altlinux.ru> 1.1.0-alt5
 - optimization from upstream's SCM
 
