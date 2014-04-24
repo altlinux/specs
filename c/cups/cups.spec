@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.7.2
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -112,6 +112,7 @@ Patch504: ALT-1.6.2-lpd-utf8.patch
 Patch505: ALT-1.4.6-config-libs.patch
 Patch506: ALT-1.6.2-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
+Patch508: ALT-644.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -122,7 +123,7 @@ Requires: printer-testpages bc cups-filters
 
 # Automatically added by buildreq on Tue Dec 24 2013
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel libsystemd-daemon pkg-config python-base
-BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel libusb-devel xdg-utils zlib-devel
+BuildRequires: gcc-c++ libacl-devel libaudit-devel libavahi-devel libdbus-devel libpam-devel libpaper-devel libselinux-devel libssl-devel libsystemd-daemon-devel systemd-devel libusb-devel xdg-utils zlib-devel
 
 BuildRequires: dbus
 
@@ -265,6 +266,7 @@ services using the main CUPS library "libcups".
 %patch505 -p1
 %patch506 -p1
 %patch507 -p1
+%patch508 -p1
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
@@ -323,14 +325,6 @@ python ../pofix.py cups_ru.po
 
 %install
 make BUILDROOT=%buildroot install
-
-# systemd files
-# TODO check all three, they're different!
-# TODO IPv6 resolve problem, so pause using socket activation
-# for t in socket path service; do
-for t in path service; do
-  install -D data/cups.$t %buildroot%_unitdir/cups.$t
-done
 
 # install non-upstream files
 install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
@@ -424,6 +418,10 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.2-alt2
+- fix perm for data (444 -> 644)
+- use Makefile for install systemd units (install cups.socket too)
+
 * Mon Apr 21 2014 Fr. Br. George <george@altlinux.ru> 1.7.2-alt1
 - Version up
 - Previous version unreleased, so autoclose bugs again
