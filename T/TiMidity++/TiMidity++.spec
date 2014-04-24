@@ -3,7 +3,7 @@
 
 Name: TiMidity++
 Version: 2.14.0
-Release: alt4%prerel
+Release: alt7%prerel
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -24,6 +24,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: timidity-instruments
 Requires: tcl >= %tcl_ver, tk >= %tk_ver
+
+# just a file conflict
+Conflicts: fluid-soundfont-lite-patches
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: emacs-base emacs-common fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libX11-locales libXext-devel libXmu-devel libXt-devel libatk-devel libaudiofile-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libp11-kit libpango-devel libpng-devel libtinfo-devel libwayland-client libwayland-server pkg-config tcl-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -101,8 +104,9 @@ mkdir -p %buildroot%_sysconfdir
 echo "dir %_datadir/%_name" >%buildroot%_sysconfdir/%_name.cfg
 
 # fixups
-subst 's,%buildroot,,g' %buildroot%_usr/lib/%_name/tkmidity.tcl
-subst 's@/usr/local/bin/%_name@%_bindir/%_name@' interface/%_name.el
+sed -i 's,%buildroot,,g' %buildroot%_usr/lib/%_name/tkmidity.tcl
+sed -i 's@/usr/local/bin/%_name@%_bindir/%_name@' interface/%_name.el
+sed -i 's@%buildroot@@' interface/%_name.el
 install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 
 %files
@@ -119,6 +123,15 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt7
+- added LSB header to initscript to help the cause :) (thanks debian)
+
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt6
+- added Conflicts: fluid-soundfont-lite-patches (thanks repocop)
+
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt5
+- fixed timidity.el regarding buildroot (thanks repocop)
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.14.0-alt4
 - added watch file just in case
 - converted description to utf8
@@ -302,14 +315,14 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
   and timidity.cgf is now in /usr/share/timidity with the other
   files; you need timidity-instruments-1.0-4mdk with this package.
 
-* Fri Aug  6 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Fri Aug  6 1999 Bernhard Rosenkränzer <bero@mandrakesoft.com>
 - 2.3.0
 - fix download URL
 
-* Fri Jul 16 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Fri Jul 16 1999 Bernhard Rosenkränzer <bero@mandrakesoft.com>
 - 2.1.1
 
-* Mon May 10 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Mon May 10 1999 Bernhard Rosenkränzer <bero@mandrakesoft.com>
 - Change paths to match the timidity-instruments package
 
 * Wed Apr 28 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
