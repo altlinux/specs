@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 12
-%define bugfix 4
+%define minor 13
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -498,6 +498,12 @@ done
 
 
 %changelog
+* Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
+- new version
+
+* Tue Apr 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt0.M70P.1
+- built for M70P
+
 * Mon Mar 31 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.4-alt1
 - new version
 
