@@ -1,7 +1,7 @@
 %def_enable libnotify
 
 Name: liferea
-Version: 1.10.5
+Version: 1.10.9
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -91,6 +91,9 @@ Play music and videos directly from Liferea
 %_libdir/%name/plugins/media-player.*
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.10.9-alt1
+- 1.10.9
+
 * Thu Jan 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1.10.5-alt1
 - 1.10.5
 
