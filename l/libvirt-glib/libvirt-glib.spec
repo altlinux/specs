@@ -1,7 +1,7 @@
 %def_without python
 
 Name: libvirt-glib
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -220,6 +220,9 @@ intltoolize --force
 %endif
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.8-alt1
+- 0.1.8
+
 * Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.7-alt1
 - 0.1.7
 
