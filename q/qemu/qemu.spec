@@ -154,7 +154,7 @@
 
 Name: qemu
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -647,6 +647,10 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt2
+- fixed migration from older versions (ALT#30033)
+- fixed build on arm
+
 * Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 - build aarch64-linux-user
