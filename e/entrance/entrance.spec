@@ -6,7 +6,7 @@
 
 Name: entrance
 Version: 0.0.99
-Release: alt0.1
+Release: alt0.2
 Serial: 1
 
 Summary: The Enlightenment Display Manager
@@ -22,6 +22,8 @@ Patch: %name-0.0.4-alt-build.patch
 # replace hardcoded sessions desktop dir
 Patch1: %name-0.0.5-alt-sessions_dir.patch
 Patch2: %name-0.0.5-alt-entrance.conf.patch
+
+Requires: sudo
 
 # from configure.ac
 BuildRequires: libeet-devel libecore-devel libevas-devel
@@ -41,6 +43,7 @@ Entrance is a login/display manager for Enlightenment desktop.
 
 %build
 %autoreconf
+export ac_cv_prog_have_sudo=yes
 %configure \
 	%{subst_enable pam} \
 	%{subst_enable consolekit} \
@@ -97,6 +100,9 @@ _PAM_
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Fri Apr 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.99-alt0.2
+- updated to d9a3fdf8d
+
 * Sun Feb 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.99-alt0.1
 - 0.0.99
 
