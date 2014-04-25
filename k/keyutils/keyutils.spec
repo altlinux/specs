@@ -1,5 +1,9 @@
+%define vermajor 1
+%define verminor 5.9
+%define version %vermajor.%verminor
+
 Name: keyutils
-Version: 1.5.8
+Version: %version
 Release: alt1
 
 Summary: Linux Key Management Utilities
@@ -62,6 +66,7 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_datadir/%name
 %_man1dir/*
 %_man5dir/*
+%_man7dir/*
 %_man8dir/*
 
 %files -n lib%name
@@ -73,6 +78,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_man3dir/*
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5.9-alt1
+- 1.5.9 released
+
 * Mon Feb 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5.8-alt1
 - 1.5.8 released
 
