@@ -12,7 +12,7 @@
 Summary: SELinux policy configuration
 Name: selinux-policy
 Version: 3.11.1
-Release: alt4
+Release: alt5
 License: GPLv2+
 Group: System/Base
 Source: serefpolicy-%version.tar
@@ -50,7 +50,7 @@ BuildArch: noarch
 Requires(pre): policycoreutils >= %POLICYCOREUTILSVER libsemanage >= 2.1.8
 Requires(post): %_bindir/sha512sum
 
-BuildRequires: python m4 bzip2 policycoreutils
+BuildRequires: python m4 bzip2 policycoreutils-devel
 BuildRequires: checkpolicy >= %CHECKPOLICYVER
 
 %description
@@ -505,6 +505,9 @@ exit 0
 
 
 %changelog
+* Fri Apr 25 2014 Led <led@altlinux.ru> 3.11.1-alt5
+- updated BuildRequires
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 3.11.1-alt4
 - fixed symlinks at %%_sysconfdir
 - updated POLICYVER
