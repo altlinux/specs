@@ -1,14 +1,14 @@
 %define ver_major 3.12
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 License: %gpl2plus
 Group: Development/Other
-Url: https://wiki.gnome.org/Apps/Devhelp
+Url: http://live.gnome.org/devhelp
 #VCS: git://git.gnome.org/devhelp
 Source: %name-%version.tar
 
@@ -101,6 +101,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
+- 3.12.1
+
 * Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
 - 3.12.0
 
