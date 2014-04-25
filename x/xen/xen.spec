@@ -19,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt5
+Release: alt6
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -724,6 +724,10 @@ done
 
 
 %changelog
+* Fri Apr 25 2014 Led <led@altlinux.ru> 4.4.0-alt6
+- upstream updates for fixing vulnerabilities on ARM
+  (CVE-2014-2915, CVE-2014-2986)
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 4.4.0-alt5
 - x86: enforce preemption in HVM_set_mem_access / p2m_set_mem_access()
   (CVE-2014-2599)
