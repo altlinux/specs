@@ -19,16 +19,16 @@
 %endif
 
 Name: rygel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Summary: A UPnP v2 Media Server
 
 Group: System/Servers
 License: LGPLv2+
-Url: http://live.gnome.org/Rygel
+Url: https://wiki.gnome.org/Projects/Rygel
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.tar
+Source: %name-%version.tar
 
 %define libxml_ver 2.7
 %define vala_ver 0.22.0
@@ -147,6 +147,9 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.1-alt1
+- 0.22.1
+
 * Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.0-alt1
 - 0.22.0
 
