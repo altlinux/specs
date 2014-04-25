@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt8
+Release:	alt9
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -137,6 +137,9 @@ fi
 %files full
 
 %changelog
+* Wed Apr 23 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt9
+- add LSB Header to sysvinit script
+
 * Thu Nov 08 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt8
 - service network should not start on 2nd runevel (closes: #25700)
 - DHCPv6 support added (closes: #27780)
