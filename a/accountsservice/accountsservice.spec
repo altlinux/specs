@@ -3,7 +3,7 @@
 
 
 Name: accountsservice
-Version: 0.6.34
+Version: 0.6.37
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -16,10 +16,9 @@ Source: %name-%version.tar
 Patch1: %name-%version-%release.patch
 
 BuildRequires: intltool gtk-doc
-BuildRequires: glib2-devel libgio-devel
+BuildRequires: glib2-devel libgio-devel >= 2.37.3
 BuildRequires: libpolkit-devel
 BuildRequires: gobject-introspection-devel
-BuildRequires: vala vala-tools
 BuildRequires: libsystemd-login-devel >= 186 systemd-devel
 
 Requires: polkit
@@ -74,8 +73,10 @@ GObject introspection devel data for the accountsservice library
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-systemd \
 	--enable-admin-group=wheel \
+	--enable-user-heuristics \
+	--with-minimum-uid=500 \
+	--enable-systemd \
 	--with-systemdsystemunitdir=%_unitdir
 %make_build
 
@@ -107,12 +108,14 @@ GObject introspection devel data for the accountsservice library
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_vapidir/*
 
 %files -n lib%name-gir-devel
 %_girdir/*.gir
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.6.37-alt1
+- 0.6.37
+
 * Wed Jul 10 2013 Alexey Shabalin <shaba@altlinux.ru> 0.6.34-alt1
 - 0.6.34
 - drop patches from github.com/mmonaco/accountsservice
