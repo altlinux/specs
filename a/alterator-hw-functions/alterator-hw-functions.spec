@@ -1,29 +1,32 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-hw-functions
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
+Url: http://www.altlinux.org/Alterator
+Source: %name
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
-
-Source1: %name
 
 Summary: helper functions for alterator to retrieve hardware info
 License: GPL
 Group: System/Base
 
 %description
-helper functions for alterator to retrieve hardware info
+%summary
 
 %install
-install -Dpm644 %SOURCE1 %buildroot%_bindir/%name
+install -pDm644 %SOURCE0 %buildroot%_bindir/%name
 
 %files
 %_bindir/*
 
 %changelog
+* Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1
+- slight netdev_is_eth() optimization
+- added an Url:
+- minor spec cleanup
+
 * Wed Jan 30 2013 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
 - Add disk_is_root() for alterator-grub.
 
