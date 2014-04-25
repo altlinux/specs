@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.8.8
+Version: 1.8.11
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -21,7 +21,9 @@ Source3: pcsc-lite.tmpfiles
 Conflicts: libpcsclite < %version-%release
 Conflicts: libpcsclite > %version-%release
 
-BuildRequires: rpm-build-licenses libudev-devel perl-podlators
+BuildRequires: rpm-build-licenses perl-podlators
+BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111
+BuildRequires: pkgconfig(libudev)
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -77,6 +79,7 @@ subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
     --enable-debugatr \
     --enable-ipcdir=/var/run/pcscd \
     --enable-usbdropdir=%_libdir/pcsc/drivers \
+    --enable-polkit \
     --with-systemdsystemunitdir=%_unitdir
 
 %make_build
@@ -107,7 +110,7 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %post_service pcscd
 
 %files
-%doc AUTHORS COPYING DRIVERS HELP NEWS README SECURITY TODO doc/README.DAEMON
+%doc AUTHORS COPYING DRIVERS HELP NEWS README SECURITY TODO doc/README.DAEMON doc/README.polkit
 %dir %_sysconfdir/reader.conf.d/
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
@@ -119,6 +122,7 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %_man8dir/*
 %dir %_libdir/pcsc
 %dir %_libdir/pcsc/drivers
+%_datadir/polkit-1/actions/*.policy
 %ghost %dir /var/run/pcscd
 
 # NB: .so belongs here, see ALT#25275
@@ -140,6 +144,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.11-alt1
+- 1.8.11
+
 * Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.8.8-alt1
 - 1.8.8
 
