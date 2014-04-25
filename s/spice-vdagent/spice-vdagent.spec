@@ -1,8 +1,8 @@
 %define _localstatedir /var
 
 Name: spice-vdagent
-Version: 0.14.0
-Release: alt1
+Version: 0.15.0
+Release: alt1.git7d858d
 Summary: Agent for Spice guests
 Group: Networking/Remote access
 License: GPLv3+
@@ -12,11 +12,12 @@ Source: http://spice-space.org/download/releases/%name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version-%release.patch
 
-BuildRequires: glib2-devel >= 2.12
-BuildRequires: spice-protocol >= 0.12.5 libXrandr-devel >= 1.3 libXfixes-devel libXinerama-devel libX11-devel
-BuildRequires: libpciaccess-devel >= 0.10
+BuildRequires: pkgconfig(glib-2.0) >= 2.12
+BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr)  >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
+BuildRequires: pkgconfig(spice-protocol) >= 0.12.5
+BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
-BuildRequires: libsystemd-login-devel >= 42 systemd-devel
+BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd-login) >= 42
 
 %description
 Spice agent for Linux guests offering the following features:
@@ -64,9 +65,13 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_var/run/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent.desktop
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
+%_datadir/gdm/greeter/autostart/spice-vdagent.desktop
 %_man1dir/*
 
 %changelog
+* Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.15.0-alt1.git7d858d
+- upstream git snaphot 7d858d5064fd0c26454b72bf9fe3e0472f31e34f
+
 * Mon May 20 2013 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
