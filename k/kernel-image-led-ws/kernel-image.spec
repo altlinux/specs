@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -156,7 +156,7 @@ Release: alt5
 %Extra_modules vboxhost 4.3.10
 %Extra_modules vboxguest 4.3.10
 #Extra_modules nvidia 331.20
-%Extra_modules fglrx 14.10
+%Extra_modules fglrx 14.10.1006
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.7
 #Extra_modules ipt_NETFLOW 1.8.2
@@ -1203,12 +1203,21 @@ lock_may_write
 next_online_pgdat
 __EOF__
 
+FindFiles()
+{
+	local f
+	find . -type f -name '*.c' |
+	while read f; do
+		[ -f ${f%%.c}.o ] && echo "$f"
+	done
+	find ./kernel -type f -name '*.h'
+}
+
 sort -u -k2 Module.symvers.unused |
 join -v2 -t'	' -11 -22 -o 2.4,2.2 Module.symvers.enabled - |
 sed 's/	/\\(/;s/$/\\)/;s/^/^(|ACPI_)/' |
-grep -E -o -f - $(find . -type f -name '*.c'; find ./kernel -type f -name '*.h') | tr ':' ' ' |
+grep -E -o -f - $(FindFiles) | tr ':' '	' |
 while read f p; do
-	[ "${f%%.c}" = "$f" -o -f ${f%%.c}.o ] || continue
 	sed -i "/^$p/s/^.*\(EXPORT\)\(_SYMBOL\)/\1_UNUSED\2/" $f >&2
 	s="${p%%)}"
 	echo "${s#*\(}	${f#./}"
@@ -1840,6 +1849,11 @@ done)
 
 
 %changelog
+* Sun Apr 27 2014 Led <led@altlinux.ru> 3.13.11-alt6
+- updated:
+  + fix-drivers-gpu-drm--i915
+- fglrx 14.10.1006
+
 * Sun Apr 27 2014 Led <led@altlinux.ru> 3.13.11-alt5
 - updated:
   + fix-mm--zswap
