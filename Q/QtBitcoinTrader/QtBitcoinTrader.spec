@@ -1,5 +1,5 @@
 Name: QtBitcoinTrader
-Version: 1.07.96.4
+Version: 1.07.98
 Release: alt1
 Summary: Mt.Gox Bitcoin Trading Client
 Url: http://sourceforge.net/projects/bitcointrader/
@@ -17,7 +17,7 @@ This software helps you to open and cancel Mt.Gox orders vary fast.
 %setup -n BitcoinTraderQtSRC_v%{version}
 
 %build
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags"
+qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" QtBitcoinTrader_Desktop.pro
 %make_build
 
 %install
@@ -39,6 +39,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Sat Apr 26 2014 Motsyo Gennadi <drool@altlinux.ru> 1.07.98-alt1
+- v1.07.98 Beta
+
 * Tue Dec 31 2013 Motsyo Gennadi <drool@altlinux.ru> 1.07.96.4-alt1
 - v1.07.96.4 Beta
 
