@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt1
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -147,11 +147,13 @@ Release: alt1
 
 #define allocator SLAB
 
+%def_disable remove_unused_exports
+
 #Extra_modules spl 0.6.2
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
-%Extra_modules fglrx 13.35.1005
+%Extra_modules fglrx 14.10
 %Extra_modules vboxhost 4.3.10
 %Extra_modules vboxguest 4.3.10
 #Extra_modules knem 1.1.1
@@ -906,6 +908,8 @@ done
 
 
 %build
+%define make_kernel %make_build %{?_enable_verbose:V=1} %{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs}
+
 cd linux-%version
 
 config_fix()
@@ -1147,10 +1151,54 @@ export CC="gcc-$GCC_VERSION"
 echo "Building kernel %kversion-%flavour-%krelease"
 
 %make_build oldconfig
-%make_build \
-	%{?_enable_verbose:V=1} \
-	%{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
-	bzImage modules
+%make_kernel bzImage modules
+%if_enabled remove_unused_exports
+FGLRX="\
+acpi_lid_notifier_register
+acpi_lid_notifier_unregister
+amd_iommu_bind_pasid
+amd_iommu_device_info
+amd_iommu_enable_device_erratum
+amd_iommu_free_device
+amd_iommu_init_device
+amd_iommu_unbind_pasid
+amd_iommu_set_invalid_ppr_cb
+amd_iommu_set_invalidate_ctx_cb
+pm_vt_switch_register
+pm_vt_switch_required
+pm_vt_switch_unregister
+set_memory_array_uc
+set_memory_array_wb
+smp_call_function
+"
+VBox="\
+__get_vm_area
+map_vm_area
+schedule_hrtimeout_range
+set_pages_nx
+set_pages_x
+smp_call_function
+"
+ZFS="\
+do_exit
+elevator_change
+lock_may_read
+lock_may_write
+"
+
+:> Module.symvers.disabled
+echo -n "$FGLRX$VBox$ZFS" | sed 's/^/(/;s/$/)/' | grep -v -f - Module.symvers.unused |
+sed 's/[()]/\\&/g;s/^/^(|ACPI_)/' |
+grep -E -o -f - $(find . -type f -name '*.c'; find ./kernel -type f -name '*.h') | tr ':' ' ' |
+while read f p; do
+	[ "${f%%.c}" = "$f" -o -f ${f%%.c}.o ] || continue
+	sed -i "/^$p/s/^\(EXPORT\)\(_SYMBOL\)/\1_UNUSED\2/" $f
+	s="${p%%)}"
+	echo "${s#*\(}	${f#./}" >> Module.symvers.disabled
+done
+
+%make_kernel bzImage modules
+%endif
 
 %if_with perf
 sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tools/perf/config/Makefile
@@ -1161,14 +1209,7 @@ sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tool
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%ifdef extra_mods
-%make_build -f Makefile.external \
-	%{?_enable_verbose:V=1} \
-	%{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs} \
-	%extra_mods &&
-	echo "External modules built"
-%endif
-
+%{?extra_mods:%make_kernel -f Makefile.external %extra_mods && echo "External modules built"}
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -1234,7 +1275,7 @@ install -m 0644 net/mac80211/{ieee80211_i,sta_info}.h %buildroot%kbuild_dir/net/
 for f in \
 	.config \
 	Makefile \
-	Module.symvers \
+	Module.symvers* \
 	scripts/Kbuild.include \
 	scripts/Makefile{,.{build,clean,host,lib,lto,mod*}} \
 	scripts/bin2c \
@@ -1793,6 +1834,23 @@ done)
 
 
 %changelog
+* Sat Apr 26 2014 Led <led@altlinux.ru> 3.13.11-alt4
+- updated:
+  + feat-kernel-vserver
+  + feat-tools--kvm
+- disabled remove_unused_exports
+
+* Fri Apr 25 2014 Led <led@altlinux.ru> 3.13.11-alt3
+- updated:
+  + feat-kernel-vserver
+
+* Thu Apr 24 2014 Led <led@altlinux.ru> 3.13.11-alt2
+- added:
+  + fix-scripts-mod--modpost
+- added optional removing unused exports
+- enabled remove_unused_exports
+- fglrx 14.10
+
 * Wed Apr 23 2014 Led <led@altlinux.ru> 3.13.11-alt1
 - 3.13.11
 - removed:
