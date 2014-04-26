@@ -1,23 +1,23 @@
-%define ver_major 3.8
+%define ver_major 3.12
 %def_enable libnotify
 %def_enable webkitgtk
 
 Name: zenity
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME port of dialog(1)
 License: LGPLv2+
 Group: Graphical desktop/GNOME
+URL: https://wiki.gnome.org/Projects/Zenity
 
-URL: http://ftp.gnome.org/pub/gnome/sources/%name/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 # from configure.in
 %define intltool_ver 0.40.0
 %define gtk_ver 3.0.0
 
-BuildPreReq: gnome-common docbook-dtds yelp-tools
+BuildPreReq: gnome-common yelp-tools
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: glib2-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -33,7 +33,7 @@ Xdialog, and cdialog, but it surpasses those projects by having
 a cooler name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -55,6 +55,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Sat Apr 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
