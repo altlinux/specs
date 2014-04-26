@@ -1,6 +1,6 @@
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.8.1
+Version: 11.9.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -1263,6 +1263,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Sat Apr 26 2014 Denis Smirnov <mithraen@altlinux.ru> 11.9.0-alt1
+- new version 11.9.0
+
 * Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 11.8.1-alt1
 - new version 11.8.1
 
