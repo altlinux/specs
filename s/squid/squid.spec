@@ -6,7 +6,7 @@
 
 Name: squid
 Version: 3.4.4.2
-Release: alt1
+Release: alt2
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -290,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Sat Apr 26 2014 Led <led@altlinux.ru> 3.4.4.2-alt2
+- Revert "Bug 3371: CONNECT with data sent at once loses data"
+
 * Thu Apr 24 2014 Led <led@altlinux.ru> 3.4.4.2-alt1
 - 3.4.4.2
 
