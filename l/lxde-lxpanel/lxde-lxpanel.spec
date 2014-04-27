@@ -3,7 +3,7 @@
 %define upstreamname lxpanel
 Name: lxde-%upstreamname
 Version: 0.5.12
-Release: alt1.g3fd2186
+Release: alt2.g3fd2186
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Summary: LXPanel is a lightweight X11 desktop panel.
@@ -19,6 +19,8 @@ Patch3: lxpanel-0.5.8-alt-a-f2-fix.patch
 Patch4: lxpanel-0.5.10-alt-fix-build.patch
 
 Requires: lxde-freedesktop-menu
+Requires: menu-cache
+
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libmenu-cache libpango-devel libsystemd-daemon libwayland-client libwayland-server pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel xz
 BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc
@@ -26,14 +28,15 @@ BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libme
 BuildRequires: libwnck-devel libwireless-devel docbook-dtds docbook-style-xsl
 
 %description
-lxpanel  is  a  program  that provides a panel for desktop, usually for
-LXDE. It is lightweight GTK+ 2.x based desktop panel.
+lxpanel is a program that provides a panel for desktop, usually LXDE.
+It is lightweight GTK+ 2.x based desktop panel.
 
 %package devel
 Summary: development headers to build %name plugins
 License: LGPL
 Group: System/Libraries
 Requires: %name = %version
+
 %description devel
 This package provides files required to build plugins
 for %name
@@ -71,6 +74,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Apr 27 2014 Michael Shigorin <mike@altlinux.org> 0.5.12-alt2.g3fd2186
+- NMU: added R: menu-cache (closes: #30036)
+
 * Wed Jan 23 2013 Mykola Grechukh <gns@altlinux.ru> 0.5.12-alt1.g3fd2186
 - updated from upstream git
 
