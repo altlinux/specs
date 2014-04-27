@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt3
-%define erelease 54.0.1.el7
+Release: alt4
+%define erelease 3.10.0-121.el7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -552,6 +552,41 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Sun Apr 27 2014 Led <led@altlinux.ru> 3.10.0-alt4
+- 3.10.0-121.el7:
+  + CVE-2013-2930
+  + CVE-2013-4348
+  + CVE-2013-4563
+  + CVE-2013-4587
+  + CVE-2013-4579
+  + CVE-2013-6367
+  + CVE-2013-6368
+  + CVE-2013-6376
+  + CVE-2013-6378
+  + CVE-2013-6380
+  + CVE-2013-6382
+  + CVE-2013-6405
+  + CVE-2013-7026
+  + CVE-2013-7266
+  + CVE-2013-7267
+  + CVE-2013-7268
+  + CVE-2013-7269
+  + CVE-2013-7270
+  + CVE-2013-7271
+  + CVE-2014-0049
+  + CVE-2014-0055
+  + CVE-2014-0069
+  + CVE-2014-0077
+  + CVE-2014-0100
+  + CVE-2014-0101
+  + CVE-2014-0102
+  + CVE-2014-0131
+  + CVE-2014-0155
+  + CVE-2014-1438
+  + CVE-2014-1690
+  + CVE-2014-2309
+  + CVE-2014-2523
+
 * Sun Apr 13 2014 Led <led@altlinux.ru> 3.10.0-alt3
 - kernel-headers-modules: added missed files
 
