@@ -1,6 +1,6 @@
 Name: scalpel
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: A Frugal, High Performance File Carver
 License: GPLv2+
@@ -27,19 +27,6 @@ sed -i 's|scalpel.conf|%_sysconfdir/&|' src/scalpel.h
 chmod -x gpl.txt README Changelog src/*.h src/*.c
 rm -f *.exe *.dll
 
-# modify configuration to have some usable one out of box:
-# everything is commented out within the stock file;
-# this sed script uncomments common file extensions
-sed -i -e "s/^#[ ]*$//;
-           s/\t/        /g;
-           s/^#   [ ]*\([a-z][a-z] \)/        \1/;
-           s/^#   [ ]*\([a-z][a-z][a-z] \)/        \1/;
-           s/^#   [ ]*\([a-z][a-z][a-z][a-z] \)/        \1/;
-           s/^\(.*case[ ]*size\)/#\1/" %name.conf
-
-# a few more more bits
-cat %SOURCE1 >> scalpel.conf
-
 %build
 %configure
 %make_build
@@ -48,12 +35,29 @@ cat %SOURCE1 >> scalpel.conf
 %makeinstall_std
 install -pDm644 scalpel.conf %buildroot%_sysconfdir/scalpel.conf
 
+# modify configuration to have some usable one out of box:
+# everything is commented out within the stock file;
+# this sed script uncomments common file extensions
+sed -i -e "s/^#[ ]*$//;
+           s/\t/        /g;
+           s/^#   [ ]*\([a-z][a-z] \)/        \1/;
+           s/^#   [ ]*\([a-z][a-z][a-z] \)/        \1/;
+           s/^#   [ ]*\([a-z][a-z][a-z][a-z] \)/        \1/;
+           s/^\(.*case[ ]*size\)/#\1/" %buildroot%_sysconfdir/scalpel.conf
+
+# a few more more bits
+cat %SOURCE1 >> %buildroot%_sysconfdir/scalpel.conf
+
 %files
 %config(noreplace) %_sysconfdir/scalpel.conf
 %_bindir/*
 %_man1dir/*
+%doc Changelog README %name.conf
 
 %changelog
+* Sun Apr 27 2014 Michael Shigorin <mike@altlinux.org> 2.0-alt2
+- added pristine stock configuration file to docs as an example
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.0-alt1
 - 2.0
   + NB: ODT/Thunderbird configuration "patch" used to work for 1.60,
