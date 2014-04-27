@@ -1,4 +1,4 @@
-%define cat_ver 14.1
+%define cat_ver 14.10
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,8 +18,8 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 13.35.1005
-Release: alt3
+Version: 14.10
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -35,6 +35,7 @@ Source12: aticonfig.1
 Source13: %{bname}_create.xinf
 Source14: xinf2fdi
 Patch0: %bname-13.20.16-printk-loglevel.patch
+Patch1: %bname-14.10-remove-unused.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -112,6 +113,7 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
 %patch0 -p1
+%patch1 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -273,6 +275,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Thu Apr 24 2014 Led <led@altlinux.ru> 2:14.10-alt1
+- Catalyst 14.4 RC
+
 * Sat Mar 29 2014 Led <led@altlinux.ru> 2:13.35.1005-alt3
 - Catalyst 14.3 Beta
 
