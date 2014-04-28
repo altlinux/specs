@@ -1,9 +1,9 @@
-%define ast_version 1.8.26.1
+%define ast_version 1.8.27.0
 
 Name: asterisk1.8-devel-doc
 Summary: Asterisk API documentation
 Version: 1.8
-Release: alt31
+Release: alt32
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -34,6 +34,9 @@ tar xfj %_usrsrc/asterisk1.8.tar.bz2
 %doc doc
 
 %changelog
+* Mon Apr 28 2014 Denis Smirnov <mithraen@altlinux.ru> 1.8-alt32
+- Asterisk update
+
 * Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 1.8-alt31
 - Asterisk update
 
