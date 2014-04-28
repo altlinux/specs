@@ -2,7 +2,7 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.8.0
-Release: alt2
+Release: alt3
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -39,7 +39,7 @@ BuildRequires: qtscriptbindings rpm-build-ruby libofa-devel libgdk-pixbuf-devel 
 BuildRequires: libtunepimp-devel libusb-devel libSDL-devel
 BuildRequires: qjson-devel libmygpo-qt-devel
 BuildRequires: libavformat-devel libavcodec-devel libavutil-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
+BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: /proc
 
 
@@ -206,6 +206,9 @@ fi
 
 
 %changelog
+* Mon Apr 28 2014 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt3
+- built without nepomuk support
+
 * Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt2
 - sync patches with SuSE
 
