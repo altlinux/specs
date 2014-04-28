@@ -1,7 +1,7 @@
 Name: astra
-Version: 4.2
+Version: 4.3
 Release: alt1
-Summary: Astra is a high-customizable software to processing IPTV streams
+Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -11,7 +11,7 @@ Url: http://cesbo.com/astra
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel libdvbcsa-devel
 
 %description
 Astra consists of the following components:
@@ -56,5 +56,8 @@ install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xprox
 %_bindir/*
 
 %changelog
+* Tue Apr 29 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt1
+- 4.3
+
 * Mon Apr 21 2014 Alexei Takaseev <taf@altlinux.org> 4.2-alt1
 - Initial RPM release
