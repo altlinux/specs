@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -76,10 +76,17 @@ EOF
 mv /etc/systemd/system/default.target /etc/systemd/system/default.target.bak ||:
 ln -sf /lib/systemd/system/setup.target /etc/systemd/system/default.target
 
+# package is removed in postinstall hook, but
+# 'systemd stop' stops whole setup.service with hook.
 %preun
-%preun_service setup
+if [ -x /sbin/sd_booted ]; then
+/sbin/sd_booted || %preun_service setup
+fi
 
 %changelog
+* Mon Apr 28 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.1-alt1
+- preun: do not use preun_service on systemd.
+
 * Mon Apr 21 2014 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
 - sysvinit support
 
