@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.11
+Version: 0.9.0
 Release: alt1
 
 Summary: Permanently install Live system
@@ -60,6 +60,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- Care to transfer NM/connman and runtime /etc/net configurations too.
+
 * Tue Mar 18 2014 Michael Shigorin <mike@altlinux.org> 0.8.11-alt1
 - Remove autologin and nodm packages too.
 
