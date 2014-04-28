@@ -1,7 +1,7 @@
 
 Name: sssd
-Version: 1.11.4
-Release: alt2
+Version: 1.11.5.1
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -290,6 +290,8 @@ be used by Python applications.
     --with-pubconf-path=%pubconfpath \
     --with-mcache-path=%mcpath \
     --with-init-dir=%_initdir \
+    --with-initscript=systemd \
+    --with-systemdunitdir=%_unitdir \
     --with-krb5-rcache-dir=%_localstatedir/cache/krb5rcache \
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
@@ -317,7 +319,6 @@ install -D -m644 src/examples/logrotate %buildroot%_sysconfdir/logrotate.d/%name
 touch %buildroot%mcpath/passwd
 touch %buildroot%mcpath/group
 
-install -D -m644 src/sysv/systemd/sssd.service %buildroot%_unitdir/%name.service
 install -D -m755 %SOURCE2 %buildroot%_initdir/%name
 install -D -m644 %SOURCE3 %buildroot%_pamdir/system-auth-sss
 install -D -m644 %SOURCE4 %buildroot%_pamdir/system-auth-use_first_pass-sss
@@ -491,6 +492,9 @@ unset CK_TIMEOUT_MULTIPLIER
 %python_sitelibdir/pysss_nss_idmap.so
 
 %changelog
+* Mon Apr 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.5.1-alt1
+- 1.11.5.1
+
 * Wed Mar 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.4-alt2
 - add pam config files
 - add libsasl2-plugin-gssapi to Requires for krb5-common
