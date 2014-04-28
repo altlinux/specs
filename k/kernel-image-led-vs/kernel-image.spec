@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -55,6 +55,7 @@ Release: alt4
 %def_enable man
 %def_disable compat
 %def_enable lto
+%def_disable lto_slim
 %def_enable relocatable
 %def_enable x32
 %def_enable cr
@@ -147,15 +148,15 @@ Release: alt4
 
 #define allocator SLAB
 
-%def_disable remove_unused_exports
+%def_enable remove_unused_exports
 
 #Extra_modules spl 0.6.2
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
-#Extra_modules nvidia 331.20
-%Extra_modules fglrx 14.10
 %Extra_modules vboxhost 4.3.10
 %Extra_modules vboxguest 4.3.10
+#Extra_modules nvidia 331.20
+%Extra_modules fglrx 14.10
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.7
 #Extra_modules ipt_NETFLOW 1.8.2
@@ -231,6 +232,8 @@ ExcludeArch: i386
 %else
 %def_disable vserver
 %endif
+
+%{?_disable_lto:%set_disable lto_slim}
 
 %{?_disable_pci:%set_disable drm}
 
@@ -908,7 +911,7 @@ done
 
 
 %build
-%define make_kernel %make_build %{?_enable_verbose:V=1} %{?_enable_lto:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs}
+%define make_kernel %make_build %{?_enable_verbose:V=1} %{?_enable_lto_slim:AR=gcc-ar-$GCC_VERSION NM=gcc-nm-$GCC_VERSION LTO_JOBS=%__nprocs}
 
 cd linux-%version
 
@@ -1075,6 +1078,7 @@ config_disable \
 
 config_enable \
 	%{?_disable_lto:lto_disable} \
+	%{?_enable_lto_slim:lto_slim} \
 	%{?_enable_relocatable:relocatable} \
 %ifarch i486 i586 i686
 	x86_generic \
@@ -1152,8 +1156,20 @@ echo "Building kernel %kversion-%flavour-%krelease"
 
 %make_build oldconfig
 %make_kernel bzImage modules
+
+# psdocs, pdfdocs don't work yet
+%{?_enable_htmldocs:%def_enable builddocs}
+%{?_enable_man:%def_enable builddocs}
+%if_enabled builddocs
+%{?_enable_htmldocs:%make_build htmldocs}
+%{?_enable_man:%make_build mandocs 2>&1 | tee mandocs.log | grep -E --line-buffered '^  (MAN|GEN)[[:blank:]]'}
+echo "Kernel docs built %kversion-%flavour-%krelease"
+%endif
+
 %if_enabled remove_unused_exports
-FGLRX="\
+(grep -v '^#' | sort -u) > Module.symvers.enabled <<__EOF__
+# FGLRX
+acpi_get_next_object
 acpi_lid_notifier_register
 acpi_lid_notifier_unregister
 amd_iommu_bind_pasid
@@ -1170,32 +1186,33 @@ pm_vt_switch_unregister
 set_memory_array_uc
 set_memory_array_wb
 smp_call_function
-"
-VBox="\
+# VBox
 __get_vm_area
 map_vm_area
 schedule_hrtimeout_range
 set_pages_nx
 set_pages_x
 smp_call_function
-"
-ZFS="\
+# ZFS
+check_disk_size_change
 do_exit
 elevator_change
+get_gendisk
 lock_may_read
 lock_may_write
-"
+next_online_pgdat
+__EOF__
 
-:> Module.symvers.disabled
-echo -n "$FGLRX$VBox$ZFS" | sed 's/^/(/;s/$/)/' | grep -v -f - Module.symvers.unused |
-sed 's/[()]/\\&/g;s/^/^(|ACPI_)/' |
+sort -u -k2 Module.symvers.unused |
+join -v2 -t'	' -11 -22 -o 2.4,2.2 Module.symvers.enabled - |
+sed 's/	/\\(/;s/$/\\)/;s/^/^(|ACPI_)/' |
 grep -E -o -f - $(find . -type f -name '*.c'; find ./kernel -type f -name '*.h') | tr ':' ' ' |
 while read f p; do
 	[ "${f%%.c}" = "$f" -o -f ${f%%.c}.o ] || continue
-	sed -i "/^$p/s/^\(EXPORT\)\(_SYMBOL\)/\1_UNUSED\2/" $f
+	sed -i "/^$p/s/^.*\(EXPORT\)\(_SYMBOL\)/\1_UNUSED\2/" $f >&2
 	s="${p%%)}"
-	echo "${s#*\(}	${f#./}" >> Module.symvers.disabled
-done
+	echo "${s#*\(}	${f#./}"
+done > Module.symvers.disabled
 
 %make_kernel bzImage modules
 %endif
@@ -1207,18 +1224,7 @@ sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tool
 
 %{?_with_lkvm:%make_build -C tools/kvm %lkvm_make_opts}
 
-echo "Kernel built %kversion-%flavour-%krelease"
-
 %{?extra_mods:%make_kernel -f Makefile.external %extra_mods && echo "External modules built"}
-
-# psdocs, pdfdocs don't work yet
-%{?_enable_htmldocs:%def_enable builddocs}
-%{?_enable_man:%def_enable builddocs}
-%if_enabled builddocs
-%{?_enable_htmldocs:%make_build htmldocs}
-%{?_enable_man:%make_build mandocs 2>&1 | tee mandocs.log | grep -vE --line-buffered '^((Warn|Note): (meta (author|source|manvol|version) ?|AUTHOR sect\.):|Note: Writing) '}
-echo "Kernel docs built %kversion-%flavour-%krelease"
-%endif
 
 
 %install
@@ -1834,6 +1840,14 @@ done)
 
 
 %changelog
+* Sun Apr 27 2014 Led <led@altlinux.ru> 3.13.11-alt5
+- updated:
+  + fix-mm--zswap
+  + fix-scripts-mod--modpost
+  + feat-block--bfq-iosched
+  + feat-mm--zcache
+- enabled remove_unused_exports
+
 * Sat Apr 26 2014 Led <led@altlinux.ru> 3.13.11-alt4
 - updated:
   + feat-kernel-vserver
