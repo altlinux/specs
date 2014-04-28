@@ -1,6 +1,6 @@
 Name: wmlife
-Version: 1.0.0
-Release: alt1
+Version: 1.0.1
+Release: alt1.1
 
 Summary: WindowMaker dock-app running Conway's Game of Life
 License: GPL
@@ -10,7 +10,8 @@ Url: http://www.swanson.ukfsn.org
 Source0: %url/%name/%name-%version.tar.gz
 Source1: %name-icons.tar.gz
 Source2: %name.desktop
-Patch: wmlife-1.0.0-stringh.patch
+Patch0: wmlife-1.0.0-stringh.patch
+Patch1: wmlife-1.0.0-alt-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 10 2006 (-bi)
@@ -33,7 +34,8 @@ the grid wraps at the edges from top to bottom and left to right.
 
 %prep
 %setup -a1
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 export CFLAGS="$CFLAGS %optflags"
@@ -58,6 +60,12 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1.1
+- fix FTBFS (-lm)
+
+* Tue Feb 21 2012 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Fri Sep 23 2011 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
 - built for ALT Linux (spec based on wmfire)
 - applied gentoo patch
