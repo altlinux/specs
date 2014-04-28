@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -30,6 +30,11 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- do not touch:
+  + networking configuration resulting from propagator/netboot;
+  + packaged default/options-eth configuration file
+
 * Sat Feb 01 2014 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - DHCP timeout set to 3 seconds (thanks msp@ for the question)
 
