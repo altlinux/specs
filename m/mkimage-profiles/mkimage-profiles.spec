@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.31
+Version: 1.1.33
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,12 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.1.33-alt1
+- net-eth tweaks
+
+* Mon Apr 21 2014 Michael Shigorin <mike@altlinux.org> 1.1.32-alt1
+- regular-rescue week
+
 * Mon Apr 14 2014 Michael Shigorin <mike@altlinux.org> 1.1.31-alt1
 - live: refactoring
 - forensics mode
