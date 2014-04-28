@@ -1,6 +1,6 @@
 Name: wmfishtime
 Version: 1.24
-Release: alt1
+Release: alt1.1
 
 Summary: WindowMaker clock dock-app featuring swimming fish
 License: GPL
@@ -71,6 +71,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 #   + (ideally) move second hand knob to a runtime option
 
 %changelog
+* Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.24-alt1.1
+- fix FTBFS (-lm)
+
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 1.24-alt1
 - built for ALT Linux
 - gentoo patchset works better for me than debian's one
