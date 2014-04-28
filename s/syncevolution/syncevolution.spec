@@ -1,6 +1,6 @@
 %set_automake_version 1.11
 
-%define ver_major 1.3
+%define ver_major 1.4
 %define libsynthesis_ver 3.4.0.47.1
 %define _libexecdir %_prefix/libexec
 
@@ -8,10 +8,11 @@
 %def_enable libcurl
 %def_enable xmlrpc
 %def_enable bluetooth
-%def_enable gnome_bluetooth
+%def_disable gnome_bluetooth
 %def_enable gnome_keyring
 %def_enable akonadi
 %def_disable activesync
+%def_enable goa
 # experimental now
 # sqlite conflicts with the evolution backend
 %def_disable sqlite
@@ -22,8 +23,8 @@
 %set_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
 
 Name: syncevolution
-Version: %ver_major.99.6
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
 Group: Office
@@ -33,8 +34,6 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
 Source2: libsynthesis.tar
-
-Patch1: syncevolution-1.3.99.6-fix-build-with-akonadi.patch
 
 Requires: %name-libs = %version-%release
 Requires: ca-certificates
@@ -52,6 +51,7 @@ BuildRequires: libgtk+3-devel libgio-devel
 %{?_enable_xmlrpc:BuildRequires: libxmlrpc-devel}
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_activesync:BuildRequires: libeasclient-devel}
+%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel}
 %{?_enable_qtcontacts:BuildRequires: qt4-mobility-devel}
 
 
@@ -112,7 +112,6 @@ SyncEvolution plugins.
 
 %prep
 %setup -q -a2
-%patch1 -p1
 sed -i '/^ACLOCAL_AMFLAGS/{ /m4-repo/!s/$/ -I m4-repo/ }' Makefile*.am
 
 %build
@@ -138,8 +137,10 @@ export LDFLAGS="$LDFLAGS -ldl -L%_libdir/kde4/devel"
 	%{subst_enable bluetooth} \
 	%{subst_enable akonadi} \
 	%{subst_enable activesync} \
+	%{subst_enable goa} \
 	%{subst_enable dav} \
 	%{subst_enable qtcontacts} \
+	--disable-internal-icaltz \
 	%{?_enable_gnome_keyring:--enable-gnome-keyring} \
 	%{?_enable_gnome_bluetooth:--enable-gnome-bluetooth-panel-plugin} \
 	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt \
@@ -168,7 +169,9 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 # some backends not linked properly, test needed
 #FIXME: divide backends
 %_libdir/%name/backends
+%if_enabled gnome_bluetooth
 %_libdir/gnome-bluetooth/plugins/libgbt%name.so
+%endif
 %_datadir/%name
 
 %exclude %_bindir/sync-ui
@@ -197,6 +200,9 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Mon Apr 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Tue Mar 11 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.99.6-alt2
 - rebuild with new xmlrpc-c
 
