@@ -1,6 +1,6 @@
 Name: unrar
 Version: 5.1.2
-Release: alt1
+Release: alt2
 
 Summary: RAR unarchiver
 License: Freely distributable
@@ -17,20 +17,39 @@ The unrar utility is a freeware program, distributed with source code and
 developed for extracting, testing and viewing the contents of archives created
 with the RAR archiver, version 1.50 and above.
 
+%package -n libunrar
+Summary: Shared library for extracting, testing and viewing the contents of RAR archives
+Group: System/Libraries
+
+%description -n libunrar
+Shared library for extracting, testing and viewing the contents of RAR archives
+
 %prep
 %setup -n unrar
+sed -ri 's/^(lib:[[space:]]+)clean[[:space:]]+/\1/' makefile
 
 %build
 %make_build STRIP=touch
+%make_build clean
+%make_build lib STRIP=touch
+#make_build lib LDFLAGS+='-Wl,-soname=libunrar.so.0' STRIP=touch
 
 %install
 install -pD -m755 unrar %buildroot%_bindir/unrar
+install -D libunrar.so %buildroot%_libdir/libunrar.so
 
 %files
 %_bindir/*
 %doc *.txt
 
+%files -n libunrar
+%doc *.txt
+%_libdir/libunrar.so
+
 %changelog
+* Mon Apr 28 2014 Fr. Br. George <george@altlinux.ru> 5.1.2-alt2
+- Build libunrar as well (Closes: #29971)
+
 * Tue Apr 08 2014 Fr. Br. George <george@altlinux.ru> 5.1.2-alt1
 - Autobuild version bump to 5.1.2
 
