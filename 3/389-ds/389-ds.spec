@@ -1,25 +1,28 @@
+%global pkgname		dirsrv
+%global groupname	%{pkgname}.target
+
 Summary: 389 Directory Server
 Name: 389-ds
-Version: 1.2.10.12
-Release: alt1.qa1.1
+Version: 1.3.2.15
+Release: alt1
 License: GPLv2
 Url: http://port389.org
 Group: System/Servers
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version-%release.tar
-Source1: install.inf
-Source3: setupssl2.sh
 
 # Automatically added by buildreq on Thu May 05 2011
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel libldap-devel libnet-snmp-devel libnl-devel libpam-devel libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel perl-Mozilla-LDAP perl-libnet perl-bignum
+BuildRequires: systemd-units
+BuildRequires: perl-DBM perl-NetAddr-IP
 
 Provides: fedora-ds = %version-%release
 Obsoletes: fedora-ds < %version-%release
 
 # AutoReq: yes, noperl
-%add_perl_lib_path %_libdir/fedora-ds/perl
-%add_findprov_skiplist %_datadir/fedora-ds/script-templates/*
-%add_findreq_skiplist %_datadir/fedora-ds/script-templates/*
+%add_perl_lib_path %_libdir/%{pkgname}/perl
+%add_findprov_skiplist %_datadir/%{pkgname}/script-templates/*
+%add_findreq_skiplist %_datadir/%{pkgname}/script-templates/*
 
 %description
 389 Directory Server is an LDAPv3 compliant server. Use setup-ds.pl to setup instances.
@@ -32,16 +35,26 @@ Requires: %name = %version-%release
 %description devel
 Development Libraries and heades for 389 Directory Server.
 
+%package libs
+Summary: Core libraries for 389 Directory Server
+Group: System/Libraries
+
+%description libs
+Core libraries for the 389 Directory Server base package.  These libraries
+are used by the main package and the -devel package.  This allows the -devel
+package to be installed with just the -libs package and without the main package.
+
 %prep
 %setup -n %name-%version
 %autoreconf
 
-cp %SOURCE1 install.inf
-
 %build
+NSSARGS="--with-svrcore-inc=%{_includedir} --with-svrcore-lib=%{_libdir} --with-nss-lib=%{_libdir} --with-nss-inc=%{_includedir}/nss"
 ./configure --prefix=/usr --exec-prefix=/usr --bindir=%_bindir --sbindir=%_sbindir --sysconfdir=%_sysconfdir \
  --datadir=%_datadir --includedir=%_includedir --libdir=%_libdir --libexecdir=%_libexecdir --localstatedir=/var \
- --sharedstatedir=/usr/com --mandir=/usr/share/man --infodir=/usr/share/info --with-openldap --with-selinux
+ --sharedstatedir=/usr/com --mandir=/usr/share/man --infodir=/usr/share/info --with-openldap --with-selinux \
+ --enable-autobind --with-systemdsystemunitdir=%{_unitdir} --with-systemdsystemconfdir=%{_sysconfdir}/systemd/system \
+ --with-perldir=/usr/bin --with-systemdgroupname=%{groupname} $NSSARGS
 
 export XCFLAGS=$RPM_OPT_FLAGS
 
@@ -57,67 +70,75 @@ export USE_64=1
 %install
 %make DESTDIR="%buildroot" install
 
-mkdir -p %buildroot%_logdir/fedora-ds
-mkdir -p %buildroot%_localstatedir/fedora-ds
-mkdir -p %buildroot%_lockdir/fedora-ds
-mkdir -p %buildroot%_var/tmp/fedora-ds
-mkdir -p %buildroot%_includedir/fedora-ds
+mkdir -p %buildroot/var/log/%{pkgname}
+mkdir -p %buildroot/var/lib/%{pkgname}
+mkdir -p %buildroot/var/lock/%{pkgname}
 
-install -p -m 644 ldap/servers/slapd/slapi-plugin.h %buildroot%_includedir/fedora-ds/
-install -p -m 755 %SOURCE3 %buildroot%_datadir/fedora-ds/
+# for systemd
+mkdir -p %buildroot%{_sysconfdir}/systemd/system/%{groupname}.wants
 
-# make sure perl scripts have a proper shebang
-%__subst 's|#{{PERL-EXEC}}|#!%_bindir/perl|' %buildroot%_datadir/fedora-ds/script-templates/template-*.pl
-%__subst 's|File::Spec->tmpdir|"/tmp"|' %buildroot%_libdir/fedora-ds/perl/DSCreate.pm
+# remove libtool and static libs
+rm -f %buildroot%{_libdir}/%{pkgname}/*.a
+rm -f %buildroot%{_libdir}/%{pkgname}/*.la
+rm -f %buildroot%{_libdir}/%{pkgname}/plugins/*.a
+rm -f %buildroot%{_libdir}/%{pkgname}/plugins/*.la
+
+# make sure perl scripts have a proper shebang 
+sed -i -e 's|#{{PERL-EXEC}}|#!/usr/bin/perl|' %buildroot%{_datadir}/%{pkgname}/script-templates/template-*.pl
 
 #move main libraries to common directory
-mv %buildroot%_libdir/fedora-ds/*.so* %buildroot%_libdir/
-find %buildroot%_libdir -name "*.la" -delete
+mv %buildroot%_libdir/%{pkgname}/*.so* %buildroot%_libdir/
 
 %files
-%doc README.ALT LICENSE EXCEPTION install.inf
-%dir %_sysconfdir/fedora-ds
-%dir %_sysconfdir/fedora-ds/schema
-%config %_sysconfdir/fedora-ds/schema/*.ldif
-%dir %_sysconfdir/fedora-ds/config
-%config %_sysconfdir/fedora-ds/config/slapd-collations.conf
-%config %_sysconfdir/fedora-ds/config/certmap.conf
-%config %_sysconfdir/fedora-ds/config/ldap-agent.conf
-%config %_sysconfdir/fedora-ds/config/template-initconfig
-%config(noreplace) %_sysconfdir/sysconfig/fedora-ds
-%_datadir/fedora-ds
-%_bindir/*
-%_sbindir/*
-%dir	%_libdir/fedora-ds
-%_libdir/*.so.*
-%dir %_libdir/fedora-ds/perl
-%_libdir/fedora-ds/perl/*.pm
-%dir %_libdir/fedora-ds/plugins
-%_libdir/fedora-ds/plugins/*.so*
-%dir %_logdir/fedora-ds
-%_initdir/*
-%_man1dir/*.gz
-%_man8dir/*.gz
+%defattr(-,root,root,-)
+%doc LICENSE EXCEPTION LICENSE.GPLv2
+%dir %{_sysconfdir}/%{pkgname}
+%dir %{_sysconfdir}/%{pkgname}/schema
+%config(noreplace)%{_sysconfdir}/%{pkgname}/schema/*.ldif
+%dir %{_sysconfdir}/%{pkgname}/config
+%dir %{_sysconfdir}/systemd/system/%{groupname}.wants
+%config(noreplace)%{_sysconfdir}/%{pkgname}/config/slapd-collations.conf
+%config(noreplace)%{_sysconfdir}/%{pkgname}/config/certmap.conf
+%config(noreplace)%{_sysconfdir}/%{pkgname}/config/ldap-agent.conf
+%config(noreplace)%{_sysconfdir}/%{pkgname}/config/template-initconfig
+%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}
+%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}.systemd
+%{_datadir}/%{pkgname}
+%{_unitdir}
+%{_bindir}/*
+%{_sbindir}/*
+%{_libdir}/%{pkgname}/perl
+%{_libdir}/%{pkgname}/python
+%dir %{_libdir}/%{pkgname}/plugins
+%{_libdir}/%{pkgname}/plugins/*.so
+%dir /var/lib/%{pkgname}
+%dir /var/log/%{pkgname}
+%ghost %dir /var/lock/%{pkgname}
+%{_mandir}/man1/*
+%{_mandir}/man8/*
 
 %files devel
-%doc LICENSE EXCEPTION
-%_includedir/fedora-ds
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%defattr(-,root,root,-)
+%doc LICENSE EXCEPTION LICENSE.GPLv2
+%{_includedir}/%{pkgname}
+%{_libdir}/libslapd.so
+%{_libdir}/pkgconfig/*
 
-%post
-%post_service fedora-ds
-%post_service fedora-ds-snmp
-
-%preun
-%preun_service fedora-ds
-%preun_service fedora-ds-snmp
+%files libs
+%defattr(-,root,root,-)
+%doc LICENSE EXCEPTION LICENSE.GPLv2
+%dir %{_libdir}/%{pkgname}
+%{_libdir}/libslapd.so.*
+%{_libdir}/libns-dshttpd.so*
 
 %triggerpostun -- 389-ds < 1.2.10.0-alt1
 echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
 %changelog
+* Mon Apr 28 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.2.15-alt1
+- 1.3.2.15
+
 * Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.2.10.12-alt1.qa1.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 

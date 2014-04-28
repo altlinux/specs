@@ -1,6 +1,9 @@
+%global pkgname		dirsrv
+%global groupname	%{pkgname}.target
+
 Summary: 389 Administration Server
 Name: 389-admin
-Version: 1.1.30
+Version: 1.1.35
 Release: alt1
 License: GPLv2
 Url: http://port389.org/
@@ -10,8 +13,7 @@ BuildRequires: 389-adminutil-devel apache2-devel apache2-mod_nss gcc-c++ libicu-
 
 Requires: apache2-httpd-worker
 Requires: apache2-mod_nss
-
-%add_perl_lib_path %_libdir/fedora-ds/perl
+Requires: 389-ds
 
 Provides: fedora-ds-adminserver = %version-%release
 Obsoletes: fedora-ds-adminserver < %version-%release
@@ -19,6 +21,8 @@ Obsoletes: fedora-ds-adminserver < %version-%release
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: %name-%version-%release.tar
+
+%add_perl_lib_path %_libdir/%{pkgname}/perl
 
 %description
 Administration Server for 389 Directory Server. Use setup-ds-admin.pl to setup.
@@ -35,38 +39,38 @@ export adminutil_inc=/usr/include/libadminutil/
 
 %configure --localstatedir=/var --with-modnss-lib=%_libdir/apache2/modules/ \
            --with-httpd=%_sbindir/httpd2.worker --with-apxs=%_sbindir/apxs2 \
-           --with-openldap --with-selinux
+           --with-openldap --with-selinux \
+           --with-systemdsystemunitdir=%{_unitdir} \
+           --with-systemddirsrvgroupname=%{groupname}
 
 %make
 
 %install
 
 %make_install DESTDIR=%buildroot install
-%__subst 's|%_libdir/httpd|%_libdir/apache2|' %buildroot%_sysconfdir/fedora-ds/admin-serv/*.conf
-%__subst 's|libmodnss.so|mod_nss.so|' %buildroot%_sysconfdir/fedora-ds/admin-serv/*.conf
-%__subst 's|%_sysconfdir/mime.types|%_sysconfdir/httpd2/conf/mime.types|' %buildroot%_sysconfdir/fedora-ds/admin-serv/*.conf
-%__subst 's|LoadModule file_cache_module|#LoadModule file_cache_module|' %buildroot%_sysconfdir/fedora-ds/admin-serv/*.conf
-%__subst 's|HostnameLookups off|HostnameLookups on|' %buildroot%_sysconfdir/fedora-ds/admin-serv/httpd.conf
-
-%post
-%post_service fedora-ds-admin
-
-%preun
-%preun_service fedora-ds-admin
+%__subst 's|%_libdir/httpd|%_libdir/apache2|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+%__subst 's|libmodnss.so|mod_nss.so|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+%__subst 's|%_sysconfdir/mime.types|%_sysconfdir/httpd2/conf/mime.types|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+%__subst 's|LoadModule file_cache_module|#LoadModule file_cache_module|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/*.conf
+%__subst 's|HostnameLookups off|HostnameLookups on|' %buildroot%_sysconfdir/%{pkgname}/admin-serv/httpd.conf
 
 %files
-%doc COPYING AUTHORS NEWS README
-%_libdir/fedora-ds
-%_libdir/*.so.*
-%_sbindir/*
-%_datadir/fedora-ds
-%dir                    %_sysconfdir/fedora-ds/admin-serv
-%config(noreplace)      %_sysconfdir/fedora-ds/admin-serv/*.conf
-%config(noreplace)      %_sysconfdir/sysconfig/fedora-ds-admin
-%_initdir/fedora-ds-admin
-%_man8dir/*.gz
+%defattr(-,root,root,-)
+%doc LICENSE
+%dir %{_sysconfdir}/%{pkgname}/admin-serv
+%config(noreplace)%{_sysconfdir}/%{pkgname}/admin-serv/*.conf
+%{_datadir}/%{pkgname}
+%config(noreplace)%{_sysconfdir}/sysconfig/%{pkgname}-admin
+%{_unitdir}/%{pkgname}-admin.service
+%{_sbindir}/*
+%{_libdir}/*.so.*
+%{_libdir}/%{pkgname}
+%{_mandir}/man8/*
 
 %changelog
+* Fri Mar 21 2014 Timur Aitov <timonbl4@altlinux.org> 1.1.35-alt1
+- 1.1.35
+
 * Thu Jul 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.30-alt1
 - 1.1.30
 
