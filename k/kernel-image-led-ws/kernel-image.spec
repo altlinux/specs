@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1849,6 +1849,20 @@ done)
 
 
 %changelog
+* Mon Apr 28 2014 Led <led@altlinux.ru> 3.13.11-alt7
+- updated:
+  + fix-drivers-misc-mei--mei-me
+  + fix-mm--zswap
+  + feat-fs-reiser4
+  + feat-mm--zcache
+- added:
+  + fix-drivers-mfd--88pm800
+  + fix-drivers-mfd--88pm805
+  + fix-drivers-mfd--max8907
+  + fix-fs-hugetlbfs
+- I2C=m
+- INTEL_MEI_ME=m
+
 * Sun Apr 27 2014 Led <led@altlinux.ru> 3.13.11-alt6
 - updated:
   + fix-drivers-gpu-drm--i915
