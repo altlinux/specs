@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt11
+Release: alt12
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -13,6 +13,9 @@ Obsoletes: compiz-manager
 Provides: compiz-manager = %version-%release
 Provides: COMPIZ_CORE_ABIVERSION = 20091102
 
+# KDE 4.11 made kdecorationbridge.h private
+# GIT_DIR=/gears/k/kde4base-workspace.git git show HEAD:kwin/libkdecorations/kdecorationbridge.h \
+# > kde/window-decorator-kde4/kdecorationbridge.h
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -179,6 +182,9 @@ fi
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Tue Apr 29 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt12
+- gtk/window-decorator: fixed DSO linking against libm.
+
 * Wed Oct 09 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt11
 - Fixed build with KDE-4.11.
 
