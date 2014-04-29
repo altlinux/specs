@@ -6,7 +6,7 @@
 
 Name: squid
 Version: 3.4.4.2
-Release: alt2
+Release: alt3
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -160,7 +160,7 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-linux-netfilter \
 	--enable-linux-tproxy \
 	--with-large-files \
-	--with-filedescriptors=16384 \
+	--with-filedescriptors=65536 \
 	--with-default-user="%name"
 
 %make_build
@@ -290,6 +290,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Apr 29 2014 Led <led@altlinux.ru> 3.4.4.2-alt3
+- increase default max_filedescriptors to 65536 (ALT#30040)
+- fixed inverted test on CONNECT payload existence
+
 * Sat Apr 26 2014 Led <led@altlinux.ru> 3.4.4.2-alt2
 - Revert "Bug 3371: CONNECT with data sent at once loses data"
 
