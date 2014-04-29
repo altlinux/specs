@@ -6,8 +6,8 @@
 %define beta %nil
 
 Name: typo3_src
-Version: 4.5.32
-Release: alt2
+Version: 4.5.33
+Release: alt1
 
 Summary: A free, feature rich, Content Management Framework/System
 License: GPL
@@ -90,6 +90,9 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Tue Apr 29 2014 Michael Shigorin <mike@altlinux.org> 4.5.33-alt1
+- 4.5.33
+
 * Tue Mar 11 2014 Michael Shigorin <mike@altlinux.org> 4.5.32-alt2
 - apache subpackage: dropped strict php5-eaccelerator
   to ease php5 package upgrade (still opcode cache
