@@ -15,8 +15,8 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.4.7
-Release: alt3
+Version: 1.6.0
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -33,8 +33,8 @@ Source7: cache_purge.tar
 Source8: ngx_ctpp2.tar
 Source9: %name.service
 Source10: nginx-rtmp-module.tar
+Source11: mime.types
 
-Patch0: alt-mime-types.patch
 Patch1: nginx-0.8-syslog.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -81,12 +81,12 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
 %setup -a 7 -a 8 -a 10
-%patch0 -p1
 %if_with syslog
 %patch1 -p2
 %endif
 
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
+cp -f %SOURCE11 conf/mime.types
 
 %build
 %ifarch i686
@@ -270,6 +270,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Tue Apr 29 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Wed Apr 23 2014 Denis Smirnov <mithraen@altlinux.ru> 1.4.7-alt3
 - fix logrotate script (ALT #30018)
 
