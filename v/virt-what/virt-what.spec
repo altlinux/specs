@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.12
+Version: 1.14
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -14,6 +14,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Wed Sep 22 2010
 BuildRequires: libdb4-devel
 BuildRequires: perl-podlators
+
+Requires: dmidecode
 
 %description
 virt-what is a shell script which can be used to detect if the program
@@ -45,6 +47,10 @@ know about or cannot detect.
 %_man1dir/*
 
 %changelog
+* Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 1.14-alt1
+- 1.14 (closes: #30049)
+- added R: dmidecode to fix virtualbox test silent failure
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1.12-alt1
 - 1.12
 
