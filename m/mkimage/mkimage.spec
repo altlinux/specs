@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.13
+Version: 0.2.14
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 0.2.14-alt1
+- mki-copy-efiboot: minor enhancements
+
 * Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 0.2.13-alt1
 - mki-copy-efiboot:
   + rescue: added forensic mode support
