@@ -1,6 +1,6 @@
 Name: repocop
 Version: 0.70
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Wed Apr 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.70-alt2
+- bugfix release
+
 * Mon Apr 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.70-alt1
 - support for fresh RPM::Source::Editor
 
