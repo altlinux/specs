@@ -1,10 +1,10 @@
 # TODO: fix urls and install icons like
 #/usr/share/linuxmint/mintMenu/search_engines/dictionary.png
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
-%define	rev	0feb06e
+%define	rev	6a7cf3f
 
 Name:           mintmenu
-Version:        5.5.1
+Version:        5.5.3
 Release:        alt1.git%rev
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -20,8 +20,6 @@ Source35:	list-mintmenu.lua
 Source36:	list-mintmenu.ignore
 
 # SUSE patches from http://download.opensuse.org/repositories/home:/unamanic/Fedora_14/src/
-# PATCH-FIX-OPENSUSE mintmenu-add_sebangs.patch william@witt-famiylnet: Add shebangs for style
-Patch0:         mintmenu-add_sebangs.patch
 # PATCH-FIX-OPENSUSE mintmenu-suse_branding.patch william@witt-famiylnet: Suse branding
 Patch2:         mintmenu-alt_branding.patch
 # PATCH-FIX-OPENSUSE mintmenu-datadir.patch william@witt-famiylnet: move from /usr/lib to /usr/share
@@ -39,7 +37,6 @@ Patch37:	mintmenu-5.2.1-alt-GPL-path.patch
 Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
 #Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
 Patch40:	mintmenu-5.5.1-alt-xfce-logout.patch
-Patch41:	mintmenu-5.5.1-alt-remove-unicode-symbols.patch
 
 Requires: GConf2 alacarte gnome-search-tool
 Requires: python-module-gnome-menus
@@ -70,7 +67,6 @@ added to your gnome-panel or launched in its own window.
 %setup -q -n mintmenu
 tar -xf %{SOURCE1}
 
-%patch0 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -86,7 +82,6 @@ tar -xf %{SOURCE1}
 %patch38 -p1
 #%%patch39 -p1
 %patch40 -p1
-%patch41 -p1
 
 # drop deprecated plugins
 rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
@@ -133,6 +128,9 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Wed Apr 30 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.3-alt1.git6a7cf3f
+- New version
+
 * Wed Mar 19 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt1.git0feb06e
 - New version (ALT #29878)
 - Drop deprecated plugin easygconf
