@@ -3,10 +3,10 @@
 %define ver_major 3.12
 %define parser_ver 3.9.5
 %define gst_api_ver 1.0
-%define gst_ver 0.11.99
-%define gst_plugins_ver 0.11.93
+%define gst_ver 1.2.4
+%define gst_plugins_ver 1.2.4
 %define gtk_ver 3.11.5
-%define grilo_ver 0.2.9
+%define grilo_ver 0.2.10
 %define glib_ver 2.36.0
 %define clutter_ver 1.17.3
 
@@ -36,7 +36,7 @@
 %endif
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -433,6 +433,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Apr 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 - temporarily removed opensubtitles plugin
