@@ -9,7 +9,7 @@
 
 Name: nemo
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -209,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Apr 27 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt2
+- 2.2.0-11-ge78efe4
+
 * Mon Apr 7 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
