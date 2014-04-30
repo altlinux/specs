@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     24
 %define BUILD_NUMBER      35
-%define PATCH_LEVEL       32
+%define PATCH_LEVEL       33
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -99,6 +99,11 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Wed Apr 30 2014 Andrey Cherepanov <cas@altlinux.org> 3.24.35.33-alt1
+- new version
+- security fixes:
+  + High CVE-2014-1736: Integer overflow in V8.
+
 * Fri Apr 11 2014 Andrey Cherepanov <cas@altlinux.org> 3.24.35.32-alt1
 - new version in 3.24 series (ALT #29866)
 
