@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libevdev
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -53,6 +53,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Wed Apr 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
