@@ -1,6 +1,6 @@
 Name: libalsa
-Version: 1.0.27
-Release: alt3
+Version: 1.0.27.2
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -157,6 +157,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.27.2-alt1
+- 1.0.27.2
+
 * Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.27-alt3
 - libalsa-alsa: replaced "include" with "__include__", to make
   header files compilable by "gcc -ansi" as they were in 1.0.26.

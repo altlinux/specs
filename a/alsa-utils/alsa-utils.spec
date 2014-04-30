@@ -1,6 +1,6 @@
 Name: alsa-utils
-Version: 1.0.27
-Release: alt3
+Version: 1.0.27.2
+Release: alt1
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -88,6 +88,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.27.2-alt1
+- 1.0.27.2
+
 * Wed Apr 17 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.27-alt3
 - post-1.0.27 fixes, see also rh#951750 (thanks ononim from opennet)
 
