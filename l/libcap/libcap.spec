@@ -1,13 +1,13 @@
 Name: libcap
-Version: 2.16
-Release: alt4
+Version: 2.24
+Release: alt1
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
 License: GPL/BSD-style
 Group: System/Libraries
-Url: http://sites.google.com/site/fullycapable/
-# http://git.altlinux.org/gears/l/libcap.git
+Url: https://sites.google.com/site/fullycapable/
+# git://git.altlinux.org/gears/l/libcap.git
 Source: %name-%version-%release.tar
 
 # For backwards compatibility.
@@ -61,11 +61,10 @@ for users specified in configuration file.
 	lib=%_lib DEBUG= INDENT= STALIBNAME=
 
 %install
-%makeinstall_std lib=%_lib STALIBNAME=
+%makeinstall_std lib=%_lib STALIBNAME= RAISE_SETFCAP=no
 install -pDm600 pam_cap/capability.conf %buildroot/etc/security/capability.conf
 
 # Relocate development library from /%_lib/ to %_libdir/.
-mkdir "%buildroot%_libdir"
 symlink="%buildroot/%_lib/libcap.so"
 soname=$(readlink "$symlink")
 rm "$symlink"
@@ -80,11 +79,13 @@ ln -s ../../%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 
 %files utils
 /sbin/*
+%_man1dir/*
 %_man8dir/*
 
 %files devel
 %_libdir/*.so
 %_includedir/sys/*.h
+%_pkgconfigdir/*.pc
 %_man3dir/*
 %doc CHANGELOG License README *.txt pgp.keys.asc doc/capability.notes progs/*.c
 
@@ -93,6 +94,9 @@ ln -s ../../%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Wed Apr 30 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.24-alt1
+- Updated to libcap-2.24-2-g3c22870 (closes: #29286).
+
 * Sun Apr 24 2011 Dmitry V. Levin <ldv@altlinux.org> 1:2.16-alt4
 - Rebuilt for more debuginfo.
 
