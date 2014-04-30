@@ -4,8 +4,6 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%define authentication_scheme pam
-#%%define default_pam_config altlinux
 %define default_pam_config redhat
 # Initial virtual terminal to use
 %define vt_nr 1
@@ -20,13 +18,12 @@
 %def_with libaudit
 %def_with plymouth
 %def_without xevie
-%def_disable split_authentication
 %def_with systemd
 %def_disable wayland
 
 Name: gdm
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -43,28 +40,23 @@ Source10: gdm.pam
 Source11: gdm-autologin.pam
 Source12: gdm-password.pam
 Source13: gdm-launch-environment.pam
-#Source11: gdm-smartcard.pam
-#Source12: gdm-fingerprint.pam
+Source14: gdm-smartcard.pam
+Source15: gdm-fingerprint.pam
 
 Patch2: gdm-3.11.90-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
-Patch12: gdm-3.12.1-fix-daemonize-regression.patch
+Patch12: 0001-Revert-"worker:-get-PATH-from-parent-instead-of-#define".patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
+Provides: gnome-dm
 
 # from configure.ac
-%define dbus_glib_ver 0.74
-%define glib_ver 2.35
+%define glib_ver 2.36.0
 %define gtk_ver 2.91.1
-%define pango_ver 1.3.0
-%define scrollkeeper_ver 0.1.4
 %define libcanberra_ver 0.4
-%define fontconfig_ver 2.5.0
-%define upower_ver 0.9.0
 %define accountsservice_ver 0.6.12
-%define nss_ver 3.11.1
 %define check_ver 0.9.4
 
 Provides: %name-user-switch-applet = %version-%release
@@ -77,15 +69,14 @@ Requires: gnome-shell
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 # since 3.11.92
 Requires: caribou
+Requires: gnome-session >= 3.7.1
+Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.7.1
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
-BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 BuildPreReq: iso-codes-devel
-BuildPreReq: glib2-devel >= %glib_ver
+BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: libupower-devel >= %upower_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
 BuildPreReq: dconf
 %{?_with_systemd:BuildRequires: systemd-devel libsystemd-devel}
@@ -95,12 +86,10 @@ BuildPreReq: dconf
 BuildPreReq: libpam-devel
 %{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
 BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
-BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libX11-devel libXau-devel libXrandr-devel libXext-devel libXdmcp-devel libXft-devel libSM-devel
 BuildPreReq: libXi-devel xorg-inputproto-devel libXinerama-devel xorg-xineramaproto-devel libXevie-devel
 BuildPreReq: xorg-xephyr xorg-server
 BuildPreReq: libcheck-devel >= %check_ver
-BuildPreReq: libnss-devel >= %nss_ver
 
 BuildRequires:  gcc-c++ libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
@@ -119,6 +108,7 @@ several different X sessions on your local machine at the same time.
 Summary: Arch independent files for GDM
 Group: Graphical desktop/GNOME
 BuildArch: noarch
+Conflicts: gdm2.20
 
 %description data
 This package provides noarch data needed for GDM to work.
@@ -172,50 +162,6 @@ several different X sessions on your local machine at the same time.
 
 This package contains user documentation for Gdm.
 
-%package extension-fingerprint
-Summary: Fingerprint extension for Gdm
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-
-%description extension-fingerprint
-Gdm (the GNOME Display Manager) is a highly configurable
-reimplementation of xdm, the X Display Manager. Gdm allows you to log
-into your system with the X Window System running and supports running
-several different X sessions on your local machine at the same time.
-
-This package contains Fingerprint extension for Gdm.
-
-%package extension-smartcard
-Summary: Smartcard extension for Gdm
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-
-%description extension-smartcard
-Gdm (the GNOME Display Manager) is a highly configurable
-reimplementation of xdm, the X Display Manager. Gdm allows you to log
-into your system with the X Window System running and supports running
-several different X sessions on your local machine at the same time.
-
-This package contains Smartcard extension for Gdm.
-
-%package gnome
-Summary: GNOME-specific part of Gdm
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Requires: %name = %version-%release
-Provides: gnome-dm
-Conflicts: %name < 2.28.0-alt1
-Requires: gnome-session >= 3.7.1
-Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.7.1
-
-%description gnome
-Gdm (the GNOME Display Manager) is a highly configurable
-reimplementation of xdm, the X Display Manager. Gdm allows you to log
-into your system with the X Window System running and supports running
-several different X sessions on your local machine at the same time.
-
-Install this package for use with GNOME desktop.
-
 %prep
 %setup
 %patch2 -p1
@@ -224,7 +170,7 @@ Install this package for use with GNOME desktop.
 %patch12 -p1
 
 # just copy our PAM config files to %default_pam_config directory
-cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
+cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
 %build
 [ ! -d m4 ] && mkdir m4
@@ -232,15 +178,12 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
 %configure \
 	%{subst_enable static} \
 	--disable-schemas-compile \
-	--enable-console-helper \
-	--enable-authentication-scheme=%authentication_scheme \
 	%{subst_enable ipv6} \
 	%{subst_enable debug} \
 	--with-sysconfsubdir=X11/gdm \
 	%{subst_with xinerama} \
 	%{subst_with xdmcp} \
 	%{?_with_tcp_wrappers:--with-tcp-wrappers} \
-	%{?_with_consolekit:--with-console-kit} \
 	%{subst_with systemd} \
 	--with-pam-prefix=%_sysconfdir \
 	--with-default-pam-config=%default_pam_config \
@@ -248,12 +191,10 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
 	%{subst_with libaudit} \
 	%{subst_with plymouth} \
 	--with-default-path="/bin:/usr/bin:/usr/local/bin" \
-	%{?_disable_split_authentication:--disable-split-authentication} \
 	--with-initial-vt=%vt_nr \
 	--with-authentication-agent-directory=%_libexecdir/polkit-1 \
 	--with-dmconfdir=%_sysconfdir/X11/sessions \
 	--disable-dependency-tracking \
-	%{?_enable_fallback_greeter:--enable-fallback-greeter} \
 	%{?_enable_wayland:--enable-wayland-support}
 
 %make_build
@@ -263,9 +204,14 @@ mkdir -p %buildroot%_sysconfdir/X11/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 
 %makeinstall_std
+rm -f %buildroot%_sysconfdir/pam.d/gdm
 
 # install external hook for update_wms
 install -m755 %SOURCE2 %buildroot%_sysconfdir/X11/wms-methods.d/%name
+
+# don't install fallback greeter
+rm -f %buildroot%_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
+rm -f %buildroot%_datadir/gdm/greeter/applications/polkit-gnome-authentication-agent-1.desktop
 
 find %buildroot -name '*.a' -delete
 find %buildroot -name '*.la' -delete
@@ -295,10 +241,12 @@ xvfb-run %make check
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %files data -f %name.lang
-%config %_sysconfdir/pam.d/gdm
+# %config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
 %config %_sysconfdir/pam.d/gdm-password
 %config %_sysconfdir/pam.d/gdm-launch-environment
+%config %_sysconfdir/pam.d/gdm-smartcard
+%config %_sysconfdir/pam.d/gdm-fingerprint
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %config(noreplace) %_sysconfdir/X11/%name
@@ -312,7 +260,6 @@ xvfb-run %make check
 %_datadir/%name/%name.schemas
 %dir %_datadir/%name/greeter
 %dir %_datadir/%name/greeter/applications
-%_datadir/%name/greeter/applications/polkit-gnome-authentication-agent-1.desktop
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/dconf/profile/%name
 %_pixmapsdir/*
@@ -325,18 +272,11 @@ xvfb-run %make check
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
 %_datadir/gdm/greeter/applications/gnome-shell.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
-%_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %_datadir/gnome-session/sessions/gdm-shell.session
 %dir %_datadir/%name/greeter/autostart
 %_datadir/%name/greeter/autostart/caribou-autostart.desktop
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
-
-%if_enabled split_authentication
-#%_libdir/gdm/simple-greeter/extensions/libpassword.so
-%dir %_datadir/gdm/simple-greeter/extensions/password
-%_datadir/gdm/simple-greeter/extensions/password/page.ui
-%endif
 
 %files help -f %name-help.lang
 
@@ -356,22 +296,13 @@ xvfb-run %make check
 
 %exclude %_sysconfdir/pam.d/gdm-pin
 
-# TODO
-%if_enabled split_authentication
-%files extension-fingerprint
-%_sysconfdir/pam.d/gdm-fingerprint
-%_libdir/gdm/simple-greeter/extensions/libfingerprint.so
-%dir %_datadir/gdm/simple-greeter/extensions/fingerprint
-%_datadir/gdm/simple-greeter/extensions/fingerprint/page.ui
-
-%files extension-smartcard
-%_sysconfdir/pam.d/gdm-smartcard
-%_libdir/gdm/simple-greeter/extensions/libsmartcard.so
-%dir %_datadir/gdm/simple-greeter/extensions/smartcard
-%_datadir/gdm/simple-greeter/extensions/smartcard/page.ui
-%endif
-
 %changelog
+* Wed Apr 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt4
+- remove compatibility "-nodaemon" option patch
+- add upstream 0001-Revert-"worker:-get-PATH-from-parent-instead-of-#define".patch
+- update pam configs
+- cleanup spec
+
 * Thu Apr 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt3
 - set initial vt number to 1 for "flicker-free plymouth transition"
 
