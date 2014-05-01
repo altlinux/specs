@@ -1,9 +1,5 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Digest/MD5.pm) perl(File/Path.pm) perl(Module/Build.pm) perl(Test/More.pm) perl-Module-Build perl-devel perl-podlators
-# END SourceDeps(oneline)
 %define upstream_name    Text-Haml
-%define upstream_version 0.990115
+%define upstream_version 0.990116
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
@@ -23,7 +19,7 @@ BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(IO/File.pm)
 BuildRequires: perl(Scalar/Util.pm)
-BuildRequires: perl(URI/Escape.pm)
+BuildRequires: perl(URI/Escape.pm) perl(Module/Build.pm)
 BuildArch:  noarch
 Source44: import.info
 
@@ -56,6 +52,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 
 %changelog
+* Thu May 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_1
+- update by mgaimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.990115-alt1_1
 - update by mgaimport
 
