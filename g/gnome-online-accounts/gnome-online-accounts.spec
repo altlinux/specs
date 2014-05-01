@@ -18,7 +18,7 @@
 
 Name: gnome-online-accounts
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -31,6 +31,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %endif
 
 Requires: lib%name = %version-%release
+
+%{?_enable_kerberos:Requires: realmd}
 
 %define glib_ver 2.36
 %define gtk_ver 3.11.1
@@ -161,9 +163,12 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gir-%api_ver/Goa-%api_ver.gir
 
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/goa/
+%_datadir/gtk-doc/html/goa
 
 %changelog
+* Wed Apr 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt2
+- Requires realmd if enabled kerberos support
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
