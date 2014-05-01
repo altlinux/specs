@@ -1,7 +1,7 @@
 %define module RPM-Source-BundleImport
 
 Name: perl-%module
-Version: 0.016
+Version: 0.017
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,6 +14,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Package
+Requires: perl-Source-Package > 0.04
 Requires: perl-RPM-Source-Editor > 0.810
 
 %description
@@ -34,6 +35,9 @@ Requires: perl-RPM-Source-Editor > 0.810
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu May 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.017-alt1
+- development release
+
 * Tue Apr 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - bugfix release
 
