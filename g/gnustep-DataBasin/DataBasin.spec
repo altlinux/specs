@@ -1,12 +1,12 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-DataBasin
-Version: 0.6
-Release: alt4
+Version: 0.7
+Release: alt1
 Summary: Data access tool and for SalesForce.com based on the SOAP API interfaces
 License: GPL / LGPLv3+
 Group: Graphical desktop/GNUstep
-Url: http://www.nongnu.org/gap/databasin/index.html
+Url: http://gap.nongnu.org/databasin/index.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -69,6 +69,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu May 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
+- Version 0.7
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt4
 - Built with clang
 
