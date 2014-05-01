@@ -1,5 +1,5 @@
 Name: perl-Gtk3
-Version: 0.013
+Version: 0.016
 Release: alt1
 
 Summary: Perl interface to the 3.x series of the gtk+ toolkit
@@ -29,6 +29,9 @@ BuildRequires:libgtk+3-devel libgtk+3-gir perl(Glib/Object/Introspection.pm) per
 %doc LICENSE NEWS README
 
 %changelog
+* Thu May 01 2014 Vladimir Lettiev <crux@altlinux.ru> 0.016-alt1
+- 0.016
+
 * Mon Oct 07 2013 Vladimir Lettiev <crux@altlinux.ru> 0.013-alt1
 - initial build for ALTLinux
 
