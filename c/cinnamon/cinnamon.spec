@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -223,14 +223,17 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/cinnamon-desktop-editor/
 %_datadir/cinnamon-json-makepot/
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
-%_datadir/icons/hicolor/scalable/categories/*.svg
-%_datadir/icons/hicolor/scalable/emblems/*.svg
+%_datadir/icons/hicolor/*/categories/*.svg
+%_datadir/icons/hicolor/*/emblems/*.svg
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_mandir/man1/*.1.*
 %doc NEWS README
 
 %changelog
+* Wed Apr 30 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt2
+- 2.2.3-37-g03fa8a4
+
 * Fri Apr 18 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt1
 - 2.2.3-19-g17cb76f
 

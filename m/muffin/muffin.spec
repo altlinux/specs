@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -140,6 +140,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Wed Apr 30 2014 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt2
+- 2.2.1-9-g570843c
+
 * Fri Apr 18 2014 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
