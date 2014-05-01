@@ -1,5 +1,5 @@
 Name: perl-Gtk3-WebKit
-Version: 0.04
+Version: 0.06
 Release: alt1
 
 Summary: WebKit bindings for Perl
@@ -32,6 +32,9 @@ xvfb-run -a make test
 %doc README Changes
 
 %changelog
+* Thu May 01 2014 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt1
+- 0.06
+
 * Mon Oct 07 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt1
 - initial build for ALTLinux
 
