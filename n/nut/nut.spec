@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt6
+%define release_pre alt7
 
 # for distr selected
 %def_without M24
@@ -171,6 +171,8 @@ BuildRequires: libfreeipmi-devel
 %define libusb libusb-devel
 %endif
 %endif
+
+%add_findreq_skiplist /lib/systemd/system-shutdown/nutshutdown
 
 BuildRequires: %libusb
 
@@ -693,6 +695,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Fri May 02 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt7
+- skip findreq upon that helper script (closes: #30053)
+
 * Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt6
 - packaged systemd shutdown helper script
 
