@@ -1,8 +1,9 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.23
+%define v8_ver 3.24
 
 %def_disable debug
 %def_disable nacl
+%def_disable verbose
 
 %if_enabled debug
 %define buildtype Debug
@@ -11,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        33.0.1750.152
-Release:        alt1
+Version:        34.0.1847.132
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -20,6 +21,7 @@ Group:          Networking/WWW
 Url:            http://code.google.com/p/chromium/
 
 Source0:        %name-%version.tar.gz
+Source10:		depot_tools.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -86,7 +88,8 @@ Patch94:	chromium-window-placement.patch
 # Patches from upstream
 
 # Patches from ALT Linux
-Patch100:	chromium-fix-doubled-delimiters-in-path.patch
+Patch95:	chromium-fix-shrank-by-one-character.patch
+Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -137,6 +140,7 @@ BuildRequires:  libXrandr-devel
 BuildRequires:  libXtst-devel
 BuildRequires:  libyasm-devel
 BuildRequires:  perl-Switch
+BuildRequires:  ninja-build
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
@@ -213,6 +217,7 @@ to Gnome's Keyring.
 
 %prep
 %setup -q -n %name
+tar xf %SOURCE10 -C src
 
 %patch63 -p2
 %patch5  -p0 -d src
@@ -241,13 +246,17 @@ to Gnome's Keyring.
 %patch92 -p1
 %patch93 -p1
 %patch94 -p1
-
-%patch100 -p0
+%patch95 -p0
+%patch96 -p0
 
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
 sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
 grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
+
+# Move vpx/internal/vpx_codec_internal.h to one directory up
+grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
+mv -f src/third_party/libvpx/source/libvpx/vpx/{internal/,}vpx_codec_internal.h
 
 # Make sure that the requires legal files can be found
 cp -a src/AUTHORS src/LICENSE .
@@ -276,7 +285,7 @@ _google_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
 
 pushd src
 
-./build/gyp_chromium -f make build/all.gyp \
+./build/gyp_chromium -f ninja build/all.gyp \
 	-Dbuild_ffmpegsumo=1 \
 %if_disabled nacl
 	-Ddisable_nacl=1 \
@@ -356,16 +365,17 @@ pushd src
 #	-Dlinux_use_tcmalloc=0 \
 
 # Limit number of threads
-export NPROCS=1
+export NPROCS=4
 
-# Buld main program
-%make_build -r chrome V=1 BUILDTYPE=%buildtype
-
-# Build the required SUID_SANDBOX helper
-%make_build -r chrome_sandbox V=1 BUILDTYPE=%buildtype
-
-# Build the ChromeDriver test suite
-%make_build -r chromedriver V=1 BUILDTYPE=%buildtype
+# Build with ninja-build (see https://code.google.com/p/chromium/wiki/LinuxBuildInstructions)
+ninja-build -C out/Release \
+%if_enabled verbose
+	-v \
+%endif
+	-j $NPROCS \
+	chrome \
+	chrome_sandbox \
+	chromedriver
 
 popd
 
@@ -389,6 +399,7 @@ pushd src/out/%buildtype
 cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
 cp -a *.pak locales xdg-mime %buildroot%_libdir/chromium/
 cp -a chromedriver %buildroot%_libdir/chromium/
+cp -a icudtl.dat %buildroot%_libdir/chromium/
 
 # Patch xdg-settings to use the chromium version of xdg-mime as that the system one is not KDE4 compatible
 sed "s|xdg-mime|%_libdir/chromium/xdg-mime|g" xdg-settings > %{buildroot}%{_libdir}/chromium/xdg-settings
@@ -452,6 +463,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_libdir/chromium/chromedriver
 %_libdir/chromium/chromium-generic
 %_libdir/chromium/libffmpegsumo.so
+%_libdir/chromium/icudtl.dat
 %_libdir/chromium/plugins/
 %_libdir/chromium/locales/
 %if_enabled nacl
@@ -477,6 +489,33 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri May 02 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.132-alt2
+- Add support for playing mp3 and mpeg4 (ALT #27863)
+- Package icudtl.dat
+
+* Wed Apr 30 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.132-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1731: Type confusion in DOM.
+  - Medium CVE-2014-1732: Use-after-free in Speech Recognition.
+  - Medium CVE-2014-1733: Compiler bug in Seccomp-BPF.
+
+* Tue Apr 15 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.116-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1718: Integer overflow in compositor.
+  - High CVE-2014-1719: Use-after-free in web workers.
+  - High CVE-2014-1720: Use-after-free in DOM.
+  - High CVE-2014-1722: Use-after-free in rendering.
+  - High CVE-2014-1723: Url confusion with RTL characters.
+  - High CVE-2014-1724: Use-after-free in speech.
+  - Medium CVE-2014-1725: OOB read with window property.
+  - Medium CVE-2014-1726: Local cross-origin bypass.
+  - Medium CVE-2014-1727: Use-after-free in forms.
+- Package depot-tools to correct build
+- Do not show apps shortcut button on bookmark bar by default
+- Switch build from make to ninja-build
+
 * Tue Mar 18 2014 Andrey Cherepanov <cas@altlinux.org> 33.0.1750.152-alt1
 - New version
 - Security fixes:
