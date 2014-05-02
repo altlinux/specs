@@ -1,14 +1,14 @@
 %define dist Class-Date
 Name: perl-%dist
-Version: 1.1.10
-Release: alt5
+Version: 1.1.12
+Release: alt1
 
 Summary: Class for easy date and time manipulation 
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Class-Date-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -33,6 +33,9 @@ have a Class::Date::Rel class for relative dates.
 %perl_vendor_autolib/Class
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.12-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.1.10-alt5
 - built for perl 5.18
 
