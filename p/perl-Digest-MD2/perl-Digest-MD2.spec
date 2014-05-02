@@ -1,14 +1,14 @@
 %define dist Digest-MD2
 Name: perl-%dist
-Version: 2.03
-Release: alt4
+Version: 2.04
+Release: alt1
 
 Summary: Perl interface to the MD2 Algorithm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GA/GAAS/Digest-MD2-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -34,6 +34,9 @@ a 128-bit "fingerprint" or "message digest" of the input.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 2.03-alt4
 - built for perl 5.18
 
