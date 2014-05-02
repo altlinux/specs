@@ -1,4 +1,4 @@
-%define gver 4.7
+%define gver 4.8
 %set_gcc_version %gver
 
 %def_without docs
@@ -17,7 +17,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.4
+%define sover %somver.11.8
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -28,8 +28,8 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.6.1
-Release: alt2
+Version: 11.8.1
+Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
 Group: Sciences/Mathematics
@@ -2215,11 +2215,13 @@ popd
 %_libdir/libtriutils.so.*
 %_libdir/libtrilinoscouplings.so.*
 %_libdir/libtpi.so.*
+%_libdir/libgtest.so.*
 
 %files -n lib%name-devel
 %_libdir/libtriutils.so
 %_libdir/libtrilinoscouplings.so
 %_libdir/libtpi.so
+%_libdir/libgtest.so
 %_pkgconfigdir/*
 
 %files -n libisorropia%somver
@@ -2483,10 +2485,10 @@ popd
 %_libdir/libstk*.so
 
 %files -n libstokhos%somver
-%_libdir/libstokhos.so.*
+%_libdir/libstokhos*.so.*
 
 %files -n libstokhos%somver-devel
-%_libdir/libstokhos.so
+%_libdir/libstokhos*.so
 
 %files -n libctrilinos%somver
 %_libdir/libctrilinos.so.*
@@ -2595,6 +2597,9 @@ popd
 %endif
 
 %changelog
+* Fri May 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.8.1-alt1
+- Version 11.8.1
+
 * Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt2
 - Built with gcc 4.7
 
