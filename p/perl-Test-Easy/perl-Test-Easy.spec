@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Easy
 Name: perl-%dist
-Version: 1.07
+Version: 1.09
 Release: alt1
 
 Summary: Testing made absolute easy.
@@ -10,7 +10,7 @@ Group: Development/Perl
 Packager: Boris Savelev <boris@altlinux.org>
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BE/BELDEN/Test-Easy-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/L/LO/LOGIE/Test-Easy-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Mar 16 2009
@@ -40,6 +40,9 @@ rm %buildroot%perl_vendor_privlib/Test/README.pod
 %perl_vendor_privlib/Test/Easy/*pm
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Sat Oct 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
