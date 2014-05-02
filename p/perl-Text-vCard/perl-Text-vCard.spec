@@ -16,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-Text-vCard
-Version: 3.02
+Version: 3.04
 Release: alt1
 
 Summary: Module for parsing and creating vCards (RFC 2426) address
@@ -58,6 +58,9 @@ vCards from an existing file for you.
 %perl_vendor_privlib/vCard*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 3.04-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.02-alt1
 - automated CPAN update
 
