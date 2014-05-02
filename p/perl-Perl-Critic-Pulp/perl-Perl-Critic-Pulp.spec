@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm) perl(Digest/MD5.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Slurp.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Uncompress/AnyInflate.pm) perl(Iterator/Simple.pm) perl(Locale/TextDomain.pm) perl(Math/Complex.pm) perl(Pod/Simple.pm) perl(Readonly.pm) perl(Regexp/Common.pm) perl(SDBM_File.pm) perl(Smart/Comments.pm) perl(Socket.pm) perl(Test/Without/Module.pm) perl(Text/Tabs.pm) perl(Tie/IxHash.pm) perl(blib.pm) perl(lib/abs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
-Version:        81
+Version:        82
 Release:        alt1
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
@@ -111,6 +111,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 82-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 81-alt1
 - automated CPAN update
 
