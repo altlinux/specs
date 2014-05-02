@@ -5,7 +5,7 @@
 %define api_ver 4.0
 
 Name: gtkhtml4
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GtkHTML is a HTML rendering/editing library
@@ -18,7 +18,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%origname/%ver_major/%origname-%ve
 
 # from configure.in
 %define gtk3_ver 3.0.5
-%define gnome_icon_ver 2.91.0
 %define libsoup_ver 2.33.92
 %define enchant_ver 1.1.17
 %define cairo_ver 1.10.0
@@ -27,7 +26,6 @@ BuildPreReq: gnome-common
 
 BuildPreReq: intltool >= 0.36.3
 BuildPreReq: libgtk+3-devel >= %gtk3_ver
-BuildPreReq: gnome-icon-theme >= %gnome_icon_ver
 BuildPreReq: libsoup-devel >= %libsoup_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libenchant-devel >= %enchant_ver
@@ -125,6 +123,9 @@ statically linked with GtkHTML.
 %endif
 
 %changelog
+* Fri May 02 2014 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
