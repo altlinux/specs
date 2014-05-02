@@ -1,7 +1,7 @@
 %define dist Inline
 Name: perl-%dist
-Version: 0.54
-Release: alt2
+Version: 0.55
+Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
 License: GPL or Artistic
@@ -48,6 +48,9 @@ can just run your Perl script like normal.
 	%perl_vendor_privlib/auto/Inline/*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.54-alt2
 - added Requires: perl(Parse/RecDescent.pm)
 
