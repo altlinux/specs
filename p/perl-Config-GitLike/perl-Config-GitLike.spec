@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/Command.
 # END SourceDeps(oneline)
 BuildRequires: perl(Moose.pm)
 Name:           perl-Config-GitLike
-Version:        1.12
+Version:        1.13
 Release:        alt1
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Mon Dec 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
