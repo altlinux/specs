@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.834
+Version: 0.835
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -77,6 +77,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 %_man1dir/hashertarbuild*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.835-alt1
+- bugfix release
+
 * Thu May 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.834-alt1
 - bugfix release
 
