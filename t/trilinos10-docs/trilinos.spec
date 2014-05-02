@@ -1,4 +1,7 @@
 %def_with docs
+%define gver 4.8
+%set_gcc_version %gver
+
 #ExclusiveArch: %ix86
 %def_with dakota
 %def_without dakota
@@ -15,7 +18,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.4
+%define sover %somver.11.8
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -26,7 +29,7 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.6.1
+Version: 11.8.1
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
@@ -47,7 +50,7 @@ Source8: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.c
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: gcc-fortran libgfortran-devel gcc-c++ libnumpy-devel
+BuildPreReq: gcc%gver-fortran libgfortran-devel gcc%gver-c++ libnumpy-devel
 BuildPreReq: liblapack-devel doxygen getfemxx binutils-devel
 BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz
 BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel libmatio-devel
@@ -2213,11 +2216,13 @@ popd
 %_libdir/libtriutils.so.*
 %_libdir/libtrilinoscouplings.so.*
 %_libdir/libtpi.so.*
+%_libdir/libgtest.so.*
 
 %files -n lib%name-devel
 %_libdir/libtriutils.so
 %_libdir/libtrilinoscouplings.so
 %_libdir/libtpi.so
+%_libdir/libgtest.so
 %_pkgconfigdir/*
 
 %files -n libisorropia%somver
@@ -2481,10 +2486,10 @@ popd
 %_libdir/libstk*.so
 
 %files -n libstokhos%somver
-%_libdir/libstokhos.so.*
+%_libdir/libstokhos*.so.*
 
 %files -n libstokhos%somver-devel
-%_libdir/libstokhos.so
+%_libdir/libstokhos*.so
 
 %files -n libctrilinos%somver
 %_libdir/libctrilinos.so.*
@@ -2593,6 +2598,12 @@ popd
 %endif
 
 %changelog
+* Fri May 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.8.1-alt1
+- Version 11.8.1
+
+* Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt2
+- Built with gcc 4.7
+
 * Thu Feb 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.6.1-alt1
 - Version 11.6.1 (with PySundance)
 
@@ -2629,3 +2640,4 @@ popd
 
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2
+
