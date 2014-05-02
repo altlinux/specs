@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-SSLeay
 Name: perl-%dist
-Version: 0.64
-Release: alt2
+Version: 0.72
+Release: alt1
 
 Summary: OpenSSL glue that provides LWP https support
 License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NA/NANIS/Crypt-SSLeay-%{version}.tar.gz
 
-BuildRequires: libssl-devel perl-Test-Pod zlib-devel perl-Try-Tiny
+BuildRequires: libssl-devel perl-Test-Pod zlib-devel perl-Try-Tiny perl(ExtUtils/CBuilder.pm) perl(Path/Class.pm)
 
 %description
 This perl module provides support for the https protocol under LWP, so
@@ -37,6 +38,9 @@ mv t/02-live.t t/02-live.t.orig
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt2
 - built for perl 5.18
 
