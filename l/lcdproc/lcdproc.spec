@@ -1,6 +1,6 @@
 Name: lcdproc
-Version: 0.5.6
-Release: alt3
+Version: 0.5.7
+Release: alt1
 
 Summary: Show info on LCD displays
 License: GPL
@@ -68,6 +68,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/*
 
 %changelog
+* Fri May 02 2014 Michael Shigorin <mike@altlinux.org> 0.5.7-alt1
+- new version (watch file uupdate)
+
 * Sat Dec 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.6-alt3
 - improved summary/description
 - picked several more BR: from fedora spec
