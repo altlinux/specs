@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(XSLoader.pm) perl(locale.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Sort-Key
-Version:        1.32
-Release:        alt4_4
+Version:        1.33
+Release:        alt1
 Summary:        Fastest way to sort anything in Perl
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Sort-Key/
-Source0:        http://www.cpan.org/authors/id/S/SA/SALVA/Sort-Key-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/S/SA/SALVA/Sort-Key-%{version}.tar.gz
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_archlib}/Sort*
 
 %changelog
+* Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt4_4
 - Sisyphus build
 
