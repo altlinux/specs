@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2.0
-Release: alt5.git20131022
+Release: alt6.git20131022
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -355,6 +355,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Sat May 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt6.git20131022
+- Rebuilt with SWIG 3.0.0
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt5.git20131022
 - Rebuilt with vtk6.0
 
