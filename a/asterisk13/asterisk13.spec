@@ -1,4 +1,4 @@
-%define svn_revision 413116
+%define svn_revision 413300
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 413116
+%define svn_revision 413300
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -1295,6 +1295,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Sat May 03 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.413300
+- update from svn revision 413300
+
 * Tue Apr 29 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.413116
 - update from svn revision 413116
 
