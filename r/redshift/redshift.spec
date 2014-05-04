@@ -1,5 +1,5 @@
 Name: 	 redshift
-Version: 1.8
+Version: 1.9.1
 Release: alt1
 
 Summary: Redshift adjusts the color temperature of your screen
@@ -8,18 +8,27 @@ Summary(ru_RU.UTF-8): Redshift изменяет температуру цвет�
 License: GPLv3+
 Group: 	 Graphical desktop/GNOME
 Url: 	 http://jonls.dk/redshift/
+#VCS:    https://github.com/jonls/redshift.git
 
 Packager: Anton Chernyshov <ach@altlinux.org>
 Source0:  %name-%version.tar
 
 Patch1:   %name-geoclue-provider.patch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
 BuildPreReq: libGConf-devel
 BuildPreReq: libXrandr-devel
 BuildPreReq: libXxf86vm-devel
 BuildPreReq: libgeoclue-devel
 BuildPreReq: gettext-devel
-#BuildPreReq: xorg-xf86vidmodeproto-devel
+BuildRequires: libdrm-devel
+BuildRequires: python3-module-pygobject
+BuildRequires: python3-module-pyxdg
+BuildRequires: systemd-devel
+
+# libaptindicator is not package in ALT Linux
+%add_typelib_req_skiplist typelib(AppIndicator3)
 
 %description
 Redshift adjusts the color temperature of your screen according
@@ -59,12 +68,13 @@ test %_libdir = /usr/lib64 && mv %buildroot/%_libexecdir %buildroot/%_libdir
 %find_lang %name
 
 %files -f %name.lang
+%doc COPYING DESIGN NEWS README README-colorramp
 %_bindir/*
-%python_sitelibdir/%{name}_gtk/*
+%python3_sitelibdir/%{name}_gtk/*
+%_libdir/systemd/user/%{name}*
 %_desktopdir/*
-%doc ABOUT-NLS AUTHORS NEWS README
 %_iconsdir/hicolor/*
-%_man1dir/*
+%doc %_man1dir/*
 
 %post
 # If gnome-panel installed (i.e for GNOME users) - set program to autostart
@@ -77,6 +87,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Tue Apr 29 2014 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
+- New version
+
 * Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 1.8-alt1
 - New version
 
