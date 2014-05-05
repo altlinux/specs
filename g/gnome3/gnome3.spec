@@ -1,8 +1,8 @@
-%define ver_major 3.10
+%define ver_major 3.12
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -21,11 +21,9 @@ BuildPreReq: rpm-build-licenses
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define metacity_ver 2.34.2
-%define media_ver 2.91.2
 %define evince_ver %ver_major
 %define applets_ver 2.91.4
-%define gedit_plugins_ver %ver_major
+%define gedit_plugins_ver 3.10
 %define gnome_nettool_ver 3.0
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
@@ -35,7 +33,6 @@ BuildPreReq: rpm-build-licenses
 %define icon_theme_ver %ver_major
 %define themes_ver %ver_major
 %define gtk_theme_prefix gtk3-theme
-%define wm_theme_prefix metacity-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
 %define orca_ver 3.9.92
@@ -63,9 +60,6 @@ Requires: gnome-tweak-tool >= %ver_major
 #Requires: gnome-initial-setup
 # default font
 Requires: fonts-otf-abattis-cantarell
-# Window manager
-# Requires: gnome-wm (see altbug #15947)
-#Requires: metacity-gnome >= %metacity_ver
 
 # Help browser
 Requires: yelp >= %ver_major
@@ -73,7 +67,8 @@ Requires: yelp >= %ver_major
 
 # GNOME Utilities
 Requires: gnome-search-tool >= 3.6.0
-Requires: gnome-system-monitor >= %ver_major
+#Requires: gnome-system-monitor >= %ver_major
+Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= 3.9.90
 Requires: gnome-calculator >= %ver_major
 
@@ -85,7 +80,7 @@ Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
 Requires: file-roller >= %ver_major
 ## Default text editor
-Requires: gedit >= %ver_major
+Requires: gedit >= 3.10
 
 # Look & Feel
 ## Default themes
@@ -163,7 +158,7 @@ Requires: notification-daemon
 ## Plugins for gedit
 Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
-Requires: gnome-media >= %media_ver
+Requires: gnome-sound-recorder >= %ver_major
 ## Default music player
 Requires: gnome-music >= %ver_major
 ## Extneded music player
@@ -179,7 +174,7 @@ Requires: gnome-photos >= %ver_major
 Requires: eog >= %ver_major
 Requires: eog-plugins >= %ver_major
 ## Default CD/DVD burning interface
-Requires: brasero >= 3.8
+Requires: brasero >= 3.11.3
 ## Clipboard manager
 Requires: parcellite
 # Documents manager
@@ -361,6 +356,11 @@ itself).
 #%files a11y
 
 %changelog
+* Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+- replaced gnome-system-monitor by gnome-logs
+- removed gnome-media, added gnome-sound-recorder
+
 * Thu Jan 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
 - added libcanberra-gtk{2,3}, totem-nautilus and epub, kra/ora
   thumbnailers for Nautilus to -default
