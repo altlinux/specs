@@ -1,18 +1,16 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
-Version: 1.4.7
+Version: 2.0.0
 Release: alt1
 License: GPL
 Group: System/Base
 URL: http://www.openinfosecfoundation.org
 Source: %name-%version.tar
-Source1: %name
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 
-BuildRequires: libpcre-devel libnet-devel libyaml-devel libpcap-devel libnfnetlink-devel libnetlink-devel libnetfilter_queue-devel glibc-devel libcap-ng-devel zlib-devel python-module-distribute
-BuildRequires: libprelude-devel libgnutls-devel libtasn1-devel libgcrypt-devel libgpg-error-devel libmagic-devel libnss-devel libnspr-devel libjansson-devel libluajit-devel libGeoIP-devel
-# libpfring-devel
+BuildRequires: libpcre-devel libnet-devel libyaml-devel libpcap-devel libnfnetlink-devel libnetlink-devel libnetfilter_queue-devel glibc-devel libcap-ng-devel zlib-devel python-module-distribute 
+BuildRequires: libprelude-devel libgnutls-devel libtasn1-devel libgcrypt-devel libgpg-error-devel libmagic-devel libnss-devel libnspr-devel libjansson-devel libluajit-devel libGeoIP-devel libjansson-devel
 
 Requires: python-module-suricata
 
@@ -22,12 +20,14 @@ Suricata is a multi-threaded intrusion detection/prevention engine
 %package -n libhtp
 Summary: LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 Group: System/Libraries
+#Version: 0.5.10
 %description -n libhtp
 LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 
 %package -n libhtp-devel
 Summary: Development headers for LibHTP
 Group: Development/C
+#Version: 0.5.10
 %description -n libhtp-devel
 Development headers for LibHTP
 
@@ -45,20 +45,29 @@ Python module for interacting with unix socket
 libtoolize -c -f -i
 %autoreconf
 %configure \
+	--prefix=%_prefix \
+	--sysconfdir=%_sysconfdir \
+	--localstatedir=%_var \
+	--libdir=%_libdir \
+	--docdir=%_docdir\%name-%version \
+	--disable-coccinelle \
 	--enable-nfqueue \
 	--enable-prelude \
 	--enable-profiling \
 	--enable-unittests \
+	--with-libjansson-includes=%_includedir \
 	--with-libpcre-includes=%_includedir/pcre \
 	--with-libnspr-includes=%_includedir/nspr \
 	--with-libnss-includes=%_includedir/nss \
+	--with-libjansson-libraries=%_libdir \
+	--with-libgeoip-includes=%_includedir \
+	--with-libgeoip-libraries=%_libdir \
+	--with-libluajit-libraries=%_libdir \
+	--with-libluajit-includes=%_includedir/luajit-2.0 \
 	--enable-luajit \
 	--enable-pcre-jit \
 	--enable-geoip
-#	--enable-pfring \
-#	--enable-cuda \
-#	--enable-dag \
-#	--enable-napatech
+
 
 %make_build
 
@@ -76,8 +85,15 @@ mkdir -p %buildroot%_runtimedir/suricata
 cp reference.config classification.config suricata.yaml threshold.config %buildroot%_sysconfdir/%name/
 
 #Init
-install -p -m 755 %SOURCE1  %buildroot%_initrddir/%name
+install -p -m 755 suricata  %buildroot%_initrddir/%name
 
+#suricatasc
+mkdir -p %buildroot%python_sitelibdir_noarch/suricatasc
+install -p -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/__init__.py %buildroot%python_sitelibdir_noarch/suricatasc/__init__.py
+install -p -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/suricatasc.py %buildroot%python_sitelibdir_noarch/suricatasc/suricatasc.py
+
+rm -rf %buildroot/usr/share/doc/suricata
+rm -rf /usr/share/doc/suricata
 
 cat << EOF > %buildroot%_sysconfdir/logrotate.d/%name
 /var/log/%name/stats.log {
@@ -144,12 +160,18 @@ EOF
 %files -n libhtp-devel
 %_includedir/*
 %_libdir/pkgconfig/htp.pc
+%_libdir/libhtp.a
 %_libdir/*.so
 
 %files -n python-module-suricata
-%python_sitelibdir_noarch/suricatasc*
+%dir %python_sitelibdir_noarch/suricatasc
+%python_sitelibdir_noarch/suricatasc/*
+%python_sitelibdir_noarch/suricatasc-0.9-py2.7.egg-info
 
 %changelog
+* Wed Apr 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.0-alt1
+- New version
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.7-alt1
 - New version
 
