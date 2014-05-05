@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.0.9
+Version: 4.1.14
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -116,6 +116,8 @@ cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 # remove doc sources
 rm -rf %buildroot%webserver_webappsdir/%name/doc/{_ext,doctrees,Makefile,make.bat,conf.py,*.rst}
 
+rm -f %buildroot%webserver_webappsdir/%name/.coveralls.yml
+
 #install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
 #install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
 #install -m644 js/*.js %buildroot%webserver_webappsdir/%name/js/
@@ -178,6 +180,7 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
 %config(noreplace) %webserver_webappsdir/%name/.htaccess
+# yes, will notify about duplicate file
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
@@ -192,6 +195,12 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Mon May 05 2014 Vitaly Lipatov <lav@altlinux.ru> 4.1.14-alt1
+- new version 4.1.14 (with rpmrb script)
+
+* Wed Apr 09 2014 Vitaly Lipatov <lav@altlinux.ru> 4.1.12-alt1
+- new version 4.1.12 (with rpmrb script)
+
 * Wed Nov 13 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.9-alt1
 - new version 4.0.9 (with rpmrb script)
 - comment out memory_limit in .htaccess (ALT bug #29570)
