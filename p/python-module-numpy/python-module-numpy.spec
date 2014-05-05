@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt11.git20131021
+Release: alt12.git20131021
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -26,7 +26,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
-%add_python_req_skip Scons
+%add_python_req_skip Scons setuptools distutils nose
 
 # http://github.com/numpy/numpy
 Source: %oname-%version.tar
@@ -85,6 +85,7 @@ Requires: python3-module-%oname-testing = %version-%release
 Requires: lib%oname-py3 = %version-%release
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
+%add_python3_req_skip Scons setuptools distutils nose
 
 %description -n python3-module-%oname
 NumPy is a general-purpose array-processing package designed to
@@ -131,6 +132,7 @@ This package contains numpydoc module for NumPy.
 Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
+%add_python3_req_skip setuptools
 
 %description -n python3-module-%oname-testing
 NumPy is a general-purpose array-processing package designed to
@@ -272,6 +274,7 @@ Summary: Testing part of NumPy
 Group: Development/Python
 Requires: %name = %version-%release
 Conflicts: %name < %version-%release
+%add_python_req_skip setuptools
 
 %description testing
 NumPy is a general-purpose array-processing package designed to
@@ -806,7 +809,7 @@ fi
 #exclude %python_sitelibdir/%oname/numarray/convolve.py*
 #exclude %python_sitelibdir/%oname/numarray/nd_image.py*
 #exclude %python_sitelibdir/%oname/numarray/include
-%exclude %python_sitelibdir/%oname/distutils/mingw
+%exclude %python_sitelibdir/%oname/distutils
 %exclude %python_sitelibdir/%oname/f2py/src
 %exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 %if_with doc
@@ -854,7 +857,7 @@ fi
 #exclude %python3_sitelibdir/%oname/numarray/convolve.py*
 #exclude %python3_sitelibdir/%oname/numarray/nd_image.py*
 #exclude %python3_sitelibdir/%oname/numarray/include
-%exclude %python3_sitelibdir/%oname/distutils/mingw
+%exclude %python3_sitelibdir/%oname/distutils
 %exclude %python3_sitelibdir/%oname/f2py/src
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
 #if_with doc
@@ -977,7 +980,8 @@ fi
 #endif
 %python_sitelibdir/%oname/core/include
 #python_sitelibdir/%oname/numarray/include
-%python_sitelibdir/%oname/distutils/mingw
+%python_sitelibdir/%oname/distutils
+%exclude %python_sitelibdir/%oname/distutils/tests
 %python_sitelibdir/%oname/f2py/src
 %python_sitelibdir/%oname/random/randomkit.h
 %python_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -1009,7 +1013,8 @@ fi
 #endif
 %python3_sitelibdir/%oname/core/include
 #python3_sitelibdir/%oname/numarray/include
-%python3_sitelibdir/%oname/distutils/mingw
+%python3_sitelibdir/%oname/distutils
+%exclude %python3_sitelibdir/%oname/distutils/tests
 %python3_sitelibdir/%oname/f2py/src
 %python3_sitelibdir/%oname/random/randomkit.h
 %python3_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -1060,6 +1065,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Mon May 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20131021
+- Avoid requirement on python-devel for %name (ALT #29862)
+
 * Wed Jan 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt11.git20131021
 - Enabled docs
 
