@@ -1,16 +1,10 @@
-%def_without M24
 
 %def_without check
 
-%if_with M24
-%define _release alt0.M24.1
-%else
-%define _release alt1
-%endif
 
 Name: cvs2svn
-Version: 2.3.0
-Release: %_release.1.1
+Version: 2.4.0
+Release: alt1
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -61,6 +55,9 @@ export LANG=en_US.UTF-8
 %doc BUGS CHANGES COMMITTERS COPYING HACKING README www
 
 %changelog
+* Tue May 06 2014 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3.0-alt1.1.1
 - Rebuild with Python-2.7
 
