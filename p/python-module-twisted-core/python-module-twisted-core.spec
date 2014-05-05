@@ -3,7 +3,7 @@
 %define prefx python-module-twisted
 Name: %prefx-core
 Version: 13.2.0
-Release: alt1
+Release: alt2
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
 
@@ -23,7 +23,7 @@ Conflicts: %name-core < %version-%release
 %add_python_req_skip kqsyscall msvcrt pythoncom pywintypes win32api
 %add_python_req_skip win32com win32event win32file win32gui win32pipe
 %add_python_req_skip win32process win32security win32con CFNetwork
-%add_python_req_skip CoreFoundation
+%add_python_req_skip CoreFoundation distutils
 
 %description
 An extensible framework for Python programming, with special focus
@@ -502,6 +502,9 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/pair/test
 
 %changelog
+* Mon May 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.2.0-alt2
+- Avoid requirement on python-devel for %name
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.2.0-alt1
 - Version 13.2.0
 
