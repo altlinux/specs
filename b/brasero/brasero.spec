@@ -1,11 +1,11 @@
-%define ver_major 3.10
+%define ver_major 3.11
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
 
 %def_enable gtk_doc
 # Make use of Tracker
-%def_disable search
+%def_enable search
 # Embed a playlist functionality based on libtotem
 %def_enable playlist
 %def_enable cdrkit
@@ -15,16 +15,16 @@
 %def_disable introspection
 
 Name: brasero
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
 License: %gpl2plus
 Url: http://www.gnome.org/projects/brasero/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
@@ -38,7 +38,7 @@ Requires: mkisofs
 %{?_enable_cdrdao:Requires: cdrdao}
 
 # to make vcd or video dvd
-Requires: dvdauthor vcdimager gst-plugins-bad
+Requires: dvdauthor vcdimager gst-plugins-bad%gst_api_ver
 
 BuildPreReq: gnome-common rpm-build-gnome rpm-build-licenses
 
@@ -52,7 +52,7 @@ BuildPreReq: libxml2-devel >= 2.6.0
 %{?_enable_libburnia:BuildPreReq: libburn-devel >= 0.4.0}
 BuildPreReq: libisofs-devel >= 0.6.4
 BuildPreReq: libnotify-devel >= 0.7
-%{?_enable_search:BuildPreReq: tracker-devel >= 0.14.0}
+%{?_enable_search:BuildPreReq: tracker-devel >= 1.0}
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel >= 2.30.2}
 BuildPreReq: intltool >= 0.35.0
 BuildPrereq: libcanberra-gtk3-devel
@@ -200,6 +200,7 @@ GObject introspection devel data for the Brasero
 %_datadir/mime/packages/%name.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.brasero.gschema.xml
 %_datadir/GConf/gsettings/brasero.convert
+%_datadir/appdata/%name.appdata.xml
 
 %exclude %_datadir/applications/brasero-nautilus.desktop
 %exclude %_libdir/%name%brasero_api_ver/plugins/lib%name-*.la
@@ -230,6 +231,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.3-alt1
+- after 3.11.3 snapshot (718139441)
+
 * Mon Nov 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
