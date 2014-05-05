@@ -5,8 +5,8 @@
 %def_with nettle
 
 Name: squid
-Version: 3.4.4.2
-Release: alt3
+Version: 3.4.5
+Release: alt1
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -290,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Mon May 05 2014 Led <led@altlinux.ru> 3.4.5-alt1
+- 3.4.5
+
 * Tue Apr 29 2014 Led <led@altlinux.ru> 3.4.4.2-alt3
 - increase default max_filedescriptors to 65536 (ALT#30040)
 - fixed inverted test on CONNECT payload existence
