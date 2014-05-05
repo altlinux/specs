@@ -29,7 +29,7 @@
 %def_enable avahi
 
 Name: samba
-Version: 4.1.6
+Version: 4.1.7
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1056,6 +1056,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Mon May 05 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.7-alt1
+- 4.1.7
+
 * Mon Mar 17 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.6-alt1
 - 4.1.6
 - fixed CVE-2013-4496, CVE-2013-6442
