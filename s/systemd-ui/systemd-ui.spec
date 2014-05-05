@@ -2,11 +2,12 @@
 Name: systemd-ui
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Version: 3
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Other
 Summary: Graphical front-end for systemd
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 BuildRequires: pkgconfig(dbus-1) >= 1.3.2
 BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(glib-2.0) > 2.26 pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(gee-0.8)
@@ -24,6 +25,7 @@ services, and a graphical agent to request passwords from the user.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -40,6 +42,9 @@ services, and a graphical agent to request passwords from the user.
 %_man1dir/systemadm.*
 
 %changelog
+* Mon May 05 2014 Alexey Shabalin <shaba@altlinux.ru> 3-alt2
+- Fix ambiguity between `GLib.Notification' and `Notify.Notification'
+
 * Thu Jan 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3-alt1
 - version 3
 
