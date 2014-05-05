@@ -5,7 +5,7 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Sound Recorder for GNOME
 Group: Development/Tools
@@ -13,6 +13,9 @@ License: GPLv2+
 Url: https://live.gnome.org/Ghex
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+Obsoletes: gnome-media-grecord
+Provides:  gnome-media-grecord = %version-%release
 
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
@@ -55,6 +58,9 @@ The GNOME application for record and play sound files.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
+- obsoletes/provides gnome-media-grecord
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
