@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -69,7 +69,8 @@ Release: alt7
 %def_enable acpi
 %def_enable pci
 %def_disable vme
-%def_disable math_emu
+%def_enable math_emu
+%def_enable cpu_emu
 %def_disable pae
 %def_disable x86_extended_platform
 %def_enable pcmcia
@@ -1066,6 +1067,7 @@ config_disable \
 	%{?_disable_nfs_swap:nfs_swap} \
 	%{?_disable_hotplug_memory:memory_hotplug} \
 	%{?_disable_math_emu:math_emulation} \
+	%{?_disable_cpu_emu:x86_cpu_emulation} \
 	%{?_disable_kallsyms:kallsyms} \
 	%{?_disable_oprofile:profiling oprofile} \
 	%{?_disable_fatelf:binfmt_fatelf} \
@@ -1849,6 +1851,13 @@ done)
 
 
 %changelog
+* Mon May 05 2014 Led <led@altlinux.ru> 3.13.11-alt8
+- updated:
+  + fix-drivers-misc-mei--mei
+  + feat-kernel-sched--bld
+- added:
+  + fix-drivers-tty
+
 * Mon Apr 28 2014 Led <led@altlinux.ru> 3.13.11-alt7
 - updated:
   + fix-drivers-misc-mei--mei-me
