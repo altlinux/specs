@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.19.12p1
+Version: 1.19.13
 Release: alt1
 
 Summary: A personal full text search package
@@ -114,6 +114,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Tue May 06 2014 Michael Shigorin <mike@altlinux.org> 1.19.13-alt1
+- new version (watch file uupdate)
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1.19.12p1-alt1
 - 1.19.12p1
 - suppress findreq for filters (bundled msodumper workaround)
