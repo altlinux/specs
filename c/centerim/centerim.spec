@@ -1,6 +1,6 @@
 Name: centerim
 Version: 4.22.10
-Release: alt1.qa2
+Release: alt2
 
 Summary: Console ncurses based IM client. ICQ, Yahoo!, AIM, IRC, MSN, Gadu-Gadu and Jabber protocols are supported. Internal RSS reader is also provided
 Summary(ru_RU.KOI8-R): Клиентская программа для IM (быстрого общения). Поддержка протоколов:  ICQ, Yahoo!, AIM, IRC, MSN, Gadu-Gadu и Jabber. Клиент для LiveJournal и RSS.
@@ -55,7 +55,7 @@ Packager: Ilya Mashkin <oddity at altlinux dot ru>
 Provides: centericq
 Obsoletes: centericq
 
-BuildRequires: gcc-c++ libcurl-devel libgpgme-devel libidn-devel libjpeg-devel libncurses-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
+BuildRequires: gcc4.7-c++ libcurl-devel libgpgme-devel libidn-devel libjpeg-devel libncurses-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
 BuildRequires: ncurses libncursesw-devel libncurses libncursesw
 
 # Automatically added by buildreq on Tue Sep 09 2008
@@ -111,6 +111,7 @@ Centerim - клиентская программа для IM (быстрого общения) под Linux. ICQ2000, Ya
 
 %build
 
+%set_gcc_version 4.7
 %set_automake_version 1.9
 %set_autoconf_version 2.5
 
@@ -167,6 +168,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue May 06 2014 Ilya Mashkin <oddity@altlinux.ru> 4.22.10-alt2
+- fix build
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.22.10-alt1.qa2
 - Fixed build
 
