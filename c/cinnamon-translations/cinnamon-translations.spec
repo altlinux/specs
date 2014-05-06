@@ -1,8 +1,8 @@
-%define ver_major 2.0
+%define ver_major 2.2
 
 Name: cinnamon-translations
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Translations for Cinnamon
 License: %gpl2plus
@@ -44,6 +44,14 @@ License: %lgpl2plus
 %description -n cinnamon-screensaver-translations
 Translations for cinnamon-screensaver
 
+%package -n cinnamon-session-translations
+Summary: Translations for cinnamon-session
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+
+%description -n cinnamon-session-translations
+Translations for cinnamon-session
+
 %prep
 %setup -q -n %name-%version
 
@@ -58,6 +66,7 @@ rm -f %{buildroot}%{_datadir}/cinnamon/locale/*/LC_MESSAGES/cinnamon-bluetooth.m
 %find_lang nemo
 %find_lang cinnamon-control-center
 %find_lang cinnamon-screensaver
+%find_lang cinnamon-session
 
 %files -f cinnamon.lang
 %doc COPYING
@@ -68,7 +77,12 @@ rm -f %{buildroot}%{_datadir}/cinnamon/locale/*/LC_MESSAGES/cinnamon-bluetooth.m
 
 %files -n cinnamon-screensaver-translations -f cinnamon-screensaver.lang
 
+%files -n cinnamon-session-translations -f cinnamon-session.lang
+
 %changelog
+* Mon May 5 2014 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Tue Mar 4 2014 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt2
 - don't pack translations for bluetooth applet
 
