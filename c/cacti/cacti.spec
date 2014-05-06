@@ -1,6 +1,6 @@
 Name: cacti
 Version: 0.8.8b
-Release: alt1
+Release: alt2
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -22,6 +22,8 @@ Source7: %name-apache.conf
 Source8: %name-lighttpd.conf
 
 # official patches
+# http://www.cacti.net/downloads/patches/0.8.8b/security.patch
+Patch1: cacti-0.8.8b-security.patch
 
 # unofficial patches
 Patch11: %name-alt-config.patch
@@ -105,6 +107,7 @@ Documentation for %name
 %setup -q -n %name-%version
 
 # add official patches
+%patch1 -p1
 
 # sed -i /\$config\ =/a\$url_path\ \=\ \"\/cacti\/\"\; include/global.php
 
@@ -234,6 +237,13 @@ fi
 %cactidir/docs
 
 %changelog
+* Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.8.8b-alt2
+- fixed:
+ + CVE-2014-2326 Unspecified HTML Injection Vulnerability
+ + CVE-2014-2328 Unspecified Remote Command Execution Vulnerability
+ + CVE-2014-2709 shell escaping issues in lib/rrd.php
+ + CVE-2014-2708 SQL injection issues in graph_xport.php
+
 * Wed Aug 14 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8b-alt1
 - 0.8.8b
 
