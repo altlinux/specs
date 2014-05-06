@@ -1,17 +1,16 @@
 
 Name: libcdr
-Version: 0.0.14
+Version: 0.0.16
 Release: alt1
 Summary: A library providing ability to interpret and import Corel Draw drawings
 Group: System/Libraries
-# the only Public Domain source is src/lib/CDRColorProfiles.h
-License: (GPLv2+ or LGPLv2+ or MPLv1.1) and Public Domain
+License: MPL-2.0
 URL: http://www.freedesktop.org/wiki/Software/libcdr
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libwpg-0.2)
-BuildRequires: pkgconfig(libwpd-0.9) pkgconfig(libwpd-stream-0.9)
+BuildRequires: pkgconfig(libwpd-0.9) >= 0.9.5 pkgconfig(libwpd-stream-0.9) >= 0.9.5
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(icu-i18n)
@@ -81,5 +80,8 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.0.16-alt1
+- 0.0.16
+
 * Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.0.14-alt1
 - initial build
