@@ -1,5 +1,5 @@
 Name: apt-cacher-ng
-Version: 0.7.7
+Version: 0.7.25
 Release: alt1
 
 Summary: Caching HTTP download proxy for software packages
@@ -80,6 +80,9 @@ mkdir -p %buildroot%_cachedir/%name/
 %preun_service acng
 
 %changelog
+* Tue May 06 2014 Vitaly Lipatov <lav@altlinux.ru> 0.7.25-alt1
+- new version 0.7.25 (with rpmrb script)
+
 * Mon Aug 06 2012 Vitaly Lipatov <lav@altlinux.ru> 0.7.7-alt1
 - new version 0.7.7 (with rpmrb script)
 - apply patches (ALT bug #24731)
