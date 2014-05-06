@@ -1,5 +1,5 @@
 %define oname numpy
-%define svnver 259fff8
+%define svnver b2b3347
 %define majver 2
 %def_without latex
 %def_with doc
@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt12.git20131021
+Release: alt12.git20140505
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -26,7 +26,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=18379
-%add_python_req_skip Scons setuptools distutils nose
+%add_python_req_skip Scons setuptools distutils nose number code_generators
 
 # http://github.com/numpy/numpy
 Source: %oname-%version.tar
@@ -52,6 +52,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: dvipng doxygen ghostscript-classic ImageMagick-tools
 BuildPreReq: texlive-latex-base texlive-latex-extra
 BuildPreReq: texmf-latex-preview python-module-matplotlib-sphinxext
+BuildPreReq: python-module-Cython
 #%if_with tests
 #BuildPreReq: libnumpy-devel
 #%endif
@@ -61,6 +62,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-sphinx-devel python3-module-Pygments
 BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-Cython
 %endif
 
 Provides: python-module-numpy-addons = %EVR
@@ -85,7 +87,7 @@ Requires: python3-module-%oname-testing = %version-%release
 Requires: lib%oname-py3 = %version-%release
 %py3_provides %oname.addons
 Provides: python3-module-numpy-addons = %EVR
-%add_python3_req_skip Scons setuptools distutils nose
+%add_python3_req_skip Scons setuptools distutils nose number code_generators
 
 %description -n python3-module-%oname
 NumPy is a general-purpose array-processing package designed to
@@ -702,7 +704,7 @@ popd
 
 pushd doc
 #for i in pyrex newdtype_example sphinxext; do
-for i in pyrex newdtype_example; do
+for i in newdtype_example; do
 pushd $i
 %python_build_debug
 %python_install
@@ -761,9 +763,10 @@ rm -f \
 
 #fixes
 
-for i in cversions generate_numpy_api
+#for i in cversions generate_numpy_api
+for i in %buildroot%python3_sitelibdir/code_generators/*.py
 do
-	2to3 -w -n %buildroot%python3_sitelibdir/code_generators/$i.py
+	2to3 -w -n $i
 done
 
 for i in %buildroot%_includedir/%oname-py3/*
@@ -802,7 +805,7 @@ fi
 %exclude %python_sitelibdir/%oname/core/lib/npy-pkg-config
 %exclude %python_sitelibdir/%oname/core/lib/libnpymath.so
 %exclude %python_sitelibdir/%oname/doc
-%exclude %python_sitelibdir/%oname/f2py/docs
+#exclude %python_sitelibdir/%oname/f2py/docs
 #exclude %python_sitelibdir/%oname/lib/polynomial.py*
 %exclude %python_sitelibdir/%oname/core/include
 #exclude %python_sitelibdir/%oname/numarray/image.py*
@@ -832,7 +835,7 @@ fi
 %exclude %python_sitelibdir/%oname/linalg/*.c
 #exclude %python_sitelibdir/%oname/linalg/*.h
 %python_sitelibdir/%oname-*.egg-info
-%python_sitelibdir/numpyx*
+#python_sitelibdir/numpyx*
 %python_sitelibdir/floatint*
 
 %if_with python3
@@ -850,7 +853,7 @@ fi
 %exclude %python3_sitelibdir/%oname/core/lib/npy-pkg-config
 %exclude %python3_sitelibdir/%oname/core/lib/libnpymath3.so
 %exclude %python3_sitelibdir/%oname/doc
-%exclude %python3_sitelibdir/%oname/f2py/docs
+#exclude %python3_sitelibdir/%oname/f2py/docs
 #exclude %python3_sitelibdir/%oname/lib/polynomial.py*
 %exclude %python3_sitelibdir/%oname/core/include
 #exclude %python3_sitelibdir/%oname/numarray/image.py*
@@ -1024,7 +1027,7 @@ fi
 %if_with doc
 %files doc
 %python_sitelibdir/%oname/doc
-%python_sitelibdir/%oname/f2py/docs
+#python_sitelibdir/%oname/f2py/docs
 
 %if_with doc
 
@@ -1065,6 +1068,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Tue May 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20140505
+- New snapshot
+
 * Mon May 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt12.git20131021
 - Avoid requirement on python-devel for %name (ALT #29862)
 
