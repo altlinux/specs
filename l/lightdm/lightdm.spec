@@ -5,8 +5,8 @@
 %def_enable qt
 
 Name: lightdm
-Version: 1.9.13
-Release: alt1.1
+Version: 1.11.1
+Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -23,7 +23,6 @@ Source7: %name-greeter.pam
 Source8: %name.rules
 
 Patch1: %name-%version-%release.patch
-Patch2: lightdm.conf.patch
 
 # Requires: %name-greeter
 # Requires: accountsservice
@@ -121,7 +120,6 @@ This package provides a Qt-based LightDM greeter engine.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -228,6 +226,9 @@ echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_envi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.1-alt1
+- 1.11.1
+
 * Fri Apr 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.9.13-alt1.1
 - NMU: fix plymouth support
 - NMU: fix to use /etc/X11/xinit/xserverrc
