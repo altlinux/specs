@@ -4,8 +4,8 @@
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name: openchange
-Version: 2.0
-Release: alt4
+Version: 2.1
+Release: alt1
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -150,7 +150,7 @@ mkdir -p setup/mapistore
 ./autogen.sh
 %configure \
 %if_enabled python
-	--enable-pymapi \
+	--enable-pyopenchange \
 %endif
 	--with-modulesdir=%_libdir/samba
 
@@ -191,7 +191,7 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %files -n libmapi
-%doc ChangeLog COPYING IDL_LICENSE.txt VERSION
+%doc COPYING IDL_LICENSE.txt
 %_libdir/libmapi-openchange.so.*
 
 %files -n libmapiadmin
@@ -238,6 +238,9 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %changelog
+* Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1-alt1
+- 2.1
+
 * Thu Apr 03 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt4
 - revert to 2.0-alt2
 - add patches from upstream
