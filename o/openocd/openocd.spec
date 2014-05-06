@@ -1,6 +1,6 @@
 Name: openocd
-Version: 0.7.0
-Release: alt1.git1304b27
+Version: 0.8.0
+Release: alt1.git8fa67bd
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
@@ -8,9 +8,9 @@ License: GPLv2
 Url: http://sourceforge.net/projects/openocd
 Source: %name-%version.tar
 Source10: git2cl.tar
-Source11: jimtcl.tar
+Patch1: openocd-jimtcl0_75.patch
 
-BuildRequires: chrpath libftdi-devel tcl
+BuildRequires: chrpath libftdi-devel jimtcl-devel
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -24,7 +24,7 @@ hardware debugging.
 %prep
 %setup
 tar -xf %SOURCE10 -C tools
-tar -xf %SOURCE11
+%patch1 -p0
 
 %build
 %autoreconf
@@ -32,34 +32,48 @@ tar -xf %SOURCE11
   --enable-maintainer-mode \
   --enable-werror \
   --enable-static \
-  --disable-shared \
+  --enable-shared \
+  --enable-aice \
+  --enable-amtjtagaccel \
+  --enable-arm-jtag-ew \
+  --enable-armjtagew \
+  --enable-at91rm9200 \
+  --enable-buspirate \
+  --enable-cmsis-dap \
+  --disable-doxygen-html \
   --enable-dummy \
+  --enable-ep39xx \
   --enable-ft2232_libftdi \
+  --enable-ftdi \
   --enable-gw16012 \
+  --disable-internal-jimtcl \
+  --enable-ioutil \
+  --enable-jlink \
+  --enable-jtag_vpi \
+  --enable-oocd_trace \
+  --enable-opendous \
+  --enable-openjtag_ftdi \
+  --enable-osbdm \
   --enable-parport \
   --enable-parport_ppdev \
   --enable-presto_libftdi \
-  --enable-amtjtagaccel \
-  --enable-arm-jtag-ew \
-  --enable-oocd_trace \
-  --enable-ep39xx \
-  --enable-at91rm9200 \
-  --disable-doxygen-html \
+  --enable-remote-bitbang \
+  --enable-rlink \
+  --enable-stlink \
+  --enable-sysfsgpio \
+  --enable-ti-icdi \
+  --enable-ulink \
+  --enable-usb-blaster-2 \
   --enable-usb_blaster_libftdi \
   --enable-usbprog \
-  --enable-jlink \
   --enable-vsllink \
-  --enable-rlink \
-  --enable-ulink \
-  --enable-stlink \
-  --enable-ti-icdi \
-  --enable-remote-bitbang \
   CROSS=
-make
+%make_build
 
 %install
 make install DESTDIR=%buildroot INSTALL="install -p"
-chrpath --delete %buildroot/%_bindir/openocd
+%makeinstall_std
+#chrpath --delete %buildroot/%_bindir/openocd
 
 %files
 %doc README COPYING AUTHORS ChangeLog NEWS TODO
@@ -72,6 +86,9 @@ chrpath --delete %buildroot/%_bindir/openocd
 %_mandir/man1/*
 
 %changelog
+* Mon May 05 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.0-alt1.git8fa67bd
+- Updated to v0.8.0-1-g8fa67bd.
+
 * Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.0-alt1.git1304b27
 - New version (1304b27).
 
