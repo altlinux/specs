@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -19,6 +19,8 @@ Requires: sfdisk console-vt-tools libshell system-report
 # Optional requires
 Requires: dmidecode ddcprobe
 
+Conflicts: startup-school-rescue startup-nanolive
+
 %description
 This package contains scripts used to boot your system from rescue disk.
 
@@ -29,19 +31,28 @@ This package contains scripts used to boot your system from rescue disk.
 mkdir -p -- %buildroot{%_bindir,/sbin,/etc/rc.d}
 
 install -pm755 rescue-shell %buildroot%_bindir/
-install -pm755 fixmbr mount-* find-fstab %buildroot/sbin
-install -pm644 inittab.rescue %buildroot/etc/
-install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
+install -pm755 fixmbr find-fstab %buildroot/sbin/
+install -pm755 mount-fstab mount-system %buildroot/sbin/
+install -pm755 *-forensic %buildroot/sbin/
+install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
+install -pDm755 rc.sysinit.rescue %buildroot/etc/rc.d/
 install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 
 %files
 /sbin/*
 %_bindir/*
+/etc/mdadm-ro.conf
 /etc/inittab.rescue
 /etc/rc.d/rc.sysinit.rescue
 %_initdir/sysreport
 
 %changelog
+* Wed May 07 2014 Michael Shigorin <mike@altlinux.org> 0.21-alt1
+- added lvm2-forensic, raid-forensic scripts to help deal with
+  guaranteed read-only LVM2/MDRAID setups (blockdev --setro
+  might be not enough in some cases); thanks Maxim Suhanov again
+- added Conflicts:
+
 * Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 0.20-alt1
 - mount-fstab: do not skip /boot/efi
 - added mount-forensic script by Maxim Suhanov
