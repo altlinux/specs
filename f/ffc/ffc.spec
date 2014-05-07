@@ -1,6 +1,6 @@
 Name:           ffc
-Version:        1.2.0
-Release:        alt2.git20131007
+Version:        1.3.0
+Release:        alt1.git20140430
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -14,8 +14,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Requires: python-module-%name = %epoch:%version-%release
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel
-BuildPreReq: libnumpy-devel python-module-fiat python-module-ufc
+BuildPreReq: python-devel swig
+BuildPreReq: libnumpy-devel python-module-fiat
 BuildPreReq: python-module-ferari gcc-c++
 
 %description
@@ -48,10 +48,10 @@ This package contains user manual for UFL (Unified Form Language).
 %package -n python-module-%name
 Summary: Python module of FFC
 Group: Development/Python
-Requires: python-module-fiat python-module-ufc python-module-ferari
+Requires: python-module-fiat python-module-ferari
 %setup_python_module ffc
 %py_provides ffc
-%py_requires FIAT ufc ferari
+%py_requires FIAT ferari
 #add_python_req_skip reassign
 
 %description -n python-module-%name
@@ -62,6 +62,23 @@ particular, a bilinear form may be assembled into a matrix and a linear
 form may be assembled into a vector.
 
 This package contains python module of FFC.
+
+%package -n ufc-devel
+Summary: Development files for UFC
+Group: Development/Other
+Requires: %name = %EVR
+
+%description -n ufc-devel
+UFC (Unified Form-assembly Code) is a unified framework for finite
+element assembly. More precisely, it defines a fixed interface for
+communicating low level routines (functions) for evaluating and
+assembling finite element variational forms. The UFC interface
+consists of a single header file ufc.h that specifies a C++ interface
+that must be implemented by code that complies with the UFC
+specification. Examples of form compilers that support the UFC
+interface are FFC and SyFi.
+
+This package contains development files for UFC.
 
 %prep
 %setup
@@ -75,8 +92,13 @@ This package contains python module of FFC.
 install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
+%ifarch x86_64
+install -d %buildroot%_pkgconfigdir
+mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
+%endif
+
 %files
-%doc README* TODO AUTHORS ChangeLog COPYING
+%doc README* AUTHORS ChangeLog COPYING
 %_bindir/*
 %_man1dir/*
 
@@ -87,7 +109,15 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %files -n python-module-%name
 %python_sitelibdir/*
 
+%files -n ufc-devel
+%_includedir/*
+%_pkgconfigdir/*
+%_datadir/ufc
+
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20140430
+- Version 1.3.0
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt2.git20131007
 - New snapshot
 

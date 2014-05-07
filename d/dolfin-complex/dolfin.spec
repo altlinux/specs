@@ -5,8 +5,8 @@
 %define scalar_type complex
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 1.2.0
-Release: alt6.git20131022
+Version: 1.3.0
+Release: alt1.git20140506
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -42,9 +42,9 @@ BuildPreReq: petsc-%scalar_type-sources python-module-sphinx-devel
 #BuildPreReq: texlive-latex-extra ghostscript-utils
 BuildPreReq: ghostscript-utils libhwloc-devel libzoltan10-devel
 BuildPreReq: libqt4-devel libvtk6.0-devel
-BuildPreReq: vtk6.0-examples
+BuildPreReq: vtk6.0-examples libarprec-devel libtbb-devel
 #BuildPreReq: libgomp-devel
-BuildPreReq: libmumps-devel
+BuildPreReq: libmumps-devel libnetcdf-mpi-devel
 
 %description
 DOLFIN is the C++/Python interface of FEniCS, providing a consistent PSE
@@ -75,7 +75,7 @@ Features:
 %package -n lib%name
 Summary: Shared library of DOLFIN
 Group: System/Libraries
-Requires: python-module-ufc
+Requires: ffc
 Requires: libsuitesparse >= 3.4.0-alt1
 Requires: zlib >= 1.2.5-alt1
 
@@ -244,6 +244,8 @@ popd
 source /usr/bin/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
+./cmake/scripts/generate-swig-docstrings
+
 pushd BUILD
 %makeinstall_std
 
@@ -306,8 +308,12 @@ ln -s %_includedir/swig %buildroot$PETSC_DIR/include/
 # fix bug in pkgconfig file
 sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
+export PYTHONPATH=%buildroot%ldir/python
+export LD_LIBRARY_PATH=%buildroot%ldir/lib
+#make -C BUILD/doc doc
+
 %files
-%doc AUTHORS COPYING ChangeLog README* TODO
+%doc AUTHORS COPYING ChangeLog README*
 %_bindir/*
 %exclude %_bindir/dolfin-get-demos
 %_man1dir/*
@@ -348,12 +354,16 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %files -n python-module-%name
 %dir %ldir/python
 %ldir/python/%oname
+%ldir/python/fenics
 
 %files -n python-module-%{name}_utils
 %dir %ldir/python
 %ldir/python/%{oname}_utils
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20140506
+- Version 1.3.0
+
 * Sat May 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt6.git20131022
 - Rebuilt with SWIG 3.0.0
 
@@ -602,3 +612,4 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
+
