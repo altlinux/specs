@@ -3,8 +3,8 @@
 %def_without new_package
 
 Name:           python-module-fiat
-Version:        1.1.0
-Release:        alt1.git20130411
+Version:        1.3.0
+Release:        alt1.git20140214
 Summary:        FInite element Automatic Tabulator
 Group:          Development/Python
 License:        LGPLv3+
@@ -80,6 +80,9 @@ install -m644 doc/*.pdf %buildroot%_docdir/%origname
 %_docdir/%origname
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20140214
+- Version 1.3.0
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20130411
 - New snapshot
 
