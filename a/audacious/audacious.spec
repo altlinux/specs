@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 3.4.3
+Version: 3.5
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -29,6 +29,7 @@ BuildPreReq: desktop-file-utils
 # Automatically added by buildreq on Sun Aug 05 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config termutils
 BuildRequires: gcc-c++ libdbus-glib-devel libgtk+3-devel
+BuildRequires: libguess1-devel >= 1.2
 
 Requires: %name-plugins
 
@@ -93,7 +94,7 @@ Development files required to develop plugins for audacious.
 %_man1dir/*
 
 %files -n lib%name
-%_libdir/libaudclient.so.*
+#_libdir/libaudclient.so.*
 #%_libdir/libaudid3tag.so.*
 %_libdir/libaudtag.so.*
 #%_libdir/libSAD.so.*
@@ -110,6 +111,9 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Tue May 06 2014 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
+- new version 3.5 (with rpmrb script)
+
 * Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt1
 - new version 3.4.3 (with rpmrb script)
 
