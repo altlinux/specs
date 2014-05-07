@@ -1,6 +1,6 @@
 Name: sfepy
-Version: 2013.3
-Release: alt1.git20131021
+Version: 2014.1
+Release: alt1.git20140506
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -92,7 +92,7 @@ This package contains examples for SfePy.
 
 %prep
 %setup
-ln -s types.h sfepy/fem/extmods/types_s.h
+ln -s types.h sfepy/discrete/fem/extmods/types_s.h
 install -m644 %SOURCE1 .
 
 cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc ~/.matplotlibrc
@@ -168,6 +168,9 @@ cp -fR doc/doc/html %buildroot%_docdir/%name/
 %python_sitelibdir/%name/examples
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt1.git20140506
+- Version 2014.1
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.3-alt1.git20131021
 - Version 2013.3
 
