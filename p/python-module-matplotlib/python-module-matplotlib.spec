@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4.git20131022
+Release: alt4.git20140504
 
 Summary: Matlab(TM) style python plotting package
 
@@ -57,7 +57,7 @@ Requires: dvipng %name-gtk3 = %version-%release
 
 # hack for unknown deps
 %add_python_req_skip AppKit Foundation PyObjCTools numarray paint _Py
-%add_python_req_skip _winreg builtins
+%add_python_req_skip _winreg builtins distutils
 %py_provides backend_agg backend_cairo
 #%py_package_provides backend_agg
 
@@ -77,7 +77,7 @@ Group: Development/Python3
 Requires: dvipng
 Requires: python3-module-%oname-gtk3 = %version-%release
 %add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
-%add_python3_req_skip _winreg builtins
+%add_python3_req_skip _winreg builtins distutils
 %py3_provides backend_agg backend_cairo
 
 %description -n python3-module-%oname
@@ -490,6 +490,7 @@ done
 %python_sitelibdir/matplotlib/tri
 %python_sitelibdir/matplotlib/compat
 %python_sitelibdir/matplotlib/axes
+%python_sitelibdir/matplotlib/style
 %exclude %python_sitelibdir/mpl_toolkits
 
 %files fltk
@@ -613,6 +614,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/tri
 %python3_sitelibdir/matplotlib/compat
 %python3_sitelibdir/matplotlib/axes
+%python3_sitelibdir/matplotlib/style
 %exclude %python3_sitelibdir/mpl_toolkits
 
 #files -n python3-module-%oname-fltk
@@ -663,6 +665,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.git20140504
+- New snapshot
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.git20131022
 - Removed mpl_toolkits from main package
 
