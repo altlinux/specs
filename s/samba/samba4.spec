@@ -30,7 +30,7 @@
 
 Name: samba
 Version: 4.1.7
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -332,6 +332,22 @@ Obsoletes: samba4-winbind-clients < %version-%release
 The samba-winbind-clients package provides the NSS library and a PAM
 module necessary to communicate to the Winbind Daemon
 
+%package winbind-krb5-locator
+Summary: Samba winbind krb5 locator
+Group: System/Servers
+%if_with libwbclient
+Requires: libwbclient = %version-%release
+Requires: %name-winbind = %version-%release
+%else
+Requires: %name-libs = %version-%release
+%endif
+Provides: samba4-winbind-krb5-locator = %version-%release
+Obsoletes: samba4-winbind-krb5-locator < %version-%release
+
+%description winbind-krb5-locator
+The winbind krb5 locator is a plugin for the system kerberos library to allow
+the local kerberos library to use the same KDC as samba and winbind use
+
 %package winbind-devel
 Summary: Developer tools for the winbind library
 Group: Development/Other
@@ -533,8 +549,8 @@ ln -sf /%_lib/libnss_winbind.so.2  %buildroot%_libdir/libnss_winbind.so
 mv  %buildroot%_libdir/libnss_wins.so.2 %buildroot/%_lib/libnss_wins.so.2
 ln -sf /%_lib/libnss_wins.so.2  %buildroot%_libdir/libnss_wins.so
 
-mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
-mv %buildroot%_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
+mv %buildroot%_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
 
 #cups backend
 %define cups_serverbin %(cups-config --serverbin 2>/dev/null)
@@ -1031,13 +1047,12 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/nss_info
 %_libdir/samba/libnss_info.so
 %_libdir/samba/libidmap.so
-%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 %_sbindir/winbindd
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
 %_unitdir/winbind.service
 %attr(755,root,root) %_initrddir/winbind
 %_sysconfdir/NetworkManager/dispatcher.d/30-winbind
-%_man7dir/winbind_krb5_locator.7*
+
 %_man8dir/winbindd.8*
 %_man8dir/idmap_*.8*
 
@@ -1055,7 +1070,14 @@ TDB_NO_FSYNC=1 %make_build test
 %_man5dir/pam_winbind.conf.5*
 %_man8dir/pam_winbind.8*
 
+%files winbind-krb5-locator
+%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+%_man7dir/winbind_krb5_locator.7*
+
 %changelog
+* Wed May 07 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.7-alt2
+- add winbind-krb5-locator package
+
 * Mon May 05 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.7-alt1
 - 4.1.7
 
