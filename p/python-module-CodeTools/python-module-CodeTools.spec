@@ -1,6 +1,6 @@
 Name: python-module-CodeTools
-Version: 4.1.0
-Release: alt2.git20131020
+Version: 4.3.0
+Release: alt1.git20140408
 Summary: Code Analysis and Execution Tools
 
 Group:          Development/Python
@@ -73,6 +73,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %python_sitelibdir/*/*/*/tests
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20140408
+- Version 4.3.0
+
 * Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.git20131020
 - New snapshot
 
