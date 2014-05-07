@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -362,7 +362,7 @@ ExcludeArch: i386
 %endif
 
 BuildPreReq: rpm-build-kernel >= 0.103
-BuildRequires: dev86 flex
+BuildRequires: dev86 flex bc
 BuildRequires: libdb4-devel
 %{?kgcc_version:BuildRequires: gcc%kgcc_version}
 BuildRequires: module-init-tools >= 3.1
@@ -1851,6 +1851,13 @@ done)
 
 
 %changelog
+* Tue May 06 2014 Led <led@altlinux.ru> 3.13.11-alt9
+- updated:
+  + fix-drivers-misc-mei--mei
+  + fix-mm--zswap
+  + feat-mm--zcache
+- fixed BuildRequires
+
 * Mon May 05 2014 Led <led@altlinux.ru> 3.13.11-alt8
 - updated:
   + fix-drivers-misc-mei--mei
