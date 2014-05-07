@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: py%oname
-Version: 3.0.0
-Release: alt3.git20130601
+Version: 3.1.1
+Release: alt1.git20140325
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -30,7 +30,7 @@ BuildPreReq: xsltproc inkscape xmlgraphics-fop excalibur-avalon-logkit
 BuildPreReq: java-devel-default docbook-tldp-xsl docbook-dtds
 BuildPreReq: w3c-markup-validator-libs python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
-BuildPreReq: texlive-latex-recommended
+BuildPreReq: texlive-latex-recommended libblosc-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
@@ -328,6 +328,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.1-alt1.git20140325
+- Version 3.1.1
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt3.git20130601
 - Rebuilt with updated NumPy
 
