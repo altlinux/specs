@@ -1,5 +1,5 @@
 %define version 2.0.4
-%define release alt1
+%define release alt2
 
 %setup_python_module nltk
 
@@ -9,7 +9,6 @@ Version: %version
 Release: %release
 
 
-Packager: Kirill Maslinsky <kirill@altlinux.org>
 License: Apache
 Group: Development/Python
 Url: http://www.nltk.org
@@ -23,6 +22,8 @@ Patch0: alt-setup.patch
 
 # Automatically added by buildreq on Mon Mar 02 2009
 BuildRequires: elinks python-devel python-module-numpy python-module-yaml python-modules-email python-modules-encodings python-modules-logging python-modules-sqlite3 python-modules-tkinter python-modules-xml
+
+BuildPreReq: python-module-setuptools
 
 %description
 Description: The Natural Language Toolkit (NLTK) is a Python package for
@@ -55,6 +56,9 @@ tar xf %SOURCE1
 %doc README.txt LICENSE.txt
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt2
+- Fixed build
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
