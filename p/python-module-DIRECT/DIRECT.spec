@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper to the DIRECT algorithm
 License: MIT
@@ -18,11 +18,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-sphinx-devel libnumpy-devel
-BuildPreReq: gcc-fortran
+BuildPreReq: gcc-fortran python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 python3-module-setuptools
 %endif
 
 %description
@@ -133,6 +133,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
+- Fixed build
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
 
