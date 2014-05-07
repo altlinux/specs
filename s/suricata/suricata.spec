@@ -1,7 +1,7 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
 Version: 2.0.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 URL: http://www.openinfosecfoundation.org
@@ -45,6 +45,7 @@ Python module for interacting with unix socket
 libtoolize -c -f -i
 %autoreconf
 %configure \
+	--disable-gccmarch-native \
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir \
 	--localstatedir=%_var \
@@ -169,6 +170,9 @@ EOF
 %python_sitelibdir_noarch/suricatasc-0.9-py2.7.egg-info
 
 %changelog
+* Wed May 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.0-alt2
+- Fixed https://redmine.openinfosecfoundation.org/issues/373
+
 * Wed Apr 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.0-alt1
 - New version
 
