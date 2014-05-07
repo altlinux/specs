@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt12
+Release: alt13
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -673,6 +673,9 @@ done
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt13
+- New snapshot
+
 * Sat Oct 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt12
 - scikits.statsmodels: removed all tests
 
