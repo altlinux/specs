@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt9
+Release: alt12
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1850,7 +1850,32 @@ done)
 %endif
 
 
+
 %changelog
+* Wed May 07 2014 Led <led@altlinux.ru> 3.13.11-alt12
+- updated:
+  + feat-mm--zcache
+- added:
+  + fix-drivers-ata--libata
+  + fix-drivers-media-pci-ivtv--ivtv-alsa
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+
+* Wed May 07 2014 Led <led@altlinux.ru> 3.13.11-alt11
+- updated:
+  + fix-drivers-block--floppy (CVE-2014-1737, CVE-2014-1738)
+  + fix-drivers-media-usb-gspca--gspca_sn9c20x
+  + fix-mm
+- added:
+  + fix-mm--mmu (CVE-2014-3122)
+
+* Tue May 06 2014 Led <led@altlinux.ru> 3.13.11-alt10
+- added:
+  + fix-drivers-net-ethernet-3com--3c509
+  + fix-drivers-net-ethernet-3com--3c59x
+  + fix-drivers-net-ethernet-dec-tulip--de4x5
+  + fix-drivers-net-ethernet-hp--hp100
+  + fix-drivers-scsi--sim710
+
 * Tue May 06 2014 Led <led@altlinux.ru> 3.13.11-alt9
 - updated:
   + fix-drivers-misc-mei--mei
