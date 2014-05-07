@@ -6,7 +6,7 @@
 
 Name: eGroupWare
 Version: %egwversion
-Release: alt5
+Release: alt6
 Epoch: 1
 Summary: eGroupWare is a web-based groupware suite written in php
 Summary(ru_RU.UTF-8): EGroupware - система организации групповой работы, написанная на PHP
@@ -486,6 +486,9 @@ pear install --nodeps -s --force --register-only /usr/share/php/pear/.pkgxml/Aut
 %_datadir/%egwdirname/workflow
 
 %changelog
+* Wed May 07 2014 Pavel Isopenko <pauli@altlinux.org> 1:1.8-alt6
+- Update to 1.8.007.20140506
+
 * Mon Apr 08 2013 Pavel Isopenko <pauli@altlinux.org> 1:1.8-alt5
 - update to 1.8.004.20130322
 - A.egroupware.conf parameter AddDefaultCharset utf-8 (ALT #26092)
