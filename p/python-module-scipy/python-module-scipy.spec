@@ -10,8 +10,8 @@ BuildRequires(pre): rpm-build-python
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.14.0
-Release: alt7.git20131020
+Version: 0.15.0
+Release: alt1.git20140506
 
 Summary: SciPy is the library of scientific codes
 
@@ -25,6 +25,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Requires: %python_noarch
 
 #add_python_req_skip swig2_ext symeig vtk
+%add_python_req_skip distutils
 
 # git://github.com/scipy/scipy.git
 Source: %oname-%version.tar
@@ -44,14 +45,13 @@ BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
 BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
-BuildRequires: libsuitesparse-devel python-module-Cython0.18
+BuildRequires: libsuitesparse-devel python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-Pygments libnumpy-py3-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 python3-module-Cython
 %endif
-
 
 %description
 SciPy is the library of scientific codes built on top of NumPy.
@@ -63,6 +63,7 @@ Group: Development/Python3
 Requires: %python3_sitelibdir_noarch
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal sympy
+%add_python3_req_skip distutils
 
 %description -n python3-module-%oname
 SciPy is the library of scientific codes built on top of NumPy.
@@ -457,6 +458,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1.git20140506
+- Version 0.15.0
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt7.git20131020
 - Rebuilt with new python-module-sphinx
 
