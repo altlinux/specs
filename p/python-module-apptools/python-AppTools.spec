@@ -3,8 +3,8 @@
 %def_without python3
 
 Name:           python-module-%oname
-Version:        4.2.0
-Release:        alt1.git20130328
+Version:        4.2.1
+Release:        alt1.git20140408
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -18,11 +18,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch:      noarch
 BuildRequires:  python-module-setuptools, python-devel
 BuildRequires: unzip python-module-setupdocs python-module-sphinx-devel
+BuildPreReq: python-module-traits
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setupdocs python-tools-2to3
 %endif
-Requires:       python-module-TraitsGUI, python-module-EnthoughtBase
+#Requires:       python-module-TraitsGUI, python-module-EnthoughtBase
 
 %description
 The AppTools project includes a set of packages that Enthought has
@@ -153,6 +154,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20140408
+- Version 4.2.1
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.git20130328
 - Version 4.2.0
 
