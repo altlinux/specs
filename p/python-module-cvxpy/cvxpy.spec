@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.svn20130211
+Release: alt3.svn20130211
 Summary: Python package for modeling optimization problems
 License: GPLv3
 Group: Development/Python
@@ -16,11 +16,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-cvxopt libnumpy-devel
-BuildPreReq: python-module-scipy
+BuildPreReq: python-module-scipy python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-cvxopt libnumpy-py3-devel
 BuildPreReq: python3-module-scipy python-tools-2to3
+BuildPreReq: python3-module-setuptools
 %endif
 
 %description
@@ -72,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.svn20130211
+- Fixed build
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20130211
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
