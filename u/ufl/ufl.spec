@@ -1,10 +1,10 @@
 Name:           ufl
-Version:        1.2.0
-Release:        alt1.git20130904
+Version:        1.3.0
+Release:        alt1.git20140430
 Summary:        Unified Form Language
 Group:          Development/Tools
 License:        LGPL v3+
-URL:            http://www.fenics.org/
+URL:            http://fenicsproject.org/
 # https://bitbucket.org/fenics-project/ufl.git
 Source:  %name-%version.tar.gz
 Source1: http://www.fenics.org/pub/documents/ufl/ufl-user-manual/ufl-user-manual.pdf
@@ -48,7 +48,7 @@ install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
 %files
-%doc COPYING ChangeLog README TODO
+%doc COPYING ChangeLog README
 %_bindir/*
 %_man1dir/*
 
@@ -59,6 +59,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20140430
+- Version 1.3.0
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20130904
 - New snapshot
 
