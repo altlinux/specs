@@ -3,8 +3,8 @@
 
 %define oname mayavi
 Name:           Mayavi
-Version:        4.3.0
-Release:        alt3.git20130807
+Version:        4.3.2
+Release:        alt1.git20140421
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -20,10 +20,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-module-setuptools python-module-setupdocs
 BuildRequires: python-module-sphinx-devel libnumpy-devel
-BuildRequires: python-module-vtk /proc strace
+BuildRequires: python-module-vtk6.0 /proc strace
 BuildPreReq: desktop-file-utils
 BuildPreReq: python-module-sip-devel libpympi-devel
-BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk-python
+BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk6.0-python
 BuildPreReq: libGL-devel libGLU-devel xvfb-run
 BuildPreReq: python-module-traits python%_python_version(traits.api)
 
@@ -184,6 +184,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.git20140421
+- Version 4.3.2
+
 * Mon Oct 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3.git20130807
 - Added necessary requirement
 
