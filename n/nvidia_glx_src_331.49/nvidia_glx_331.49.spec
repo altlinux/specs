@@ -15,13 +15,13 @@
 %define nv_version 331
 %define nv_release 49
 %define nv_minor %nil
-%define pkg_rel alt126
+%define pkg_rel alt127
 %ifarch x86_64
 %def_disable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -339,6 +339,9 @@ fi
 %endif
 
 %changelog
+* Thu May 08 2014 Sergey V Turchin <zerg@altlinux.org> 331.49-alt127
+- don't package kernel module sources
+
 * Wed Feb 19 2014 Sergey V Turchin <zerg@altlinux.org> 331.49-alt126
 - new version
 
