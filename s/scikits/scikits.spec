@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt13
+Release: alt14
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -605,6 +605,9 @@ done
 %exclude %python_sitelibdir/statsmodels/*/tests
 %exclude %python_sitelibdir/statsmodels/*/*/tests
 %exclude %python_sitelibdir/statsmodels/examples
+%exclude %python_sitelibdir/statsmodels/*/*/testdata.py*
+%exclude %python_sitelibdir/statsmodels/*/examples
+%exclude %python_sitelibdir/statsmodels/*/*/examples
 
 %files -n python-module-%name.talkbox
 %doc talkbox/README talkbox/LICENSE.txt talkbox/TODO
@@ -637,6 +640,9 @@ done
 #python_sitelibdir/%name/*/*/*/*/tests
 %python_sitelibdir/%name/*/examples
 #python_sitelibdir/%name/*/*/*/examples
+%python_sitelibdir/*/*/*/testdata.py*
+%python_sitelibdir/*/*/examples
+%python_sitelibdir/*/*/*/examples
 
 %if_enabled docs
 %files -n python-module-%name-doc
@@ -673,6 +679,10 @@ done
 %endif
 
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt14
+- Moved all tests from python-module-%name.statsmodels into
+  python-module-%name-examples
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt13
 - New snapshot
 
