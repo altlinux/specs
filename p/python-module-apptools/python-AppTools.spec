@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.2.1
-Release:        alt1.git20140408
+Release:        alt2.git20140408
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -96,6 +96,17 @@ found useful in creating a number of applications.
 
 This package contains pickles for AppTools.
 
+%package tests
+Summary: Tests for AppTools
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+The AppTools project includes a set of packages that Enthought has
+found useful in creating a number of applications.
+
+This package contains tests for AppTools.
+
 %prep
 %setup -n AppTools-%version
 #rm -rf AppTools.egg-info
@@ -139,6 +150,10 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 #_bindir/*
+%exclude %python_sitelibdir/%oname/*/test*
+
+%files tests
+%python_sitelibdir/%oname/*/test*
 
 %files docs
 %doc examples html
@@ -154,6 +169,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.git20140408
+- Moved tests into tests subpackage
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20140408
 - Version 4.2.1
 
