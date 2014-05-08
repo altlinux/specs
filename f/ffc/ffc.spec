@@ -1,6 +1,6 @@
 Name:           ffc
 Version:        1.3.0
-Release:        alt1.git20140430
+Release:        alt2.git20140430
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel swig
 BuildPreReq: libnumpy-devel python-module-fiat
 BuildPreReq: python-module-ferari gcc-c++
+
+Obsoletes: python-module-ufc
 
 %description
 FFC is a compiler for finite element variational forms. From a high-level
@@ -52,6 +54,7 @@ Requires: python-module-fiat python-module-ferari
 %setup_python_module ffc
 %py_provides ffc
 %py_requires FIAT ferari
+Obsoletes: python-module-ufc
 #add_python_req_skip reassign
 
 %description -n python-module-%name
@@ -115,6 +118,9 @@ mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
 %_datadir/ufc
 
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt2.git20140430
+- Obsoletes: python-module-ufc
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20140430
 - Version 1.3.0
 
