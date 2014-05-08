@@ -1,17 +1,20 @@
-Summary: PCMan File Manager
-Name: pcmanfm2
-Version: 1.1.2
+Name: pcmanfm
+Version: 1.2.0
 Release: alt1
+
+Summary: PCMan File Manager
 License: GPL
-Group: File tools
-Url: http://pcmanfm.sourceforge.net/
+Group: Graphical desktop/Other
 
-Source: %name-%version.tar.gz
+Url: http://pcmanfm.sourceforge.net
+Source: %name-%version.tar
 
-Conflicts: pcmanfm < 0.9
+Provides: pcmanfm2 = %version-%release
+Obsoletes: pcmanfm2 < 1.2.0
 
+BuildRequires: rpm-build-xdg
 BuildRequires: libgtk+2-devel >= 2.18.0
-BuildRequires: libfm-devel >= 1.1.2
+BuildRequires: libfm-devel >= 1.2.0
 BuildRequires: libgio-devel
 
 BuildRequires: libdbus-glib-devel libstartup-notification-devel libgamin-devel intltool libmenu-cache-devel menu-cache
@@ -19,18 +22,18 @@ BuildRequires: libdbus-glib-devel libstartup-notification-devel libgamin-devel i
 %description
 Features:
     * Extremly fast and lightweight
-    * Can be started in one second on normal machine
-    * Tabbed browsing (Similiar to Firefox)
-    * Drag & Drop support
+    * Can be started in under a second on reasonable hardware
+    * Tabbed browsing (similar to Firefox)
+    * Drag&Drop support
     * Files can be dragged among tabs
-    * Load large directories in reasonable time
-    * File association support (Default application)
+    * Loads large directories in reasonable time
+    * File association support (default applications)
     * Basic thumbnail support
     * Bookmarks support
     * Handles non-UTF-8 encoded filenames correctly
-    * Provide icon view and detailed list view
-    * Standard compliant (Follows FreeDesktop.org)
-    * Clean and user-friendly interface (GTK+ 2)
+    * Provides icon view and detailed list view
+    * Standards compliant (follows freedesktop.org)
+    * Clean and user-friendly interface (GTK+2)
 
 %prep
 %setup
@@ -38,23 +41,25 @@ Features:
 %build
 %autoreconf
 %configure --enable-largefile
-
-%make
+%make_build
 
 %install
-make DESTDIR=%buildroot install
-%find_lang pcmanfm
-cd %buildroot%_bindir
-ln -s pcmanfm pcmanfm2
+%makeinstall_std
+%find_lang %name
+ln -s %name %buildroot%_bindir/pcmanfm2
 
-%files -f pcmanfm.lang
+%files -f %name.lang
 %_bindir/*
-%_desktopdir/*.desktop
-%_datadir/pcmanfm
-%_sysconfdir/xdg/pcmanfm/*
-%_mandir/man1/*
+%_desktopdir/*
+%_datadir/%name/
+%_xdgconfigdir/%name/*
+%_man1dir/*
 
 %changelog
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- renamed back to pcmanfm according to upstream git
+
 * Fri Aug 16 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.2-alt1
 - new version (1.1.2)
 

@@ -1,57 +1,71 @@
-%define  rev f58b1b7
-
 Name:    pcmanfm-qt
-Version: 0.1.0
-Release: alt4.git%rev
+Version: 0.7.0
+Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPLv2+
 Group:   File tools
-Url:     http://blog.lxde.org/?p=990
 
-Source:  %name-%version.tar
+Url:     http://lxqt.org
+Source0: %name-%version.tar
 Source1: %name.desktop
 
-BuildRequires: gcc-c++ qt4-devel cmake
-BuildRequires: libfm2-devel
-BuildRequires: libXdmcp-devel
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: qt4-devel libXdmcp-devel
+BuildRequires: libfm-devel >= 1.2.0
+BuildRequires: libmenu-cache-devel
 
 Requires: menu-cache
 
 %description
 PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
-Libfm-Qt is a companion library providing components to build desktop
+
+%package -n libfm-qt
+Summary: Shared library for %name
+Group: System/Libraries
+
+%description -n libfm-qt
+LibFM-Qt is a companion library providing components to build desktop
 file managers.
+
+%package -n libfm-qt-devel
+Summary: Development headers for libfm-qt
+Group: Development/C++
+
+%description -n libfm-qt-devel
+LibFM-Qt is a companion library providing components to build desktop
+file managers.
+
+This package provides the development files for libfm-qt.
 
 %prep
 %setup
-subst 's/DESTINATION lib/DESTINATION lib${LIB_SUFFIX}/g' libfm-qt/CMakeLists.txt
 
 %build
-%cmake
-%make_build -C BUILD
+%cmake_insource
+%make_build
 
 %install
-%makeinstall_std -C BUILD
-
-# Clear development files
-rm -rf %buildroot%_includedir/libfm-qt \
-       %buildroot%_datadir/libfm-qt/translations/libfm-qt_template.qm \
-       %buildroot%_datadir/pcmanfm-qt/translations/pcmanfm-qt_template.qm \
-       %buildroot%_libdir/libfm-qt.so \
-       %buildroot%_pkgconfigdir/libfm-qt.pc
-
-install -D -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-
-# Detect all localization files
+%makeinstall_std
 %find_lang --with-qt --all-name %name
+install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*.desktop
+
+%files -n libfm-qt
 %_libdir/libfm-qt.so.*
 
+%files -n libfm-qt-devel
+%_includedir/libfm-qt
+%_libdir/libfm-qt.so
+%_pkgconfigdir/libfm-qt.pc
+
 %changelog
+* Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Mon Mar 31 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt4.gitf58b1b7
 - Increase release number to backport to p7 branch
 
