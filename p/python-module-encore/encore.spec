@@ -1,7 +1,7 @@
 %define oname encore
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20140422
+Release: alt2.git20140422
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD
 Group: Development/Python
@@ -45,6 +45,19 @@ aside from the Python Standard Library.
 
 This package contains pickles for encore.
 
+%package tests
+Summary: Tests for encore
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+This package consists of a collection of core utility packages useful for
+building Python applications.  This package is intended to be at the
+bottom of the software stack and have zero required external dependencies
+aside from the Python Standard Library.
+
+This package contains tests for encore.
+
 %prep
 %setup
 
@@ -67,6 +80,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc LICENSE.txt README.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/*/*/*/tests
+%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/testing
 
 #files docs
 #doc docs/build/html/*
@@ -74,7 +90,15 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 #files pickles
 #python_sitelibdir/%oname/pickle
 
+%files tests
+%python_sitelibdir/*/*/*/tests
+%python_sitelibdir/*/*/tests
+%python_sitelibdir/*/testing
+
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2.git20140422
+- Moved tests into tests subpackage
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20140422
 - Version 0.6.0
 
