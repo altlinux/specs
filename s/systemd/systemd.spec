@@ -39,7 +39,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 210
-Release: alt7
+Release: alt8
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1291,6 +1291,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu May 08 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt8
+- increase RestartSec to 5 sec for getty services (ALT#30061)
+
 * Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt7
 - v210-stable snapshot (1ba98e163ed872d8744ff644e3d255b4be171bc6)
 - fixed typo, /lib/systemd/network should work fine
