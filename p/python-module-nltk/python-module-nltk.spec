@@ -1,5 +1,5 @@
 %define version 2.0.4
-%define release alt2
+%define release alt3
 
 %setup_python_module nltk
 
@@ -33,6 +33,22 @@ Keywords: NLP,CL,natural language processing,computational
 linguistics,parsing,tagging,tokenizing,syntax,linguistics,language,natural
 language
 
+%package tests
+Summary: Tests for NLTK
+Group: Development/Python
+Requires: %name = %EVR
+%add_python_req_skip featurechart treeview
+
+%description tests
+Description: The Natural Language Toolkit (NLTK) is a Python package for
+processing natural language text.  NLTK requires Python 2.4 or higher.
+
+Keywords: NLP,CL,natural language processing,computational
+linguistics,parsing,tagging,tokenizing,syntax,linguistics,language,natural
+language
+
+This package contains teets for NLTK.
+
 %prep
 %setup
 rm -rvf nltk/yaml/
@@ -54,8 +70,19 @@ tar xf %SOURCE1
 %python_sitelibdir/nltk_contrib/
 %python_sitelibdir/*.egg-info
 %doc README.txt LICENSE.txt
+%exclude %python_sitelibdir/*/test
+%exclude %python_sitelibdir/*/*/*/*/test*
+%exclude %python_sitelibdir/*/examples
+
+%files tests
+%python_sitelibdir/*/test
+%python_sitelibdir/*/*/*/*/test*
+%python_sitelibdir/*/examples
 
 %changelog
+* Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt3
+- Moved tests into tests subpackage
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt2
 - Fixed build
 
