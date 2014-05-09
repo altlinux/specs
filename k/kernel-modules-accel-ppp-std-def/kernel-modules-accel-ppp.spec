@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.8.0
-%define module_release alt0.beta.1
+%define module_release          alt1
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -60,6 +60,9 @@ install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko %buildroot/%module_dir/ipoe.k
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 09 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
+- 1.8.0 release
 
 * Mon Apr 14 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt0.beta.1
 - Initial build for Sisuphus
