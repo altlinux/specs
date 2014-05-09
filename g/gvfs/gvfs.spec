@@ -21,7 +21,7 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -456,6 +456,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Fri May 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.2-alt1
+- 1.20.2
+
 * Fri Apr 11 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
 - 1.20.1
 
