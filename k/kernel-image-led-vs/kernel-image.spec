@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.13.11
-Release: alt14
+Version: 3.13.11.2
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.13
-%define kernel_stable_version 11
+%define kernel_stable_version 11.2
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1869,6 +1869,16 @@ done)
 
 
 %changelog
+* Fri May 09 2014 Led <led@altlinux.ru> 3.13.11.2-alt1
+- 3.13.11.2
+- removed:
+  + fix-drivers-media-usb-gspca--gspca_sn9c20x
+  + fix-drivers-tty
+  + fix-drivers-virtio--virtio_balloon
+  + fix-mm--mmu
+- updated:
+  + fix-drivers-block--floppy
+
 * Fri May 09 2014 Led <led@altlinux.ru> 3.13.11-alt14
 - updated:
   + feat-arch-x86--cpu_emulate
