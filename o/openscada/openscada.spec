@@ -4,8 +4,8 @@ Summary(ru_RU.UTF8): Открытая SCADA система.
 Summary(uk_UA.UTF8): Відкрита SCADA система.
 Summary(de_DE.UTF8): Open SCADA-System.
 Name: openscada
-Version: 0.8.0.9
-Release: alt2
+Version: 0.8.0.10
+Release: alt1
 Source: openscada-%version.tar
 License: GPLv2
 Group: Graphics
@@ -17,8 +17,9 @@ URL: http://oscada.org
 #= Individual distributives seting =
 %if %_vendor == "alt"
 %set_verify_elf_method no
-BuildRequires: glibc-devel gcc-c++ libgd2-devel libpcre-devel libMySQL-devel libsqlite3-devel libsensors3-devel
-BuildRequires: libnet-snmp-devel libqt4-devel firebird-devel postgresql-devel libportaudio2-devel libfftw3-devel
+BuildRequires: glibc-devel gcc-c++ libpcre-devel libgd2-devel
+BuildRequires: libMySQL-devel libsqlite3-devel firebird-devel postgresql-devel
+BuildRequires: libsensors3-devel libnet-snmp-devel libportaudio2-devel libqt4-devel libfftw3-devel
 %else
 %define _initdir /etc/init.d
 %define _desktopdir %_datadir/applications
@@ -1465,6 +1466,9 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Fri May 09 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.0.10-alt1
+- 0.8.0.10 update to production release.
+
 * Tue Apr 22 2014 Roman Savochenko <rom_as@altlinux.ru> 0.8.0.9-alt2
 - Set dependent to postgresql-devel.
 
