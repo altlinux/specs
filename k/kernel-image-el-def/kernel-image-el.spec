@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt21
-%define erelease 431.11.2.el6
+Release: alt22
+%define erelease 431.17.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,14 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Thu May 08 2014 Led <led@altlinux.ru> 2.6.32-alt22
+- 2.6.32-431.17.1.el6:
+  + CVE-2013-6383
+  + CVE-2014-0055
+  + CVE-2014-0077
+  + CVE-2014-0101
+  + CVE-2014-2523
+
 * Wed Mar 26 2014 Led <led@altlinux.ru> 2.6.32-alt21
 - updated:
   + fix-firmware-radeon
