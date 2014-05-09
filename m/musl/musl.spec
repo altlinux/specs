@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.1.0
-Release: alt7
+Release: alt8
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Fri May 09 2014 Led <led@altlinux.ru> 1.1.0-alt8
+- fixed strftime %s not to zero pad with default width=2
+
 * Mon May 05 2014 Led <led@altlinux.ru> 1.1.0-alt7
 - fixes from upstream's SCM
 - reverted adding '-Wa,-mimplicit-it=thumb'
