@@ -1,6 +1,10 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: pbx-utils
 Summary: Useful utilites for Asterisk and CallWeaver
-Version: 0.0.15
+Version: 0.0.16
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -34,6 +38,15 @@ Group: %group
 
 %description -n pbx-astdb
 Utilites for convert bdb<->sqlite3 astdb format
+
+%package -n pbx-astgenkey
+Summary: Create keys for use in Asterisk
+Group: System/Servers
+Conflicts: asterisk12-crypto
+Conflicts: asterisk11-crypto
+
+%description -n pbx-astgenkey
+Create keys for use in Asterisk
 
 %package -n pbx-astman
 Summary: Text mode manager for Asterisk
@@ -120,6 +133,7 @@ Requires: pbx-stereorize = %version-%release
 Requires: pbx-streamplayer = %version-%release
 Requires: zones2indications = %version-%release
 Requires: pbx-astcanary = %version-%release
+Requires: pbx-astgenkey = %version-%release
 %if_with refcounter
 Requires: pbx-refcounter = %version-%release
 %endif
@@ -158,6 +172,10 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %attr(0755,root,root) %_sbindir/astdb2bdb
 %attr(0755,root,root) %_sbindir/astdb2sqlite3
 
+%files -n pbx-astgenkey
+%_sbindir/astgenkey
+%_man8dir/astgenkey.*
+
 %files -n pbx-astman
 %attr(0755,root,root) %_sbindir/astman
 
@@ -188,6 +206,9 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %attr(0755,root,root) %_sbindir/zones2indications
 
 %changelog
+* Sun May 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.16-alt1
+- add pbx-astgenkey
+
 * Wed May 22 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.15-alt1
 - add pbx-refcounter
 - import from asterisk12
