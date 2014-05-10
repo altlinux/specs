@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11
-Release: alt12
+Release: alt14
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -154,6 +154,7 @@ Release: alt12
 #Extra_modules spl 0.6.2
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
+%Extra_modules vmware 6.0.2
 %Extra_modules vboxhost 4.3.10
 %Extra_modules vboxguest 4.3.10
 #Extra_modules nvidia 331.20
@@ -225,6 +226,10 @@ ExcludeArch: i386
 
 %ifnarch i486
 %set_disable math_emu
+%endif
+
+%ifarch i486 i586
+%set_enable optimize_for_size
 %endif
 
 %if "%sub_flavour" == "vs"
@@ -1168,8 +1173,12 @@ echo "Building kernel %kversion-%flavour-%krelease"
 echo "Kernel docs built %kversion-%flavour-%krelease"
 %endif
 
+%{?extra_mods:%make_kernel -f Makefile.external %extra_mods && echo "External modules built"}
+
 %if_enabled remove_unused_exports
-(grep -v '^#' | sort -u) > Module.symvers.enabled <<__EOF__
+(
+%{?extra_mods:find . -type f -name '*.ko' | xargs nm -uop -f posix | cut -d' ' -f2}
+grep -v '^#' <<__EOF__
 # FGLRX
 acpi_get_next_object
 acpi_lid_notifier_register
@@ -1195,6 +1204,11 @@ schedule_hrtimeout_range
 set_pages_nx
 set_pages_x
 smp_call_function
+# VMWare
+csum_partial_copy_to_user
+getname
+poll_freewait
+poll_initwait
 # ZFS
 check_disk_size_change
 do_exit
@@ -1203,7 +1217,12 @@ get_gendisk
 lock_may_read
 lock_may_write
 next_online_pgdat
+#Nvidia
+cpufreq_get
+drm_gem_private_object_init
+ioremap_cache
 __EOF__
+) | sort -u > Module.symvers.enabled
 
 FindFiles()
 {
@@ -1234,8 +1253,6 @@ sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tool
 %endif
 
 %{?_with_lkvm:%make_build -C tools/kvm %lkvm_make_opts}
-
-%{?extra_mods:%make_kernel -f Makefile.external %extra_mods && echo "External modules built"}
 
 
 %install
@@ -1852,6 +1869,17 @@ done)
 
 
 %changelog
+* Fri May 09 2014 Led <led@altlinux.ru> 3.13.11-alt14
+- updated:
+  + feat-arch-x86--cpu_emulate
+- added extmod vmware
+
+* Thu May 08 2014 Led <led@altlinux.ru> 3.13.11-alt13
+- added:
+  + feat-arch-x86--cpu_emulate
+  + feat-firmware--amd-ucode
+- enabled optimize_for_size (i486, i586)
+
 * Wed May 07 2014 Led <led@altlinux.ru> 3.13.11-alt12
 - updated:
   + feat-mm--zcache
