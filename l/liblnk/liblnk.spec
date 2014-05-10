@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: liblnk
-Version: 20131015
+Version: 20140323
 Release: alt1
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
@@ -22,8 +22,9 @@ Group: File tools
 
 Url: http://code.google.com/p/liblnk/
 #DL-URL: https://googledrive.com/host/0B3fBvzttpiiSQmluVC1YeDVvZWM/liblnk-alpha-20131015.tar.gz
-Source: %name-alpha-%version.tar.gz
+Source0: %name-alpha-%version.tar.gz
 Source1: Windows_Shortcut_File_(LNK)_format.pdf
+Source2: liblnk.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
@@ -111,6 +112,9 @@ cp -a "%SOURCE1" .
 %python_sitelibdir/pylnk.so
 
 %changelog
+* Sat May 10 2014 Michael Shigorin <mike@altlinux.org> 20140323-alt1
+- new version (watch file uupdate)
+
 * Sat May 10 2014 Michael Shigorin <mike@altlinux.org> 20131015-alt1
 - initial build for ALT Linux Sisyphus
 

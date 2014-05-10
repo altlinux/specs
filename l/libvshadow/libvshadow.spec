@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: libvshadow
-Version: 20131003
+Version: 20140323
 Release: alt1
 
 Summary: Library to access the Volume Shadow Snapshot (VSS) format
@@ -22,10 +22,11 @@ Group: File tools
 
 Url: http://code.google.com/p/libvshadow/
 #DL-URL:         https://googledrive.com/host/0B3fBvzttpiiSZDZXRFVMdnZCeHc/libvshadow-alpha-20131003.tar.gz
-Source: libvshadow-alpha-%version.tar.gz
+Source0: libvshadow-alpha-%version.tar.gz
 Source1: Paper_-_Windowless_Shadow_Snapshots.pdf
 Source2: Slides_-_Windowless_Shadow_Snapshots.pdf
 Source3: Volume_Shadow_Snapshot_(VSS)_format.pdf
+Source4: libvshadow.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libfuse-devel
@@ -139,6 +140,9 @@ export CXXFLAGS="%optflags"
 %python_sitelibdir/*.so
 
 %changelog
+* Sat May 10 2014 Michael Shigorin <mike@altlinux.org> 20140323-alt1
+- new version (watch file uupdate)
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20131003-alt1
 - initial build for ALT Linux Sisyphus
 
