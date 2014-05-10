@@ -1,5 +1,5 @@
 Name: telepathy-gabble
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Summary: Jabber/XMPP connection manager
@@ -29,7 +29,7 @@ calls. Install this package to use Telepathy instant messaging clients
 with Jabber/XMPP servers, including Google Talk.
 
 %prep
-%setup -q
+%setup
 
 
 %build
@@ -44,8 +44,7 @@ with Jabber/XMPP servers, including Google Talk.
 %make_build DESTDIR=%buildroot install
 
 %check
-#jingle-share/test-send-file.py --timeout error
-#%%make check
+#%make check
 
 %files
 %_bindir/telepathy-gabble-xmpp-console
@@ -69,6 +68,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Sat May 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
+- 0.18.3
+
 * Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.18.2-alt1
 - 0.18.2
 
