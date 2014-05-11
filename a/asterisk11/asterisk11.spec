@@ -1,10 +1,13 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.9.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
-%def_with 		corosync
 %if_with corosync
 BuildRequires: libcorosync2-devel
 %endif
@@ -73,7 +76,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %def_enable debug
 %def_without		hoard
 %def_without 		addons
-%def_with 		corosync
+%def_without 		corosync
 %def_with			snmp
 %def_with			speex
 %def_with			curl
@@ -342,7 +345,6 @@ Requires: %name-chan_dahdi = %version-%release
 Requires: %name-codec_gsm = %version-%release
 Requires: %name-codec_ilbc = %version-%release
 Requires: %name-codec_speex = %version-%release
-Requires: %name-crypto = %version-%release
 Requires: %name-curl = %version-%release
 Requires: %name-devel = %version-%release
 Requires: %name-docs = %version-%release
@@ -353,7 +355,6 @@ Requires: %name-httpd = %version-%release
 Requires: %name-odbc = %version-%release
 %endif
 Requires: %name-pgsql = %version-%release
-Requires: %name-res_crypto = %version-%release
 %if_with snmp
 Requires: %name-res_snmp = %version-%release
 %endif
@@ -390,16 +391,6 @@ Requires: %name = %version-%release
 %description corosync
 Device state and MWI clustering
 %endif
-
-%package crypto
-Summary: OpenSSL support for Asterisk (crypto)
-Group: %group
-BuildArch: noarch
-Requires: %name-res_crypto = %version-%release
-
-%description crypto
-res_crypto used by chan_sip and chan_iax2 for crypto support
-
 
 %if_with curl
 %package curl
@@ -555,6 +546,7 @@ PostgresSQL logging module for Asterisk
 Summary: OpenSSL support for Asterisk (crypto)
 Group: %group
 Requires: %name = %version-%release
+Requires: pbx-astgenkey
 
 %description res_crypto
 res_crypto used by chan_sip and chan_iax2 for crypto support
@@ -1087,9 +1079,6 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %astsample res_corosync
 %endif
 
-%files crypto
-%_sbindir/astgenkey
-
 %if_with curl
 %files curl
 %astmodule func_curl
@@ -1263,6 +1252,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Sun May 11 2014 Denis Smirnov <mithraen@altlinux.ru> 11.9.0-alt2
+- use pbx-astgenkey
+
 * Sat Apr 26 2014 Denis Smirnov <mithraen@altlinux.ru> 11.9.0-alt1
 - new version 11.9.0
 
