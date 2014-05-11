@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        28.0
+Version:        29.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -258,6 +258,27 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun May 11 2014 Alexey Gladkov <legion@altlinux.ru> 29.0.1-alt1
+- New release (29.0.1).
+
+* Sat May 10 2014 Alexey Gladkov <legion@altlinux.ru> 29.0-alt1
+- New release (29.0).
+- Fixed:
+  + MFSA 2014-47 Debugger can bypass XrayWrappers with JavaScript
+  + MFSA 2014-46 Use-after-free in nsHostResolve
+  + MFSA 2014-45 Incorrect IDNA domain name matching for wildcard certificates
+  + MFSA 2014-44 Use-after-free in imgLoader while resizing images
+  + MFSA 2014-43 Cross-site scripting (XSS) using history navigations
+  + MFSA 2014-42 Privilege escalation through Web Notification API
+  + MFSA 2014-41 Out-of-bounds write in Cairo
+  + MFSA 2014-40 Firefox for Android addressbar suppression
+  + MFSA 2014-39 Use-after-free in the Text Track Manager for HTML video
+  + MFSA 2014-38 Buffer overflow when using non-XBL object as XBL
+  + MFSA 2014-37 Out of bounds read while decoding JPG images
+  + MFSA 2014-36 Web Audio memory corruption issues
+  + MFSA 2014-35 Privilege escalation through Mozilla Maintenance Service Installer
+  + MFSA 2014-34 Miscellaneous memory safety hazards (rv:29.0 / rv:24.5)
+
 * Sat Mar 22 2014 Alexey Gladkov <legion@altlinux.ru> 28.0-alt1
 - New release (28.0).
 - Fixed:
