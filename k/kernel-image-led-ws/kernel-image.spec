@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -189,7 +189,9 @@ Source5: fixes.inc
 Source6: features.inc
 Source7: fixes-apply.inc
 Source8: features-apply.inc
+Source9: fupdate.sh
 Source10: Makefile.external
+Source11: gen-symvers-disabled.sh
 
 #Patch0000: patch-%kernel_branch.%kernel_stable_version
 
@@ -905,7 +907,8 @@ find linux-%kversion -type f -or -type l -not -name '*.orig' -not -name '*~' -no
 cd -
 %endif
 
-install -m644 %SOURCE1 %SOURCE2 .
+install -m 0644 %SOURCE1 %SOURCE2 .
+install -m 0755 %SOURCE11 scripts/gen-symvers-disabled.sh
 
 %ifdef extra_mods
 install -m 0644 %SOURCE10 ./Makefile.external
@@ -1224,25 +1227,7 @@ ioremap_cache
 __EOF__
 ) | sort -u > Module.symvers.enabled
 
-FindFiles()
-{
-	local f
-	find . -type f -name '*.c' |
-	while read f; do
-		[ -f ${f%%.c}.o ] && echo "$f"
-	done
-	find ./kernel -type f -name '*.h'
-}
-
-sort -u -k2 Module.symvers.unused |
-join -v2 -t'	' -11 -22 -o 2.4,2.2 Module.symvers.enabled - |
-sed 's/	/\\(/;s/$/\\)/;s/^/^(|ACPI_)/' |
-grep -E -o -f - $(FindFiles) | tr ':' '	' |
-while read f p; do
-	sed -i "/^$p/s/^.*\(EXPORT\)\(_SYMBOL\)/\1_UNUSED\2/" $f >&2
-	s="${p%%)}"
-	echo "${s#*\(}	${f#./}"
-done > Module.symvers.disabled
+scripts/gen-symvers-disabled.sh Module.symvers.unused Module.symvers.enabled > Module.symvers.disabled
 
 %make_kernel bzImage modules
 %endif
@@ -1403,7 +1388,9 @@ tar	--transform='s/^linux-%kversion/&-%flavour-%krelease/' \
 
 rm -rf *.rpmmodlist{,~}
 gen_rpmmodlist() {
-	ls -d $@ | sed 's|^%buildroot||'
+	cd %buildroot%modules_dir/kernel
+	ls -d $@ 2>/dev/null | sort -u | sed 's|^|%modules_dir/kernel/|'
+	cd - >/dev/null
 }
 gen_rpmmodfile() {
 	local F=$1.rpmmodlist
@@ -1412,43 +1399,47 @@ gen_rpmmodfile() {
 }
 gen_rpmmodfile scsi-base \
 %if "%sub_flavour" == "guest"
-	%buildroot%modules_dir/kernel/drivers/scsi/{virtio*,{,lib}iscsi*,scsi_transport_iscsi.ko} \
+	drivers/scsi/{virtio*,{,lib}iscsi*,scsi_transport_iscsi.ko} \
 %endif
-	%buildroot%modules_dir/kernel/drivers/{scsi/{{*_mod,scsi_{tgt,transport_srp},vhba}.ko,osd,device_handler{,/scsi_dh.ko}},target/{iscsi,target_core_mod.ko}}
-gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target/*,vhost/vhost_scsi.ko} | \
-	grep -Fxv -f scsi-base.rpmmodlist | \
-	grep -Fxv -f infiniband.rpmmodlist | \
+	drivers/{scsi/{{*_mod,scsi_{tgt,transport_{sas,spi,srp}},vhba}.ko,osd,device_handler{,/scsi_dh.ko}},target/{iscsi,target_core_mod.ko}}
+# For VirtualBox
+gen_rpmmodlist drivers/scsi/BusLogic.ko >> scsi-base.rpmmodlist
+# For QEMU
+gen_rpmmodlist drivers/scsi/{megaraid,sym53c8xx_2,tmscsim.ko} >> scsi-base.rpmmodlist
+gen_rpmmodfile infiniband {drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
+gen_rpmmodlist drivers/{{vhost/vhost_scsi,message/fusion/mptfc}.ko,{scsi{,/device_handler},target}/*} |
+	grep -Fxv -f scsi-base.rpmmodlist |
+	grep -Fxv -f infiniband.rpmmodlist |
 	grep -v '^%modules_dir/kernel/drivers/scsi/virtio.*' > scsi.rpmmodlist
-mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
-gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
-%{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu}
-%{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net,net/802}/fddi*}
-%{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
-%{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
+sort -u scsi-base.rpmmodlist > scsi-base.rpmmodlist~ && rm scsi-base.rpmmodlist
+gen_rpmmodfile ipmi drivers/{char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
+%{?_enable_drm:gen_rpmmodfile drm drivers/gpu}
+%{?_enable_fddi:gen_rpmmodfile fddi {drivers/net,net/802}/fddi*}
+%{?_enable_usb_gadget:gen_rpmmodlist drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
+%{?_enable_watchdog:gen_rpmmodlist drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
 %if_enabled video
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | \
-	grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | \
-	grep -xv '%modules_dir/kernel/drivers/video/console' | \
-	grep -xv '%modules_dir/kernel/drivers/video/sis' | \
-	grep -xv '%modules_dir/kernel/drivers/video/backlight' | \
+gen_rpmmodlist drivers/video/* |
+	grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' |
+	grep -xv '%modules_dir/kernel/drivers/video/console' |
+	grep -xv '%modules_dir/kernel/drivers/video/sis' |
+	grep -xv '%modules_dir/kernel/drivers/video/backlight' |
 	grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -Ev '%modules_dir/kernel/drivers/video/(backlight/(apple_bl|lcd).ko$)' >> video.rpmmodlist
+gen_rpmmodlist drivers/video/backlight/* | grep -Ev '%modules_dir/kernel/drivers/video/(backlight/(apple_bl|lcd).ko$)' >> video.rpmmodlist
 %endif
 %if_enabled media
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' | grep -xv '%modules_dir/kernel/drivers/media/v4l2-core' > media.rpmmodlist
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/v4l2-core/* | grep -xv '%modules_dir/kernel/drivers/media/v4l2-core/videodev.ko' >> media.rpmmodlist
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/hid/hid-picolcd.ko >> media.rpmmodlist
+gen_rpmmodlist drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' | grep -xv '%modules_dir/kernel/drivers/media/v4l2-core' > media.rpmmodlist
+gen_rpmmodlist drivers/media/v4l2-core/* | grep -xv '%modules_dir/kernel/drivers/media/v4l2-core/videodev.ko' >> media.rpmmodlist
+gen_rpmmodlist drivers/hid/hid-picolcd.ko >> media.rpmmodlist
 %endif
-%{?_enable_ide:gen_rpmmodfile ide %buildroot%modules_dir/kernel/drivers/{ide,leds/ledtrig-ide-disk.ko}}
-%{?_enable_edac:gen_rpmmodfile edac %buildroot%modules_dir/kernel/drivers/edac}
-%{?_enable_mtd:gen_rpmmodfile mtd %buildroot%modules_dir/kernel/{drivers/mtd,lib/bch.ko}}
+%{?_enable_ide:gen_rpmmodfile ide drivers/{ide,leds/trigger/ledtrig-ide-disk.ko}}
+%{?_enable_edac:gen_rpmmodfile edac drivers/edac}
+%{?_enable_mtd:gen_rpmmodfile mtd {drivers/mtd,lib/bch.ko}}
 gen_rpmmodfile input-extra \
-	%{?_enable_joystick:%buildroot%modules_dir/kernel/drivers/input/joystick} \
-	%{?_enable_tablet:%buildroot%modules_dir/kernel/drivers/input/tablet} \
-	%{?_enable_touchscreen:%buildroot%modules_dir/kernel/drivers/input/touchscreen}
+	%{?_enable_joystick:drivers/input/joystick} \
+	%{?_enable_tablet:drivers/input/tablet} \
+	%{?_enable_touchscreen:drivers/input/touchscreen}
 %if "%sub_flavour" != "guest"
-%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
+%{?_enable_guest:gen_rpmmodfile guest {drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
@@ -1869,6 +1860,14 @@ done)
 
 
 %changelog
+* Sun May 11 2014 Led <led@altlinux.ru> 3.13.11.2-alt2
+- updated:
+  + feat-fs-aufs
+- moved drivers from kernel-modules-scsi-* to kernel-image-*:
+  + mptspi (for VMWare default block device and VirtualBox block device)
+  + mptsas, BusLogic (for VirtualBox block device)
+  + megaraid, sym53c8xx_2, tmscsim (for QEMU block devices)
+
 * Fri May 09 2014 Led <led@altlinux.ru> 3.13.11.2-alt1
 - 3.13.11.2
 - removed:
