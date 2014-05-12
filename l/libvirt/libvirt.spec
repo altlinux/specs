@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -455,6 +455,7 @@ required to manage the virtualization capabilities of Xen.
 %package vbox
 Summary: Server side daemon, driver & default configs required to run VirtualBox guests
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-daemon-config-network = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
@@ -576,7 +577,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap
+for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap dommigrate
 do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
@@ -917,6 +918,9 @@ fi
 %_datadir/libvirt/api/libvirt-lxc-api.xml
 
 %changelog
+* Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Tue Apr 01 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 - build with libxl
