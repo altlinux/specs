@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.1.2
+Version: 0.2.0.2
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -41,5 +41,8 @@ This package provides bindings to the ALSA simple mixer API.
 %files -f %name-files.all
 
 %changelog
+* Mon May 12 2014 Denis Smirnov <mithraen@altlinux.ru> 0.2.0.2-alt1
+- 0.2.0.2
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt1
 - Spec created by cabal2rpm 0.20_08
