@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -13,8 +13,8 @@ Group: Networking/WWW
 License: GPL
 URL: http://www.gnome.org/projects/%name
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Provides: webclient
 Obsoletes: %name-extensions
@@ -72,7 +72,7 @@ This package contains common noarch files needed for Epiphany.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %__mkdir_p %buildroot{%_libdir/epiphany/%ua_ver/extensions,%_datadir/epiphany-extensions}
 
@@ -100,6 +100,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Wed Apr 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1.1
 - updated to a945d01c
 
