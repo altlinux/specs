@@ -3,7 +3,7 @@
 %define eggname CairoSVG
 
 Name:               python-module-cairosvg
-Version:            1.0.6
+Version:            1.0.7
 Release:            alt1
 Summary:            A Simple SVG Converter for Cairo
 
@@ -81,6 +81,9 @@ mv %buildroot%_bindir/{,python3-}cairosvg
 %endif
 
 %changelog
+* Mon May 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
+- New version
+
 * Tue Mar 25 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
 - New version
 
