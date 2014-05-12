@@ -1,78 +1,75 @@
 Name: easytag
-Version: 2.1.8
-Release: alt2
+Version: 2.2.2
+Release: alt1
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
 License: GPL
 Group: Sound
-Url: http://easytag.sourceforge.net
+Url: https://wiki.gnome.org/Apps/EasyTAG
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
-Source: http://download.sourceforge.net/%name/%name-%version.tar
-Source1: ru.po
+Source: %name-%version.tar
 
-Patch0: easytag-2.1.8-alt-wavpack-declaration-after-statement-warn.patch
+BuildRequires: intltool gcc-c++
+BuildRequires: appdata-tools
+BuildRequires: xsltproc docbook-dtds docbook-style-xsl
+BuildRequires: desktop-file-utils
+BuildRequires: yelp-tools
 
-Requires: id3lib >= 3.8.3-alt3
-BuildPreReq: id3lib-devel >= 3.8.3-alt3
-
-BuildRequires: gcc-c++ libflac-devel
-BuildRequires: libgtk+2-devel >= 2.24.0
-BuildRequires: libid3tag-devel
-BuildRequires: libtag-devel
-BuildRequires: libspeex-devel
-BuildRequires: libvorbis-devel
-BuildRequires: libwavpack-devel
-BuildRequires: intltool
-#BuildRequires: desktop-file-utils
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.2.1
+BuildRequires: pkgconfig(ogg) >= 1.0 pkgconfig(vorbis) >= 1.0.1 pkgconfig(vorbisfile)
+BuildRequires: pkgconfig(opus) >= 1.0 pkgconfig(opusfile)
+BuildRequires: pkgconfig(speex)
+BuildRequires: pkgconfig(flac) >= 1.1.4
+BuildRequires: pkgconfig(id3tag) id3lib-devel
+BuildRequires: pkgconfig(taglib) >= 1.9.1
+BuildRequires: pkgconfig(wavpack) >= 4.40
+BuildRequires: pkgconfig(gio-2.0) >= 2.32.0
 
 %description
+EasyTAG is a utility for viewing, editing and writing the tags of MP4, MP3,
+MP2, FLAC, Ogg Opus, Ogg Speex, Ogg Vorbis, MusePack and Monkey's Audio files.
+
 EasyTAG is an utility for viewing, editing easily and quickly the ID3v1 ,
 ID3v2, APE and OGG tags of your audio files, using a nice GTK+2 user interface.
 
 %description -l ru_RU.UTF-8
 EasyTAG - это утилита для просмотра и редактирования тегов ID3v1 и ID3v2
-файлов MP3 и MP2, а также тегов APE и OGG, использующая графический
-интерфейс GTK+2.
+файлов MP4, MP3 MP2, FLAC, Ogg Opus, Ogg Speex, Ogg Vorbis, MusePack и
+Monkey's звуковых файлов.
 
 %prep
 %setup -q
-%patch0 -p1
-install -p %SOURCE1 po/ru.po
 
 %build
 %autoreconf
+%configure
 
-%configure \
-    --enable-mp3 \
-    --enable-id3v23 \
-    --enable-ogg \
-    --enable-flac \
-    --enable-speex \
-    --enable-mp4 \
-    --enable-wavpack \
-    #
 %make_build
-%make -C po update-po
 
 %install
-%makeinstall
+%makeinstall_std
 
-%find_lang %name
+%find_lang --with-gnome %name
 
-%post
-
-%postun
+%check
+%make check
 
 %files -f %name.lang
-%_bindir/*
-%_mandir/man?/*
-%_iconsdir/hicolor/*/apps/*
-%doc INSTALL README TODO THANKS
-%_datadir/applications/*
+%doc ChangeLog COPYING HACKING README THANKS TODO
+%_bindir/%name
+%_datadir/appdata/%name.appdata.xml
+%_man1dir/%name.1*
+%_iconsdir/hicolor/*/apps/%name.*
+%_desktopdir/%name.desktop
 
 %changelog
+* Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+- build with gtk+-3
+- update BR:
+
 * Sun Nov 03 2013 Afanasov Dmitry <ender@altlinux.org> 2.1.8-alt2
 - drop libmp4v2 buildreq
 
