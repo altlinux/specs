@@ -48,16 +48,16 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
 Group: Office
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-Url: http://projects.gnome.org/tracker/
+Url: http://wiki.gnome.org/Projects/Tracker
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Obsoletes: lib%name-client
@@ -377,6 +377,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
