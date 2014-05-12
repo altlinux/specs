@@ -1,7 +1,7 @@
 # vim: set ft=spec : -*- rpm-spec -*-
 
 Name: yajl
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 
 Summary: Yet Another JSON Library
@@ -65,6 +65,9 @@ mv %buildroot%_datadir/pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Wed Jun 13 2012 Alexey Shabalin <shaba@altlinux.ru> 2.0.4-alt1
 - 2.0.4
 
