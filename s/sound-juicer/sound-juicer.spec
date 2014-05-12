@@ -3,7 +3,7 @@
 
 Name: sound-juicer
 Version: %ver_major.90
-Release: alt1
+Release: alt2
 
 Summary: Clean and lean CD ripper
 Group: Sound
@@ -24,7 +24,6 @@ BuildRequires: libgtk+3-devel >= 2.90.0
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
-BuildRequires: libgnome-media-profiles-devel >= 3.0.0
 BuildRequires: libmusicbrainz5-devel  >= 5.0.1 libdiscid-devel iso-codes-devel
 
 %description
@@ -62,6 +61,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.90-alt2
+- fixed buildreqs
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.90-alt1
 - 3.11.90
 
