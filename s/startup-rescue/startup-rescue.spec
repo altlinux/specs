@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.21
+Version: 0.23
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -17,7 +17,7 @@ Requires(preun): %preun_service
 Requires: sfdisk console-vt-tools libshell system-report
 
 # Optional requires
-Requires: dmidecode ddcprobe
+Requires: dmidecode ddcprobe altquire
 
 Conflicts: startup-school-rescue startup-nanolive
 
@@ -33,7 +33,6 @@ mkdir -p -- %buildroot{%_bindir,/sbin,/etc/rc.d}
 install -pm755 rescue-shell %buildroot%_bindir/
 install -pm755 fixmbr find-fstab %buildroot/sbin/
 install -pm755 mount-fstab mount-system %buildroot/sbin/
-install -pm755 *-forensic %buildroot/sbin/
 install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
 install -pDm755 rc.sysinit.rescue %buildroot/etc/rc.d/
 install -pDm755 sysreport.init %buildroot%_initdir/sysreport
@@ -47,6 +46,12 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 %_initdir/sysreport
 
 %changelog
+* Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.23-alt1
+- moved *-forensic into a standalone package
+
+* Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.22-alt1
+- mount-forensic: minor fixes
+
 * Wed May 07 2014 Michael Shigorin <mike@altlinux.org> 0.21-alt1
 - added lvm2-forensic, raid-forensic scripts to help deal with
   guaranteed read-only LVM2/MDRAID setups (blockdev --setro
