@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.24
+Version: 0.5.25
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -92,6 +92,10 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Mon May 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.25-alt1
+- service: use is-active as a closer systemd equivalent of
+  sysvinit status (closes: #30034).
+
 * Thu Feb 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.5.24-alt1
 - Implemented systemd-only service support in {post,preun}_service
   (closes: #27390) and native support of systemd services.
