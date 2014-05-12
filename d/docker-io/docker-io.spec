@@ -1,6 +1,6 @@
 Name: docker-io
-Version: 0.10.0
-Release: alt2
+Version: 0.11.1
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -14,13 +14,13 @@ Conflicts: docker
 Source0: %name-%version.tar
 
 BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static libbtrfs-devel
-BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
+BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
 BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3) golang(github.com/syndtr/gocapability/capability) golang(github.com/godbus/dbus) golang(github.com/coreos/go-systemd/activation)
 
 Requires: tar lxc xz
 Provides: lxc-docker
 
-%define commit dc9c28f51d669d6b09e81c2381f800f1a33bb659
+%define commit fb99f992c081a1d433c97c99ffb46d12693eeb76
 %define shortcommit %(c=%commit; echo ${c:0:7})
 
 %define gopath %_datadir/gocode
@@ -59,9 +59,11 @@ pushd _build
 popd
 
 export DOCKER_GITCOMMIT="%shortcommit/%version"
+#export DOCKER_BUILDTAGS='selinux'
 export GOPATH=$(pwd)/_build:%gopath
 
 hack/make.sh dynbinary
+contrib/man/md/md2man-all.sh
 cp contrib/syntax/vim/LICENSE LICENSE-vim-syntax
 cp contrib/syntax/vim/README.md README-vim-syntax.md
 
@@ -87,13 +89,14 @@ install -p -m 644 contrib/syntax/vim/doc/dockerfile.txt %buildroot%_datadir/vim/
 install -p -m 644 contrib/syntax/vim/ftdetect/dockerfile.vim %buildroot%_datadir/vim/vimfiles/ftdetect
 install -p -m 644 contrib/syntax/vim/syntax/dockerfile.vim %buildroot%_datadir/vim/vimfiles/syntax
 # install udev rules
-install -d %buildroot/lib/udev/rules.d
-install -p -m 755 contrib/udev/80-docker.rules %buildroot/lib/udev/rules.d
+install -d %buildroot%_sysconfdir/udev/rules.d
+install -p -m 755 contrib/udev/80-docker.rules %buildroot%_sysconfdir/udev/rules.d
 # install storage dir
 install -d -m 700 %buildroot%_sharedstatedir/docker
 # install systemd/init scripts
 install -d %buildroot%_unitdir
 install -p -m 644 contrib/init/systemd/docker.service %buildroot%_unitdir
+#install -p -m 644 %%SOURCE1 %%buildroot%%_unitdir
 %if 0
 install -d %buildroot%_initddir
 install -p -m 755 contrib/init/sysvinit-debian/docker %buildroot%_initddir/docker
@@ -155,7 +158,7 @@ exit 0
 %_sysconfdir/bash_completion.d/docker.bash
 %_datadir/zsh/site-functions/_docker
 %dir %_sharedstatedir/docker
-/lib/udev/rules.d/80-docker.rules
+%_sysconfdir/udev/rules.d/80-docker.rules
 %dir %_datadir/vim/vimfiles/doc
 %_datadir/vim/vimfiles/doc/dockerfile.txt
 %dir %_datadir/vim/vimfiles/ftdetect
@@ -164,6 +167,9 @@ exit 0
 %_datadir/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Mon May 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.1-alt1
+- New version.
+
 * Wed Apr 23 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.0-alt2
 - %%post: restored creation of docker group.
 
