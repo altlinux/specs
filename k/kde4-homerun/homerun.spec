@@ -5,8 +5,8 @@
 
 %define rname homerun
 Name: kde4-homerun
-Version: 1.2.3
-Release: alt2
+Version: 1.2.4
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Application Launcher
@@ -77,6 +77,12 @@ of the homerun launcher.
 %_K4libdir/cmake/Homerun/
 
 %changelog
+* Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt1
+- new version
+
+* Wed Apr 16 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1.M70P.1
+- built for M70P
+
 * Wed Apr 16 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt2
 - move to kde-specific place
 
