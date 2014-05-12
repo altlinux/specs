@@ -2,7 +2,7 @@
 
 Name: kde4-plasma-nm
 Version: 0.9.3.3
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: Plasma applet written in QML for managing network connections
@@ -197,6 +197,9 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt5
+- rebuild with new libnm-qt
+
 * Thu Mar 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt4
 - fix maxi subpackage
 
