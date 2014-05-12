@@ -1,5 +1,5 @@
 Name:    alt-test
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Test environment based on Tapper
@@ -37,6 +37,9 @@ cp -av tests/* %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Mon May 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- Fix environment variable name in program help
+
 * Wed Apr 02 2014 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Version check support for test_package
 - Rename TESTED_PACKAGE_SOURCE environment variable to TEST_PACKAGE_SOURCE
