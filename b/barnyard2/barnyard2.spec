@@ -1,6 +1,6 @@
 Name: barnyard2
-Version: 1.11
-Release: alt3
+Version: 2.1.13
+Release: alt1
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -34,7 +34,7 @@ Group: Networking/Other
 BuildArch: noarch
 Requires: %name = %version-%release
 Requires: mysql
-BuildRequires: mysql-devel
+BuildRequires: mysql-devel libmysqlclient-devel libmysqlclient18 libmysqlclient16
 %description mysql
 barnyard2 binary compiled with mysql support.
 
@@ -46,10 +46,12 @@ barnyard2 binary compiled with mysql support.
 %patch3 -p1
 
 %build
-autoreconf --install
+%autoreconf
+./autogen.sh
 %configure 					\
 	--with-mysql				\
-	--with-mysql-libraries=/usr/%_lib
+	--with-mysql-libraries=%_libdir 	\
+	--with-mysql-includes=%_includedir/mysql
 %make_build
 
 %install
@@ -65,6 +67,7 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 
 %files
 %_bindir/*
+%config(noreplace) %dir %_sysconfdir/%name
 %config(noreplace) %_initdir/barnyard2
 %config(noreplace) %_sysconfdir/%name/barnyard2.conf
 %config(noreplace) %_sysconfdir/sysconfig/barnyard2
@@ -72,9 +75,14 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %doc LICENSE doc/INSTALL doc/README.*
 
 %files mysql
+%dir %_datadir/%name
+%dir %_datadir/%name/schemas
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Wed May 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.1.13-alt1
+- New version
+
 * Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 1.11-alt3
 - set output database by default
 - fix barnayrd2 init script
