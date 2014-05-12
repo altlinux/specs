@@ -1,5 +1,5 @@
 Name: lbdb
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: The Little Brother's Database
@@ -8,7 +8,7 @@ Group: Databases
 
 Url: http://www.spinnaker.de/lbdb
 Source: http://www.spinnaker.de/debian/lbdb_%version.tar.gz
-Patch: lbdb-sample.lbdbrc.patch
+Patch0: lbdb-sample.lbdbrc.patch
 Patch1: lbdb-muttalias.patch
 Patch2: lbdb-0.38-evolution.patch
 
@@ -19,10 +19,10 @@ BuildRequires: abook finger gnupg perl-ldap perl-p5-Palm
 BuildRequires: evolution
 # We prefer not to depend on mawk...
 BuildConflicts: mawk
-BuildRequires: perl-Pod-Parser
+BuildRequires: perl-Pod-Parser perl-Authen-SASL
 
 %description
-Lbdbq is the client program for the little brother's database. It will
+lbdbq is the client program for the little brother's database. It will
 attempt to invoke various modules to gather information about persons
 matching something. E.g., it may look at a list of addresses from which
 you have received mail, it may look at YP maps, or it may try to finger
@@ -30,7 +30,7 @@ something@<various hosts>.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -39,7 +39,7 @@ something@<various hosts>.
 %make_build
 
 %install
-%makeinstall libdir=%buildroot/%_libdir/lbdb
+%makeinstall libdir=%buildroot%_libdir/lbdb
 
 %files
 %doc README sample.lbdbrc
@@ -49,6 +49,9 @@ something@<various hosts>.
 %_man1dir/*
 
 %changelog
+* Sun May 11 2014 Michael Shigorin <mike@altlinux.org> 0.39-alt1
+- 0.39
+
 * Sun Jun 26 2011 Victor Forsiuk <force@altlinux.org> 0.38-alt1
 - 0.38
 
