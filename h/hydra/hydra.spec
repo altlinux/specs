@@ -1,5 +1,5 @@
 Name: hydra
-Version: 7.6
+Version: 8.0
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -101,6 +101,9 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 %_bindir/pw-inspector
 
 %changelog
+* Mon May 12 2014 Ilya Mashkin <oddity@altlinux.ru> 8.0-alt1
+- 8.0
+
 * Mon Dec 30 2013 Ilya Mashkin <oddity@altlinux.ru> 7.6-alt1
 - 7.6
 
