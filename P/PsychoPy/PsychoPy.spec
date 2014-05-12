@@ -1,5 +1,5 @@
 Name: PsychoPy
-Version: 1.80.01
+Version: 1.80.04
 Release: alt1
 Summary: Psychophysics toolkit for Python
 Url: http://www.psychopy.org
@@ -82,6 +82,9 @@ done
 %python_sitelibdir_noarch/%name-*
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 1.80.04-alt1
+- Autobuild version bump to 1.80.04
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 1.80.01-alt1
 - Autobuild version bump to 1.80.01
 - Fix requierments
