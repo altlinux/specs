@@ -1,5 +1,5 @@
 Name: dap
-Version: 3.9
+Version: 3.10
 Release: alt1
 Summary: A small statistics and graphics package based on C
 Url: http://www.gnu.org/software/dap/
@@ -48,6 +48,9 @@ Summary: Development environment for %name, %summary
 %_includedir/*
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 3.10-alt1
+- Autobuild version bump to 3.10
+
 * Sat Mar 22 2014 Fr. Br. George <george@altlinux.ru> 3.9-alt1
 - Autobuild version bump to 3.9
 
