@@ -1,6 +1,6 @@
 
 Name: libnm-qt
-Version: 0.9.8.1
+Version: 0.9.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -45,5 +45,8 @@ that use NetworkManager
 %_includedir/NetworkManagerQt/
 
 %changelog
+* Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.1-alt1
+- new version
+
 * Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8.1-alt1
 - initial build
