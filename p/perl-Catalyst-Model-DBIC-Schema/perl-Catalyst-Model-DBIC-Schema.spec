@@ -2,11 +2,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Carp/Clan.pm) perl(Catalyst.pm) perl(Catalyst/Component/InstancePerContext.pm) perl(Catalyst/Devel.pm) perl(Catalyst/Runtime.pm) perl(CatalystX/Component/Traits.pm) perl(Class/C3.pm) perl(Config.pm) perl(Cwd.pm) perl(DBD/Pg.pm) perl(DBD/SQLite.pm) perl(DBD/mysql.pm) perl(DBI.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Core.pm) perl(DBIx/Class/Cursor/Cached.pm) perl(DBIx/Class/ResultSet.pm) perl(DBIx/Class/Schema.pm) perl(DBIx/Class/Schema/Loader.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(Hash/Merge.pm) perl(IPC/Open3.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(List/MoreUtils.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(MooseX/ClassAttribute.pm) perl(MooseX/NonMoose.pm) perl(MooseX/Types.pm) perl(MooseX/Types/LoadableClass.pm) perl(MooseX/Types/Moose.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Storable.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Tie/IxHash.pm) perl(Try/Tiny.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(lib.pm) perl(mro.pm) perl(namespace/autoclean.pm) perl(namespace/clean.pm) perl-devel
 # END SourceDeps(oneline)
-%define module_version 0.62
+%define module_version 0.63
 %define module_name Catalyst-Model-DBIC-Schema
 %define dist Catalyst-Model-DBIC-Schema
 Name: perl-%dist
-Version: 0.62
+Version: 0.63
 Release: alt1
 
 Summary: DBIx::Class::Schema Model Class
@@ -14,7 +14,7 @@ License: perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://cpan.org.ua/authors/id/I/IL/ILMARI/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILMARI/Catalyst-Model-DBIC-Schema-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ on generating these Models via Helper scripts.
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
+- automated CPAN update
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
 - uploaded to Sisyphus as dependency
 
