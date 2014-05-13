@@ -7,14 +7,13 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME 2
 License: %gpl2plus
 Group: File tools
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
@@ -132,6 +131,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
