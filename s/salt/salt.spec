@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 0.17.4
+Version: 0.17.5
 Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
@@ -54,10 +54,10 @@ Salt minion is queried and controlled from the master.
 %setup
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --prefix=/usr --root=%buildroot
+%python_build_install --prefix=/usr
 
 install -D -m 755 pkg/altlinux/salt-master.init %buildroot%_initdir/salt-master
 install -D -m 755 pkg/altlinux/salt-syndic.init %buildroot%_initdir/salt-syndic
@@ -106,8 +106,10 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man7dir/salt.7.*
 
 %files master
+%config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %_sysconfdir/salt/master
 %config %_sysconfdir/bash_completion.d/*
+%config(noreplace) %dir %_sysconfdir/bash_completion.d
 %config(noreplace) %_sysconfdir/logrotate.d/salt-master
 
 %config(noreplace) %_sysconfdir/sysconfig/salt-master
@@ -137,6 +139,7 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 
 
 %files minion
+%config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %_sysconfdir/salt/minion
 %config(noreplace) %_sysconfdir/logrotate.d/salt-minion
 
@@ -152,6 +155,9 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Tue May 13 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.17.5-alt1
+- New version
+
 * Fri Jan 10 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 0.17.4-alt1
 - New version
 
