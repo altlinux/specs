@@ -1,5 +1,5 @@
 Name: x264
-Version: 136
+Version: 142
 Release: alt1
 
 Summary: CLI H.264 encoder
@@ -70,21 +70,22 @@ This package includes %name encoder utils.
 	--system-libx264
 
 %make_build %name
-gcc %optflags -o tools/xyuv tools/xyuv.c -lSDL
 
 %install
 %make_install DESTDIR=%buildroot install
-install -pm0755 tools/{countquant_%name.pl,xyuv} %buildroot%_bindir
+install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 
 %files
 %_bindir/%name
 
 %files utils
 %doc tools/q_matrix_jvt.cfg
-%_bindir/xyuv
-%_bindir/countquant_%name.pl
+%_bindir/countquant_x264.pl
 
 %changelog
+* Sun May 11 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt1
+- updated to 142
+
 * Sun Sep 08 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 136-alt1
 - updated to 136
 

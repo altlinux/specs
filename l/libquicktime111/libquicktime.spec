@@ -24,8 +24,8 @@
 %define libname %upstreamname%abiver
 %define corename %libname-core
 Name: %libname
-Version: 1.2.2
-Release: alt1.6
+Version: 1.2.4
+Release: alt1
 
 Summary: A library for manipulating QuickTime files
 %if_with gpl
@@ -35,16 +35,9 @@ License: LGPL
 %endif
 Group: Video
 Url: http://libquicktime.sourceforge.net
-Packager: Afanasov Dmitry <ender@altlinux.org>
 
 # http://dl.sf.net/libquicktime/libquicktime-%version.tar.gz
 Source: libquicktime-%version.tar
-Patch1: libquicktime-1.1.1-soname_hack-alt.patch
-Patch2: libquicktime-1.0.2-alt-fix-libswscale.patch
-Patch3: libquicktime-%version-alt-versioned-gettext-domain.patch
-Patch4: libquicktime-1.1.1-libav9.patch
-
-Patch100: libquicktime-%version-alt-changes.patch
 
 %define dv_ver 0.102
 
@@ -231,12 +224,6 @@ Static libquicktime libraries.
 
 %prep
 %setup -q -n %upstreamname-%version
-%patch1 -p1
-#patch2 -p1
-%patch3 -p1
-%patch4 -p1 -b .libav
-
-%patch100 -p1
 
 subst 's/^\(AM_GNU_GETTEXT_VERSION.*\)/# \1/' configure.ac;
 subst 's/^SOVERSION.*/SOVERSION=%abiver/' configure.ac;
@@ -347,6 +334,9 @@ rm -f %buildroot%pluginsdir/*.la
 %endif
 
 %changelog
+* Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt1
+- 1.2.4 released
+
 * Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt1.6
 - rebuilt with recent libav/libx264
 

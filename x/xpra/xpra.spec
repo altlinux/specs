@@ -1,6 +1,6 @@
 Name: xpra
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 
@@ -84,6 +84,9 @@ patch -p1 <patches/old-libav-no0RGB.patch
 %_datadir/xpra/
 
 %changelog
+* Mon May 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.0-alt2
+- rebuilt with recent libx264
+
 * Mon Feb 17 2014 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 - build with Cython 0.20

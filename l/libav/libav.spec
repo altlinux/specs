@@ -71,7 +71,7 @@
 # }}}
 
 Name: libav
-Version: 9.12
+Version: 10.1
 Release: alt1
 Epoch: 1
 
@@ -124,39 +124,39 @@ Obsoletes: ffmpeg-doc
 %package -n avserver
 Summary: A streaming server for both audio and video
 Group: Video
-Requires: libavcodec54 = %epoch:%version-%release
-Requires: libavformat54 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Provides: ffserver = %epoch:%version-%release
 Obsoletes: ffserver
 
 %package -n avplay
 Summary: A very simple media player using the libav and SDL libraries
 Group: Video
-Requires: libavcodec54 = %epoch:%version-%release
-Requires: libavformat54 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Provides: ffplay = %epoch:%version-%release
 Obsoletes: ffplay
 
 %package -n avprobe
 Summary:  Multimedia streams analyzer
 Group: Video
-Requires: libavcodec54 = %epoch:%version-%release
-Requires: libavformat54 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Provides: ffprobe = %epoch:%version-%release
 Obsoletes: ffprobe
 
 %package -n avconv
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
 Group: Video
-Requires: libavcodec54 = %epoch:%version-%release
-Requires: libavformat54 = %epoch:%version-%release
-Requires: libavutil52 = %epoch:%version-%release
-Requires: libavdevice = %epoch:%version-%release
-Requires: libavfilter3 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
+Requires: libavutil53 = %epoch:%version-%release
+Requires: libavdevice54 = %epoch:%version-%release
+Requires: libavfilter4 = %epoch:%version-%release
 Provides: ffmpeg = %epoch:%version-%release
 Obsoletes: ffmpeg
 
-%package -n libavcodec54
+%package -n libavcodec55
 Summary: libav codec library
 Group: System/Libraries
 Provides: libavcodec = %epoch:%version-%release
@@ -165,7 +165,7 @@ Obsoletes: libavcodec < %epoch:%version-%release
 %package -n libavcodec-devel
 Summary: Development files for libavcodec
 Group: Development/C
-Requires: libavcodec54 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
 Requires: libavutil-devel = %epoch:%version-%release
 
 %package -n libavcodec-devel-static
@@ -173,17 +173,17 @@ Summary: Static development files for libavcodec
 Group: Development/C
 Requires: libavcodec-devel = %epoch:%version-%release
 
-%package -n libavformat54
+%package -n libavformat55
 Summary: libav file format library
 Group: System/Libraries
-Requires: libavcodec54 = %epoch:%version-%release
+Requires: libavcodec55 = %epoch:%version-%release
 Provides: libavformat = %epoch:%version-%release
 Obsoletes: libavformat < %epoch:%version-%release
 
 %package -n libavformat-devel
 Summary: Development files for libavcodec
 Group: Development/C
-Requires: libavformat54 = %epoch:%version-%release
+Requires: libavformat55 = %epoch:%version-%release
 Requires: libavcodec-devel = %epoch:%version-%release
 
 %package -n libavformat-devel-static
@@ -191,7 +191,7 @@ Summary: Static development files for libavformat
 Group: Development/C
 Requires: libavformat-devel = %epoch:%version-%release
 
-%package -n libavutil52
+%package -n libavutil53
 Summary: libav utility library
 Group: System/Libraries
 Provides: libavutil = %epoch:%version-%release
@@ -199,7 +199,7 @@ Provides: libavutil = %epoch:%version-%release
 %package -n libavutil-devel
 Summary: Development files for libavutil
 Group: Development/C
-Requires: libavutil52 = %epoch:%version-%release
+Requires: libavutil53 = %epoch:%version-%release
 
 %package -n libavutil-devel-static
 Summary: Static development files for libavutil
@@ -236,28 +236,28 @@ Summary: Static development files for libswscale
 Group: Development/C
 Requires: libswscale-devel = %epoch:%version-%release
 
-%package -n libavdevice
+%package -n libavdevice54
 Summary: libav device handling library
 Group: System/Libraries
 
 %package -n libavdevice-devel
 Summary: Development files for libavdevice
 Group: Development/C
-Requires: libavdevice = %epoch:%version-%release
+Requires: libavdevice54 = %epoch:%version-%release
 
 %package -n libavdevice-devel-static
 Summary: Static development files for libavdevice
 Group: Development/C
 Requires: libavdevice-devel = %epoch:%version-%release
 
-%package -n libavfilter3
+%package -n libavfilter4
 Summary: libav filter handling library
 Group: System/Libraries
 
 %package -n libavfilter-devel
 Summary: Development files for libavfilter
 Group: Development/C
-Requires: libavfilter3 = %epoch:%version-%release
+Requires: libavfilter4 = %epoch:%version-%release
 
 %package -n libavfilter-devel-static
 Summary: Static development files for libavfilter
@@ -303,19 +303,19 @@ into several file formats based on DCT/motion compensation encoding.
 Sound is compressed in MPEG audio layer 2 or using an AC3 compatible
 stream.
 
-%description -n libavcodec54
+%description -n libavcodec55
 This package contains libavcodec, the libav project codec library.
 
 %description -n libavcodec-devel
 This package contains development files for libavcodec.
 
-%description -n libavformat54
+%description -n libavformat55
 This package contains libavformat, the libav project file format library.
 
 %description -n libavformat-devel
 This package contains development files for libavformat.
 
-%description -n libavutil52
+%description -n libavutil53
 This package contains libavutil, the libav project utility library.
 
 %description -n libavutil-devel
@@ -333,13 +333,13 @@ This package contains libswscale, the libav project image rescaling library.
 %description -n libswscale-devel
 This package contains development files for libswscale.
 
-%description -n libavdevice
+%description -n libavdevice54
 This package contains libavdevice, the libav project device handling library.
 
 %description -n libavdevice-devel
 This package contains development files for libavdevice.
 
-%description -n libavfilter3
+%description -n libavfilter4
 This package contains libavfilter, the libav project filter handling library.
 
 %description -n libavfilter-devel
@@ -463,7 +463,7 @@ bzip2 --best --force --keep -- Changelog
 %doc CREDITS
 %doc Changelog.*
 
-%files -n libavcodec54
+%files -n libavcodec55
 %_libdir/libavcodec.so.*
 
 %files -n libavcodec-devel
@@ -471,7 +471,7 @@ bzip2 --best --force --keep -- Changelog
 %_libdir/libavcodec.so
 %_pkgconfigdir/libavcodec.pc
 
-%files -n libavformat54
+%files -n libavformat55
 %_libdir/libavformat.so.*
 
 %files -n libavformat-devel
@@ -479,7 +479,7 @@ bzip2 --best --force --keep -- Changelog
 %_pkgconfigdir/libavformat.pc
 %_libdir/libavformat.so
 
-%files -n libavutil52
+%files -n libavutil53
 %_libdir/libavutil.so.*
 
 %files -n libavutil-devel
@@ -487,7 +487,7 @@ bzip2 --best --force --keep -- Changelog
 %_libdir/libavutil.so
 %_pkgconfigdir/libavutil.pc
 
-%files -n libavdevice
+%files -n libavdevice54
 %_libdir/libavdevice.so.*
 
 %files -n libavdevice-devel
@@ -495,7 +495,7 @@ bzip2 --best --force --keep -- Changelog
 %_libdir/libavdevice.so
 %_pkgconfigdir/libavdevice.pc
 
-%files -n libavfilter3
+%files -n libavfilter4
 %_libdir/libavfilter.so.*
 
 %files -n libavfilter-devel
@@ -571,6 +571,12 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Sun May 11 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.1-alt1
+- 10.1 released
+
+* Mon Mar 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.0-alt1
+- 10.0 released
+
 * Fri Mar 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:9.12-alt1
 - 9.12 released
 
