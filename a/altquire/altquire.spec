@@ -1,6 +1,6 @@
 Name: altquire
-Version: 0.1
-Release: alt2
+Version: 0.1.1
+Release: alt1
 
 Summary: a TUI frontend for dc3dd
 License: GPLv2+
@@ -41,6 +41,9 @@ cp -a *.sh %buildroot%aqdir/
 %aqdir
 
 %changelog
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
+- 20140512 scripts
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - made noarch
 
