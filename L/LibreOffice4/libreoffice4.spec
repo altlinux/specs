@@ -1,17 +1,17 @@
-# 4.2.3.3
+# 4.2.4.1
 %def_with forky
 %def_with parallelism
 %def_without fetch
 
 Name: LibreOffice4
 Version: 4.2
-%define urelease 3.3
+%define urelease 4.1
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -28,7 +28,8 @@ Obsoletes: %name-full < %version-%release
 
 %define with_lang ru de fr uk pt-BR es kk
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
-Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
+#Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
+Requires: gst-libav
 
 Source:		libreoffice-%uversion.tar.xz
 Source1:	libreoffice-dictionaries-%uversion.tar.xz
@@ -45,28 +46,40 @@ Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
 
 # FC patches files
-Patch11: 0001-Related-rhbz-1032774-bodge-around-reported-NULL-valu.patch
-Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch13: 0001-Resolves-rhbz-912529-Kerkis-SmallCaps-shown-instead-.patch
-Patch14: 0001-Resolves-rhbz-1038189-refresh-printer-list-when-prin.patch
+Patch11: 0001-fix-libetonyek-build.patch
+Patch12: 0001-Related-rhbz-1032774-bodge-around-reported-NULL-valu.patch
+Patch13: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch14: 0001-Resolves-rhbz-912529-Kerkis-SmallCaps-shown-instead-.patch
 Patch15: 0001-disable-firebird-unit-test.patch
 Patch16: 0001-never-run-autogen.sh.patch
 Patch17: 0001-Related-rhbz-1065807-rework-i66157-for-multiple-writ.patch
 Patch18: 0001-Resolves-rhbz-1065807-use-xdg-Templates-for-default-.patch
-Patch19: 0001-explictly-list-common-lang-independant-template-dir.patch
-Patch20: 0001-rhbz-1057977-avoid-use-of-invalidated-pointers.patch
-Patch21: 0001-fdo-75540-setProcessServiceFactory-must-be-called-be.patch
-Patch22: 0001-KDE-don-t-throw-on-TemplatePathVariable.patch
-Patch23: 0001-Resolves-rhbz-1007697-Update-on-a-Window-triggering-.patch
-Patch24: 0001-Wizards-should-look-for-templates-in-Template_intern.patch
-Patch25: 0001-actively-search-for-wizards-dir-in-all-internal-temp.patch
-Patch26: 0002-rhbz-988516-DOCX-import-fix-context-stack-when-impor.patch
-Patch27: 0001-fdo-74787-rhbz-1072553-Fix-deselection-problems-of-t.patch
-Patch28: 0001-rhbz-1072607-hopefully-fix-crash-in-SvxRuler-MouseMo.patch
-Patch29: 0001-rhbz-1043551-sw-avoid-division-by-0-in-Text-Grid-pai.patch
-Patch30: 0001-writerfilter-salvage-a-field-parameter-parsing-train.patch
-Patch31: 0001-RTF-import-fix-spurious-page-breaks-at-doc-end-relat.patch
-Patch32: 0001-Related-rhbz-1076264-intermittent-a11y-crash-in-calc.patch
+Patch19: 0001-rhbz-1057977-avoid-use-of-invalidated-pointers.patch
+Patch20: 0001-KDE-don-t-throw-on-TemplatePathVariable.patch
+Patch21: 0001-Wizards-should-look-for-templates-in-Template_intern.patch
+Patch22: 0001-actively-search-for-wizards-dir-in-all-internal-temp.patch
+Patch23: 0001-Change-SDK-javaodc-from-static-Package-to-dynamic-Ge.patch
+Patch24: 0001-Package-GeneratedPackage-fixup.patch
+Patch25: 0001-Related-rhbz-1075951-abrt-crash-in-MSWordExportBase-.patch
+Patch26: 0001-drop-OnlyShowIn-from-.desktop-files.patch
+Patch27: 0001-Resolves-rhbz-1081176-don-t-jump-to-cursor-pos-when.patch
+Patch28: 0001-prevent-KDE-Qt-from-interfering-with-the-session-man.patch
+Patch29: 0001-Resolves-fdo-36815-enable-printing-WYSIWYG-sidewindo.patch
+Patch30: 0001-Related-fdo-36815-print-the-text-highlight-range-as-.patch
+Patch31: 0001-Resolves-rhbz-1086714-overlarge-pixmap.patch
+Patch32: 0001-every-even-numbered-print-job-is-reported-as-failed.patch
+Patch33: 0001-Related-rhbz-1088625-PresenterPaintManager-seen-as-N.patch
+Patch34: 0001-table-not-resizing-when-rows-columns-added-to-it.patch
+Patch35: 0001-Fix-fdo-71423-crash-while-editing-Impress-tables.patch
+Patch36: 0001-Resolves-rhbz-1089377-crash-on-loading-a-specific-rt.patch
+Patch37: 0001-add-a-format-all-comments-feature.patch
+Patch38: 0001-Resolves-fdo-37130-use-10pt-Default-style-font-for-c.patch
+Patch39: 0001-Related-fdo-36815-center-scaled-comment-page-vertica.patch
+Patch40: 0001-crash-in-selecting-text-in-comments-midway-in-para.patch
+Patch41: 0001-Resolves-fdo-60040-crash-after-undoing-master-page-a.patch
+Patch42: 0001-Related-rhbz-1032774-slide-restarter-should-disable-.patch
+Patch43: 0001-add-X-TryExec-entries-to-desktop-files.patch
+
 
 
 # Long-term FC patches
@@ -191,28 +204,40 @@ echo Direct build
 %patch403 -p2
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
-%patch11 -p1
+#patch11 -p1
 %patch12 -p1
 %patch13 -p1
-#patch14 -p1
+%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-#patch21 -p1
+%patch21 -p1
 %patch22 -p1
-#patch23 -p1
+%patch23 -p1
 %patch24 -p1
 %patch25 -p1
-#patch26 -p1
-#patch27 -p1
-#patch28 -p1
-#patch29 -p1
-#patch30 -p1
-#patch31 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
 %patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+
 
 
 # Long-term FC patches applying
@@ -446,6 +471,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed Apr 30 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt3
+- Version up to 4.2.4.1
+
 * Wed Apr 16 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt2
 - Version up to 4.2.3.3
 
