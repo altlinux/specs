@@ -1,6 +1,6 @@
 Name: unrar
-Version: 5.1.2
-Release: alt2
+Version: 5.1.5
+Release: alt1
 
 Summary: RAR unarchiver
 License: Freely distributable
@@ -47,6 +47,9 @@ install -D libunrar.so %buildroot%_libdir/libunrar.so
 %_libdir/libunrar.so
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt1
+- Autobuild version bump to 5.1.5
+
 * Mon Apr 28 2014 Fr. Br. George <george@altlinux.ru> 5.1.2-alt2
 - Build libunrar as well (Closes: #29971)
 
