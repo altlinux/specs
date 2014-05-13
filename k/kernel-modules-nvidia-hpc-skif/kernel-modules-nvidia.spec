@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	331.49
+%define module_version	331.67
 %define module_release	alt1
 %define flavour		hpc-skif
 
@@ -33,7 +33,7 @@
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.119
+%define legacy4 304.121
 %else
 %define legacy4 %nil
 %endif
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 09 2014 Led <led@altlinux.ru> 331.67-alt1
+- new releases (331.67, 304.121)
 
 * Fri Feb 21 2014 Led <led@altlinux.ru> 331.49-alt1
 - new release (331.49)
