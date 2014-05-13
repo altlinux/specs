@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
 Version: 3.10.21
-Release: alt7
+Release: alt8
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,10 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Tue May 13 2014 Led <led@altlinux.ru> 3.10.21-alt8
+- updates from linux-3.10.40:
+  + KVM: ioapic: fix assignment of ioapic->rtc_status.pending_eoi (CVE-2014-0155)
+
 * Wed Apr 02 2014 Led <led@altlinux.ru> 3.10.21-alt7
 - updates from linux-3.10.35:
   + KVM: MMU: handle invalid root_hpa at __direct_map
