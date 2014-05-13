@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 0.0
 %def_disable static
 %def_enable introspection
 
 Name: libcryptui
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: Library for OpenPGP prompts
 
@@ -127,6 +127,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
