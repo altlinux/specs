@@ -1,6 +1,6 @@
 %define dist Image-MetaData-JPEG
 Name: perl-%dist
-Version: 0.155
+Version: 0.156
 Release: alt1
 
 Summary: Perl extension for showing/modifying JPEG (meta)data
@@ -40,6 +40,9 @@ modified and rewritten to disk.
 %perl_vendor_privlib/Image
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.156-alt1
+- automated CPAN update
+
 * Wed Feb 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.155-alt1
 - automated CPAN update
 
