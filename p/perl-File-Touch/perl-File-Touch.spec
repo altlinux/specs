@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-File-Touch
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: update access and modification timestamps, creating nonexistent files where necessary
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/File-Touch-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jul 10 2010
 BuildRequires: perl-devel
@@ -75,6 +75,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/File/*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sat Jul 10 2010 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - initial build for ALT Linux Sisyphus
 
