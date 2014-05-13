@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Params-Validate
 Name: perl-%dist
-Version: 1.08
-Release: alt2
+Version: 1.10
+Release: alt1
 
 Summary: Validate method/function parameters
 License: GPL or Artistic
@@ -10,7 +11,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Params-Validate-%{version}.tar.gz
 
-BuildRequires: perl-Attribute-Handlers perl-Module-Build perl-Module-Implementation perl-Test-Fatal
+BuildRequires: perl-Attribute-Handlers perl-Module-Build perl-Module-Implementation perl-Test-Fatal perl(Test/Requires.pm)
 
 %description
 The Params::Validate module allows you to validate method or function
@@ -37,6 +38,9 @@ and that no unspecified additional parameters were passed in.
 %perl_vendor_archlib/Attribute
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt2
 - built for perl 5.18
 
