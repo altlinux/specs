@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher
 
 Name: docs-%variant
-Version: 7.0
-Release: alt4
+Version: 7.0.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -22,7 +22,8 @@ Source: %name-%version-%release.tar
 Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
 
 BuildRequires(pre):rpm-build-licenses
-BuildRequires: asciidoc-a2x
+BuildRequires: publican
+BuildRequires: perl-podlators
 
 %description
 %Variant documentation.
@@ -42,6 +43,10 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue May 13 2014 Artem Zolochevskiy <azol@altlinux.ru> 7.0.1-alt1
+- switch to publican
+- fix screenshots
+
 * Tue Jun 25 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt4
 - update dvd- usb-burn section
 
