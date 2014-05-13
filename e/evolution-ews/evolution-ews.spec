@@ -1,7 +1,7 @@
 %define ver_major 3.12
 
 Name: evolution-ews
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Group: Networking/Mail
@@ -71,6 +71,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/evolution-data-server/ews/windowsZones.xml
 
 %changelog
+* Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.2-alt1
+- 3.12.2
+
 * Mon Apr 14 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
 - 3.12.1
 
