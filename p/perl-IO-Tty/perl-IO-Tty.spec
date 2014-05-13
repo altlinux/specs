@@ -1,14 +1,14 @@
 %define dist IO-Tty
 Name: perl-%dist
-Version: 1.10
-Release: alt4
+Version: 1.11
+Release: alt1
 
 Summary: interface to pseudo tty's
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/IO-Tty-%{version}.tar.gz
 
 # always loaded when available
 Requires: perl-IO-Stty
@@ -38,6 +38,9 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_autolib/IO
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt4
 - built for perl 5.18
 
