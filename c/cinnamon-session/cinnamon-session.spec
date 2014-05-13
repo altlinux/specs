@@ -4,8 +4,8 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -122,6 +122,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon May 12 2014 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Mon May 5 2014 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt2
 - add dependence on translations package
 
