@@ -1,4 +1,5 @@
-Version: 2.9.1
+
+Version: 3.0
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -63,7 +64,6 @@ This extensions are included in package:
 - hgcia -- Send notifications to http://cia.navi.cx
 - highlight -- Highlight syntax in the file revision view of hgweb
 - imerge --Perform interactive, interruptible merges
-- inotify -- Use inotify API for instantaneous status updates
 - interhg -- Change changelog and summary text in InterWiki way
 - keyword -- Use CVS-like keyword expandsion in tracked files
 - mq -- Mercurail Patch Queues - manage changes as series of patches
@@ -131,6 +131,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Tue May 13 2014 Alexey Shabalin <shaba@altlinux.ru> 3.0-alt1
+- 3.0
+
 * Fri Mar 14 2014 Alexey Shabalin <shaba@altlinux.ru> 2.9.1-alt1
 - 2.9.1
 
