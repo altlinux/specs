@@ -1,13 +1,12 @@
 Name: libetonyek
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
 License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
-Source: http://dev-www.libreoffice.org/src/%name-%version.tar.xz
-Patch1: libetonyek-0.0.3-boost-1.53.patch
+Source: %name-%version.tar.xz
 
 BuildRequires: cppunit-devel
 
@@ -46,7 +45,6 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %configure --disable-silent-rules --disable-static --disable-werror
@@ -86,6 +84,10 @@ make check
 %_bindir/key2xhtml
 
 %changelog
+* Tue May 13 2014 Fr. Br. George <george@altlinux.ru> 0.0.4-alt1
+- Autobuild version bump to 0.0.4
+- Drop patch
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.0.3-alt1
 - Initial build from FC
 
