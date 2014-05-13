@@ -2,8 +2,8 @@
 
 %define rname baloo
 Name: kde4-baloo
-Version: 4.13.0
-Release: alt3
+Version: 4.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -100,6 +100,7 @@ echo "add_subdirectory(kcmadv)" >> src/file/CMakeLists.txt
 %_kde4_bindir/baloo_file
 %_kde4_bindir/baloo_file_cleaner
 %_kde4_bindir/baloo_file_extractor
+%_kde4_bindir/balooctl
 %_kde4_bindir/baloosearch
 %_kde4_bindir/balooshow
 %_K4exec/kde_baloo_filewatch_raiselimit
@@ -148,6 +149,9 @@ echo "add_subdirectory(kcmadv)" >> src/file/CMakeLists.txt
 %_K4libdir/libbalooxapian.so.*
 
 %changelog
+* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
+- new version
+
 * Mon Apr 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt3
 - add advanced configuration module
 
