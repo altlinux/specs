@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 8
+%define bugfix 9
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -948,6 +948,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.9-alt1
+- new version
+
 * Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.8-alt3
 - update from 4.11 branch
 

@@ -1,7 +1,7 @@
 
 %define rname kfilemetadata
 Name: kde4-kfilemetadata
-Version: 4.13.0
+Version: 4.13.1
 Release: alt1
 
 Group: System/Libraries
@@ -58,5 +58,8 @@ Summary: %name library
 %_K4libdir/cmake/KFileMetaData/
 
 %changelog
+* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
+- new version
+
 * Fri Apr 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - initial build
