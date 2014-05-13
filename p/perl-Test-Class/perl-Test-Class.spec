@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Class
 Name: perl-%dist
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: Easily create test classes in an xUnit/JUnit style
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Test-Class-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Test-Class-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ to test your code in an xUnit style.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- automated CPAN update
+
 * Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - automated CPAN update
 
