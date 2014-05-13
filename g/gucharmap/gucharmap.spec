@@ -1,5 +1,5 @@
 %def_enable introspection
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 2.90
 
 Name: gucharmap
@@ -67,7 +67,7 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the GNOME Unicode character map library
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -87,6 +87,7 @@ GObject introspection devel data for the GNOME Unicode character map library
 %_desktopdir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Charmap.enums.xml
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README TODO COPYING.UNICODE
 
 %files -n lib%name
@@ -106,6 +107,12 @@ GObject introspection devel data for the GNOME Unicode character map library
 %endif
 
 %changelog
+* Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
