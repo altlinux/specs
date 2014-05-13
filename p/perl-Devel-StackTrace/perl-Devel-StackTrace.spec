@@ -1,6 +1,6 @@
 %define module Devel-StackTrace
 Name: perl-%module
-Version: 1.31
+Version: 1.32
 Release: alt1
 Epoch: 1
 
@@ -33,6 +33,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/Devel/StackTrace*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.32-alt1
+- automated CPAN update
+
 * Wed Jan 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.31-alt1
 - automated CPAN update
 
