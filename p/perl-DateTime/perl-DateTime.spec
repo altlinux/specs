@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DateTime
 Name: perl-%dist
-Version: 1.08
+Version: 1.10
 Release: alt1
 
 Summary: DateTime base objects
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 # break dependency loop
 Requires: perl-DateTime-TimeZone
 
-BuildRequires: perl-DateTime-Locale perl-DateTime-TimeZone perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal
+BuildRequires: perl-DateTime-Locale perl-DateTime-TimeZone perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal perl(Test/Warnings.pm)
 
 %description
 DateTime is a class for the representation of date/time combinations,
@@ -37,6 +38,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Wed Mar 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
 - automated CPAN update
 
