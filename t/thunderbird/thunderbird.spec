@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.4.0
+Version:	24.5.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -458,6 +458,18 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun May 11 2014 Alexey Gladkov <legion@altlinux.ru> 24.5.0-alt1
+- New version (24.5.0).
+- Fixed:
+  + MFSA 2014-46 Use-after-free in nsHostResolve
+  + MFSA 2014-44 Use-after-free in imgLoader while resizing images
+  + MFSA 2014-43 Cross-site scripting (XSS) using history navigations
+  + MFSA 2014-42 Privilege escalation through Web Notification API
+  + MFSA 2014-38 Buffer overflow when using non-XBL object as XBL
+  + MFSA 2014-37 Out of bounds read while decoding JPG images
+  + MFSA 2014-35 Privilege escalation through Mozilla Maintenance Service Installer
+  + MFSA 2014-34 Miscellaneous memory safety hazards (rv:29.0 / rv:24.5)
+
 * Sun Mar 23 2014 Alexey Gladkov <legion@altlinux.ru> 24.4.0-alt1
 - New version (24.4.0).
 - Fixed:

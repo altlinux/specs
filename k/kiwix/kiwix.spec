@@ -2,7 +2,7 @@
 
 Name: 	 kiwix
 Version: 0.9
-Release: alt0.rc4.3.git%git_commit
+Release: alt0.rc4.4.git%git_commit
 Summary: Kiwix is an offline reader for Web content like Wikipedia
 
 License: GPLv3
@@ -87,6 +87,9 @@ ln -s %_libdir/%name/%name %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue May 13 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc4.4.git8108ee4
+- Rebuild with Xulrunner 29.x
+
 * Fri Mar 28 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc4.3.git8108ee4
 - Rebuild with Xulrunner 28.x
 - Add VK_RIGHT+ALT and VK_LEFT+ALT for pagenext()

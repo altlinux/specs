@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	28.0
+Version:	29.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -28,13 +28,9 @@ Source3:	xulrunner-mozconfig
 Source4:	xpi-mimeinfo.xml
 
 Patch0:		xulrunner-no-version.patch
-#Patch2:	xulrunner-noarch-extensions.patch
-
+Patch1:		mozilla-js-makefile.patch
 Patch10:	rhbz-966424.patch
-
 Patch100:	mozilla-192-path.patch
-#Patch101:	mozilla-pkgconfig.patch
-#Patch104:	mozilla-nongnome-proxies.patch
 
 Requires:	%name-libs = %version-%release
 
@@ -143,7 +139,7 @@ cd %_builddir/%name-%version/mozilla
 tar -xf %SOURCE1
 
 %patch0 -p1
-#patch1 -p1
+%patch1 -p1 -b .fix
 #patch2 -p1
 
 %patch10 -p1
@@ -359,6 +355,24 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Tue May 06 2014 Alexey Gladkov <legion@altlinux.ru> 29.0-alt1
+- New release (29.0).
+- Fixed:
+  + MFSA 2014-47 Debugger can bypass XrayWrappers with JavaScript
+  + MFSA 2014-46 Use-after-free in nsHostResolve
+  + MFSA 2014-45 Incorrect IDNA domain name matching for wildcard certificates
+  + MFSA 2014-44 Use-after-free in imgLoader while resizing images
+  + MFSA 2014-43 Cross-site scripting (XSS) using history navigations
+  + MFSA 2014-42 Privilege escalation through Web Notification API
+  + MFSA 2014-41 Out-of-bounds write in Cairo
+  + MFSA 2014-40 Firefox for Android addressbar suppression
+  + MFSA 2014-39 Use-after-free in the Text Track Manager for HTML video
+  + MFSA 2014-38 Buffer overflow when using non-XBL object as XBL
+  + MFSA 2014-37 Out of bounds read while decoding JPG images
+  + MFSA 2014-36 Web Audio memory corruption issues
+  + MFSA 2014-35 Privilege escalation through Mozilla Maintenance Service Installer
+  + MFSA 2014-34 Miscellaneous memory safety hazards (rv:29.0 / rv:24.5)
+
 * Fri Mar 21 2014 Alexey Gladkov <legion@altlinux.ru> 28.0-alt1
 - New release (28.0).
 - Fixed:
