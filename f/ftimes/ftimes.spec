@@ -1,6 +1,6 @@
 Name: ftimes
 Version: 3.10.0
-Release: alt1
+Release: alt2
 
 Summary: a system baselining and evidence collection tool
 License: BSD (3-clause), Apache, MIT
@@ -43,13 +43,16 @@ mv %buildroot/usr/etc/xmagic %buildroot%_sysconfdir/
 %_man1dir/*
 %_sysconfdir/*
 %doc README*
-#doc etc/*.cfg/*.cfg.*
+%doc etc/*.cfg/*.cfg.*
 #doc doc/*/
 
 # TODO:
 # - server-side?
 
 %changelog
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 3.10.0-alt2
+- added sample configuration files
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 3.10.0-alt1
 - built for ALT Linux (proposed by Maxim Suhanov)
 
