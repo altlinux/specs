@@ -4,7 +4,7 @@ BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(C
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
-Version:        2.00
+Version:        2.01
 Release:        alt1
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
@@ -123,6 +123,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
