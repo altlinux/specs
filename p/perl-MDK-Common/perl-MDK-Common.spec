@@ -1,6 +1,6 @@
 %define dist MDK-Common
 Name: perl-MDK-Common
-Version: 1.2.29
+Version: 1.2.30
 Release: alt1
 
 Summary: Various simple Perl functions
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: http://cvs.mandrakesoft.com/cgi-bin/cvsweb.cgi/soft/perl-MDK-Common/
-Source: http://www.cpan.org/authors/id/T/TV/TVIGNAUD/%{dist}-%{version}.tgz
+Source: http://www.cpan.org/authors/id/T/TV/TVIGNAUD/MDK-Common-%{version}.tgz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ Various simple perl functions created for DrakX.
 %perl_vendor_privlib/MDK/Common/*.pm
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.30-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.29-alt1
 - automated CPAN update
 
