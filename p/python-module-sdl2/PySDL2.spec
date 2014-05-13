@@ -1,5 +1,5 @@
 Name: python-module-sdl2
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 Group: Development/Python
 License: Public Domain
@@ -33,6 +33,9 @@ restrictions, nor does it rely on C code, but uses ctypes instead.
 %python_sitelibdir_noarch/sdl2*
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 0.9.2-alt1
+- Autobuild version bump to 0.9.2
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.9.1-alt1
 - Autobuild version bump to 0.9.1
 
