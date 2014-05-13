@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define pkgname RTF-Tokenizer
 
 Name:      perl-%pkgname
 Summary:   %pkgname - Tokenize RTF
-Version:   1.15
+Version:   1.18
 Release:   alt1
 License:   GPL or Artistic
 Group:     Development/Perl
@@ -40,11 +41,14 @@ install -m 755 eg/rtf{dump,diff} %buildroot%_bindir/
 find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
 
 %files
-%doc README TODO
+%doc README CHANGES
 %_bindir/*
 %perl_vendor_privlib/RTF*
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
