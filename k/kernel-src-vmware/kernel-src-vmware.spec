@@ -4,7 +4,7 @@
 
 Name: kernel-src-%mname
 Version: 6.0.2
-Release: alt1
+Release: alt2
 Summary: Linux VMWare host modules sources
 License: GPLv2
 Group: Development/Kernel
@@ -35,5 +35,8 @@ tar -C .. -cJf %kernel_srcdir/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Tue May 13 2014 Led <led@altlinux.ru> 6.0.2-alt2
+- fixed typos
+
 * Fri May 09 2014 Led <led@altlinux.ru> 6.0.2-alt1
 - initial build
