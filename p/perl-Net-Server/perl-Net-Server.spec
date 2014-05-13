@@ -1,8 +1,8 @@
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.007
-Release: alt2
+Version: 2.008
+Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -39,6 +39,9 @@ fi
 %perl_vendor_privlib/Net/Server
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 2.008-alt1
+- automated CPAN update
+
 * Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 2.007-alt2
 - fixed build
 
