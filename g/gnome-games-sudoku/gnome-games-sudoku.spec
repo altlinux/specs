@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -60,6 +60,9 @@ subst 's/gnome-games/%__name/' src/lib/defaults.py
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
