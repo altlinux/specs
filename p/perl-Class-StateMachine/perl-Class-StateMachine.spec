@@ -1,6 +1,6 @@
 %define dist Class-StateMachine
 Name: perl-%dist
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Define classes for state machines
@@ -32,6 +32,9 @@ that are dispatched depending on an internal "state" property.
 %perl_vendor_privlib/Class
 
 %changelog
+* Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
