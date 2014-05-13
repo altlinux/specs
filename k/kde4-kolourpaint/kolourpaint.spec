@@ -2,7 +2,7 @@
 
 %define rname kolourpaint
 Name: kde4-kolourpaint
-Version: 4.11.4
+Version: 4.13.1
 Release: alt1
 
 Group: Graphics
@@ -66,6 +66,12 @@ KDE 4 core library.
 
 
 %changelog
+* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
+- new version
+
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
