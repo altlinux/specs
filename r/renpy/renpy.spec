@@ -1,5 +1,5 @@
 Name: renpy
-Version: 6.17.3
+Version: 6.17.6
 Release: alt1
 Summary: A visual novel engine
 Group: Games/Adventure
@@ -150,6 +150,9 @@ cd module
 %_iconsdir/hicolor/*/apps/%name-the_question.*
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 6.17.6-alt1
+- Autobuild version bump to 6.17.6
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 6.17.3-alt1
 - Autobuild version bump to 6.17.3
 
