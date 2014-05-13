@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -29,18 +29,18 @@
 %endif
 
 %define rname poppler
-%define somajor 44
+%define somajor 46
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 24
-%define bugfix 5
+%define minor 26
+%define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -65,8 +65,7 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
-# FC
-Patch10: poppler-0.24.2-mocversiongrep.patch
+Patch100: alt-find-moc-qt5.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -269,9 +268,7 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-%patch10 -p1
-
-chmod a-x goo/GooTimer.h
+%patch100 -p1
 
 %autoreconf
 #aclocal --force -I m4
@@ -302,13 +299,10 @@ export QT4DIR=%_qt4dir
 %if_disabled qt4
     --disable-poppler-qt4 \
 %endif
-%if_enabled qt5
-    --enable-poppler-qt5 \
-%else
+%if_disabled qt5
     --disable-poppler-qt5 \
 %endif
     #
-
 %make_build
 
 %install
@@ -403,8 +397,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 0.24.5-alt2
-- build compat libraries
+* Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.0-alt1
+- new version
 
 * Fri Jan 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.24.5-alt1
 - new version
