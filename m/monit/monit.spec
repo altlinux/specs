@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.8
+Version: 5.8.1
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -138,7 +138,7 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 %preun_service %name
 
 %files
-%doc README* CHANGES examples/
+%doc README* examples/
 %config %_initdir/%name
 %ghost %attr(600,root,root) %config(noreplace,missingok) %_pemdir/*
 %dir %_sysconfdir/monitrc.d/templates/
@@ -162,6 +162,9 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 5.8.1-alt1
+- new version (watch file uupdate)
+
 * Fri Mar 28 2014 Michael Shigorin <mike@altlinux.org> 5.8-alt1
 - new version (watch file uupdate)
 - seems it's now requisite set pidfile location explicitly
