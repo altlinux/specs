@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -176,6 +176,9 @@ This package contains development documentation for GCR libraries.
 
 
 %changelog
+* Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
