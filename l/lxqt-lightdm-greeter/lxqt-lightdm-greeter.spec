@@ -1,6 +1,6 @@
 Name: lxqt-lightdm-greeter
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: LightDM greeter for LXQt
 License: LGPL
@@ -17,6 +17,9 @@ BuildRequires: liblxqt-devel libqtxdg-devel
 Requires: lightdm
 Provides: lightdm-greeter
 Provides: lightdm-lxqt-greeter
+
+Provides: lightdm-razorqt-greeter = %version
+Obsoletes: lightdm-razorqt-greeter < 0.7.0
 
 %description
 A LightDM greeter that uses the LXQt and Qt libraries.
@@ -45,6 +48,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace lightdm-razorqt-greeter
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 

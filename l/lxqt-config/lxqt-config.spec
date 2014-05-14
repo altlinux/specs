@@ -1,6 +1,6 @@
 Name: lxqt-config
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -13,6 +13,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel libqtxdg-devel libqt4-devel
 BuildRequires: rpm-build-xdg
+
+Provides: razorqt-config = %version
+Obsoletes: razorqt-config < 0.7.0
 
 %description
 %summary
@@ -36,6 +39,9 @@ BuildRequires: rpm-build-xdg
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace razorqt-config
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 

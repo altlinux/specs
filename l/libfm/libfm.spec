@@ -2,7 +2,7 @@
 
 Name: libfm
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -48,6 +48,14 @@ Conflicts: libfm2-devel
 %description devel
 This package contains files needed to build applications using LibFM.
 
+%package -n lxde-lxshortcut
+Summary: Application shortcuts editor
+Group: Graphical desktop/Other
+
+%description -n lxde-lxshortcut
+LXShortcut is a small program used to edit application shortcuts
+created with freedesktop.org Desktop Entry spec.
+
 %prep
 %setup
 sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
@@ -78,12 +86,12 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 
 %files -n %name%soname -f libfm.lang
 %_xdgconfigdir/*
-%_bindir/*
 %_libdir/*.so.*
 %_libdir/%name/modules/*.so
 %_xdgmimedir/packages/*
 %_datadir/%name/
 %_desktopdir/*
+%_bindir/libfm-pref-apps
 %doc %_man1dir/*
 
 %files devel
@@ -92,7 +100,13 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_pkgconfigdir/*
 %doc %_datadir/gtk-doc/html/%name/*
 
+%files -n lxde-lxshortcut
+%_bindir/lxshortcut
+
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt4
+- separate lxde-lxshortcut for proper dist-upgrade
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt3
 - merged 1.1.2-alt0.2.1 changelog record to please the buildsystem
 

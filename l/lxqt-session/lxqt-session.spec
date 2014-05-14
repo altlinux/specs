@@ -1,6 +1,6 @@
 Name: lxqt-session
 Version: 0.7.0
-Release: alt2
+Release: alt3
 
 Summary: Session manager
 License: LGPL
@@ -17,6 +17,9 @@ BuildRequires: libqtxdg-devel xdg-utils
 
 Requires: lxqt-common
 Requires: xdg-utils
+
+Provides: razorqt-session = %version
+Obsoletes: razorqt-session < 0.7.0
 
 %description
 %summary
@@ -40,6 +43,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt3
+- replace razorqt-session
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
 - added wmsession file
 

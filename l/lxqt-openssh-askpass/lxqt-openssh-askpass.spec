@@ -1,6 +1,6 @@
 Name: lxqt-openssh-askpass
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Used to ask for user/password with GUI for OpenSSH
 License: LGPL
@@ -12,6 +12,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel libqt4-devel
+
+Provides: razorqt-openssh-askpass = %version
+Obsoletes: razorqt-openssh-askpass < 0.7.0
 
 %description
 %summary
@@ -31,6 +34,9 @@ BuildRequires: liblxqt-devel libqt4-devel
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace razorqt-openssh-askpass
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 
