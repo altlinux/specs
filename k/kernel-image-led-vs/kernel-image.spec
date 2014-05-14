@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1860,6 +1860,12 @@ done)
 
 
 %changelog
+* Tue May 13 2014 Led <led@altlinux.ru> 3.13.11.2-alt3
+- updated:
+  + fix-virt-kvm--kvm (CVE-2014-0155)
+- added:
+  + fix-virt-kvm-arm--vgic
+
 * Sun May 11 2014 Led <led@altlinux.ru> 3.13.11.2-alt2
 - updated:
   + feat-fs-aufs
