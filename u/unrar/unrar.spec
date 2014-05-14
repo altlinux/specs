@@ -1,6 +1,6 @@
 Name: unrar
 Version: 5.1.5
-Release: alt1
+Release: alt2
 
 Summary: RAR unarchiver
 License: Freely distributable
@@ -24,6 +24,13 @@ Group: System/Libraries
 %description -n libunrar
 Shared library for extracting, testing and viewing the contents of RAR archives
 
+%package -n libunrar-devel
+Summary: Include file containing unrar API
+Group: Development/C++
+
+%description -n libunrar-devel
+%summary
+
 %prep
 %setup -n unrar
 sed -ri 's/^(lib:[[space:]]+)clean[[:space:]]+/\1/' makefile
@@ -37,6 +44,7 @@ sed -ri 's/^(lib:[[space:]]+)clean[[:space:]]+/\1/' makefile
 %install
 install -pD -m755 unrar %buildroot%_bindir/unrar
 install -D libunrar.so %buildroot%_libdir/libunrar.so
+install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 
 %files
 %_bindir/*
@@ -46,7 +54,14 @@ install -D libunrar.so %buildroot%_libdir/libunrar.so
 %doc *.txt
 %_libdir/libunrar.so
 
+%files -n libunrar-devel
+%dir %_includedir/libunrar
+%_includedir/libunrar/dll.hpp
+
 %changelog
+* Wed May 14 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt2
+- Introduce -devel package
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt1
 - Autobuild version bump to 5.1.5
 
