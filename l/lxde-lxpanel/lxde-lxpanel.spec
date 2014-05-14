@@ -3,7 +3,7 @@
 %define upstreamname lxpanel
 Name: lxde-%upstreamname
 Version: 0.5.12
-Release: alt2.g3fd2186
+Release: alt3.g3fd2186
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Summary: LXPanel is a lightweight X11 desktop panel.
@@ -74,6 +74,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.5.12-alt3.g3fd2186
+- NMU: rebuilt against current libmenu-cache
+
 * Sun Apr 27 2014 Michael Shigorin <mike@altlinux.org> 0.5.12-alt2.g3fd2186
 - NMU: added R: menu-cache (closes: #30036)
 

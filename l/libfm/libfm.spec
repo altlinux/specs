@@ -1,43 +1,52 @@
-%set_automake_version 1.11
+%define soname 4
 
 Name: libfm
-Summary: core part of pcmanfm
-Version: 1.1.2
-Release: alt0.2.1
-License: GPL
-Group: File tools
-Url: http://pcmanfm.sourceforge.net/
+Version: 1.2.0
+Release: alt3
 
-Source: %name-%version.tar.gz
+Summary: Core library of PCManFM file manager
+License: GPL
+Group: System/Libraries
+
+Url: http://lxqt.org
+Source: %name-%version.tar
 
 BuildPreReq: rpm-build-xdg
-BuildRequires: intltool libmenu-cache-devel gtk-doc
+BuildRequires: intltool libmenu-cache-devel
 BuildRequires: libdbus-glib-devel libudisks2-devel
-BuildRequires: libgtk+2-devel >= 2.18.0
-BuildRequires: glib2-devel >= 2.27.1
+BuildRequires: glib2-devel libgtk+2-devel gtk-doc
 BuildRequires: vala >= 0.13.0
+BuildRequires: libexif-devel
+BuildRequires: libxslt-devel
+
+BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: libqt4-devel
+BuildRequires: libqtxdg-devel
+
+Conflicts: libfm2
 
 %description
-Description: LibFM is a GIO-based library used to develop file
-manager-like programs. It is developed as the core of next generation
-PCManFM and takes care of all file-related operations such as
-copy & paste, drag & drop, file associations or thumbnail support. By
-utilizing glib/gio and gvfs, libfm can access remote filesystems
-supported by gvfs.
+LibFM is a core library of PCManFM file manager.
+
+%package -n %name%soname
+Summary: %summary
+Group: System/Libraries
+
+%description -n %name%soname
+LibFM is a core library of PCManFM file manager.
+
+It is developed as the core of next generation PCManFM and takes care
+of all file-related operations such as copy & paste, drag & drop, file
+associations or thumbnail support. By utilizing glib/gio and gvfs
+libfm can access remote filesystems supported by gvfs.
 
 %package devel
-Summary: devel files for libmanfm
+Summary: Development files for %name
 Group: Development/Other
+Conflicts: libfm2-devel
 
 %description devel
-This package contains files needed to build libfm-dependent applications
-
-%package devel-static
-Summary: static devel
-Group: Development/Other
-
-%description devel-static
-This package contains files needed to statically link to libfm
+This package contains files needed to build applications using LibFM.
 
 %prep
 %setup
@@ -46,113 +55,58 @@ sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
 
 %build
 %configure \
+    --disable-static \
+    --disable-silent-rules \
+    --with-gtk=2 \
+    --enable-gtk-doc \
     --enable-largefile \
     --enable-udisks \
     --sysconfdir=/etc
 
-%make
+%make_build
 
 # FIXME: tilda versions don't work with RPM in general
 sed -i 's,\~[a-z0-9]*,,g' libfm*.pc
 
 %install
-make DESTDIR=%buildroot install
-%find_lang %name
+%makeinstall_std
+%find_lang libfm
 
-# FIXME: consider gtk3 build later, don't pull it in right now
+# Remove unnecessary files
+rm -f %buildroot%_libdir/%name/modules/*.la
 rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 
-%files -f %name.lang
+%files -n %name%soname -f libfm.lang
 %_xdgconfigdir/*
 %_bindir/*
 %_libdir/*.so.*
-
+%_libdir/%name/modules/*.so
 %_xdgmimedir/packages/*
 %_datadir/%name/
 %_desktopdir/*
-%_man1dir/*
+%doc %_man1dir/*
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-
-%files devel-static
-%_libdir/*.a
+%doc %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt3
+- merged 1.1.2-alt0.2.1 changelog record to please the buildsystem
+
+* Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
+- re-enabled gtk support (reverted to gtk2 though) for pcmanfm
+
+* Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- disabled gtk support (upstream chose Qt instead of GTK3)
+  + thus dropped libfm-pref-apps, lxshortcut
+- renamed main subpackage according to shared libs policy
+
+* Fri Mar 07 2014 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt0.rc1.1
+- Build libfm 1.2.0 as separate package
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt0.2.1
 - Fixed build
-
-* Fri Aug 16 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.2-alt0.2
-- new version (1.1.2)
-
-* Wed Jan 23 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.0-alt2
-- updated udisks2 buildreq
-
-* Tue Nov 06 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt1
-- new version (1.1.0)
-
-* Wed Oct 31 2012 Radik Usupov <radik@altlinux.org> 1.0.2-alt1
-- new version (1.0.2). Thanks Andrej N. Gritsenko!
-
-* Thu Oct 04 2012 Radik Usupov <radik@altlinux.org> 1.0.1-alt1
-- new version (1.0.1)
-
-* Thu Aug 16 2012 Radik Usupov <radik@altlinux.org> 1.0-alt1
-- new version (1.0)
-
-* Tue Jun 12 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt3
-- new snapshot
-
-* Wed Feb 22 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt2
-- new snapshot
-
-* Tue Jan 31 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt1
-- new version (0.1.17)
-
-* Wed Aug 31 2011 Radik Usupov <radik@altlinux.org> 0.1.16-alt1
-- new snapshot
-
-* Thu Jul 14 2011 Mykola Grechukh <gns@altlinux.ru> 0.1.15-alt6
-- new upstream snapshot
-- fixed bug with DnD folder to bookmarks
-
-* Wed Jul 06 2011 Mykola Grechukh <gns@altlinux.ru> 0.1.15-alt5
-- new upstream snapshot
-
-* Tue May 31 2011 Mykola Grechukh <gns@altlinux.ru> 0.1.15-alt4
-- new snapshot
-
-* Tue Apr 26 2011 Mykola Grechukh <gns@altlinux.ru> 0.1.15-alt3
-- new snapshot
-
-* Tue Mar 01 2011 Timur Aitov <timonbl4@altlinux.org> 0.1.15-alt1
-- new snapshot
-
-* Mon Oct 25 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.14-alt1
-- new snapshot
-
-* Thu Sep 23 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.13-alt3
-- new snapshot
-
-* Fri Aug 27 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.13-alt2
-- udisks support activated
-
-* Wed Jul 21 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.13-alt1
-- new upstream version
-
-* Sun May 30 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.12-alt1
-- new upstream version
-
-* Tue May 04 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.11-alt1
-- new upstream version
-
-* Mon Apr 26 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.10-alt1
-- new version
-
-* Mon Apr 12 2010 Nick S. Grechukh <gns@altlinux.ru> 0.1.9-alt1
-- new version
-
-* Fri Mar 12 2010 Nick S. Grechukh <gns@altlinux.ru> 0.1.5-alt1
-- first build

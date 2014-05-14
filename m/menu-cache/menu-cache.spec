@@ -1,28 +1,28 @@
 Name: menu-cache
-Version: 0.4.1.10
-Release: alt1.g1a48be7
+Version: 0.5.1
+Release: alt1
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
 License: GPL
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
-Source: %name-%version.tar.gz
+Url: http://lxqt.org
+Source: %name-%version.tar
+Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: glib2-devel pkg-config
 BuildRequires: gtk-doc libgio-devel
 
 %description
-Libmenu-cache is a library creating and utilizing caches to speed up
+libmenu-cache is a library creating and utilizing caches to speed up
 the manipulation for freedesktop.org defined application menus.
 It can be used as a replacement of libgnome-menu of gnome-menus.
 
 Advantages:
 1. Shorten time for loading menu entries.
 2. Ease of use. (API is very similar to that of libgnome-menu)
-3. Lightweight runtime library. (Parsing of the menu definition files 
+3. Lightweight runtime library. (Parsing of the menu definition files
    are done by menu-cache-gen when the menus are really changed.)
 4. Less unnecessary and complicated file monitoring.
 5. Heavily reduced disk I/O.
@@ -31,35 +31,25 @@ Advantages:
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
 License: LGPL
 Group: System/Libraries
+
 %description -n lib%name
-Libmenu-cache is a library creating and utilizing caches to speed up
+libmenu-cache is a library creating and utilizing caches to speed up
 the manipulation for freedesktop.org defined application menus.
 It can be used as a replacement of libgnome-menu of gnome-menus.
 
-Advantages:
-1. Shorten time for loading menu entries.
-2. Ease of use. (API is very similar to that of libgnome-menu)
-3. Lightweight runtime library. (Parsing of the menu definition files 
-   are done by menu-cache-gen when the menus are really changed.)
-4. Less unnecessary and complicated file monitoring.
-5. Heavily reduced disk I/O.
+This package contains shared libraries for libmenu-cache.
 
 %package -n lib%name-devel
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
 License: LGPL
-Group: System/Libraries
+Group: Development/C
+
 %description -n lib%name-devel
-Libmenu-cache is a library creating and utilizing caches to speed up
+libmenu-cache is a library creating and utilizing caches to speed up
 the manipulation for freedesktop.org defined application menus.
 It can be used as a replacement of libgnome-menu of gnome-menus.
 
-Advantages:
-1. Shorten time for loading menu entries.
-2. Ease of use. (API is very similar to that of libgnome-menu)
-3. Lightweight runtime library. (Parsing of the menu definition files 
-   are done by menu-cache-gen when the menus are really changed.)
-4. Less unnecessary and complicated file monitoring.
-5. Heavily reduced disk I/O.
+This package contains development headers for libmenu-cache.
 
 %prep
 %setup
@@ -67,7 +57,6 @@ Advantages:
 %build
 %autoreconf
 %configure --libexecdir=%_libexecdir/%name
-
 %make_build
 
 %install
@@ -75,17 +64,25 @@ Advantages:
 %find_lang %name
 
 %files -f %name.lang
-%doc ChangeLog INSTALL README
+%doc ChangeLog README
 %_libexecdir/%name
+
 %files -n lib%name
 %_libdir/*.so.*
+
 %files -n lib%name-devel
 %_libdir/*.so
-%exclude %_libdir/*.a
 %_pkgconfigdir/*.pc
 %_includedir/%name
+%exclude %_libdir/*.a
 
 %changelog
+* Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.1-alt1
+- 0.5.1
+- reworked upstream git use scheme
+- spec cleanup
+- updated Url:
+
 * Wed Jan 23 2013 Mykola Grechukh <gns@altlinux.ru> 0.4.1.10-alt1.g1a48be7
 - updated from upstream git
 
