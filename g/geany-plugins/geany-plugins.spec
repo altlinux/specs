@@ -1,7 +1,7 @@
-%define geany_ver 1.23.1
+%define geany_ver 1.24.1
 Name: geany-plugins
-Version: 1.23
-Release: alt2
+Version: 1.24
+Release: alt1
 
 Summary: Plugins for Geany
 
@@ -67,6 +67,9 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 1.24-alt1
+- Autobuild version bump to 1.24
+
 * Thu May 23 2013 Fr. Br. George <george@altlinux.ru> 1.23-alt2
 - Rebuild with geany 1.23.1
 
