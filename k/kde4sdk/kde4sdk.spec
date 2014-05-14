@@ -9,7 +9,7 @@
 Name: kde4sdk
 %define major 4
 %define minor 13
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -383,6 +383,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4libdir/libkasten2gui.so.*
 
 %files dolphin
+%_K4lib/fileviewdropboxplugin.so
 %_K4lib/fileviewgitplugin.so
 %_K4lib/fileviewsvnplugin.so
 %_K4lib/fileviewbazaarplugin.so
@@ -390,6 +391,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4cfg/fileviewsvnpluginsettings.kcfg
 %_K4cfg/fileviewgitpluginsettings.kcfg
 %_K4cfg/fileviewhgpluginsettings.kcfg
+%_K4srv/fileviewdropboxplugin.desktop
 %_K4srv/fileviewgitplugin.desktop
 %_K4srv/fileviewsvnplugin.desktop
 %_K4srv/fileviewbazaarplugin.desktop
@@ -576,6 +578,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Wed May 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
+- new version
+
 * Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
