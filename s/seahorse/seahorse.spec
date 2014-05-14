@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -43,12 +43,10 @@ BuildRequires: vala-tools
 %{?_enable_ldap:BuildPreReq: libldap-devel}
 %{?_enable_hkp:BuildPreReq: libsoup-devel >= 2.4}
 %{?_enable_gnome_keyring:BuildPreReq: libsecret-devel >= 0.5}
-%{?_enable_pkcs11:BuildPreReq: gcr-libs-devel >= 3.11.91}
+%{?_enable_pkcs11:BuildPreReq: gcr-libs-devel >= 3.11.91 gcr-libs-vala}
 %{?_enable_sharing:BuildPreReq: libavahi-glib-devel >= 0.6 libavahi-devel }
 %{?_enable_ssh:BuildPreReq: openssh openssh-clients}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-
-BuildRequires: libSM-devel
 BuildRequires: gtk-doc docbook-dtds gcc-c++ perl-XML-Parser
 BuildRequires: rpm-build-licenses
 BuildRequires: desktop-file-utils
@@ -57,7 +55,7 @@ BuildRequires: desktop-file-utils
 Seahorse is a password and encryption key manager for GNOME desktop.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -101,6 +99,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
