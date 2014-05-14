@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt3
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1860,6 +1860,27 @@ done)
 
 
 %changelog
+* Wed May 14 2014 Led <led@altlinux.ru> 3.13.11.2-alt6
+- updated:
+  + fix-arch-x86
+- added:
+  + fix-drivers-usb-host--xhci-hcd
+
+* Wed May 14 2014 Led <led@altlinux.ru> 3.13.11.2-alt5
+- updated:
+  + fix-arch-x86
+  + fix-virt-kvm--kvm
+- added:
+  + fix-drivers-platform--pvpanic
+
+* Tue May 13 2014 Led <led@altlinux.ru> 3.13.11.2-alt4
+- updated:
+  + fix-drivers-video--fb
+- added:
+  + fix-drivers-video--uvesafb
+  + fix-drivers-video-console--fbcon
+- enabled CIFS_SMB2
+
 * Tue May 13 2014 Led <led@altlinux.ru> 3.13.11.2-alt3
 - updated:
   + fix-virt-kvm--kvm (CVE-2014-0155)
