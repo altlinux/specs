@@ -3,7 +3,7 @@
 %define rname sflphone-client-kde
 Name: sflphone-client-kde4
 Version: 1.3.0
-Release: alt2
+Release: alt3
 %define sflphone_version 1.3.0
 
 Group: Communications
@@ -18,12 +18,17 @@ Provides: sflphone-client-kde = %EVR
 Obsoletes: sflphone-client-kde < %EVR
 
 Source: %rname-%version.tar
+# ALT
 Patch1: alt-fix-compile.patch
+# Ubuntu
+Patch10: kubuntu_sflphone-kde-startup-hang.patch
+# https://projects.savoirfairelinux.com/issues/46029
+Patch100: 46029.patch
 
 # Automatically added by buildreq on Tue Feb 19 2013 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde-common-devel kde4libs kde4libs-devel kde4pimlibs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libsystemd-daemon libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: akonadi-devel boost-devel-headers gcc-c++ glib2-devel kde4-nepomuk-core-devel kde4pimlibs-devel libqt3-devel python-module-distribute rpm-build-ruby xorg-xf86miscproto-devel zlib-devel-static
-BuildRequires: akonadi-devel boost-devel gcc-c++ glib2-devel kde4-nepomuk-core-devel kde4pimlibs-devel zlib-devel
+BuildRequires: akonadi-devel boost-devel gcc-c++ glib2-devel kde4pimlibs-devel zlib-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -62,6 +67,8 @@ Requires: %name-common = %EVR
 %prep
 %setup -qn %rname-%version
 %patch1 -p1
+%patch10 -p2
+%patch100 -p1
 
 %build
 %K4build \
@@ -101,6 +108,13 @@ Requires: %name-common = %EVR
 %_K4libdir/libqtsflphone.so.*
 
 %changelog
+* Wed May 14 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt3
+- fix hang with new akonadi
+- fix build requires
+
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1.M70P.1
+- built for M70P
+
 * Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
 - rebuilt with new sflphone
 
