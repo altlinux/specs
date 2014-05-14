@@ -1,6 +1,6 @@
 Name: liblxqt
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Core utility library for LXDE-Qt components
 License: LGPL
@@ -13,6 +13,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libqt4-devel
 BuildRequires: libqtxdg-devel
+
+Provides: librazorqt = %version
+Obsoletes: librazorqt < 0.7.0
 
 %description
 %summary
@@ -57,6 +60,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace librazorqt
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 

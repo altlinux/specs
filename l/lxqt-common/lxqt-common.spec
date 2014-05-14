@@ -1,8 +1,8 @@
 Name: lxqt-common
 Version: 0.7.0
-Release: alt3
+Release: alt4
 
-Summary: Default configuration files for LXDE-Qt desktop session
+Summary: Default configuration files for LXQt desktop session
 License: LGPL
 Group: Graphical desktop/Other
 
@@ -17,6 +17,12 @@ BuildRequires: liblxqt-devel libqt4-devel
 BuildRequires: rpm-build-xdg
 
 Requires: dbus-tools-gui
+
+Provides: razorqt = %version
+Obsoletes: razorqt < 0.7.0
+
+Provides: razorqt-desktop = %version
+Obsoletes: razorqt-desktop < 0.7.0
 
 %description
 %summary
@@ -39,6 +45,9 @@ Requires: dbus-tools-gui
 %_datadir/lxqt/
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt4
+- replace razorqt, razorqt-desktop
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt3
 - noarch
 
