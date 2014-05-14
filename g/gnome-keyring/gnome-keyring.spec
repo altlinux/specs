@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -96,7 +96,7 @@ and start the keyring daemon.
 %_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring
 %_libdir/pkcs11
-#%_man1dir/%name-daemon.1.*
+%_man1dir/*
 
 %if_enabled pam
 %files -n pam_%name
@@ -110,6 +110,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
