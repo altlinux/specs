@@ -7,7 +7,7 @@
 Name: kde4utils
 %define major 4
 %define minor 13
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Wed May 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
+- new version
+
 * Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
