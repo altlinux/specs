@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
 Version: 3.5
-Release: alt1.svn20131201
+Release: alt1.svn20140514
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -545,6 +545,41 @@ software.
 A Coopr plugin that creates NEOS solvers, as well as a solver manager
 that can employ these solvers.
 
+%package bilevel
+Summary: A Coopr package that supports modeling of bilevel programs
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description bilevel
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+A Coopr package that supports modeling of bilevel programs.
+
+%package mpec
+Summary: Coopr modeling extensions for Mathematical Programming with Equilibrium Constraints (MPEC)
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description mpec
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+Coopr modeling extensions for Mathematical Programming with
+Equilibrium Constraints (MPEC).
+
 %package tests
 Summary: Tests for Coopr
 Group: Development/Python
@@ -563,6 +598,8 @@ Requires: %name-extras = %version-%release
 Requires: %name-openopt = %version-%release
 Requires: %name-dae = %version-%release
 Requires: %name-solvers = %version-%release
+Requires: %name-bilevel = %version-%release
+Requires: %name-mpec = %version-%release
 #Requires: %name-os = %version-%release
 %py_requires pyutilib.dev.runtests pyutilib.th pyutilib.component.app
 %py_requires pyutilib.component.loader pyutilib.autotest
@@ -844,6 +881,18 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname.neos*
 %python_sitelibdir/%oname/neos
 
+%files bilevel
+%doc %oname.bilevel/trunk/*.txt
+%python_sitelibdir/%oname.bilevel*
+%python_sitelibdir/%oname/bilevel
+%exclude %python_sitelibdir/%oname/bilevel/tests
+
+%files mpec
+%doc %oname.mpec/trunk/*.txt
+%python_sitelibdir/%oname.mpec*
+%python_sitelibdir/%oname/mpec
+%exclude %python_sitelibdir/%oname/mpec/tests
+
 %files tests
 %_bindir/test*
 %python_sitelibdir/%oname/colin/tests
@@ -865,8 +914,13 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/openopt/test*
 %python_sitelibdir/%oname/dae/test*
 %python_sitelibdir/%oname/solvers/tests
+%python_sitelibdir/%oname/bilevel/tests
+%python_sitelibdir/%oname/mpec/tests
 
 %changelog
+* Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.svn20140514
+- New snapshot
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.svn20131201
 - Version 3.5
 
