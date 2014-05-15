@@ -6,7 +6,7 @@
 
 Name:    gambas
 Version: 2.24.0
-Release: alt6
+Release: alt7
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -809,6 +809,15 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Thu May 15 2014 Sergey V Turchin <zerg@altlinux.org> 2.24.0-alt7
+- rebuilt with new poppler
+
+* Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 2.24.0-alt5.M70P.2
+- rebuilt with new poppler
+
+* Wed Aug 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt5.M70P.1
+- Backport to p7 branch
+
 * Wed Aug 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt6
 - Install correct icon for desktop file
 
