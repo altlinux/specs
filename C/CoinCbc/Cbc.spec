@@ -3,8 +3,8 @@
 
 %define oname Cbc
 Name: Coin%oname
-Version: 2.8.7
-Release: alt1.svn20131129
+Version: 2.8.9
+Release: alt1.svn20140513
 Summary: COIN-OR Branch-and-Cut MIP Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -147,6 +147,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/%oname-driver
 
 %changelog
+* Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.9-alt1.svn20140513
+- Version 2.8.9
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt1.svn20131129
 - Version 2.8.7
 
