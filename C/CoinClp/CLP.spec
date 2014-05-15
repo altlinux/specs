@@ -4,7 +4,7 @@
 %define oname Clp
 Name: Coin%oname
 Version: 1.15.5
-Release: alt1.svn20131130
+Release: alt1.svn20140507
 Summary: COIN-OR Linear Programming Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -115,7 +115,7 @@ sed -i 's|\(termcap\)|\1 tinfo|' Clp/configure
 	--with-dot
 TOPDIR=$PWD
 %make_build TOPDIR=$TOPDIR
-rm -f $(find ./ -name 'libOsiClp.*')
+rm -f $(find ./ -name 'libOsiClp.*') $(find ./ -name 'libClpSolver.*')
 %make_build TOPDIR=$TOPDIR ADDLIB=-lClp
 
 #make_build -C %oname/examples TOPDIR=$TOPDIR MPIDIR=%mpidir
@@ -164,6 +164,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/*driver
 
 %changelog
+* Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.5-alt1.svn20140507
+- New snapshot
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.5-alt1.svn20131130
 - Version 1.15.5
 
