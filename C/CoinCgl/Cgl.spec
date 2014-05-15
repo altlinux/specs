@@ -3,8 +3,8 @@
 
 %define oname Cgl
 Name: Coin%oname
-Version: 0.58.4
-Release: alt1.svn20131121
+Version: 0.58.6
+Release: alt1.svn20140317
 Summary: COIN-OR Cut Generation Library
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -139,6 +139,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/*
 
 %changelog
+* Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.58.6-alt1.svn20140317
+- Version 0.58.6
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.58.4-alt1.svn20131121
 - Version 0.58.4
 
