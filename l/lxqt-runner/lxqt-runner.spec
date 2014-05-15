@@ -1,6 +1,6 @@
 Name: lxqt-runner
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Tool used to launch programs quickly by typing their names
 License: LGPL
@@ -14,6 +14,9 @@ BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel libqt4-devel
 BuildRequires: libqtxdg-devel
 BuildRequires: lxqt-globalkeys-devel
+
+Provides: razorqt-runner = %version
+Obsoletes: razorqt-runner < 0.7.0
 
 %description
 %summary
@@ -34,6 +37,9 @@ BuildRequires: lxqt-globalkeys-devel
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace razorqt-runner
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 
