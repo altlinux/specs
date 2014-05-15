@@ -3,7 +3,7 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.8.13
+Version: 0.8.14
 Release: alt1
 
 Summary: An nsswitch module which uses directory servers
@@ -18,8 +18,6 @@ Source3: nslcd.tmpconf
 Source4: nslcd.service
 Patch:   %name-0.8.10-alt-DSO.patch
 Patch1:	 %name-nslcd-user-name.patch
-Patch2:  %name-0.8.13-In-nslcd-log-EPIPE-only-on-debug-level.patch
-Patch3:  %name-0.8.13-Use-a-timeout-when-skipping-remaining-result-data.patch
 
 Requires: nscd
 Requires: su
@@ -44,13 +42,13 @@ nsswitch module.
 %setup
 %patch -p2
 %patch1 -p2
-%patch2 -p1
-%patch3 -p1
 %autoreconf
 
 
 %build
 %add_optflags -I%_includedir/krb5
+# Override man generator name
+export DOCBOOK2X_MAN=/usr/bin/db2x_docbook2man
 %configure \
 	--with-ldap-conf-file=%_sysconfdir/nslcd.conf \
 	--with-pam-seclib-dir=/%_lib/security \
@@ -177,6 +175,10 @@ exit 0
 %endif
 
 %changelog
+* Wed May 14 2014 Andrey Cherepanov <cas@altlinux.org> 0.8.14-alt1
+- New version
+- Implement an -n switch to not daemonise
+
 * Thu Jan 30 2014 Andrey Cherepanov <cas@altlinux.org> 0.8.13-alt1
 - New version
 - Log EPIPE only on debug level
