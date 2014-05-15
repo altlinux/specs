@@ -1,20 +1,21 @@
 Name: leafnode
-Version: 1.11.8
-Release: alt1.qa1
+Version: 1.11.10
+Release: alt1
 
-Summary: Leafnode - a leafsite NNTP server
+Summary: a leafsite NNTP server
 License: Artistic
 Group: System/Servers
 
 Url: http://www.leafnode.org
-Source: ftp://wpxx02.toxi.uni-wuerzburg.de/pub/%name-%version.tar.bz2
+Source0: ftp://wpxx02.toxi.uni-wuerzburg.de/pub/%name-%version.tar.bz2
 Source1: %name.texpire
 Source2: %name.filters
 Source3: %name.xinetd
+Source4: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Leafnode - небольшой NNTP-сервер
-Summary(uk_UA.KOI8-U): Leafnode - невеличкий NNTP-сервер
+Summary(ru_RU.UTF-8): п╫п╣п╠п╬п╩я▄я┬п╬п╧ NNTP-я│п╣я─п╡п╣я─
+Summary(uk_UA.UTF-8): п╫п╣п╡п╣п╩п╦я┤п╨п╦п╧ NNTP-я│п╣я─п╡п╣я─
 
 # NOTE: buildreq would catch %_sbindir/tcpd from and add tcp_wrappers :-/
 # So don't run that on this. -- mike
@@ -32,17 +33,17 @@ connection to the internet. It supports a subset of NNTP and is able to
 automatically fetch the newsgroups the user reads regularly from the
 newsserver of the ISP and push the posted messages.
 
-%description -l ru_RU.KOI8-R
-Leafnode - небольшой NNTP-сервер для "домашних" новостей при отсутствии
-постоянного соединения с Internet.  Он поддерживает подмножество NNTP
-и позволяет автоматически доставлять группы новостей и отправлять
-сообщения при помощи news-сервера провайдера.
+%description -l ru_RU.UTF-8
+Leafnode - п╫п╣п╠п╬п╩я▄я┬п╬п╧ NNTP-я│п╣я─п╡п╣я─ п╢п╩я▐ "п╢п╬п╪п╟я┬п╫п╦я┘" п╫п╬п╡п╬я│я┌п╣п╧ п©я─п╦ п╬я┌я│я┐я┌я│я┌п╡п╦п╦
+п©п╬я│я┌п╬я▐п╫п╫п╬пЁп╬ я│п╬п╣п╢п╦п╫п╣п╫п╦я▐ я│ Internet.  п·п╫ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п©п╬п╢п╪п╫п╬п╤п╣я│я┌п╡п╬ NNTP
+п╦ п©п╬п╥п╡п╬п╩я▐п╣я┌ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╦ п╢п╬я│я┌п╟п╡п╩я▐я┌я▄ пЁя─я┐п©п©я▀ п╫п╬п╡п╬я│я┌п╣п╧ п╦ п╬я┌п©я─п╟п╡п╩я▐я┌я▄
+я│п╬п╬п╠я┴п╣п╫п╦я▐ п©я─п╦ п©п╬п╪п╬я┴п╦ news-я│п╣я─п╡п╣я─п╟ п©я─п╬п╡п╟п╧п╢п╣я─п╟.
 
-%description -l uk_UA.KOI8-U
-Leafnode - невеличкий NNTP-сервер для "домашн╕х" новин за в╕дсутност╕
-пост╕йного з'╓днання з Internet.  В╕н п╕дтриму╓ п╕дмножину NNTP та
-дозволя╓ автоматично приймати групи новин та в╕дсилати листи за
-допомогою news-серверу провайдера.
+%description -l uk_UA.UTF-8
+Leafnode - п╫п╣п╡п╣п╩п╦я┤п╨п╦п╧ NNTP-я│п╣я─п╡п╣я─ п╢п╩я▐ "п╢п╬п╪п╟я┬п╫Б∙∙я┘" п╫п╬п╡п╦п╫ п╥п╟ п╡Б∙∙п╢я│я┐я┌п╫п╬я│я┌Б∙∙
+п©п╬я│я┌Б∙∙п╧п╫п╬пЁп╬ п╥'Б∙⌠п╢п╫п╟п╫п╫я▐ п╥ Internet.  п▓Б∙∙п╫ п©Б∙∙п╢я┌я─п╦п╪я┐Б∙⌠ п©Б∙∙п╢п╪п╫п╬п╤п╦п╫я┐ NNTP я┌п╟
+п╢п╬п╥п╡п╬п╩я▐Б∙⌠ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╫п╬ п©я─п╦п╧п╪п╟я┌п╦ пЁя─я┐п©п╦ п╫п╬п╡п╦п╫ я┌п╟ п╡Б∙∙п╢я│п╦п╩п╟я┌п╦ п╩п╦я│я┌п╦ п╥п╟
+п╢п╬п©п╬п╪п╬пЁп╬я▌ news-я│п╣я─п╡п╣я─я┐ п©я─п╬п╡п╟п╧п╢п╣я─п╟.
 
 %prep
 %setup
@@ -57,12 +58,10 @@ Leafnode - невеличкий NNTP-сервер для "домашн╕х" новин за в╕дсутност╕
 %install
 install -d %buildroot%_sysconfdir/{cron.daily,leafnode}
 # carefully working around horrors in Makefile...
-make INSTALL="install -p" \
+%makeinstall_std \
         prefix=%buildroot%prefix \
 	SPOOLDIR=%_spooldir/news \
-	LOCKFILE=%buildroot%_lockdir/news/fetchnews.lck \
-	DESTDIR=%buildroot \
-	install
+	LOCKFILE=%buildroot%_lockdir/news/fetchnews.lck
 
 install -pDm600 filters.example %buildroot%_sysconfdir/leafnode/filters
 install -pDm755 %SOURCE1 %buildroot%_sysconfdir/cron.daily/texpire
@@ -115,6 +114,9 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %_bindir/*
 
 %changelog
+* Thu May 15 2014 Michael Shigorin <mike@altlinux.org> 1.11.10-alt1
+- new version (watch file uupdate)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.11.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
