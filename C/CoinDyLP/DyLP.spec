@@ -3,8 +3,8 @@
 
 %define oname DyLP
 Name: Coin%oname
-Version: 1.9.3
-Release: alt1.svn20131121
+Version: 1.9.4
+Release: alt1.svn20131231
 Summary: COIN-OR dynamic simplex algorithm
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -136,6 +136,9 @@ rm -fR %buildroot%_datadir/coin/doc
 #_bindir/*
 
 %changelog
+* Thu May 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.svn20131231
+- Version 1.9.4
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.3-alt1.svn20131121
 - Version 1.9.3
 
