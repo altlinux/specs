@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.7.8
 
 Name: kdenlive
-Version: 0.9.6
-Release: alt2
+Version: 0.9.8
+Release: alt1
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -17,8 +17,8 @@ Requires: icon-theme-oxygen
 
 Source: %name-%version.tar
 Source1: ru.po
-Patch1: kdenlive-0.8-alt-mlt0.7.4.patch
-Patch2: kdenlive-0.8.2.1-alt-fix-compile.patch
+Patch1: alt-mlt0.7.4.patch
+Patch2: alt-disable-nepomuk.patch
 
 BuildRequires: cmake cmake-modules gcc-c++
 BuildRequires: kde4base-workspace-devel libqt4-devel kde-common-devel qjson-devel
@@ -65,6 +65,9 @@ mv altlinux/doc .
 %_K4xdg_mime/*
 
 %changelog
+* Thu May 15 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
+- new version
+
 * Thu May 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
 - fix requires
 
