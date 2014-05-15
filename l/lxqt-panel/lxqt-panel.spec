@@ -1,6 +1,6 @@
 Name: lxqt-panel
 Version: 0.7.0
-Release: alt6
+Release: alt7
 
 Summary: Desktop panel
 License: LGPL
@@ -21,6 +21,8 @@ BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
 
 Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
+
+Requires: menu-cache
 
 %description
 %summary
@@ -57,6 +59,9 @@ rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 %_includedir/*/*.h
 
 %changelog
+* Thu May 15 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt7
+- R: menu-cache (bails out otherwise)
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt6
 - drop libpanelkbindicator.so for now (looks like broken linking)
 
