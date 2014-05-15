@@ -12,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        34.0.1847.132
-Release:        alt2
+Version:        34.0.1847.137
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -489,6 +489,13 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed May 14 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.137-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1740: Use-after-free in WebSockets.
+  - High CVE-2014-1741: Integer overflow in DOM ranges.
+  - High CVE-2014-1742: Use-after-free in editing.
+
 * Fri May 02 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.132-alt2
 - Add support for playing mp3 and mpeg4 (ALT #27863)
 - Package icudtl.dat
