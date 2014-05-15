@@ -4,8 +4,8 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.7
-Release: alt3
+Version: 2.6.8
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -29,7 +29,7 @@ Source3: http://gitorious.org/avidemux2-6/avidemux2-6/blobs/raw/7cf44bbc1f338945
 %if_enabled ownffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 %endif
-Patch2: avidemux-2.6.0-alt-i18n-qm-path.patch
+Patch2: avidemux-2.6.8-alt-i18n-qm-path.patch
 Patch3: avidemux-2.6.0-alt-crash-retranslate.patch
 Patch4: avidemux-2.6.0-alt-flags.patch
 #
@@ -172,6 +172,9 @@ done
 %exclude %_includedir/avidemux
 
 %changelog
+* Thu May 15 2014 Sergey V Turchin <zerg@altlinux.org> 2.6.8-alt1
+- new version
+
 * Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.7-alt3
 - rebuilt with recent x264
 
