@@ -1,5 +1,5 @@
 Name: libx264
-Version: 136
+Version: 142
 Release: alt1
 
 Summary: H.264 codec shared library
@@ -104,6 +104,9 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Sun May 11 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt1
+- API 142
+
 * Sun Sep 08 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 136-alt1
 - 136
 

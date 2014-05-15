@@ -1,6 +1,6 @@
 Name: libopal
 Version: 3.10.10
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Library for H323 spec
 Url: http://www.opalvoip.org/
@@ -55,6 +55,9 @@ Header files for development with opal.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.10.10-alt3
+- rebuilt with recent libav/libx264, again
+
 * Wed Sep 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:3.10.10-alt2
 - rebuilt with recent libav/libx264
 

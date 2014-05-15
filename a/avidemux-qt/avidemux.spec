@@ -5,7 +5,7 @@
 
 Name: avidemux-qt
 Version: 2.6.7
-Release: alt2
+Release: alt3
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -172,6 +172,9 @@ done
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.7-alt3
+- rebuilt with recent x264
+
 * Sat Dec 28 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.7-alt2
 - built with xvba support
 

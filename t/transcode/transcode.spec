@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt2
+Release: alt3
 
 Summary: A linux video stream processing utility
 
@@ -57,6 +57,7 @@ Patch15: transcode-1.1.7-preset-force.patch
 Patch16: transcode-1.1.7-ffmpeg2.patch
 Patch17: transcode-1.1.7-freetype251.patch
 # ALTLinux patches
+Patch18: transcode-1.1.7-libav-10.patch
 Patch98: transcode-1.1.5-textrel.patch
 Patch99: subtitleripper-0.3-4-alt-makefile.patch
 
@@ -75,7 +76,7 @@ BuildRequires: libXv-devel liba52-devel libalsa-devel
 BuildRequires: libavformat-devel libdvdread-devel libfreetype-devel liblame-devel liblzo2-devel
 BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel libswscale-devel
 BuildRequires: libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel
-BuildRequires: libxvid-devel >= %xvid_ver xorg-cf-files
+BuildRequires: libavresample-devel libxvid-devel >= %xvid_ver xorg-cf-files
 BuildPreReq: libpng-devel
 
 %description
@@ -135,6 +136,7 @@ sed -i s/getline/get_line/ contrib/subrip/subtitleripper/vobsub.c
 %patch16 -p1
 %patch17 -p1
 #
+%patch18 -p1
 %patch98 -p2
 %patch99 -p1
 install -m644 %SOURCE2 filter/
@@ -237,6 +239,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon May 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt3
+- rebuilt with recent libav and libx264
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 1.1.7-alt2
 - rebuild with new ImageMagick
 

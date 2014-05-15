@@ -10,7 +10,7 @@
 
 Name: %_name-ugly%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt2
+- rebuilt with recent x264, again
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
