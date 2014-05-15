@@ -1,6 +1,6 @@
 Name: lxqt-notificationd
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Notification service
 License: LGPL
@@ -13,6 +13,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel libqt4-devel
 BuildRequires: libqtxdg-devel
+
+Provides: razorqt-notificationd = %version
+Obsoletes: razorqt-notificationd < 0.7.0
 
 %description
 %summary
@@ -33,6 +36,9 @@ BuildRequires: libqtxdg-devel
 %doc AUTHORS
 
 %changelog
+* Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
+- replace razorqt-notificationd
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 
