@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt7
+Release: alt8
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -25,6 +25,9 @@ Patch8: syslinux-4.04-isohybrid_efi.diff
 Patch9: syslinux-4.04-isohybrid_efi_optional.diff
 Patch10: syslinux-4.04-isohybrid_mbr.diff
 Patch11: syslinux-4.04-localboot.diff
+Patch12: syslinux-4.04-geometry.diff
+Patch13: syslinux-4.04-nostrip.diff
+Patch14: syslinux-4.04-timeout.diff
 
 #BuildPrereq: nasm perl-base
 # Automatically added by buildreq on Tue Oct 28 2008 (-bi)
@@ -75,6 +78,9 @@ Read main packages description
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p0
+%patch14 -p1
 install -m 0644 %SOURCE2 .
 
 %build
@@ -125,6 +131,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt8
+- sync patches with SuSE
+
 * Mon Apr 22 2013 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt7
 - sync patches with SuSE
 
