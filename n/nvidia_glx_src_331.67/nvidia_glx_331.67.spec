@@ -15,7 +15,7 @@
 %define nv_version 331
 %define nv_release 67
 %define nv_minor %nil
-%define pkg_rel alt127
+%define pkg_rel alt128
 %ifarch x86_64
 %def_disable egl
 %else
@@ -85,6 +85,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: buildfix_kernel_3.14.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -192,6 +194,7 @@ sh %SOURCE201 -x
 cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
+%patch1 -p1
 rm -rf precompiled
 popd
 
@@ -339,6 +342,9 @@ fi
 %endif
 
 %changelog
+* Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt128
+- add patch against 3.14 kernel
+
 * Tue Apr 29 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt127
 - new version
 
