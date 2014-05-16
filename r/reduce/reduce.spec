@@ -7,7 +7,7 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20131115
+Version: 20140515
 Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
@@ -35,7 +35,8 @@ BuildPreReq: ImageMagick-tools libXrandr-devel libICE-devel
 BuildPreReq: gcc-c++ gnuplot libGL-devel libGLU-devel libXcursor-devel
 BuildPreReq: libXft-devel libjpeg-devel libpng-devel libtiff-devel
 BuildPreReq: libXext-devel libX11-devel libncurses-devel
-BuildPreReq: libtinfo-devel ghostscript-utils libwxGTK2.9-devel
+BuildPreReq: libtinfo-devel ghostscript-utils libwxGTK3.0-devel
+BuildPreReq: libcrlibm-devel
 
 %description
 This is the REDUCE - symbolic mathematics system. REDUCE has two modes of
@@ -214,6 +215,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140515-alt1
+- New snapshot
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20131115-alt1
 - New snapshot
 
