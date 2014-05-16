@@ -1,5 +1,5 @@
 %define ver 2.3.5
-%define reldate 20140515
+%define reldate 20140516
 %define oname objects.inv
 Name: python-module-%oname
 Version: %ver.%reldate
@@ -51,6 +51,9 @@ install -m644 objects.inv \
 %python3_sitelibdir/sphinx/*
 
 %changelog
+* Fri May 16 2014 Cronbuild Service <cronbuild@altlinux.org> 2.3.5.20140516-alt1
+- repocop cronbuild 20140516. At your service.
+
 * Thu May 15 2014 Cronbuild Service <cronbuild@altlinux.org> 2.3.5.20140515-alt1
 - repocop cronbuild 20140515. At your service.
 
