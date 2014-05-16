@@ -1,6 +1,6 @@
 Name: libnghttp2
 Version: 0.4.0
-Release: alt2.9ca63de9
+Release: alt3
 
 Summary: HTTP/2.0 C Library
 Group: System/Libraries
@@ -46,6 +46,7 @@ Requires: %name = %version-%release
 %_man1dir/nghttp.1*
 %_man1dir/nghttpd.1*
 %_man1dir/nghttpx.1*
+%_man1dir/h2load.1*
 
 %files devel
 %_includedir/nghttp2/nghttp2.h
@@ -54,10 +55,13 @@ Requires: %name = %version-%release
 %_libdir/pkgconfig/libnghttp2.pc
 %doc README.rst AUTHORS COPYING ChangeLog
 
-%files 
+%files
 %_libdir/libnghttp2.so.*
 
 %changelog
+* Fri May 16 2014 Vladimir Lettiev <crux@altlinux.ru> 0.4.0-alt3
+- 0.4.0
+
 * Thu May 01 2014 Vladimir Lettiev <crux@altlinux.ru> 0.4.0-alt2.9ca63de9
 - http2 draft-12 (commit 9ca63de9)
 
