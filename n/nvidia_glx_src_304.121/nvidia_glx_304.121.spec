@@ -15,7 +15,7 @@
 %define nv_version 304
 %define nv_release 121
 %define nv_minor %nil
-%define pkg_rel alt118
+%define pkg_rel alt119
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -81,6 +81,7 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
+Patch1: buildfix_kernel_3.14.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -187,6 +188,7 @@ sh %SOURCE201 -x
 cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
+%patch1 -p1
 rm -rf precompiled
 popd
 
@@ -318,6 +320,9 @@ fi
 %endif
 
 %changelog
+* Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 304.121-alt119
+- add patch against 3.14 kernel
+
 * Fri Mar 14 2014 Sergey V Turchin <zerg@altlinux.org> 304.121-alt118
 - new version
 
