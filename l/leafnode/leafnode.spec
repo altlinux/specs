@@ -1,6 +1,6 @@
 Name: leafnode
 Version: 1.11.10
-Release: alt1
+Release: alt1.1
 
 Summary: a leafsite NNTP server
 License: Artistic
@@ -17,11 +17,11 @@ Packager: Michael Shigorin <mike@altlinux.org>
 Summary(ru_RU.UTF-8): небольшой NNTP-сервер
 Summary(uk_UA.UTF-8): невеличкий NNTP-сервер
 
-# NOTE: buildreq would catch %_sbindir/tcpd from and add tcp_wrappers :-/
+# NOTE: buildreq would catch %%_sbindir/tcpd from and add tcp_wrappers :-/
 # So don't run that on this. -- mike
 
 BuildRequires: libpcre-devel
-Conflicts: inn
+Conflicts: inn cyrus-imapd
 
 %define nntp_server news.talk.ru
 %define leafgroup news
@@ -114,6 +114,9 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %_bindir/*
 
 %changelog
+* Fri May 16 2014 Michael Shigorin <mike@altlinux.org> 1.11.10-alt1.1
+- added C: cyrus-imapd (thx repocop)
+
 * Thu May 15 2014 Michael Shigorin <mike@altlinux.org> 1.11.10-alt1
 - new version (watch file uupdate)
 
