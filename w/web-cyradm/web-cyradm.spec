@@ -1,6 +1,6 @@
 Name: web-cyradm
 Version: 0.5.5e1
-Release: alt2
+Release: alt3
 
 Summary: Web Based Management tool for Postfix, Cyrus IMAP, and MySQL or PostgreSQL
 License: GPL
@@ -90,6 +90,10 @@ install -d -m1770 %buildroot%_var/log/%name
 %config(noreplace) %apache2_confdir/addon.d/A.%name.conf
 
 %changelog
+* Fri May 16 2014 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e1-alt3
+- search.php: fix account limit units
+- replace obsoleted eregi, split
+
 * Tue Jun 14 2011 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e1-alt2
 - add missed requires pear-DB
 - fix apache config
