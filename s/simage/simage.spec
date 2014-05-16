@@ -1,6 +1,6 @@
 Name: simage
 Version: 1.7.0
-Release: alt5
+Release: alt6
 Summary: Format loaders and front-ends to common import libraries
 License: Public domain
 Group: Video
@@ -9,7 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://ftp.coin3d.org/coin/src/all/simage-1.7.0.tar.gz
 
-BuildPreReq: gcc-c++ qt4-devel libquicktimehv-devel libX11-devel
+BuildPreReq: gcc-c++ qt4-devel libX11-devel libXt-devel
 BuildPreReq: libungif-devel libjpeg-devel zlib-devel libpng-devel
 BuildPreReq: libtiff-devel ghostscript-utils libsndfile-devel
 BuildPrereq: libvorbis-devel gcc-fortran guile18-devel
@@ -95,6 +95,9 @@ export QTDIR=%_qt4dir
 %_datadir/guile/coin/*
 
 %changelog
+* Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt6
+- Fixed build
+
 * Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt5
 - Rebuilt with libpng15
 
