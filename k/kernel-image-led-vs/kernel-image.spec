@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -155,8 +155,8 @@ Release: alt7
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
 %Extra_modules vmware 6.0.2
-%Extra_modules vboxhost 4.3.10
-%Extra_modules vboxguest 4.3.10
+%Extra_modules vboxhost 4.3.12
+%Extra_modules vboxguest 4.3.12
 #Extra_modules nvidia 331.20
 %Extra_modules fglrx 14.10.1006
 #Extra_modules knem 1.1.1
@@ -379,7 +379,7 @@ BuildRequires: patch >= 2.6.1-alt1
 %{?_with_firmware:BuildRequires: hardlink}
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
-%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel perl-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
+%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc xmlto elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel perl-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
 %{?_with_lkvm:BuildRequires: binutils-devel libvncserver-devel libSDL-devel zlib-devel libaio-devel libgtk+3-devel}
 
 Requires: bootloader-utils >= 0.4.21
@@ -1860,6 +1860,15 @@ done)
 
 
 %changelog
+* Sat May 17 2014 Led <led@altlinux.ru> 3.13.11.2-alt8
+- updated:
+  + feat-arch-x86--cpu_emulate
+- added:
+  + fix-mm--memcg
+- fixed BuildRequires
+- vboxguest 4.3.12
+- vboxhost 4.3.12
+
 * Thu May 15 2014 Led <led@altlinux.ru> 3.13.11.2-alt7
 - updated:
   + feat-block--bfq-iosched
