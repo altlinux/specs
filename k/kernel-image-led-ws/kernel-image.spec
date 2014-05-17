@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1860,6 +1860,10 @@ done)
 
 
 %changelog
+* Thu May 15 2014 Led <led@altlinux.ru> 3.13.11.2-alt7
+- updated:
+  + feat-block--bfq-iosched
+
 * Wed May 14 2014 Led <led@altlinux.ru> 3.13.11.2-alt6
 - updated:
   + fix-arch-x86
