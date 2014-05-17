@@ -8,7 +8,7 @@
 
 Name: reduce
 Version: 20140515
-Release: alt1
+Release: alt2
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
 Group: Sciences/Mathematics
@@ -215,6 +215,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Sat May 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140515-alt2
+- Rebuilt with updated crlibm (soname changed)
+
 * Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140515-alt1
 - New snapshot
 

@@ -1,7 +1,7 @@
-%define sover 0
+%define sover 1
 Name: crlibm
 Version: 1.0beta4
-Release: alt1
+Release: alt2
 Summary: Correctly Rounded mathematical library
 License: LGPL
 Group: Sciences/Mathematics
@@ -47,6 +47,7 @@ CRlibm is a free mathematical library (libm) which provides:
 Summary: Development files of Correctly Rounded mathematical library
 Group: Development/C
 Requires: lib%name = %EVR
+Conflicts: libscs-devel
 
 %description -n lib%name-devel
 CRlibm, an efficient and proven correctly-rounded mathematical library.
@@ -127,6 +128,9 @@ popd
 %doc docs/*.pdf
 
 %changelog
+* Sat May 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0beta4-alt2
+- Avoid conflict with libscs
+
 * Fri May 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0beta4-alt1
 - Initial build for Sisyphus
 
