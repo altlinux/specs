@@ -1,5 +1,5 @@
 Name: altquire
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: a TUI frontend for dc3dd
@@ -41,6 +41,9 @@ cp -a *.sh %buildroot%aqdir/
 %aqdir
 
 %changelog
+* Sat May 17 2014 Michael Shigorin <mike@altlinux.org> 0.1.2-alt1
+- 20140517 scripts: workaround non-printable serial numbers
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
 - 20140512 scripts
 
