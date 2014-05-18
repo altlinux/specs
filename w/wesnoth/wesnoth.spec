@@ -1,3 +1,7 @@
+##### unstable specific ###############
+BuildRequires: libvorbis-devel
+#######################################
+
 %define _unpackaged_files_terminate_build 1
 %def_with build_using_scons
 %def_with install_using_scons
@@ -25,18 +29,19 @@
 %define _pseudouser_group    _wesnothd
 %define _pseudouser_home     %_var/run/wesnothd
 
-Name: wesnoth
-Version: 1.10.7
+%define wessuffix %nil
+#define wesdesktopsuffix unstable
+#define wessuffix -%wesdesktopsuffix
+
+Name: wesnoth%wessuffix
+Version: 1.11.13
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.%name.org
-Source0: %name-%version.tar
-Source1: %{name}d.init
-Source2: %{name}d.service
-Source3: %{name}.sysconfig
+Source0: wesnoth-%version.tar
 
 Requires: %name-data = %version-%release
 
@@ -54,6 +59,7 @@ BuildRequires: python-devel
 %{?_enable_display_revision:BuildRequires: subversion}
 
 Requires: python-module-%name = %version-%release
+Conflicts: %name-tools < 1.11.7
 
 %description
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -131,6 +137,7 @@ This package contains Battle for Wesnoth map editor.
 %package tools
 Group: Games/Strategy
 Summary: Battle for Wesnoth tools
+Requires: python-module-%name = %version-%release
 
 %description tools
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -176,7 +183,7 @@ This package contains python interface to Battle for Wesnoth.
 %endif
 
 %prep
-%setup
+%setup -n wesnoth-%version
 
 %build
 %define _optlevel 3
@@ -186,12 +193,18 @@ This package contains python interface to Battle for Wesnoth.
 # note for 1.10.7 - upstream really moved to scons.
 # scons now works. cmake is outdated and does not build campaignd.
 %if_with build_using_scons
-scons all prefix=%{_prefix} \
+scons all \
+      	  prefix=%{_prefix} \
           bindir=%{_bindir} \
           libdir=%{_libdir} \
+	  fifodir=%_runtimedir/wesnothd%wessuffix \
+	  datadirname=%name \
+	  docdir=%_docdir/%name \
           python_site_packages_dir=%{python_sitelibdir_noarch}/%{name} \
           extra_flags_release="%optflags" \
           %{?_smp_mflags}
+
+#	  version_suffix=%wessuffix \
 
 	  # let it be default - translations - for now, for cmake install compatibility
 	  #localedirname=locale \
@@ -223,6 +236,9 @@ cmake . \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
 	-DDATAROOTDIR=%_datadir \
+	-DDATADIRNAME=%name \
+	-DDOCDIR=%_docdir/%name \
+	-DFIFO_DIR=%_runtimedir/wesnothd%wessuffix \
 	-DBINDIR=%_bindir \
 	-DENABLE_TOOLS=ON \
 	-DENABLE_NLS=ON \
@@ -230,12 +246,14 @@ cmake . \
  	-DENABLE_STRICT_COMPILATION=OFF \
 	-DCMAKE_INSTALL_PREFIX=%buildroot
 
+#-DSERVER_UID=%name \
+
 %make_build VERBOSE=1
 %endif # scons
 
 for s in 96 72 48 36 32 24 22 16; do
-    convert -depth 8 -resize ${s}x$s icons/%name-{icon-Mac,$s}.png
-    convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,%{name}_editor-$s}.png
+    convert -depth 8 -resize ${s}x$s icons/wesnoth-{icon-Mac,$s}.png
+    convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,wesnoth_editor-$s}.png
 done
 bzip2 --keep --best --force changelog
 
@@ -255,7 +273,7 @@ bzip2 --keep --best --force changelog
 scons install install-pytools destdir=$RPM_BUILD_ROOT
 rm %buildroot%{_datadir}/icons/wesnoth-icon.png
 rm %buildroot%_desktopdir/wesnoth.desktop
-rm -rf %buildroot/%python_sitelibdir_noarch/wesnoth
+rm -rf %buildroot/%python_sitelibdir_noarch/%name
 install -m 755 schema_generator %buildroot%_bindir/
 %endif
 
@@ -274,22 +292,35 @@ for i in data fonts icons images sounds translations l10n-track; do
 done
 %endif
 
+%ifdef wesdesktopsuffix
+for i in cutter exploder wesnoth schema_generator wesnoth_addon_manager \
+ wmlindent wmllint wmlscope \
+ ; do
+	 mv %buildroot%_bindir/$i %buildroot%_bindir/$i%wessuffix
+done
+cp icons/wesnoth{,%wessuffix}.desktop
+cp icons/wesnoth_editor{,%wessuffix}.desktop
+find %buildroot%_mandir -name wesnoth.6 -execdir mv {} wesnoth%wessuffix.6 \;
+find %buildroot%_mandir -name wesnothd.6 -execdir mv {} wesnothd%wessuffix.6 \;
+sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name=.*\),\1 (%wesdesktopsuffix),' icons/wesnoth*%{wessuffix}.desktop
+%endif
+
 #if with install_using_manual || with install_using_scons
 # emulate cmake install
 desktop-file-install --dir %buildroot%_desktopdir \
                      --mode="0644" \
                      --remove-key="Version" \
-                     icons/%{name}.desktop icons/%{name}_editor.desktop
+                     icons/wesnoth%wessuffix.desktop icons/wesnoth_editor%wessuffix.desktop
 mkdir -p %buildroot%{_datadir}/pixmaps
-cp icons/%{name}-icon.png %buildroot%{_datadir}/pixmaps
-cp icons/%{name}_editor-icon.png %buildroot%{_datadir}/pixmaps
+cp icons/wesnoth-icon.png %buildroot%{_datadir}/pixmaps
+cp icons/wesnoth_editor-icon.png %buildroot%{_datadir}/pixmaps
 mkdir -p %buildroot%_docdir/
 cp -a doc/manual %buildroot%_docdir/%name
 %endif
 
 install -d -m 0755 %buildroot%_sbindir
-[ -e %buildroot%_bindir/%{name}d ] && mv %buildroot{%_bindir,%_sbindir}/%{name}d
-[ -e %buildroot%_bindir/campaignd ] && mv %buildroot{%_bindir,%_sbindir}/campaignd
+[ -e %buildroot%_bindir/wesnothd ] && mv %buildroot{%_bindir/wesnothd,%_sbindir/wesnothd%wessuffix}
+[ -e %buildroot%_bindir/campaignd ] && mv %buildroot{%_bindir/campaignd,%_sbindir/campaignd%wessuffix}
 
 %if_enabled tests
 mv %buildroot%_bindir/{,%name-}test
@@ -300,42 +331,173 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot/%python_sitelibdir_no
 mv %buildroot%_datadir/%name/data/tools/addon_manager %buildroot/%python_sitelibdir_noarch
 mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot/%python_sitelibdir_noarch
 
-pushd data
-pushd tools
-for i in wesnoth_addon_manager wml*; do
-    cp $i %buildroot/%_bindir/
-done
-popd
-popd
+#pushd data
+#pushd tools
+#for i in wesnoth_addon_manager wml*; do
+#    cp $i %buildroot/%_bindir/
+#done
+#popd
+#popd
 
 mkdir -p %buildroot%_docdir/%name-%version/manual
 mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-%version/manual/
 install -m 0644 README copyright changelog.* %buildroot%_docdir/%name-%version/
 install -d -m 0755 %buildroot%_iconsdir/hicolor/64x64/apps
-mv %buildroot{%_pixmapsdir/%name-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
-mv %buildroot{%_pixmapsdir/%{name}_editor-icon,%_iconsdir/hicolor/64x64/apps/%{name}_editor}.png
-install -D -m 0644 {icons/%name-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%name}.png
-install -D -m 0644 {icons/map-editor-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%{name}_editor}.png
+mv %buildroot{%_pixmapsdir/wesnoth-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
+mv %buildroot{%_pixmapsdir/wesnoth_editor-icon,%_iconsdir/hicolor/64x64/apps/wesnoth_editor%{wessuffix}}.png
+install -D -m 0644 {icons/wesnoth-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/%name}.png
+install -D -m 0644 {icons/map-editor-icon-Mac,%buildroot%_iconsdir/hicolor/128x128/apps/wesnoth_editor%{wessuffix}}.png
 for s in 96 72 48 36 32 24 22 16; do
-    install -D -m 0644 {icons/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
-    install -D -m 0644 {icons/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%{name}_editor}.png
+    install -D -m 0644 {icons/wesnoth-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
+    install -D -m 0644 {icons/wesnoth-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/wesnoth_editor%{wessuffix}}.png
 done
-install -D -m 755 %SOURCE1 %buildroot%_initdir/%{name}d
-install -D -m 644 %SOURCE2 %buildroot%_unitdir/wesnothd.service
-install -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/wesnoth
+
+mkdir -p %buildroot%_initdir/ %buildroot%_sysconfdir/sysconfig/
+cat > %buildroot%_sysconfdir/sysconfig/wesnoth%wessuffix <<'EOF'
+#
+# wesnothd(6) options. Pick a custom port here if needed, for example.
+#
+WESNOTHD_OPTIONS=""
+EOF
+cat > %buildroot%_initdir/wesnothd%wessuffix <<'EOF'
+#! /bin/sh
+#
+# wesnothd%wessuffix	Wesnoth server
+#
+# chkconfig:	345 98 02
+#
+# description:	This is a 'Battle for Wesnoth' daemon 
+#
+#		Modified for ALTLinux
+#		by Gleb Stiblo <errandir@gmail.com>
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Do not load RH compatibility interface.
+WITHOUT_RC_COMPAT=1
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+DAEMON=/usr/sbin/wesnothd%wessuffix
+NAME=wesnothd
+USER=%_pseudouser_user
+LOCKFILE=/var/lock/subsys/wesnothd%wessuffix
+PIDFILE=/var/run/wesnothd%wessuffix.pid
+SOCKETDIR=/var/run/wesnothd%wessuffix
+RETVAL=0
+
+test -x $DAEMON || exit 0
+
+WESNOTHD_OPTIONS=
+# Include wesnoth defaults if available
+SourceIfNotEmpty /etc/sysconfig/wesnoth%wessuffix || exit 1
 
 
-%find_lang --with-man %name
-%find_lang --with-man %{name}d
+start()
+{
+	# for /var/run on tmpfs
+	/bin/mkdir -p $SOCKETDIR/
+	/bin/chown -R $USER.$USER $SOCKETDIR/
+	start_daemon --make-pidfile $PIDFILE --pidfile $PIDFILE --name $NAME --user $USER -- $DAEMON $WESNOTHD_OPTIONS
+	RETVAL=$?
+	return $RETVAL
+}
+
+stop()
+{
+	stop_daemon --pidfile $PIDFILE --name $NAME -- $DAEMON 
+
+	RETVAL=$?
+	return $RETVAL
+}
+
+restart()
+{
+	stop
+	sleep 1
+	start
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+  reload)
+	;;
+  condstop)
+	if [ -e "$LOCKFILE" ]; then
+	    stop
+	fi
+	;;
+  condrestart)
+	if [ -e "$LOCKFILE" ]; then
+	    restart
+	fi
+	;;
+  condreload)
+	;;
+  status)
+	status --pidfile "$PIDFILE" -- $DAEMON
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "${0##*/} {start|stop|restart|reload|condstop|condrestart|condreload|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL
+EOF
+
+##### backport specific ###############
+mkdir -p %buildroot%_unitdir/
+cat > %buildroot%_unitdir/wesnothd%wessuffix.service <<'EOF'
+[Unit]
+Description=Wesnoth Multiplayer Server Daemon
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/wesnoth%wessuffix
+User=%_pseudouser_user
+ExecStartPre=/bin/mkdir -p /var/run/wesnothd%wessuffix/
+ExecStartPre=/bin/chown -R %_pseudouser_user.%_pseudouser_group /var/run/wesnothd%wessuffix/
+ExecStart=/usr/sbin/wesnothd%wessuffix $WESNOTHD_OPTIONS
+
+[Install]
+WantedBy=multi-user.target
+EOF
+##### backport specific ###############
+
+
+%ifdef wesdesktopsuffix
+%find_lang --with-man wesnoth%wessuffix
+%find_lang --with-man wesnothd%wessuffix
+%find_lang wesnoth
+%find_lang wesnothd
+cat wesnoth.lang >> %name.lang
+cat wesnothd.lang >> wesnothd%{wessuffix}.lang
+rm -f wesnoth.lang wesnothd.lang
+%else
+%find_lang --with-man wesnoth
+%find_lang --with-man wesnothd
+%endif
 
 for d in %buildroot%_datadir/%name/translations/*; do
     l=$(basename "$d")
     c=${l:0:2}
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l" >> %name.lang
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l/LC_MESSAGES" >> %name.lang
-    [ -f $d/LC_MESSAGES/%name.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/%name.mo" >> %name.lang
-    for i in anl aoi did dm editor ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual; do
-	[ -f $d/LC_MESSAGES/%name-$i.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/%name-$i.mo" >> %name.lang
+    [ -f $d/LC_MESSAGES/wesnoth.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/wesnoth.mo" >> %name.lang
+    for i in ai anl aoi did dm editor ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual; do
+	[ -f $d/LC_MESSAGES/wesnoth-$i.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/wesnoth-$i.mo" >> %name.lang
     done
 done
 for f in %buildroot%_datadir/%name/data/languages/*_*.cfg; do
@@ -356,9 +518,9 @@ ln -s %_datadir/fonts/ttf/sazanami/gothic/sazanami-gothic.ttf %buildroot%_datadi
 ln -s %_datadir/fonts/ttf/wqy-zenhei/wqy-zenhei.ttc %buildroot%_datadir/%name/fonts/wqy-zenhei.ttc
 
 
-sed -i 's/wesnoth-icon/wesnoth/' %buildroot%_desktopdir/%name.desktop
+sed -i 's/wesnoth-icon/wesnoth%wessuffix/' %buildroot%_desktopdir/%name.desktop
 %if_enabled editor
-sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_editor.desktop
+sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/wesnoth_editor%wessuffix.desktop
 %endif
 
 %if_enabled server
@@ -368,15 +530,14 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
         -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %preun server
-%preun_service %{name}d
+%preun_service wesnothd%wessuffix
 
 %post server
-%post_service %{name}d
+%post_service wesnothd%wessuffix
 %endif
 
 %files
 %_bindir/%name
-%_bindir/wesnoth_addon_manager
 
 %files data -f %name.lang
 %_desktopdir/%name.desktop
@@ -391,7 +552,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_datadir/%name/sounds
 %dir %_datadir/%name/translations
 %dir %_datadir/%name/data
-%_datadir/%name/data/COPYING.txt
+#%_datadir/%name/data/COPYING.txt
 %_datadir/%name/data/ai/
 %_datadir/%name/data/campaigns
 %_datadir/%name/data/core
@@ -412,19 +573,20 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 
 %if_enabled editor
 %files editor
-%_desktopdir/%{name}_editor.desktop
-%_iconsdir/hicolor/*/apps/%{name}_editor.png
+%_desktopdir/wesnoth_editor%{wessuffix}.desktop
+%_iconsdir/hicolor/*/apps/wesnoth_editor%{wessuffix}.png
 %endif
 
 %if_enabled tools
 %files tools
-%_bindir/cutter
-%_bindir/exploder
-%_bindir/schema_generator
+%_bindir/cutter%wessuffix
+%_bindir/exploder%wessuffix
+%_bindir/schema_generator%wessuffix
 %if_with build_using_scons
 %else
-%_bindir/schema_validator
+%_bindir/schema_validator%wessuffix
 %endif
+%_bindir/wesnoth_addon_manager%wessuffix
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/tools
@@ -433,13 +595,15 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %if_enabled server
-%files server -f %{name}d.lang
-%_sbindir/%{name}d
-%_sbindir/campaignd
-%_initdir/%{name}d
-%_unitdir/%{name}d.service
-%config(noreplace) %_sysconfdir/sysconfig/wesnoth
-%_man6dir/%{name}d.6*
+%files server -f wesnothd%{wessuffix}.lang
+%_sbindir/wesnothd%wessuffix
+%_sbindir/campaignd%wessuffix
+%_initdir/wesnothd%wessuffix
+##### backport specific ###############
+%_unitdir/wesnothd%wessuffix.service
+##### backport specific ###############
+%config(noreplace) %_sysconfdir/sysconfig/wesnoth%wessuffix
+%_man6dir/wesnothd%{wessuffix}.6*
 %endif
 
 %if_enabled python
@@ -450,6 +614,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %changelog
+* Fri May 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.13-alt1
+- 1.12 beta 3
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.7-alt1
 - new version
 - use scons for build
