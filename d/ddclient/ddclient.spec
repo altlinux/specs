@@ -6,17 +6,19 @@ Summary: A client to update host entries on DynDNS like services
 Summary(ru_RU.UTF8): Клиент для обновления записей служб динамического DNS, подобных DynDNS
 Name: ddclient
 Version: 3.8.1
-Release: alt1
+Release: alt2.1
 License: GPLv2
 Group: System/Configuration/Networking
-Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://ddclient.sourceforge.net/
 Source0: http://prdownloads.sourceforge.net/ddclient/%name-%version.tar.bz2
 Source1: ddclientd
 Source2: README_SSL.ALT.txt
 Patch0: %name-3.7.1-piddir.diff
 Patch1: %name-3.8.1.fix_ssl_warning_altspecifics.diff
+Patch2: %name-3.8.1-ipv6.patch
 BuildArch: noarch
+
+Requires: perl-Digest-SHA1
 
 %description
 DDclient is a small full featured client requiring only Perl and no
@@ -38,30 +40,31 @@ scripts for use with DHCP, PPP, and cron. See the README for more
 information.
 
 %description -l ru_RU.UTF8
-DDclient - маленький, но полнофункциональный клиент для службы динамического DNS, 
+DDclient - маленький, но полнофункциональный клиент для службы динамического DNS,
 требующий для работы только наличия Perl без каких-либо дополнительных модулей.
-DDclient работает под большинством UNIX-подобных операционных систем и был 
-протестирован в Linux и FreeBSD. Среди поддерживаемых функций: работа в качестве 
-демона (сервиса), ручное и автоматическое обновление, статическое и динамическое 
-обновление, оптимизированное обновление для нескольких адресов, управление MX-записью, 
-использование масок (шаблонов) адресов, предотвращение неправильного использования, 
-повтор попыток обновления в случае неудачи, отправка состояния обновления службе 
+DDclient работает под большинством UNIX-подобных операционных систем и был
+протестирован в Linux и FreeBSD. Среди поддерживаемых функций: работа в качестве
+демона (сервиса), ручное и автоматическое обновление, статическое и динамическое
+обновление, оптимизированное обновление для нескольких адресов, управление MX-записью,
+использование масок (шаблонов) адресов, предотвращение неправильного использования,
+повтор попыток обновления в случае неудачи, отправка состояния обновления службе
 syslog или посредством e-mail. В настоящей версии DDclient возможно получение
 IP адреса вашего компьютера с любого интерфейса, со служб обнаружения IP адресов,
-расположенных в сети интернет, с роутеров Watchguard SOHO, Netopia R910, 
-широкополосных SMC Barricade, Netgear RT3xx, широкополосных Linksys, MaxGate UGATE-3x00, 
-ELSA LANCOM DSL/10, Cisco 2610, сетевого модема 3com 3c886a 56k, SOHOWare BroadGuard NBG800, 
-и практически любого другого роутера с конфигурируемыми пользователем настройками 
+расположенных в сети интернет, с роутеров Watchguard SOHO, Netopia R910,
+широкополосных SMC Barricade, Netgear RT3xx, широкополосных Linksys, MaxGate UGATE-3x00,
+ELSA LANCOM DSL/10, Cisco 2610, сетевого модема 3com 3c886a 56k, SOHOWare BroadGuard NBG800,
+и практически любого другого роутера с конфигурируемыми пользователем настройками
 встроенного сетевого экрана (firewall, см. пример конфигурации etc_ddclient.conf).
 Также, настоящая версия DDclient предоставляет полную поддержку протокола NIC2 от DynDNS.org.
 Поддержка других служб динамического DNS тоже включена и организуется с помощью
-скриптов для совместного использования с DHCP, PPP, и cron; примеры скриптов включены 
+скриптов для совместного использования с DHCP, PPP, и cron; примеры скриптов включены
 в пакет. Более детальные сведения находятся в файле README.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p0
 install -m 0644 %SOURCE2 ./README_SSL.ALT.txt
 
 %build
@@ -74,6 +77,11 @@ install -p ddclient %buildroot%_sbindir
 install -p sample-etc_ddclient.conf %buildroot%_sysconfdir/%name/ddclient.conf
 touch %buildroot%_sysconfdir/%name/ddclient.cache
 install -p -m 0755 %SOURCE1 %buildroot%_initdir/ddclientd
+
+mkdir -p %buildroot/lib/tmpfiles.d
+cat <<EOF >%buildroot/lib/tmpfiles.d/ddclient.conf
+d /var/run/ddclient 2770 root dyndns -
+EOF
 
 %pre
 /usr/sbin/groupadd -r -f %privgroup
@@ -89,10 +97,19 @@ install -p -m 0755 %SOURCE1 %buildroot%_initdir/ddclientd
 %attr(600,dyndns,dyndns) %config(noreplace) %_sysconfdir/%name/ddclient.conf
 %config(noreplace) %ghost %_sysconfdir/%name/ddclient.cache
 %_initdir/ddclientd
+/lib/tmpfiles.d/ddclient.conf
 %dir %attr(2770,root,dyndns) /var/cache/ddclient
 %dir %attr(2770,root,dyndns) /var/run/ddclient
 
 %changelog
+* Sun May 18 2014 Motsyo Gennadi <drool@altlinux.ru> 3.8.1-alt2.1
+- build for Sisyphus
+
+* Thu May 08 2014 Denis G. Samsonenko <ogion@altlinux.org> 3.8.1-alt2
+- IPv6 support patch
+- /lib/tmpfiles.d/ddclient.conf
+- /etc/rc.d/init.d/ddclientd corrected
+
 * Mon Nov 04 2013 Motsyo Gennadi <drool@altlinux.ru> 3.8.1-alt1
 - 3.8.1
 
@@ -153,7 +170,7 @@ install -p -m 0755 %SOURCE1 %buildroot%_initdir/ddclientd
 * Sun Dec 18 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3.6.7-1mdk
 - New release 3.6.7
 
-* Fri May 27 2005 Nicolas L�cureuil <neoclust@mandriva.org> 3.6.6-1mdk
+* Fri May 27 2005 Nicolas L�cureuil <neoclust@mandriva.org> 3.6.6-1mdk
 - New release 3.6.6
 
 * Wed Feb 09 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3.6.5-3mdk
