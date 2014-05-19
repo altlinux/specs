@@ -1,8 +1,8 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Determine file type
@@ -43,7 +43,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/File
 
 %files scripts
@@ -51,6 +51,9 @@ scripts for %name
 #%_man1dir/*
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
