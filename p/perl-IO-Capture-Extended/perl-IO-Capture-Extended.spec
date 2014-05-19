@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Capture-Extended
-Version:        0.11
-Release:        alt3_7
+Version:        0.12
+Release:        alt1
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/IO-Capture-Extended/
-Source0:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
 BuildArch:      noarch
 # Compile-time:
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -50,10 +51,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes LICENSE README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3_7
 - moved to Sisyphus for Slic3r (by dd@ request)
 
