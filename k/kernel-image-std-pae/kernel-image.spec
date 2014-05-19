@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.12
-%define kernel_sublevel	.19
+%define kernel_sublevel	.20
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sat May 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.20-alt1
+- 3.12.20
+
 * Mon May 12 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.19-alt2
 - 3.12.19
 
