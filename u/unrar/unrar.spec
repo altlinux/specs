@@ -1,6 +1,6 @@
 Name: unrar
 Version: 5.1.5
-Release: alt2
+Release: alt3
 
 Summary: RAR unarchiver
 License: Freely distributable
@@ -34,6 +34,7 @@ Group: Development/C++
 %prep
 %setup -n unrar
 sed -ri 's/^(lib:[[space:]]+)clean[[:space:]]+/\1/' makefile
+sed -i '1i#define _UNIX' dll.hpp
 
 %build
 %make_build STRIP=touch
@@ -59,6 +60,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Mon May 19 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt3
+- Fix queer _UNIX define in devel package
+
 * Wed May 14 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt2
 - Introduce -devel package
 
