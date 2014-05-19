@@ -5,7 +5,7 @@
 
 Name: zoneminder
 Version: 1.27.0
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -52,6 +52,7 @@ Zoneminder configuration file and requires for nginx
 
 %prep
 %setup
+%patch0 -p1
 cp %SOURCE4 README.alt
 cp %SOURCE5 README-nginx-ru.alt
 
@@ -151,6 +152,9 @@ fi
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
 
 %changelog
+* Mon May 19 2014 Anton Farygin <rider@altlinux.ru> 1.27.0-alt2
+- rebuild with new libav
+
 * Wed Apr 16 2014 Anton Farygin <rider@altlinux.ru> 1.27.0-alt1
 - new version
 - added subpackage with sample nginx configuration for zoneminder web interface
