@@ -1,4 +1,4 @@
-%define libsover 3
+%define libsover 4
 %define libkipiplugins libkipiplugins%libsover
 %define kde4graphics_ver %{get_version kde4graphics-devel}
 
@@ -11,8 +11,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 3.5.0
-Release: alt4
+Version: 4.0.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -27,6 +27,7 @@ Source10: FindOpenCV.cmake
 Source11: FindKSane.cmake
 Source12: FindKipi.cmake
 Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
+Patch2: kipi-plugins-4.0.0-alt-lib-version.patch
 
 Requires: %name-core = %version-%release
 %if_enabled expoblending
@@ -43,7 +44,6 @@ BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-dev
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: qt-gstreamer-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
-BuildRequires: kde4-nepomuk-core-devel
 
 %description
 The library of the KDE Image Plugin Interface used by digiKam and Gwenview
@@ -82,6 +82,7 @@ KDE 4 library.
 %prep
 %setup -q -n %rname-%version -a1 -a2
 %patch1 -p1
+%patch2 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
 #install -m 0644 %SOURCE10 cmake/modules
@@ -171,6 +172,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon May 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1
+- new version
+
 * Wed Apr 02 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt4
 - rebuilt with new ImageMagick
 
