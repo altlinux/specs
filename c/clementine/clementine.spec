@@ -1,5 +1,5 @@
 Name: clementine
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: A music player and library organiser
 
@@ -53,6 +53,9 @@ advantage of Qt4.
 %_datadir/clementine
 
 %changelog
+* Mon May 19 2014 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt1
+- Version 1.2.3
+
 * Mon Feb 24 2014 Vladimir Didenko <cow@altlinux.org> 1.2.2-alt1
 - Version 1.2.2
 
