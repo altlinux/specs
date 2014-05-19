@@ -1,6 +1,6 @@
 Name: writer2latex
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Flexible tool to convert OpenOffice documents into LaTeX2e and XHTML formats
 License: LGPL
@@ -15,7 +15,7 @@ BuildRequires(pre): /proc rpm-build-java rpm-build-texmf
 # Automatically added by buildreq on Sat Jun 09 2007
 BuildRequires: ant junit LibreOffice4-common xml-commons-resolver12
 
-#Requires: java-1.6.0-sun
+Requires: java >= 1.7.0
 
 BuildArch: noarch
 
@@ -101,6 +101,9 @@ install -m 644 source/distro/latex/*.sty source/distro/latex/obsolete/*.sty %bui
 #%doc %_javadocdir/%name
 
 %changelog
+* Mon May 19 2014 Fr. Br. George <george@altlinux.ru> 1.2.0-alt2
+- Add modern java requirement
+
 * Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
 - Version up
 - Rebuild with LOO4 (FC patches applied)
