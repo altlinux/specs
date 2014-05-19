@@ -4,7 +4,7 @@
 Summary: 389 Directory Server
 Name: 389-ds
 Version: 1.3.2.15
-Release: alt1
+Release: alt2.e9f86dab
 License: GPLv2
 Url: http://port389.org
 Group: System/Servers
@@ -136,6 +136,9 @@ echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
 %changelog
+* Mon May 19 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.2.15-alt2.e9f86dab
+- git e9f86dab
+
 * Mon Apr 28 2014 Timur Aitov <timonbl4@altlinux.org> 1.3.2.15-alt1
 - 1.3.2.15
 
