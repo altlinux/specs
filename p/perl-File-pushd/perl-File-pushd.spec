@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-pushd
 Name: perl-%dist
-Version: 1.005
+Version: 1.006
 Release: alt1
 
 Summary: Change directory temporarily for a limited scope
@@ -52,6 +52,9 @@ absolute pathname of the directory entered.
 %perl_vendor_privlib/File/
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.006-alt1
+- automated CPAN update
+
 * Fri Oct 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1
 - automated CPAN update
 - rediffed patch
