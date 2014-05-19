@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Perl-Tags
 
 Name: perl-Perl-Tags
-Version: 0.28
-Release: alt2
+Version: 0.31
+Release: alt1
 
 Summary: Generate (possibly exuberant) Ctags style tags for Perl sourcecode
 
@@ -13,10 +14,10 @@ Url: %CPAN %dist
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/O/OS/OSFAMERON/Perl-Tags-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jun 25 2008
-BuildRequires: perl-Module-Locate perl-Test-Pod perl-Test-Pod-Coverage perl-PPI
+BuildRequires: perl-Module-Locate perl-Test-Pod perl-Test-Pod-Coverage perl-PPI perl(Capture/Tiny.pm) perl(Path/Tiny.pm) perl(Test/Exception.pm) perl(Test/LongString.pm) perl(File/Find/Rule.pm)
 
 %description
 use Perl::Tags;
@@ -44,13 +45,20 @@ what you want to do and I'll try to help).
 
 %install
 %perl_vendor_install
+rm -f %buildroot%perl_vendor_privlib/Perl/README.pod
 
 %files
 %_bindir/perl-tags
+%_bindir/require-perl-tags*
 %perl_vendor_privlib/Perl/Tags*
+%perl_vendor_privlib/App/*
+%perl_vendor_privlib/Test/Perl/Tags*
 %doc README Changes
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Mon Feb 18 2013 Vladimir Lettiev <crux@altlinux.ru> 0.28-alt2
 - add perl-tags script
 - spec cleanup
