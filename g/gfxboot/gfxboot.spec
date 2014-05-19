@@ -1,5 +1,5 @@
 Name:         gfxboot
-Version:      4.5.1
+Version:      4.5.2
 Release:      alt1
 
 Group:        Development/Other
@@ -37,6 +37,9 @@ Here you find the graphical boot logo. Suitable for both lilo, grub and syslinux
 %_datadir/gfxboot/
 
 %changelog
+* Mon May 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.5.2-alt1
+- new version
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.5.1-alt1
 - new version
 
