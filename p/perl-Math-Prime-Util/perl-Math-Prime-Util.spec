@@ -1,4 +1,4 @@
-%define module_version 0.40
+%define module_version 0.41
 %define module_name Math-Prime-Util
 %add_findreq_skiplist %perl_vendor_archlib/Math/Prime/Util.pm
 # BEGIN SourceDeps(oneline):
@@ -8,7 +8,7 @@ BuildRequires: libsowing-devel perl(Benchmark.pm) perl(Bytes/Random/Secure.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.40
+Version: 0.41
 Release: alt1
 Summary: Utilities related to prime numbers, including fast sieves and factoring
 Group: Development/Perl
@@ -88,6 +88,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
