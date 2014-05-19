@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.15.alpha
+Version: 0.0.16.alpha
 Release: alt1
 
 Group: Games/Strategy
@@ -14,6 +14,7 @@ BuildRequires: gcc-c++ python zip cmake
 BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
 BuildRequires: libgamin-devel libgamin-fam libcurl-devel libjpeg-devel libpng-devel libvorbis-devel
 BuildRequires: libxml2-devel libopenal-devel libSDL-devel wxGTK-devel libXcursor-devel libgloox-devel
+BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -37,6 +38,7 @@ educational celebration of game development and ancient history.
 mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
 export CPPFLAGS="%optflags"
+export SHELL=/bin/sh
 build/workspaces/update-workspaces.sh --bindir=%_bindir --datadir=%_datadir/%name --libdir=%_libdir/%name
 pushd build/workspaces/gcc
 make verbose=1
@@ -46,7 +48,7 @@ popd
 install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/pyrogenesis
 install -Dm 0755 binaries/system/libCollada.so %buildroot%_libdir/%name/libCollada.so
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/%name/libAtlasUI.so
-install -Dm 0755 binaries/system/libmozjs185-ps-release.so.1.0 %buildroot%_libdir/%name/libmozjs185-ps-release.so.1.0
+install -Dm 0755 binaries/system/libmozjs24-ps-release.so %buildroot%_libdir/%name/libmozjs24-ps-release.so
 install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore.so
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
@@ -57,6 +59,8 @@ install -Dm 0755 binaries/system/libminiupnpc.so.9 %buildroot%_libdir/%name/libm
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 build/resources/0ad.png %buildroot%_pixmapsdir/%name.png
 install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
+mkdir -p %buildroot/%_datadir/0ad/
+cp -a binaries/data/* %buildroot/%_datadir/0ad/
 
 %files
 %doc README.txt
@@ -64,7 +68,7 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %_bindir/pyrogenesis
 %_libdir/%name/libCollada.so
 %_libdir/%name/libAtlasUI.so
-%_libdir/%name/libmozjs185-ps-release.so.1.0
+%_libdir/%name/libmozjs24-ps-release.so
 %_libdir/%name/libnvcore.so
 %_libdir/%name/libnvimage.so
 %_libdir/%name/libnvmath.so
@@ -74,8 +78,12 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 %dir %_libdir/%name
+%_datadir/0ad/*
 
 %changelog
+* Mon May 19 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.16.alpha-alt1
+- 0.0.16
+
 * Wed Dec 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.15.alpha-alt1
 - 0.0.15
 
