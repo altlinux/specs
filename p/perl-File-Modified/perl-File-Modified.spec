@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-File-Modified
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: %m_name - checks intelligently if files have changed
@@ -49,6 +49,9 @@ cannot be loaded.
 %doc Changes README
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
