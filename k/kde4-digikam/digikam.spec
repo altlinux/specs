@@ -4,8 +4,8 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 3.5.0
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -23,7 +23,6 @@ BuildPreReq: libpng-devel
 BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblensfun-devel liblqr-devel libxkbfile-devel libtiff-devel
 BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel liblcms2-devel
 BuildRequires: kde4libs-devel libkface-devel libkgeomap-devel boost-devel
-BuildRequires: soprano-backend-virtuoso soprano-backend-redland soprano kde4-nepomuk-core-devel
 BuildRequires: libopencv-devel libsqlite-devel eigen3
 
 %if_enabled marble
@@ -39,10 +38,10 @@ Requires: %name-data = %version-%release
 Requires: %name-marble = %version-%release
 %endif
 Source0: %rname-%version.tar
+Source1: %rname-po-%version.tar
+Source2: %rname-doc-%version.tar
+Source3: %rname-doc-translated-%version.tar
 Patch1: build-without-mysql.patch
-Patch2: i18n.patch
-Patch3: digikam-boost-1.48.patch
-Patch4: digikam-old-libkipi.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -139,11 +138,8 @@ Marble support for %lname.
 
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version  -a1 -a2 -a3
 %patch1 -p2
-%patch2 -p2
-#%%patch3 -p0
-#%%patch4 -p1
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -154,6 +150,19 @@ find -type f -name \*.h | \
 while read f ; do
     sed -i 's|<double>|<qreal>|g' $f
 done
+
+mv %rname-po-%version po
+mv %rname-doc-%version doc
+mv %rname-doc-translated-%version doc-translated
+
+cat >> CMakeLists.txt <<__EOF__
+find_package(Msgfmt REQUIRED)
+find_package(Gettext REQUIRED)
+add_subdirectory( po )
+add_subdirectory( doc )
+add_subdirectory( doc-translated )
+__EOF__
+
 
 %build
 %K4build \
@@ -169,6 +178,7 @@ rm -f %buildroot/%_K4i18n/*/*/kipiplugin*
 rm -f %buildroot/%_K4i18n/*/*/libkipi.*
 rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %K4find_lang --with-kde %rname
+%K4find_lang --with-kde --append --output=%rname.lang showfoto
 
 %files
 %_K4bindir/%rname
@@ -211,6 +221,12 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Mon May 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1
+- new version
+
+* Fri Mar 14 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt1.M70P.1
+- built for M70P
+
 * Tue Feb 04 2014 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt2
 - rebuilt
 
