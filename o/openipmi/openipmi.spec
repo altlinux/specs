@@ -2,8 +2,8 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.19
-Release: alt3
+Version: 2.0.21
+Release: alt1
 License: LGPL
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
@@ -145,11 +145,23 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 %_man7dir/openipmi_conparms.7*
 
 %files lanserv
+%config(noreplace) %_sysconfdir/ipmi/ipmisim1.emu
+%config(noreplace) %_sysconfdir/ipmi/lan.conf
 %_bindir/ipmilan
+%_bindir/ipmi_sim
+%_bindir/sdrcomp
 %_libdir/libIPMIlanserv.so.*
 %_man8dir/ipmilan.8*
+%_man1dir/ipmi_sim.1*
+%_man5dir/ipmi_lan.5*
+%_man5dir/ipmi_sim_cmd.5*
+
+
 
 %changelog
+* Tue May 20 2014 Anton Farygin <rider@altlinux.ru> 2.0.21-alt1
+- new version
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.19-alt3
 - built for perl 5.18
 
