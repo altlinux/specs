@@ -1,6 +1,6 @@
 Name: VTKLargeData
 Version: 1.1
-Release: alt1.git20130522
+Release: alt1.git20131223
 Summary: Large data files for examples of The Visualization Toolkit (VTK)
 License: MIT
 Group: Development/Tools
@@ -34,6 +34,9 @@ done
 %_datadir/*
 
 %changelog
+* Tue May 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20131223
+- New snapshot
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20130522
 - New snapshot
 
