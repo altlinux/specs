@@ -1,0 +1,63 @@
+Summary:        Creates Windows USB stick installer from a Windows DVD or image
+Name:		winusb
+Version:        1.0.10
+Release:        alt1
+URL:            http://en.congelli.eu/prog_info_winusb.html
+Source: 	%name-%version.tar
+Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
+License: 	GPLv2
+Group: 		System/Configuration/Hardware
+
+BuildRequires:  libwxGTK-devel gcc-c++ ImageMagick-tools
+
+%description
+WinUSB can create bootable windows installer on usb.
+ This package contains two programs:
+  - WinUSB-gui: a simple tool that enable you to create
+ your own usb stick windows installer from iso image
+ or a real DVD.
+  - winusb: the command line tool.
+ Supported images: Windows Vista, Seven, 8 installer
+ for any language and any version (home, pro...)
+ and Windows PE.
+
+%prep
+%setup
+
+%build
+%configure
+
+%install
+%makeinstall_std
+
+install -D -m 644 ./src/linux-menu/winusbgui.desktop %buildroot%_datadir/applications/winusbgui.desktop
+install -D -m 644 ./src/linux-menu/winusbgui-icon.png %buildroot%_datadir/pixmaps/winusbgui-icon.png
+
+mkdir -p %buildroot%_datadir/icons/hicolor/{16x16,22x22,24x24,32x32,36x36,48x48,64x64,72x72,96x96}/apps
+for size in 16x16 22x22 24x24 32x32 36x36 48x48 64x64 72x72 96x96
+do
+convert -size 48x48 %buildroot%_datadir/pixmaps/winusbgui-icon.png -resize $size %buildroot%_datadir/icons/hicolor/$size/apps/winusbgui-icon.png
+done
+
+%files
+%doc COPYING README AUTHORS ChangeLog
+%_bindir/%name
+%_bindir/winusbgui
+%_datadir/applications/winusbgui.desktop
+%_man1dir/*.1.gz
+%dir %_datadir/%name
+%_datadir/pixmaps/winusbgui-icon.png
+%_datadir/icons/hicolor/*/apps/winusbgui-icon.png
+%dir %_datadir/%name/data
+%_datadir/%name/data/*
+%dir %_datadir/%name/locale
+%dir %_datadir/%name/locale/fr
+%dir %_datadir/%name/locale/fr/LC_MESSAGES
+%_datadir/%name/locale/fr/LC_MESSAGES/wxstd.mo
+%_datadir/%name/locale/fr/LC_MESSAGES/trad.mo
+
+
+%changelog
+* Tue May 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt1
+- Initial build
+
