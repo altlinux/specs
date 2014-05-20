@@ -1,16 +1,17 @@
 Name: wildmidi
-Version: 0.2.3.5
+Version: 0.3.6
 Release: alt1
 Summary: WildMidi Open Source Midi Sequencer
 Group: Sound
 
 License: GPLv3+
-Url: http://wildmidi.sourceforge.net
+Url: http://www.mindwerks.net/projects/wildmidi/
 Source: %name-%version.tar.gz
 Packager: Fr. Br. George <george@altlinux.ru>
 
-# Automatically added by buildreq on Sat Aug 07 2010 (-bi)
-BuildRequires: libalsa-devel chrpath
+# Automatically added by buildreq on Tue May 20 2014 (-bi)
+# optimized out: cmake-modules elfutils python-base
+BuildRequires: cmake libalsa-devel libopenal-devel
 
 Requires: timidity-instruments
 
@@ -18,16 +19,14 @@ Requires: timidity-instruments
 WildMidi is a software midi play which has a core softsynth library that can be use with other applications.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%name-%version
 
 %build
-%configure --disable-static --without-arch --disable-werror
-%make
-chrpath -d src/.libs/libWildMidi.so
-chrpath -d src/.libs/wildmidi
+%cmake
+%cmake_build
 
 %install
-%makeinstall
+%cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 
 %files
 %_bindir/%name
@@ -59,11 +58,16 @@ License: LGPLv3+
 This package contains development files for wildmidi
 
 %files -n %develname
+%doc docs/ProgRef.odt
 %_libdir/*.so
 %_includedir/*.h
 %_man3dir/*.3*
 
 %changelog
+* Tue May 20 2014 Fr. Br. George <george@altlinux.ru> 0.3.6-alt1
+- Autobuild version bump to 0.3.6
+- Build scheme and upstream hosting switch
+
 * Fri Jan 20 2012 Fr. Br. George <george@altlinux.ru> 0.2.3.5-alt1
 - Autobuild version bump to 0.2.3.5
 - Fix build
