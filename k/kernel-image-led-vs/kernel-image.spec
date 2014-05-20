@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1860,6 +1860,13 @@ done)
 
 
 %changelog
+* Tue May 20 2014 Led <led@altlinux.ru> 3.13.11.2-alt11
+- updated:
+  + fix-fs
+  + feat-arch-x86--cpu_emulate
+  + feat-fs-reiser4
+  + feat-fs-tux3
+
 * Tue May 20 2014 Led <led@altlinux.ru> 3.13.11.2-alt10
 - updated:
   + fix-arch-x86--mcheck
