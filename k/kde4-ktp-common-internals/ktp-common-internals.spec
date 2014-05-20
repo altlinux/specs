@@ -3,7 +3,7 @@
 
 %define rname ktp-common-internals
 Name: kde4-ktp-common-internals
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -20,7 +20,6 @@ BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel libtelepathy-qt4-devel
 BuildRequires: libtelepathy-logger-devel telepathy-logger-qt4-devel
 BuildRequires: kde4libs-devel kde4pimlibs-devel libkpeople-devel
-BuildRequires: kde4-nepomuk-core-devel soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel shared-desktop-ontologies-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -131,6 +130,12 @@ done
 %_K4includedir/KTp/
 
 %changelog
+* Tue May 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
+- new version
+
+* Thu Apr 03 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt0.M70P.1
+- built for M70P
+
 * Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - new version
 
