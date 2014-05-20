@@ -35,7 +35,7 @@ BuildRequires: libvorbis-devel
 
 Name: wesnoth%wessuffix
 Version: 1.11.13
-Release: alt1
+Release: alt2
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -58,7 +58,9 @@ BuildRequires: python-devel
 %{?_enable_optipng:BuildRequires: optipng}
 %{?_enable_display_revision:BuildRequires: subversion}
 
+%if_enabled python
 Requires: python-module-%name = %version-%release
+%endif
 Conflicts: %name-tools < 1.11.7
 
 %description
@@ -204,6 +206,9 @@ scons all \
           extra_flags_release="%optflags" \
           %{?_smp_mflags}
 
+# TODO
+#	localedirname=locale \
+
 #	  version_suffix=%wessuffix \
 
 	  # let it be default - translations - for now, for cmake install compatibility
@@ -296,13 +301,13 @@ done
 for i in cutter exploder wesnoth schema_generator wesnoth_addon_manager \
  wmlindent wmllint wmlscope \
  ; do
-	 mv %buildroot%_bindir/$i %buildroot%_bindir/$i%wessuffix
+	 mv %buildroot%_bindir/$i %buildroot%_bindir/${i}%wessuffix
 done
 cp icons/wesnoth{,%wessuffix}.desktop
 cp icons/wesnoth_editor{,%wessuffix}.desktop
 find %buildroot%_mandir -name wesnoth.6 -execdir mv {} wesnoth%wessuffix.6 \;
 find %buildroot%_mandir -name wesnothd.6 -execdir mv {} wesnothd%wessuffix.6 \;
-sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name=.*\),\1 (%wesdesktopsuffix),' icons/wesnoth*%{wessuffix}.desktop
+sed -i -e 's,Exec=wesnoth,Exec=wesnoth%wessuffix,;s,^\(Name.*\),\1 (%wesdesktopsuffix),' icons/wesnoth*%{wessuffix}.desktop
 %endif
 
 #if with install_using_manual || with install_using_scons
@@ -326,10 +331,12 @@ install -d -m 0755 %buildroot%_sbindir
 mv %buildroot%_bindir/{,%name-}test
 %endif
 
+%if_enabled python
 mkdir -p %buildroot/%python_sitelibdir_noarch
 mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot/%python_sitelibdir_noarch
 mv %buildroot%_datadir/%name/data/tools/addon_manager %buildroot/%python_sitelibdir_noarch
 mv %buildroot%_datadir/%name/data/tools/unit_tree %buildroot/%python_sitelibdir_noarch
+%endif
 
 #pushd data
 #pushd tools
@@ -552,7 +559,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %_datadir/%name/sounds
 %dir %_datadir/%name/translations
 %dir %_datadir/%name/data
-#%_datadir/%name/data/COPYING.txt
+%_datadir/%name/data/COPYING.txt
 %_datadir/%name/data/ai/
 %_datadir/%name/data/campaigns
 %_datadir/%name/data/core
@@ -566,6 +573,11 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %dir %_datadir/%name/data/languages
 %_datadir/%name/l10n-track
 %_man6dir/%name.6*
+%if_disabled tools
+%dir %_datadir/%name
+%dir %_datadir/%name/data
+%_datadir/%name/data/tools
+%endif
 
 %files doc
 %dir %_docdir/%name-%version
@@ -614,6 +626,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor%wessuffix/' %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.13-alt2
+- bugfix release
+
 * Fri May 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.13-alt1
 - 1.12 beta 3
 
