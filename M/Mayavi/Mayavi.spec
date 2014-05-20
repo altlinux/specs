@@ -1,10 +1,11 @@
-%define mpiimpl openmpi
+%define mpiimpl openmpiRebuilt with vtk6.1
 %define mpidir %_libdir/%mpiimpl
+%define vtkver 6.1
 
 %define oname mayavi
 Name:           Mayavi
 Version:        4.3.2
-Release:        alt1.git20140421
+Release:        alt2.git20140421
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -20,10 +21,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-module-setuptools python-module-setupdocs
 BuildRequires: python-module-sphinx-devel libnumpy-devel
-BuildRequires: python-module-vtk6.0 /proc strace
+BuildRequires: python-module-vtk%vtkver /proc strace
 BuildPreReq: desktop-file-utils
 BuildPreReq: python-module-sip-devel libpympi-devel
-BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk6.0-python
+BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk%vtkver-python
 BuildPreReq: libGL-devel libGLU-devel xvfb-run
 BuildPreReq: python-module-traits python%_python_version(traits.api)
 
@@ -41,6 +42,7 @@ Requires:       python-module-wx
 Requires: python-module-mayavi = %EVR
 Requires: python-module-mayavi.tests = %EVR
 Requires: python-module-tvtk = %EVR
+Requires: python-module-vtk%vtkver
 
 %add_python_req_skip test tvtk_classes
 
@@ -184,6 +186,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Tue May 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt2.git20140421
+- Rebuilt with vtk6.1
+
 * Thu May 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.git20140421
 - Version 4.3.2
 
