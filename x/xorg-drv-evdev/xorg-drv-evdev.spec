@@ -1,7 +1,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-evdev
-Version: 2.8.4
+Version: 2.9.0
 Release: alt1
 Epoch: 2
 Summary: Generic Linux input driver
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libmtdev-devel libxkbfile-devel libudev-devel xorg-xextproto-devel xorg-resourceproto-devel
+BuildRequires: libevdev-devel libmtdev-devel libxkbfile-devel libudev-devel xorg-xextproto-devel xorg-resourceproto-devel
 BuildRequires: xorg-scrnsaverproto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-xproto-devel
 
 %description
@@ -50,11 +50,9 @@ Generic Linux input driver development package
 
 mkdir -p %buildroot%_xconfdir
 install -m644 *.conf %buildroot%_xconfdir/
-install -pD -m644 99-x11-keyboard.rules %buildroot%_sysconfdir/udev/rules.d/99-x11-keyboard.rules
 
 %files
 %config(noreplace) %_xconfdir/*.conf
-%_sysconfdir/udev/rules.d/99-x11-keyboard.rules
 %_x11modulesdir/input/*.so
 %_man4dir/*
 
@@ -63,6 +61,9 @@ install -pD -m644 99-x11-keyboard.rules %buildroot%_sysconfdir/udev/rules.d/99-x
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 20 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:2.9.0-alt1
+- 2.9.0
+
 * Thu May 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:2.8.4-alt1
 - 2.8.4
 
