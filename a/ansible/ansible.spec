@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.5.5
+Version: 1.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -8,6 +8,8 @@ License: GPLv3
 Source0: http://ansibleworks.com/releases/%name-%version.tar
 Patch0:%name-%version-alt.patch
 Url: http://ansibleworks.com
+
+Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools
@@ -43,9 +45,12 @@ cp -va library/* %buildroot/%_datadir/%name/
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Wed May 21 2014 Terechkov Evgenii <evg@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Apr 22 2014 Terechkov Evgenii <evg@altlinux.org> 1.5.5-alt1
 - 1.5.5
 
