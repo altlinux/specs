@@ -6,8 +6,8 @@
 %def_disable gui
 
 Name: SPICE
-Version: 0.12.4
-Release: alt2.gite3da0c4
+Version: 0.12.5
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Wed May 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt1
+- 0.12.5
+
 * Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.4-alt2.gite3da0c4
 - upstream git snapshot e3da0c4f01f16e504d48793bb9a5b37b65fa345e
 - switch from celt051 to opus
