@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-ShareDir
 Name: perl-%dist
-Version: 1.03
-Release: alt2
+Version: 1.102
+Release: alt1
 
 Summary: Locate per-dist and per-module shared files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RE/REHSACK/File-ShareDir-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,10 +44,14 @@ very strange ways to make the data available to their code.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_privlib/File
+%perl_vendor_privlib/auto/share/*
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.102-alt1
+- automated CPAN update
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt2
 - rebuilt
 
