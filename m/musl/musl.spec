@@ -7,8 +7,8 @@
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 Name: musl
-Version: 1.1.0
-Release: alt9
+Version: 1.1.1
+Release: alt1
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,12 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Wed May 21 2014 Led <led@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
+* Tue May 20 2014 Led <led@altlinux.ru> 1.1.0-alt10
+- fix unhandled cases in strptime
+
 * Tue May 20 2014 Led <led@altlinux.ru> 1.1.0-alt9
 - fixes from upstream's SCM
 
