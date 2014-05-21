@@ -1,20 +1,21 @@
-%define module_version 0.02
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build.pm)
+%define module_version 0.03
 %define module_name HTML-FillInForm-ForceUTF8
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Encode.pm) perl(ExtUtils/MakeMaker.pm) perl(HTML/FillInForm.pm) perl(HTML/Parser.pm) perl(Test/More.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.02
-Release: alt2
+Version: 0.03
+Release: alt1
 Summary: FillInForm with utf8 encoding
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/K/KA/KAZEBURO/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KAZEBURO/HTML-FillInForm-ForceUTF8-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -31,10 +32,13 @@ HTML::FillInForm::ForceUTF8 is a subclass of HTML::FillInForm that forces utf8 f
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.md Changes
 %perl_vendor_privlib/H*
 
 %changelog
+* Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2
 - build for Sisyphus (required for perl update)
 
