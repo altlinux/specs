@@ -1,0 +1,65 @@
+Name: evtest
+Version: 1.31
+Release: alt1
+
+Summary: Input device event monitor and query tool
+License: GPLv2+
+Group: Other
+
+Url: http://cgit.freedesktop.org/%name/
+Packager: Nazarov Denis <nenderus@altlinux.org>
+
+Source: http://cgit.freedesktop.org/%name/snapshot/%name-1.31.tar.gz
+
+BuildRequires: asciidoc
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-encodings
+BuildRequires: time
+BuildRequires: xmlto
+
+%description
+The first invocation type displayed above ("capture mode") causes evtest to
+display information about the specified input device, including all the events
+supported by the device. It then monitors the device and displays all the
+events layer events generated.
+
+In the second invocation type ("query mode"), evtest performs a one-shot query
+of the state of a specific key *value* of an event *type*.
+
+*type* is one of: *EV_KEY*, *EV_SW*, *EV_SND*, *EV_LED* (or the numerical value)
+
+*value* can be either a decimal representation (e.g. 44), hex
+(e.g. 0x2c), or the constant name (e.g. KEY_Z) of the key/switch/sound/LED
+being queried.
+
+If the state bit is set (key pressed, switch on, ...), evtest exits with
+code 10. If the state bit is unset (key depressed, switch off, ...), evtest
+exits with code 0. No other output is generated.
+
+evtest needs to be able to read from the device; in most cases this means it
+must be run as root.
+
+evtest is commonly used to debug issues with input devices in X.Org. The
+output of evtest shows the information presented by the kernel; based on
+this information it can be determined whether a bug may be a kernel or an
+X.Org issue.
+
+%prep
+%setup
+
+%build
+%autoreconf
+%configure
+%make_build
+
+%install
+%makeinstall_std
+
+%files
+%doc COPYING INSTALL
+%_bindir/%name
+%_man1dir/%name.1*
+
+%changelog
+* Wed May 21 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt1
+- Initial build for ALT Linux
