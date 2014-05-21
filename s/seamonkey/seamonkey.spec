@@ -7,19 +7,19 @@
 %define sm_version	%name-%version
 %define sm_arch_extensionsdir	%sm_prefix/extensions
 %define sm_noarch_extensionsdir	%sm_datadir/extensions
-%define sm_cid			\{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}
-%define enigmail_ciddir		%sm_arch_extensionsdir/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
-%define sm_idldir                 %_datadir/idl/%name
-%define sm_includedir             %_includedir/%name
-%define sm_develdir               %sm_prefix-devel
+%define sm_cid		\{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}
+%define enigmail_ciddir	%sm_arch_extensionsdir/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
+%define sm_idldir       %_datadir/idl/%name
+%define sm_includedir   %_includedir/%name
+%define sm_develdir     %sm_prefix-devel
 
-Name: seamonkey
-Version: 2.25
+Name: 	 seamonkey
+Version: 2.26
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
-Group: Networking/WWW
+Group:   Networking/WWW
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
@@ -34,7 +34,7 @@ Source6:	enigmail.tar
 Source7:	seamonkey-mozconfig
 Source8:	rpm-build.tar
 
-Patch:		thunderbird-install-paths.patch
+Patch:		seamonkey-2.26-installdir.patch
 Patch1:		seamonkey-2.2-alt-machOS-fix.patch
 Patch2:		seamonkey-2.0.14-alt-fix-plugin-path.patch
 Patch3:		xulrunner-noarch-extensions.patch
@@ -42,7 +42,9 @@ Patch3:		xulrunner-noarch-extensions.patch
 Patch5:		thunderbird-with-system-mozldap.patch
 %endif
 Patch6:		seamonkey-2.13.2-alt-fix-build.patch
-Patch7:     seamonkey-2.19-elfhack.patch
+Patch7:     	seamonkey-2.19-elfhack.patch
+Patch8:		seamonkey-2.26-enable-addons.patch
+Patch9:		mozilla-js-makefile.patch
 
 PreReq:		urw-fonts
 
@@ -148,12 +150,14 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %patch -p2
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%patch3 -p2
 %if_with system_mozldap
 %patch5 -p1 -b .mozldap
 %endif
 %patch6 -p2
 %patch7 -p2
+%patch8 -p2
+%patch9 -p2
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -193,6 +197,10 @@ autoconf
 [ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
+
+# a kludge since 2.26 ...
+mkdir objdir
+ln -s ../objdir mozilla/objdir
 
 %make_build -f client.mk build \
 	mozappdir=%sm_prefix \
@@ -380,6 +388,22 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon May 19 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.26-alt1
+- New version
+- Security fixes:
+  + MFSA 2014-47 Debugger can bypass XrayWrappers with JavaScript
+  + MFSA 2014-46 Use-after-free in nsHostResolve
+  + MFSA 2014-45 Incorrect IDNA domain name matching for wildcard certificates
+  + MFSA 2014-44 Use-after-free in imgLoader while resizing images
+  + MFSA 2014-43 Cross-site scripting (XSS) using history navigations
+  + MFSA 2014-42 Privilege escalation through Web Notification API
+  + MFSA 2014-41 Out-of-bounds write in Cairo
+  + MFSA 2014-39 Use-after-free in the Text Track Manager for HTML video
+  + MFSA 2014-38 Buffer overflow when using non-XBL object as XBL
+  + MFSA 2014-37 Out of bounds read while decoding JPG images
+  + MFSA 2014-36 Web Audio memory corruption issues
+  + MFSA 2014-34 Miscellaneous memory safety hazards
+
 * Sun Mar 30 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.25-alt1
 - New version
 - Security fixes:
