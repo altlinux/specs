@@ -1,14 +1,14 @@
 
 %define kpeople_sover 3
-%define kpeople_libver 0.2.1
+%define kpeople_libver 0.2.2
 %define libkpeople libkpeople%kpeople_sover
 %define kpeoplewidgets_sover 3
-%define kpeoplewidgets_libver 0.2.1
+%define kpeoplewidgets_libver 0.2.2
 %define libkpeoplewidgets libkpeoplewidgets%kpeoplewidgets_sover
 
 Name: libkpeople
 Summary: Meta-contact aggregation library
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Group: System/Libraries
@@ -17,12 +17,10 @@ License: LGPLv2+
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Oct 31 2013 (-bi)
-# optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xproto-devel zlib-devel
-#BuildRequires: ctest gcc-c++ glib2-devel kde4-nepomuk-core-devel libicu50 libqt3-devel python-module-distribute rpm-build-python3 rpm-build-ruby soprano xorg-xf86miscproto-devel zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel
-BuildRequires: kde4-nepomuk-core-devel soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel shared-desktop-ontologies-devel
-BuildRequires: kde4libs-devel kde4pimlibs-devel kde-common-devel
+# Automatically added by buildreq on Wed May 21 2014 (-bi)
+# optimized out: automoc boost-devel-headers cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libakonadi4-calendar libakonadi4-contact libakonadi4-kabc libakonadi4-kcal libakonadi4-kde libakonadi4-kmime libakonadi4-notes libakonadi4-socialutils libakonadi4-xml libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpgmexx4-pthread libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-sql libqt4-svg libqt4-xml libsoprano-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: gcc-c++ glib2-devel kde4pimlibs-devel libXxf86misc-devel libqt3-devel python-module-protobuf qt4-designer rpm-build-ruby zlib-devel-static
+BuildRequires: gcc-c++ libXxf86misc-devel kde4libs-devel kde4pimlibs-devel kde-common-devel
 
 %description
 A library that provides access to all contacts and the people who hold them.
@@ -98,6 +96,12 @@ Requires: %name-common >= %EVR
 %_libdir/cmake/KPeople
 
 %changelog
+* Tue May 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
+- new version
+
+* Thu Apr 03 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt0.M70P.1
+- built for M70P
+
 * Wed Mar 19 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
 - new version
 
