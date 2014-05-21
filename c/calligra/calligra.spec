@@ -8,7 +8,7 @@
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -669,6 +669,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.3-alt1
+- new version
+
+* Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.2-alt0.M70P.1
+- built for M70P
+
 * Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.2-alt1
 - new version
 
