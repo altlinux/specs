@@ -2,7 +2,7 @@
 
 Name: libfm
 Version: 1.2.0
-Release: alt4
+Release: alt5
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -90,9 +90,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_libdir/%name/modules/*.so
 %_xdgmimedir/packages/*
 %_datadir/%name/
-%_desktopdir/*
+%_desktopdir/libfm-pref-apps.desktop
 %_bindir/libfm-pref-apps
-%doc %_man1dir/*
+%_man1dir/libfm-pref-apps.1*
 
 %files devel
 %_libdir/*.so
@@ -102,8 +102,13 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 
 %files -n lxde-lxshortcut
 %_bindir/lxshortcut
+%_desktopdir/lxshortcut.desktop
+%_man1dir/lxshortcut.1*
 
 %changelog
+* Thu May 22 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt5
+- moved lxshortcut desktop file and manpage to appropriate subpackage
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt4
 - separate lxde-lxshortcut for proper dist-upgrade
 
