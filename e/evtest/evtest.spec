@@ -1,6 +1,6 @@
 Name: evtest
 Version: 1.31
-Release: alt1
+Release: alt2
 
 Summary: Input device event monitor and query tool
 License: GPLv2+
@@ -61,5 +61,8 @@ X.Org issue.
 %_man1dir/%name.1*
 
 %changelog
+* Thu May 22 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt2
+- Fix release for safe upgrade from autoimports repository
+
 * Wed May 21 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt1
 - Initial build for ALT Linux
