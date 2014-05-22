@@ -1,5 +1,5 @@
 Name: gpgme
-Version: 1.3.2
+Version: 1.4.3
 Release: alt1
 
 %define min_gnupg_version 1.9.6
@@ -12,7 +12,7 @@ Url: http://www.gnupg.org/related_software/gpgme/index.html
 # ftp://ftp.gnupg.org/gcrypt/gpgme/gpgme-%version.tar.bz2
 Source: gpgme-%version.tar
 
-Patch1: gpgme-1.3.0-alt-version-script.patch
+Patch1: gpgme-1.4.3-alt-version-script.patch
 Patch2: gpgme-1.3.0-alt-gpgme-config-assuan.patch
 Patch3: gpgme-1.3.0-alt-tests.patch
 Patch4: gpgme-1.3.2-rh-alt-linkage.patch
@@ -22,7 +22,7 @@ Requires: gnupg2-gpg >= %min_gnupg_version
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires: gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
+BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 
 %package -n lib%name
 Summary: GnuPG Made Easy!
@@ -129,6 +129,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %endif
 
 %changelog
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1
+- new version
+
 * Tue Dec 04 2012 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - new version
 
