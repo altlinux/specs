@@ -3,11 +3,12 @@
 %define liblastfm_fingerprint liblastfm_fingerprint%sover
 %define liblastfm_common liblastfm-common%sover
 Name: liblastfm
-Version: 1.0.3
-Release: alt2
+Version: 1.0.8
+Release: alt1
 
 Group: System/Libraries
 Summary: Liblastfm is a collection of libraries to help you integrate Last.fm services
+Url: https://github.com/lastfm/liblastfm/
 License: GPLv3
 
 Requires: %name-common = %version-%release
@@ -81,6 +82,9 @@ Install this package if you want do compile applications using the %name library
 %_includedir/*
 
 %changelog
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.8-alt1
+- new version
+
 * Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt2
 - rebuilt with new rpm (ALT#28443)
 
