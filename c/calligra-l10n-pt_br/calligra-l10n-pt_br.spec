@@ -3,7 +3,7 @@
 %define lngg Brazil Portuguese
 
 Name: calligra-l10n-%lngpkg
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 %define beta %nil
 
@@ -54,6 +54,9 @@ done
 #%lang(%lng) %_K4apps/calligra/autocorrect/%{lng}*.xml
 
 %changelog
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 2.8.3-alt1
+- new version
+
 * Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt1
 - new version
 
