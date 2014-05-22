@@ -1,5 +1,5 @@
 Name: libinput
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: Input devices library
@@ -12,7 +12,7 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %define mtdev_ver 1.1.0
 %define evdev_ver 0.4
 
-BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
+BuildRequires: gcc-c++ libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel
 
 %description
@@ -42,9 +42,7 @@ that are needed to write applications that use %name.
 
 %build
 %autoreconf
-%configure --disable-static \
-	--disable-gcov
-
+%configure --disable-static
 %make_build
 
 %install
@@ -63,6 +61,9 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Tue Mar 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus
 
