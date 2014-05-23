@@ -1,15 +1,14 @@
 
 Name: hd2u
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Group: Text tools
 Summary: Converts DOS-style EOLs to UNIX-style EOLs and vice versa.
 Url: http://www.megaloman.com/~hany/software/hd2u/
 License: GPL
 
-Provides: dos2unix unix2dos
-Obsoletes: dos2unix unix2dos
+Conflicts: dos2unix unix2dos
 
 Source: %name-%version.tar.bz2
 
@@ -43,6 +42,9 @@ ln -s dos2unix %buildroot/%_bindir/unix2dos
 %doc AUTHORS CREDITS ChangeLog NEWS README TODO
 
 %changelog
+* Fri May 23 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt2
+- don't obsolete dos2unix
+
 * Wed Jun 02 2010 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
 - new version
 
