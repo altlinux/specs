@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt13
+Release: alt14
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1060,7 +1060,7 @@ config_disable \
 	%{?_disable_smack:security_smack} \
 	%{?_disable_yama:securyty_yama} \
 	%{?_disable_thp:transparent_hugepage} \
-	%{?_disable_guest:virtio drm_{cirrus_qemu,vmwgfx} vmware_balloon} \
+	%{?_disable_guest:virtio drm_{cirrus_qemu,qxl,vmwgfx} vmware_balloon} \
 	%{?_disable_kvm:kvm} \
 	%{?_disable_hypervisor_guest:hypervisor_guest} \
 	%{?_disable_hyperv:hyperv} \
@@ -1860,6 +1860,12 @@ done)
 
 
 %changelog
+* Fri May 23 2014 Led <led@altlinux.ru> 3.13.11.2-alt14
+- updated:
+  + feat-drivers-block--btier
+  + feat-drivers-platform--omnibook
+- disabled USB_SN9C102
+
 * Thu May 22 2014 Led <led@altlinux.ru> 3.13.11.2-alt13
 - updated:
   + fix-fs-reiserfs
