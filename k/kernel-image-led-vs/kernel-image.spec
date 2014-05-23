@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.13.11.2
-Release: alt11
+Release: alt13
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1860,6 +1860,17 @@ done)
 
 
 %changelog
+* Thu May 22 2014 Led <led@altlinux.ru> 3.13.11.2-alt13
+- updated:
+  + fix-fs-reiserfs
+
+* Wed May 21 2014 Led <led@altlinux.ru> 3.13.11.2-alt12
+- updated:
+  + fix-fs-hugetlbfs
+  + feat-tools--kvm
+- added:
+  + fix-mm--huge_memory
+
 * Tue May 20 2014 Led <led@altlinux.ru> 3.13.11.2-alt11
 - updated:
   + fix-fs
