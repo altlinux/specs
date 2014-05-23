@@ -19,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt7
+Release: alt8
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -724,6 +724,10 @@ done
 
 
 %changelog
+* Fri May 23 2014 Led <led@altlinux.ru> 4.4.0-alt8
+- upstream updates for fixing vulnerabilities:
+  + CVE-2013-3495
+
 * Mon May 12 2014 Led <led@altlinux.ru> 4.4.0-alt7
 - upstream updates for fixing vulnerabilities:
   + CVE-2013-3495
