@@ -15,13 +15,13 @@
 %define nv_version 331
 %define nv_release 67
 %define nv_minor %nil
-%define pkg_rel alt128
+%define pkg_rel alt129
 %ifarch x86_64
 %def_disable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -342,6 +342,9 @@ fi
 %endif
 
 %changelog
+* Fri May 23 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt129
+- don't package kernel module sources
+
 * Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 331.67-alt128
 - add patch against 3.14 kernel
 
