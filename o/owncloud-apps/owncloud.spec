@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/apps/
 
 Name: owncloud-apps
-Version: 6.0.1
+Version: 6.0.3
 Release: alt1
 
 Summary: Applications for owncloud
@@ -35,6 +35,9 @@ rm -f %buildroot%installdir/l10n/init.sh
 %installdir/*
 
 %changelog
+* Wed May 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.3-alt1
+- 6.0.3
+
 * Wed Jan 29 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.1-alt1
 - 6.0.1
 
