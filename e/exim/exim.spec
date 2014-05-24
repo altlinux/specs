@@ -8,12 +8,14 @@
 %define openssldir /var/lib/ssl
 
 Name: exim
-Version: 4.76
-Release: alt5
+Version: 4.82
+Release: alt1
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
 Group: System/Servers
+
+Packager: Anton Gorlov <stalker@altlinux.ru>
 
 URL: http://www.exim.org/
 Source0: %ftpurl/exim-%version.tar.bz2
@@ -45,7 +47,7 @@ Source36: README.ALT
 Source38: eximon.png
 Source43: smtpauthpwd
 
-Patch1: exim-4.72-buildoptions.patch
+Patch1: exim-4.82-buildoptions.patch
 Patch3: exim-4.34-texinfo.patch
 Patch4: exim-4.76-pcre.patch
 Patch5: CVE-2012-5671.patch
@@ -211,8 +213,8 @@ install -d Local
 # temporarily suspended
 #patch3 -p1
 
-%patch4 -p1
-%patch5 -p1
+#patch4 -p1
+#patch5 -p1
 
 install %SOURCE21 Local/eximon.conf
 
@@ -235,8 +237,11 @@ versions="heavy $versions"
 
 %define compiledir build-`scripts/os-type`-`scripts/arch-type`
 
+ sed -i 's#MYLIBDIR#%{_libdir}#g' src/EDITME
+
 for version in $versions
 do
+ sed -i 's#MYLIBDIR#%{_libdir}#g' %_sourcedir/exim-addMakefile.$version
  cat src/EDITME %_sourcedir/exim-addMakefile.$version >Local/Makefile
  make CFLAGS="-I/usr/include/pcre $RPM_OPT_FLAGS -DLDAP_DEPRECATED" FULLECHO='' EXIM_CHMOD=''
  cp %compiledir/exim bins/exim-$version
@@ -370,7 +375,7 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %doc ACKNOWLEDGMENTS NOTICE README.UPDATING
 %doc doc/{README.SIEVE,ChangeLog,NewStuff,dbm.discuss.txt,filter.txt,oview.txt,spec.txt}
 %doc doc/experimental-spec.txt
-%doc doc/{OptionLists.txt,config.samples.tar.bz2,pcre*.txt}
+%doc doc/{OptionLists.txt,config.samples.tar.bz2}
 #%doc util/transport-filter.pl
 
 %config(noreplace) %_sysconfdir/exim/exim.conf
@@ -451,6 +456,13 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Sun May 18 2014 Anton Gorlov <stalker@altlinux.ru> 4.82-alt1
+- 4.82 
+
+* Sun May 18 2014 Anton Gorlov <stalker@altlinux.ru> 4.76-alt6
+- fix libdir in Makefiles
+- fix perl core path
+
 * Mon Sep 23 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.76-alt5
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
