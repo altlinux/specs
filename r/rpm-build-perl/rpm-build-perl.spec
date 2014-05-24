@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt3
+Release: alt4
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Sat May 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.84-alt4
+- better Module::Build recognition
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.84-alt3
 - added exceptions for incorrect versions in RequiresPerl.
 
