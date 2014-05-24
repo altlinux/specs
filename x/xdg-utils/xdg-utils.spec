@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt9
+Release: alt10
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -15,6 +15,7 @@ Patch3: detect-mate.patch
 Patch4: mate-screensaver.patch
 Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
+Patch7: xdg-open-fix-ifs-use.patch
 
 BuildArch: noarch
 
@@ -62,6 +63,7 @@ popd
 %patch4 -p2
 %patch5 -p1
 %patch6 -p2
+%patch7 -p2
 
 %build
 %autoreconf
@@ -86,6 +88,10 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Sat May 24 2014 Michael Shigorin <mike@altlinux.org> 1.1.0-alt10
+- xdg-open: fix totally broken IFS use (closes: #28728)
+  + thanks Maxim Suhanov for analysis
+
 * Mon Mar 17 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.0-alt9
 - Drop patches for obsolete version of xdg-su.
 - xdg-su: use gnomesu or su_generic for xfce.
