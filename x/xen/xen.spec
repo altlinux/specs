@@ -3,7 +3,7 @@
 %def_without xsm
 %def_enable ocamltools
 %def_enable monitors
-%def_enable xend
+%def_disable xend
 %def_enable xenapi
 
 %define _localstatedir %_var
@@ -19,7 +19,7 @@ Name: xen
 Version: 4.4.0
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt8
+Release: alt9
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 URL: http://www.xenproject.org/
@@ -166,8 +166,8 @@ BuildRequires: rpm-build-xen >= 4.3.1
 %endif
 
 %description
-This package contains the XenD daemon and xm command line tools, needed to manage
-virtual machines running under the Xen hypervisor.
+This package contains the command line tools, needed to manage virtual machines
+running under the Xen hypervisor.
 
 
 %package -n lib%name
@@ -428,8 +428,8 @@ sed -i '/^[[:blank:]]*\. \/etc\/rc\.status[[:blank:]]*$/s/\. /: # &/' %buildroot
 install -m 0755 %SOURCE20 %buildroot%_initddir/xenstored
 install -m 0755 %SOURCE21 %buildroot%_initddir/xenconsoled
 install -m 0755 %SOURCE22 %buildroot%_initddir/blktapctrl
-install -m 0755 %SOURCE23 %buildroot%_initddir/xend
 install -m 0755 %SOURCE24 %buildroot%_initddir/xendomains
+install -m 0755 %SOURCE23 %buildroot%_initddir/xend
 
 # sysconfig
 install -d -m 0755 %buildroot%_sysconfdir/sysconfig
@@ -443,10 +443,10 @@ install -p -m 0644 %SOURCE40 %buildroot%_unitdir/proc-xen.mount
 install -p -m 0644 %SOURCE41 %buildroot%_unitdir/var-lib-xenstored.mount
 install -p -m 0644 %SOURCE42 %buildroot%_unitdir/xenstored.service
 install -p -m 0644 %SOURCE43 %buildroot%_unitdir/blktapctrl.service
-install -p -m 0644 %SOURCE44 %buildroot%_unitdir/xend.service
 install -p -m 0644 %SOURCE45 %buildroot%_unitdir/xenconsoled.service
 install -p -m 0644 %SOURCE46 %buildroot%_unitdir/xen-watchdog.service
 install -p -m 0644 %SOURCE47 %buildroot%_unitdir/xendomains.service
+install -p -m 0644 %SOURCE44 %buildroot%_unitdir/xend.service
 %{?_enable_ocamltools:install -p -m 0644 %SOURCE50 %buildroot%_unitdir/oxenstored.service}
 
 install -pD -m 0644 %SOURCE49 %buildroot/lib/tmpfiles.d/xen.conf
@@ -487,11 +487,11 @@ done
 
 
 %post
-%post_service xend
+%{?_enable_xend:%post_service xend}
 %post_service xendomains
 
 %preun
-%preun_service xend
+%{?_enable_xend:%preun_service xend}
 %preun_service xendomains
 
 
@@ -724,6 +724,9 @@ done
 
 
 %changelog
+* Sun May 25 2014 Led <led@altlinux.ru> 4.4.0-alt9
+- disabled xend (obsolete xen management user interface)
+
 * Fri May 23 2014 Led <led@altlinux.ru> 4.4.0-alt8
 - upstream updates for fixing vulnerabilities:
   + CVE-2013-3495
