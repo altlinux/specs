@@ -3,7 +3,7 @@
 %define m_name		Exporter::Lite
 %define m_author_id	MSCHWERN
 Name: perl-%module
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: Exporter::Lite - Lightweight exporting of variables
@@ -45,6 +45,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Exporter/
 
 %changelog
+* Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
