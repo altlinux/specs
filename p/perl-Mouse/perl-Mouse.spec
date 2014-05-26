@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build.pm)
+BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1
 - automated CPAN update
 
