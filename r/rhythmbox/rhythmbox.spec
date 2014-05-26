@@ -12,7 +12,7 @@
 %def_disable zeitgeist
 
 Name: rhythmbox
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -481,6 +481,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Mon May 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
+- 3.0.3
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2, built for gnome-3.12
 - temporarily disabled magnatune plugin
