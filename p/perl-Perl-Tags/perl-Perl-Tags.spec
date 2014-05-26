@@ -2,7 +2,7 @@
 %define dist Perl-Tags
 
 Name: perl-Perl-Tags
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: Generate (possibly exuberant) Ctags style tags for Perl sourcecode
@@ -56,6 +56,9 @@ rm -f %buildroot%perl_vendor_privlib/Perl/README.pod
 %doc README Changes
 
 %changelog
+* Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
