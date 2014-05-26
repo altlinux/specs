@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 0.4.2
+Version: 0.4.7
 Release: alt1
 
 Summary: Library for real-time communications with async IO support and a complete SIP stack
@@ -54,5 +54,8 @@ rm -f %buildroot%_libdir/lib%oname.a
 #%_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 26 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.7-alt1
+- 0.4.8
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - initial build for ALT Linux Sisyphus
