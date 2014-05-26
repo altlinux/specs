@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.5
+Version: 2.6.1
 Release: alt1
 
 Summary: Tool that helps you find what software is using the most power
@@ -29,6 +29,7 @@ Please note that it also runs just fine with e.g. AMD CPUs. :)
 %setup
 
 %build
+find -name '*.o' -delete
 %autoreconf
 %configure
 %make_build
@@ -45,6 +46,9 @@ install -d %buildroot%_cachedir/%name
 %dir %_cachedir/%name
 
 %changelog
+* Mon May 26 2014 Michael Shigorin <mike@altlinux.org> 2.6.1-alt1
+- new version (watch file uupdate)
+
 * Sat Nov 23 2013 Michael Shigorin <mike@altlinux.org> 2.5-alt1
 - new version (watch file uupdate)
 
