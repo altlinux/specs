@@ -1,11 +1,11 @@
 Name: xfce4-mount-plugin
-Version: 0.6.4
-Release: alt1.git20130427
+Version: 0.6.7
+Release: alt1
 
-Summary: Mount plugin for XFce Desktop
+Summary: Mount plugin for Xfce Desktop
 License: %gpl2plus
 Group: Graphical desktop/XFce
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-mount-plugin
@@ -50,6 +50,10 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 0.6.7.
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.6.4-alt1.git20130427
 - Upstream git snapshot.
 - Updated to 0.6.4.
