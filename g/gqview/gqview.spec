@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt7.qa1
+Release: alt8
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -20,6 +20,8 @@ Patch7: gqview-pixbuf-renderer-use-gdk_window_scroll.patch
 # Automatically added by buildreq on Mon Feb 25 2008
 BuildRequires: libgtk+2-devel liblcms-devel
 
+Requires: /usr/bin/jpegtran /usr/bin/mogrify
+
 %description
 GQview is an image viewer for browsing through graphics files.
 Features include single click file viewing, support for external
@@ -35,14 +37,16 @@ editors, previewing images using thumbnails, and zoom.
 %patch5 -p1
 %patch6 -p2
 %patch7 -p2
+sed -i 's,^gqview_LDADD = ,&-lm ,' src/Makefile*
 
 %build
+export CFLAGS="-lm"
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-install -pD -m644 gqview.png %buildroot%_liconsdir/gqview.png
+%makeinstall_std
+install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 
 %find_lang %name
 
@@ -55,6 +59,10 @@ install -pD -m644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Mon May 26 2014 Michael Shigorin <mike@altlinux.org> 2.1.5-alt8
+- fixed FTBFS (-lm now missing from GTK_LIBS)
+- added deps to ensure jpegtran and mogrify are there (closes: #30094)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
