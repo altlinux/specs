@@ -1,6 +1,6 @@
 Name: xfdashboard
-Version: 0.1.6
-Release: alt2
+Version: 0.1.91
+Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: %gpl2plus
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
 BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildPreReq: libxfconf-devel libgarcon-devel
@@ -47,9 +47,14 @@ mkdir m4
 
 %files -f %name.lang
 %_bindir/%name
+%_xdgconfigdir/autostart/*.desktop
+%_desktopdir/*.desktop
 %_datadir/themes/%name/
 
 %changelog
+* Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 0.1.91-alt1
+- Updated to 0.1.91.
+
 * Mon Mar 31 2014 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt2
 - Rebuild with libcogl-1.18.0.
 
