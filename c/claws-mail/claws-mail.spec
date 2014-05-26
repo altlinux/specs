@@ -12,7 +12,7 @@
 %def_disable	tnef
 
 Name:   	claws-mail
-Version:	3.9.3
+Version:	3.10.0
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -41,7 +41,7 @@ BuildRequires: libgtk+2-devel
 # For plugin-archive:
 BuildRequires: libarchive-devel
 
-# For plugin-fancy, plugin-rssyl, plugin-spamreport, plugin-vcalendar
+# For plugin-fancy, plugin-rssyl, plugin-spamreport, plugin-vcalendar, plugin-libravatar
 BuildRequires: libcurl-devel
 
 # For plugin-fancy
@@ -160,6 +160,7 @@ Requires:	%name-plugin-gdata = %version-%release
 %if_enabled geolocation
 Requires:	%name-plugin-geolocation = %version-%release
 %endif
+Requires:	%name-plugin-libravatar = %version-%release
 Requires:	%name-plugin-mailmbox = %version-%release
 Requires:	%name-plugin-newmail = %version-%release
 Requires:	%name-plugin-notification = %version-%release
@@ -356,6 +357,19 @@ Requires:	%name = %version-%release
 
 %description	plugin-geolocation
 This Claws Mail plugin provides GeoLocation functionality.
+
+%package	plugin-libravatar
+Summary:	Pligin displays libravatar/gravatar profiles' images
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-libravatar
+This plugin allows showing the profile picture associated to email
+addresses provided by https://www.libravatar.org/. You can read
+more about what is this at http://wiki.libravatar.org/description/.
+By default missing profiles in the libravatar site are also searched
+in http://gravatar.com, so it will also show pictures from gravatar
+profiles.
 
 %package	plugin-mailmbox
 Summary:	This plugin handles mailboxes in mbox format
@@ -597,6 +611,7 @@ EOF
 %_bindir/%_oldname
 %_man1dir/%name.1.gz
 %_desktopdir/*.desktop
+%_datadir/appdata/*
 %_iconsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_pixmapsdir/%name.png
@@ -613,6 +628,7 @@ EOF
 %files plugins
 
 %files plugin-spamassassin
+%doc src/plugins/spamassassin/README*
 %_claws_plugins_path/spamassassin.so
 
 %files plugin-bogofilter
@@ -670,6 +686,10 @@ EOF
 %_claws_plugins_path/geolocation.so
 %endif
 
+%files plugin-libravatar
+%doc src/plugins/libravatar/README*
+%_claws_plugins_path/libravatar.so
+
 %files plugin-mailmbox
 %_claws_plugins_path/mailmbox.so
 
@@ -715,6 +735,15 @@ EOF
 
 
 %changelog
+* Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 3.10.0-alt1
+- Fixes from upstream git:
+    + Fix GCond use with newer Glib.
+    + added Esperanto and re-instated Dutch.
+- Package README files for spamassassin and libravatar plugins.
+- Package appdata helper file.
+- Package libravatar plugin.
+- Fix menu categories.
+
 * Mon Dec 16 2013 Mikhail Efremov <sem@altlinux.org> 3.9.3-alt1
 - Fixes from upstream git:
     + Fix parsing universal time zone in mailmbox.
