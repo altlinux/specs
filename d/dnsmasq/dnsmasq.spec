@@ -1,5 +1,5 @@
 Name: dnsmasq
-Version: 2.69
+Version: 2.71
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -127,6 +127,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 2.71-alt1
+- Updated to 2.71.
+
 * Mon Apr 14 2014 Mikhail Efremov <sem@altlinux.org> 2.69-alt1
 - Fix conf-file path for DNSSEC.
 - Enable DNSSEC support.
