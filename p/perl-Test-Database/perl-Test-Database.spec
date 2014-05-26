@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBD/DBM.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
-Version:        1.112
+Version:        1.113
 Release:        alt1
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
@@ -56,6 +56,9 @@ configuration.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1
+- automated CPAN update
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.112-alt1
 - automated CPAN update
 
