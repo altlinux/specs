@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Patch1: sflphone-1.3.0-alt-find-gsm.patch
 Patch2: sflphone-1.2.2-alt-find-pcre.patch
 Patch10: pjproject-2.0.1-alt-libav.patch
+Patch11: sflphone-1.3.0-alt-libav10.patch
 
 # Automatically added by buildreq on Tue Feb 19 2013 (-bi)
 # optimized out: elfutils gcc-c++ gnu-config libavcodec-devel libavutil-devel libccrtp-devel libcom_err-devel libcommoncpp2-devel libdbus-c++ libdbus-devel libgpg-error libkrb5-devel libopencore-amrnb0 libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base ruby ruby-stdlibs
@@ -41,6 +42,7 @@ Authors:
 %patch2 -p1
 pushd libs/pjproject-*/
 %patch10 -p1
+%patch11 -p1
 popd
 #sed -i 's|^export[[:space:]][[:space:]]*CC[[:space:]][[:space:]]*=.*$|export CC = gcc -c|' libs/pjproject-*/build/cc-auto.mak.in
 #sed -i 's|^export[[:space:]][[:space:]]*CXX[[:space:]][[:space:]]*=.*$|export CXX = g++ -c|' libs/pjproject-*/build/cc-auto.mak.in
@@ -75,6 +77,12 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Mon May 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
+- built with new libav
+
+* Mon Feb 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt0.M70P.1
+- built for M70P
+
 * Fri Jan 31 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - new version
 
