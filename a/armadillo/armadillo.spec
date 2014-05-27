@@ -1,6 +1,6 @@
 Name:           armadillo
-Version:        3.929.0
-Release:        alt1.svn20131107
+Version:        4.300.6
+Release:        alt1.svn20140523
 Summary:        Fast C++ matrix library with interfaces to LAPACK and ATLAS
 Group:          Sciences/Mathematics
 License:        LGPLv3+
@@ -158,6 +158,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc examples *.pdf *.html *.png
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.300.6-alt1.svn20140523
+- Version 4.300.6
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.929.0-alt1.svn20131107
 - Version 3.929.0
 
