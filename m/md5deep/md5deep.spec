@@ -1,5 +1,5 @@
 Name: md5deep
-Version: 4.1
+Version: 4.3
 Release: alt1
 
 Summary: Compute MD5 message digests on an arbitrary number of files
@@ -7,7 +7,8 @@ License: Public domain
 Group: File tools
 
 Url: http://md5deep.sourceforge.net
-Source: http://downloads.sourceforge.net/md5deep/%name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/md5deep/%name-%version.tar.gz
+Source1: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++
@@ -61,6 +62,9 @@ ma następujące dodatkowe możliwości:
 %_man1dir/*
 
 %changelog
+* Tue May 27 2014 Michael Shigorin <mike@altlinux.org> 4.3-alt1
+- new version (watch file uupdate)
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 4.1-alt1
 - 4.1
 
