@@ -1,6 +1,6 @@
-Name: json-c
-Version: 0.12
-Release: alt1
+Name: libjson
+Version: 0.10
+Release: alt2
 
 Summary: JSON implementation in C
 License: MIT
@@ -16,24 +16,12 @@ easily construct JSON objects in C, output them as JSON formatted
 strings and parse JSON formatted strings back into the C representation
 of JSON objects.
 
-%package -n lib%name
-Summary: JSON shared library
-Group: System/Libraries
-
-%description -n lib%name
-JSON-C implements a reference counting object model that allows you to
-easily construct JSON objects in C, output them as JSON formatted
-strings and parse JSON formatted strings back into the C representation
-of JSON objects.
-
-This package contains shared JSON-C library
-
-%package -n lib%name-devel
+%package devel
 Summary: header files for libjson
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: libjson = %version-%release
 
-%description -n lib%name-devel
+%description devel
 JSON-C implements a reference counting object model that allows you to
 easily construct JSON objects in C, output them as JSON formatted
 strings and parse JSON formatted strings back into the C representation
@@ -46,27 +34,26 @@ This package contains development part of JSON-C
 
 %build
 %autoreconf
-%configure --enable-rdrand --disable-static
+%configure --disable-static
 %make
 
 %install
-%makeinstall_std
+%makeinstall
 
 %check
 %make check
 
-%files -n lib%name
-%_libdir/*.so.*
+%files
+%_libdir/libjson*.so.*
 
-%files -n lib%name-devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*.pc
+%files devel
+%_libdir/libjson*.so
+%_includedir/json
+%_pkgconfigdir/json.pc
 
 %changelog
-* Tue May 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12-alt1
-- 0.12
-- rename to libjson-c
+* Tue May 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.10-alt2
+- rename source package from json-c to libjson
 
 * Fri Dec 07 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10-alt1
 - 0.10
