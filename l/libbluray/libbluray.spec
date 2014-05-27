@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 Summary: BD library
 
@@ -33,7 +33,7 @@ This package contains various utilities using libbluray library.
 
 %prep
 %setup
-sed -i s,noinst_PROGRAMS,bin_PROGRAMS, src/examples/Makefile.am
+sed -i s,noinst_PROGRAMS,bin_PROGRAMS, src/Makefile.am
 
 %build
 export JDK_HOME=/usr/lib/jdk
@@ -43,7 +43,6 @@ export JDK_HOME=/usr/lib/jdk
 
 %install
 %makeinstall
-install -pm0644 -D src/.libs/libbluray.jar %buildroot%_datadir/libbluray/libbluray.jar
 
 %files
 %_libdir/*.so.*
@@ -58,6 +57,9 @@ install -pm0644 -D src/.libs/libbluray.jar %buildroot%_datadir/libbluray/libblur
 %_bindir/*
 
 %changelog
+* Tue May 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
+- 0.6.0 released
+
 * Tue Sep 17 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.0-alt1
 - 0.4.0 released
 
