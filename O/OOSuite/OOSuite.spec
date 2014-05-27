@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-python
 %define dirs DerApproximator FuncDesigner OpenOpt SpaceFuncs
 
 Name: OOSuite
-Version: 0.51
-Release: alt2.svn20131012
+Version: 0.53
+Release: alt1.svn20140430
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -278,6 +278,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.53-alt1.svn20140430
+- Version 0.53
+
 * Fri Jan 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.51-alt2.svn20131012
 - Rebuilt with glpk35
 
