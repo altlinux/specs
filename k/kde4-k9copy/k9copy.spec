@@ -2,7 +2,7 @@
 %define rname k9copy
 Name: kde4-%rname
 Version: 2.3.8
-Release: alt3
+Release: alt4
 
 Group: Video
 Summary: Copy, split and shrink DVDs
@@ -29,7 +29,7 @@ Patch101: alt-libav10.patch
 # Automatically added by buildreq on Mon Jul 20 2009 (-bi)
 #BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavformat-devel libmpeg2-devel libqt3-devel libswscale-devel libxine-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
 BuildRequires: kde4libs-devel
-BuildRequires: gcc-c++ libavformat-devel libmpeg2-devel libswscale-devel libxine-devel libdvdread-devel libdvdnav-devel
+BuildRequires: gcc-c++ libavformat-devel libmpeg2-devel libswscale-devel libxine2-devel libdvdread-devel libdvdnav-devel
 
 
 %description
@@ -88,6 +88,9 @@ K9Copy - маленькая программа для копирования DVD
 
 
 %changelog
+* Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt4
+- built with libxine2
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt3
 - fix to build with libav10
 
