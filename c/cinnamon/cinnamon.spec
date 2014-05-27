@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 2.2.10
+Version: 2.2.13
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -209,7 +209,6 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/applications/cinnamon.desktop
 %_datadir/applications/cinnamon2d.desktop
 %_datadir/applications/cinnamon-settings.desktop
-%_datadir/applications/cinnamon-add-panel-launcher.desktop
 %_datadir/applications/cinnamon-menu-editor.desktop
 %_datadir/applications/cinnamon-settings-*.desktop
 %_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
@@ -231,6 +230,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Tue May 27 2014 Vladimir Didenko <cow@altlinux.org> 2.2.13-alt1
+- 2.2.13-2-gcb815e4
+
 * Wed May 21 2014 Vladimir Didenko <cow@altlinux.org> 2.2.10-alt1
 - 2.2.10-1-g903c455
 
