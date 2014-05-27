@@ -1,8 +1,8 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 3.0.2
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Group: Sound
 Summary: ID3 tagger
@@ -15,7 +15,6 @@ Conflicts: kid3 <= 1.3-alt1
 Source: kid3-%{version}.tar
 Patch1: kid3-3.0.2-alt-desktop_ru_uk.patch
 Patch2: kid3-3.0.2-alt-libdir.patch
-Patch3: kid3-3.0.2-alt-cli-no-phonon.patch
 
 BuildRequires(pre): kde4libs-devel
 # Automatically added by buildreq on Mon May 21 2012 (-bi)
@@ -114,7 +113,6 @@ Requires: %rname-common = %EVR
 %setup -q -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %K4cmake \
@@ -167,6 +165,12 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 3.1-alt1
+- new version
+
+* Mon Mar 24 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt1.M70P.1
+- built for M70P
+
 * Tue Jan 14 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.2-alt2
 - built CLI UI without phonon
 
