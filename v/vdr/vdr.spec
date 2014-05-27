@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.0.6
-Release: alt1
+Release: alt2
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -11,14 +11,14 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ 
 BuildRequires: fontconfig-devel libalsa-devel libcap-devel libfreetype-devel libjpeg-devel
-BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel
+BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libcec-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libpostproc-devel
-BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine-devel libzvbi-devel
+BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine2-devel libzvbi-devel
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: boost-devel libupnp-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
 BuildRequires: libvdpau-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel
-BuildRequires: libcurl-devel
+BuildRequires: libavresample-devel libcurl-devel libcxxtools-devel libpcrecpp-devel
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -53,6 +53,11 @@ Requires: vdr = %version-%release
 
 %package plugin-iptv
 Summary: VDR IPTV plugin
+Group: Video
+Requires: vdr = %version-%release
+
+%package plugin-live
+Summary: VDR LIVE plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -147,6 +152,9 @@ DVB Frontend Status Monitor plugin for the Video Disk Recorder (VDR).
 %description plugin-iptv
 IPTV plugin for the Video Disk Recorder (VDR).
 
+%description plugin-live
+Live Interactive VDR Environment -- web inteface for the Video Disk Recorder (VDR).
+
 %description plugin-pvrinput
 Analog PVR-like cards (ivtv, cx18 etc) support for the Video Disk Recorder (VDR).
 
@@ -228,7 +236,7 @@ sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefi
 
 %build
 (cd PLUGINS/src/xineliboutput && sh configure)
-make
+%make_build
 
 %install
 make install DESTDIR=%buildroot
@@ -253,6 +261,10 @@ cp -p PLUGINS/src/femon/README %buildroot%docdir/femon
 mkdir -p %buildroot%docdir/iptv
 cp -p PLUGINS/src/iptv/README %buildroot%docdir/iptv
 cp -a PLUGINS/src/iptv/iptv %buildroot%confdir/plugins
+
+mkdir -p %buildroot%docdir/live %buildroot%confdir/plugins/live
+cp -p PLUGINS/src/live/README %buildroot%docdir/live
+cp -a PLUGINS/src/live/live %buildroot%resdir/plugins
 
 mkdir -p %buildroot%docdir/pvrinput
 cp -p PLUGINS/src/pvrinput/{FAQ,HISTORY,README} %buildroot%docdir/pvrinput
@@ -323,6 +335,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=epgsync.lang vdr-epgsync
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
+%find_lang --output=live.lang vdr-live
 %find_lang --output=pvrinput.lang vdr-pvrinput
 %find_lang --output=softhddevice.lang vdr-softhddevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
@@ -335,6 +348,15 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
 %find_lang --output=xineliboutput.lang vdr-xineliboutput
 %find_lang --output=xvdr.lang vdr-xvdr
+
+mkdir -p %buildroot%_libexecdir/rpm
+cat << __EOF__ > %buildroot%_libexecdir/rpm/vdr.filetrigger
+#!/bin/sh -e
+grep -qs '^%plugindir/' || exit 0
+service vdr condrestart
+__EOF__
+
+chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 
 %pre
 %_sbindir/groupadd -r -f _vdr &> /dev/null
@@ -398,6 +420,8 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %dir %attr(0770,root,_vdr) %_runtimedir/vdr
 %dir %attr(0770,root,_vdr) %_cachedir/vdr
 
+%_libexecdir/rpm/vdr.filetrigger
+
 %files devel
 %_includedir/libsi
 %_includedir/vdr
@@ -446,6 +470,13 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %dir %attr(0770,root,_vdr) %confdir/plugins/iptv
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/iptv/*
 %plugindir/libvdr-iptv.so.%version
+%resdir/plugins/iptv
+
+%files plugin-live -f live.lang
+%docdir/live
+%dir %attr(0770,root,_vdr) %confdir/plugins/live
+%plugindir/libvdr-live.so.%version
+%resdir/plugins/live
 
 %files plugin-pvrinput -f pvrinput.lang
 %docdir/pvrinput
@@ -541,6 +572,16 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sat May 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt2
+- live plugin added
+- plugins updated:
+  + dummydevice 2.0.0
+  + epgsync 1.0.1
+  + femon 2.0.4
+  + iptv 2.0.4
+  + remotetimers 1.0.1
+  + vnsiserver 1.0.1
+
 * Sat Mar 22 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt1
 - 2.0.6 released
 
