@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4.git20140504
+Release: alt5.git20140504
 
 Summary: Matlab(TM) style python plotting package
 
@@ -329,6 +329,7 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' + ||:
 %endif
 
 %build
+export XDG_RUNTIME_DIR=%_xdgdatadir
 %add_optflags -fno-strict-aliasing
 %if_with python3
 pushd ../python3
@@ -351,6 +352,7 @@ popd
 %python_build_debug
 
 %install
+export XDG_RUNTIME_DIR=%_xdgdatadir
 %if_with python3
 pushd ../python3
 %python3_install
@@ -665,6 +667,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt5.git20140504
+- Fixed build
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.git20140504
 - New snapshot
 
