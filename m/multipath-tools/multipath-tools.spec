@@ -4,7 +4,7 @@
 
 Name: multipath-tools
 Version: 0.4.9
-Release: alt4
+Release: alt5
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -33,6 +33,7 @@ The tools are:
 Summary: The %name modules and shared library
 License: GPL+
 Group: System/Libraries
+Conflicts: multipath-tools <= 0.4.9-alt3
 
 %description -n libmultipath
 The libmultipath provides the path checker
@@ -42,6 +43,7 @@ libmultipath.
 %package -n kpartx
 Summary: Partition device manager for device-mapper devices
 Group: System/Configuration/Hardware
+Conflicts: multipath-tools <= 0.4.9-alt3
 
 %description -n kpartx
 kpartx manages partition creation and removal for device-mapper devices.
@@ -64,7 +66,7 @@ make install \
 	unitdir=%_unitdir
 
 install -pm755 multipathd/multipathd.init.alt %buildroot%_initdir/multipathd
-cp multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
+cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 
 %post
 %post_service multipathd
@@ -98,6 +100,9 @@ cp multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Tue May 27 2014 Michael Shigorin <mike@altlinux.org> 0.4.9-alt5
+- added missing Conflicts: to facilitate upgrade (closes: #30092)
+
 * Fri Nov 16 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.9-alt4
 - upstream snapshot 2012-10-01
 - update udev rules
