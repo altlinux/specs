@@ -1,7 +1,7 @@
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
-Version: 2.4.0
-Release: alt1.svn20131009
+Version: 2.5.0
+Release: alt1.svn20140526
 Group: Sciences/Mathematics
 License: CPL
 URL: https://projects.coin-or.org/ADOL-C
@@ -26,7 +26,7 @@ Source13: README
 Requires: lib%name = %version-%release
 Requires: %name-examples = %version-%release
 
-BuildPreReq: gcc-c++ CoinBuildTools libcolpack-devel
+BuildPreReq: gcc-c++ CoinBuildTools libcolpack-devel chrpath
 
 %description
 The package ADOL-C facilitates the evaluation of first and higher derivatives of
@@ -109,11 +109,15 @@ This package contains examples for ADOL-C.
 %setup
 
 %build
-#autoreconf
+%autoreconf
 FLAGS="-g -pipe -O3 -Wall %optflags_shared -pthread -I%_includedir/colpack"
 %configure \
+%ifarch x86_64
+	--enable-ulong \
+%endif
 	--enable-shave=no \
 	--enable-tserrno \
+	--enable-atrig-erf \
 	--enable-sparse \
 	--enable-docexa \
 	--enable-addexa \
@@ -140,6 +144,12 @@ install -p -m644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 \
 rm -f $(find ADOL-C/examples -name '*.o')
 cp -fR ADOL-C/examples/* %buildroot%_libdir/%name-examples/
 
+for i in %buildroot%_libdir/%name-examples/additional_examples/*/.libs/*
+do
+	chrpath -d $i ||:
+done
+chrpath -d %buildroot%_libdir/*.so
+
 %files
 %doc AUTHORS BUGS ChangeLog LICENSE NEWS README TODO
 
@@ -149,6 +159,7 @@ cp -fR ADOL-C/examples/* %buildroot%_libdir/%name-examples/
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
@@ -157,6 +168,9 @@ cp -fR ADOL-C/examples/* %buildroot%_libdir/%name-examples/
 %_libdir/%name-examples
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.svn20140526
+- Version 2.5.0
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.svn20131009
 - New snapshot
 
