@@ -13,7 +13,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.2
-Release: alt7
+Release: alt8
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -36,6 +36,7 @@ Patch101: k3b-1.92-alt-check-cdrecord-ver.patch
 Patch102: k3b-2.0.2-alt-k3bsetup.patch
 Patch103: k3b-2.0-alt-dvd-default-grouwisofs.patch
 Patch104: k3b-1.69.0-alt-messages.patch
+Patch105: k3b-2.0.2-libav10.patch
 
 # Automatically added by buildreq on Thu Apr 16 2009 (-bi)
 #BuildRequires: gcc-c++ kde4multimedia-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavformat-devel libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libqt3-devel libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
@@ -119,6 +120,7 @@ KDE 4 library.
 %patch102 -p1
 %patch103 -p1
 #%patch104 -p0
+%patch105 -p1
 
 
 %build
@@ -163,6 +165,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt8
+- built with new libav
+
 * Tue Oct 01 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt7
 - sync patches with Debian to fix compile with new libav
 
