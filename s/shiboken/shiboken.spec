@@ -1,6 +1,6 @@
 Name: shiboken
-Version: 1.2.1
-Release: alt1.git20131015
+Version: 1.2.2
+Release: alt1.git20140422
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -111,6 +111,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20140422
+- Version 1.2.2
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20131015
 - Version 1.2.1
 
