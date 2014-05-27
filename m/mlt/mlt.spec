@@ -4,26 +4,12 @@
 %def_disable debug
 %def_disable vdpau
 
-%def_disable mmx
-%def_disable sse
-%def_disable sse2
-%ifarch x86_64
-%set_enable mmx
-%set_enable sse
-%set_enable sse2
-%endif
-%ifarch %ix86
-%set_enable mmx
-%set_enable sse
-%set_disable sse2
-%endif
-
 %define Name MLT
 %define lname lib%name
 
 Name: mlt
-Version: 0.8.8
-Release: alt3
+Version: 0.9.0
+Release: alt1
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
 Group: Video
@@ -35,6 +21,7 @@ Source: %name-%version.tar
 Source1: mlt++-config.h
 Patch1: mlt-0.5.4-alt-configure-mmx.patch
 Patch2: mlt-0.8.8-alt-fix-compile.patch
+Patch3: mlt-0.9.0-alt-no-version-script.patch
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
 
@@ -101,6 +88,7 @@ This module allows to work with MLT using python..
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch10 -p0
 
 [ -f src/mlt++/config.h ] || \
@@ -112,28 +100,30 @@ sed -i "s/__VDPAU_SONAME__/${VDPAU_SONAME}/" src/modules/avformat/vdpau.c
 %build
 export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt4dir
 %configure \
+	--enable-gpl --enable-gpl3 \
 	--target-os=Linux \
 %ifarch x86_64
 	--target-arch=%_target_cpu \
 %endif
-	--enable-gpl \
-	--enable-gpl3 \
-	--luma-compress \
-	--enable-motion-est \
-	--avformat-swscale \
 	%if_enabled vdpau
 	--avformat-vdpau \
 	%else
 	--avformat-no-vdpau \
 	%endif
-	%{subst_enable mmx} \
-	%{subst_enable sse} \
-	%{subst_enable sse2} \
+	%ifnarch %ix86 x86_64
+	--disable-mmx \
+	--disable-sse \
+	--disable-sse2 \
+	%endif
+	%ifarch i586
+	--disable-mmx \
+	%endif
 	%{subst_enable debug} \
 	--without-kde \
 	--kde-includedir=%_K4includedir \
         --kde-libdir=%_K4lib \
         --swig-languages=python
+#	--luma-compress \
 
 %make_build
 
@@ -171,6 +161,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+
 * Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt3
 - rebuilt with new libav
 
