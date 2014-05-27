@@ -1,5 +1,5 @@
 Name: libaacs
-Version: 0.5.0
+Version: 0.7.1
 Release: alt1
 Summary: BD AACS library
 
@@ -44,6 +44,9 @@ This package contains the headers and libraries for libaacs development.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue May 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
+- 0.7.1 released
+
 * Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
 - 0.5.0 released
 
