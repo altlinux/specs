@@ -5,19 +5,19 @@
 %define sover %somver.0.0
 
 Name: adios
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.olcf.ornl.gov/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.5.0.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.5.0.pdf
-Source2: https://users.nccs.gov/~lot/skel/skel-doc.pdf
-Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.5.0.pdf
-Source4: http://users.nccs.gov/~pnorbert/ADIOS-vizschema.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.6.0.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.6.0.pdf
+Source2: https://users.nccs.gov/~lot/skel/skel-doc-1.6.0.pdf
+Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.6.0.pdf
+Source4: https://users.nccs.gov/~pnorbert/ADIOS-VisualizationSchema-1.1.pdf
 
 %add_verify_elf_skiplist %_libdir/%name/examples/C/*
 %add_python_req_skip skel_dwarf
@@ -205,6 +205,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
+- Version 1.6.0
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
 - Rebuilt with new libhdf5
 
