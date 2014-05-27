@@ -5,7 +5,7 @@
 %define sover %somver.0.0
 
 Name: berkeley_upc
-Version: 2.18.0
+Version: 2.18.2
 Release: alt1
 Summary: Berkeley Unified Parallel C (UPC)
 License: BSD
@@ -55,7 +55,7 @@ sed -i 's|@LIBDIR@|%_libdir|' \
 %ifarch x86_64
 LIB64=64
 %endif
-sed -i "s|@64@|$LIB64|" multiconf.conf.in
+sed -i "s|@64@|$LIB64|" multiconf.conf.in upcc.mak.in
 
 sed -i 's|^STRIP.*\=.*|STRIP=echo|' \
 	Makefile.in configure
@@ -135,6 +135,9 @@ rm -fR %buildroot%prefix/man
 %_docdir/*
 
 %changelog
+* Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.18.2-alt1
+- Version 2.18.2
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.18.0-alt1
 - Version 2.18.0
 
