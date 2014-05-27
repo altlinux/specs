@@ -1,8 +1,10 @@
-%define pg_ver 9.1
+%define pg_ver 9.3
 %define ver_major 2.1
 
+%def_without json
+
 Name: postgis2
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -16,8 +18,9 @@ Source: %name-%version.tar
 
 BuildPreReq: postgresql%pg_ver-devel
 
-BuildRequires: ImageMagick-tools docbook-dtds docbook-style-xsl flex libgeos-devel libgtk+2-devel libproj-devel libxml2-devel postgresql-devel xsltproc
-BuildRequires: libgdal-devel libjson-devel
+BuildRequires: ImageMagick-tools docbook-dtds docbook-style-xsl flex libgeos-devel >= 3.3.0 libgtk+2-devel libproj-devel >= 4.6.0 libxml2-devel postgresql-devel xsltproc
+BuildRequires: libgdal-devel >= 1.8
+%{?_with_json:BuildRequires: libjson-c-devel}
 
 %description
 PostGIS adds support for geographic objects to the PostgreSQL
@@ -64,6 +67,7 @@ are implemented here.
 %setup
 # %patch -p1
 %__subst "s|PGSQL_DOCDIR|DOCDIR|g" doc/Makefile.in
+%__subst "s|dev||g" Version.config
 
 # fix build postgis_tiger_geocoder.sql
 mkdir -p extensions/postgis_tiger_geocoder/sql/
@@ -105,6 +109,10 @@ install -d %buildroot%_includedir/
 %_includedir/*
 
 %changelog
+* Tue May 27 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.3-alt1
+- 2.1.3
+- build without json
+
 * Fri Sep 13 2013 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
 - 2.1.0 as postgis2 package
 
