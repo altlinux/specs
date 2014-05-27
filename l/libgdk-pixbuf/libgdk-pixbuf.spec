@@ -11,14 +11,13 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
 License: LGPL
 Url: http://www.projects.gnome.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 Source1: %_name.map
@@ -224,6 +223,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue May 27 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.8-alt1
+- 2.30.8
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.7-alt1
 - 2.30.7
 
