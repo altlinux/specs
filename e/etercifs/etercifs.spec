@@ -42,9 +42,12 @@
 %define src_3_10_version 2.0
 %define src_3_11_version 2.01
 %define src_3_12_version 2.02
+%define src_3_13_version 2.02
+%define src_3_14_version 2.02
+%define src_3_15_version 2.02
 
 Name: etercifs
-Version: 5.4.8
+Version: 5.4.9
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -96,6 +99,9 @@ Source49: %src_package_name-3.9-%src_3_9_version.tar.bz2
 Source50: %src_package_name-3.10-%src_3_10_version.tar.bz2
 Source51: %src_package_name-3.11-%src_3_11_version.tar.bz2
 Source52: %src_package_name-3.12-%src_3_12_version.tar.bz2
+Source53: %src_package_name-3.13-%src_3_13_version.tar.bz2
+Source54: %src_package_name-3.14-%src_3_14_version.tar.bz2
+Source55: %src_package_name-3.15-%src_3_15_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 
 Conflicts: linux-cifs
@@ -129,6 +135,9 @@ Provides: %src_package_name-3.9 = %version-%release
 Provides: %src_package_name-3.10 = %version-%release
 Provides: %src_package_name-3.11 = %version-%release
 Provides: %src_package_name-3.12 = %version-%release
+Provides: %src_package_name-3.13 = %version-%release
+Provides: %src_package_name-3.14 = %version-%release
+Provides: %src_package_name-3.15 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -192,6 +201,7 @@ EOF
 
 %__subst "s|@DATADIR@|%_datadir/%name|g" functions.sh etercifs etermount etercifs-build
 %__subst "s|@SYSCONFIGDIR@|%_sysconfdir/sysconfig|g" functions.sh etercifs etermount
+%__subst "s|@INITDIR@|%_initdir|g" etercifs.service
 
 install -D -m644 buildmodule.sh %buildroot%_datadir/%name/buildmodule.sh
 install -D -m644 functions.sh %buildroot%_datadir/%name/functions.sh
@@ -265,6 +275,9 @@ cp %SOURCE49 %buildroot/%etercifs_src/
 cp %SOURCE50 %buildroot/%etercifs_src/
 cp %SOURCE51 %buildroot/%etercifs_src/
 cp %SOURCE52 %buildroot/%etercifs_src/
+cp %SOURCE53 %buildroot/%etercifs_src/
+cp %SOURCE54 %buildroot/%etercifs_src/
+cp %SOURCE55 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -337,6 +350,12 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.11-%src_3_11_version.tar.bz2
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.11-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.12-%src_3_12_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.12-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.13-%src_3_13_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.13-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.14-%src_3_14_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.14-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.15-%src_3_15_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.15-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -366,6 +385,21 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Wed May 28 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.9-alt1
+- Add sources for 3.15 (v3.15-rc7)
+- Add sources for 3.14 (v3.14.4)
+- Add sources for 3.13 (v3.13.11)
+- Fix memory leaks in SMB2_open for 3.12
+- Update 3.12 sources from stable (v3.12.20)
+- Update 3.11 sources from stable (v3.11.10)
+- Update 3.10 sources from stable (v3.10.40)
+- Update 3.4 sources from stable (v3.4.91)
+- Update 3.2 sources from stable (v3.2.59)
+- Update 2.6.34 sources from stable (v2.6.34.15)
+- Fix an exec path in etercifs.service
+- Fix build error message
+- Fix build warnings for CentOS 6.0
+
 * Sun Nov 10 2013 Pavel Shilovsky <piastry@altlinux.org> 5.4.8-alt1
 - Add sources for 3.12 (v3.12)
 - Add sources for 3.11 (v3.11.7)
