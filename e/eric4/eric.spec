@@ -1,10 +1,8 @@
 Summary: The eric is a Python IDE
 Name: eric4
-Version: 4.4.20
+Version: 4.5.22
 Release: alt1
 Source0: %name-%version-%release.tar
-#Packager: Gennady Kovalev <gik@altlinux.ru>
-Packager: Mikhail Pokidko <pma@altlinux.org>
 
 License: GPL
 Group: Development/Python
@@ -21,7 +19,9 @@ BuildPreReq: %py_package_dependencies PyQt4
 Requires: python-module-qscintilla2-qt4
 
 %description
-Eric4 is a full featured Python IDE that is written in PyQt using the QScintilla editor widget. For information on PyQt and QScintilla please see Riverbank Computing.
+Eric4 is a full featured Python IDE that is written in PyQt using the
+QScintilla editor widget. For information on PyQt and QScintilla please
+see Riverbank Computing.
 
 
 %prep
@@ -80,6 +80,9 @@ python install-i18n.py
 
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.22-alt1
+- Version 4.5.22
+
 * Thu Jan 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.20-alt1
 - Version 4.4.20
 
