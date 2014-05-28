@@ -17,7 +17,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -346,6 +346,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed May 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt2
+- update code from 4.13 branch
+
 * Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
 - new version
 
