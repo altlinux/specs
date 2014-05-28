@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt2.svn20130919
+Release: alt2.svn20140522
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -219,6 +219,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20140522
+- New snapshot
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130919
 - New snapshot
 
@@ -267,4 +270,3 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 
 * Thu Oct 15 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.7-alt1.svn20091009
 - Initial build for Sisyphus
-
