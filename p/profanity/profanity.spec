@@ -1,17 +1,16 @@
 Name: profanity
-# configure.ac:AC_INIT([profanity], [0.1.10], [boothj5web@gmail.com])
-Version: 0.4.0
+Version: 0.4.2
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
 License: GPLv3
 Source: %name-%version.tar.gz
-# wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@</.*@@;p}' > profrc
+# wget -q -O- http://www.profanity.im/configuration.html | sed -n '/\[ui]/,/<\/code>/{s@ *</\?.*>@@g;p}' > profrc
 Source1: profrc
 
-# Automatically added by buildreq on Mon Apr 01 2013
-# optimized out: glib2-devel libX11-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libncurses-devel libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libssl-devel libstrophe-devel libxml2-devel
+# Automatically added by buildreq on Wed May 28 2014
+# optimized out: glib2-devel libX11-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libp11-kit libtinfo-devel pkg-config xorg-scrnsaverproto-devel xorg-xproto-devel
+BuildRequires: libXScrnSaver-devel libcurl-devel libgnutls-devel libncursesw-devel libnotify-devel libssl-devel libstrophe-devel libxml2-devel libotr-devel
 
 %description
 %summary
@@ -23,7 +22,8 @@ cp %SOURCE1 profrc
 
 %build
 %autoreconf
-%configure --with-libxml2
+%configure --with-libxml2 --enable-notifications --enable-otr
+
 %make_build
 
 %install
@@ -33,8 +33,13 @@ cp %SOURCE1 profrc
 %doc README.md themes profrc
 %_bindir/*
 %_man1dir/*
+%_datadir/%name
 
 %changelog
+* Wed May 28 2014 Fr. Br. George <george@altlinux.ru> 0.4.2-alt1
+- Autobuild version bump to 0.4.2
+- Fix buildreq and rc obtaining spec cmdline
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.4.0-alt1
 - Autobuild version bump to 0.4.0
 
