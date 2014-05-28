@@ -6,8 +6,8 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
-Version: 8.1
-Release: alt1.pre.svn20131111
+Version: 8.2
+Release: alt1.pre.svn20140527
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -27,7 +27,7 @@ BuildPreReq: libsacado10-devel libthyra10-devel libtrilinos10-devel
 BuildPreReq: libmumps-devel libhypre-devel libsuitesparse-devel
 BuildPreReq: chrpath rpm-macros-make boost-signals-devel
 BuildPreReq: libnetcdf_c++-mpi-devel libdakota-devel cmake
-BuildPreReq: libdakota-devel
+BuildPreReq: libdakota-devel bzlib-devel libmuparser-devel
 
 Requires: lib%name = %version-%release
 
@@ -160,6 +160,9 @@ cmake \
 	-DMPI_LIBRARY:FILEPATH=%mpidir/lib/libmpi.so \
 	-DNETCDF_INCLUDE_DIR:PATH=%mpidir/include/netcdf \
 	-DPETSC_DIR:PATH=%ldir \
+	-DTrilinos_INCLUDE_DIRS:PATH=%_includedir \
+	-DTrilinos_TPL_LIBRARIES:STRING="epetra;sacado;amesos;ifpack;aztecoo;teuchos" \
+	-DTrilinos_PACKAGE_LIST:STRING="Amesos Epetra Ifpack AztecOO Sacado Teuchos" \
 	.
 %make_build VERBOSE=1
 
@@ -201,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140527
+- Version 8.2.pre
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.1-alt1.pre.svn20131111
 - Version 8.1.pre
 
@@ -294,4 +300,3 @@ popd
 
 * Sat Jan 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.4-alt1.pre.svn20101223
 - Initial build for Sisyphus
-
