@@ -21,13 +21,13 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt2.svn20130919
+Release: alt2.svn20140522
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
 License: Free (see license.txt)
 URL: http://cgns.sourceforge.net/
-# https://cgns.svn.sourceforge.net/svnroot/cgns
+# svn://svn.code.sf.net/p/cgns/code
 Source: %oname-%version.tar
 Source1: CMakeCache.txt
 Source2: CGNS_docs.tar
@@ -213,6 +213,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20140522
+- New snapshot
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130919
 - New snapshot
 
