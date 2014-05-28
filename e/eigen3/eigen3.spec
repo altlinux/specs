@@ -1,6 +1,6 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -53,6 +53,7 @@ mkdir BUILD
 pushd BUILD
 
 %add_optflags -I%_includedir/metis
+export PATH=$PATH:%_libdir/pastix/bin
 
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
@@ -98,6 +99,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
 - Version 3.2.0
 
