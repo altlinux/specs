@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.14.8
+%define tarbolversion 8.14.9
 
 Version: %tarbolversion
-Release: alt2
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -67,7 +67,7 @@ Patch10: %name-mrs-8.12.11.patch
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-Patch100: sendmail-8.14.8.m4header.patch
+#Patch100:
 
 %add_findreq_skiplist */include/*
 
@@ -90,14 +90,14 @@ BuildRequires: glibc-devel groff-base libdb4-devel libgdbm-devel libldap-devel l
 The Sendmail program is a widely used Mail Transport Agent (MTA).
 MTAs send mail from one machine to another.
 
-Sendmail is not a client program, which you use to read your e-mail. Sendmail
-is a behind-the-scenes program which actually moves your e-mail over networks
-or the Internet to where you want it to go.
+Sendmail is not a client program, which you use to read your e-mail.
+Sendmail is a behind-the-scenes program which actually moves your
+e-mail over networks or the Internet to where you want it to go.
 
 If you ever need to reconfigure Sendmail, you'll also need to have the
-%name.cf package installed. If you need documentation on Sendmail, you
-can install the %name-doc package (%name-doc contain ALT Linux specific
-recomendations README.alt and README.cyrus-imap).
+sendmail-cf package installed. If you need documentation on Sendmail,
+you can install the sendmail-doc package (sendmail-doc contains ALT Linux
+specific recomendations README.alt and README.cyrus-imap).
 
 %package submit
 Summary: sendmail's submit service
@@ -198,7 +198,7 @@ them that you are currently not reading your mail.
 %patch50 -p1
 
 #errata
-%patch100 -p0
+#patch100 -p0
 
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE6 > cf/cf/altlinux.mc
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE11> cf/cf/submit.mc
@@ -358,6 +358,11 @@ done
 #sh %{SOURCE15}
 #popd
 
+# create fake *.db
+pushd $RPM_BUILD_ROOT/%_sysconfdir/mail
+touch access.db domaintable.db mailertable.db virtusertable.db
+popd
+
 %__install -m755 %SOURCE16 %buildroot%_bindir/sendmail-milters_watchdog
 %__install -m755 -d %buildroot%_sysconfdir/cron.d
 cat <<EOF >%buildroot%_sysconfdir/cron.d/sendmail-milters_watchdog
@@ -412,7 +417,6 @@ EOF
 %attr(640,root,root) %_logdir/%name.st
 %attr(640,root,root) %_logdir/statistics
 
-# XXX can't do noreplace here or new sendmail will not deliver.
 %dir %_sysconfdir/smrsh
 
 %dir %_sysconfdir/mail/certs
@@ -429,6 +433,8 @@ EOF
 %_sysconfdir/aliases
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/mail/virtuserdomains
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/mail/virtusertable
+
+%ghost %_sysconfdir/mail/*.db
 
 %ghost %_sysconfdir/mail/access
 %config(noreplace) %_sysconfdir/mail/access.main
@@ -495,6 +501,11 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Wed May 28 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.9-alt1
+- New version (security update)
+- some cleanups in *.mc
+- updated access.d/sendmail.org.access
+
 * Thu Jan 30 2014 Sergey Y. Afonin <asy@altlinux.ru> 8.14.8-alt2
 - 8.14.8-alt1 pushed with 8.14.7 tarball. :-(
   So alt2 is realy new version.
