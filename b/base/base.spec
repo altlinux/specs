@@ -1,6 +1,6 @@
 Name: base
 Version: 1.4.5
-Release: alt5
+Release: alt6
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -15,7 +15,7 @@ Patch1: base-1.4.5-alt-font-path.patch
 
 BuildArch: noarch
 
-Requires: php5-adodb fonts-ttf-dejavu pear-Image_Graph
+Requires: php5-adodb fonts-ttf-dejavu pear-Image_Graph php5-mysql
 
 %description
 BASE is the Basic Analysis and Security Engine.  It is based on the code 
@@ -100,6 +100,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/sites-available.d/base.c
 %_sysconfdir/nginx/sites-available.d/base.conf
 
 %changelog
+* Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 1.4.5-alt6
+- add Requires: php5-mysql
+
 * Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 1.4.5-alt5
 - add Requires for build graphs
 

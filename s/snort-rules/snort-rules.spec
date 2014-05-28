@@ -1,16 +1,14 @@
 Name:     snort-rules
-Version:  2.9.3.1
+Version:  2.9.6.1
 Release:  alt1
 
 Summary:  Rules for Snort, popular network intrusion detection system
-License:  GPL
+License:  GPLv2
 Group:    Security/Networking
 Url:      http://www.snort.org
 
-Source0:  %name-%version-rules.tar
-Source1:  %name-%version-docs.tar
+Source0:  community-rules.tar
 Source2:  snort-mergesidmaps
-Source3:  Community-Rules-2.8.tar
 
 BuildArch: noarch
 Requires: snort-base
@@ -42,33 +40,33 @@ Create base directory structure for Snort NIDS configuration files.
 Пустой пакет, создающий каталоги, совместно используемые остальными пакетами,
 на которые разбит обнаружитель сетевых атак (IDS) Snort.
 
-%package doc
-Summary: Detailed descriptions for standard rules used by Snort NIDS.
-Summary(ru_RU.KOI8-R): Описания стандартных сигнатур для анализатору сетевого трафика Snort
-Group: Security/Networking
-%description doc
-Tons of detailed textual listings describing all network intrusions known by Snort.
-%description doc -l ru_RU.KOI8-R
-Детальная документация по сигнатурам сетевых атак, входящим в базовый комплект
-поставки свободной версии Snort - системы обнаружения сетевых вторжений.
+#%package doc
+#Summary: Detailed descriptions for standard rules used by Snort NIDS.
+#Summary(ru_RU.KOI8-R): Описания стандартных сигнатур для анализатору сетевого трафика Snort
+#Group: Security/Networking
+#%description doc
+#Tons of detailed textual listings describing all network intrusions known by Snort.
+#%description doc -l ru_RU.KOI8-R
+#Детальная документация по сигнатурам сетевых атак, входящим в базовый комплект
+#поставки свободной версии Snort - системы обнаружения сетевых вторжений.
 
 %prep
-%setup -q -a1 -a3
+%setup -q
 
 %build  #..nothing to do
 
 %install
 mkdir -p %buildroot{%myconfdir,%myrulesdir,%_bindir}
-install -pm 644 rules/*.rules %buildroot%myrulesdir
+install -pm 644 *.rules %buildroot%myrulesdir
 install -p %SOURCE2 %buildroot%_bindir
-mv rules/*sid-msg.map etc/
+install -pm 644 *sid-msg.map %buildroot%myconfdir
 
-echo "Generate maps..."
-d=$PWD
-cd %buildroot%myconfdir
-%SOURCE2 $d/etc/*sid-msg.map
-cd -
-echo "...done!"
+#echo "Generate maps..."
+#d=$PWD
+#cd %buildroot%myconfdir
+#%SOURCE2 $d/etc/*sid-msg.map
+#cd -
+#echo "...done!"
 
 %files -n snort-base
 %dir %myconfdir
@@ -77,12 +75,14 @@ echo "...done!"
 %_bindir/snort-*
 %config(noreplace) %myrulesdir
 %config(noreplace) %myconfdir/sid-msg.map
-%doc rules/VRT-License.txt
 
-%files doc
-%doc doc/signatures/* docs/*
+#%files doc
+#%doc doc/signatures/* docs/*
 
 %changelog
+* Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 2.9.6.1-alt1
+- use only community rules
+
 * Mon Jan 14 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt1
 - new version
 
