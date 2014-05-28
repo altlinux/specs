@@ -1,7 +1,7 @@
-%define plugin_version 2.3
+%define plugin_version 2.4
 
 Name: libxine2
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Free libraries for play video and audio
@@ -14,7 +14,7 @@ Source: %name-%version-%release.tar
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
 BuildRequires: libGL-devel libGLU-devel libSDL-devel
-BuildRequires: libxcb-devel libXinerama-devel libXv-devel libva-devel libvdpau-devel
+BuildRequires: libxcb-devel libXinerama-devel libXv-devel libXvMC-devel libva-devel libvdpau-devel
 BuildRequires: gnome-vfs-devel libsmbclient-devel
 BuildRequires: libv4l-devel libdvdread-devel libdvdnav-devel libcdio-devel libbluray-devel
 BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libpostproc-devel
@@ -103,6 +103,9 @@ mv %buildroot%_man5dir/xine.5 %buildroot%_man5dir/xine2.5
 %_libdir/xine/plugins/%plugin_version/xineplug_inp_smb.so
 
 %changelog
+* Wed May 28 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Fri May 23 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
