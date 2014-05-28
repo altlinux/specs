@@ -2,15 +2,15 @@ Name: cube
 License: BSD
 Group: Development/Tools
 Summary: Performance report explorer for Scalasca and Score-P
-Version: 4.2
+Version: 4.2.2
 Release: alt1
 Url: http://www.scalasca.org/software/cube-4.x/download.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://apps.fz-juelich.de/scalasca/releases/cube/4.2/dist/cube-4.2.tar.gz
+Source: http://apps.fz-juelich.de/scalasca/releases/cube/4.2/dist/cube-4.2.2.tar.gz
 
 BuildPreReq: gcc-c++ libqt4-devel zlib-devel uncrustify doxygen
-BuildPreReq: libdbus-devel flex graphviz texlive-base-bin
+BuildPreReq: libdbus-devel flex graphviz texlive-base-bin menu
 
 Requires: lib%name = %EVR
 
@@ -80,9 +80,12 @@ This package contains documentation for Cube.
 %setup
 
 %build
-%add_optflags -I%_includedir/dbus-1.0
-#autoreconf
-%configure
+%add_optflags -I%_includedir/dbus-1.0 -L%buildroot%_libexecdir
+%autoreconf
+%configure \
+	--with-backend-compression=full \
+	--with-compression=full \
+	--with-frontend-compression=full
 pushd build-backend
 %make_build libcube4.la
 %make_build libcube4w.la
@@ -96,14 +99,10 @@ cp -P $(find ./ -name 'libcube4.so*') %buildroot/%_libexecdir/
 cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libexecdir/
 %makeinstall_std
 
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
-%endif
-
 %files
 %_bindir/*
 %exclude %_bindir/cube-config*
+%_datadir/cube
 %_datadir/icons/*
 %_datadir/modulefiles
 
@@ -119,6 +118,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_docdir/*
 
 %changelog
+* Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1
+- Version 4.2.2
+
 * Thu Sep 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
 - Initial build for Sisyphus
 
