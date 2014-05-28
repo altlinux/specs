@@ -1,6 +1,6 @@
 Name: memtest86+
-Version: 4.20
-Release: alt3
+Version: 5.01
+Release: alt1
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -8,9 +8,16 @@ Group: System/Kernel and hardware
 
 Url: http://www.memtest.org
 Source: %url/download/%version/%name-%version.tar.gz
+# reported upstream
+Patch0:   memtest86+-5.01-no-scp.patch
+# patches to get memtest86+ working with gcc-4.7.2 or later + PCI scan fix
+# these patches were taken from Mageia
+# upstream report containing link to the patches:
+# http://forum.canardpc.com/threads/83443-Memtest86-V5.01-crashes-with-gcc-4.7.2-or-later
+Patch1:   memtest86+-5.01-no-optimization.patch
+Patch2:   memtest86+-5.01-compile-fix.patch
+Patch3:   memtest86+-5.01-array-size-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
-
-Patch0: memtest86p-4.20-suse-gcc4.7_fix.patch
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
@@ -24,44 +31,54 @@ that is proven to be effective in finding memory errors.  The BIOS based
 memory test is just a quick check that will often miss many of the
 failures that are detected by Memtest86.
 
-%description -l ru_RU.KOI8-R
-Тщательный и самостоятельный тест памяти для x86-систем, который может
-быть загружен или с жесткого диска при помощи LILO/GRUB, или с дискеты.
+The ELF version should be used for booting from grub,
+and avoids the following errors:
+"Error 7: Loading below 1MB is not supported"
+"Error 13: Invalid or unsupported executable format"
+"Error 28: Selected item cannot fit into memory"
 
-Тест использует алгоритм "движущихся инверсий", доказавший свою
-эффективность при обнаружении сбоев памяти. Не обращайте внимания на
-"тест" BIOS: он практически ничего не значит, так как пропустит много
-ошибок из тех, которые обнаружит memtest86.
+%description -l ru_RU.UTF-8
+п╒я┴п╟я┌п╣п╩я▄п╫я▀п╧ п╦ я│п╟п╪п╬я│я┌п╬я▐я┌п╣п╩я▄п╫я▀п╧ я┌п╣я│я┌ п©п╟п╪я▐я┌п╦ п╢п╩я▐ x86-я│п╦я│я┌п╣п╪, п╨п╬я┌п╬я─я▀п╧ п╪п╬п╤п╣я┌
+п╠я▀я┌я▄ п╥п╟пЁя─я┐п╤п╣п╫ п╦п╩п╦ я│ п╤п╣я│я┌п╨п╬пЁп╬ п╢п╦я│п╨п╟ п©я─п╦ п©п╬п╪п╬я┴п╦ LILO/GRUB, п╦п╩п╦ я│ п╢п╦я│п╨п╣я┌я▀.
 
-Также может использоваться для создания загрузочной тест-дискеты.
+п╒п╣я│я┌ п╦я│п©п╬п╩я▄п╥я┐п╣я┌ п╟п╩пЁп╬я─п╦я┌п╪ "п╢п╡п╦п╤я┐я┴п╦я┘я│я▐ п╦п╫п╡п╣я─я│п╦п╧", п╢п╬п╨п╟п╥п╟п╡я┬п╦п╧ я│п╡п╬я▌
+я█я└я└п╣п╨я┌п╦п╡п╫п╬я│я┌я▄ п©я─п╦ п╬п╠п╫п╟я─я┐п╤п╣п╫п╦п╦ я│п╠п╬п╣п╡ п©п╟п╪я▐я┌п╦. п²п╣ п╬п╠я─п╟я┴п╟п╧я┌п╣ п╡п╫п╦п╪п╟п╫п╦я▐ п╫п╟
+"я┌п╣я│я┌" BIOS: п╬п╫ п©я─п╟п╨я┌п╦я┤п╣я│п╨п╦ п╫п╦я┤п╣пЁп╬ п╫п╣ п╥п╫п╟я┤п╦я┌, я┌п╟п╨ п╨п╟п╨ п©я─п╬п©я┐я│я┌п╦я┌ п╪п╫п╬пЁп╬
+п╬я┬п╦п╠п╬п╨ п╦п╥ я┌п╣я┘, п╨п╬я┌п╬я─я▀п╣ п╬п╠п╫п╟я─я┐п╤п╦я┌ memtest86.
 
-%description -l uk_UA.KOI8-U
-Ретельний та самост╕йний тест пам'ят╕ для x86-систем, що може бути
-завантажений як з жорсткого диску за допомогою LILO/GRUB, так ╕ з
-дискети.
+п╒п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄я│я▐ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╥п╟пЁя─я┐п╥п╬я┤п╫п╬п╧ я┌п╣я│я┌-п╢п╦я│п╨п╣я┌я▀.
 
-Тест використову╓ алгоритм "рухаючихся ╕нверс╕й", який дов╕в свою
-ефективн╕сть при визначенн╕ негаразд╕в ╕з пам'яттю. Не звертайте уваги
-на "тест" BIOS: в╕н практично н╕чого не означа╓, тому що пройде повз
-багатьох збо╖в з тих, що знаходить memtest86.
+%description -l uk_UA.UTF-8
+п═п╣я┌п╣п╩я▄п╫п╦п╧ я┌п╟ я│п╟п╪п╬я│я┌я√п╧п╫п╦п╧ я┌п╣я│я┌ п©п╟п╪'я▐я┌я√ п╢п╩я▐ x86-я│п╦я│я┌п╣п╪, я┴п╬ п╪п╬п╤п╣ п╠я┐я┌п╦
+п╥п╟п╡п╟п╫я┌п╟п╤п╣п╫п╦п╧ я▐п╨ п╥ п╤п╬я─я│я┌п╨п╬пЁп╬ п╢п╦я│п╨я┐ п╥п╟ п╢п╬п©п╬п╪п╬пЁп╬я▌ LILO/GRUB, я┌п╟п╨ я√ п╥
+п╢п╦я│п╨п╣я┌п╦.
 
-Також може використовуватися для створення завантажувально╖
-тест-дискети.
+п╒п╣я│я┌ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ п╟п╩пЁп╬я─п╦я┌п╪ "я─я┐я┘п╟я▌я┤п╦я┘я│я▐ я√п╫п╡п╣я─я│я√п╧", я▐п╨п╦п╧ п╢п╬п╡я√п╡ я│п╡п╬я▌
+п╣я└п╣п╨я┌п╦п╡п╫я√я│я┌я▄ п©я─п╦ п╡п╦п╥п╫п╟я┤п╣п╫п╫я√ п╫п╣пЁп╟я─п╟п╥п╢я√п╡ я√п╥ п©п╟п╪'я▐я┌я┌я▌. п²п╣ п╥п╡п╣я─я┌п╟п╧я┌п╣ я┐п╡п╟пЁп╦
+п╫п╟ "я┌п╣я│я┌" BIOS: п╡я√п╫ п©я─п╟п╨я┌п╦я┤п╫п╬ п╫я√я┤п╬пЁп╬ п╫п╣ п╬п╥п╫п╟я┤п╟я■, я┌п╬п╪я┐ я┴п╬ п©я─п╬п╧п╢п╣ п©п╬п╡п╥
+п╠п╟пЁп╟я┌я▄п╬я┘ п╥п╠п╬я≈п╡ п╥ я┌п╦я┘, я┴п╬ п╥п╫п╟я┘п╬п╢п╦я┌я▄ memtest86.
+
+п╒п╟п╨п╬п╤ п╪п╬п╤п╣ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐п╡п╟я┌п╦я│я▐ п╢п╩я▐ я│я┌п╡п╬я─п╣п╫п╫я▐ п╥п╟п╡п╟п╫я┌п╟п╤я┐п╡п╟п╩я▄п╫п╬я≈
+я┌п╣я│я┌-п╢п╦я│п╨п╣я┌п╦.
 
 %prep
 %setup
-%patch0 -p0
+%patch0 -p1 -b .no-scp
+%patch1 -p1 -b .no-optimization
+%patch2 -p1 -b .compile-fix
+%patch3 -p1 -b .array-size-fix
+
+sed -i -e's,0x5000,0x100000,' memtest.lds
+%ifarch x86_64
+sed -i -e's,$(LD) -s -T memtest.lds,$(LD) -s -T memtest.lds -z max-page-size=0x1000,' Makefile
+%endif
 
 %build
-%ifarch x86_64
-%define stubarch -D__x86_64__ -D__LP64__
-%else
-%define stubarch %nil
-%endif
-make CC='gcc -fno-stack-protector -U_FORTIFY_SOURCE %stubarch' memtest.bin
+make
 
 %install
 install -pDm644 memtest.bin %buildroot/boot/memtest-%version.bin
+install -pDm644 memtest %buildroot/boot/elf-memtest-%version
 mkdir -p %buildroot%_sbindir
 ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 	%buildroot%_sbindir/installmemtest86+
@@ -74,10 +91,30 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 
 %files
 /boot/memtest-%version.bin
+/boot/elf-memtest-%version
 %_sbindir/installmemtest86+
 %doc README* FAQ
 
 %changelog
+* Wed May 28 2014 Michael Shigorin <mike@altlinux.org> 5.01-alt1
+- 5.01:
+  + added support for:
+    - up to 2 TB of RAM on X64 CPUs
+    - up to 32 cores SMT (experimental, via F2 at startup)
+    - complete detection for memory controllers
+    - motherboard manufacturer & model reporting
+    - CPU temperature reporting
+    - Intel "Sandy Bridge-E", "Ivy Bridge" CPUs
+    - Intel "Haswell", "Haswell-ULT" CPUs (preliminary)
+    - AMD "Kabini" (K16), "Bulldozer", "Trinity", "Bobcat" CPUs
+    - Intel Atom "Pineview", "Cedar Trail" CPUs
+    - SPD detection on most AMD Chipsets
+  + assorted bugfixes
+  + dropped #29048 patch (see also bnc#773569, lp#1071209)
+- added fedora patches and description bits
+  + initial build would fail to actually run tests for me
+- build and package ELF binary too (e.g. for GRUB)
+
 * Sun Jul 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 4.20-alt3
 - Fix false positives on test #7 (Closes: 29048)
 
