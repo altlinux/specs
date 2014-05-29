@@ -9,7 +9,7 @@
 
 %define rname libkgapi
 Name: libkgapi
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Group: System/Libraries
@@ -94,6 +94,12 @@ Development files for %name
 
 
 %changelog
+* Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
 
