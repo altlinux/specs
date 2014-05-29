@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -11,7 +11,6 @@ Source: %name-%version.tar
 
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
 Requires: barnyard2-mysql snort-rules
-Requires: MySQL-server MySQL-client
 Requires: oinkmaster wget
 Requires: alterator-l10n >= 2.8-alt4
 
@@ -42,6 +41,12 @@ touch %buildroot/%_sysconfdir/cron.d/%name
 %ghost %_sysconfdir/cron.d/%name
 
 %changelog
+* Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 0.2.5-alt1
+- Fix download rules by oinkcode
+
+* Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 0.2.4-alt2
+- Remove Req: MySQL-server, MySQL-client
+
 * Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.4-alt1
 - Get password for mysql from barnyard config
 

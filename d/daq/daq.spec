@@ -1,5 +1,5 @@
 Name: daq
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 Summary: Data Acquisition Library
 License: GPLv2
@@ -48,7 +48,7 @@ utilize lib%name.
 %make
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files -n lib%name
 %_bindir/daq-modules-config
@@ -60,6 +60,9 @@ make install DESTDIR=%buildroot
 %_libdir/*.so
 
 %changelog
+* Tue May 27 2014 Timur Aitov <timonbl4@altlinux.org> 2.0.2-alt1
+- new version
+
 * Wed Jan 09 2013 Timur Aitov <timonbl4@altlinux.org> 2.0.0-alt1
 - new version
 
