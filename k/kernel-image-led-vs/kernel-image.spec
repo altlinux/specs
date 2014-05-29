@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.4
-Release: alt1
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1337,6 +1337,7 @@ ln -s %kbuild_dir %buildroot%modules_dir/build
 %makeinstall_std -C tools/perf %perf_make_opts install-man
 install -d -m 0755 %buildroot%_docdir/perf-%version
 install -m 0644 tools/perf/{CREDITS,design.txt,Documentation/examples.txt} %buildroot%_docdir/perf-%version/
+%add_verify_elf_skiplist %_libdir/traceevent/plugins/*
 %endif
 
 %if_with lkvm
@@ -1860,6 +1861,22 @@ done)
 
 
 %changelog
+* Thu May 29 2014 Led <led@altlinux.ru> 3.14.4-alt4
+- updated:
+  + fix-drivers-block--floppy
+  + feat-arch-x86--cpu-emu
+
+* Tue May 27 2014 Led <led@altlinux.ru> 3.14.4-alt3
+- removed:
+  + feat-arch-x86--cpu_emulate
+- added:
+  + fix-arch-x86--math-emu
+  + feat-arch-x86--cpu-emu
+
+* Mon May 26 2014 Led <led@altlinux.ru> 3.14.4-alt2
+- updated:
+  + feat-arch-x86--cpu_emulate
+
 * Sun May 25 2014 Led <led@altlinux.ru> 3.14.4-alt1
 - updated:
   + fix-arch-x86
