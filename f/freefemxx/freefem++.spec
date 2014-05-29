@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 3.25
+%define over 3.30
 Name: freefemxx
-Version: 3.25
+Version: 3.30
 Release: alt1
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
@@ -22,7 +22,7 @@ BuildPreReq: libsuperlu-devel libblacs-devel libscalapack-devel
 BuildPreReq: libscotch-devel libparmetis-devel chrpath libXext-devel
 BuildPreReq: libsuperlu_dist-devel f2c libf2c-ng-devel libhypre-devel
 BuildPreReq: libparms-devel libpastix-devel libXxf86vm-devel
-BuildPreReq: mmg3d libmmg3d-devel
+BuildPreReq: mmg3d libmmg3d-devel libipopt-devel
 
 Conflicts: bamg
 
@@ -89,7 +89,8 @@ export MPIDIR=%mpidir
 
 INCS="-I%_includedir/suitesparse -I%mpidir/include"
 INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
-INCS="$INCS -I%_includedir/openblas"
+INCS="$INCS -I%_includedir/openblas -I%_includedir/mmg3d"
+INCS="$INCS -include stdio.h -include mpi.h"
 %add_optflags $INCS -fno-strict-aliasing -fpermissive
 %autoreconf
 %configure \
@@ -103,7 +104,10 @@ INCS="$INCS -I%_includedir/openblas"
 	--enable-opengl \
 	--enable-default-fltk=yes \
 	--with-mpipath=%mpidir \
-	--with-mpi=mpic++ \
+	--with-mpi=openmpi \
+	--with-mpilibs="-L%mpidir/lib -lmpi_f90  -lmpi_cxx -lmpi -lopen-rte -lopen-pal -lutil" \
+	--with-mpilibsc="-L%mpidir/lib -lmpi -lopen-rte -lopen-pal -lutil" \
+	--with-mpiinc="-I%mpidir/include" \
 	--with-blas="-lopenblas" \
 	--with-lapack="-llapack" \
 	--with-arpack="-larpack_LINUX -L%mpidir/lib -lmpi_cxx" \
@@ -135,6 +139,9 @@ export MPIDIR=%mpidir
 %doc DOC/*.pdf
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.30-alt1
+- Version 3.30
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.25-alt1
 - Version 3.25
 
