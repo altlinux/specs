@@ -1,5 +1,5 @@
 Name: libkscreen
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Group: System/Libraries
@@ -42,12 +42,18 @@ developing applications that use %name.
 %_K4lib/plugins/kscreen/*.so
 
 %files devel
-%_includedir/kscreen/
+%_K4includedir/kscreen/
 %_K4link/libkscreen.so
 %_K4libdir/cmake/LibKScreen/
 %_K4libdir/pkgconfig/kscreen.pc
 
 %changelog
+* Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt1
+- new version
+
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
 - new version
 
