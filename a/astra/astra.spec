@@ -1,6 +1,6 @@
 Name: astra
 Version: 4.3
-Release: alt1
+Release: alt2
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -56,6 +56,9 @@ install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xprox
 %_bindir/*
 
 %changelog
+* Thu May 29 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt2
+- update to git:4552db1c6d80c797f505b9e51f8cb24c578f2893
+
 * Tue Apr 29 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt1
 - 4.3
 
