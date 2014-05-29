@@ -5,7 +5,7 @@
 
 Name: Xdmf
 Version: 20100923
-Release: alt23
+Release: alt24
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -37,6 +37,7 @@ BuildRequires: python3-devel
 %endif
 
 Requires: lib%name = %version-%release
+Requires: libhdf5-8-mpi
 
 %description
 The need for a standardized method to exchange scientific data between
@@ -49,6 +50,7 @@ coupled calculations using multiple, previously stand alone codes.
 %package -n lib%name
 Summary: Shared libraries of XDMF
 Group: System/Libraries
+Requires: libhdf5-8-mpi
 
 %description -n lib%name
 The need for a standardized method to exchange scientific data between
@@ -210,6 +212,9 @@ cp -fR Data/Data/* %buildroot%_datadir/%name/
 
 rm -f $(find Examples -name '*.o')
 
+%filter_from_requires /^debug.*(libhdf5\.so.*/s/^/libhdf5-8-mpi-debuginfo\t/
+%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf7-mpi-debuginfo\t/
+
 %files
 %_bindir/*
 
@@ -236,6 +241,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt24
+- Rebuilt with updated exodusii
+
 * Wed Apr 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt23
 - Rebuilt with postgresql9.3
 

@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.9.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.pre.git20140108
+Release: alt2.pre.git20140108
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -457,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2.pre.git20140108
+- Rebuilt with updated exodusii
+
 * Fri Jan 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.pre.git20140108
 - New snapshot
 - Rebuilt with glpk35
