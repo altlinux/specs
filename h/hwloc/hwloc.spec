@@ -1,6 +1,6 @@
 Name: hwloc
-Version: 1.8
-Release: alt1.rc1
+Version: 1.9
+Release: alt1
 Summary: Portable Hardware Locality (hwloc)
 License: BSD
 Group: Development/Tools
@@ -117,6 +117,9 @@ This package contains documentation for hwloc.
 %doc doc/doxygen-doc/html
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1
+- Version 1.9
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.rc1
 - Version 1.8rc1
 
