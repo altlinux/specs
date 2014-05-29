@@ -1,9 +1,9 @@
 Name: lapack
 %define sover 4
 %define soname lib%name.so.%sover
-Version: 3.4.2
+Version: 3.5.0
 Epoch: 1
-Release: alt2
+Release: alt1
 
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 License: BSD
@@ -219,6 +219,9 @@ ctest --force-new-ctest-process -VV
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.5.0-alt1
+- Version 3.5.0
+
 * Tue Mar 12 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.4.2-alt2
 - built with libblas-devel on %arm architectures
 
