@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -174,6 +174,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.8-alt2
+- remove region panel
+
 * Wed May 21 2014 Vladimir Didenko <cow@altlinux.org> 2.2.8-alt1
 - 2.2.8
 
