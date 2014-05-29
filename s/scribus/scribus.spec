@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.4.3
-Release: alt2
+Version: 1.4.4
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -168,6 +168,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed May 28 2014 Cronbuild Service <cronbuild@altlinux.org> 1:1.4.4-alt1
+- Fresh up to v1.4.4 with the help of cronbuild and update-source-functions.
+
 * Thu Apr 03 2014 Paul Wolneykien <manowar@altlinux.org> 1:1.4.3-alt2
 - Rebuild with lcms2.
 
