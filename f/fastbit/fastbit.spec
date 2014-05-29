@@ -1,6 +1,6 @@
 Name: fastbit
-Version: ibis1.3.8.2
-Release: alt1.svn20131031
+Version: ibis1.3.9.5
+Release: alt1.svn20140516
 Summary: An Efficient Compressed Bitmap Index Technology
 License: LGPL v2.1 or later
 Group: Development/Databases
@@ -129,7 +129,8 @@ This package contains Javadoc for FastBit Java interface.
 %configure \
 	--enable-static=no \
 	--disable-debug \
-	--with-java=%_libexecdir/jvm/java
+	--with-java=%_libexecdir/jvm/java \
+	--enable-contrib=yes
 %make_build
 
 pushd java
@@ -184,6 +185,9 @@ gzip ChangeLog
 %_javadocdir/%name
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> ibis1.3.9.5-alt1.svn20140516
+- Version ibis1.3.9.5
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> ibis1.3.8.2-alt1.svn20131031
 - Version ibis1.3.8.2
 
