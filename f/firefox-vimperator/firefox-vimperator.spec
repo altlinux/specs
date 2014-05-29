@@ -4,9 +4,9 @@
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
-%define ver 3.8.2
-%define mver 1.2
-%define ft_release alt4.hg20140213
+%define ver 3.8.3
+%define mver 1.3
+%define ft_release alt1.hg20140527
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -113,6 +113,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.3-alt1.hg20140527
+- Vimperator 3.8.3, Muttator 1.3
+
 * Thu Feb 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.2-alt4.hg20140213
 - Vimperator 3.8.2
 
