@@ -1,6 +1,6 @@
 Name: jbig
-Version: 2.0
-Release: alt2
+Version: 2.1
+Release: alt1
 
 # API change in version 1.6: jbg_enc_options(): parameter l0 changed type
 # API change in version 1.5: struct jbg_enc_state: new member yd1
@@ -102,7 +102,7 @@ cp -a INSTALL %buildroot%pkgdocdir/README
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make_build -k test
+%make -k test
 
 %files -n libjbig
 %_libdir/libjbig.so.%sover
@@ -129,6 +129,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/pbmtojbg.*
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1
+- Version 2.1
+
 * Fri Jul 08 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0-alt2
 - %name-devel: packaged /usr/include/jbig_ar.h (closes: #25869).
 - Enabled test suite.
