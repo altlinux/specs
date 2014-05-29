@@ -1,8 +1,9 @@
 Name: fastbit
-Version: ibis1.3.9.5
-Release: alt1.svn20140516
+Epoch: 1
+Version: 1.4.0
+Release: alt1.pre3.svn20140630
 Summary: An Efficient Compressed Bitmap Index Technology
-License: LGPL v2.1 or later
+License: LGPLv2.1+, GPLv2+
 Group: Development/Databases
 Url: https://sdm.lbl.gov/fastbit/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -40,7 +41,7 @@ This package contains shared libraries of FastBit.
 %package -n lib%name-devel
 Summary: Development files of FastBit
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 FastBit is an open-source data processing library following the spirit
@@ -72,7 +73,7 @@ This package contains development documentation for FastBit.
 %package examples
 Summary: Examples for FastBit
 Group: Development/Databases
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: ibutils
 
 %description examples
@@ -90,7 +91,7 @@ This package contains examples for FastBit.
 Summary: FastBit Java interface
 Group: Development/Databases
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: jakarta-commons-logging junit log4j
 
 %description j
@@ -125,7 +126,7 @@ This package contains Javadoc for FastBit Java interface.
 
 %build
 %autoreconf
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -std=gnu99
 %configure \
 	--enable-static=no \
 	--disable-debug \
@@ -185,6 +186,9 @@ gzip ChangeLog
 %_javadocdir/%name
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.0-alt1.pre3.svn20140630
+- Version 1.4.0pre3
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> ibis1.3.9.5-alt1.svn20140516
 - Version ibis1.3.9.5
 
