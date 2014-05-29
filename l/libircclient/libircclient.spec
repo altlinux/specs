@@ -2,14 +2,14 @@
 %def_enable openssl
 
 Name: libircclient
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Library that implements the client-server IRC protocol
 License: %lgpl2plus
 Group: System/Libraries
 
-URL: http://www.ulduzsoft.com/libircclient/
+URL: http://www.ulduzsoft.com/linux/libircclient/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch2: libircclient-1.6-fedora-rfc.patch
@@ -58,6 +58,10 @@ export CFLAGS="%optflags -fPIC"
 %_libdir/*.so
 
 %changelog
+* Tue May 27 2014 Mikhail Efremov <sem@altlinux.org> 1.8-alt1
+- Fix Url.
+- Updated to 1.8.
+
 * Wed Jul 10 2013 Mikhail Efremov <sem@altlinux.org> 1.7-alt1
 - Don't strip shared object.
 - Don't build and package devel documentation.
