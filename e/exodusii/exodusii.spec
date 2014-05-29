@@ -5,7 +5,7 @@ Name: exodusii
 Version: 5.14.0
 %define somver 0
 %define sover %somver.%version
-Release: alt7.git20130820
+Release: alt7.git20140509
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -18,6 +18,7 @@ Source1: CMakeCache.txt
 BuildPreReq: doxygen graphviz
 BuildPreReq: %mpiimpl-devel cmake libnetcdf-mpi-devel imake
 BuildPreReq: netcdf7-mpi-tools slurm-utils libhdf5-mpi-devel
+BuildPreReq: libcurl-devel
 
 %description
 EXODUS II is a model developed to store and retrieve transient data for
@@ -28,6 +29,7 @@ Includes the nemesis parallel extension.
 %package -n lib%name
 Summary: Shared libraries of EXODUS II
 Group: System/Libraries
+Requires: libnetcdf7-mpi
 
 %description -n lib%name
 EXODUS II is a model developed to store and retrieve transient data for
@@ -63,6 +65,19 @@ Includes the nemesis parallel extension.
 
 This package contains development documentation for EXODUS II.
 
+%package -n python-module-exodus
+Summary: Python binding for EXODUS II
+Group: Development/Python
+Requires: lib%name = %version-%release
+
+%description -n python-module-exodus
+EXODUS II is a model developed to store and retrieve transient data for
+finite element analyses. It is used for preprocessing, postprocessing,
+as well as code to code data transfer. ExodusII is based on netcdf.
+Includes the nemesis parallel extension.
+
+This package contains python binding for EXODUS II.
+
 %prep
 %setup
 install -p -m644 %SOURCE1 exodus
@@ -79,14 +94,25 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 pushd exodus
-cmake .
-%make_build verbose=1
+cmake \
+%ifarch x86_64
+	-DLIB_SUFFIX:STRING="64" \
+%endif
+	-DSOMVER:STRING="%somver" \
+	-DSOVER:STRING="%sover" \
+	-DNETCDF_SO_ROOT=%_libdir \
+	-DPYTHON_INSTALL=%python_sitelibdir \
+	.
+%make_build VERBOSE=1
 popd
 pushd nemesis
-#NETCDF_INC="-I%mpidir/include/netcdf-3"
-#NETCDF_INC="$NETCDF_INC -I$PWD/../exodus/cbind/include"
-#%make_build -f Makefile.standalone NETCDF_INC="$NETCDF_INC"
-cmake .
+cmake \
+%ifarch x86_64
+	-DLIB_SUFFIX:STRING="64" \
+%endif
+	-DSOMVER:STRING="%somver" \
+	-DSOVER:STRING="%sover" \
+	.
 %make_build VERBOSE=1
 popd
 
@@ -98,38 +124,20 @@ popd
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-NETCDF_INC="-I%mpidir/include/netcdf-3"
-NETCDF_INC="$NETCDF_INC -I$PWD/exodus/cbind/include"
 pushd exodus
 %makeinstall_std
 popd
-
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
+pushd nemesis
+%makeinstall_std
+popd
 
 install -d %buildroot%_includedir/%name
 mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
-# nemesis
-
-install -p -m644 nemesis/*.h %buildroot%_includedir/%name/
-install -m644 nemesis/*.a %buildroot%_libdir
-
-pushd %buildroot%_libdir
-#for i in exoIIv2c nemesis nemIf; do
-for i in exoIIv2c nemesis; do
-	mpic++ -shared -Wl,--whole-archive lib$i.a -Wl,--no-whole-archive \
-		-Wl,-soname,lib$i.so.%somver -o lib$i.so.%sover \
-		-L%mpidir/lib -L. $ADDLIBS -lnetcdf -Wl,-R%mpidir/lib
-	ln -s lib$i.so.%sover lib$i.so.%somver
-	ln -s lib$i.so.%somver lib$i.so
-	ADDLIBS="$ADDLIBS -l$i"
-done
-popd
-
 mv nemesis/README README.Nemesis
+
+%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf7-mpi-debuginfo\t/
+%filter_from_requires /^debug.*(libhdf5\.so.*/s/^/libhdf5-8-mpi-debuginfo\t/
 
 %files -n lib%name
 %doc exodus/COPYRIGHT exodus/README README.Nemesis ChangeLog
@@ -143,7 +151,13 @@ mv nemesis/README README.Nemesis
 #doc exodus/html exodus/doc/* nemesis/doc/*
 %doc exodus/html exodus/doc/*
 
+%files -n python-module-exodus
+%python_sitelibdir/*
+
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7.git20140509
+- New snapshot
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7.git20130820
 - New snapshot
 
