@@ -3,7 +3,7 @@
 %define somver 0
 %define sover %somver.0.0
 Name: f2c
-Version: 20110108
+Version: 20130926
 Release: alt1
 Summary: F2c converts Fortran 77 source code to C/C++ source code
 License: %bsdstyle
@@ -131,6 +131,9 @@ bzip2 changes
 %_docdir/%name
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130926-alt1
+- Version 20130926
+
 * Fri Sep 02 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110108-alt1
 - Version 20110108
 
