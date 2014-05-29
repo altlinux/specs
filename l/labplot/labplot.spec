@@ -1,20 +1,18 @@
 %define oname LabPlot
 %define pre .beta1
 Name: labplot
-Version: 2.0.0
-Release: alt8%pre.svn20131107
+Version: 2.0.1
+Release: alt1.svn20140201
 
 Summary: Function and Data Plotter
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://labplot.sourceforge.net
 Group: Sciences/Other
 License: GPL
 
 # https://labplot.svn.sourceforge.net/svnroot/labplot
-Source: %oname-%version%pre.tar.bz2
-Source1: %name-%version.desktop
+Source: %oname-%version.tar.bz2
+Source1: %name-2.0.0.desktop
 Source2: CMakeCache.txt
 
 # Automatically added by buildreq on Sun Jan 18 2009
@@ -58,8 +56,8 @@ SciDAVis introduces an abstraction of the application design called
 "aspect framework" or "5 layer model".
 
 %prep
-%setup -q -n %oname-%version%pre
-sed -i 's|@LIBDIR@|%_libdir|g' src/qtfrontend/config.pri
+%setup -n %oname-%version
+#sed -i 's|@LIBDIR@|%_libdir|g' src/qtfrontend/config.pri
 
 install -p -m644 %SOURCE2 .
 sed -i "s|@PWD@|$PWD|g" CMakeCache.txt
@@ -108,8 +106,10 @@ ln -s %oname %buildroot%_bindir/labplot2
 %_bindir/*
 #exclude %_bindir/scidavis
 #_libdir/*so.*
-%_datadir/apps/%oname/
+%_datadir/apps/%{oname}2/
 %_desktopdir/*
+%_K4xdg_mime/*
+%_datadir/icons/hicolor/*/apps/*
 
 #files scidavis
 #doc %_docdir/scidavis
@@ -117,6 +117,9 @@ ln -s %oname %buildroot%_bindir/labplot2
 #_libdir/scidavis
 
 %changelog
+* Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.svn20140201
+- Version 2.0.1
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.beta1.svn20131107
 - Version 2.0.0.beta1
 
