@@ -1,13 +1,13 @@
 Name: squashfs-tools
-Version: 4.2
-Release: alt1.aae0aff4
+Version: 4.3
+Release: alt1
 
 Summary: squashfs support
 License: GPL
 Group: System/Kernel and hardware
 Url: https://git.kernel.org/cgit/fs/squashfs/squashfs-tools.git/
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 
 BuildRequires: zlib-devel liblzma-devel liblzo2-devel
 Provides: squashfsprogs = %version-%release
@@ -21,7 +21,7 @@ block device/memory systems (e.g. embedded systems) where low overhead
 is needed. 
 
 %prep
-%setup -q -n %name-%version-%release
+%setup -q
 
 %build
 %make_build XZ_SUPPORT=1 LZO_SUPPORT=1 COMP_DEFAULT=xz
@@ -39,6 +39,9 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Fri May 30 2014 Anton Farygin <rider@altlinux.ru> 4.3-alt1
+- new release
+
 * Sun Apr 27 2014 Anton Farygin <rider@altlinux.ru> 4.2-alt1.aae0aff4
 - updated from upstream git (stable branch)
 - renamed to upstream name - squashfs-tools
