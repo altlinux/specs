@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.4
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1861,6 +1861,10 @@ done)
 
 
 %changelog
+* Fri May 30 2014 Led <led@altlinux.ru> 3.14.4-alt5
+- added:
+  + fix-sound-pci-hda--snd-hda-intel
+
 * Thu May 29 2014 Led <led@altlinux.ru> 3.14.4-alt4
 - updated:
   + fix-drivers-block--floppy
