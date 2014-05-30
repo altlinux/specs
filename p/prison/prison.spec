@@ -1,7 +1,7 @@
 
 %define sover 0
 Name: prison
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Group: Graphics
@@ -46,7 +46,7 @@ barcodes and DataMatrix barcodes, and can easily be made support more.
 
 %files -n lib%name%sover
 %_libdir/libprison.so.%sover
-%_libdir/libprison.so.%version
+%_libdir/libprison.so.%sover.*
 
 %files devel
 %_includedir/prison/
@@ -54,6 +54,12 @@ barcodes and DataMatrix barcodes, and can easily be made support more.
 %_libdir/lib%name.so
 
 %changelog
+* Fri May 30 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
+* Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - new version
 
