@@ -1,6 +1,6 @@
 Name: alsa-plugins
 Version: 1.0.27
-Release: alt2
+Release: alt3
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -65,6 +65,9 @@ __EOF__
 %_datadir/alsa/alsa.conf.d/pulse.conf
 
 %changelog
+* Fri May 30 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.0.27-alt3
+- rebuilt with libav10
+
 * Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.27-alt2
 - retag
 
