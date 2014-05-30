@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 2.2.13
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -42,6 +42,7 @@ Requires: %name-data = %version-%release
 Requires: muffin >= %muffin_ver
 Requires: libmuffin-gir >= %muffin_ver
 Requires: %name-translations
+Requires: mintlocale
 
 # needed for settings (python.req ignores /usr/share/cinnamon-settings/cinnamon-settings.py)
 Requires: python-module-dbus
@@ -230,6 +231,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.13-alt2
+- use mintlocale for language selection
+
 * Tue May 27 2014 Vladimir Didenko <cow@altlinux.org> 2.2.13-alt1
 - 2.2.13-2-gcb815e4
 

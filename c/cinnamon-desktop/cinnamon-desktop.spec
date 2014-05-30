@@ -9,7 +9,7 @@
 
 Name: cinnamon-desktop
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various Cinnamon modules
 License: %gpl2plus, %fdl
@@ -143,6 +143,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt2
+- remove not needed more locale schema
+
 * Wed May 21 2014 Vladimir Didenko <cow@altlinux.org> 2.2.3-alt1
 - 2.2.3
 
