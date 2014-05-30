@@ -4,14 +4,16 @@
 %define sover %somver.112.26
 
 Name: libflame
-Version: r11226
-Release: alt1
+Epoch: 1
+Version: 5.1.0
+Release: alt1.git20140417
 Summary: Formal Linear Algebra Method Environment
 License: LGPL v2.1
 Group: System/Libraries
 Url: http://www.cs.utexas.edu/users/flame/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/flame/libflame.git
 Source: %name-%version.tar
 #Source1: http://www.cs.utexas.edu/users/flame/book/Downloads/FLAMEC/example.tar.gz
 #Source2: elemental.tar.gz
@@ -31,7 +33,7 @@ implementation and analysis of algorithms and implementations.
 %package devel
 Summary: Development files of Formal Linear Algebra Method Environment
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: liblapack-devel
 
 %description devel
@@ -84,6 +86,10 @@ This package contains example of using FLAME.
 
 sed -i "s|@fla_host_cpu@|%_arch|" build/config.mk.in
 
+sed -i 's|libgoto\.a|libopenblas.so|g' $(find ./ -name makefile)
+sed -i 's|libgoto_core2\.a|libopenblas.so|g' $(find ./ -name makefile)
+sed -i 's|liblapack\.a|liblapack.so|g' $(find ./ -name makefile)
+
 %build
 %add_optflags %optflags_shared -std=gnu99
 #autoreconf
@@ -96,7 +102,7 @@ sed -i "s|@fla_host_cpu@|%_arch|" build/config.mk.in
 	--enable-lapack2flame=no \
 	--enable-external-lapack-interfaces \
 	--enable-blas3-front-end-cntl-trees \
-	--disable-cblas-interfaces \
+	--enable-cblas-interfaces \
 	--disable-goto-interfaces \
 	--disable-gpu \
 	--enable-verbose-make-output \
@@ -127,7 +133,7 @@ install -m644 $(find ./ -name '*.pdf') %buildroot%_docdir/%name
 mv doxygen/html %buildroot%_docdir/%name/
 
 %files
-%doc AUTHORS CHANGELOG CONTRIBUTORS LICENSE
+%doc AUTHORS CHANGELOG CONTRIBUTORS LICENSE KNOWN-ISSUES README
 %_libdir/*.so.*
 
 %files devel
@@ -141,6 +147,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Fri May 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.1.0-alt1.git20140417
+- Version 5.1.0
+
 * Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r11226-alt1
 - Version r11226
 
