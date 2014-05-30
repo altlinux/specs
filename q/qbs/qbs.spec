@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Qt Build Suite
@@ -87,6 +87,12 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Fri May 30 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.1-alt1
+- Version 1.2.1
+
+* Thu May 08 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt0.M70T.1
+- Build for branch t7
+
 * Wed May 07 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
 - Version 1.2.0
 
