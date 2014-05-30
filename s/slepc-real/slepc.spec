@@ -11,8 +11,8 @@
 %define somver 3
 %define sover %somver.2.0
 Name: %oname-%scalar_type
-Version: 3.4.3
-Release: alt2
+Version: 3.4.4
+Release: alt1
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -238,6 +238,7 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 
 %files -n lib%name
 %ldir/lib/*.so.*
+%ldir/lib/modules
 
 %files -n lib%name-devel
 %ldir/lib/*.so
@@ -258,6 +259,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Fri May 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.4-alt1
+- Version 3.4.4
+
 * Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt2
 - Built with gcc 4.7
 
