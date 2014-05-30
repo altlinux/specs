@@ -1,6 +1,6 @@
 Name: mintlocale
 Version: 1.1.6
-Release: alt1
+Release: alt2
 
 Summary: Language selection tool for Cinnamon
 License: GPLv2+
@@ -33,17 +33,17 @@ sed -i -e 's@/usr/lib@/usr/share@g' usr/bin/mintlocale \
 %build
 
 %install
-install -m 0755 -d %buildroot/%{_prefix}/
-cp -Rp usr %buildroot/
+install -m 0755 -d %buildroot%{_prefix}/
+cp -Rp usr %buildroot
+chmod +x %buildroot%_bindir/mintlocale-set-default-locale
 
 #install polkit files
 install -m 0755 -d %buildroot%{_datadir}/polkit-1/actions/
 install -D -p -m 0644 %{SOURCE1} %buildroot%{_datadir}/polkit-1/actions/
 
 %files
-%exclude %_bindir/add-remove-locales
-%exclude %_bindir/set-default-locale
 %_bindir/mintlocale
+%_bindir/mintlocale-set-default-locale
 %_datadir/applications/mintLocale.desktop
 %_datadir/linuxmint/mintLocale
 %_datadir/polkit-1/actions/org.mintlocale.policy
@@ -51,5 +51,8 @@ install -D -p -m 0644 %{SOURCE1} %buildroot%{_datadir}/polkit-1/actions/
 %doc debian/copyright
 
 %changelog
+* Fri May 30 2014 Vladimir Didenko <cow@altlinux.org> 1.1.6-alt2
+- add support for /etc/syconfig/i18n
+
 * Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 1.1.6-alt1
 - initial build
