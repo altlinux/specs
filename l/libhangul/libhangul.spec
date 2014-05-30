@@ -1,23 +1,26 @@
-Name: libhangul
-Version: 0.0.11
-Release: alt1.qa1
+Name:    libhangul
+Version: 0.1.0
+Release: alt1
 
 License: LGPLv2+
-Url: http://kldp.net/projects/hangul/
+Url:     http://kldp.net/projects/hangul/
 # url changes every release
-Source0: http://kldp.net/frs/download.php/5417/libhangul-%version.tar.gz
+Source0:  http://kldp.net/frs/download.php/5417/libhangul-%version.tar.gz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
+BuildRequires: chrpath
+
 Summary: Hangul input library
-Group: System/Libraries
+Group:   System/Libraries
 %description
 libhangul provides common features for Hangul input method programs.
 
 %package devel
 Summary: Development files for libhangul
-Group: Development/Other
+Group:   Development/Other
 Requires: %name = %version-%release
 Requires: pkgconfig
+
 %description devel
 This package contains development files necessary to develop programs
 providing Hangul input.
@@ -31,13 +34,16 @@ providing Hangul input.
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
-rm $RPM_BUILD_ROOT%_libdir/%name.la
+rm %buildroot%_libdir/%name.la
+chrpath -d %buildroot%_bindir/hangul
 
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README
+%_bindir/hangul
 %_libdir/lib*.so.*
 %_datadir/%name
 
@@ -47,6 +53,11 @@ rm $RPM_BUILD_ROOT%_libdir/%name.la
 %_libdir/*.so
 
 %changelog
+* Fri May 30 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt1
+- New version
+- Disable hardcoded rpath with standard library path
+- Package hangul utility and localization
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.11-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
