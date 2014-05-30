@@ -29,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.2.1
-Release: alt4
+Version: 5.4.1
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -312,7 +312,7 @@ This plugin provides Monitorus support for collectd
 Summary: MySQL support module for collectd
 Group: Monitoring
 Requires: collectd = %version-%release
-BuildRequires: libmysqlclient-devel
+BuildRequires: libMySQL-devel
 
 %description mysql
 This plugin provides MySQL server support for collectd
@@ -491,7 +491,6 @@ from collectd into nagios to avoid extra sensor-caused load
 %setup
 %patch0 -p1
 sed -i 's/ -Werror//' src/Makefile.*
-sed -i -e '/^=head1/i=encoding ISO-8859-1\n' src/*.pod
 mkdir libltdl
 
 %build
@@ -549,9 +548,6 @@ install -pDm755 contrib/altlinux/%name.init %buildroot%_initdir/%name
 install -d %buildroot%_libdir/%name/ %buildroot%_localstatedir/%name/
 rm %buildroot%_libdir/%name/*.la
 
-# FIXME: this is ugly
-mv %buildroot{%_libexecdir,%_datadir}/perl5
-
 # TODO: package collection3 and maybe other frontends as well
 %if_enabled cgi
 %if_enabled apache
@@ -608,6 +604,7 @@ service %name condrestart ||:
 %_sbindir/%name
 %_sbindir/collectdmon
 %_bindir/collectdctl
+%_bindir/collectd-tg
 %_man1dir/*.1*
 %_man5dir/*.5*
 %_datadir/%name/
@@ -813,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed May 28 2014 Anton Farygin <rider@altlinux.ru> 5.4.1-alt1
+- new version
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.2.1-alt4
 - built for perl 5.18
 
