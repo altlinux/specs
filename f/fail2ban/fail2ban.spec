@@ -1,7 +1,7 @@
 %define module_name fail2ban
 Name: %module_name
-Version: 0.8.10
-Release: alt2
+Version: 0.8.13
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -51,6 +51,9 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 %_man1dir/*
 
 %changelog
+* Fri May 30 2014 Anton Farygin <rider@altlinux.ru> 0.8.13-alt1
+- new version
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.10-alt2
 - implement reload method for service fail2ban
 
