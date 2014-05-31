@@ -1,6 +1,6 @@
 Name: xen-tools
 Version: 4.4
-Release: alt2
+Release: alt3
 Summary: A collection of scripts for working with Xen guest images
 License: GPLv2
 Group: Emulators
@@ -45,8 +45,11 @@ some RPM-based distributions.
 
 
 %changelog
+* Sat May 31 2014 Led <led@altlinux.ru> 4.4-alt3
+- upstream updates and fixes
+
 * Wed Apr 09 2014 Led <led@altlinux.ru> 4.4-alt2
-- upstream update and fixes
+- upstream updates and fixes
 
 * Sun Jan 26 2014 Led <led@altlinux.ru> 4.4-alt1
 - initial build
