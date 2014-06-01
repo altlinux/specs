@@ -1,6 +1,6 @@
 Name: usbview
-Version: 1.1
-Release: alt1_1deb
+Version: 2.0
+Release: alt1
 Epoch: 1
 
 Summary: USB topology and device viewer
@@ -12,12 +12,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 Source: %url/%name-%version.tar
 Source1: %name-icons.tar
 
-Patch0: usbview_1.1-1.diff.gz
-
-# Automatically added by buildreq on Mon Apr 28 2008 (-bi)
-BuildRequires: libgtk+2-devel
-# packagereq: optimized out:
-BuildRequires: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgtk+2-common libgtk+2-common-devel libpango-devel pkg-config zlib-devel
+BuildRequires: libgtk+3-devel
 
 
 %description
@@ -28,7 +23,6 @@ properly or not.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 #autoreconf -fisv
@@ -53,12 +47,8 @@ Comment=USB topology and device viewer
 Icon=%{name}
 Exec=%{name}
 Terminal=false
-Categories=Settings;HardwareSettings;
+Categories=GTK;Settings;HardwareSettings;
 EOF
-
-# installing debian man pages
-install -d ${RPM_BUILD_ROOT}%_man8dir
-install -m644 usbview.8 ${RPM_BUILD_ROOT}%_man8dir/
 
 %files
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -68,6 +58,9 @@ install -m644 usbview.8 ${RPM_BUILD_ROOT}%_man8dir/
 %_man8dir/usbview.8*
 
 %changelog
+* Sun Jun 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0-alt1
+- new version
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_1deb
 - new version
 
