@@ -1,6 +1,7 @@
 %define _name clutter-gst
 %define api_ver 2.0
 %define gst_api_ver 1.0
+%define gst_ver 1.2
 
 %def_enable gtk_doc
 %def_enable introspection
@@ -8,8 +9,8 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: 2.0.10
-Release: alt2
+Version: 2.0.12
+Release: alt1
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -21,10 +22,10 @@ Patch: clutter-gst-1.9.90-alt-gtk-doc.patch
 
 %{?_enable_hw:Requires: gst-plugins-bad%gst_api_ver}
 
-BuildRequires: gst-plugins%gst_api_ver-devel gtk-doc glib2-devel >= 2.18 libcogl-devel >= 1.10 libclutter-devel >= 1.6.0
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver gtk-doc glib2-devel >= 2.18 libcogl-devel >= 1.10 libclutter-devel >= 1.6.0
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins%gst_api_ver-gir-devel}
 # for gstreamer-basevideo
-%{?_enable_hw:BuildRequires: gst-plugins-bad%gst_api_ver-devel}
+%{?_enable_hw:BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver}
 
 %description
 Library integrating clutter with GStreamer
@@ -111,6 +112,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Sun Jun 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt1
+- 2.0.12
+
 * Wed Feb 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.10-alt2
 - rebuilt against libcogl.so.19
 
