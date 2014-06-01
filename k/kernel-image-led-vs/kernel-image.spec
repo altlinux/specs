@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.14.4
-Release: alt5
+Version: 3.14.5
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.14
-%define kernel_stable_version 4
+%define kernel_stable_version 5
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1861,6 +1861,20 @@ done)
 
 
 %changelog
+* Sun Jun 01 2014 Led <led@altlinux.ru> 3.14.5-alt1
+- 3.14.5
+- removed:
+  + fix-drivers-gpu-drm--vmwgfx
+  + fix-mm--huge_memory
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--qxl
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs-hugetlbfs
+  + fix-virt-kvm--kvm
+  + feat-kernel-vserver
+
 * Fri May 30 2014 Led <led@altlinux.ru> 3.14.4-alt5
 - added:
   + fix-sound-pci-hda--snd-hda-intel
