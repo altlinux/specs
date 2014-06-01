@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.6.1
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Group: System/Libraries
 License: GPLv3
@@ -48,6 +48,9 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Sun Jun  1 2014 Terechkov Evgenii <evg@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Fri May 23 2014 Terechkov Evgenii <evg@altlinux.org> 1.6.1-alt2
 - Relax suds module requirement
 
