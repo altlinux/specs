@@ -2,7 +2,7 @@
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -38,6 +38,9 @@ greater flexibility and stability.
 %perl_vendor_privlib/Finance
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 
