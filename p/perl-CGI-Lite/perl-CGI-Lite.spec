@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-CGI-Lite
-Version: 2.02
-Release: alt2.1
+Version: 2.03
+Release: alt1
 
 Summary: Process and decode WWW forms and cookies
 
@@ -25,7 +25,7 @@ Url: http://search.cpan.org/dist/CGI-Lite/
 
 BuildArch: noarch
 #Source: http://search.cpan.org//CPAN/authors/id/S/SM/SMYLERS/%m_distro-%version.tar.gz
-Source: %m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/H/HO/HOUSTON/CGI-Lite-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-devel
@@ -49,6 +49,9 @@ behind the decoding process.
 %doc CHANGES README TODO examples
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.02-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
