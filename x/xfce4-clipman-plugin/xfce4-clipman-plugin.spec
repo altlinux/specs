@@ -1,5 +1,5 @@
 Name: xfce4-clipman-plugin
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
@@ -41,10 +41,6 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 # Don't use git tag in version.
 %xfce4_drop_gitvtag project_version_tag configure.ac.in
 
-# Seems like upstream forgot to bump version in the git repo
-# (1.2.5 was announced)
-sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_version_micro], [5]);' configure.ac.in
-
 %build
 %xfce4reconf
 %configure \
@@ -73,10 +69,14 @@ sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_versio
 %_desktopdir/*
 %_xdgconfigdir/xfce4/panel/*
 %_xdgconfigdir/autostart/*
+%_datadir/appdata/*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jun 02 2014 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1
+- Updated to 1.2.6.
+
 * Wed Feb 12 2014 Mikhail Efremov <sem@altlinux.org> 1.2.5-alt1
 - Bump version in the configure script.
 - Fix help url.
