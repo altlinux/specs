@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.37
+Version: 1.1.38
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jun 02 2014 Michael Shigorin <mike@altlinux.org> 1.1.38-alt1
+- mksquashfs 4.3 support
+
 * Mon May 26 2014 Michael Shigorin <mike@altlinux.org> 1.1.37-alt1
 - use/browser
 
