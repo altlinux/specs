@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Locale-PO
 Name: perl-%dist
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Object-oriented interface to gettext po-file entries
@@ -39,6 +39,9 @@ with associated comments). It can load and save complete po-files.
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Fri Oct 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
