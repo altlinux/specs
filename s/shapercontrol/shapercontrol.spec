@@ -1,6 +1,6 @@
 
 Name: shapercontrol
-Version: 1.3.4
+Version: 1.5.1
 Release: alt1
 License: GPLv2+
 Summary: Administration tool for Linux-based ISP traffic shaper 
@@ -10,7 +10,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildArch: noarch
-Requires: ipset iproute2 perl-DBD-SQLite perl-AppConfig
+Requires: iproute2 perl-DBD-SQLite perl-AppConfig
 
 # Automatically added by buildreq on Fri Feb 04 2011
 BuildRequires: perl-Pod-Parser perl-DBD-SQLite perl-AppConfig
@@ -26,7 +26,7 @@ Administration tool for Linux-based ISP traffic shaper
 %make
 
 %install
-%makeinstall DESTDIR=%buildroot%_sbindir INITDIR=%buildroot%_initdir MANDIR=%buildroot%_mandir CFGDIR=%buildroot%_sysconfdir/sc
+%makeinstall DESTDIR=%buildroot SBINDIR=%_sbindir INITDIR=%_initdir MANDIR=%_mandir CFGDIR=%_sysconfdir/sc
 mkdir -p %buildroot%_sysconfdir/sysconfig
 echo "SC_OPTS=" > %buildroot%_sysconfdir/sysconfig/sc
 
@@ -46,6 +46,9 @@ echo "SC_OPTS=" > %buildroot%_sysconfdir/sysconfig/sc
 %_man8dir/*
 
 %changelog
+* Mon Jun 02 2014 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
+- new version
+
 * Wed Nov 02 2011 Anton Farygin <rider@altlinux.ru> 1.3.4-alt1
 - new version
 
