@@ -1,6 +1,6 @@
 %define dist CGI.pm
 Name: perl-CGI
-Version: 3.65
+Version: 4.01
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKSTOS/CGI.pm-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/L/LE/LEEJO/CGI.pm-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -42,6 +42,9 @@ bzip2 -k Changes
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.65-alt1
 - automated CPAN update
 
