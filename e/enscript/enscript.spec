@@ -1,33 +1,46 @@
 Name: enscript
-Version: 1.6.4
-Release: alt4
+Version: 1.6.6
+Release: alt1
 
 Summary: Converts plain ASCII to PostScript
 License: GPL
 Group: Publishing
-Url: http://people.ssh.fi/mtr/genscript/
+Url: http://www.gnu.org/software/enscript/
 
+Source0: %name-%version.tar.gz
+Source1: repatch_spec.sh
+Source2: repatch_spec.unused
 
-Source0: ftp://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.bz2
+## FC patches
+Patch1: FC-1.6.1-locale.patch
+Patch2: FC-wrap_header.patch
+Patch3: FC-1.6.4-rh457720.patch
+Patch4: FC-rh477382.patch
+Patch5: FC-build.patch
+Patch6: FC-manfixes.patch
+Patch7: FC-bufpos-crash.patch
 
-Patch1: enscript-1.6.3-rh-mail.patch
-Patch2: enscript-1.6.1-rh-locale.patch
-Patch3: enscript-1.6.3-alt-fontpath.patch
-Patch4: enscript-1.6.3-alt-default-enc.patch  
-Patch5: enscript-1.6.3-alt-encodings.patch
-Patch6: enscript-1.6.4-alt-build.patch
-Patch7: enscript-1.6.3-deb-CAN-2004-1184.patch
-Patch8: enscript-1.6.3-deb-CAN-2004-1185.patch
-Patch9: enscript-1.6.3-deb-CAN-2004-1186.patch
+## Ubuntu patches
+Patch101: Ubuntu-01_libpaper.patch
+Patch102: Ubuntu-03_misc.patch
+Patch103: Ubuntu-04_highlighting.patch
+Patch104: Ubuntu-339938-hilight-wrapped-function-list.patch
+Patch105: Ubuntu-06_debian.patch
+Patch106: Ubuntu-07_media.patch
+Patch107: Ubuntu-09_appendctrld.patch
+Patch108: Ubuntu-344750-no-gecos.patch
+Patch109: Ubuntu-147116-ruby-hilight.patch
+Patch110: Ubuntu-457244-octave-highlighting.patch
 
-BuildPreReq: rpm-build >= 4.0.4-alt10, automake_1.7, autoconf_2.50
-%set_automake_version 1.7
-%set_autoconf_version 2.5
+## ALT patches
+Patch501: enscript-1.6.4-alt-mail.patch
+Patch502: enscript-1.6.3-alt-fontpath.patch
+Patch503: enscript-1.6.3-alt-default-enc.patch
+Patch504: enscript-1.6.3-alt-encodings.patch
 
-Obsoletes: nenscript
-
-# Automatically added by buildreq on Tue Sep 16 2003
-BuildRequires: flex
+# Automatically added by buildreq on Thu May 29 2014
+# optimized out: xz
+BuildRequires: flex libpaper-devel
 
 %description
 Enscript is a print filter. It can take ASCII input
@@ -37,41 +50,53 @@ ASCII pages on one physical page (side by side) or
 changing fonts.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+%setup
 
-autoreconf -fiv
+## FC apply patches
+%patch1 -p1 -b .locale
+%patch2 -p1 -b .wrap_header
+%patch3 -p1 -b .rh457720
+%patch4 -p1 -b .rh477382
+%patch5 -p1 -b .build
+%patch6 -p1 -b .manfixes
+%patch7 -p1 -b .bufpos-crash
+
+## Ubuntu apply patches
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+
+## ALT apply patches
+%patch501 -p1
+%patch502 -p1
+%patch503 -p1
+%patch504 -p1
 
 %build
-%add_optflags -D_GNU_SOURCE
-%configure --with-media=Letter
+export CPPFLAGS='-DPROTOTYPES'
+%autoreconf
+%configure --with-media=A4
 %make_build
 
 %install
-#strange hack
-cd po
-%__ln_s ../mkinstalldirs mkinstalldirs
-cd -
-
 %makeinstall
 
-%__install -pm755 -d $RPM_BUILD_ROOT%_sysconfdir/%name
-%__install -pm644 $RPM_BUILD_ROOT/%_datadir/%name/afm/font.map $RPM_BUILD_ROOT%_sysconfdir/%name/font.map
+install -pm755 -d $RPM_BUILD_ROOT%_sysconfdir/%name
+install -pm644 $RPM_BUILD_ROOT/%_datadir/%name/afm/font.map $RPM_BUILD_ROOT%_sysconfdir/%name/font.map
 cd $RPM_BUILD_ROOT/%_datadir/%name
-%__ln_s  %_sysconfdir/%name/font.map
+ln -s  %_sysconfdir/%name/font.map
 cd -
 
 %find_lang %name
 
-%__ln_s %_bindir/enscript $RPM_BUILD_ROOT%_bindir/nenscript
+ln -s %_bindir/enscript $RPM_BUILD_ROOT%_bindir/nenscript
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README README.ESCAPES THANKS TODO
@@ -82,8 +107,13 @@ cd -
 %_datadir/%name
 %_infodir/*.info*
 
-
 %changelog
+* Wed May 28 2014 Fr. Br. George <george@altlinux.ru> 1.6.6-alt1
+- Autobuild version bump to 1.6.6
+- Upstream switch
+- FC and Ubuntu repatch_spec used
+- Minor spec cleanup
+
 * Mon Feb 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.4-alt4
 - fixed build on arm
 
@@ -140,7 +170,6 @@ cd -
 - new groups
 - fixed non-existent URL
 
-* Tue Nov 23 1999 François PONS <fpons@mandrakesoft.com>
 - Build release.
 
 * Tue May 11 1999 Bernhard Rosenkraenzer <bero@mandrakesoft.com>
