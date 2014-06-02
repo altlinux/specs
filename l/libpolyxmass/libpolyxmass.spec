@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++
 %add_optflags %optflags_shared
 Name:           libpolyxmass
 Version:        0.9.1
-Release:        alt3_11.1
+Release:        alt4_11
 Summary:        Polymer chemistry-related functionalities
 
 Group:          System/Libraries
@@ -14,6 +14,7 @@ License:        GPLv2+
 URL:            http://www.polyxmass.org
 Source0:        http://www.polyxmass.org/libpolyxmass/downloads/0.9.1/libpolyxmass-0.9.1.tar.gz
 Patch0:         libpolyxmass-x86_64.patch
+Patch1:		libpolyxmass-0.9.1-alt-no-g_memmove.patch
 
 BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
@@ -45,11 +46,12 @@ The %{name}-devel package contains the files needed for development with
 %prep
 %setup -q
 %patch0
+%patch1 -p1
 
+%build
 libtoolize
 autoreconf
 
-%build
 export CFLAGS="${RPM_OPT_FLAGS} -Wno-error"
 %configure --disable-static
 make %{?_smp_mflags}
@@ -74,6 +76,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libpolyxmass.pc
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt4_11
+- Fixed build
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt3_11.1
 - Fixed build
 
