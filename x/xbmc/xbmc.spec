@@ -1,6 +1,6 @@
 Name: xbmc
-Version: 12.2
-Release: alt1
+Version: 13.0
+Release: alt4
 
 Summary: XBMC Media Center
 License: GPL
@@ -28,7 +28,8 @@ BuildRequires: libpcrecpp-devel libpng-devel libsamplerate-devel libsmbclient-de
 BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
 BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
 BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel
-BuildRequires: fontconfig-devel java-1.6.0-openjdk-devel /proc
+BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
+BuildRequires: java-1.7.0-openjdk-devel /proc
 
 %ifarch %ix86 x86_64
 BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libglew-devel
@@ -59,7 +60,6 @@ touch xvdr/{NEWS,AUTHORS,ChangeLog}
 [ ! -x bootstrap ] || sh bootstrap
 %configure --disable-non-free \
 	--enable-external-libraries \
-	--disable-external-ffmpeg \
 	--enable-pulse \
 	--with-lirc-device=/var/run/lirc/lircd \
 %ifarch %arm
@@ -162,6 +162,18 @@ E_O_F
 %_datadir/xbmc/userdata
 
 %changelog
+* Mon Jun 02 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt4
+- 13.1rc1
+
+* Sat May 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt3
+- 13.1b2
+
+* Sat May 17 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt2
+- 13.1b1
+
+* Fri May 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt1
+- 13.0 Gotham released
+
 * Fri May 03 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.2-alt1
 - 12.2 released
 
