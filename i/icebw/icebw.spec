@@ -5,10 +5,10 @@
 %define build_lang uk_UA.KOI8-U
 
 %define oname iceBw
-%define oversion 9_11
+%define oversion 9_15
 
 Name:    icebw
-Version: 9.11
+Version: 9.15
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -43,6 +43,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Mon Jun 02 2014 Andrey Cherepanov <cas@altlinux.org> 9.15-alt1
+- New version
+
 * Thu Feb 27 2014 Andrey Cherepanov <cas@altlinux.org> 9.11-alt1
 - New version
 - Fix project URL

@@ -1,9 +1,9 @@
 
 %define oname iceB
-%define oversion 14_11
+%define oversion 14_15
 
 Name:    iceb
-Version: 14.11
+Version: 14.15
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -73,6 +73,9 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %_datadir/%name
 
 %changelog
+* Mon Jun 02 2014 Andrey Cherepanov <cas@altlinux.org> 14.15-alt1
+- New version
+
 * Thu Feb 27 2014 Andrey Cherepanov <cas@altlinux.org> 14.11-alt1
 - New version
 - Fix project URL
