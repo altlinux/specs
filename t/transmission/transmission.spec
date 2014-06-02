@@ -6,7 +6,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.82
+Version: 2.83
 Release: alt1
 
 Group: Networking/File transfer
@@ -135,7 +135,7 @@ sed -i "s|^LIBS.*\+=.*libevent\.a$|LIBS += -levent|" qt/qtr.pro
 
 %if_enabled qt
 pushd qt
-qmake-qt4 "QMAKE_CXXFLAGS+=%optflags"
+qmake-qt4 "QMAKE_CXXFLAGS+=%optflags -std=c++11"
 popd
 %endif
 
@@ -269,6 +269,9 @@ fi
 %dir %_logdir/%dname
 
 %changelog
+* Mon Jun 02 2014 Anton Farygin <rider@altlinux.ru> 2.83-alt1
+- new version
+
 * Mon Sep 02 2013 Anton Farygin <rider@altlinux.ru> 2.82-alt1
 - new version
 
