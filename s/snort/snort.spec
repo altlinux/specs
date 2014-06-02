@@ -1,7 +1,7 @@
 Summary:   An intrusion detection system
 Name:      snort
 Version:   2.9.6.1
-Release:   alt1
+Release:   alt2
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
@@ -303,7 +303,7 @@ echo
 %config(noreplace) %_initdir/snortd
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/%name
-%attr(1770,root,snort) %dir %_logdir/%name
+%attr(0770,root,snort) %dir %_logdir/%name
 %_sbindir/%name-plain
 %ghost %_sbindir/%name
 %_man8dir/%name.*
@@ -334,6 +334,9 @@ echo
 %doc doc/snort_manual.*
 
 %changelog
+* Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 2.9.6.1-alt2
+- change attr /var/log/snort
+
 * Tue May 27 2014 Timur Aitov <timonbl4@altlinux.org> 2.9.6.1-alt1
 - 2.9.6.1
 - use default memcap in snort.conf
