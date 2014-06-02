@@ -1,8 +1,8 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.7.4
-Release: alt2
+Version: 1.7.5
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -108,6 +108,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Mon Jun 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.5-alt1
+- 1.7.5
+
 * Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt2
 - upstream snapshot 0784d04cb6f6e5c893aaf368091f20326fb847fe
 - build 256k bios images for qemu 2.0

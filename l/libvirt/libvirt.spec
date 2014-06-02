@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -749,9 +749,12 @@ fi
 %_sbindir/virtlockd
 %_datadir/augeas/lenses/libvirt_lockd.aug
 %_datadir/augeas/lenses/virtlockd.aug
-%_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
 %_datadir/augeas/lenses/tests/test_virtlockd.aug
 %_man8dir/virtlockd.*
+
+%if_with qemu
+%_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
+%endif
 
 %if_with storage_disk
 %_libexecdir/libvirt_parthelper
@@ -918,6 +921,9 @@ fi
 %_datadir/libvirt/api/libvirt-lxc-api.xml
 
 %changelog
+* Mon Jun 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Mon May 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
