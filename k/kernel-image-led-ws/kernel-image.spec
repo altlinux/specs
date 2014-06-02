@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.5
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1861,6 +1861,13 @@ done)
 
 
 %changelog
+* Mon Jun 02 2014 Led <led@altlinux.ru> 3.14.5-alt2
+- updated:
+  + fix-drivers-usb-musb--musb_hdrc
+- added:
+  + fix-drivers-usb-musb--tusb6010
+  + fix-drivers-usb-musb--tusb6010_omap
+
 * Sun Jun 01 2014 Led <led@altlinux.ru> 3.14.5-alt1
 - 3.14.5
 - removed:
