@@ -1,15 +1,15 @@
 %define module_name Lingua-EN-Numbers-Ordinate
 
 Name: perl-%module_name
-Version: 1.02
-Release: alt1.1
+Version: 1.03
+Release: alt1
 
 Summary: Go from cardinal number (3) to ordinal ("3rd")
 Summary(ru_RU.UTF8): Преобразование количественных чисел (3) в порядковые (3rd)
 Group: Development/Perl
 URL: http://interglacial.com/~sburke
 License: GPL or Artistic
-Source: http://search.cpan.org/CPAN/authors/id/S/SB/SBURKE/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Numbers-Ordinate-%{version}.tar.gz
 Buildarch: noarch
 AutoReqProv: yes, perl
 BuildRequires: perl-devel
@@ -37,6 +37,9 @@ giving the ordinal form of a number, given its cardinal value.
 %perl_vendor_privlib/Lingua*
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
