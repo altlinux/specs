@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:    jffi
 Version: 1.0.10
-Release: alt2_1jpp7
+Release: alt3_1jpp7
 Summary: An optimized Java interface to libffi 
 
 Group:   System/Libraries
@@ -63,6 +63,7 @@ rm -rf archive/ jni/libffi/ jni/win32/ lib/CopyLibs/ lib/junit*
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 sed -i -e 's,-mimpure-text,,g' `find . -name GNUmakefile`
+sed -i -e s,-Werror,, libtest/GNUmakefile*
 
 %build
 mkdir lib/build_lib
@@ -93,6 +94,9 @@ ant test
 %{_javadocdir}/jffi
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt3_1jpp7
+- fixed build
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt2_1jpp7
 - gcc47 build
 
