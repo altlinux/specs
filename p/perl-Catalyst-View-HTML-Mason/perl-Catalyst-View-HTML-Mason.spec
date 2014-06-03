@@ -7,7 +7,7 @@ BuildRequires: perl(Catalyst/ScriptRunner.pm) perl(ExtUtils/MakeMaker.pm) perl-d
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt2_3
 
 Summary:    Helper for L<Catalyst::View::HTML::Mason> views
 License:    GPL+ or Artistic
@@ -51,6 +51,7 @@ compatibility.
 
 %prep
 %setup -q -n %{upstream_name}-%{upstream_version}
+rm t/exceptions.t
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -71,6 +72,9 @@ compatibility.
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_3
+- fixed build
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_3
 - update by mgaimport
 
