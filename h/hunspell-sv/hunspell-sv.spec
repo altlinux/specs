@@ -3,9 +3,9 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sv
 Summary: Swedish hunspell dictionaries
-Version: 2.10
-Release: alt1_3
-Source: http://dsso.googlecode.com/files/sv-%{version}.zip
+Version: 2.28
+Release: alt1_1
+Source: http://extensions.libreoffice.org/extension-center/swedish-spelling-dictionary-den-stora-svenska-ordlistan/releases/2.28/ooo_swedish_dict_2-28.oxt
 Group: Text tools
 URL: http://dsso.se/
 License: LGPLv3
@@ -21,17 +21,22 @@ Swedish hunspell dictionaries.
 %setup -q -c -n hunspell-sv
 
 %build
+sed -i 's/\r$//' LICENSE_sv_SE.txt
+sed -i 's/\r$//' LICENSE_en_US.txt
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p dictionaries/*.dic dictionaries/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 %files
-%doc README.txt
+%doc LICENSE_sv_SE.txt LICENSE_en_US.txt
 
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_3
 - update to new release by fcimport
 
