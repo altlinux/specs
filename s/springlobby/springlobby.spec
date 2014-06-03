@@ -6,10 +6,10 @@ BuildRequires: gcc-c++ libSDL_sound-devel libgcrypt-devel libgnutls-devel libgpg
 # those are from static libUtil, in main binary
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
-%define fedora 20
+%define fedora 21
 Name:			springlobby
 Version:		0.169
-Release:		alt1_8
+Release:		alt1_9
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -89,6 +89,9 @@ desktop-file-install	\
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_9
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_8
 - update to new release by fcimport
 
