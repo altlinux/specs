@@ -2,18 +2,19 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%global prerel rc3
+%global prerel rc4
 
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.6.%{prerel}
+Release:        alt2_0.8.%{prerel}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://blobby.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}2-linux-%{version}%{prerel}.tar.gz
 Source1:        blobby.desktop
-BuildRequires:  libSDL-devel libphysfs-devel zlib-devel ctest cmake boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel zip
+Source2:        blobby.appdata.xml
+BuildRequires:  libSDL2-devel libphysfs-devel zlib-devel ctest cmake boost-devel zip
 BuildRequires:  ImageMagick desktop-file-utils icon-theme-hicolor
 Source44: import.info
 
@@ -24,6 +25,9 @@ Blobby Volley 2 is the continuation of this lovely game.
 %prep
 %setup -q -n %{name}-%{version}%{prerel}
 
+# Updated to SDL2 but still looks for SDL also? Why!
+sed -ibackup '/find_package(SDL REQUIRED)/d' src/CMakeLists.txt
+
 %build
 %{fedora_cmake} .
 make %{?_smp_mflags}
@@ -32,13 +36,16 @@ make %{?_smp_mflags}
 %makeinstall_std
 
 # Icon
-unzip -o -j data/gfx.zip gfx/ball01.bmp
-convert -size 48x48 -transparent black ball01.bmp blobby.png
+# unzip -o -j data/gfx.zip gfx/ball01.bmp
+convert -size 48x48 -transparent black data/Icon.bmp blobby.png
 install -p -m 644 -D blobby.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/blobby.png
 
 # Desktop file
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata/
+install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdata.xml
 
 %files
 %doc AUTHORS README ChangeLog COPYING TODO
@@ -46,8 +53,13 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/blobby
 %{_datadir}/icons/hicolor/48x48/apps/*.png
 %{_datadir}/applications/*.desktop
+%dir %{_datadir}/appdata/
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.8.rc4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.6.rc3
 - update to new release by fcimport
 
