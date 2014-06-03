@@ -4,8 +4,8 @@ BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           autoarchive
-Version:        1.1.0
-Release:        alt1_1
+Version:        1.1.1
+Release:        alt1_2
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
@@ -51,6 +51,9 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1
 - update to new release by fcimport
 
