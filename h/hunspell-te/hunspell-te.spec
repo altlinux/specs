@@ -1,45 +1,39 @@
-%define lang te
-%define langrelease 2
-%define langversion 0.01
-
 Name: hunspell-te
 Summary: Telugu hunspell dictionaries
-%define upstreamid 20050929
-Version: 0.%{upstreamid}
-Release: alt2_11
+Version: 1.0.0
+Release: alt1_1
+#Epoch:   1
 Group:          Text tools
 ##Upstream is unresponsive so unable to verify license version
 License:        GPL+
-URL:            http://aspell.net/
-Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{langversion}-%{langrelease}.tar.bz2
+URL:            https://gitorious.org/hunspell_dictionaries
+Source0:        http://anishpatil.fedorapeople.org/te_in.%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  aspell >= 0.60
-BuildRequires: libhunspell-devel hunspell-utils
+
 Requires:       hunspell
 Source44: import.info
 
 %description
-Telugu hunspell dictionaries.This package
-contains the efforts of aspell-te that converted by
-wordlist2hunspell.
+Telugu hunspell dictionaries.
 
 %prep
-%setup -q -n aspell6-%{lang}-%{langversion}-%{langrelease}
-prezip-bin -d < te.cwl > te.txt
+%setup -q -c -n te_IN
 
 %build
-export LANG=te_IN.utf8
-wordlist2hunspell te.txt te_IN
+
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p te_IN/*.dic te_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
 %files 
-%doc COPYING Copyright
+%doc te_IN/COPYING te_IN/Copyright te_IN/README 
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050929-alt2_11
 - update to new release by fcimport
 
