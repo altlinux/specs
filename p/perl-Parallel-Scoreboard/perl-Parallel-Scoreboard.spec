@@ -1,26 +1,35 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Carp/Heavy.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Errno.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(IO/Handle.pm) perl(IO/Seekable.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(PerlIO.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Carp/Heavy.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Errno.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(IO/Seekable.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(PerlIO.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Scoreboard
 Version:        0.05
-Release:        alt1
+Release:        alt1_1
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Parallel-Scoreboard/
-Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Class/Accessor/Lite.pm)
+BuildRequires:  perl(Digest/MD5.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Filter/Util/Call.pm)
 BuildRequires:  perl(HTML/Entities.pm)
+BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(JSON.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(POSIX.pm)
+BuildRequires:  perl(Spiffy.pm)
+BuildRequires:  perl(Test/Base.pm)
+BuildRequires:  perl(Test/Base/Filter.pm)
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/Builder/Module.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Digest/MD5.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+
 
 Requires:       perl(Class/Accessor/Lite.pm) >= 0.05
 # Filter out unversioned R: perl(Class::Accessor::Lite)
@@ -36,12 +45,15 @@ like the status module of the Apache HTTP server.
 %prep
 %setup -q -n Parallel-Scoreboard-%{version}
 # Remove bundled modules
-for f in inc/Test/More.pm inc/File/Temp.pm inc/Test/Builder.pm \
-    inc/Test/Builder/Module.pm; do
+for f in inc/Test/More.pm inc/File/Temp.pm inc/Spiffy.pm \
+    inc/Test/Base.pm inc/Test/Base/Filter.pm \
+    inc/Test/Builder.pm inc/Test/Builder/Module.pm; do
   pat=$(echo "$f" | sed 's,/,\\/,g;s,\.,\\.,g')
   rm $f
   sed -i -e "/$pat/d" MANIFEST
 done
+# Packaging bug in 0.05
+sed -i -e '/Parallel-Scoreboard-0.04.tar/d' MANIFEST
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -51,7 +63,6 @@ make %{?_smp_mflags}
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -63,6 +74,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_1
+- update to new release by fcimport
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
