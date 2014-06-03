@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 3.66
+Version: 3.68
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -128,6 +128,9 @@ find %buildroot%_mandir -type f -print0 | xargs -r0 sh scripts/remove_COLOPHON.s
 %_datadir/%name/
 
 %changelog
+* Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 3.68-alt1
+- Autobuild version bump to 3.68
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 3.66-alt1
 - Autobuild version bump to 3.66
 
