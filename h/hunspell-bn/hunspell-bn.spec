@@ -1,13 +1,11 @@
-%define upstreamver 0.06
-
 Name: hunspell-bn
 Summary: Bengali hunspell dictionaries
-Version: %{upstreamver}
-Release: alt1_4
+Version: 1.0.0
+Release: alt1_1
 #Epoch: 1
 Group:          Text tools
-Source: http://sourceforge.net/projects/bengalinux/files/bengali-spellcheck/%{name}-%{version}.tar.bz2
-URL: http://ankur.org.bd/wiki
+Source: http://anishpatil.fedorapeople.org/bn_in.%{version}.tar.gz
+URL: https://gitorious.org/hunspell_dictionaries
 License: GPLv2+
 BuildArch: noarch
 
@@ -18,39 +16,25 @@ Source44: import.info
 Bengali hunspell dictionaries.
 
 %prep
-%setup -q -n %{name}-%{upstreamver}
-chmod -x bn.aff  bn.dic  COPYING  Copyright README
-chmod -x doc/README
-mv bn.aff bn_BD.aff
-mv bn.dic bn_BD.dic
+%setup -q -c -n bn_IN
 
-# Convert to utf-8
-for file in Copyright doc/README; do
-    iconv -f ISO-8859-1 -t UTF-8 -o $file.new $file && \
-    touch -r $file $file.new && \
-    mv $file.new $file
-done
 
 
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
-cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
+cp -p bn_IN/*.dic bn_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
-bn_BD_aliases="bn_IN"
-for lang in $bn_BD_aliases; do
-        ln -s bn_BD.aff $lang.aff
-        ln -s bn_BD.dic $lang.dic
-done
-popd
 
 %files
-%doc doc/README COPYING Copyright
+%doc bn_IN/README bn_IN/COPYING bn_IN/Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_4
 - update to new release by fcimport
 
