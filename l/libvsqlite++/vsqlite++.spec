@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 %define oldname vsqlite++
 Name:        libvsqlite++
-Version:    0.3.11
-Release:    alt1_4
+Version:    0.3.13
+Release:    alt1_3
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
 Group:      Development/C
@@ -13,8 +13,7 @@ License:    BSD
 URL:        https://github.com/vinzenz/vsqlite--
 Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  premake
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libtool
 BuildRequires:  doxygen
@@ -81,6 +80,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.13-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.11-alt1_4
 - update to new release by fcimport
 
