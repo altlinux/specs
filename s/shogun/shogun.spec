@@ -1,6 +1,6 @@
 Name: shogun
-Version: 3.0.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-devel gcc-c++ liblapack-devel /proc cmake
 BuildPreReq: python-module-matplotlib python-module-wx2.9 libsnappy-devel
-BuildPreReq: libglpk35-devel libnumpy-devel libreadline-devel
+BuildPreReq: libglpk36-devel libnumpy-devel libreadline-devel
 BuildPreReq: liblpsolve-devel liblzma-devel swig doxygen graphviz
 BuildPreReq: liblzo2-devel bzlib-devel zlib-devel boost-devel libjson-devel
 BuildPreReq: texlive-latex-extra python-module-docutils ghostscript-classic
@@ -297,6 +297,10 @@ chmod +x %buildroot%_libdir/%name/examples/libshogun/*
 %doc tests
 
 %changelog
+* Tue Jun 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
+- Version 3.2.0
+- Rebuilt with gkpk36
+
 * Sat Jan 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt2
 - Rebuilt with gkpk35
 
