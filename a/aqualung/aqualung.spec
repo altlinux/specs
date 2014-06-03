@@ -1,6 +1,6 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
-Version: 0.9svn1297
+Version: 0.9svn1298
 Release: alt1
 License: GPL
 Group: Sound
@@ -126,6 +126,9 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 0.9svn1298-alt1
+- Autobuild version bump to 0.9svn1298
+
 * Tue May 13 2014 Fr. Br. George <george@altlinux.ru> 0.9svn1297-alt1
 - Autobuild version bump to 0.9svn1297
 
