@@ -5,11 +5,12 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Work around koji build issues on ppc64
 # See https://www.redhat.com/archives/fedora-devel-list/2009-March/msg00022.html
-%global libreoffice_dir $(ls -d /usr/lib*/libreoffice)
+#global libreoffice_dir $(ls -d /usr/lib*/libreoffice)
+%global libreoffice_dir $(ls -d /usr/lib*/LibreOffice4)
 
 Name:           jabref
 Version:        2.9.2
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Graphical frontend to manage BibTeX bibliographical databases
 License:        GPLv2+ and BSD
 Group:          Publishing
@@ -162,6 +163,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.2-alt2_1jpp7
+- fixed build
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.9.2-alt1_1jpp7
 - new version
 
