@@ -2,7 +2,7 @@
 %global qt_module qtquick1
 
 Name: qt5-quick1
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -104,11 +104,18 @@ syncqt.pl-qt5 \
 %_qt5_libdir/cmake/Qt5Declarative/
 %_qt5_libdir/pkgconfig/Qt5Declarative.pc
 %_qt5_archdatadir/mkspecs/modules/qt_lib_declarative*.pri
+%_libdir/cmake/Qt5Designer/Qt5Designer_QDeclarativeViewPlugin.cmake
 
 #%files doc
 #%_qt5_docdir/*
 
 %changelog
+* Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.M70P.1
+- built for M70P
+
 * Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - new version
 

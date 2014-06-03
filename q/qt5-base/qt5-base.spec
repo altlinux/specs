@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -19,11 +19,11 @@
 %define gname  qt5
 %define libname  lib%gname
 %define major  5
-%define minor  2
-%define bugfix 1
+%define minor  3
+%define bugfix 0
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -33,8 +33,8 @@ Url: http://qt-project.org/
 Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
-Patch1: qtbase-opensource-src-5.0.2-lowmem.patch
-Patch2: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
+Patch1: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
+Patch2: qtbase-opensource-src-5.3.0-no_xkbcommon-x11.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -63,7 +63,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
-BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel
+BuildRequires: gcc-c++ libcups-devel libdbus-devel libicu-devel libjpeg-devel libharfbuzz-devel
 BuildRequires: libpcre-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libgtk+2-devel
 BuildRequires: pkgconfig(gl) pkgconfig(glesv2)
 BuildRequires: libX11-devel libXi-devel libxkbcommon-devel
@@ -291,8 +291,8 @@ Widgets library for the Qt%major toolkit
 
 %prep
 %setup -n %rname-opensource-src-%version
-%patch1 -p1 -b .lowmem
-%patch2 -p1 -b .QTBUG-35459
+%patch1 -p1 -b .QTBUG-35459
+%patch2 -p1 -b .xkbcommon
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -308,6 +308,7 @@ bin/syncqt.pl -private \
     -module QtPlatformSupport \
     -module QtWidgets \
     -module QtOpenGL \
+    -module QtOpenGLExtensions \
     -module QtPrintSupport \
     ./
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
@@ -355,7 +356,6 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -shared \
     -pkg-config \
     -largefile \
-    -javascript-jit \
     -no-nis \
     -accessibility \
     -dbus-linked \
@@ -373,7 +373,9 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-rpath \
     -no-separate-debug-info \
     -no-strip \
+%ifarch %ix86 x86_64
     -reduce-relocations \
+%endif
     -opengl %opengl_type \
     -system-sqlite \
     %{?_enable_sql_tds:-plugin-sql-tds}%{!?_enable_sql_tds:-no-sql-tds} \
@@ -385,6 +387,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -system-libpng \
     -system-pcre \
     -system-zlib \
+    -system-harfbuzz \
     -xcb -system-xcb \
     -xkb -system-xkbcommon \
     #
@@ -574,6 +577,8 @@ done
 %_qt5_bindir/syncqt*
 %_bindir/uic*
 %_qt5_bindir/uic*
+%_bindir/qlalr*
+%_qt5_bindir/qlalr*
 %dir %_qt5_headerdir
 %_qt5_headerdir/Qt*/
 %dir %_qt5_prefix/mkspecs/
@@ -696,6 +701,15 @@ done
 
 
 %changelog
+* Fri May 30 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Sat Mar 01 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt3.M70P.2
+- build docs
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt3.M70P.1
+- built for M70P
+
 * Wed Feb 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt4
 - add sql accumulating subpackage
 
