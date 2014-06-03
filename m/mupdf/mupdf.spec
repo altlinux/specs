@@ -1,5 +1,5 @@
 Name: mupdf
-Version: 1.3
+Version: 1.4
 Release: alt1
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
@@ -8,7 +8,6 @@ Url: http://mupdf.com/
 Source0: http://mupdf.com/download/%name-%version-source.tar.gz
 Source1: %name.desktop
 Patch0: %name-upstream.patch
-
 
 # Automatically added by buildreq on Thu Aug 22 2013
 # optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
@@ -71,6 +70,9 @@ install -D platform/debian/mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 %_libdir/lib*.a
 
 %changelog
+* Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 1.4-alt1
+- Autobuild version bump to 1.4
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.3-alt1
 - Autobuild version bump to 1.3
 - Fix build
