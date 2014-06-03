@@ -3,15 +3,15 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_12
+Release:        alt3_14
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://linux.softpedia.com/get/GAMES-ENTERTAINMENT/Simulation/LucidLife-26633.shtml
 Source0:        http://mirror.thecodergeek.com/src/lucidlife-0.9.2.tar.gz
-Patch0:		%{name}-make-docs-use-proper-dir.patch
 Patch1: 	%{name}-fix-FSF-address.patch
+Patch2: 	%{name}-printf-format-security.patch
 
 BuildRequires:  gtk2-devel >= 2.6.0
 BuildRequires:	gnome-vfs-devel
@@ -34,12 +34,13 @@ more modern user interface and other enhancements.
 
 %prep
 %setup -q
-%patch0 -p0 -b .make-docs-use-proper-dir
 %patch1 -p0 -b .fix-FSF-address
+%patch2 -p0 -b .printf-format-security
 %patch33 -p2
 
 
 %build
+%{__autoconf}
 %configure LDFLAGS='-lX11'
 make %{?_smp_mflags}
 
@@ -55,7 +56,7 @@ desktop-file-install \
 	%{buildroot}%{_datadir}/applications/lucidlife.desktop
  
 
-%files -f %{name}.lang 
+%files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
 %doc doc/*.png doc/*.html doc/*.gif doc/*.css
 %{_bindir}/%{name}
@@ -65,6 +66,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_14
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_12
 - update to new release by fcimport
 
