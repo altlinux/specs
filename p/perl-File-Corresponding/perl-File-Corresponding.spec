@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators perl(Module/Build.pm)
 
 Name: perl-%module_name
 Version: %module_version
-Release: alt2
+Release: alt3
 Summary: File::Corresponding - Find corresponding files in the directory tree
 Group: Development/Perl
 License: perl
@@ -23,7 +23,7 @@ different places in the directory tree.
 
 %prep
 %setup -n %module_name-%module_version
-rm  t/corresponding-group-corresponding.t t/corresponding-corresponding.t
+[ %version == 0.003 ] && rm t/corresponding-group-corresponding.t t/corresponding-corresponding.t t/corresponding-config.t
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ rm  t/corresponding-group-corresponding.t t/corresponding-corresponding.t
 %exclude %_bindir/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3
+- fixed build
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
