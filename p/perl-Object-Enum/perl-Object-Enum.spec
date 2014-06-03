@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(base.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Scalar/Util.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Object-Enum
-%define upstream_version 0.073
+%define upstream_version 0.074
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
@@ -31,7 +31,7 @@ Implements enums in Perl in a robust manner.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%__perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -41,11 +41,18 @@ Implements enums in Perl in a robust manner.
 %install
 %makeinstall_std
 
+# not needed
+rm -f %{buildroot}%{perl_vendor_privlib}/.DS_Store
+
 %files
 %doc Changes LICENSE META.yml  README
-%perl_vendor_privlib/*
+%{perl_vendor_privlib}/*
+
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.074-alt1_1
+- update by mgaimport
+
 * Thu May 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.073-alt1_1
 - update by mgaimport
 
