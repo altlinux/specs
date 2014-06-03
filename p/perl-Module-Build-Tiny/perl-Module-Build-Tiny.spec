@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.035
-Release:	alt1_1
+Version:	0.036
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
@@ -83,6 +84,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.035-alt1_1
 - update to new release by fcimport
 - tmp patch not to use new Test::Harness::Env
