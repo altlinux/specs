@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Test/Pod.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    LWP-Protocol-PSGI
-%define upstream_version 0.06
+%define upstream_version 0.07
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_2
+Release:    alt1_1
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
@@ -53,11 +53,13 @@ without modifying the calling code or its internals.
 ./Build install --destdir=%{buildroot}
 
 %files
-%doc Changes META.yml  README
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
-
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_1
+- update by mgaimport
+
 * Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_2
 - update by mgaimport
 
