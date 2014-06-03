@@ -1,5 +1,5 @@
 Name: imake
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: C preprocessor interface to the make utility
@@ -44,6 +44,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
