@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
 Version:        2.001
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-Markdown/
-Source:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -60,6 +60,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1
 - automated CPAN update
 
