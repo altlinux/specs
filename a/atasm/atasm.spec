@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           atasm
 Version:        1.07d
-Release:        alt2_6
+Release:        alt2_7
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -35,7 +35,6 @@ popd
 
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
 
@@ -58,6 +57,9 @@ popd
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_7
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_6
 - update to new release by fcimport
 
