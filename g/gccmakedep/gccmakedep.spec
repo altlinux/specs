@@ -1,5 +1,5 @@
 Name: gccmakedep
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: create dependencies in makefiles using 'gcc -M'
@@ -33,6 +33,9 @@ object files must be recompiled when a dependency has changed.
 %_man1dir/*
 
 %changelog
+* Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
+- Autobuild version bump to 1.0.3
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Autobuild version bump to 1.0.2
 
