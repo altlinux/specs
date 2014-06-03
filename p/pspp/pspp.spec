@@ -1,5 +1,5 @@
 Name: pspp
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 Summary: A program for statistical analysis of sampled data
 Group: Sciences/Mathematics
@@ -73,6 +73,9 @@ make check
 %_mandir/man1/pspp-convert.1.*
 
 %changelog
+* Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 0.8.3-alt1
+- Autobuild version bump to 0.8.3
+
 * Tue May 27 2014 Fr. Br. George <george@altlinux.ru> 0.8.2-alt1
 - Initial build from FC
 
