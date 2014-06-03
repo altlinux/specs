@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt3
+Release:	alt4
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -296,7 +296,7 @@ Patch115:	 speech_tools-1.2.96-beta-suse.patch
 Patch138: speech_tools-1.2.95-alt-hts_support-fest1.96.patch
 # set up shared lib version
 Patch139: speech_tools-2.0.95-alt-config-project.patch
-
+Patch137: speech_tools-2.0.96-alt-gcc48.patch
 
 Requires:	festvox
 
@@ -483,6 +483,7 @@ cd $RPM_BUILD_DIR/speech_tools
 
 %patch138 -p1
 %patch139 -p2
+%patch137 -p1
 
 # prep Edinburgh Speech Tools
 sed -i s/'# INCLUDE_MODULES += ESD_AUDIO'/'INCLUDE_MODULES += ESD_AUDIO'/ \
@@ -826,6 +827,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt4
+- fixed build
+
 * Thu Jan 31 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt3
 - rebuild to get rid of non-strict dependencies
 
