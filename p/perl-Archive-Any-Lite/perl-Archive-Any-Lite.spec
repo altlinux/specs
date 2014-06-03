@@ -1,17 +1,16 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(ExtUtils/MakeMaker/CPANfile.pm)
+BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 19
 Name:		perl-Archive-Any-Lite
 Version:	0.09
-Release:	alt1
+Release:	alt1_1
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
-Group:		Development/Perl
 URL:		https://metacpan.org/release/Archive-Any-Lite
-Source:	http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Patch0:		Archive-Any-Lite-0.08-EU:MM.patch
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -31,10 +30,7 @@ BuildRequires:	perl(FindBin.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/UseAllModules.pm)
 # Optional Tests
-%if 0%{?fedora} > 14 || 0%{?rhel} > 5
-# Needs 0.7.6 for data structure retrieval
 BuildRequires:	perl(Parallel/ForkManager.pm)
-%endif
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 # Runtime
@@ -52,10 +48,8 @@ check MIME types.
 %prep
 %setup -q -n Archive-Any-Lite-%{version}
 
-# Test::More->note() requires Test::More ≥ 0.82
-%if %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.82) ? 1 : 0);' 2>/dev/null || echo 0)
-sed -i -e '/ note /d' t/30_fork.t
-%endif
+# Build with ExtUtils::MakeMaker rather than ExtUtils::MakeMaker::CPANfile
+%patch0
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -74,6 +68,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
