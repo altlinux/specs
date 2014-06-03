@@ -1,6 +1,6 @@
 Name: ffmpeg2theora
 Version: 0.29
-Release: alt1
+Release: alt2
 
 Summary: Theora video encoder using ffmpeg
 License: GPLv2+
@@ -8,9 +8,15 @@ Group: Video
 Url: http://www.v2v.cc/~j/ffmpeg2theora/
 # http://www.v2v.cc/~j/ffmpeg2theora/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
+# git://git.xiph.org/ffmpeg2theora.git
+Patch0: only-depend-on-libswresample-for-local-branch.patch
+Patch1: don-t-use-deprecated-AVCODEC_MAX_AUDIO_FRAME_SIZE.patch
+Patch2: avcodec_decode_audio4-and-libswresample.patch
+#
+Patch3: ffmpeg2theora-0.29-alt-libav10.patch
 
 # Automatically added by buildreq on Tue Jun 15 2010
-BuildRequires: gcc-c++ libavdevice-devel libavformat-devel libavutil-devel libkate-devel libpostproc-devel libswscale-devel libtheora-devel libvorbis-devel scons
+BuildRequires: gcc-c++ libavdevice-devel libavresample-devel libavformat-devel libavutil-devel libkate-devel libpostproc-devel libswscale-devel libtheora-devel libvorbis-devel scons
 
 %description
 This package provides a command-line tool to encode/recode various
@@ -19,6 +25,11 @@ the free video codec.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1 -b .libav
+
 sed -ri '/"(libswresample|libavfilter)"/d' SConstruct
 
 %build
@@ -34,6 +45,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS ChangeLog
 
 %changelog
+* Sat May 31 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.29-alt2
+- rebuilt with libav10
+
 * Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.29-alt1
 - Updated to 0.29.
 
