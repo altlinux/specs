@@ -4,8 +4,8 @@ BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6)
 %add_optflags %optflags_shared
 %define oldname wfmath
 Name:           libwfmath
-Version:        1.0.1
-Release:        alt1_3
+Version:        1.0.2
+Release:        alt1_1
 Summary:        WorldForge client math libraries
 
 Group:          Development/C++
@@ -15,7 +15,7 @@ Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/%{oldnam
 
 BuildRequires:  doxygen
 # Testing needs
-BuildRequires:	atlascpp-devel
+BuildRequires:  atlascpp-devel
 Source44: import.info
 Provides: wfmath = %{version}-%{release}
 
@@ -90,6 +90,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3
 - update to new release by fcimport
 
