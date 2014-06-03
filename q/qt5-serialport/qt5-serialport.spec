@@ -2,7 +2,7 @@
 %global qt_module qtserialport
 
 Name: qt5-serialport
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -94,5 +94,11 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Fri Mar 07 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.M70P.1
+- built for M70P
+
 * Fri Feb 28 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - initial build

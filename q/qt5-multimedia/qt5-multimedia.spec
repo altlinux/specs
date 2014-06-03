@@ -4,7 +4,7 @@
 
 
 Name: qt5-multimedia
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -37,6 +37,7 @@ the use of available devices like cameras and radios.
 %package common
 Summary: Common package for %name
 Group: System/Configuration/Other
+BuildArch: noarch
 Requires: qt5-base-common
 %description common
 Common package for %name
@@ -118,6 +119,12 @@ syncqt.pl-qt5 \
 %_qt5_docdir/*
 
 %changelog
+* Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.M70P.1
+- built for M70P
+
 * Mon Feb 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - new version
 

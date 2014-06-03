@@ -1,10 +1,10 @@
 
 %define qt_module qtdeclarative
 %define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -82,6 +82,13 @@ Requires: %name-common = %EVR
 %description -n libqt5-quicktest
 %summary
 
+%package -n libqt5-quickwidgets
+Group: System/Libraries
+Summary: Qt5 - library
+Requires: %name-common = %EVR
+%description -n libqt5-quickwidgets
+%summary
+
 %prep
 %setup -n %qt_module-opensource-src-%version
 syncqt.pl-qt5 \
@@ -91,6 +98,7 @@ syncqt.pl-qt5 \
     -module QtQuick \
     -module QtQuickTest \
     -module QtQuickParticles \
+    -module QtQuickWidgets \
     #
 
 %build
@@ -134,8 +142,8 @@ syncqt.pl-qt5 \
 %_qt5_plugindir/accessible/libqtaccessiblequick.so
 %_qt5_plugindir/qmltooling/
 %_qt5_archdatadir/qml/QtQuick.2/
-%_qt5_archdatadir/qml/QtQuick/Dialogs/
-%_qt5_archdatadir/qml/QtQuick/PrivateWidgets/
+#%_qt5_archdatadir/qml/QtQuick/Dialogs/
+#%_qt5_archdatadir/qml/QtQuick/PrivateWidgets/
 %_qt5_archdatadir/qml/QtQuick/Window.2/
 
 %files -n libqt5-quickparticles
@@ -146,6 +154,9 @@ syncqt.pl-qt5 \
 %_qt5_libdir/libQt5QuickTest.so.*
 %_qt5_archdatadir/qml/QtTest/
 
+%files -n libqt5-quickwidgets
+%_qt5_libdir/libQt5QuickWidgets.so.*
+
 %files devel
 %_bindir/qml*
 %_qt5_bindir/qml*
@@ -155,15 +166,19 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
 %_pkgconfigdir/Qt?Qml.pc
-%_pkgconfigdir/Qt?QuickParticles.pc
-%_pkgconfigdir/Qt?Quick.pc
-%_pkgconfigdir/Qt?QuickTest.pc
+%_pkgconfigdir/Qt?Quick*.pc
 
 %files devel-static
-%_qt5_libdir/libQt?*.a
+%_qt5_libdir/libQt?QmlDevTools.a
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Mon Jun 02 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.M70P.1
+- built for M70P
+
 * Wed Feb 12 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - new version
 

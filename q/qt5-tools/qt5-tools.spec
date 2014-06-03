@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-tools
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -195,6 +195,7 @@ done
 %_bindir/qhelpconverter*
 %_bindir/qhelpgenerator*
 %_bindir/qtpaths*
+%_bindir/qtdiag*
 %_qt5_bindir/lconvert*
 %_qt5_bindir/lrelease*
 %_qt5_bindir/lupdate*
@@ -203,6 +204,7 @@ done
 %_qt5_bindir/qhelpconverter*
 %_qt5_bindir/qhelpgenerator*
 %_qt5_bindir/qtpaths*
+%_qt5_bindir/qtdiag*
 
 %files -n qt5-qtconfig
 %_bindir/qtconfig-qt5
@@ -233,7 +235,7 @@ done
 %_bindir/linguist*
 %_qt5_bindir/linguist*
 %_qt5_bindir/designer*
-%_qt5_plugindir/designer/libqwebview.so
+%_qt5_plugindir/designer/lib*.so
 %_desktopdir/*designer.desktop
 %_desktopdir/*linguist.desktop
 %_iconsdir/hicolor/*/apps/designer*.*
@@ -278,6 +280,12 @@ done
 
 
 %changelog
+* Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
+* Thu Feb 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt0.M70P.1
+- built for M70P
+
 * Thu Feb 13 2014 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - new version
 
