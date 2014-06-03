@@ -5,10 +5,10 @@
 %define oname libmesh
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 0.9.3
+Version: 1.0.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt2.pre.git20140108
+Release: alt1.pre.git20140529
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -33,7 +33,7 @@ BuildPreReq: doxygen graphviz
 BuildPreReq: libfftw3-mpi-devel libexodusii-devel libparmetis0-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel libblitz-devel getfemxx
 BuildPreReq: libtbb-devel python-module-sphinx-devel python-module-Pygments
-BuildPreReq: libglpk35-devel libaztecoo10-devel libloca10-devel libbelos10-devel
+BuildPreReq: libglpk36-devel libaztecoo10-devel libloca10-devel libbelos10-devel
 BuildPreReq: librtop10-devel libthyra10-devel libtpetra10-devel libkokkos10-devel
 BuildPreReq: libisorropia10-devel libadolc-devel libsparskit-devel
 BuildPreReq: liboptika10-devel libctrilinos10-devel libpiro10-devel
@@ -43,8 +43,8 @@ BuildPreReq: liboptipack10-devel libpliris10-devel libpamgen10-devel
 BuildPreReq: libseacas10-devel libkomplex10-devel libdakota-devel
 BuildPreReq: libfei10-devel libteko10-devel libtrikota10-devel
 BuildPreReq: libintrepid10-devel libphalanx10-devel libmoertel10-devel
-BuildPreReq: libstokhos10-devel liblaspack-devel libnetcdf_c++4-mpi-devel
-BuildPreReq: libxpetra10-devel libmatio-devel
+BuildPreReq: libstokhos10-devel libnetcdf_c++4-mpi-devel
+BuildPreReq: libxpetra10-devel libmatio-devel cppunit-devel
 
 %description
 The libMesh library provides a framework for the numerical simulation of
@@ -225,6 +225,9 @@ rm -f aclocal.m4
 rm -f contrib/tetgen/tetgen.h \
 	contrib/parmetis/Lib/parmetis.h \
 	contrib/parmetis/Lib/proto.h
+pushd contrib
+rm -fR netcdf boost eigen exodusii metis nemesis parmetis tetgen
+popd
 
 %if "%scalar_type" == "complex"
 rm -f $(find ./ -name '.depend') \
@@ -240,9 +243,6 @@ cp examples/ex9/exact_solution.C examples/..9/exact_solution.C
 #	sed -i 's|\-@|-|' $i
 #	sed -i 's|@\$|$|' $i
 #done
-
-#rm -fR contrib/nemesis contrib/exodusii contrib/netcdf \
-#	contrib/tetgen contrib/metis contrib/parmetis contrib/boost
 
 %ifarch x86_64
 LIB64=64
@@ -309,13 +309,16 @@ done
 	--with-tbb=%prefix \
 	--with-tbb-lib=%_libdir \
 	--with-gm=%prefix \
-	--with-glpk-include=%_includedir/glpk35 \
+	--with-glpk-include=%_includedir/glpk36 \
 	--with-glpk-lib=%_libdir \
 	--with-lapack=lapack \
 	--with-eigen-include=%_includedir/eigen3 \
 	--enable-triangle=yes \
 	--with-boost=yes \
-	--with-boost-libdir=%_libdir
+	--with-boost-libdir=%_libdir \
+	--disable-strict-lgpl \
+	--enable-parmesh \
+	--enable-blocked-storage
 
 #pushd contrib
 #make_build
@@ -457,6 +460,10 @@ popd
 %endif
 
 %changelog
+* Tue Jun 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.pre.git20140529
+- Version 1.0.0-pre
+- Rebuilt with glpk36
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2.pre.git20140108
 - Rebuilt with updated exodusii
 
