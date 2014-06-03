@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-ConsistentVersion
 Version:        0.2.3
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Ensures a CPAN distribution has consistent versioning
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -31,6 +31,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Perl/Critic.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Test/Pod.pm)
+Requires:       perl(Test/Pod/Content.pm)
 Source44: import.info
 
 %description
@@ -59,6 +60,9 @@ TEST_AUTHOR=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_9
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_8
 - moved to Sisyphus for Slic3r (by dd@ request)
 
