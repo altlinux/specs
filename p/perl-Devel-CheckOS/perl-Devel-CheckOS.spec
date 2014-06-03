@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-CheckOS
 Version:        1.72
-Release:        alt1
+Release:        alt1_1
 Summary:        Check what OS we're running on
 License:        GPLv2 or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-CheckOS/
-Source:        http://www.cpan.org/authors/id/D/DC/DCANTRELL/Devel-CheckOS-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/D/DC/DCANTRELL/Devel-CheckOS-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -65,6 +65,9 @@ make test
 %{_mandir}/man1/use-devel-assertos.1*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
 - automated CPAN update
 
