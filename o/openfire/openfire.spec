@@ -1,12 +1,11 @@
 Summary: Openfire XMPP Server
 Name: openfire
-Version: 3.9.1
+Version: 3.9.3
 Release: alt1
 
-Source0: openfire_src_3_9_1.tar.gz
+Source0: openfire_src_3_9_3.tar.gz
 Source1: openfire.init
 Group: Networking/Instant messaging
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 License: Apache Software License 2.0
 Url: http://www.igniterealtime.org/
 BuildArch: noarch
@@ -93,6 +92,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %exclude %firedir/lib/*.dll
 
 %changelog
+* Tue Jun 03 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt1
+- 3.9.3
+
 * Sat Feb 08 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.1-alt1
 - New version
 
