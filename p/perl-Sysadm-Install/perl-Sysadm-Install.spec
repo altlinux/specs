@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(Log/Log4perl/Util.pm) perl-devel perl-podlators perl(File/Which.pm)
+BuildRequires: perl(File/Spec/Functions.pm) perl(Log/Log4perl/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
 Version:	0.44
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Sysadm-Install/
-Source:	http://www.cpan.org/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(Archive/Tar.pm)
 BuildRequires:	perl(Config.pm)
@@ -22,6 +21,7 @@ BuildRequires:	perl(File/Basename.pm)
 BuildRequires:	perl(File/Copy.pm)
 BuildRequires:	perl(File/Path.pm)
 BuildRequires:	perl(File/Temp.pm)
+BuildRequires:	perl(File/Which.pm)
 BuildRequires:	perl(HTTP/Request.pm)
 BuildRequires:	perl(HTTP/Status.pm)
 BuildRequires:	perl(Log/Log4perl.pm)
@@ -78,6 +78,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1_1
+- update to new release by fcimport
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
