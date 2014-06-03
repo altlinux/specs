@@ -1,42 +1,49 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl-devel perl-podlators perl(Test/Trap.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
 Version:    0.371
-Release:    alt1
+Release:    alt1_2
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Summary:    Aggregate C<*.t> tests to make them run faster
-Source:     http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
+Summary:    Aggregate *.t tests to make them run faster
+Source:     http://search.cpan.org/CPAN/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
+# Do not touch Test::Builder internals that will change in 2.0, CPAN RT#64604
+Patch0:     Test-Aggregate-0.371-Don-t-grab-at-Test-Builder-hash-keys.patch
 Url:        http://search.cpan.org/dist/Test-Aggregate
 BuildArch:  noarch
 
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl(FindBin.pm)
-BuildRequires: perl(Module/Build/Compat.pm)
-BuildRequires: perl(Test/Harness.pm)
-BuildRequires: perl(Test/More.pm)
-BuildRequires: perl(Test/NoWarnings.pm)
-BuildRequires: perl(Test/Simple.pm)
-# optional tests
-BuildRequires: perl(Test/Pod.pm)
-BuildRequires: perl(Test/Pod/Coverage.pm)
-
-### auto-added reqs!
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(Test/Builder.pm)
+BuildRequires:  perl(Test/Builder/Module.pm)
+BuildRequires:  perl(Test/More.pm)
+# Test::NoWarnings not used at tests
+BuildRequires:  perl(vars.pm)
+# Optional run-time:
+BuildRequires:  perl(Data/Dump/Streamer.pm)
+# Tests:
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/Trap.pm)
 Requires:       perl(FindBin.pm) >= 1.47
-Requires:       perl(Test/Harness.pm) >= 3.09
 Requires:       perl(Test/NoWarnings.pm)
 
-### auto-added brs!
-BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(Test/Most.pm)
 
+# Filter under-specified dependencies
 
 Source44: import.info
+%filter_from_requires /^perl\\(FindBin.pm\\)$/d
 
 %description
 *WARNING*: this is ALPHA code. The interface is not guaranteed to be
@@ -52,25 +59,27 @@ are expensive to load, this can dramatically speed up a test suite.
 
 %prep
 %setup -q -n Test-Aggregate-%{version}
+%patch0 -p1
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+./Build
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
+./Build install 'destdir=%{buildroot}' create_packlist=0
+# %{_fixperms} %{buildroot}/*
 
 %check
-make test
+./Build test
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.371-alt1_2
+- update to new release by fcimport
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.371-alt1
 - automated CPAN update
 
