@@ -1,6 +1,6 @@
 Name:           xa
 Version:        2.3.5
-Release:        alt2_9
+Release:        alt2_10
 Summary:        6502/65816 cross-assembler
 
 Group:          Development/Tools
@@ -60,6 +60,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt2_9
 - update to new release by fcimport
 
