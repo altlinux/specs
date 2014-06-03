@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Digest/MD5.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/ShareDir.pm) perl(FileHandle.pm) perl(HTTP/Date.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Socket/INET.pm) perl(IO/Socket/UNIX.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Plack/HTTPParser.pm) perl(Plack/Loader.pm) perl(Plack/Runner.pm) perl(Plack/TempBuffer.pm) perl(Plack/Test/Suite.pm) perl(Plack/Util.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Time/HiRes.pm) perl(Try/Tiny.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Digest/MD5.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/ShareDir.pm) perl(FileHandle.pm) perl(HTTP/Date.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Socket/UNIX.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Plack/HTTPParser.pm) perl(Plack/Runner.pm) perl(Plack/TempBuffer.pm) perl(Plack/Test/Suite.pm) perl(Plack/Util.pm) perl(Pod/Text.pm) perl(Time/HiRes.pm) perl(Try/Tiny.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Starlet
-Version:        0.21
-Release:        alt1_2
+Version:        0.24
+Release:        alt1_1
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -14,13 +14,20 @@ BuildArch:      noarch
 
 BuildRequires:  /usr/bin/start_server
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(IO/Socket/INET.pm)
+BuildRequires:  perl(Net/EmptyPort.pm)
 BuildRequires:  perl(Parallel/Prefork.pm)
 BuildRequires:  perl(Plack.pm)
+BuildRequires:  perl(Plack/Loader.pm)
 BuildRequires:  perl(Plack/Test.pm)
 BuildRequires:  perl(Server/Starter.pm)
+BuildRequires:  perl(Socket.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/TCP.pm)
 BuildRequires:  perl(LWP/UserAgent.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 Source44: import.info
 
 
@@ -51,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2
 - update to new release by fcimport
 
