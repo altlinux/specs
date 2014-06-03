@@ -2,27 +2,30 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(open.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 20
-# We need to patch the test suite if we have an old version of Test::More
+%define fedora 21
+# We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.96) ? 1 : 0);' 2>/dev/null || echo 0)
+%global old_test_pod %(perl -MTest::Pod -e 'print (($Test::Pod::VERSION < 1.41) ? 1 : 0);' 2>/dev/null || echo 0)
 
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Mojibake
 Version:	1.0
-Release:	alt1
+Release:	alt1_1
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
-Source:	http://www.cpan.org/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
-Patch0:		Test-Mojibake-0.4-no-Test::Version.patch
-Patch1:		Test-Mojibake-0.9-old-Test::More.patch
+Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
+Patch0:		Test-Mojibake-1.0-no-Test::Version.patch
+Patch1:		Test-Mojibake-1.0-old-Test::More.patch
+Patch2:		Test-Mojibake-1.0-old-Test::Pod.patch
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
 # ===================================================================
+BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
 # Module requirements
@@ -67,12 +70,12 @@ BuildRequires:	perl(Test/Vars.pm)
 %endif
 # Modules only available from EL-7
 %if 0%{?fedora} || 0%{?rhel} > 6
-BuildRequires:	perl(Perl/Critic/Policy/Modules/ProhibitModuleShebang.pm)
 BuildRequires:	perl(Test/CPAN/Changes.pm)
 BuildRequires:	perl(Test/Version.pm)
 %endif
-# Modules only available from F-18, EL-7
-%if 0%{?fedora} > 17 || 0%{?rhel} > 6
+# Modules only available from EL-8
+%if 0%{?fedora} || 0%{?rhel} > 7
+BuildRequires:	perl(Perl/Critic/Policy/Modules/ProhibitModuleShebang.pm)
 BuildRequires:	perl(Test/Pod/LinkCheck.pm)
 %endif
 %endif
@@ -114,14 +117,19 @@ Enter the Test::Mojibake ;)
 %prep
 %setup -q -n Test-Mojibake-%{version}
 
-# Test::Version not always available
-%if !0%{?fedora} && 0%{?rhel} < 7
-%patch0
-%endif
-
 # We need to patch the test suite if we have an old version of Test::More
 %if %{old_test_more}
 %patch1
+%endif
+
+# We need to patch the test suite if we have an old version of Test::Pod
+%if %{old_test_pod}
+%patch2
+%endif
+
+# Test::Version not always available
+%if !0%{?fedora} && 0%{?rhel} < 7
+%patch0
 %endif
 
 %build
@@ -143,6 +151,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
+- update to new release by fcimport
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - automated CPAN update
 
