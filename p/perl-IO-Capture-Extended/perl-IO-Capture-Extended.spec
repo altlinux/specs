@@ -1,18 +1,17 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Capture-Extended
 Version:        0.12
-Release:        alt1
+Release:        alt1_1
 Summary:        Extend functionality of IO::Capture
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/IO-Capture-Extended/
-Source:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/J/JK/JKEENAN/IO-Capture-Extended-%{version}.tar.gz
 BuildArch:      noarch
-# Compile-time:
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
 BuildRequires:  perl(base.pm)
@@ -20,6 +19,8 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(IO/Capture.pm)
 BuildRequires:  perl(IO/Capture/Stderr.pm)
 BuildRequires:  perl(IO/Capture/Stdout.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Tests only:
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -38,13 +39,12 @@ Test::Simple, Test::More or other modules built on Test::Builder.
 %setup -q -n IO-Capture-Extended-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_1
+- update to new release by fcimport
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
