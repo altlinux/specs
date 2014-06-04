@@ -6,8 +6,8 @@
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname-%sover-seq
-Version: %major.2
-Release: alt2
+Version: %major.2.1
+Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v4, C++ interface
 
@@ -170,6 +170,9 @@ popd
 %_altdir/%name-devel.alternatives
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
+- Version 4.2.1
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
 - Rebuilt with new libhdf5
 

@@ -8,8 +8,8 @@
 %define hdfdir %_libdir/%oname-seq
 %define priority 30
 Name: lib%oname-%sover-seq
-Version: 1.8.11
-Release: alt2
+Version: 1.8.13
+Release: alt1
 
 Summary: Hierarchical Data Format 5 library
 
@@ -194,6 +194,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %_docdir/hdf5_examples
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.13-alt1
+- Version 1.8.13
+
 * Thu Sep 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.11-alt2
 - Added links to headers into %_includedir
 

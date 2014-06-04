@@ -6,8 +6,8 @@
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
-Version: %major.3.0
-Release: alt3
+Version: %major.3.2
+Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -209,7 +209,7 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 	%hdfdir/include/netcdf-3 %hdfdir/include/netcdf
 
 %files
-%doc COPYRIGHT README RELEASE_NOTES
+%doc COPYRIGHT README* RELEASE_NOTES*
 %hdfdir/bin/*
 %exclude %hdfdir/bin/nc-config
 %_man1dir/*
@@ -236,6 +236,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %exclude %_man3dir/index.3*
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
+- Version 4.3.2
+
 * Wed Jul 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3
 - Added Provides: pkgconfig(netcdf) = %EVR
 
