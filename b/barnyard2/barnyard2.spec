@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt1
+Release: alt2
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -13,7 +13,6 @@ Source1: barnyard2.init
 
 Patch1: barnyard2-1.11-alt-confpath.patch
 Patch2: barnyard2-1.11-alt-default_output.patch
-Patch3: barnyard2-1.11-alt-fix-create-pidfile.patch
 
 BuildRequires: libpcap-devel
 
@@ -43,7 +42,6 @@ barnyard2 binary compiled with mysql support.
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %autoreconf
@@ -80,6 +78,10 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Wed Jun 04 2014 Timur Aitov <timonbl4@altlinux.org> 2.1.13-alt2
+- remove 'fix-create-pidfile' patch
+- mod init script
+
 * Wed May 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.1.13-alt1
 - New version
 
