@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.8.1
-Release: alt1
+Release: alt1.1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -141,6 +141,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.1-alt1.1
+- Rebuilt with updated libglpk
+
 * Wed Mar 12 2014 Paul Wolneykien <manowar@altlinux.ru> 3.8.1-alt1
 - repocop cronbuild 20140312. At your service.
 

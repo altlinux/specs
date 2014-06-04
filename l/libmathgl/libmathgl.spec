@@ -1,7 +1,7 @@
 %define oname mathgl
 Name: lib%oname
-Version: 2.0.3
-Release: alt4
+Version: 2.2.2.1
+Release: alt1
 
 Summary: Library of fast C++ routines for the plotting of the data
 
@@ -10,7 +10,7 @@ Group: System/Libraries
 Url: http://www.sf.net/projects/mathgl/
 
 Source: http://prdownloads.sf.net/%oname/%oname-%version.tar
-Source1: %oname-%version.eng.pdf
+Source1: %oname-2.2.2.eng.pdf
 
 # Automatically added by buildreq on Fri Jan 08 2010
 BuildRequires: gcc-c++ glibc-devel libGL-devel libGLUT-devel libgif-devel libgsl-devel libhdf5-devel libjpeg-devel libpng-devel python-devel libnumpy-devel swig
@@ -106,6 +106,8 @@ cmake \
 	-Denable-pthread:BOOL=ON \
 	-Denable-python:BOOL=ON \
 	-Denable-qt:BOOL=ON \
+	-Denable-qt4:BOOL=ON \
+	-Denable-openmp:BOOL=OFF \
 %ifarch x86_64
 	-DLIB_SUFFIX=64 \
 %endif
@@ -119,6 +121,8 @@ cmake \
 install -d %buildroot%_liconsdir
 mv %buildroot%_pixmapsdir/udav.png %buildroot%_liconsdir/
 
+install -m755 examples/mgl*example %buildroot%_bindir/
+
 %files
 #_bindir/mgl2*
 %_bindir/mglconv
@@ -126,6 +130,7 @@ mv %buildroot%_pixmapsdir/udav.png %buildroot%_liconsdir/
 %doc AUTHORS README* ChangeLog.txt
 %_libdir/*.so.*
 %_datadir/mathgl/
+%_libdir/mathgl
 
 %files devel
 %_libdir/*.so
@@ -138,15 +143,19 @@ mv %buildroot%_pixmapsdir/udav.png %buildroot%_liconsdir/
 %doc texinfo/*.pdf *.pdf todo.txt
 
 %files examples
-%doc examples/*.cpp
+%doc examples/*.cpp examples/CMakeLists.txt
 %_bindir/mgl*example
 
 %files -n %oname-udav
 %_bindir/udav
-%_desktopdir/UDAV.*
+%_desktopdir/udav.*
 %_liconsdir/udav.*
+%_datadir/udav
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2.1-alt1
+- Version 2.2.2.1
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt4
 - Rebuilt with new libhdf5
 

@@ -1,11 +1,11 @@
 %define oname pyFltk
 %define mname pyfltk
 %define _python_egg_info %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
-%define oversion 1.3.1
+%define oversion 1.3.2
 
 Name: python3-module-%mname
-Version: 1.3.1rc1
-Release: alt2.1
+Version: 1.3.2rc1
+Release: alt1
 
 Summary: Python 3 bindings for FLTK library
 
@@ -37,7 +37,7 @@ o To port all programs in test/ to Python using pyFLTK
 
 %prep
 %setup -q -n %oname-%oversion
-%patch10 -p2
+#patch10 -p2
 rm -f python/fltk_wrap.*
 
 %build
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2rc1-alt1
+- Version 1.3.2rc1
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1rc1-alt2.1
 - Fixed build
 

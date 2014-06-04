@@ -1,13 +1,13 @@
 %define oname libfltk
 %define major 1.3
 
-Name: %{oname}13
-Version: %major.2.r10181
-Release: alt1
+Name: %{oname}0
+Version: %major.2.r10018
+Release: alt2
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
-Group: System/Libraries
+Group: System/Legacy libraries
 URL: http://www.fltk.org/
 
 # http://seriss.com/public/fltk/fltk/branches/branch-1.3/
@@ -29,6 +29,8 @@ BuildPreReq: libXxf86misc-devel libXScrnSaver-devel
 BuildPreReq: doxygen cmake glib2-devel libpixman-devel
 BuildPreReq: pkgconfig(glproto) pkgconfig(dri2proto)
 BuildPreReq: libXxf86vm-devel
+
+Obsoletes: libfltk13 < %version-%release
 
 %description
 The Fast Light ToolKit ("FLTK", pronounced "fulltick") is a LGPL'd
@@ -100,32 +102,32 @@ cp -fR documentation/html %buildroot%_docdir/fltk-%version/
 mv %buildroot%prefix/man/* %buildroot%_mandir/
 
 %files
-%_bindir/fluid
+#_bindir/fluid
 %_libdir/*.so.*
-%dir %_docdir/fltk-%version
-%_docdir/fltk-%version/ANNOUNCEMENT
-%_docdir/fltk-%version/CREDITS
-%_docdir/fltk-%version/README
-%_mandir/man1/fluid.1*
+#dir %_docdir/fltk-%version
+#_docdir/fltk-%version/ANNOUNCEMENT
+#_docdir/fltk-%version/CREDITS
+#_docdir/fltk-%version/README
+#_mandir/man1/fluid.1*
 
-%files -n %oname-devel
-%_bindir/*
-%exclude %_bindir/fluid
-%_libdir/*.so
-%_includedir/*
-%_libdir/FLTK-1.3
-%_mandir/man?/*
-%exclude %_mandir/man1/fluid.1*
+#files -n %oname-devel
+#_bindir/*
+#exclude %_bindir/fluid
+#_libdir/*.so
+#_includedir/*
+#_libdir/FLTK-1.3
+#_mandir/man?/*
+#exclude %_mandir/man1/fluid.1*
 
-%files doc
-%_docdir/fltk-%version
-%exclude %_docdir/fltk-%version/ANNOUNCEMENT
-%exclude %_docdir/fltk-%version/CREDITS
-%exclude %_docdir/fltk-%version/README
+#files doc
+#_docdir/fltk-%version
+#exclude %_docdir/fltk-%version/ANNOUNCEMENT
+#exclude %_docdir/fltk-%version/CREDITS
+#exclude %_docdir/fltk-%version/README
 
 %changelog
-* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10181-alt1
-- New snapshot
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10018-alt2
+- Moved this version into System/Legacy libraries
 
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10018-alt1
 - Version 1.3.2

@@ -1,6 +1,6 @@
 Name: FlightGear
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: open-source flight simulator
 License: GPL
@@ -103,6 +103,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.1
+- Rebuilt with new libfltk
+
 * Sat Feb 22 2014 Michael Shigorin <mike@altlinux.org> 3.0.0-alt1
 - 3.0.0
 

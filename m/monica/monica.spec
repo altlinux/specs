@@ -1,6 +1,6 @@
 Name: monica
 Version: 3.7
-Release: alt2.3
+Release: alt2.4
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -41,6 +41,9 @@ install -pD -m755 monica %buildroot%_bindir/monica
 %doc authors licence news readme
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7-alt2.4
+- Rebuilt with updated libfltk
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7-alt2.3
 - Fixed build
 
