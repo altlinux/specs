@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Pod/Usage.pm) perl(Source/Repository/Matcher/CPAN2ALT.pm) perl(Pod/Text.pm)
+# END SourceDeps(oneline)
 %define orepo cpan
 %define obranch default
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,6 +16,8 @@ Group: Development/Other
 License: GPL or Artistic
 Source: %name-%version.tar
 Url: http://repocop.altlinux.org/
+
+BuildRequires: rpm-build-perl
 
 %description
 %summary
@@ -37,11 +42,17 @@ for type in source ; do
 	done
 done
 
+mkdir -p %buildroot%_bindir
+install -m 755 bin/* %buildroot%_bindir/
 
 %files
-/usr/share/distromap/*
+%_bindir/*
+%_datadir/distromap/*
 
 %changelog
+* Wed Jun 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- added cpan distrodb utils
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - db update
 
