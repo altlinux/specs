@@ -26,11 +26,12 @@
 %def_with dc
 %endif
 
+%def_with systemd
 %def_enable avahi
 
 Name: samba
-Version: 4.1.7
-Release: alt2
+Version: 4.1.8
+Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -91,6 +92,7 @@ BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-
 %{?_without_ldb:BuildRequires: libldb-devel >= 1.1.14 python-module-pyldb-devel}
 %{?_with_clustering_support:BuildRequires: ctdb-devel}
 %{?_with_testsuite:BuildRequires: ldb-tools}
+%{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 BuildRequires: perl-Perl4-CoreLibs
 
@@ -450,6 +452,11 @@ LDFLAGS="-Wl,-z,relro,-z,now" \
 %endif
 %if_without dc
 	--without-ad-dc \
+%endif
+%if_with systemd
+	--with-systemd \
+%else
+	--without-systemd \
 %endif
 %if_with clustering_support
 	--with-cluster-support \
@@ -1075,6 +1082,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.8-alt1
+- 4.1.8
+- fixed CVE-2014-0239, CVE-2014-0178
+
 * Wed May 07 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.7-alt2
 - add winbind-krb5-locator package
 
