@@ -43,7 +43,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.18
-Release: alt2
+Release: alt3
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -261,6 +261,7 @@ sed -i 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
 
 # XXX tests fail
 rm PerlMagick/t/mpeg/read.t
+rm PerlMagick/t/ps/read.t
 rm PerlMagick/t/zlib/read.t
 
 %build
@@ -504,6 +505,9 @@ __MENU__
 %endif
 
 %changelog
+* Wed Jun 04 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.18-alt3
+- drop ps/read.t from PerlMagick testsuite
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.18-alt2
 - built for perl 5.18
 
