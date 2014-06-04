@@ -7,7 +7,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.26
-Release: alt3
+Release: alt4
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -51,7 +51,6 @@ Summary: Librairies for SASL a the Simple Authentication and Security Layer
 Group: System/Libraries
 Requires: shadow-utils
 Provides: libsasl2 = %version-%release
-Conflicts: libsasl2 < %version-%release
 
 %description -n libsasl2-%abiversion
 SASL is the Simple Authentication and Security Layer,
@@ -286,6 +285,9 @@ rm -f %buildroot%_libdir/sasl2/*.la
 %endif
 
 %changelog
+* Wed Jun 04 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.26-alt4
+- Drop Conflicts: libsasl2 to comply SharedLibs Policy.
+
 * Tue Nov 19 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt3
 - Changed "Conflicts" to "libsasl2 < %%version-%%release" for libsasl2-3
   (2.1.26 with old names in p7/t7 now)
