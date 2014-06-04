@@ -3,7 +3,7 @@ License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
 Version: 4.2.0
-Release: alt3.svn20130430
+Release: alt3.svn20140428
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -192,6 +192,7 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/pkgconfig/omniDynamic*
 %_libdir/pkgconfig/omnithread*
 %_libdir/pkgconfig/omniConnectionMgmt*
+%_libdir/pkgconfig/omniZIOP*
 %_man1dir/omniidl*
 %_man1dir/omnicpp*
 
@@ -207,6 +208,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt3.svn20140428
+- New snapshot
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt3.svn20130430
 - New snapshot
 
