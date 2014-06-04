@@ -5,7 +5,7 @@
 
 Name: wNutrak
 Version: 0.18
-Release: %branch_release alt1
+Release: %branch_release alt1.1
 
 Summary: Converts Garmin nuvi 2/7xx tracks into gpx format (GUI version)
 License: %gpl3plus
@@ -71,6 +71,9 @@ install -pD %SOURCE10 %buildroot%_desktopdir/%name.desktop
 %_bindir/nutrak
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.1
+- Rebuilt with updated libfltk
+
 * Tue Aug 07 2012 Aleksey Avdeev <solo@altlinux.ru> 0.18-alt1
 - Initial build for ALT Linux Sisyphus
 - Create nutrak subpackage

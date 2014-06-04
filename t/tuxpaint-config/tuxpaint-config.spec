@@ -13,7 +13,7 @@ Url: http://www.tuxpaint.org/
 License: GPL v2 or later
 Group: Graphics
 Version: 0.0.12
-Release: alt1.1
+Release: alt1.2
 Requires: tuxpaint
 
 Source: %name-%version.tar.gz
@@ -70,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.12-alt1.2
+- Rebuilt with updated libfltk
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.12-alt1.1
 - Fixed build
 

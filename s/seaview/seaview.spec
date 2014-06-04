@@ -1,6 +1,6 @@
 Name: seaview
 Version: 4.2.6
-Release: alt1.3
+Release: alt1.4
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Sciences/Biology
@@ -57,6 +57,9 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.6-alt1.4
+- Rebuilt with updated libfltk
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.6-alt1.3
 - Rebuilt with new FLTK
 

@@ -1,6 +1,6 @@
 Name: VirtualGL
 Version: 2.3
-Release: alt1
+Release: alt1.1
 
 %define vgl_name vgl
 
@@ -100,6 +100,9 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.1
+- Rebuilt with updatet libfltk
+
 * Mon Dec 26 2011 Dmitry Derjavin <dd@altlinux.org> 2.3-alt1
 - [2.3] (closes: 26707)
 

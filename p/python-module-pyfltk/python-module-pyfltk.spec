@@ -3,11 +3,11 @@
 # test new define
 %define oname pyFltk
 %define _python_egg_info %python_sitelibdir/%oname-%version-py%_python_version.egg-info
-%define oversion 1.3.1
+%define oversion 1.3.2
 
 Name: python-module-pyfltk
-Version: 1.3.1rc1
-Release: alt3
+Version: 1.3.2rc1
+Release: alt1
 
 Summary: Python bindings for FLTK library
 
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2rc1-alt1
+- Version 1.3.2rc1
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1rc1-alt3
 - Fixed build
 
