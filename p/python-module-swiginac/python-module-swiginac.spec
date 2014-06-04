@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.5.1.1
-Release: alt2.svn20100615
+Release: alt3.svn20100615
 Summary: Extending Python with Symbolic Mathematics
 Group: Development/Python
 License: GPL
@@ -48,7 +48,7 @@ This package contains development documentation for Swiginac.
 %package -n python-module-Symbolic
 Summary: Symbolic subpackage of Swiginac
 Group: Development/Python
-BuildArch: noarch
+#BuildArch: noarch
 
 %description  -n python-module-Symbolic
 Swiginac is a Python interface to GiNaC, built with SWIG. The aim of swiginac is
@@ -73,13 +73,17 @@ cp -fR tests %buildroot%_docdir/%oname/
 
 rm -f %buildroot%python_sitelibdir_noarch/Symbolic/*.pyo
 
+%ifarch x86_64
+mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+%endif
+
 %files
 %doc %dir %_docdir/%oname
 %doc %_docdir/%oname/ChangeLog
 %python_sitelibdir/*%{oname}*
 
 %files -n python-module-Symbolic
-%python_sitelibdir_noarch/Symbolic*
+%python_sitelibdir/Symbolic*
 
 %files -n %oname-docs
 %doc %dir %_docdir/%oname
@@ -87,6 +91,9 @@ rm -f %buildroot%python_sitelibdir_noarch/Symbolic/*.pyo
 %exclude %_docdir/%oname/ChangeLog
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1.1-alt3.svn20100615
+- Rebuilt with new libginac
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1.1-alt2.svn20100615
 - Rebuilt with libginac 1.6.2
 

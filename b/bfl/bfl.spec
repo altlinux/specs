@@ -2,7 +2,7 @@
 
 Name: bfl
 Version: 0.8.0
-Release: alt3.svn20110302
+Release: alt4.svn20110302
 Summary: The Bayesian Filtering Library (BFL)
 
 Group: Sciences/Mathematics
@@ -123,6 +123,9 @@ mv doc/html %buildroot%_defaultdocdir/lib%name-devel/
 %_defaultdocdir/lib%name-devel
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt4.svn20110302
+- Rebuilt with new libginac
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt3.svn20110302
 - Fixed build
 
