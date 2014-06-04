@@ -5,7 +5,7 @@
 %define sover 8
 %define priority 40
 Name: lib%{oname}-%sover-mpi
-Version: 1.8.11
+Version: 1.8.13
 Release: alt1
 
 Summary: Hierarchical Data Format 5 library, parallel version
@@ -74,7 +74,7 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-#add_optflags -DH5_HAVE_MPE
+%add_optflags -DH5_HAVE_MPE
 %autoreconf
 %configure \
 	--bindir=%mpidir/bin \
@@ -90,8 +90,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-fortran \
 	--enable-parallel \
 	--enable-trace \
+	--with-mpe=%prefix \
 	MPIDIR=%mpidir
-#	--with-mpe=%prefix \
 
 subst "s|^LT=.*|LT=../libtool|g" c++/src/Makefile c++/test/Makefile
 cp src/lib%oname.settings src/lib%oname-%sover.settings
@@ -165,6 +165,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.13-alt1
+- Version 1.8.13
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.11-alt1
 - Version 1.8.11
 

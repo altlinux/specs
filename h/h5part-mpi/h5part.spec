@@ -15,7 +15,7 @@
 
 Name: h5part-%otype
 Version: 1.6.6
-Release: alt3
+Release: alt4
 Summary: API that simplifies the reading/writing of the data to the HDF5 file format
 License: BSD
 Group: Sciences/Other
@@ -180,6 +180,9 @@ done
 %endif
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt4
+- Rebuilt wuth new libhdf5
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt3
 - Rebuilt with new libhdf5
 
