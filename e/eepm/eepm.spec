@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.5.2
+Version: 1.5.4
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -39,7 +39,7 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 
 %install
 # install to datadir and so on
-%makeinstall version=%version-%release
+%makeinstall_std datadir=%_datadir bindir=%_bindir mandir=%_mandir version=%version-%release
 install -m 0755 packed/epm.sh %buildroot/%_datadir/%name/epm-packed.sh
 install -m 0755 packed/serv.sh %buildroot/%_datadir/%name/serv-packed.sh
 
@@ -64,6 +64,15 @@ chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Wed Jun 04 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
+- add initial support for FreeBSD's pkgng
+- add audit command for check installed packages against known vulnerabilities
+
+* Wed May 28 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.3-alt1
+- prefer to use init script directly
+- introduce downgrade command
+- use correct datadir
+
 * Tue Mar 25 2014 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
 - use repolist for get local repo path
 - support --auto for reinstall
