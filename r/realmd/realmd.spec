@@ -1,7 +1,6 @@
-%set_automake_version 1.11
 
 Name: realmd
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
@@ -70,6 +69,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 0.15.1-alt1
+- 0.15.1
+
 * Wed Apr 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.15.0-alt1
 - initial build
 - disable PackageKit support
