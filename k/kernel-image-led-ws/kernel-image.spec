@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.5
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -133,7 +133,8 @@ Release: alt2
 %def_enable thp
 %def_enable kvm
 %def_disable hyperv
-%def_disable hypervisor_guest
+%def_enable hypervisor_guest
+%def_disable paravirt
 %def_disable kvm_guest
 %def_disable nfs_swap
 %def_enable fatelf
@@ -160,8 +161,8 @@ Release: alt2
 #Extra_modules nvidia 331.20
 %Extra_modules fglrx 14.10.1006
 #Extra_modules knem 1.1.1
-#Extra_modules exfat 1.2.7
-#Extra_modules ipt_NETFLOW 1.8.2
+#Extra_modules exfat 1.2.8
+#Extra_modules ipt_NETFLOW 1.8.3
 #Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
 
@@ -236,7 +237,6 @@ ExcludeArch: i386
 
 %if "%sub_flavour" == "vs"
 %def_enable vserver
-%set_enable hypervisor_guest
 %else
 %def_disable vserver
 %endif
@@ -1063,6 +1063,7 @@ config_disable \
 	%{?_disable_guest:virtio drm_{bochs,cirrus_qemu,qxl,vmwgfx} vmware_balloon} \
 	%{?_disable_kvm:kvm} \
 	%{?_disable_hypervisor_guest:hypervisor_guest} \
+	%{?_disable_paravirt:paravirt} \
 	%{?_disable_hyperv:hyperv} \
 	%{?_disable_kvm_guest:kvm_guest} \
 	%{?_disable_bootsplash:bootsplash} \
@@ -1861,6 +1862,34 @@ done)
 
 
 %changelog
+* Wed Jun 04 2014 Led <led@altlinux.ru> 3.14.5-alt4
+- updated:
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- disabled paravirt
+
+* Wed Jun 04 2014 Led <led@altlinux.ru> 3.14.5-alt3
+- updated:
+  + fix-arch-x86--microcode
+  + fix-arch-x86-mcheck--mce_amd
+  + fix-arch-x86-mcheck--mce_intel
+  + fix-drivers-hwmon--coretemp
+  + fix-drivers-hwmon--via-cputemp
+  + fix-drivers-tty-serial-8250--8250
+  + feat-drivers-acpi--bbswitch
+  + feat-drivers-block--btier
+  + feat-fs-aufs
+  + feat-kernel-vserver
+  + feat-lib--unwind
+- added:
+  + fix-arch-x86--microcode-amd
+  + fix-arch-x86--microcode-intel
+  + fix-kernel--futex
+  + feat-arch-x86-mach-xen
+- enabled hypervisor_guest (ws)
+- disabled PARAVIRT_XEN (vs)
+- disabled X86_64_XEN (x86_64)
+- disabled X86_XEN (x86)
+
 * Mon Jun 02 2014 Led <led@altlinux.ru> 3.14.5-alt2
 - updated:
   + fix-drivers-usb-musb--musb_hdrc
