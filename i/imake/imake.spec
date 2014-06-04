@@ -1,6 +1,6 @@
 Name: imake
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary: C preprocessor interface to the make utility
 License: MIT/X11
@@ -10,6 +10,7 @@ Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 
 Patch: imake-1.0.5-alt-tmpdir.patch
+Patch1: 0001-1.0.7-alt1.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013
 # optimized out: pkg-config
@@ -28,6 +29,7 @@ descriptions of the various items to be built.
 %setup
 
 %patch -p1 -b .orig
+%patch1 -p2 -b .redirect
 
 %build
 %autoreconf
@@ -44,6 +46,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Wed Jun 04 2014 Fr. Br. George <george@altlinux.ru> 1.0.7-alt2
+- Fix *.cpp (not c++!) build
+
 * Tue Jun 03 2014 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
 - Autobuild version bump to 1.0.7
 
