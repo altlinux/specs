@@ -6,7 +6,7 @@
 
 Name: squid
 Version: 3.4.5
-Release: alt3
+Release: alt4
 %define langpack_ver 20140220
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -290,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Jun 04 2014 Led <led@altlinux.ru> 3.4.5-alt4
+- upstream fixes
+
 * Wed May 21 2014 Led <led@altlinux.ru> 3.4.5-alt3
 - Fix segfault setting up server SSL connnection
 
