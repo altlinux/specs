@@ -1,6 +1,6 @@
 Name: ding-libs
-Version: 0.3.0.1
-Release: alt1.git6f829
+Version: 0.4.0
+Release: alt2
 
 Summary: "Ding is not GLib" assorted utility libraries
 License: LGPLv3+
@@ -12,9 +12,9 @@ Source: %name-%version.tar
 %define path_utils_version 0.2.1
 %define dhash_version 0.4.3
 %define collection_version 0.6.2
-%define ref_array_version 0.1.3
-%define basicobjects_version 0.1.0
-%global ini_config_version 1.0.0.1
+%define ref_array_version 0.1.4
+%define basicobjects_version 0.1.1
+%global ini_config_version 1.1.0
 
 BuildRequires: pkgconfig(check) >= 0.9.5
 BuildRequires: doxygen
@@ -164,7 +164,7 @@ structure
 %_includedir/dhash.h
 %_libdir/libdhash.so
 %_pkgconfigdir/dhash.pc
-%doc dhash/README.dhash dhash/examples/
+%doc dhash/README.dhash dhash/examples/*.c
 
 %files -n libcollection
 %doc COPYING COPYING.LESSER
@@ -208,6 +208,12 @@ structure
 %_pkgconfigdir/ini_config.pc
 
 %changelog
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt2
+- increase release
+
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Tue Feb 04 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.0.1-alt1.git6f829
 - upstream snapshot 6f829cba74cb64f2a9aeda099c5a502f6beaaa36
 

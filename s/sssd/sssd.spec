@@ -1,7 +1,7 @@
 
 Name: sssd
-Version: 1.11.5.1
-Release: alt2
+Version: 1.11.6
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -18,6 +18,7 @@ Patch: %name-%version-%release.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
+%define ldb_version 1.1.17
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -31,6 +32,7 @@ Patch: %name-%version-%release.patch
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
+Requires: libldb = %ldb_version
 
 ### Build Dependencies ###
 BuildRequires: /proc
@@ -38,7 +40,7 @@ BuildRequires: libpopt-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
 BuildRequires: libtdb-devel >= 1.1.3
-BuildRequires: libldb-devel >= 0.9.2
+BuildRequires: libldb-devel = %ldb_version
 BuildRequires: libdhash-devel >= 0.4.2
 BuildRequires: libcollection-devel >= 0.5.1
 BuildRequires: libini_config-devel >= 1.0.0
@@ -255,8 +257,35 @@ Group: Development/C
 License: LGPLv3+
 Requires: libsss_nss_idmap = %version-%release
 
+%package dbus
+Summary: The D-Bus responder of the SSSD
+Group: System/Servers
+License: GPLv3+
+Requires: %name = %version-%release
+
+%description dbus
+Provides the D-Bus responder of the SSSD, called the InfoPipe, that allows
+the information from the SSSD to be transmitted over the system bus.
+
 %description -n libsss_nss_idmap-devel
 Utility library for SID based lookups
+
+%package -n libsss_simpleifp
+Summary: The SSSD D-Bus responder helper library
+Group: System/Libraries
+License: GPLv3+
+
+%description -n libsss_simpleifp
+Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
+
+%package -n libsss_simpleifp-devel
+Summary: The SSSD D-Bus responder helper library
+Group: Development/C
+License: GPLv3+
+Requires: libsss_simpleifp = %version-%release
+
+%description -n libsss_simpleifp-devel
+Provides library that simplifies D-Bus API for the SSSD InfoPipe responder.
 
 %package -n python-module-sss_nss_idmap
 Summary: Python bindings for libsss_nss_idmap
@@ -488,10 +517,31 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libdir/libsss_nss_idmap.so
 %_pkgconfigdir/sss_nss_idmap.pc
 
+%files dbus
+%doc COPYING
+%_libexecdir/%name/sssd_ifp
+# %_libdir/%name/libsss_config.so
+%_man5dir/sssd-ifp.5*
+# InfoPipe DBus plumbing
+%_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
+
+# %files -n libsss_simpleifp
+# %_libdir/libsss_simpleifp.so.*
+
+# %files -n libsss_simpleifp-devel
+# %doc sss_simpleifp_doc/html
+# %_includedir/sss_sifp.h
+# %_includedir/sss_sifp_dbus.h
+# %_libdir/libsss_simpleifp.so
+# %_pkgconfigdir/sss_simpleifp.pc
+
 %files -n python-module-sss_nss_idmap
 %python_sitelibdir/pysss_nss_idmap.so
 
 %changelog
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.6-alt1
+- 1.11.6
+
 * Thu May 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.5.1-alt2
 - rebuild with new libldb
 
