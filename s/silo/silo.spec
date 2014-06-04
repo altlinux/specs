@@ -3,7 +3,7 @@
 
 Name: silo
 Version: 4.9.1
-Release: alt1
+Release: alt2
 Summary: A library for reading and writing a wide variety of scientific data
 License: BSD
 Group: Development/Tools
@@ -205,6 +205,9 @@ touch %buildroot%python_sitelibdir/%name/__init__.py
 %python_sitelibdir/%name
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.1-alt2
+- Rebuilt with new libhdf5
+
 * Mon Jul 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.1-alt1
 - Version 4.9.1
 

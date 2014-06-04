@@ -8,8 +8,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: %sname%sover-mpi
-Version: %major.3.0
-Release: alt3
+Version: %major.3.2
+Release: alt1
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -162,6 +162,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags -I%mpidir/include -fno-strict-aliasing %optflags_shared
+%add_optflags -DHAVE_MPI_COMM_F2C
 %autoreconf
 %configure \
 	--bindir=%mpidir/bin \
@@ -260,7 +261,7 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 
 %files
-%doc COPYRIGHT README RELEASE_NOTES
+%doc COPYRIGHT README* RELEASE_NOTES*
 %ghost %_libdir/%sname.so.*
 %mpidir/lib/%sname.so.*
 %_altdir/%name.alternatives
@@ -287,6 +288,9 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
+- Version 4.3.2
+
 * Wed Jul 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3
 - Added Provides: pkgconfig(netcdf) = %EVR
 
