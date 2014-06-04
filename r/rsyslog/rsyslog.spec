@@ -2,8 +2,8 @@
 %def_disable mmcount
 
 Name: rsyslog
-Version: 8.2.1
-Release: alt1
+Version: 8.2.2
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
@@ -31,7 +31,7 @@ BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.9
 BuildRequires: liblogging-devel >= 1.0.3
-BuildRequires: libjson-devel
+BuildRequires: libjson-c-devel
 BuildRequires: liblognorm-devel >= 1.0.0
 BuildRequires: libmongo-client-devel >= 0.1.4
 BuildRequires: libuuid-devel
@@ -512,6 +512,12 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 8.2.2-alt2
+- build with libjson-c-devel
+
+* Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 8.2.2-alt1
+- 8.2.2
+
 * Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 8.2.1-alt1
 - 8.2.1
 
