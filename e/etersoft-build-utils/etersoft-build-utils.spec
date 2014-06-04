@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Jun 04 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- fix rpm-build-intro replacement (for rpm-build-intro since 1.8.0)
+- gacl: print command for show command
+- rpmlog: add support for changelog message, add quiet mode support
+- rpmlog: allow use without increment
+- rpmgs: fix archive extensions
+- add common freebsd replacements
+
 * Wed Feb 26 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - update all requires version
 - rpmlog: add -e option support for just increment and add empty changelog entry
