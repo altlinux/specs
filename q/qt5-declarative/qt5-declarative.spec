@@ -1,11 +1,11 @@
 
 %define qt_module qtdeclarative
 %define gname qt5
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: qt5-declarative
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -173,6 +173,9 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Wed Jun 04 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt2
+- build docs
+
 * Mon Jun 02 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
