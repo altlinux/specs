@@ -1,6 +1,6 @@
 Name: dirmngr
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Client for Managing/Downloading CRLs
 Group: System/Libraries
@@ -9,7 +9,6 @@ Url: http://www.gnupg.org/
 
 # ftp://ftp.gnupg.org/gcrypt/dirmngr/%name-%version.tar.bz2
 Source: %name-%version.tar
-Patch1: dirmngr-1.1.0-alt-fix-linking.patch
 
 BuildRequires: libassuan-devel libgcrypt-devel libksba-devel libldap-devel libpth-devel
 
@@ -23,7 +22,6 @@ the dirmngr-client tool.
 
 %prep
 %setup
-%patch1 -p1
 %autoreconf
 
 %build
@@ -50,6 +48,9 @@ install -pm644 AUTHORS NEWS README THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
+- new version
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt2
 - fix to build with gcc-4.6
 
