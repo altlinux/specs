@@ -1,7 +1,7 @@
 # typelibs/girs dependencies (see below) added manually because of conflict with gnome-shell names
 
 Name: muffin
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -140,6 +140,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Thu Jun 5 2014 Vladimir Didenko <cow@altlinux.org> 2.2.5-alt1
+- 2.2.5
+
 * Wed May 21 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt1
 - 2.2.4
 
