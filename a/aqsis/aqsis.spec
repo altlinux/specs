@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ python-devel
+BuildRequires: gcc-c++ python-devel swig
 # END SourceDeps(oneline)
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_6
+Release:	alt2_9
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
 License:	GPLv2+ and LGPLv2+
 URL:		http://www.aqsis.org
 Source0:	http://downloads.sourceforge.net/aqsis/aqsis-%{version}.tar.gz
-# from mageia
-Patch: imfinputfile-forward-declaration.diff
+
+# fix build against ilmbase-2.x, kudos to arch linux
+Patch1: imfinputfile-forward-declaration.diff
 
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-devel >= 1.34.0
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
@@ -107,7 +109,9 @@ integration with third-party applications.
 
 %prep
 %setup -q
-%patch -p1
+
+%patch1 -p1 -b imfinputfile-forward-declaration
+
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -221,6 +225,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_9
+- converted for ALT Linux by srpmconvert tools
+
 * Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_6
 - fixed build
 
