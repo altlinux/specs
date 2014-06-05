@@ -4,8 +4,8 @@
 %define sover 0
 
 Name: mct
-Version: 2.6.0
-Release: alt6
+Version: 2.8.3
+Release: alt1
 Summary: The Model Coupling Toolkit
 License: MIT
 Group: Development/Tools
@@ -78,22 +78,6 @@ declare and use MCT datatypes can be coupled with a minimum of effort.
 
 This package contains development files of MCT.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of MCT
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-MCT is a set of open-source software tools for creating coupled models. MCT is
-fully parallel and can be used to couple message-passing parallel models to
-create a parallel coupled model. MCT is available as a small library and a set
-of Fortran90 modules.
-
-MCT provides model interoperability through a simple API. Two models that
-declare and use MCT datatypes can be coupled with a minimum of effort.
-
-This package contains static libraries of MCT.
-
 %package -n lib%name-devel-doc
 Summary: Documentation for MCT
 Group: Development/Documentation
@@ -119,7 +103,7 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-#autoreconf
+%autoreconf
 MPILIBS="-L%mpidir/lib -lmpi_f90"
 MPILIBS="$MPILIBS -lmpi_f77 -lmpi -Wl,-rpath,%mpidir/lib"
 %configure \
@@ -129,12 +113,12 @@ MPILIBS="$MPILIBS -lmpi_f77 -lmpi -Wl,-rpath,%mpidir/lib"
 	OPT="%optflags %optflags_shared"
 
 %make
-%make examples
-mv examples/climate_sequen1/climate examples/climate.seq
+#make examples
+#mv examples/climate_sequen1/climate examples/climate.seq
 
-pushd doc
-%make
-popd
+#pushd doc
+#make
+#popd
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -144,16 +128,16 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot%_bindir
 install -d %buildroot%_datadir/%name/data
-install -d %buildroot%_docdir/lib%name-devel
+#install -d %buildroot%_docdir/lib%name-devel
 
-pushd examples
-rm -f $(find ./ -name '*.o')
-mv climate.seq climate_concur1/climate simple/twocon simple/twoseq* \
-	%buildroot%_bindir/
-popd
+#pushd examples
+#rm -f $(find ./ -name '*.o')
+#mv climate.seq climate_concur1/climate simple/twocon simple/twoseq* \
+#	%buildroot%_bindir/
+#popd
 install -p -m644 data/* %buildroot%_datadir/%name/data
 
-install -m644 doc/*.dvi %buildroot%_docdir/lib%name-devel
+#install -m644 doc/*.dvi %buildroot%_docdir/lib%name-devel
 
 #shared libraries
 
@@ -167,25 +151,27 @@ for i in libmpeu libmct; do
 done
 popd
 
-%files
-%doc COPYRIGHT examples
-%_bindir/*
-%_datadir/%name
+#files
+#doc COPYRIGHT examples
+#_bindir/*
+#_datadir/%name
 
 %files -n lib%name
+%doc COPYRIGHT
 %_libdir/*.so.*
+%_datadir/%name
 
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
-%files -n lib%name-devel-doc
-%_docdir/lib%name-devel
+#files -n lib%name-devel-doc
+#_docdir/lib%name-devel
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt1
+- Version 2.8.3
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt6
 - Rebuilt with OpenMPI 1.6
 
