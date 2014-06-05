@@ -4,8 +4,8 @@
 %def_disable gtk_doc
 
 Name: libgsystem
-Version: %ver_major.1
-Release: alt0.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: GIO-based library with Unix/Linux specific API
 Group: System/Libraries
@@ -103,6 +103,9 @@ This package contains development documentation for LibGSystem library.
 %endif
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 2014.2-alt1
+- 2014.2
+
 * Thu Feb 06 2014 Yuri N. Sedunov <aris@altlinux.org> 2014.1-alt0.1
 - first build for Sisyphus
 
