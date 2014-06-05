@@ -2,18 +2,18 @@
 BuildRequires(pre): rpm-build-python
 BuildRequires: waf
 # END SourceDeps(oneline)
+BuildRequires: libnumpy-devel
 BuildRequires: gcc-c++
-%add_optflags %optflags_shared
 %define oldname lilv
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.16.0
+%define version 0.18.0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.16.0
-Release:    alt1_3
+Version:    0.18.0
+Release:    alt1_2
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -24,14 +24,14 @@ Patch1:     lilv-0.16.0-gcc.patch
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  sord-devel >= 0.12.0
-BuildRequires:  sratom-devel >= 0.4.0
-BuildRequires:  lv2-devel >= 1.0.0
+BuildRequires:  sratom-devel >= 0.4.4
+BuildRequires:  lv2-devel >= 1.8.0
 BuildRequires:  python-devel
 BuildRequires:  swig
+BuildRequires: python-module-numpy python-module-numpy-addons python-module-numpy-testing
 
 
 Source44: import.info
-Provides: lilv = %{version}-%{release}
 
 %description
 %{oldname} is a library to make the use of LV2 plugins as simple as possible 
@@ -42,7 +42,6 @@ faster and have minimal dependencies.
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
 Requires:   %{name} = %{version}-%{release}
-Provides: lilv-devel = %{version}-%{release}
 
 %description devel
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -109,6 +108,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3
 - update to new release by fcimport
 
