@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Group: System/Libraries
@@ -83,6 +83,12 @@ install -m 0644 %SOURCE2 src/
 %endif
 
 %changelog
+* Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 1.13-alt1
+- new version
+
+* Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 1.12-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
 - new version
 
