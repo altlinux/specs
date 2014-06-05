@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: appdata-tools
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Tools for AppData files
@@ -12,7 +12,7 @@ Url: http://people.freedesktop.org/~hughsient/appdata/
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
 BuildRequires: glib2-devel >= 2.26
-BuildRequires: libsoup-devel libgdk-pixbuf-devel
+BuildRequires: libappstream-glib-devel >= 0.1.4
 BuildRequires: intltool docbook-dtds docbook-style-xsl xsltproc
 BuildRequires: trang python-module-lxml >= 2.3
 #BuildRequires: emacs-common emacs-leim
@@ -47,6 +47,9 @@ application descriptions for standards compliance and to the style guide.
 %exclude %_datadir/emacs/site-lisp/site-start.d/appdata-rng-init.el
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
+- 0.1.8
+
 * Tue Feb 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
 - first build for Sisyphus
 
