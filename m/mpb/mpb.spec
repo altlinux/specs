@@ -1,6 +1,6 @@
 Name: mpb
-Version: 1.4.2
-Release: alt4
+Version: 1.5
+Release: alt1
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -11,7 +11,9 @@ Source: %name-%version.tar
 
 BuildPreReq: libctl-devel liblapack-devel zlib-devel
 BuildPreReq: libreadline-devel libfftw-devel guile18 guile18-devel
-BuildPreReq: gcc-fortran gcc-c++ /proc libhdf5-devel
+BuildPreReq: gcc-fortran gcc-c++ /proc libhdf5-devel libnlopt-devel
+
+Requires: lib%name = %EVR
 
 %description
 The MIT Photonic-Bands (MPB) package is a free program for computing the
@@ -42,6 +44,34 @@ Ab Initio Physics group.
 
 This package contains documentation for MIT Photonic Bands (MPB).
 
+%package -n lib%name
+Summary: Shared libraries of MIT Photonic Bands (MPB)
+Group: System/Libraries
+
+%description -n lib%name
+The MIT Photonic-Bands (MPB) package is a free program for computing the
+band structures (dispersion relations) and electromagnetic modes of
+periodic dielectric structures, on both serial and parallel computers.
+It was developed by Steven G. Johnson at MIT along with the Joannopoulos
+Ab Initio Physics group.
+
+This package contains shared libraries of MIT Photonic Bands (MPB).
+
+%package -n lib%name-devel
+Summary: Development files of MIT Photonic Bands (MPB)
+Group: Development/C++
+Requires: lib%name = %EVR
+Requires: %name = %EVR
+
+%description -n lib%name-devel
+The MIT Photonic-Bands (MPB) package is a free program for computing the
+band structures (dispersion relations) and electromagnetic modes of
+periodic dielectric structures, on both serial and parallel computers.
+It was developed by Steven G. Johnson at MIT along with the Joannopoulos
+Ab Initio Physics group.
+
+This package contains development files of MIT Photonic Bands (MPB).
+
 %prep
 %setup
 
@@ -54,6 +84,8 @@ export CPPFLAGS="%optflags"
 %autoreconf
 
 %configure \
+	--enable-shared \
+	--enable-static=no \
 	--with-blas=-lopenblas \
 	--with-lapack=-llapack \
 	--with-inv-symmetry \
@@ -65,15 +97,25 @@ export CPPFLAGS="%optflags"
 %makeinstall_std
 
 %files
-%doc AUTHORS ChangeLog COPYING COPYRIGHT NEWS README TODO
+%doc AUTHORS ChangeLog COPYING COPYRIGHT NEWS README* TODO
 %_bindir/*
 %_man1dir/*
-%_datadir/libctl
+%_datadir/%name
 
 %files doc
 %doc doc/*
 
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_libdir/*.so
+
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
+- Version 1.5
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt4
 - Rebuilt with new libhdf5
 
