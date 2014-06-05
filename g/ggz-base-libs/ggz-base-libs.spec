@@ -1,14 +1,15 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: libexpat-devel
 # END SourceDeps(oneline)
 
+
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_13
+Release: alt3_15
 
 License: LGPLv2+ and GPLv2+
-Group:   System/Libraries
 URL: http://www.ggzgamingzone.org/
 #Source0: http://ftp.belnet.be/packages/ggzgamingzone/ggz/%{version}/ggz-base-libs-snapshot-%{version}.tar.gz
 Source0: http://mirrors.ibiblio.org/pub/mirrors/ggzgamingzone/ggz/snapshots/ggz-base-libs-snapshot-%{version}.tar.gz
@@ -40,8 +41,8 @@ games and game-related applications for client-server online gaming. Player
 rankings, game spectators, AI players and a chat bot are part of this effort.
 
 %package devel
-Summary: Development files for %{name}
 Group: Development/C
+Summary: Development files for %{name}
 Obsoletes: libggz-devel < 1:0.99.5
 Obsoletes: ggz-client-libs-devel < 1:0.99.5
 Provides: libggz-devel = 1:%{version}-%{release}
@@ -82,7 +83,6 @@ make %{?_smp_mflags}
 
 
 %install
-
 make install DESTDIR=%{buildroot}
 
 # GGZCONFDIR stuff
@@ -93,7 +93,7 @@ mkdir -p %{buildroot}%{_datadir}/ggz
 # GGZGAMEDIR
 mkdir -p %{buildroot}%{_libdir}/ggz
 # RPM macros
-install -D -m644 -p %{SOURCE2} %{buildroot}%{_sysconfdir}/rpm/macros.ggz
+install -D -m644 -p %{SOURCE2} %{buildroot}%{_rpmmacrosdir}/ggz
 
 %find_lang ggzcore_snapshot-%{version}
 %find_lang ggz-config
@@ -127,7 +127,7 @@ make check ||:
 %{_datadir}/desktop-directories/ggz*.directory
 
 %files devel
-%{_sysconfdir}/rpm/macros.ggz
+%{_rpmmacrosdir}/ggz
 # GPLv2+
 %{_includedir}/ggzmod.h
 %{_libdir}/libggzmod.so
@@ -146,6 +146,9 @@ make check ||:
 
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_15
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_13
 - update to new release by fcimport
 
