@@ -1,13 +1,13 @@
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %def_enable shared
-%def_enable static
+%def_disable static
 %def_enable threads
 %def_disable debug
 
 %define Name Mini-XML
 Name: mxml
 %define lname lib%name
-Version: 2.7
+Version: 2.8
 Release: alt1
 Summary: %Name documentation generator
 Group: Text tools
@@ -128,6 +128,9 @@ This package includes %Name documentation.
 
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1
+- Version 2.8
+
 * Tue Feb 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1
 - Version 2.7
 
