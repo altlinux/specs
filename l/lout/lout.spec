@@ -1,6 +1,6 @@
 Name: lout
-Version: 3.39
-Release: alt2
+Version: 3.40
+Release: alt1
 
 Summary: The Lout document formatting language
 License: GPL
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 Source1: %name-mode.el
 Source2: fontdefs.ld
-Source3: %name-3.29.user.ps.bz2
+Source3: %name-3.40-user.ps.bz2
 Requires: urw-fonts >= 2.0-alt9
 BuildRequires(pre): rpm-build-fonts
 BuildPreReq: emacs
@@ -111,6 +111,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %doc %_docdir/%name
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.40-alt1
+- Version 3.40
+
 * Thu Dec 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.39-alt2
 - Applied lout-3.39-alt1-digest.diff from repocop
 
