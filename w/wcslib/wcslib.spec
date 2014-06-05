@@ -1,5 +1,5 @@
 Name: wcslib
-Version: 4.21
+Version: 4.23
 Release: alt1
 
 Group: System/Libraries
@@ -76,6 +76,9 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.23-alt1
+- new version
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 4.21-alt1
 - new version
 
