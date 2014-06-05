@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.5
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1415,17 +1415,19 @@ gen_rpmmodlist drivers/{{vhost/vhost_scsi,message/fusion/mptfc}.ko,{scsi{,/devic
 	grep -v '^%modules_dir/kernel/drivers/scsi/virtio.*' > scsi.rpmmodlist
 sort -u scsi-base.rpmmodlist > scsi-base.rpmmodlist~ && rm scsi-base.rpmmodlist
 gen_rpmmodfile ipmi drivers/{char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
-%{?_enable_drm:gen_rpmmodfile drm drivers/gpu}
+%if_enabled drm
+gen_rpmmodlist drivers/gpu/*/* \
+%if "%sub_flavour" != "guest"
+	| grep -Ev '/drm/(ttm|drm(|_kms_helper)\.ko)$' \
+	%{?_enable_guest:| grep -Ev '/drm/(bochs|cirrus|qxl|vmwgfx)$'} \
+%endif
+	> drm.rpmmodlist
+%endif
 %{?_enable_fddi:gen_rpmmodfile fddi {drivers/net,net/802}/fddi*}
 %{?_enable_usb_gadget:gen_rpmmodlist drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
 %if_enabled video
-gen_rpmmodlist drivers/video/* |
-	grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' |
-	grep -xv '%modules_dir/kernel/drivers/video/console' |
-	grep -xv '%modules_dir/kernel/drivers/video/sis' |
-	grep -xv '%modules_dir/kernel/drivers/video/backlight' |
-	grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
+gen_rpmmodlist drivers/video/* | grep -Ev '/(backlight|console|sis|uvesafb\.ko|.*sys.*\.ko)$' > video.rpmmodlist
 gen_rpmmodlist drivers/video/backlight/* | grep -Ev '%modules_dir/kernel/drivers/video/(backlight/(apple_bl|lcd).ko$)' >> video.rpmmodlist
 %endif
 %if_enabled media
@@ -1442,7 +1444,6 @@ gen_rpmmodfile input-extra \
 	%{?_enable_touchscreen:drivers/input/touchscreen}
 %if "%sub_flavour" != "guest"
 %{?_enable_guest:gen_rpmmodfile guest {drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{bochs,cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
-%{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
 
@@ -1862,6 +1863,17 @@ done)
 
 
 %changelog
+* Thu Jun 05 2014 Led <led@altlinux.ru> 3.14.5-alt5
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-firmware--radeon
+  + fix-kernel--futex (CVE-2014-3153) (thanks ldv@ for info)
+- added:
+  + fix-drivers-media--media (CVE-2014-1739)
+- moved DRM core modules from kernel-modules-drm-* to kernel-image-*
+
 * Wed Jun 04 2014 Led <led@altlinux.ru> 3.14.5-alt4
 - updated:
   + feat-net-ipv4-netfilter--ipt_NETFLOW
