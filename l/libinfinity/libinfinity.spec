@@ -3,7 +3,7 @@
 %define api_ver 0.5
 
 Name: libinfinity
-Version: 0.5.3
+Version: 0.5.5
 Release: alt1
 
 Summary: A library to build collaborative text editors
@@ -178,6 +178,9 @@ This package contains development documentation for %name (GTK+3 widgets).
 
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
+- 0.5.5
+
 * Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
