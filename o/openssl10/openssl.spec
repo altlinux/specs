@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.1g
+Version: 1.0.1h
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -441,6 +441,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Jun 05 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1h-alt1
+- Updated to 1.0.1h (fixes CVE-2014-0224, CVE-2014-022, CVE-2014-019,
+  CVE-2014-347, and CVE-2010-5298).
+
 * Mon Apr 07 2014 Dmitry V. Levin <ldv@altlinux.org> 1.0.1g-alt1
 - Updated to 1.0.1g (fixes CVE-2014-0076 and CVE-2014-0160).
 
