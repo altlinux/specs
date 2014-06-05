@@ -2,24 +2,20 @@
 %define fname mozilla-fira
 
 Name: fonts-otf-%fname
-Version: 20130925
+Version: 3.108
 Release: alt1
+Serial: 1
 
 Summary: Mozilla's Fira fonts
 License: OFL
 Group: System/Fonts/True type
 
-Url: https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/
-# Upstream tarball is not versioned. See the "Downloads" section of %%{url}.
-# Upstream does not provide a direct download link.
-Source0: %oname-%version.zip
-# The license file was obtained from here:
-# https://raw.github.com/mozilla/Fira/master/LICENSE
-# It is the standard OFL.
-Source1: fira-LICENSE
+Url: https://github.com/mozilla/Fira
+Source0: %name-%version.tar
+Source1: LICENSE
 
 BuildArch: noarch
-BuildRequires: unzip, rpm-build-fonts >= 0.4
+BuildRequires: rpm-build-fonts >= 0.4
 PreReq: fontconfig >= 2.4.2
 
 %description
@@ -27,9 +23,8 @@ Originally designed to integrate with the character of Firefox OS,
 Fira is a new set of sans-serif fonts which focuses on legibility.
 
 %prep
-%setup -c
-mv */*.otf .
-cp -p %SOURCE1 LICENSE
+%setup
+cp -a %SOURCE1 .
 
 %install
 %otf_fonts_install %fname
@@ -38,6 +33,11 @@ cp -p %SOURCE1 LICENSE
 %doc LICENSE
 
 %changelog
+* Thu Jun 05 2014 Michael Shigorin <mike@altlinux.org> 1:3.108-alt1
+- 3.108 built from upstream git
+  + fixes https://github.com/mozilla/Fira/issues/39
+- reworked build appropriately
+
 * Fri May 30 2014 Michael Shigorin <mike@altlinux.org> 20130925-alt1
 - built for ALT Linux (description from fedora spec)
 
