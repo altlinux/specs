@@ -1,7 +1,7 @@
 %define _name rply
 
 Name: lib%_name
-Version: 1.01
+Version: 1.1.3
 Release: alt1
 
 Summary: A library to read and write PLY files
@@ -9,7 +9,7 @@ Group: System/Libraries
 License: MIT
 Url: http://www.tecgraf.puc-rio.br/~diego/professional/%_name/
 
-Source: http://www.tecgraf.puc-rio.br/~diego/professional/%_name/%_name-1.01.tar.gz
+Source: http://www.tecgraf.puc-rio.br/~diego/professional/%_name/%_name-%version.tar.gz
 Patch: %_name-1.01-cmake_build.patch
 
 BuildRequires: cmake >= 2.6.0 gcc-c++
@@ -62,6 +62,9 @@ Rply Library Header Files and Link Libraries
 %_datadir/%_name/
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Mon Sep 05 2011 Yuri N. Sedunov <aris@altlinux.org> 1.01-alt1
 - Adapted for Sisyphus
 
