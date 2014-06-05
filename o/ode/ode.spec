@@ -1,6 +1,6 @@
 Name: ode
-Version: 0.12
-Release: alt3.svn20130810
+Version: 0.13
+Release: alt1.svn20140203
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
@@ -154,6 +154,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20140203
+- Version 0.13
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt3.svn20130810
 - New snapshot
 
