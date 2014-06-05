@@ -1,6 +1,6 @@
 Name: log4cplus
-Version: 1.1.2
-Release: alt1
+Version: 1.2.0
+Release: alt1.rc1
 Summary: Logging library to C++
 License: Apache License
 Group: Development/C++
@@ -77,7 +77,7 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %make check
 
 %files -n lib%name
-%doc AUTHORS ChangeLog NEWS README TODO REVISION
+%doc AUTHORS ChangeLog NEWS README* TODO REVISION
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -90,6 +90,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %_man3dir/*
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.rc1
+- Version 1.2.0-rc1
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
 - Version 1.1.2
 
