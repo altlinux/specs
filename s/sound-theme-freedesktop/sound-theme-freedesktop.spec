@@ -1,5 +1,5 @@
 Name: sound-theme-freedesktop
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: freedesktop.org sound theme
@@ -43,6 +43,9 @@ specification. (http://0pointer.de/public/sound-theme-spec.html)
 %_datadir/sounds/freedesktop/stereo/*.oga
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
+- 0.8
+
 * Wed May 11 2011 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - 0.7
 
