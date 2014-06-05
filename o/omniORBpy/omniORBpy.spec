@@ -1,6 +1,6 @@
 Name: omniORBpy
 Version: 4.2.0
-Release: alt1.svn20130412
+Release: alt1.svn20140428
 Summary: Python bindings for CORBA object request broker (omniORB)
 License: LGPLv2.1+
 Group: Networking/Remote access
@@ -57,8 +57,18 @@ sed -i 's|\(get_python_lib\)(0|\1(1|' configure
 	--with-openssl=%prefix
 %make_build
 
+pushd modules/ziop
+%make
+popd
+
 %install
 %makeinstall_std
+
+pushd modules/ziop
+%makeinstall_std
+popd
+
+ln -s _omniZIOPmodule.so %buildroot%python_sitelibdir/_omniZIOP.so
 
 %files -n python-module-%name
 %doc README* update.log ReleaseNotes.txt
@@ -72,6 +82,9 @@ sed -i 's|\(get_python_lib\)(0|\1(1|' configure
 %doc doc/*.pdf doc/omniORBpy examples
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.svn20140428
+- New snapshot
+
 * Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.svn20130412
 - New snapshot
 

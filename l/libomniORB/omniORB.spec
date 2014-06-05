@@ -3,7 +3,7 @@ License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
 Version: 4.2.0
-Release: alt3.svn20140428
+Release: alt4.svn20140428
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -17,6 +17,8 @@ Patch1: libomniORB-all-cosifaces.patch
 
 # Automatically added by buildreq on Wed Aug 26 2009
 BuildRequires: gcc-c++ libssl-devel python-devel python-modules-compiler
+
+BuildPreReq: zlib-devel
 
 Summary: ORB from AT&T (core libraries)
 Group:   Networking/Remote access
@@ -124,14 +126,14 @@ for the omniORB package (COS module).
 	--with-omniORB-config=%_sysconfdir/omniORB.cfg \
 	--with-omniNames-logdir=%_logdir/omniORB
 
-%make
+%make EnableZIOP=1
 
 %install
 # hasher workaround
 unset target ||:
 # end
 
-%makeinstall_std
+%makeinstall_std EnableZIOP=1
 
 install -d -m 755 %buildroot%_logdir/omniORB
 install -d -m 755 %buildroot%_man1dir
@@ -208,6 +210,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt4.svn20140428
+- Enabled ZIOP
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt3.svn20140428
 - New snapshot
 
