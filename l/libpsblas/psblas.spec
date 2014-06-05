@@ -4,7 +4,7 @@
 %define sover %somver.2.4
 
 Name: libpsblas
-Version: 3.1.2
+Version: 3.1.2.1
 Release: alt1
 Summary: Parallel Sparse Basic Linear Algebra Subroutines
 License: BSD
@@ -129,6 +129,9 @@ popd
 %doc test
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2.1-alt1
+- Version 3.1.2-1
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt1
 - Version 3.1.2
 
