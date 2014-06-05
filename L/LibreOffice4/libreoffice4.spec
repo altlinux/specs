@@ -1,17 +1,17 @@
-# 4.2.4.1
+# 4.3.0.0.beta2-buildfix1
 %def_with forky
 %def_with parallelism
 %def_without fetch
 
 Name: LibreOffice4
-Version: 4.2
-%define urelease 4.1
+Version: 4.3
+%define urelease 0.0.beta2-buildfix1
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt0.beta2.buildfix1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -46,65 +46,118 @@ Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
 
 # FC patches files
-Patch11: 0001-fix-libetonyek-build.patch
-Patch12: 0001-Related-rhbz-1032774-bodge-around-reported-NULL-valu.patch
-Patch13: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch14: 0001-Resolves-rhbz-912529-Kerkis-SmallCaps-shown-instead-.patch
-Patch15: 0001-disable-firebird-unit-test.patch
-Patch16: 0001-never-run-autogen.sh.patch
-Patch17: 0001-Related-rhbz-1065807-rework-i66157-for-multiple-writ.patch
-Patch18: 0001-Resolves-rhbz-1065807-use-xdg-Templates-for-default-.patch
-Patch19: 0001-rhbz-1057977-avoid-use-of-invalidated-pointers.patch
-Patch20: 0001-KDE-don-t-throw-on-TemplatePathVariable.patch
-Patch21: 0001-Wizards-should-look-for-templates-in-Template_intern.patch
-Patch22: 0001-actively-search-for-wizards-dir-in-all-internal-temp.patch
-Patch23: 0001-Change-SDK-javaodc-from-static-Package-to-dynamic-Ge.patch
-Patch24: 0001-Package-GeneratedPackage-fixup.patch
-Patch25: 0001-Related-rhbz-1075951-abrt-crash-in-MSWordExportBase-.patch
-Patch26: 0001-drop-OnlyShowIn-from-.desktop-files.patch
-Patch27: 0001-Resolves-rhbz-1081176-don-t-jump-to-cursor-pos-when.patch
-Patch28: 0001-prevent-KDE-Qt-from-interfering-with-the-session-man.patch
-Patch29: 0001-Resolves-fdo-36815-enable-printing-WYSIWYG-sidewindo.patch
-Patch30: 0001-Related-fdo-36815-print-the-text-highlight-range-as-.patch
-Patch31: 0001-Resolves-rhbz-1086714-overlarge-pixmap.patch
-Patch32: 0001-every-even-numbered-print-job-is-reported-as-failed.patch
-Patch33: 0001-Related-rhbz-1088625-PresenterPaintManager-seen-as-N.patch
-Patch34: 0001-table-not-resizing-when-rows-columns-added-to-it.patch
-Patch35: 0001-Fix-fdo-71423-crash-while-editing-Impress-tables.patch
-Patch36: 0001-Resolves-rhbz-1089377-crash-on-loading-a-specific-rt.patch
-Patch37: 0001-add-a-format-all-comments-feature.patch
-Patch38: 0001-Resolves-fdo-37130-use-10pt-Default-style-font-for-c.patch
-Patch39: 0001-Related-fdo-36815-center-scaled-comment-page-vertica.patch
-Patch40: 0001-crash-in-selecting-text-in-comments-midway-in-para.patch
-Patch41: 0001-Resolves-fdo-60040-crash-after-undoing-master-page-a.patch
-Patch42: 0001-Related-rhbz-1032774-slide-restarter-should-disable-.patch
-Patch43: 0001-add-X-TryExec-entries-to-desktop-files.patch
 
-
+Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch13: 0001-disable-firebird-unit-test.patch
+Patch14: 0001-never-run-autogen.sh.patch
+Patch15: 0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch16: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
+Patch44: 0001-deb-749592-mysql-connector-doesn-t-work-with-remote-.patch
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
 Patch301: openoffice.org-3.0.0.ooo88341.sc.verticalboxes.patch
 Patch302: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
 
-# Automatically added by buildreq on Wed Mar 06 2013
-# optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins1.0-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg-devel libwps-devel libodfgen-devel libcdr-devel libmspub-devel libmwaw-devel libvisio-devel libcmis-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
-
-BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel python3-devel liblcms2-devel libraptor-devel libredland-devel libsane-devel
-BuildRequires: xulrunner-devel
-BuildRequires: graphite2-devel
-BuildRequires: libexttextcat-devel
+BuildRequires: ant-testutil imake junit4 xorg-cf-files zenity
 BuildRequires: sac pentaho-libxml flute pentaho-reporting-flow-engine liblayout libloader libformula librepository libserializer libbase apache-commons-codec apache-commons-lang apache-commons-httpclient apache-commons-logging bsh rhino
 
-# 4.1
-BuildRequires: libharfbuzz-devel liblangtag-devel
+BuildRequires: bc
+BuildRequires: binutils
+BuildRequires: desktop-file-utils
+BuildRequires: doxygen
+BuildRequires: findutils
+BuildRequires: libicu-devel
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: git
+BuildRequires: gperf
+BuildRequires: perl-Archive-Zip
+BuildRequires: zip unzip
+
+# libs / headers - common
+BuildRequires: libcups-devel
+BuildRequires: libexpat-devel
+BuildRequires: fonts-ttf-liberation
+BuildRequires: libhyphen-devel
+BuildRequires: libicu-devel
+BuildRequires: liblpsolve-devel
+BuildRequires: pkgconfig(cppunit) >= 1.12.0
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(evolution-data-server-1.2)
+BuildRequires: pkgconfig(fontconfig) >= 2.4.1
+BuildRequires: pkgconfig(freetype2) >= 9.9.3
+BuildRequires: pkgconfig(gconf-2.0)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(gtk+-2.0) >= 2.10.0 pkgconfig(gdk-pixbuf-xlib-2.0) >= 2.2 pkgconfig(gtk+-unix-print-2.0) >= 2.10.0 pkgconfig(gio-2.0) >= 2.26
+BuildRequires: pkgconfig(telepathy-glib) >= 0.18.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.2 pkgconfig(gtk+-unix-print-3.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(cairo)
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(ice)
+BuildRequires: pkgconfig(libcurl) >= 7.19.4
+BuildRequires: pkgconfig(libidn)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libxslt)
+BuildRequires: pkgconfig(neon)
+BuildRequires: pkgconfig(nss) >= 3.9.3 pkgconfig(nspr) >= 4.8
+BuildRequires: pkgconfig(poppler)
+BuildRequires: pkgconfig(redland) >= 1.0.8 pkgconfig(raptor2) >= 2.0.7
+BuildRequires: pkgconfig(sane-backends)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xt)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: libvigra-devel
+
+# libs / headers - conditional
+#BuildRequires: firebird-devel
+#BuildRequires: firebird-libfbembed
+BuildRequires: libglm-devel
+BuildRequires: kde4libs-devel
+BuildRequires: pkgconfig(glew) >= 1.10.0
+BuildRequires: pkgconfig(libabw-0.1)
+BuildRequires: pkgconfig(libcdr-0.1)
+BuildRequires: pkgconfig(libcmis-0.4) >= 0.4.0
+BuildRequires: pkgconfig(libe-book-0.1) >= 0.1.1
+BuildRequires: pkgconfig(libeot) >= 0.01
+BuildRequires: pkgconfig(libetonyek-0.1) >= 0.1.1
+BuildRequires: pkgconfig(libfreehand-0.1)
+BuildRequires: pkgconfig(libmspub-0.1)
+BuildRequires: pkgconfig(libmwaw-0.3) >= 0.3.1
+BuildRequires: pkgconfig(libodfgen-0.1)
+BuildRequires: pkgconfig(liborcus-0.8) >= 0.7.0
+BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1
+BuildRequires: pkgconfig(libvisio-0.1)
+BuildRequires: pkgconfig(libwpd-0.10)
+BuildRequires: pkgconfig(libwpg-0.3)
+BuildRequires: pkgconfig(libwps-0.3)
+BuildRequires: pkgconfig(mdds) >= 0.10.3
+
+BuildRequires: boost-devel
+BuildRequires: pkgconfig(graphite2) >= 0.9.3
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(libclucene-core)
+BuildRequires: pkgconfig(libexttextcat)
+BuildRequires: pkgconfig(liblangtag)
+BuildRequires: pkgconfig(mythes)
+BuildRequires: pkgconfig(poppler-cpp)
+
+BuildRequires: libldap-devel
+BuildRequires: libunixODBC-devel
+BuildRequires: postgresql-devel
+BuildRequires: libmysqlclient-devel
+BuildRequires: libbluez-devel
+BuildRequires: python3-devel
+BuildRequires: xulrunner-devel
+
+# libs / headers - special cases
+BuildRequires: pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-video-1.0)
+BuildRequires: libjpeg-devel
+
 
 # to remove in 4.2
 BuildRequires: tomcat-servlet-3.0-api
-
-# 4.2
-BuildRequires: libe-book-devel libetonyek-devel libfreehand-devel libabw-devel mdds-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -204,46 +257,17 @@ echo Direct build
 %patch403 -p2
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
-#patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
-%patch42 -p1
-%patch43 -p1
-
-
+%patch44 -p1
 
 # Long-term FC patches applying
-%patch300 -p1
-%patch301 -p1
-%patch302 -p1
+#%patch300 -p1
+#%patch301 -p1
+#%patch302 -p1
 
 # Hack GCC_VERSION usage
 sed -i '
@@ -286,11 +310,12 @@ test -r %conffile && . %conffile ||:
         --disable-odk \
         --disable-systray \
 	--disable-firebird-sdbc \
+	--disable-gltf \
+	--disable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
         --with-alloc=system \
-        --without-afms \
         --without-fonts \
         --without-myspell-dicts \
         --without-ppds \
@@ -471,6 +496,11 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 4.3-alt0.beta2.buildfix1
+- 4.3.0.0.beta2-buildfix1
+- update BR:
+- switch to librevenge-based import libs
+
 * Wed Apr 30 2014 Fr. Br. George <george@altlinux.ru> 4.2-alt3
 - Version up to 4.2.4.1
 

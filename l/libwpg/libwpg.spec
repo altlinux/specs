@@ -1,7 +1,7 @@
-%define major 0.2
+
 Name: libwpg
-Version: %major.2
-Release: alt3
+Version: 0.3.0
+Release: alt1
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
 
@@ -14,11 +14,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/libwpg/%name-%version.tar
 
 Provides: libwpg2 = %version-%release
-Obsoletes: libwpg2
+Obsoletes: libwpg2 < %version-%release
 
-# Automatically added by buildreq on Sat Jan 21 2012
-# optimized out: libstdc++-devel pkg-config
-BuildRequires: doxygen gcc-c++ glibc-devel libwpd9-devel
+BuildRequires: gcc-c++
+BuildRequires: doxygen
+BuildRequires: help2man
+BuildRequires: pkgconfig(librevenge-0.0)
+BuildRequires: pkgconfig(libwpd-0.10)
 
 %description
 libwpg is a library for reading and converting WPG images
@@ -34,11 +36,10 @@ Currently supported: raw svg
 
 %package devel
 Requires: %name = %version-%release
-Requires: libwpd9-devel >= 0.9.0
 Summary: Files for developing with libwpg
 Group: Development/C
 Provides: libwpg2-devel = %version-%release
-Obsoletes: libwpg2-devel
+Obsoletes: libwpg2-devel < %version-%release
 
 %description devel
 Includes and definitions for developing with libwpg.
@@ -57,33 +58,48 @@ Documentation of libwpg API for developing with libwpg
 %setup
 
 %build
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
-%configure --disable-static
-
+%autoreconf
+%configure --disable-static --disable-werror
 %make_build
+
+find docs/doxygen/html |xargs touch -r docs/doxygen/doxygen.cfg
+export LD_LIBRARY_PATH=`pwd`/src/lib/.libs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+help2man -N -n 'debug the conversion library' -o wpg2raw.1 ./src/conv/raw/.libs/wpg2raw
+help2man -N -n 'convert WordPerfect Graphics into SVG' -o wpg2svg.1 ./src/conv/svg/.libs/wpg2svg
+help2man -N -n 'batch convert WordPerfect Graphics files into SVG' \
+    --help-option=-h --no-discard-stderr \
+    -o wpg2svgbatch.pl.1 ./src/conv/svg/wpg2svgbatch.pl
 
 %install
 %makeinstall_std
 
-rm -rf %buildroot%_libdir/libwpg*.la
-#rm -rf %buildroot $RPM_BUILD_DIR/file.list.%name
+# we install API docs directly from build
+rm -rf %buildroot%_docdir/%name
+
+install -m 0755 -d %buildroot%_man1dir
+install -m 0644 wpg2*.1 %buildroot%_man1dir/
 
 %files
+%doc AUTHORS COPYING.LGPL COPYING.MPL
 %_libdir/libwpg*.so.*
-%doc ChangeLog README AUTHORS
 
 %files tools
-%_bindir/wpg2*
+%_bindir/*
+%_man1dir/*.1*
 
 %files devel
-%_libdir/libwpg*.so
-%_pkgconfigdir/libwpg*.pc
-%_includedir/libwpg-%major/
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+%_includedir/*
 
 %files docs
-%doc %_docdir/%name/
+%doc COPYING.LGPL COPYING.MPL
+%doc docs/doxygen/html
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt1
+- 0.3.0
+
 * Wed Aug 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt3
 - add provides/obsoletes for libwpg2-devel
 

@@ -1,7 +1,10 @@
+
+%def_without gnome_vfs
+
 %define pre %nil
 Name: inkscape
 Version: 0.48.4
-Release: alt5
+Release: alt6
 
 Summary: A Vector Drawing Application
 
@@ -18,6 +21,15 @@ Source2: tutorial-%version.tar
 
 Patch: %name.patch
 
+#fedora patches
+Patch10:         inkscape-0.48.2-types.patch
+Patch110:        inkscape-0.48.4-spuriouscomma.patch
+Patch111:        inkscape-0.48.4-freetype.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1097945
+Patch112:        inkscape-0.48.4-poppler-0.26.patch
+Patch113:        inkscape-0.48.4-gc-7.4.patch
+Patch114:        0001-update-to-new-libwpg.patch
+
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
 #BuildPreReq: menu-devel
@@ -27,9 +39,10 @@ BuildPreReq: desktop-file-utils
 
 # manually removed: bzr
 # Automatically added by buildreq on Sat Aug 04 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel libwpd9-devel libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers gcc-c++ gnome-vfs-devel intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms-devel libpoppler-glib-devel libpopt-devel libwpg2-devel libxslt-devel perl-devel python-module-mwlib python-module-paste
-
+# optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel  libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
+BuildRequires: boost-devel-headers gcc-c++  intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms2-devel libpoppler-glib-devel libpopt-devel  libxslt-devel perl-devel python-module-mwlib python-module-paste zlib-devel
+%{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
+BuildRequires: libwpg-devel librevenge-devel
 BuildRequires: libpng-devel
 BuildRequires: libpoppler-devel
 
@@ -65,6 +78,14 @@ inkview is standalone viewer for Inkscape files (SVG)
 %setup -n %name-%version%pre
 %patch
 
+# fedora patches
+%patch10 -p1 -b .types
+%patch110 -p0 -b .spuriouscomma
+%patch111 -p0 -b .freetype
+%patch112 -p1 -b .poppler
+%patch113 -p1 -b .gc
+%patch114 -p1 -b .libwpg
+
 #cat %%SOURCE1 >po/ru.po
 
 %build
@@ -72,7 +93,6 @@ inkview is standalone viewer for Inkscape files (SVG)
 %autoreconf
 subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %configure \
-        --with-gnome-vfs        \
         --with-python           \
         --with-perl             \
         --with-xft              \
@@ -115,6 +135,10 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.48.4-alt6
+- switch to librevenge
+- build without gnome-vfs support
+
 * Thu Sep 26 2013 Anton Farygin <rider@altlinux.ru> 0.48.4-alt5
 - Rebuild with new libImageMagick
 

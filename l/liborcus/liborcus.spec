@@ -1,6 +1,6 @@
 Name: liborcus
-Version: 0.5.1
-Release: alt1
+Version: 0.7.0
+Release: alt2
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -9,11 +9,13 @@ Url: http://gitorious.org/orcus
 Source: %name-%version.tar.bz2
 Patch: liborcus-alt-boost.patch
 
-%define libver 0.6
+%define libver 0.8
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
-BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel
+BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel
+
+BuildRequires: chrpath
 
 %description
 %name is a standalone file import filter library for spreadsheet
@@ -40,7 +42,6 @@ Tools for working with Orcus.
 %patch -p1
 
 %build
-
 sed -i 's|liborcus_@ORCUS_API_VERSION@_la_LIBADD = |& ../parser/liborcus-parser-@ORCUS_API_VERSION@.la|' src/liborcus/Makefile.am
 sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Makefile.am
 
@@ -56,7 +57,6 @@ sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Ma
 	--with-boost-system \
 	\
 	--disable-spreadsheet-model
-	
 
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -66,6 +66,7 @@ sed -i \
 
 %install
 make install DESTDIR=%buildroot
+chrpath -d %buildroot/%_libdir/*.so.*.*.*
 rm -f %buildroot/%_libdir/*.la
 
 %files
@@ -81,6 +82,13 @@ rm -f %buildroot/%_libdir/*.la
 %_bindir/orcus-*
 
 %changelog
+* Sat Jun 07 2014 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt2
+- build to sisyphus
+
+* Thu Feb 20 2014 Fr. Br. George <george@altlinux.ru> 0.7.0-alt1
+- Autobuild version bump to 0.7.0
+- Fix build (introduce chrpath hack)
+
 * Thu Jul 25 2013 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
 - Autobuild version bump to 0.5.1
 - Fix underlinkage
