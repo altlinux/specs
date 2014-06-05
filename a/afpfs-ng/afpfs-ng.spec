@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_13.3
+Release:        alt3_15
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -17,6 +17,8 @@ URL:            http://alexthepuffin.googlepages.com/home
 Source0:        http://downloads.sourceforge.net/afpfs-ng/%{name}-%{version}.tar.bz2
 Patch0:         afpfs-ng-0.8.1-overflows.patch
 Patch1:         afpfs-ng-0.8.1-pointer.patch
+# Sent by e-mail to Alex deVries <alexthepuffin@gmail.com>
+Patch2:         afpfs-ng-0.8.1-formatsec.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
 BuildRequires: libgcrypt-devel libgmp-devel libgmp_cxx-devel readline-devel
@@ -53,6 +55,7 @@ Library for dynamic linking and header files of afpfs-ng.
 %setup -q
 %patch0 -p1 -b .overflows
 %patch1 -p1 -b .pointer
+%patch2 -p1 -b .formatsec
 
 
 %build
@@ -100,6 +103,9 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %changelog
+* Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_15
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_13.3
 - update to new release by fcimport
 
