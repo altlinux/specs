@@ -1,5 +1,5 @@
 Name: nlopt
-Version: 2.4
+Version: 2.4.2
 Release: alt1
 Summary: Library for nonlinear optimization
 License: MIT, LGPL
@@ -180,6 +180,9 @@ install -m755 test/.libs/* %buildroot%_bindir/
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
+- Version 2.4.2
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt1
 - Version 2.4
 
