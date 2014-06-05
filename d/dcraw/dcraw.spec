@@ -1,5 +1,5 @@
 Name: dcraw
-Version: 9.19
+Version: 9.21
 Release: alt1
 
 Summary: Command-line decoder for raw digital photos
@@ -14,10 +14,7 @@ Source4: %url/.badpixels
 Source5: %url/ahd_maze.png
 Source6: %url/vng_grid.png
 
-# Automatically added by buildreq on Sun Jul 31 2011
-BuildRequires: libjasper-devel libjpeg-devel liblcms-devel
-
-# TODO: patch to use lcms2 instead of lcms
+BuildRequires: libjasper-devel libjpeg-devel liblcms2-devel
 
 %description
 dcraw decodes raw photos, displays metadata, and extracts thumbnails.
@@ -31,7 +28,7 @@ install -m644 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 .
 # -O4 shows best speed in benchmarks!
 %define _optlevel 4
 gcc -I/usr/include/lcms -DLOCALEDIR=\"/usr/share/locale/\" \
-	%optflags -o dcraw dcraw.c -ljpeg -lm -llcms -ljasper
+	%optflags -o dcraw dcraw.c -ljpeg -lm -llcms2 -ljasper
 
 %install
 install -pD -m755 dcraw %buildroot%_bindir/dcraw
@@ -56,6 +53,9 @@ done
 %doc dcraw.html *.png .badpixels
 
 %changelog
+* Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 9.21-alt1
+- 9.21, built against liblcms2
+
 * Thu Dec 19 2013 Yuri N. Sedunov <aris@altlinux.org> 9.19-alt1
 - 9.19
 
