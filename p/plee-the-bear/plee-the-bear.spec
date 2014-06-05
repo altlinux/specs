@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           plee-the-bear
 Version:        0.6.0
-Release:        alt4_13
+Release:        alt4_14
 Summary:        2D platform game
 Group:          Games/Other
 # Code and artwork respectively
@@ -21,7 +21,7 @@ Patch3:		plee-the-bear-boost-1.50-patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libclaw-devel >= 1.7.0
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  boost-devel
 BuildRequires:  wxGTK-devel
 BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libjpeg-devel
@@ -32,6 +32,7 @@ BuildRequires: ctest cmake
 BuildRequires:	chrpath
 Source44: import.info
 ExclusiveArch: x86_64
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 
 %description
 Plee the Bear is a 2D platform game like those we found on consoles in the
@@ -98,6 +99,9 @@ done
 
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_14
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_13
 - update to new release by fcimport
 
