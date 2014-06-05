@@ -2,7 +2,7 @@
 Summary: Fonts for the Ghostscript PostScript interpreter
 Name: fonts-type1-ghostscript
 Version: 5.50
-Release: alt1_29
+Release: alt1_33
 # Contacted Kevin Hartig, who agreed to relicense his fonts under the SIL Open Font 
 # License. Hershey fonts are under the "Hershey Font License", which is not what Fontmap 
 # says (Fontmap is wrong).
@@ -92,6 +92,9 @@ fi
 %ghost %verify(not md5 size mtime) %{fontdir}/fonts.scale
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 5.50-alt1_33
+- new fc release
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 5.50-alt1_29
 - new fc release
 
