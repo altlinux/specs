@@ -11,14 +11,15 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt5.svn20130801
+Release: alt5.svn20140313
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
 Url: http://mpip.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://mpip.svn.sourceforge.net/viewvc/mpip.tar.gz
+# svn://svn.code.sf.net/p/mpip/code/trunk
+Source: mpip.tar.gz
 Source1: farg.f
 
 Requires: lib%name = %version-%release
@@ -170,6 +171,9 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %_libdir/libfarg.so
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt5.svn20140313
+- New snapshot
+
 * Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt5.svn20130801
 - New snapshot
 
