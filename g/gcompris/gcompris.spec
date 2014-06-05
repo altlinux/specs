@@ -1,6 +1,6 @@
 
 Name: gcompris
-Version: 14.03
+Version: 14.05
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -598,6 +598,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/sk
 
 %changelog
+* Thu Jun 05 2014 Andrey Cherepanov <cas@altlinux.org> 14.05-alt1
+- New version
+
 * Fri Apr 04 2014 Andrey Cherepanov <cas@altlinux.org> 14.03-alt1
 - New version (ALT #29947)
 - Fix missing pictures (ALT #29870)
