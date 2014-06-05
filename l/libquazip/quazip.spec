@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %define oname quazip
 Name:		lib%oname
-Version:	0.5
-Release:	alt1_1.2
+Version:	0.6.2
+Release:	alt1
 Summary:	Qt/C++ wrapper for the minizip library
 License:	GPLv2+ or LGPLv2+
 Group:		System/Libraries
@@ -70,6 +70,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1_1.2
 - Rebuilt with optflags
 
