@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
+
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -13,6 +14,7 @@ Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.
 Source1:        modules.sh
 Source2:        createmodule.sh
 Source3:        createmodule.py
+Source4:        macros.%{name}
 Patch0:         environment-modules-3.2.7-bindir.patch
 # Comment out stray module use in modules file when not using versioning
 # https://bugzilla.redhat.com/show_bug.cgi?id=895555
@@ -24,13 +26,20 @@ Patch2:         environment-modules-clear.patch
 Patch3:         environment-modules-avail.patch
 # Fix -Werror=format-security
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037053
+# https://sourceforge.net/p/modules/patches/13/
 Patch4:         environment-modules-format.patch
+# Support Tcl 8.6
+# https://sourceforge.net/p/modules/feature-requests/14/
+Patch5:         environment-modules-tcl86.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
 BuildRequires:  man
 #For ps in startup script
 Requires:       procps
+Requires(post): alternatives
+Requires(postun): alternatives
+Provides:	environment(modules)
 Source44: import.info
 
 %description
@@ -65,6 +74,7 @@ have access to the module alias.
 %patch2 -p1 -b .clear
 %patch3 -p1 -b .avail
 %patch4 -p1 -b .format
+%patch5 -p1 -b .tcl86
 
 
 %build
@@ -73,7 +83,7 @@ have access to the module alias.
            --prefix=%{_datadir} \
            --exec-prefix=%{_datadir}/Modules \
            --with-man-path=$(manpath) \
-           --with-module-path=%{_sysconfdir}/modulefiles
+           --with-module-path=%{_sysconfdir}/modulefiles:%{_datadir}/modulefiles
 #           --with-debug=42 --with-log-facility-debug=stderr
 make %{?_smp_mflags}
 
@@ -81,16 +91,27 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
-cp -p %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modules.sh
+touch %{buildroot}%{_sysconfdir}/profile.d/modules.{csh,sh}
+cp -p %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/Modules/init/modules.sh
 cp -p %SOURCE2 %SOURCE3 $RPM_BUILD_ROOT%{_datadir}/Modules/bin
-ln -s %{_datadir}/Modules/init/csh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modules.csh
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles \
+         $RPM_BUILD_ROOT%{_datadir}/modulefiles
+# Install the rpm config file
+install -Dpm 644 %{SOURCE4} %{buildroot}/%{_rpmmacrosdir}/%{name}
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/modules.sh_environment-modules<<EOF
+%{_sysconfdir}/profile.d/modules.sh	%{_datadir}/Modules/init/modules.sh	40
+%{_sysconfdir}/profile.d/modules.csh	%{_datadir}/Modules/init/csh	%{_datadir}/Modules/init/modules.sh
+EOF
 
+
+%post
+[ ! -L %{_bindir}/modules.sh ] && rm -f %{_sysconfdir}/profile.d/modules.sh
+:
 
 %files
+%_altdir/modules.sh_environment-modules
 %doc LICENSE.GPL README TODO
 %{_sysconfdir}/modulefiles
-%config(noreplace) %{_sysconfdir}/profile.d/*
 %{_bindir}/modulecmd
 %dir %{_datadir}/Modules
 %{_datadir}/Modules/bin/
@@ -98,11 +119,16 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 %config(noreplace) %{_datadir}/Modules/init/*
 %config(noreplace) %{_datadir}/Modules/init/.modulespath
 %{_datadir}/Modules/modulefiles
+%{_datadir}/modulefiles
 %{_mandir}/man1/module.1*
 %{_mandir}/man4/modulefile.4*
+%{_rpmmacrosdir}/%{name}
 
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_10
+- converted for ALT Linux by srpmconvert tools
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_8
 - update to new release by fcimport
 
