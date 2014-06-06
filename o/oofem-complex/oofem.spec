@@ -8,8 +8,8 @@
 %define sover %somver.2.2
 %define oname oofem
 Name: oofem-%scalar_type
-Version: 2.2
-Release: alt7.svn20121029
+Version: 2.4.0
+Release: alt1.git20140529
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -33,7 +33,10 @@ BuildPreReq: libneXtaw-devel libXext-devel doxygen graphviz latex2html
 %if "%scalar_type" == "real"
 BuildPreReq: libimlxx-devel
 %endif
-BuildPreReq: libtrilinos10-devel chrpath
+BuildPreReq: libtrilinos10-devel chrpath cmake
+BuildPreReq: libtinyxml2-devel liblapack-devel
+BuildPreReq: libvtk-devel vtk-examples vtk-python
+BuildPreReq: boost-python-devel
 
 %description
 OOFEM is free finite element code with object oriented architecture for
@@ -190,8 +193,8 @@ This package contains development documentation for ELIXIR.
 
 %prep
 %setup
-sed -i 's|@SOMVER@|%somver|g' */src/Makefile.in base/main_makefile.in
-sed -i 's|@SOVER@|%sover|g' */src/Makefile.in base/main_makefile.in
+sed -i 's|@SOMVER@|%somver|g' */src/Makefile.in
+sed -i 's|@SOVER@|%sover|g' */src/Makefile.in
 %if "%scalar_type" == "real"
 pushd doc
 tar -cf ../docs.tar $(find ./ -name '*.pdf')
@@ -207,113 +210,16 @@ source /usr/bin/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
 export MPIDIR=%mpidir
 
-export PETSC_INCLUDE=$PETSC_DIR/include
-export SLEPC_LIB="-lslepc"
+#export PETSC_INCLUDE=$PETSC_DIR/include
+#export SLEPC_LIB="-lslepc"
 %if "%scalar_type" == "complex"
 COMPLEX_FLAGS="-fno-strict-aliasing"
 %endif
 FLAGS="-I$PETSC_INCLUDE -I%_includedir/boost -I%mpidir/include/metis"
 FLAGS="$FLAGS -I$PWD/targets/default/include -I$PWD/src/oofemlib"
-#FLAGS="$FLAGS -I%_includedir/python%_python_version -DBOOST_PYTHON"
+FLAGS="$FLAGS -I%_includedir/python%_python_version -DBOOST_PYTHON"
 %add_optflags %optflags_shared $FLAGS $COMPLEX_FLAGS -fpermissive
 TOP=$PWD
-
-mkdir -p targets/default/include
-cp -f base/oofemdef.h.in targets/default/include/
-
-# function for build main package
-
-function buildIt() {
-	%configure $3 $4 \
-		--with-CKITDIR=$PWD/Ckit \
-		--with-ELIXIRDIR=$PWD/Elixir \
-		--with-MPIDIR=%mpidir \
-		--with-x \
-%if "%scalar_type" == "real"
-		--enable-iml \
-		--with-IMLDIR=%_includedir \
-%endif
-		--enable-petsc \
-		--enable-slepc \
-		--with-PETSCDIR=$PETSC_DIR \
-		--enable-parmetis \
-		--with-PARMETISDIR=%prefix \
-		--enable-dss \
-		--enable-sm \
-		--enable-tm \
-		--enable-fm \
-		OOFEM_TARGET=$1 \
-		CPPFLAGS="-I$TOP/Ckit/include -I$TOP/Elixir/include -I../default/include -g" \
-		LIBS="-L$TOP/Ckit/src -L$TOP/Elixir/src"
-	if [ "$NO_BUILD" = "" ]; then
-		pushd targets/default
-		export LIBNAME=lib$2
-		if [ "$1" = "default" ]; then
-			%make_build SOVER=%sover SOMVER=%somver
-		else
-			%make_build SOVER=%sover SOMVER=%somver OOFEM_TARGET=$1
-		fi 
-		rm -f $(find ./ -name '*.o')
-		if [ "$1" != "default" ]; then
-			cp -f include/* ../$1/include/
-		fi
-		popd
-	fi
-}
-
-# prepare
-
-mkdir -p targets/default/include
-mkdir -p targets/oofem-release/include
-mkdir -p targets/poofem-release/include
-mkdir objs
-sed -i "s|(PWD)|$PWD|g" configure.in
-%autoreconf
-
-NO_BUILD=1
-buildIt default poofem --enable-poofem
-NO_BUILD=
-
-# create necessary objects
-
-function buildCommon() {
-	mpicxx -g %optflags %optflags_shared -I../src/oofemlib \
-		-I../src/oofemlib/xfem -I%ldir/include -I../src/sm \
-		-I../src/tm -I../src/fm -I../Elixir/include \
-		-I../Ckit/include -I../targets/default/include \
-		-I../src/oofemlib/iga -I../src/tm/cemhyd \
-		-I../src/tm/cemhyd/tinyxml \
-		-D__SM_MODULE -D__TM_MODULE -D__FM_MODULE \
-		-D__USE_MPI -D__PETSC_MODULE $1 -c *.C
-}
-
-pushd objs
-cp ../src/main/* ./
-cp -f %SOURCE3 ./
-rm -f maindebug.C
-mkdir tmp
-
-# parallel
-buildCommon -D__PARALLEL_MODE
-for i in $(ls *.o); do
-	mv $i tmp/poofem-$i
-done
-# sequential
-buildCommon
-for i in $(ls *.o); do
-	mv $i tmp/oofem-$i
-done
-# graphical
-buildCommon -D__OOFEG
-for i in $(ls *.o); do
-	mv $i tmp/oofeg-$i
-done
-
-mv tmp/* ./
-rmdir tmp
-mv oofeg-oofeg.o oofeg.o
-
-popd
 
 # build necessary libraries
 
@@ -332,22 +238,68 @@ pushd Elixir/src
 %make
 popd
 
-# main build
+cmake \
+%if %_lib == lib64
+	-DLIB_SUFFIX=64 \
+%endif
+	-DCMAKE_INSTALL_PREFIX:PATH=%ldir \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DSCALAR_TYPE:STRING=%scalar_type \
+	-DSOMVER:STRING=%somver \
+	-DSOVER:STRING=%sover \
+	-DBLAS_LIBRARIES:STRING="openblas" \
+	-DLAPACK_LIBRARIES:STRING="lapack" \
+	-DCKIT_DIR:PATH="$PWD/Ckit" \
+	-DELIXIR_DIR:PATH="$PWD/Elixir" \
+	-DMETIS_DIR:PATH="%prefix" \
+	-DMPI_DIR:PATH="%mpidir" \
+	-DMY_PETSC_DIR:PATH="$PETSC_DIR" \
+	-DPARMETIS_DIR:PATH="%prefix" \
+	-DSLEPC_DIR:PATH="$PETSC_DIR" \
+	-DSPOOLES_DIR:PATH="%_libdir/spooles" \
+	-DTINYXML2_DIR:PATH="%prefix" \
+	-DVTK_DIR:PATH="%prefix" \
+	-DUSE_CEMHYD:BOOL=ON \
+	-DUSE_DSS:BOOL=ON \
+	-DUSE_LAPACK:BOOL=ON \
+	-DUSE_OOFEG:BOOL=ON \
+	-DUSE_PARALLEL:BOOL=ON \
+	-DUSE_METIS:BOOL=ON \
+	-DUSE_PARMETIS:BOOL=ON \
+	-DUSE_PETSC:BOOL=ON \
+	-DUSE_PYTHON:BOOL=ON \
+	-DUSE_PYTHON_BINDINGS:BOOL=ON \
+	-DUSE_SLEPC:BOOL=ON \
+	-DUSE_SPOOLES:BOOL=OFF \
+	-DUSE_TRIANGLE:BOOL=OFF \
+	-DUSE_TINYXML:BOOL=ON \
+	-DUSE_VTK:BOOL=ON \
+%if "%scalar_type" == "real"
+	-DUSE_IML:BOOL=ON \
+%endif
+	.
 
-buildIt poofem-release poofem --enable-poofem
-buildIt oofem-release oofem
-buildIt default oofeg --enable-oofeg --enable-oofeg-devel-interface
+%make_build VERBOSE=1
 
 # need relink libesi & libelixir
 
 pushd Elixir/src
 rm -f libesi.*
-%make_build OOFEG_LIB="-L../../targets/default -loofeg"
+%make_build OOFEG_LIB="-L$TOP -loofem $TOP/CMakeFiles/oofem.dir/src/main/main.C.o"
 rm -f libelixir.*
-%make_build OOFEG_LIB="-L../../targets/default -loofeg" ESI_LIB=-lesi
+%make_build OOFEG_LIB="-L$TOP -loofem $TOP/CMakeFiles/oofem.dir/src/main/main.C.o" \
+	ESI_LIB=-lesi
 popd
 
 %install
+source /usr/bin/petsc-%scalar_type.sh
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
+export MPIDIR=%mpidir
+
+%makeinstall_std
 
 install -d %buildroot%ldir/bin
 install -d %buildroot%_libdir
@@ -355,11 +307,13 @@ install -d %buildroot%ldir/lib
 install -d %buildroot%ldir/include/Ckit
 install -d %buildroot%ldir/include/Elixir
 
-install -m755 targets/default/bin/* %buildroot%ldir/bin
+#install -m755 targets/default/bin/* %buildroot%ldir/bin
 cp -P Ckit/src/*.so* Elixir/src/*.so* \
-	%buildroot%ldir/lib
-cp -P targets/default/*.so* %buildroot%ldir/lib/
-chmod -x %buildroot%ldir/lib/*
+	%buildroot%ldir/lib/
+#cp -P targets/default/*.so* %buildroot%ldir/lib/
+cp -fP liboofem.so* %buildroot%ldir/lib/
+cp -fP oofe? %buildroot%ldir/bin/
+#chmod -x %buildroot%ldir/lib/*
 install -p -m644 Ckit/include/*.h %buildroot%ldir/include/Ckit
 install -p -m644 Elixir/include/*.h %buildroot%ldir/include/Elixir
 pushd %buildroot%ldir/include
@@ -392,8 +346,11 @@ do
 	chrpath -r %ldir/lib:%mpidir/lib $i
 done
 
+#cp Ckit/README README.Ckit
+#cp Elixir/README README.Elixir
+
 %files
-%doc ChangeLog gpl.txt README
+%doc ChangeLog README
 %ldir/bin/*
 
 %files -n lib%name
@@ -445,6 +402,9 @@ done
 %endif
 
 %changelog
+* Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.git20140529
+- Version 2.4.0
+
 * Thu Jul 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt7.svn20121029
 - Rebuilt with new PETSc
 
@@ -515,3 +475,4 @@ done
 
 * Sun Oct 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.svn20091001
 - Initial build for Sisyphus
+
