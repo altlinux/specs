@@ -1,8 +1,8 @@
 %define _name MiniMock
 
 Name: python-module-minimock
-Version: 1.2.6
-Release: alt1.1
+Version: 1.2.8
+Release: alt1
 
 Summary: The simplest possible mock library
 License: MIT
@@ -24,7 +24,7 @@ synchronization and storage, the advanced API support allows to upload
 and download episode status changes.
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %python_build
@@ -37,6 +37,9 @@ and download episode status changes.
 %doc docs/*.txt
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
+- 1.2.8
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.6-alt1.1
 - Rebuild with Python-2.7
 
