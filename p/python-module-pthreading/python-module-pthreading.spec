@@ -1,7 +1,7 @@
 %define _name pthreading
 
 Name: python-module-%_name
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Re-implement threading.Lock, RLock and Condition with libpthread
@@ -40,6 +40,9 @@ implementation.
 %python_sitelibdir_noarch/%_name-%version-py*.egg-info
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- 0.1.3
+
 * Wed Oct 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - first build for Sisyphus
 
