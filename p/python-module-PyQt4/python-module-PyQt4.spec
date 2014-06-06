@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 4.10.4
+Version: 4.11
 Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
@@ -13,7 +13,6 @@ Group: Development/Python
 
 Source0: PyQt-x11-gpl.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
-Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
 BuildPreReq: %py_package_dependencies dbus-devel
@@ -90,10 +89,10 @@ This package contains PyQt4 docs
 
 %prep
 %setup -n PyQt-x11-gpl
-subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
-subst 's|/lib" |/%_lib" |g' configure.py
+subst 's|/lib/libpython|/%_lib/libpython|g' configure*.py
+subst 's|/lib" |/%_lib" |g' configure*.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
-	configure.py
+	configure*.py
 find . -type f -name \*.pro -o -name '*.pro-in' |while read f; do
 cat >> $f << 'E_O_F'
 QMAKE_CFLAGS += %optflags %optflags_shared
@@ -110,15 +109,13 @@ cp -a . ../python3
 export QT4DIR=%_qt4dir
 %add_optflags -I$PWD/qpy/QtGui
 
-echo 'yes' | python configure.py \
+echo 'yes' | python configure-ng.py \
 	--debug \
 	--verbose \
 	-q %_qt4dir/bin/qmake \
 	-d %python_sitelibdir \
-	-p %_qt4dir/plugins \
 	-a --confirm-license \
 	--qsci-api \
-	--enable=designer-plugin \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
 for i in $(find ./ -name Makefile); do
 	sed -i 's|-Wl,-rpath,|-I|g' $i
@@ -205,6 +202,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11-alt1
+- Version 4.11
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.4-alt1
 - Version 4.10.4
 
