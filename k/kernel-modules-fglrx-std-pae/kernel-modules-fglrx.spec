@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	14.10.1006
-%define module_release alt2
+%define module_version	14.10.1006.1001
+%define module_release alt1
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jun 06 2014 Led <led@altlinux.ru> 2:14.10.1006.1001-alt1
+- 14.10.1006.1001 (Catalyst 14.4 rev2)
 
 * Fri May 09 2014 Led <led@altlinux.ru> 2:14.10.1006-alt2
 - fixed build module for kernel 3.14
