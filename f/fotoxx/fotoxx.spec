@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 14.02.1
+Version: 14.06
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -11,7 +11,7 @@ Source: fotoxx-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
-Patch1: fotoxx-13.12-install.patch
+Patch1: fotoxx-14.06-alt-install.patch
 Patch2: fotoxx-12.01-helpdir.patch
 
 Requires: %name-data = %version-%release
@@ -66,7 +66,7 @@ subst 's/@ g++/g++/g; s/-O. /%optflags /' Makefile
 
 %install
 install -d %buildroot%_man1dir
-%make_install install DESTDIR=%buildroot PREFIX=/usr
+%make_install install DESTDIR=%buildroot PREFIX=%_prefix
 
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/fotoxx.desktop
 install -pD -m644 doc/fotoxx.man %buildroot%_man1dir/fotoxx.1
@@ -86,6 +86,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_man1dir/*
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 14.06-alt1
+- 14.06
+
 * Mon Feb 03 2014 Yuri N. Sedunov <aris@altlinux.org> 14.02.1-alt1
 - 14.02.1
 
