@@ -6,7 +6,7 @@
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.8.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-PyQt4-devel
 %endif
-BuildRequires: chrpath qt5-base-devel
+BuildRequires: chrpath qt5-base-devel python-module-PyQt5-devel
 
 %description
 Qscintilla is a free source code editing component. It comes with complete
@@ -242,7 +242,12 @@ Documentation for %name
 ln -s Qt4Qt5 Qt4
 cp -fR Qt4Qt5 Qt5
 cp -a Python Python-qt4
+sed -i "s|@Q5CFLAGS@||g" Python-qt4/configure.py
 cp -a Python Python-qt5
+Q5CFLAGS="$(pkg-config --cflags Qt5Widgets)"
+Q5CFLAGS="$Q5CFLAGS $(pkg-config --cflags Qt5PrintSupport)"
+sed -i "s|@Q5CFLAGS@|$Q5CFLAGS|g" Python-qt5/configure.py
+sed -i "s|\(lqscintilla2\)|\1-qt5|g" Python-qt5/configure.py
 %if_with python3
 cp -fR Python-qt4 ../python3
 %endif
@@ -323,12 +328,12 @@ python configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
 popd
 
 # Python bindings for PyQt5
-#pushd Python-qt5
-#python configure.py --debug -n ../Qt5 -o ../Qt5 \
-#	--qmake=%_qt5_bindir/qmake \
-#	--pyqt=PyQt5
-#%make_build
-#popd
+pushd Python-qt5
+python configure.py --debug -n ../Qt5 -o ../Qt5 \
+	--qmake=%_qt5_bindir/qmake \
+	--pyqt=PyQt5
+%make_build
+popd
 
 %if_with python3
 pushd ../python3
@@ -366,9 +371,9 @@ pushd Python-qt4
 %makeinstall_std INSTALL_ROOT=%buildroot
 popd
 # Python bindings for PyQt5
-#pushd Python-qt5
-#%makeinstall_std INSTALL_ROOT=%buildroot
-#popd
+pushd Python-qt5
+%makeinstall_std INSTALL_ROOT=%buildroot
+popd
 %endif
 
 mkdir -p %buildroot%python_sitelibdir/PyQt4
@@ -516,12 +521,12 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %files -n python-module-%name-qt4-devel
 %_datadir/sip/PyQt4/Qsci
 
-#files -n python-module-%name-qt5
-#python_sitelibdir/PyQt5/Qsci.so
-#_datadir/qt5/api/python/*.api
+%files -n python-module-%name-qt5
+%python_sitelibdir/PyQt5/Qsci.so
+%_datadir/qt5/api/python/*.api
 
-#files -n python-module-%name-qt5-devel
-#_datadir/sip/PyQt5/Qsci
+%files -n python-module-%name-qt5-devel
+%_datadir/sip/PyQt5/Qsci
 
 %if_with python3
 %files -n python3-module-%name-qt4
@@ -538,6 +543,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.2-alt2
+- Added python module for Qt5
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.2-alt1
 - Version 2.8.2
 - Added library for Qt5
