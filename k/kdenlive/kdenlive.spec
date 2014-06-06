@@ -2,7 +2,7 @@
 
 Name: kdenlive
 Version: 0.9.8
-Release: alt2
+Release: alt3
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: ru.po
 Patch1: alt-mlt0.7.4.patch
 Patch2: alt-disable-nepomuk.patch
+Patch3: alt-prefer-vlc.patch
 
 BuildRequires: cmake cmake-modules gcc-c++
 BuildRequires: kde4base-workspace-devel libqt4-devel kde-common-devel qjson-devel
@@ -44,6 +45,7 @@ rm -rf doc
 mv altlinux/doc .
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K4build
@@ -65,6 +67,9 @@ mv altlinux/doc .
 %_K4xdg_mime/*
 
 %changelog
+* Fri Jun 06 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt3
+- prefer vlc for preview
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt2
 - rebuilt with new mlt
 
