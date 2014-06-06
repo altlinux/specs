@@ -1,4 +1,4 @@
-%define cat_ver 14.10.1006
+%define cat_ver 14.10.1006.1001
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,8 +18,8 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 14.10.1006
-Release: alt2
+Version: 14.10.1006.1001
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -37,6 +37,7 @@ Source14: xinf2fdi
 Patch0: %bname-13.20.16-printk-loglevel.patch
 Patch1: %bname-14.10-remove-unused.patch
 Patch2: %bname-14.10-linux-3.14.patch
+Patch3: %bname-14.10-alt.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -116,6 +117,7 @@ cd common/lib/modules/%bname/build_mod
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -277,6 +279,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Fri Jun 06 2014 Led <led@altlinux.ru> 2:14.10.1006.1001-alt1
+- Catalyst 14.4 rev2
+
 * Fri May 09 2014 Led <led@altlinux.ru> 2:14.10.1006-alt2
 - kernel module: fixed build for kernel 3.14
 
