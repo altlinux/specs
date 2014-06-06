@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -43,7 +43,7 @@ Source: %name-%version.tar
 %define gio_ver 2.26
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
-%define libsoup_ver 2.42.0
+%define libsoup_ver 2.44.0
 %define gtk_ver 3.0
 %define libsqlite3_ver 3.5
 
@@ -147,6 +147,9 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.2-alt1
+- 0.22.2
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.1-alt1
 - 0.22.1
 
