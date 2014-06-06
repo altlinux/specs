@@ -6,7 +6,7 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 4.8.0
+Version: 4.8.6
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
@@ -55,7 +55,7 @@ Development files needed to build applications with %name.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/link-parser
@@ -71,10 +71,13 @@ Development files needed to build applications with %name.
 %dir %_includedir/%name/
 %_includedir/%name/*
 %_libdir/*.so
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 4.8.6-alt1
+- 4.8.6
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
