@@ -1,8 +1,8 @@
 %define _name mygpoclient
 
 Name: python-module-%_name
-Version: 1.6
-Release: alt1.1
+Version: 1.7
+Release: alt1
 
 Summary: Python interface to the my.gpodder.org webservices
 License: GPLv3+
@@ -36,6 +36,9 @@ and download episode status changes.
 %doc AUTHORS README
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6-alt1.1
 - Rebuild with Python-2.7
 
