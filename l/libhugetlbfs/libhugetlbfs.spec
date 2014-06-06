@@ -1,18 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name: libhugetlbfs
-Version: 2.17
-Release: alt1_1
+Version: 2.18
+Release: alt1_2
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
 License: LGPLv2+
 URL: http://libhugetlbfs.sourceforge.net/
 Source0: http://downloads.sourceforge.net/libhugetlbfs/%{name}-%{version}.tar.gz
-Patch0: libhugetlbfs-2.17-s390.patch
-Patch1: libhugetlbfs-2.17-ppc.patch
+Patch0: libhugetlbfs-2.18-s390.patch
 
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
@@ -48,7 +46,6 @@ pool size control. pagesize lists page sizes available on the machine.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .s390
-%patch1 -p1 -b .ppc
 
 %build
 # Parallel builds are not reliable
@@ -106,6 +103,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_1
 - update to new release by fcimport
 
