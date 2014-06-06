@@ -3,7 +3,7 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.4.1
+Version: 1.4.3
 Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
@@ -14,6 +14,7 @@ Url: http://www.gnu.org/software/freeipmi/
 PreReq: lib%name = %version-%release
 
 Source: %name-%version.tar
+Source1: %name.watch
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Tue Apr 10 2007
@@ -176,6 +177,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Fri Jun 06 2014 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
+- new version
+
 * Tue Mar 25 2014 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
 - new version
 
