@@ -2,7 +2,7 @@
 %def_with man
 
 Name: python-module-ethtool
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Ethernet settings python bindings
@@ -48,6 +48,9 @@ install -m644 man/pifconfig.8 %buildroot%_man8dir/pifconfig.8
 %{?_with_man:%_man8dir/*}
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
+- 0.11
+
 * Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
 - 0.10
 
