@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.12
 %define parser_ver 3.9.5
@@ -37,7 +37,7 @@
 
 Name: totem
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -433,6 +433,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Sat Jun 07 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
+- updated to 3.12.1_773e85fb
+
 * Wed Apr 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
