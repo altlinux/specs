@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: Xdmf
-Version: 20100923
-Release: alt24
+Version: 20140607
+Release: alt1
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -241,6 +241,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140607-alt1
+- New snapshot
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt24
 - Rebuilt with updated exodusii
 
