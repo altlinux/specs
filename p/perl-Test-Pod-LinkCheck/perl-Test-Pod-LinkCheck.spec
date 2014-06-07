@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 # Remove once Test::Apocalypse gets into buildroot.
 # Keep conditional dependencies to allow perl bootstrap.
@@ -8,14 +8,17 @@ BuildRequires: perl(CPAN.pm) perl(Test/NoWarnings.pm) perl-Module-Build perl-dev
 
 Name:           perl-Test-Pod-LinkCheck
 Version:        0.007
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Tests POD for invalid links
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Pod-LinkCheck/
 Source0:        http://www.cpan.org/authors/id/A/AP/APOCAL/Test-Pod-LinkCheck-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time:
 BuildRequires:  perl(App/PodLinkCheck/ParseLinks.pm)
 BuildRequires:  perl(App/PodLinkCheck/ParseSections.pm)
@@ -38,6 +41,8 @@ BuildRequires:  perl(Test/Tester.pm)
 %if %{undefined perl_bootstrap}
 # Break build-time cycle with perl-Test-Apocalypse
 BuildRequires:  perl(Test/Apocalypse.pm)
+BuildRequires:  perl(Test/NoWarnings.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
 %endif
 BuildRequires:  perl(Test/Script.pm)
 Requires:       perl(App/PodLinkCheck/ParseSections.pm)
@@ -74,6 +79,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.007-alt2_8
+- converted for ALT Linux by srpmconvert tools
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt2_6
 - build for Sisyphus
 
