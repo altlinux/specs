@@ -1,5 +1,5 @@
 Name: udunits
-Version: 2.1.24
+Version: 2.2.12
 Release: alt1
 Summary: Conversion of unit specifications between formatted and binary forms, etc
 License: Open source
@@ -9,7 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: libexpat-devel flex CUnit-devel
+BuildPreReq: libexpat-devel flex CUnit-devel gcc-fortran
 
 Requires: lib%name = %version-%release
 
@@ -72,7 +72,7 @@ rm -fR expat
 %make check
 
 %files
-%doc ANNOUNCEMENT BACKLOG CHANGE_LOG LICENSE
+%doc ANNOUNCEMENT BACKLOG CHANGE_LOG COPYRIGHT README
 %_bindir/*
 %_datadir/%name
 %_docdir/%name
@@ -85,10 +85,13 @@ rm -fR expat
 %_libdir/*.so
 
 %files docs
-%doc *.html *.pdf
+%doc *.html *.pdf */*.html */*.pdf
 %_infodir/*
 
 %changelog
+* Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.12-alt1
+- Version 2.2.12
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.24-alt1
 - Initial build for Sisyphus
 
