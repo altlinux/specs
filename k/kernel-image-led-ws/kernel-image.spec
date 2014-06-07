@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.5
-Release: alt5
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -152,14 +152,17 @@ Release: alt5
 
 %def_enable remove_unused_exports
 
+%if "%sub_flavour" != "xen"
+# FIXME: spl and vmware for 'xen' flavour
 #Extra_modules spl 0.6.2
 %Extra_modules zfs 0.6.2
-#Extra_modules kvm 3.10.1
 %Extra_modules vmware 6.0.2
 %Extra_modules vboxhost 4.3.12
 %Extra_modules vboxguest 4.3.12
+%endif
+#Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
-%Extra_modules fglrx 14.10.1006
+%Extra_modules fglrx 14.10.1006.1001
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.8
 #Extra_modules ipt_NETFLOW 1.8.3
@@ -275,6 +278,11 @@ ExcludeArch: i386
 %set_without lkvm
 %endif
 
+%if "%sub_flavour" == "xen"
+%set_disable kvm
+%set_without lkvm
+%endif
+
 %if "%sub_flavour" == "ws"
 %set_disable numa
 %endif
@@ -287,12 +295,6 @@ ExcludeArch: i386
 #set_enable pae
 %endif
 %endif
-%endif
-
-%if "%sub_flavour" == "vs"
-%def_enable vserver
-%else
-%def_disable vserver
 %endif
 
 %ifarch %x86_64
@@ -404,12 +406,21 @@ are built separately from the kernel; they are available in separate packages
 (kernel-modules-*-%flavour).
 %if "%sub_flavour" == "ws"
 The "ws" flavour of kernel packages is kernels for using on workstations.
-%endif
+%else
 %if "%sub_flavour" == "vs"
-The "vs" flavour of kernel packages is VServer kernels http://linux-vserver.org.
+The "vs" flavour of kernel packages is VServer kernels
+http://linux-vserver.org/.
 It allows to run multiple virtual units at once. Those units are sufficiently
 isolated to guarantee the required security, but utilize available resources
 efficiently, as they run on the same kernel.
+%else
+%if "%sub_flavour" == "xen"
+The "xen" flavour of kernel packages is for XEN paravirtualization
+http://www.xenproject.org/.
+This kernels can be used both as the domain0 ("XEN0") and as an unprivileged
+("XENU") kernel.
+%endif
+%endif
 %endif
 
 %define kernel_modules_package_add_provides() \
@@ -939,7 +950,6 @@ config_fix()
 
 config_disable()
 {
-	echo "DISABLE=<$@>"
 	config_fix d $@
 }
 
@@ -1082,6 +1092,11 @@ config_disable \
 	%{?_disable_fatelf:binfmt_fatelf} \
 	%{?_enable_simple_ext2:ext2_fs_{xattr,posix_acl,security}} \
 	%{?_enable_ext4_for_ext2:ext2_fs} %{?_enable_ext4_for_ext3:ext3_fs}
+
+%if "%sub_flavour" != "ws"
+config_disable preempt hz_1000 sched_cfs_boost
+config_enable preempt_voluntary hz_250
+%endif
 
 %{?_disable_pata:config_disable $(sed -n '/^CONFIG_PATA_/s/^CONFIG_\(PATA_.*\)=.*$/\1/p' .config | tr '[[:upper:]]\n' '[[:lower:]] ')}
 # FIXME MFD_* may be selected with other options
@@ -1416,7 +1431,7 @@ gen_rpmmodlist drivers/{{vhost/vhost_scsi,message/fusion/mptfc}.ko,{scsi{,/devic
 sort -u scsi-base.rpmmodlist > scsi-base.rpmmodlist~ && rm scsi-base.rpmmodlist
 gen_rpmmodfile ipmi drivers/{char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
 %if_enabled drm
-gen_rpmmodlist drivers/gpu/*/* \
+gen_rpmmodlist drivers/gpu/{vga,drm/*} \
 %if "%sub_flavour" != "guest"
 	| grep -Ev '/drm/(ttm|drm(|_kms_helper)\.ko)$' \
 	%{?_enable_guest:| grep -Ev '/drm/(bochs|cirrus|qxl|vmwgfx)$'} \
@@ -1863,6 +1878,26 @@ done)
 
 
 %changelog
+* Sat Jun 07 2014 Led <led@altlinux.ru> 3.14.5-alt7
+- updated:
+  + fix-kernel--futex
+- added:
+  + fix-drivers-usb-host--ohci-hcd
+
+* Fri Jun 06 2014 Led <led@altlinux.ru> 3.14.5-alt6
+- added "xen" kernel type
+- updated:
+  + feat-arch-x86-mach-xen
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- disabled for non-ws:
+  + SCHED_CFS_BOOST
+  + PREEMPT
+  + HZ_1000
+- enabled for non-ws:
+  + PREEMPT_VOLUNTARY
+  + HZ_250
+- fglrx 14.10.1006.1001
+
 * Thu Jun 05 2014 Led <led@altlinux.ru> 3.14.5-alt5
 - updated:
   + fix-drivers-gpu-drm--i915
