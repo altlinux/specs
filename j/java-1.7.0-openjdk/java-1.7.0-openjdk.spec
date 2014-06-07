@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/java /usr/bin/xprop
-# END SourceDeps(oneline)
 BuildRequires: ca-certificates-java
 # ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
 %ifarch %{arm}
@@ -19,29 +16,21 @@ BuildRequires(pre): rpm-build-java
 %define with_systemtap 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.9
-# If gcjbootstrap is 1 OpenJDK is bootstrapped against
-# java-1.6.0-sun-devel.  If gcjbootstrap is 0 OpenJDK is built against
-# java-1.6.0-openjdk-devel.
-%global gcjbootstrap 0
-
+%define version 1.7.0.25
 # If debug is 1, OpenJDK is built with all debug info present.
 %global debug 0
 
-%global icedtea_version 2.3.8
+%global icedtea_version 2.3.10
 %global hg_tag icedtea-{icedtea_version}
-
-%global accessmajorver 1.23
-%global accessminorver 0
-%global accessver %{accessmajorver}.%{accessminorver}
-%global accessurl http://ftp.gnome.org/pub/GNOME/sources/java-access-bridge/
-
 
 %global multilib_arches ppc64 sparc64 x86_64
 
 %global jit_arches %{ix86} x86_64 sparcv9 sparc64
+#this is even greater restriction then jit archs. It should have all modifications 
+#as jit_archs, and as addition also using 2.1 source
+%global arm_arches armv5tel armv7hl
 
 %ifarch x86_64
 %global archbuild amd64
@@ -121,38 +110,33 @@ BuildRequires: jpackage-compat
 # simply be another alternative.
 %ifarch %{multilib_arches}
 %global syslibdir       %{_libdir}
-%global archname        %{name}.%{_arch}
 %else
 %global syslibdir       %{_libdir}
-%global archname        %{name}
 %endif
+%global archname        %{name}.%{_arch}
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global buildver        9
+%global buildver        25
 # Keep priority on 6digits in case buildver>9
-%global priority        17000%{buildver}
+%global priority        1700%{buildver}
 %global javaver         1.7.0
 
 # Standard JPackage directories and symbolic links.
 # Make 64-bit JDKs just another alternative on 64-bit architectures.
-%ifarch %{multilib_arches}
 %global sdklnk          java-%{javaver}-%{origin}.%{_arch}
 %global jrelnk          jre-%{javaver}-%{origin}.%{_arch}
 %global sdkdir          %{name}-%{version}.%{_arch}
-%else
-%global sdklnk          java-%{javaver}-%{origin}
-%global jrelnk          jre-%{javaver}-%{origin}
-%global sdkdir          %{name}-%{version}
-%endif
+
 %global jredir          %{sdkdir}/jre
 %global sdkbindir       %{_jvmdir}/%{sdklnk}/bin
 %global jrebindir       %{_jvmdir}/%{jrelnk}/bin
-%ifarch %{multilib_arches}
+
 %global jvmjardir       %{_jvmjardir}/%{name}-%{version}.%{_arch}
-%else
-%global jvmjardir       %{_jvmjardir}/%{name}-%{version}
-%endif
+
+# The suffix for file names when we have to make them unique (from
+# other Java packages).
+%global uniquesuffix          %{name}
 
 %ifarch %{jit_arches}
 # Where to install systemtap tapset (links)
@@ -172,7 +156,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt1_2.3.8.0jpp7
+Release: alt1_2.3.10.3jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -204,28 +188,12 @@ URL:      http://openjdk.java.net/
 # tar czf openjdk-icedtea-%{icedtea_version}.tar.gz openjdk
 Source0:  openjdk-icedtea-%{icedtea_version}.tar.gz
 
-# Gnome access bridge
-# Download-able from accessurl, md5 hash supported
-Source1:  %{accessurl}%{accessmajorver}/java-access-bridge-%{accessver}.tar.bz2
-
 # README file
 # This source is under maintainer's/java-team's control
 Source2:  README.src
 
-# javac wrapper (used during bootstrap to strip what ecj doesn't support)
-# This source is under manual control of maintainer/java-team
-Source3: javac-wrapper
-
-
 # Sources 6-12 are taken from hg clone http://icedtea.classpath.org/hg/icedtea7
 # Unless said differently, there is directory with required sources which should be enough to pack/rename
-
-# Auto-generated files (used only in bootstrap)
-# To reproduce: 
-# build OpenJDK7 tarball above with any JDK
-# mv generated.build generated
-# tar czf generated-files.tar.gz generated
-Source4: generated-files.tar.gz
 
 # Class rewrite to rewrite rhino hierarchy
 Source5: class-rewriter.tar.gz
@@ -246,20 +214,17 @@ Source9: pulseaudio.tar.gz
 # Removed libraries that we link instead
 Source10: remove-intree-libraries.sh
 
-# For primary arches, build latest and for secondary, use hs22
+# For primary arches, build latest and for arm, use hs22
 # base (icedtea-2.2.1 tag)
 
 # http://icedtea.classpath.org/hg/release/icedtea7-forest-2.1
-# hg tag: icedtea-2.1.5
-Source100:  openjdk-icedtea-2.1.6.tar.gz
+# hg tag: icedtea-2.1.9
+Source100:  openjdk-icedtea-2.1.9.tar.gz
 
 # RPM/distribution specific patches
 
 # Allow TCK to pass with access bridge wired in
 Patch1:   java-1.7.0-openjdk-java-access-bridge-tck.patch
-
-# Adjust idlj compilation switches to match what system idlj supports
-Patch2:   java-1.7.0-openjdk-java-access-bridge-idlj.patch
 
 # Disable access to access-bridge packages by untrusted apps
 Patch3:   java-1.7.0-openjdk-java-access-bridge-security.patch
@@ -284,6 +249,9 @@ Patch100: rhino.patch
 Patch101: %{name}-bitmap.patch
 Patch102: %{name}-size_t.patch
 
+# Disable system LCMS as 2.3.10 security release have fixes for it
+Patch500:  %{name}-disable-system-lcms.patch
+
 # Patches for Arm
 Patch103: %{name}-arm-fixes.patch
 
@@ -293,120 +261,8 @@ Patch105: %{name}-ppc-zero-hotspot.patch
 
 Patch106: %{name}-freetype-check-fix.patch
 
-#
-# Bootstrap patches (code with this is never shipped)
-#
-
-# Explicitly set javac, so that the bootstrap version is used
-Patch200: bootstrap-ant-javac.patch
-
-# Adjusted generated sources path to use prebuilt ones
-Patch201: bootstrap-corba-defs.patch
-
-# Do not use idlj to generate sources, as we use prebuilt ones
-Patch202: bootstrap-corba-idlj.patch
-
-# Disable decending into sources dir for generation
-Patch203: bootstrap-corba-no-gen.patch
-
-# Explicitly compile ORB.java
-Patch204: bootstrap-corba-orb.patch
-
-# Don't build demos in bootstrap
-Patch205: bootstrap-demos.patch
-
-# Change hex constants to be numbers instead of 0x... so that ecj can compile them right
-Patch206: bootstrap-ecj-fphexconstants.patch
-
-# Adjust opt flags to remove what ecj doesn't support
-Patch207: bootstrap-ecj-opts.patch
-
-# use pre-generated font config files
-Patch208: bootstrap-fontconfig.patch
-
-# Don't write auto-generation message in bootstrap
-Patch209: bootstrap-generated-comments.patch
-
-# Adjust bootclasspath to match what ecj has
-Patch210: bootstrap-xbootclasspath.patch
-
-# Wire in icedtea rt.jar (FIXME: name needs update, kept same for now to match icedtea name)
-Patch211: bootstrap-icedteart.patch
-
-# Wire in custom compiles rt classes
-Patch212: bootstrap-jar.patch
-
-# Compile inner opengl class explicitly
-Patch213: bootstrap-javah.patch
-
-# Disable ct.sym creation for bootstrap
-Patch214: bootstrap-symbols.patch
-
-# Disable icon generation for bootstrap
-Patch215: bootstrap-tobin.patch
-
-# Don't run test_gamma
-Patch216: bootstrap-test_gamma.patch
-
-# Disable requirement of module_lib path which bootstrap java_home doesn't have
-Patch217: bootstrap-tools.jar.patch
-
-# Allow -J opts to jar only if jar knows of them
-Patch218: bootstrap-jopt.patch
-
-# Explicitly add jaxp classes to classpath
-Patch219: bootstrap-jaxp-dependency.patch
-
-# Don't fork when generating stubs
-Patch220: bootstrap-genstubs-nofork.patch
-
-# Remove dependency on ProcessBuilder which is package private to Oracle implementation
-Patch221: bootstrap-break-processbuilder-dependency.patch
-
-# Allow to build with 1.5
-Patch222: bootstrap-revert-6973616.patch
-
-# Avoid trying to load system zone info provider and failing
-Patch223: bootstrap-revert-6941137.patch
-
-# Replace usage of string switch with if/elseif/else
-Patch224: bootstrap-ecj-stringswitch.patch
-
-# Allow langtools to use older jdk
-Patch225: bootstrap-langtools-force-old-jdk.patch
-
-# Access JDK sources and classes from langtools build
-Patch226: bootstrap-corba-dependencies.patch
-
-# Access langtools classes for Javadoc
-Patch227: bootstrap-jaxws-langtools-dependency.patch
-
-# Access JDK sources for com.sun.net.httpserver
-Patch228: bootstrap-jaxws-jdk-dependency.patch
-
-# Access JDK and generated sources to build servicability agent
-Patch229: bootstrap-hotspot-jdk-dependency.patch
-
-# Remove use of multi-catch and replace with regular multi-level catch
-Patch230: bootstrap-ecj-multicatch.patch
-
-# Remove use of try-with-resources and replace with manual close
-Patch231: bootstrap-ecj-trywithresources.patch
-
-# Disable auto-boxing and manally cast
-Patch232: bootstrap-ecj-autoboxing.patch
-
-# Use custom xslt processor
-Patch233: bootstrap-xsltproc.patch
-
-# Use constants from interface rather than impl
-Patch234: bootstrap-pr40188.patch
-
-# Remove use of diamond operator and replace with manual
-Patch235: bootstrap-ecj-diamond.patch
-
-# Adjust javah switches to only use what bootstrap version supports
-Patch236: bootstrap-javah-xbootclasspath.patch
+# allow to create hs_pid.log in tmp (in 700 permissions) if working directory is unwritable
+Patch200: abrt_friendly_hs_log_jdk7.patch
 
 #
 # Optional component packages
@@ -427,13 +283,20 @@ Patch302: systemtap.patch
 # Rhino support
 Patch400: rhino-icedtea-2.1.1.patch
 
+#Workaround RH947731
+Patch401: 657854-openjdk7.patch
+#Workaround RH902004
+Patch402: gstackbounds.patch
+Patch403: PStack-808293.patch
+# End of tmp patches
+
 BuildRequires: autoconf
 BuildRequires: automake
+BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: cups-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libungif-devel
-BuildRequires: liblcms2-devel
 BuildRequires: libX11-devel
 BuildRequires: libXi-devel
 BuildRequires: libXp-devel
@@ -450,16 +313,13 @@ BuildRequires: ant-nodeps
 BuildRequires: libXinerama-devel
 BuildRequires: rhino
 BuildRequires: zip
-%if %{gcjbootstrap}
-BuildRequires: java-1.6.0-sun-devel
-%else
-BuildRequires: java-1.7.0-openjdk-devel
-%endif
 BuildRequires: fontconfig
-# Java Access Bridge for GNOME build requirements.
+BuildRequires: fonts-type1-xorg
+BuildRequires: zlib > 1.2.3-6
+BuildRequires: java-1.7.0-openjdk-devel
+BuildRequires: fontconfig
 #BuildRequires: libat-spi-devel
 BuildRequires: gawk
-BuildRequires: libbonobo-devel
 BuildRequires: xset xhost
 # PulseAudio build requirements.
 %if %{with_pulseaudio}
@@ -484,8 +344,9 @@ BuildRequires: systemtap-sdt-devel
 %endif
 
 Requires: rhino
-Requires: liblcms2
 #Requires: libjpeg = 6b
+Requires: fontconfig
+Requires: fonts-type1-xorg
 # Require /etc/pki/java/cacerts.
 Requires: ca-certificates
 # Require jpackage-utils for ant.
@@ -610,25 +471,35 @@ Provides: java-javadoc = 1:1.7.0
 %description javadoc
 The OpenJDK API documentation.
 
+%package accessibility
+Group: Development/Java
+Summary: OpenJDK accessibility connector
+Requires: java-atk-wrapper
+Requires: %{name} = %{epoch}:%{version}-%{release}
+
+%description accessibility
+Enables accessibility support in OpenJDK by using java-at-wrapper. This allows compatible at-spi2 based accessibility programs to work for AWT and Swing-based programs.
+Please note, the java-atk-wrapper is still in beta, and also OpenJDK itself is still in phase of tuning to be working with accessibility features.
+Although working pretty fine, there are known issues with accessibility on, so do not rather install this package unless you really need.
+
 %prep
 
-%ifarch %{jit_arches}
-%global source_num 0
-%else
+%ifarch %{arm_arches}
 %global source_num 100
+%else
+%global source_num 0
 %endif
 
-%setup -q -c -n %{name} -T -a %{source_num}
-%setup -q -n %{name} -T -D -a 1
+%setup -q -c -n %{uniquesuffix} -T -a %{source_num}
 cp %{SOURCE2} .
 
 # OpenJDK patches
 
 # Rhino patch -- one default version (100) and one specific to 2.1.1 (400)
-%ifarch %{jit_arches}
-%patch100
-%else
+%ifarch %{arm_arches}
 %patch400
+%else
+%patch100
 %endif
 
 # pulseaudio support
@@ -647,9 +518,6 @@ sh %{SOURCE10}
 # Copy jaxp, jaf and jaxws drops
 mkdir drops/
 
-# Extract the generated files
-tar xzf %{SOURCE4}
-
 # Extract the rewriter (to rewrite rhino classes)
 tar xzf %{SOURCE5}
 
@@ -660,7 +528,7 @@ tar xzf %{SOURCE6}
 
 for file in tapset/*.in; do
 
-    OUTPUT_FILE=`echo $file | sed -e s:\.in$::g`
+    OUTPUT_FILE=`echo $file | sed -e s:%{javaver}\.stp\.in$:%{version}-%{release}.stp:g`
     sed -e s:@ABS_SERVER_LIBJVM_SO@:%{_jvmdir}/%{sdkdir}/jre/lib/amd64/server/libjvm.so:g $file > $OUTPUT_FILE
     sed -i -e '/@ABS_CLIENT_LIBJVM_SO@/d' $OUTPUT_FILE
     sed -i -e s:@ABS_JAVA_HOME_DIR@:%{_jvmdir}/%{sdkdir}:g $OUTPUT_FILE
@@ -677,54 +545,9 @@ tar xzf %{SOURCE9}
 
 # Extract desktop files
 tar xzf %{SOURCE7}
-
-# If bootstrapping, apply additional patches
-%if %{gcjbootstrap}
-
-cp -a openjdk openjdk-boot
-
-# Add bootstrap patches
-%patch200
-%patch201
-%patch202
-%patch203
-%patch204
-%patch205
-%patch206
-%patch207
-%patch208
-%patch209
-%patch210
-%patch211
-%patch212
-%patch213
-%patch214
-%patch215
-%patch216
-%patch217
-%patch218
-%patch219
-%patch220
-%patch221
-%patch222
-%patch223
-%patch224
-%patch225
-%patch226
-%patch227
-%patch228
-%patch229
-%patch230
-%patch231
-%patch232
-%patch233
-%patch234
-%patch235
-%patch236
-
-%endif
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 %patch33 -p1
+
 
 %build
 # How many cpu's do we have?
@@ -758,7 +581,11 @@ patch -l -p0 < %{PATCH102}
 patch -l -p0 < %{PATCH103}
 %endif
 
+# Disable system LCMS2
+patch -l -p0 < %{PATCH500}
+
 patch -l -p0 < %{PATCH106}
+patch -l -p0 < %{PATCH200}
 
 %ifarch ppc ppc64
 # PPC fixes
@@ -766,8 +593,11 @@ patch -l -p0 < %{PATCH104}
 patch -l -p0 < %{PATCH105}
 %endif
 
-# Add a "-icedtea" tag to the version
-sed -i "s#BUILD_VARIANT_RELEASE)#BUILD_VARIANT_RELEASE)-icedtea#" openjdk/jdk/make/common/shared/Defs.gmk
+patch -l -p0 < %{PATCH401}
+%ifarch %{jit_arches}
+patch -l -p0 < %{PATCH402}
+patch -l -p0 < %{PATCH403}
+%endif
 
 # Build the re-written rhino jar
 mkdir -p rhino/{old,new}
@@ -801,102 +631,9 @@ java -cp rewriter com.redhat.rewriter.ClassRewriter \
    jar cfm ../rhino.jar META-INF/MANIFEST.MF sun
 )
 
-%if %{gcjbootstrap}
-
-mkdir -p bootstrap/boot
-
-# Copy over JAVA_HOME from /usr/lib/jvm/java-gcj/
-cp -aL %{_jvmdir}/java-gcj/* bootstrap/boot/ || : # broken symlinks can be non-fatal but may cause this to fail
-
-# Replace javac with a wrapper that does some magic
-cp -af %{SOURCE3} bootstrap/boot/bin/javac
-chmod u+x bootstrap/boot/bin/javac # SOURCE3 may not be +x
-sed -i -e s:@RT_JAR@:$PWD/bootstrap/boot/jre/lib/rt.jar:g bootstrap/boot/bin/javac
-
-# Link the native2ascii binary
-ln -sf /usr/bin/gnative2ascii bootstrap/boot/bin/native2ascii
-
-# We don't need a disassebler, fake it
-echo "#!/bin/sh
-exit 0" > bootstrap/boot/bin/javap
-chmod u+rx bootstrap/boot/bin/javap # We need to run this during build
-
-# Modules directory
-mkdir -p bootstrap/boot/lib/modules
-
-# jdk1.6.0 link
-rm -f bootstrap/jdk1.6.0
-ln -sf boot bootstrap/jdk1.6.0
-
-# Update rt.jar with newer classes
-# Extra classes to compile for reasons like
-# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42003
-echo "openjdk-boot/jdk/src/share/classes/java/util/regex/Matcher.java 
-openjdk-boot/jdk/src/share/classes/javax/management/remote/JMXServiceURL.java 
-openjdk-boot/jdk/src/share/classes/javax/management/modelmbean/ModelMBeanInfo.java 
-openjdk-boot/jdk/src/share/classes/javax/swing/plaf/basic/BasicDirectoryModel.java
-openjdk-boot/langtools/src/share/classes/javax/tools/JavaFileManager.java" > rt-source-files
-
-mkdir -p rt
-bootstrap/jdk1.6.0/bin/javac -g -encoding utf-8    -source 6 -target 6 -d rt \
-  -classpath %{_jvmdir}/java-gcj/jre/lib/rt.jar \
-  -sourcepath 'generated:openjdk-boot/jdk/src/share/classes:openjdk-boot/jdk/src/solaris/classes:openjdk-boot/langtools/src/share/classes:openjdk-boot/corba/src/share/classes' \
-  -bootclasspath "\'\'" @rt-source-files
-
-pushd rt
-zip -qur ../bootstrap/jdk1.6.0/jre/lib/rt.jar *
-popd
-
-# clean up
-rm -f rt-source-files
-rm -rf rt
-
-# Build it
-pushd openjdk-boot
-cp -a ../generated generated.build
-chmod u+rwx generated.build
-
-export ALT_DROPS_DIR=$PWD/../drops
-export ALT_JDK_IMPORT_PATH="$PWD/../bootstrap/jdk1.6.0"
-
-# Set generic profile
-source jdk/make/jdk_generic_profile.sh
-
-make MEMORY_LIMIT=-J-Xmx512m \
-  ANT="/usr/bin/ant" \
-  ALT_BOOTDIR="$PWD/../bootstrap/jdk1.6.0" \
-  ICEDTEA_RT="$PWD/../bootstrap/jdk1.6.0/jre/lib/rt.jar" \
-  HOTSPOT_BUILD_JOBS="$NUM_PROC" \
-  NO_DOCS="true" \
-  RHINO_JAR="$PWD/../rhino/rhino.jar" \
-  GENSRCDIR="$PWD/generated.build" \
-  DISABLE_NIMBUS="true" \
-  XSLT="/usr/bin/xsltproc" \
-  FT2_CFLAGS="-I/usr/include/freetype2 " \
-  FT2_LIBS="-lfreetype " \
-%ifnarch %{jit_arches}
-  LIBFFI_CFLAGS="`pkg-config --cflags libffi` " \
-  LIBFFI_LIBS="-lffi " \
-  ZERO_BUILD="true" \
-  ZERO_LIBARCH="%{archbuild}" \
-  ZERO_ARCHDEF="%{archdef}" \
-%ifarch ppc ppc64 s390 s390x
-  ZERO_ENDIANNESS="big" \
-%else
-  ZERO_ENDIANNESS="little" \
-%endif
-%endif
-  %{nil}
-
-export JDK_TO_BUILD_WITH=$PWD/build/linux-%{archbuild}/j2sdk-image
-
-popd
-
-%else
-
 export JDK_TO_BUILD_WITH=/usr/lib/jvm/java-openjdk
 
-%endif
+
 
 pushd openjdk >& /dev/null
 
@@ -916,15 +653,16 @@ make MEMORY_LIMIT=-J-Xmx512m \
   ANT="/usr/bin/ant" \
   DISTRO_NAME="Fedora" \
   DISTRO_PACKAGE_VERSION="ALTLinux-%{release}-%{_arch}" \
-%ifarch %{jit_arches}
-  JDK_UPDATE_VERSION=`printf "%02d" %{buildver}` \
-%else
+%ifarch %{arm_arches}
   JDK_UPDATE_VERSION="03" \
+%else
+  JDK_UPDATE_VERSION=`printf "%02d" %{buildver}` \
 %endif
   MILESTONE="fcs" \
   HOTSPOT_BUILD_JOBS="$NUM_PROC" \
   STATIC_CXX="false" \
   RHINO_JAR="$PWD/../rhino/rhino.jar" \
+  GENSRCDIR="$PWD/generated.build" \
   FT2_CFLAGS="-I/usr/include/freetype2 " \
   FT2_LIBS="-lfreetype " \
   DEBUG_CLASSFILES="true" \
@@ -961,24 +699,16 @@ cp -pPRf build/pulse-java.jar $JAVA_HOME/jre/lib/ext/
 popd
 %endif
 
-%if_with java_access_bridge
-# Build Java Access Bridge for GNOME.
-pushd java-access-bridge-%{accessver}
-  patch -l -p1 < %{PATCH1}
-  patch -l -p1 < %{PATCH2}
-  OLD_PATH=$PATH
-  export PATH=$JAVA_HOME/bin:$OLD_PATH
-  ./configure
-make MEMORY_LIMIT=-J-Xmx512m
-  export PATH=$OLD_PATH
-  cp -a bridge/accessibility.properties $JAVA_HOME/jre/lib
-  chmod 644 gnome-java-bridge.jar
-  cp -a gnome-java-bridge.jar $JAVA_HOME/jre/lib/ext
-popd
-%endif
-
 # Copy tz.properties
 echo "sun.zoneinfo.dir=/usr/share/javazi" >> $JAVA_HOME/jre/lib/tz.properties
+
+#remove all fontconfig files. This change should be usptreamed soon
+rm -f %{buildoutputdir}/j2re-image/lib/fontconfig*.properties.src
+rm -f %{buildoutputdir}/j2re-image/lib/fontconfig*.bfc
+rm -f %{buildoutputdir}/j2sdk-image/jre/lib/fontconfig*.properties.src
+rm -f %{buildoutputdir}/j2sdk-image/jre/lib/fontconfig*.bfc
+rm -f %{buildoutputdir}/lib/fontconfig*.properties.src
+rm -f %{buildoutputdir}/lib/fontconfig*.bfc
 
 %install
 unset JAVA_HOME
@@ -992,16 +722,21 @@ popd
 
 pushd %{buildoutputdir}/j2sdk-image
 
+#install jsa directories so we can owe them
+mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/server/
+mkdir -p $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
+
   # Install main files.
   install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
   cp -a bin include lib src.zip $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
   install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}
   cp -a jre/bin jre/lib $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}
+  cp -a ASSEMBLY_EXCEPTION LICENSE THIRD_PARTY_README $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}
 
 %if_enabled systemtap
   # Install systemtap support files.
   install -dm 755 $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset
-  cp -a $RPM_BUILD_DIR/%{name}/tapset/*.stp $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset/
+  cp -a $RPM_BUILD_DIR/%{uniquesuffix}/tapset/*.stp $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/tapset/
   install -d -m 755 $RPM_BUILD_ROOT%{tapsetdir}
   pushd $RPM_BUILD_ROOT%{tapsetdir}
     RELATIVE=$(%{abs2rel} %{_jvmdir}/%{sdkdir}/tapset %{tapsetdir})
@@ -1066,7 +801,7 @@ pushd %{buildoutputdir}/j2sdk-image
     iconv -f ISO_8859-1 -t UTF8 $manpage -o $manpage.tmp
     mv -f $manpage.tmp $manpage
     install -m 644 -p $manpage $RPM_BUILD_ROOT%{_mandir}/man1/$(basename \
-      $manpage .1)-%{name}.1
+      $manpage .1)-%{uniquesuffix}.1
   done
 
   # Install demos and samples.
@@ -1096,9 +831,15 @@ done
 # Install desktop files.
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/{applications,pixmaps}
 for e in jconsole policytool ; do
-    desktop-file-install --vendor=%{name} --mode=644 \
+    sed -i "s/#ARCH#/%{_arch}-%{release}/g" $e.desktop
+    sed -i "s|/usr/bin|%{sdkbindir}/|g" $e.desktop
+    desktop-file-install --vendor=%{uniquesuffix} --mode=644 \
         --dir=$RPM_BUILD_ROOT%{_datadir}/applications $e.desktop
 done
+
+# Install /etc/.java/.systemPrefs/ directory
+# See https://bugzilla.redhat.com/show_bug.cgi?id=741821
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/.java/.systemPrefs
 
 # Find JRE directories.
 find $RPM_BUILD_ROOT%{_jvmdir}/%{jredir} -type d \
@@ -1134,6 +875,22 @@ find $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/demo \
   | sed 's|'$RPM_BUILD_ROOT'||' \
   | sed 's|^|%%doc |' \
   >> %{name}-demo.files
+
+# intentionally after the files generation, as it goes to separate package
+# Create links which leads to separately installed java-atk-bridge and allow configuration
+# links points to java-atk-wrapper - an dependence
+  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/%{archinstall}
+    ln -s %{syslibdir}/java-atk-wrapper/libatk-wrapper.so.0 libatk-wrapper.so
+  popd
+  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/ext
+     ln -s %{syslibdir}/java-atk-wrapper/java-atk-wrapper.jar  java-atk-wrapper.jar
+  popd
+  pushd $RPM_BUILD_ROOT/%{_jvmdir}/%{jredir}/lib/
+    echo "#Config file to  enable java-atk-wrapper" > accessibility.properties
+    echo "" >> accessibility.properties
+    echo "assistive_technologies=org.GNOME.Accessibility.AtkWrapper" >> accessibility.properties
+    echo "" >> accessibility.properties
+  popd
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_java-1.7.0-openjdk-javadoc<<EOF
 %{_javadocdir}/java	%{_javadocdir}/%{name}/api	%{priority}
 EOF
@@ -1246,15 +1003,15 @@ done
 
 
 
+
 # FIXME: identical binaries are copied, not linked. This needs to be
 # fixed upstream.
 %files -f %{name}.files
 %_altdir/%altname-java
 %_sysconfdir/buildreqs/packages/substitute.d/%name
-%doc %{buildoutputdir}/j2sdk-image/jre/ASSEMBLY_EXCEPTION
-%doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
-%doc %{buildoutputdir}/j2sdk-image/jre/THIRD_PARTY_README
-
+%doc %{_jvmdir}/%{sdkdir}/ASSEMBLY_EXCEPTION
+%doc %{_jvmdir}/%{sdkdir}/LICENSE
+%doc %{_jvmdir}/%{sdkdir}/THIRD_PARTY_README
 %dir %{_jvmdir}/%{sdkdir}
 %{_jvmdir}/%{jrelnk}
 %{_jvmjardir}/%{jrelnk}
@@ -1264,26 +1021,31 @@ done
 %{_jvmdir}/%{jredir}/lib/security/cacerts
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/logging.properties
 %{_datadir}/icons/hicolor/*x*/apps/java-%{javaver}.png
-%{_mandir}/man1/java-%{name}.1*
-%{_mandir}/man1/keytool-%{name}.1*
-%{_mandir}/man1/orbd-%{name}.1*
-%{_mandir}/man1/pack200-%{name}.1*
-%{_mandir}/man1/rmid-%{name}.1*
-%{_mandir}/man1/rmiregistry-%{name}.1*
-%{_mandir}/man1/servertool-%{name}.1*
-%{_mandir}/man1/tnameserv-%{name}.1*
-%{_mandir}/man1/unpack200-%{name}.1*
-%{_jvmdir}/%{jredir}/lib/security/nss.cfg
+%{_mandir}/man1/java-%{uniquesuffix}.1*
+%{_mandir}/man1/keytool-%{uniquesuffix}.1*
+%{_mandir}/man1/orbd-%{uniquesuffix}.1*
+%{_mandir}/man1/pack200-%{uniquesuffix}.1*
+%{_mandir}/man1/rmid-%{uniquesuffix}.1*
+%{_mandir}/man1/rmiregistry-%{uniquesuffix}.1*
+%{_mandir}/man1/servertool-%{uniquesuffix}.1*
+%{_mandir}/man1/tnameserv-%{uniquesuffix}.1*
+%{_mandir}/man1/unpack200-%{uniquesuffix}.1*
+%config(noreplace) %{_jvmdir}/%{jredir}/lib/security/nss.cfg
 %{_jvmdir}/%{jredir}/lib/audio/
+%{_jvmdir}/%{jredir}/lib/%{archinstall}/server/
+%{_jvmdir}/%{jredir}/lib/%{archinstall}/client/
+%{_sysconfdir}/.java/
+%{_sysconfdir}/.java/.systemPrefs
 
 
 %files devel
 %_altdir/%altname-javac
 %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
-%doc %{buildoutputdir}/j2sdk-image/ASSEMBLY_EXCEPTION
-%doc %{buildoutputdir}/j2sdk-image/LICENSE
-%doc %{buildoutputdir}/j2sdk-image/THIRD_PARTY_README
+%doc %{_jvmdir}/%{sdkdir}/ASSEMBLY_EXCEPTION
+%doc %{_jvmdir}/%{sdkdir}/LICENSE
+%doc %{_jvmdir}/%{sdkdir}/THIRD_PARTY_README
 %dir %{_jvmdir}/%{sdkdir}/bin
 %dir %{_jvmdir}/%{sdkdir}/include
 %dir %{_jvmdir}/%{sdkdir}/lib
@@ -1300,44 +1062,44 @@ done
 %{_jvmjardir}/%{sdklnk}
 %{_datadir}/applications/*jconsole.desktop
 %{_datadir}/applications/*policytool.desktop
-%{_mandir}/man1/appletviewer-%{name}.1*
-%{_mandir}/man1/apt-%{name}.1*
-%{_mandir}/man1/extcheck-%{name}.1*
-%{_mandir}/man1/idlj-%{name}.1*
-%{_mandir}/man1/jar-%{name}.1*
-%{_mandir}/man1/jarsigner-%{name}.1*
-%{_mandir}/man1/javac-%{name}.1*
-%{_mandir}/man1/javadoc-%{name}.1*
-%{_mandir}/man1/javah-%{name}.1*
-%{_mandir}/man1/javap-%{name}.1*
-%{_mandir}/man1/jconsole-%{name}.1*
-%ifarch %{jit_arches} # Only in u4+
-%{_mandir}/man1/jcmd-%{name}.1*
+%{_mandir}/man1/appletviewer-%{uniquesuffix}.1*
+%{_mandir}/man1/apt-%{uniquesuffix}.1*
+%{_mandir}/man1/extcheck-%{uniquesuffix}.1*
+%{_mandir}/man1/idlj-%{uniquesuffix}.1*
+%{_mandir}/man1/jar-%{uniquesuffix}.1*
+%{_mandir}/man1/jarsigner-%{uniquesuffix}.1*
+%{_mandir}/man1/javac-%{uniquesuffix}.1*
+%{_mandir}/man1/javadoc-%{uniquesuffix}.1*
+%{_mandir}/man1/javah-%{uniquesuffix}.1*
+%{_mandir}/man1/javap-%{uniquesuffix}.1*
+%{_mandir}/man1/jconsole-%{uniquesuffix}.1*
+%ifnarch %{arm_arches} # Only in u4+
+%{_mandir}/man1/jcmd-%{uniquesuffix}.1*
 %endif
-%{_mandir}/man1/jdb-%{name}.1*
-%{_mandir}/man1/jhat-%{name}.1*
-%{_mandir}/man1/jinfo-%{name}.1*
-%{_mandir}/man1/jmap-%{name}.1*
-%{_mandir}/man1/jps-%{name}.1*
-%{_mandir}/man1/jrunscript-%{name}.1*
-%{_mandir}/man1/jsadebugd-%{name}.1*
-%{_mandir}/man1/jstack-%{name}.1*
-%{_mandir}/man1/jstat-%{name}.1*
-%{_mandir}/man1/jstatd-%{name}.1*
-%{_mandir}/man1/native2ascii-%{name}.1*
-%{_mandir}/man1/policytool-%{name}.1*
-%{_mandir}/man1/rmic-%{name}.1*
-%{_mandir}/man1/schemagen-%{name}.1*
-%{_mandir}/man1/serialver-%{name}.1*
-%{_mandir}/man1/wsgen-%{name}.1*
-%{_mandir}/man1/wsimport-%{name}.1*
-%{_mandir}/man1/xjc-%{name}.1*
+%{_mandir}/man1/jdb-%{uniquesuffix}.1*
+%{_mandir}/man1/jhat-%{uniquesuffix}.1*
+%{_mandir}/man1/jinfo-%{uniquesuffix}.1*
+%{_mandir}/man1/jmap-%{uniquesuffix}.1*
+%{_mandir}/man1/jps-%{uniquesuffix}.1*
+%{_mandir}/man1/jrunscript-%{uniquesuffix}.1*
+%{_mandir}/man1/jsadebugd-%{uniquesuffix}.1*
+%{_mandir}/man1/jstack-%{uniquesuffix}.1*
+%{_mandir}/man1/jstat-%{uniquesuffix}.1*
+%{_mandir}/man1/jstatd-%{uniquesuffix}.1*
+%{_mandir}/man1/native2ascii-%{uniquesuffix}.1*
+%{_mandir}/man1/policytool-%{uniquesuffix}.1*
+%{_mandir}/man1/rmic-%{uniquesuffix}.1*
+%{_mandir}/man1/schemagen-%{uniquesuffix}.1*
+%{_mandir}/man1/serialver-%{uniquesuffix}.1*
+%{_mandir}/man1/wsgen-%{uniquesuffix}.1*
+%{_mandir}/man1/wsimport-%{uniquesuffix}.1*
+%{_mandir}/man1/xjc-%{uniquesuffix}.1*
 %if_enabled systemtap
 %{tapsetroot}
 %endif
 
 %files demo -f %{name}-demo.files
-%doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
+%doc %{_jvmdir}/%{sdkdir}/LICENSE
 
 %files src
 %doc README.src
@@ -1348,7 +1110,15 @@ done
 %doc %{_javadocdir}/%{name}
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
+%files accessibility
+%{_jvmdir}/%{jredir}/lib/%{archinstall}/libatk-wrapper.so
+%{_jvmdir}/%{jredir}/lib/ext/java-atk-wrapper.jar
+%{_jvmdir}/%{jredir}/lib/accessibility.properties
+
 %changelog
+* Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.25-alt1_2.3.10.3jpp7
+- converted from JPackage by jppimport script
+
 * Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.9-alt1_2.3.8.0jpp7
 - fc update
 
