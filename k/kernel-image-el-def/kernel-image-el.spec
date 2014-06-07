@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt22
+Release: alt23
 %define erelease 431.17.1.el6
 
 %define kernel_req %nil
@@ -548,6 +548,10 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Sat Jun 07 2014 Led <led@altlinux.ru> 2.6.32-alt23
+- futex: Forbid uaddr == uaddr2 in futex_requeue(..., requeue_pi=1)
+  (CVE-2014-3153)
+
 * Thu May 08 2014 Led <led@altlinux.ru> 2.6.32-alt22
 - 2.6.32-431.17.1.el6:
   + CVE-2013-6383
