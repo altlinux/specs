@@ -4,7 +4,7 @@
 Epoch: 1
 
 Version: 0.8.92
-Release: alt2
+Release: alt3
 Name: emacs-jabber
 License: %gpl2plus
 Group: Networking/Instant messaging
@@ -23,6 +23,7 @@ BuildPreReq: emacs-devel >= 0.0.1-alt2
 BuildPreReq: emacs-common
 BuildPreReq: rpm-build-licenses
 BuildPreReq: emacs-gnus >= 5.10
+# We need automake >= 1.12 to support LOG_COMPILER:
 BuildPreReq: automake >= 1.12
 
 %description
@@ -50,7 +51,6 @@ You need to install %name-el only if you intend to modify any of the
 %autoreconf
 %configure --with-lispdir=%_emacslispdir/%pkg_name
 make install DESTDIR=%buildroot abs_builddir="%_builddir/%name-%version"
-# We need automake >= 1.12 to support LOG_COMPILER:
 pushd tests
 make check
 popd
@@ -81,6 +81,9 @@ install -m 644 jabber-fallback-lib/hexrgb.elc %buildroot%_emacslispdir/%pkg_name
 %doc %pkg_name.texi
 
 %changelog
+* Sat Jun  7 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt3
+- git-20140607
+
 * Thu Jan  9 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt2
 - git-20140109
 
