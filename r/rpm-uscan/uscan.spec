@@ -1,7 +1,7 @@
 %define destname rpm-uscan
-%define debian_ver 2.11.6
+%define debian_ver 2.14.4
 Name: %destname
-Version: 0.7.%debian_ver
+Version: 0.8.%debian_ver
 Release: alt1
 
 Summary: Utility to check watch files
@@ -12,8 +12,10 @@ Group: Development/Other
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-licenses perl-devel perl-RPM perl(LWP/UserAgent.pm)
-Requires: perl-Crypt-SSLeay
+BuildRequires: rpm-build-licenses perl-devel perl-RPM perl(LWP/UserAgent.pm) perl(LWP/Protocol/https.pm)
+# for spawn function.
+BuildRequires: perl-Dpkg
+Requires: perl(LWP/Protocol/https.pm)
 Requires: gear-uupdate
 
 %description
@@ -40,6 +42,15 @@ install -Dm644 scripts/uscan.1 %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.2.14.4-alt1
+- sync with debian uscan 2.14.4
+- sync with upstream watch
+- updated man page to reflect rpm-uscan changes
+
+* Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.2.13.3-alt1
+- sync with debian uscan 2.13.3
+- sync with upstream watch
+
 * Tue May 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.2.11.6-alt1
 - more patterns in any-archive
 
