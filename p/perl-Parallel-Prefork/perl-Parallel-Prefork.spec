@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(List/Util.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Prefork
-Version:        0.14
-Release:        alt1_3
+Version:        0.15
+Release:        alt1_1
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -17,6 +17,7 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(Proc/Wait3.pm)
 BuildRequires:  perl(Scope/Guard.pm)
+BuildRequires:  perl(Signal/Mask.pm)
 BuildRequires:  perl(Test/Requires.pm)
 BuildRequires:  perl(Parallel/Scoreboard.pm)
 BuildRequires:  perl(Test/SharedFork.pm)
@@ -38,7 +39,6 @@ make %{?_smp_mflags}
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_3
 - update to new release by fcimport
 
