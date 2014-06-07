@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-webserver-common
 # Automatically added by buildreq on Fri Feb 27 2009 (-bi)
 BuildRequires: libmysqlclient-devel libcurl-devel libiksemel-devel libldap-devel
 BuildRequires: libnet-snmp-devel libsqlite3-devel perl-Switch libopenipmi-devel gettext-tools
+BuildRequires: libxml2-devel
 
 %if_with pgsql
 BuildRequires: postgresql-devel
@@ -94,7 +95,7 @@ BuildArch: noarch
 %package phpfrontend-php5
 Summary: zabbix web frontend, edition for php5
 Group: Monitoring
-Requires: php5-gd2 php5-mysql php5-pgsql php5-sockets php5-mbstring php5-dom
+Requires: php5-gd2 php5-mysqli php5-pgsql php5-sockets php5-mbstring php5-dom
 BuildArch: noarch
 
 %package phpfrontend-apache
@@ -219,6 +220,7 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h
 	--enable-ipv6 \
 	--with-ldap \
 	--with-libcurl \
+	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
 	--sysconfdir=/etc/zabbix
@@ -235,6 +237,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 	--enable-ipv6 \
 	--with-ldap \
 	--with-libcurl \
+	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
 	--sysconfdir=/etc/zabbix
@@ -249,6 +252,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--enable-proxy \
 	--enable-ipv6 \
 	--with-libcurl \
+	--with-libxml2 \
 	--with-net-snmp \
 	--with-ldap \
 	--enable-agent \
@@ -457,6 +461,10 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Wed May 21 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.3-alt2
+- build with --with-libxml2 (ALT#30086)
+- change Requires: php5-mysqli for zabbix-phpfrontend-php5 (ALT#30105)
+
 * Thu Apr 10 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.3-alt1
 - 2.2.3 release
 
