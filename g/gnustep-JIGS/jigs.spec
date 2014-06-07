@@ -2,7 +2,7 @@
 
 Name: gnustep-JIGS
 Version: 1.6.2
-Release: alt1
+Release: alt1.1
 Summary: Java Interface for GnuStep
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -135,6 +135,9 @@ cp -fR Examples Testing %buildroot%_docdir/GNUstep/Developer/JIGS/
 %_docdir/GNUstep
 
 %changelog
+* Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1.1
+- rebuild with new openjdk java
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt1
 - Initial build for Sisyphus
 
