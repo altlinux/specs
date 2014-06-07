@@ -11,17 +11,14 @@ BuildRequires: gcc-c++ unzip
 # http://upstream-tracker.org/versions/clipper.html
 
 Name:           libpolyclipping
-Version:        5.1.6
-Release:        alt1_3
+Version:        6.1.3a
+Release:        alt1_2
 Summary:        Polygon clipping library
 
 Group:          System/Libraries
 License:        Boost
 URL:            http://sourceforge.net/projects/polyclipping
 Source0:        http://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
-
-# http://sourceforge.net/p/polyclipping/bugs/47/
-Patch0:         %{oldname}-bug47.patch
 
 BuildRequires: ctest cmake
 BuildRequires:  dos2unix
@@ -50,12 +47,10 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -qc
-%patch0 -p1
 
 # Delete binaries
 find . \( -name "*.exe" -o -name "*.dll" \) -delete
 
-#TODO
 # Correct line ends and encodings
 find . -type f -exec dos2unix -k {} \;
 
@@ -65,6 +60,8 @@ for filename in perl/perl_readme.txt README; do
     mv "${filename}".conv "${filename}"
 done
 
+# Enable use_lines
+sed -i 's|^//#define use_lines$|#define use_lines|' cpp/clipper.hpp
 
 %build
 pushd cpp
@@ -81,6 +78,7 @@ pushd cpp
   sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
 popd
 
+sed -i -e 's,Version:.*,Version: %version,' %{buildroot}%{_datadir}/pkgconfig/%{oldname}.pc
 
 %files
 %doc License.txt README
@@ -88,10 +86,14 @@ popd
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
+%{_datadir}/pkgconfig/%{oldname}.pc
 %{_includedir}/%{oldname}/
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 6.1.3a-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 5.1.6-alt1_3
 - update to new release by fcimport
 
