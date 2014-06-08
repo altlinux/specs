@@ -3,8 +3,8 @@
 
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
-Version: 5.9.10
-Release: alt2.svn20131115
+Version: 5.10.0
+Release: alt1.svn20140521
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -21,7 +21,7 @@ BuildPreReq: libncurses-devel libgd2-devel tcl-devel tk-devel
 BuildPreReq: python-module-pygtk-devel libnumpy-devel libgnomeui-devel
 BuildPreReq: python-module-pygnome-devel
 BuildPreReq: python-module-pygnome-canvas perl-XML-DOM liblasi-devel
-BuildPreReq: libwxGTK3.0-devel liblapack-devel dri2proto
+BuildPreReq: libwxGTK3.1-devel liblapack-devel dri2proto
 %if_enabled docs
 BuildPreReq: texinfo openjade docbook-dtds OpenSP
 BuildPreReq: docbook2X docbook-utils-print docbook-style-dsssl
@@ -33,7 +33,8 @@ BuildPreReq: OpenSP fonts-ttf-freefont libopal-devel
 BuildPreReq: python-module-sip-devel /proc glproto libXdmcp-devel
 BuildPreReq: libXdamage-devel libXxf86vm-devel libshape-devel
 BuildPreReq: libexpat-devel xmlto doxygen libharfbuzz-devel
-BuildPreReq: fonts-ttf-freefont
+BuildPreReq: fonts-ttf-freefont xvfb-run libxshmfence-devel
+BuildPreReq: libharu-devel libagg-devel libshape-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
@@ -320,10 +321,12 @@ sed -i 's|@LIBDIR@|%buildroot%_libdir|' \
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
 %build
 %if_with python3
 pushd ../python3
-cmake \
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	cmake \
 %ifarch x86_64
 	-DLIB_SUFFIX=64 \
 %endif
@@ -337,7 +340,8 @@ cmake \
 popd
 %endif
 
-cmake \
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	cmake \
 %ifarch x86_64
 	-DLIB_SUFFIX=64 \
 %endif
@@ -390,6 +394,10 @@ install -m755 scripts/plm2gif scripts/plpr \
 rm -fR %buildroot%_docdir/%name \
 	%buildroot%_datadir/%name%version/examples/test_octave_interactive.sh
 
+mkdir docbook
+cp doc/docbook/src/*.html docbook/
+cp -fR doc/doxygen/html doxygen
+
 %files
 %doc AUTHORS COPYING* ChangeLog* Copyright FAQ NEWS PROBLEMS
 %doc README* SERVICE ToDo
@@ -405,7 +413,7 @@ rm -fR %buildroot%_docdir/%name \
 
 %if_enabled docs
 %files doc
-%doc doc/doxygen/html/*
+%doc docbook doxygen
 %endif
 
 %files -n python-module-%name
@@ -427,8 +435,8 @@ rm -fR %buildroot%_docdir/%name \
 %_libdir/libcsironn.so.*
 %_libdir/libplplotcxxd.so.*
 %_libdir/libplplotd.so.*
-%_libdir/libplplotf77cd.so.*
-%_libdir/libplplotf77d.so.*
+#_libdir/libplplotf77cd.so.*
+#_libdir/libplplotf77d.so.*
 %_libdir/libplplotf95cd.so.*
 %_libdir/libplplotf95d.so.*
 %_libdir/libqsastime.so.*
@@ -444,6 +452,8 @@ rm -fR %buildroot%_docdir/%name \
 %_libexecdir/plplot%version/driversd/null.so
 %_libexecdir/plplot%version/driversd/ps.driver_info
 %_libexecdir/plplot%version/driversd/ps.so
+%_libexecdir/plplot%version/driversd/pdf.driver_info
+%_libexecdir/plplot%version/driversd/pdf.so
 #_libdir/plplot%version/driversd/pstex.rc
 #_libdir/plplot%version/driversd/pstex.so
 %_libexecdir/plplot%version/driversd/psttf.driver_info
@@ -468,13 +478,14 @@ rm -fR %buildroot%_docdir/%name \
 %dir %_datadir/plplot%version/examples/cmake
 %dir %_datadir/plplot%version/examples/cmake/modules
 #_datadir/plplot%version/examples/cmake/modules/FindPkgConfig.cmake
-%_datadir/plplot%version/examples/cmake/modules/export_plplot-noconfig.cmake
-%_datadir/plplot%version/examples/cmake/modules/export_plplot.cmake
+#_datadir/plplot%version/examples/cmake/modules/export_plplot-noconfig.cmake
+#_datadir/plplot%version/examples/cmake/modules/export_plplot.cmake
 %_datadir/plplot%version/examples/cmake/modules/language_support.cmake
 #_datadir/plplot%version/examples/cmake/modules/language_support/
 %_datadir/plplot%version/examples/cmake/modules/pkg-config.cmake
 %_datadir/plplot%version/examples/cmake/modules/plplot_configure.cmake
 %_datadir/plplot%version/examples/cmake/modules/plplot_functions.cmake
+%_datadir/plplot%version/examples/cmake/modules/ndp_UseQt4.cmake
 %_datadir/plplot%version/examples/c/
 %_datadir/plplot%version/examples/c++/
 %_datadir/plplot%version/examples/Makefile
@@ -483,26 +494,27 @@ rm -fR %buildroot%_docdir/%name \
 %_datadir/plplot%version/examples/test_cxx.sh
 %_datadir/plplot%version/examples/test_diff.sh
 %_man3dir/pl*.3*
+%_libdir/cmake
 
 %files -n lib%name-fortran-devel
 %dir %_libdir/fortran
 %dir %_libdir/fortran/modules
 %dir %_libdir/fortran/modules/plplot
-%dir %_libdir/fortran/include
-%_libdir/fortran/include/plplot
+#dir %_libdir/fortran/include
+#_libdir/fortran/include/plplot
 %fmoddir/plplot.mod
 %fmoddir/plplot_flt.mod
 %fmoddir/plplotp.mod
 %fmoddir/plf95demolib.mod
-%_libdir/libplplotf77cd.so
-%_libdir/libplplotf77d.so
+#_libdir/libplplotf77cd.so
+#_libdir/libplplotf77d.so
 %_libdir/libplplotf95cd.so
 %_libdir/libplplotf95d.so
-%_pkgconfigdir/plplotd-f77.pc
+#_pkgconfigdir/plplotd-f77.pc
 %_pkgconfigdir/plplotd-f95.pc
-%_datadir/plplot%version/examples/f77/
+#_datadir/plplot%version/examples/f77/
 %_datadir/plplot%version/examples/f95/
-%_datadir/plplot%version/examples/test_f77.sh
+#_datadir/plplot%version/examples/test_f77.sh
 %_datadir/plplot%version/examples/test_f95.sh
 
 %files lua
@@ -547,10 +559,13 @@ rm -fR %buildroot%_docdir/%name \
 %files -n lib%name-tk
 %_libdir/libplplottcltkd.so.*
 %_libdir/libtclmatrixd.so.*
+%_libdir/libplplottcltk_Maind.so.*
 %_libexecdir/plplot%version/driversd/tk.driver_info
 %_libexecdir/plplot%version/driversd/tk.so
 %_libexecdir/plplot%version/driversd/tkwin.driver_info
 %_libexecdir/plplot%version/driversd/tkwin.so
+%_libexecdir/plplot%version/driversd/ntk.so
+%_libexecdir/plplot%version/driversd/ntk.driver_info
 
 %files -n python-module-%name-tk
 %python_sitelibdir/plplot_widgetmodule.so
@@ -563,7 +578,9 @@ rm -fR %buildroot%_docdir/%name \
 %files -n lib%name-tk-devel
 %_libdir/libplplottcltkd.so
 %_libdir/libtclmatrixd.so
+%_libdir/libplplottcltk_Maind.so
 %_pkgconfigdir/plplotd-tcl.pc
+%_pkgconfigdir/plplotd-tcl_Main.pc
 
 %files -n lib%name-wxGTK
 %_libdir/libplplotwxwidgetsd.so.*
@@ -575,6 +592,10 @@ rm -fR %buildroot%_docdir/%name \
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Sun Jun 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1.svn20140521
+- Version 5.10.0
+- Built with wxGTK3.1
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.10-alt2.svn20131115
 - Rebuilt with wxGTK3.0
 
