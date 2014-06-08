@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.11
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -109,6 +109,20 @@ cp -a . ../python3
 export QT4DIR=%_qt4dir
 %add_optflags -I$PWD/qpy/QtGui
 
+cp -fR ../PyQt-x11-gpl ../_tmp_
+pushd ../_tmp_
+echo 'yes' | python configure.py \
+	--debug \
+	--verbose \
+	-q %_qt4dir/bin/qmake \
+	-d %python_sitelibdir \
+	-p %_qt4dir/plugins \
+	-a --confirm-license \
+	--qsci-api \
+	--enable=designer-plugin \
+	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
+popd
+
 echo 'yes' | python configure-ng.py \
 	--debug \
 	--verbose \
@@ -162,6 +176,9 @@ rm -fR %buildroot%python3_sitelibdir/%oname/uic/port_v2
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
+install -m644 ../_tmp_/pyqtconfig.py \
+	%buildroot%python_sitelibdir/%oname/
+
 ##wait ##
 install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 	PyQt-x11-gpl/sip/QtGui
@@ -202,6 +219,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Sun Jun 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11-alt2
+- Added pyqtconfig.py
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11-alt1
 - Version 4.11
 
