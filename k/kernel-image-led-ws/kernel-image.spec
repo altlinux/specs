@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.14.5
-Release: alt7
+Version: 3.14.6
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.14
-%define kernel_stable_version 5
+%define kernel_stable_version 6
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1020,7 +1020,7 @@ config_disable \
 %endif
 	%{?_disable_smp:smp} \
 	%{?_disable_modversions:modversions} \
-	%{?_disable_compat:sysctl_syscall acpi_proc_event compat_vdso i2c_compat proc_pid_cpuset sysfs_deprecated usb_devicefs isb_device_class edac_legacy_sysfs x86_acpi_cpufreq_cpb} \
+	%{?_disable_compat:sysctl_syscall acpi_procfs acpi_procfs_power compat_vdso i2c_compat proc_pid_cpuset sysfs_deprecated edac_legacy_sysfs x86_acpi_cpufreq_cpb} \
 	%{?_disable_x32:x86_x32} \
 	%{?_disable_pae:highmem64g} %{?_enable_pae:highmem4g} \
 	%{?_disable_bld:bld} \
@@ -1878,6 +1878,23 @@ done)
 
 
 %changelog
+* Sun Jun 08 2014 Led <led@altlinux.ru> 3.14.6-alt1
+- 3.14.6
+- removed:
+  + fix-drivers-char-ipmi--ipmi_si
+  + fix-drivers-media--media
+  + fix-drivers-usb-host--ohci-hcd
+  + fix-kernel--futex
+  + fix-sound-pci-hda--snd-hda-intel
+- updated:
+  + fix-arch-x86
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-tty-serial-8250--8250
+  + feat-arch-x86-mach-xen
+  + feat-kernel-vserver
+
 * Sat Jun 07 2014 Led <led@altlinux.ru> 3.14.5-alt7
 - updated:
   + fix-kernel--futex
