@@ -1,6 +1,6 @@
 Name: rinse
 Version: 0
-Release: alt0.1
+Release: alt0.2
 Summary: A collection of scripts for working with Xen guest images
 License: GPLv2
 Group: System/Base
@@ -46,5 +46,9 @@ sed -i 's|/usr/lib\(/%name/\)|%_datadir\1|g' Makefile bin/%name
 
 
 %changelog
+* Sun Jun 08 2014 Led <led@altlinux.ru> 0-alt0.2
+- Include /dev/urandom , needed by early yum install
+- Fedora 19
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0-alt0.1
 - initial build
