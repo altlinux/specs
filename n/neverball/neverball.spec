@@ -1,6 +1,6 @@
 Name: neverball
-Version: 1.5.4
-Release: alt4.1
+Version: 1.6.0
+Release: alt1
 
 Summary: OpenGL golf-based game
 License: GPL
@@ -19,8 +19,8 @@ Patch: neverball-1.5.4-dso.patch
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-BuildRequires: freetype2-devel libGLU-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel zlib-devel
-BuildRequires: libjpeg-devel libpng-devel libalsa-devel libvorbis-devel libX11-devel libphysfs-devel fonts-ttf-dejavu
+BuildRequires: freetype2-devel libGLU-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel zlib-devel
+BuildRequires: libjpeg-devel libpng-devel libalsa-devel libvorbis-devel libX11-devel libphysfs-devel fonts-ttf-dejavu gettext
 
 Obsoletes: neverputt <= %version-%release
 Conflicts: neverputt <= %version-%release
@@ -40,7 +40,7 @@ golf game using the physics and graphics of Neverball.
 
 %prep
 %setup
-%patch -p0
+#patch -p0
 sed -i 's|\(ALL_CFLAGS\ \:\=.*\)|\1 -g|' Makefile
 
 %build
@@ -99,7 +99,7 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf \
 %find_lang %name
 
 %files -f %name.lang
-%doc README
+#doc README
 %_gamesbindir/*
 %dir %_datadir/%name
 %_datadir/%name/*
@@ -112,6 +112,9 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf \
 %_datadir/applications/*
 
 %changelog
+* Mon Jun 09 2014 Ilya Mashkin <oddity@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.4-alt4.1
 - Rebuilt with libpng15
 
