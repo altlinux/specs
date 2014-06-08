@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.19.13
+Version: 1.19.14
 Release: alt1
 
 Summary: A personal full text search package
@@ -50,7 +50,7 @@ need bulky additional required packages, manual setup, or both.
 Summary: All the recommended stuff for Recoll
 Group: File tools
 BuildArch: noarch
-Requires: %name = %version
+Requires: %name-extras = %version
 Requires: perl-Image-ExifTool
 Requires: antiword catdoc unrtf
 Requires: python-module-pychm
@@ -114,6 +114,12 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Sun Jun 08 2014 Michael Shigorin <mike@altlinux.org> 1.19.14-alt1
+- new version (watch file uupdate)
+
+* Wed May 07 2014 Michael Shigorin <mike@altlinux.org> 1.19.13-alt2
+- full subpackage now pulls extras in finally
+
 * Tue May 06 2014 Michael Shigorin <mike@altlinux.org> 1.19.13-alt1
 - new version (watch file uupdate)
 
