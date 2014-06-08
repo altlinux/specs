@@ -1,6 +1,6 @@
 Name: vacuumvideoscript 
 Version: 0.20
-Release: alt1
+Release: alt2
 
 Summary: Download videos from RuTube, vkontakte, and lots of other sites.
 License: GPL2+
@@ -67,6 +67,9 @@ install -D -pm 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Jun 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2
+- updated watch file
+
 * Sat Jul 14 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - new version (watch file uupdate)
 
