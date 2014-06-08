@@ -1,6 +1,6 @@
 Name: xiccd
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Summary: X color profile daemon
 License: %gpl3plus
@@ -44,6 +44,9 @@ install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/xdg/autostart/xiccd.desktop
 %_bindir/%name
 
 %changelog
+* Mon Jun 09 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
+- rebuilt against libcolord.so.2
+
 * Thu Nov 28 2013 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
 - Initial build.
 
