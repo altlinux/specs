@@ -1,5 +1,5 @@
 Name: hostapd
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
@@ -69,6 +69,9 @@ mkdir -p %buildroot%_var/run/%name
 %_var/run/%name
 
 %changelog
+* Mon Jun 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
+- 2.2 released
+
 * Wed Feb 05 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
 - 2.1 released
 
