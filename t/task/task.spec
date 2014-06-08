@@ -1,6 +1,6 @@
 Name:           task
-Version:        2.1.2
-Release:        alt2
+Version:        2.3.0
+Release:        alt1
 Summary:        A command-line todo list manager
 
 Group:          Office
@@ -74,6 +74,9 @@ make test
 %_datadir/zsh/Completion/Unix/_task
 
 %changelog
+* Sun Jun 08 2014 Kirill Maslinsky <kirill@altlinux.org> 2.3.0-alt1
+- 2.1.2 -> 2.3.0
+
 * Mon Nov 12 2012 Fr. Br. George <george@altlinux.ru> 2.1.2-alt2
 - Separate zsh completion file
 - TODO: separate vim plugins
