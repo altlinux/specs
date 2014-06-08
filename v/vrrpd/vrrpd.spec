@@ -1,17 +1,24 @@
+%define svndate 20081017
+
 Name:  vrrpd
-Version: 01082007
-Release: alt3
+Version: 1.0
+Release: alt1
+Epoch: 1
 
 Summary: VRRPd is an implementation of Virtual Router Redundancy Protocol
-License: GPL
+License: %gpl2plus
 Group: Networking/Other
-BuildArch: i586
-Source0: %name-%version.tgz
+Url: http://sourceforge.net/projects/vrrpd/
+
+Source0: %name-%version-%svndate.tgz
 Source1: vrrpd_wrapper
 Source2: vrrpd-etcnet.txt
+
 Packager: Denis Kuznetsov <dek@altlinux.ru>
-Requires: etcnet
-Requires: perl-base
+
+BuildRequires: rpm-build-licenses
+
+Requires: etcnet perl-base
 
 %description
  VRRPd is an implementation of Virtual Router Redundancy Protocol 
@@ -21,7 +28,7 @@ Requires: perl-base
 
 
 %prep
-%setup -q
+%setup -q -n %name-%version-%svndate
 
 %build
 %make_build
@@ -40,8 +47,13 @@ install -pD -m644 %SOURCE2 vrrpd-etcnet.txt
 %_sbindir/vrrpd_wrapper
 %_mandir/man8/%name.8.gz
 
-%doc Changes FAQ TODO doc/draft-ietf-vrrp-spec-v2-05.txt doc/draft-jou-duplicate-ip-address-02.txt doc/rfc2338.txt.vrrp vrrpd-etcnet.txt
+%doc Changes FAQ TODO README doc/draft-ietf-vrrp-spec-v2-05.txt doc/draft-jou-duplicate-ip-address-02.txt doc/rfc2338.txt.vrrp vrrpd-etcnet.txt
 
 %changelog
+* Fri Jun 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:1.0-alt1
+- New version (svn trunk 2008-10-17)
+- removed BuildArch definition
+- added Url
+
 * Thu Aug 09 2007 Denis Kuznetsov <dek@altlinux.ru> 01082007-alt3
 - Started package
