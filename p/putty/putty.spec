@@ -1,6 +1,6 @@
 Name: putty
 Version: 0.63
-Release: alt1
+Release: alt1.qa1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -55,6 +55,9 @@ install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1.qa1
+- NMU: fixed bugs in watch file
+
 * Wed Aug 07 2013 Michael Shigorin <mike@altlinux.org> 0.63-alt1
 - security fixes for vulnerabilities exploitable by custom sshd, see
   http://www.chiark.greenend.org.uk/~sgtatham/putty/changes.html
