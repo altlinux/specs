@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.7
-Release: alt11
+Release: alt12
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -212,6 +212,10 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Mon Jun 09 2014 Michael Shigorin <mike@altlinux.org> 2:1.3.7-alt12
+- NMU: updated altconf.patch:
+  + added seamonkey to toolbar
+
 * Wed Apr 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt11
 - updated altconf.patch:
   + added wlan0 to NetworkStatusDevice for show status
