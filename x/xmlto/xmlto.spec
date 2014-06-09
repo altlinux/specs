@@ -1,7 +1,7 @@
 %def_with tex_subpkg
 
 Name: xmlto
-Version: 0.0.25
+Version: 0.0.26
 Release: alt1
 Summary: A tool for converting XML files to various formats.
 Group: Publishing
@@ -40,6 +40,7 @@ PassiveTeX/TeX for functionality.
 
 
 %build
+%autoreconf
 %configure
 %make_build
 bzip2 --keep --best --force ChangeLog
@@ -68,6 +69,9 @@ bzip2 --keep --best --force ChangeLog
 
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.26-alt1
+- Version 0.0.26
+
 * Thu Dec 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.25-alt1
 - Version 0.0.25
 
