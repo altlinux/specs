@@ -1,7 +1,7 @@
 %define destname rpm-uscan
 %define debian_ver 2.14.4
 Name: %destname
-Version: 0.8.%debian_ver
+Version: 0.9.%debian_ver
 Release: alt1
 
 Summary: Utility to check watch files
@@ -42,6 +42,9 @@ install -Dm644 scripts/uscan.1 %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2.14.4-alt1
+- multiple usability improvements
+
 * Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.2.14.4-alt1
 - sync with debian uscan 2.14.4
 - sync with upstream watch
