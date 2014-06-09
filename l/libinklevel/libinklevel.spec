@@ -1,7 +1,7 @@
 
 Name: libinklevel
 Version: 0.8.0
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Library for retrieving the ink level of a printer.
 License: GPL
@@ -60,6 +60,9 @@ mv %buildroot/usr/local/include/*.h %buildroot%_includedir
 %_includedir/*.h
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1.qa2
+- NMU: fixed bugs in watch file
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
