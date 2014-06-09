@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: OpenAD
-Version: 20130823
+Version: 20140315
 Release: alt1
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
@@ -160,6 +160,7 @@ export TOPDIR=$PWD
 install -d %buildroot%_libdir/whirl2f
 
 source ./setenv.sh
+python openadConfig.py
 %make -C Open64
 cp Open64/osprey1.0/targ*linux/be/be.so \
 	Open64/osprey1.0/targ*linux/be/itanium.so \
@@ -275,6 +276,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140315-alt1
+- Version 20140315
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130823-alt1
 - Version 20130823
 
