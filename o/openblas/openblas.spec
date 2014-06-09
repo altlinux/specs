@@ -1,8 +1,8 @@
 %define rev 0
 
 Name: openblas
-Version: 0.2.8
-Release: alt1.git20130801
+Version: 0.2.9
+Release: alt1.rc2.git20140306
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
 Group: Sciences/Mathematics
@@ -129,6 +129,9 @@ install -p -m644 *.h %buildroot%_includedir/%name
 %_includedir/*
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.rc2.git20140306
+- Version 0.2.9.rc2
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt1.git20130801
 - Version 0.2.8
 
