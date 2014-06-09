@@ -1,6 +1,6 @@
 Name: darktable
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
@@ -22,7 +22,7 @@ BuildRequires: libgomp-devel libgphoto2-devel libjpeg-devel liblcms2-devel lible
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release
 BuildRequires: openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc libpixman-devel libexpat-devel
-BuildRequires: libcolord-gtk-devel
+BuildRequires: libcolord-gtk-devel libudev-devel
 BuildRequires: libGraphicsMagick-c++-devel libopenjpeg-devel
 
 %description
@@ -61,6 +61,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/darktable/
 
 %changelog
+* Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt2
+- rebuilt against libcolord.so.2
+
 * Thu May 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 

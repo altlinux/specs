@@ -10,7 +10,7 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -190,6 +190,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-automount
 
 %changelog
+* Mon Jun 9 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt3
+- rebuild with new colord
+
 * Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt2
 - use system locale settings
 

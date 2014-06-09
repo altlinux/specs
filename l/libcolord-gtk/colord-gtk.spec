@@ -4,7 +4,7 @@
 
 Name: lib%_name-gtk
 Version: 0.1.25
-Release: alt1
+Release: alt2
 
 Summary: GTK+3 support library for colord daemon
 License: GPLv2+
@@ -109,6 +109,9 @@ This package provides Vala language bindings for %_name-gtk library.
 
 
 %changelog
+* Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.25-alt2
+- rebuilt against libcolord.so.2
+
 * Sat Mar 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.25-alt1
 - 0.1.25
 

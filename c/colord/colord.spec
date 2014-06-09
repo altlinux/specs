@@ -3,13 +3,15 @@
 %def_enable vala
 %def_enable print_profiles
 %def_disable bash_completion
+%def_enable installed_tests
+%def_enable libcolordcompat
 
 %define _libexecdir %_prefix/libexec
 %define _icccolordir %_datadir/color/icc
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.0.7
+Version: 1.2.1
 Release: alt1
 
 Summary: Color daemon
@@ -99,6 +101,15 @@ BuildArch: noarch
 More color profiles for color management that are less commonly used.
 This may be useful for CMYK soft-proofing or for extra device support.
 
+%package tests
+Summary: Tests for the Colord 
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Golord.
+
 %prep
 %setup
 
@@ -109,7 +120,9 @@ This may be useful for CMYK soft-proofing or for extra device support.
 	%{subst_enable vala} \
 	--with-daemon-user=%colord_user \
 	%{?_enable_print_profiles:--enable-print-profiles} \
-	%{?_disable_bash_completion:--disable-bash-completion}
+	%{?_disable_bash_completion:--disable-bash-completion} \
+	%{?_enable_installed_tests:--enable-installed-tests} \
+	%{subst_enable libcolordcompat}
 
 %make_build
 
@@ -125,7 +138,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %find_lang %name
 
 %check
-#%%make check
+#%make check
 
 %pre
 %_sbindir/groupadd -r -f %colord_group 2>/dev/null ||:
@@ -134,7 +147,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 %files -f %name.lang
 %_bindir/*
-%config %_sysconfdir/%name.conf
+#%config %_sysconfdir/%name.conf
 %_datadir/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %_libexecdir/%name
 %_libexecdir/colord-session
@@ -164,7 +177,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
-%_man1dir/colord.conf.1.*
+#%_man1dir/colord.conf.1.*
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
 %dir %_localstatedir/lib/color
@@ -233,6 +246,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/libcolord.so.*
 %_libdir/libcolordprivate.so.*
 %_libdir/libcolorhug.so.*
+%{?_enable_libcolordcompat:%_libdir/libcolordcompat.so}
 
 %files -n lib%name-devel
 %_includedir/colord-1/
@@ -257,8 +271,21 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_datadir/vala/vapi/%name.vapi
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%name/
+%_datadir/installed-tests/%name/
+%endif
+
 
 %changelog
+* Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
+* Thu Apr 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- new -tests subpackage
+
 * Thu Apr 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 

@@ -21,7 +21,7 @@
 
 Name: libgtk+3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -389,6 +389,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
+- rebuilt against libcolord.so.2
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
