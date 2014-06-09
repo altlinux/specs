@@ -1,11 +1,13 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
+%define gver 4.7
+%set_gcc_version %gver
 
 %define sover 0
 
 Name: pnetcdf
-Version: 1.4.0
-Release: alt1
+Version: 1.5.0
+Release: alt1.pre1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -14,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: %mpiimpl-devel flex
+BuildPreReq: %mpiimpl-devel flex gcc%gver-fortran
 BuildPreReq: ghostscript-utils texlive-latex-base
 
 %description
@@ -88,7 +90,7 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags %optflags_shared -DNDEBUG -Df2cFortran
+%add_optflags %optflags_shared -DNDEBUG -Df2cFortran -I%mpidir/lib
 export FCFLAGS="%optflags"
 export F90FLAGS="%optflags"
 %autoreconf
@@ -110,7 +112,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %ifarch x86_64
 LIB_SUFFIX=64
 %endif
-%makeinstall LIB_SUFFIX=$LIB_SUFFIX
+%makeinstall SOVER=%sover LIB_SUFFIX=$LIB_SUFFIX
 
 rm -f %buildroot%_libdir/*.so.
 
@@ -131,6 +133,9 @@ rm -f %buildroot%_libdir/*.so.
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.pre1
+- Version 1.5.0.pre1
+
 * Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 
