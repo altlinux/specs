@@ -17,7 +17,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Version: 3.14.3
-Release: alt1
+Release: alt2
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -73,6 +73,8 @@ Source4: 80-hpmud.perms
 Source5: %name.png
 Source6: %name-icons.tar
 Source7: %name-fixppd.sh
+Source8: %name.watch
+Source9: upstream-signing-key.asc
 
 #TODO: see what fdi is better:
 # https://bugzilla.redhat.com/show_bug.cgi?id=478495
@@ -938,6 +940,10 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.3-alt2
+- added watch file
+- added upstream-signing-key.asc
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.3-alt1
 - new version
 
