@@ -15,8 +15,8 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.3
+Release: alt0.1
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -24,8 +24,8 @@ Group: System/Libraries
 Url: http://www.clutter-project.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %name-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.31.19
 %define cogl_ver 1.17.5
@@ -49,7 +49,7 @@ BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir
 %{?_enable_wayland_compositor:BuildRequires: pkgconfig(wayland-server)}
 %{?_enable_gdk_backend:BuildRequires: pkgconfig(gdk-3.0) >= %gdk_ver gir(Gdk) = 3.0}
 %{?_enable_tslib_input:BuildRequires: pkgconfig(tslib-1.0)}
-%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libinput)}
+%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libevdev) pkgconfig(libinput)}
 %{?_enable_xinput:BuildRequires: pkgconfig(xi)}
 %{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0)}
 
@@ -179,6 +179,9 @@ gtkdocize
 
 
 %changelog
+* Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt0.1
+- 1.18.3 snapshot (da66dd01ef)
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - 1.18.2
 
