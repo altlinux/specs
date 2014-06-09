@@ -7,13 +7,13 @@
 
 Name: openfvm-%scalar_type
 Version: 1.4
-Release: alt4.svn20120521
+Release: alt4.svn20140225
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
 License: GPL v2 or later
 URL: http://openfvm.sourceforge.net/
-# https://openfvm.svn.sourceforge.net/svnroot/openfvm/trunk/
+# svn://svn.code.sf.net/p/openfvm/code/trunk
 Source: %oname-%version.tar.gz
 Source1: openfvm
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -22,11 +22,11 @@ Requires: gmsh gnuplot %oname-common = %version-%release
 
 BuildPreReq: python-module-Pyro4 python-module-petsc-config
 BuildPreReq: liblaspack-devel libpetsc-%scalar_type-devel
-BuildPreReq: texlive-latex-extra libwxGTK2.9-devel libGL-devel
+BuildPreReq: texlive-latex-extra libwxGTK3.0-devel libGL-devel
 BuildPreReq: libGLUT-devel libamesos10-devel libepetraext10-devel
 BuildPreReq: libifpack10-devel libaztecoo10-devel libepetra10-devel
 BuildPreReq: libteuchos10-devel libtrilinos10-devel ghostscript-utils
-BuildPreReq: chrpath libparmetis0-devel libmetis0-devel libdakota-devel
+BuildPreReq: chrpath libparmetis-devel libmetis-devel libdakota-devel
 
 %description
 OpenFVM is a general CFD solver released under the GPL license. It was
@@ -140,6 +140,9 @@ done
 %endif
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt4.svn20140225
+- New snapshot
+
 * Tue Jul 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt4.svn20120521
 - Rebuilt with new PETSc
 
@@ -198,4 +201,3 @@ done
 
 * Tue Oct 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.svn20091002
 - Initial build for Sisyphus
-
