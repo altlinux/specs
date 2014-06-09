@@ -1,6 +1,6 @@
 Name: xbmc
-Version: 13.0
-Release: alt4
+Version: 13.1
+Release: alt1
 
 Summary: XBMC Media Center
 License: GPL
@@ -162,6 +162,9 @@ E_O_F
 %_datadir/xbmc/userdata
 
 %changelog
+* Mon Jun 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.1-alt1
+- 13.1 Gotham released
+
 * Mon Jun 02 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.0-alt4
 - 13.1rc1
 
