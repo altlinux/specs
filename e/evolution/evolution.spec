@@ -13,11 +13,8 @@
 # %define plugins experimental
 %define plugins all
 
-# Use stricter build settings than required by upstream.
-%define strict_build_settings 1
-
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -206,23 +203,7 @@ fi
 %else
 %define ldap_flags --without-openldap
 %endif
-export CPPFLAGS="-I%{_includedir}/et"
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -I%{_includedir}/et -Wno-sign-compare"
 
-# Add stricter build settings here as the source code gets cleaned up. 
-# We want to make sure things like compiler warnings and avoiding deprecated 
-# functions in the GNOME/GTK+ libraries stay fixed. 
-# 
-# Please file a bug report at bugzilla.gnome.org if these settings break 
-# compilation, and encourage the upstream developers to use them. 
-
-%if %{strict_build_settings}
-CFLAGS="$CFLAGS \
-	-UGNOME_DISABLE_DEPRECATED \
-	-fno-strict-aliasing"
-%endif
-
-#NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 export ac_cv_path_BOGOFILTER=%_bindir/bogofilter
 export ac_cv_path_SENDMAIL=%_sbindir/sendmail
@@ -238,12 +219,6 @@ export KILL_PROCESS_CMD=%_bindir/killall
     --enable-plugins=%plugins \
     --enable-nss \
     --enable-smime \
-    --enable-audio-inline \
-%if_with krb5
-    --with-krb5=%_prefix \
-    --with-krb5-libs=%_libdir \
-    --with-krb5-includes=%_includedir/krb5 \
-%endif
     --disable-schemas-compile \
     %{?_enable_map:--enable-contact-maps} \
     %{?_disable_image_inline:--disable-image-inline}
@@ -251,7 +226,7 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 # evolution command name
 %__mv %buildroot%_bindir/evolution %buildroot%_bindir/evolution-%ver_major
@@ -316,6 +291,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Mon Jun 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
