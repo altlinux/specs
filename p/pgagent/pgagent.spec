@@ -1,5 +1,5 @@
 Name: pgagent
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 Summary: Job scheduler for PostgreSQL which may be managed using pgAdmin
 License: BSD
@@ -44,8 +44,12 @@ cmake \
 %doc LICENSE
 %_bindir/*
 %_datadir/*.sql
+%_datadir/pgsql
 
 %changelog
+* Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Sat Dec 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0-alt1
 - Initial build for Sisyphus (ALT #28193)
 
