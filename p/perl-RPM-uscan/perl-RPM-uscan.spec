@@ -1,5 +1,5 @@
 Name: perl-RPM-uscan
-Version: 0.4.2.14.4
+Version: 0.5.2.14.4
 Release: alt1
 
 Summary: Perl library for querying debian watch files
@@ -43,6 +43,9 @@ install -m 755 uscan-query %buildroot/%_bindir/
 %_bindir/uscan-query
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2.14.4-alt1
+- sync with rpm-uscan 0.11.2.14.4
+
 * Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2.14.4-alt1
 - sync with rpm-uscan 0.10.2.14.4
 
