@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.6
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -165,7 +165,7 @@ Release: alt1
 %Extra_modules fglrx 14.10.1006.1001
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.8
-#Extra_modules ipt_NETFLOW 1.8.3
+%Extra_modules ipt_NETFLOW 1.8.3
 #Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
 
@@ -1145,6 +1145,9 @@ config_disable usb_uhci_hcd
 config_disable sched_smt net_dma pch_dma
 %endif
 
+%if %(echo "%extra_mods" | grep -q '\bipt_NETFLOW\b' && echo 1 || echo 0)
+config_disable ip_nf_target_netflow
+%endif
 # FIXME
 config_disable iscsi_ibft_find firmware_memmap
 # Timberdale is a companion chip for Atom CPUs in embedded in-car infotainment systems. Are we need that?
@@ -1878,6 +1881,19 @@ done)
 
 
 %changelog
+* Mon Jun 09 2014 Led <led@altlinux.ru> 3.14.6-alt3
+- updated:
+  + fix-drivers-char--ttyprintk
+  + feat-fs-aufs
+  + feat-tools--kvm
+- disabled ip_nf_target_netflow
+- added extmod ipt_NETFLOW 1.8.3
+
+* Sun Jun 08 2014 Led <led@altlinux.ru> 3.14.6-alt2
+- fixed led-xen-3.14.x86_64.config
+- updated:
+  + fix-arch-x86
+
 * Sun Jun 08 2014 Led <led@altlinux.ru> 3.14.6-alt1
 - 3.14.6
 - removed:
