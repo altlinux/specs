@@ -1,5 +1,5 @@
 Name: freedink
-Version: 1.08.20121209
+Version: 108.2
 Release: alt1
 Summary: Adventure and role-playing game
 Group: Games/Adventure
@@ -69,6 +69,9 @@ cat %name-gnulib.lang >> %name.lang
 %_mandir/man6/*
 
 %changelog
+* Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 108.2-alt1
+- Autobuild version bump to 108.2
+
 * Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 1.08.20121209-alt1
 - Autobuild version bump to 1.08.20121209
 
