@@ -1,6 +1,6 @@
 Name: ink
 Version: 0.5.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: A command line tool which displays the ink level of your printer.
 License: GPL
@@ -32,6 +32,9 @@ Command line tool for displaying ink level of your printer using libinklevel.
 %_man1dir/*
 
 %changelog
+* Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1.qa2
+- NMU: fixed bugs in watch file
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
