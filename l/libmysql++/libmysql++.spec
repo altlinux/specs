@@ -2,7 +2,7 @@
 
 Name: lib%origname
 Version: 3.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: C++ API for MySQL
 License: LGPL
@@ -121,6 +121,9 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 # TODO: have a closer look at fedora spec
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1.1
+- NMU: fixed watch file
+
 * Sun Dec 22 2013 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1
 - new version (watch file uupdate)
 - descriptions converted to utf8
