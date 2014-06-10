@@ -2,7 +2,7 @@
 %define module_name Net-DNS-SEC
 
 Name: perl-%module_name
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +37,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_privlib/Net/DNS
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
