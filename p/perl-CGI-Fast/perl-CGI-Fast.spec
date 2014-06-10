@@ -1,20 +1,20 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/More.pm) perl(if.pm)
-# END SourceDeps(oneline)
-%define module_version 2.00
-%define module_name CGI-Fast
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(CGI.pm) perl(ExtUtils/MakeMaker.pm) perl(FCGI.pm) perl(Test/More.pm) perl(if.pm) perl(Test/Deep.pm)
+# END SourceDeps(oneline)
+%define module_version 2.02
+%define module_name CGI-Fast
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.00
-Release: alt2
+Version: 2.02
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/module/CGI::Fast
 
-Source0: http://cpan.org.ua/authors/id/L/LE/LEEJO/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/L/LE/LEEJO/CGI-Fast-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -40,6 +40,9 @@ see large performance improvements.
 %perl_vendor_privlib/C*
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2
 - moved to Sisyphus as dependency
 
