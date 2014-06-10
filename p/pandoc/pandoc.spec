@@ -8,7 +8,7 @@
 
 Name: pandoc
 Version: 1.11.1
-Release: alt1
+Release: alt1.1
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -46,6 +46,9 @@ Slidy HTML slide shows.
 %_man5dir/*
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.1-alt1.1
+- NMU: updated watch file
+
 * Mon May 06 2013 Denis Smirnov <mithraen@altlinux.ru> 1.11.1-alt1
 - 1.11.1
 
