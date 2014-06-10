@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.6
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1881,6 +1881,13 @@ done)
 
 
 %changelog
+* Tue Jun 10 2014 Led <led@altlinux.ru> 3.14.6-alt4
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--radeon
+  + fix-tools--perf
+
 * Mon Jun 09 2014 Led <led@altlinux.ru> 3.14.6-alt3
 - updated:
   + fix-drivers-char--ttyprintk
