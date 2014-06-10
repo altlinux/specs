@@ -6,7 +6,7 @@
 
 Name: viewnior
 Version: 1.4
-Release: alt1
+Release: alt1.1
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -65,6 +65,9 @@ chmod 644 AUTHORS ChangeLog COPYING NEWS README TODO src/*
 %_datadir/%name/
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1.1
+- NMU: fixed watch file
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 1.4-alt1
 - added watch file
 - new version (watch file uupdate)
