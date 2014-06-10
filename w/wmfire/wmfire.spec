@@ -1,6 +1,6 @@
 Name: wmfire
 Version: 1.2.4
-Release: alt2
+Release: alt3
 
 Summary: WindowMaker dock-app showing CPU load as a flame
 License: GPL
@@ -15,8 +15,8 @@ Patch0: wmfire-1.2.3-stringh.patch
 Patch1: wmfire-1.2.4-no_display.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Аплет WindowMaker, отображающий загрузку в виде пламени
-Summary(uk_UA.KOI8-U): Аплет WindowMaker, який зобража╓ завантаження як полум'я
+Summary(ru_RU.UTF-8): п░п©п╩п╣я┌ WindowMaker, п╬я┌п╬п╠я─п╟п╤п╟я▌я┴п╦п╧ п╥п╟пЁя─я┐п╥п╨я┐ п╡ п╡п╦п╢п╣ п©п╩п╟п╪п╣п╫п╦
+Summary(uk_UA.UTF-8): п░п©п╩п╣я┌ WindowMaker, я▐п╨п╦п╧ п╥п╬п╠я─п╟п╤п╟я■ п╥п╟п╡п╟п╫я┌п╟п╤п╣п╫п╫я▐ я▐п╨ п©п╬п╩я┐п╪'я▐
 
 # Automatically added by buildreq on Sun Dec 10 2006 (-bi)
 BuildRequires: imake libSM-devel libXext-devel libgtk+2-devel libgtop-devel xorg-cf-files
@@ -35,21 +35,21 @@ This is an update of the original wmfire dock applet. Like the
 wmufo program it uses the GDK library to improve its speed -
 using less than half the cpu of the original program.
 
-%description -l ru_RU.KOI8-R
-wmfire - занятный аплет для WindowMaker, отображающий загрузку
-системы (или числовые данные из заданного файла) в виде пламени,
-при этом сам ее практически не увеличивает.
+%description -l ru_RU.UTF-8
+wmfire - п╥п╟п╫я▐я┌п╫я▀п╧ п╟п©п╩п╣я┌ п╢п╩я▐ WindowMaker, п╬я┌п╬п╠я─п╟п╤п╟я▌я┴п╦п╧ п╥п╟пЁя─я┐п╥п╨я┐
+я│п╦я│я┌п╣п╪я▀ (п╦п╩п╦ я┤п╦я│п╩п╬п╡я▀п╣ п╢п╟п╫п╫я▀п╣ п╦п╥ п╥п╟п╢п╟п╫п╫п╬пЁп╬ я└п╟п╧п╩п╟) п╡ п╡п╦п╢п╣ п©п╩п╟п╪п╣п╫п╦,
+п©я─п╦ я█я┌п╬п╪ я│п╟п╪ п╣п╣ п©я─п╟п╨я┌п╦я┤п╣я│п╨п╦ п╫п╣ я┐п╡п╣п╩п╦я┤п╦п╡п╟п╣я┌.
 
-Это обновленная версия, которая использует GDK для понижения
-использования процессора при отрисовке (примерно вдвое).
+п╜я┌п╬ п╬п╠п╫п╬п╡п╩п╣п╫п╫п╟я▐ п╡п╣я─я│п╦я▐, п╨п╬я┌п╬я─п╟я▐ п╦я│п©п╬п╩я▄п╥я┐п╣я┌ GDK п╢п╩я▐ п©п╬п╫п╦п╤п╣п╫п╦я▐
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п©я─п╬я├п╣я│я│п╬я─п╟ п©я─п╦ п╬я┌я─п╦я│п╬п╡п╨п╣ (п©я─п╦п╪п╣я─п╫п╬ п╡п╢п╡п╬п╣).
 
-%description -l uk_UA.KOI8-U
-wmfire - ц╕кавий аплет для WindowMaker, який в╕дображу╓
-завантаження системи (чи числов╕ дан╕ з файлу) у вигляд╕ полум'я;
-при цьому сам в╕н майже не дода╓ до нього.
+%description -l uk_UA.UTF-8
+wmfire - я├я√п╨п╟п╡п╦п╧ п╟п©п╩п╣я┌ п╢п╩я▐ WindowMaker, я▐п╨п╦п╧ п╡я√п╢п╬п╠я─п╟п╤я┐я■
+п╥п╟п╡п╟п╫я┌п╟п╤п╣п╫п╫я▐ я│п╦я│я┌п╣п╪п╦ (я┤п╦ я┤п╦я│п╩п╬п╡я√ п╢п╟п╫я√ п╥ я└п╟п╧п╩я┐) я┐ п╡п╦пЁп╩я▐п╢я√ п©п╬п╩я┐п╪'я▐;
+п©я─п╦ я├я▄п╬п╪я┐ я│п╟п╪ п╡я√п╫ п╪п╟п╧п╤п╣ п╫п╣ п╢п╬п╢п╟я■ п╢п╬ п╫я▄п╬пЁп╬.
 
-Це поновлена верс╕я, котра використову╓ GDK для зниження
-використання процесору при малюванн╕ (приблизно вдв╕ч╕).
+п╕п╣ п©п╬п╫п╬п╡п╩п╣п╫п╟ п╡п╣я─я│я√я▐, п╨п╬я┌я─п╟ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ GDK п╢п╩я▐ п╥п╫п╦п╤п╣п╫п╫я▐
+п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐ п©я─п╬я├п╣я│п╬я─я┐ п©я─п╦ п╪п╟п╩я▌п╡п╟п╫п╫я√ (п©я─п╦п╠п╩п╦п╥п╫п╬ п╡п╢п╡я√я┤я√).
 
 %prep
 %setup -a1
@@ -84,6 +84,10 @@ install -pDm644 %SOURCE2  %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Tue Jun 10 2014 Michael Shigorin <mike@altlinux.org> 1.2.4-alt3
+- rebuilt against recent libgtop
+- spec converted to UTF-8
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt2
 - added watch file
 

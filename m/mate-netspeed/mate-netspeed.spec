@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfi
 %define _libexecdir %_prefix/libexec
 Name:           mate-netspeed
 Version:        1.8.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE netspeed
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
@@ -55,6 +55,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- rebuild with libgtop
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

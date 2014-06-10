@@ -2,7 +2,7 @@
 
 Name: bamf
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: BAMF Application Matching Framework
 License: GPLv3/LGPLv3
@@ -218,6 +218,9 @@ make check || exit 1
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt3
+- rebuilt against libgtop-2.0.so.10
+
 * Sun Nov 24 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt2
 - Vala stuff
 

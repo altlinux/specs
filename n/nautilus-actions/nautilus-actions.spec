@@ -7,7 +7,7 @@
 
 Name: nautilus-actions
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Nautilus extension for customizing the context menu
 Group: Graphical desktop/GNOME
@@ -106,6 +106,9 @@ make DESTDIR=%buildroot install
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt3
+- Rebuild with new version of libgtop
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt2
 - Fix build with new GConf
 

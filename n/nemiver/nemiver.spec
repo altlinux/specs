@@ -2,7 +2,7 @@
 
 Name: nemiver
 Version: %ver_major.5
-Release: alt0.1
+Release: alt0.2
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
@@ -39,7 +39,7 @@ The %name-devel package contains header files for developing new debugging
 backends for Nemiver.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -67,6 +67,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt0.2
+- rebuilt against libgtop-2.0.so.10
+
 * Sun Dec 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt0.1
 - 0.9.5
 

@@ -25,7 +25,7 @@ BuildRequires: libcanberra-gtk2-devel
 
 Name:           mate-window-manager
 Version:        %{branch}.0
-Release:        alt1_1
+Release:        alt2_1
 #Release:       0.5%{?git_rel}%{?dist}
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
@@ -189,6 +189,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- rebuild with libgtop
+
 * Fri Mar 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 
