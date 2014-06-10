@@ -1,6 +1,6 @@
 Name: python-module-zmq
-Version: 2.2.0.1
-Release: alt2
+Version: 14.3.0
+Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -68,7 +68,7 @@ rm zmq/__*
 PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 
 %files
-%doc README.rst COPYING.LESSER examples/
+%doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/zmq
 %exclude %python_sitelibdir/zmq/tests
@@ -81,6 +81,9 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 %python_sitelibdir/zmq/tests
 
 %changelog
+* Tue Jun 10 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.3.0-alt1
+- New version
+
 * Fri Dec 07 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.0.1-alt2
 - Add subpackage devel
 
