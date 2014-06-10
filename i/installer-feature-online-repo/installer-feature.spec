@@ -1,5 +1,5 @@
 Name:    installer-feature-online-repo
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Make online repositories available
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 0.14-alt1
+- Enable online repositories even Internet is unavailable
+
 * Tue Dec 11 2012 Andrey Cherepanov <cas@altlinux.org> 0.13-alt1
 - Increase level from 80 to 99 because cdrom source is added at 90 level
 - Do not show sources at script execution
