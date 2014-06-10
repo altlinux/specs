@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgupnp-av
-Version: 0.12.5
+Version: 0.12.6
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -118,6 +118,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
+- 0.12.6
+
 * Mon Feb 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
 - 0.12.5
 
