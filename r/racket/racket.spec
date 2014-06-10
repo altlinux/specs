@@ -2,9 +2,9 @@
 %define _disable_ld_no_undefined 1
 %define debug_package %nil
 
-%define sover 5.3.6
+%define sover 6.0.1
 Name: racket
-Version: 5.3.6
+Version: 6.0.1
 Release: alt1
 
 Summary: Racket programming language
@@ -32,6 +32,7 @@ BuildPreReq: libgtk+2-devel libgtkglext-devel libwxGTK2.9-devel
 BuildPreReq: libssl-devel zlib-devel 
 
 Requires: lib%name = %version-%release
+Requires: %name-data = %version-%release
 
 %description
 Depending on how you look at it, Racket is
@@ -42,6 +43,23 @@ Depending on how you look at it, Racket is
 * a family of programming languages - variants of Racket, and more; or
 
 * a set of tools - for using a family of programming languages.
+
+%package data
+Summary: Data for Racket
+Group: Development/Scheme
+BuildArch: noarch
+
+%description data
+Depending on how you look at it, Racket is
+
+* a programming language - a dialect of Lisp and a descendant of
+  Scheme;
+
+* a family of programming languages - variants of Racket, and more; or
+
+* a set of tools - for using a family of programming languages.
+
+This package contains data for Racket.
 
 %package doc
 Summary: Documentation for Racket
@@ -117,6 +135,7 @@ pushd src
 %ifarch %ix86
 %add_optflags -march=i686 -mtune=i686
 %endif
+%add_optflags %optflags_shared
 %configure \
 	--docdir=%_docdir/%name-%version \
 	--enable-shared \
@@ -148,6 +167,10 @@ install -pD -m644 drscheme.desktop \
 %_desktopdir/*
 %_niconsdir/*
 %_man1dir/*
+%_sysconfdir/*
+
+%files data
+%_datadir/%name
 
 %files doc
 %doc %_docdir/%name-%version
@@ -163,6 +186,9 @@ install -pD -m644 drscheme.desktop \
 %_includedir/*
 
 %changelog
+* Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt1
+- Version 6.0.1
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.6-alt1
 - Version 5.3.6
 
