@@ -1,14 +1,14 @@
 %define dist IO-Interface
 Name: perl-%dist
-Version: 1.06
-Release: alt4
+Version: 1.07
+Release: alt1
 
 Summary: extention for IO::Socket
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LD/LDS/IO-Interface-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-devel
@@ -36,6 +36,9 @@ as the ability to multicast.
 %perl_vendor_autolib/IO
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt4
 - built for perl 5.18
 
