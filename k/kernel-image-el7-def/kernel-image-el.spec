@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt5
-%define erelease 3.10.0-121.el7
+Release: alt6
+%define erelease 3.10.0-123.1.2.el7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -552,6 +552,11 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Tue Jun 10 2014 Led <led@altlinux.ru> 3.10.0-alt6
+- 3.10.0-123.1.2.el7:
+  + CVE-2014-0196
+  + CVE-2014-3122
+
 * Sat Jun 07 2014 Led <led@altlinux.ru> 3.10.0-alt5
 - futex: Forbid uaddr == uaddr2 in futex_requeue(..., requeue_pi=1)
   (CVE-2014-3153)
