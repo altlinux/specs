@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -36,6 +36,9 @@ install -pDm755 initinstall/stop-md-dm.sh \
 %_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Wed Jun 11 2014 Michael Shigorin <mike@altlinux.org> 0.5.1-alt1
+- /run/udev support
+
 * Thu Nov 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt1
 - Stop MD/DM devices in initinstall (ALT#29554).
 
