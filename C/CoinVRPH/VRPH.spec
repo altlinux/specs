@@ -4,7 +4,7 @@
 %define oname VRPH
 Name: Coin%oname
 Version: 1.0.0
-Release: alt4.svn20110727
+Release: alt5.svn20110727
 Summary: Library of heuristics for generating solutions to Vehicle Routing Problems (VRPs)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -97,6 +97,9 @@ cp -P lib/* %buildroot%_libdir/
 %doc doc/html/*
 
 %changelog
+* Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt5.svn20110727
+- Fixed build with plplot 5.10.0
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt4.svn20110727
 - Rebuilt with plplot 5.9.10
 
