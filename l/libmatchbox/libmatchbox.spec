@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen libICE-devel libSM-devel libcheck-devel pkgconfi
 
 Name: libmatchbox
 Version: 1.9
-Release: alt4
+Release: alt4.1
 Summary: Libraries for the Matchbox Desktop
 License: LGPLv2+
 Group: System/Libraries
@@ -89,6 +89,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt4.1
+- updated watch file
+
 * Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt4
 - build with libxsettings-client-devel
 
