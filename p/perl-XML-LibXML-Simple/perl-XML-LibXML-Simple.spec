@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML-Simple
 Name: perl-%dist
-Version: 0.93
+Version: 0.94
 Release: alt1
 
 Summary: XML::LibXML based XML::Simple clone
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-LibXML-Simple-%{version}.
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-File-Slurp perl-Test-Pod perl-XML-LibXML
+BuildRequires: perl-File-Slurp perl-Test-Pod perl-XML-LibXML perl(File/Slurp/Tiny.pm)
 
 %description
 None.
@@ -31,6 +32,9 @@ None.
 %perl_vendor_privlib/XML
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1
 - automated CPAN update
 
