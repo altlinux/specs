@@ -1,10 +1,10 @@
-%set_verify_elf_method unresolved=relaxed
+#set_verify_elf_method unresolved=relaxed
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: scorep
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
@@ -12,12 +12,12 @@ Group: Development/Tools
 Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/scorep/scorep-1.2.1.tar.gz
+Source: http://www.vi-hps.org/upload/packages/scorep/scorep-1.2.3.tar.gz
 
 BuildPreReq: %mpiimpl-devel libotf2-devel opari2-devel libcube-devel
 BuildPreReq: libbfd-devel uncrustify doxygen libpapi-devel flex
 BuildPreReq: libopenpdt-devel libcube-devel graphviz texlive-base-bin
-BuildPreReq: chrpath
+BuildPreReq: chrpath lockfile-progs binutils-devel
 
 %description
 The Score-P (Scalable Performance Measurement Infrastructure for
@@ -64,7 +64,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--with-otf2 \
 	--with-opari2 \
 	--with-cube \
-	--with-pdt=%_bindir
+	--with-pdt=%_bindir \
+	--disable-openmp \
+	--with-libbfd=yes
 
 pushd build-backend
 %make_build V=1 libscorep_adapter_utils.la
@@ -88,7 +90,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %makeinstall_std TOPDIR=$PWD
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING THANKS README
 %_bindir/*
 %exclude %_bindir/scorep-config
 %_datadir/%name
@@ -102,6 +104,10 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1
+- Version 1.2.3
+
+
 * Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 
