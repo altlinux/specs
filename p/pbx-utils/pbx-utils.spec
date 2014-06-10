@@ -4,13 +4,13 @@
 #============================================================================
 Name: pbx-utils
 Summary: Useful utilites for Asterisk and CallWeaver
-Version: 0.0.16
+Version: 0.0.17
 Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: asterisk12-devel libdb1-devel libmhash-devel libnewt-devel libpopt-devel libsqlite3-devel libtonezone-dahdi-devel
+BuildRequires: asterisk11-devel libdb1-devel libmhash-devel libnewt-devel libpopt-devel libsqlite3-devel libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers libtonezone-dahdi-devel
-%define ast_ver %{get_version asterisk12-devel}
+%define ast_ver %{get_version asterisk11-devel}
 Url: http://sisyphus.ru/ru/srpm/Sisyphus/pbx-utils
 %define agi_dir %_libexecdir/asterisk/agi-bin
 Source: %name-%version.tar
@@ -206,6 +206,9 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %attr(0755,root,root) %_sbindir/zones2indications
 
 %changelog
+* Tue Jun 10 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.17-alt1
+- build with asterisk11-devel
+
 * Sun May 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.16-alt1
 - add pbx-astgenkey
 
