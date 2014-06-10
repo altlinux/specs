@@ -1,6 +1,6 @@
 Name: perl-Wx
-Version: 0.9922
-Release: alt2
+Version: 0.9923
+Release: alt1
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL
@@ -66,6 +66,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.9923-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.9922-alt2
 - built for perl 5.18
 
