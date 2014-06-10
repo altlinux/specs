@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python-module-libvirt
-Version: 1.2.3
+Version: 1.2.5
 Release: alt1
 Url: http://libvirt.org
 #http://libvirt.org/git/?p=libvirt-python.git
@@ -49,6 +49,8 @@ of recent versions of Linux (and other OSes).
 %python_install
 %python3_install
 
+rm -f %buildroot%_libdir/python*/site-packages/*egg-info
+
 %files
 %python_sitelibdir/libvirt*
 %doc  NEWS README COPYING COPYING.LESSER examples
@@ -59,6 +61,9 @@ of recent versions of Linux (and other OSes).
 %doc  NEWS README COPYING COPYING.LESSER examples
 
 %changelog
+* Tue Jun 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Thu Apr 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 - add python3 package
