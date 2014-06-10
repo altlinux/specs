@@ -19,7 +19,7 @@
 
 Name: xorg-server
 Version: 1.15.1
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -188,7 +188,6 @@ drivers, input drivers, or other X modules should install this package.
 	--enable-drv-switch \
 	--with-drv-switch-path=%_libexecdir/X11/drv.d \
 	--enable-record \
-	--enable-dri2 \
 	%{subst_enable dmx} \
 	%{subst_enable xnest} \
 	--enable-glx-tls \
@@ -303,6 +302,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Jun 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.1-alt2
+- Report DRI3, Present as a built-in module
+
 * Mon Apr 14 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.1-alt1
 - 1.15.1
 
