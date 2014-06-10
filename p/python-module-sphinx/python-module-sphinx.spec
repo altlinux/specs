@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt4.a0
+Release: alt5.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -29,13 +29,15 @@ BuildPreReq: python-devel python-module-setuptools python-module-simplejson
 BuildPreReq: python-module-Pygments
 BuildPreReq: python-module-docutils python-module-jinja2 texlive-latex-base
 # for tests
-BuildPreReq:  python-module-nose
+BuildPreReq:  python-module-nose python-modules-json
+BuildPreReq: python-module-snowballstemmer
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-objects.inv
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-Pygments python3-module-docutils
 BuildPreReq: python3-module-jinja2 python3-module-nose
 BuildPreReq: python-tools-2to3 python3-module-jinja2-tests
+BuildPreReq: python3-module-snowballstemmer
 %endif
 
 %py_requires simplejson
@@ -60,7 +62,7 @@ multiple reStructuredText sources)
 Summary: Development package for Sphinx (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
-Requires: python3-module-%oname-pickles = %epoch:%version-%release
+#Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
 PreReq: rpm-macros-%{oname}3 >= %epoch:%version-%release
 Requires: python3-module-objects.inv
@@ -89,6 +91,9 @@ Summary: Tests for Sphinx (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
 %py3_requires nose
+%add_python3_req_skip compiler
+%add_python3_req_skip missing_module missing_package1 missing_package2
+%add_python3_req_skip missing_package3
 
 %description -n python3-module-%oname-tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -144,7 +149,9 @@ Summary: Tests for Sphinx
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
 %py_requires nose
-%add_python3_req_skip compiler
+%add_python_req_skip compiler
+%add_python_req_skip missing_module missing_package1 missing_package2
+%add_python_req_skip missing_package3
 
 %description tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -264,7 +271,7 @@ cp -fR doc/_build/html %buildroot%_docdir/%name/
 #install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
 install -p -m644 AUTHORS CHANGES EXAMPLES LICENSE README.rst TODO \
 	%buildroot%_docdir/%name
-install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
+#install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
 
 # macros
 
@@ -297,22 +304,20 @@ install -p -m644 conf.py.template \
 LIBSUF=64
 %endif
 
-%if_with python3
-pushd ../python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-export PATH=$PATH:%buildroot%_bindir
-sed -i 's|^SPHINXBUILD.*|SPHINXBUILD = py3_sphinx-build|' doc/Makefile
-%make_build -C doc pickle
-install -d %buildroot%python3_sitelibdir/%oname/doctrees
-install -p -m644 doc/_build/doctrees/*.pickle \
-	%buildroot%python3_sitelibdir/%oname/doctrees/
-#install -p -m644 %oname/pycode/*.pickle \
-#	%buildroot%python3_sitelibdir/%oname/pycode/
-cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
-install -p -m644 conf.py.template \
-	%buildroot%python3_sitelibdir/%oname/
-popd
-%endif
+#if_with python3
+#pushd ../python3
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+#export PATH=$PATH:%buildroot%_bindir
+#sed -i 's|^SPHINXBUILD.*|SPHINXBUILD = py3_sphinx-build|' doc/Makefile
+#make_build -C doc pickle
+#install -d %buildroot%python3_sitelibdir/%oname/doctrees
+#install -p -m644 doc/_build/doctrees/*.pickle \
+#	%buildroot%python3_sitelibdir/%oname/doctrees/
+#cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+#install -p -m644 conf.py.template \
+#	%buildroot%python3_sitelibdir/%oname/
+#popd
+#endif
 
 #check
 # test_autosummary work only with installed Sphinx
@@ -327,7 +332,7 @@ popd
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/doctrees
 %python_sitelibdir/*.egg-info
-%_man1dir/*
+#_man1dir/*
 
 %files devel
 
@@ -350,15 +355,15 @@ popd
 %_bindir/py3_*
 %python3_sitelibdir/%oname/
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/pickle
-%exclude %python3_sitelibdir/%oname/doctrees
+#exclude %python3_sitelibdir/%oname/pickle
+#exclude %python3_sitelibdir/%oname/doctrees
 %python3_sitelibdir/*.egg-info
 
 %files -n python3-module-%oname-devel
 
-%files -n python3-module-%oname-pickles
-%python3_sitelibdir/%oname/pickle
-%python3_sitelibdir/%oname/doctrees
+#files -n python3-module-%oname-pickles
+#python3_sitelibdir/%oname/pickle
+#python3_sitelibdir/%oname/doctrees
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
@@ -368,6 +373,9 @@ popd
 %endif
 
 %changelog
+* Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt5.a0
+- New snapshot
+
 * Tue Jan 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt4.a0
 - Restored original sphinx/highlighting.py
 
