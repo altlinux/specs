@@ -1,5 +1,8 @@
+
+%def_disable experimental
+
 Name: libe-book
-Version: 0.0.3
+Version: 0.1.1
 Release: alt1
 Summary: A library for reading and converting reflowable e-book formats
 License: LGPL
@@ -7,11 +10,22 @@ Url: http://sourceforge.net/projects/libebook/
 Group: System/Libraries
 Source: %name-%version.tar.xz
 
-BuildRequires: cppunit-devel
+BuildRequires: gcc-c++
+BuildRequires: boost-devel-headers
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(cppunit)
 
-# Automatically added by buildreq on Tue Mar 18 2014
-# optimized out: libcloog-isl4 libstdc++-devel pkg-config xz
-BuildRequires: boost-devel-headers doxygen gcc-c++ gperf libicu-devel libwpd9-devel libxml2-devel zlib-devel
+%if_enabled experimental
+BuildRequires: pkgconfig(libcss) >= 0.3.0 pkgconfig(libparserutils) pkgconfig(libwapcaplet)
+BuildRequires: pkgconfig(libhubbub) >= 0.3.0
+BuildRequires: pkgconfig(libmspack)
+%endif
+
+BuildRequires: doxygen
+BuildRequires: gperf
 
 %description
 libe-book is a library and a set of tools for reading and converting
@@ -57,11 +71,11 @@ Currently supported are:
 
 %build
 %autoreconf
-%configure
+%configure --disable-static --disable-werror
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -77,6 +91,9 @@ Currently supported are:
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
+- 0.1.1
+
 * Tue Mar 18 2014 Fr. Br. George <george@altlinux.ru> 0.0.3-alt1
 - Autobuild version bump to 0.0.3
 

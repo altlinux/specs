@@ -1,5 +1,5 @@
 Name: libfreehand
-Version: 0.0.0
+Version: 0.1.0
 Release: alt1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
@@ -8,11 +8,13 @@ License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libfreehand/
 Source: http://dev-www.libreoffice.org/src/%name-%version.tar.xz
 
-Patch0: 0001-coverity-fix-memory-leak.patch
+BuildRequires: gcc-c++
+BuildRequires: boost-devel-headers
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
+BuildRequires: pkgconfig(zlib)
 
-# Automatically added by buildreq on Wed Mar 19 2014
-# optimized out: gnu-config libstdc++-devel libwpd9-devel pkg-config xz
-BuildRequires: doxygen gcc-c++ gperf libwpg-devel zlib-devel
+BuildRequires: doxygen
+BuildRequires: gperf
 
 %description
 libfreehand is library providing ability to interpret and import
@@ -46,19 +48,14 @@ Currently supported: SVG, raw.
 %prep
 %setup
 
-%patch0 -p1
-
 %build
+mkdir -p m4
+%autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
-sed -i \
-    -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    libtool
 %make_build
 
 %install
-make install DESTDIR=%buildroot
-rm -f %buildroot/%_libdir/*.la
+%makeinstall_std
 # we install API docs directly from build
 rm -rf %buildroot/%_docdir/%name
 
@@ -70,17 +67,19 @@ rm -rf %buildroot/%_docdir/%name
 %doc ChangeLog
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %files doc
 %doc COPYING
 %doc docs/doxygen/html
 
 %files tools
-%_bindir/fh2raw
-%_bindir/fh2svg
+%_bindir/*
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
+- 0.1.0
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.0.0-alt1
 - Initial build from FC
 

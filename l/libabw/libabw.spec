@@ -1,5 +1,5 @@
 Name: libabw
-Version: 0.0.2
+Version: 0.1.0
 Release: alt1
 Summary: A library for import of AbiWord files
 
@@ -8,9 +8,15 @@ License: MPLv2.0
 Url: http://www.freedesktop.org/wiki/Software/libabw/
 Source: %name-%version.tar.xz
 
-# Automatically added by buildreq on Thu Mar 20 2014
-# optimized out: gnu-config libcloog-isl4 libstdc++-devel perl-Encode perl-Locale-gettext pkg-config xz
-BuildRequires: boost-devel-headers doxygen gcc-c++ gperf help2man libwpd9-devel libxml2-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: boost-devel-headers
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(zlib)
+
+BuildRequires: doxygen help2man
+BuildRequires: gperf
 
 %description
 %name is a library for import of AbiWord files.
@@ -45,6 +51,8 @@ supported: XHTML, raw, text.
 %setup
 
 %build
+mkdir -p m4
+%autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -58,8 +66,8 @@ help2man -N -n 'convert AbiWord document into HTML' -o abw2html.1 ./src/conv/htm
 help2man -N -n 'convert AbiWord document into plain text' -o abw2text.1 ./src/conv/text/.libs/abw2text
 
 %install
+%makeinstall_std
 make install DESTDIR=%buildroot
-rm -f %buildroot/%_libdir/*.la
 # we install API docs directly from build
 rm -rf %buildroot/%_docdir/%name
 
@@ -89,6 +97,9 @@ install -m 0644 abw2*.1 %buildroot/%_mandir/man1
 %_mandir/man1/abw2html.1*
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
+- 0.1.0
+
 * Thu Mar 20 2014 Fr. Br. George <george@altlinux.ru> 0.0.2-alt1
 - Autobuild version bump to 0.0.2
 

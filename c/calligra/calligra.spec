@@ -9,7 +9,7 @@
 
 Name: calligra
 Version: 2.8.3
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -37,6 +37,7 @@ Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
 # FC
 Patch1: calligra-2.7.90-no_mpxj.patch
+Patch2: 0001-switch-to-librevenge-based-import-libs.patch
 # ALT
 Patch101: calligra-2.6.0-alt-build-active.patch
 Patch102: calligra-2.8.0-alt-fix-compile.patch
@@ -50,7 +51,7 @@ BuildRequires: kde4-okular-devel kde4edu-devel kde4pimlibs-devel libkdcraw4-deve
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
 BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
-BuildRequires: libvisio-devel libwpg-devel libwpd9-devel libwps-devel libodfgen-devel
+BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
@@ -254,6 +255,7 @@ Requires: %name-common = %EVR
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 #%patch101 -p1
 %patch102 -p1
 %if_disabled RDF
@@ -669,6 +671,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0:2.8.3-alt2
+- switch to librevenge-based import libs
+
+* Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.3-alt0.M70P.1
+- built for M70P
+
 * Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.3-alt1
 - new version
 

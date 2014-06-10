@@ -1,6 +1,6 @@
 
 Name: libmwaw
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 Summary: Import library for some old mac text documents
 Group: System/Libraries
@@ -13,9 +13,10 @@ Url: http://sourceforge.net/projects/libmwaw/
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(libwpd-0.9) pkgconfig(libwpd-stream-0.9)
+BuildRequires: boost-devel-headers
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
 
-BuildRequires: doxygen libwpg-devel
+BuildRequires: doxygen
 
 %description
 libmwaw contains some import filters for old mac text documents
@@ -55,8 +56,7 @@ Supported output formats are XHTML, text and raw.
 %build
 mkdir -p m4
 %autoreconf
-%configure --disable-static --disable-werror --disable-zip \
-    --with-sharedptr=c++11 CXXFLAGS="$CXXFLAGS -std=c++11"
+%configure --disable-static --disable-werror --disable-zip
 
 %make_build
 
@@ -83,6 +83,9 @@ rm -f %buildroot/%_bindir/mwawFile
 %_bindir/*
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.1-alt1
+- 0.3.1
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.2.0-alt1
 - new version
 

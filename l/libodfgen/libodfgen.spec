@@ -1,6 +1,6 @@
 
 Name: libodfgen
-Version: 0.0.4
+Version: 0.1.0
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
@@ -9,8 +9,9 @@ URL: http://sourceforge.net/projects/libwpd/
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(libwpg-0.2) pkgconfig(libwpd-0.9)
-BuildRequires: libetonyek-devel doxygen
+BuildRequires: boost-devel-headers
+BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0)
+BuildRequires: doxygen
 
 %description
 %name is a library for generating ODF (text and vector drawing formats
@@ -33,13 +34,12 @@ developing applications that use %name.
 %build
 mkdir -p m4
 %autoreconf
-%configure --disable-silent-rules --disable-static --disable-werror \
- --with-sharedptr=c++11 CXXFLAGS="$CXXFLAGS -std=c++11"
+%configure --disable-silent-rules --disable-static --disable-werror
 %make_build
 
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc COPYING.* README
@@ -53,6 +53,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
+- 0.1.0
+
 * Wed Mar 19 2014 Fr. Br. George <george@altlinux.ru> 0.0.4-alt1
 - new version
 
