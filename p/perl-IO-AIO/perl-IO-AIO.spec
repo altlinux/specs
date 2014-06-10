@@ -1,7 +1,7 @@
 Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.3
+Version: 4.31
 Release: alt1
 
 Summary: Asynchronous Input/Output
@@ -43,6 +43,9 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.31-alt1
+- automated CPAN update
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.3-alt1
 - automated CPAN update
 
