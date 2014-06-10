@@ -1,6 +1,6 @@
 Name: wmforkplop
 Version: 0.9.3
-Release: alt6.1
+Release: alt7
 
 Summary: Cute system process monitoring applet
 License: GPL
@@ -69,6 +69,9 @@ install -pDm755 gkforkplop.so %buildroot%_libdir/gkrellm2/plugins/gkforkplop.so
 %_libdir/gkrellm2/plugins/gkforkplop.so
 
 %changelog
+* Tue Jun 10 2014 Michael Shigorin <mike@altlinux.org> 0.9.3-alt7
+- rebuilt against recent libgtop
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt6.1
 - Fixed build with gcc 4.7
 

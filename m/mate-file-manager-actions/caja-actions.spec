@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/db2html
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
 Version:	1.7.1
-Release:	alt1_1
+Release:	alt2_1
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -120,6 +120,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt2_1
+- rebuild with libgtop
+
 * Tue Apr 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_1
 - new fc release
 

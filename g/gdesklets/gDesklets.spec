@@ -3,7 +3,7 @@
 
 Name:    gdesklets
 Version: 0.36.3
-Release: alt1
+Release: alt2
 
 Summary: gDesklets - an advanced architecture for desktop applets
 License: GPL
@@ -124,6 +124,9 @@ fi
 #%_pkgconfigdir/*
 
 %changelog
+* Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt2
+- Rebuild with new version of libgtop
+
 * Wed Jan 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt1
 - New version 0.36.3
 - Add watch file

@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
 Version:        1.8.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Process and resource monitor
 
 License:        GPLv2+
@@ -66,6 +66,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- rebuild with libgtop
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

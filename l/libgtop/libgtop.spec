@@ -1,11 +1,11 @@
 %define oldname libgtop2
-%define ver_major 2.28
+%define ver_major 2.30
 %def_disable static
 %def_with examples
 %def_enable introspection
 
 Name: libgtop
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: LibGTop library
@@ -163,6 +163,9 @@ gtkdocize
 %endif
 
 %changelog
+* Tue Apr 29 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
+- 2.30.0
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 2.28.5-alt1
 - 2.28.5
 

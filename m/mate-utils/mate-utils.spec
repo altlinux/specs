@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
 Version:        1.8.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
@@ -224,6 +224,9 @@ done
 
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
+- rebuild with libgtop
+
 * Thu Mar 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - new fc release
 

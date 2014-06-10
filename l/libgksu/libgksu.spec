@@ -1,6 +1,6 @@
 Name: libgksu
 Version: 2.0.12
-Release: alt6.2
+Release: alt7
 
 Summary: A 'su' and 'sudo' wrapper library for GTK+/GNOME applications
 License: %lgpl2plus
@@ -109,6 +109,9 @@ fi
 %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.12-alt7
+- rebuilt against libgtop-2.0.so.10
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.12-alt6.2
 - Fixed build with make 3.82
 
