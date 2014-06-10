@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/pkg-config libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name: matchbox-window-manager
 Version: 1.2
-Release: alt4
+Release: alt4.1
 Summary: Window manager for the Matchbox Desktop
 License: GPLv2+
 Group: Graphical desktop/Other
@@ -100,6 +100,9 @@ install -D -m 644 %{SOURCE3} %buildroot/%_sysconfdir/matchbox/kbdconfig
 %_bindir/matchbox-window-manager-light
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4.1
+- updated watch file
+
 * Sun Nov 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4
 - restored kbdconfig
 
