@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Lingua-EN-Inflect-Number
-Version: 1.1
-Release: alt2.1
+Version: 1.11
+Release: alt1
 
 Summary: %m_name - Force number of words to singular or plural
 
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Lingua-EN-Inflect-Number/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SI/SIMON/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-Inflect-Number-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 13 2008 (-bi)
 BuildRequires: perl-Lingua-EN-Inflect perl-devel
@@ -46,6 +46,9 @@ with three new functions available for export.
 %doc Changes README
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
