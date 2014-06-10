@@ -1,6 +1,6 @@
 %define dist Term-Cap
 Name: perl-%dist
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Perl termcap interface
@@ -33,6 +33,9 @@ a terminal capability (termcap) database.
 %perl_vendor_privlib/Term
 
 %changelog
+* Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Sun Oct 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
