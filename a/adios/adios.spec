@@ -6,7 +6,7 @@
 
 Name: adios
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
@@ -205,6 +205,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2
+- Fixed build
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1
 - Version 1.6.0
 
