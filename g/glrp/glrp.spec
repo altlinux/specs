@@ -1,5 +1,5 @@
 Name:		glrp
-Version:	1.4.6
+Version:	1.4.7
 Release:	alt1
 Summary:	Robust internet radio station streamer
 Url:		http://sourceforge.net/projects/glrp/?source=dlp
@@ -53,6 +53,9 @@ cp changelog.txt %buildroot%_datadir/glrp/
 %_iconsdir/hicolor/scalable/apps/
 
 %changelog
+* Wed Jun 11 2014 Motsyo Gennadi <drool@altlinux.ru> 1.4.7-alt1
+- 1.4.7
+
 * Fri Jan 17 2014 Motsyo Gennadi <drool@altlinux.ru> 1.4.6-alt1
 - 1.4.6
 
