@@ -1,5 +1,5 @@
 Name: sylpheed
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
@@ -154,6 +154,9 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Wed Jun 11 2014 Ilya Mashkin <oddity@altlinux.ru> 3.4.2-alt1
+- 3.4.2
+
 * Sat Apr 12 2014 Ilya Mashkin <oddity@altlinux.ru> 3.4.1-alt1
 - 3.4.1
 
