@@ -22,8 +22,8 @@
 %def_disable wayland
 
 Name: gdm
-Version: %ver_major.1
-Release: alt4
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -46,7 +46,6 @@ Source15: gdm-fingerprint.pam
 Patch2: gdm-3.11.90-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
-Patch12: 0001-Revert-"worker:-get-PATH-from-parent-instead-of-#define".patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %version-%release
@@ -167,7 +166,6 @@ This package contains user documentation for Gdm.
 %patch2 -p1
 %patch7 -p1
 %patch11 -p1 -b .lfs
-%patch12 -p1
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -297,6 +295,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Jun 11 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.2-alt1
+- 3.12.2
+
 * Wed Apr 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt4
 - remove compatibility "-nodaemon" option patch
 - add upstream 0001-Revert-"worker:-get-PATH-from-parent-instead-of-#define".patch
