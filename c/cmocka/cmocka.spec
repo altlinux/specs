@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: cmocka
-Version: 0.3.2
-Release: alt3
+Version: 0.4.1
+Release: alt1
 
 License: ASL 2.0
 Group: Development/Tools
@@ -91,21 +91,15 @@ Development headers for the cmocka unit testing library.
   -DUNIT_TESTING=ON
 
 
-pushd BUILD
-%make_build VERBOSE=1
-%make doc
-popd
+%cmake_build VERBOSE=1
+%cmake_build doc
 
 %install
-pushd BUILD
-%make_install install DESTDIR=%buildroot
-popd
+%cmakeinstall_std
 
 %check
-pushd BUILD
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make test
-popd
+%cmake_build  test
 
 %files -n libcmocka
 %doc AUTHORS README ChangeLog COPYING
@@ -116,6 +110,7 @@ popd
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/cmocka/*.cmake
 
 %if_enabled static
 %files -n libcmocka-devel-static
@@ -123,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 11 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Fri Mar 14 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt3
 - rename libcmocka-static to libcmocka-devel-static
 - disable build static lib
