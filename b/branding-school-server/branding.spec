@@ -6,8 +6,8 @@
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
 %define status %nil
 %define status_en %nil
-%define distro_name ALT Linux 7.0.4%status_en School Server
-%define distro_name_ru Альт Линукс 7.0.4%status Школьный Сервер
+%define distro_name ALT Linux 7.0.5%status_en School Server
+%define distro_name_ru Альт Линукс 7.0.5%status Школьный Сервер
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
@@ -15,7 +15,7 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%brand-%theme
-Version: 7.0.4
+Version: 7.0.5
 Release: alt1
 BuildArch: noarch
 
@@ -391,7 +391,7 @@ cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
 # system-settings
 mkdir -p %buildroot/%_sysconfdir/polkit-1/rules.d/
 cp -a system-settings/polkit-rules/*.rules %buildroot/%_sysconfdir/polkit-1/rules.d/
-install -Dm644 system-settings/ldm_pam_environment %buildroot%_localstatedir/ldm/.pam_environment
+#install -Dm644 system-settings/ldm_pam_environment %buildroot%_localstatedir/ldm/.pam_environment
 
 #bootloader
 %pre bootloader
@@ -420,7 +420,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %_sbindir/indexhtml-update
 
 %post system-settings
-chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
+#chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
 sed -i '/pam_env\.so/ {
 		/user_readenv/ b
 		s/pam_env\.so/pam_env.so user_readenv=1/ }
@@ -502,9 +502,12 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
-%config %_localstatedir/ldm/.pam_environment
+#%config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Jun 11 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt1
+- New release
+
 * Wed Mar 05 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
 - New release
 
