@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.14.6
-Release: alt4
+Version: 3.14.7
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.14
-%define kernel_stable_version 6
+%define kernel_stable_version 7
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1881,6 +1881,19 @@ done)
 
 
 %changelog
+* Thu Jun 12 2014 Led <led@altlinux.ru> 3.14.7-alt1
+- 3.14.7
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs (CVE-2014-4014)
+  + fix-fs-ext2
+  + fix-fs-ext4
+  + fix-tools--perf
+  + feat-arch-x86-mach-xen
+
 * Tue Jun 10 2014 Led <led@altlinux.ru> 3.14.6-alt4
 - updated:
   + fix-drivers-cpufreq--intel_pstate
