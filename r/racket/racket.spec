@@ -5,7 +5,7 @@
 %define sover 6.0.1
 Name: racket
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Racket programming language
 
@@ -159,6 +159,8 @@ install -pD -m644 %SOURCE1 %buildroot%_niconsdir/drscheme.png
 install -pD -m644 drscheme.desktop \
 	%buildroot%_desktopdir/drscheme.desktop
 
+sed -i 's|%buildroot||g' %buildroot%_desktopdir/*.desktop
+
 %files
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/README
@@ -186,6 +188,9 @@ install -pD -m644 drscheme.desktop \
 %_includedir/*
 
 %changelog
+* Wed Jun 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt2
+- Removed %%buildroot from desktop files
+
 * Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt1
 - Version 6.0.1
 
