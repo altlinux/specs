@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -47,6 +47,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Jun 11 2014 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
+- convert GRUB_AUTOUPDATE_DEVICE members to stable symlinks (closes: #29546)
+
 * Thu Jan 23 2014 Michael Shigorin <mike@altlinux.org> 0.9.8-alt1
 - force shim installation even if SecureBoot is not there
   during install (so that the bootloader doesn't turn into
