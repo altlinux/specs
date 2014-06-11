@@ -3,7 +3,7 @@
 
 Name: golang-github-kr-pty
 Version: 0
-Release: alt2
+Release: alt3
 Summary: PTY interface for Go
 License: MIT
 Group: Development/Other
@@ -44,6 +44,10 @@ cp -av *.go %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/*.go
 
 %changelog
+* Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt3
+- update to commit 67e2db24c8 (required for docker 1.0
+   https://github.com/dotcloud/docker/issues/5908 )
+
 * Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
 - Update spec
 

@@ -3,7 +3,7 @@
 
 Name: golang-github-gorilla-mux
 Version: 0
-Release: alt2
+Release: alt3
 Summary: A powerful URL router and dispatcher for golang
 License: BSD
 Group: Development/Other
@@ -55,6 +55,10 @@ cp -av *.go %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/*.go
 
 %changelog
+* Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt3
+- update to commit 136d54f81f (required for docker 1.0
+   https://github.com/dotcloud/docker/issues/5908)
+
 * Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
 - Update spec
 
