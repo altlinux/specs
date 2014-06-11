@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_3jpp7
+Release:    alt2_4jpp7
 Summary:    Java ATK Wrapper
 
 Group:      Development/Java
@@ -44,8 +44,7 @@ change of underlying communication mechanism.
 
 %build
 %configure
-make 
-#%{?_smp_mflags} JAVAC='javac -J-Xmx64m'
+make
 cp %{SOURCE1} .
 
 %install
@@ -72,6 +71,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so.0.0.18 \
 
 
 %changelog
+* Wed Jun 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.30.4-alt2_4jpp7
+- converted from JPackage by jppimport script
+
 * Wed Apr 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.30.4-alt1_3jpp7
 - converted from JPackage by jppimport script
 
