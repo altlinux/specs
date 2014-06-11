@@ -1,6 +1,6 @@
 Name: foo2zjs
-Version: 20120601
-Release: alt2.qa1
+Version: 20140519
+Release: alt1
 
 Summary: ZJS (some HP/Minolta) printer driver
 Summary(ru_RU.UTF8): ZJS драйвер для некоторых принтеров HP/Minolta
@@ -20,15 +20,16 @@ Source5: hplj1020-32.png
 Source6: hplj1020-48.png
 Source7: hplj10xx.rules
 
-Patch1: foo2zjs.make_20120714.patch
+Patch1: foo2zjs.make_20140611.patch
 Patch2: foo2zjs.hplj1000_20120714.patch
 Patch3: hplj10xx_gui.tcl_20100505.patch
-Patch4: foo2zjs.getweb_20120501.patch
+Patch4: foo2zjs.getweb_20140104.patch
 
 Packager: Evgeny V Shishkov <shev@altlinux.org>
 
 # Automatically added by buildreq on Mon Jan 26 2009 (-bi)
 BuildRequires: foomatic-filters ghostscript-classic ghostscript-utils ghostscript-module-X groff-ps iputils psutils unzip bc
+BuildRequires: libcups-devel
 
 %package -n %name-apps
 BuildArch: noarch
@@ -169,14 +170,14 @@ foo2oak:
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-sed -i 's,/tmp/,$TMPDIR/,' foo2hiperc-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2hp2600-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2lava-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2oak-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2qpdl-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2slx-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2xqx-wrapper.in
-sed -i 's,/tmp/,$TMPDIR/,' foo2zjs-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2hiperc-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2hp2600-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2lava-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2oak-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2qpdl-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2slx-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2xqx-wrapper.in
+%__subst 's,/tmp/,$TMPDIR/,' foo2zjs-wrapper.in
 
 %build
 %make CFLAGS="%optflags"
@@ -196,20 +197,16 @@ mkdir -p %buildroot%_sysconfdir/udev/rules.d
 install -m644 %SOURCE1 README-UTF8.ALT
 install -m755 getweb %buildroot%_bindir/
 install -m700 %SOURCE2 %buildroot%_sbindir/
-install -pD -m644 %SOURCE3 %buildroot%_desktopdir/hplj1020.desktop
-install -pD -m644 %SOURCE4 %buildroot%_miconsdir/hplj1020.png
-install -pD -m644 %SOURCE5 %buildroot%_niconsdir/hplj1020.png
-install -pD -m644 %SOURCE6 %buildroot%_liconsdir/hplj1020.png
+%__install -pD -m644 %SOURCE3 %buildroot%_desktopdir/hplj1020.desktop
+%__install -pD -m644 %SOURCE4 %buildroot%_miconsdir/hplj1020.png
+%__install -pD -m644 %SOURCE5 %buildroot%_niconsdir/hplj1020.png
+%__install -pD -m644 %SOURCE6 %buildroot%_liconsdir/hplj1020.png
 
-install -pD -m644 %SOURCE7 %buildroot%_udevrulesdir/11-hplj10xx.rules
+%__install -pD -m644 %SOURCE7 %buildroot%_sysconfdir/udev/rules.d/11-hplj10xx.rules
 
 #ln -s %_datadir/ppd/foo2zjs %buildroot%_datadir/cups/model/foo2zjs-ppd
 
 rm -rf %buildroot%_docdir/%name/
-
-# temporary till the foo2zjs base sync with foomatic-db
-# drop this line when the file will be removed upstream
-rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
 
 %files -n %name-apps
 %_miconsdir/hplj1020.png
@@ -235,7 +232,7 @@ rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
 /bin/*
 %_bindir/*
 %_sbindir/hplj*
-%_udevrulesdir/*
+%_sysconfdir/udev/rules.d/*
 %dir %_localstatedir/foo2zjs/
 %_localstatedir/foo2zjs/*
 %_localstatedir/foo2hiperc/*
@@ -252,6 +249,9 @@ rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
 %exclude %_localstatedir/foo2zjs/hplj10xx_gui.tcl
 
 %changelog
+* Wed Jun 11 2014 Evgeny V Shishkov <shev@altlinux.org> 20140519-alt1
+- 2014-05-19 tarball
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 20120601-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
