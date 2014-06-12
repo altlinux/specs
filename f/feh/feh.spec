@@ -1,7 +1,7 @@
-%define rev 
+%define rev 2b04e7f4
 Name: feh
-Version: 2.10
-Release: alt1
+Version: 2.12
+Release: alt2.%rev
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -46,6 +46,12 @@ cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Thu Jun 12 2014 Andrew Clark <andyc@altlinux.org> 2.12-alt2.2b04e7f4
+- version update to 2.12-alt2.2b04e7f4
+
+* Sat May 24 2014 Andrew Clark <andyc@altlinux.org> 2.12-alt1.717f2a00
+- version update to 2.12-alt1.717f2a00
+
 * Sat Mar 29 2014 Andrew Clark <andyc@altlinux.org> 2.10-alt1
 - version update 2.10
 
