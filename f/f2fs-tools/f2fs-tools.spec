@@ -4,7 +4,7 @@
 %define fsname f2fs
 Name: %fsname-tools
 Version: 1.3.0
-Release: alt9
+Release: alt10
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
 Group: System/Kernel and hardware
@@ -57,6 +57,10 @@ Currently, the tools include mkfs.%fsname, fsck.%fsname and dump.%fsname.
 
 
 %changelog
+* Thu Jun 12 2014 Led <led@altlinux.ru> 1.3.0-alt10
+- fsck.f2fs: large volume support
+- mkfs: support passing in the number of sectors to use
+
 * Wed May 21 2014 Led <led@altlinux.ru> 1.3.0-alt9
 - mkfs.f2fs, fsck.f2fs: large volume support
 
