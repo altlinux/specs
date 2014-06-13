@@ -1,24 +1,19 @@
-%define _release 1
-
 Name: blobwars
-Version: 1.04
-Release: alt4.qa3
+Version: 1.19
+Release: alt1
 
 Summary: Mission and Objective based 2D Platform Game
 License: %gpl2plus
 Group: Games/Arcade
 
 Url: http://www.parallelrealities.co.uk/blobWars.php
-Source: %name-%version-%_release.tar.bz2
-Patch1: %name-1.04-alt-fix-as-needed-linking.patch
-Patch2: %name-1.04-alt-fixes.patch
-Patch3: %name-1.04-fix-gcc4-compile.patch
-Patch4: %name-1.04-fix-fdo-categories.patch
-Patch5: %name-1.04-alt-zlib-1.2.7.patch
+Source: %name-%version.tar
+Patch1: %name-1.19-alt-fix-as-needed-linking.patch
+Patch2: %name-1.19-alt-fixes.patch
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel zlib-devel
+BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL_net-devel zlib-devel
 # TODO: The package should depend on fonts-ttf-dejavu in runtime and take
 # the font from there. rpm-build-fonts contains %_ttffontsdir macro.
 BuildRequires: rpm-build-fonts fonts-ttf-dejavu
@@ -33,39 +28,39 @@ MIAs as possible.
 %setup -q
 %patch1
 %patch2
-%patch3
-%patch4
-%patch5 -p2
-%__subst 's/TTF_RenderText/TTF_RenderUTF8/' src/*
 %__subst 's/vera\.ttf/font.ttf/' src/*
 cp %_ttffontsdir/dejavu/DejaVuSans.ttf data/font.ttf
 
 %build
-%make_build VERSION=%version RELEASE=%_release PREFIX=%_prefix
+%make_build VERSION=%version PREFIX=%_prefix
+# RELEASE=0
 
 %install
-%makeinstall DESTDIR=%buildroot PREFIX=%buildroot%_prefix
+%makeinstall DESTDIR=%buildroot PREFIX=%_prefix
 
 # icons
-mkdir -p %buildroot%_niconsdir %buildroot%_miconsdir %buildroot%_liconsdir
-pushd %buildroot%_iconsdir
-mv mini/*.* %buildroot%_miconsdir/
-mv large/*.* %buildroot%_liconsdir/
-mv *.* %buildroot%_niconsdir/
-rmdir mini large
+mkdir -p %buildroot%_liconsdir
+install -m 644 icons/blobwars-large.png %buildroot%_liconsdir/blobwars.png
+
+# fonts
+pushd %buildroot%_gamesdatadir/%name
+rm data/vera.ttf data/font.ttf
+ln -s %_ttffontsdir/dejavu/DejaVuSans.ttf data/font.ttf
 popd
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_gamesbindir/%name
-%dir %_gamesdatadir/parallelrealities
-%_gamesdatadir/parallelrealities/%name.pak
+%_gamesdatadir/%name
 %_desktopdir/%name.desktop
-%_niconsdir/%name.png
-%_miconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %doc doc/*
 
 %changelog
+* Fri Jun 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- new version
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.04-alt4.qa3
 - Fixed build with zlib 1.2.7
 
