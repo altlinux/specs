@@ -4,7 +4,7 @@
 
 Name: kernel-src-%mname
 Version: 6.0.2
-Release: alt3
+Release: alt4
 Summary: Linux VMWare host modules sources
 License: GPLv2
 Group: Development/Kernel
@@ -35,6 +35,9 @@ tar -C .. -cJf %kernel_srcdir/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Fri Jun 13 2014 Led <led@altlinux.ru> 6.0.2-alt4
+- fixed build for kernel >= 3.15
+
 * Sat May 24 2014 Led <led@altlinux.ru> 6.0.2-alt3
 - fixed build for kernel >= 3.14
 
