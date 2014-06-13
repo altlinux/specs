@@ -1,5 +1,5 @@
 %define foomatic_version 4.0.3
-%define snapshot 20140425
+%define snapshot 20140426
 
 %def_disable foo2zjs
 
@@ -39,7 +39,9 @@ PreReq: foomatic-db-engine >= %foomatic_version
 BuildPreReq: foomatic-db-engine cups >= 1.2.1
 
 # Automatically added by buildreq on Fri May 26 2006 (-bi)
-BuildRequires: cups foomatic-db-engine
+BuildRequires: cups foomatic-db-engine 
+# autoremove conflicts
+BuildRequires: foomatic-db-foo2zjs
 
 %description
 This package is the Foomatic database, an XML database containing
@@ -53,7 +55,7 @@ The site http://www.linuxprinting.org/ is based in this database.
 %package -n foomatic-db-foo2zjs
 BuildArch: noarch
 Summary: Database of printers supported by foo2zjs drivers
-Summary(ru_RU.UTF8): Áàçà äàííûõ ïðèíòåðîâ, êîòîðûå ïîääåðæèâàþòñÿ äðàéâåðàìè foo2zjs.
+Summary(ru_RU.UTF8): Ð‘Ð°Ð·Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¸Ð½Ñ‚ÐµÑ€Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€Ð°Ð¼Ð¸ foo2zjs.
 Group: System/Configuration/Hardware
 #Requires: %name = %version-%release
 
@@ -61,13 +63,13 @@ Group: System/Configuration/Hardware
 Database of printers that are supported by foo2zjs drivers.
 
 %description -l ru_RU.UTF-8 -n foomatic-db-foo2zjs
-Áàçà äàííûõ ïðèíòåðîâ, êîòîðûå ïîääåðæèâàþòñÿ äðàéâåðàìè foo2zjs.
+Ð‘Ð°Ð·Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¸Ð½Ñ‚ÐµÑ€Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÑŽÑ‚ÑÑ Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€Ð°Ð¼Ð¸ foo2zjs.
 %endif
 
 %package -n foomatic-db-docs
 BuildArch: noarch
 Summary: documentation files for the Foomatic printer database.
-Summary(ru_RU.UTF8): Äîêóìåíòàöèÿ ê áàçå äàííûõ ïðèíòåðîâ Foomatic. 
+Summary(ru_RU.UTF8): Ð”Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ñ Ðº Ð±Ð°Ð·Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¸Ð½Ñ‚ÐµÑ€Ð¾Ð² Foomatic. 
 Group: Documentation
 
 %description -n foomatic-db-docs
@@ -75,8 +77,8 @@ This package is the documentation files for the Foomatic database.
 It contains README and ChangeLog.
 
 %description -l ru_RU.UTF-8 -n foomatic-db-docs
-Äîêóìåíòàöèÿ ê áàçå äàííûõ ïðèíòåðîâ Foomatic. 
-Âêëþ÷àåò â ñåáÿ README è ChangeLog.
+Ð”Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ñ Ðº Ð±Ð°Ð·Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¸Ð½Ñ‚ÐµÑ€Ð¾Ð² Foomatic. 
+Ð’ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ Ð² ÑÐµÐ±Ñ README Ð¸ ChangeLog.
 
 %prep
 %setup -q
@@ -116,9 +118,15 @@ find %buildroot/%_datadir/%name/source/PPD -type f -name "*.ppd" -print0 |
 	xargs -r0 perl -pi -e 's:^(\*Default.*)Letter\s*$:$1A4\n:; \
 		s:\s\n:\n:'
 
+# remove file conflicts with foomatic-db-foo2zjs
+for i in `rpm -ql foomatic-db-foo2zjs| grep /usr/share/foomatic/db/source/printer/`; do
+	rm -f %buildroot$i
+done
+# just in case
 grep -rl 'foo2' %buildroot/usr/share/foomatic/db/source/printer | sed -e 's,%buildroot,,' | sort -u > foomatic-db-foo2zjs.ls
 find %buildroot/usr/share/foomatic/db/source/printer -type f | sed -e 's,%buildroot,,' | sort > foomatic-db-all.ls
 comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
+
 
 %files -f foomatic-db-main.ls
 %doc USAGE
@@ -150,6 +158,9 @@ comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
 %doc README ChangeLog
 
 %changelog
+* Fri Jun 13 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.20140426-alt1
+- improved foo2zjs conflict remover
+
 * Thu Jun 12 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.20140425-alt1
 - rebuild to remove conflict with foo2zjs
 
