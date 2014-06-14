@@ -8,7 +8,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.3
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -184,6 +184,10 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt2
+- Revert
+  "sys/zfs_context: make ddi_time_* macros visible for build kernel- modules"
+
 * Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt1
 - 0.6.3
 
