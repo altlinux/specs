@@ -1,5 +1,5 @@
 Name: gear-cronbuild
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: gear repository automated build utility
@@ -11,8 +11,9 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: perl-RPM-Source-Editor perl-RPM perl-devel /usr/bin/pod2man
-Requires: gear rpm-uscan > 0.4
+# TODO use /usr/bin/gear-rules-print-specfile
+BuildRequires: perl-RPM-Source-Editor perl-RPM perl-devel /usr/bin/pod2man perl-Gear-Rules
+Requires: gear rpm-uscan > 0.4 perl-Gear-Rules > 0.10
 
 %description
 %summary
@@ -44,6 +45,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Sat Jun 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- use perl-Gear-Rules for gear API
+
 * Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - upodated man pages
 
