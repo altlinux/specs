@@ -7,8 +7,8 @@
 
 Name: zfs
 %define lname lib%name
-Version: 0.6.2
-Release: alt50
+Version: 0.6.3
+Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -184,6 +184,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt1
+- 0.6.3
+
 * Sat Jun 07 2014 Led <led@altlinux.ru> 0.6.2-alt50
 - upstream updates and fixes
 
