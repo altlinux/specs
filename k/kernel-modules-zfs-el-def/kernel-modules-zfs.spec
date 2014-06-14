@@ -1,6 +1,6 @@
 %define module_name zfs
-%define module_version 0.6.2
-%define module_release alt2
+%define module_version 0.6.3
+%define module_release alt1
 
 %define flavour el-def
 BuildRequires(pre): kernel-headers-modules-el-def
@@ -88,6 +88,9 @@ find %buildroot%splmod_dir -type d -empty -delete
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt1
+- 0.6.3
 
 * Mon Feb 17 2014 Led <led@altlinux.ru> 0.6.2-alt2
 - use gcc piinted in gcc_version.inc
