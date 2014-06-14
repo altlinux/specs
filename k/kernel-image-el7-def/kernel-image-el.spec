@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt6
+Release: alt7
 %define erelease 3.10.0-123.1.2.el7
 
 %define kernel_req %nil
@@ -395,6 +395,7 @@ for f in \
 	scripts/bin2c \
 	scripts/check{includes,version}.pl \
 	scripts/conmakehash \
+	scripts/depmod.sh \
 	scripts/extract-ikconfig \
 	scripts/gcc-*.sh \
 	scripts/kallsyms \
@@ -552,6 +553,9 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Sat Jun 14 2014 Led <led@altlinux.ru> 3.10.0-alt7
+- added scripts/depmod.sh to kernel-headers-modules-*
+
 * Tue Jun 10 2014 Led <led@altlinux.ru> 3.10.0-alt6
 - 3.10.0-123.1.2.el7:
   + CVE-2014-0196
