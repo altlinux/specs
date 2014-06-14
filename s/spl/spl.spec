@@ -1,12 +1,12 @@
 Name: spl
-Version: 0.6.2
-Release: alt16
+Version: 0.6.3
+Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org
 Source: http://archive.zfsonlinux.org/downloads/zfsonlinux/%name/%name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-kernel
 
@@ -53,7 +53,7 @@ This package contains SPL modules sources for Linux kernel.
 
 %prep
 %setup -q
-%patch -p1
+#patch -p1
 sed -i '/^AC_OUTPUT/itest "x$SPL_CONFIG" != "xkernel" || ac_config_files="module/Makefile module/spl/Makefile module/splat/Makefile"\n' configure.ac
 
 
@@ -89,6 +89,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt1
+- 0.6.3
+
 * Sun Jun 01 2014 Led <led@altlinux.ru> 0.6.2-alt16
 - upstream updates
 
