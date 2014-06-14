@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.14.7
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -154,8 +154,8 @@ Release: alt1
 
 %if "%sub_flavour" != "xen"
 # FIXME: spl and vmware for 'xen' flavour
-#Extra_modules spl 0.6.2
-%Extra_modules zfs 0.6.2
+#Extra_modules spl 0.6.3
+%Extra_modules zfs 0.6.3
 %Extra_modules vmware 6.0.2
 %Extra_modules vboxhost 4.3.12
 %Extra_modules vboxguest 4.3.12
@@ -1110,6 +1110,7 @@ config_enable \
 	x86_generic \
 	%{?_enable_optimize_for_size:cc_optimize_for_size} \
 %endif
+	%{?_enable_compat:uselib} \
 	%{?_enable_debug_section_mismatch:debug_section_mismatch} \
 	%{?_enable_modversions:modversions} \
 	%{?_enable_pae:highmem64g} \
@@ -1881,6 +1882,15 @@ done)
 
 
 %changelog
+* Sat Jun 14 2014 Led <led@altlinux.ru> 3.14.7-alt2
+- added:
+  + fix-drivers-gpu-drm--ast
+  + fix-drivers-gpu-drm--mgag200
+  + fix-fs--binfmt_elf
+  + fix-kernel--auditsc (CVE-2014-3917)
+- spl 0.6.3
+- zfs 0.6.3
+
 * Thu Jun 12 2014 Led <led@altlinux.ru> 3.14.7-alt1
 - 3.14.7
 - updated:
