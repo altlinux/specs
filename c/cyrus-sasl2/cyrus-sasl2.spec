@@ -7,7 +7,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.26
-Release: alt4
+Release: alt5
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -135,7 +135,7 @@ popd
 %configure	--enable-shared \
 		--sysconfdir=%_sysconfdir/sasl2 \
 		--libdir=/%_lib \
-		--with-plugindir=%_libdir/sasl2 \
+		--with-plugindir=%_libdir/sasl2-%abiversion \
 		--with-dbpath=%_sysconfdir/sasl2/sasldb2 \
 		--with-dblib=berkeley \
 		--with-devrandom=/dev/urandom \
@@ -179,7 +179,7 @@ popd
 %set_verify_elf_method unresolved=relaxed
 
 mkdir -p %buildroot{%_bindir,%_libdir}
-%makeinstall sasldir=%buildroot%_libdir/sasl2 libdir=%buildroot/%_lib
+%makeinstall sasldir=%buildroot%_libdir/sasl2-%abiversion libdir=%buildroot/%_lib
 
 install -m 755 saslauthd/testsaslauthd %buildroot%_bindir
 
@@ -225,7 +225,7 @@ install -m0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/saslauthd
 mkdir -p %buildroot%_pkgconfigdir
 mv -f %buildroot/%_lib/pkgconfig/libsasl2.pc %buildroot%_pkgconfigdir/libsasl2.pc
 
-rm -f %buildroot%_libdir/sasl2/*.la
+rm -f %buildroot%_libdir/sasl2-%abiversion/*.la
 
 %post
 %post_service saslauthd
@@ -243,30 +243,28 @@ rm -f %buildroot%_libdir/sasl2/*.la
 %_bindir/*
 %_sbindir/*
 %_man8dir/*
-#%%_libdir/sasl2/*.conf
 %attr(0711,root,root) %dir %_var/run/saslauthd
 
 %files -n libsasl2-%abiversion
 %config(noreplace) %attr(0640,root,sasl) %_sysconfdir/sasl2/sasldb2
 %dir %_sysconfdir/sasl2
-%dir %_libdir/sasl2
+%dir %_libdir/sasl2-%abiversion
 /%_lib/*.so.*
-%_libdir/sasl2/libanonymous.so*
-%_libdir/sasl2/libcrammd5.so*
-%_libdir/sasl2/libdigestmd5.so*
-%_libdir/sasl2/liblogin.so*
-%_libdir/sasl2/libntlm.so*
-%_libdir/sasl2/libotp.so*
-%_libdir/sasl2/libplain.so*
-%_libdir/sasl2/libsasldb.so*
-%_libdir/sasl2/libsrp.so*
-%_libdir/sasl2/libscram.so*
+%_libdir/sasl2-%abiversion/libanonymous.so*
+%_libdir/sasl2-%abiversion/libcrammd5.so*
+%_libdir/sasl2-%abiversion/libdigestmd5.so*
+%_libdir/sasl2-%abiversion/liblogin.so*
+%_libdir/sasl2-%abiversion/libntlm.so*
+%_libdir/sasl2-%abiversion/libotp.so*
+%_libdir/sasl2-%abiversion/libplain.so*
+%_libdir/sasl2-%abiversion/libsasldb.so*
+%_libdir/sasl2-%abiversion/libsrp.so*
+%_libdir/sasl2-%abiversion/libscram.so*
 
 %doc COPYING AUTHORS INSTALL NEWS README ChangeLog doc/TODO
 
 %files -n libsasl2-devel
 %dir %_includedir/sasl
-%dir %_libdir/sasl2
 %_includedir/sasl/*
 %_mandir/man3/*
 %_libdir/*.so
@@ -277,14 +275,18 @@ rm -f %buildroot%_libdir/sasl2/*.la
 %doc %_docdir/%name-%version
 
 %files -n libsasl2-plugin-gssapi
-%_libdir/sasl2/libgssapiv2.so*
+%_libdir/sasl2-%abiversion/libgssapiv2.so*
 
 %if_enabled sql
 %files -n libsasl2-plugin-sql
-%_libdir/sasl2/libsql.so*
+%_libdir/sasl2-%abiversion/libsql.so*
 %endif
 
 %changelog
+* Sat Jun 14 2014 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt5
+- 20140330 git snapshot
+- moved plugins to sasl2-%%abiversion directoy (ALT #30113)
+
 * Wed Jun 04 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.26-alt4
 - Drop Conflicts: libsasl2 to comply SharedLibs Policy.
 
