@@ -1,7 +1,7 @@
 %define mname ipt_NETFLOW
 Name: kernel-src-%mname
 Version: 1.8.3
-Release: alt1
+Release: alt3
 Summary: Netflow iptables module for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -28,7 +28,10 @@ This is netfilter/iptables module adding support for NETFLOW target.
 install -d -m 0755 %mname-%version
 cd %mname-%version
 ln -sf ../{%mname.[ch],murmur3.h} ./
-echo "obj-m = %mname.o" > Makefile
+cat > Makefile <<__EOF__
+obj-m = %mname.o
+EXTRA_CFLAGS += -DENABLE_DEBUGFS -DSNMP_RULES
+__EOF__
 
 
 %install
@@ -41,6 +44,12 @@ tar -chJf %buildroot%kernel_src/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Sun Jun 15 2014 Led <led@altlinux.ru> 1.8.3-alt3
+- upstream updates and fixes
+
+* Mon Jun 09 2014 Led <led@altlinux.ru> 1.8.3-alt2
+- upstream updates
+
 * Thu Jun 05 2014 Led <led@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 
