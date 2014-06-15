@@ -1,6 +1,6 @@
 Name: kumir2
 Version: 2.1.0
-Release: alt0.beta4
+Release: alt0.beta5
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -13,7 +13,7 @@ Packager: Denis Kirienko <dk@altlinux.ru>
 BuildPreReq: libqt4-devel gcc-c++ cmake python-modules python-modules-json boost-devel
 Requires: libqt4-core
 
-Source: kumir2-2.1.0-beta4.tar
+Source: kumir2-2.1.0-beta5.tar
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -33,7 +33,7 @@ This is a second generation of well-known Kumir system.
 Пакет kumir2 содержит новую реализацию системы Кумир.
 
 %prep
-%setup -n kumir2-2.1.0-beta4
+%setup -n kumir2-2.1.0-beta5
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
 
 %build
@@ -56,6 +56,9 @@ cd build
 %_iconsdir/*/*/*/*
 
 %changelog
+* Sun Jun 15 2014 Denis Kirienko <dk@altlinux.org> 2.1.0-alt0.beta5
+- Version 2.1.0-beta5
+
 * Thu Jan 09 2014 Denis Kirienko <dk@altlinux.org> 2.1.0-alt0.beta4
 - Version 2.1.0-beta4
 
