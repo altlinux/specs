@@ -18,17 +18,20 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #
 # Spec file adapted for ALT Linux.
 
+%global with_systemd 1
+%define init_script systemd
+
 Name: lxc
-Version: 0.9.0
-Release: alt3
+Version: 1.0.4
+Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
-URL: http://lxc.sourceforge.net
-Source: http://dl.sourceforge.net/sourceforge/%name/%name-%{version}.tar
+URL: https://linuxcontainers.org/
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Summary: %name : Linux Container
@@ -37,22 +40,34 @@ License: LGPL
 Requires: libcap gzip-utils
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
-#TODO  python3 libpython3 
+BuildRequires: rpm-build-python3
 
 # Needed to disable auto requirements from distro templates
-%add_findreq_skiplist %_datadir/%name/templates/*
+%add_findreq_skiplist %_datadir/%name/*
+
+Requires: openssl rsync
+BuildRequires: libcap libcap-devel docbook2X graphviz
+
+Requires: python3
+BuildRequires: python3-devel
+
+BuildRequires: systemd-devel
 
 %description
+Containers are insulated areas inside a system, which have their own namespace
+for filesystem, network, PID, IPC, CPU and memory allocation and which can be
+created using the Control Group and Namespace features included in the Linux
+kernel.
 
-The package "%name" provides the command lines to create and manage
-containers.  It contains a full featured container with the isolation
-/ virtualization of the pids, the ipc, the utsname, the mount points,
-/proc, /sys, the network and it takes into account the control groups.
-It is very light, flexible, and provides a set of tools around the
-container like the monitoring with asynchronous events notification,
-or the freeze of the container. This package is useful to create
-Virtual Private Server, or to run isolated applications like bash or
-sshd.
+This package provides the lxc-* tools, which can be used to start a single
+daemon in a container, or to boot an entire "containerized" system, and to
+manage and debug your containers.
+
+%package	libs
+Summary:	Shared library files for %{name}
+Group:		System/Configuration/Other
+%description	libs
+The %{name}-libs package contains libraries for running %{name} applications.
 
 %package devel
 Summary: development library for %name
@@ -71,7 +86,10 @@ CFLAGS+=-I%_includedir/linux-default/include/
 %autoreconf
 %configure -disable-rpath \
     --localstatedir=%_var \
-    --with-config-path=%_var/lib/lxc
+    --with-config-path=%_var/lib/lxc \
+    --enable-python \
+    --with-init-script=%{init_script}
+
 #TODO    --enable-python
 %make_build
 
@@ -86,33 +104,47 @@ mkdir -p %buildroot%_cachedir/%name
 
 %files
 %defattr(-,root,root)
-%dir %_sysconfdir/%name
-%_sysconfdir/%name/*
-%_bindir/*
-%_libdir/*.so.*
-%dir %_libexecdir/%name
-%attr(4711,root,root) %_libexecdir/%name/lxc-init
-%dir %_libdir/%name
-%dir %_libdir/%name/rootfs
-%_libdir/%name/rootfs/*
-%dir %_datadir/%name
-%_datadir/%name/*
-%_man1dir/*
-%_man5dir/*
-%_man7dir/*
-%dir %_docdir/%name
-%_docdir/%name/*
-%dir %_localstatedir/%name
-%dir %_cachedir/%name
+%{_bindir}/*
+%{_mandir}/man1/lxc*
+%{_mandir}/man5/lxc*
+%{_mandir}/man7/lxc*
+%{_mandir}/ja/man1/lxc*
+%{_mandir}/ja/man5/lxc*
+%{_mandir}/ja/man7/lxc*
+%{_datadir}/doc/*
+%{_datadir}/lxc/*
+%{_sysconfdir}/bash_completion.d
+%config(noreplace) %{_sysconfdir}/lxc/*
+%{_unitdir}/lxc.service
+
+%files libs
+%defattr(-,root,root)
+%{_sbindir}/*
+%{_libdir}/*.so.*
+%{_libdir}/%{name}
+%{_localstatedir}/*
+%{_libexecdir}/%{name}
+%attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
+
+%if %{with_systemd}
+%attr(555,root,root) %{_libexecdir}/%{name}/lxc-devsetup
+%attr(555,root,root) %{_libexecdir}/%{name}/lxc-autostart-helper
+%endif
+
+%{python3_sitelibdir}/_lxc*
+%{python3_sitelibdir}/lxc/*
 
 %files devel
 %defattr(-,root,root)
-%dir %_includedir/%name
-%_includedir/%name/*
-%_libdir/pkgconfig/*
-%_libdir/*.so
+%{_includedir}/%{name}/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*
+
 
 %changelog
+* Sat Jun 14 2014 Denis Pynkin <dans@altlinux.org> 1.0.4-alt1
+- New version
+
 * Sun Nov 24 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt3
 - Fixed rebuild problem
 
