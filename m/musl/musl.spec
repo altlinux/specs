@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 1.1.2
-Release: alt2
+Release: alt3
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Jun 15 2014 Led <led@altlinux.ru> 1.1.2-alt3
+- fix missing argument to syscall in fanotify_mark
+
 * Thu Jun 12 2014 Led <led@altlinux.ru> 1.1.2-alt2
 - updates from upstream's SCM
 
