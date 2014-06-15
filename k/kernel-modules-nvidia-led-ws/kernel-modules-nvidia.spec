@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	331.79
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		led-ws
 
 %setup_kernel_module %flavour
@@ -26,13 +26,13 @@
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.15
+%nvIF_ver_lt %xorg_ver 1.16
 %define legacy3 173.14.39
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.15
+%nvIF_ver_lt %xorg_ver 1.16
 %define legacy4 304.121
 %else
 %define legacy4 %nil
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Jun 15 2014 Led <led@altlinux.ru> 331.79-alt2
+- enabled legacy3 and legacy4
 
 * Sat May 24 2014 Led <led@altlinux.ru> 331.79-alt1
 - new releases (331.79)
