@@ -1,6 +1,6 @@
 %define dist Archive-Tar
 Name: perl-%dist
-Version: 1.96
+Version: 2.00
 Release: alt1
 
 Summary: Module for creation and manipulation of tar archives
@@ -35,6 +35,9 @@ allowing for the creation of tar file objects for custom manipulation.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Fri Oct 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.96-alt1
 - automated CPAN update
 
