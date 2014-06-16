@@ -1,6 +1,6 @@
 
 Name: libodfgen
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 Summary: An ODF generator library
 Group: System/Libraries
@@ -53,6 +53,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jun 16 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
+- 0.1.1
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
 - 0.1.0
 
