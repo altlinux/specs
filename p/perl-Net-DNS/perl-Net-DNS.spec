@@ -4,7 +4,7 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.76
+Version: 0.77
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -48,6 +48,9 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
+- automated CPAN update
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1
 - automated CPAN update
 
