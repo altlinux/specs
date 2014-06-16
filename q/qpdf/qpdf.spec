@@ -1,11 +1,12 @@
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 License: Artistic 2.0
 Group: System/Base
 Url: http://qpdf.sourceforge.net/
 Source0: http://downloads.sourceforge.net/sourceforge/qpdf/qpdf-%version.tar
+Source1: %name.watch
 Patch0: %name-%version-%release.patch
 
 BuildRequires: zlib-devel xml-utils xsltproc docbook-style-xsl
@@ -92,6 +93,9 @@ QPDF Manual
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Mon Jun 16 2014 Anton Farygin <rider@altlinux.ru> 5.1.2-alt1
+- new version
+
 * Wed Feb 19 2014 Anton Farygin <rider@altlinux.ru> 5.1.1-alt1
 - new version
 
