@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Crypt-GeneratePassword
-Version: 0.03
-Release: alt2.1
+Version: 0.04
+Release: alt1
 
 Summary: generate secure random pronounceable passwords
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/J/JW/JWALT/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Crypt-GeneratePassword-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Nov 04 2005
 BuildRequires: perl-devel
@@ -69,6 +69,9 @@ computer speed has improved a little since 1977.
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
