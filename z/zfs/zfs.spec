@@ -8,7 +8,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.3
-Release: alt2
+Release: alt3
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -90,7 +90,7 @@ Group: Development/Kernel
 BuildArch: noarch
 Provides: kernel-src-%name = %version-%release
 Requires: kernel-source-spl = %version
-Requires: kernel-source-spl >= 0.6.2-alt4
+Requires: kernel-source-spl >= 0.6.3-alt2
 
 %description -n kernel-source-%name
 ZFS is an advanced file system and volume manager which was originally developed
@@ -184,6 +184,10 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Mon Jun 16 2014 Led <led@altlinux.ru> 0.6.3-alt3
+- module: replace stupidly defined spl's 'hz' with generic 'HZ'
+- fixed Requires of kernel-source-zfs
+
 * Sat Jun 14 2014 Led <led@altlinux.ru> 0.6.3-alt2
 - Revert
   "sys/zfs_context: make ddi_time_* macros visible for build kernel- modules"
