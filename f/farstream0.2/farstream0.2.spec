@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
@@ -103,7 +103,7 @@ This package provides development documentation for the Farstream library.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/gstreamer-%gst_api_ver/libfsmsnconference.so
@@ -141,6 +141,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Tue May 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
