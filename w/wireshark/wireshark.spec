@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 1.10.7
+Version: 1.10.8
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -16,6 +16,7 @@ Url: http://www.wireshark.org/
 Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source1: http://www.wireshark.org/download/docs/wsug_html_chunked.zip
 Source2: %name.control
+Source3: %name.watch
 
 Patch: %name-%version-%release.patch
 
@@ -235,6 +236,9 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Jun 16 2014 Anton Farygin <rider@altlinux.ru> 1.10.8-alt1
+- new version 1.10.8
+
 * Tue Apr 29 2014 Anton Farygin <rider@altlinux.ru> 1.10.7-alt1
 - new version
 
