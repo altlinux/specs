@@ -5,13 +5,13 @@ BuildRequires: perl(Math/NumSeq/DigitCountLow.pm) perl(Math/NumSeq/Fibbinary.pm)
 BuildRequires: perl(Set/IntSpan/Fast.pm) perl(Smart/Comments.pm) perl(Tie/IxHash.pm) perl(Time/HiRes.pm) perl(Tk.pm) perl(URI/Escape.pm) perl(Wx.pm) perl(Wx/App.pm) perl(Wx/Event.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-PlanePath
-Version:        115
-Release:        alt1_1
+Version:        116
+Release:        alt1
 Summary:        Mathematical paths through the 2-D plane
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://user42.tuxfamily.org/math-planepath/index.html
-Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -72,6 +72,9 @@ make test
 %{perl_vendor_privlib}/Math*
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 116-alt1
+- automated CPAN update
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 115-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
