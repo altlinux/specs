@@ -1,7 +1,7 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ Requires: gear
 %_bindir/*
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- added ab@samba
+
 * Sat Jun 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - added gear-rules-print-specfile
 
