@@ -12,7 +12,7 @@
 %def_disable	tnef
 
 Name:   	claws-mail
-Version:	3.10.0
+Version:	3.10.1
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -735,6 +735,9 @@ EOF
 
 
 %changelog
+* Mon Jun 16 2014 Mikhail Efremov <sem@altlinux.org> 3.10.1-alt1
+- Updated to 3.10.1.
+
 * Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 3.10.0-alt1
 - Fixes from upstream git:
     + Fix GCond use with newer Glib.
