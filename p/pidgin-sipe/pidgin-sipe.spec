@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.15.1
+Version: 1.18.2
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -19,11 +19,12 @@ Patch1: %name-%version-git_snapshot.patch
 Requires: libpurple pidgin
 
 BuildRequires: intltool libxml2-devel
+# BuildRequires: libssl-devel
 BuildRequires: glib2-devel >= 2.28.0
 BuildRequires: libpurple-devel >= 2.8.0
 %{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer-devel}
-%{?_with_krb5:BuildRequires: libkrb5-devel}
-%{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.28.0}
+%{?_with_krb5:BuildRequires: libkrb5-devel gssntlmssp-devel}
+%{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.32.0}
 BuildRequires: libnss-devel
 BuildRequires: libgmime-devel >= 2.4.16
 
@@ -59,7 +60,8 @@ This package provides the protocol support for Telepathy clients.
 %patch1 -p1
 
 %build
-export KRB5_CFLAGS=`krb5-config --cflags`
+%add_optflags -I%_includedir/krb5
+# export KRB5_CFLAGS=`krb5-config --cflags`
 %autoreconf
 %configure \
 	--disable-quality-check \
@@ -87,6 +89,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Mon Jun 16 2014 Alexey Shabalin <shaba@altlinux.ru> 1.18.2-alt1
+- 1.18.2
+
 * Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 1.15.1-alt1
 - 1.15.1
 
