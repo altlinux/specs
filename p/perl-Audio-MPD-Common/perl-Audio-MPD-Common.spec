@@ -1,6 +1,6 @@
 %define dist Audio-MPD-Common
 Name: perl-%dist
-Version: 2.000
+Version: 2.002
 Release: alt1
 
 Summary: Common helper classes for mpd
@@ -39,6 +39,9 @@ Audio::MPD::Common.
 %perl_vendor_privlib/Audio
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.002-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1
 - automated CPAN update
 
