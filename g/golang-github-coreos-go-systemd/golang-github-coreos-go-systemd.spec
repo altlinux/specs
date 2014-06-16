@@ -1,11 +1,12 @@
 %define import_path     github.com/coreos/go-systemd
 %define gopath          %_datadir/gocode
-%define commit          1d8116f3f71d2796626716452b35c4236178e5c3
-%define shortcommit     1d8116f
+%define commit          f743bc15d6bddd23662280b4ad20f7c874cdd5ad
+%define shortcommit     f743bc1
+
 #%%define shortcommit     %%(c=%%commit; echo ${c:0:7})
 
 Name: golang-github-coreos-go-systemd
-Version: 1
+Version: 2
 Release: alt1.git%shortcommit
 Summary: Go bindings to systemd socket activation, journal and D-BUS APIs
 License: ASL 2.0
@@ -58,5 +59,8 @@ cp -av {activation,dbus,journal} %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/journal/*.go
 
 %changelog
+* Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2-alt1.gitf743bc1
+- New version.
+
 * Tue Apr 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1-alt1.git1d8116f
 - Initial build.

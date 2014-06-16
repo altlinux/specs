@@ -1,5 +1,5 @@
 Name: docker-io
-Version: 0.11.1
+Version: 1.0.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -17,10 +17,13 @@ BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlit
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain pandoc
 BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3) golang(github.com/syndtr/gocapability/capability) golang(github.com/godbus/dbus) golang(github.com/coreos/go-systemd/activation)
 
+BuildRequires: golang-github-gorilla-mux-devel >= 0-alt3
+BuildRequires: golang-github-kr-pty-devel >= 0-alt3
+BuildRequires: golang-github-coreos-go-systemd-devel >= 2-alt1.gitf743bc1
 Requires: tar lxc xz
 Provides: lxc-docker
 
-%define commit fb99f992c081a1d433c97c99ffb46d12693eeb76
+%define commit 63fe64c471e7d76be96a625350468dfc65c06c31
 %define shortcommit %(c=%commit; echo ${c:0:7})
 
 %define gopath %_datadir/gocode
@@ -167,6 +170,9 @@ exit 0
 %_datadir/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1
+- New version.
+
 * Mon May 12 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.1-alt1
 - New version.
 
