@@ -1,6 +1,6 @@
 %define dist Audio-MPD
 Name: perl-%dist
-Version: 1.120610
+Version: 2.000
 Release: alt1
 
 Summary: Class to talk to MPD (Music Player Daemon) servers
@@ -39,6 +39,9 @@ server is established as soon as a new Audio::MPD object is created.
 %_man1dir/mpd-*
 
 %changelog
+* Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.120610-alt1
 - automated CPAN update
 
