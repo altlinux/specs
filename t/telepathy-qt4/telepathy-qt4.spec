@@ -3,8 +3,8 @@
 %define farstream_dev farstream-devel libtelepathy-farstream0.4-devel
 
 Name: telepathy-qt4
-Version: 0.9.3
-Release: alt7
+Version: 0.9.4
+Release: alt1
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -13,10 +13,7 @@ Group: System/Libraries
 URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
 Packager: Nazarov Denis <nenderus@altlinux.ru>
 
-Source0: http://telepathy.freedesktop.org/releases/telepathy-qt4/%name-%version.tar.gz
-# SuSE
-Patch1: compilation-on-new-versions-of-cmake.patch
-Patch2: fix-storing-avatars.patch
+Source: telepathy-qt-%version.tar
 # ALT
 Patch10: alt-fix-install.patch
 Patch11: alt-pkgconfig.patch
@@ -49,9 +46,7 @@ Requires: libtelepathy-glib-devel
 Development libraries and header files for %name.
 
 %prep
-%setup
-%patch1 -p1
-%patch2 -p1
+%setup -qn telepathy-qt-%version
 %patch10 -p1
 %patch11 -p1
 
@@ -82,6 +77,12 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Mon Jun 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
+- new version
+
+* Thu Nov 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt6.M70P.1
+- built for M70P
+
 * Wed Nov 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt7
 - fix to build with new cmake
 - fix storing avatars
