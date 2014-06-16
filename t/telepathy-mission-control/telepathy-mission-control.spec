@@ -1,3 +1,4 @@
+%define _libexecdir %_prefix/libexec
 %define api_ver 5.5
 %def_enable gnome_keyring
 #monitor device suspending and resuming
@@ -7,8 +8,8 @@
 %def_disable check
 
 Name: telepathy-mission-control
-Version: 5.16.1
-Release: alt2
+Version: 5.16.2
+Release: alt1
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
@@ -93,6 +94,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.2-alt1
+- 5.16.2
+
 * Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.1-alt2
 - rebuilt for GNOME-3.12 (temporarily disabled upower support)
 
