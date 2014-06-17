@@ -1,7 +1,7 @@
 %define dist namespace-clean
 
 Name: perl-namespace-clean
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: Keep imports and functions out of your namespace
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: %CPAN %dist
 
 BuildArch: noarch
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/namespace-clean-%{version}.tar.gz
 
 BuildRequires: perl-B-Hooks-EndOfScope perl-Package-Stash perl-devel
 
@@ -30,6 +30,9 @@ None.
 %perl_vendor_privlib/namespace/clean.pm
 
 %changelog
+* Tue Jun 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.24-alt1
 - 0.024
 - spec cleanup
