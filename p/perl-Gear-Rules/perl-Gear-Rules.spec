@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.12
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,8 +13,8 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM-Source-Editor > 0.73 perl(Pod/Text.pm)
-Requires: gear
+BuildRequires: perl-devel  perl-RPM-Source-Editor perl(Pod/Usage.pm) perl(Pod/Text.pm)
+Requires: gear perl(Pod/Text.pm)
 
 %description
 %summary
@@ -35,6 +35,9 @@ Requires: gear
 %_bindir/*
 
 %changelog
+* Tue Jun 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
+- explicit requires on perl(Pod/Text.pm)
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - added ab@samba
 
