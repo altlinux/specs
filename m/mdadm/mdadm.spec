@@ -1,5 +1,5 @@
 Name: mdadm
-Version: 3.3
+Version: 3.3.1
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -37,7 +37,8 @@ bzip2 -9fk ChangeLog
 install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
 install -pD -m755 misc/syslog-events %buildroot/sbin/mdadm-syslog-events
 install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf
-install -pD -m644 alt/mdadm.service %buildroot%_unitdir/mdadm.service
+# install -pD -m644 alt/mdadm.service %buildroot%_unitdir/mdadm.service
+ln -r -s %buildroot%_unitdir/mdmonitor.service %buildroot%_unitdir/mdadm.service
 
 install -pD -m755 alt/checkarray %buildroot%_datadir/mdadm/checkarray
 install -pD -m644 alt/mdadm.sysconfig %buildroot%_sysconfdir/sysconfig/mdadm
@@ -61,9 +62,13 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %_initdir/mdadm
 %_datadir/mdadm/
 %_unitdir/*
+/lib/systemd/system-shutdown/mdadm.shutdown
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Tue Jun 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.3.1-alt1
+- 3.3.1
+
 * Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 3.3-alt1
 - 3.3
 
