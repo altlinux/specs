@@ -1,14 +1,13 @@
 Name: squashfs-tools
 Version: 4.3
-Release: alt1
+Release: alt2
 
 Summary: squashfs support
 License: GPL
 Group: System/Kernel and hardware
 Url: https://git.kernel.org/cgit/fs/squashfs/squashfs-tools.git/
-
-Source0: %name-%version.tar
-
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: zlib-devel liblzma-devel liblzo2-devel
 Provides: squashfsprogs = %version-%release
 Obsoletes: squashfsprogs
@@ -18,19 +17,20 @@ Squashfs is a compressed read-only filesystem for Linux. Squashfs is
 intended for general read-only filesystem use, for archival use
 (i.e. in cases where a .tar.gz file may be used), and in constrained
 block device/memory systems (e.g. embedded systems) where low overhead
-is needed. 
+is needed.
+
+This package contains the utilities to (un)compress squashfs images.
 
 %prep
-%setup -q
+%setup
+%patch0 -p1
 
 %build
 %make_build XZ_SUPPORT=1 LZO_SUPPORT=1 COMP_DEFAULT=xz
 
-
 %install
-%__mkdir_p %buildroot/sbin %buildroot/%_bindir
-%__install -m 0755 mksquashfs %buildroot/sbin/
-%__install -m 0755 unsquashfs %buildroot/%_bindir
+install -pDm755 mksquashfs %buildroot/sbin/mksquashfs
+install -pDm755 unsquashfs %buildroot/%_bindir/unsquashfs
 ln -sf mksquashfs %buildroot/sbin/mkfs.squashfs
 ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 
@@ -39,6 +39,11 @@ ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
 %_bindir/*
 
 %changelog
+* Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 4.3-alt2
+- upstream fix for 32bit memory calculation on 64bit (or pae) kernel (closes: #30103)
+- upstream fix for working without -mem options and/or /proc
+- cleanup spec
+
 * Fri May 30 2014 Anton Farygin <rider@altlinux.ru> 4.3-alt1
 - new release
 
