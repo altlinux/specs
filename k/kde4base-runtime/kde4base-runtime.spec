@@ -7,7 +7,7 @@
 %define rname kdebase-runtime
 %define major 4
 %define minor 13
-%define bugfix 1
+%define bugfix 2
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -40,7 +40,7 @@ BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel l
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
 BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
 BuildRequires: kde4-kactivities-devel
-BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel libwebp-devel
+BuildRequires: libungif-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
 BuildRequires: libopenslp-devel libqca2-devel libgpgme-devel
 #BuildRequires: libqzeitgeist-devel
@@ -229,6 +229,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Jun 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
+* Wed Jun 04 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt2
+- fix build requires
+
 * Tue May 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
 - new version
 

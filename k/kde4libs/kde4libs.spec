@@ -13,11 +13,11 @@
 
 %define major 4
 %define minor 13
-%define bugfix 1
+%define bugfix 2
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -346,6 +346,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Jun 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
 * Wed May 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt2
 - update code from 4.13 branch
 
