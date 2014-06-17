@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.0
-Release: alt2
+Version: 3.15.1
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 0
+%define kernel_stable_version 1
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1883,6 +1883,17 @@ done)
 
 
 %changelog
+* Tue Jun 17 2014 Led <led@altlinux.ru> 3.15.1-alt1
+- 1.15.1
+- removed:
+  + fix-kernel--auditsc
+- updated:
+  + fix-drivers-gpu-drm--ast
+  + fix-drivers-gpu-drm--i915
+  + feat-fs-overlayfs
+- added:
+  + fix-sound-pci-hda--snd-hda-intel
+
 * Mon Jun 16 2014 Led <led@altlinux.ru> 3.15.0-alt2
 - updated:
   + feat-drivers-block--btier
