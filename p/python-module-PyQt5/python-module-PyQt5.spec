@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 5.3
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -23,7 +23,7 @@ BuildPreReq: python-module-dbus-devel libqt5-help qt5-multimedia-devel
 BuildPreReq: qt5-declarative-devel qt5-svg-devel qt5-webkit-devel
 BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
 BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
-BuildPreReq: qt5-connectivity-devel
+BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
 
 %description
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
@@ -118,6 +118,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %doc examples
 
 %changelog
+* Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt2
+- Built with qt5-websockets
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1
 - Initial build for Sisyphus
 
