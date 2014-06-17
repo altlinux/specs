@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.4.1
-Release: alt1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -810,6 +810,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 5.4.1-alt2
+- fixed "no instance" error in collection3 for ethernet interfaces plugins
+
 * Wed May 28 2014 Anton Farygin <rider@altlinux.ru> 5.4.1-alt1
 - new version
 
