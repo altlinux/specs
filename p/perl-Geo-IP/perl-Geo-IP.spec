@@ -1,7 +1,7 @@
 %define module Geo-IP
 
 Name: perl-%module
-Version: 1.42
+Version: 1.43
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Geo/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BORISZ/Geo-IP-%{version}.tar.gz
 
 # from Fedora
 Patch: Geo-IP-1.28-yahoo-namelookuptest.diff
@@ -42,6 +42,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Tue Jun 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.42-alt1
 - 1.41 -> 1.42
 
