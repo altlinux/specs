@@ -1,5 +1,5 @@
 Name: xtables-addons
-Version: 2.4
+Version: 2.5
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
@@ -10,6 +10,7 @@ License: GPLv2
 # git://xtables-addons.git.sf.net/gitroot/xtables-addons/xtables-addons.git
 # git://git.altlinux.org/gears/x/xtables-addons.git
 Source: %name-%version.tar
+Source1: %name.watch
 Patch: %name-%version-%release.patch
 
 %define _libexecdir /usr/libexec
@@ -73,6 +74,10 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 2.5-alt1
+- new version
+- added watch file
+
 * Thu Mar 27 2014 Anton Farygin <rider@altlinux.ru> 2.4-alt1
 - New version
 
