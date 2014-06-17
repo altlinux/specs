@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt5.a0
+Release: alt6.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -314,8 +314,8 @@ LIBSUF=64
 #install -p -m644 doc/_build/doctrees/*.pickle \
 #	%buildroot%python3_sitelibdir/%oname/doctrees/
 #cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
-#install -p -m644 conf.py.template \
-#	%buildroot%python3_sitelibdir/%oname/
+install -p -m644 conf.py.template \
+	%buildroot%python3_sitelibdir/%oname/
 #popd
 #endif
 
@@ -373,6 +373,9 @@ LIBSUF=64
 %endif
 
 %changelog
+* Tue Jun 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt6.a0
+- Restored %python3_sitelibdir/%oname/conf.py.template
+
 * Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt5.a0
 - New snapshot
 
