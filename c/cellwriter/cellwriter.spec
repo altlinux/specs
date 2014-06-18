@@ -1,6 +1,6 @@
 Name: cellwriter
-Version: 1.3.4
-Release: alt4
+Version: 1.3.5
+Release: alt1
 
 Summary: A grid-entry natural handwriting input panel
 License: GPLv2+
@@ -8,7 +8,9 @@ Group: Text tools
 
 Url: http://risujin.org/cellwriter
 Source: %url/%name-%version.tar.gz
-Patch: cellwriter-1.3.4-alt-manpage.patch
+Source100: %name.watch
+Patch0: cellwriter-1.3.4-alt-manpage.patch
+Patch1: cellwriter-1.3.5-debian-desktop.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Apr 06 2010
@@ -23,6 +25,8 @@ application as if typed on the keyboard.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 sed -ri 's,^(LDADD.*)$,\1 -lX11,' Makefile.am
 
 %build
@@ -50,6 +54,9 @@ rm -r %buildroot%_pixmapsdir/
 # - 16x16 and 48x48? (%%_miconsdir and %%_liconsdir)
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1
+- new version (watch file uupdate)
+
 * Tue May 29 2012 Michael Shigorin <mike@altlinux.org> 1.3.4-alt4
 - fixed FTBFS with binutils-2.22
 
