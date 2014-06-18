@@ -8,7 +8,7 @@
 Name: kde4edu
 %define major 4
 %define minor 13
-%define bugfix 0
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -719,6 +719,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4apps/artikulateui.rc
 %_K4conf/artikulate.knsrc
 %_K4cfg/artikulate.kcfg
+%_K4iconsdir/hicolor/*/apps/artikulate.*
 %_K4doc/en/artikulate/
 
 
@@ -1146,6 +1147,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
