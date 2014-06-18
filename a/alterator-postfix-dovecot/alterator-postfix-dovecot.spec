@@ -4,7 +4,7 @@
 
 Name: alterator-postfix-dovecot
 Version: 0.8.0
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for Postfix/Dovecot setup
 License: GPL
@@ -15,7 +15,7 @@ Source:%name-%version.tar
 Requires: alterator >= 4.7-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-l10n >= 2.9-alt1
 Requires: dovecot >= 2.0.0
-Requires: augeas >= 1.2.0-alt1
+Requires: augeas >= 1.2.0
 Requires: clamsmtp
 Requires: alterator-service-functions >= 2.0.0
 #Conflicts: alterator-fbi < 5.17-alt3
@@ -60,6 +60,9 @@ fi
 %_sysconfdir/control.d/facilities/*
 
 %changelog
+* Wed Jun 18 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.0-alt3
+- Relaxed dependence on Augeas
+
 * Wed Jun 18 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.0-alt2
 - Add Augeas version
 
