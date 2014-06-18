@@ -1,5 +1,5 @@
 Name: cdlabelgen
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Program for generating frontcards and traycards for CDs
@@ -13,8 +13,8 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildArch: noarch
 BuildRequires: perl-podlators
 
-Summary(ru_RU.KOI8-R): Программа для создания обложек к CD
-Summary(uk_UA.KOI8-U): Програма для створення обкладинок для CD
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╬п╠п╩п╬п╤п╣п╨ п╨ CD
+Summary(uk_UA.UTF-8): п÷я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ я│я┌п╡п╬я─п╣п╫п╫я▐ п╬п╠п╨п╩п╟п╢п╦п╫п╬п╨ п╢п╩я▐ CD
 
 %description
 cdlabelgen is a program for generating frontcards and traycards for CDs.
@@ -24,21 +24,21 @@ even make a label for that CD that you lost the case for!
 
 This package is used by the gcombust frontend to cd burning.
 
-%description -l ru_RU.KOI8-R
-cdlabelgen позволяет генерировать обложки для CD.
+%description -l ru_RU.UTF-8
+cdlabelgen п©п╬п╥п╡п╬п╩я▐п╣я┌ пЁп╣п╫п╣я─п╦я─п╬п╡п╟я┌я▄ п╬п╠п╩п╬п╤п╨п╦ п╢п╩я▐ CD.
 
-Пригодится для облагораживания коллекции дисков с ogg, архивами,
-ну и восстановления той самой потерянной коробочки!
+п÷я─п╦пЁп╬п╢п╦я┌я│я▐ п╢п╩я▐ п╬п╠п╩п╟пЁп╬я─п╟п╤п╦п╡п╟п╫п╦я▐ п╨п╬п╩п╩п╣п╨я├п╦п╦ п╢п╦я│п╨п╬п╡ я│ ogg, п╟я─я┘п╦п╡п╟п╪п╦,
+п╫я┐ п╦ п╡п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦я▐ я┌п╬п╧ я│п╟п╪п╬п╧ п©п╬я┌п╣я─я▐п╫п╫п╬п╧ п╨п╬я─п╬п╠п╬я┤п╨п╦!
 
-Также используется в gcombust.
+п╒п╟п╨п╤п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╡ gcombust.
 
-%description -l uk_UA.KOI8-U
-cdlabelgen дозволя╓ генерувати обкладинки для CD.
+%description -l uk_UA.UTF-8
+cdlabelgen п╢п╬п╥п╡п╬п╩я▐я■ пЁп╣п╫п╣я─я┐п╡п╟я┌п╦ п╬п╠п╨п╩п╟п╢п╦п╫п╨п╦ п╢п╩я▐ CD.
 
-Знадобиться для покращення колекц╕╖ диск╕в з ogg, арх╕вами,
-та й поновлення отого втраченого опакунку для диску!
+п≈п╫п╟п╢п╬п╠п╦я┌я▄я│я▐ п╢п╩я▐ п©п╬п╨я─п╟я┴п╣п╫п╫я▐ п╨п╬п╩п╣п╨я├я√я≈ п╢п╦я│п╨я√п╡ п╥ ogg, п╟я─я┘я√п╡п╟п╪п╦,
+я┌п╟ п╧ п©п╬п╫п╬п╡п╩п╣п╫п╫я▐ п╬я┌п╬пЁп╬ п╡я┌я─п╟я┤п╣п╫п╬пЁп╬ п╬п©п╟п╨я┐п╫п╨я┐ п╢п╩я▐ п╢п╦я│п╨я┐!
 
-Також використову╓ться в combust.
+п╒п╟п╨п╬п╤ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■я┌я▄я│я▐ п╡ combust.
 
 %prep
 %setup
@@ -59,6 +59,10 @@ install -pm644 cdlabelgen.1 %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 4.3.0-alt1
+- 4.3.0
+- converted spec to UTF-8
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
