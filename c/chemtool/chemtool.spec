@@ -1,6 +1,6 @@
 Name: chemtool
-Version: 1.6.13
-Release: alt3
+Version: 1.6.14
+Release: alt1
 
 %define pre %nil
 
@@ -12,12 +12,13 @@ Url: http://ruby.chemie.uni-freiburg.de/~martin/chemtool
 Source0: %url/%name-%version%pre.tar.gz
 Source1: %name.desktop
 Source2: %name.menu
+Source3: %name.watch
 Patch: chemtool-cht.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Программа для рисования двумерных органических структур
-Summary(uk_UA.KOI8-U): Програма для малювання двовим╕рних орган╕чних структур
-Summary(pl): Program do rysowania 2-wymiarowych cz╠steczek organicznych.
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я─п╦я│п╬п╡п╟п╫п╦я▐ п╢п╡я┐п╪п╣я─п╫я▀я┘ п╬я─пЁп╟п╫п╦я┤п╣я│п╨п╦я┘ я│я┌я─я┐п╨я┌я┐я─
+Summary(uk_UA.UTF-8): п÷я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ п╪п╟п╩я▌п╡п╟п╫п╫я▐ п╢п╡п╬п╡п╦п╪я√я─п╫п╦я┘ п╬я─пЁп╟п╫я√я┤п╫п╦я┘ я│я┌я─я┐п╨я┌я┐я─
+Summary(pl): Program do rysowania 2-wymiarowych czБ∙═steczek organicznych.
 
 # should be generalized?
 %define _applnkdir %_datadir/applnk
@@ -34,18 +35,18 @@ A program for drawing organic molecules easily and store
 them as a X bitmap, Xfig or EPS file. It runs under the
 X Window System using the GTK widget set.
 
-%description -l ru_RU.KOI8-R
-Программа для удобного рисования органических молекул и
-сохранения их в различных форматах, использующая gtk+.
+%description -l ru_RU.UTF-8
+п÷я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я┐п╢п╬п╠п╫п╬пЁп╬ я─п╦я│п╬п╡п╟п╫п╦я▐ п╬я─пЁп╟п╫п╦я┤п╣я│п╨п╦я┘ п╪п╬п╩п╣п╨я┐п╩ п╦
+я│п╬я┘я─п╟п╫п╣п╫п╦я▐ п╦я┘ п╡ я─п╟п╥п╩п╦я┤п╫я▀я┘ я└п╬я─п╪п╟я┌п╟я┘, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╟я▐ gtk+.
 
-%description -l uk_UA.KOI8-U
-Програма для зручного малювання орган╕чних молекул та
-збереження ╖х у р╕зних форматах, що використову╓ gtk+.
+%description -l uk_UA.UTF-8
+п÷я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ п╥я─я┐я┤п╫п╬пЁп╬ п╪п╟п╩я▌п╡п╟п╫п╫я▐ п╬я─пЁп╟п╫я√я┤п╫п╦я┘ п╪п╬п╩п╣п╨я┐п╩ я┌п╟
+п╥п╠п╣я─п╣п╤п╣п╫п╫я▐ я≈я┘ я┐ я─я√п╥п╫п╦я┘ я└п╬я─п╪п╟я┌п╟я┘, я┴п╬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■ gtk+.
 
 %description -l pl
-Programem do rysowania cz╠steczek organicznych i zapisu
+Programem do rysowania czБ∙═steczek organicznych i zapisu
 ich jako pliki X-bitmap, Xfig lub EPS. Pracuje pod X Window
-u©ywaj╠c bibliotek GTK.
+uб╘ywajБ∙═c bibliotek GTK.
 
 %prep
 %setup
@@ -81,6 +82,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.6.14-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 16 2012 Michael Shigorin <mike@altlinux.org> 1.6.13-alt3
 - oops, desktop-file-validate skipped (thx repocop)
 
