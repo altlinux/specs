@@ -6,7 +6,7 @@
 Name: kde4-kactivities
 %define major 4
 %define minor 13
-%define bugfix 0
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -116,6 +116,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Tue Jun 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
 * Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
