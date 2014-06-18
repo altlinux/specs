@@ -16,7 +16,7 @@
 %define rname kate
 %define major 4
 %define minor 13
-%define bugfix 1
+%define bugfix 2
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -32,6 +32,7 @@ Provides: kde4sdk-kate = %version-%release
 Obsoletes: kde4sdk-kate < %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-disable-tests.patch
 
 # Automatically added by buildreq on Fri Sep 16 2011 (-bi)
 # optimized out: automoc cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -104,10 +105,12 @@ applications for %rname.
 
 %prep
 %setup -q -n %rname-%version
-
+%patch1 -p1
 
 %build
-%K4build
+%K4build \
+    -DKDE4_BUILD_TESTS:BOOL=OFF \
+    #
 
 %install
 %K4install
@@ -222,6 +225,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
 * Wed May 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt1
 - new version
 
