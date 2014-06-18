@@ -1,5 +1,5 @@
 Name: alsa-utils
-Version: 1.0.27.2
+Version: 1.0.28
 Release: alt1
 Serial: 1
 
@@ -88,6 +88,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.28-alt1
+- 1.0.28
+
 * Wed Apr 30 2014 Michael Shigorin <mike@altlinux.org> 1:1.0.27.2-alt1
 - 1.0.27.2
 

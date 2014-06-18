@@ -1,8 +1,8 @@
 %define basever 1.0.26
 
 Name: alsa-tools
-Version: 1.0.27
-Release: alt2
+Version: 1.0.28
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPL
@@ -167,6 +167,9 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.0.28-alt1
+- 1.0.28
+
 * Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 1.0.27-alt2
 - retag
 
