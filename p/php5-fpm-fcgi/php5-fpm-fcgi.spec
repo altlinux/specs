@@ -2,7 +2,7 @@
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -167,6 +167,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Wed Jun 18 2014 Anton Farygin <rider@altlinux.ru> 5.5.13.20140626-alt1.1
+- fixed unix socket permissions in default php5-fpm.conf 
 
 * Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.4.17.20130704-alt0
 - patches fixed
