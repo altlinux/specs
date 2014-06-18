@@ -1,8 +1,8 @@
 Name: crtools
 Version: 1.3
-%define pre -rc1
+%define pre -rc2
 %define ver %version%{?pre:%pre}
-Release: alt0.10
+Release: alt0.11
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -67,6 +67,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Wed Jun 18 2014 Led <led@altlinux.ru> 1.3-alt0.11
+- 1.3-rc2
+
 * Thu Jun 12 2014 Led <led@altlinux.ru> 1.3-alt0.10
 - upstream fixes
 
