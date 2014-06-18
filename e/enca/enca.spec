@@ -1,14 +1,14 @@
 %def_disable static
 
 Name: enca
-Version: 1.13
-Release: alt3
+Version: 1.15
+Release: alt1
 
 Summary: A program that guesses encoding of text files
 License: GPL
 Group: Text tools
 
-Url: http://gitorious.org/enca
+Url: http://cihar.com/software/enca
 Source: http://dl.cihar.com/enca/%name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -17,8 +17,8 @@ Requires: lib%name = %version-%release
 # Automatically added by buildreq on Fri Mar 04 2011
 BuildRequires: gtk-doc librecode-devel perl-Encode perl-Unicode-Map
 
-Summary(ru_RU.KOI8-R): Программа, "угадывающая" кодировку текстовых файлов
-Summary(uk_UA.KOI8-U): Програма, що "вгаду╓" кодування текстових файл╕в
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟, "я┐пЁп╟п╢я▀п╡п╟я▌я┴п╟я▐" п╨п╬п╢п╦я─п╬п╡п╨я┐ я┌п╣п╨я│я┌п╬п╡я▀я┘ я└п╟п╧п╩п╬п╡
+Summary(uk_UA.UTF-8): п÷я─п╬пЁя─п╟п╪п╟, я┴п╬ "п╡пЁп╟п╢я┐я■" п╨п╬п╢я┐п╡п╟п╫п╫я▐ я┌п╣п╨я│я┌п╬п╡п╦я┘ я└п╟п╧п╩я√п╡
 
 %description
 Enca (Extremely Naive Charset Analyser) is a simple utility
@@ -35,25 +35,25 @@ Install Enca if you need to cope with text files of dubious
 origin and unknown encoding and convert them to some reasonable
 encoding.
 
-%description -l ru_RU.KOI8-R
-Enca (Extremely Naive Charset Analyser) - простая утилита,
-которая позволяет "угадывать" кодировку текстового файла и,
-возможно, конвертировать его в другую известную.
+%description -l ru_RU.UTF-8
+Enca (Extremely Naive Charset Analyser) - п©я─п╬я│я┌п╟я▐ я┐я┌п╦п╩п╦я┌п╟,
+п╨п╬я┌п╬я─п╟я▐ п©п╬п╥п╡п╬п╩я▐п╣я┌ "я┐пЁп╟п╢я▀п╡п╟я┌я▄" п╨п╬п╢п╦я─п╬п╡п╨я┐ я┌п╣п╨я│я┌п╬п╡п╬пЁп╬ я└п╟п╧п╩п╟ п╦,
+п╡п╬п╥п╪п╬п╤п╫п╬, п╨п╬п╫п╡п╣я─я┌п╦я─п╬п╡п╟я┌я▄ п╣пЁп╬ п╡ п╢я─я┐пЁя┐я▌ п╦п╥п╡п╣я│я┌п╫я┐я▌.
 
-Сейчас поддерживаются белорусский, чешский, польский, русский,
-словацкий, украинский, болгарский, хорватский, эстонский,
-венгерский, латвийский, литовский, словацкий языки и несколько
-мультибайтных кодировок вне зависимости от языка.
+п║п╣п╧я┤п╟я│ п©п╬п╢п╢п╣я─п╤п╦п╡п╟я▌я┌я│я▐ п╠п╣п╩п╬я─я┐я│я│п╨п╦п╧, я┤п╣я┬я│п╨п╦п╧, п©п╬п╩я▄я│п╨п╦п╧, я─я┐я│я│п╨п╦п╧,
+я│п╩п╬п╡п╟я├п╨п╦п╧, я┐п╨я─п╟п╦п╫я│п╨п╦п╧, п╠п╬п╩пЁп╟я─я│п╨п╦п╧, я┘п╬я─п╡п╟я┌я│п╨п╦п╧, я█я│я┌п╬п╫я│п╨п╦п╧,
+п╡п╣п╫пЁп╣я─я│п╨п╦п╧, п╩п╟я┌п╡п╦п╧я│п╨п╦п╧, п╩п╦я┌п╬п╡я│п╨п╦п╧, я│п╩п╬п╡п╟я├п╨п╦п╧ я▐п╥я▀п╨п╦ п╦ п╫п╣я│п╨п╬п╩я▄п╨п╬
+п╪я┐п╩я▄я┌п╦п╠п╟п╧я┌п╫я▀я┘ п╨п╬п╢п╦я─п╬п╡п╬п╨ п╡п╫п╣ п╥п╟п╡п╦я│п╦п╪п╬я│я┌п╦ п╬я┌ я▐п╥я▀п╨п╟.
 
-%description -l uk_UA.KOI8-U
-Enca (Extremely Naive Charset Analyser) - проста утил╕та,
-що нада╓ можлив╕сть "вгадувати" кодування тектового файлу
-та, можливо, конвертувати його у ╕нше в╕доме.
+%description -l uk_UA.UTF-8
+Enca (Extremely Naive Charset Analyser) - п©я─п╬я│я┌п╟ я┐я┌п╦п╩я√я┌п╟,
+я┴п╬ п╫п╟п╢п╟я■ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ "п╡пЁп╟п╢я┐п╡п╟я┌п╦" п╨п╬п╢я┐п╡п╟п╫п╫я▐ я┌п╣п╨я┌п╬п╡п╬пЁп╬ я└п╟п╧п╩я┐
+я┌п╟, п╪п╬п╤п╩п╦п╡п╬, п╨п╬п╫п╡п╣я─я┌я┐п╡п╟я┌п╦ п╧п╬пЁп╬ я┐ я√п╫я┬п╣ п╡я√п╢п╬п╪п╣.
 
-На цей час п╕дтримуються б╕лоруська, чеська, польська, рос╕йська,
-словацька, укра╖нська, болгарська, хорватська, естонська,
-угорська, латв╕йська, литовська, словацька мови та дек╕лька
-мультибайтових кодувань незалежно в╕д мови.
+п²п╟ я├п╣п╧ я┤п╟я│ п©я√п╢я┌я─п╦п╪я┐я▌я┌я▄я│я▐ п╠я√п╩п╬я─я┐я│я▄п╨п╟, я┤п╣я│я▄п╨п╟, п©п╬п╩я▄я│я▄п╨п╟, я─п╬я│я√п╧я│я▄п╨п╟,
+я│п╩п╬п╡п╟я├я▄п╨п╟, я┐п╨я─п╟я≈п╫я│я▄п╨п╟, п╠п╬п╩пЁп╟я─я│я▄п╨п╟, я┘п╬я─п╡п╟я┌я│я▄п╨п╟, п╣я│я┌п╬п╫я│я▄п╨п╟,
+я┐пЁп╬я─я│я▄п╨п╟, п╩п╟я┌п╡я√п╧я│я▄п╨п╟, п╩п╦я┌п╬п╡я│я▄п╨п╟, я│п╩п╬п╡п╟я├я▄п╨п╟ п╪п╬п╡п╦ я┌п╟ п╢п╣п╨я√п╩я▄п╨п╟
+п╪я┐п╩я▄я┌п╦п╠п╟п╧я┌п╬п╡п╦я┘ п╨п╬п╢я┐п╡п╟п╫я▄ п╫п╣п╥п╟п╩п╣п╤п╫п╬ п╡я√п╢ п╪п╬п╡п╦.
 
 %package -n lib%name
 Summary: Shared Enca library
@@ -112,14 +112,21 @@ linked programs using the Extremely Naive Charset Analyser library.
 %_includedir/enca.h
 %_libdir/libenca.so
 %_pkgconfigdir/enca.pc
-%doc README.devel INSTALL devel-docs/html
+%doc README.devel
+#doc devel-docs/html
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
 %endif
 
+# TODO:
+# - fix devel-docs/html/ build
+
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 1.15-alt1
+- 1.15
+
 * Thu Dec 15 2011 Michael Shigorin <mike@altlinux.org> 1.13-alt3
 - autoreconf against broken RPATH
 
