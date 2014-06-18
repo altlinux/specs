@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.11
+Version: 5.5.13
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20140401
+%define _php5_snapshot 20140626
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -46,7 +46,6 @@ Patch39: php-set-session-save-path.patch
 Patch40: php5-5.2.13-alt-lsattr_path.patch
 Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
-Patch52: php-5.4.15-alt-modules-syms-visibility.patch
 Patch60: php-5.4.15-alt-bison-2.7.1.patch
 Patch61: php5-5.5.9-phar-phppath.patch
 
@@ -165,7 +164,6 @@ in use by other PHP5-related packages.
 %patch40 -p1
 %patch41 -p2
 %patch51 -p2
-%patch52 -p2
 %patch60 -p2
 %patch61 -p1
 
@@ -368,6 +366,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 5.5.13-alt1
+- new version
+
 * Tue Apr 08 2014 Anton Farygin <rider@altlinux.ru> 5.5.11-alt1
 - new version
 
