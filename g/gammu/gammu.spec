@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: gammu
-Version: 1.32.0
-Release: alt2
+Version: 1.33.0
+Release: alt1
 
 Summary: Mobile phones management utility
 License: GPL
@@ -198,6 +198,9 @@ cp -R contrib/bash-completion %buildroot%_gammu_docdir/other/
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Tue Jun 04 2013 Michael Shigorin <mike@altlinux.org> 1.33.0-alt1
+- 1.33.0
+
 * Sun Apr 07 2013 Michael Shigorin <mike@altlinux.org> 1.32.0-alt2
 - rebuilt against libmysqlclient18
 - added the overlooked libgammu translations
