@@ -13,8 +13,8 @@
 %def_with machines
 
 Name: pdsh
-Version: 2.26
-Release: alt3
+Version: 2.29
+Release: alt1
 
 Summary: Parallel remote shell program
 License: GPL
@@ -272,7 +272,7 @@ install -pDm644 %SOURCE1 %buildroot%_man1dir/dshdir.1
 ##############################################################################
 
 %files
-%doc COPYING README ChangeLog NEWS DISCLAIMER
+%doc COPYING README NEWS DISCLAIMER
 %doc README.KRB4 README.modules README.QsNet
 %_bindir/pdsh
 %_bindir/pdcp
@@ -401,6 +401,9 @@ fi
 ##############################################################################
 
 %changelog
+* Thu Jun 19 2014 Michael Shigorin <mike@altlinux.org> 2.29-alt1
+- new version (watch file uupdate)
+
 * Thu Mar 13 2014 Michael Shigorin <mike@altlinux.org> 2.26-alt3
 - enabled dshgroups per legion@'s request
 
