@@ -1,6 +1,6 @@
 Name: vpnc
 Version: 0.5.3
-Release: alt4.qa1
+Release: alt5
 
 Summary: Client for cisco vpn concentrator
 Group: Networking/Remote access
@@ -8,17 +8,12 @@ License: GPL
 
 Url: http://www.unix-ag.uni-kl.de/~massar/vpnc/
 
-Source0: %name-%version.tar.gz
-
-Patch0: vpnc-0.4.0-alt-destdir.patch
-Patch2: vpnc-0.5.3-cloexec.patch
-Patch3: vpnc-0.5.1-dpd.patch
-Patch4: vpnc-0.5.3-update-script.patch
-Patch5: vpnc-0.5.3-make-flags.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Packager: Ilya Mashkin <oddity@altlinux.org>
 
-BuildRequires: libgcrypt-devel perl-autodie
+BuildRequires: libgcrypt-devel libgnutls-devel perl-autodie
 Requires: iproute2 vpnc-script
 
 %add_findreq_skiplist %_sysconfdir/vpnc/vpnc-script
@@ -29,7 +24,7 @@ vpnc is supposed to work with:
 * Cisco VPN concentrator 3000 Series
 * Cisco IOS routers
 * Cisco PIX / ASA Zecurity Appliances
-* Juniper/Netscreen 
+* Juniper / Junos / SRX / Netscreen
 
 Supported Authentications: Pre-Shared-Key + XAUTH, Pre-Shared-Key
 Supported IKE DH-Groups: dh1 dh2 dh5
@@ -48,40 +43,42 @@ or openconnect.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch2 -p1 -b .cloexec
-%patch3 -p1 -b .dpd
-%patch4 -p1
-%patch5 -p1
+%patch -p1
 
 %build
-%make_build
+CFLAGS="$RPM_OPT_FLAGS -fPIE" LDFLAGS="$RPM_OPT_FLAGS -pie" %make PREFIX=%_prefix
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std PREFIX=%_prefix
 
-mkdir -p %buildroot%_var/run/vpnc
-touch %buildroot%_var/run/vpnc/pid \
-      %buildroot%_var/run/vpnc/defaultroute \
-      %buildroot%_var/run/vpnc/resolv.conf-backup
+mkdir -p %buildroot%_tmpfilesdir
+install -m 0644 vpnc-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
+
+mkdir -p %buildroot%_runtimedir/%name
+touch %buildroot%_runtimedir/%name/defaultroute \
+      %buildroot%_runtimedir/%name/resolv.conf-backup
 
 %files
-%doc README TODO COPYING
-%config(noreplace) %_sysconfdir/vpnc/default.conf
+%doc README TODO COPYING juniper.txt nortel.txt
+%config(noreplace) %_sysconfdir/%name/default.conf
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
 %_man8dir/*
-%dir %_var/run/vpnc
-%ghost %verify(not md5 size mtime) %_var/run/vpnc/pid
-%ghost %verify(not md5 size mtime) %_var/run/vpnc/defaultroute
-%ghost %verify(not md5 size mtime) %_var/run/vpnc/resolv.conf-backup
+%_tmpfilesdir/%name.conf
+%dir %_runtimedir/%name
+%ghost %verify(not md5 size mtime) %_runtimedir/%name/defaultroute
+%ghost %verify(not md5 size mtime) %_runtimedir/%name/resolv.conf-backup
 
 %files script
-%dir %_sysconfdir/vpnc
-%config(noreplace) %_sysconfdir/vpnc/vpnc-script
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/vpnc-script
 
 %changelog
+* Wed Jun 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.5.3-alt5
+- svn snapshot r550 (fixed ALT#26600, ALT#29351, ALT#26761, ALT#26726)
+- add JunOS support from https://github.com/ndpgroup/vpnc (ALT#30117)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.3-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
