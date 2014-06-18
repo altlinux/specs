@@ -2,7 +2,7 @@
 %define fname dejavu-lgc
 
 Name: fonts-ttf-%fname
-Version: 2.33
+Version: 2.34
 Release: alt1
 
 Summary: A font family based on the Bitstream Vera Fonts (Latin, Greek, Cyrillic)
@@ -14,6 +14,7 @@ Source0: http://downloads.sourceforge.net/dejavu/%_name-%version.tar.bz2
 Source1: 59-dejavu-lgc-minimal.conf
 Source2: 20-unhint-small-dejavu-lgc-minimal.conf
 Source3: dejavu-lgc-minimal-README.ALT
+Source4: dejavu-lgc-fonts-ttf.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -68,18 +69,6 @@ popd
 install -pm644 %SOURCE1 %SOURCE2 %buildroot%_sysconfdir/fonts/conf.avail/
 install -pm644 %SOURCE3 README.ALT
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
-%post minimal
-%post_fonts
-
-%postun minimal
-%postun_fonts
-
 %files -f ttf/%fname.files
 %_sysconfdir/fonts/conf.avail/*.conf
 %exclude %_sysconfdir/fonts/conf.avail/??-%fname-minimal.conf
@@ -92,6 +81,10 @@ install -pm644 %SOURCE3 README.ALT
 %doc LICENSE README.ALT
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 2.34-alt1
+- new version (watch file uupdate)
+- minor spec cleanup
+
 * Thu Jul 21 2011 Michael Shigorin <mike@altlinux.org> 2.33-alt1
 - 2.33
 - clarified description (thanks sem@)

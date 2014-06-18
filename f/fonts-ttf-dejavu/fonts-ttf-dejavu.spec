@@ -2,25 +2,27 @@
 %define fname dejavu
 
 Name: fonts-ttf-%fname
-Version: 2.33
+Version: 2.34
 Release: alt1
 
 Summary: A font family based on the Bitstream Vera Fonts with a wider set of characters
-Summary (ru_RU.UTF-8): Шрифты, основанные на Bitstream Vera, с более широким набором символов 
 License: Freely distributable
 Group: System/Fonts/True type
+
 Url: http://dejavu.sourceforge.net
 Source: http://downloads.sourceforge.net/%fname/%_name-%version.tar.bz2
-BuildArch: noarch
+Source100: dejavu-fonts-ttf.watch
 Packager: Alexey Rusakov <ktirf@altlinux.ru>
 
-BuildPreReq: rpm-build-licenses
+BuildArch: noarch
 BuildPreReq: rpm-build-fonts >= 0.3
 PreReq: fontconfig >= 2.4.2
 
 Obsoletes: %fname-fonts-ttf < 2.10
 Provides: %fname-fonts-ttf = %version-%release
 Provides: fonts-ttf-core
+
+Summary(ru_RU.UTF-8): Шрифты, основанные на Bitstream Vera, с более широким набором символов 
 
 %description
 The DejaVu fonts are a font family based on the Bitstream Vera Fonts
@@ -44,17 +46,15 @@ mkdir -p %buildroot%_sysconfdir/fonts/conf.avail
 install -m644 -pD fontconfig/{??-unhint-small-dejavu*.conf,??-dejavu*.conf} \
     %buildroot%_sysconfdir/fonts/conf.avail/
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
 %files -f ttf/%fname.files
 %_sysconfdir/fonts/conf.avail/*.conf
 %doc AUTHORS BUGS LICENSE NEWS README status.txt unicover.txt
 
 %changelog
+* Wed Jun 18 2014 Michael Shigorin <mike@altlinux.org> 2.34-alt1
+- new version (watch file uupdate)
+- minor spec cleanup
+
 * Thu Jul 21 2011 Michael Shigorin <mike@altlinux.org> 2.33-alt1
 - 2.33
 
