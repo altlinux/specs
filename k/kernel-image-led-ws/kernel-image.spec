@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,14 @@ done)
 
 
 %changelog
+* Wed Jun 17 2014 Led <led@altlinux.ru> 3.15.1-alt2
+- updated:
+  + fix-sound-pci-hda--snd-hda-intel
+  + feat-fs-exfat
+- added:
+  + fix-drivers-target--target_core_mod
+  + fix-drivers-target-iscsi--iscsi_target_mod
+
 * Tue Jun 17 2014 Led <led@altlinux.ru> 3.15.1-alt1
 - 1.15.1
 - removed:
