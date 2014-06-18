@@ -1,6 +1,6 @@
 Name: alterator-logs
-Version: 0.8
-Release: alt4
+Version: 0.8.1
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
@@ -41,6 +41,9 @@ System logs alterator module
 %_sysconfdir/alterator/logs
 
 %changelog
+* Wed Jun 18 2014 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- add alterator-updates log definition.
+
 * Tue Feb 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt4
 - use sh instead of buggy ash (it eats 0x81 from 0xD1 0x81)
 
