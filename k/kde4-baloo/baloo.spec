@@ -2,8 +2,8 @@
 
 %define rname baloo
 Name: kde4-baloo
-Version: 4.13.1
-Release: alt2
+Version: 4.13.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -138,6 +138,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooxapian.so.*
 
 %changelog
+* Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
+- new version
+
 * Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.1-alt2
 - disable indexing by default
 - drop advanced configuration module
