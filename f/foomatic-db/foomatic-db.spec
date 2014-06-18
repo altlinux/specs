@@ -1,5 +1,5 @@
 %define foomatic_version 4.0.3
-%define snapshot 20140426
+%define snapshot 20140618
 
 %def_disable foo2zjs
 
@@ -158,6 +158,9 @@ comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
 %doc README ChangeLog
 
 %changelog
+* Wed Jun 18 2014 Cronbuild Service <cronbuild@altlinux.org> 4.0.20140618-alt1
+- repocop cronbuild 20140618. At your service.
+
 * Fri Jun 13 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.20140426-alt1
 - improved foo2zjs conflict remover
 
