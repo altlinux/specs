@@ -1,6 +1,6 @@
 %define dist Text-Bidi
 Name: perl-%dist
-Version: 2.02
+Version: 2.09
 Release: alt1
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
@@ -8,10 +8,11 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: %dist-%version.tar
+Source1: %name.watch
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: libfribidi-devel perl-Test-Pod
+BuildRequires: libfribidi-devel perl-Test-Pod perl-unicore
 
 %description
 This is a perl interface to the libfribidi library that implements the
@@ -29,11 +30,14 @@ written languages.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_archlib/Text
 %perl_vendor_autolib/Text
 
 %changelog
+* Thu Jun 19 2014 Anton Farygin <rider@altlinux.ru> 2.09-alt1
+- new version 2.09
+
 * Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 2.02-alt1
 - new version
 
