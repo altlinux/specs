@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.12
 %define gtk_api_ver 3.0
 %def_with pkcs11
 
@@ -15,6 +15,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define glib_ver 2.28
 %define gtk_ver 3.0.0
 %define nm_ver 0.8.997
 %define notify_ver 0.7
@@ -22,6 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %{?_with_pkcs11:Requires: libopensc}
 
+BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver
@@ -35,7 +37,7 @@ krb5-auth-dialog is a simple dialog that monitors kerberos tickets, and
 pops up a dialog when they are about to expire.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -56,12 +58,14 @@ pops up a dialog when they are about to expire.
 %_libdir/%name/plugins/libka-plugin-dummy.so
 %_libdir/%name/plugins/libka-plugin-pam.so
 %_libdir/%name/plugins/libka-plugin-afs.so
+%_libdir/%name/plugins/libka-plugin-gnomelock.so
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.KrbAuthDialog.convert
+%_datadir/appdata/%name.appdata.xml
 %_sysconfdir/xdg/autostart/*.desktop
 %_man1dir/*
 %doc AUTHORS ChangeLog NEWS README
@@ -69,6 +73,9 @@ pops up a dialog when they are about to expire.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Thu Jun 19 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Thu Mar 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
