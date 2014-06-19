@@ -4,8 +4,8 @@
 %set_automake_version 1.11
 
 Name: netgen
-Version: 5.2
-Release: alt3.svn20130902
+Version: 5.3
+Release: alt1.svn20140428
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -142,13 +142,25 @@ do
 	pushd libsrc/$i
 	%make clean
 	popd
-	%make_build TCLLIBDIR=%_tcllibdir \
-		NGLIB=$PWD/nglib/libnglib.la TOPDIR=$PWD
+	if [ "$i" == "csg" ]; then
+		%make_build TCLLIBDIR=%_tcllibdir \
+			NGLIB=$PWD/nglib/libnglib.la LIBNETGEN=$PWD/nglib/libnetgen.la \
+			TOPDIR=$PWD
+	else
+		%make_build TCLLIBDIR=%_tcllibdir \
+			NGLIB=$PWD/nglib/libnglib.la LIBNETGEN=$PWD/nglib/libnetgen.la \
+			LIBCSG=$PWD/libsrc/csg/libcsg.la \
+			TOPDIR=$PWD
+	fi
 done
 
 %install
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
+
+install -d %buildroot%_libdir
+cp -P nglib/.libs/*.so* libsrc/csg/.libs/*.so* %buildroot%_libdir/
+
 %makeinstall_std TCLLIBDIR=%_tcllibdir TOPDIR=$PWD
 
 pushd dropsexport
@@ -186,6 +198,9 @@ done
 %doc demoapp
 
 %changelog
+* Thu Jun 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.svn20140428
+- Version 5.3
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt3.svn20130902
 - Fixed build
 

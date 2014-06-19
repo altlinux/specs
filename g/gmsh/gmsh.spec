@@ -5,8 +5,8 @@
 
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
-Version: 2.8.4
-Release: alt1.svn20131112
+Version: 2.8.5
+Release: alt1.svn20140618
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -18,6 +18,7 @@ Source: %name-%version.tar.gz
 Source1: CMakeCache.txt
 
 Requires: libcgns-mpi
+Requires: lib%name = %EVR
 
 BuildPreReq: libfltk-devel libjpeg-devel zlib-devel libpng-devel
 BuildPreReq: libnetgen-devel libann-devel libchaco-devel chrpath
@@ -32,6 +33,7 @@ BuildPreReq: libXrandr-devel libXt-devel libXv-devel libXxf86misc-devel
 BuildPreReq: libslepc-real-devel flex libamesos10 swig
 BuildPreReq: libepetraext10 libifpack10 libtrilinos10 libgaleri10
 BuildPreReq: libopencascade-devel libmmg3d-devel libdakota-devel
+BuildPreReq: libnumpy-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -60,6 +62,56 @@ scripting language.
 
 This package contains tutorial and demo files for Gmsh.
 
+%package -n lib%name
+Summary: Shared libraries of Gmsh
+Group: System/Libraries
+
+%description -n lib%name
+Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
+and post-processor. Its design goal is to provide a simple meshing tool for
+academic problems with parametric input and advanced visualization capabilities.
+
+Gmsh is built around four modules: geometry, mesh, solver and post-processing.
+The specification of any input to these modules is done either interactively
+using the graphical user interface or in ASCII text files using Gmsh's own
+scripting language.
+
+This package contains shared libraries of Gmsh.
+
+%package -n lib%name-devel
+Summary: Development files of Gmsh
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-devel
+Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
+and post-processor. Its design goal is to provide a simple meshing tool for
+academic problems with parametric input and advanced visualization capabilities.
+
+Gmsh is built around four modules: geometry, mesh, solver and post-processing.
+The specification of any input to these modules is done either interactively
+using the graphical user interface or in ASCII text files using Gmsh's own
+scripting language.
+
+This package contains development files of Gmsh.
+
+%package -n python-module-%name
+Summary: Python wrapper of Gmsh
+Group: Development/Python
+Requires: lib%name = %EVR
+
+%description -n python-module-%name
+Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
+and post-processor. Its design goal is to provide a simple meshing tool for
+academic problems with parametric input and advanced visualization capabilities.
+
+Gmsh is built around four modules: geometry, mesh, solver and post-processing.
+The specification of any input to these modules is done either interactively
+using the graphical user interface or in ASCII text files using Gmsh's own
+scripting language.
+
+This package contains python wrapper of Gmsh.
+
 %prep
 %setup
 
@@ -78,6 +130,8 @@ CHACO_FILES="$(egrep -R 'defs\.h' contrib/Chaco/|awk -F : '{print $1}')"
 sed -i 's|defs\.h|chaco_defs.h|' $CHACO_FILES
 
 rm -fR contrib/{ANN,Metis,mmg3d}
+
+sed -i "s|@SRCROOT@|$PWD|g" wrappers/gmshpy/setup.py.in
 
 %build
 mpi-selector --set %mpiimpl
@@ -100,8 +154,10 @@ export LD_LIBRARY_PATH=%_libdir/oski
 
 %makeinstall_std
 
-#for i in %buildroot%_bindir/* %buildroot%_libdir/*.so; do
-for i in %buildroot%_bindir/*; do
+#for i in %buildroot%_bindir/*; do
+for i in %buildroot%_bindir/* %buildroot%_libdir/*.so \
+	%buildroot%python_sitelibdir/gmshpy/*.so
+do
 	chrpath -r %mpidir/lib:%petsc_dir/lib $i ||:
 done
 
@@ -110,8 +166,10 @@ install -m644 doc/texinfo/*.info* %buildroot%_infodir
 
 install -p -m644 doc/*.html %buildroot%_docdir/%name
 
-# antirepocop
-rm -fR %buildroot%_includedir
+pushd %buildroot/usr/gmshpy
+%python_build_install
+popd
+rm -fR %buildroot/usr/gmshpy
 
 %filter_from_requires /^debug.*(libcgns\.so.*/s/^/libcgns-mpi-debuginfo\t/
 
@@ -122,7 +180,16 @@ rm -fR %buildroot%_includedir
 %_bindir/*
 %_man1dir/*
 %_infodir/*
-#_libdir/*.so
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_libdir/*.so
+
+%files -n python-module-%name
+%python_sitelibdir/*
 
 %files demos
 %dir %_docdir/%name
@@ -130,6 +197,9 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Thu Jun 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.5-alt1.svn20140618
+- Version 2.8.5
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1.svn20131112
 - Version 2.8.4
 

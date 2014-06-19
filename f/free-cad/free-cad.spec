@@ -3,7 +3,7 @@
 
 Name: free-cad
 Version: 0.13.0
-Release: alt1.git20131111
+Release: alt1.git20140521
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -27,12 +27,13 @@ BuildPreReq: libopencascade-devel libgts-devel libGL-devel libGLU-devel
 BuildPreReq: libode-devel eigen2 phonon-devel libann-devel qt4-assistant
 BuildPreReq: doxygen graphviz texlive-extra-utils libqt4-help eigen3
 BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
-BuildPreReq: boost-interprocess-devel
+BuildPreReq: boost-interprocess-devel libshiboken-devel shiboken
+BuildPreReq: libpyside-qt4-devel
 %py_requires pivy
 %py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 %py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
-%py_provides ImageGui
-%add_python_req_skip pyopencl
+%py_provides ImageGui PartDesignGui _PartDesign
+%add_python_req_skip pyopencl IfcImport Units
 
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -228,8 +229,8 @@ popd
 #mv %buildroot%ldir/lib/* %buildroot%ldir/lib/
 #endif
 
-for i in %python_sitelibdir/_coin.so \
-	%ldir/Mod/PartDesign/PartDesign.so
+#	%ldir/Mod/PartDesign/PartDesign.so
+for i in %python_sitelibdir/_coin.so
 do
 	chrpath -r %ldir/lib %buildroot$i
 done
@@ -289,6 +290,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Thu May 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20140521
+- New snapshot
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20131111
 - New snapshot
 

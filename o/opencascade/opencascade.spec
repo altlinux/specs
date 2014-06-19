@@ -1,5 +1,5 @@
 Name: opencascade
-Version: 6.6.0
+Version: 6.7.1
 Release: alt1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
@@ -8,7 +8,7 @@ Url: http://www.opencascade.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: OpenCASCADE_src.tar
-Source1: LICENSE
+Source1: LICENSE_LGPL_21.txt
 Source2: OSD_Common.hxx
 
 Requires: lib%name = %version-%release
@@ -19,6 +19,7 @@ BuildPreReq: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
 BuildPreReq: java-devel-default libcoin3d-devel libfreetype-devel
 BuildPreReq: python-module-gist libtbb-devel libftgl-devel
 BuildPreReq: libgl2ps-devel zlib-devel libfreeimage-devel
+BuildPreReq: libXext-devel
 
 %description
 Open CASCADE Technology version 6.3., a minor release, which introduces quite a
@@ -101,9 +102,9 @@ if [ "%__nprocs" = "1" -o "%__nprocs" = "" ]; then
 else
 	NPROCS=%__nprocs
 fi
-#make -j$NPROCS
 sed -i 's|define VERSION|define OCCVERSION|' config.h
-%make
+%make -j$NPROCS
+#make
 
 %install
 %makeinstall
@@ -152,7 +153,7 @@ mv %buildroot%prefix/*.sh %buildroot%_bindir/
 #chmod +x %buildroot%_bindir/custom.sh
 
 %files
-%doc LICENSE
+%doc LICENSE*
 %_bindir/*
 #_datadir/%name/env_DRAW.sh
 
@@ -168,6 +169,9 @@ mv %buildroot%prefix/*.sh %buildroot%_bindir/
 %_datadir/%name/src
 
 %changelog
+* Wed May 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.7.1-alt1
+- Version 6.7.1
+
 * Fri Sep 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.6.0-alt1
 - Version 6.6.0
 

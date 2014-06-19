@@ -4,8 +4,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ngsolve
-Version: 5.1
-Release: alt3
+Version: 5.3
+Release: alt1.svn20140618
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -103,7 +103,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %make_build -C comp libngcomp.la
 %make_build
 %make_build -C linalg clean
-%make -C linalg LIBNGCOMP=$PWD/comp/libngcomp.la
+%make -C linalg LIBNGCOMP=$PWD/comp/libngcomp.la \
+	LIBPARALLEL=$PWD/parallel/libparallel.la
 %make_build -C multigrid clean
 %make -C multigrid LIBNGLA=$PWD/linalg/libngla.la
 
@@ -156,6 +157,9 @@ mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
 #doc %_datadir/%name
 
 %changelog
+* Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.svn20140618
+- Version 5.3
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt3
 - Fixed build
 
