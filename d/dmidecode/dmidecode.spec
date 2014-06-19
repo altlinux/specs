@@ -1,13 +1,15 @@
 Name: dmidecode
-Version: 2.11
-Release: alt1.qa1
+Version: 2.12
+Release: alt1
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
 License: GPLv2+
 Group: System/Kernel and hardware
 
 URL: http://www.nongnu.org/dmidecode/
-Source0: http://download.savannah.gnu.org/releases/dmidecode/dmidecode-%version.tar.bz2
+Source0: http://download.savannah.gnu.org/releases/dmidecode/dmidecode-%version.tar
+Source1: %name.watch
+Patch1: supported-smbios-ver.patch
 
 %description
 dmidecode reports information about x86 hardware as described in the system BIOS
@@ -22,6 +24,7 @@ parallel, USB).
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 subst 's/-O./%optflags/' Makefile
@@ -35,6 +38,10 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Thu Jun 19 2014 Anton Farygin <rider@altlinux.ru> 2.12-alt1
+- new version 2.12
+- fixed smbios 2.8.0 support
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.11-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
