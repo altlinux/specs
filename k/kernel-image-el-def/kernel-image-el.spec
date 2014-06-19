@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt23
+Release: alt24
 %define erelease 431.17.1.el6
 
 %define kernel_req %nil
@@ -548,6 +548,14 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Fri Jun 20 2014 Led <led@altlinux.ru> 2.6.32-alt24
+- futex: Add another early deadlock detection check
+- futex: Prevent attaching to kernel threads
+- futex: Validate atomic acquisition in futex_lock_pi_atomic()
+- futex: Always cleanup owner tid in unlock_pi
+- futex: Make lookup_pi_state more robust
+- auditsc: audit_krule mask accesses need bounds checking (CVE-2014-3917)
+
 * Sat Jun 07 2014 Led <led@altlinux.ru> 2.6.32-alt23
 - futex: Forbid uaddr == uaddr2 in futex_requeue(..., requeue_pi=1)
   (CVE-2014-3153)
