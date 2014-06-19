@@ -1,6 +1,6 @@
 Name: docker-io
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -162,14 +162,14 @@ exit 0
 %_datadir/zsh/site-functions/_docker
 %dir %_sharedstatedir/docker
 %_sysconfdir/udev/rules.d/80-docker.rules
-%dir %_datadir/vim/vimfiles/doc
 %_datadir/vim/vimfiles/doc/dockerfile.txt
-%dir %_datadir/vim/vimfiles/ftdetect
 %_datadir/vim/vimfiles/ftdetect/dockerfile.vim
-%dir %_datadir/vim/vimfiles/syntax
 %_datadir/vim/vimfiles/syntax/dockerfile.vim
 
 %changelog
+* Thu Jun 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt2
+- Dropped %%_datadir/vim/vimfiles/{doc,ftdetect,syntax}.
+
 * Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.0-alt1
 - New version.
 
