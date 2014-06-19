@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.98.1
+Version: 0.98.4
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -65,8 +65,9 @@ Requires(post): sed >= 1:3.02-alt1
 
 # sed used by configure script
 BuildRequires: sed
-# Automatically added by buildreq on Sat Oct 31 2009
-BuildRequires: gcc-c++ bzlib-devel git-core libcheck-devel libncurses-devel subversion zlib-devel
+
+BuildRequires: gcc-c++ bzlib-devel libcheck-devel libncurses-devel zlib-devel libcurl-devel libssl-devel libxml2-devel
+BuildRequires: git-core subversion graphviz groff-extra gv zip doxygen
 
 # ...and edited manually to separate conditional buildreqs
 %{?_with_milter:BuildRequires: sendmail-devel}
@@ -128,7 +129,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 %patch1 -p1
 %patch2 -p1
 
-%patch10 -p1
+#patch10 -p1
 
 %patch20 -p1
 
@@ -248,6 +249,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 
 %_bindir/clamdscan
 %_bindir/clamscan
+%_bindir/clamsubmit
 %_bindir/sigtool
 %_bindir/clamdtop
 %_bindir/clambc
@@ -259,6 +261,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/clamd
 %_man1dir/clamdscan*
 %_man1dir/clamscan*
+%_man1dir/clamsubmit*
 %_man1dir/sigtool*
 %_man1dir/clamdtop*
 %_man1dir/clambc*
@@ -307,6 +310,11 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Wed Jun 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.4-alt1
+- 0.98.4 (ALT #30087)
+- updated BuildRequires
+- disabled clamav-0.98-alt-arm.patch
+
 * Fri Jan 24 2014 Sergey Y. Afonin <asy@altlinux.ru> 0.98.1-alt1
 - 0.98.1
 
