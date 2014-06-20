@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 5.3
-Release: alt2
+Release: alt3
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -118,6 +118,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %doc examples
 
 %changelog
+* Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt3
+- Rebuilt with new SIP
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt2
 - Built with qt5-websockets
 
