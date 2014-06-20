@@ -1,6 +1,6 @@
 Summary: Simple debugging utility
 Name: scanmem
-Version: 0.13
+Version: 0.14
 Release: alt1
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
@@ -34,6 +34,9 @@ install -D -m 644 scanmem.1 %buildroot%_man1dir/scanmem.1
 %doc ChangeLog COPYING INSTALL NEWS README TODO
 
 %changelog
+* Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14-alt1
+- New version
+
 * Fri Oct 04 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.13-alt1
 - New version
 
