@@ -1,10 +1,8 @@
 Name: alterator-distro-chainmail
-Version: 2.1
+Version: 2.96.0
 Release: alt1
 
-Source:%name-%version.tar
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Source: %name-%version.tar
 
 Summary: special alterator modules for IVK Chainmail
 License: GPL
@@ -25,11 +23,11 @@ BuildPreReq: alterator >= 4.12-alt1
 
 %description
 special alterator modules for IVK Chainmail:
-- firsttime settings
+- alterator's workflow
 - hooks for administrator password
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -40,12 +38,19 @@ special alterator modules for IVK Chainmail:
 
 %files
 %config(noreplace) %_sysconfdir/alterator/logs/.order
-%_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
-%_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
 
 %changelog
+* Fri Jun 20 2014 Mikhail Efremov <sem@altlinux.org> 2.96.0-alt1
+- Drop hook and helper for setting MySQL password.
+- Update description.
+- Drop firsttime.
+
+* Wed Nov 03 2010 Mikhail Efremov <sem@altlinux.org> 2.1-alt2
+- drop setting MySQL passwords for moodle and wikidb.
+- resurrect utility for mysql.
+
 * Wed Nov 18 2009 Stanislav Ievlev <inger@altlinux.org> 2.1-alt1
 - update to newest versions of alterator-fbi and alterator-root
 - use standard logout-button instead of own logout page
@@ -54,7 +59,7 @@ special alterator modules for IVK Chainmail:
 - use ui-corner-all class
 
 * Wed Oct 07 2009 Stanislav Ievlev <inger@altlinux.org> 2.0-alt11
-- fix style (no div with width 100%)
+- fix style (no div with width 100%%)
 - update to latest alterator-fbi: new help engine, drop links to unexistent js files
 
 * Fri Oct 02 2009 Stanislav Ievlev <inger@altlinux.org> 2.0-alt10
