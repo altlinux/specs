@@ -2,7 +2,7 @@
 
 Name: wok-tool
 Version: 6.5.2
-Release: alt3
+Release: alt4
 Summary: Open CASCADE Technology WOK tool
 License: BSD-like
 Group: Development/Tools
@@ -101,6 +101,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Thu May 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.2-alt4
+- Rebuilt with OpenCASCADE 6.7.1
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.2-alt3
 - Fixed build
 
