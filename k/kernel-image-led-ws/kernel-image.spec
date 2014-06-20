@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,7 +1883,13 @@ done)
 
 
 %changelog
-* Wed Jun 17 2014 Led <led@altlinux.ru> 3.15.1-alt2
+* Fri Jun 20 2014 Led <led@altlinux.ru> 3.15.1-alt3
+- updated:
+  + feat-block--bfq-iosched
+- added:
+  + fix-mm--nmu
+
+* Wed Jun 18 2014 Led <led@altlinux.ru> 3.15.1-alt2
 - updated:
   + fix-sound-pci-hda--snd-hda-intel
   + feat-fs-exfat
