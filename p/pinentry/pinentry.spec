@@ -1,9 +1,9 @@
 %define qtdir %_qt3dir
-%def_with libcap
+%def_enable libcap
 
 Name: pinentry
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -12,7 +12,7 @@ License: GPLv2+
 
 Requires: %name-common = %version-%release
 
-Requires: %name-qt = %version-%release
+Requires: %name-qt4 = %version-%release
 Requires: %name-gtk = %version-%release
 Requires: %name-curses = %version-%release
 
@@ -26,7 +26,7 @@ Patch100: pinentry-0.7.6-alt-system-assuan.patch
 # due to qt macros
 BuildRequires(pre): libqt3-devel libqt4-devel
 
-%if_with libcap
+%if_enabled libcap
 BuildRequires: libcap-devel
 %endif
 
@@ -47,8 +47,8 @@ Conflicts: pinentry-qt < 0.7.2 pinentry-gtk < 0.7.2
 Group: %group
 Summary: %summary
 Provides: %name-terminal = %version-%release
+Provides: %name-console = %version-%release
 Provides: %name = %version-%release
-Provides: %_bindir/%name
 Requires: %name-common = %version-%release
 
 %package gtk
@@ -56,25 +56,23 @@ Group: %group
 Summary: %summary
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Provides: %_bindir/%name
 Requires: %name-common = %version-%release
 
-%package qt
+%package qt4
 Group: %group
 Summary: %summary
 Provides: %name = %version-%release
-Provides: %_bindir/%name
 Provides: %name-x11 = %version-%release
-Requires: libqt4-core >= %{get_version libqt4-core}
 Requires: %name-common = %version-%release
+#
+Provides: pinentry-qt = %EVR
+Obsoletes: pinentry-qt < %EVR
 
 %package qt3
 Group: %group
 Summary: %summary
 Provides: %name = %version-%release
-Provides: %_bindir/%name
 Provides: %name-x11 = %version-%release
-Requires: libqt3 >= %{get_version libqt3}
 Requires: %name-common = %version-%release
 
 %description curses
@@ -85,7 +83,7 @@ utilize the Assuan protocol as described by the aegypten project.
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 
-%description qt
+%description qt4
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 
@@ -110,9 +108,9 @@ for h in pinentrydialog.h qsecurelineedit.h; do
     moc-qt4 $h -o $m
 done
 popd
+%autoreconf
 
 %build
-%autoreconf
 export QTDIR=%qtdir
 
 %configure \
@@ -122,7 +120,7 @@ export QTDIR=%qtdir
     --enable-pinentry-qt \
     --enable-pinentry-qt4 \
     --enable-pinentry-curses \
-    %{subst_with libcap} \
+    %{subst_enable libcap} \
     #
 
 %make_build
@@ -132,11 +130,12 @@ export QTDIR=%qtdir
 rm %buildroot%_bindir/%name
 mv %buildroot%_bindir/%name-gtk{-2,}
 mv %buildroot%_bindir/%name-qt{,3}
-mv %buildroot%_bindir/%name-qt{4,}
+#mv %buildroot%_bindir/%name-qt{4,}
+ln -s %name-qt4 %buildroot%_bindir/%name-qt
 
 mkdir -p %buildroot%_altdir
 WEIGHT=10
-for i in curses qt3 gtk qt; do
+for i in curses qt3 gtk qt4; do
 cat >%buildroot%_altdir/%name-$i<<EOF
 %_bindir/%name	%_bindir/%name-$i	$WEIGHT
 EOF
@@ -151,8 +150,9 @@ done
 %_altdir/%name-gtk
 %_bindir/%name-gtk
 
-%files qt
-%_altdir/%name-qt
+%files qt4
+%_altdir/%name-qt4
+%_bindir/%name-qt4
 %_bindir/%name-qt
 
 %files qt3
@@ -164,6 +164,12 @@ done
 %_infodir/*.info*
 
 %changelog
+* Fri Jun 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt2
+- rename pinentry-qt to pinentry-qt4
+
+* Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt0.M70P.1
+- built for M70P
+
 * Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt1
 - new version
 
