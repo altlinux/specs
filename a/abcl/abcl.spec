@@ -1,6 +1,6 @@
 Name: abcl
-Version: 1.2.1
-Release: alt1.svn20131102_jpp7
+Version: 1.4.0
+Release: alt1.svn20140517_jpp7
 
 Summary: Armed Bear Common Lisp is an implementation of ANSI Common Lisp for JVM
 License: GPLv2 with exceptions
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real@altlinux.org>
 Url: http://common-lisp.net/project/armedbear/
 # fragment from .git/config :
 #[svn-remote "svn"]
-#  url = svn://common-lisp.net/project/armedbear/svn/trunk/abcl
+#  url = http://abcl.org/svn/trunk/abcl/
 #  fetch = :refs/remotes/git-svn
 Source: %name-src-%version.tar.gz
 
@@ -87,6 +87,9 @@ ln -s %name-%version %buildroot%_javadocdir/%name
 %doc %_javadocdir/%name
 
 %changelog
+* Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.svn20140517_jpp7
+- Version 1.4.0
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.svn20131102_jpp7
 - New snapshot
 
