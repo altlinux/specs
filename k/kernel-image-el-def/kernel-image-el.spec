@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt24
-%define erelease 431.17.1.el6
+Release: alt25
+%define erelease 431.20.3.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,17 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Fri Jun 20 2014 Led <led@altlinux.ru> 2.6.32-alt25
+- 2.6.32-431.20.3.el6:
+  + CVE-2013-6378
+  + CVE-2014-0196
+  + CVE-2014-0203
+  + CVE-2014-1737
+  + CVE-2014-1738
+  + CVE-2014-1874
+  + CVE-2014-2039
+  + CVE-2014-3153
+
 * Fri Jun 20 2014 Led <led@altlinux.ru> 2.6.32-alt24
 - futex: Add another early deadlock detection check
 - futex: Prevent attaching to kernel threads
