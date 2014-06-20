@@ -4,10 +4,9 @@
 %define _libexecdir %_prefix/libexec
 
 %def_enable gtk_doc
-%def_enable network_manager
 
 Name: %{_name}2
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -18,14 +17,12 @@ Url: http://geoclue.freedesktop.org/
 Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.34
-%define nm_ver 0.9.9.0
 %define mm_ver 1.0
 %define geoip_ver 1.5.1
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
 BuildRequires: libjson-glib-devel libsoup-devel libmm-glib-devel >= %mm_ver
-%{?_enable_network_manager:BuildRequires: libnm-glib-devel >= %nm_ver}
-BuildRequires: libxml2-devel libnotify-devel systemd-devel
+BuildRequires: libnotify-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -86,7 +83,7 @@ mkdir -p %buildroot%_localstatedir/%_name
 %pre
 %_sbindir/groupadd -r -f %_name
 %_sbindir/useradd -r -g %_name -d %_localstatedir/%_name -s /dev/null \
-    -c 'User for GeoClue service' %_name >/dev/null || :
+    -c 'User for GeoClue service' %_name >/dev/null 2>&1 ||:
 
 %files
 %_libexecdir/%_name
@@ -112,6 +109,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Fri Jun 20 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.9-alt1
+- 2.1.9
+
 * Mon Apr 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
 - 2.1.8
 
