@@ -1,6 +1,7 @@
 
 %add_findpackage_path %_kde4_bindir
 %add_python_req_skip modeltest
+%add_python_req_skip PyQt5
 
 %define rname kdegames
 Name: kde4games
@@ -8,7 +9,7 @@ Name: kde4games
 %define minor 13
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE - Games
@@ -1214,6 +1215,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Fri Jun 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt2
+- don't require PyQt5
+
 * Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
 - new version
 
