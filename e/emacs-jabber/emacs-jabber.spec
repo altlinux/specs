@@ -4,7 +4,7 @@
 Epoch: 1
 
 Version: 0.8.92
-Release: alt3
+Release: alt4
 Name: emacs-jabber
 License: %gpl2plus
 Group: Networking/Instant messaging
@@ -81,6 +81,9 @@ install -m 644 jabber-fallback-lib/hexrgb.elc %buildroot%_emacslispdir/%pkg_name
 %doc %pkg_name.texi
 
 %changelog
+* Fri Jun 20 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt4
+- git-20140620
+
 * Sat Jun  7 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.8.92-alt3
 - git-20140607
 
