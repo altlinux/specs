@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: escript-finley
-Version: 3.4
+Version: 3.4.2
 Release: alt1
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
@@ -62,7 +62,7 @@ This package contains shared libraries of Escript.
 %package devel
 Summary: Development files of Escript
 Group: Development/C++
-BuildArch: noarch
+#BuildArch: noarch
 Requires: lib%name = %version-%release
 Requires: python-module-esys = %version-%release
 
@@ -173,6 +173,7 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 
 %files devel
 %_includedir/*
+%_libexecdir/buildvars
 
 %files -n python-module-esys
 %python_sitelibdir/*
@@ -182,6 +183,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
+- Version 3.4.2
+
 * Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1
 - Version 3.4
 
