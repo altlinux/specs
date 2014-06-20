@@ -1,6 +1,6 @@
 Summary: A Python library to address multiple cloud provider APIs
 Name: python-module-libcloud
-Version: 0.14
+Version: 0.14.1
 Release: alt1
 Url: http://libcloud.apache.org/
 Source: %name-%version.tar
@@ -16,6 +16,14 @@ libcloud is a client library for interacting with many of the popular cloud
 server providers.  It was created to make it easy for developers to build 
 products that work between any of the services that it supports.
 
+%package tests
+Summary: Unit tests
+Group: Development/Python
+
+%description tests
+Unit tests for python-module-libcloud
+
+
 %prep
 %setup
 
@@ -26,12 +34,20 @@ products that work between any of the services that it supports.
 %install
 #__python setup.py install --prefix=/usr --root=%buildroot
 %python_build_install --prefix=/usr
- 
+
+%files tests
+%python_sitelibdir/libcloud/test/*
+
 %files
 %doc CHANGES.rst CONTRIBUTING.rst NOTICE README.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/libcloud/test
 
 %changelog
+* Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14.1-alt1
+- New version
+- Add subpackages python-module-libcloud-tests
+
 * Thu Jan 23 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14-alt1
 - Initial build for ALT
 
