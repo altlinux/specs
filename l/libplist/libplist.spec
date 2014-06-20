@@ -1,6 +1,6 @@
 Name: libplist
-Version: 1.10
-Release: alt2
+Version: 1.11
+Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
@@ -8,11 +8,10 @@ License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
 Source: http://github.com/downloads/JonathanBeck/%name/%name-%version.tar.bz2
-# fc
-Patch: libplist-1.8-fc-cmake_lib_suffix.patch
 
-BuildRequires: gcc-c++ cmake libxml2-devel xml-utils python-devel swig
-BuildRequires: python-module-Cython >= 0.18
+BuildRequires: gcc-c++ cmake libxml2-devel xml-utils
+BuildRequires: python-devel python-module-Cython >= 0.18
+#BuildRequires: python3-devel rpm-build-python3 python3-module-Cython >= 0.18
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -53,19 +52,19 @@ Requires: %{name}mm = %version-%release
 Python libraries and bindings for %name
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
-%cmake -DLIB_SUFFIX=%_lib -DCMAKE_SKIP_RPATH:BOOL=yes
-%cmake_build
+%autoreconf
+%configure --disable-static
+# SMP-incompatible build
+%make
 
 %install
-%cmakeinstall_std
+%makeinstall_std
 
 %files
 %_bindir/plistutil
-%_bindir/plistutil-%version
 %_libdir/libplist.so.*
 %doc AUTHORS README
 
@@ -84,10 +83,13 @@ Python libraries and bindings for %name
 %_libdir/pkgconfig/libplist++.pc
 
 %files -n python-module-%name
-%python_sitelibdir/plist/
 %python_sitelibdir/plist.so
+%exclude %python_sitelibdir/plist.la
 
 %changelog
+* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
+- 1.11
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt2
 - fixed %%build for cmake-2.8.12.1-alt1
 

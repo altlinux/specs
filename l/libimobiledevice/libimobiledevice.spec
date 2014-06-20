@@ -1,6 +1,8 @@
+%def_disable python
+
 Name: libimobiledevice
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
@@ -8,10 +10,9 @@ License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
 Source: %url/downloads/l/%name-%version.tar.bz2
-Patch: %name-1.1.5-alt-link.patch
 
-%define plist_ver 1.9
-%define usbmuxd_ver 1.0.8
+%define plist_ver 1.11
+%define usbmuxd_ver 1.0.9
 %define cython_ver 0.18
 
 BuildPreReq: libplist-devel >= %plist_ver
@@ -19,7 +20,7 @@ BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
 
 BuildRequires: gcc-c++ glib2-devel libxml2-devel libusb-devel libplistmm-devel
 BuildRequires: libgnutls-devel libtasn1-devel libgcrypt-devel libssl-devel
-BuildRequires: python-devel python-module-Cython0.18 python-module-libplist
+BuildRequires: python-devel python-module-Cython >= %cython_ver python-module-libplist
 
 %description
 libimobiledevice is a library for connecting to Apple's iPhone or iPod touch devices
@@ -42,11 +43,11 @@ Python bindings for libimobiledevice.
 
 %prep
 %setup
-%patch -b .link
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	%{?_disable_python:--without-cython}
 
 %make_build
 
@@ -65,11 +66,16 @@ Python bindings for libimobiledevice.
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 
+%if_enabled python
 %files -n python-module-%name
 %python_sitelibdir/imobiledevice.so
 %exclude %python_sitelibdir/imobiledevice.la
+%endif
 
 %changelog
+* Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt2
 - use Cython-0.18
 
