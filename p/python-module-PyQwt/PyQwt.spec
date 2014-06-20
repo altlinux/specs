@@ -2,7 +2,7 @@
 
 Name:           python-module-PyQwt
 Version:        5.2.0
-Release:        alt2
+Release:        alt3
 Summary:        Python bindings for Qwt
 
 Group:          Development/Python
@@ -100,6 +100,9 @@ chmod 755 %{buildroot}/%{python_sitelibdir}/PyQt4/Qwt5/qplt.py
 
 
 %changelog
+* Fri Jun 20 2014 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt3
+- Rebuild with new version of python-module-sip (ALT #30129)
+
 * Mon Jan 27 2014 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt2
 - Build in Sisyphus
 
