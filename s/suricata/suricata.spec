@@ -1,6 +1,6 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
-Version: 2.0.0
+Version: 2.0.1
 Release: alt2
 License: GPL
 Group: System/Base
@@ -95,6 +95,9 @@ install -p -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricat
 
 rm -rf %buildroot/usr/share/doc/suricata
 rm -rf /usr/share/doc/suricata
+rm -rf %buildroot%_libdir/*.so
+cd %buildroot%_libdir
+ln -s libhtp-0.5.10.so.1.0.0 libhtp.so
 
 cat << EOF > %buildroot%_sysconfdir/logrotate.d/%name
 /var/log/%name/stats.log {
@@ -153,16 +156,17 @@ EOF
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_sysconfdir/logrotate.d/*
 %dir %attr(3770,_%name,root) /var/log/%name
-%dir %attr(3770,_%name,root) %_runtimedir/suricata
+#dir attr(3770,_name,root) _runtimedir/suricata
 
 %files -n libhtp
 %_libdir/*.so.*
+%_libdir/*.so
 
 %files -n libhtp-devel
 %_includedir/*
 %_libdir/pkgconfig/htp.pc
 %_libdir/libhtp.a
-%_libdir/*.so
+#_libdir/*.so
 
 %files -n python-module-suricata
 %dir %python_sitelibdir_noarch/suricatasc
@@ -170,6 +174,9 @@ EOF
 %python_sitelibdir_noarch/suricatasc-0.9-py2.7.egg-info
 
 %changelog
+* Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt2
+- New version
+
 * Wed May 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.0-alt2
 - Fixed https://redmine.openinfosecfoundation.org/issues/373
 
