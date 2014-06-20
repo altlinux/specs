@@ -1,8 +1,6 @@
 Name: installer-distro-chainmail
-Version: 2.1
-Release: alt3
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Version: 2.96.0
+Release: alt1
 
 Summary: Installer files for IVK chainmail
 License: GPL
@@ -30,7 +28,6 @@ Requires: installer-feature-vm-ofs-stage2
 Requires: installer-feature-net-br-stage2
 Requires: installer-feature-quota-stage2 >= 0.4
 Requires: installer-feature-server-raid-fixup-stage2
-Requires: installer-feature-restore-stage2
 Requires: x-cursor-theme-jimmac
 
 %description stage2
@@ -43,10 +40,11 @@ Group: System/Configuration/Other
 Provides: installer-chainmail-stage3 = %version-%release
 Requires: installer-common-stage3
 #modules
-Requires: alterator-lilo
+Requires: alterator-grub
 Requires: alterator-distro-chainmail >= 2.1-alt1
 Requires: alterator-net-eth
 Requires: installer-feature-vm-ofs-stage3
+Requires: alterator-auth
 
 %description stage3
 Installer IVK chainmail stage3.
@@ -63,15 +61,28 @@ cp -a * %buildroot%install2dir/
 %install2dir/alterator-menu
 %install2dir/alterator-ldap-groups
 %install2dir/installer-steps
+%install2dir/services-*
 %install2dir/postinstall.d/01-remove-installer-office-server-pkgs.sh
 
 %files stage3
 %install2dir/postinstall.d/20-alterator-defaults.sh
 %install2dir/postinstall.d/30-ahttpd.sh
-%install2dir/postinstall.d/95-services.sh
 %install2dir/postinstall.d/20-openldap.sh
 
 %changelog
+* Fri Jun 20 2014 Mikhail Efremov <sem@altlinux.org> 2.96.0-alt1
+- Add services-off list.
+- Replace services hook with services-on list.
+- Drop bacula-select.
+- Replace lilo with grub.
+- Add alterator-auth to requires.
+- steps: Add users-root.
+- services hook: Update services list and drop firsttime.
+
+* Tue Dec 14 2010 Mikhail Efremov <sem@altlinux.org> 2.1-alt4
+- enable 'updates' menu item.
+- enable 'services' menu item.
+
 * Fri Dec 11 2009 Vladislav Zavjalov <slazav@altlinux.org> 2.1-alt3
 - alterator-menu: add firewall group, fix order-list
 
