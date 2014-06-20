@@ -1,9 +1,10 @@
 %def_with netcdf
 %def_without pdflib
+%def_with lpr
 
 Name: grace
-Version: 5.1.22
-Release: alt9.5
+Version: 5.1.23
+Release: alt1
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -33,13 +34,14 @@ BuildPreReq: libXext-devel
 BuildRequires: imake libXbae-devel libXmu-devel libXp-devel libXpm-devel libfftw-devel libjpeg-devel libopenmotif-devel libpng-devel t1lib-devel xorg-cf-files libX11-devel libSM-devel
 
 %{?_with_pdflib:BuildRequires: libpdflib-lite-devel}
+%{?_with_lpr:BuildRequires: /usr/bin/lpr}
 # argh
 %{?_with_netcdf:BuildRequires: libnetcdf-devel}
-%{?_with_netcdf:Requires: libnetcdf7 libhdf5-8}
+%{?_with_netcdf:Requires: libnetcdf libhdf5}
 # no need this conflict now
-#{?_with_netcdf:Conflicts: libnetcdf6-mpi libhdf5-6-mpi mpi-selector openmpi}
+#{?_with_netcdf:Conflicts: libnetcdf-mpi libhdf5-mpi mpi-selector openmpi}
 
-Summary(ru_RU.KOI8-R): WYSIWYG-средство для подготовки двумерных графиков
+Summary(ru_RU.UTF-8): WYSIWYG-я│я─п╣п╢я│я┌п╡п╬ п╢п╩я▐ п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ п╢п╡я┐п╪п╣я─п╫я▀я┘ пЁя─п╟я└п╦п╨п╬п╡
 
 %description
 Grace is a tool to make two-dimensional plots of numerical data. It runs
@@ -50,27 +52,27 @@ strength lies in the fact that it combines the convenience of a
 graphical user interface with the power of a scripting language which
 enables it to do sophisticated calculations or perform automated tasks.
 
-%description -l ru_RU.KOI8-R
-Grace -- это программа для подготовки двумерных графиков по численным
-данным. Она работает на множестве (если не на всех) разновидностей UNIX,
-где есть X11 и M*tif. Возможности этой программы аналогичны таким
-программам, как Sigmaplot или Microcal Origin, однако, сочетают в себе и
-возможности таких программ, как gnuplot или Genplot.  Мощь этой
-программы состоит в том, что она сочетает в себе удобство графического
-интерфейса с большими возможностями языка сценариев, что позволяет
-проводить сложные вычисления или делать автоматическую обработку.
+%description -l ru_RU.UTF-8
+Grace -- я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п©п╬п╢пЁп╬я┌п╬п╡п╨п╦ п╢п╡я┐п╪п╣я─п╫я▀я┘ пЁя─п╟я└п╦п╨п╬п╡ п©п╬ я┤п╦я│п╩п╣п╫п╫я▀п╪
+п╢п╟п╫п╫я▀п╪. п·п╫п╟ я─п╟п╠п╬я┌п╟п╣я┌ п╫п╟ п╪п╫п╬п╤п╣я│я┌п╡п╣ (п╣я│п╩п╦ п╫п╣ п╫п╟ п╡я│п╣я┘) я─п╟п╥п╫п╬п╡п╦п╢п╫п╬я│я┌п╣п╧ UNIX,
+пЁп╢п╣ п╣я│я┌я▄ X11 п╦ M*tif. п▓п╬п╥п╪п╬п╤п╫п╬я│я┌п╦ я█я┌п╬п╧ п©я─п╬пЁя─п╟п╪п╪я▀ п╟п╫п╟п╩п╬пЁп╦я┤п╫я▀ я┌п╟п╨п╦п╪
+п©я─п╬пЁя─п╟п╪п╪п╟п╪, п╨п╟п╨ Sigmaplot п╦п╩п╦ Microcal Origin, п╬п╢п╫п╟п╨п╬, я│п╬я┤п╣я┌п╟я▌я┌ п╡ я│п╣п╠п╣ п╦
+п╡п╬п╥п╪п╬п╤п╫п╬я│я┌п╦ я┌п╟п╨п╦я┘ п©я─п╬пЁя─п╟п╪п╪, п╨п╟п╨ gnuplot п╦п╩п╦ Genplot.  п°п╬я┴я▄ я█я┌п╬п╧
+п©я─п╬пЁя─п╟п╪п╪я▀ я│п╬я│я┌п╬п╦я┌ п╡ я┌п╬п╪, я┤я┌п╬ п╬п╫п╟ я│п╬я┤п╣я┌п╟п╣я┌ п╡ я│п╣п╠п╣ я┐п╢п╬п╠я│я┌п╡п╬ пЁя─п╟я└п╦я┤п╣я│п╨п╬пЁп╬
+п╦п╫я┌п╣я─я└п╣п╧я│п╟ я│ п╠п╬п╩я▄я┬п╦п╪п╦ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▐п╪п╦ я▐п╥я▀п╨п╟ я│я├п╣п╫п╟я─п╦п╣п╡, я┤я┌п╬ п©п╬п╥п╡п╬п╩я▐п╣я┌
+п©я─п╬п╡п╬п╢п╦я┌я▄ я│п╩п╬п╤п╫я▀п╣ п╡я▀я┤п╦я│п╩п╣п╫п╦я▐ п╦п╩п╦ п╢п╣п╩п╟я┌я▄ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨я┐я▌ п╬п╠я─п╟п╠п╬я┌п╨я┐.
 
 %package devel
 Summary: A library for interfacing with Grace using pipes
-Summary(ru_RU.KOI8-R): Библиотека для взаимодействия с Grace через каналы (pipes)
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ п╡п╥п╟п╦п╪п╬п╢п╣п╧я│я┌п╡п╦я▐ я│ Grace я┤п╣я─п╣п╥ п╨п╟п╫п╟п╩я▀ (pipes)
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
 A library for interfacing with Grace using pipes
 
-%description -l ru_RU.KOI8-R devel
-Библиотека для взаимодействия с Grace через каналы (pipes)
+%description -l ru_RU.UTF-8 devel
+п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ п╡п╥п╟п╦п╪п╬п╢п╣п╧я│я┌п╡п╦я▐ я│ Grace я┤п╣я─п╣п╥ п╨п╟п╫п╟п╩я▀ (pipes)
 
 %prep
 %setup -n %name-%version
@@ -80,7 +82,7 @@ A library for interfacing with Grace using pipes
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p2
+#patch7 -p2
 cp -a %SOURCE7 set_default_enc
 
 %build
@@ -95,11 +97,13 @@ cp -a %SOURCE7 set_default_enc
 %make_build
 
 %install
+# NB: it's _not_ %%makeinstall_std unfortunately
 %makeinstall DESTDIR=%buildroot
 
-install -m 755 set_default_enc %buildroot%_datadir/grace/auxiliary/
+install -pm755 set_default_enc %buildroot%_datadir/grace/auxiliary/
 ln -s ../doc/%name-%version/doc %buildroot%_datadir/grace/doc
-ln -s KOI8-R.enc %buildroot%_datadir/grace/fonts/enc/Default.enc
+# UTF-8.enc missing by 5.1.23
+#ln -s UTF-8.enc %buildroot%_datadir/grace/fonts/enc/Default.enc
 
 install -pDm644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 install -pDm644 %SOURCE5 %buildroot%_miconsdir/%name.xpm
@@ -134,6 +138,12 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Fri Jun 20 2014 Michael Shigorin <mike@altlinux.org> 5.1.23-alt1
+- new version 5.1.23
+  + dropped patch7
+- enable printing support by default
+- minor spec fixups
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.5
 - Requires: libhdf5-8
 
