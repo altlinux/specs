@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(x11) zlib-devel
+BuildRequires: /usr/bin/xsltproc gcc-c++ pkgconfig(x11) zlib-devel
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-build-java
 %set_compress_method none
 %define oldname icedtea-web
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-compat
 
 # We require at the least the first release java-1.6.0-openjdk 
 # with IcedTea6 1.10
@@ -22,52 +22,33 @@ BuildRequires: jpackage-generic-compat
 # Alternatives priority
 %define priority 17000
 
-%ifarch %{ix86}
-%define archinstall i386
-%endif
-%ifarch x86_64
-%define archinstall amd64
-%endif
-# 32 bit sparc, optimized for v9
-%ifarch sparcv9
-%define archinstall sparc
-%endif
-# 64 bit sparc
-%ifarch sparc64
-%define archinstall sparcv9
-%endif
 
-%ifarch %{multilib_arches}
-%define javadir     %{_jvmdir}/java-%{javaver}-openjdk.%{_arch}
-%define jredir      %{_jvmdir}/jre-%{javaver}-openjdk.%{_arch}
-%define jre6dir     %{_jvmdir}/jre-1.6.0-openjdk.%{_arch}
+%define javadir     %{_jvmdir}/java-openjdk
+%define jredir      %{_jvmdir}/jre-openjdk
 %define javaplugin  libjavaplugin.so.%{_arch}
-%else
-%define javadir     %{_jvmdir}/java-%{javaver}-openjdk
-%define jredir      %{_jvmdir}/jre-%{javaver}-openjdk
-%define jre6dir     %{_jvmdir}/jre-1.6.0-openjdk
-%define javaplugin  libjavaplugin.so
-%endif
 
 %define binsuffix      .itweb
 
 Name:		mozilla-plugin-java-1.7.0-openjdk
-Version:	1.3
-Release:	alt2.hg478_1jpp7
-Summary:	Additional Java components for OpenJDK
+Version:	1.4
+Release:	alt1_2jpp7
+Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 
-Group:      Development/Java
+Group:      Networking/WWW
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
-Source0:    http://icedtea.classpath.org/download/source/%{oldname}-1.4pre.tar.gz
-Patch: rhbz753960.patch
+Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
+
+Patch1:		b25-appContextFix.patch
 
 BuildRequires:  java-%{javaver}-openjdk-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  xulrunner-devel
-BuildRequires:  libglib2-devel
-BuildRequires:  libgtk+2-devel
+BuildRequires:  glib2-devel
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:  xulrunner-devel
+BuildRequires:  junit4
 
 # For functionality and the OpenJDK dirs
 Requires:      java-%{javaver}-openjdk
@@ -82,11 +63,10 @@ Requires(post):   alternatives
 Requires(postun): alternatives
 
 # Standard JPackage plugin provides.
-Provides: java-plugin = %{javaver}
+Provides: java-plugin = 1:%{javaver}
+Provides: javaws = 1:%{javaver}
 
-
-# IcedTea is only built on these archs for now
-ExclusiveArch: x86_64 %ix86
+Provides:   java-%{javaver}-openjdk-plugin = 1:%{version}
 Source44: import.info
 
 %define altname java-%{javaver}-openjdk
@@ -125,6 +105,8 @@ with %{name} J2SE Runtime Environment.
 %endif # enabled javaws
 #BuildRequires: java-%javaver-%origin-devel
 
+
+
 %description
 The IcedTea-Web project provides a Java web browser plugin, an implementation
 of Java Web Start (originally based on the Netx project) and a settings tool to
@@ -134,6 +116,7 @@ implementations.
 %package javadoc
 Summary:    API documentation for IcedTea-Web
 Group:      Development/Java
+Requires:   mozilla-plugin-java-1.7.0-openjdk = %{version}-%{release}
 Requires:   jpackage-utils
 BuildArch:  noarch
 
@@ -141,11 +124,13 @@ BuildArch:  noarch
 This package contains Javadocs for the IcedTea-Web project.
 
 %prep
-%setup -q -n %{oldname}-1.4pre
-%patch -p0
+%setup -n %{oldname}-%{version} -q
+
+%patch1 -p1
 
 %build
-./autogen.sh
+autoreconf -fisv
+CXXFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS" \
 ./configure \
     --with-pkgversion=ALTLinux-%{release}-%{_arch} \
     --docdir=%{_datadir}/javadoc/%{oldname} \
@@ -154,8 +139,7 @@ This package contains Javadocs for the IcedTea-Web project.
     --libdir=%{_libdir} \
     --program-suffix=%{binsuffix} \
     --prefix=%{_prefix}
-
-make CXXFLAGS="$RPM_OPT_FLAGS"
+make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -170,6 +154,11 @@ desktop-file-install --vendor ''\
   --dir $RPM_BUILD_ROOT%{_datadir}/applications javaws.desktop
 desktop-file-install --vendor ''\
   --dir $RPM_BUILD_ROOT%{_datadir}/applications itweb-settings.desktop
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%{javaplugin}_icedtea-web<<EOF
+%{_libdir}/mozilla/plugins/libjavaplugin.so	%{_libdir}/IcedTeaPlugin.so	%{priority}
+%{_bindir}/javaws	%{_prefix}/bin/javaws%{binsuffix}	%{_libdir}/IcedTeaPlugin.so
+%{_mandir}/man1/javaws.1.gz	%{_mandir}/man1/javaws-itweb.1.gz	%{_libdir}/IcedTeaPlugin.so
+EOF
 
 install -d -m 755 %buildroot/etc/icedtea-web
 cat > %buildroot/etc/icedtea-web/javaws.policy << EOF
@@ -251,7 +240,11 @@ done
 # - END alt linux specific, shared with openjdk -#
 ##################################################
 
+%check
+#make check
+
 %files
+%_altdir/%{javaplugin}_icedtea-web
 %{_prefix}/bin/*
 %{_libdir}/IcedTeaPlugin.so
 %{_datadir}/applications/*
@@ -288,6 +281,9 @@ done
 
 
 %changelog
+* Fri Jun 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp7
+- converted from JPackage by jppimport script
+
 * Wed Oct 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2.hg478_1jpp7
 - added rhbz753960.patch (closes: #27881)
 - note that this is 1.4 pre. waiting for 1.4 release, Nov. 1st
