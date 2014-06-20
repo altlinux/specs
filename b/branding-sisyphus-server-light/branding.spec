@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-server-light
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 BuildArch: noarch
 
@@ -244,6 +244,9 @@ echo $lang > lang
 %_desktopdir/*
 
 %changelog
+* Fri Jun 20 2014 Anton Farygin <rider@altlinux.ru> 1.9.3-alt1
+- version up
+
 * Fri Apr 11 2014 Anton Farygin <rider@altlinux.ru> 1.9.2-alt1
 - version up
 
