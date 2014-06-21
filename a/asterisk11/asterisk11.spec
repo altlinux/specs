@@ -5,7 +5,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.10.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -116,6 +116,7 @@ Requires: pbx-streamplayer
 Requires: pbx-stereorize
 Source: %name-%version.tar
 Source2: %name-altlinux.tar
+Source3: %name.watch
 Patch: %name-%version.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -1252,6 +1253,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Sat Jun 21 2014 Denis Smirnov <mithraen@altlinux.ru> 11.10.0-alt2
+- add watch-file to rpm
+
 * Sat Jun 07 2014 Denis Smirnov <mithraen@altlinux.ru> 11.10.0-alt1
 - new version 11.10.0
 
