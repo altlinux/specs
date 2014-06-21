@@ -1,7 +1,11 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk1.8
 Summary: Open source PBX
 Version: 1.8.27.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
@@ -351,7 +355,6 @@ Requires: %name-chan_dahdi = %version-%release
 Requires: %name-codec_gsm = %version-%release
 Requires: %name-codec_ilbc = %version-%release
 Requires: %name-codec_speex = %version-%release
-Requires: %name-crypto = %version-%release
 Requires: %name-curl = %version-%release
 Requires: %name-devel = %version-%release
 Requires: %name-docs = %version-%release
@@ -391,16 +394,6 @@ Requires: pbx-utils-all
 
 %description complete
 This virtual package requires all Asterisk subpackages
-
-%package crypto
-Summary: OpenSSL support for Asterisk (crypto)
-Group: %group
-BuildArch: noarch
-Requires: %name-res_crypto = %version-%release
-
-%description crypto
-res_crypto used by chan_sip and chan_iax2 for crypto support
-
 
 %if_with curl
 %package curl
@@ -548,6 +541,7 @@ PostgresSQL logging module for Asterisk
 Summary: OpenSSL support for Asterisk (crypto)
 Group: %group
 Requires: %name = %version-%release
+Requires: pbx-astgenkey
 
 %description res_crypto
 res_crypto used by chan_sip and chan_iax2 for crypto support
@@ -1058,9 +1052,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 
 %files complete
 
-%files crypto
-%_sbindir/astgenkey
-
 %if_with curl
 %files curl
 %astmodule func_curl
@@ -1209,6 +1200,10 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Sat Jun 21 2014 Denis Smirnov <mithraen@altlinux.ru> 1.8.27.0-alt2
+- add watch-file to rpm
+- use pbx-astgenkey instead of %name-crypto
+
 * Mon Apr 28 2014 Denis Smirnov <mithraen@altlinux.ru> 1.8.27.0-alt1
 - new version 1.8.27.0
 
