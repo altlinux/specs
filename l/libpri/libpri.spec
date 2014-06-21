@@ -1,7 +1,11 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: libpri
 Summary: PRI library
 Version: 1.4.14
-Release: alt1
+Release: alt2
 License: %gpl2only
 Group: System/Servers
 BuildRequires: libtonezone-dahdi-devel
@@ -10,6 +14,7 @@ Epoch: 20080502
 Url: ftp://ftp.asterisk.org/pub/%name/%name-%version.tar.gz
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
+Source2: %name.watch
 Patch1: %name-%version.patch
 Conflicts: libzap
 Obsoletes: libzap
@@ -62,6 +67,9 @@ find -type f -name '.depend' -print0 \
 %_libdir/libpri.a
 
 %changelog
+* Sat Jun 21 2014 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.14-alt2
+- add watch-file and cronbuild support
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.14-alt1
 - 1.4.14
 
