@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt2
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,7 +1883,28 @@ done)
 
 
 %changelog
-* Wed Jun 17 2014 Led <led@altlinux.ru> 3.15.1-alt2
+* Sat Jun 21 2014 Led <led@altlinux.ru> 3.15.1-alt5
+- updated:
+  + fix-kernel-sched
+
+* Fri Jun 20 2014 Led <led@altlinux.ru> 3.15.1-alt4
+- updated:
+  + fix-drivers-net--bonding
+- added:
+  + fix-drivers-base--dma-buf
+  + fix-drivers-pwm--core
+  + fix-drivers-usb-host--ohci-hcd
+  + fix-kernel-time
+  + fix-net-8021q--8021q
+  + fix-net-xfrm--xfrm_user
+
+* Fri Jun 20 2014 Led <led@altlinux.ru> 3.15.1-alt3
+- updated:
+  + feat-block--bfq-iosched
+- added:
+  + fix-mm--nmu
+
+* Wed Jun 18 2014 Led <led@altlinux.ru> 3.15.1-alt2
 - updated:
   + fix-sound-pci-hda--snd-hda-intel
   + feat-fs-exfat
