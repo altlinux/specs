@@ -1,4 +1,4 @@
-%define svn_revision 413542
+%define svn_revision 413542.1
 #============================================================================
 # Please do not edit!
 # Created by specgen utility from files in specs/ subdir
@@ -70,7 +70,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 413542
+%define svn_revision 413542.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -345,7 +345,6 @@ Requires: %name-chan_dahdi = %version-%release
 Requires: %name-codec_gsm = %version-%release
 Requires: %name-codec_ilbc = %version-%release
 Requires: %name-codec_speex = %version-%release
-Requires: %name-crypto = %version-%release
 Requires: %name-curl = %version-%release
 Requires: %name-devel = %version-%release
 Requires: %name-docs = %version-%release
@@ -393,16 +392,6 @@ Requires: %name = %version-%release
 %description corosync
 Device state and MWI clustering
 %endif
-
-%package crypto
-Summary: OpenSSL support for Asterisk (crypto)
-Group: %group
-BuildArch: noarch
-Requires: %name-res_crypto = %version-%release
-
-%description crypto
-res_crypto used by chan_sip and chan_iax2 for crypto support
-
 
 %if_with curl
 %package curl
@@ -558,6 +547,7 @@ PostgresSQL logging module for Asterisk
 Summary: OpenSSL support for Asterisk (crypto)
 Group: %group
 Requires: %name = %version-%release
+Requires: pbx-astgenkey
 
 %description res_crypto
 res_crypto used by chan_sip and chan_iax2 for crypto support
@@ -1004,6 +994,7 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %exclude %astsample res_corosync
 %endif
 %_docdir/%name-%version/appdocsxml.xslt
+%exclude %_sbindir/astgenkey
 
 %files -n aelparse13
 %_sbindir/aelparse-%version
@@ -1122,9 +1113,6 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %astmodule res_corosync
 %astsample res_corosync
 %endif
-
-%files crypto
-%_sbindir/astgenkey
 
 %if_with curl
 %files curl
@@ -1295,6 +1283,9 @@ mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%v
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Sat Jun 21 2014 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.413542.1
+- use pbx-astgenkey instead of included
+
 * Fri May 09 2014 Cronbuild Service <cronbuild@altlinux.org> 13-alt0.413542
 - update from svn revision 413542
 
