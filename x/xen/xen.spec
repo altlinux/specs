@@ -16,16 +16,18 @@
 
 Summary: Xen is a virtual machine monitor
 Name: xen
-Version: 4.4.0
+Version: 4.4.1
+%define pre -rc1
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt9
+Release: alt0.1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
+%define qemu_ver 4.4.0
 URL: http://www.xenproject.org/
-Source0: http://bits.%{name}source.com/oss-%name/release/%version/%name-%version.tar
-Source1: qemu-upstream-%version.tar
-Source2: qemu-%name-%version.tar
+Source0: http://bits.%{name}source.com/oss-%name/release/%version/%name-%version%pre.tar
+Source1: qemu-upstream-%version%pre.tar
+Source2: qemu-%name-%qemu_ver.tar
 Source3: %name.modules
 #Source3: %name.modules.alt
 Source4: %name.logrotate
@@ -127,7 +129,7 @@ Requires: chkconfig
 
 %{?_with_efi:BuildPreReq: rpm-macros-uefi}
 BuildRequires: zlib-devel libncurses-devel libaio-devel
-BuildRequires: python-devel ghostscript texi2html transfig
+BuildRequires: python-devel ghostscript %_bindir/texi2html transfig
 BuildRequires: pkgconfig(glib-2.0) >= 2.12
 # for the docs
 BuildRequires: perl(Pod/Man.pm) perl(Pod/Text.pm) texinfo graphviz
@@ -261,7 +263,7 @@ manage Xen virtual machines.
 
 
 %prep
-%setup -q -a1 -a2
+%setup -q -n %name-%version%pre -a1 -a2
 #ln -s ../qemu-upstream-%version tools/qemu-xen
 #ln -s ../qemu-%name-%version tools/qemu-xen-traditional
 %patch0 -p1
@@ -295,10 +297,15 @@ install -p -m 0644 %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15 %
 
 %build
 %{?_with_efi:install -d -m 0755 dist/install/boot/efi/efi/altlinux}
-#export QEMU_REMOTE=$PWD/qemu-%name-%version
-export CONFIG_QEMU=$PWD/qemu-%name-%version
-export QEMU_UPSTREAM_URL=$PWD/qemu-upstream-%version
+#export QEMU_REMOTE=$PWD/qemu-%name-%qemu_ver
+export CONFIG_QEMU=$PWD/qemu-%name-%qemu_ver
+export QEMU_UPSTREAM_URL=$PWD/qemu-upstream-%version%pre
+%if "%pre" == "%nil"
 export XEN_VENDORVERSION="-%release"
+%else
+v="%version"
+export XEN_EXTRAVERSION="${v#${v%%.*}}-%release"
+%endif
 export EXTRA_CFLAGS_XEN_TOOLS="%optflags"
 export EXTRA_CFLAGS_QEMU_TRADITIONAL="%optflags"
 export EXTRA_CFLAGS_QEMU_XEN="%optflags"
@@ -330,10 +337,15 @@ export GIT=$(which true)
 
 
 %install
-#export QEMU_REMOTE=$PWD/qemu-%name-%version
-export CONFIG_QEMU=$PWD/qemu-%name-%version
-export QEMU_UPSTREAM_URL=$PWD/qemu-upstream-%version
+#export QEMU_REMOTE=$PWD/qemu-%name-%qemu_ver
+export CONFIG_QEMU=$PWD/qemu-%name-%qemu_ver
+export QEMU_UPSTREAM_URL=$PWD/qemu-upstream-%version%pre
+%if "%pre" == "%nil"
 export XEN_VENDORVERSION="-%release"
+%else
+v="%version"
+export XEN_EXTRAVERSION="${v#${v%%.*}}-%release"
+%endif
 export EXTRA_CFLAGS_XEN_TOOLS="%optflags"
 export EXTRA_CFLAGS_QEMU_TRADITIONAL="%optflags"
 export EXTRA_CFLAGS_QEMU_XEN="%optflags"
@@ -724,6 +736,9 @@ done
 
 
 %changelog
+* Sat Jun 21 2014 Led <led@altlinux.ru> 4.4.1-alt0.1
+- 4.4.1-rc1
+
 * Sun May 25 2014 Led <led@altlinux.ru> 4.4.0-alt9
 - disabled xend (obsolete xen management user interface)
 
