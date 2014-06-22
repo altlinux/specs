@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,11 @@ done)
 
 
 %changelog
+* Sun Jun 22 2014 Led <led@altlinux.ru> 3.15.1-alt6
+- updated:
+  + fix-drivers-gpu-drm--mgag200
+  + feat-fs-aufs
+
 * Sat Jun 21 2014 Led <led@altlinux.ru> 3.15.1-alt5
 - updated:
   + fix-kernel-sched
