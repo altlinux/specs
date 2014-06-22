@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt7
+Release: alt8
 %define erelease 3.10.0-123.1.2.el7
 
 %define kernel_req %nil
@@ -553,6 +553,9 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Sun Jun 22 2014 Led <led@altlinux.ru> 3.10.0-alt8
+- reiserfs: fix race in readdir
+
 * Sat Jun 14 2014 Led <led@altlinux.ru> 3.10.0-alt7
 - added scripts/depmod.sh to kernel-headers-modules-*
 
