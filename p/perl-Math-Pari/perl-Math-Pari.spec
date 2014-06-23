@@ -1,18 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Math-Pari
 Name: perl-%dist
-Version: 2.01080607
+Version: 2.010808
 Release: alt1
+Serial: 1
 
 Summary: Perl interface to PARI
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.zip
 Source1: http://pari.math.u-bordeaux.fr/pub/pari/unix/OLD/pari-2.3.5.tar.gz
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel unzip
 
 %description
 This package is a Perl interface to famous library PARI for
@@ -37,6 +39,9 @@ Math::libPARI).
 %perl_vendor_autolib/Math
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.010808-alt1
+- automated CPAN update
+
 * Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 2.01080607-alt1
 - automated CPAN update
 
