@@ -1,6 +1,6 @@
 %define dist Net-IDN-Encode
 Name: perl-%dist
-Version: 2.100
+Version: 2.200
 Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
@@ -37,6 +37,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode (Punycode, RFC 3492)
 %perl_vendor_archlib/Net
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 2.200-alt1
+- automated CPAN update
+
 * Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 2.100-alt1
 - automated CPAN update
 
