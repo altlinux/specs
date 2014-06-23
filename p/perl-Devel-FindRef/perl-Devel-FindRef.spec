@@ -10,8 +10,9 @@ BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 %define __isa_bits 32
 %endif
 Name:           perl-Devel-FindRef
-Version:        1.422
+Version:        1.44
 Release:        alt1
+Serial:		1
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.422-alt1
 - automated CPAN update
 
