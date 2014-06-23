@@ -2,7 +2,7 @@
 
 Name: SDL2_gfx
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Graphics primitives and surface functions
 License: zlib
@@ -53,7 +53,11 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 
 %build
 %autoreconf
-%configure %{subst_enable static}
+%configure %{subst_enable static} \
+%ifnarch %ix86 x86_64
+	--disable-mmx \
+%endif
+
 %make_build
 
 %install
@@ -76,6 +80,12 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %endif
 
 %changelog
+* Mon Jun 23 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt2
+- Disable MMX on non x86 and x64 arch (thanks Sergey Bolshakov)
+
+* Sat Jun 21 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt0.M70T.1
+- Build for branch t7
+
 * Sat Jun 21 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 
