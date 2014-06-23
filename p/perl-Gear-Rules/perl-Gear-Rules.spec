@@ -1,8 +1,8 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.12
-Release: alt2
+Version: 0.13
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ Requires: gear perl(Pod/Text.pm)
 %_bindir/*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- bugfix release
+
 * Tue Jun 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
 - explicit requires on perl(Pod/Text.pm)
 
