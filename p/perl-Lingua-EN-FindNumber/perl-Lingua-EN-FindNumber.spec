@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-FindNumber
-Version: 1.2
+Version: 1.30
 Release: alt1
 
 Summary: Locate (written) numbers in English text
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/CPAN/authors/id/T/TM/TMTM/Lingua-EN-FindNumber-1.2.t
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-EN-FindNumber-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Sep 26 2012
 # optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
@@ -49,6 +49,9 @@ numbers.
 %perl_vendor_privlib/Lingua/*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
 - initial build for ALT Linux Sisyphus
 
