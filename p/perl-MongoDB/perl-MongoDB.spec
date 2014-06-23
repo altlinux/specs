@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MongoDB
 Name: perl-%dist
-Version: 0.702.2
+Version: 0.704.1.0
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -8,16 +9,16 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.cpan.org
-Source: http://www.cpan.org/authors/id/F/FR/FRIEDO/MongoDB-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/M/MO/MONGODB/MongoDB-v%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011 (-bb)
-BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean
+BuildRequires: perl-Any-Moose perl-Class-Method-Modifiers perl-Data-Types perl-DateTime perl-File-Slurp perl-JSON perl-Module-Install perl-Moose perl-Package-Stash-XS perl-Readonly perl-Readonly-XS perl-Test-Exception perl-Tie-IxHash perl-boolean perl(Config/AutoConf.pm) perl(Path/Tiny.pm) perl(Throwable.pm) perl(Syntax/Keyword/Junction.pm) perl(Safe/Isa.pm)
 
 %description
 This is the Perl driver for MongoDB, a document-oriented database.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %dist-v%version
 
 # need database connection
 %def_without test
@@ -34,6 +35,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 %perl_vendor_autolib/MongoDB
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.704.1.0-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.702.2-alt1
 - 0.702.0 -> 0.702.2
 
