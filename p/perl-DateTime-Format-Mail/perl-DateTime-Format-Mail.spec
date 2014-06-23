@@ -1,14 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-Mail
 Name: perl-%dist
-Version: 0.3001
+Version: 0.401
 Release: alt1
+Serial:  1
 
 Summary: Convert between DateTime and RFC2822/822 formats
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-Mail-0.3001.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BOOK/DateTime-Format-Mail-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,10 +31,13 @@ This module parses and emits such dates.
 %perl_vendor_install
 
 %files
-%doc AUTHORS Changes CREDITS README
+%doc Changes CREDITS README
 %perl_vendor_privlib/DateTime*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.401-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.3001-alt1
 - automated CPAN update
 
