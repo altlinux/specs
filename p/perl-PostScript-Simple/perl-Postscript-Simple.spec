@@ -1,14 +1,14 @@
 %define dist PostScript-Simple
 Name: perl-%dist
-Version: 0.07
-Release: alt1.1
+Version: 0.08
+Release: alt1
 
 Summary: Produce PostScript files from Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MC/MCNEWTON/PostScript-Simple-0.07.tar.gz
+Source: http://www.cpan.org/authors/id/M/MC/MCNEWTON/PostScript-Simple-%{version}.tar.gz
 Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ PostScript fonts.
 
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
