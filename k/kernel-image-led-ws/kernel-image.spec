@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,22 @@ done)
 
 
 %changelog
+* Mon Jun 23 2014 Led <led@altlinux.ru> 3.15.1-alt7
+- updated:
+  + fix-arch-x86--apic
+  + fix-fs-ext4
+- added:
+  + fix-drivers-infiniband-hw--cxgb3
+  + fix-drivers-infiniband-hw--cxgb4
+  + fix-drivers-iommu--amd_iommu_v2
+  + fix-drivers-net-ethernet--sfc
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_core
+  + fix-drivers-rtc--rtc-efi
+  + fix-fs-xfs
+  + fix-include-linux
+  + fix-mm--memory-failure
+  + fix-net-team--team
+
 * Sun Jun 22 2014 Led <led@altlinux.ru> 3.15.1-alt6
 - updated:
   + fix-drivers-gpu-drm--mgag200
