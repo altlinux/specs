@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.0.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -53,6 +53,7 @@ export LDFLAGS=
 	--enable-scriptdir=%_datadir/zsh/scripts \
 	--enable-site-fndir=/usr/local/share/zsh \
 	--enable-site-scriptdir=/usr/local/share/zsh/scripts \
+	--enable-additional-fpath=%_datadir/zsh/site-functions \
 	--enable-function-subdirs \
 	--enable-maildir-support \
 	--with-curses-terminfo \
@@ -110,6 +111,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Mon Jun 23 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.5-alt2
+- Provide additional fpath (for 3d-party completion etc.)
+
 * Thu Jan 16 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.5-alt1
 - Autobuild version bump to 5.0.5
 - Fix merge script
