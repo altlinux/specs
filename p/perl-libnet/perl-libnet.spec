@@ -1,6 +1,6 @@
 %define dist libnet
 Name: perl-%dist
-Version: 1.23
+Version: 1.27
 Release: alt1
 Epoch: 1
 
@@ -57,6 +57,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.27-alt1
+- new version 1.27
+
 * Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.23-alt1
 - 1.22 -> 1.23
 
