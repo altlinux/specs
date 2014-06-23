@@ -10,7 +10,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		golang
-Version:	1.2
+Version:	1.3
 Release:	alt1
 Summary:	The Go Programming Language
 Group:		Development/Other
@@ -21,7 +21,7 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	golang-%version.tar
 Patch0:		golang-1.2-verbose-build.patch
-Patch1:		golang-1.1-disable-multicast_test.patch
+Patch1:		golang-1.3-disable-multicast_test.patch
 Patch2:		golang-1.2-alt-certs-path.patch
 
 ExclusiveArch:	%ix86 x86_64 %arm
@@ -103,7 +103,6 @@ export GOROOT_FINAL=%_libdir/%name
 cd src
 ./make.bash
 
-
 %check
 export GOROOT=$PWD
 export PATH="$GOROOT/bin:$PATH"
@@ -133,6 +132,10 @@ rm -rfv -- \
 
 find %buildroot/%_libdir/%name/src -maxdepth 1 -type f -print0 |
 	xargs -0 rm -fv --
+
+# remove plan9 files
+#rm -fv -- %buildroot/%_datadir/%name/include/plan9/mklibc.rc
+rm -rfv -- %buildroot/%_datadir/%name/include/plan9
 
 # remove testdata, tests, and non-go files: this is all we need for godoc
 find \
@@ -223,6 +226,9 @@ cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 
 
 %changelog
+* Mon Jun 23 2014 Alexey Gladkov <legion@altlinux.ru> 1.3-alt1
+- New version (1.3).
+
 * Tue Dec 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.2-alt1
 - New version (1.2).
 
