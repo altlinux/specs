@@ -1,64 +1,42 @@
-%add_findreq_skiplist %{perl_vendor_privlib}/Language/Expr/Compiler/*
-%add_findreq_skiplist %{perl_vendor_privlib}/Language/Expr/Interpreter/*
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(List/Util.pm) perl(Moo/Role.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Data/Clone.pm) perl(Data/Rmap.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/MoreUtils.pm) perl(List/Util.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Pod/Coverage/TrustPod.pm) perl(Regexp/Grammars.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(UUID/Tiny.pm) perl(boolean.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
-Name:           perl-Language-Expr
-Version:        0.19
-Release:        alt2_4
-Summary:        Simple mini-language for use in expression
-License:        GPL+ or Artistic
-Group:          Development/Perl
-URL:            http://search.cpan.org/dist/Language-Expr/
-Source0:        http://www.cpan.org/authors/id/S/SH/SHARYANTO/Language-Expr-%{version}.tar.gz
-BuildArch:      noarch
-BuildRequires:  perl
-BuildRequires:  perl(boolean.pm)
-BuildRequires:  perl(Regexp/Grammars.pm)
-BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Moo.pm)
-BuildRequires:  perl(UUID/Tiny.pm)
-BuildRequires:  perl(List/MoreUtils.pm)
-BuildRequires:  perl(Data/Clone.pm)
-BuildRequires:  perl(Data/Rmap.pm)
-BuildRequires:  perl(File/Which.pm)
-BuildRequires:  perl(String/ShellQuote.pm)
-BuildRequires:  perl(Test/Exception.pm)
-Requires:       perl(JSON.pm)
-Source44: import.info
+%define module_version 0.23
+%define module_name Language-Expr
+%define _unpackaged_files_terminate_build 1
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+Name: perl-%module_name
+Version: 0.23
+Release: alt1
+Summary: Simple minilanguage for use in expression
+Group: Development/Perl
+License: perl
+URL: https://metacpan.org/release/Language-Expr
+
+Source0: http://cpan.org.ua/authors/id/S/SH/SHARYANTO/%{module_name}-%{module_version}.tar.gz
+BuildArch: noarch
 
 %description
-Language::Expr defines a simple, Perl-like expression mini-language. It
-supports mathematical and string operators, arrays, hashes, variables, and
-functions. See Language::Expr::Manual::Syntax for description of the
-language syntax.
+From summary: %summary
 
 %prep
-%setup -q -n Language-Expr-%{version}
+%setup -n %{module_name}-%{module_version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-./Build
+%perl_vendor_build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} %{buildroot}/*
-
-%check
-# disabled for perl 5.18
-%if %release != alt2_4
-./Build test
-%endif
+%perl_vendor_install
 
 %files
-%doc Changes dist.ini LICENSE META.json README
-%{perl_vendor_privlib}/*
+%doc Changes README LICENSE
+%perl_vendor_privlib/L*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- regenerated from template by package builder
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2_4
 - moved to Sisyphus for Slic3r (by dd@ request)
 
