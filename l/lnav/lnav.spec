@@ -1,20 +1,21 @@
 Name: lnav
-Version: 0.4.0
+Version: 0.7.0
 Release: alt1
 
 Summary: The log file navigator
 License: BSD
 Group: File tools
 
-Url: http://tstack.github.com/lnav/
-Source: %name-%version.tar.gz
+Url: http://lnav.org
+Source0: %name-%version.tar.gz
+Source1: %name.watch
 Patch0: lnav-0.4.0-alt-fixes.patch
 Patch1: lnav-fix_32bit_use_size_t.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sun Sep 25 2011
-# optimized out: libpcre-devel libstdc++-devel libtinfo-devel
-BuildRequires: bzlib-devel gcc-c++ libncurses-devel libpcrecpp-devel libreadline-devel libsqlite3-devel libssl-devel zlib-devel
+# Automatically added by buildreq on Mon Jun 23 2014
+# optimized out: libcloog-isl4 libpcre-devel libstdc++-devel libtinfo-devel python-base
+BuildRequires: bzlib-devel gcc-c++ libncurses-devel libpcrecpp-devel libreadline-devel libsqlite3-devel sqlite3 zlib-devel
 
 %description
 The log file navigator, lnav, is an enhanced log file viewer that
@@ -28,8 +29,6 @@ the user to quickly and efficiently zero in on problems.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p0
 touch AUTHORS ChangeLog COPYING
 
 %build
@@ -42,6 +41,7 @@ touch AUTHORS ChangeLog COPYING
 
 %files
 %_bindir/*
+%_man1dir/*
 %doc LICENSE README
 
 # TODO:
@@ -50,6 +50,11 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- new version (watch file uupdate)
+- dropped patches
+- buildreq
+
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - 0.4.0
 - updated patch
