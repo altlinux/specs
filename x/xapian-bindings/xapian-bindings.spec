@@ -1,5 +1,5 @@
 Name: xapian-bindings
-Version: 1.2.17
+Version: 1.2.18
 Release: alt1
 
 Summary: Xapian search engine bindings
@@ -80,6 +80,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 # - package docs/examples properly
 
 %changelog
+* Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 1.2.18-alt1
+- new version (watch file uupdate)
+
 * Fri Mar 21 2014 Michael Shigorin <mike@altlinux.org> 1.2.17-alt1
 - new version (watch file uupdate)
 
