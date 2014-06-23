@@ -1,6 +1,6 @@
 Serial: 1
 Name: perl-ldap
-Version: 0.57
+Version: 0.64
 Release: alt1
 
 Summary: %name - A Client interface to LDAP servers
@@ -9,7 +9,7 @@ Group: Development/Perl
 Url: http://www.cpan.org/modules/by-module/Net
 
 BuildArch: noarch
-Source: %url/%name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARSCHAP/perl-ldap-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Nov 15 2010
 BuildRequires: perl-Authen-SASL perl-Convert-ASN1 perl-IO-Socket-SSL perl-Module-Install perl-XML-SAX-Writer perl-libwww
@@ -55,6 +55,9 @@ mv contrib/tklkup contrib/tklkup.pl
 %_bindir/*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.64-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.57-alt1
 - new version
 
