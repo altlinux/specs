@@ -4,8 +4,8 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.3.2
-Release: alt3
+Version: 3.4.0
+Release: alt1
 
 Summary: Spam filter for email written in perl
 License: Apache License v2.0
@@ -18,7 +18,7 @@ Source2: spamassassin_local.cf
 Source3: spamd.sysconfig
 
 # from Debian:
-Patch10: spamassassin-3.2.1-debian-change_config_paths.patch
+Patch10: spamassassin-3.4.0-debian-change_config_paths.patch
 
 %def_without test
 # normal method nukes on errors :(
@@ -177,6 +177,10 @@ install -d -m700 %buildroot%_sysconfdir/spamassassin/sa-update-keys
 
 pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 
+#warning: Installed (but unpackaged) file(s) found:
+#    /usr/lib/perl5/perllocal.pod
+rm -f %buildroot%perl_vendor_archlib/perllocal.pod
+
 %post spamd
 %post_service spamd
 
@@ -218,7 +222,7 @@ pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 %_man1dir/spamd*
 %_man1dir/sa-check_spamd*
 %attr(700,spamd,spamd) %_localstatedir/spamd/
-%attr(3770,root,spamd) /var/run/spamd/
+#attr(3770,root,spamd) /var/run/spamd/
 
 %files spamc
 %_bindir/spamc
@@ -227,7 +231,7 @@ pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 %files -n perl-%pname
 %doc sample-nonspam.txt sample-spam.txt
 %dir %_sysconfdir/spamassassin
-%dir %_sysconfdir/spamassassin/sa-update-keys
+%dir %attr(0700,root,root) %_sysconfdir/spamassassin/sa-update-keys
 %config(noreplace) %_sysconfdir/spamassassin/*.*
 %_datadir/spamassassin
 %dir %attr(0775,root,mail) /var/spool/spamassassin
@@ -236,6 +240,14 @@ pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 #%_man3dir/*
 
 %changelog
+* Thu Jun 19 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.4.0-alt1
+- NMU: 3.4.0 (ALT #30063)
+- fixed start, stop, reload and status options in init.d/spamd (ALT #28789)
+- changed permisson for sa-update-keys directory to 700
+- added lsb init header for init.d/spamd
+- removed /var/run/spamd directory (/var/run used for pid file)
+- added CHILDUSER variable and described it in the /etc/sysconfig/spamd
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt3
 - NMU: added missing Pod dependencies
 
