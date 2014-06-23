@@ -2,8 +2,8 @@
 # $Id: wmclock,v 1.3 2006/02/06 07:50:11 raorn Exp $
 
 Name: wmclock
-Version: 1.0.12.2
-Release: alt4
+Version: 1.0.14
+Release: alt1
 
 Summary: Dockable clock applet for Window Maker
 License: GPL
@@ -11,7 +11,7 @@ Group: Graphical desktop/Window Maker
 
 Url: http://www.jmknoble.net/WindowMaker/wmclock
 Source: %url/%name-%version.tar.gz
-Patch: wmclock-1.0.12.2-debian-nopolling.patch
+Source100: %name.watch
 Packager: Sir Raorn <raorn@altlinux.ru>
 
 # Automatically added by buildreq on Mon Feb 06 2006
@@ -28,14 +28,14 @@ from asclock, a similar clock for the AfterStep window manager.
 
 %prep
 %setup
-%patch -p1
 
 %build
 ./configure --lang english
 %make_build
 
 %install
-%makeinstall_std install.man install.share
+%makeinstall_std install.man
+make install.share DESTDIR=%buildroot%prefix
 
 mkdir -p %buildroot%_menudir
 cat <<__EOF >%buildroot%_menudir/%name
@@ -56,6 +56,10 @@ __EOF
 #   (should WindowMaker cope with that)
 
 %changelog
+* Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 1.0.14-alt1
+- new version (watch file uupdate)
+- dropped patch (merged upstream)
+
 * Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 1.0.12.2-alt4
 - updated BR:
 
