@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: numactl
-Version: 2.0.7
+Version: 2.0.9
 Release: alt1
 
 Summary: Simple NUMA policy support
@@ -10,6 +10,7 @@ Group: System/Libraries
 
 Url: http://oss.sgi.com/projects/libnuma/
 Source: %name-%version.tar.gz
+Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 %description
@@ -78,6 +79,9 @@ developing applications that use %name.
 # - 2.0.4 RC series are slowly rolling over here
 
 %changelog
+* Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 2.0.9-alt1
+- new version (watch file uupdate)
+
 * Fri Apr 15 2011 Alexey Shabalin <shaba@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 - build for debuginfo
