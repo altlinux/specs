@@ -17,6 +17,7 @@
 %def_enable polkit
 %def_enable efi
 %def_enable networkd
+%def_enable resolved
 %def_disable kdbus
 %def_with python
 %def_enable gtk_doc
@@ -38,8 +39,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 210
-Release: alt8
+Version: 214
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -108,10 +109,8 @@ BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
 BuildRequires: libcap-devel libcap-utils
-BuildRequires: libwrap-devel
 BuildRequires: libpam-devel
 BuildRequires: libacl-devel acl
-BuildRequires: libattr-devel
 BuildRequires: xsltproc
 BuildRequires: docbook-style-xsl docbook-dtds
 BuildRequires: libdbus-devel >= %dbus_ver
@@ -132,7 +131,7 @@ BuildRequires: libblkid-devel >= 2.20
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
 BuildRequires: libgcrypt-devel
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
-%{?_enable_microhttpd:BuildRequires: libmicrohttpd-devel}
+%{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
@@ -513,7 +512,6 @@ GObject introspection devel data for the GUdev library
 %build
 export QUOTAON="/sbin/quotaon"
 export QUOTACHECK="/sbin/quotacheck"
-export SETCAP="/sbin/setcap"
 export KILL="/bin/kill"
 export KMOD="/bin/kmod"
 export KEXEC="/sbin/kexec"
@@ -537,6 +535,8 @@ intltoolize --force --automake
 	--with-kbd-loadkeys=/bin/loadkeys \
 	--with-kbd-setfont=/bin/setfont \
 	--with-telinit=/sbin/telinit \
+	--with-system-uid-max=499 \
+	--with-system-gid-max=499 \
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
 	%{subst_enable vconsole} \
@@ -553,6 +553,7 @@ intltoolize --force --automake
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
 	%{subst_enable networkd} \
+	%{subst_enable resolved} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
@@ -562,7 +563,7 @@ intltoolize --force --automake
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--enable-introspection
 
-%make_build
+%make_build GCC_COLORS="" V=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -838,7 +839,23 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 
 %pre
-%_sbindir/groupadd -r -f systemd-journal ||:
+%_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
+    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f systemd-network >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-network -c 'systemd Network Management' \
+    -d /var/empty -s /dev/null -r -l -M systemd-network >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-resolve -c 'systemd Resolver' \
+    -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f systemd-bus-proxy >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-bus-proxy -c 'systemd Bus Proxy' \
+    -d /var/empty -s /dev/null -r -l -M systemd-bus-proxy >/dev/null 2>&1 ||:
 
 %post
 /sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
@@ -857,8 +874,8 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 [ -L %_sysconfdir/systemd/system/multi-user.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/multi-user.target.wants/network.service  >/dev/null 2>&1 || :
 
 # Make sure new journal files will be owned by the "systemd-journal" group
-chgrp systemd-journal %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
-chmod g+s %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+chgrp systemd-journal /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
+chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
 
 # Apply ACL to the journal directory
 /usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
@@ -880,13 +897,17 @@ if [ $1 -eq 1 ] ; then
                 getty@tty1.service \
                 remote-fs.target \
                 systemd-readahead-replay.service \
-                systemd-readahead-collect.service >/dev/null 2>&1 || :
+                systemd-readahead-collect.service \
+                systemd-networkd.service \
+                console-getty.service \
+                console-shell.service \
+                debug-shell.service \
+                 >/dev/null 2>&1 || :
 fi
 
 %postun
 if [ $1 -ge 1 ] ; then
 	/sbin/systemctl daemon-reload > /dev/null 2>&1 || :
-	/sbin/systemctl try-restart systemd-logind.service >/dev/null 2>&1 || :
 fi
 
 %preun
@@ -895,7 +916,12 @@ if [ $1 -eq 0 ] ; then
                 getty@.service \
                 remote-fs.target \
                 systemd-readahead-replay.service \
-                systemd-readahead-collect.service >/dev/null 2>&1 || :
+                systemd-readahead-collect.service \
+                systemd-networkd.service \
+                console-getty.service \
+                console-shell.service \
+                debug-shell.service \
+                 >/dev/null 2>&1 || :
 
         /bin/rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
@@ -920,7 +946,7 @@ update_chrooted all
 %pre journal-gateway
 %_sbindir/groupadd -r -f systemd-journal-gateway ||:
 %_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
-    -d %_localstatedir/log/journal -s /dev/null -r systemd-journal-gateway >/dev/null 2>&1 ||:
+    -d %_localstatedir/log/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
 
 %post journal-gateway
 %post_service systemd-journal-gatewayd
@@ -928,9 +954,11 @@ update_chrooted all
 %endif
 
 %pre -n udev
-%_sbindir/groupadd -r -f video ||:
-%_sbindir/groupadd -r -f dialout ||:
-%_sbindir/groupadd -r -f tape ||:
+%_sbindir/groupadd -r -f cdrom >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f tape >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f dialout >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f input >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f video >/dev/null 2>&1 ||:
 
 %post -n udev
 %post_service udevd
@@ -1115,6 +1143,7 @@ update_chrooted all
 /lib/tmpfiles.d/legacy.conf
 /lib/tmpfiles.d/x11.conf
 /lib/tmpfiles.d/tmp.conf
+/lib/tmpfiles.d/var.conf
 %_man5dir/tmpfiles.*
 %_man8dir/systemd-tmpfiles.*
 
@@ -1135,7 +1164,7 @@ update_chrooted all
 
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl
-%_sysconfdir/sysctl.d/99-sysctl.conf
+%config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
 %_unitdir/systemd-sysctl.service
 %_unitdir/sysinit.target.wants/systemd-sysctl.service
 /lib/sysctl.d/50-default.conf
@@ -1146,7 +1175,7 @@ update_chrooted all
 /lib/systemd/systemd-backlight
 %_unitdir/systemd-backlight@.service
 %_man8dir/systemd-backlight*
-%dir %_localstatedir/lib/systemd/backlight
+%ghost %dir %_localstatedir/lib/systemd/backlight
 
 %files analyze
 %_bindir/systemd-analyze
@@ -1225,7 +1254,7 @@ update_chrooted all
 %dir %_sysconfdir/udev
 %config(noreplace) %_sysconfdir/udev/*.conf
 %ghost %_sysconfdir/udev/hwdb.bin
-%config %_sysconfdir/scsi_id.config
+%config(noreplace) %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
 %_unitdir/sockets.target.wants/systemd-udevd*.socket
@@ -1291,6 +1320,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Jun 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt1
+- switch to v214-stable branch
+
 * Thu May 08 2014 Alexey Shabalin <shaba@altlinux.ru> 1:210-alt8
 - increase RestartSec to 5 sec for getty services (ALT#30061)
 
