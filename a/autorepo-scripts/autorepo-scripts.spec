@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.39
+Version: 0.40
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -78,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- new version
+
 * Wed Jun 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - added autorepo-filter-unmets-diff
 
