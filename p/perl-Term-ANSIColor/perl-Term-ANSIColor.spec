@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Term-ANSIColor
 Name: perl-Term-ANSIColor
-Version: 4.02
+Version: 4.03
 Release: alt1
 
 Summary: Color output using ANSI escape sequences
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RR/RRA/Term-ANSIColor-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Aug 06 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Module/Build.pm)
 
 %description
 Term::ANSIColor provides constants and simple functions for sending ANSI
@@ -35,10 +36,13 @@ rm t/pod*.t
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc NEWS README
 %perl_vendor_privlib/Term
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 4.03-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.02-alt1
 - automated CPAN update
 
