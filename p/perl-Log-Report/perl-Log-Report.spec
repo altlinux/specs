@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 0.998
+Version: 1.04
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -15,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm)
+BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm) perl-Log-Report-Optional perl(Mojo/Base.pm)
 
 %description
 Handling messages to users can be a hassle, certainly when the same
@@ -43,9 +42,12 @@ module to do only translations or only message dispatching.
 %files
 %doc ChangeLog README
 %perl_vendor_privlib/Log
-%_bindir/xgettext-perl
+%perl_vendor_privlib/MojoX/Log
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Wed Oct 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.998-alt1
 - automated CPAN update
 
