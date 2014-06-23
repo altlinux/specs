@@ -4,8 +4,8 @@
 #============================================================================
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.10.0
-Release: alt2
+Version: 11.10.2
+Release: alt1
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -1253,6 +1253,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Mon Jun 23 2014 Denis Smirnov <mithraen@altlinux.ru> 11.10.2-alt1
+- new version 11.10.2
+
 * Sat Jun 21 2014 Denis Smirnov <mithraen@altlinux.ru> 11.10.0-alt2
 - add watch-file to rpm
 
