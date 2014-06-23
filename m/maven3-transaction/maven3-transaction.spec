@@ -5,10 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
+Release: alt3jpp
 
 # can't afford to kill it yet
-Requires: eclipse-cdt
+Requires: jansi-native
 
 %description
 Maven3 transaction unfinished files.
@@ -24,6 +24,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3jpp
+- updated dependencies
+
 * Thu Feb 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2jpp
 - updated dependencies
 
