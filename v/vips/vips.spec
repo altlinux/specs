@@ -1,11 +1,8 @@
 %def_disable static
 
 Name: vips
-Version: 7.38.5
+Version: 7.38.6
 Release: alt1
-%define majorver %(echo %version |cut -d. -f1,2)
-
-Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: Large image processing library
 License: LGPLv2.1
@@ -14,11 +11,15 @@ Group: Graphics
 Url: http://www.vips.ecs.soton.ac.uk
 Source0: %name-%version.tar.gz
 Source100: vips.watch
+Packager: Victor Forsiuk <force@altlinux.org>
 
 BuildPreReq: libxml2-devel
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel ilmbase-devel libX11-devel libfreetype-devel libstdc++-devel libxml2-devel pkg-config python-base python-modules xorg-xproto-devel zlib-devel
 BuildRequires: gcc-c++ gtk-doc imake libICE-devel libImageMagick-devel libcfitsio-devel libexif-devel libfftw3-devel libjpeg-devel liblcms2-devel libmatio-devel liborc-devel libpango-devel libpng-devel libtiff-devel openexr-devel python-devel xorg-cf-files
+BuildRequires: libwebp-devel libopenslide-devel
+
+%define majorver %(echo %version |cut -d. -f1,2)
 
 %description
 VIPS is an image processing library. It is good for very large
@@ -112,6 +113,10 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Thu Jun 19 2014 Michael Shigorin <mike@altlinux.org> 7.38.6-alt1
+- new version (watch file uupdate)
+- built with openslide
+
 * Wed Apr 02 2014 Michael Shigorin <mike@altlinux.org> 7.38.5-alt1
 - new version (watch file uupdate)
 - build with lcms2 instead of lcms (closes: #29945)
