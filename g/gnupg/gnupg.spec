@@ -1,5 +1,5 @@
 Name: gnupg
-Version: 1.4.16
+Version: 1.4.17
 Release: alt1
 
 Summary: The GNU Privacy Guard
@@ -27,7 +27,7 @@ Conflicts: gnupg2-common < 2.0.13
 %define _libexecdir %_prefix/libexec
 %def_enable ldap
 
-BuildPreReq: bzlib-devel docbook-utils libreadline-devel zlib-devel
+BuildPreReq: bzlib-devel libreadline-devel zlib-devel
 %if_enabled ldap
 BuildPreReq: libldap-devel
 %endif #enabled ldap
@@ -59,9 +59,6 @@ install -pm644 %_sourcedir/GnuPG-FAQ.new.txt doc/FAQ
 
 iconv -f iso-8859-15 -t utf8 < THANKS > THANKS.utf8
 mv THANKS.utf8 THANKS
-iconv -f koi8r -t utf8 < doc/gpg.ru.1 > doc/gpg.ru.1.utf8
-mv doc/gpg.ru.1.utf8 doc/gpg.ru.1
-sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' doc/gpg.ru.1
 
 sed -i s/pkgdata/sysconf/ g10/Makefile.am
 install -p -m644 %_sourcedir/pgp2gnupg.html doc/
@@ -101,10 +98,6 @@ install -pm755 tools/convert-from-106 %buildroot%_bindir/gpg-convert-from-106
 install -pm644 %_sourcedir/{gpg-convert-from-106,gpgsplit,lspgpot}.1 \
 	%buildroot%_man1dir/
 
-# Move localized manpages to FHS compliant locations
-mkdir -p %buildroot%_mandir/ru/man1
-mv %buildroot%_man1dir/gpg.ru.1 %buildroot%_mandir/ru/man1/gpg.1
-
 # Remove from %_datadir/%name what we install into %_docdir/%name-%version
 rm -rv %buildroot%_datadir/%name
 
@@ -123,7 +116,6 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 %config(noreplace) %_sysconfdir/
 %_mandir/man?/*
-%lang(ru) %_mandir/ru/man?/*
 %_infodir/*.info*
 %doc AUTHORS BUGS NEWS.bz2 PROJECTS README THANKS TODO
 %doc doc/{HACKING,OpenPGP,highlights-1.4.txt,*.bz2,*.html}
@@ -136,6 +128,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Mon Jun 23 2014 Dmitry V. Levin <ldv@altlinux.org> 1.4.17-alt1
+- Updated to 1.4.17 (fixes CVE-2014-4617).
+
 * Fri Dec 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt1
 - Updated to 1.4.16 (fixes CVE-2013-4576).
 
