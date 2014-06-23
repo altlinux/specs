@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.20
+Version: 0.1.21
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Mon Jun 23 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.21-alt1
+- fix asterisk*-update with new gear-cronbuild
+
 * Tue Mar 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.20-alt1
 - fix Status and Pull utilites
 
