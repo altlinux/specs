@@ -1,6 +1,6 @@
 Name: fetchmail
-Version: 6.3.23
-Release: alt2
+Version: 6.3.26
+Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -8,13 +8,14 @@ License: GPL
 
 Url: http://www.fetchmail.info
 
-Source: http://download.berlios.de/fetchmail/%name-%version.tar.bz2
+Source0: %name-%version.tar.xz
 Source1: %name.init
 Source3: fetchmailrc.example
 Source10: fetchmailconf-large.png
 Source11: fetchmailconf-mini.png
 Source12: fetchmailconf.png
 Source13: fetchmailconf.desktop
+Source100: fetchmail.watch
 
 Patch1: %name-5.6.2-contrib.patch
 Patch2: %name-6.3.0-fetchmailconf.patch
@@ -31,7 +32,7 @@ BuildPreReq: flex libssl-devel python-dev
 %define rtdir %_runtimedir/%name
 
 %package -n %{name}conf
-Summary: A utility for graphically configuring your %name preferences.
+Summary: A utility for graphically configuring your %name preferences
 Group: System/Configuration/Networking
 BuildArch: noarch
 Requires: %name = %version-%release, tkinter
@@ -158,8 +159,7 @@ usermod -d %rtdir %name ||:
 
 %preun -n %name-daemon
 %preun_service %name
-
-%files 
+%files
 %_bindir/%name
 %_man1dir/%name.*
 %doc COPYING FAQ FEATURES NEWS NOTES README README.SSL TODO *.html *.txt
@@ -183,8 +183,11 @@ usermod -d %rtdir %name ||:
 %doc contrib/*
 
 %files -f %name.lang locales
-
 %changelog
+* Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 6.3.26-alt1
+- new version (watch file uupdate)
+- build reverted to srpm again
+
 * Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 6.3.23-alt2
 - fetchmail-daemon made noarch
 
