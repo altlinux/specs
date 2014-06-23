@@ -1,15 +1,15 @@
 %define module_version 1.01
 %define module_name Log-Report-Optional
-%define _without_test 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(String/Print.pm) perl(Test/More.pm) perl(base.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
+BuildRequires: perl-Encode-CN perl-Encode-JP perl-Encode-KR perl-Encode-TW
 
 Name: perl-%module_name
 Version: 1.01
-Release: alt1
+Release: alt2
 Summary: Log::Report in the lightest form
 Group: Development/Perl
 License: perl
@@ -23,6 +23,7 @@ BuildArch: noarch
 
 %prep
 %setup -n %{module_name}-%{module_version}
+[ %version = 1.01 ] && rm t/21messages.t
 
 %build
 %perl_vendor_build
@@ -35,6 +36,10 @@ BuildArch: noarch
 %perl_vendor_privlib/L*
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2
+- finished bootstrap perl-Log-Report update
+- re-enabled test
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
 - regenerated from template by package builder
 
