@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 1.973
+Version: 1.994
 Release: alt1
 
 Summary: SSL socket interface class
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-%{version}.tar.gz
-Patch: IO-Socket-SSL-1.953-alt-deps.patch
+Patch: IO-Socket-SSL-1.954-alt-deps.patch
 
 BuildArch: noarch
 
@@ -25,6 +25,8 @@ interface methods.
 %prep
 %setup -q -n %dist-%version
 %patch -p0
+# needs internet connection
+rm t/external/*.t
 
 %build
 %perl_vendor_build
@@ -37,6 +39,9 @@ interface methods.
 %perl_vendor_privlib/IO
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.994-alt1
+- automated CPAN update
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.973-alt1
 - automated CPAN update
 
