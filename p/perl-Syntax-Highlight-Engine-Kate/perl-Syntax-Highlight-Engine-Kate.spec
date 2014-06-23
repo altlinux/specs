@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Syntax-Highlight-Engine-Kate
 Name: perl-%dist
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Port to Perl of the syntax highlight engine of the Kate texteditor
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue Jan 19 2010
-BuildRequires: perl-Module-Install perl(Test/Differences.pm)
+BuildRequires: perl-Module-Install perl(Test/Differences.pm) perl(Test/Warn.pm)
 
 BuildRequires: perl-XML-Dumper perl-HTML-Parser perl-XML-TokeParser
 
@@ -29,7 +29,7 @@ engine of the Kate text editor.
 %prep
 %setup -n %dist-%version
 # newer kate engine; diff, not regression
-[ %version = 0.08 ] && rm t/perl_highlighting.t
+[ %version = 0.09 ] && rm t/perl_highlighting.t
 
 %build
 %perl_vendor_build
@@ -42,6 +42,9 @@ engine of the Kate text editor.
 %perl_vendor_privlib/Syntax/
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Fri Oct 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
