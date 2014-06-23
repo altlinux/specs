@@ -1,14 +1,14 @@
 %define dist XML-Grove
 Name: perl-%dist
-Version: 0.46
-Release: alt4
+Version: 0.46alpha
+Release: alt1
 
 Summary: Simple access to infoset of parsed XML, HTML, or SGML instances
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-0.46alpha.tar.gz
+Source: http://www.cpan.org/authors/id/K/KM/KMACLEOD/XML-Grove-%{version}.tar.gz
 Patch: perl-XML-Grove-test.patch
 
 BuildArch: noarch
@@ -35,6 +35,9 @@ set of parsed or stored XML, HTML, or SGML instances.
 %perl_vendor_privlib/XML
 
 %changelog
+* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.46alpha-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.46-alt4
 - rebuilt as plain src.rpm
 
