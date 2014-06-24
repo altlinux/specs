@@ -5,26 +5,27 @@
 %define sover %somver.0.0
 
 Name: adios
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.olcf.ornl.gov/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.6.0.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.6.0.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.7.0.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.7.0.pdf
 Source2: https://users.nccs.gov/~lot/skel/skel-doc-1.6.0.pdf
 Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.6.0.pdf
 Source4: https://users.nccs.gov/~pnorbert/ADIOS-VisualizationSchema-1.1.pdf
+Source5: %name.conf
 
 %add_verify_elf_skiplist %_libdir/%name/examples/C/*
-%add_python_req_skip skel_dwarf
 
 BuildPreReq: libmxml-devel %mpiimpl-devel libhdf5-mpi-devel
 BuildPreReq: libnetcdf-mpi-devel libmpe2-devel libmxml-devel
-BuildPreReq: python-modules-xml
+BuildPreReq: python-modules-xml cmake bzlib-devel zlib-devel
+BuildPreReq: libsz2-devel liblustre-devel glib2-devel libnumpy-devel
 
 Requires: python-module-%name = %version-%release
 
@@ -116,68 +117,84 @@ This package contains documentation for ADIOS.
 
 %prep
 %setup
-install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 .
+install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 .
+
+sed -i 's|@BUILDROOT@|%buildroot|' wrappers/numpy/setup*
+%ifarch x86_64
+LIBSUFF=64
+%endif
+sed -i "s|@64@|$LIBSUFF|" wrappers/numpy/setup*
 
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
+TOPDIR=$PWD
 
-%autoreconf
-%add_optflags -I%mpidir/include -I%mpidir/include/netcdf-3 %optflags_shared
-%configure \
-	--sysconfdir=%_sysconfdir \
-	--enable-shared \
-	--enable-static=no \
-	--enable-skel-timing \
-	--with-mxml=%prefix \
-	--with-mpi=%mpidir \
-	--with-phdf5=%mpidir \
-	--with-nc4par=%mpidir \
-	--with-nc4par-incdir=%mpidir/include/netcdf-3
-#	--disable-fortran \
-#make_build
-%make USE_PARALLEL_COMPILER=1
+%add_optflags -I%mpidir/include -I%mpidir/include/netcdf %optflags_shared
+%add_optflags -I$TOPDIR/src/public
+
+export CFLAGS="%optflags"
+. ./%name.conf
+
+mkdir BUILD
+pushd BUILD
+cmake \
+%if %_lib == lib64
+	-DLIB_SUFFIX=64 \
+%endif
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DCXXFLAGS:STRING="%optflags" \
+	-DFCFLAGS:STRING="%optflags" \
+	-DNC4PAR:BOOL=ON \
+	-DPHDF5:BOOL=ON \
+	-DMPIDIR:PATH=%mpidir \
+	-DMPILIBS:STRING="-L%mpidir/lib -lmpi_f90 -lmpi_f77 -lmpi_cxx -lmpi" \
+	-DCMAKE_INSTALL_RPATH:STRING=%mpidir/lib \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DSOMVER:STRING=%somver \
+	-DSOVER:STRING=%sover \
+	..
+
+%make VERBOSE=1
+popd
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
 
+pushd BUILD
 %makeinstall_std
+#cp -P src/libadios_internal_nompi.so* %buildroot%_libdir/
+popd
 
 install -d %buildroot%_datadir/%name
 mv %buildroot%_bindir/adios_config.flags %buildroot%_datadir/%name/
 
-rm -f $(find examples -name '*.o')
+pushd wrappers/numpy
+export PATH=$PATH:%buildroot%_bindir
+export CFLAGS=-I%buildroot%_includedir
+%make MPI=y python
+%python_install
+popd
+install -m644 utils/skel/lib/skel_suite.py \
+	utils/skel/lib/skel_template.py \
+	utils/skel/lib/skel_test_plan.py \
+	%buildroot%python_sitelibdir/
+
+rm -f $(find examples -name '*.o') \
+	examples/staging/stage_write/writer_adios
 
 install -d %buildroot%_libdir/%name
 cp -fR examples %buildroot%_libdir/%name/
 
 install -d %buildroot%python_sitelibdir
 mv %buildroot%_libdir/python/*.py %buildroot%python_sitelibdir/
-
-mkdir -p %buildroot%_libdir/tmp
-pushd %buildroot%_libdir
-rm -f *_nompi*.a
-LIBS="$(ls *.a)"
-pushd tmp
-for i in $LIBS; do
-	LIB=$(echo $i|sed 's|\(.*\)\.a|\1|')
-	ar x ../$i
-	mpicc -shared * -Wl,-soname,$LIB.so.%somver -o ../$LIB.so.%sover \
-		-Wl,-rpath,%mpidir/lib -lnetcdf -lhdf5 -lmxml -lpthread -lgfortran \
-		$ADDLIB
-	ln -s $LIB.so.%sover ../$LIB.so.%somver
-	ln -s $LIB.so.%somver ../$LIB.so
-	rm -f *
-done
-popd
-popd
-rmdir %buildroot%_libdir/tmp
-
-#rm -f %buildroot%_libdir/*_nompi.so*
 
 %files
 %doc AUTHORS COPYING ChangeLog KNOWN_BUGS NEWS README TODO
@@ -197,6 +214,7 @@ rmdir %buildroot%_libdir/tmp
 %_libdir/*.so
 %_includedir/*
 %_datadir/%name
+%_libdir/FindADIOS.cmake
 
 %files examples
 %_libdir/%name
@@ -205,6 +223,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Tue Jun 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1
+- Version 1.7.0
+
 * Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2
 - Fixed build
 
