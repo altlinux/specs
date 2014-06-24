@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 44101
+%define svnrev 46770
 
 %def_with pgsql
 
@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 2.2.3
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -461,6 +461,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Jun 24 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.4-alt1
+- 2.2.4
+
 * Wed May 21 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.3-alt2
 - build with --with-libxml2 (ALT#30086)
 - change Requires: php5-mysqli for zabbix-phpfrontend-php5 (ALT#30105)
