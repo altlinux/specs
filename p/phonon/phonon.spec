@@ -1,7 +1,7 @@
 %def_disable zeitgeist
 
 Name: phonon
-Version: 4.7.1
+Version: 4.7.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -11,8 +11,6 @@ License: LGPLv2+
 
 #Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/%name-%version.tar.bz2
 Source: %name-%version.tar.bz2
-# FC
-Patch2: phonon-4.6.0-phonon-allow-stop-empty-source.patch
 # ALT
 Patch100: alt-no-rpath.patch
 Patch101: alt-fix-install.patch
@@ -21,7 +19,7 @@ Patch101: alt-fix-install.patch
 #BuildRequires: libbfd-devel libxml2-devel
 BuildRequires(pre): libqt4-devel
 BuildRequires: ImageMagick-tools automoc cmake gcc-c++
-BuildRequires: libalsa-devel libpulseaudio-devel libxine-devel gst-plugins-devel
+BuildRequires: libalsa-devel libpulseaudio-devel gst-plugins-devel
 BuildRequires: kde-common-devel
 %if_enabled zeitgeist
 BuildRequires: libqzeitgeist-devel
@@ -60,8 +58,6 @@ browsing.
 
 %prep
 %setup -q
-%patch2 -p1
-#
 %patch100 -p1
 %patch101 -p1
 
@@ -70,7 +66,8 @@ browsing.
 %Kcmake \
     -DINCLUDE_INSTALL_DIR:PATH=%_K4includedir \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt4dir \
-    -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=TRUE \
+    -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=ON \
+    -DPHONON_BUILD_PHONON4QT5:BOOL=OFF \
     #
 %Kmake
 
@@ -101,6 +98,9 @@ mkdir -p %buildroot/%_qt4dir/plugins/phonon_backend
 %_K4dbus_interfaces/org.kde.Phonon.AudioOutput.xml
 
 %changelog
+* Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.2-alt1
+- new version
+
 * Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
 - new version
 
