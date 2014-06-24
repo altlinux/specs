@@ -1,5 +1,5 @@
 Name: perl-Future
-Version: 0.20
+Version: 0.28
 Release: alt1
 
 Summary: represent an operation awaiting completion
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test
 %doc Changes LICENSE README
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Sat Dec 14 2013 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt1
 - initial build for ALTLinux
 
