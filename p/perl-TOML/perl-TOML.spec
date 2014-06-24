@@ -1,5 +1,6 @@
+BuildRequires: perl(Module/Build/Tiny.pm)
 Name: perl-TOML
-Version: 0.92
+Version: 0.94
 Release: alt1
 
 Summary: Parser for Tom's Obvious, Minimal Language.
@@ -10,7 +11,7 @@ Url: %CPAN TOML
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl(Text/Balanced.pm)
+BuildRequires: perl-devel perl(Text/Balanced.pm) perl(TOML/Parser.pm)
 
 %description
 %summary
@@ -26,9 +27,12 @@ BuildRequires: perl-devel perl(Text/Balanced.pm)
 
 %files
 %perl_vendor_privlib/TOML*
-%doc Changelog README
+%doc Changes README.md
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Tue Jan 14 2014 Vladimir Lettiev <crux@altlinux.ru> 0.92-alt1
 - initial build for ALTLinux
 
