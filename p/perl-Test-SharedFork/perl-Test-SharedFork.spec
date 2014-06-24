@@ -1,5 +1,5 @@
 Name: perl-Test-SharedFork
-Version: 0.20
+Version: 0.25
 Release: alt1
 
 Summary: Test::SharedFork - fork test
@@ -28,9 +28,12 @@ This module merges test count with parent process & child process.
 
 %files
 %perl_vendor_privlib/Test/SharedFork*
-%doc Changes README 
+%doc Changes README.md
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Fri Jul 06 2012 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt1
 - New version 0.20
 - Added perl-Test-Requires test dependency
