@@ -3,8 +3,8 @@
 %endif
 
 Name: phonon-backend-gstreamer
-Version: 4.7.1
-Release: alt2
+Version: 4.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -52,6 +52,9 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.2-alt1
+- new version
+
 * Mon Feb 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt2
 - add more requires to gst-plugins
 
