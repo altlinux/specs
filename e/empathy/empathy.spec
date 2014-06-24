@@ -1,3 +1,5 @@
+%define _libexecdir %_prefix/libexec
+
 %define ver_major 3.12
 %def_disable static
 %def_enable map
@@ -12,7 +14,7 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -184,6 +186,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Fri Jun 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
+- 3.12.4
+
 * Wed Jun 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 

@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -61,6 +61,9 @@ systems.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Jun 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
