@@ -1,6 +1,6 @@
 Name: cups
-Version: 1.7.2
-Release: alt2
+Version: 1.7.3
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -67,41 +67,47 @@ Patch39: FC-lspp.patch
 Patch101: Ubuntu-manpage-hyphen-minus.patch
 Patch102: Ubuntu-rootbackends-worldreadable.patch
 Patch103: Ubuntu-fixes-for-jobs-with-multiple-files-and-multiple-formats.patch
-Patch104: Ubuntu-color-management-extension.patch
-Patch105: Ubuntu-cupsd-upstart-support.patch
-Patch106: Ubuntu-cupsd-exit-on-idle.patch
-Patch107: Ubuntu-cupsd-exit-on-idle-upstart.patch
-Patch108: Ubuntu-tests-ignore-warnings.patch
-Patch109: Ubuntu-tests-ignore-usb-crash.patch
-Patch110: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
-Patch111: Ubuntu-test-i18n-nonlinux.patch
-Patch112: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
-Patch113: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
-Patch114: Ubuntu-tests-use-cupsfilters.patch
-Patch115: Ubuntu-move-cupsd-conf-default-to-share.patch
-Patch116: Ubuntu-drop_unnecessary_dependencies.patch
-Patch117: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
-Patch118: Ubuntu-deviced-allow-device-ids-with-newline.patch
-Patch119: Ubuntu-airprint-support.patch
-Patch120: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
-Patch121: Ubuntu-no-conffile-timestamp.patch
-Patch122: Ubuntu-pidfile.patch
-Patch123: Ubuntu-ppd-poll-with-client-conf.patch
-Patch124: Ubuntu-removecvstag.patch
-Patch125: Ubuntu-revert-upstream-change-to-FINAL_CONTENT_TYPE-to-fix-printing-to-remote-CUPS-servers.patch
-Patch126: Ubuntu-do-not-broadcast-with-hostnames.patch
-Patch127: Ubuntu-reactivate_recommended_driver.patch
-Patch128: Ubuntu-add-ipp-backend-of-cups-1.4.patch
-Patch129: Ubuntu-logfiles_adm_readable.patch
-Patch130: Ubuntu-default_log_settings.patch
-Patch131: Ubuntu-confdirperms.patch
-Patch132: Ubuntu-printer-filtering.patch
-Patch133: Ubuntu-show-compile-command-lines.patch
-Patch134: Ubuntu-ppdc-dynamic-linking.patch
-Patch135: Ubuntu-log-debug-history-nearly-unlimited.patch
-Patch136: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
-Patch137: Ubuntu-man-cups-lpd-drop-dangling-references.patch
-Patch138: Ubuntu-manpage-translations.patch
+Patch104: Ubuntu-cupsd-idleexittimeout.patch
+Patch105: Ubuntu-no-gcrypt.patch
+Patch106: Ubuntu-color-management-extension.patch
+Patch107: Ubuntu-systemd-optional-socket-activation.patch
+Patch108: Ubuntu-cupsd-upstart-support.patch
+Patch109: Ubuntu-tests-ignore-warnings.patch
+Patch110: Ubuntu-tests-ignore-usb-crash.patch
+Patch111: Ubuntu-tests-ignore-kfreebsd-amd64-not-a-pdf.patch
+Patch112: Ubuntu-test-i18n-nonlinux.patch
+Patch113: Ubuntu-tests-wait-on-unfinished-jobs-everytime.patch
+Patch114: Ubuntu-tests-fix-ppdLocalize-on-unclean-env.patch
+Patch115: Ubuntu-tests-use-cupsfilters.patch
+Patch116: Ubuntu-move-cupsd-conf-default-to-share.patch
+Patch117: Ubuntu-drop_unnecessary_dependencies.patch
+Patch118: Ubuntu-read-embedded-options-from-incoming-postscript-and-add-to-ipp-attrs.patch
+Patch119: Ubuntu-deviced-allow-device-ids-with-newline.patch
+Patch120: Ubuntu-airprint-support.patch
+Patch121: Ubuntu-snmp-oids-device-id-hp-ricoh.patch
+Patch122: Ubuntu-no-conffile-timestamp.patch
+Patch123: Ubuntu-pidfile.patch
+Patch124: Ubuntu-ppd-poll-with-client-conf.patch
+Patch125: Ubuntu-removecvstag.patch
+Patch126: Ubuntu-revert-upstream-change-to-FINAL_CONTENT_TYPE-to-fix-printing-to-remote-CUPS-servers.patch
+Patch127: Ubuntu-do-not-broadcast-with-hostnames.patch
+Patch128: Ubuntu-reactivate_recommended_driver.patch
+Patch129: Ubuntu-add-ipp-backend-of-cups-1.4.patch
+Patch130: Ubuntu-logfiles_adm_readable.patch
+Patch131: Ubuntu-default_log_settings.patch
+Patch132: Ubuntu-confdirperms.patch
+Patch133: Ubuntu-printer-filtering.patch
+Patch134: Ubuntu-show-compile-command-lines.patch
+Patch135: Ubuntu-ppdc-dynamic-linking.patch
+Patch136: Ubuntu-log-debug-history-nearly-unlimited.patch
+Patch137: Ubuntu-cupsd-set-default-for-SyncOnClose-to-Yes.patch
+Patch138: Ubuntu-man-cups-lpd-drop-dangling-references.patch
+Patch139: Ubuntu-cupsd-idleexittimeout-systemd.patch
+Patch140: Ubuntu-cupsd-idleexittimeout-upstart.patch
+Patch141: Ubuntu-cupsd-write-systemd-Port.patch
+Patch142: Ubuntu-lppasswd-manpage-mention-dpkg-statoverride.patch
+Patch143: Ubuntu-debianize_cups-config.patch
+Patch144: Ubuntu-manpage-translations.patch
 
 ## ALT patches
 Patch500: ALT-1.6.1-hardening.patch
@@ -113,6 +119,7 @@ Patch505: ALT-1.4.6-config-libs.patch
 Patch506: ALT-1.6.2-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
 Patch508: ALT-644.patch
+Patch509: ALT-1.7.2-local_ipv6.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -221,11 +228,11 @@ services using the main CUPS library "libcups".
 ##patch101 -p1
 %patch102 -p1
 #patch103 -p1
-%patch104 -p1
+##patch104 -p1
 #patch105 -p1
 %patch106 -p1
 #patch107 -p1
-%patch108 -p1
+#patch108 -p1
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
@@ -233,29 +240,35 @@ services using the main CUPS library "libcups".
 %patch113 -p1
 %patch114 -p1
 %patch115 -p1
-#patch116 -p1
-%patch117 -p1
+%patch116 -p1
+#patch117 -p1
 %patch118 -p1
 %patch119 -p1
-##patch120 -p1
-%patch121 -p1
+%patch120 -p1
+##patch121 -p1
 %patch122 -p1
 %patch123 -p1
 %patch124 -p1
-#patch125 -p1
-%patch126 -p1
+%patch125 -p1
+#patch126 -p1
 %patch127 -p1
 %patch128 -p1
-#patch129 -p1
-%patch130 -p1
+%patch129 -p1
+#patch130 -p1
 %patch131 -p1
 %patch132 -p1
 %patch133 -p1
-##patch134 -p1
-%patch135 -p1
-#patch136 -p1
-##patch137 -p1
+%patch134 -p1
+##patch135 -p1
+%patch136 -p1
+#patch137 -p1
 ##patch138 -p1
+##patch139 -p1
+##patch140 -p1
+%patch141 -p1
+%patch142 -p1
+%patch143 -p1
+##patch144 -p1
 
 ## ALT apply patches
 %patch500 -p1
@@ -263,10 +276,11 @@ services using the main CUPS library "libcups".
 %patch502 -p1
 %patch503 -p1
 %patch504 -p1
-%patch505 -p1
+#patch505 -p1
 %patch506 -p1
 %patch507 -p1
 %patch508 -p1
+%patch509 -p1
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
@@ -297,6 +311,9 @@ aclocal -I config-scripts
 autoconf -I config-scripts
 
 %configure \
+   --with-icondir=%_iconsdir \
+   --with-menudir=%_desktopdir \
+   --with-xinetd=%_sysconfdir/xinetd.d \
    --enable-relro \
    --enable-dbus \
    --enable-libusb \
@@ -313,7 +330,6 @@ autoconf -I config-scripts
    --enable-debug
 
 %make_build
-# STRIPPROG=touch
 
 (
 cd locale
@@ -326,8 +342,8 @@ python ../pofix.py cups_ru.po
 %install
 make BUILDROOT=%buildroot install
 
-# install non-upstream files
-install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
+### install non-upstream files
+##install -D cups-lps.xinetd %buildroot%_sysconfdir/xinetd.d/cups-lpd
 install -Dpm 755 %SOURCE20 %buildroot%_controldir/%name
 
 alternate() { # priority files \
@@ -418,6 +434,10 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Mon Jun 16 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt1
+- Version up
+- Allow requests from IPV4-to-IPV6 mapped localhost (RH#737230)
+
 * Thu Apr 24 2014 Alexey Shabalin <shaba@altlinux.ru> 1.7.2-alt2
 - fix perm for data (444 -> 644)
 - use Makefile for install systemd units (install cups.socket too)
