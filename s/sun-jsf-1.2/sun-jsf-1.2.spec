@@ -1,5 +1,5 @@
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-1.6.0-compat
 # Copyright (c) 2000-2011, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-jsf-1.2
 Version:        1.2.04
-Release:        alt5_2jpp6
+Release:        alt6_2jpp6
 Epoch:          0
 Summary:        Java Server Pages
 License:        CDDL
@@ -240,6 +240,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt6_2jpp6
+- fixed build (java6)
+
 * Sun Sep 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt5_2jpp6
 - dropped jetty6 dependencies
 
