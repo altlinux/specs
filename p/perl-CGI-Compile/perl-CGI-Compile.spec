@@ -1,5 +1,6 @@
+BuildRequires: perl(Module/Build/Tiny.pm)
 Name: perl-CGI-Compile
-Version: 0.15
+Version: 0.17
 Release: alt1
 Summary: CGI::Compile - Compile .cgi scripts to a code reference like ModPerl::Registry
 
@@ -30,6 +31,9 @@ ready to run on a persistent environment.
 %doc Changes README 
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Fri Dec 02 2011 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
 - New version 0.15
 
