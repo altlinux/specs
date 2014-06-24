@@ -1,7 +1,7 @@
 %define dist SDL
 Name: perl-SDL25
-Version: 2.540
-Release: alt2
+Version: 2.544
+Release: alt1
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -68,6 +68,9 @@ application/game into PAR archive.
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.544-alt1
+- automated CPAN update
+
 * Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 2.540-alt2
 - built for perl 5.18
 
