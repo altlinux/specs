@@ -1,6 +1,6 @@
 %define m_distro DateTime-Format-HTTP
 Name: perl-DateTime-Format-HTTP
-Version: 0.40
+Version: 0.42
 Release: alt1
 Summary: DateTime::Format::HTTP - Date conversion routines
 
@@ -29,5 +29,8 @@ BuildRequires: perl-devel perl-HTTP-Date perl-DateTime perl-Module-Build
 %doc LICENSE Changes README 
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
+- automated CPAN update
+
 * Sat Jul 30 2011 Vladimir Lettiev <crux@altlinux.ru> 0.40-alt1
 - initial build
