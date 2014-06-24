@@ -1,6 +1,6 @@
 Name: apt-repo-tools
-Version: 0.6.0.17
-Release: alt2
+Version: 0.6.0.18
+Release: alt1
 
 Summary: Utilities to create APT repositories
 License: GPLv2+
@@ -40,6 +40,9 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Mon May 19 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.0.18-alt1
+- genpkglist: add buildtime.
+
 * Tue Mar 11 2014 Dmitry V. Levin <ldv@altlinux.org> 0.6.0.17-alt2
 - Rebuilt.
 

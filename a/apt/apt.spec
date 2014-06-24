@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt44
+Release: alt45
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -16,66 +16,10 @@ Source4: apt.ru.po
 Source5: apt.be.po
 Source6: ChangeLog-rpm.old
 
-Patch9: apt-0.5.15lorg2-alt-buildlib.patch
-Patch10: apt-0.5.15lorg2-alt-rpmSystem-DistroVer.patch
-Patch11: apt-0.5.15lorg2-alt-fixes.patch
-Patch12: apt-0.5.15cnc5-alt-libtool.patch
-Patch13: apt-0.5.15lorg2-alt-readline.patch
-Patch14: apt-0.5.15cnc5-alt-rpm-build.patch
-Patch15: apt-0.5.15cnc5-alt-distro.patch
-Patch16: apt-0.5.15cnc5-alt-debsystem.patch
-Patch17: apt-0.5.15cnc6-alt-defaults.patch
-Patch18: apt-0.5.5cnc5-alt-rsync.patch
-Patch19: apt-0.5.15cnc5-alt-getsrc.patch
-Patch20: apt-0.5.15cnc6-alt-parseargs.patch
-Patch21: apt-0.5.15cnc5-alt-execrpm-cmd.patch
-Patch22: apt-0.5.15cnc6-alt-rpm-fancypercent.patch
-Patch23: apt-0.5.15cnc5-alt-gpg-homedir.patch
-Patch24: apt-0.5.15cnc5-alt-md5hash-debug.patch
-Patch25: apt-0.5.15cnc5-alt-packagemanager-CheckRConflicts.patch
-Patch26: apt-0.5.5cnc4.1-alt-PrioComp.patch
-Patch27: apt-0.5.4cnc9-alt-pkgorderlist-score.patch
-Patch28: apt-0.5.15cnc6-alt-virtual-scores.patch
-Patch29: apt-0.5.15cnc5-alt-gettext.patch
-Patch30: apt-0.5.15lorg2-alt-lua51.patch
-Patch31: apt-0.5.15cnc6-alt-rpm-order.patch
-Patch32: apt-0.5.15cnc6-alt-pkgcachegen.patch
-Patch33: apt-0.5.15cnc6-alt-apt-shell.patch
-Patch34: apt-0.5.15cnc6-alt-umount.patch
-Patch35: apt-0.5.15cnc6-alt-apt-get-TryToInstall.patch
-Patch36: apt-0.5.15cnc6-alt-lsgroup.patch
-Patch37: apt-0.5.15cnc6-alt-apt-shell-dl.patch
-Patch38: apt-0.5.15cnc6-alt-dash-cmd.patch
-Patch39: apt-0.5.15cnc6-alt-quiet-update.patch
-Patch40: apt-0.5.15cnc6-alt-vendor.patch
-Patch41: apt-0.5.15cnc6-alt-apt-pipe.patch
-Patch42: apt-0.5.15cnc6-alt-PrintLocalFile.patch
-Patch43: apt-0.5.15cnc6-apt-utils-locale.patch
-Patch44: apt-0.5.15lorg2-alt-apt-shell-resetconfig.patch
-Patch45: apt-0.5.15lorg2-alt-pkgInitConfig-cpu.patch
-Patch46: apt-0.5.15lorg2-alt-pkgCache-PrvIterator.patch
-Patch47: apt-0.5.15lorg2-alt-realloc.patch
-Patch48: apt-0.5.15lorg2-alt-apt-get-TryToInstall-PrvPkgCandVer.patch
-Patch49: apt-0.5.15lorg2-alt-apt-get-simple-output.patch
-Patch50: apt-0.5.15lorg2-alt-versionmatch-TryToChangeVer.patch
-Patch51: apt-0.5.15lorg2-alt-exit-status.patch
-Patch52: apt-0.5.15lorg2-alt-i18n-apt-shell-typo.patch
-Patch53: apt-0.5.15lorg2-alt-src-apt-shell-wrong_message_fix.patch
-Patch54: apt-0.5.15lorg2-alt-genpkglist-reqfiles.patch
-Patch55: apt-0.5.15lorg2-alt-manifest.patch
-Patch56: apt-0.5.15lorg2-lorg-pkgcachegen-selfprov.patch
-Patch57: apt-0.5.15lorg2-alt-genpkglist-no-fileflags.patch
-Patch58: apt-0.5.15lorg2-lorg-cache-limit.patch
-Patch59: apt-0.5.15lorg2-alt-gcc4.3.patch
-Patch60: apt-0.5.15lorg2-alt-apt-shell-list_completion.patch
-Patch61: apt-0.5.15lorg2-alt-apt-shell-quit_by_eof.patch
-Patch62: apt-0.5.15lorg2-alt-rpmdbopen.patch
-Patch63: apt-0.5.15lorg2-apt-cdrom-to-media.patch
-
-Patch99: apt-%version-%release.patch
-Patch100: apt-0.5.15lorg2-alt-lfs.patch
+Patch: apt-%version-%release.patch
 
 # Normally not applied, but useful.
+# still useful?
 Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
 
 Requires: libapt = %version-%release
@@ -223,63 +167,7 @@ This package contains method 'rsync' for APT.
 
 %prep
 %setup
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p2
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
-%patch42 -p1
-%patch43 -p1
-%patch44 -p1
-%patch45 -p1
-%patch46 -p1
-%patch47 -p1
-%patch48 -p1
-%patch49 -p1
-%patch50 -p1
-%patch51 -p1
-%patch52 -p1
-%patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
-%patch58 -p1
-%patch59 -p1
-%patch60 -p1
-%patch61 -p1
-%patch62 -p1
-%patch63 -p2
-%patch99 -p1
-%patch100 -p1
+%patch -p1
 
 find -type f -name \*.orig -delete
 
@@ -287,7 +175,7 @@ find -type f -name \*.orig -delete
 rm -rf lua
 
 # Turn it on only if you want to see the debugging messages:
-#%patch101 -p1 -b .getsrc-debug
+#%%patch101 -p1 -b .getsrc-debug
 
 install -pm644 %SOURCE3 %SOURCE6 .
 install -pm644 %SOURCE4 po/ru.po
@@ -315,7 +203,7 @@ find -type f -print0 |
 %make_build
 
 %install
-mkdir -p %buildroot%_sysconfdir/%name/{%name.conf,sources.list,vendors.list}.d
+mkdir -p %buildroot%_sysconfdir/%name/{%name.conf,sources.list,vendors.list,preferences}.d
 mkdir -p %buildroot%_libdir/%name/scripts
 mkdir -p %buildroot%_localstatedir/%name/{lists/partial,prefetch}
 mkdir -p %buildroot%_cachedir/%name/{archives/partial,gen{pkg,src}list}
@@ -386,6 +274,13 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Tue Jun 24 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt45
+- Honor buildtime.
+- Added support of preferences.d dir.
+- apt-pkg/algorithms.cc: mark all installed packages first without auto
+  installation in a dist-upgrade (probably fixes
+  http://lists.altlinux.org/pipermail/devel/2009-May/171113.html ).
+
 * Tue Mar 11 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt44
 - libapt: enlarged integer types in pkgCache::Version (closes: #29514).
 
