@@ -30,7 +30,7 @@
 %def_enable avahi
 
 Name: samba
-Version: 4.1.8
+Version: 4.1.9
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1082,6 +1082,11 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Tue Jun 24 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.9-alt1
+- 4.1.9
+- fixed nmbd denial of service(CVE-2014-0244)
+- fixed Segmentation fault in smbd_marshall_dir_entry(CVE-2014-3493)
+
 * Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.8-alt1
 - 4.1.8
 - fixed CVE-2014-0239, CVE-2014-0178
