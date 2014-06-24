@@ -1,5 +1,5 @@
 Name: perl-Class-Load-XS
-Version: 0.06
+Version: 0.08
 Release: alt1
 
 Summary: XS implementation of parts of Class::Load
@@ -29,6 +29,9 @@ BuildRequires: perl(Test/Requires.pm) perl(Class/Load.pm) perl(Test/Fatal.pm) pe
 %doc Changes LICENSE README
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt1
 - initial build for ALTLinux
 
