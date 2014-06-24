@@ -1,5 +1,5 @@
 Name: openttd
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -9,15 +9,14 @@ URL: http://www.openttd.com/
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
 Requires: %name-data = %version-%release
-Requires: openttd-3rd-party
-Packager: Anton Farygin <rider@altlinux.com>
+Requires: openttd-3rd-party >= 0.5.1
 
 Source: %name-%version-%release.tar
+Source1: %name.watch
 
 Patch0: %name-%version-%release.patch
 
 BuildRequires: libSDL-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel liblzma-devel
-
 
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -37,7 +36,7 @@ Data files for %name
 %patch0 -p1
 
 %build
-echo "1.4.0	26440	0	1.4.0" >.ottdrev
+echo "1.4.1	26627	0	1.4.1" >.ottdrev
 
 ./configure \
     --prefix-dir=%_prefix \
@@ -89,6 +88,9 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
+* Tue Jun 24 2014 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
+- new version
+
 * Thu Apr 10 2014 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - new version
 
