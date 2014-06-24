@@ -4,7 +4,7 @@
 %define rname plasma-mediacenter
 Name: kde4-plasma-mediacenter
 Version: 1.3.0
-Release: alt0.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Plasma Media Center
@@ -72,6 +72,9 @@ Devel stuff for %name
 %_K4link/lib*.so
 
 %changelog
+* Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
+- new version
+
 * Thu Jun 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt0.1
 - 1.3.0 beta1
 
