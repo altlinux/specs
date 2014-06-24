@@ -1,6 +1,6 @@
 %define dist bignum
 Name: perl-%dist
-Version: 0.30
+Version: 0.37
 Release: alt1
 
 Summary: Transparent BigNumber support for Perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/bignum-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ bigrat - Transparent BigNumber/BigRational support
 %perl_vendor_privlib/big*
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.30-alt1
 - 0.29 -> 0.30
 
