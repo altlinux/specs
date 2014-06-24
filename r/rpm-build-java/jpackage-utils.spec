@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define javapackagestoolsver 0.12.6
+%define javapackagestoolsver 0.14.1
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt30
+Release:        alt31
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -155,6 +155,7 @@ Requires:       xmvn
 # POM files needed by maven itself
 Requires:       apache-commons-parent
 Requires:       apache-parent
+Requires:       geronimo-parent-poms
 Requires:       httpcomponents-project
 Requires:       jboss-parent
 Requires:       maven-parent
@@ -164,17 +165,22 @@ Requires:       plexus-components-pom
 Requires:       plexus-pom
 Requires:       plexus-tools-pom
 Requires:       sonatype-oss-parent
+Requires:       weld-parent
 # added by viy@ for initial bootstrapping transaction
 Requires:       sonatype-forge-parent
 # Common Maven plugins required by almost every build. It wouldn't make
 # sense to explicitly require them in every package built with Maven.
+Requires:       maven-assembly-plugin
 Requires:       maven-compiler-plugin
+Requires:       maven-enforcer-plugin
 Requires:       maven-jar-plugin
 Requires:       maven-javadoc-plugin
 Requires:       maven-surefire-plugin
 # Tests based on JUnit are very common and JUnit itself is small.
 # Include JUnit provider for Surefire just for convenience.
 Requires:       maven-surefire-provider-junit
+# testng is quite common as well
+Requires:       maven-surefire-provider-testng
 
 %description -n rpm-build-maven-local
 This package provides macros and scripts to support packaging Maven artifacts.
@@ -430,16 +436,22 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 ##endif
 
 pushd javapackages
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven-effective-poms
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/xmvn
 install -pm 644 macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-fjava
 install -pm 644 macros.xmvn ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-xmvn
 install -p -m 644 metadata/*.xml $RPM_BUILD_ROOT%{_sysconfdir}/maven
+install -p -m 644 scripts/xmvn_config_editor.sh $RPM_BUILD_ROOT${_javadir}-utils
 install -p -m 755 scripts/mvn-* $RPM_BUILD_ROOT%{_bindir}
+
+install -p -m 644 configs/configuration*.xml $RPM_BUILD_ROOT%{_datadir}/xmvn
+ln -sf %{_datadir}/xmvn/configuration-19.xml $RPM_BUILD_ROOT%{_datadir}/xmvn/configuration.xml
 popd
 
 %define fedora 18
 # On Fedora 18 we don't want to install mvn-local and mvn-rpmbuild
 # scripts as they are already provided by maven package.
-%if 0%{fedora} == 18
+%if 0%{?fedora} == 18
 rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %endif
 
@@ -479,14 +491,21 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 /usr/lib/rpm/osgi.*
 
 %files -n rpm-build-maven-local
-%config(noreplace) %{_sysconfdir}/maven/metadata-*.xml
+%{_sysconfdir}/maven/metadata-*.xml
 #%{_bindir}/mvn-*
 %_bindir/mvn-alias
 %_bindir/mvn-build
+%_bindir/mvn-config
 %_bindir/mvn-file
 %_bindir/mvn-package
+%dir %{_datadir}/maven-effective-poms
+%{_datadir}/java-utils/xmvn_config_editor.sh
+%{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt31
+- sync with javapackages-tools = 0.14.1
+
 * Tue Apr 23 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt30
 - proper man page locations (closes: 28885)
 
