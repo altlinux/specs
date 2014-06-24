@@ -1,7 +1,7 @@
-Name: libss7
+Name: libss7-2
 Summary: SS7 library for Asterisk
-Version: 1.0.2
-Release: alt7
+Version: 2.0.0
+Release: alt1
 License: GPL
 Group: System/Libraries
 
@@ -16,6 +16,14 @@ BuildRequires: dahdi-linux-headers
 
 %description
 SS7 library
+
+%package -n libss7-devel
+Summary: development files for libss6
+License: GPL
+Group: Development/C
+
+%description -n libss7-devel
+Headers for SS7 library
 
 %prep
 %setup
@@ -33,17 +41,19 @@ find -type f -name '.depend' -print0 \
 	INSTALL_PREFIX=%buildroot \
 	libdir=%_libdir \
 	install
+ln -s libss7.so.2.0 %buildroot%_libdir/libss7.so.2
 
+%files -n libss7-devel
+%_includedir/libss7.h
+%_libdir/libss7.so
 %files
-%_libdir/libss7.so.1.0
-%_libdir/libss7.so.1
+%_libdir/libss7.so.2.0
+%_libdir/libss7.so.2
 %exclude %_libdir/libss7.a
-%exclude %_includedir/libss7.h
-%exclude %_libdir/libss7.so
 
 %changelog
-* Mon Jun 23 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt7
-- remove libss7-devel subpackage
+* Mon Jun 23 2014 Denis Smirnov <mithraen@altlinux.ru> 2.0.0-alt1
+- 2.0.0
 
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt6
 - fix libss7-devel: non-strict dependency on libss7
