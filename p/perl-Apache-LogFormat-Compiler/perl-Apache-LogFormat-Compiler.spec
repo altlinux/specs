@@ -1,5 +1,5 @@
 Name: perl-Apache-LogFormat-Compiler
-Version: 0.13
+Version: 0.32
 Release: alt1
 
 Summary: Compile a log format string to perl-code 
@@ -10,7 +10,7 @@ Url: %CPAN Apache-LogFormat-Compiler
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(URI/Escape.pm) perl(HTTP/Request/Common.pm) perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm) perl(CPAN/Meta/Prereqs.pm)
+BuildRequires: perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(URI/Escape.pm) perl(HTTP/Request/Common.pm) perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm) perl(CPAN/Meta/Prereqs.pm) perl(Test/MockTime.pm) perl(POSIX/strftime/Compiler.pm)
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(URI/Escape.pm) perl
 %doc Changes LICENSE README.md
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt1
 - initial build for ALTLinux
 
