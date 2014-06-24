@@ -1,6 +1,6 @@
 Name:         rekonq
 Version:      2.4.2
-Release:      alt1
+Release:      alt2
 
 Group:        Networking/WWW
 Summary:      Web browser easy for use
@@ -19,7 +19,7 @@ BuildRequires: libalternatives-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel desktop-file-utils
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel
+BuildRequires: kde4-kactivities-devel
 
 %description
 Web browser easy for use.
@@ -61,6 +61,12 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt2
+- built with Activities support
+
+* Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt0.M70P.1
+- built for M70P
+
 * Mon Jan 13 2014 Sergey V Turchin <zerg@altlinux.org> 2.4.2-alt1
 - new version
 
