@@ -1,5 +1,5 @@
-%define nm_version 0.9.8
-%define nm_applet_version 0.9.8
+%define nm_version 0.9.9.98
+%define nm_applet_version 0.9.9.98
 %define nm_applet_name NetworkManager-applet-gtk
 #define git_date .git20120624
 %define git_date %nil
@@ -7,15 +7,15 @@
 
 Name: NetworkManager-l2tp
 Version: 0.9.8.6
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
 Url: http://www.gnome.org/projects/NetworkManager/
 # git://github.com/seriyps/NetworkManager-l2tp.git
 Source: %name-%version.tar
-#Patch0: %name-%version-%release.patch
-Requires: NetworkManager   >= %nm_version
+Patch: %name-%version-%release.patch
+Requires: NetworkManager-daemon   >= %nm_version
 Requires: xl2tpd
 Requires: ppp = %ppp_version
 Requires: strongswan
@@ -55,7 +55,7 @@ NetworkManager panel applet.
 
 %prep
 %setup -q
-#patch0 -p1
+%patch -p1
 sed -i '/m4/ d' Makefile.am
 
 %build
@@ -88,6 +88,10 @@ sed -i '/m4/ d' Makefile.am
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt2
+- Update requires: NetworkManager -> NetworkManager-daemon.
+- Update translations from upstream git.
+
 * Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt1
 - Temporary don't treat warrnings as errors.
 - Add strongswan to requires.

@@ -1,5 +1,5 @@
-%define nm_version 0.9.8.2
-%define nm_applet_version 0.9.8.2
+%define nm_version 0.9.9.98
+%define nm_applet_version 0.9.9.98
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
@@ -7,7 +7,7 @@
 
 Name: NetworkManager-vpnc
 Version: 0.9.8.6
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -20,13 +20,13 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgnome-keyring-devel perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: NetworkManager-glib-devel >= %nm_version
+BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libgtk+%gtkver-devel
 BuildRequires: libdbus-devel             >= 1.1
 BuildRequires: libpng-devel
 BuildRequires: intltool gettext
 
-Requires: NetworkManager   >= %nm_version
+Requires: NetworkManager-daemon   >= %nm_version
 Requires: vpnc             >= 0.4
 
 %description
@@ -90,6 +90,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt3
+- Update requires: NetworkManager -> NetworkManager-daemon.
+- Update BR: Use libnm-glib-vpn-devel.
+
 * Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt2
 - Temporary don't treat warrnings as errors.
 - Rebuild with NetworkManager-applet-gtk-0.9.9.

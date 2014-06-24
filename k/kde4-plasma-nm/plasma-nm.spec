@@ -2,14 +2,14 @@
 
 Name: kde4-plasma-nm
 Version: 0.9.3.3
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: Plasma applet written in QML for managing network connections
 Url: https://projects.kde.org/projects/playground/network/plasma-nm
 License: LGPLv2+ and GPLv2+
 
-Requires: NetworkManager >= 0.9.8
+Requires: NetworkManager-daemon >= 0.9.8
 
 Source: plasma-nm-%version.tar
 Source10: 01-plasma-nm.js
@@ -30,6 +30,7 @@ the default NetworkManager service.
 Group: Graphical desktop/KDE
 Summary: Mobile support for %name
 BuildArch: noarch
+Provides: plasma-applet-networkmanager
 Obsoletes: plasma-applet-networkmanager
 Requires: %name-connect-mobile
 Requires: %name-connect-openvpn
@@ -197,6 +198,9 @@ install -m644 -p -D %SOURCE10 %buildroot/%_K4apps/plasma-desktop/updates/01-plas
 %_K4srv/plasmanetworkmanagement_pptpui.desktop
 
 %changelog
+* Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt6
+- rebuild with new NM
+
 * Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.3.3-alt5
 - rebuild with new libnm-qt
 
