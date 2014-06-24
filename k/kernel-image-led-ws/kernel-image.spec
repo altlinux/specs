@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,15 @@ done)
 
 
 %changelog
+* Tue Jun 24 2014 Led <led@altlinux.ru> 3.15.1-alt8
+- updated:
+  + fix-drivers-gpu-drm--ast
+  + fix-drivers-net-ethernet-broadcom--bnx2x
+  + fix-mm (CVE-2014-4171)
+- added:
+  + fix-drivers-platform--asus-nb-wmi
+  + fix-fs-dlm
+
 * Mon Jun 23 2014 Led <led@altlinux.ru> 3.15.1-alt7
 - updated:
   + fix-arch-x86--apic
