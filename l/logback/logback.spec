@@ -3,11 +3,11 @@ Epoch: 0
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-1.6.0-compat
 %global with_maven 0
 Name:           logback
 Version:        1.0.9
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        A Java logging library
 
 Group:          Development/Java
@@ -231,6 +231,9 @@ cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{na
 %{_mavenpomdir}/JPP.%{name}-%{name}-examples.pom
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.9-alt2_2jpp7
+- fixed build (use java6 due to reflection API change)
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.9-alt1_2jpp7
 - fc update
 
