@@ -1,5 +1,5 @@
 Name: libmicrohttpd
-Version: 0.9.13
+Version: 0.9.36
 Release: alt1
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
@@ -9,7 +9,7 @@ Url: http://www.gnu.org/software/libmicrohttpd/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: libgcrypt-devel libgnutls-devel
+BuildRequires: libcurl-devel libgcrypt-devel libgnutls-devel libssl-devel zlib-devel
 
 %description
 Library providing compact API and implementation of an HTTP/1.1 webserver
@@ -45,6 +45,9 @@ This package contains the headers and libraries for libmicrohttpd development.
 %_man3dir/*
 
 %changelog
+* Tue Jun 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.36-alt1
+- 0.9.36
+
 * Fri Aug 19 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.13-alt1
 - 0.9.13 released
 
@@ -56,5 +59,3 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 * Mon Jul 26 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9-alt1
 - initial build for ALT Linux
-
-
