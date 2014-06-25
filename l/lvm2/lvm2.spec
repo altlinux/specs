@@ -1,5 +1,5 @@
-%define lvm2version 2.02.106
-%define dmversion 1.02.85
+%define lvm2version 2.02.107
+%define dmversion 1.02.86
 
 %def_disable cluster
 %def_enable selinux
@@ -33,9 +33,10 @@ Requires: liblvm2  = %{lvm2version}-%{release}
 %def_enable static
 
 BuildRequires: libreadline-devel, libtinfo-devel libudev-devel CUnit-devel
+BuildRequires: systemd-devel
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
-%{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
 
 %description
@@ -401,6 +402,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Wed Jun 25 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.107-alt1
+- 2.02.107
+
 * Wed Apr 23 2014 Alexey Shabalin <shaba@altlinux.ru> 2.02.106-alt1
 - 2.02.106
 
