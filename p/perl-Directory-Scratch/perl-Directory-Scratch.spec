@@ -1,6 +1,6 @@
 %define m_distro Directory-Scratch
 Name: perl-Directory-Scratch
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Easy-to-use self-cleaning scratch space
 
@@ -22,6 +22,7 @@ but may be useful elsewhere.
 %prep
 %setup -q -n %m_distro-%version
 rm -rf t/os
+sed -i -e /authority/d Makefile.PL
 
 %build
 %perl_vendor_build
@@ -34,5 +35,8 @@ rm -rf t/os
 %doc Changes README 
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Tue Aug 24 2010 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - initial build
