@@ -1,6 +1,6 @@
 Name:           armadillo
-Version:        4.300.6
-Release:        alt1.svn20140523
+Version:        4.349.0
+Release:        alt1.svn20140624
 Summary:        Fast C++ matrix library with interfaces to LAPACK and ATLAS
 Group:          Sciences/Mathematics
 License:        LGPLv3+
@@ -16,8 +16,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: lib%name = %version-%release
 
-BuildRequires:  cmake gcc-c++ liblapack-devel
-BuildRequires:  boost-devel
+BuildRequires:  cmake gcc-c++ liblapack-devel libhdf5-devel
+BuildRequires:  boost-devel libarpack-devel libclapack-devel
+BuildPreReq: hdf5-8-tools
 
 %description
 Armadillo is a C++ linear algebra library (matrix maths)
@@ -123,7 +124,19 @@ INCS="-include boost/math/complex/acos.hpp"
 INCS="$INCS -include boost/math/complex/asin.hpp"
 INCS="$INCS -include boost/math/complex/atan.hpp"
 %add_optflags -std=c++0x $INCS
-%configure
+export PATH=$PATH:%_libdir/hdf5-seq/bin
+
+cmake \
+%if %_lib == lib64
+	-DLIB_SUFFIX=64 \
+%endif
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	.
+
 %make_build VERBOSE=1
 
 #pushd examples
@@ -158,6 +171,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc examples *.pdf *.html *.png
 
 %changelog
+* Wed Jun 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.349.0-alt1.svn20140624
+- Version 4.349.0
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.300.6-alt1.svn20140523
 - Version 4.300.6
 
