@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.0
-Release: alt8
-%define erelease 3.10.0-123.1.2.el7
+Release: alt9
+%define erelease 3.10.0-123.4.2.el7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -553,6 +553,17 @@ hardlink -c %buildroot%firmware_dir
 
 
 %changelog
+* Wed Jun 25 2014 Led <led@altlinux.ru> 3.10.0-alt9
+- 3.10.0-123.4.2.el7:
+  + CVE-2014-0206
+  + CVE-2014-1737
+  + CVE-2014-1738
+  + CVE-2014-2568
+  + CVE-2014-2851
+  + CVE-2014-3144
+  + CVE-2014-3145
+  + CVE-2014-3153
+
 * Sun Jun 22 2014 Led <led@altlinux.ru> 3.10.0-alt8
 - reiserfs: fix race in readdir
 
