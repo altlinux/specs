@@ -1,14 +1,14 @@
 
 Name: libnm-qt
 Version: 0.9.9.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt-only wrapper for NetworkManager DBus API
 Url: https://projects.kde.org/projects/extragear/libs/libnm-qt
 License: LGPLv2+
 
-Requires: NetworkManager >= 0.9.8
+Requires: NetworkManager-daemon
 
 Source: %name-%version.tar
 
@@ -45,6 +45,9 @@ that use NetworkManager
 %_includedir/NetworkManagerQt/
 
 %changelog
+* Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.1-alt2
+- rebuild with new NM
+
 * Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.9.1-alt1
 - new version
 

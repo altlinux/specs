@@ -1,6 +1,6 @@
-%define nm_version 0.9.9.0
-%define git_date .git20140422
-#define git_date %nil
+%define nm_version 0.9.9.98
+#define git_date .git20140422
+%define git_date %nil
 
 # Always must be '3' now
 %define gtkver 3
@@ -8,8 +8,8 @@
 %def_without bluetooth
 
 Name: NetworkManager-applet-gtk
-Version: 0.9.9.0
-Release: alt2%git_date
+Version: 0.9.9.98
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -41,7 +41,7 @@ BuildRequires: libgnome-keyring-devel
 # For migration connections from gconf
 BuildRequires: libGConf-devel
 
-Requires: NetworkManager >= %nm_version
+Requires: NetworkManager-daemon >= %nm_version
 Requires: libnm-gtk = %version-%release
 Requires: gnome-keyring gcr
 Requires: dbus-tools-gui
@@ -159,6 +159,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Jun 23 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.98-alt1
+- Updated to 0.9.9.98 (0.9.10-rc1).
+
 * Tue Apr 22 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.0-alt2.git20140422
 - Upstream git snapshot (master branch).
 

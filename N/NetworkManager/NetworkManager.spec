@@ -1,5 +1,5 @@
-%define git_date .git20140422
-#define git_date %nil
+#define git_date .git20140422
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -22,12 +22,14 @@
 %def_disable teamdctl
 %def_enable nmtui
 
+%define _name %name-daemon
+
 Name: NetworkManager
-Version: 0.9.9.1
+Version: 0.9.9.98
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
-Summary: Network Link Manager and User Applications
+Summary: Install NetworkManager daemon and plugins
 Url: http://www.gnome.org/projects/NetworkManager/
 # git://git.freedesktop.org/git/NetworkManager/NetworkManager.git
 Source: %name-%version.tar
@@ -56,23 +58,42 @@ BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables libsoup-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
+BuildRequires: libreadline-devel
 %{?_enable_teamdctl:BuildRequires: libteam-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 
+
+Requires: %name-adsl = %version-%release
+Requires: %name-bluetooth = %version-%release
+Requires: %name-wifi = %version-%release
+Requires: %name-wwan = %version-%release
+%{?_enable_wimax:Requires: %name-wimax = %version-%release}
+
+%description
+NetworkManager is a system service that manages network interfaces and
+connections based on user or automatic configuration. It supports
+Ethernet, Bridge, Bond, VLAN, Team, InfiniBand, Wi-Fi, mobile broadband
+(WWAN), PPPoE and other devices, and supports a variety of different VPN
+services.
+
+This is virtual package for install NetworkManager daemon
+and all its plugins (excluding VPN plugins).
+
+%package daemon
+License: %gpl2plus
+Group: System/Configuration/Networking
+Summary: Network Link Manager and User Applications
 Requires: dbus >= %dbus_version
-Requires: wpa_supplicant >= %wpa_supplicant_version
 Requires: iproute2 openssl
 Requires: ppp = %ppp_version
 Requires: nss >= 3.11.7
-Requires: ppp-pppoe
 Requires: dnsmasq
 Requires: openresolv >= %openresolv_version
 Requires: openresolv-dnsmasq >= %openresolv_version
 Requires: libshell
-Requires: ModemManager >= 0.7
 Requires: nm-dhcp-client
 
 Conflicts: NetworkManager-vpnc < 0.9.2
@@ -84,20 +105,68 @@ Conflicts: dhcpcd < %dhcpcd_version
 
 Obsoletes: nmcli
 
-%description
-NetworkManager attempts to keep an active network connection available
-at all times.  The point of NetworkManager is to make networking
-configuration and setup as painless and automatic as possible. If
-using DHCP, NetworkManager is intended to replace default routes,
-obtain IP addresses from a DHCP server, and change name servers
-whenever it sees fit.
+%description daemon
+NetworkManager is a system service that manages network interfaces and
+connections based on user or automatic configuration. It supports
+Ethernet, Bridge, Bond, VLAN, Team, InfiniBand, Wi-Fi, mobile broadband
+(WWAN), PPPoE and other devices, and supports a variety of different VPN
+services.
 
+This package contents NetworkManager daemon itself and other
+utilities.
+
+%package adsl
+Summary: ADSL device plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: ppp-pppoe
+Requires: %_name = %version-%release
+
+%description adsl
+This package contains NetworkManager support for ADSL devices.
+
+%package bluetooth
+Summary: Bluetooth device plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+Requires: %name-wwan = %version-%release
+
+%description bluetooth
+This package contains NetworkManager support for Bluetooth devices.
+
+%package wifi
+Summary: Wifi plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: wpa_supplicant >= %wpa_supplicant_version
+Requires: %_name = %version-%release
+
+%description wifi
+This package contains NetworkManager support for Wifi and OLPC devices.
+
+%package wwan
+Summary: Mobile broadband device plugin for NetworkManager
+Group: System/Configuration/Networking
+Requires: ModemManager >= 0.7
+Requires: %_name = %version-%release
+
+%description wwan
+This package contains NetworkManager support for mobile broadband (WWAN) devices.
+
+%if_enabled wimax
+%package wimax
+Summary: Intel WiMAX device support for NetworkManager
+Group: System/Configuration/Networking
+Requires: %_name = %version-%release
+
+%description wimax
+This package contains NetworkManager support for Intel WiMAX mobile
+broadband devices.
+%endif
 
 %package tui
 License: %gpl2plus
 Summary: Curses-based Text User Interface for NetworkManager
 Group: System/Configuration/Networking
-Requires: %name = %version-%release
+Requires: %_name = %version-%release
 
 %description tui
 %summary
@@ -313,18 +382,18 @@ install -Dm0755 %SOURCE9 %buildroot%_sbindir/NetworkManager-prestart
 %check
 make check
 
-%pre
+%pre daemon
 # Workaround for upgrade
 [ -d %_var/lib/NetworkManager/timestamps ] &&
 rm -rf %_var/lib/NetworkManager/timestamps/ ||:
 
-%post
+%post daemon
 #post_service %name
 SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 	"$SYSTEMCTL" daemon-reload ||:
 	if [ "$1" -eq 1 ]; then
-		"$SYSTEMCTL" -q preset NetworkManager.service ||:
+		"$SYSTEMCTL" -q preset %name.service %name-wait-online.service %name-dispatcher.service ||:
 	fi
 else
 	if [ "$1" -eq 1 ]; then
@@ -334,19 +403,28 @@ else
 	fi
 fi
 
-%preun
-%preun_service %name
-if [ $1 -eq 0 ]; then
+%preun daemon
+#preun_service %name
+if [ "$1" -eq 0 ]; then
+	SYSTEMCTL=systemctl
+	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+		"$SYSTEMCTL" --no-reload -q disable %name.service %name-wait-online.service %name-dispatcher.service ||:
+	else
+		chkconfig --del NetworkManager ||:
+	fi
+
     killall -TERM nm-system-settings >/dev/null 2>&1 ||:
 fi
 
-%triggerpostun -- %name <= 0.9.8.2-alt3
+%triggerpostun daemon -- %name <= 0.9.8.2-alt3
 SYSTEMCTL=systemctl
 if sd_booted && "$SYSTEMCTL" -q is-enabled %name.service; then
 	"$SYSTEMCTL" enable -q %name-dispatcher.service
 fi
 
-%files -f %name.lang
+%files
+
+%files -f %name.lang daemon
 %doc COPYING NEWS AUTHORS README CONTRIBUTING TODO
 %_bindir/nm-online
 %_bindir/nmcli
@@ -355,6 +433,7 @@ fi
 %doc %_man1dir/*.*
 %doc %_man5dir/*.*
 %doc %_man8dir/*.*
+%_defaultdocdir/%name-%version/examples/
 %dir %_libexecdir/NetworkManager/
 %dir %_libdir/NetworkManager/
 %_libdir/NetworkManager/libnm-*.so
@@ -379,6 +458,28 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
+%{?_enable_systemd:/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service}
+
+%exclude %_libdir/%name/libnm-device-plugin-*.so
+%exclude %_libdir/%name/libnm-wwan.so
+
+%files adsl
+%_libdir/%name/libnm-device-plugin-adsl.so
+
+%files bluetooth
+%_libdir/%name/libnm-device-plugin-bluetooth.so
+
+%files wifi
+%_libdir/%name/libnm-device-plugin-wifi.so
+
+%files wwan
+%_libdir/%name/libnm-device-plugin-wwan.so
+%_libdir/%name/libnm-wwan.so
+
+%if_enabled wimax
+%files wimax
+%_libdir/%name/libnm-device-plugin-wimax.so
+%endif
 
 %if_enabled nmtui
 %files tui
@@ -443,6 +544,18 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.98-alt1
+- Add libreadline-devel to BR.
+- preun: Don't use preun_service.
+- post: Handle all *.service in case of systemd.
+- init script: Use --wait-for-startup option for nm-online.
+- init script: Add comment about nm-dispatcher.action kill.
+- Package examples/server.conf.
+- Package plugins as separate packages.
+- etcnet-alt: Updated for current NM.
+- nm-dispatcher: Drop --persist option.
+- Updated to 0.9.9.98 (0.9.10-rc1).
+
 * Tue Apr 22 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.1-alt1.git20140422
 - etcnet-alt: Use nm-platform.h instead of wifi-utils.h.
 - etcnet-alt: Ignore more suffixes in the config files names.

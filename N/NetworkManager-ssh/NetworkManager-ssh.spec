@@ -1,13 +1,13 @@
-%define nm_version 0.9.8.0
-%define nm_applet_version 0.9.8.0
+%define nm_version 0.9.9.98
+%define nm_applet_version 0.9.9.98
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20130405
 %define gtkver 3
 
 Name: NetworkManager-ssh
-Version: 0.9.1
-Release: alt4%git_date
+Version: 0.9.3
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -21,10 +21,10 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libgnome-keyring-devel perl-XML-Parser
 BuildRequires: intltool
 BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: NetworkManager-glib-devel >= %nm_version
+BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libgtk+%gtkver-devel
 
-Requires: NetworkManager   >= %nm_version
+Requires: NetworkManager-daemon   >= %nm_version
 Requires: openssh
 
 %description
@@ -83,6 +83,11 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
+- Update requires: NetworkManager -> NetworkManager-daemon.
+- Update BR: Use libnm-glib-vpn-devel.
+- Updated to 0.9.3.
+
 * Wed Apr 02 2014 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt4
 - Temporary don't treat warrnings as errors.
 - Rebuild with NetworkManager-applet-gtk-0.9.9.
