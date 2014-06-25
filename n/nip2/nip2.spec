@@ -1,5 +1,5 @@
 Name: nip2
-Version: 7.38.4
+Version: 7.40.1
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -69,6 +69,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Wed Jun 25 2014 Michael Shigorin <mike@altlinux.org> 7.40.1-alt1
+- new version (watch file uupdate)
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 7.38.4-alt1
 - new version (watch file uupdate)
 
