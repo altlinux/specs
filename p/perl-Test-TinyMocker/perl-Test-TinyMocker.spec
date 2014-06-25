@@ -1,5 +1,5 @@
 Name: perl-Test-TinyMocker
-Version: 0.03
+Version: 0.05
 Release: alt1
 
 Summary: a very simple tool to mock external modules
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc AUTHORS Changes README
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Thu Aug 22 2013 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt1
 - initial build for ALTLinux
 
