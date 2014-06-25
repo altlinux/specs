@@ -14,7 +14,7 @@
 
 Name: libspice-gtk
 Version: 0.25
-Release: alt1
+Release: alt2
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -39,7 +39,6 @@ BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
-BuildRequires: libcelt051-devel >= 0.5.1.1
 BuildRequires: libopus-devel >= 0.9.14
 BuildRequires: libsoup-devel
 BuildRequires: libphodav-devel
@@ -343,6 +342,9 @@ cd ..
 %endif
 
 %changelog
+* Tue Jun 24 2014 Alexey Shabalin <shaba@altlinux.ru> 0.25-alt2
+- rebuild without libcelt051
+
 * Mon Apr 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.25-alt1
 - 0.25
 - build with libphodav support
