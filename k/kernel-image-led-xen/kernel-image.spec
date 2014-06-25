@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt9
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,23 @@ done)
 
 
 %changelog
+* Wed Jun 25 2014 Led <led@altlinux.ru> 3.15.1-alt11
+- added:
+  + fix-block--cfq-iosched
+  + fix-drivers-net-ethernet-broadcom--tg3
+  + fix-drivers-rtc--rtc-core
+  + fix-fs-nfsd
+  + fix-kernel--ftrace
+  + fix-kernel-printk--printk
+
+* Wed Jun 25 2014 Led <led@altlinux.ru> 3.15.1-alt10
+- updated:
+  + fix-mm
+- added:
+  + fix-drivers-acpi--acpi
+  + fix-drivers-scsi--hpsa
+  + fix-kernel--kexec
+
 * Tue Jun 24 2014 Led <led@altlinux.ru> 3.15.1-alt9
 - updated:
   + fix-drivers-iommu--amd_iommu_v2
