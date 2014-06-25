@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.7.3
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -16,6 +16,7 @@ Source11: README.patches
 
 # MISC
 Source20: cups.control
+Source21: cups.startup
 
 # support
 Source97: alt_ru.po
@@ -302,6 +303,7 @@ service printer
 @@@
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
+cp %SOURCE21 scheduler/cups.sh.in
 
 # TODO help translation injecting
 
@@ -434,6 +436,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed Jun 25 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt2
+- Restore Mandrake init script (closes: #30137)
+
 * Mon Jun 16 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt1
 - Version up
 - Allow requests from IPV4-to-IPV6 mapped localhost (RH#737230)
