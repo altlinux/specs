@@ -3,7 +3,7 @@
 
 Name: arpack
 Version: 96
-Release: alt10
+Release: alt11
 Summary: Fortran77 subroutines designed to solve large scale eigenvalue problems
 License: BSD
 Group: Sciences/Mathematics
@@ -24,7 +24,8 @@ Source9: http://www.caam.rice.edu/software/ARPACK/CONTRIBUTED/chkpnt.tar.gz
 Requires: %name-doc = %version-%release
 
 BuildPreReq: gcc-fortran libblacs-devel %mpiimpl-devel libscalapack-devel
-BuildPreReq: libarpack-devel chrpath
+#BuildPreReq: libarpack-devel chrpath
+BuildPreReq: chrpath
 
 %description
 ARPACK is a collection of Fortran77 subroutines designed to solve large
@@ -425,6 +426,8 @@ do
 	chrpath -r %mpidir/lib $i ||:
 done
 
+ln -s libarpack_LINUX.so %buildroot%_libdir/libarpack.so
+
 %files
 %_bindir/dssave
 
@@ -438,6 +441,7 @@ done
 %files -n lib%name-devel
 %_libdir/lib%{name}_LINUX.so
 %_libdir/lib%{name}_LINUX_Carley.so
+%_libdir/lib%{name}.so
 %_includedir/%name
 %exclude %_includedir/%name/BLACS
 %exclude %_includedir/%name/MPI
@@ -497,6 +501,9 @@ done
 #_libdir/libp%{name}_MPI-LINUX_Carley.a
 
 %changelog
+* Wed Jun 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 96-alt11
+- Added link libarpack_LINUX.so -> libarpack
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 96-alt10
 - Rebuilt with OpenMPI 1.6
 
