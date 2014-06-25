@@ -9,8 +9,8 @@
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
-Version: 0.8.8
-Release: alt5.git.37d2e4
+Version: 0.9.0
+Release: alt1
 License: GPLv2+
 Group: System/Base
 
@@ -276,10 +276,10 @@ export UDEVADM="/sbin/udevadm"
 
 %autoreconf
 %configure \
+	--disable-static				\
 	--enable-tracing				\
 	--enable-drm-renderer				\
 	--enable-documentation				\
-	--without-default-plugin			\
 	--with-logo=%_pixmapsdir/altlinux.png		\
 	--with-background-start-color-stop=0x0073B3	\
 	--with-background-end-color-stop=0x00457E	\
@@ -299,6 +299,7 @@ export UDEVADM="/sbin/udevadm"
 
 %install
 %makeinstall_std
+
 
 # Glow isn't quite ready for primetime
 rm -rf %buildroot%_datadir/plymouth/glow/
@@ -488,6 +489,9 @@ fi \
 %files system-theme
 
 %changelog
+* Thu Jun 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.0-alt1
+- 0.9.0
+
 * Wed Mar 26 2014 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt5.git.37d2e4
 - upstream snapshot 37d2e400d25e6b4716d77d26fb7d40de8a8c1a8a
 
