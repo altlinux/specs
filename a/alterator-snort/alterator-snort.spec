@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.2.5
+Version: 0.3.0
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -32,6 +32,9 @@ Alterator module for snort administration.
 %makeinstall
 mkdir -p %buildroot/%_sysconfdir/cron.d/
 touch %buildroot/%_sysconfdir/cron.d/%name
+touch %buildroot/%_sysconfdir/cron.d/%name-notifications
+mkdir -p %buildroot/%_sysconfdir/sysconfig/
+touch %buildroot/%_sysconfdir/sysconfig/%name
 
 %files
 %_altdata_dir/applications/*
@@ -39,8 +42,17 @@ touch %buildroot/%_sysconfdir/cron.d/%name
 %_alterator_backend3dir/*
 %_libexecdir/%name/
 %ghost %_sysconfdir/cron.d/%name
+%ghost %_sysconfdir/cron.d/%name-notifications
+%_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Jun 25 2014 Timur Aitov <timonbl4@altlinux.org> 0.3.0-alt1
+- Add notifications page
+- Add ban and banned page
+- Add base page
+- Add configuration page
+- Mod rules page
+
 * Wed May 28 2014 Timur Aitov <timonbl4@altlinux.org> 0.2.5-alt1
 - Fix download rules by oinkcode
 
