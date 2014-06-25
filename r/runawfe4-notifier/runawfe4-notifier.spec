@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
 Version: 4.1.0
-Release: alt1
+Release: alt5
 
 Summary: Runawfe notifier client
 
@@ -56,7 +56,7 @@ mkdir -p %buildroot%_pixmapsdir/
 mkdir -p %buildroot%_desktopdir/
 
 cp %SOURCE1 %buildroot%_desktopdir/
-cp %SOURCE2 %buildroot%_pixmapsdir/
+cp %SOURCE2 %buildroot/usr/share/pixmaps/
 
 cat >%buildroot/%_bindir/runawfe4-notifier <<EOF
 cd %runadir/
@@ -93,5 +93,14 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Wed Jun 25 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt5
+- Workaround pixmaps, fix with new swt
+
+* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt3
+- Fixed application.properties
+
+* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt2
+- Fixed rtn.log
+
 * Mon Mar 31 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt1
 - initial build 4.1.0
