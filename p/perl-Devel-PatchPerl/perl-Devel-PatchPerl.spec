@@ -1,5 +1,5 @@
 Name: perl-Devel-PatchPerl
-Version: 1.10
+Version: 1.24
 Release: alt1
 
 Summary: Patch perl source a la Devel::PPPort's buildperl.pl
@@ -30,6 +30,9 @@ BuildRequires: perl-Module-Pluggable perl-File-pushd perl-devel perl-IPC-Cmd
 %doc Changes LICENSE README
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt1
 - 0.94 -> 1.10
 
