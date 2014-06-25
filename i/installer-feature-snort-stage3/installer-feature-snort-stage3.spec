@@ -1,5 +1,5 @@
 Name: installer-feature-snort-stage3
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Installer stage3 snort hook
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Jun 25 2014 Timur Aitov <timonbl4@altlinux.org> 0.4-alt1
+- config barnyard2
+
 * Wed Dec 22 2010 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
 - Create hook for alterator-net-eth.
 
