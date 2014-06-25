@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 19
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rxtx
 %define version 2.2
 #global upver	2.1
@@ -22,7 +22,7 @@ BuildRequires: jpackage-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt2_0.7.20100211.1jpp7
+Release:	alt2_0.7.20100211.2jpp7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -86,6 +86,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.7.20100211.2jpp7
+- update to new release by jppimport
+
 * Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.7.20100211.1jpp7
 - update to new release by jppimport
 
