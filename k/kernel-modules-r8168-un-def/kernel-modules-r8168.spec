@@ -1,6 +1,6 @@
 %define module_name	r8168
 %define module_version	8.038.00
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 
@@ -18,6 +18,8 @@ Group: System/Kernel and hardware
 
 URL: http://www.realtek.com/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch: r8168-build-3.15.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %karch
@@ -46,6 +48,7 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+%patch0 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -60,6 +63,9 @@ install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jun 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.038.00-alt2
+- build with 3.15 fixed
 
 * Wed Mar 19 2014 Nazarov Denis <nenderus@altlinux.org> 8.038.00-alt1
 - Version 8.038.00
