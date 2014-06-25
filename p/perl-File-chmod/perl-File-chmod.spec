@@ -1,6 +1,6 @@
 %define m_distro File-chmod
 Name: perl-File-chmod
-Version: 0.39
+Version: 0.40
 Release: alt1
 Summary: File::chmod - Implements symbolic and ls chmod modes
 
@@ -12,7 +12,7 @@ Url: http://search.cpan.org/~pinyan/File-chmod/
 
 BuildArch: noarch
 Source: %m_distro-%version.tar
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(autodie.pm)
 
 %description
 %summary
@@ -31,6 +31,9 @@ BuildRequires: perl-devel
 %doc Changes 
 
 %changelog
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - automated CPAN update
 
