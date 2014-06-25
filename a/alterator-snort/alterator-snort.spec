@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -35,6 +35,8 @@ touch %buildroot/%_sysconfdir/cron.d/%name
 touch %buildroot/%_sysconfdir/cron.d/%name-notifications
 mkdir -p %buildroot/%_sysconfdir/sysconfig/
 touch %buildroot/%_sysconfdir/sysconfig/%name
+mkdir -p %buildroot/%_datadir/alterator-snort/
+install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 
 %files
 %_altdata_dir/applications/*
@@ -44,8 +46,13 @@ touch %buildroot/%_sysconfdir/sysconfig/%name
 %ghost %_sysconfdir/cron.d/%name
 %ghost %_sysconfdir/cron.d/%name-notifications
 %_sysconfdir/sysconfig/%name
+%_datadir/alterator-snort
+%_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Wed Jun 25 2014 Timur Aitov <timonbl4@altlinux.org> 0.3.1-alt1
+- Mod reset-snort-db.sh
+
 * Wed Jun 25 2014 Timur Aitov <timonbl4@altlinux.org> 0.3.0-alt1
 - Add notifications page
 - Add ban and banned page
