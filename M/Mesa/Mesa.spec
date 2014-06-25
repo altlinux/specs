@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 10.2.1
+Version: 10.2.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -125,6 +125,9 @@ DRI driver for Intel i8xx, i9xx
 Summary: ATI RADEON DRI driver
 Group: System/X11
 Requires: libGL = %epoch:%version-%release
+%ifarch %ix86 x86_64
+Requires: libvdpau
+%endif
 
 %description -n xorg-dri-radeon
 DRI driver for ATI R100, R200, R300, R400, R500
@@ -133,6 +136,9 @@ DRI driver for ATI R100, R200, R300, R400, R500
 Summary: nVidia DRI driver
 Group: System/X11
 Requires: libGL = %epoch:%version-%release
+%ifarch %ix86 x86_64
+Requires: libvdpau
+%endif
 
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
@@ -353,6 +359,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed Jun 25 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.2.2-alt1
+- 10.2.2
+
 * Mon Jun 09 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.2.1-alt1
 - 10.2.1
 
