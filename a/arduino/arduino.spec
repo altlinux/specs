@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
 Version:	1.0.5
-Release:	alt1_6jpp7
+Release:	alt1_7jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -226,6 +226,9 @@ fi
 
 
 %changelog
+* Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_7jpp7
+- update to new release by jppimport
+
 * Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_6jpp7
 - update
 
