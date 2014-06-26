@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-cf-sorts-mill-goudy
 Version:        3.1 
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Goudy Oldstyle and Italic fonts  
 
 Group:          System/Fonts/True type
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_6
 - update to new release by fcimport
 
