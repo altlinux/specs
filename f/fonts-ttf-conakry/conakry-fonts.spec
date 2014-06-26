@@ -2,7 +2,7 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname conakry-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name conakry-fonts
 %define version 20070829
 %global fontname conakry
@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-conakry
 Version:	20070829
-Release:	alt3_8
+Release:	alt3_9
 Summary:	N'Ko font by Michael Everson
 
 Group:		System/Fonts/True type
@@ -97,6 +97,9 @@ fi
 %doc *.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_8
 - update to new release by fcimport
 
