@@ -2,7 +2,7 @@ Name: hyphen-sa
 Summary: Sanskrit hyphenation rules
 %define upstreamid 20110915
 Version: 0.%{upstreamid}
-Release: alt1_5
+Release: alt1_6
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-sa.tex?view=co
 Source: hyph-sa.tex
@@ -39,6 +39,9 @@ cp -p hyph_sa_IN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_sa_IN.dic
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_5
 - update to new release by fcimport
 
