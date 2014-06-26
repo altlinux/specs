@@ -7,7 +7,7 @@
 
 Name:		fonts-ttf-motoya-lcedar
 Version:	1.00
-Release:	alt3_0.7.%{archivedate}git
+Release:	alt3_0.9.%{archivedate}git
 Summary:	Japanese Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.9.20110406git
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.7.20110406git
 - update to new release by fcimport
 
