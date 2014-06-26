@@ -1,5 +1,5 @@
 %define oldname baekmuk-ttf-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name baekmuk-ttf-fonts
 %define version 2.2
 %global priority    65-2
@@ -13,7 +13,7 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_36
+Release:        alt2_37
 Summary:        Free Korean TrueType fonts
 
 Group:          System/Fonts/True type
@@ -216,6 +216,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_37
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_36
 - update to new release by fcimport
 
