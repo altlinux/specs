@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-moyogo-molengo
 Version:        0.10 
-Release:        alt3_7
+Release:        alt3_9
 Summary:        A Latin typeface for documents 
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_7
 - update to new release by fcimport
 
