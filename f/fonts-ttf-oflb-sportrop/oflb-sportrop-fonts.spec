@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-oflb-sportrop
 Version:        0.9
-Release:        alt3_12
+Release:        alt3_14
 Summary:        A multiline decorative font
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 %doc OFL_FAQ.txt OFL_License.txt tabl_c.jpg
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_12
 - update to new release by fcimport
 
