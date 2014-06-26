@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-nicefore
 Version: 20080303
-Release: alt3_11
+Release: alt3_12
 Summary: GFS Nicefore majuscule Greek font
 
 Group:     System/Fonts/True type
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_11
 - update to new release by fcimport
 
