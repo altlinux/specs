@@ -7,7 +7,7 @@ BuildRequires: unzip
 %global archivename Mingzat
 
 Name:    fonts-ttf-sil-mingzat
-Version: 0.020
+Version: 0.100
 Release: alt1_2
 Summary: A font for Lepcha script
 Group:   System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 %doc *.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.100-alt1_2
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.020-alt1_2
 - update to new release by fcimport
 
