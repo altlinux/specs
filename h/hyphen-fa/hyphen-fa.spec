@@ -5,7 +5,7 @@ Name: hyphen-fa
 Summary: Farsi hyphenation rules
 %define upstreamid 20130404
 Version: 0.%{upstreamid}
-Release: alt1_2
+Release: alt1_3
 Source: http://mirrors.ctan.org/language/hyphenation/fahyph.zip
 Group: Text tools
 URL: http://www.ctan.org/tex-archive/language/hyphenation/fahyph
@@ -36,6 +36,9 @@ cp -p hyph_fa_IR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20130404-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130404-alt1_2
 - update to new release by fcimport
 
