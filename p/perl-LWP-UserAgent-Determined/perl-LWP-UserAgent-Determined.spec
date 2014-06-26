@@ -16,7 +16,7 @@
 %define _enable_test 1
 
 Name: perl-LWP-UserAgent-Determined
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: a virtual browser that retries errors
@@ -28,7 +28,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JE/JESSE/LWP-UserAgent-Determined-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/LWP-UserAgent-Determined-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
 BuildRequires: libnss-mdns perl-devel perl-libwww
@@ -56,6 +56,9 @@ settings are relatively sane.
 %perl_vendor_privlib/LWP/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
