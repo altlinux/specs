@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Test-Differences
 
 Name: perl-%module
-Version: 0.61
+Version: 0.62
 Release: alt1
 Serial: 1
 
@@ -12,12 +13,12 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/O/OV/OVID/Test-Differences-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCANTRELL/Test-Differences-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Apr 08 2010
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Diff
+BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Diff perl(Capture/Tiny.pm)
 
 %description
 Test strings and data structures and show differences if not ok.
@@ -38,6 +39,9 @@ sed -i "s,2\.126,2.125," Makefile.PL Build.PL
 %perl_vendor_privlib/Test
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.62-alt1
+- automated CPAN update
+
 * Wed Sep 21 2011 Igor Vlasenko <viy@altlinux.ru> 1:0.61-alt1
 - automated CPAN update
 
