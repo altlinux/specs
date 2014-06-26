@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-tlomt-league-gothic
 Version:        1.0
-Release:        alt2_5
+Release:        alt2_7
 Summary:        A sans serif gothic typeface
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5
 - update to new release by fcimport
 
