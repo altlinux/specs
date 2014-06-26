@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-doulos
 Version:        4.104
-Release:        alt3_9
+Release:        alt3_11
 Summary:        Doulos SIL fonts
 
 Group:          System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.104-alt3_9
 - update to new release by fcimport
 
