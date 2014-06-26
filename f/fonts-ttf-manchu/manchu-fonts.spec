@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-manchu
 Version:        2.006
-Release:        alt3_6
+Release:        alt3_8
 Summary:        A Manchu OpenType (TrueType-flavored) font
 
 Group:          System/Fonts/True type
@@ -85,9 +85,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
+%doc GNU\ GENERAL\ PUBLIC\ LICENSE.txt
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_8
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_6
 - update to new release by fcimport
 
