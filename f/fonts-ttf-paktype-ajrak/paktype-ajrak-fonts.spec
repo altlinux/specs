@@ -4,7 +4,7 @@
 %global fontdir %{_datadir}/fonts/%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
-Version:     4.0
+Version:     4.1
 Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_3
 - update to new release by fcimport
 
