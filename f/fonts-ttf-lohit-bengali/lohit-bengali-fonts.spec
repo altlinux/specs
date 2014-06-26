@@ -4,7 +4,7 @@
 
 Name:        fonts-ttf-lohit-bengali
 Version:        2.5.3
-Release:        alt1_2
+Release:        alt1_5
 Summary:        Free Bengali font
 Group:          System/Fonts/True type
 License:        OFL
@@ -13,8 +13,9 @@ Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{versio
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
-Obsoletes: lohit-fonts-common < %{version}-%{release}
+Patch1: bug-959994.patch
 Source44: import.info
+
 
 %description
 This package provides a free Bengali truetype/opentype font.
@@ -23,6 +24,7 @@ This package provides a free Bengali truetype/opentype font.
 %prep
 %setup -q -n %{fontname}-%{version} 
 mv 66-%{fontname}.conf 65-0-lohit-bengali.conf
+%patch1 -p1 -b .1-removing-as-from-fc-cache
 
 
 %build
@@ -85,6 +87,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_5
+- update to new release by fcimport
+
 * Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
 - update to new release by fcimport
 
