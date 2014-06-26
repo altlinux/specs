@@ -1,7 +1,7 @@
 %define oldname vlgothic-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name vlgothic-fonts
-%define version 20121230
+%define version 20140530
 %global	priority	65-1
 %global	ppriority	65-0
 %global	fontname	vlgothic
@@ -14,14 +14,14 @@ Most of the glyphs are taken from the M+ and Sazanami Gothic fonts,\
 but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
-Version:	20121230
-Release:	alt1_4
+Version:	20140530
+Release:	alt1_1
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
 Group:		System/Fonts/True type
 URL:		http://dicey.org/vlgothic
-Source0:	http://osdn.dl.sourceforge.jp/vlgothic/57732/%{archivename}.tar.bz2
+Source0:	http://osdn.dl.sourceforge.jp/vlgothic/61261/%{archivename}.tar.bz2
 Source1:	%{oldname}-fontconfig-pgothic.conf
 Source2:	%{oldname}-fontconfig-gothic.conf
 BuildArch:	noarch
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20140530-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_4
 - update to new release by fcimport
 
