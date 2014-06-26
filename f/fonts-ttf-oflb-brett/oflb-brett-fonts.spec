@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-oflb-brett
 Version:        20080506
-Release:        alt3_11
+Release:        alt3_13
 Summary:        A handwriting font
 
 Group:          System/Fonts/True type
@@ -86,6 +86,9 @@ fi
 %doc License.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080506-alt3_11
 - update to new release by fcimport
 
