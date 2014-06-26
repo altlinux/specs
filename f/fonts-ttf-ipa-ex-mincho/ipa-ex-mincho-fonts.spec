@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-ex-mincho
 Version:	002.01
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_2
 - update to new release by fcimport
 
