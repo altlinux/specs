@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-pmincho
 Version:	003.03
-Release:	alt2_4
+Release:	alt2_6
 Summary:	Japanese Proportional Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_4
 - update to new release by fcimport
 
