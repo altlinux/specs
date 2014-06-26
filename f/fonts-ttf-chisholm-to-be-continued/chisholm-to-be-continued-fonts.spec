@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-chisholm-to-be-continued
 Version:        20090124
-Release:        alt3_9
+Release:        alt3_10
 Summary:        Decorative Sans Serif Font
 
 Group:          System/Fonts/True type
@@ -88,6 +88,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_9
 - update to new release by fcimport
 
