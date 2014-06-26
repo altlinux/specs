@@ -2,17 +2,17 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname hanazono-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hanazono-fonts
-%define version 20130222
+%define version 20131208
 %define	fontname	hanazono
 %define archivename	%{fontname}-%{version}
 %define	priority	65-1
 %define fontconf	%{priority}-%{fontname}.conf
 
 Name:		fonts-ttf-hanazono
-Version:	20130222
-Release:	alt1_1
+Version:	20131208
+Release:	alt1_2
 Summary:	Japanese Mincho-typeface TrueType font
 
 Group:		System/Fonts/True type
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20131208-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 20130222-alt1_1
 - update to new release by fcimport
 
