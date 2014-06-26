@@ -22,7 +22,7 @@ elements designed in an atmosphere of diversity.
 
 Name:		fonts-otf-ht-alegreya
 Version:	1.004
-Release:	alt1_2
+Release:	alt1_4
 Summary:	A Serif typeface originally intended for literature
 License:	OFL
 URL:		http://www.huertatipografica.com.ar/tipografias/alegreya/ejemplos.html
@@ -118,6 +118,9 @@ fi
 %doc OFL.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_4
+- update to new release by fcimport
+
 * Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
