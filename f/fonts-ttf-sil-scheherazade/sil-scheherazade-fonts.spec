@@ -6,16 +6,16 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-ttf-sil-scheherazade
-Version:        1.005
-Release:        alt1_3
+Version:        2.020
+Release:        alt1_2
 Summary:        An Arabic script unicode font
 
 Group:          System/Fonts/True type
 License:        OFL
 URL:            http://scripts.sil.org/ArabicFonts
 # The file complete URL is as follows:
-# http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=scheherazade_OT_1_005&filename=ScheherazadeRegOT-1.005.zip
-Source0:        ScheherazadeRegOT-%{version}.zip
+# http://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=Scheherazade-2.000&filename=Scheherazade-2.000.zip
+Source0:        Scheherazade-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
@@ -28,7 +28,7 @@ designed in a similar style to traditional typefaces such as Monotype Naskh,
 extended to cover the full Unicode Arabic repertoire.
 
 %prep
-%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
+%setup -q -n Scheherazade-%{version}
 
 
 %build
@@ -91,9 +91,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc *.txt
+%doc *.txt documentation/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.020-alt1_2
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1_3
 - update to new release by fcimport
 
