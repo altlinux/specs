@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-vdrsymbol
 Version:        20100612
-Release:        alt3_4
+Release:        alt3_6
 Summary:        VDR symbol fonts
 
 Group:          System/Fonts/True type
@@ -87,6 +87,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20100612-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20100612-alt3_4
 - update to new release by fcimport
 
