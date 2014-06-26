@@ -15,7 +15,7 @@ signs.
 Name:		fonts-ttf-tiresias
 Summary: 	Low vision fonts
 Version:	1.0
-Release:	alt3_12
+Release:	alt3_14
 # Font exception
 License:	GPLv3+ with exceptions
 Group:		System/Fonts/True type
@@ -262,6 +262,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12
 - update to new release by fcimport
 
