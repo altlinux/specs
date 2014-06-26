@@ -2,7 +2,7 @@ Name: hyphen-mn
 Summary: Mongolian hyphenation rules
 %define upstreamid 20100531
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-mn-cyrl.tex?view=co#/hyph-mn-cyrl.tex
 Group: Text tools
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/mnhyphn.html
@@ -37,6 +37,9 @@ cp -p hyph_mn_MN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_6
 - update to new release by fcimport
 
