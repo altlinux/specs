@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-kalapi
 Version:        0.1
-Release:        alt1_3
+Release:        alt1_5
 Summary:        OpenType sanserif font for Gujarati script
 Group:          System/Fonts/True type
 License:        OFL
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_3
 - update to new release by fcimport
 
