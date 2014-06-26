@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-web-naskh
 Version:        1.2
-Release:        alt3_10
+Release:        alt3_12
 Summary:        Nafees Web font for writing Urdu in the Naskh script 
 
 Group:          System/Fonts/True type
@@ -104,6 +104,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_10
 - update to new release by fcimport
 
