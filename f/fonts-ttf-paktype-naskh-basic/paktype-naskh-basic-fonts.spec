@@ -1,16 +1,17 @@
 %define oldname paktype-naskh-basic-fonts
+%global priority 65-0
 %global fontname paktype-naskh-basic
-%global fontconf 67-paktype-naskh-basic
+%global fontconf %{priority}-%{fontname}
 
 Name:	fonts-ttf-paktype-naskh-basic
-Version:     4.0
-Release:     alt1_2
+Version:     4.1
+Release:     alt1_4
 Summary:     Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:		https://sourceforge.net/projects/paktype/
 Source0:     http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Naskh-Basic-%{version}.tar.gz
-Source1:	%{fontconf}.conf
+Source1:	%{oldname}.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
@@ -90,6 +91,9 @@ fi
 %doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_4
+- update to new release by fcimport
+
 * Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
