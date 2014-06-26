@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_6
+Release:   alt2_8
 Summary:   Thai TrueType fonts
 Group:     System/Fonts/True type
 License:   GPLv2+ and Bitstream Vera
@@ -295,6 +295,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_6
 - update to new release by fcimport
 
