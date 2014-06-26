@@ -6,14 +6,15 @@ BuildRequires: unzip
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-google-lato
-Version:        1.014
-Release:        alt1_3
+Version:        2.007
+Release:        alt1_2
 Summary:        A sanserif typeface family
 
 Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.latofonts.com/
-Source0:        http://www.latofonts.com/download/LatoOFL.zip
+# Fonts retrieved 2014-04-02 from http://www.latofonts.com/download/Lato2OFL.zip
+Source0:        %{oldname}-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
@@ -40,17 +41,19 @@ The semi-rounded details of the letters give Lato a feeling of warmth, while the
 strong structure provides stability and seriousness. "Male and female, serious
 but friendly. With the feeling of the Summer," says A.ukasz.
 
-Lato consists of five weights (plus corresponding italics), including a
-beautiful hairline style.
+Lato consists of nine weights (plus corresponding italics), including a
+beautiful hairline style. It covers 2300+ glyphs per style and supports 100+
+Latin-based languages, 50+ Cyrillic-based languages as well as Greek and IPA
+phonetics.
 
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
 
 # Fix wrong end-of-lines encoding
-sed "s/\r//" OFL.txt > OFL.txt.new
-touch -r OFL.txt OFL.txt.new
-mv OFL.txt.new OFL.txt
+sed "s/\r//" Lato2OFL/OFL.txt > Lato2OFL/OFL.txt.new
+touch -r Lato2OFL/OFL.txt Lato2OFL/OFL.txt.new
+mv Lato2OFL/OFL.txt.new Lato2OFL/OFL.txt
 
 
 %build
@@ -58,7 +61,7 @@ mv OFL.txt.new OFL.txt
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
-install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
+install -m 0644 -p Lato2OFL/*.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontconfig_templatedir} $RPM_BUILD_ROOT%{_fontconfig_confdir}
 
@@ -104,10 +107,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc OFL.txt README.txt
+%doc Lato2OFL/{OFL.txt,README.txt}
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.007-alt1_2
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1_3
 - update to new release by fcimport
 
