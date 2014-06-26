@@ -2,17 +2,17 @@
 BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
 # END SourceDeps(oneline)
 %define oldname japanese-bitmap-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name japanese-bitmap-fonts
 %define version 0.20080710
 %global	fontname        japanese-bitmap
 %define cataloguedir    %{_sysconfdir}/X11/fontpath.d
 %define cidmapdir       %{_datadir}/ghostscript/conf.d
 
-%define chxlfd          /usr/bin/perl $RPM_BUILD_DIR/%{name}-%{version}/%{vft}/chbdfxlfd.pl
-%define mkalias         /usr/bin/perl $RPM_BUILD_DIR/%{name}-%{version}/%{vft}/mkalias.pl
-%define mkbold          $RPM_BUILD_DIR/%{name}-%{version}/%{shinonome}-src/tools/mkbold
-%define mkitalic        $RPM_BUILD_DIR/%{name}-%{version}/%{vft}/mkitalic
+%define chxlfd          /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/chbdfxlfd.pl
+%define mkalias         /usr/bin/perl $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkalias.pl
+%define mkbold          $RPM_BUILD_DIR/%{oldname}-%{version}/%{shinonome}-src/tools/mkbold
+%define mkitalic        $RPM_BUILD_DIR/%{oldname}-%{version}/%{vft}/mkitalic
 
 %define kappa           Kappa20-0.396
 %define shinonome       shinonome-0.9.11
@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_13
+Release:        alt2_15
 License:        Public Domain and BSD and mplus
 Group:          System/Fonts/True type
 BuildArch:      noarch
@@ -104,7 +104,7 @@ This package provides various free Japanese Bitmap fonts.
 
 %prep
 #%%setup -q -T -c -a 5 -a 40 -a 41 -a 50 -a 51 -a 52 -a 53 -a 54 -a 57 -a 58 -a 59 -a 60
-%setup -q -T -c -a 41 -a 50 -a 51 -a 52 -a 53 -a 54 -a 57 -a 58 -a 59 -a 60
+%setup -n %{oldname}-%{version} -q -T -c -a 41 -a 50 -a 51 -a 52 -a 53 -a 54 -a 57 -a 58 -a 59 -a 60
 ## ttfonts-ja
 ## jisksp14
 gunzip -c %{SOURCE10} > jisksp14.bdf
@@ -378,6 +378,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_15
+- update to new release by fcimport
+
 * Fri Apr 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_13
 - fc update
 
