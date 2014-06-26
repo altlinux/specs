@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-alexander
 Version:        3.01
-Release:        alt3_7
+Release:        alt3_8
 Summary:        A Greek typeface inspired by Alexander Wilson
 
 Group:          System/Fonts/True type
@@ -102,6 +102,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_7
 - update to new release by fcimport
 
