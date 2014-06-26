@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-aldusleaf-crimson-text
 Version:        0.8
-Release:        alt1_0.2.20130806
+Release:        alt1_0.3.20130806
 Summary:        A latin font for the production of technical books and papers
 
 Group:          System/Fonts/True type
@@ -88,6 +88,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.3.20130806
+- update to new release by fcimport
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.2.20130806
 - update to new release by fcimport
 
