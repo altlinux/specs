@@ -1,5 +1,5 @@
 %define oldname taipeifonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name taipeifonts
 %define version 1.2
 %define fontname taipeifonts
@@ -10,7 +10,7 @@
 
 Name:       fonts-bitmap-taipei
 Version:    1.2
-Release:    alt1_16
+Release:    alt1_18
 Summary:    %common_desc
 
 Group:      Graphical desktop/Other
@@ -51,22 +51,6 @@ mkfontdir $RPM_BUILD_ROOT%{bmpfontdir}
 # catalogue
 install -d $RPM_BUILD_ROOT%{catalogue}
 ln -s %{bmpfontdir} $RPM_BUILD_ROOT%{catalogue}/%{oldname}
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 %files
 %doc README
@@ -74,9 +58,12 @@ fi
 %{bmpfontdir}/*.gz
 %{bmpfontdir}/fonts.alias
 %verify(not md5 size mtime) %{bmpfontdir}/fonts.dir
-%{catalogue}/%{oldname}*
+%{catalogue}/%{oldname}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_18
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_16
 - update to new release by fcimport
 
