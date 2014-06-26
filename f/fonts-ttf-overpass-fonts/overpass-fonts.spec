@@ -5,7 +5,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-overpass-fonts
 Version:	1.01
-Release:	alt1_4
+Release:	alt1_7
 Summary:	Typeface based on the U.S. interstate highway road signage type system
 License:	OFL or ASL 2.0 
 URL:		https://fedorahosted.org/overpass-fonts/
@@ -21,7 +21,7 @@ Free & open source typeface based on the U.S. interstate highway road signage
 type system; it is sans-serif and suitable for both body and titling text.
 
 %prep
-%setup -n %{oldname}-%{version} -q -c
+%setup -n %{oldname}-%{version} -q
 cp %{SOURCE2} .
 
 %build
@@ -81,6 +81,9 @@ fi
 %doc Overpass-OFL.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_4
 - update to new release by fcimport
 
