@@ -14,7 +14,7 @@ The font is a smart font using a Graphite description.
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.8
-Release: alt1_4
+Release: alt1_6
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -127,6 +127,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_6
+- update to new release by fcimport
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4
 - update to new release by fcimport
 
