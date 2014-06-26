@@ -13,7 +13,7 @@ multiples (8pt., 16pt., 24pt., etc.) with anti-aliasing turned off. \
 Name:		fonts-ttf-silkscreen
 Summary: 	Silkscreen four member type family
 Version:	1.0
-Release:	alt3_8
+Release:	alt3_10
 # License attribution confirmed by author and Open Font Library
 # http://openfontlibrary.org/media/files/jkottke/218
 License:	OFL
@@ -116,6 +116,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_10
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_8
 - update to new release by fcimport
 
