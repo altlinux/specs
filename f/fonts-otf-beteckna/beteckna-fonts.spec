@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt3_11
+Release:	alt3_12
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -161,6 +161,9 @@ fi
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_11
 - update to new release by fcimport
 
