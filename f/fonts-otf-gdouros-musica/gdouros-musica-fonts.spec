@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-musica
 Version:        2.52
-Release:        alt3_7
+Release:        alt3_8
 Summary:        A font for musical symbols
 
 Group:          System/Fonts/True type
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_7
 - update to new release by fcimport
 
