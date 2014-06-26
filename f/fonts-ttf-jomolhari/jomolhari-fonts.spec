@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_16
+Release:	alt3_18
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 Group:		System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_18
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_16
 - update to new release by fcimport
 
