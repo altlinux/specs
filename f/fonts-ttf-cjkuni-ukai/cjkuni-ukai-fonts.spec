@@ -1,5 +1,5 @@
 %define oldname cjkuni-ukai-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-ukai-fonts
 %define version 0.2.20080216.1
 %global fontname cjkuni-ukai
@@ -17,7 +17,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-ukai
 Version:        0.2.20080216.1
-Release:        alt4_51
+Release:        alt4_52
 Summary:        Chinese Unicode TrueType font in Kai face
 
 Group:          System/Fonts/True type
@@ -114,6 +114,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_52
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_51
 - update to new release by fcimport
 
