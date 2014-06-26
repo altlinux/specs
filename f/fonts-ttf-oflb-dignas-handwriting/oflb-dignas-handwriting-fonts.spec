@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-oflb-dignas-handwriting
 Version:        20031109
-Release:        alt3_6
+Release:        alt3_8
 Summary:        Handwriting font
 
 Group:          System/Fonts/True type
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_6
 - update to new release by fcimport
 
