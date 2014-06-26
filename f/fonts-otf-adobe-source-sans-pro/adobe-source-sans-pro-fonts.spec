@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-adobe-source-sans-pro
 Version:        1.050
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.050-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.050-alt1_2
 - update to new release by fcimport
 
