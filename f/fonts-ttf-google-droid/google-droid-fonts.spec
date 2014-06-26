@@ -1,5 +1,5 @@
 %define oldname google-droid-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name google-droid-fonts
 %define version 20120715
 %global fontname google-droid
@@ -17,7 +17,7 @@ Pascal Zoghbi of 29ArabicLetters.
 Name:    fonts-ttf-google-droid
 # No sane versionning upstream, use git clone timestamp
 Version: 20120715
-Release: alt1_5
+Release: alt1_7
 Summary: General-purpose fonts released by Google as part of Android
 
 Group:     System/Fonts/True type
@@ -188,6 +188,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt1_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20120715-alt1_5
 - update to new release by fcimport
 
