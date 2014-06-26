@@ -1,14 +1,14 @@
 %define dist URI-Fetch
 Name: perl-%dist
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: Smart URI fetching/caching
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/URI-Fetch-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ rm t/01-fetch.t
 %perl_vendor_privlib/URI
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt2
 - disabled build dependency on perl-Module-Install
 
