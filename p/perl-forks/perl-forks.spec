@@ -1,14 +1,14 @@
 %define dist forks
 Name: perl-%dist
-Version: 0.34
-Release: alt4
+Version: 0.35
+Release: alt1
 
 Summary: Drop-in replacement for Perl threads using fork()
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RY/RYBSKEJ/forks-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Acme-Damn perl-Attribute-Handlers perl-Devel-Symdump perl-List-MoreUtils perl-Sys-SigAction perl-devel perl-threads
@@ -32,6 +32,9 @@ same syntax as the threads.pm module (it even takes over its namespace).
 %perl_vendor_archlib/threads
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.34-alt4
 - built for perl 5.18
 
