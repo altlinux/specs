@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-lohit-telugu
 Version:        2.5.3
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Free Telugu font
 
 Group:          System/Fonts/True type
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_4
+- update to new release by fcimport
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
 - update to new release by fcimport
 
