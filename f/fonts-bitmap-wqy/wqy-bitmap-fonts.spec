@@ -5,7 +5,7 @@
 
 Name:           fonts-bitmap-wqy
 Version:        1.0.0
-Release:        alt3_0.5.rc1
+Release:        alt3_0.7.rc1
 Summary:        WenQuanYi Bitmap Chinese Fonts
 
 Group:          System/Fonts/True type
@@ -99,6 +99,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.7.rc1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.5.rc1
 - update to new release by fcimport
 
