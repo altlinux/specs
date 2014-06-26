@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Carp-Assert
-Version: 0.20
-Release: alt2.1
+Version: 0.21
+Release: alt1
 
 Summary: Carp-Assert - executable comments
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/modules/by-module/Carp/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Carp-Assert-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 24 2005 (-bi)
 BuildRequires: perl-devel
@@ -59,6 +59,9 @@ nothing but...)
 %perl_vendor_privlib/Carp/
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
