@@ -8,7 +8,7 @@ Name:	fonts-ttf-lklug
 # update versions on file changes. When in doubt use the timestamp of the most
 # recent file as version.
 Version:	0.6
-Release:	alt3_9.%{cvsdate}cvs
+Release:	alt3_11.%{cvsdate}cvs
 Summary:	Fonts for Sinhala language
 Group:	System/Fonts/True type
 License:	GPLv2
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_11.20090803cvs
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_9.20090803cvs
 - update to new release by fcimport
 
