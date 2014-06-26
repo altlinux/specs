@@ -2,7 +2,7 @@ Name: hyphen-ia
 Summary: Interlingua hyphenation rules
 %define upstreamid 20050628
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 Source: http://www.ctan.org/get/language/hyphenation/iahyphen.tex
 Group: Text tools
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/iahyphen.html
@@ -36,6 +36,9 @@ cp -p hyph_ia.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_7
 - update to new release by fcimport
 
