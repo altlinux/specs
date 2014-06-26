@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:          fonts-ttf-dustin-domestic-manners
 Version:       20030527
-Release:       alt3_9
+Release:       alt3_10
 Summary:       Handwriting font by Dustin Norlander
 
 Group:         System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_9
 - update to new release by fcimport
 
