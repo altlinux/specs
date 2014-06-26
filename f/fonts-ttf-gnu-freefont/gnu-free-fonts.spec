@@ -7,7 +7,7 @@ BuildRequires: python-devel
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_5
+Release:   alt1_9
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
@@ -17,6 +17,7 @@ Source0:   http://ftp.gnu.org/gnu/freefont/freefont-src-%{version}.tar.gz
 Source2:   %{fontconf}-mono.conf
 Source3:   %{fontconf}-sans.conf
 Source4:   %{fontconf}-serif.conf
+Patch0:    gnu-free-fonts-devanagari-rendering.patch
 BuildArch: noarch
 BuildRequires: fontpackages-devel fontforge
 
@@ -85,6 +86,7 @@ This package contains the GNU FreeFont serif font.
 %prep
 %setup -n %{oldname}-%{version} -qn freefont-%{version}
 
+%patch0 -p1 -b .devanagari
 
 %build
 make
@@ -166,6 +168,9 @@ fi
 %doc AUTHORS ChangeLog CREDITS COPYING README
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_5
 - update to new release by fcimport
 
