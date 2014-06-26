@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-scholarsfonts-cardo
 Version:        1.045 
-Release:        alt3_4
+Release:        alt3_7
 Summary:        A font for scholarly use in classical and medieval languages
 
 Group:          System/Fonts/True type
@@ -92,6 +92,9 @@ fi
 %doc Manual104s.pdf 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.045-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.045-alt3_4
 - update to new release by fcimport
 
