@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-theokritos
 Version: 20070415
-Release: alt3_19
+Release: alt3_20
 Summary: GFS Theokritos decorative font
 
 Group:   System/Fonts/True type
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_20
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_19
 - update to new release by fcimport
 
