@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-impallari-lobster
 Version:        1.4
-Release:        alt3_6
+Release:        alt3_8
 Summary:        Hand written font with various ligatures for better connecting of letters
 
 License:        OFL
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_8
+- update to new release by fcimport
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_6
 - update to new release by fcimport
 
