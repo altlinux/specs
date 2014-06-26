@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-ns-bola
 Version:        20080203
-Release:        alt3_6
+Release:        alt3_8
 Summary:        Chunky Geometric Fonts
 
 Group:          System/Fonts/True type
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20080203-alt3_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080203-alt3_6
 - update to new release by fcimport
 
