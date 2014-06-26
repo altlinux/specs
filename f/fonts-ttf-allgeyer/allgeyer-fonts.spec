@@ -13,7 +13,7 @@ embedded in PDF files.
 Name:		fonts-ttf-allgeyer
 Summary: 	Musical Notation True Type Fonts
 Version:	5.002
-Release:	alt3_9
+Release:	alt3_10
 License:	OFL
 Group:		System/Fonts/True type
 # The source was originally downloaded from:
@@ -124,6 +124,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 5.002-alt3_9
 - update to new release by fcimport
 
