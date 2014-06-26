@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-nhn-nanum-gothic-light
 Version:	1.000
-Release:	alt1_3
+Release:	alt1_5
 Summary:	Nanum Gothic Light family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_3
 - update to new release by fcimport
 
