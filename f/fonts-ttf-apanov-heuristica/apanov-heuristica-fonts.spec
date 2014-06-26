@@ -1,5 +1,5 @@
 %define oldname apanov-heuristica-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apanov-heuristica-fonts
 %define version 0.2.2
 %global fontname apanov-heuristica
@@ -10,7 +10,7 @@
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 0.2.2
-Release: alt3_7
+Release: alt3_8
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_7
 - update to new release by fcimport
 
