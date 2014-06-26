@@ -1,5 +1,5 @@
 Name: perl-AnyEvent-Gearman
-Version: 0.09
+Version: 0.10
 Release: alt1
 Summary: AnyEvent::Gearman - Asynchronous Gearman client/worker module for AnyEvent applications
 
@@ -28,5 +28,8 @@ BuildRequires: perl-devel perl-Module-Install perl-Module-Install-AuthorTests pe
 %doc LICENSE Changes README 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Fri Aug 12 2011 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
 - initial build
