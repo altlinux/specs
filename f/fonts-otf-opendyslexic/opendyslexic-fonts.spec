@@ -7,7 +7,7 @@ Group: System/Fonts/True type
 
 Name:		fonts-otf-opendyslexic
 Version:	0.600
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Font designed for dyslexics and high readability
 License:	Bitstream Vera and CC-BY
 URL:		http://dyslexicfonts.com/
@@ -87,6 +87,9 @@ fi
 %doc README.md
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_4
+- update to new release by fcimport
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.600-alt1_2
 - initial fc import
 
