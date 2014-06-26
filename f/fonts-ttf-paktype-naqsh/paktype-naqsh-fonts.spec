@@ -3,7 +3,7 @@
 %global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-naqsh
-Version:     4.0
+Version:     4.1
 Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 
@@ -92,6 +92,9 @@ fi
 %doc PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3
+- update to new release by fcimport
+
 * Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_3
 - update to new release by fcimport
 
