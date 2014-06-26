@@ -8,8 +8,8 @@ BuildRequires: unzip
 %global archivename CharisSIL
 
 Name:    fonts-ttf-sil-charis
-Version: 4.106
-Release: alt5_7
+Version: 4.114
+Release: alt1_3
 Summary: A serif smart font similar to Bitstream Charter
 
 Group:     System/Fonts/True type
@@ -17,7 +17,7 @@ License:   OFL
 URL:       http://scripts.sil.org/CharisSILFont
 # Actual download URL
 # http://scripts.sil.org/cms/scripts/render_download.php?site_id=nrsi&format=file&media_id=%{archivename}.zip&filename=%{archivename}%{version}.zip
-Source0:   %{archivename}%{version}.zip
+Source0:   %{archivename}-%{version}.zip
 Source1:   %{oldname}-fontconfig.conf
 
 
@@ -40,7 +40,7 @@ optimized for readability in long printed documents.
 
 
 %prep
-%setup -q -n %{archivename}
+%setup -q -n %{archivename}-%{version}
 for txt in *.txt ; do
    fold -s $txt > $txt.new
    sed -i 's/\r//' $txt.new
@@ -110,6 +110,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 4.114-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.106-alt5_7
 - update to new release by fcimport
 
