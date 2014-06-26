@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt6.a0
+Release: alt7.a0
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -373,6 +373,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Thu Jun 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt7.a0
+- Avoid download objects.inv
+
 * Tue Jun 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3-alt6.a0
 - Restored %python3_sitelibdir/%oname/conf.py.template
 
