@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-baskerville
 Version: 20070327
-Release: alt3_18
+Release: alt3_19
 Summary: GFS Baskerville Greek font
 
 Group:     System/Fonts/True type
@@ -120,6 +120,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070327-alt3_19
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070327-alt3_18
 - update to new release by fcimport
 
