@@ -3,7 +3,7 @@
 Summary: A collection of Math symbol fonts 
 Name:	 fonts-ttf-jsmath
 Version: 20090708 
-Release: alt3_6
+Release: alt3_8
 
 # derived from computer modern metafont tex sources
 License: Public domain 
@@ -73,6 +73,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20090708-alt3_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090708-alt3_6
 - update to new release by fcimport
 
