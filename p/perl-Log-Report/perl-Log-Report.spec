@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.04
+Version: 1.05
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -45,6 +45,9 @@ module to do only translations or only message dispatching.
 %perl_vendor_privlib/MojoX/Log
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
