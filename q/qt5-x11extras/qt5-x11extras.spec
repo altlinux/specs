@@ -2,7 +2,7 @@
 %global qt_module qtx11extras
 
 Name: qt5-x11extras
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Group: System/Libraries
@@ -92,6 +92,9 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Jun 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 

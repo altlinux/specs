@@ -4,8 +4,8 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.3.0
-Release: alt2
+Version: 5.3.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -14,7 +14,7 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -136,6 +136,7 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/qml/Qt/labs/settings/
 %_qt5_archdatadir/qml/QtQml/Models.2/
 %_qt5_archdatadir/qml/QtQuick/LocalStorage/
+%_qt5_archdatadir/qml/QtQuick/XmlListModel/
 
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
@@ -173,6 +174,9 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Wed Jun 04 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt2
 - build docs
 

@@ -2,7 +2,7 @@
 %global qt_module qtgraphicaleffects
 
 Name: qt5-graphicaleffects
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Group: System/Libraries
@@ -63,5 +63,8 @@ This package contains documentation for Qt5 %qt_module
 %_qt5_docdir/*
 
 %changelog
+* Thu Jun 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Wed Jun 04 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - initial build

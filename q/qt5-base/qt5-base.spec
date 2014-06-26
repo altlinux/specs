@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -20,10 +20,10 @@
 %define libname  lib%gname
 %define major  5
 %define minor  3
-%define bugfix 0
+%define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -701,6 +701,9 @@ done
 
 
 %changelog
+* Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Wed Jun 04 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt2
 - build docs
 
