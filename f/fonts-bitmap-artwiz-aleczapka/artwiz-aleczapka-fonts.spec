@@ -11,7 +11,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_15
+Release:	alt2_16
 Summary:	Very small futuristic font family
 Group:		System/Fonts/True type
 License:	GPLv2
@@ -380,6 +380,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_15
 - update to new release by fcimport
 
