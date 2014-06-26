@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_10
+Release: alt3_12
 Summary: Font for Nepali language
 Group: System/Fonts/True type
 License: GPL+
@@ -102,6 +102,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_10
 - update to new release by fcimport
 
