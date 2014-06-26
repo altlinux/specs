@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt5-doc
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -75,5 +75,8 @@ Requires: %name-common = %EVR
 %_qt5_docdir/*
 
 %changelog
+* Thu Jun 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - initial build

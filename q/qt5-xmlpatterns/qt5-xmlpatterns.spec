@@ -1,8 +1,9 @@
 
 %global qt_module qtxmlpatterns
+%def_disable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Group: System/Libraries
@@ -12,7 +13,10 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-tools
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools
+%endif
 
 %description
 The Qt XML Patterns module provides support for XPath, XQuery, XSLT,
@@ -68,11 +72,15 @@ syncqt.pl-qt5 \
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
 %make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
 %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 %files common
 %files -n libqt5-xmlpatterns
@@ -90,9 +98,14 @@ syncqt.pl-qt5 \
 %_qt5_archdatadir/mkspecs/modules/*.pri
 
 %files doc
+%if_disabled bootstrap
 %_qt5_docdir/*
+%endif
 
 %changelog
+* Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- new version
+
 * Tue Jun 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
