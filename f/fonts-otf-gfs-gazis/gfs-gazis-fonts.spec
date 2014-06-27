@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-gazis
 Version: 20091008
-Release: alt3_6
+Release: alt3_7
 Summary: An 18th century Greek typeface
 
 Group:     System/Fonts/True type
@@ -113,6 +113,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20091008-alt3_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20091008-alt3_6
 - update to new release by fcimport
 
