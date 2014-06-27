@@ -2,12 +2,12 @@ Name: cube
 License: BSD
 Group: Development/Tools
 Summary: Performance report explorer for Scalasca and Score-P
-Version: 4.2.2
+Version: 4.2.3
 Release: alt1
 Url: http://www.scalasca.org/software/cube-4.x/download.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://apps.fz-juelich.de/scalasca/releases/cube/4.2/dist/cube-4.2.2.tar.gz
+Source: http://apps.fz-juelich.de/scalasca/releases/cube/4.2/dist/cube-4.2.3.tar.gz
 
 BuildPreReq: gcc-c++ libqt4-devel zlib-devel uncrustify doxygen
 BuildPreReq: libdbus-devel flex graphviz texlive-base-bin menu
@@ -118,6 +118,9 @@ cp -P $(find ./ -name 'libcube4w.so*') %buildroot/%_libexecdir/
 %_docdir/*
 
 %changelog
+* Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt1
+- Version 4.2.3
+
 * Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1
 - Version 4.2.2
 
