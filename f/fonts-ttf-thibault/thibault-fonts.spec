@@ -22,7 +22,7 @@ and Rockets.
 
 Name:           fonts-ttf-thibault
 Version:        0.1
-Release:        alt3_20
+Release:        alt3_22
 
 Summary:        Thibault.org font collection
 Group:          System/Fonts/True type
@@ -239,6 +239,9 @@ fi
 %doc staypuft/COPYING.LIB staypuft/README.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_22
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_20
 - update to new release by fcimport
 
