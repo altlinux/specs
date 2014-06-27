@@ -1,19 +1,19 @@
+Group: System/Fonts/True type
 %define oldname smc-fonts
-%define	fontname	smc
+%global	fontname	smc
 
 # Common description
-%define common_desc \
+%global common_desc \
 The SMC Fonts package contains fonts for the display of\
 traditional and new Malayalam Script.
 
 Name:		fonts-ttf-smc
-Version:	5.0.1
-Release:	alt1_5
+Version:	6.0
+Release:	alt1_8
 Summary:	Open Type Fonts for Malayalam script
-Group:		System/Fonts/True type
 License:	GPLv3+ with exceptions and GPLv2+ with exceptions and GPLv2+ and  GPLv2 and GPL+
 URL:		http://savannah.nongnu.org/projects/smc
-Source0:	http://download.savannah.gnu.org/releases-noredirect/smc/fonts/malayalam-fonts-%{version}.tar.gz
+Source0:	http://download.savannah.gnu.org/releases-noredirect/smc/fonts/malayalam-fonts-%{version}.tar.xz
 Source1: 65-0-smc-meera.conf
 Source2: 67-smc-anjalioldlipi.conf
 Source3: 67-smc-dyuthi.conf
@@ -25,6 +25,7 @@ Source8: AnjaliOldLipi-license-confirmation-email.txt
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel > 1.13
 BuildRequires:	fontforge >= 20080429
+# https://bugzilla.redhat.com/show_bug.cgi?id=803234
 Patch1: bug-803234.patch
 Source44: import.info
 
@@ -32,15 +33,15 @@ Source44: import.info
 %common_desc
 
 %package common
+Group: System/Fonts/True type
 Summary:  Common files for smc-fonts
-Group:	System/Fonts/True type
 
 %description common
 %common_desc
 
 %package -n fonts-ttf-smc-dyuthi
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
 %description -n fonts-ttf-smc-dyuthi
@@ -51,10 +52,11 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-dyuthi.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-dyuthi.conf
 %{_fontbasedir}/*/%{_fontstem}/Dyuthi*.ttf
+%doc Dyuthi/COPYING
 
 %package -n fonts-ttf-smc-meera
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2+ with exceptions
 %description -n fonts-ttf-smc-meera
@@ -69,8 +71,8 @@ traditional Malayalam Scripts.
 
 
 %package -n fonts-ttf-smc-rachana
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2+
 %description -n fonts-ttf-smc-rachana
@@ -85,8 +87,8 @@ traditional Malayalam Scripts.
 
 
 %package -n fonts-ttf-smc-raghumalayalam
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2
 %description -n fonts-ttf-smc-raghumalayalam
@@ -97,10 +99,11 @@ new Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-raghumalayalam.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-raghumalayalam.conf
 %{_fontbasedir}/*/%{_fontstem}/RaghuMalayalamSans.ttf
+%doc RaghuMalayalamSans/COPYING
 
 %package -n fonts-ttf-smc-suruma
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3 with exceptions
 %description -n fonts-ttf-smc-suruma
@@ -111,10 +114,11 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-suruma.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-suruma.conf
 %{_fontbasedir}/*/%{_fontstem}/Suruma.ttf
+%doc Suruma/COPYING Suruma/README
 
 %package -n fonts-ttf-smc-kalyani
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
 %description -n fonts-ttf-smc-kalyani
@@ -125,10 +129,11 @@ new Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-kalyani.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-kalyani.conf
 %{_fontbasedir}/*/%{_fontstem}/Kalyani.ttf
+%doc Kalyani/COPYING
 
 %package -n fonts-ttf-smc-anjalioldlipi
-Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
+Summary: Open Type Fonts for Malayalam script
 Requires: %{name}-common = %{version}-%{release}
 License: GPL+
 %description -n fonts-ttf-smc-anjalioldlipi
@@ -139,18 +144,21 @@ traditional Malayalam Scripts.
 %{_fontconfig_templatedir}/67-smc-anjalioldlipi.conf
 %config(noreplace) %{_fontconfig_confdir}/67-smc-anjalioldlipi.conf
 %{_fontbasedir}/*/%{_fontstem}/AnjaliOldLipi.ttf
+%doc AnjaliOldLipi/COPYING
 
-#%{_fontbasedir}/*/%{_fontstem} is shared by following packages since they all are for malayalam script only
 
 %prep
-%setup -q -n malayalam-fonts-%{version}
+%setup -q -n fonts
 %patch1 -p1 -b .1-panose-setting
+sed -i 's/\r//' */COPYING
+sed -i 's/\r//' Rachana/LICENSE
 
 %build
 chmod +x generate.pe
 make
 
 %install
+#%%{_fontdir} is shared by all subpackages since they all are for malayalam script only
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p AnjaliOldLipi/*.ttf %{buildroot}%{_fontdir}
 install -m 0644 -p Dyuthi/*.ttf %{buildroot}%{_fontdir}
@@ -227,6 +235,9 @@ fi
 %doc ChangeLog 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 6.0-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_5
 - update to new release by fcimport
 
