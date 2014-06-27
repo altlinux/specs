@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-bodoni-classic
 Version: 20070415
-Release: alt3_17
+Release: alt3_18
 Summary: GFS Bodoni Classic oblique Greek font
 
 Group:     System/Fonts/True type
@@ -115,6 +115,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_18
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_17
 - update to new release by fcimport
 
