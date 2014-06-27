@@ -1,7 +1,7 @@
 Name: stardict-dic-zh_CN
 Summary: Simplified Chinese(zh_CN) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_12
+Release: alt2_13
 Group: Text tools
 License: GPL+
 URL: http://stardict.sourceforge.net
@@ -59,6 +59,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_13
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_12
 - update to new release by fcimport
 
