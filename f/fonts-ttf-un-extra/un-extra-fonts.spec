@@ -21,23 +21,23 @@ The Un Extra set is composed of: \
 - UnPilgia: script \
 
 %define common_desc_ko \
-은글꼴 시리즈는 HLaTex개발자이신 은광희님이 1998년에 개발한 폰트입니다. \
-2003년에 박원규님이 FontForge를 이용하여 트루타입폰트로 변환했습니다. \
-은글꼴은 가장 일반적인 글꼴들입니다. \
+i'.e..e.. i.'e..i..e.. HLaTexe.'e.'i..i'.i.. i'.e..i'.e.'i'. 1998e..i-. e.'e.'i.' i..i..i..e..e... \
+2003e..i-. e..i..e.'e.'i'. FontForgee.. i'.i..i.'i-. i..e..i..i..i..i..e.' e..i''i..i..e..e... \
+i'.e..e..i'. e..i.. i'.e.'i..i'. e..e..e..i..e..e... \
 \
-Extra 모음 \
-- 은펜, 은펜흘림: script \
-- 은타자: typewriter style \
-- 은봄: decorative \
-- 은신문 \
-- 은옛글: old Korean printing style \
-- 은자모소라, 은자모노벨, 은자모돋음, 은자모바탕 \
-- 은바다 \
-- 은필기a: script \ 
+Extra e..i'. \
+- i'.i.', i'.i.'i''e..: script \
+- i'.i..i..: typewriter style \
+- i'.e..: decorative \
+- i'.i..e.. \
+- i'.i'.e..: old Korean printing style \
+- i'.i..e..i..e'., i'.i..e..e..e.., i'.i..e..e..i'., i'.i..e..e..i.. \
+- i'.e..e.. \
+- i'.i..e..a: script \ 
 
 Name:        fonts-ttf-un-extra
 Version:     1.0.2
-Release:     alt3_0.17.%{alphatag}
+Release:     alt3_0.19.%{alphatag}
 Summary:     Un Extra family of Korean TrueType fonts
 Summary(ko): 한글 은글꼴 Extra 모음
 
@@ -367,6 +367,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.19.080608
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.17.080608
 - update to new release by fcimport
 
