@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:        fonts-otf-saab
 Version:     0.91
-Release:     alt3_9
+Release:     alt3_11
 Summary:     Free Punjabi Unicode OpenType Font
 
 Group:       System/Fonts/True type
@@ -88,6 +88,9 @@ fi
 %doc License_font_exception.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_9
 - update to new release by fcimport
 
