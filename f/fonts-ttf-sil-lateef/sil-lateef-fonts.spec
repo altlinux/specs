@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-lateef
 Version:        1.001
-Release:        alt3_5
+Release:        alt3_7
 Summary:        An Arabic script unicode font
 
 Group:          System/Fonts/True type
@@ -96,6 +96,9 @@ fi
 %doc *.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_5
 - update to new release by fcimport
 
