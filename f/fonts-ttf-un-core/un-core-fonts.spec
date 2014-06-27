@@ -1,5 +1,5 @@
 %define oldname un-core-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name un-core-fonts
 %define version 1.0.2
 %global fontname un-core
@@ -22,21 +22,21 @@ The Un Core set is composed of: \
 - UnPilgi: script
 
 %define common_desc_ko \
-은글꼴 시리즈는 HLaTex개발자이신 은광희님이 1998년에 개발한 폰트입니다. \
-2003년에 박원규님이 FontForge를 이용하여 트루타입폰트로 변환했습니다. \
-은글꼴은 가장 일반적인 글꼴들입니다. \
+i'.e..e.. i.'e..i..e.. HLaTexe.'e.'i..i'.i.. i'.e..i'.e.'i'. 1998e..i-. e.'e.'i.' i..i..i..e..e... \
+2003e..i-. e..i..e.'e.'i'. FontForgee.. i'.i..i.'i-. i..e..i..i..i..i..e.' e..i''i..i..e..e... \
+i'.e..e..i'. e..i.. i'.e.'i..i'. e..e..e..i..e..e... \
 \
-Core 모음: \
-- 은바탕: serif \
-- 은디나루: fantasy \
-- 은돋음: sans-serif \
-- 은그래픽: sans-serif style \
-- 은궁서: cursive, brush-stroke \
-- 은필기: script
+Core e..i'.: \
+- i'.e..i..: serif \
+- i'.e..e.'e..: fantasy \
+- i'.e..i'.: sans-serif \
+- i'.e..e.'i..: sans-serif style \
+- i'.e..i.': cursive, brush-stroke \
+- i'.i..e..: script
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.21.%{alphatag}
+Release:        alt3_0.23.%{alphatag}
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
@@ -68,7 +68,7 @@ This package consists of files used by other %{oldname} packages.
 %define un_subpkg() \
 %package -n fonts-ttf-%{fontname}-%1 \
 Summary:        Un Core fonts - %(echo %2) \
-Summary(ko):    한글 은글꼴 Core 모음 - %(echo %3) \
+Summary(ko):    i.'e.. i'.e..e.. Core e..i'. - %(echo %3) \
 Group:          System/Fonts/True type \
 Requires:       %{name}-common = %{version}-%{release} \
 \
@@ -258,6 +258,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.23.080608
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.21.080608
 - update to new release by fcimport
 
