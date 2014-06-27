@@ -14,7 +14,7 @@ The font is a smart font using a Graphite description.
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.8
-Release: alt1_6
+Release: alt2_6
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -40,16 +40,16 @@ Source44: import.info
 %{_fontbasedir}/*/%{_fontstem}/Padauk-bold.ttf
 %doc *.txt
 
-%package -n %{fontname}-book-fonts
+%package -n fonts-ttf-sil-padauk-book
 Group: System/Fonts/True type
 Summary:  A font for Burmese and the Myanmar script
 
-%description -n %{fontname}-book-fonts
+%description -n fonts-ttf-sil-padauk-book
 Padauk Book family font.
 
 %common_desc
 
-%files -n sil-padauk-book-fonts
+%files -n fonts-ttf-sil-padauk-book
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
 %{_fontbasedir}/*/%{_fontstem}/Padauk-book*.ttf
@@ -127,6 +127,9 @@ fi
 
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt2_6
+- bugfix: fixed subpackage name
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_6
 - update to new release by fcimport
 
