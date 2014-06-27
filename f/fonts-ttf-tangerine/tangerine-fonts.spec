@@ -3,15 +3,16 @@
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-tangerine
-Version:        1.000 
-Release:        alt3_5
+Version:        1.3
+Release:        alt1_2
 Summary:        Tangerine is a calligraphy font inspired by many italic chancery hands 
 
 Group:          System/Fonts/True type
 License:        OFL
-URL:            http://code.google.com/p/googlefontdirectory/source/browse/tangerine/
-Source0:        http://googlefontdirectory.googlecode.com/hg/tangerine/Tangerine.ttf
-Source1:        %{oldname}-fontconfig.conf
+URL:            http://www.google.com/fonts/specimen/Tangerine
+Source0:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Regular.ttf
+Source1:        http://googlefontdirectory.googlecode.com/hg/ofl/tangerine/Tangerine_Bold.ttf
+Source2:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -28,22 +29,20 @@ who encouraged him to begin this work.
 
 %prep
 %setup -n %{oldname}-%{version} -c -T
-cp -p %{SOURCE0} .
+cp -p %{SOURCE0} %{SOURCE1} .
 
 
 %build
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
@@ -92,6 +91,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_5
 - update to new release by fcimport
 
