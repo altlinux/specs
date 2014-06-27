@@ -4,7 +4,7 @@
 
 Name:           fonts-otf-oflb-asana-math
 Version:        0.930
-Release:        alt2_4
+Release:        alt2_6
 Summary:        An OpenType font with a MATH table
 
 Group:          System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.930-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.930-alt2_4
 - update to new release by fcimport
 
