@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-bitmap-jisksp16-1990
 Version:	0.983
-Release:	alt4_9
+Release:	alt4_11
 Summary:	16x16 JIS X 0212:1990 Bitmap font
 Group:		System/Fonts/True type
 License:	Public Domain
@@ -89,6 +89,9 @@ fi
 %{catalogue}/*
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_9
 - update to new release by fcimport
 
