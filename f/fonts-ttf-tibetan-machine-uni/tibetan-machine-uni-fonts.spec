@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-tibetan-machine-uni
 Version:	1.901
-Release:	alt3_11
+Release:	alt3_13
 Summary:	Tibetan Machine Uni font for Tibetan, Dzongkha and Ladakhi
 
 Group:		System/Fonts/True type
@@ -78,6 +78,9 @@ fi
 %doc gpl.txt ReadMe.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_11
 - update to new release by fcimport
 
