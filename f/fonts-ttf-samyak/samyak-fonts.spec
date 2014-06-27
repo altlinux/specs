@@ -9,7 +9,7 @@ Scripts Devanagari, Gujarati, Malayalam, Odia and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt3_13
+Release:	alt4_13
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -30,10 +30,10 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-samyak-common
 Summary:  Common files for samyak-fonts
 Group:	System/Fonts/True type
-%description common
+%description -n fonts-ttf-samyak-common
 %common_desc
 
 %package -n fonts-ttf-samyak-devanagari
@@ -92,18 +92,18 @@ Scripts Gujarati.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gujarati.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Gujarati.ttf
 
-%package -n %{fontname}-odia-fonts
+%package -n fonts-ttf-samyak-odia
 Summary: Open Type Fonts for Odia script
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
 Provides:	%{fontname}-oriya-fonts = %{version}-%{release}
 Obsoletes:	%{fontname}-oriya-fonts < 1.2.2-12
-%description -n %{fontname}-odia-fonts
+%description -n fonts-ttf-samyak-odia
 This package contains truetype/opentype font for the display of \
 Scripts Odia.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-odia-fonts
+%files -n fonts-ttf-samyak-odia
 %{_fontconfig_templatedir}/%{fontconf}-odia.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-odia.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Odia.ttf
@@ -187,11 +187,14 @@ fi
 
 
 
-%files common
+%files -n fonts-ttf-samyak-common
 %doc COPYING README AUTHORS
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt4_13
+- bugfix: fixed subpackage name
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_13
 - update to new release by fcimport
 
