@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.1
-Release: alt11
+Release: alt13
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,16 @@ done)
 
 
 %changelog
+* Thu Jun 26 2014 Led <led@altlinux.ru> 3.15.1-alt13
+- updated:
+  + fix-drivers-spi
+  + feat-kernel-power-tuxonice
+
+* Thu Jun 26 2014 Led <led@altlinux.ru> 3.15.1-alt12
+- added:
+  + fix-sound-core--snd (CVE-2014-4652, CVE-2014-4653, CVE-2014-4654,
+    CVE-2014-4655, CVE-2014-4656)
+
 * Wed Jun 25 2014 Led <led@altlinux.ru> 3.15.1-alt11
 - added:
   + fix-block--cfq-iosched
