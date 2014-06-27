@@ -2,7 +2,7 @@
 BuildRequires: /usr/bin/afm2tfm /usr/bin/fontforge /usr/bin/mktexlsr /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-arundina-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name thai-arundina-fonts
 %define version 0.2.0
 %global fontname thai-arundina
@@ -17,7 +17,7 @@ compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
 Version:	0.2.0
-Release:	alt2_3
+Release:	alt2_5
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
@@ -173,6 +173,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_3
 - update to new release by fcimport
 
