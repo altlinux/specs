@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-olga
 Version: 20060908
-Release: alt3_16
+Release: alt3_17
 Summary: GFS Olga experimental oblique font
 
 Group:     System/Fonts/True type
@@ -112,6 +112,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20060908-alt3_16
 - update to new release by fcimport
 
