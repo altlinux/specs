@@ -1,5 +1,5 @@
 %define oname glusterfs
-%define major 3.4
+%define major 3.5
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.3
+Version: %major.0
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -45,7 +45,7 @@ Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Nov 19 2012
 BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
-BuildRequires: librdmacm-devel libaio-devel
+BuildRequires: librdmacm-devel libaio-devel zlib-devel liblvm2-devel glib2-devel
 
 Conflicts: %oname
 
@@ -177,13 +177,23 @@ is in user space and easily manageable.
 
 This package provides the development libraries.
 
+%package -n python-module-%name
+Summary: Python module for %name
+Group: Development/Python
+%setup_python_module %name
+
+%description -n python-module-%name
+This package provides Python API for %name
+
 %prep
 %setup
 %patch0 -p1
 
 %build
 ./autogen.sh
-%configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/
+%configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/ \
+	    --enable-qemu-block \
+	    --enable-bd-xlator
 
 # Remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -237,9 +247,6 @@ mkdir -p %buildroot%_sharedstatedir/glusterd
 # Update configuration file to /var/lib working directory
 sed -i 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
 %buildroot%_sysconfdir/glusterfs/glusterd.vol
-# Clean up the examples we want to include as %%doc
-cp -a doc/examples examples
-rm -f examples/Makefile*
 
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
@@ -285,6 +292,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %if 0%{!?_without_rdma:1}
 %exclude %_libdir/glusterfs/%version/rpc-transport/rdma*
 %endif
+%_datadir/glusterfs/scripts/post-upgrade-script-for-quota.sh
+%_datadir/glusterfs/scripts/pre-upgrade-script-for-quota.sh
+
 
 %if 0%{!?_without_rdma:1}
 %files rdma
@@ -296,8 +306,17 @@ install -D -p -m 644 extras/glusterfs.vim \
 %dir %_libexecdir/glusterfs/
 %_libexecdir/glusterfs/gsyncd
 %dir %_libexecdir/glusterfs/python/
+%_libexecdir/glusterfs/gverify.sh
+%_libexecdir/glusterfs/peer_add_secret_pub
+%_libexecdir/glusterfs/peer_gsec_create
 %_libexecdir/glusterfs/python/syncdaemon/
+%_datadir/glusterfs/scripts/get-gfid.sh
+%_datadir/glusterfs/scripts/slave-upgrade.sh
+%_datadir/glusterfs/scripts/gsync-upgrade.sh
+%_datadir/glusterfs/scripts/generate-gfid-file.sh
+%_bindir//gsync-sync-gfid
 %endif
+
 
 %files client
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
@@ -310,7 +329,6 @@ install -D -p -m 644 extras/glusterfs.vim \
 %endif
 
 %files server
-%doc examples/
 %config(noreplace) %_sysconfdir/logrotate.d/glusterd
 %config(noreplace) %_sysconfdir/sysconfig/glusterd
 %config(noreplace) %_sysconfdir/glusterfs
@@ -330,6 +348,10 @@ install -D -p -m 644 extras/glusterfs.vim \
 %exclude %_includedir/glusterfs/y.tab.h
 %_libdir/*.so
 %_libdir/pkgconfig/glusterfs-api.pc
+%_libdir/pkgconfig/libgfchangelog.pc
+
+%files -n python-module-%name
+%python_sitelibdir_noarch/*
 
 %post server
 %post_service glusterfsd
@@ -340,11 +362,16 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Thu Jun 19 2014 Anton Farygin <rider@altlinux.ru> 3.5.0-alt1
+- new version
+- build with linux AIO
+
 * Sat Apr 12 2014 Alexei Takaseev <taf@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
 * Sat Feb 15 2014 Alexei Takaseev <taf@altlinux.org> 3.4.2-alt1
 - 3.4.2
+
 
 * Wed Jul 17 2013 Alexei Takaseev <taf@altlinux.org> 3.4.0-alt1
 - 3.4.0
