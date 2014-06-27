@@ -5,11 +5,11 @@
 # Common description
 %global common_desc \
 The Samyak package contains fonts for the display of \
-Scripts Devanagari, Gujarati, Malayalam, Oriya and Tamil
+Scripts Devanagari, Gujarati, Malayalam, Odia and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt3_10
+Release:	alt3_13
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -20,10 +20,11 @@ Source1: 66-samyak-devanagari.conf
 Source2: 67-samyak-tamil.conf
 Source3: 68-samyak-malayalam.conf
 Source4: 67-samyak-gujarati.conf
-Source5: 67-samyak-oriya.conf
+Source5: 67-samyak-odia.conf
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 BuildRequires: fontforge >= 20080429
+Patch1: bug-1040288.patch
 Source44: import.info
 
 %description
@@ -91,23 +92,27 @@ Scripts Gujarati.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gujarati.conf
 %{_fontbasedir}/*/%{_fontstem}/Samyak-Gujarati.ttf
 
-%package -n fonts-ttf-samyak-oriya
-Summary: Open Type Fonts for Oriya script
-Group: System/Fonts/True type
+%package -n %{fontname}-odia-fonts
+Summary: Open Type Fonts for Odia script
+Group: Graphical desktop/Other
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-%description -n fonts-ttf-samyak-oriya
+Provides:	%{fontname}-oriya-fonts = %{version}-%{release}
+Obsoletes:	%{fontname}-oriya-fonts < 1.2.2-12
+%description -n %{fontname}-odia-fonts
 This package contains truetype/opentype font for the display of \
-Scripts Oriya.
+Scripts Odia.
 
-%files -n fonts-ttf-samyak-oriya
-%{_fontconfig_templatedir}/%{fontconf}-oriya.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-oriya.conf
-%{_fontbasedir}/*/%{_fontstem}/Samyak-Oriya.ttf
+%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-odia-fonts
+%{_fontconfig_templatedir}/%{fontconf}-odia.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-odia.conf
+%{_fontbasedir}/*/%{_fontstem}/Samyak-Odia.ttf
 
 
 %prep
 %setup -q -n samyak-fonts-%{version}
+%patch1 -p1 -b .1-change-name-from-oriya-to-odia
+
 
 %build
 mkdir -p TTFfiles/
@@ -134,14 +139,14 @@ install -m 0644 -p %{SOURCE4} \
 	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-gujarati.conf
 
 install -m 0644 -p %{SOURCE5} \
-	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-oriya.conf
+	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}-odia.conf
 
 
 for fconf in 66-samyak-devanagari.conf \
 		%{fontconf}-tamil.conf \
 		68-samyak-malayalam.conf \
 		%{fontconf}-gujarati.conf \
-		%{fontconf}-oriya.conf ; do
+		%{fontconf}-odia.conf ; do
   ln -s %{_fontconfig_templatedir}/$fconf \
 	%{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -187,6 +192,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_10
 - update to new release by fcimport
 
