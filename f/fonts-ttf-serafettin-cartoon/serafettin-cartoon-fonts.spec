@@ -1,5 +1,5 @@
 %define oldname serafettin-cartoon-fonts
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name serafettin-cartoon-fonts
 %define version 0.6
 %define fontname serafettin-cartoon
@@ -8,7 +8,7 @@
 
 Name:          fonts-ttf-serafettin-cartoon
 Version:       0.6
-Release:       alt3_5
+Release:       alt3_7
 Summary:       Sans-serif Cartoon Fonts
 Group:         System/Fonts/True type
 License:       GPLv2+
@@ -93,6 +93,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_5
 - update to new release by fcimport
 
