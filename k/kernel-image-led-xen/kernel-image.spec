@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.1
-Release: alt11
+Version: 3.15.2
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 1
+%define kernel_stable_version 2
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1883,6 +1883,28 @@ done)
 
 
 %changelog
+* Fri Jun 26 2014 Led <led@altlinux.ru> 3.15.2-alt1
+- 3.15.2
+- removed:
+  + fix-drivers-net-ethernet--sfc
+  + fix-drivers-target--target_core_mod
+  + fix-drivers-target-iscsi--iscsi_target_mod
+  + fix-lib-lz4--lz4_decompress
+  + fix-lib-lzo--lzo_decompress
+  + fix-sound-core--snd
+- updated:
+  + fix-mm
+
+* Thu Jun 26 2014 Led <led@altlinux.ru> 3.15.1-alt13
+- updated:
+  + fix-drivers-spi
+  + feat-kernel-power-tuxonice
+
+* Thu Jun 26 2014 Led <led@altlinux.ru> 3.15.1-alt12
+- added:
+  + fix-sound-core--snd (CVE-2014-4652, CVE-2014-4653, CVE-2014-4654,
+    CVE-2014-4655, CVE-2014-4656)
+
 * Wed Jun 25 2014 Led <led@altlinux.ru> 3.15.1-alt11
 - added:
   + fix-block--cfq-iosched
