@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-typemade-josefinsansstd-light
 Version:        1.000 
-Release:        alt3_7
+Release:        alt3_9
 Summary:        A latin font that is geometric, elegant, and kind of vintage
 
 Group:          System/Fonts/True type
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_7
 - update to new release by fcimport
 
