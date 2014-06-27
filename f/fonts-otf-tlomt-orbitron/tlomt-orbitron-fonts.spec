@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-tlomt-orbitron
 Version:        1.000
-Release:        alt3_7
+Release:        alt3_9
 Summary:        Geometric sans-serif typeface
 
 Group:          System/Fonts/True type
@@ -104,6 +104,9 @@ fi
 %doc Open\ Font\ License.txt
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_9
+- update to new release by fcimport
+
 * Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_7
 - fc update
 
