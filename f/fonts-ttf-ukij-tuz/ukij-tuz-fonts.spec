@@ -4,7 +4,7 @@
 
 Name:		fonts-ttf-ukij-tuz
 Version:	3.10
-Release:	alt2_4
+Release:	alt2_6
 Summary:	Uyghur Computer Science Association (UKIJ) Unicode fonts
 
 Group:		System/Fonts/True type
@@ -78,6 +78,9 @@ fi
 %doc
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.10-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.10-alt2_4
 - update to new release by fcimport
 
