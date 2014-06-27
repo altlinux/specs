@@ -18,8 +18,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.15.1
-Release: alt2
+Version: 1.15.2
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -302,6 +302,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jun 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.2-alt1
+- 1.15.2
+
 * Tue Jun 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.1-alt2
 - Report DRI3, Present as a built-in module
 
