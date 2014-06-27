@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-abyssinica
 Version:        1.200
-Release:        alt2_5
+Release:        alt2_7
 Summary:        SIL Abyssinica fonts
 
 License:        OFL
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_5
 - update to new release by fcimport
 
