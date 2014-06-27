@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -41,7 +41,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.10.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 0.9.11
+%define hb_ver 0.9.29
 
 # We need to prereq these so we can run pango-querymodules in post
 PreReq: glib2 >= %glib_ver
@@ -192,13 +192,16 @@ mkdir -p %buildroot%_sysconfdir/%_name
 
 %if_enabled installed_tests
 %files tests
-%_libexecdir/%_name/installed-tests/
+%_libexecdir/installed-tests/%_name/
 %_datadir/installed-tests/%_name/
 %endif
 
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Tue Jun 24 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.5-alt1
+- 1.36.5
+
 * Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.3-alt1
 - 1.36.3
 

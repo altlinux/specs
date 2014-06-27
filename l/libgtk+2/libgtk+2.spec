@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.23
+Version: %ver_major.24
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -25,7 +25,6 @@ License: %lgpl2plus
 Group: System/Libraries
 Url: http://www.gtk.org
 Icon: gtk+-logo.xpm
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Provides: libgtk2 = %version gtk2 = %version gtk+2 = %version gtk-engines-pixmap = %version
 Obsoletes: libgtk2 < %version gtk2 < %version gtk+2 < %version gtk-engines-pixmap < %version
@@ -375,6 +374,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_datadir/gir-1.0/*
 
 %changelog
+* Tue Jun 24 2014 Yuri N. Sedunov <aris@altlinux.org> 2.24.24-alt1
+- 2.24.24
+
 * Tue Mar 18 2014 Yuri N. Sedunov <aris@altlinux.org> 2.24.23-alt1
 - 2.24.23
 
