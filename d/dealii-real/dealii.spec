@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 8.2
-Release: alt1.pre.svn20140527
+Release: alt1.pre.svn20140626
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -126,6 +126,16 @@ deal.II.
 rm -fR bundled/tbb* bundled/boost* bundled/umfpack
 #sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
 
+TRILINOS_VERSION_MAJOR=$(rpm -q --queryformat="%{VERSION}" libtrilinos10 |sed 's|\([0-9]*\)\..*|\1|')
+sed -i "s|@TRILINOS_VERSION_MAJOR@|$TRILINOS_VERSION_MAJOR|" \
+	include/deal.II/base/config.h.in
+TRILINOS_VERSION_MINOR=$(rpm -q --queryformat="%{VERSION}" libtrilinos10 |sed 's|[0-9]*\.\([0-9]*\).*|\1|')
+sed -i "s|@TRILINOS_VERSION_MINOR@|$TRILINOS_VERSION_MINOR|" \
+	include/deal.II/base/config.h.in
+TRILINOS_VERSION_SUBMINOR=$(rpm -q --queryformat="%{VERSION}" libtrilinos10 |sed 's|[0-9]*\.[0-9]*\.\(.*\)|\1|')
+sed -i "s|@TRILINOS_VERSION_SUBMINOR@|$TRILINOS_VERSION_SUBMINOR|" \
+	include/deal.II/base/config.h.in
+
 %build
 source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -204,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140626
+- New snapshot
+
 * Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140527
 - Version 8.2.pre
 
