@@ -3,7 +3,7 @@ Group: System/Fonts/True type
 %global fontname overpass
 %global fontconf 60-%{fontname}.conf
 
-Name:		fonts-ttf-overpass-fonts
+Name:		fonts-ttf-overpass
 Version:	1.01
 Release:	alt1_7
 Summary:	Typeface based on the U.S. interstate highway road signage type system
@@ -15,6 +15,9 @@ Source2:	http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
+# rename
+Conflicts: fonts-ttf-overpass-fonts <= 1.01-alt1_7
+Obsoletes: fonts-ttf-overpass-fonts <= 1.01-alt1_7
 
 %description
 Free & open source typeface based on the U.S. interstate highway road signage 
@@ -81,15 +84,6 @@ fi
 %doc Overpass-OFL.txt LICENSE-2.0.txt
 
 %changelog
-* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_7
-- update to new release by fcimport
-
-* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_4
-- update to new release by fcimport
-
-* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_3
-- update to new release by fcimport
-
-* Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_2
-- fc import
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_7
+- bugfix: fixed subpackage name
 
