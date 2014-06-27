@@ -6,7 +6,7 @@
 
 Name: fonts-bitmap-iso8859-2
 Version: 1.0
-Release: alt2_28
+Release: alt2_30
 License: MIT
 # Upstream url http://www.biz.net.pl/images/ISO8859-2-bdf.tar.gz is dead now.
 Source: ISO8859-2-bdf.tar.gz
@@ -87,40 +87,6 @@ mkdir -p $RPM_BUILD_ROOT%{catalogue}
 ln -sf %{_fontdir}/misc $RPM_BUILD_ROOT%{catalogue}/%{fontname}-misc-fonts
 ln -sf %{_fontdir}/75dpi $RPM_BUILD_ROOT%{catalogue}/%{fontname}-75dpi-fonts
 ln -sf %{_fontdir}/100dpi $RPM_BUILD_ROOT%{catalogue}/%{fontname}-100dpi-fonts
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 %post -n fonts-bitmap-iso8859-2-misc
 {
@@ -140,33 +106,36 @@ fi
 
 %files -n fonts-bitmap-iso8859-2-misc
 %doc
-%dir %{_fontbasedir}/*/%{_fontstem}/misc
-%{_fontbasedir}/*/%{_fontstem}/misc/*.gz
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/misc/fonts.alias
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/misc/fonts.dir
-%{catalogue}/%{fontname}-misc*
+%dir %{_fontdir}/misc
+%{_fontdir}/misc/*.gz
+%verify(not md5 size mtime) %{_fontdir}/misc/fonts.alias
+%verify(not md5 size mtime) %{_fontdir}/misc/fonts.dir
+%{catalogue}/%{fontname}-misc-fonts
 
 %files -n fonts-bitmap-iso8859-2-75dpi
 %doc
-%dir %{_fontbasedir}/*/%{_fontstem}/75dpi
-%{_fontbasedir}/*/%{_fontstem}/75dpi/*.gz
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/75dpi/fonts.alias
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/75dpi/fonts.dir
-%{catalogue}/%{fontname}-75dpi*
+%dir %{_fontdir}/75dpi
+%{_fontdir}/75dpi/*.gz
+%verify(not md5 size mtime) %{_fontdir}/75dpi/fonts.alias
+%verify(not md5 size mtime) %{_fontdir}/75dpi/fonts.dir
+%{catalogue}/%{fontname}-75dpi-fonts
 
 %files -n fonts-bitmap-iso8859-2-100dpi
 %doc
-%dir %{_fontbasedir}/*/%{_fontstem}/100dpi
-%{_fontbasedir}/*/%{_fontstem}/100dpi/*.gz
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/100dpi/fonts.alias
-%verify(not md5 size mtime) %{_fontbasedir}/*/%{_fontstem}/100dpi/fonts.dir
-%{catalogue}/%{fontname}-100dpi*
+%dir %{_fontdir}/100dpi
+%{_fontdir}/100dpi/*.gz
+%verify(not md5 size mtime) %{_fontdir}/100dpi/fonts.alias
+%verify(not md5 size mtime) %{_fontdir}/100dpi/fonts.dir
+%{catalogue}/%{fontname}-100dpi-fonts
 
 %files common
 %doc *.TXT
-%dir %{_fontbasedir}/*/%{_fontstem}
+%dir %{_fontdir}
 
 %changelog
+* Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_30
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_28
 - update to new release by fcimport
 
