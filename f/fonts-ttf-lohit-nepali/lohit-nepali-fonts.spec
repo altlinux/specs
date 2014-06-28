@@ -1,11 +1,12 @@
+BuildRequires: libfontforge-devel
 %define oldname lohit-nepali-fonts
 %global fontname lohit-nepali
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-nepali
-Version:        2.5.3
-Release:        alt1_1
-Summary:        Free Nepali font
+Version:        2.94.0
+Release:        alt1_2
+Summary:        Free TrueType fonts for Nepali language
 
 Group:          System/Fonts/True type
 License:        OFL
@@ -17,14 +18,14 @@ BuildRequires:  fontpackages-devel
 Source44: import.info
 
 %description
-This package provides a free Nepali truetype/opentype font.
+This package provides a free TrueType font for Nepali language.
 
 
 %prep
 %setup -q -n %{fontname}-%{version} 
 
 %build
-make
+make ttf %{?_smp_mflags}
 
 %install
 rm -fr %{buildroot}
@@ -80,9 +81,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-nepali.txt
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
