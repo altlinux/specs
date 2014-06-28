@@ -1,5 +1,5 @@
 Name: perl-Data-Section-Simple
-Version: 0.03
+Version: 0.07
 Release: alt1
 Summary: Data::Section::Simple - Read data from __DATA__
 
@@ -25,9 +25,12 @@ BuildRequires: perl-devel perl-Test-Requires perl-Module-Install perl-Module-Ins
 
 %files
 %perl_vendor_privlib/Data/Section/Simple.pm
-%doc Changes README 
+%doc Changes README.md
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Sun Dec 04 2011 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt1
 - New version 0.03
 
