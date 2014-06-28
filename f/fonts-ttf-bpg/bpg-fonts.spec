@@ -12,7 +12,7 @@ BuildRequires: unzip
 Name:		fonts-ttf-bpg
 Summary: 	Georgian Unicode fonts
 Version:	%{common_ver}
-Release:	alt4_4
+Release:	alt5_4
 # Font exception
 # See: http://groups.google.com/group/bpg-fonts/web/gpl-gnu-license
 # No version of the GPL is specified.
@@ -71,11 +71,11 @@ Source44: import.info
 %description
 %common_desc
 
-%package common
+%package -n fonts-ttf-bpg-common
 Summary:	Common files for BPG Georgian fonts (documentation...)
 Group:		System/Fonts/True type
 
-%description common
+%description -n fonts-ttf-bpg-common
 %common_desc
 
 This package consists of files used by other BPG font packages.
@@ -112,18 +112,18 @@ This package contains the Chveulebrivi font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-chveulebrivi.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Chveulebrivi_*.ttf"
 
-%package -n %{fontname}-classic-fonts
+%package -n fonts-ttf-bpg-classic
 Summary:	Classic family of BPG Georgian fonts
 Version:	8.500
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-classic-fonts
+%description -n fonts-ttf-bpg-classic
 %common_desc
 
 This package contains the Classic font family.
 
-%files -n bpg-classic-fonts
+%files -n fonts-ttf-bpg-classic
 %{_fontconfig_templatedir}/%{fontconf}-classic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-classic.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Classic_*.otf"
@@ -160,36 +160,36 @@ This package contains the Courier S font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-courier-s.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Courier_S*.ttf"
 
-%package -n %{fontname}-dedaena-block-fonts
+%package -n fonts-ttf-bpg-dedaena-block
 Summary:	DedaEna Block family of BPG Georgian fonts
 Version:	3.005
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-dedaena-block-fonts
+%description -n fonts-ttf-bpg-dedaena-block
 %common_desc
 
 This package contains the DedaEna Block font family.
 
-%files -n bpg-dedaena-block-fonts
+%files -n fonts-ttf-bpg-dedaena-block
 %{_fontconfig_templatedir}/%{fontconf}-dedaena-block.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dedaena-block.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DedEena_Block*.ttf"
 
-%package -n %{fontname}-dejavu-sans-fonts
+%package -n fonts-ttf-bpg-dejavu-sans
 Summary:	DejaVu Sans with BPG Georgian changes
 Version:	2.28
 License:	Bitstream Vera
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-dejavu-sans-fonts
+%description -n fonts-ttf-bpg-dejavu-sans
 %common_desc
 
 This package contains an improved version of DejaVu Sans with BPG Georgian 
 changes.
 
-%files -n bpg-dejavu-sans-fonts
+%files -n fonts-ttf-bpg-dejavu-sans
 %{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-bpg-dejavu-sans.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_Sans_*.ttf"
@@ -227,36 +227,36 @@ This package contains the Excelsior font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_GPL*.ttf"
 
-%package -n %{fontname}-excelsior-caps-fonts
+%package -n fonts-ttf-bpg-excelsior-caps
 Summary:	Excelsior Caps family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 License:	Bitstream Vera
 
-%description -n %{fontname}-excelsior-caps-fonts
+%description -n fonts-ttf-bpg-excelsior-caps
 %common_desc
 
 This package contains the Excelsior Caps font family.
 
-%files -n bpg-excelsior-caps-fonts
+%files -n fonts-ttf-bpg-excelsior-caps
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Caps*.ttf"
 
-%package -n %{fontname}-excelsior-condenced-fonts
+%package -n fonts-ttf-bpg-excelsior-condenced
 Summary:	Excelsior Condenced family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 License:	Bitstream Vera
 
-%description -n %{fontname}-excelsior-condenced-fonts
+%description -n fonts-ttf-bpg-excelsior-condenced
 %common_desc
 
 This package contains the Excelsior Condenced font family.
 
-%files -n bpg-excelsior-condenced-fonts
+%files -n fonts-ttf-bpg-excelsior-condenced
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-condenced.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Condenced*.ttf"
@@ -276,18 +276,18 @@ This package contains the Glaho font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-glaho.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Glaho*.ttf"
 
-%package -n %{fontname}-gorda-fonts
+%package -n fonts-ttf-bpg-gorda
 Summary:	Gorda family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-gorda-fonts
+%description -n fonts-ttf-bpg-gorda
 %common_desc
 
 This package contains the Gorda font family.
 
-%files -n bpg-gorda-fonts
+%files -n fonts-ttf-bpg-gorda
 %{_fontconfig_templatedir}/%{fontconf}-gorda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gorda.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Gorda*.ttf"
@@ -308,13 +308,13 @@ This package contains the Ingiri font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ingiri.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Ingiri*.ttf"
 
-%package -n %{fontname}-irubaqidze-fonts
+%package -n fonts-ttf-bpg-irubaqidze
 Summary:	Irubaqidze family of BPG Georgian fonts
 Version:	1.000
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-irubaqidze-fonts
+%description -n fonts-ttf-bpg-irubaqidze
 %common_desc
 
 This package contains the Irubaqidze font family. In 1628 Georgian printing 
@@ -326,18 +326,18 @@ Asomtavruli and Mkhedruli. Majio spent 7 years in Georgia studying Georgian
 language, scripture and grammar. Font "BPG Irubaqidze" is a modernized 
 replica of this casted type. 
 
-%files -n bpg-irubaqidze-fonts
+%files -n fonts-ttf-bpg-irubaqidze
 %{_fontconfig_templatedir}/%{fontconf}-irubaqidze.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-irubaqidze.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Irubaqidze*.otf"
 
-%package -n %{fontname}-mikhail-stephan-fonts
+%package -n fonts-ttf-bpg-mikhail-stephan
 Summary:	Mikhail Stephan family of BPG Georgian fonts
 Version:	2.500
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-mikhail-stephan-fonts
+%description -n fonts-ttf-bpg-mikhail-stephan
 %common_desc
 
 This package contains the Mikhail Stephan font family. This type was first 
@@ -346,87 +346,87 @@ used to print "The Knight in the Panther's Skin" by Shota Rustaveli, then
 "New Testament" and "The Bible" were printed using updated types prepared 
 in Tbilisi by Hungarian Master Michael Stefan Hungaro-Valakhian.
 
-%files -n bpg-mikhail-stephan-fonts
+%files -n fonts-ttf-bpg-mikhail-stephan
 %{_fontconfig_templatedir}/%{fontconf}-mikhail-stephan.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mikhail-stephan.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mikhail_Stephan*.otf"
 
-%package -n %{fontname}-mrgvlovani-fonts
+%package -n fonts-ttf-bpg-mrgvlovani
 Summary:	Mrgvlovani family of BPG Georgian fonts
 Version:	1.002
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-mrgvlovani-fonts
+%description -n fonts-ttf-bpg-mrgvlovani
 %common_desc
 
 This package contains the Mrgvlovani font family.
 
-%files -n bpg-mrgvlovani-fonts
+%files -n fonts-ttf-bpg-mrgvlovani
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_GPL*.ttf"
 
-%package -n %{fontname}-mrgvlovani-caps-fonts
+%package -n fonts-ttf-bpg-mrgvlovani-caps
 Summary:	Mrgvlovani Caps family of BPG Georgian fonts
 Version:	1.002
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n	%{fontname}-mrgvlovani-caps-fonts
+%description -n fonts-ttf-bpg-mrgvlovani-caps
 %common_desc
 
 This package contains the Mrgvlovani Caps font family.
 
-%files -n bpg-mrgvlovani-caps-fonts
+%files -n fonts-ttf-bpg-mrgvlovani-caps
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_Caps_*.ttf"
 
-%package -n %{fontname}-nateli-fonts
+%package -n fonts-ttf-bpg-nateli
 Summary:	Nateli family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-nateli-fonts
+%description -n fonts-ttf-bpg-nateli
 %common_desc
 
 This package contains the Nateli font family.
 
-%files -n bpg-nateli-fonts
+%files -n fonts-ttf-bpg-nateli
 %{_fontconfig_templatedir}/%{fontconf}-nateli.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_GPL*.ttf"
 
-%package -n %{fontname}-nateli-caps-fonts
+%package -n fonts-ttf-bpg-nateli-caps
 Summary:	Nateli Caps family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-nateli-caps-fonts
+%description -n fonts-ttf-bpg-nateli-caps
 %common_desc
 
 This package contains the Nateli Caps font family.
 
-%files -n bpg-nateli-caps-fonts
+%files -n fonts-ttf-bpg-nateli-caps
 %{_fontconfig_templatedir}/%{fontconf}-nateli-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Caps*.ttf"
 
-%package -n %{fontname}-nateli-condenced-fonts
+%package -n fonts-ttf-bpg-nateli-condenced
 Summary:	Nateli Condenced family of BPG Georgian fonts
 Version:	2.003
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-nateli-condenced-fonts
+%description -n fonts-ttf-bpg-nateli-condenced
 %common_desc
 
 This package contains the Nateli Condenced font family.
 
-%files -n bpg-nateli-condenced-fonts
+%files -n fonts-ttf-bpg-nateli-condenced
 %{_fontconfig_templatedir}/%{fontconf}-nateli-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-condenced.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Condenced*.ttf"
@@ -561,18 +561,18 @@ This package contains the Serif Modern font family.
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-serif-modern.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Serif_Modern*.ttf"
 
-%package -n %{fontname}-ucnobi-fonts
+%package -n fonts-ttf-bpg-ucnobi
 Summary:	Ucnobi family of BPG Georgian fonts
 Version:	3.300
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 Requires:	%{name}-common = %{common_ver}-%{release}
 
-%description -n %{fontname}-ucnobi-fonts
+%description -n fonts-ttf-bpg-ucnobi
 %common_desc
 
 This package contains the Ucnobi font family.
 
-%files -n bpg-ucnobi-fonts
+%files -n fonts-ttf-bpg-ucnobi
 %{_fontconfig_templatedir}/%{fontconf}-ucnobi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ucnobi.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Ucnobi*.otf"
@@ -666,11 +666,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-ttf-bpg-common
 %doc Docs/*
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt5_4
+- bugfix: fixed subpackage name
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt4_4
 - update to new release by fcimport
 
