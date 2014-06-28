@@ -1,5 +1,5 @@
 Name: perl-HTML-Shakan
-Version: 0.15
+Version: 1.00
 Release: alt1
 
 Summary: HTML::Shakan - form html generator/validator
@@ -11,7 +11,7 @@ Url: %CPAN HTML-Shakan
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires perl-List-MoreUtils perl-parent perl-Any-Moose perl-CGI perl-HTML-Scrubber perl-Lingua-JA-Regular-Unicode perl-DateTime perl-DateTime-Format-HTTP perl-Module-Build
+BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires perl-List-MoreUtils perl-parent perl-Any-Moose perl-CGI perl-HTML-Scrubber perl-Lingua-JA-Regular-Unicode perl-DateTime perl-DateTime-Format-HTTP perl-Module-Build perl(HTML/Escape.pm)
 
 %description
 %summary
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl-Mouse perl-FormValidator-Lite perl-Test-Requires 
 %doc TODO Changes
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Thu Apr 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
 - 0.15
 
