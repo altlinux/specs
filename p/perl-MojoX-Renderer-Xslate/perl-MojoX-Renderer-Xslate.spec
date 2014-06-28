@@ -1,5 +1,5 @@
 Name: perl-MojoX-Renderer-Xslate
-Version: 0.08
+Version: 0.09
 Release: alt1
 Summary: MojoX::Renderer::Xslate - Text::Xslate renderer for Mojo
 
@@ -29,6 +29,9 @@ BuildRequires: perl-Try-Tiny perl-Text-Xslate perl-devel perl-Mojolicious perl-M
 %doc Changes README 
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sat Jul 07 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - 0.07 -> 0.08
 
