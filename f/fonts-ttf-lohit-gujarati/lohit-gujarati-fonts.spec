@@ -1,12 +1,12 @@
+BuildRequires: libfontforge-devel
 %define oldname lohit-gujarati-fonts
 %global fontname lohit-gujarati
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-gujarati
-Version:        2.5.3
-Release:        alt1_1
+Version:        2.92.2
+Release:        alt1_2
 Summary:        Free Gujarati font
-
 Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
@@ -26,7 +26,7 @@ This package provides a free Gujarati truetype/opentype font.
 mv 66-%{fontname}.conf 65-0-lohit-gujarati.conf
 
 %build
-make %{?_smp_mflags}
+make ttf %{?_smp_mflags}
 
 %install
 
@@ -81,10 +81,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
-
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-gujarati.txt
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.92.2-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
