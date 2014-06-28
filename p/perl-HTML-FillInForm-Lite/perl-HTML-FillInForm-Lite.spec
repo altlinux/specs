@@ -1,5 +1,5 @@
 Name: perl-HTML-FillInForm-Lite
-Version: 1.10
+Version: 1.13
 Release: alt1
 
 Summary: HTML::FillInForm::Lite - Fills in HTML forms with data
@@ -27,9 +27,12 @@ BuildRequires: perl-devel perl-Module-Install perl-Module-Install perl-Module-In
 
 %files
 %perl_vendor_privlib/HTML/FillInForm/Lite*
-%doc Changes README 
+%doc Changes README.md
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt1
 - 1.09 -> 1.10
 
