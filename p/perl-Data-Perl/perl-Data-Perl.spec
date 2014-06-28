@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/MoreUtils.pm) perl(List/Util.pm) perl(Module/Runtime.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Scalar/Util.pm) perl(Test/Deep.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(parent.pm) perl(strictures.pm)
 # END SourceDeps(oneline)
-%define module_version 0.002008
+%define module_version 0.002009
 %define module_name Data-Perl
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002008
+Version: 0.002009
 Release: alt1
 Summary: Base classes wrapping fundamental Perl data types.
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.002009-alt1
+- automated CPAN update
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.002008-alt1
 - automated CPAN update
 
