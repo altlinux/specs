@@ -1,5 +1,5 @@
 Name: perl-Dancer2
-Version: 0.141000
+Version: 0.142000
 Release: alt1
 
 Summary: Lightweight yet powerful web application framework
@@ -32,6 +32,9 @@ BuildRequires: perl(Capture/Tiny.pm) perl(YAML.pm) perl(Pod/Usage.pm) perl(Templ
 %doc AUTHORS Changes LICENSE README.md
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.142000-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.141000-alt1
 - automated CPAN update
 
