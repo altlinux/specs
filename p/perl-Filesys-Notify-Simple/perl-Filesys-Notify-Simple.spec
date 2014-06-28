@@ -1,5 +1,5 @@
 Name: perl-Filesys-Notify-Simple
-Version: 0.08
+Version: 0.12
 Release: alt1
 
 Summary: Filesys::Notify::Simple - Simple and dumb file system watcher
@@ -32,9 +32,12 @@ a fallback to the full directory scan if they're not available.
 
 %files
 %perl_vendor_privlib/Filesys/Notify/Simple*
-%doc Changes README 
+%doc Changes README.md
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Tue Apr 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - New version 0.08
 - Added strict dependency on perl-Linux-Inotify2
