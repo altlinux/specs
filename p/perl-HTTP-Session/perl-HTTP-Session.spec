@@ -1,5 +1,5 @@
 Name: perl-HTTP-Session
-Version: 0.46
+Version: 0.48
 Release: alt1
 Summary: HTTP::Session - simple session
 
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-HTTP-Message perl-CGI-Simple perl-Module-Runtime 
 %doc Changes README 
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Thu Apr 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.46-alt1
 - 0.46
 
