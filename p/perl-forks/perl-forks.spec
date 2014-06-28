@@ -1,6 +1,6 @@
 %define dist forks
 Name: perl-%dist
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: Drop-in replacement for Perl threads using fork()
@@ -32,6 +32,9 @@ same syntax as the threads.pm module (it even takes over its namespace).
 %perl_vendor_archlib/threads
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
