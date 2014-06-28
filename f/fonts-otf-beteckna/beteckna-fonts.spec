@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt3_12
+Release:	alt4_12
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -38,45 +38,45 @@ Source44: import.info
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/Beteckna.otf
 
-%package	common
+%package	-n fonts-otf-beteckna-common
 Group: System/Fonts/True type
 Summary:	Common files of %{oldname}
 
-%description common
+%description -n fonts-otf-beteckna-common
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
 
 
 # 1 Lower Case
-%package -n	%{fontname}-lower-case-fonts
+%package -n fonts-otf-beteckna-lower-case
 Group: System/Fonts/True type
 Summary:	Beteckna lower case sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n	%{fontname}-lower-case-fonts
+%description -n fonts-otf-beteckna-lower-case
 %common_desc
 
 These are lower case Beteckna Fonts.
 
-%files -n beteckna-lower-case-fonts
+%files -n fonts-otf-beteckna-lower-case
 %{_fontconfig_templatedir}/%{fontconf}-lower-case.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lower-case.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaLowerCase*.otf
 
 
 # 1 Small Caps
-%package -n	%{fontname}-small-caps-fonts
+%package -n fonts-otf-beteckna-small-caps
 Group: System/Fonts/True type
 Summary:	Beteckna small caps sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n	%{fontname}-small-caps-fonts
+%description -n fonts-otf-beteckna-small-caps
 %common_desc
 
 These are small caps Beteckna Fonts.
 
-%files -n beteckna-small-caps-fonts
+%files -n fonts-otf-beteckna-small-caps
 %{_fontconfig_templatedir}/%{fontconf}-small-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-small-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaSmallCaps.otf
@@ -157,10 +157,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
+%files -n fonts-otf-beteckna-common
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_12
+- bugfix: fixed subpackage name
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_12
 - update to new release by fcimport
 
