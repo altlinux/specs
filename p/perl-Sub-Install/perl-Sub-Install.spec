@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sub-Install
-Version: 0.927
+Version: 0.928
 Release: alt1
 
 Summary: install subroutines into packages easily
@@ -49,6 +49,9 @@ see them.
 %perl_vendor_privlib/Sub*
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.928-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.927-alt1
 - automated CPAN update
 
