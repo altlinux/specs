@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Params-Validate
 Name: perl-%dist
-Version: 1.10
+Version: 1.12
 Release: alt1
 
 Summary: Validate method/function parameters
@@ -38,6 +38,9 @@ and that no unspecified additional parameters were passed in.
 %perl_vendor_archlib/Attribute
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
