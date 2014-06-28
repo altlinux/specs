@@ -1,10 +1,11 @@
+BuildRequires: libfontforge-devel
 %define oldname lohit-malayalam-fonts
 %global fontname lohit-malayalam
 %global fontconf 67-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-malayalam
-Version:        2.5.3
-Release:        alt1_1
+Version:        2.92.0
+Release:        alt1_2
 Summary:        Free Malayalam font
 Group:          System/Fonts/True type
 License:        OFL
@@ -13,7 +14,6 @@ Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{versio
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
-Obsoletes: lohit-fonts-common < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -24,7 +24,7 @@ This package provides a free Malayalam truetype/opentype font.
 %setup -q -n %{fontname}-%{version} 
 
 %build
-make %{?_smp_mflags}
+make ttf %{?_smp_mflags}
 
 %install
 
@@ -79,9 +79,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README std-test-out.txt test-malayalam.txt
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.92.0-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
