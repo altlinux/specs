@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.80
+Version: 0.82
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -17,7 +17,7 @@ BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
 BuildRequires: libleveldb-devel libsnappy-devel libs3-devel libblkid-devel
-BuildRequires: libxfs-devel
+BuildRequires: libxfs-devel yasm libudev-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -179,6 +179,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph_mon_store_converter
 %_bindir/ceph-rbdnamer
 %_bindir/ceph-dencoder
+%_bindir/cephfs-journal-tool
 %_bindir/librados-config
 %_bindir/rados
 %_bindir/rbd
@@ -189,7 +190,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_sbindir/ceph-disk-activate
 %_sbindir/ceph-disk-prepare
 %_sbindir/ceph-disk-udev
-%_sbindir/mkcephfs
 %_sbindir/mount.ceph
 %_sbindir/rcceph
 %_initdir/ceph
@@ -206,7 +206,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/ceph-mon.8*
 %_mandir/man8/ceph-mds.8*
 %_mandir/man8/ceph-osd.8*
-%_mandir/man8/mkcephfs.8*
 %_mandir/man8/ceph-run.8*
 %_mandir/man8/ceph-syn.8*
 %_mandir/man8/ceph-dencoder.8*
@@ -271,6 +270,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Jun 28 2014 Alexei Takaseev <taf@altlinux.org> 0.82-alt1
+- 0.82
+
 * Fri May 09 2014 Alexei Takaseev <taf@altlinux.org> 0.80-alt1
 - 0.80
 
