@@ -1,9 +1,10 @@
+BuildRequires: libfontforge-devel
 %define oldname lohit-devanagari-fonts
 %global fontname lohit-devanagari
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-devanagari
-Version:        2.5.3
+Version:        2.94.0
 Release:        alt1_2
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
@@ -23,7 +24,7 @@ This package provides a free Devanagari Script TrueType/OpenType font.
 mv 66-%{fontname}.conf 65-0-lohit-devanagari.conf
 
 %build
-make %{?_smp_mflags}
+make ttf %{?_smp_mflags}
 
 %install
 
@@ -79,10 +80,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README ChangeLog.old
+%doc ChangeLog COPYRIGHT OFL.txt AUTHORS README test-devanagari.txt
 
 
 %changelog
+* Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.94.0-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
 - update to new release by fcimport
 
