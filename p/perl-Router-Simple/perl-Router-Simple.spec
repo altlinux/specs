@@ -1,5 +1,5 @@
 Name: perl-Router-Simple
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Router::Simple perl module
 
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-
 %doc Changes 
 
 %changelog
+* Sun Jun 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - 0.09 -> 0.14
 
