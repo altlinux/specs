@@ -1,6 +1,6 @@
 Name: bitstream-headers
 Version: 1.0
-Release: alt3
+Release: alt5
 Summary: biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc.
 Group: Development/C
 
@@ -9,7 +9,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 License: MIT
 Url: http://www.videolan.org/developers/bitstream.html
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+#Patch0: %%name-%%version-%%release.patch
 BuildArch: noarch
 
 %description
@@ -22,7 +22,7 @@ and specifications.
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 
 %install
 make PREFIX=%buildroot/usr install
@@ -30,9 +30,14 @@ make PREFIX=%buildroot/usr install
 %files
 %doc AUTHORS COPYING INSTALL NEWS README TODO
 %_includedir/bitstream
-%_includedir/bitstream/*
 
 %changelog
+* Sun Jun 29 2014 Alexei Takaseev <taf@altlinux.org> 1.0-alt5
+- update to git:047c02753ca8b6b3e8d69b9b9a4790559d6aa8b7
+
+* Tue Oct 02 2012 Alexei Takaseev <taf@altlinux.org> 1.0-alt4
+- dvb/pes: Fix for PES payload offset
+
 * Sat Aug 11 2012 Alexei Takaseev <taf@altlinux.org> 1.0-alt3
 - Enforce consistency naming between tables (git: 6a24504cc5b5c4c4bd11dffc89209f2e2474b814)
 
