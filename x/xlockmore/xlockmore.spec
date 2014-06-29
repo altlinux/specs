@@ -1,33 +1,33 @@
 Name: xlockmore
 Version: 5.43
-Release: alt1
+Release: alt2
 
 Summary: An X terminal locking program
 License: MIT
 Group: Graphical desktop/Other
 Url: http://www.tux.org/~bagleyd/xlockmore.html
-Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
 Source: %name-%version.tar.bz2
 Source1: %name-v5.27-icons.tar.gz
 Source2: %name-v5.27-pam.d.tar
 Source3: po.tar.gz
 
-Patch: %name-v5.27-imode.patch
-Patch1: %name-v5.27-pam.patch
-Patch2: %name-v5.27-l10n.patch
-Patch3: %name-v5.42-kbdmon.patch
+Patch: xlockmore-v5.27-imode.patch
+Patch1: xlockmore-v5.27-pam.patch
+Patch2: xlockmore-v5.27-l10n.patch
+Patch3: xlockmore-v5.42-kbdmon.patch
+Patch4: xlockmore-5.43-nologout.patch
+Patch5: xlockmore-5.43-droidfonts.patch
 
 PreReq: /etc/tcb
 Requires: fortune-mod
-Requires: terminus-font
+Requires: fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono fonts-ttf-google-droid-serif
+
 
 BuildPreReq: gcc-c++
-BuildPreReq: libXpm-devel libXmu-devel
-
-# Automatically added by buildreq on Tue Feb 12 2013
-# optimized out: gnu-config libGL-devel libICE-devel libSM-devel libX11-devel libXt-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ imake libGLU-devel libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libfreetype-devel libpam-devel xorg-cf-files
+# Automatically added by buildreq on Sun Jun 29 2014
+# optimized out: gnu-config libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXt-devel libcloog-isl4 libfreetype-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ imake libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libftgl-devel libpam-devel xorg-cf-files
 
 %description
 The %name utility is an enhanced version of the standard xlock
@@ -44,10 +44,12 @@ X sessions.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 autoconf
-%configure \
+ftgl_includes=%_includedir/FTGL %configure \
 	--without-motif \
 	--without-gtk \
 	--without-esound \
@@ -57,6 +59,8 @@ autoconf
 	--enable-button-logout=85 \
 	--enable-use_mb \
 	--enable-kbdmon
+# Hack a little
+echo '#define FTGL213' >> config.h
 
 %make_build \
 	xapploaddir=%_sysconfdir/X11/app-defaults
@@ -81,6 +85,13 @@ install -D -m 644 ../%name-v5.27-icons/xlock-48x48.xpm %buildroot%_liconsdir/%na
 	xapploaddir=%buildroot%_sysconfdir/X11/app-defaults
 
 chmod 755 %buildroot%_bindir/*
+install -d %buildroot%_datadir/xlock/fonts
+
+%post
+find %_datadir/fonts/ttf -type f -iname \*.ttf | xargs -I. ln -sf . %_datadir/xlock/fonts/
+
+%postun
+rm -rf %_datadir/xlock/fonts/
 
 %files
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
@@ -91,9 +102,15 @@ chmod 755 %buildroot%_bindir/*
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 %_datadir/locale/*/*/xlock.mo
+%_datadir/xlock
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Sun Jun 29 2014 Fr. Br. George <george@altlinux.ru> 5.43-alt2
+- Add ftgl support
+- Provide -nologout option for user switching
+- Change default fonts to Droid ones
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 5.43-alt1
 - Autobuild version bump to 5.43
 
