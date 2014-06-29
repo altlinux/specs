@@ -1,6 +1,6 @@
 Name: apt-blacklist
 Version: 0.01
-Release: alt2.3.1
+Release: alt2.4
 
 Summary: Forbids installation of packages based on some criteria
 License: GPLv3+
@@ -40,6 +40,9 @@ install -pD -m644 apt.conf %buildroot/etc/apt/apt.conf.d/10-%name.conf
 %config(noreplace) %_sysconfdir/%name/watch
 
 %changelog
+* Sun Jun 29 2014 Terechkov Evgenii <evg@altlinux.org> 0.01-alt2.4
+- Compact all printed messages
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.01-alt2.3.1
 - Rebuild with Python-2.7
 
