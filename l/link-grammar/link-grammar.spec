@@ -2,11 +2,12 @@
 # don't use aspell as Abiword uses hanspell via libenchant
 %def_disable aspell
 %def_enable hunspell
+%def_disable perl
 
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 4.8.6
+Version: 5.0.8
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
@@ -15,11 +16,15 @@ Group: Text tools
 Url: http://www.link.cs.cmu.edu/link/
 
 Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
+Source1: ax_pkg_swig.m4
+
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ swig
+BuildRequires: libedit-devel libsqlite3-devel
 %{?_enable_aspell:BuildRequires:libaspell-devel}
 %{?_enable_hunspell:BuildRequires:libhunspell-devel}
+%{?_enable_perl:BuildRequires: perl-devel}
 
 %description
 The link grammar parsing system for Unix
@@ -39,9 +44,18 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 Development files needed to build applications with %name.
 
+%package -n perl-%name
+Summary: Perl bindings for %name
+Group: Development/Perl
+Requires: lib%name = %version-%release
+
+%description -n perl-%name
+Perl bindings for %name library.
+
 %prep
-%setup -q
+%setup
 [ ! -d m4 ] && mkdir m4
+cp %SOURCE1 ac-helpers/
 
 %build
 %autoreconf -I ac-helpers
@@ -50,8 +64,6 @@ Development files needed to build applications with %name.
 	%{?_disable_java:--disable-java-bindings} \
 	%{subst_enable aspell} \
 	%{subst_enable hunspell}
-
-
 %make_build
 
 %install
@@ -74,7 +86,15 @@ Development files needed to build applications with %name.
 %_pkgconfigdir/%name.pc
 %exclude %_libdir/*.a
 
+%if_enabled perl
+%files -n perl-%name
+%perl_vendor_privlib/*
+%endif
+
 %changelog
+* Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1
+- 5.0.8
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 4.8.6-alt1
 - 4.8.6
 
