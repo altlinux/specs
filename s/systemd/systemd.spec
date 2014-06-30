@@ -40,7 +40,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 214
-Release: alt1
+Release: alt6
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -54,7 +54,7 @@ Source4: prefdm.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source14: systemd-vconsole-setup@.service
+# Source14: systemd-vconsole-setup@.service
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
@@ -633,9 +633,9 @@ ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/loca
 ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
 
 # add workaround for localize ttyX
-install -m644 %SOURCE14 %buildroot%_unitdir/systemd-vconsole-setup@.service
-mkdir -p %buildroot%_unitdir/getty@.service.requires
-ln -r -s %buildroot%_unitdir/systemd-vconsole-setup@.service %buildroot%_unitdir/getty@.service.requires/systemd-vconsole-setup@.service
+#install -m644 %SOURCE14 %buildroot%_unitdir/systemd-vconsole-setup@.service
+#mkdir -p %buildroot%_unitdir/getty@.service.requires
+#ln -r -s %buildroot%_unitdir/systemd-vconsole-setup@.service %buildroot%_unitdir/getty@.service.requires/systemd-vconsole-setup@.service
 
 # create drop-in to prevent tty1 to be cleared
 mkdir -p %buildroot%_unitdir/getty@tty1.service.d
@@ -1320,6 +1320,23 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Jun 30 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt6
+- units: networkd - don't order wait-online.service before network.target
+- libudev: queue - watch entire directory to allow the re-use of the watch descriptor
+
+* Sat Jun 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt5
+- backport fixes from upstream master branch
+
+* Fri Jun 27 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt3
+- revert "add systemd-vconsole-setup@.service for another way localize ttyX"
+- revert "start systemd-ask-password-wall.service after getty@tty1.service"
+- revert "increase RestartSec to 5 sec for getty services"
+
+* Fri Jun 27 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt2
+- snapshot v214-stable branch
+- fixed sysv generator
+- don't create symlinks /var/run, /var/lock (ALT#30138)
+
 * Mon Jun 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt1
 - switch to v214-stable branch
 
