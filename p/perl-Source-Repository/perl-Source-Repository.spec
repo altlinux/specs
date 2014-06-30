@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.22
+Version: 0.24
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,12 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- new version
+
+* Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- development release
+
 * Thu May 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - bugfix release
 
