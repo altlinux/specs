@@ -7,7 +7,7 @@
 
 Name: %sname%sover-seq
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 
@@ -186,6 +186,9 @@ popd
 %doc man4/*.pdf man4/*.txt man4/*.html examples
 
 %changelog
+* Mon Jun 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt3
+- Rebuilt with gcc 4.8
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
 - Rebuilt with new libhdf5
 
