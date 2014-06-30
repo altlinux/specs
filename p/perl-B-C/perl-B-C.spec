@@ -1,6 +1,6 @@
 Name: perl-B-C
-Version: 1.43
-Release: alt0.2
+Version: 1.47
+Release: alt1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -35,8 +35,12 @@ done
 %perl_vendor_autolib/B
 %perl_vendor_archlib/ByteLoader.pm
 %perl_vendor_autolib/ByteLoader
+%perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.43-alt0.2
 - 1.43_git_b16d217b -> 1.43_git_a07eafb8
 - disabled failed tests
