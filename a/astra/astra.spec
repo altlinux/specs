@@ -1,6 +1,6 @@
 Name: astra
 Version: 4.3
-Release: alt2
+Release: alt3
 Summary: Astra is a highly-customizable software for processing IPTV streams
 Group: Networking/Other
 
@@ -40,12 +40,6 @@ install -m 0755 -D scripts/analyze.lua %buildroot%_sysconfdir/%name/scripts/anal
 install -m 0755 -D scripts/dvbls.lua %buildroot%_sysconfdir/%name/scripts/dvbls.lua
 install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xproxy.lua
 
-%post
-%post_service %name
-
-%preun
-%preun_service %name
-
 %files
 %doc COPYING README.md Astra.sublime-project scripts/stream.lua scripts/examples/*
 #%config(noreplace) %_initdir/*
@@ -56,6 +50,9 @@ install -m 0755 -D scripts/xproxy.lua %buildroot%_sysconfdir/%name/scripts/xprox
 %_bindir/*
 
 %changelog
+* Sun Jun 29 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt3
+- update to git:3a3c96e06263469b6ac0850e86105f602eea9564
+
 * Thu May 29 2014 Alexei Takaseev <taf@altlinux.org> 4.3-alt2
 - update to git:4552db1c6d80c797f505b9e51f8cb24c578f2893
 
