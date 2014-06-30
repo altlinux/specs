@@ -1,6 +1,6 @@
 Summary: The eric is a Python IDE
 Name: eric4
-Version: 4.5.22
+Version: 4.5.23
 Release: alt1
 Source0: %name-%version-%release.tar
 
@@ -73,6 +73,7 @@ python install-i18n.py
 %python_sitelibdir/*
 %_desktopdir/%{name}.desktop
 %_datadir/pixmaps/%name.png
+%_datadir/appdata
 %doc README LICENSE.GPL3 changelog README-i18n.txt THANKS 
 
 %_datadir/qt4/qsci/api/python/*.api
@@ -80,6 +81,9 @@ python install-i18n.py
 
 
 %changelog
+* Mon Jun 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.23-alt1
+- Version 4.5.23
+
 * Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.22-alt1
 - Version 4.5.22
 
