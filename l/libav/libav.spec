@@ -71,8 +71,8 @@
 # }}}
 
 Name: libav
-Version: 10.1
-Release: alt2
+Version: 10.2
+Release: alt1
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -571,6 +571,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Mon Jun 30 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.2-alt1
+- 10.2 released
+
 * Fri May 23 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.1-alt2
 - made av_find_program_from_stream() public
 
