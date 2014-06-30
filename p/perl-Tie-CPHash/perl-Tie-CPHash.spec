@@ -3,7 +3,7 @@
 %define m_name Tie::CPHash
 
 Name: perl-%module
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Tie::CPHash - Case preserving but case insensitive hash table
@@ -43,6 +43,9 @@ will return the key that was used to set the value.
 %perl_vendor_privlib/Tie/CPHash.pm
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Sat Feb 18 2012 Sergei Epiphanov <serpiph@altlinux.ru> 1.05-alt1
 - New version
 
