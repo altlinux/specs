@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_enable bootstrap
+%def_disable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -52,6 +52,7 @@ Patch1002: alt-dont-require-plugin-file.patch
 %define _qt5_examplesdir %_qt5_archdatadir/examples
 %define _qt5_headerdir %_includedir/qt5
 %define _qt5_importdir %_qt5_archdatadir/imports
+%define _qt5_qmldir %_qt5_archdatadir/qml
 %define _qt5_libdir %_libdir
 %define _qt5_libexecdir %_qt5_archdatadir/libexec
 %define _qt5_libdatadir %_qt5_prefix/lib
@@ -346,6 +347,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -examplesdir %_qt5_examplesdir \
     -headerdir %_qt5_headerdir \
     -importdir %_qt5_importdir \
+    -qmldir %_qt5_qmldir \
     -libdir %_qt5_libdir \
     -libexecdir %_qt5_libexecdir \
     -plugindir %_qt5_plugindir \
@@ -423,6 +425,7 @@ docdir=%_qt5_docdir
 examplesdir=%_qt5_examplesdir
 headerdir=%_qt5_headerdir
 importdir=%_qt5_importdir
+qmldir=%_qt5_qmldir
 libdir=%_qt5_libdir
 libexecdir=%_qt5_libexecdir
 moc=%_qt5_bindir/moc
@@ -452,6 +455,7 @@ cat >%buildroot/%_rpmmacrosdir/%gname <<__EOF__
 %%_qt5_examplesdir %_qt5_examplesdir
 %%_qt5_headerdir %_qt5_headerdir
 %%_qt5_importdir %_qt5_importdir
+%%_qt5_qmldir %_qt5_qmldir
 %%_qt5_libdir %_qt5_libdir
 %%_qt5_libdatadir %_qt5_libdatadir
 %%_qt5_libexecdir %_qt5_libexecdir
@@ -466,7 +470,7 @@ __EOF__
 cat %SOURCE1 >>%buildroot/%_rpmmacrosdir/%gname
 
 # create/own dirs
-mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_libexecdir,%_qt5_plugindir/iconengines,%_qt5_translationdir,%_qt5_docdir}
+mkdir -p %buildroot/{%_qt5_archdatadir/mkspecs/modules,%_qt5_importdir,%_qt5_qmldir,%_qt5_libexecdir,%_qt5_plugindir/iconengines,%_qt5_translationdir,%_qt5_docdir}
 
 # create compatibility symlinks to dirs
 for d in imports libexec mkspecs plugins ; do
@@ -526,6 +530,7 @@ done
 %doc LICENSE.* LGPL_EXCEPTION.txt
 %dir %_qt5_docdir/
 %dir %_qt5_importdir/
+%dir %_qt5_qmldir/
 %dir %_qt5_translationdir/
 %dir %_qt5_prefix/
 %dir %_qt5_prefix/doc/
@@ -701,6 +706,13 @@ done
 
 
 %changelog
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt2
+- build docs
+- add _qt5_qmldir macro
+
+* Fri Jun 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt0.M70P.1
+- build for M70P
+
 * Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
 - new version
 
