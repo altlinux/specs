@@ -4,7 +4,7 @@
 %define somver 0
 %define sover %somver.0.0
 
-%define svn svn6764
+%define svn svn6813
 
 Name: elmerfem
 Version: 7.0
@@ -28,7 +28,8 @@ BuildRequires: libopencascade-devel libftgl-devel R-devel
 BuildpreReq: libtetgen-devel libsuitesparse-devel libarpack-devel
 BuildPreReq: python-module-PyQt4 libqwt6-devel libvtk-devel
 BuildPreReq: libparpack-mpi-devel qt4-devel tcl-devel tk-devel
-BuildPreReq: libhypre-devel rpm-macros-make
+BuildPreReq: libhypre-devel rpm-macros-make libnetcdff-mpi-devel
+BuildPreReq: libproj-devel libavcodec-devel libswscale-devel
 
 Requires: lib%name = %version-%release
 
@@ -187,7 +188,7 @@ for i in %elmer_modules; do
 	if [ "$i" == "post" ]; then
 		sed -i "s|\(\-lmatc\)|-L`pwd`/../matc/src \1|" configure
 	fi
-	%add_optflags %optflags_shared -I%_includedir/freetype2
+	%add_optflags %optflags_shared -I%_includedir/freetype2 -I$TOPDIR/fem/src
 	%configure
 	%make
 	if [ "$i" == "matc" ]; then
@@ -271,6 +272,22 @@ qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 %make_build
 popd
 
+export PATH=$PATH:$TOPDIR/fem/src
+pushd elmerice
+%make_build_ext
+popd
+
+pushd misc/netcdf
+mkdir tmp bin
+%make_ext
+popd
+
+#pushd utils/ElmerClips
+#qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+#	QMAKE_CXXFLAGS_RELEASE="%optflags" ElmerClips.pro
+#%make_build
+#popd
+
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -314,6 +331,19 @@ for i in Free*.ttf; do
 done
 popd
 
+pushd elmerice
+install -m644 *.so %buildroot%_libdir/elmersolver/lib/
+install -m644 *.mod %buildroot%_includedir/
+popd
+
+pushd misc/netcdf
+install -m644 bin/GridLib.so %buildroot%_libdir/elmersolver/lib/
+popd
+
+#pushd utils/ElmerClips
+#%makeinstall_std
+#popd
+
 %pre
 rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 
@@ -351,6 +381,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Mon Jun 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6813
+- New snapshot
+
 * Thu May 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6764
 - New snapshot
 
