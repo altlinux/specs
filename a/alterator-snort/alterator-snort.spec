@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for snort administration
@@ -51,6 +51,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Mon Jun 30 2014 Timur Aitov <timonbl4@altlinux.org> 0.3.2-alt1
+- Grant UPDATE,DELETE for all database
+
 * Fri Jun 27 2014 Timur Aitov <timonbl4@altlinux.org> 0.3.1-alt2
 - Add Req: fail2ban
 
