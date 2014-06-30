@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 4.60
+Version: 5.10
 Release: alt1
 Summary: Real-time web framework
 
@@ -63,6 +63,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc LICENSE Changes
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 5.10-alt1
+- new version 5.10
+
 * Fri Dec 13 2013 Vladimir Lettiev <crux@altlinux.ru> 4.60-alt1
 - 4.16 -> 4.60
 
