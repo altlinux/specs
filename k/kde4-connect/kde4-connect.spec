@@ -7,7 +7,7 @@
 %define rname kdeconnect-kde
 Name: kde4-connect
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: KDE Connect client for communication with smartphones
@@ -16,6 +16,8 @@ License: GPLv2+
 
 Provides: %rname = %version
 Provides: kde-connect = %version
+
+Requires: fuse-sshfs qca2-ossl
 
 Source: %rname-%version.tar
 
@@ -126,6 +128,12 @@ Development files for %name
 %_K4link/lib*.so
 
 %changelog
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt2
+- fix requires
+
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt0.M70P.1
+- built for M70P
+
 * Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 
