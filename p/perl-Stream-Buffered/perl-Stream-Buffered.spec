@@ -1,5 +1,5 @@
 Name: perl-Stream-Buffered
-Version: 0.02
+Version: 0.03
 Release: alt1
 
 Summary: temporary buffer to save bytes
@@ -26,9 +26,12 @@ BuildRequires: perl-devel perl-Module-Install perl-Module-Install-ReadmeFromPod 
 
 %files
 %perl_vendor_privlib/Stream/Buffered*
-%doc Changes README
+%doc Changes README.md
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Fri Dec 14 2012 Vladimir Lettiev <crux@altlinux.ru> 0.02-alt1
 - initial build for ALTLinux
 
