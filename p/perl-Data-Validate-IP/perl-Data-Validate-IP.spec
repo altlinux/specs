@@ -1,6 +1,6 @@
 %define bname Data-Validate-IP
 Name: perl-%bname
-Version: 0.18
+Version: 0.23
 Release: alt1
 Summary: Perl IP address validation routines
 Group: Development/Perl
@@ -34,5 +34,8 @@ and untainting easier and more readable.
 
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0.18-alt1
 - initial build
