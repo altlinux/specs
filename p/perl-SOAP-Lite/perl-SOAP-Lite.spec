@@ -1,7 +1,7 @@
 %define dist SOAP-Lite
 Name: perl-%dist
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: Perl's Web Services Toolkit
 License: GPL or Artistic
@@ -38,9 +38,6 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 # Avoid dependency on mod_perl
 %add_findreq_skiplist */SOAP/Transport/HTTP.pm
 
-# XXX Can't locate SOAP/Transport/TCP.pm in @INC
-%add_findreq_skiplist */XMLRPC/Transport/TCP.pm
-
 # Workaround "Supported versions:" error
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MSOAP::Lite'
 
@@ -48,13 +45,12 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %doc Changes README examples
 %_bindir/*.pl
 %perl_vendor_privlib/Apache/SOAP.pm
-#perl_vendor_privlib/IO
 %perl_vendor_privlib/SOAP
-#perl_vendor_privlib/UDDI
-#perl_vendor_privlib/XML
-#perl_vendor_privlib/XMLRPC
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2
+- spec cleanup
+
 * Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
