@@ -1,7 +1,7 @@
 
 Name: shapercontrol
 Version: 1.5.1
-Release: alt3
+Release: alt4
 License: GPLv2+
 Summary: Administration tool for Linux-based ISP traffic shaper 
 Group: Security/Networking
@@ -46,6 +46,9 @@ echo "SC_OPTS=" > %buildroot%_sysconfdir/sysconfig/sc
 %_man8dir/*
 
 %changelog
+* Mon Jun 30 2014 Anton Farygin <rider@altlinux.ru> 1.5.1-alt4
+- return code fixed for loading rules from database
+
 * Mon Jun 30 2014 Anton Farygin <rider@altlinux.ru> 1.5.1-alt3
 - initscript fixed for status
 
