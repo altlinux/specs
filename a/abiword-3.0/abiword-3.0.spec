@@ -7,11 +7,12 @@
 %def_with goffice
 %def_with champlain
 %def_with libical
-%def_without eds
+%def_with eds
+%def_with python
 
 Name: %_name-%abi_ver
 Version: %ver_major.0
-Release: alt5
+Release: alt6
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -35,7 +36,7 @@ Patch14: abiword-3.0.0-fix-redraw.patch
 Patch15: abiword-3.0.0-gnutls-no-libgcrypt.patch
 Patch16: abiword-3.0.0-librevenge.patch
 Patch17: abiword-3.0.0-libebook.patch
-
+Patch18: abiword-3.0.0-link-grammar-5.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Conflicts: %_name %_name-light
@@ -52,6 +53,7 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel libgnutls-devel libsoup-d
 %{?_with_champlain:BuildRequires: libchamplain-gtk3-devel}
 %{?_with_libical:BuildRequires: libical-devel}
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
+%{?_with_python:BuildRequires: python-module-pygobject3-devel python-module-setuptools}
 
 %description
 AbiWord is a cross-platform, Open Source Word Processor developed
@@ -107,7 +109,15 @@ BuildArch: noarch
 Requires: %name-gir = %version-%release
 
 %description gir-devel
-GObject introspection devel data for the Tracker library
+GObject introspection devel data for the AbiWord
+
+%package -n python-module-%_name
+Summary: Python bindings for developing with AbiWord
+Group: Development/Python
+Requires: %name-gir = %version-%release
+
+%description -n python-module-%_name
+Python bindings for developing with AbiWord library
 
 %prep
 %setup -n %_name-%version
@@ -122,6 +132,7 @@ GObject introspection devel data for the Tracker library
 %patch15 -p1 -b .nogcrypt
 %patch16 -p0 -b .librevenge
 %patch17 -p1 -b .libebook
+%patch18 -p1 -b .link-grammar-5
 
 %build
 find plugins -name Makefile.am | sed  's|.am$||g' > plugin-makefiles.m4
@@ -153,7 +164,7 @@ done
 %make
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 install -p -m 0644 -D %SOURCE11 %buildroot%_datadir/mime-info/abiword.mime
 install -p -m 0644 -D %SOURCE12 %buildroot%_datadir/mime-info/abiword.keys
@@ -187,7 +198,15 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %files gir-devel
 %_girdir/*.gir
 
+%files -n python-module-%_name
+%python_sitelibdir/gi/overrides/*
+
 %changelog
+* Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt6
+- new python-module-abiword subpackage (ALT #30134)
+- e-d-s support enabled
+- built against liblink-grammar.so.5
+
 * Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 3.0.0-alt5
 - add patches from fedora for porting to librevenge framework
 
