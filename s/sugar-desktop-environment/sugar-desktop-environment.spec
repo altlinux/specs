@@ -2,7 +2,7 @@
 
 Name: sugar-desktop-environment
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Sugar Desktop installers
 License: %gpl2plus
@@ -84,7 +84,7 @@ Requires: sugar-turtleart
 Requires: sugar-typing-turtle
 Requires: sugar-view-slides
 Requires: sugar-visualmatch
-Requires: sugar-write
+#Requires: sugar-write
 Requires: sugar-xoirc
 Requires: sugar-xomail
 Requires: etoys-sugar
@@ -106,6 +106,9 @@ This virtual package installs full Sugar Desktop except .
 #%files -n sugar-full
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.98.0-alt2
+- dropped sugar-write
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.0-alt1
 - updated
 
