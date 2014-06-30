@@ -1,6 +1,6 @@
 Name: perl-OpenGL
-Version: 0.66
-Release: alt3
+Version: 0.6703
+Release: alt1
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -33,6 +33,9 @@ rm test.pl
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.6703-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.66-alt3
 - built for perl 5.18
 
