@@ -1,10 +1,12 @@
 %define _kde_alternate_placement 1
 %define sover 1
 %define libkdeconnect libkdeconnect%sover
+%define libkdeconnectinterfaces libkdeconnectinterfaces%sover
+%define libkdeconnectcore libkdeconnectcore
 
 %define rname kdeconnect-kde
 Name: kde4-connect
-Version: 0.5.2.1
+Version: 0.7.1
 Release: alt1
 
 Group: Communications
@@ -29,12 +31,33 @@ Currently, you can pair with your Android devices over Wifi using the
 KDE Connect app from Albert Vaka which you can obtain via Google Play, F-Droid
 or the project website.
 
-%package -n %libkdeconnect
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+%description common
+Common package for %name
+
+%package -n %libkdeconnectcore
 Summary: %name libraries
 Group: System/Libraries
-#Requires: %name-common = %EVR
-%description -n %libkdeconnect
+Requires: %name-common >= %EVR
+%description -n %libkdeconnectcore
 %name libraries
+
+%package -n %libkdeconnectinterfaces
+Summary: %name libraries
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libkdeconnectinterfaces
+%name libraries
+
+%package devel
+Summary: Development files for %name
+Group: Development/KDE and QT
+Requires: %name-common = %version-%release
+%description devel
+Development files for %name
 
 
 %prep
@@ -51,9 +74,12 @@ Group: System/Libraries
 
 
 
+%files common
+
 %files -f %name.lang
 %doc README
 
+%_kde4_bindir/kdeconnect-cli
 %_K4exec/kdeconnectd
 
 %_K4lib/kcm_kdeconnect.so
@@ -65,6 +91,8 @@ Group: System/Libraries
 
 %_K4lib/imports/org/kde/kdeconnect/
 %_K4lib/kded_kdeconnect.so
+%_K4lib/kio_kdeconnect.so
+%_K4lib/kdeconnectfiletiemaction.so
 
 %_K4dbus_interfaces/org.kde.kdeconnect.daemon.xml
 %_K4dbus_interfaces/org.kde.kdeconnect.device.battery.xml
@@ -72,23 +100,37 @@ Group: System/Libraries
 %_K4dbus_interfaces/org.kde.kdeconnect.device.notifications.xml
 %_K4dbus_interfaces/org.kde.kdeconnect.device.xml
 %_K4dbus_interfaces/org.kde.kdeconnect.device.sftp.xml
-%_K4dbus_interfaces/org.kde.kded.kdeconnect.xml
+#%_K4dbus_interfaces/org.kde.kded.kdeconnect.xml
 
 %_K4lib/kdeconnect_*.so
 %_K4apps/kdeconnect/
 %_K4apps/plasma/plasmoids/kdeconnect/
 
-%_K4srv/kdeconnect_*.desktop
 %_K4srv/kded/kdeconnect.desktop
-%_K4srv/plasma-kdeconnect.desktop
+%_K4srv/*kdeconnect*
 %_K4srvtyp/kdeconnect_plugin.desktop
 
 %_kde4_iconsdir/hicolor/*/apps/kdeconnect.*
 
-%files -n %libkdeconnect
-%_K4libdir/libkdeconnect.so.%sover
-%_K4libdir/libkdeconnect.so.%sover.*
+%files -n %libkdeconnectcore
+%_K4libdir/libkdeconnectcore.so
+
+%files -n %libkdeconnectinterfaces
+%_K4libdir/libkdeconnectinterfaces.so.%sover
+%_K4libdir/libkdeconnectinterfaces.so.%sover.*
+
+%files devel
+%_K4includedir/kdeconnect/
+%_K4includedir/KDEConnect/
+%_libdir/cmake/KDEConnect/
+%_K4link/lib*.so
 
 %changelog
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
+- new version
+
+* Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.2.1-alt0.M70P.1
+- built for M70P
+
 * Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.2.1-alt1
 - initial build
