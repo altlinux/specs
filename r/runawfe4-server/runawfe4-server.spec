@@ -1,6 +1,6 @@
 Name: runawfe4-server
 Version: 4.1.0
-Release: alt3
+Release: alt7
 
 Summary: Runawfe server
 
@@ -49,7 +49,9 @@ export MAVEN_OPTS="-Dmaven.repo.local=/tmp/.m2"
 cd wfe-app/repository/
 ./add_dependencies.sh
 cd ..
-mvn -o clean package -Dappserver=jboss7
+#mvn clean package -Dappserver=jboss7
+mvn -o clean package -Dappserver=jboss7 #for offline build in git.alt
+
 
 %install
 #jboss-as-cp -l %buildroot/%runadir
@@ -62,7 +64,7 @@ mkdir -p %buildroot/%_sbindir/
 #FIX JBOSS_BASE_DIR not work in jboss from zip, unused
 cat >%buildroot/%_sbindir/runawfe4-server <<EOF
 JBOSS_BASE_DIR=%jbossdir %_datadir/jboss-as/bin/standalone.sh -c standalone-runa.xml \
-& echo $! > /var/run/runawfe4-server.pid;
+&& echo \$$ > /var/run/runawfe4-server.pid;
 EOF
 
 mkdir -p %buildroot/%jbossdir/deployments/
@@ -92,6 +94,18 @@ useradd -d %runadir -r -s %_sbindir/runawfe4-server %runauser >/dev/null 2>&1 ||
 %attr(755,root,root) %_sbindir/runawfe4-server
 
 %changelog
+* Mon Jun 30 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
+- On offline build
+
+* Thu Apr 24 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt6
+- Off offline build [temporary]
+
+* Wed Apr 23 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt5
+- Fixed recreate db
+
+* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt4
+- Fixed server stop
+
 * Thu Apr 03 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt3
 - set maven offline build
 
