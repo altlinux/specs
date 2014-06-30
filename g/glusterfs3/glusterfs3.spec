@@ -19,7 +19,7 @@
 Summary: Cluster File System
 Name: glusterfs3
 Version: %major.0
-Release: alt1
+Release: alt2
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
@@ -28,20 +28,20 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: glusterd.sysconfig
-Source2: glusterfsd.sysconfig
+
 Source3: umount.glusterfs
 Source4: glusterfs-fuse.logrotate
 Source5: glusterd.logrotate
 Source6: glusterfsd.logrotate
 
 Source7: glusterd.init
-Source8: glusterfsd.init
+
 
 Patch0: %name-%version-%release.patch
 
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
 %define _init_file1     %_initdir/glusterd
-%define _init_file2     %_initdir/glusterfsd
+#%define _init_file2     %_initdir/glusterfsd
 
 # Automatically added by buildreq on Mon Nov 19 2012
 BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
@@ -222,10 +222,7 @@ install -p -m 0644 xlators/protocol/server/src/*.h \
 rm -f %buildroot/etc/init.d/glusterd
 
 # Create logging directory
-mkdir -p %buildroot%_logdir/gluster
-mkdir -p %buildroot%_logdir/gluster/glusterd
-mkdir -p %buildroot%_logdir/gluster/glusterfs
-mkdir -p %buildroot%_logdir/gluster/glusterfsd
+mkdir -p %buildroot%_logdir/glusterfs/
 
 # Remove unwanted files from all the shared libraries
 find %buildroot%_libdir -name '*.a' -delete
@@ -250,11 +247,8 @@ sed -i 's|option working-directory %_sysconfdir/glusterd|option working-director
 
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
-%_init_install %SOURCE8 glusterfsd
 install -D -p -m 0644 %SOURCE1 \
 %buildroot%_sysconfdir/sysconfig/glusterd
-install -D -p -m 0644 %SOURCE2 \
-%buildroot%_sysconfdir/sysconfig/glusterfsd
 # Install wrapper umount script
 install -D -p -m 0755 %SOURCE3 \
 %buildroot/sbin/umount.glusterfs
@@ -273,9 +267,6 @@ install -D -p -m 644 extras/glusterfs.vim \
 
 %files
 %doc ChangeLog INSTALL README THANKS COPYING-GPLV2 COPYING-LGPLV3
-#%config(noreplace) %_sysconfdir/logrotate.d/glusterd
-#%config(noreplace) %_sysconfdir/sysconfig/glusterd
-#%_libdir/glusterfs
 %_libdir/*.so.*
 %_sbindir/glusterfs*
 %_sbindir/gluster
@@ -286,7 +277,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_libdir/glusterfs/%version/auth/
 %_libdir/glusterfs/%version/xlator/
 %exclude %_libdir/glusterfs/%version/xlator/mount/fuse*
-%_logdir/gluster/*
+%_logdir/glusterfs
 %_man8dir/*gluster*.8*
 %exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
@@ -334,10 +325,8 @@ install -D -p -m 644 extras/glusterfs.vim \
 %config(noreplace) %_sysconfdir/glusterfs
 # Legacy configs
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfsd
-%config(noreplace) %_sysconfdir/sysconfig/glusterfsd
 %_sharedstatedir/glusterd
 %_init_file1
-%_init_file2
 
 %files vim
 %doc COPYING-GPLV2 COPYING-LGPLV3
@@ -354,14 +343,17 @@ install -D -p -m 644 extras/glusterfs.vim \
 %python_sitelibdir_noarch/*
 
 %post server
-%post_service glusterfsd
 %post_service glusterd
 
 %preun server
-%preun_service glusterfsd
 %preun_service glusterd
 
 %changelog
+* Mon Jun 30 2014 Anton Farygin <rider@altlinux.ru> 3.5.0-alt2
+- add patch from Anton Agapov (closes: #30089) :
+    - left only one glusterd service
+    - include correct logdir in package (closes: #29191)
+
 * Thu Jun 19 2014 Anton Farygin <rider@altlinux.ru> 3.5.0-alt1
 - new version
 - build with linux AIO
