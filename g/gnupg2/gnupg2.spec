@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.0.22
+Version: 2.0.25
 Release: alt1
 
 Group: Text tools
@@ -16,8 +16,7 @@ Patch1: gnupg-1.6.9-xloadimage.patch
 Patch2: gnupg-1.9.20-alt-libpcsclite.patch
 Patch3: gnupg-2.0.18-alt-agent-fix-password-request.patch
 Patch4: gnupg-2.0.19-alt-texinfo.patch
-Patch11: gnupg-2.0.18-rh-protect-tool-env.patch
-Patch12: gnupg-2.0.20-rh-ocsp-keyusage.patch
+Patch11: gnupg-2.0.20-rh-ocsp-keyusage.patch
 
 %define docdir %_docdir/gnupg-%version
 
@@ -57,7 +56,6 @@ functionality up into several modules.
 %patch3 -p1
 %patch4 -p1
 %patch11 -p1
-%patch12 -p1
 rm doc/*.info*
 
 %build
@@ -103,6 +101,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Mon Jun 30 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0.25-alt1
+- Updated to 2.0.25 (fixes CVE-2014-4617).
+
 * Sat Oct 05 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.22-alt1
 - Updated to 2.0.22 (fixes CVE-2013-4402).
 
