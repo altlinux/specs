@@ -1,5 +1,5 @@
 Name: sysstat
-Version: 10.0.4
+Version: 11.0.0
 Release: alt1
 
 Summary: The sar and iostat system monitoring commands
@@ -7,9 +7,8 @@ License: GPLv2+
 Group: System/Base
 
 URL: http://sebastien.godard.pagesperso-orange.fr/
-Source: http://pagesperso-orange.fr/sebastien.godard/sysstat-%version.tar.bz2
+Source: http://pagesperso-orange.fr/sebastien.godard/sysstat-%version.tar.xz
 Source1: sysstat.init
-Patch1: sysstat-10.0.0-cpu.patch
 
 # Automatically added by buildreq on Wed Aug 04 2010
 BuildRequires: libsensors3-devel
@@ -33,19 +32,20 @@ by a previous sar run.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 export CFLAGS="%optflags"
 export sa_lib_dir=%_libdir/sa
 # we build script for daily summary that takes yesterday's data and will
 # run it by cron after midnight
-./configure --prefix=/usr \
+%configure \
 	--enable-yesterday \
 	--enable-sensors \
-	--mandir=%_mandir \
+	--disable-man-group \
 	--disable-compress-manpg \
 	--enable-install-isag
+
+sed -i 's/SADC_OPTIONS=""/SADC_OPTIONS="-S DISK"/' sysstat.sysconfig
 
 %make_build SA_LIB_DIR="%_libdir/sa" LFLAGS="-lsensors"
 
@@ -68,13 +68,27 @@ EOF
 install -pD -m755 %_sourcedir/sysstat.init %buildroot%_initrddir/sysstat
 subst 's@LIBDIR@%_libdir@' %buildroot%_initrddir/sysstat
 
+# Install service file
+mkdir -p %buildroot%_unitdir
+install -m 0644 sysstat.service %buildroot%_unitdir/
+
+# Install timer units
+install -m 0644 cron/sysstat-{collect,summary}.{service,timer} %buildroot%_unitdir/
+
 # sysstat makefiles install the docs, blow them away
 rm -rf %buildroot/usr/doc
 
 %find_lang %name
 
-%preun -p "%preun_service sysstat"
-%post -p "%post_service sysstat"
+%post
+%post_service sysstat
+
+%preun
+%preun_service sysstat
+if [[ $1 -eq 0 ]]; then
+  # Remove sa logs if removing sysstat completely
+  rm -f %_logdir/sa/*
+fi
 
 %files -f %name.lang
 %config(noreplace) %attr(644,root,root) %_sysconfdir/cron.d/%name
@@ -84,6 +98,7 @@ rm -rf %buildroot/usr/doc
 %exclude %_bindir/isag
 %_libdir/sa
 %_initrddir/*
+%_unitdir/*
 %_man1dir/*
 %exclude %_man1dir/isag.*
 %_man5dir/*
@@ -96,6 +111,9 @@ rm -rf %buildroot/usr/doc
 %_man1dir/isag.*
 
 %changelog
+* Sat Jun 28 2014 Alexey Shabalin <shaba@altlinux.ru> 11.0.0-alt1
+- 11.0.0
+
 * Fri Mar 09 2012 Victor Forsiuk <force@altlinux.org> 10.0.4-alt1
 - 10.0.4
 
