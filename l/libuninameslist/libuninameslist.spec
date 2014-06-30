@@ -4,7 +4,7 @@ BuildRequires: unzip
 %add_optflags %optflags_shared
 Name:           libuninameslist
 Version:        20130501
-Release:        alt1_1
+Release:        alt1_2
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -55,6 +55,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 20130501-alt1_2
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 20130501-alt1_1
 - update to new release by fcimport
 
