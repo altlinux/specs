@@ -4,8 +4,8 @@
 %def_with bytecode
 
 Name: fontforge
-Version: 20110222
-Release: alt3
+Version: 20120731
+Release: alt1
 Summary: FontForge -- font editor
 Summary(ru_RU.KOI8-R): Редактор шрифтов FontForge
 
@@ -15,7 +15,7 @@ Url: http://fontforge.sourceforge.net/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %{name}_full-%version.tar.bz2
+Source: %{name}_full-%version-b.tar.bz2
 Source2: %name.png
 Patch0: %name-%version.patch
 
@@ -55,6 +55,7 @@ Requires: lib%name = %version-%release
 Summary: FontForge python module
 Group: Development/Python
 Requires: python
+Requires: lib%name-devel
 
 %description -n lib%name
 FontForge shared library
@@ -66,7 +67,7 @@ FontForge development files
 FontForge python module
 
 %prep
-%setup -q
+%setup -q -n %{name}-%version-b
 %patch -p0
 
 %build
@@ -137,6 +138,10 @@ popd
 %files -n python-module-%name -f python-module-%name
 
 %changelog
+* Sun Jun 29 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt1
+- new version
+- add require libfontforge-devel for python-module-fontforge (altbug #30144)
+
 * Sat Dec 24 2011 Pavel Vainerman <pv@altlinux.ru> 20110222-alt3
 - applied patch from fedora (fontforge-20100501-select-points-crash.patch)
   altbug #25979
