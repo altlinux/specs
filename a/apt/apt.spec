@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt45
+Release: alt45.1
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -274,6 +274,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Tue Jul 01 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt45.1
+- Rebuilt with rpm-4.0.4-alt100.78 (different size of rpmTagTable).
+
 * Tue Jun 24 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt45
 - Honor buildtime.
 - Added support of preferences.d dir.
