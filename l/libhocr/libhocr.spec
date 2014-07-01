@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/pkg-config /usr/bin/swig gcc-c++ libhocr-devel pkgconfig
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libhocr
 %define version 0.10.17
 # Override default upstream location [/usr/share/doc/libhocr]
@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_16
+Release:	alt2_17
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -174,6 +174,9 @@ done
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_17
+- update to new release by fcimport
+
 * Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_16
 - update to new release by fcimport
 
