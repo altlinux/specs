@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gzip gcc-c++ libXext-devel libXi-devel libgtk+2-devel
 Summary: 3D tabletennis game
 Name: csmash
 Version: 0.6.6
-Release: alt3_27
+Release: alt3_28
 License: GPLv2+
 Group: Games/Other
 URL: http://cannonsmash.sourceforge.net/
@@ -75,6 +75,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt3_28
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt3_27
 - update to new release by fcimport
 
