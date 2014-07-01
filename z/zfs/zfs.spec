@@ -8,7 +8,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.3
-Release: alt3
+Release: alt4
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -184,6 +184,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Tue Jul 01 2014 Led <led@altlinux.ru> 0.6.3-alt4
+- upstream updates and fixes
+
 * Mon Jun 16 2014 Led <led@altlinux.ru> 0.6.3-alt3
 - module: replace stupidly defined spl's 'hz' with generic 'HZ'
 - fixed Requires of kernel-source-zfs
