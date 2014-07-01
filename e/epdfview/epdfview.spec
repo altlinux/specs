@@ -1,7 +1,7 @@
 Summary:        A lightweight PDF viewer for GNOME
 Name:           epdfview
 Version:        0.1.8
-Release:        alt1
+Release:        alt2
 URL:            http://trac.emma-soft.com/epdfview/
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License:	GPL v2+
@@ -46,8 +46,8 @@ mv po/nl_NL.po po/nl.po
 %install
 %makeinstall_std PREFIX=/usr
 
-install -d %buildroot%_pixmapsdir
-install -D -m 644 %buildroot%_datadir/%name/pixmaps/icon_epdfview-48.png %buildroot/%_pixmapsdir/%name.png
+install -d %buildroot%_liconsdir
+install -D -m 644 %buildroot%_datadir/%name/pixmaps/icon_epdfview-48.png %buildroot/%_liconsdir/%name.png
 sed -i -e 's,Icon=icon_epdfview-48,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 
 %find_lang %name
@@ -58,9 +58,12 @@ sed -i -e 's,Icon=icon_epdfview-48,Icon=%name,' %buildroot%_desktopdir/%name.des
 %_man1dir/*
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
+%_liconsdir/%name.png
 
 %changelog
+* Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt2
+- PNG moved to %_liconsdir
+
 * Fri Jun 27 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt1
 - Initial build
 
