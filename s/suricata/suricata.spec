@@ -1,7 +1,7 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
 Version: 2.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 URL: http://www.openinfosecfoundation.org
@@ -85,13 +85,15 @@ mkdir -p %buildroot%_runtimedir/suricata
 #Config
 cp reference.config classification.config suricata.yaml threshold.config %buildroot%_sysconfdir/%name/
 
-#Init
-install -p -m 755 suricata  %buildroot%_initrddir/%name
+#Init & Service
+install -pD -m 755 suricata.init  %buildroot%_initrddir/%name
+install -pD -m 644 suricata.service %buildroot%_unitdir/%name.service
+
 
 #suricatasc
 mkdir -p %buildroot%python_sitelibdir_noarch/suricatasc
-install -p -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/__init__.py %buildroot%python_sitelibdir_noarch/suricatasc/__init__.py
-install -p -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/suricatasc.py %buildroot%python_sitelibdir_noarch/suricatasc/suricatasc.py
+install -pD -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/__init__.py %buildroot%python_sitelibdir_noarch/suricatasc/__init__.py
+install -pD -m 644 %_builddir/%name-%version/scripts/suricatasc/build/lib/suricatasc/suricatasc.py %buildroot%python_sitelibdir_noarch/suricatasc/suricatasc.py
 
 rm -rf %buildroot/usr/share/doc/suricata
 rm -rf /usr/share/doc/suricata
@@ -151,6 +153,7 @@ EOF
 %dir %attr(750,root,_%name) %_sysconfdir/%name
 %dir %attr(750,root,_%name) %_sysconfdir/%name/rules
 %_initrddir/%name
+%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name/*.config
 %config(noreplace) %_sysconfdir/%name/*.yaml
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -160,13 +163,12 @@ EOF
 
 %files -n libhtp
 %_libdir/*.so.*
-%_libdir/*.so
 
 %files -n libhtp-devel
 %_includedir/*
 %_libdir/pkgconfig/htp.pc
 %_libdir/libhtp.a
-#_libdir/*.so
+%_libdir/libhtp.so
 
 %files -n python-module-suricata
 %dir %python_sitelibdir_noarch/suricatasc
@@ -174,6 +176,9 @@ EOF
 %python_sitelibdir_noarch/suricatasc-0.9-py2.7.egg-info
 
 %changelog
+* Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt3
+- Fixed library-pkgnames-static in libhtp-devel
+
 * Fri Jun 20 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt2
 - New version
 
