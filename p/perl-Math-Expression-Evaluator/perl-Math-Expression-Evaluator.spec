@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 # END SourceDeps(oneline)
 Name:           perl-Math-Expression-Evaluator
 Version:        0.3.2
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Parses, compiles and evaluates mathematics expressions
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ find %{buildroot} -type f -name '*.pm' -exec chmod -x {} 2>/dev/null ';'
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_7
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt2_6
 - moved to Sisyphus for Slic3r (by dd@ request)
 
