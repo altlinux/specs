@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-tpi
 Summary: Tok Pisin hunspell dictionaries
 Version: 0.07
-Release: alt1_2
+Release: alt1_3
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/ext/4824/3/hunspell-tpi-0.07.oxt
 URL: http://extensions.services.openoffice.org/en/project/tok-pisin-spell-checker
@@ -30,6 +30,9 @@ cp -p dictionaries/tpi_PG.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_2
 - update to new release by fcimport
 
