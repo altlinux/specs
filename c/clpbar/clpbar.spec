@@ -1,6 +1,6 @@
 Name:          clpbar
 Version:       1.10.9
-Release:       alt2_8
+Release:       alt2_10
 Summary:       Show information about a data transfer
 
 Group:         File tools
@@ -10,6 +10,7 @@ Source0:       http://downloads.sourceforge.net/%{name}/bar_%{version}.tar.gz
 Source1:       clpbar.1.in
 Patch0:        bar-1.10.9-clpbar.patch
 Patch1:        bar-1.10.9-Makefile.patch
+Patch2:        bar-1.10.9-Werror=format-security.patch
 
 
 BuildRequires: automake
@@ -29,6 +30,7 @@ transfer large amounts (many, many gigabytes) of data across a network.
 %setup -q -n bar-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 cp %{SOURCE1} .
 ./autogen
 
@@ -48,6 +50,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/clpbar.1*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_8
 - update to new release by fcimport
 
