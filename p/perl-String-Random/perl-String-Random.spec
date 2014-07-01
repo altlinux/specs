@@ -5,7 +5,7 @@ BuildRequires: perl(Exporter.pm) perl(Test/Run/CmdLine/Iface.pm) perl-Module-Bui
 # END SourceDeps(oneline)
 Name:           perl-String-Random
 Version:        0.26
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Perl module to generate random strings based on a pattern
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/String-Random/
@@ -47,6 +47,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_1
 - update to new release by fcimport
 
