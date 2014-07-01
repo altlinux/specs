@@ -3,7 +3,7 @@ BuildRequires: perl(Digest/MD5.pm) perl(Digest/SHA1.pm) perl(Locale/gettext.pm) 
 # END SourceDeps(oneline)
 Name:           dc3dd
 Version:        7.1.614
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Patched version of GNU dd for use in computer forensics
 
 Group:          Editors
@@ -70,6 +70,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 7.1.614-alt2_7
+- update to new release by fcimport
+
 * Tue Apr 15 2014 Igor Vlasenko <viy@altlinux.ru> 7.1.614-alt2_6
 - moved to Sisyphus by mike@ request
 
