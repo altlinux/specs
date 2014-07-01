@@ -6,7 +6,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.11.7
-Release: alt1_2
+Release: alt1_3
 
 License: LGPLv2+
 Group: Development/C
@@ -117,6 +117,9 @@ done
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.11.7-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.11.7-alt1_2
 - update to new release by fcimport
 
