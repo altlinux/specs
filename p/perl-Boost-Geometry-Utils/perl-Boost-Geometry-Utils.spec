@@ -5,7 +5,7 @@ BuildRequires: perl(English.pm) perl(List/Util.pm) perl-Module-Build perl-devel 
 BuildRequires: gcc-c++
 Name:           perl-Boost-Geometry-Utils
 Version:        0.15
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -47,6 +47,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Boost*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_4
+- update to new release by fcimport
+
 * Wed Feb 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_3
 - moved to Sisyphus for Slic3r (by dd@ request)
 
