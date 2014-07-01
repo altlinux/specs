@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.010
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Build.PL install path logic made easy
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -67,6 +67,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_1
 - update to new release by fcimport
 
