@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl-devel perl-podlators
+BuildRequires: perl(File/Spec/Functions.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_13
 - update to new release by fcimport
 
