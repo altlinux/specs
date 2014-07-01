@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 20
+%define fedora 21
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_6
+Release:	alt2_7
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -169,6 +169,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_7
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_6
 - update to new release by fcimport
 
