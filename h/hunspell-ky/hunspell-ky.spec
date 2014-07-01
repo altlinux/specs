@@ -5,7 +5,7 @@ Name: hunspell-ky
 Summary: Kirghiz hunspell dictionaries
 %define upstreamid 20090415
 Version: 0.%{upstreamid}
-Release: alt2_8
+Release: alt2_9
 Group: Text tools
 Source: http://ftp.gnu.org/gnu/aspell/dict/ky/aspell6-ky-0.01-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/
@@ -38,6 +38,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20090415-alt2_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20090415-alt2_8
 - update to new release by fcimport
 
