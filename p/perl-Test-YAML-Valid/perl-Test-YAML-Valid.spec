@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Valid.pm
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_13
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_12
 - moved to Sisyphus for Slic3r (by dd@ request)
 
