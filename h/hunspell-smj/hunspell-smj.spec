@@ -1,7 +1,7 @@
 Name: hunspell-smj
 Summary: Lule Saami hunspell dictionaries
 Version: 1.0
-Release: alt2_0.7.beta7
+Release: alt2_0.8.beta7
 Source: http://divvun.no/static_files/hunspell-smj.tar.gz
 Group: Text tools
 URL: http://www.divvun.no/index.html
@@ -36,6 +36,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.8.beta7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.7.beta7
 - update to new release by fcimport
 
