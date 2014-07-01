@@ -5,7 +5,7 @@ Name: hunspell-am
 Summary: Amharic hunspell dictionaries
 %define upstreamid 20090704
 Version: 0.%{upstreamid}
-Release: alt2_7
+Release: alt2_8
 Source: http://www.cs.ru.nl/~biniam/geez/dict/am_ET.zip
 Group: Text tools
 URL: http://www.cs.ru.nl/~biniam/geez/index.php
@@ -35,6 +35,9 @@ cp -p am_ET.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20090704-alt2_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20090704-alt2_7
 - update to new release by fcimport
 
