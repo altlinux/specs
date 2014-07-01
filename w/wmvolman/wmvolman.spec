@@ -3,7 +3,7 @@ BuildRequires: pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 Name: wmvolman
 Version: 2.0.1
-Release: alt2_2
+Release: alt2_3
 
 Summary: Window Maker Volume Manager
 License: GPLv2+
@@ -38,6 +38,9 @@ make %{?_smp_mflags}
 %{_datadir}/wmvolman
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_3
+- update to new release by fcimport
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_2
 - Sisyphus build by request of mike@
 
