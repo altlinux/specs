@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           lure
 Version:        1.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Lure of the Temptress - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -57,6 +57,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_10
 - update to new release by fcimport
 
