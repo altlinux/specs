@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cave9
 %define version 0.4
 %global fontconf 64-%{name}-mutante.conf
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_7
+Release:        alt3_8
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -117,6 +117,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_7
 - update to new release by fcimport
 
