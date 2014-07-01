@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ unzip
 %add_optflags %optflags_shared
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_16
+Release:        alt2_17
 
 Summary:        3D Studio file format library
 
@@ -98,6 +98,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_16
 - update to new release by fcimport
 
