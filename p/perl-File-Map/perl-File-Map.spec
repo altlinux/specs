@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(open.pm) perl(subs.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-File-Map
 Version:        0.61
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.61-alt2_2
+- update to new release by fcimport
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.61-alt2_1
 - moved to Sisyphus for Slic3r (by dd@ request)
 
