@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel libesd-devel
 # END SourceDeps(oneline)
 Name:           xarchon
 Version:        0.50
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -62,6 +62,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_15
 - update to new release by fcimport
 
