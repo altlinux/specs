@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:		libgcroots
 Version:	0.2.3
-Release:	alt2_6
+Release:	alt2_7
 License:	MIT
 URL:		http://code.google.com/p/sigscheme/wiki/libgcroots
 
@@ -60,6 +60,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/gcroots.pc
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_6
 - update to new release by fcimport
 
