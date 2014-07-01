@@ -1,7 +1,10 @@
 Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires: swig
+# END SourceDeps(oneline)
 Name:           avl
 Version:        3.35
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
 # Plotlib is LGPLv2+, the rest is GPLv2+
@@ -57,6 +60,9 @@ make %{?_smp_mflags} -C bin
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.35-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.35-alt1_1
 - update to new release by fcimport
 
