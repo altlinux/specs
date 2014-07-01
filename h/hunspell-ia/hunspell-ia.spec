@@ -5,7 +5,7 @@ Name: hunspell-ia
 Summary: Interlingua hunspell dictionaries
 %define upstreamid 20050226
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Group: Text tools
 Source: http://download.savannah.gnu.org/releases/interlingua/ia_myspell.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries#Interlingua_.28x-register.29
@@ -35,6 +35,9 @@ cp -p ia.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20050226-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050226-alt2_9
 - update to new release by fcimport
 
