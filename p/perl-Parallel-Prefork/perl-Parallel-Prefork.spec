@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Prefork
 Version:        0.15
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
