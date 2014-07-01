@@ -4,7 +4,7 @@ BuildRequires: perl(Scalar/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockModule
 Version:        0.05
-Release:        alt1_20
+Release:        alt1_21
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Perl
 License:        GPL+ or Artistic
@@ -42,6 +42,9 @@ make test
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_21
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_20
 - update to new release by fcimport
 
