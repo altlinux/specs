@@ -4,7 +4,7 @@ BuildRequires: perl(Scalar/Util.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Contextual-Return
 Version:        0.004007
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Create context-sensitive return values
 Group:          Development/Perl
 License:        GPL+ or Artistic
@@ -54,6 +54,9 @@ make test
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.004007-alt2_5
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.004007-alt2_4
 - moved to Sisyphus for Slic3r (by dd@ request)
 
