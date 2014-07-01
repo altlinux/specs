@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DB2
 Version:        0.05
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Parse and format DB2 dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -47,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_15
 - update to new release by fcimport
 
