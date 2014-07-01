@@ -1,6 +1,6 @@
 Name: xinetd
 Version: 2.3.15
-Release: alt2
+Release: alt3
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -122,7 +122,7 @@ done
 mkdir -p %buildroot{%_libdir/%name,%_includedir/%name,%_mandir/man{3,5,8}}
 
 install -pD -m755 %_sourcedir/xinetd.init %buildroot%_initdir/%name
-install -pD -m755 %_sourcedir/xinetd.service %buildroot%_unitdir/%name
+install -pD -m755 %_sourcedir/xinetd.service %buildroot%_unitdir/%name.service
 install -pD -m640 %_sourcedir/xinetd.conf %buildroot%_sysconfdir/%name.conf
 install -pD -m640 %_sourcedir/xinetd.sysconf %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m755 %_sourcedir/convert.pl %buildroot%_sbindir/inetdconvert
@@ -155,7 +155,7 @@ rm %buildroot%_mandir/*.3
 %preun_service %name
 
 %files
-%_unitdir/%name
+%_unitdir/%name.service
 %config %_initdir/%name
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -175,6 +175,9 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Tue Jul 01 2014 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt3
+- Packaged xinetd.service (closes: #27392, #28101).
+
 * Fri Sep 27 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt2
 - Packaged xinetd.service (closes: #27392, #28101).
 
