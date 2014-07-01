@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           beneath-a-steel-sky-cd
 Version:        0.0372
-Release:        alt4_9
+Release:        alt4_10
 Summary:        Beneath a Steel Sky - Adventure Game - CD version
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -49,6 +49,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_9
 - update to new release by fcimport
 
