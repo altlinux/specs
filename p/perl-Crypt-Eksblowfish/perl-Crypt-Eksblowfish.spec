@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Crypt-Eksblowfish
 Version:        0.009
-Release:        alt4_8
+Release:        alt4_9
 Summary:        Eksblowfish block cipher
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Crypt*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt4_9
+- update to new release by fcimport
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt4_8
 - moved to Sisyphus as dependency
 
