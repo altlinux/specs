@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-ExtUtils-Helpers
 Version:	0.022
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -75,6 +75,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_1
 - update to new release by fcimport
 
