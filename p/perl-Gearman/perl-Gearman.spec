@@ -1,17 +1,16 @@
-%define module_version 1.11
-%define module_name Gearman
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(List/Util.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Storable.pm) perl(Time/HiRes.pm) perl(base.pm) perl(fields.pm) perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IO/Socket/INET.pm) perl(List/Util.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Storable.pm) perl(Time/HiRes.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
 Version:        1.11
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Distributed job system
-License:        perl
+License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source0:        http://cpan.org.ua/authors/id/D/DO/DORMANDO/%module_name-%module_version.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(Test/More.pm)
@@ -27,7 +26,7 @@ to do work in parallel, to load balance lots of function calls,
 or to call functions between languages.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Gearman-%{version}
 
 # Filter double proved for Gearman::Client:
 cat << \EOF > %{name}-prov
@@ -56,10 +55,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc CHANGES TODO
+%doc CHANGES HACKING TODO
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_11
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_10
 - build for Sisyphus (required for perl update)
 
