@@ -4,7 +4,7 @@ BuildRequires: perl(English.pm)
 BuildRequires: xml-utils
 Name: docbook5-schemas
 Version: 5.0
-Release: alt2_11
+Release: alt2_12
 Group: Text tools
 
 Summary: Norman Walsh's schemas (DTD, Relax NG, W3C schema) for Docbook 5.X
@@ -302,6 +302,9 @@ fi
 %{_bindir}/db4-entities.pl
 
 %ChangeLog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_11
 - update to new release by fcimport
 
