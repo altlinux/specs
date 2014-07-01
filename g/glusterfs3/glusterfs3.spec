@@ -18,8 +18,8 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.0
-Release: alt2
+Version: %major.1
+Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
@@ -28,7 +28,7 @@ Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: glusterd.sysconfig
-
+Source2: %name.watch
 Source3: umount.glusterfs
 Source4: glusterfs-fuse.logrotate
 Source5: glusterd.logrotate
@@ -271,6 +271,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_sbindir/glusterfs*
 %_sbindir/gluster
 %_sbindir/glusterd
+%_sbindir/glfsheal
 %dir %_libdir/glusterfs/
 %dir %_libdir/glusterfs/%version/
 %_libdir/glusterfs/%version/rpc-transport/
@@ -349,6 +350,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Tue Jul 01 2014 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
+- new version
+
 * Mon Jun 30 2014 Anton Farygin <rider@altlinux.ru> 3.5.0-alt2
 - add patch from Anton Agapov (closes: #30089) :
     - left only one glusterd service
