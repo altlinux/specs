@@ -1,6 +1,6 @@
 Name:           safecopy
 Version:        1.7
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Safe copying of files and partitions
 
 Group:          File tools
@@ -37,6 +37,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_5
+- update to new release by fcimport
+
 * Mon Apr 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_4
 - moved to Sisyphus by mike@ request
 
