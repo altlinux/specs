@@ -1,57 +1,111 @@
-Name: gitg
-Version: 0.1.0
-Release: alt1.qa1
-Summary: git repository viewer targeting gtk+/GNOME
+%define ver_major 0.3
+%define api_ver 1.0
+%def_enable python
 
+Name: gitg
+Version: %ver_major.3
+Release: alt1
+
+Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
 License: GPL
 URL: http://trac.novowork.com/gitg/
 
-Source: %name-%version.tar
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 PreReq: lib%name = %version-%release
 
-BuildRequires: libgtk+2-devel libgio-devel libGConf-devel gnome-common intltool libgtksourceview-devel gsettings-desktop-schemas-devel
-BuildRequires: desktop-file-utils
+%define gitg_pluginsdir %_libdir/%name/plugins
+
+%if_enabled python
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%endif
+
+
+%define glib_ver 2.38
+%define gtk_ver 3.12
+%define gtksourceview_ver 3.10
+%define git2_ver 0.0.18
+%define webkit_ver 2.2
+%define gtkspell_ver 3.0.3
+
+BuildPreReq: libgio-devel >= %glib_ver
+BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: libgit2-glib-devel >= %git2_ver
+BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
+BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
+BuildRequires: gnome-common intltool desktop-file-utils
+BuildRequires: libgee0.8-devel libjson-glib-devel libpeas-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel 
+BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
+BuildRequires: vala-tools
+BuildRequires: gsettings-desktop-schemas-devel
+%{?_enable_python:BuildRequires: python3-devel rpm-build-python3 python3-module-pygobject3-devel}
 
 %description
-gitg is a git repository viewer targeting gtk+/GNOME. One of its main
-objectives is to provide a more unified user experience for git
-frontends across multiple desktops. It does this not be writing a
-cross-platform application, but by close collaboration with similar
-clients for other operating systems (like GitX for OS X).
-
-gitg targets cases where it is useful to provide a graphical
-representation of git data or actions. The history view is a good
-example where graphical representation helps to get an overview of the
-repository. gitg does not aim to be an advanced tool which allows access
-to every feature of git through a graphical interface, it will however
-try to incorporate common actions which might require multiple actions
-on the command line (like staging, unstaging, reverting and committing).
+Gitg is a graphical user interface for git. It aims at being a small,
+fast and convenient tool to visualize the history of git repositories.
+Besides visualization, gitg also provides several utilities to manage your
+repository and commit your work.
 
 %package -n lib%name
 Summary: lib%name library
-Group: Development/C
+Group: System/Libraries
 
 %description -n lib%name
-%summary
+Gitg is a graphical user interface for git. It aims at being a small,
+fast and convenient tool to visualize the history of git repositories.
+Besides visualization, gitg also provides several utilities to manage your
+repository and commit your work.
+
+This package provides shared Gitg library.
 
 %package -n lib%name-devel
-Summary: lib%name library development files
+Summary: Development files for lib%name
 Group: Development/C
 PreReq: lib%name = %version-%release
 
 %description -n lib%name-devel
-%summary
+Gitg is a graphical user interface for git. It aims at being a small,
+fast and convenient tool to visualize the history of git repositories.
+Besides visualization, gitg also provides several utilities to manage your
+repository and commit your work.
+
+This package provides headers and libraries to develop plugins for Gitg
+or other applications
+
+%package -n lib%name-gir
+Summary: GObject introspection data for the Gitg library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+
+%description -n lib%name-gir
+This package provides GObject introspection data for the Gitg
+library.
+
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for the Gitg library
+Group: Development/Other
+BuildArch: noarch
+Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-gir-devel
+This package provides GObject introspection devel data for the Gitg
+library.
 
 %prep
 %setup
 
 %build
-NOCONFIGURE=true ./autogen.sh
-%configure --disable-static
-%make_build
+%autoreconf
+%configure --disable-static \
+	%{subst_enable python}
+%make
 
 %install
 %makeinstall_std
@@ -61,28 +115,45 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/gitg.desktop
 
 %files -f %name.lang
+%_bindir/%name
+%gitg_pluginsdir/
 %_datadir/glib-2.0/schemas/org.gnome.gitg.gschema.xml
 %_desktopdir/%name.desktop
-%_datadir/%name
-%_bindir/%name
+%_datadir/%name/
 %_man1dir/%{name}*
-%_miconsdir/*
-%_niconsdir/*
-%_liconsdir/*
-%_iconsdir/hicolor/scalable/*
-%_iconsdir/hicolor/22x22/apps/*
-%_iconsdir/hicolor/24x24/apps/*
-%doc AUTHORS COPYING MAINTAINERS NEWS README
+%_iconsdir/hicolor/*x*/apps/*
+%_datadir/appdata/%name.appdata.xml
+%{?_enable_python:%python3_sitelibdir/gi/overrides/GitgExt.py}
+%doc AUTHORS NEWS README
+
+%exclude %gitg_pluginsdir/*.la
 
 %files -n lib%name
-%_libdir/lib%name-1.0.so.*
+%_libdir/lib%name-%api_ver.so.*
+%_libdir/lib%name-ext-%api_ver.so.*
 
 %files -n lib%name-devel
-%_includedir/lib%name-1.0
-%_libdir/lib%name-1.0.so
-%_libdir/pkgconfig/lib%name-1.0.pc
+%_includedir/lib%name-%api_ver/
+%_includedir/lib%name-ext-%api_ver/
+%_libdir/lib%name-%api_ver.so
+%_libdir/lib%name-ext-%api_ver.so
+%_libdir/pkgconfig/lib%name-%api_ver.pc
+%_libdir/pkgconfig/lib%name-ext-%api_ver.pc
+%_vapidir/lib%name-%api_ver.vapi
+%_vapidir/lib%name-ext-1.0.vapi
+
+%files -n lib%name-gir
+%_typelibdir/Gitg-%api_ver.typelib
+%_typelibdir/GitgExt-%api_ver.typelib
+
+%files -n lib%name-gir-devel
+%_girdir/Gitg-%api_ver.gir
+%_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Tue Jul 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.1.0-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
