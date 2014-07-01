@@ -1,6 +1,6 @@
 Name:           cdogs-sdl
 Version:        0.4
-Release:        alt4_12
+Release:        alt4_13
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -52,6 +52,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_13
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_12
 - update to new release by fcimport
 
