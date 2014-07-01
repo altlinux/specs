@@ -1,6 +1,6 @@
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Space Invaders clone written in ncurses for cli gaming
 
 Group:          Games/Other
@@ -36,6 +36,9 @@ install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_9
 - update to new release by fcimport
 
