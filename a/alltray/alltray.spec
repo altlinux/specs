@@ -3,7 +3,7 @@ BuildRequires: libX11-devel pkgconfig(gdk-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pk
 # END SourceDeps(oneline)
 Name:           alltray
 Version:        0.71b
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
@@ -51,6 +51,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_6
 - update to new release by fcimport
 
