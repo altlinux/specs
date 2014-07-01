@@ -5,7 +5,7 @@ BuildRequires: perl(MooseX/AttributeHelpers.pm) perl(MooseX/Role/Strict.pm) perl
 Name:           perl-MooseX-ClassAttribute
 Summary:        Declare class attributes Moose-style
 Version:        0.27
-Release:        alt2_2
+Release:        alt2_3
 License:        Artistic 2.0
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/MooseX-ClassAttribute-%{version}.tar.gz
@@ -79,6 +79,9 @@ make test
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2_3
+- update to new release by fcimport
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2_2
 - moved to Sisyphus as dependency
 
