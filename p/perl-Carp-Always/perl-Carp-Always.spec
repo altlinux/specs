@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -62,6 +62,9 @@ make test
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_2
+- update to new release by fcimport
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_1
 - Sisyphus build
 
