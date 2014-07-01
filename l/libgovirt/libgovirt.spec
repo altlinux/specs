@@ -2,7 +2,7 @@
 BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 20
+%define fedora 21
 # -*- rpm-spec -*-
 
 %global with_gir 0
@@ -14,7 +14,7 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
 Version: 0.3.0
-Release: alt1_3
+Release: alt1_4%{?extra_release}
 License: LGPLv2+
 Group: Development/C
 Source: http://people.freedesktop.org/~teuf/govirt/%{name}-%{version}.tar.xz
@@ -84,6 +84,9 @@ make check
 %endif
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_4
+- update to new release by fcimport
+
 * Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3
 - update to new release by fcimport
 
