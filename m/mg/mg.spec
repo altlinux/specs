@@ -1,6 +1,6 @@
 Name:		mg
 Version:	20110905
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Tiny Emacs-like editor
 
 Group:		Editors
@@ -35,6 +35,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20110905-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20110905-alt2_5
 - update to new release by fcimport
 
