@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/adonthell-0.3 python-devel
 # END SourceDeps(oneline)
 Name:           wastesedge
 Version:        0.3.5
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Official game package for Adonthell
 
 License:        GPL+
@@ -89,6 +89,9 @@ desktop-file-install                               \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_3
 - update to new release by fcimport
 
