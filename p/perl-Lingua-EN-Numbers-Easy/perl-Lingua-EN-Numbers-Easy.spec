@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Kwalitee.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2009110701
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 Group:          Development/Perl
@@ -47,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2009110701-alt2_7
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 2009110701-alt2_6
 - moved to Sisyphus for Slic3r (by dd@ request)
 
