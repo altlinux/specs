@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.014
+Version:	0.016
 Release:	alt1_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
@@ -12,7 +12,8 @@ URL:		http://search.cpan.org/dist/Test-Warnings
 Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
-BuildRequires:	perl(Module/Build/Tiny.pm)
+BuildRequires:	perl
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
 BuildRequires:	perl(Exporter.pm)
 BuildRequires:	perl(Test/Builder.pm)
@@ -26,7 +27,6 @@ BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(if.pm)
 BuildRequires:	perl(List/Util.pm)
-BuildRequires:	perl(Test/Deep.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 BuildRequires:	perl(version.pm)
@@ -59,20 +59,25 @@ with use Test::Warnings; whether or not your tests have a plan.
 %setup -q -n Test-Warnings-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
-./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-./Build install --destdir=%{buildroot} --create_packlist=0
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
+# %{_fixperms} %{buildroot}
 
 %check
-./Build test
+make test
 
 %files
 %doc Changes CONTRIBUTING LICENSE README README.md examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_1
+- update to new release by fcimport
+
 * Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1_1
 - update to new release by fcimport
 
