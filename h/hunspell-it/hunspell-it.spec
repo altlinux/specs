@@ -5,7 +5,7 @@ Name: hunspell-it
 Summary: Italian hunspell dictionaries
 %define upstreamid 20070901
 Version: 2.4
-Release: alt2_0.10.%{upstreamid}
+Release: alt2_0.11.%{upstreamid}
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/italiano_2_4_2007_09_01.zip
 Group: Text tools
 URL: http://linguistico.sourceforge.net
@@ -43,6 +43,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.11.20070901
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.10.20070901
 - update to new release by fcimport
 
