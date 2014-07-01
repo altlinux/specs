@@ -4,7 +4,7 @@ BuildRequires: perl(FindBin.pm) perl(IO/Capture/Stderr.pm) perl(IO/Capture/Stdou
 # END SourceDeps(oneline)
 Name:           perl-Module-CPANTS-Analyse
 Version:        0.92
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Generate Kwalitee ratings for a distribution
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -81,6 +81,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 %{_mandir}/man1/cpants_lint.pl.1*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.92-alt2_2
+- update to new release by fcimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.92-alt2_1
 - Sisyphus build
 
