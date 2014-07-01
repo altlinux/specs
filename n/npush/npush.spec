@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		npush
 Version:	0.7
-Release:	alt2_10
+Release:	alt2_11
 Summary:	A logic game similar to Sokoban
 
 Group:		Games/Other
@@ -70,6 +70,9 @@ install -p -m 0644 %{name}.png				\
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_10
 - update to new release by fcimport
 
