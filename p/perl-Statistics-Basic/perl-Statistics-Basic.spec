@@ -4,7 +4,7 @@ BuildRequires: perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(overload.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-Statistics-Basic
 Version:        1.6607
-Release:        alt2_6
+Release:        alt2_7
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Perl
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.6607-alt2_7
+- update to new release by fcimport
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.6607-alt2_6
 - moved to Sisyphus for Slic3r (by dd@ request)
 
