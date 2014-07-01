@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Data/Dump.pm) perl(ExtUtils/MakeMaker.pm) perl(Lingua/EN/Numbers/Easy.pm) perl(Storable.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-Rmap
 Version:        0.62
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -47,6 +47,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.62-alt2_8
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.62-alt2_7
 - moved to Sisyphus for Slic3r (by dd@ request)
 
