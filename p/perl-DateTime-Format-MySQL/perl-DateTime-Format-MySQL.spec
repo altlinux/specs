@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 # Note:  Some tests for this package are disabled by default, as they
 # require network access and would thus fail in the buildsys' mock
@@ -16,7 +16,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:           perl-DateTime-Format-MySQL
 Version:        0.04        
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Parse and format MySQL dates and times 
 
 Group:          Development/Perl
@@ -75,6 +75,9 @@ make test
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_21
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_20
 - update to new release by fcimport
 
