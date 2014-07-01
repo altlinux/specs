@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 306
+Version: 308
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -46,12 +46,11 @@ Patch0006: 0006-xterm-alt-makefile-install.patch
 Patch0007: 0007-xterm-alt-disable-report_win_label.patch
 Patch0008: 0008-xterm-alt-i18n.patch
 Patch0009: 0009-xterm-alt-colors.patch
-Patch0010: 0010-xterm-alt-class.patch
-Patch0011: 0011-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
-Patch0012: 0012-xterm-alt-appdef.patch
-Patch0013: 0013-xterm-alt-enable_utf8title.patch
-Patch0014: 0014-xterm-alt-man_suffix.patch
-Patch0015: 0015-xterm-alt-Shorten-passedPty-to-fit-PTYCHARLEN.patch
+Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
+Patch0011: 0011-xterm-alt-appdef.patch
+Patch0012: 0012-xterm-alt-enable_utf8title.patch
+Patch0013: 0013-xterm-alt-man_suffix.patch
+Patch0014: 0014-xterm-alt-Shorten-passedPty-to-fit-PTYCHARLEN.patch
 
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -99,7 +98,6 @@ install -pm755 %_sourcedir/uxterm .
 %patch0012 -p2
 %patch0013 -p2
 %patch0014 -p2
-%patch0015 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -170,6 +168,10 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Tue Jul 01 2014 Fr. Br. George <george@altlinux.ru> 308-alt1
+- Autobuild version bump to 308
+- Fix "-class ..." segfault by dropping UXTerm class enforce patch
+
 * Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 306-alt1
 - Autobuild version bump to 306
 
