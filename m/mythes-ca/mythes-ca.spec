@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: mythes-ca
 Summary: Catalan thesaurus
 Version: 1.5.0
-Release: alt1_9
+Release: alt1_10
 Source: http://www.softcatala.org/diccionaris/actualitzacions/sinonims/thesaurus-ca.oxt
 Group: Text tools
 URL: http://www.softcatala.org/wiki/Projectes/Openthesaurus-ca
@@ -43,6 +43,9 @@ popd
 %{_datadir}/mythes/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_9
 - update to new release by fcimport
 
