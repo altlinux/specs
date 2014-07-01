@@ -1,6 +1,6 @@
 %define destname gear-uupdate
 Name: %destname
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -39,6 +39,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- new version
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - added --override-spec option
 
