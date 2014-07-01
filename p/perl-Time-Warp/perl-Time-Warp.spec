@@ -4,7 +4,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(Test.pm) perl-devel pe
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.5 
-Release:    alt5_14
+Release:    alt5_15
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -54,6 +54,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt5_15
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt5_14
 - update to new release by fcimport
 
