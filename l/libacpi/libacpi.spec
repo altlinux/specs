@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libacpi
 Version:        0.2
-Release:        alt2_20
+Release:        alt2_21
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -68,6 +68,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_21
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_20
 - update to new release by fcimport
 
