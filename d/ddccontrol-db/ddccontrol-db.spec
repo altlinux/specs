@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/perl
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name ddccontrol-db
 %define version 20061014
 %global git_commit e8cc385a6321e7c99783150001193ec6e9e0c436
@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/perl
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20061014
-Release:          alt1_5.%{git_suffix}
+Release:          alt1_6.%{git_suffix}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
@@ -57,6 +57,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_6.20120904gite8cc385a
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_5.20120904gite8cc385a
 - update to new release by fcimport
 
