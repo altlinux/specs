@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 Name: agistudio
 Version: 1.3.0
-Release: alt1_2
+Release: alt1_3
 Summary: AGI integrated development environment
 License: GPLv2+
 Group: Games/Other
@@ -56,6 +56,9 @@ desktop-file-install  \
 %{_datadir}/icons/hicolor/32x32/apps/agistudio.xpm
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_2
 - update to new release by fcimport
 
