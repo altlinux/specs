@@ -7,7 +7,7 @@ Group: Other
 Name:           libdivecomputer
 Version:        0.4.2
 #Release:        2.{snapver}{?dist}
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
@@ -130,6 +130,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_1
 - update to new release by fcimport
 
