@@ -6,7 +6,7 @@ Summary: Galician dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 0.5a
-Release: alt2_7
+Release: alt2_8
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -36,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.5a-alt2_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.5a-alt2_7
 - update to new release by fcimport
 
