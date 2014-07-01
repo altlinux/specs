@@ -4,6 +4,7 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 BuildRequires: libnumpy-devel
 BuildRequires: gcc-c++
+%add_optflags %optflags_shared
 %define oldname lilv
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
@@ -13,7 +14,7 @@ BuildRequires: gcc-c++
 
 Name:       liblilv
 Version:    0.18.0
-Release:    alt1_2
+Release:    alt1_3
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -32,6 +33,7 @@ BuildRequires: python-module-numpy python-module-numpy-addons python-module-nump
 
 
 Source44: import.info
+Provides: lilv = %{version}-%{release}
 
 %description
 %{oldname} is a library to make the use of LV2 plugins as simple as possible 
@@ -41,7 +43,8 @@ faster and have minimal dependencies.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   liblilv = %{version}-%{release}
+Provides: lilv-devel = %{version}-%{release}
 
 %description devel
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -52,7 +55,7 @@ This package contains the headers and development libraries for %{oldname}.
 %package -n python-module-lilv
 Summary:    Python bindings for %{oldname}
 Group:      Development/Python
-Requires:   %{name} = %{version}-%{release}
+Requires:   liblilv = %{version}-%{release}
 
 %description -n python-module-lilv 
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -108,6 +111,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt1_3
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
