@@ -4,12 +4,12 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
 License:        BSD
-URL:            http://www.annodex.net/
+URL:            http://www.xiph.org/fishsound/
 Source0:        http://downloads.xiph.org/releases/libfishsound/libfishsound-%{version}.tar.gz
 
 # also pulled in by speex-devel
@@ -64,7 +64,7 @@ sed -i '/^Requires:.*/d' fishsound.pc.in
 
 
 %build
-%configure --disable-static # --docdir=%{_datadir}/doc/%{name}-docs-%{version}
+%configure --disable-static
 # Don't use rpath!
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -107,6 +107,9 @@ mv src/examples .
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_7
 - update to new release by fcimport
 
