@@ -5,7 +5,7 @@ Name: hunspell-id
 Summary: Indonesian hunspell dictionaries
 %define upstreamid 20040812
 Version: 0.%{upstreamid}
-Release: alt2_8
+Release: alt2_9
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/id_ID.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries#Indonesian_.28Indonesia.29
@@ -33,6 +33,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt2_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt2_8
 - update to new release by fcimport
 
