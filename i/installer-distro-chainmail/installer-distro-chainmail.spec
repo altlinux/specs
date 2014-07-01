@@ -1,5 +1,5 @@
 Name: installer-distro-chainmail
-Version: 2.96.0
+Version: 2.96.1
 Release: alt1
 
 Summary: Installer files for IVK chainmail
@@ -67,9 +67,15 @@ cp -a * %buildroot%install2dir/
 %files stage3
 %install2dir/postinstall.d/20-alterator-defaults.sh
 %install2dir/postinstall.d/30-ahttpd.sh
-%install2dir/postinstall.d/20-openldap.sh
+%install2dir/postinstall.d/90-vsftpd.sh
 
 %changelog
+* Tue Jul 01 2014 Mikhail Efremov <sem@altlinux.org> 2.96.1-alt1
+- Drop 20-openldap.sh postinstall hook.
+- alterator menu: Don't hide net-domain.
+- Change default vsftpd settings (by Stanislav Ievlev).
+- Disable bridge service.
+
 * Fri Jun 20 2014 Mikhail Efremov <sem@altlinux.org> 2.96.0-alt1
 - Add services-off list.
 - Replace services hook with services-on list.
