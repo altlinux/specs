@@ -1,5 +1,5 @@
 Name: ploop
-Version: 1.10
+Version: 1.11
 Release: alt1
 Group: System/Base
 License: GNU GPL
@@ -7,7 +7,6 @@ Summary: Ploop tools
 URL: http://wiki.openvz.org/Ploop
 Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 Requires: parted
 BuildRequires: libxml2-devel libe2fs-devel
@@ -35,7 +34,6 @@ Headers of ploop library
 
 %prep
 %setup
-%patch -p1
 
 %build
 %make LIBDIR=%_libdir all
@@ -62,6 +60,9 @@ make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
 %_includedir/%name
 
 %changelog
+* Tue Jul  1 2014 Evgenii Terechkov <evg@altlinux.org> 1.11-alt1
+- New version
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.10-alt1
 - New version
 
