@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/bbrun /usr/bin/firefox /usr/bin/gencat /usr/bin/gvim gcc
 Summary: The bastard son of Blackbox, a small and fast Window Manager
 Name: hackedbox
 Version: 0.8.5
-Release: alt1_12
+Release: alt1_13
 # Most of the sources are MIT-licensed from blackbox, but a (very) small
 # portion is GPLv2+, so that is the resulting license
 License: GPLv2+
@@ -110,6 +110,9 @@ rm -f %buildroot/etc/X11/gdm/Sessions/Hackedbox
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_13
+- update to new release by fcimport
+
 * Thu Aug 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_12
 - fc import. moved to autoimports
 
