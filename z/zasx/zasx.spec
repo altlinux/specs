@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           zasx
 Version:        1.30
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Asteroid like game with powerups
 Group:          Games/Other
 License:        GPLv2+ and Freely redistributable without restriction
@@ -12,6 +12,7 @@ Source0:        http://www.bob.allegronetwork.com/zasx/zasx130s.zip
 Source1:        zasx.desktop
 Patch0:         zasx-1.30-fixes.patch
 Patch1:         zasx-1.30-datadir.patch
+Patch2:         zasx-1.30-format-security.patch
 BuildRequires:  dumb-devel ImageMagick desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -26,6 +27,7 @@ mode, joystick, music and sound.
 %setup -q -n Zasx
 %patch0 -p1 -z .fix
 %patch1 -p1 -z .datadir
+%patch2 -p1
 sed -i 's/\r//' copying.txt readme.txt docs/index.html docs/%{name}.css
 mv docs html
 
@@ -61,6 +63,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_15
 - update to new release by fcimport
 
