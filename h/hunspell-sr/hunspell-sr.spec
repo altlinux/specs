@@ -5,7 +5,7 @@ Name: hunspell-sr
 Summary: Serbian hunspell dictionaries
 %define upstreamid 20130330
 Version: 0.%{upstreamid}
-Release: alt1_2
+Release: alt1_3
 Source: http://extensions.services.openoffice.org/e-files/ext/1572/10/dict-sr.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/project/dict-sr
@@ -75,6 +75,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_2
 - update to new release by fcimport
 
