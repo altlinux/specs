@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libhbaapi
 Version:        2.2.9
-Release:        alt1_3
+Release:        alt1_4
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -49,6 +49,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_3
 - update to new release by fcimport
 
