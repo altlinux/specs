@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-pod
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.11
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -68,6 +68,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1_1
 - update to new release by fcimport
 
