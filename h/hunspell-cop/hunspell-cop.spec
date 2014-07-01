@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-cop
 Summary: Coptic hunspell dictionaries
 Version: 0.3
-Release: alt2_5
+Release: alt2_6
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/793/2/dict-cop_EG_v03.oxt
 URL: http://www.moheb.de/coptic_oo.html
@@ -37,6 +37,9 @@ cp -p cop_EG-Bohairic/cop_EG.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_5
 - update to new release by fcimport
 
