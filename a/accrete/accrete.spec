@@ -1,6 +1,6 @@
 Name:		accrete
 Version:	1.0
-Release:	alt2_10
+Release:	alt2_11
 Summary:	Accrete is a physical simulation of solar system planet formation
 
 License:	Public Domain
@@ -33,6 +33,9 @@ install -Dm 755 accrete $RPM_BUILD_ROOT%{_bindir}/accrete
 %{_bindir}/accrete
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_10
 - update to new release by fcimport
 
