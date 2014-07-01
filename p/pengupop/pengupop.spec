@@ -1,6 +1,6 @@
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_11
+Release:        alt4_12
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 Group:          Games/Other
@@ -47,6 +47,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_11
 - update to new release by fcimport
 
