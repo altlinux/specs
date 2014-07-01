@@ -4,14 +4,14 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname flann
-%define fedora 19
+%define fedora 21
 %if 0%{?rhel} < 6 && ! 0%{?fedora}
 %{!?python_sitearch: %global python_sitearch %(/usr/bin/python26 -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %endif
 
 Name:           libflann
 Version:        1.8.4
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 Group:          Development/C
@@ -49,9 +49,10 @@ choosing the best algorithm and optimum parameters depending on the data sets.
 Summary: Development headers and libraries for flann
 Group: Development/C
 Requires: %{name} = %{version}-%{release}
-Provides: flann-devel = %{version}-%{release}
 # flann/flann_mpi.hpp requires boost/mpi.hpp, which is a convenience header
 # inside of the boost-devel package
+Requires: boost-devel-headers
+Provides: flann-devel = %{version}-%{release}
 
 %description devel
 Development headers and libraries for flann.
@@ -124,6 +125,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_2
 - update to new release by fcimport
 
