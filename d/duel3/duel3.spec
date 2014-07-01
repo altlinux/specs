@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ unzip
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.16.%{snapshot}
+Release:        alt3_0.17.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -91,6 +91,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.17.20060225
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.16.20060225
 - update to new release by fcimport
 
