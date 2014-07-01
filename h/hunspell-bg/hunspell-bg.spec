@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-bg
 Summary: Bulgarian hunspell dictionaries
 Version: 4.3
-Release: alt2_6
+Release: alt2_7
 Source: http://downloads.sourceforge.net/bgoffice/OOo-spell-bg-%{version}.zip
 Group: Text tools
 URL: http://bgoffice.sourceforge.net/
@@ -47,6 +47,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_6
 - update to new release by fcimport
 
