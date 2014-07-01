@@ -2,7 +2,7 @@
 %global snapshot 20130509
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_2
+Release:    alt1_3
 Summary:    Compiler built-ins
 Group:      Development/C
 License:    BSD
@@ -32,6 +32,9 @@ install -m 0644 -t %{buildroot}%{_includedir} *.h
 %{_includedir}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20130509-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130509-alt1_2
 - update to new release by fcimport
 
