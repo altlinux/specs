@@ -5,7 +5,7 @@ Name: hunspell-lb
 Summary: Luxembourgish hunspell dictionaries
 %define upstreamid 20121128
 Version: 0.%{upstreamid}
-Release: alt1_2
+Release: alt1_3
 Source: http://downloads.spellchecker.lu/packages/OOo3/SpellcheckerLu.oxt
 Group: Text tools
 URL: http://spellchecker.lu
@@ -45,6 +45,9 @@ cp -p th_lb_LU_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/th_lb_LU_v2.*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20121128-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20121128-alt1_2
 - update to new release by fcimport
 
