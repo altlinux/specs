@@ -1,5 +1,5 @@
 Name: libgit2
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: linkable library for Git
@@ -8,7 +8,7 @@ License: GPLv2 with linking exception
 Group: System/Libraries
 URL: http://libgit2.github.com
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake python-modules zlib-devel libssl-devel
@@ -57,6 +57,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
+- 0.21.0_16e7596d
+
 * Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
