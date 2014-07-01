@@ -1,6 +1,6 @@
 Name:           flight-of-the-amazon-queen-cd
 Version:        1.0
-Release:        alt4_10
+Release:        alt4_11
 Summary:        Flight of the Amazon Queen - Adventure Game - CD version
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -64,6 +64,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_10
 - update to new release by fcimport
 
