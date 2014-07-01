@@ -5,7 +5,7 @@ Summary: Polish dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 6.0_20061121
-Release: alt2_9
+Release: alt2_10
 License: LGPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -35,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 6.0_20061121-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 6.0_20061121-alt2_9
 - update to new release by fcimport
 
