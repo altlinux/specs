@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 %define oldname alfont
 Name:           libalfont
 Version:        2.0.9
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Font rendering library for the Allegro game library
 Group:          System/Libraries
 License:        FTL
@@ -74,6 +74,9 @@ install -m 644 include/%{oldname}*.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_5
 - update to new release by fcimport
 
