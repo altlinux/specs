@@ -1,13 +1,14 @@
-%global upstreamid 20080110
-
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 Summary: Arabic hunspell dictionaries
 Name: hunspell-ar
-Version: 0.%{upstreamid}
-Release: alt2_10
+Version: 3.2
+Release: alt1_2
 License: GPLv2 or LGPLv2 or MPLv1.1
 Group: Text tools
 URL: http://ayaspell.sourceforge.net/
-Source: http://downloads.sourceforge.net/ayaspell/hunspell-ar_%{upstreamid}.tar.gz
+Source: http://sourceforge.net/projects/ayaspell/files/hunspell-ar_%{version}.zip
 
 BuildArch: noarch
 Requires: hunspell
@@ -17,10 +18,10 @@ Source44: import.info
 Arabic (Egypt, Algeria, etc.) hunspell dictionaries.
 
 %prep
-%setup -q -n %{name}_%{upstreamid}
+%setup -q -c
 
 %build
-# nothing to build
+chmod -x *
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
@@ -36,10 +37,13 @@ done
 popd
 
 %files
-%doc AUTHORS ChangeLog-ar COPYING README-ar THANKS
+%doc AUTHORS ChangeLog-ar COPYING README-* THANKS
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20080110-alt2_10
 - update to new release by fcimport
 
