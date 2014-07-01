@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(XSLoader.pm) per
 BuildRequires: gcc-c++
 Name:           perl-ExtUtils-CppGuess
 Version:        0.07
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -49,6 +49,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_7
+- update to new release by fcimport
+
 * Tue Feb 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_6
 - moved to Sisyphus for Slic3r (by dd@ request)
 
