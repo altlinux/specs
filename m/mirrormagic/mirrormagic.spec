@@ -1,7 +1,7 @@
-%define fedora 19
+%define fedora 21
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_13
+Release:        alt5_15
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -14,6 +14,7 @@ Patch1:         %{name}-%{version}-64bit.patch
 Patch2:         %{name}-%{version}-fs-toggle.patch
 Patch3:         %{name}-%{version}-highscore.patch
 Patch4:         %{name}-%{version}-yesno.patch
+Patch5:         %{name}-%{version}-format-security.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -33,6 +34,7 @@ familiar from the games "Deflektor" and "Mindbender".
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 
 %build
@@ -71,6 +73,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_15
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_13
 - update to new release by fcimport
 
