@@ -1,6 +1,6 @@
 Name:      and
 Version:   1.2.2
-Release:   alt3_20
+Release:   alt3_21
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -79,6 +79,9 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 %{_unitdir}/and.service
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_21
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_20
 - update to new release by fcimport
 
