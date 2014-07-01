@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.02
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Converts HTML to Text with tables in tact
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_5
 - update to new release by fcimport
 
