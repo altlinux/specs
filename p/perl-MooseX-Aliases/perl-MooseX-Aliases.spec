@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Aliases
 Version:        0.11
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/MooseX/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
 - update to new release by fcimport
 
