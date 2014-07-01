@@ -4,7 +4,7 @@ BuildRequires: libsysfs-devel
 %add_optflags %optflags_shared
 Name:    libcxgb4
 Version: 1.3.3
-Release: alt1_1
+Release: alt1_2
 Summary: Chelsio T4 iWARP HCA Userspace Driver
 Group:   System/Libraries
 License: GPLv2 or BSD
@@ -52,6 +52,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.a
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1_1
 - update to new release by fcimport
 
