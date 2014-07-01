@@ -9,7 +9,7 @@ Group: Other
 
 Name:           html401-dtds
 Version:        4.01
-Release:        alt1_%{date}.12.4
+Release:        alt1_%{date}.12.5
 Summary:        HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
@@ -73,6 +73,9 @@ cd -
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.5
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.4
 - update to new release by fcimport
 
