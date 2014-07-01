@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(ExtUtils/MakeMaker.pm) perl(Imager.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-Math-Symbolic
 Version:        0.612
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -62,6 +62,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_4
+- update to new release by fcimport
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_3
 - moved to Sisyphus for Slic3r (by dd@ request)
 
