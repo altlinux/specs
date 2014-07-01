@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/Pg.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Moose/Meta/Method/Accessor.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(Try/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        2.01
-Release:        alt1
+Release:        alt1_2
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-FormFu/
-Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI.pm)
@@ -123,6 +123,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_2
+- update to new release by fcimport
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
 - automated CPAN update
 
