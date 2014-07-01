@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           sudoku-savant
 Version:        1.3
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Solve and generate sudoku puzzles through logical means
 Summary(de):    Lösen und Erstellen von Sudoku-Puzzles mit logischen Mitteln
 
@@ -65,6 +65,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10
 - update to new release by fcimport
 
