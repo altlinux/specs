@@ -4,7 +4,7 @@ Summary: Swedish dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.51
-Release: alt2_10
+Release: alt2_11
 # file sv_phonet.dat is under GPLv2+ the other parts of this package are under LGPLv2+
 License: LGPLv2+ and GPLv2+ 
 Group: Text tools
@@ -35,6 +35,9 @@ make install  DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.51-alt2_10
 - update to new release by fcimport
 
