@@ -1,16 +1,15 @@
-%define module_version 0.15
-%define module_name Class-Field
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Class-Field
 Version:        0.15
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Class Field Accessor Generator
-License:        perl
+License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Class-Field/
-Source0:        http://cpan.org.ua/authors/id/I/IN/INGY/%module_name-%module_version.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(inc/Module/Install.pm)
@@ -28,7 +27,7 @@ Class::Field exports two subroutines, field and const. These functions are
 used to declare fields and constants in your class.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Class-Field-%{version}
 rm -r inc
 sed -i -e '/^inc\// d' MANIFEST
 find -type f -exec chmod -x {} +
@@ -54,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_9
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_8
 - build for Sisyphus (required for perl update)
 
