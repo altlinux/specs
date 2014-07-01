@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Paper-Specs
 Version:        0.10
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Size and layout information for paper stock, forms, and labels
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_7
+- update to new release by fcimport
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_6
 - update to new release by fcimport
 
