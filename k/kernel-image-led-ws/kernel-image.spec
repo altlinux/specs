@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.2
+Version: 3.15.3
 Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 2
+%define kernel_stable_version 3
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1883,6 +1883,19 @@ done)
 
 
 %changelog
+* Tue Jul 01 2014 Led <led@altlinux.ru> 3.15.3-alt1
+- 3.15.3
+- removed:
+  + fix-drivers-media-pci-ivtv--ivtv-alsa
+  + fix-mm--memory-failure
+- updated:
+  + fix-fs-btrfs
+  + fix-fs-cifs
+  + feat-fs-aufs
+- added:
+  + fix-drivers-gpu-drm--msm
+  + fix-fs-proc
+
 * Fri Jun 26 2014 Led <led@altlinux.ru> 3.15.2-alt1
 - 3.15.2
 - removed:
