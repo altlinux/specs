@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Reporter
 Version:        1.60
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Sends test results to cpan-testers@perl.org
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.60-alt2_2
+- update to new release by fcimport
+
 * Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.60-alt2_1
 - moved to Sisyphus as dependency
 
