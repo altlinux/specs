@@ -5,7 +5,7 @@ Name: aspell-%{lang}
 # Have to bump this to make it newer than the old, bad version.
 #Epoch: 51
 Version: 0.50
-Release: alt1_3
+Release: alt1_4
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -35,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_libdir}
 %{_datadir}/aspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_3
 - update to new release by fcimport
 
