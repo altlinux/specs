@@ -5,7 +5,7 @@ Name: hunspell-fa
 Summary: Farsi hunspell dictionaries
 %define upstreamid 20070116
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Group: Text tools
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/fa/aspell6-fa-0.11-0.tar.bz2
 URL: http://aspell.net/
@@ -37,6 +37,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_9
 - update to new release by fcimport
 
