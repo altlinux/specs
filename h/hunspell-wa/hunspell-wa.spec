@@ -1,7 +1,7 @@
 Name: hunspell-wa
 Summary: Walloon hunspell dictionaries
 Version: 0.4.17
-Release: alt1_1
+Release: alt1_2
 Source0: http://chanae.walon.org/walon/aspell-wa-%{version}.tar.bz2
 Group: Text tools
 URL: http://chanae.walon.org/walon/aspell.php
@@ -42,6 +42,9 @@ cp -p wa.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/wa_BE.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.17-alt1_2
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.17-alt1_1
 - update to new release by fcimport
 
