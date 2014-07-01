@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 %add_optflags %optflags_shared
 Name:           libpgf
 Version:        6.13.45
-Release:        alt1_0.1.svn123
+Release:        alt1_0.2.svn123
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -66,6 +66,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 6.13.45-alt1_0.2.svn123
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 6.13.45-alt1_0.1.svn123
 - update to new release by fcimport
 
