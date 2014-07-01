@@ -2,7 +2,7 @@ Name: mythes-ga
 Summary: Irish thesaurus
 %define upstreamid 20071001
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_12
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/thes_ga_IE_v2.zip
 Group: Text tools
 URL: http://borel.slu.edu/lsg/index-en.html
@@ -39,6 +39,9 @@ cp -p th_ga_IE_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_11
 - update to new release by fcimport
 
