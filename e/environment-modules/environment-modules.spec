@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -126,6 +126,9 @@ EOF
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_11
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_10
 - converted for ALT Linux by srpmconvert tools
 
