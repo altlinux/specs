@@ -1,13 +1,15 @@
 Name: livecd-evms
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
-Summary: tune evms config to run from LiveCD
+Summary: Tune EVMS config to run from LiveCD
 License: GPLv2
 Group: System/Configuration/Other
 
+Url: http://www.altlinux.org/Alterator
 Source0: %name
-
+Source1: %name.service
+Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
 PreReq: service chkconfig
@@ -18,9 +20,11 @@ Requires(preun): chkconfig
 
 %description
 %summary
+(livecd-install won't work if this isn't done)
 
 %install
-install -pD -m0755 %SOURCE0 %buildroot%_initdir/%name
+install -pDm755 %SOURCE0 %buildroot%_initdir/%name
+install -pDm644 %SOURCE1 %buildroot%_unitdir/livecd-evms.service
 
 %post
 %post_service %name
@@ -30,9 +34,12 @@ install -pD -m0755 %SOURCE0 %buildroot%_initdir/%name
 
 %files
 %_initdir/%name
-
+%_unitdir/%name.service
 
 %changelog
+* Tue Jul 01 2014 Michael Shigorin <mike@altlinux.org> 0.2.1-alt1
+- added systemd unit file (214 broke sysv initscript compatibility)
+
 * Thu May 19 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - exclude zram*
 
