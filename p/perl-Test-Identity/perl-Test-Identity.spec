@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/Builder/Module.pm) perl-Mod
 # END SourceDeps(oneline)
 Name:           perl-Test-Identity
 Version:        0.01
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Assert the referential identity of a reference
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_7
+- update to new release by fcimport
+
 * Thu Oct 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_6
 - Sisyphus build
 
