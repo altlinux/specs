@@ -1,14 +1,21 @@
 Requires: bash-completion
+%global commit dabc177bbd2a6728f94ad013ab581dd44437d5ab
+%global owner joelthelion
+
 Name:           autojump
-Version:        21.1.2
-Release:        alt3_3
+Version:        21.7.1
+Release:        alt1_3
 
 Summary:        A fast way to navigate your filesystem from the command line
 
 Group:          Shells
 License:        GPLv3+
 URL:            http://wiki.github.com/joelthelion/autojump
-Source:         https://github.com/downloads/joelthelion/%{name}/%{name}_v%{version}.tar.gz
+Source:         https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
+Patch1:         fix-bash-completion.patch
+
+# pandoc doesnt build on arm, so lets build on intel arch only
+ExclusiveArch:  %{ix86} noarch
 BuildArch:      noarch
 
 BuildRequires:  pandoc python-devel
@@ -29,43 +36,37 @@ autojump is a faster way to navigate your filesystem. It works by maintaining
 a database of the directories you use the most from the command line.
 autojump-zsh is designed to work with zsh.
 
+
+%package fish
+Requires:       %{name} = %{version}-%{release}
+Group:          Office
+Summary:        Autojump for fish shell
+
+%description fish
+autojump is a faster way to navigate your filesystem. It works by maintaining 
+a database of the directories you use the most from the command line.
+autojump-fish is designed to work with fish shell.
+
+
 %prep
-%setup -q -n %{name}_v%{version}
+%setup -q -n %{name}-%{commit}
+%patch1 -p1
 
 # Fix shebang
 sed -i 's|/usr/bin/env python|/usr/bin/python|' bin/%{name}
-for i in bin/jumpapplet tests/runtests.py; do
-    sed -i 's|/usr/bin/env python2|/usr/bin/python|' "$i"
-done
 
 %build
 make docs
 
-%check
-python tests/runtests.py
-
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# There must be a more elegant way to do that
-install -p bin/icon.png $RPM_BUILD_ROOT%{_datadir}/%{name}/icon.png
-install -Dp bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
-install -p bin/jumpapplet $RPM_BUILD_ROOT%{_bindir}/jumpapplet
-install -Dpm 644 bin/_j $RPM_BUILD_ROOT%{_datadir}/zsh/site-functions/_j
-install -Dpm 755 bin/%{name}.bash $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.bash
-install -Dpm 755 bin/%{name}.sh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.sh
-install -Dpm 755 bin/%{name}.zsh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.zsh
-
-install -Dpm 644 docs/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
-# jumpapplet needs autojump.py
-ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/%{name}.py
+./install.sh --destdir %{buildroot} --prefix usr
+# deprecated file
+rm -f %{buildroot}/_j
 
 %files
 %doc LICENSE README.md AUTHORS
 %{_bindir}/%{name}
-%{_bindir}/%{name}.py
-%{_bindir}/jumpapplet
+%{_bindir}/%{name}_argparse.py
 %{_datadir}/%{name}
 %{_mandir}/man1/%{name}.1*
 %config(noreplace) %{_sysconfdir}/profile.d/%{name}.sh
@@ -73,10 +74,14 @@ ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/%{name}.py
 
 %files zsh
 %config(noreplace) %{_sysconfdir}/profile.d/%{name}.zsh
-%dir %{_datadir}/zsh/site-functions/
-%{_datadir}/zsh/site-functions/_j
+
+%files fish
+%config(noreplace) %{_sysconfdir}/profile.d/%{name}.fish
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 21.7.1-alt1_3
+- update to new release by fcimport
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 21.1.2-alt3_3
 - 755 for all profile files (closes: #28500)
 
