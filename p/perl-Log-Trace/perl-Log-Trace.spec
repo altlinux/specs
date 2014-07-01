@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl-devel perl-podlators
+BuildRequires: perl(Data/Dumper.pm) perl(Data/Serializer.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(Time/HiRes.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Log-Trace 
 Version:    1.070 
-Release:    alt2_14
+Release:    alt2_15
 # lib/Log/Trace.pm -> GPLv2+ 
 License:    GPLv2+
 Group:      Development/Perl
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_15
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_14
 - update to new release by fcimport
 
