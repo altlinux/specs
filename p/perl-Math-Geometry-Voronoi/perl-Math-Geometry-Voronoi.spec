@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(CGI.pm) perl(HTML/Template.pm) perl(blib.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Compute Voronoi diagrams from sets of points
 License:        (GPL+ or Artistic) and MIT
 # Perl module is licensed as Perl, underlaying C code is MIT
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_11
+- update to new release by fcimport
+
 * Tue Feb 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_10
 - moved to Sisyphus for Slic3r (by dd@ request)
 
