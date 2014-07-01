@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.20
-Release: alt2
+Release: alt3
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -100,6 +100,8 @@ install -pm0644 -D %SOURCE2          %buildroot%_man1dir/connmanctl.1
 install -pm0755 -D client/connmanctl %buildroot%_sbindir/connmanctl
 install -pm0644 -D src/main.conf     %buildroot%_sysconfdir/connman/main.conf
 
+ln -s connman.service %buildroot%_unitdir/connmand.service
+
 find %buildroot%_libdir/%name -name '*.la' -delete
 
 %files
@@ -143,6 +145,9 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %_libdir/%name/scripts/*.so
 
 %changelog
+* Tue Jul 01 2014 Michael Shigorin <mike@altlinux.org> 1.20-alt3
+- symlink connman.service as connmand.service (closes: #30147)
+
 * Tue Dec 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.20-alt2
 - Rebuilt with new version.
 
