@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DBI
 Version:        0.041
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Perl
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_1
 - update to new release by fcimport
 
