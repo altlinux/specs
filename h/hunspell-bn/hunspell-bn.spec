@@ -1,7 +1,7 @@
 Name: hunspell-bn
 Summary: Bengali hunspell dictionaries
 Version: 1.0.0
-Release: alt1_1
+Release: alt1_2
 #Epoch: 1
 Group:          Text tools
 Source: http://anishpatil.fedorapeople.org/bn_in.%{version}.tar.gz
@@ -32,6 +32,9 @@ cp -p bn_IN/*.dic bn_IN/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
 - update to new release by fcimport
 
