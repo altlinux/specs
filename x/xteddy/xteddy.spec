@@ -4,7 +4,7 @@ BuildRequires: libICE-devel libSM-devel libX11-devel
 BuildRequires: libXext-devel
 Name:           xteddy
 Version:        2.2
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
@@ -32,8 +32,8 @@ and make you smile.
 %patch33 -p1
 sed -i -e s,/usr/games/xteddy,xteddy, xtoys
 
+
 %build
-#autoreconf -fisv
 %configure
 make %{?_smp_mflags}
 
@@ -69,6 +69,9 @@ EOF
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_1
 - update to new release by fcimport
 
