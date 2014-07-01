@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lingua-EN-Numbers
 Version:        1.07
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Turn "407" into "four hundred and seven", etc
 License:        GPLv2
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
