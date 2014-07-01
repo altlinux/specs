@@ -1,7 +1,7 @@
 Name: hunspell-si
 Summary: Sinhala hunspell dictionaries
 Version: 0.2.1
-Release: alt2_9
+Release: alt2_10
 Source: http://www.sandaru1.com/si-LK.tar.gz
 Group: Text tools
 #Following URL is down since few months informed to upstream
@@ -30,6 +30,9 @@ cp -p dictionaries/si-LK.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/si_LK.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_9
 - update to new release by fcimport
 
