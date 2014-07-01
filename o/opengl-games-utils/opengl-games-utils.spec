@@ -1,6 +1,6 @@
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Utilities to check proper 3d support before launching 3d games
 Group:          Games/Other
 License:        Public Domain
@@ -42,6 +42,9 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_5
 - update to new release by fcimport
 
