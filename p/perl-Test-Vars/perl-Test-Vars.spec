@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Vars
 Version:	0.005
-Release:	alt2_4
+Release:	alt2_5
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -74,6 +74,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_5
+- update to new release by fcimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.005-alt2_4
 - Sisyphus build
 
