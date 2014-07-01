@@ -2,7 +2,7 @@
 
 Name:		agedu
 Version:	0
-Release:	alt2_6.%{rel}
+Release:	alt2_7.%{rel}
 Summary:	An utility for tracking down wasted disk space
 Group:		File tools
 License:	MIT
@@ -36,6 +36,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_7.r9153
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt2_6.r9153
 - update to new release by fcimport
 
