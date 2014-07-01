@@ -4,7 +4,7 @@
 
 Name:           aspell-bn
 Version:        0.01.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        GNU Aspell Bengali Dictionary Package
 
 Group:          Text tools
@@ -50,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.01.1-alt2_10
 - update to new release by fcimport
 
