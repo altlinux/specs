@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 21
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           londonlaw
 Version:        0.2.1
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -77,6 +77,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_16
 - update to new release by fcimport
 
