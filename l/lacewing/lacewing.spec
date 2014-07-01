@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 21
 Name:           lacewing
 Version:        1.10
-Release:        alt2_21
+Release:        alt2_23
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -17,6 +17,8 @@ Patch0:         lacewing.patch
 Patch1:         lacewing-fullscreen.patch
 Patch2:         lacewing-nicecpu.patch
 Patch3:         lacewing-warn.patch
+Patch4:         lacewing-format-security.patch
+Patch5:         lacewing-rhbz1045111.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -39,6 +41,8 @@ unzip -qqo %{SOURCE1}
 %patch1 -p1 -z .fullscreen
 %patch2 -p1 -z .nicecpu
 %patch3 -p1 -z .warn
+%patch4 -p1
+%patch5 -p1
 sed -i 's/\r//' readme.txt licence.txt
 chmod 644 readme.txt licence.txt
 %patch33 -p1
@@ -78,6 +82,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_23
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_21
 - update to new release by fcimport
 
