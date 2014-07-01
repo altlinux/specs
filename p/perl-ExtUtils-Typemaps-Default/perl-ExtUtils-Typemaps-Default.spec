@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.05
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ sed -i 's/3.18_03/3.18/' Build.PL
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_2
+- update to new release by fcimport
+
 * Wed Feb 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_1
 - moved to Sisyphus for Slic3r (by dd@ request)
 
