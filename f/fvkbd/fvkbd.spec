@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libfakekey)
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fvkbd
 %define version 0.2.2
 # Tarfile created using git
@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.
 
 Name:          fvkbd
 Version:       0.2.2
-Release:       alt3_8
+Release:       alt3_9
 Summary:       Free Virtual Keyboard
 
 Group:         System/Libraries
@@ -85,6 +85,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libfvkbd-gtk-0.2.so
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_9
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_8
 - update to new release by fcimport
 
