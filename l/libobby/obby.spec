@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(net6-1.3) pkgconfig(sigc++-2.0)
 %define oldname obby
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_6
+Release:        alt1_7
 Summary:        A library which provides synced document buffers
 
 Group:          Development/C
@@ -26,7 +26,7 @@ Unix-like platforms.
 %package devel
 Summary:        Development libraries for obby
 Group:          Development/C
-Requires:       libobby = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: obby-devel = %{version}-%{release}
 
 %description devel
@@ -60,6 +60,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_6
 - update to new release by fcimport
 
