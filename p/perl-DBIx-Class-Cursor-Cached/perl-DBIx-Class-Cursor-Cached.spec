@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Ext
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-Cursor-Cached
 Version:        1.001002
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Cursor class with built-in caching support
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt3_7
+- update to new release by fcimport
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 1.001002-alt3_6
 - moved to Sisyphus as dependency
 
