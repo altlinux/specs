@@ -1,5 +1,5 @@
 Name: installer-feature-quota-stage2
-Version: 0.4
+Version: 0.6
 Release: alt1
 
 Summary: Setup quota on local filesystems
@@ -25,6 +25,12 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jul 01 2014 Mikhail Efremov <sem@altlinux.org> 0.6-alt1
+- Setup quota for all supported filesystems.
+
+* Wed Dec 05 2012 Andriy Stepanov <stanv@altlinux.ru> 0.5-alt1
+- Migrate from ext3 to ext4. vm-profiles by default crates Ext4.
+
 * Mon Jun 15 2009 Dmitry V. Levin <ldv@altlinux.org> 0.4-alt1
 - Changed hook to handle ovz filesystems.
 
