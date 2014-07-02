@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname suil
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name suil
 %define version 0.8.0
 %global maj 0
@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsuil
 Version:    0.8.0
-Release:    alt1_1
+Release:    alt1_2
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -95,6 +95,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_1
 - update to new release by fcimport
 
