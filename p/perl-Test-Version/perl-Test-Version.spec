@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-Test-Version
 Version:	1.002004
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 Group:		Development/Perl
@@ -101,6 +101,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1_4
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1_3
 - update to new release by fcimport
 
