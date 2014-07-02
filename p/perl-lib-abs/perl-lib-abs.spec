@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DynaLoader.pm) perl(ExtUtils/M
 # END SourceDeps(oneline)
 Name:           perl-lib-abs
 Version:        0.93
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Module lib that makes relative path absolute to caller
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_2
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_1
 - update to new release by fcimport
 
