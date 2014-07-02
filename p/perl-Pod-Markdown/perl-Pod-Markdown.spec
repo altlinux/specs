@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
 Version:        2.001
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -60,6 +60,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.001-alt1_1
 - update to new release by fcimport
 
