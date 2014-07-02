@@ -12,7 +12,7 @@ BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open
 
 Name:		perl-Test-Mojibake
 Version:	1.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -151,6 +151,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
 - update to new release by fcimport
 
