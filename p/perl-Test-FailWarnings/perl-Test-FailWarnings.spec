@@ -5,7 +5,7 @@ BuildRequires: perl(IO/Handle.pm) perl(IPC/Open3.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-FailWarnings
 Version:        0.008
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_1
 - update to new release by fcimport
 
