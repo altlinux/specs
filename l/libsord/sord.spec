@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsord
 Version:    0.12.0
-Release:    alt1_5
+Release:    alt1_6
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -19,7 +19,7 @@ License:    ISC
 URL:        http://drobilla.net/software/sord/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
-BuildRequires: boost-devel
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: glib2-devel
@@ -86,6 +86,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_6
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_5
 - update to new release by fcimport
 
