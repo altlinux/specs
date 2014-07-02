@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_8
+- update to new release by fcimport
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_7
 - Sisyphus build
 
