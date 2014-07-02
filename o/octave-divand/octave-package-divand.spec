@@ -1,14 +1,14 @@
-%define octave_pkg_version 1.2.3
-%define octave_pkg_name queueing
-%define octave_descr_name queueing
+%define octave_pkg_version 1.1.2
+%define octave_pkg_name divand
+%define octave_descr_name divand
 Name: octave-%octave_pkg_name
-Version: 1.2.3
+Version: 1.1.2
 Release: alt1
-Summary: Octave package for Queueing Networks and Markov chains analysis
+Summary: divand
 
 Group: Sciences/Mathematics
-License: GPLv3+
-URL: http://www.moreno.marzolla.name/software/queueing/
+License: GPLv2+
+URL: http://modb.oce.ulg.ac.be/mediawiki/index.php/divand
 
 Source0: %octave_pkg_name-%version.tar.gz
 
@@ -18,9 +18,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(queueing) = %version
-# Depends: octave (>= 3.2.3)
-Requires: octave >= 3.2.3
+Provides: octave(divand) = %version
+# Depends: octave (>= 3.4.0)
+Requires: octave >= 3.4.0
 
 
 %description
@@ -28,7 +28,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-The queueing package provides functions for queueing
+divand performs an n-dimensional variational analysis (interpolation) of arbitrarily located observations.
 
 %prep
 %setup -c -n %name-%version
@@ -50,15 +50,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.3-alt1
-- updated by octave-package-builder
-
-* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.2-alt2
-- Rebuild with the next version of Octave: 3.8.0
-
-* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.2-alt1
-- updated by octave-package-builder
-
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.0-alt1
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.1.2-alt1
 - updated by octave-package-builder
 

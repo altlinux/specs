@@ -1,14 +1,15 @@
-%define octave_pkg_version 1.2.3
-%define octave_pkg_name queueing
-%define octave_descr_name queueing
+%def_with _octave_arch
+%define octave_pkg_version 1.3.7
+%define octave_pkg_name nurbs
+%define octave_descr_name Nurbs
 Name: octave-%octave_pkg_name
-Version: 1.2.3
+Version: 1.3.7
 Release: alt1
-Summary: Octave package for Queueing Networks and Markov chains analysis
+Summary: Nurbs.
 
 Group: Sciences/Mathematics
 License: GPLv3+
-URL: http://www.moreno.marzolla.name/software/queueing/
+URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
@@ -18,9 +19,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(queueing) = %version
-# Depends: octave (>= 3.2.3)
-Requires: octave >= 3.2.3
+Provides: octave(nurbs) = %version
+# Depends: octave (>= 3.2)
+Requires: octave >= 3.2
 
 
 %description
@@ -28,7 +29,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-The queueing package provides functions for queueing
+Collection of routines for the creation, and manipulation of Non-Uniform Rational B-Splines (NURBS), based on the NURBS toolbox by Mark Spink.
 
 %prep
 %setup -c -n %name-%version
@@ -50,15 +51,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.3-alt1
-- updated by octave-package-builder
-
-* Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.2.2-alt2
-- Rebuild with the next version of Octave: 3.8.0
-
-* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.2-alt1
-- updated by octave-package-builder
-
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.0-alt1
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.3.7-alt1
 - updated by octave-package-builder
 

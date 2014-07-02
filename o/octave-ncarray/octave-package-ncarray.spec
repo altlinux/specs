@@ -1,14 +1,14 @@
-%define octave_pkg_version 1.0.1
+%define octave_pkg_version 1.0.3
 %define octave_pkg_name ncarray
-%define octave_descr_name ncArray
+%define octave_descr_name ncarray
 Name: octave-%octave_pkg_name
-Version: 1.0.1
+Version: 1.0.3
 Release: alt1
-Summary: ncArray
+Summary: ncarray
 
 Group: Sciences/Mathematics
 License: GPLv2+
-URL: http://octave.sf.net
+URL: http://modb.oce.ulg.ac.be/mediawiki/index.php/ncArray
 
 Source0: %octave_pkg_name-%version.tar.gz
 
@@ -19,8 +19,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(ncarray) = %version
-# Depends: octave (>= 3.4.0), octcdf (>= 1.1.5)
-Requires: octave >= 3.4.0 octave(octcdf) >= 1.1.5
+# Depends: octave (>= 3.4.0), netcdf (>= 1.0.2), statistics (>= 1.0.6)
+Requires: octave >= 3.4.0 octave(netcdf) >= 1.0.2 octave(statistics) >= 1.0.6
 
 
 %description
@@ -31,10 +31,12 @@ Extension Description:
 Access a single or a collection of NetCDF files as a multi-dimensional array
 
 %prep
-%setup -T -c %name-%version
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -48,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.3-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.0.1-alt1
 - updated by octave-package-builder
 

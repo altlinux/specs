@@ -1,10 +1,10 @@
 Serial: 1
-%define octave_pkg_version 1.2.2
+%define octave_pkg_version 1.2.3
 %define octave_pkg_name statistics
 %define octave_descr_name Statistics
 Name: octave-%octave_pkg_name
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Statistics
 
 Group: Sciences/Mathematics
@@ -32,10 +32,12 @@ Extension Description:
 Additional statistics functions for Octave.
 
 %prep
-%setup -T -c %name-%version
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -49,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.3-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.2-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

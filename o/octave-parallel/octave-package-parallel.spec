@@ -2,11 +2,11 @@
 BuildRequires: /usr/bin/mkoctfile /usr/bin/octave glibc-devel
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.1.1
+%define octave_pkg_version 2.2.0
 %define octave_pkg_name parallel
 %define octave_descr_name Parallel
 Name: octave-%octave_pkg_name
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 Summary: Parallel Computing.
 
@@ -32,13 +32,15 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Parallel execution package for cluster computers. See
+Parallel execution package. See also package mpi, maintained
 
 %prep
-%setup -T -c %name-%version
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -52,6 +54,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 2.2.0-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 2.1.1-alt1
 - updated by octave-package-builder
 

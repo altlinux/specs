@@ -1,14 +1,14 @@
 Serial: 1
-%define octave_pkg_version 0.9.1
+%define octave_pkg_version 1.0.0
 %define octave_pkg_name dataframe
 %define octave_descr_name dataframe
 Name: octave-%octave_pkg_name
-Version: 0.9.1
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: Data Frame
 
 Group: Sciences/Mathematics
-License: GPL version 3 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
@@ -20,8 +20,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(dataframe) = %version
-# Depends: octave (>= 3.2.0)
-Requires: octave >= 3.2.0
+# Depends: octave (>= 3.4.0)
+Requires: octave >= 3.4.0
 
 
 %description
@@ -32,10 +32,12 @@ Extension Description:
 Data manipulation toolbox similar to R data.frame
 
 %prep
-%setup -n %octave_pkg_name
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -49,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.0-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:0.9.1-alt2
 - Rebuild with the next version of Octave: 3.8.0
 
