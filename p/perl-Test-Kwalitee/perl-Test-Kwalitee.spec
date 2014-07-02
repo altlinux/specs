@@ -4,7 +4,7 @@ BuildRequires: perl(if.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Kwalitee
 Version:	1.18
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Test the Kwalitee of a distribution before you release it
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -64,6 +64,9 @@ chmod -c 755 %{buildroot}%{_bindir}/kwalitee-metrics
 %{_mandir}/man1/kwalitee-metrics.1*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_2
+- update to new release by fcimport
+
 * Fri Mar 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_1
 - update to new release by fcimport
 
