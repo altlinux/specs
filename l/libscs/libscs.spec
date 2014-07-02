@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 19
+%define fedora 21
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_8.2
+Release:        alt3_9.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_9.2
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_8.2
 - update to new release by fcimport
 
