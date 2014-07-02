@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(diagnostics.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Data-Denter 
 Version:    0.15 
-Release:    alt2_13
+Release:    alt2_14
 # Denter.pod -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_14
+- update to new release by fcimport
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_13
 - Sisyphus build
 
