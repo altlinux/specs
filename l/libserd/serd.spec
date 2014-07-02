@@ -3,7 +3,7 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname serd
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name serd
 %define version 0.18.2
 %global maj 0
@@ -11,7 +11,7 @@ BuildRequires: waf
 
 Name:           libserd
 Version:        0.18.2
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -88,6 +88,9 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.2-alt1_4
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.2-alt1_3
 - update to new release by fcimport
 
