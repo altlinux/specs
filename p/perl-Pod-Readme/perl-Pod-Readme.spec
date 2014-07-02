@@ -6,7 +6,7 @@ BuildRequires: perl(IO/File.pm) perl(Pod/PlainText.pm) perl-devel perl-podlators
 
 Name:           perl-Pod-Readme
 Version:        0.110
-Release:        alt3_9
+Release:        alt3_10
 Summary:        Convert POD to README file
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ DEVEL_TESTS=1 make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.110-alt3_10
+- update to new release by fcimport
+
 * Tue Sep 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.110-alt3_9
 - Sisyphus build; switch to fc import
 
