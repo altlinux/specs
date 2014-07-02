@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Data/Show.pm) perl(ExtUtils
 # END SourceDeps(oneline)
 Name:		perl-Regexp-Grammars
 Version:	1.033
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -58,6 +58,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Skip_if_Perl_5_18.pm
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.033-alt2_2
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.033-alt2_1
 - moved to Sisyphus for Slic3r (by dd@ request)
 
