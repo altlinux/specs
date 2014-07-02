@@ -1,5 +1,5 @@
 Name: cdemu-daemon
-Version: 2.1.1
+Version: 3.0.0
 Release: alt1
 
 Summary: CDEmu daemon
@@ -13,7 +13,7 @@ Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 
 BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 2.1.1
+BuildRequires: libmirage-devel >= 3.0.0
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -39,27 +39,36 @@ pushd %_target_platform
 cmake .. \
          -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
          -DCMAKE_INSTALL_LIBEXECDIR:PATH="%_libexecdir/%name" \
-         -DCMAKE_C_FLAGS:STRING="%optflags"
+         -DCMAKE_C_FLAGS:STRING="%optflags" \
+         -DCMAKE_BUILD_TYPE:STRING="Release"
          
 popd
 
 %make_build -C %_target_platform
 
 %install
-%make -C %_target_platform DESTDIR=%buildroot install
+%makeinstall_std -C %_target_platform
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_bindir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-session.sh
-%_mandir/man8/*
+%_man8dir/%name.*
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/services
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
+- Version 3.0.0
+
+* Mon Feb 10 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt0.M70P.1
+- Build for branch p7
+
+* Sun Feb 09 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt0.M70T.1
+- Build for branch t7
+
 * Sat Sep 21 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 

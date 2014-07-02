@@ -1,5 +1,5 @@
 Name: libmirage
-Version: 2.1.1
+Version: 3.0.0
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -11,7 +11,17 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 
-BuildRequires: bzlib-devel cmake glib-networking gobject-introspection-devel gtk-doc glibc-core libGConf liblzma-devel libsamplerate-devel libsndfile-devel time zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: cmake
+BuildRequires: glib-networking
+BuildRequires: gobject-introspection-devel
+BuildRequires: gtk-doc
+BuildRequires: libGConf
+BuildRequires: liblzma-devel
+BuildRequires: libsamplerate-devel
+BuildRequires: libsndfile-devel
+BuildRequires: time
+BuildRequires: zlib-devel
 
 %description
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -44,37 +54,45 @@ pushd %_target_platform
 
 cmake .. \
          -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
-         -DCMAKE_C_FLAGS:STRING="%optflags"
+         -DCMAKE_C_FLAGS:STRING="%optflags" \
+         -DCMAKE_BUILD_TYPE:STRING="Release"
          
 popd
 
 %make_build -C %_target_platform
 
 %install
-%make -C %_target_platform DESTDIR=%buildroot install
-find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
+%makeinstall_std -C %_target_platform
 
 %files
-%_defattr
-%doc AUTHORS ChangeLog COPYING NEWS INSTALL README
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_libdir/libmirage.so.*
-%dir %_libdir/libmirage-2.1
-%_libdir/libmirage-2.1/*.so
+%dir %_libdir/libmirage-3.0
+%_libdir/libmirage-3.0/*.so
 %_datadir/mime/packages/*.xml
 
 %files devel
-%_defattr
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/*
 %_pkgconfigdir/%name.pc
-%dir %_includedir/%name
-%_includedir/%name/*.h
+%dir %_includedir/%name-3.0
+%dir %_includedir/%name-3.0/mirage
+%_includedir/%name-3.0/mirage/*.h
 %_datadir/gir-1.0/*
 %dir %_datadir/gtk-doc
 %dir %_datadir/gtk-doc/html
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
+- Version 3.0.0
+
+* Mon Feb 10 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt0.M70P.1
+- Build for branch p7
+
+* Sun Feb 09 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt0.M70T.1
+- Build for branch t7
+
 * Sat Sep 21 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 

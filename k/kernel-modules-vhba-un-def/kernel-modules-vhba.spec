@@ -2,9 +2,9 @@
 %define module_version  20140629
 %define module_release alt1
 
-%define flavour         std-def
+%define flavour         un-def
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 

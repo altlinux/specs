@@ -1,5 +1,5 @@
 %define module_name     vhba
-%define module_version  20130607
+%define module_version  20140629
 %define module_release alt1
 
 %define flavour         std-pae
@@ -71,6 +71,9 @@ install -Dp -m0755 %SOURCE2 %buildroot%_initdir/%module_name
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 02 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1
+- Version 20140629
 
 * Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 20130607-alt1
 - Version 20130607
