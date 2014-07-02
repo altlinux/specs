@@ -4,7 +4,7 @@ BuildRequires: perl(B.pm) perl(Config.pm) perl(Symbol.pm) perl(overload.pm) perl
 # END SourceDeps(oneline)
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_15
+Release:	alt3_16
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_16
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_15
 - moved to Sisyphus for Slic3r (by dd@ request)
 
