@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DBIx/Class/Core.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(DBIx/Class/Core.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-IntrospectableM2M
 Version:        0.001001
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Introspect many-to-many shortcuts
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -47,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.001001-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.001001-alt1_5
 - update to new release by fcimport
 
