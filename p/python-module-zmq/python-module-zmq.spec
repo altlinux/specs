@@ -1,10 +1,11 @@
 Name: python-module-zmq
-Version: 14.3.0
+Version: 14.3.1
 Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
 License: LGPLv3+ and ASL 2.0
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
@@ -81,6 +82,9 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 %python_sitelibdir/zmq/tests
 
 %changelog
+* Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.3.1-alt1
+- New version
+
 * Tue Jun 10 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.3.0-alt1
 - New version
 
