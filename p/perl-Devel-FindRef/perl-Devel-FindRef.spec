@@ -1,25 +1,19 @@
-%define _unpackaged_files_terminate_build 1
+Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl(XSLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 Name:           perl-Devel-FindRef
 Version:        1.44
-Release:        alt1
-Serial:		1
+Release:        alt1_1
 Summary:        Where is that reference to my variable hiding?
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-FindRef/
-Source:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{version}.tar.gz
-Patch0:         0001-Fix-compiler-warnings.patch
-Patch1:         0001-Fix-64-bit-warnings.patch
+Source0:        http://www.cpan.org/authors/id/M/ML/MLEHMANN/Devel-FindRef-%{version}.tar.gz
+# fixing format warnings
+Patch0:         perl-Devel-FindRef-1.44-fix-format-warnings.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=786085
 Patch2:         Devel-FindRef-fix.patch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(common/sense.pm)
@@ -34,9 +28,6 @@ references "backwards" is usually possible.
 %prep
 %setup -q -n Devel-FindRef-%{version}
 %patch0 -p1
-%if %{__isa_bits} == 64
-%patch1 -p1
-%endif
 %patch2 -p1
 
 
@@ -63,6 +54,9 @@ make test
 %{perl_vendor_archlib}/Devel
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt1_1
+- update to new release by fcimport
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.44-alt1
 - automated CPAN update
 
