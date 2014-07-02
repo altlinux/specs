@@ -1,10 +1,10 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 1.0.3
+%define octave_pkg_version 1.0.5
 %define octave_pkg_name fits
 %define octave_descr_name FITS
 Name: octave-%octave_pkg_name
-Version: 1.0.3
+Version: 1.0.5
 Release: alt2
 Summary: Reading and writing FITS (Flexible Image Transport System) files.
 
@@ -29,8 +29,6 @@ BuildRequires: libcfitsio-devel
 BuildRequires: libcfitsio-devel
 # Depends: octave (>= 3.0.0)
 Requires: octave >= 3.0.0
-Patch33: octave-fits-MArray.patch
-
 
 %description
 Octave-Forge - Extra packages for GNU Octave.
@@ -41,12 +39,13 @@ The Octave-FITS package provides functions for
 
 %prep
 %setup -c -n %name-%version
-%patch33 -p1
+%define build_flags
 
 %build
+%define build_flags CXXFLAGS=-I%_includedir/cfitsio
 tar czf ../%octave_pkg_name-%version.tar.gz *
 rm -rf *
-octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
+%build_flags octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -60,6 +59,12 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.5-alt2
+- updated by octave-package-builder
+
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.5-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.3-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

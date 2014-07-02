@@ -2,12 +2,12 @@
 BuildRequires: /usr/bin/mkoctfile /usr/bin/octave
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.1.6
+%define octave_pkg_version 1.1.7
 %define octave_pkg_name octcdf
 %define octave_descr_name octcdf
 Name: octave-%octave_pkg_name
-Version: 1.1.6
-Release: alt2
+Version: 1.1.7
+Release: alt1
 Summary: octcdf
 
 Group: Sciences/Mathematics
@@ -38,10 +38,12 @@ Extension Description:
 A NetCDF interface for octave
 
 %prep
-%setup -T -c %name-%version
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -55,6 +57,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1.1.7-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1.1.6-alt2
 - Rebuild with the next version of Octave: 3.8.0
 

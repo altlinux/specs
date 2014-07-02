@@ -1,10 +1,10 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 1.3.0
+%define octave_pkg_version 1.3.1
 %define octave_pkg_name optim
 %define octave_descr_name Optim
 Name: octave-%octave_pkg_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Optimization.
 
@@ -21,8 +21,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(optim) = %version
-# Depends: octave (>= 3.4.0), miscellaneous (>= 1.0.10), struct (>= 1.0.10), parallel (>= 2.0.5)
-Requires: octave >= 3.4.0 octave(miscellaneous) >= 1.0.10 octave(struct) >= 1.0.10 octave(parallel) >= 2.0.5
+# Depends: octave (>= 3.6.0), miscellaneous (>= 1.0.10), struct (>= 1.0.10)
+Requires: octave >= 3.6.0 octave(miscellaneous) >= 1.0.10 octave(struct) >= 1.0.10
 
 
 %description
@@ -33,10 +33,12 @@ Extension Description:
 Non-linear optimization toolkit.
 
 %prep
-%setup -T -c %name-%version
+%setup -c -n %name-%version
 
 %build
-octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
+tar czf ../%octave_pkg_name-%version.tar.gz *
+rm -rf *
+octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -50,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.1-alt1
+- updated by octave-package-builder
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 1:1.3.0-alt1
 - updated by octave-package-builder
 
