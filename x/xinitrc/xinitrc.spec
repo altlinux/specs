@@ -1,6 +1,6 @@
 Name: xinitrc
-Version: 2.4.40
-Release: alt1
+Version: 2.4.41
+Release: alt2
 
 Summary: The default startup scripts for the X Window System
 License: GPL
@@ -13,6 +13,7 @@ Provides: %_sysconfdir/X11/xsession.user.d
 Requires: app-defaults >= 0:0.2, xvt
 Conflicts: kde-settings < 3.1.0-alt3, kdebase < 3.0.2-alt5, kde-config < 1.0-alt5
 Conflicts: initscripts < 1:5.49.1-alt1
+Conflicts: systemd < 1:214-alt8
 
 %description
 The %name package contains system scripts used to start
@@ -62,7 +63,8 @@ fi
 %_sysconfdir/X11/wms-methods.d
 %_sysconfdir/X11/xsession.user.d
 %_rpmlibdir/*
-%config %_initdir/*
+%_initdir/*
+%_unitdir/*
 %config %_sysconfdir/X11/Xsession
 %config %_sysconfdir/X11/prefdm
 %config(noreplace) %_sysconfdir/sysconfig/*
@@ -70,6 +72,12 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Thu Jul 03 2014 Alexey Shabalin <shaba@altlinux.ru> 2.4.41-alt2
+- add alias display-manager.service for prefdm.service
+
+* Tue Jul 01 2014 Alexey Shabalin <shaba@altlinux.ru> 2.4.41-alt1
+- add systemd unit prefdm.service
+
 * Mon Mar 24 2014 Michael Shigorin <mike@altlinux.org> 2.4.40-alt1
 - xrootwarn.real: fallback from gxmessage to xmessage,
   no need to pull libgtk+2 with all the family in (see #28111).
