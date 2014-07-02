@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_14
+Release:        alt3_15
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_15
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_14
 - update to new release by fcimport
 
