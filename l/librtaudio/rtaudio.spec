@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        4.0.11
-Release:        alt1_5
+Release:        alt1_6
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -43,7 +43,7 @@ designed with the following objectives:
 %package devel
 Summary:        Real-time Audio I/O Library
 Group:          System/Libraries
-Requires:       librtaudio = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides: rtaudio-devel = %{version}-%{release}
 
 %description devel
@@ -103,6 +103,9 @@ ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_5
 - update to new release by fcimport
 
