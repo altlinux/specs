@@ -1,6 +1,6 @@
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Sidescrolling platform and shoot'em up action-game
 Group:          Games/Other
 License:        GPLv2+
@@ -9,6 +9,7 @@ Source0:        http://downloads.sourceforge.net/worminator/worminator-%{version
 Source1:        worminator.png
 Source2:        worminator.desktop
 Patch0:         worminator-3.0R2.1-speed.patch
+Patch1:         worminator-3.0R2.1-format-security.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       worminator-data >= 3.0R2.1-2 icon-theme-hicolor
 Source44: import.info
@@ -22,6 +23,7 @@ full screen scrolling, sound and music, and much more!
 %prep
 %setup -q
 %patch0 -p1 -z .speed
+%patch1 -p1
 sed -i 's/\r//' ReadMe.txt
 
 
@@ -51,6 +53,9 @@ desktop-file-install                           \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_20
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_18
 - update to new release by fcimport
 
