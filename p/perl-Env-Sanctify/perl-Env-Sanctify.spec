@@ -2,11 +2,11 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 20
+%define fedora 21
 Name:		perl-Env-Sanctify
 Summary:	Lexically scoped sanctification of %%ENV
 Version:	1.12
-Release:	alt1_1
+Release:	alt1_2
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Env-Sanctify/
@@ -62,6 +62,9 @@ make test AUTHOR_TESTING=1
 %{perl_vendor_privlib}/Env/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_1
 - update to new release by fcimport
 
