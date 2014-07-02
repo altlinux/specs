@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/NoWarnings.pm) perl-Module-
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
 Version:    0.371
-Release:    alt1_2
+Release:    alt1_3
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
@@ -77,6 +77,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.371-alt1_3
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.371-alt1_2
 - update to new release by fcimport
 
