@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.3
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1883,6 +1883,18 @@ done)
 
 
 %changelog
+* Wed Jul 02 2014 Led <led@altlinux.ru> 3.15.3-alt2
+- updated:
+  + fix-drivers-gpu-drm--mgag200
+  + fix-drivers-scsi--scsi_mod
+  + fix-drivers-scsi--sd_mod
+- added:
+  + fix-drivers-acpi--acpi_pad
+  + fix-drivers-scsi--bnx2fc
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-sound
+  + fix-sound-pci-hda--snd-hda-codec-hdmi
+
 * Tue Jul 01 2014 Led <led@altlinux.ru> 3.15.3-alt1
 - 3.15.3
 - removed:
