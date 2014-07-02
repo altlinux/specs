@@ -5,7 +5,7 @@ BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Archive-Any-Lite
 Version:	0.09
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Archive-Any-Lite
@@ -68,6 +68,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_1
 - update to new release by fcimport
 
