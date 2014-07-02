@@ -1,7 +1,7 @@
 Summary: Openfire XMPP Server
 Name: openfire
 Version: 3.9.3
-Release: alt1
+Release: alt2
 
 Source0: openfire_src_3_9_3.tar.gz
 Source1: openfire.init
@@ -46,6 +46,7 @@ cd ..
 
 %__install -p -m 644 target/%name/bin/extra/redhat/openfire-sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %__install -p -m 644 target/%name/conf/openfire.xml %buildroot%_sysconfdir/%name/%name.xml
+%__install -p -m 644 target/%name/conf/security.xml %buildroot%_sysconfdir/%name/security.xml
 %__install -p -m 755 %SOURCE1 %buildroot%_initrddir/%name
 %__install -p -m 755 target/%name/bin/extra/embedded-db.rc %buildroot%_bindir/embedded-db.rc
 %__install -p -m 755 target/%name/bin/extra/embedded-db-viewer.sh %buildroot%_bindir/embedded-db-viewer.sh
@@ -81,6 +82,7 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %attr(-,_%name,_%name) %_localstatedir/%name
 %config %_initrddir/%name
 %config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/%name.xml
+%config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/security.xml
 %config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/security/keystore
 %config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/security/truststore
 %config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/security/client.truststore
@@ -92,6 +94,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %exclude %firedir/lib/*.dll
 
 %changelog
+* Thu Jul 03 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt2
+- Add lost config file
+
 * Tue Jun 03 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt1
 - 3.9.3
 
