@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 Name:		perl-Perl-Destruct-Level
 Summary:	Allows you to change perl's internal destruction level
 Version:	0.02
-Release:	alt4_7
+Release:	alt4_8
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Perl-Destruct-Level/
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_archlib}/Perl/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_8
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_7
 - Sisyphus build
 
