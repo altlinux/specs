@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl-devel perl-podlators
 Name:		perl-Test-Valgrind
 Summary:	Generate suppressions, analyze and test any command with valgrind
 Version:	1.14
-Release:	alt2_1
+Release:	alt2_2
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Valgrind/
@@ -98,6 +98,9 @@ fi
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2_2
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2_1
 - Sisyphus build
 
