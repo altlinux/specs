@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-UseAllModules
 Version:        0.14
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_5
+- update to new release by fcimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_4
 - Sisyphus build
 
