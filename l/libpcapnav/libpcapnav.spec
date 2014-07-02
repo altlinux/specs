@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdoc-mkdb gcc-c++ libpcapnav-devel
 %add_optflags %optflags_shared
 Name:           libpcapnav
 Version:        0.8
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Wrapper library for libpcap offering navigation inside of a tracefile
 
 Group:          System/Libraries
@@ -59,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gtk-doc/html/pcapnav/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_9
 - update to new release by fcimport
 
