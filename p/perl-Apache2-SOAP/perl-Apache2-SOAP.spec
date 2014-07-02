@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm) perl-devel perl-podlators
+BuildRequires: perl(APR/Table.pm) perl(Apache.pm) perl(Apache/Constants.pm) perl(Apache2/Const.pm) perl(Apache2/RequestIO.pm) perl(Apache2/RequestRec.pm) perl(Apache2/RequestUtil.pm) perl(Exporter.pm) perl(FindBin.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %global perlname Apache2-SOAP
 
 Name:      perl-Apache2-SOAP
 Version:   0.73
-Release:   alt1_15
+Release:   alt1_16
 Summary:   A replacement for Apache::SOAP designed to work with mod_perl 2
 
 Group:     Development/Perl
@@ -66,6 +66,9 @@ chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_15
 - update to new release by fcimport
 
