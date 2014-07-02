@@ -9,7 +9,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-Test-Synopsis
 Version:	0.10
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -88,6 +88,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
 - update to new release by fcimport
 
