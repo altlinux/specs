@@ -2,7 +2,7 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name: firefox-anonymox
-Version: 2.4.1
+Version: 2.4.3
 Release: alt1
 Summary: Easy anonymous web browsing
 Group: Networking/WWW
@@ -47,6 +47,9 @@ cp -fR * %buildroot/%ciddir
 %ciddir
 
 %changelog
+* Wed Jul 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt1
+- Version 2.4.3
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1
 - Version 2.4.1
 
