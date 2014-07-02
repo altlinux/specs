@@ -7,7 +7,7 @@
 %def_enable memphis
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -22,7 +22,7 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.
 %define cairo_ver 1.4
 %define gtk_ver 3.0.1
 %define clutter_ver 1.12
-%define soup_ver 2.33.90
+%define soup_ver 2.34
 %define gir_ver 0.10.3
 %define memphis_ver 0.2.1
 
@@ -202,6 +202,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Wed Jul 02 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.8-alt1
+- 0.12.8
+
 * Fri Feb 07 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
 - 0.12.7
 - built against libcogl.so.19
