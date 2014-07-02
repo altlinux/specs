@@ -4,7 +4,7 @@ BuildRequires: perl(IO/File.pm) perl(YAML.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-YAML
 Version:	0.22
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Validate a META.yml file within a CPAN distribution
 Group:		Development/Perl
 License:	Artistic 2.0
@@ -55,6 +55,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2_3
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2_2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
