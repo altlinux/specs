@@ -3,7 +3,7 @@
 
 Name: free-cad
 Version: 0.13.0
-Release: alt1.git20140521
+Release: alt1.git20140701
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -24,7 +24,7 @@ BuildPreReq: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
 BuildPreReq: java-devel-default qt4-designer boost-program_options-devel
 BuildPreReq: boost-signals-devel libXxf86misc-devel libqt4-sql-sqlite
 BuildPreReq: libopencascade-devel libgts-devel libGL-devel libGLU-devel
-BuildPreReq: libode-devel eigen2 phonon-devel libann-devel qt4-assistant
+BuildPreReq: libode-devel phonon-devel libann-devel qt4-assistant
 BuildPreReq: doxygen graphviz texlive-extra-utils libqt4-help eigen3
 BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
 BuildPreReq: boost-interprocess-devel libshiboken-devel shiboken
@@ -290,6 +290,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Wed Jul 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20140701
+- New snapshot
+
 * Thu May 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20140521
 - New snapshot
 
