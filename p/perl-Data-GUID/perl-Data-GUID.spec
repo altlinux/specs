@@ -4,7 +4,7 @@ BuildRequires: perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-GUID
 Version:        0.048
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2_2
+- update to new release by fcimport
+
 * Fri Mar 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2_1
 - moved to Sisyphus as dependency
 
