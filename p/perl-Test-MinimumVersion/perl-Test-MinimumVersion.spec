@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-MinimumVersion
 Version:	0.101081
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.101081-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.101081-alt1_1
 - update to new release by fcimport
 
