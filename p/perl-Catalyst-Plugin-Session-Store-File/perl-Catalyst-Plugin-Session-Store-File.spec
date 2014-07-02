@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Cache/FileCache.pm) perl(Catalyst.pm) perl(Catalyst/Plugin/Session/Store.pm) perl(Catalyst/Plugin/Session/Test/Store.pm) perl(Catalyst/Utils.pm) perl(Config.pm) perl(Path/Class.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Cache/FileCache.pm) perl(Carp.pm) perl(Catalyst/Plugin/Session/Store.pm) perl(Catalyst/Plugin/Session/Test/Store.pm) perl(Catalyst/Utils.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Class.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Plugin-Session-Store-File
 Version:        0.18
-Release:        alt2_13
+Release:        alt2_14
 Summary:        File storage backend for session data
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_13
 - update to new release by fcimport
 
