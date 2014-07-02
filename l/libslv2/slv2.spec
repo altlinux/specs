@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: waf
+BuildRequires: swig waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname slv2
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name slv2
 %define version 0.6.6
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
@@ -11,7 +11,7 @@ BuildRequires: waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_14
+Release:		alt4_15
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -105,6 +105,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_15
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_14
 - update to new release by fcimport
 
