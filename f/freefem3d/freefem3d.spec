@@ -1,15 +1,18 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+%define vtkver 5.10
+
 Name: freefem3d
-Version: 1.0pre10
-Release: alt6
+Version: 1.0pre11
+Release: alt1.cvs20140702
 Summary: 3D solver of partial differential equations
 License: GPLv2+
 Group: Sciences/Mathematics
-Url: http://www.freefem.org/ff3d/
+Url: https://savannah.nongnu.org/projects/ff3d/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/ff3d co ff3d
 Source: %name-%version.tar
 
 BuildPreReq: %mpiimpl-devel perl-devel
@@ -56,9 +59,10 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=%_qt4dir/bin:$PATH
 
-%add_optflags -I%_includedir/vtk-5.10 -fpermissive
+%add_optflags -I%_includedir/vtk-%vtkver -fpermissive
 %autoreconf
 %configure \
+	--enable-static=no \
 	--enable-optimize \
 	--enable-gui \
 	--enable-pthread \
@@ -80,6 +84,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre11-alt1.cvs20140702
+- Version 1.0pre11
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre10-alt6
 - Fixed build with gcc 4.7
 
