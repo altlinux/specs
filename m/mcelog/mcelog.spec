@@ -1,6 +1,6 @@
 Name: mcelog
-Version: 1.0
-Release: alt0.2
+Version: 1.0.1
+Release: alt1
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
@@ -67,6 +67,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Update to v101
+
 * Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 1.0-alt0.2
 - cron subpackage made noarch
 
