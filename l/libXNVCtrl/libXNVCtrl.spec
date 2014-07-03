@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libXNVCtrl
 Version:        169.12
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Library providing the NV-CONTROL API
 Group:          System/Libraries
 License:        GPLv2+
@@ -67,6 +67,9 @@ mv $RPM_BUILD_ROOT%{_includedir}/X11/extensions \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 169.12-alt2_10
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 169.12-alt2_9
 - update to new release by fcimport
 
