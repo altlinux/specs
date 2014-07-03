@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           liblzf
 Version:        3.6
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Small data compression library
 
 Group:          System/Libraries
@@ -10,7 +10,7 @@ URL:            http://oldhome.schmorp.de/marc/liblzf.html
 Source0:        http://dist.schmorp.de/liblzf/liblzf-%{version}.tar.gz
 # Adds autoconf and in particular support for building shared libraries.
 # 7th Feb 2011 - Mail sent upstream to author. Awaiting conclusion. 
-Patch0:         liblzf-%{version}-autoconf.patch
+Patch0:         liblzf-%{version}-autoconf-20140314.patch
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -68,10 +68,14 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 
 %files devel
 %{_includedir}/lzf.h
+%{_includedir}/lzfP.h
 %{_libdir}/liblzf.so
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_6
 - update to new release by fcimport
 
