@@ -1,6 +1,6 @@
 Name: alternatives
 Version: 0.4.5
-Release: alt1
+Release: alt1.1
 
 Summary: alternatives support
 License: GPLv2+
@@ -105,6 +105,9 @@ install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.fi
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 0.4.5-alt1.1
+- Fix sorting an joining with non-POSIX locales
+
 * Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt1
 - Relocated macro file to %%_rpmmacrosdir/.
 
