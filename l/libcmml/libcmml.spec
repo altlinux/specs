@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /u
 %add_optflags %optflags_shared
 Name:           libcmml
 Version:        0.9.1
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Library for handling Continuous Media Markup Language
 
 Group:          System/Libraries
@@ -82,6 +82,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/doc/libcmml/doxygen-build.stamp
 %{_includedir}/cmml.h
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_13
 - update to new release by fcimport
 
