@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.7.3
-Release: alt2
+Release: alt3
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -268,7 +268,7 @@ services using the main CUPS library "libcups".
 ##patch140 -p1
 %patch141 -p1
 %patch142 -p1
-%patch143 -p1
+#patch143 -p1
 ##patch144 -p1
 
 ## ALT apply patches
@@ -436,6 +436,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt3
+- Remove Debian-specific config patch
+
 * Wed Jun 25 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt2
 - Restore Mandrake init script (closes: #30137)
 
