@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 Name:		libyuv
 Summary:	YUV conversion and scaling functionality library
 Version:	0
-Release:	alt1_0.20.20121221svn522
+Release:	alt1_0.21.20121221svn522
 License:	BSD
 Group:		Development/C
 Url:		http://code.google.com/p/libyuv/
@@ -81,6 +81,9 @@ make check
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.21.20121221svn522
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.20.20121221svn522
 - update to new release by fcimport
 
