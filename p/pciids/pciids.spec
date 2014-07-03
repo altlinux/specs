@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20140626
+Version: 20140703
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,6 +34,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Thu Jul 03 2014 Cronbuild Service <cronbuild@altlinux.org> 20140703-alt1
+- repocop cronbuild 20140703. At your service.
+
 * Thu Jun 26 2014 Cronbuild Service <cronbuild@altlinux.org> 20140626-alt1
 - repocop cronbuild 20140626. At your service.
 
