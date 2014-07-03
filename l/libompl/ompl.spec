@@ -5,8 +5,8 @@ BuildRequires: gcc-c++ python-devel
 %add_optflags %optflags_shared
 %define oldname ompl
 Name:           libompl
-Version:        0.12.2
-Release:        alt1_3
+Version:        0.14.2
+Release:        alt1_2
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -14,13 +14,13 @@ License:        BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
 # This patch adds LIB_SUFFIX to the library installation directory, so that
-# libraries get installed to /usr/lib64 on 64 bit systems.  It also
-# moves the installation directory of the odeint library
+# libraries get installed to /usr/lib64 on 64 bit systems.  
 # Not yet submitted upstream
-Patch0:         ompl-0.12.2-fedora.patch
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+Patch0:         ompl-0.14.2-fedora.patch
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
+BuildRequires:  flann-devel
 BuildRequires:  graphviz
 BuildRequires:  libode-devel
 BuildRequires:  ruby
@@ -38,6 +38,7 @@ collision checker or visualization front end.
 Summary:        Development files for %{oldname}
 Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires: boost-devel-headers
 Provides: ompl-devel = %{version}-%{release}
 
 %description    devel
@@ -76,13 +77,14 @@ rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
 rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
 rm -rf %{buildroot}%{_bindir}
 
-#%check
-#export LD_LIBRARY_PATH=$(pwd)/build/lib
-#make -C build test
+%check
+export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
+#make -C build test || exit 0
 
 %files
 %doc LICENSE README.md
 %{_libdir}/libompl.so.*
+%{_mandir}/man1/*.1.*
 
 %files devel
 %doc doc/html
@@ -93,6 +95,9 @@ rm -rf %{buildroot}%{_bindir}
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.14.2-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_3
 - update to new release by fcimport
 
