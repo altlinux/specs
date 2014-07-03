@@ -2,27 +2,19 @@
 BuildRequires: /usr/bin/blender /usr/bin/db2html /usr/bin/doxygen /usr/bin/valgrind
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname cal3d
 Name:           libcal3d
 Version:        0.11.0
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Skeletal based 3-D character animation library
-
 License:        LGPLv2+
 URL:            http://gna.org/projects/cal3d
 Source0:        http://download.gna.org/%{oldname}/sources/%{oldname}-%{version}.tar.gz
 Patch0:         %{oldname}-0.11.0-gcc43.patch
-
 BuildRequires:  doxygen libtool
-
-%if 0%{?suse_version}
-Group:          System/Libraries
-BuildRequires:  docbook-toys gcc-c++
-%else
-Group:          System/Libraries
 BuildRequires:  docbook-utils
-%endif
 Source44: import.info
 Provides: cal3d = %{version}-%{release}
 
@@ -30,10 +22,10 @@ Provides: cal3d = %{version}-%{release}
 Cal3D is a skeletal based 3-D character animation library written in C++
 in a platform-/graphic API-independent way.
 
-%package devel
+%package        devel
+Group: Development/C++
 Summary:        Header files, libraries and development documentation for Cal3D
-Group:          Development/C++
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides: cal3d-devel = %{version}-%{release}
 
 %description devel
@@ -41,38 +33,33 @@ This package contains the header files, libraries and documentation
 for Cal3D.
 
 %package doc
+Group: Documentation
 Summary:        Documentation files for Cal3D
-Group:          Documentation
-Requires:       %{name} = %{version}-%{release}
+BuildArch:      noarch
 Provides: cal3d-doc = %{version}-%{release}
 
 %description doc
 This package contains modeling documentation and a users guide for Cal3D.
 
-
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p0 -b .gcc43
-
 
 %build
 LIBTOOL=libtool %configure
 make LIBTOOL=libtool %{?_smp_mflags}
 ( cd docs && make doc-guide && make doc-api )
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 # remove libtool archives and static libraries
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
-
+rm -f %{buildroot}%{_libdir}/*.la
+rm -f %{buildroot}%{_libdir}/*.a
 
 %check
 # https://gna.org/bugs/index.php?8416
 #make check
-
 
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
@@ -90,8 +77,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %doc docs/guide
 # upstream forgot this for 0.11.0: docs/modeling
 
-
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt2_15
 - update to new release by fcimport
 
