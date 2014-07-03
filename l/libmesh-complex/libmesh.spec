@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 1.0.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.pre.git20140529
+Release: alt1.pre.git20140703
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -20,7 +20,7 @@ Source: %oname-%version.tar
 
 Requires: libslepc-%scalar_type
 
-BuildPreReq: python-module-Pyro4 eigen3 liblaspack-devel
+BuildPreReq: python-module-Pyro4 eigen3 liblaspack-devel libqhull-devel
 BuildPreReq: %mpiimpl-devel libscalapack-devel chrpath
 BuildPreReq: liblapack-devel libX11-devel boost-devel
 BuildPreReq: gcc-c++ gcc-fortran libpetsc-%scalar_type-devel libxdrfile-devel
@@ -460,6 +460,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.pre.git20140703
+- New snapshot
+
 * Tue Jun 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.pre.git20140529
 - Version 1.0.0-pre
 - Rebuilt with glpk36
@@ -610,4 +613,3 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
-

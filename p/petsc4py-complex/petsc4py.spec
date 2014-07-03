@@ -18,7 +18,7 @@
 Name: %oname-%scalar_type
 Version: 3.4
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.git20140225
+Release: alt1.git20140702
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -117,8 +117,6 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 #sed -i "s|@MPILIBS@||g" conf/core/confcore.py
 %add_optflags %optflags_shared -fno-strict-aliasing
 %add_optflags -I%ldir/include -I%mpidir/include -include petscviewerhdf5.h
-%add_optflags -DKSPConvergedSkip=KSPSkipConverged
-%add_optflags -DSNESConvergedSkip=SNESSkipConverged
 #python_build
 export CC=g++
 %make_ext config
@@ -170,6 +168,7 @@ cp -fR demo/* %buildroot%exampledir/
 #make_build_ext bratu2df90
 #install -m644 *.so %buildroot%ldir/python
 #popd
+
 #pushd demo/poisson3d
 #f2py -m del2lib -c del2lib.f90
 #make_build_ext del2lib.so poisson3d
@@ -189,7 +188,7 @@ done
 #ldir/bin/*
 
 %files -n python-module-%name
-%doc HISTORY.txt LICENSE.txt README.txt
+%doc *.rst
 %dir %ldir/python
 %ldir/python/*
 
@@ -219,6 +218,9 @@ done
 %endif
 
 %changelog
+* Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140702
+- New snapshot
+
 * Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140225
 - New snapshot
 
@@ -338,3 +340,4 @@ done
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
+

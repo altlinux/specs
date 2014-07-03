@@ -10,7 +10,7 @@
 
 Name: phaml
 Version: 1.13.0
-Release: alt3
+Release: alt4
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -152,6 +152,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.0-alt4
+- Rebuilt without SLEPc
+
 * Tue May 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13.0-alt3
 - Fixed build
 

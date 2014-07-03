@@ -21,13 +21,13 @@
 %endif
 
 %define somver 3
-%define sover %somver.3.0
+%define sover %somver.5.0
 
 %define topsomver 0
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.4.4
+Version: 3.5.0
 Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
@@ -256,7 +256,7 @@ Summary: Common files of PETSc (both for real and complex scalars)
 Group: Development/Tools
 BuildArch: noarch
 Conflicts: libxforms-demos
-%add_python_req_skip RDict script
+%add_python_req_skip RDict script TOPSInstaller
 
 %description -n %oname-common
 Portable, Extensible Toolkit for Scientific Computation (PETSc) is a suite of
@@ -354,7 +354,7 @@ OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -I$PETSC_DIR/include/sieve
 %if_with netcdf
 OPTFLAGS="$OPTFLAGS -DPETSC_HAVE_NETCDF"
 %endif
-OPTFLAGS="$OPTFLAGS -DTETLIBRARY -I%mpidir/include/netcdf-3"
+OPTFLAGS="$OPTFLAGS -DTETLIBRARY -DPETSC_USE_LOG -I%mpidir/include/netcdf"
 BLASLAPACK="[libxerbla.a,liblapack.so,libopenblas.so]"
 MUMPS="[libcmumps.so,libdmumps.so,libsmumps.so,libzmumps.so,libmumps_common.so"
 MUMPS="$MUMPS,libpord.so,libesmumps.so,libptscotch.so,libscotch.so]"
@@ -365,6 +365,9 @@ ML="$ML,libepetra.so,libteuchos.so,liby12m.so]"
 SUNDIALS="[libsundials_cvode.so"
 SUNDIALS="$SUNDIALS,libsundials_nvecparallel.so]"
 PASTIX_LIBS="[libpastix_d.so,libpastix.so,libparmetis.so,libptscotch.so,librt.so]"
+SUITESPARSE="[libumfpack.so,libklu.so,libcholmod.so,libbtf.so"
+SUITESPARSE="$SUITESPARSE,libccolamd.so,libcolamd.so,libcamd.so"
+SUITESPARSE="$SUITESPARSE,libamd.so,libsuitesparseconfig.so]"
 %if_with tops
 CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 %endif
@@ -417,9 +420,9 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-superlu=1 \
 	--with-superlu-include=%_includedir \
 	--with-superlu-lib=[libtmglib.so,libsuperlu_4.0.so] \
-	--with-umfpack=1 \
-	--with-umfpack-include=%_includedir/suitesparse \
-	--with-umfpack-lib=[libumfpack.so,libamd.so] \
+	--with-suitesparse=1 \
+	--with-suitesparse-include=%_includedir/suitesparse \
+	--with-suitesparse-lib=$SUITESPARSE \
 	--with-spooles=1 \
 	--with-spooles-include=%_libdir/spooles/include \
 	--with-spooles-lib=[libspoolesMPI.so,libspooles.so] \
@@ -532,7 +535,7 @@ sed -i 's|%_libexecdir|%_libdir|g' conf/petscvariables
 sed -i 's|%_libexecdir|%_libdir|g' conf/petscvariables
 %endif
 
-%make all SOMVER=%somver SOVER=%sover
+%make all SOMVER=%somver SOVER=%sover V=1
 #make alldoc LOC=$PETSC_DIR
 
 export INSTALL_DIR=%buildroot%prefix
@@ -555,10 +558,8 @@ install -d %buildroot%ldir/lib
 install -d %buildroot%ldir/include
 install -d %buildroot%ldir/python
 
-mv %buildroot%_libexecdir/*.so* %buildroot%_libexecdir/*.a \
+mv %buildroot%_libexecdir/*.so* \
 	%buildroot%ldir/lib/
-#ln -s libpetsc.so.%sover %buildroot%ldir/lib/libpetsc.so.%somver
-#ln -s libpetsc.so.%somver %buildroot%ldir/lib/libpetsc.so
 mv %buildroot%_includedir/* %buildroot%ldir/include/
 
 mv Generator %buildroot%python_sitelibdir/%{oname}_config/
@@ -576,7 +577,7 @@ popd
 pushd %buildroot%ldir/include
 mv *.html %buildroot%_docdir/%oname/include/
 #for i in adic finclude mpiuni petsc-private sieve; do
-for i in finclude mpiuni petsc-private sieve; do
+for i in finclude mpiuni petsc-private; do
 	mv $i/*.html %buildroot%_docdir/%oname/include/$i/
 done
 #cp $PETSC_DIR/src/dm/mesh/sieve/Filter.hh sieve/
@@ -690,8 +691,9 @@ pushd %buildroot%ldir/lib
 chrpath -r \
 	%ldir/lib:%mpidir/lib \
 	lib%oname.so.%sover
-ln -s lib%oname.so.%sover lib%oname.so.%somver
-ln -s lib%oname.so.%somver lib%oname.so
+ln -s lib%oname.so.3.5 lib%oname.so.%somver
+#ln -s lib%oname.so.%sover lib%oname.so.%somver
+#ln -s lib%oname.so.%somver lib%oname.so
 #if_with tops
 #for i in topsclient-c topsclient-cxx
 #do
@@ -715,7 +717,8 @@ cp -fR src include %buildroot%ldir/sources/
 
 mv %buildroot%_bindir/pythonscripts/* \
 	%buildroot%_bindir/pythonscripts ||:
-rm -fR %buildroot%_bindir/pythonscripts
+rm -fR %buildroot%_bindir/pythonscripts \
+	%buildroot%_bindir/saws
 
 sed -i 's|^\(PETSC_FC_INCLUDES.*\)|\1 -I%ldir/include|' \
 	%buildroot%_datadir/%name/conf/petscvariables
@@ -793,6 +796,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1
+- Version 3.5.0
+
 * Sat Mar 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.4-alt1
 - Version 3.4.4
 
