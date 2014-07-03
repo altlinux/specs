@@ -1,6 +1,6 @@
 Name: geos
 Version: 3.5.0
-Release: alt1.dev.svn20140521
+Release: alt1.dev.svn20140630
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sun Nov 09 2008 (-bi)
 BuildRequires: gcc-c++ python-devel swig
 
+BuildPreReq: cmake doxygen graphviz
+
 %description
 GEOS (Geometry Engine - Open Source) is a C++ port of the Java
 Topology Suite (JTS). As such, it aims to contain the complete
@@ -22,6 +24,21 @@ functionality of JTS in C++. This includes all the OpenGIS
 "Simple Features for SQL" spatial predicate functions and
 spatial operators, as well as specific JTS topology functions
 such as IsValid().
+
+%package doc
+Summary: Documentation for GEOS
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc
+GEOS (Geometry Engine - Open Source) is a C++ port of the Java
+Topology Suite (JTS). As such, it aims to contain the complete
+functionality of JTS in C++. This includes all the OpenGIS
+"Simple Features for SQL" spatial predicate functions and
+spatial operators, as well as specific JTS topology functions
+such as IsValid().
+
+This package contains documentation for GEOS.
 
 %package -n lib%name
 Summary: Geometry Engine - Open Source
@@ -36,12 +53,12 @@ spatial operators, as well as specific JTS topology functions
 such as IsValid().
 
 %package -n lib%name-devel
-Summary: Development headers for the Geometry Engine - Open Source
+Summary: Development files for the Geometry Engine - Open Source
 Group: Development/C
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
-Dedelopment headers for the Geometry Engine - Open Source
+Development files for the Geometry Engine - Open Source
 
 %package -n python-module-%name
 Summary: Python bindings for the lib%name library
@@ -63,16 +80,45 @@ Ruby bindings for the lib%name library.
 %setup
 
 %build
-ACLOCAL="aclocal -I macros" %autoreconf -I macros
-%add_optflags -fno-strict-aliasing
+./autogen.sh
 %configure \
 	--disable-static \
 	--enable-python \
 	--disable-ruby
-%make_build
+
+%if %_lib == lib64
+LIB_SUFFIX=64
+%endif
+
+mkdir BUILD
+pushd BUILD
+cmake \
+	-DLIB_SUFFIX=$LIB_SUFFIX \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	..
+
+%make_build VERBOSE=1
+popd
+
+%make -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
+	ENABLE_PYTHON=1 ENABLE_SWIG=1
+
+%make -C doc doxygen-html
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std -C BUILD
+
+%if %_lib == lib64
+LIB_SUFFIX=64
+%endif
+%makeinstall_std -C swig/python LIB_SUFFIX=$LIB_SUFFIX \
+	ENABLE_PYTHON=1 ENABLE_SWIG=1
+
 rm -f %buildroot%python_sitelibdir/geos/*.la
 rm -f %buildroot%ruby_sitearchdir/*.la
 
@@ -81,12 +127,10 @@ bzip2 ChangeLog
 %files -n lib%name
 %doc AUTHORS ChangeLog* COPYING NEWS README TODO
 %_libdir/lib*.so.*
-%_libdir/lib*%{version}*.so
 
 %files -n lib%name-devel
 %_bindir/%name-config
 %_libdir/lib*.so
-%exclude %_libdir/lib*%{version}*.so
 %_includedir/*
 
 %files -n python-module-%name
@@ -97,7 +141,13 @@ bzip2 ChangeLog
 %ruby_sitearchdir/*
 %endif
 
+%files doc
+%doc doc/doxygen_docs/html/*
+
 %changelog
+* Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20140630
+- New snapshot
+
 * Thu May 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20140521
 - New snapshot
 
