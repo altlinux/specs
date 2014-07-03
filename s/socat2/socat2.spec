@@ -1,6 +1,6 @@
 Name: socat2
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
 License: GPL
@@ -12,7 +12,7 @@ Source: socat.tar
 
 Conflicts: socat
 
-BuildRequires: /proc libreadline-devel libssl-devel yodl
+BuildRequires: /proc libreadline-devel libssl-devel yodl libwrap-devel
 
 %description
 socat is a relay for bidirectional data transfer between two independent
@@ -46,6 +46,9 @@ echo '#define HAVE_DEV_PTMX 1' >> config.h
 %doc README* EXAMPLES FAQ SECURITY CHANGES doc/*.html doc/*.css
 
 %changelog
+* Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 2.0.0-alt4
+- Restore libwrap dependency
+
 * Tue Apr 22 2014 Fr. Br. George <george@altlinux.ru> 2.0.0-alt3
 - 2.0.0-b7
 - Remove libwrap dependency
