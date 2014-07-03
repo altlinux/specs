@@ -1,6 +1,6 @@
 %define module_name     vhba
 %define module_version  20140629
-%define module_release alt1
+%define module_release alt2
 
 %define flavour         std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -65,12 +65,18 @@ install -Dp -m0755 %SOURCE2 %buildroot%_initdir/%module_name
 /sbin/service %module_name condrestart ||:
 
 %files
-%module_dir
-%attr(0755,root,root) %_initdir/%module_name
+%module_dir/%module_name.ko
+%_initdir/%module_name
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt2
+- Fix correct unload vhba module when CDemu daemon is running
+
+* Wed Jul 02 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1
+- Version 20140629
 
 * Wed Jul 02 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1
 - Version 20140629
