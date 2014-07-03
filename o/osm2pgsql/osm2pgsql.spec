@@ -5,7 +5,7 @@ Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
 Name: osm2pgsql
 Group: Databases
 Version: 0.80.0
-Release: alt1.svn%svn.2
+Release: alt1.svn%svn.3
 
 License: GPLv2+
 Url: http://svn.openstreetmap.org/applications/utils/export/osm2pgsql
@@ -62,6 +62,9 @@ geospatial analysis.
 %_man1dir/%name.*
 
 %changelog
+* Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.80.0-alt1.svn28333.3
+- Rebuilt with updated geos
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.80.0-alt1.svn28333.2
 - Rebuilt with updated geos
 
