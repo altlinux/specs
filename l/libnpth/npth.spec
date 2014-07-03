@@ -3,7 +3,7 @@
 Summary:        The New GNU Portable Threads library
 Name:           libnpth
 Version:        0.91
-Release:        alt1_6
+Release:        alt1_7
 # software uses dual licensing (or both in parallel)
 License:        LGPLv3+ or GPLv2+ or (LGPLv3+ and GPLv2+)
 Group:          System/Libraries
@@ -64,6 +64,9 @@ make check
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_6
 - update to new release by fcimport
 
