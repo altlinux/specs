@@ -4,7 +4,7 @@ BuildRequires: zlib-devel
 %add_optflags %optflags_shared
 Name:		libax25
 Version:	0.0.12
-Release:	alt2_0.6.rc2
+Release:	alt2_0.7.rc2
 Summary:	AX.25 library for hamradio applications
 
 Group:		System/Libraries
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.7.rc2
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.6.rc2
 - update to new release by fcimport
 
