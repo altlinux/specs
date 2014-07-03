@@ -1,7 +1,7 @@
 %define _name girara
 
 Name: lib%_name
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -15,7 +15,7 @@ Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-devel libnotify-devel
 BuildRequires: intltool
 
 %description
@@ -56,6 +56,10 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Thu Jul 03 2014 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
+- Enable libnotify support.
+- Updated to 0.2.2.
+
 * Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Build with GTK+3.
 - Updated to 0.2.0.
