@@ -6,13 +6,13 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_15
+Release:        alt2_17
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
 License:        GPLv2
 URL:            http://ifp-driver.sourceforge.net/
-Source0:        http://dl.sourceforge.net/ifp-driver/%{name}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/project/ifp-driver/%{name}/%{version}-stable/%{name}-%{version}.tar.gz
 Source1:        libifp.hotplug
 Source2:        10-libifp.rules
 # autoconf-2.69 breaks configure.in (likely configure.in is the broken part)
@@ -73,6 +73,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_15
 - update to new release by fcimport
 
