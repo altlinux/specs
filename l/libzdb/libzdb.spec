@@ -1,24 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/mysql_config /usr/bin/pg_config /usr/bin/re2c gcc-c++ libssl-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
-%define fedora 20
 Name:           libzdb
 Version:        3.0
-Release:        alt1_1
-Summary:        Small, fast, and easy to use database API
-
-Group:          System/Libraries
+Release:        alt1_2
+Summary:        Small, easy to use Database Connection Pool Library
 License:        GPLv3+ and MIT
 URL:            http://www.tildeslash.com/libzdb/
 Source0:        http://www.tildeslash.com/%{name}/dist/%{name}-%{version}.tar.gz
-
-%if 0%{?fedora} && 0%{?fedora} > 14
-BuildRequires:  flex flex
-%else
 BuildRequires:  flex
-%endif
-BuildRequires:  libmysqlclient-devel >= 4.1 postgresql-devel >= 8 libsqlite3-devel
+BuildRequires:  libmysqlclient-devel
+BuildRequires:  postgresql-devel >= 8
+BuildRequires:  libsqlite3-devel >= 3.6.12
 Source44: import.info
 
 %description
@@ -27,6 +22,14 @@ API with thread-safe connection pooling. The library can connect transparently
 to multiple database systems, has zero configuration and connections are
 specified via a standard URL scheme.
 
+%package        devel
+Group: Development/C
+Summary:        Development files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description    devel
+This package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
 %setup -q
@@ -35,35 +38,26 @@ specified via a standard URL scheme.
 rm -f doc/api-docs/._*
 
 %build
-%configure --disable-static --enable-protected
+%configure --disable-static --enable-protected --enable-sqliteunlock
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 %files
-%{_libdir}/%{name}\.so\.*
-
 %doc AUTHORS CHANGES COPYING README
-
-
-%package devel
-Summary:        Developer header files & libraries for libzdb database API
-Group:          Development/C
-Requires:       libzdb = %{version}-%{release}
-
-%description devel
-Developer header files & libraries for libzdb database API.
+%{_libdir}/%{name}.so.*
 
 %files devel
-%{_includedir}/zdb
+%{_includedir}/zdb/
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/zdb.pc
 %doc doc/api-docs
 
-
-
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_1
 - update to new release by fcimport
 
