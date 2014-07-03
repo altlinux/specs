@@ -10,7 +10,7 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_11
+Release:        alt4_12
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
@@ -88,6 +88,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_12
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_11
 - update to new release by fcimport
 
