@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ unzip
 %define oldname gstream
 Name:           libgstream
 Version:        1.6
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Simplified stream output/input for Allegro
 Group:          System/Libraries
 License:        Giftware
@@ -79,6 +79,9 @@ done
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_10
 - update to new release by fcimport
 
