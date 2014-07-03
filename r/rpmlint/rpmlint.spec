@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.85
-Release: alt3.1
+Release: alt4
 
 Summary: RPM correctness checker
 License: GPL2
@@ -12,7 +12,7 @@ Source1: config.alt
 Source2: README.ALT
 BuildArch: noarch
 
-Patch0: %name-0.78-alt-rpm-v2.patch
+Patch0: %name-0.85-alt-rpm-v2.patch
 Patch1: %name-0.85-popen2.patch
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
@@ -51,6 +51,9 @@ install -m644 %name.bash-completion %buildroot%_sysconfdir/bash_completion.d/%na
 %_datadir/%name
 
 %changelog
+* Thu Jul  3 2014 Terechkov Evgenii <evg@altlinux.org> 0.85-alt4
+- Patch0 updated to work with ALT >= rpm-4.0.4-alt100.78
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.85-alt3.1
 - Rebuild with Python-2.7
 
