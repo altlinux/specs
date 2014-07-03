@@ -6,7 +6,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:		libechonest
 Version: 	2.1.0
-Release:	alt1_2
+Release:	alt1_3
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -68,6 +68,9 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_2
 - update to new release by fcimport
 
