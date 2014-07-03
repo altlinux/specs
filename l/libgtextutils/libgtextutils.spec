@@ -3,14 +3,14 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libgtextutils
-Version:	0.6
-Release:	alt2_10
+Version:	0.7
+Release:	alt1_11
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
 License:	AGPLv3+
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
-Source0:	http://hannonlab.cshl.edu/fastx_toolkit/%{name}-%{version}.tar.bz2
+Source0:	http://hannonlab.cshl.edu/fastx_toolkit/%{name}-%{version}.tar.gz
 Source44: import.info
 
 
@@ -55,6 +55,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_10
 - update to new release by fcimport
 
