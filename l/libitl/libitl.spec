@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: swig
+# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
 Group:          System/Libraries
@@ -64,6 +67,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_7
 - update to new release by fcimport
 
