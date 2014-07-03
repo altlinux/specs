@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -34,7 +34,7 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
 Patch1: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
-Patch2: qtbase-opensource-src-5.3.0-no_xkbcommon-x11.patch
+Patch2: qtbase-opensource-src-5.3.0-old-xcb.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -325,7 +325,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO\s*+=.*$|QMAKE_CFLAGS_RELEASE_W
 # move some bundled libs to ensure they're not accidentally used
 pushd src/3rdparty
 mkdir UNUSED
-mv freetype libjpeg libpng sqlite zlib xcb UNUSED/
+mv freetype libjpeg libpng sqlite zlib xcb xkbcommon UNUSED/
 popd
 
 %build
@@ -706,6 +706,12 @@ done
 
 
 %changelog
+* Thu Jul 03 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt3
+- fix xcb-xkb usage (ALT#30153)
+
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1.M70P.1
+- built for M70P
+
 * Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt2
 - build docs
 - add _qt5_qmldir macro
