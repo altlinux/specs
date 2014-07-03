@@ -5,7 +5,7 @@
 
 Name: fontforge
 Version: 20120731
-Release: alt1
+Release: alt2
 Summary: FontForge -- font editor
 Summary(ru_RU.KOI8-R): Редактор шрифтов FontForge
 
@@ -55,7 +55,7 @@ Requires: lib%name = %version-%release
 Summary: FontForge python module
 Group: Development/Python
 Requires: python
-Requires: lib%name-devel
+Requires: lib%name = %version-%release
 
 %description -n lib%name
 FontForge shared library
@@ -138,6 +138,9 @@ popd
 %files -n python-module-%name -f python-module-%name
 
 %changelog
+* Thu Jul 03 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt2
+- added patch needed for the correct loading of libraries (python-module)
+
 * Sun Jun 29 2014 Pavel Vainerman <pv@altlinux.ru> 20120731-alt1
 - new version
 - add require libfontforge-devel for python-module-fontforge (altbug #30144)
