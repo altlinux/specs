@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:      libmkv
 Version:   0.6.5.1
-Release:   alt2_5
+Release:   alt2_6
 Summary:   An alternative to the official libmatroska library
 
 Group:     System/Libraries
@@ -57,6 +57,9 @@ development files.
 %{_libdir}/libmkv.so
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_6
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_5
 - update to new release by fcimport
 
