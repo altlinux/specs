@@ -1,6 +1,6 @@
 Name: kernel-source-vhba
-Version: 20130607
-Release: alt1.1
+Version: 20140629
+Release: alt1
 
 Summary: Source for VHBA module
 License: GPLv2
@@ -46,6 +46,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Wed Jul 02 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1
+- Version 20140629
+
 * Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 20130607-alt1.1
 - Fix udev rules path
 

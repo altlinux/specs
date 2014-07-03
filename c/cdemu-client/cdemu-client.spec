@@ -1,6 +1,6 @@
 Name: cdemu-client
-Version: 2.1.1
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -14,10 +14,9 @@ Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 
 BuildRequires: cmake
 BuildRequires: intltool
-BuildRequires: python-module-distribute
 BuildRequires: rpm-build-gir
 
-Requires: cdemu-daemon >= 2.1.1
+Requires: cdemu-daemon >= 3.0.0
 
 %description
 This is cdemu-client, a simple command-line client for controlling CDEmu daemon.
@@ -29,33 +28,43 @@ daemon, such as loading and unloading devices, displaying devices' status and
 retrieving/setting devices' debug masks.
 
 %prep
-%setup -q
+%setup
 
 %build
 %__mkdir_p %_target_platform
 pushd %_target_platform
 
 cmake .. \
-         -DCMAKE_INSTALL_PREFIX=%prefix
+         -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
+         -DCMAKE_BUILD_TYPE:STRING="Release"
          
 popd
 
 %make_build -C %_target_platform
 
 %install
-%make -C %_target_platform DESTDIR=%buildroot install
+%makeinstall_std -C %_target_platform
 %find_lang cdemu
 
 %files -f cdemu.lang
-%defattr(-,root,root)
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS COPYING ChangeLog NEWS README
 %_bindir/cdemu
 %_desktopdir/%name.desktop
-%_mandir/man1/*
+%_man1dir/cdemu.*
+%_pixmapsdir/%name.svg
 %dir %_sysconfdir/bash_completion.d
-%_sysconfdir/bash_completion.d/%name
+%_sysconfdir/bash_completion.d/cdemu-bash-completion.sh
 
 %changelog
+* Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
+- Version 3.0.0
+
+* Mon Feb 10 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1.M70P.1
+- Build for branch p7
+
+* Sun Feb 09 2014 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1.M70T.1
+- Build for branch t7
+
 * Tue Oct 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt2
 - Use find-lang for language files
 
