@@ -3,7 +3,7 @@ BuildRequires: cppunit-devel gcc-c++ libICE-devel libSDL-devel libSM-devel libX1
 # END SourceDeps(oneline)
 Name:           pinball
 Version:        0.3.1
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Emilia arcade game
 Group:          Games/Other
 License:        GPL+
@@ -83,6 +83,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_23
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_22
 - update to new release by fcimport
 
