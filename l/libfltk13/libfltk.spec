@@ -2,8 +2,8 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.2.r10181
-Release: alt2
+Version: %major.2.r10217
+Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
@@ -124,6 +124,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10217-alt1
+- New snapshot
+
 * Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10181-alt2
 - Avoid conflict with libfltk0 (ALT #30107)
 
