@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3
+Version:	2.3.1
 Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
@@ -60,6 +60,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1
 - update to new release by fcimport
 
