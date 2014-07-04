@@ -1,7 +1,7 @@
 BuildRequires: libkmahjongg4-common
 Name:        mj
 Version:     1.13
-Release:     alt1_1
+Release:     alt1_2
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -130,6 +130,9 @@ fi
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
+- update to new release by fcimport
+
 * Fri Jan 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_1
 - update to new release by fcimport
 
