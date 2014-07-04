@@ -1,6 +1,6 @@
 Name:           asc-music
 Version:        1.0
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Background music for the game asc
 Group:          Games/Other
 License:        GPLv2+
@@ -38,6 +38,9 @@ install -p -m 644 *.ogg $RPM_BUILD_ROOT%{_datadir}/asc/music
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_10
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9
 - update to new release by fcimport
 
