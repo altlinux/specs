@@ -1,5 +1,5 @@
 Name: jpegoptim
-Version: 1.2.4
+Version: 1.4.1
 Release: alt1
 
 Summary: Utility to optimize jpeg files
@@ -26,13 +26,16 @@ libtoolize -i
 %make_build
 
 %install
-%make_install install INSTALL_ROOT=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Fri Jul 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Mon Apr 11 2011 Victor Forsiuk <force@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
