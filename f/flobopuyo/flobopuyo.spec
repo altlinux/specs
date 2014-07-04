@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_12
+Release:        alt4_13
 Summary:        2-player falling bubbles game
 
 Group:          Games/Other
@@ -82,6 +82,9 @@ install -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_13
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_12
 - update to new release by fcimport
 
