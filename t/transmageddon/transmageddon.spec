@@ -1,6 +1,6 @@
 
 Name: transmageddon
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Video transcoder
@@ -28,8 +28,8 @@ Requires: typelib(GstPbutils)
 Requires: typelib(GstTag)
 Requires: typelib(GUdev)
 
-BuildRequires: intltool
-BuildRequires: gstreamer1.0-devel >= 1.0.0
+BuildRequires: intltool appdata-tools
+BuildRequires: gstreamer1.0-devel >= 1.2.0
 BuildRequires: python3 python3-module-pygobject3
 
 %description
@@ -38,7 +38,6 @@ Transmageddon Video Transcoding application.
 %prep
 %setup
 tar -xf %SOURCE2 -C common
-sed -i -e "s,transmageddon/appdata,appdata," appdata/Makefile.am
 %patch -p1
 
 %build
@@ -60,6 +59,9 @@ sed -i -e "s,transmageddon/appdata,appdata," appdata/Makefile.am
 %_man1dir/%name.*
 
 %changelog
+* Fri Jul 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Mon May 19 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1-alt1
 - 1.1
 
