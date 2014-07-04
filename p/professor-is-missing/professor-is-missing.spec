@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		professor-is-missing
 Version:	0.1
-Release:	alt4_10
+Release:	alt4_11
 Summary:	The Professor is Missing, an AGI adventure game
 
 Group:		Games/Other
@@ -72,6 +72,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/professor-is-missing-wrapper.sh
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_10
 - update to new release by fcimport
 
