@@ -1,6 +1,6 @@
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Portable corewar system with ICWS'94 extensions
 
 Group:          Games/Other
@@ -57,6 +57,9 @@ install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 %{_mandir}/man6/pmars.6.*
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_11
+- update to new release by fcimport
+
 * Tue Feb 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_10
 - update to new release by fcimport
 
