@@ -1,5 +1,5 @@
 Name: perl-Test-SharedFork
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Test::SharedFork - fork test
@@ -31,6 +31,9 @@ This module merges test count with parent process & child process.
 %doc Changes README.md
 
 %changelog
+* Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
