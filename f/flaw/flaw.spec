@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name flaw
 %define version 1.3.2a
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt1_6
+Release:	alt1_8
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -59,6 +59,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc %{_pkgdocdir}
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_8
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_6
 - update to new release by fcimport
 
