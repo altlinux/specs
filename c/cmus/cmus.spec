@@ -2,8 +2,9 @@
 # $Id: cmus.spec,v 1.34 2006/08/20 13:58:03 eugene Exp $
 
 %define name cmus
-%define version 2.5.0
-%define release alt4
+%define version 2.6.0
+%define rcname rc0
+%define release alt0.%rcname
 %define debug 0
 
 Name: %name
@@ -18,14 +19,14 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 
 AutoReq: yes, nopython
 
-Source0: %name-%version.tar
+Source0: %name-%version-%rcname.tar
 Source2: cmus.desktop
 
 # Patch0: cmus-vorbis_includes.patch
 # Temporary disable build with ncursesw - removed. Now cmus use ncurses if
 # ncursesw not available
 # Patch1: %name-with_ncurses.patch
-Patch2: cmus.git-5feece0be8491287625b105af35d0091cbb05aa6.patch
+# Patch2: cmus.git-5feece0be8491287625b105af35d0091cbb05aa6.patch
 
 # User interface
 BuildRequires(build): libtinfo-devel
@@ -34,6 +35,7 @@ BuildRequires(build): libncursesw-devel
 BuildRequires(build): libalsa-devel
 BuildRequires(build): libao-devel
 BuildRequires(build): libpulseaudio-devel
+BuildRequires(build): libjack-devel
 # Input
 BuildRequires(build): libmad-devel
 BuildRequires(build): libogg-devel
@@ -73,13 +75,13 @@ Features
     o .mpc, .mpp, .mp+ (libmpcdec)
     o MPEG-4 AAC (.mp4, .m4a, .m4b)
     o AAC (.aac, audio/aac, audio/aacp)
-    o FFMPEG (.wma files, could extend to support more)
     o WavPack (.wv)
     o CDIO
   * Output
     o ALSA
     o OSS
     o libao
+    o JACK
   * Playing
     o Album/artist modes; playing within one album or artist
     o Play queue
@@ -115,13 +117,13 @@ CMus - маленький и быстрый музыкальный проигр�
     o .mpc, .mpp, .mp+ (libmpcdec)
     o MPEG-4 AAC (.mp4, .m4a, .m4b)
     o AAC (.aac, audio/aac, audio/aacp)
-    o FFMPEG (.wma, возможность поддержки многих форматов)
     o WavPack (.wv)
     o CDIO
   * Выход:
     o ALSA
     o OSS
     o libao
+    o JACK
   * Воспроизведение
     o Режимы альбом/исполнитель. Воспроизведение целого альбома или
       полностью исполнителя
@@ -276,7 +278,7 @@ CMus is a small and fast music player using the ncurses library.
 
 This package contains plugin for WavPack (.wv, audio/x-wavpack) files.
 
-%description -l ru_RU.UTF-8 in-aac
+%description -l ru_RU.UTF-8 in-wavpack
 CMus - маленький и быстрый музыкальный проигрыватель, использующий
 библиотеку ncurses.
 
@@ -305,13 +307,6 @@ Requires: %name = %version-%release
 CMus is a small and fast music player using the ncurses library.
 
 This package contains plugin for CDIO support.
-
-%description -l ru_RU.UTF-8 in-aac
-CMus - маленький и быстрый музыкальный проигрыватель, использующий
-библиотеку ncurses.
-
-Этот пакет содержит расширение для поддержки FFMPEG (дает возможность
-воспроизведения .wma и других форматов).
 
 %package in-cue
 Summary: CUE plugin for CMus
@@ -381,12 +376,23 @@ CMus - маленький и быстрый музыкальный проигр�
 
 Этот пакет содержит расширение для воспроизведения через libao.
 
+%package out-jack
+Summary: JACK plugin for CMus
+Group: Sound
+
+Requires: %name = %version-%release
+
+%description out-jack
+CMus is a small and fast music player using the ncurses library.
+
+This package contains plugin for Jack Audio Connection Kit support.
+
 
 %prep
-%setup -q
+%setup -q -n %name-%version-%rcname
 # %patch0 -p1
 # %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 CFLAGS="${CFLAGS:--pipe -Wall -O2 -g}" ; export CFLAGS
@@ -406,7 +412,7 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_AAC=y \
         CONFIG_MP4=y \
         CONFIG_WAVPACK=y \
-        CONFIG_FFMPEG=y \
+        CONFIG_FFMPEG=n \
         CONFIG_CUE=y \
         CONFIG_ALSA=y \
         CONFIG_PULSE=y \
@@ -416,7 +422,8 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_OPUS=y \
         CONFIG_CDDB=y \
         CONFIG_DISCID=y \
-        CONFIG_CDIO=y
+        CONFIG_CDIO=y \
+        CONFIG_JACK=y
 %make_build
 # make man
 # make html
@@ -452,7 +459,7 @@ mv cmus-status-display examples
 %_desktopdir/%name.desktop
 %_datadir/%name
 %exclude %_datadir/doc/%name
-%doc AUTHORS README examples contrib
+%doc AUTHORS README.md examples contrib
 %_man1dir/cmus.1.*
 %_man1dir/cmus-remote.1.*
 %_man7dir/cmus-tutorial.7.*
@@ -490,13 +497,8 @@ mv cmus-status-display examples
 %_libexecdir/%name/ip/wavpack.so
 
 
-%files in-ffmpeg
-%_libexecdir/%name/ip/ffmpeg.so
-
-
 %files in-cdio
 %_libexecdir/%name/ip/cdio.so
-
 
 %files in-cue
 %_libexecdir/%name/ip/cue.so
@@ -513,8 +515,16 @@ mv cmus-status-display examples
 %files out-ao
 %_libexecdir/%name/op/ao.so
 
+%files out-jack
+%_libexecdir/%name/op/jack.so
+
 
 %changelog
+* Fri Jul 04 2014 Eugene Vlasov <eugvv@altlinux.ru> 2.6.0-alt0.rc0
+- 2.6.0-rc0
+- build without ffmpeg support
+- Added subpackage for JACK plugin
+
 * Wed Mar 27 2013 Eugene Vlasov <eugvv@altlinux.ru> 2.5.0-alt4
 - Merged my git works for 2.4.2:
   * Initial CUE support
