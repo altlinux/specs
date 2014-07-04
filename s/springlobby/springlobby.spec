@@ -9,7 +9,7 @@ BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-dev
 %define fedora 21
 Name:			springlobby
 Version:		0.169
-Release:		alt1_9
+Release:		alt1_10
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -89,6 +89,9 @@ desktop-file-install	\
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_10
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_9
 - update to new release by fcimport
 
