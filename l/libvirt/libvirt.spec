@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -586,6 +586,9 @@ install -d -m 0755 %buildroot%_localstatedir/run/libvirt/
 rm -f %buildroot%_libdir/*.{a,la}
 rm -f %buildroot%_libdir/%name/*/*.{a,la}
 
+# delete docs
+rm -rf %buildroot%_datadir/doc/libvirt-%version
+
 %if_with network
 # We don't want to install /etc/libvirt/qemu/networks in the main %files list
 # because if the admin wants to delete the default network completely, we don't
@@ -685,7 +688,6 @@ fi
 %doc examples
 
 %doc docs/html docs/devhelp docs/*.gif
-%doc docs/libvirt-api.xml
 
 %files client -f %name.lang
 %doc AUTHORS ChangeLog.gz README COPYING COPYING.LESSER TODO
@@ -798,6 +800,7 @@ fi
 %if_with network
 %files daemon-driver-network
 %_libdir/%name/connection-driver/libvirt_driver_network.so
+%_libexecdir/libvirt_leaseshelper
 %endif
 
 %if_with udev
@@ -912,15 +915,15 @@ fi
 %endif
 
 %files devel
-%_pkgconfigdir/libvirt.pc
+%_pkgconfigdir/lib*.pc
 %_libdir/lib*.so
 %_includedir/libvirt
-%dir %_datadir/libvirt/api
-%_datadir/libvirt/api/libvirt-api.xml
-%_datadir/libvirt/api/libvirt-qemu-api.xml
-%_datadir/libvirt/api/libvirt-lxc-api.xml
+%_datadir/libvirt/api
 
 %changelog
+* Fri Jul 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.6-alt1
+- 1.2.6
+
 * Mon Jun 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.5-alt1
 - 1.2.5
 
