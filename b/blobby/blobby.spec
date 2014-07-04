@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.8.%{prerel}
+Release:        alt2_0.9.%{prerel}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -14,7 +14,7 @@ URL:            http://blobby.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}2-linux-%{version}%{prerel}.tar.gz
 Source1:        blobby.desktop
 Source2:        blobby.appdata.xml
-BuildRequires:  libSDL2-devel libphysfs-devel zlib-devel ctest cmake boost-devel zip
+BuildRequires:  libSDL2-devel libphysfs-devel zlib-devel ctest cmake boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel zip
 BuildRequires:  ImageMagick desktop-file-utils icon-theme-hicolor
 Source44: import.info
 
@@ -57,6 +57,9 @@ install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdat
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.9.rc4
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.8.rc4
 - update to new release by fcimport
 
