@@ -1,12 +1,13 @@
 Name: git-cola
-Version: 1.7.5
-Release: alt3
+Version: 2.0.4
+Release: alt1
 
 Summary: A highly caffeinated git gui
 License: GPLv2+
 Group: Development/Tools
 
 Url: http://cola.tuxfamily.org
+# https://github.com/git-cola/git-cola.git
 Source: %name-%version.tar.gz
 
 BuildArch: noarch
@@ -32,8 +33,8 @@ and caffeine-inspired features.
 
 %install
 %python_install -O1 --skip-build --root %{buildroot} --prefix=%{_prefix}
-#make DESTDIR=%buildroot prefix=%prefix install-doc
-#make DESTDIR=%buildroot prefix=%prefix install-html
+%make DESTDIR=%buildroot prefix=%prefix install-doc
+%make DESTDIR=%buildroot prefix=%prefix install-html
 %find_lang %name
 
 %files -f %name.lang
@@ -42,10 +43,13 @@ and caffeine-inspired features.
 %_desktopdir/*.desktop
 %_datadir/git-cola
 %_docdir/git-cola
-#_man1dir/*
+%_man1dir/*
 %python_sitelibdir/*
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
 * Tue May 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5-alt3
 - Disabled docs (brocken)
 
