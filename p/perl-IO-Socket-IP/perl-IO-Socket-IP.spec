@@ -1,5 +1,5 @@
 Name: perl-IO-Socket-IP
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: IO::Socket::IP - A drop-in replacement for IO::Socket::INET supporting both IPv4 and IPv6
@@ -40,6 +40,9 @@ while still falling back to IPv4-only on systems which don't.
 %doc LICENSE Changes README 
 
 %changelog
+* Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
