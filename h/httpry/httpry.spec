@@ -1,7 +1,7 @@
 Summary: specialized packet sniffer designed for displaying and logging HTTP traffic
 Name: httpry
-Version: 0.1.7
-Release: alt2
+Version: 0.1.8
+Release: alt1
 License: GPLv2
 Group: Networking/WWW
 Url: http://dumpsterventures.com/jason/httpry/
@@ -25,6 +25,8 @@ the request/response line along with associated header fields.
 Summary: Plugins for %name
 Group: Networking/WWW
 Requires: perl-DBD-mysql
+BuildArch: noarch
+
 %description scripts
 A number of Perl scripts are included with the project to provide a basic
 log parsing framework.
@@ -78,6 +80,9 @@ cp -r scripts/plugins/* %buildroot%perl_vendor_privlib/%name
 %perl_vendor_privlib/%name
 
 %changelog
+* Fri Jul 04 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.1.8-alt1
+- New version
+
 * Tue Sep 18 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.7-alt2
 - Update to tag 0.1.7 from git
 
