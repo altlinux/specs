@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 21
 Name:           kitsune
 Version:        2.0
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Program to solve mathematical problems
 
 Group:          Games/Other
@@ -70,6 +70,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_13
 - update to new release by fcimport
 
