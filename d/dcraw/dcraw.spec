@@ -1,5 +1,5 @@
 Name: dcraw
-Version: 9.21
+Version: 9.22
 Release: alt1
 
 Summary: Command-line decoder for raw digital photos
@@ -53,6 +53,9 @@ done
 %doc dcraw.html *.png .badpixels
 
 %changelog
+* Fri Jul 04 2014 Yuri N. Sedunov <aris@altlinux.org> 9.22-alt1
+- 9.22
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 9.21-alt1
 - 9.21, built against liblcms2
 
