@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -106,6 +106,9 @@ $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_21
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_20
 - update to new release by fcimport
 
