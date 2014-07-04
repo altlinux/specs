@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: python-devel
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 21
 Name:           seahorse-adventures
 Version:        1.0
-Release:        alt4_13
+Release:        alt4_14
 Summary:        Help barbie the seahorse float on bubbles to the moon
 Group:          Games/Other
 License:        GPL+
@@ -76,6 +76,9 @@ install -p -m 644 data/images/player/right.png \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_14
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_13
 - update to new release by fcimport
 
