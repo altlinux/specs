@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt45.1
+Release: alt46
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -274,6 +274,10 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Jul 04 2014 Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt46
+- apt-pkg/policy.cc: it is ok, if default PinDir doesn't exist
+  (reported by rider@).
+
 * Tue Jul 01 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt45.1
 - Rebuilt with rpm-4.0.4-alt100.78 (different size of rpmTagTable).
 
