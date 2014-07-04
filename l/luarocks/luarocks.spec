@@ -2,7 +2,7 @@
 %define download_helper curl
 
 Name: luarocks
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 
 Summary: A deployment and management system for Lua modules
@@ -60,5 +60,8 @@ done
 %_datadir/lua5/luarocks
 
 %changelog
+* Fri Jul 4 2014 Vladimir Didenko <cow@altlinux.org> 2.1.2-alt1
+- new version
+
 * Sat Aug 31 2013 Vladimir Didenko <cow@altlinux.org> 2.1.0-alt1
 - Initial build
