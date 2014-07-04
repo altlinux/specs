@@ -1,5 +1,5 @@
 Name: starman
-Version: 0.3005
+Version: 0.4009
 Release: alt1
 Serial: 1
 Summary: High-performance preforking PSGI/Plack web server
@@ -14,7 +14,7 @@ Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name.logrotate
 
-BuildRequires: perl-Plack perl-HTTP-Parser-XS perl-Net-Server perl-Module-Install perl-Module-Install-Repository perl-Module-Install-ReadmeFromPod perl-Module-Install-AuthorTests perl-Test-Requires perl-Data-Dump 
+BuildRequires: perl-Plack perl-HTTP-Parser-XS perl-Net-Server perl-Module-Build-Tiny perl-Test-Requires perl-Data-Dump 
 
 %add_findreq_skiplist */Plack/Handler/Starman.pm
 
@@ -51,7 +51,7 @@ Starman is a PSGI perl web server that has unique features such as:
 %setup -q
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+%perl_vendor_build --install_path bindoc=%_man1dir
 
 %install
 %perl_vendor_install
@@ -83,9 +83,12 @@ mkdir -p %buildroot/var/log/%name
 %_initdir/%name
 %_sysconfdir/logrotate.d/%name
 %attr(3770,root,_starman) /var/log/%name
-%doc Changes README
+%doc Changes README.md
 
 %changelog
+* Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.4009-alt1
+- automated CPAN update
+
 * Mon Nov 19 2012 Eugene Prokopiev <enp@altlinux.ru> 1:0.3005-alt1
 - New version 0.3005
 - add --retry option for start-stop-daemon in initscript
