@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.3
-Release: alt2
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1390,7 +1390,7 @@ done
 find %buildroot%_docdir/kernel-doc-%flavour -type f -name Makefile -delete
 %if_enabled man
 install -d %buildroot%kmandir
-install -m 0644 Documentation/DocBook/man/* %buildroot%kmandir/
+install -m 0644 Documentation/DocBook/man/*.9.gz %buildroot%kmandir/
 %endif
 %endif
 
@@ -1883,6 +1883,39 @@ done)
 
 
 %changelog
+* Fri Jul 04 2014 Led <led@altlinux.ru> 3.15.3-alt6
+- updated:
+  + fix-arch-x86 (CVE-2014-4699)
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_core
+  + fix-drivers-scsi--lpfc
+  + fix-drivers-usb-core
+  + fix-sound-pci-hda--snd-hda-intel
+- DEFAULT_CFQ=y and DEFAULT_IOSCHED="cfq" (ws)
+- disabled DRM_I2C_NXP_TDA998X
+
+* Thu Jul 03 2014 Led <led@altlinux.ru> 3.15.3-alt5
+- updated:
+  + fix-drivers-net-ethernet-broadcom--tg3
+  + fix-mm
+
+* Thu Jul 03 2014 Led <led@altlinux.ru> 3.15.3-alt4
+- added:
+  + fix--Makefile
+  + fix-Documentation-DocBook-media
+  + fix-arch-powerpc-boot
+  + fix-arch-um
+  + fix-scripts-packages--builddeb
+  + fix-scripts-packages--buildtar
+
+* Wed Jul 02 2014 Led <led@altlinux.ru> 3.15.3-alt3
+- updated:
+  + fix-fs-nfsd
+  + fix-mm
+- added:
+  + fix-drivers-infiniband-hw--mlx4
+  + fix-net-sctp--sctp
+
 * Wed Jul 02 2014 Led <led@altlinux.ru> 3.15.3-alt2
 - updated:
   + fix-drivers-gpu-drm--mgag200
