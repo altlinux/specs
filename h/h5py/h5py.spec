@@ -1,14 +1,14 @@
 %define hdf5dir %_libdir/hdf5-seq
 Name: h5py
-Version: 2.2.0
-Release: alt2.a1.hg20120919
+Version: 2.4.0
+Release: alt1.a0.git20140625
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
-Url: http://code.google.com/p/h5py/
+Url: http://www.h5py.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://code.google.com/p/h5py/
+# https://github.com/h5py/h5py.git
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
@@ -143,16 +143,16 @@ This package contains tests for H5PY.
 
 sed -i 's|@PYVER@|%_python_version|g' docs/Makefile
 
-%prepare_sphinx docs
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+ln -s ../objects.inv docs_api/
 
 %build
 #python setup.py cython
-#python setup.py configure --hdf5=%hdf5dir --api=18
-pushd %name
+python setup.py configure --hdf5=%hdf5dir
 python api_gen.py
-popd
 %add_optflags -fno-strict-aliasing
-%python_build_debug --hdf5=%hdf5dir --api=18
+%python_build_debug
 
 %install
 %python_install
@@ -162,39 +162,44 @@ pushd docs
 %make html
 %make pickle
 popd
+%make -C docs_api html
 
 install -d %buildroot%python_sitelibdir/%name/examples
 install -p -m644 examples/* %buildroot%python_sitelibdir/%name/examples
 touch %buildroot%python_sitelibdir/%name/examples/__init__.py
 
 install -d %buildroot%_docdir/%name
-cp -fR docs/build/html lzf %buildroot%_docdir/%name/
+cp -fR docs/_build/html %buildroot%_docdir/%name/html
+cp -fR docs_api/_build/html %buildroot%_docdir/%name/api
+cp -fR lzf %buildroot%_docdir/%name/
 #install -m644 docs/build/latex/*.pdf %buildroot%_docdir/%name/pdf
 
 # pickles
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%name/
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
 
 %files -n python-module-%name
-%doc licenses *.txt
+%doc licenses *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%name/pickle
 %exclude %python_sitelibdir/%name/examples
-%exclude %python_sitelibdir/*/lowtest
-%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/tests
 
 %files -n python-module-%name-doc
 %_docdir/%name
 
 %files -n python-module-%name-tests
-%python_sitelibdir/*/lowtest
-%python_sitelibdir/*/*/tests
+%python_sitelibdir/*/tests
+%python_sitelibdir/%name/examples
 
 %files -n python-module-%name-pickles
 %dir %python_sitelibdir/%name
 %python_sitelibdir/%name/pickle
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.a0.git20140625
+- Version 2.4.0a0
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.a1.hg20120919
 - Rebuilt with new libhdf5
 
