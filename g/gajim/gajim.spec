@@ -1,6 +1,6 @@
 Name: gajim
 Version: 0.16
-Release: alt0.1
+Release: alt0.2
 
 Summary: a Jabber client written in PyGTK
 License: GPLv3
@@ -10,7 +10,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 AutoReqProv: yes, noshell
 
-Source: %url/downloads/%name-%version-rc1.tar.bz2
+Source: %url/downloads/%name-%version-rc2.tar.gz
 
 Patch1: gajim-alt-dont_install_docdata.patch
 Patch2: gajim-alt-package-names.patch
@@ -36,7 +36,7 @@ users. Gajim does not require GNOME to run, eventhough it exists with
 it nicely.
 
 %prep
-%setup -q -n %name-%version-rc1
+%setup -q -n %name-%version-rc2
 #patch1 -p2
 #patch2 -p2
 #patch3 -p2
@@ -67,6 +67,9 @@ rm %buildroot%_datadir/%name/scripts/dev -rf
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Fri Jul 04 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt0.2
+- 0.16 rc2
+
 * Tue Apr 17 2014 Ilya Mashkin <oddity@altlinux.ru> 0.16-alt0.1
 - 0.16 rc1
 - drop patches
