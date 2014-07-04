@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/pngtopnm /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
-%define fedora 19
+%define fedora 21
 Name:           pioneers
 Version:        14.1
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
@@ -118,6 +118,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_5
 - update to new release by fcimport
 
