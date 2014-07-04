@@ -7,7 +7,7 @@ BuildRequires: libexpat-devel
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_15
+Release: alt3_16
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -146,6 +146,9 @@ make check ||:
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_16
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_15
 - converted for ALT Linux by srpmconvert tools
 
