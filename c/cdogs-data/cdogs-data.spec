@@ -7,7 +7,7 @@
 
 Name:           cdogs-data
 Version:        %{cdogs_sdl_version}
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Data files for the CDogs game
 Group:          Games/Other
 License:        Redistributable, no modification permitted
@@ -44,6 +44,9 @@ rm $RPM_BUILD_ROOT%{_datadir}/%{name}/cdogs?icon.*
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_10
 - update to new release by fcimport
 
