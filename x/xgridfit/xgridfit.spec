@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 Requires: python-module-libxml2
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xgridfit
 %define version 2.2
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print (get_python_lib())")}
@@ -14,7 +14,7 @@ Requires: python-module-libxml2
 
 Name:    xgridfit
 Version: 2.2
-Release: alt3_10%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
+Release: alt3_11%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
 Summary: Font hinting tool
 
 # This is where we drop fontforge
@@ -104,6 +104,9 @@ xmlcatalog --noout --del \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_11.a.20100725cvs
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_10.a.20100725cvs
 - update to new release by fcimport
 
