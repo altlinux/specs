@@ -1,22 +1,26 @@
 %define _name appstream-glib
 %define api_ver 1.0
+%def_disable rpm
 
 Name: lib%_name
-Version: 0.1.6
+Version: 0.2.1
 Release: alt1
 
 Summary: Library for AppStream metadata
 Group: System/Libraries
 License: LGPLv2+
-Url: http://people.freedesktop.org/~hughsient/%_name/
+Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
+Patch: libappstream-glib-0.2.1-alt-build.patch
 
-BuildRequires: glib2-devel >= 2.16.1
+BuildRequires: intltool glib2-devel >= 2.16.1 libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel libgdk-pixbuf-devel
+BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: gperf
+%{?_enable_rpm:BuildRequires: librpm-devel}
 
 %description
 This library provides GObjects and helper methods to make it easy to read and
@@ -50,10 +54,60 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the AppStream metadata library.
 
+%package devel-doc
+Summary: Development package for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package provides development documentation for the AppStream
+metadata library.
+
+%package -n libappstream-builder
+Summary: A library and tools to build an AppStream database
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description -n libappstream-builder
+This library provides GObjects and helper methods to make it easy to
+build AppStream database.
+
+%package -n libappstream-builder-devel
+Summary: Development files for libappstream-bulder
+Group: Development/C
+Requires: libappstream-builder = %version-%release
+Requires: %name-devel = %version-%release
+
+%description -n libappstream-builder-devel
+This package provides development files for libappstream-bulder.
+
+%package -n libappstream-builder-gir
+Summary: GObject introspection data for the libappstream-bulder library
+Group: System/Libraries
+Requires: libappstream-builder = %version-%release
+Requires: %name-gir = %version-%release
+
+%description -n libappstream-builder-gir
+GObject introspection data for the AppStream builder library.
+
+%package -n libappstream-builder-gir-devel
+Summary: GObject introspection devel data for the libappstream-bulder library
+Group: Development/Other
+BuildArch: noarch
+Requires: libappstream-builder-gir = %version-%release
+Requires: %name-gir-devel = %version-%release
+Requires: libappstream-builder-devel = %version-%release
+
+%description -n libappstream-builder-gir-devel
+GObject introspection devel data for the AppStream builder library.
+
 %prep
 %setup -n %_name-%version
+%patch
 
 %build
+%autoreconf
 %configure \
         --enable-gtk-doc \
         --disable-static
@@ -63,16 +117,20 @@ GObject introspection devel data for the AppStream metadata library.
 %install
 %makeinstall_std
 
-%files
+%find_lang %_name
+
+%files -f %_name.lang
 %_bindir/appstream-util
 %_libdir/%name.so.*
+%_man1dir/appstream-util.1.*
+%_datadir/bash-completion/completions/appstream-util
 %doc README.md AUTHORS NEWS
 
 %files devel
-%_libdir/*.so
-%_pkgconfigdir/%_name.pc
 %_includedir/%name/
-%_datadir/gtk-doc/html/%_name/
+%_libdir/%name.so
+%_pkgconfigdir/%_name.pc
+%_datadir/aclocal/appstream-xml.m4
 
 %files gir
 %_typelibdir/AppStreamGlib-%api_ver.typelib
@@ -80,7 +138,38 @@ GObject introspection devel data for the AppStream metadata library.
 %files gir-devel
 %_girdir/AppStreamGlib-%api_ver.gir
 
+%files devel-doc
+%_datadir/gtk-doc/html/%_name/
+
+%files -n libappstream-builder
+%_bindir/appstream-builder
+%_libdir/libappstream-builder.so.*
+%dir %_libdir/asb-plugins
+%_libdir/asb-plugins/*.so
+%_man1dir/appstream-builder.1.*
+%_datadir/bash-completion/completions/appstream-builder
+
+%exclude %_libdir/asb-plugins/*.la
+
+%files -n libappstream-builder-devel
+%_libdir/libappstream-builder.so
+%_pkgconfigdir/appstream-builder.pc
+%_includedir/libappstream-builder/
+
+%files -n libappstream-builder-gir
+%_typelibdir/AppStreamBuilder-%api_ver.typelib
+
+%files -n libappstream-builder-gir-devel
+%_girdir/AppStreamBuilder-%api_ver.gir
+
+#%files -n libappstream-builder-devel-doc
+#%_datadir/gtk-doc/html/appstream-builder/
+
+
 %changelog
+* Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - first build for Sisyphus
 
