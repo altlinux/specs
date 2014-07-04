@@ -1,6 +1,6 @@
 Name:           overgod
 Version:        1.0
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -9,6 +9,8 @@ Source0:        http://downloads.sourceforge.net/overgod/overgod.tar.gz
 Source1:        overgod.desktop
 Source2:        overgod.png
 Patch0:         overgod-1.0.patch
+Patch1:         overgod-1.0-format-string.patch
+Patch2:         overgod-1.0-shield_bmp_array_overrun.patch
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -27,6 +29,8 @@ ways.
 %prep
 %setup -q
 %patch0 -p1 -z .unix
+%patch1 -p1
+%patch2 -p1
 sed -i 's/\r//' readme.txt licence.txt
 
 # as-needed
@@ -34,7 +38,8 @@ sed -i -e 's,$(CC) $(LDFLAGS) -o $@ $^,$(CC) -o $@ $^ $(LDFLAGS),' Makefile
 
 
 %build
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" PREFIX=%{_prefix}
+make %{?_smp_mflags} \
+  CFLAGS="$RPM_OPT_FLAGS -Wno-unused-but-set-variable" PREFIX=%{_prefix}
 
 
 %install
@@ -59,6 +64,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_20
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_18
 - update to new release by fcimport
 
