@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/makensis gcc-c++ libxml2-devel pkgconfig(cairo) pkgconfi
 # END SourceDeps(oneline)
 Name:           tuxmath
 Version:        2.0.1
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Educational math tutor for children
 
 Group:          Games/Other
@@ -58,6 +58,9 @@ desktop-file-install --vendor="" \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_5
 - update to new release by fcimport
 
