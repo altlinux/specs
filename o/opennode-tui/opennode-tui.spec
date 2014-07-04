@@ -1,7 +1,7 @@
 Summary: OpenNode Textual User Interface RPM
 Name: opennode-tui
 Version: 2.0.1
-Release: alt3.git.cec422f06
+Release: alt4.git.43b881d
 License: Apache License v2
 Group: System/Configuration/Other
 Url: http://github.com/opennode/opennode-tui
@@ -26,6 +26,9 @@ Common modules for opennode
 %prep
 %setup
 
+#fix for /bin/env in on-dump-csv.py
+sed -i 's/\/bin\/env/\/usr\/bin\/env/' scripts/on-dump-csv.py
+
 %build
 %python_build
 
@@ -44,9 +47,7 @@ mkdir -p %buildroot%_spooldir/opennode
 
 #Copy files to system
 cp scripts/* %buildroot/%_bindir/
-cp opennode-tui.conf %buildroot%_sysconfdir/opennode/
-cp openvz.conf %buildroot%_sysconfdir/opennode/
-cp kvm.conf %buildroot%_sysconfdir/opennode/
+cp conf/* %buildroot%_sysconfdir/opennode/
 cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 
 %post
@@ -57,6 +58,7 @@ cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 %config(noreplace) %_sysconfdir/opennode/opennode-tui.conf
 %config(noreplace) %_sysconfdir/opennode/kvm.conf
 %config(noreplace) %_sysconfdir/opennode/openvz.conf
+%config(noreplace) %_sysconfdir/opennode/VM.conf
 %_sysconfdir/profile.d/opennode-tui.sh
 
 %_bindir/*
@@ -69,12 +71,16 @@ cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 %dir %_spooldir/opennode
 
 %exclude %python_sitelibdir_noarch/opennode/*.*
+%exclude %dir %python_sitelibdir_noarch/opennode
 
 %files -n python-module-opennode
 %dir %python_sitelibdir_noarch/opennode
 %python_sitelibdir_noarch/opennode/*.*
 
 %changelog
+* Fri Jul 04 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt4.git.43b881d
+- Updated from git
+
 * Wed Jan 02 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt3.git.cec422f06
 - Add subpackage python-module-opennode
 - Update from git
