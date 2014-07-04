@@ -1,5 +1,6 @@
+BuildRequires: perl(Module/Build.pm)
 Name: perl-Data-Localize
-Version: 0.00025
+Version: 0.00026
 Release: alt1
 
 Summary: Data::Localize perl module
@@ -29,6 +30,9 @@ BuildArch: noarch
 %doc Changes 
 
 %changelog
+* Fri Jul 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.00026-alt1
+- automated CPAN update
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.00025-alt1
 - new version 0.00025
 
