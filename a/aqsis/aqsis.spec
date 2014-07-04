@@ -2,10 +2,9 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ python-devel swig
 # END SourceDeps(oneline)
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_9
+Release:	alt2_10
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -19,7 +18,7 @@ Patch1: imfinputfile-forward-declaration.diff
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires:  boost-devel >= 1.34.0
+BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
@@ -225,6 +224,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_10
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_9
 - converted for ALT Linux by srpmconvert tools
 
