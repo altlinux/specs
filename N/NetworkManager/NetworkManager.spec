@@ -26,7 +26,7 @@
 
 Name: NetworkManager
 Version: 0.9.9.98
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -544,6 +544,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jun 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.9.98-alt2
+- define DISTRO_NETWORK_SERVICE=network.service for ALTLinux
+- don't order NetworkManager-wait-online.service before network.target
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.9.98-alt1
 - Add libreadline-devel to BR.
 - preun: Don't use preun_service.

@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt9
+Release:	alt10
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -16,6 +16,7 @@ BuildArch:	noarch
 
 Conflicts:	net-scripts
 Conflicts:	ethtool < 0:3-alt4, ifplugd < 0.28-alt2, ipset < 4.1-alt2
+Conflicts:	systemd < 1:210-alt7
 Provides:	network-config-subsystem
 
 %description
@@ -116,6 +117,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/net/ifaces/lo/*
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/net/sysctl.conf
 %_initdir/network
+%_unitdir/*
 %exclude %_sysconfdir/net/options.d/50-*
 %config %_sysconfdir/net/options.d/*
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/sysconfig/network
@@ -137,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Wed Jul 02 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt10
+- add systemd unit file
+
 * Wed Apr 23 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt9
 - add LSB Header to sysvinit script
 

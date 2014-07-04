@@ -1,4 +1,4 @@
-%define firmwaredir             /lib/firmware
+%define firmwaredir /lib/firmware
 %define _localstatedir %_var
 
 %def_enable libcryptsetup
@@ -40,7 +40,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 214
-Release: alt6
+Release: alt9
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -49,9 +49,6 @@ License: LGPLv2.1+
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source:%name-%version.tar
-Source2: rc-local.service
-Source4: prefdm.service
-Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
 # Source14: systemd-vconsole-setup@.service
@@ -70,6 +67,7 @@ Source30: 49-coredump-null.conf
 Source31: 60-raw.rules
 Source33: udev.filetrigger
 # ALTLinux's default preset policy
+Source34: 85-display-manager.preset
 Source35: 90-default.preset
 Source36: 99-default-disable.preset
 
@@ -574,15 +572,8 @@ intltoolize --force --automake
 mkdir -p %buildroot%_unitdir/{basic,default,dbus,syslog,poweroff,rescue,reboot}.target.wants
 
 
-install -m644 %SOURCE2 %buildroot%_unitdir/rc-local.service
 ln -s rc-local.service %buildroot%_unitdir/local.service
-install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
-ln -s prefdm.service %buildroot%_unitdir/dm.service
-ln -s prefdm.service %buildroot%_unitdir/display-manager.service
 mkdir -p %buildroot%_unitdir/graphical.target.wants
-ln -s ../display-manager.service %buildroot%_unitdir/graphical.target.wants
-install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-idetune.service
-ln -s ../altlinux-idetune.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-update_chrooted.service
 ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
@@ -596,6 +587,8 @@ ln -s ../altlinux-save-dmesg.service %buildroot%_unitdir/basic.target.wants
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
+ln -s systemd-reboot.service %buildroot%_unitdir/reboot.service
+ln -s systemd-halt.service %buildroot%_unitdir/halt.service
 
 # restore bind-mounts /var/run -> run and /var/lock -> /run/lock
 # we don't have those directories symlinked
@@ -659,7 +652,6 @@ rm -f %buildroot%_unitdir/multi-user.target.wants/systemd-ask-password-wall.path
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
 ln -s /dev/null %buildroot%_unitdir/killall.service
-ln -s /dev/null %buildroot%_unitdir/halt.service
 ln -s /dev/null %buildroot%_unitdir/single.service
 ln -s /dev/null %buildroot%_unitdir/netfs.service
 
@@ -741,6 +733,7 @@ mkdir -p %buildroot%_sysconfdir/systemd/system-preset
 mkdir -p %buildroot/lib/systemd/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
 mkdir -p %buildroot/usr/lib/systemd/user-preset
+install -m 0644 %SOURCE34 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE35 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
 
@@ -1320,6 +1313,17 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Jul 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt9
+- add alias for halt and reboot services
+- don't do automatic cleanup in $XDG_RUNTIME_DIR
+
+* Tue Jul 01 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt8
+- drop prefdm.service
+- add preset for display managers
+
+* Mon Jun 30 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt7
+- update ALTLinux units
+
 * Mon Jun 30 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt6
 - units: networkd - don't order wait-online.service before network.target
 - libudev: queue - watch entire directory to allow the re-use of the watch descriptor
