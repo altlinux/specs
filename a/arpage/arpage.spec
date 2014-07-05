@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name arpage
 %define version 0.3.3
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_13
+Release:	alt2_16
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -23,6 +23,9 @@ BuildRequires:	libjack-devel
 BuildRequires:	libgtkmm2-devel
 BuildRequires:	intltool libxml++2-devel
 BuildRequires:	desktop-file-utils
+BuildRequires:	libtool
+BuildRequires:	automake
+BuildRequires:	autoconf
 Source44: import.info
 
 %description
@@ -44,6 +47,9 @@ chmod 644 %{_builddir}/%{name}-%{version}/src/main.cc
 
 %build
 
+# Fix for aarch64 build
+#automake --add-missing
+autoreconf -i
 
 %configure
 make %{?_smp_mflags}
@@ -68,6 +74,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_16
+- update to new release by fcimport
+
 * Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_13
 - update to new release by fcimport
 
