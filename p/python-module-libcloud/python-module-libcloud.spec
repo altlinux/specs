@@ -1,7 +1,7 @@
 Summary: A Python library to address multiple cloud provider APIs
 Name: python-module-libcloud
-Version: 0.14.1
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Url: http://libcloud.apache.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -45,6 +45,9 @@ Unit tests for python-module-libcloud
 %exclude %python_sitelibdir/libcloud/test
 
 %changelog
+* Sat Jul 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.0-alt1
+- New version
+
 * Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.14.1-alt2
 - Add %dir for unit tests, just a little fix
 
