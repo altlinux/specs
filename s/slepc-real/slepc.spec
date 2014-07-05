@@ -9,10 +9,10 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 %define somver 3
-%define sover %somver.2.0
+%define sover %somver.04.4
 Name: %oname-%scalar_type
 Version: 3.4.4
-Release: alt1
+Release: alt1.git20140625
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -94,6 +94,7 @@ Requires: libprimme-devel %mpiimpl-devel
 %if "%scalar_type" == "real"
 Requires: libblzpack-devel libtrlan-devel 
 %endif
+%add_python_req_skip cmakegen
 
 %description -n lib%name-devel
 SLEPc is a software library for the solution of large scale sparse eigenvalue
@@ -192,8 +193,8 @@ export PETSC_ARCH=linux-gnu
 	--with-arpack \
 	--with-arpack-flags=$ARPACKLIBS \
 	--with-arpack-dir=%_libdir \
-	--without-primme
-%make SOVER="%sover" SOMVER="%somver"
+	--with-primme
+%make SOVER="%sover" SOMVER="%somver" V=1
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -208,8 +209,9 @@ export PETSC_ARCH=linux-gnu
 
 pushd %buildroot$PETSC_LDIR/lib
 chrpath -r %ldir/lib:%mpidir/lib lib%oname.so.%sover
-ln -s lib%oname.so.%sover lib%oname.so.%somver
-ln -s lib%oname.so.%somver lib%oname.so
+ln -s lib%oname.so.3.04 lib%oname.so.%somver
+#ln -s lib%oname.so.%sover lib%oname.so.%somver
+#ln -s lib%oname.so.%somver lib%oname.so
 popd
 
 %if "%scalar_type" == "real"
@@ -217,12 +219,16 @@ install -d %buildroot%_docdir/lib%oname-%version
 rm docs/makefile*
 cp -fR docs/* %buildroot%_docdir/lib%oname-%version
 
-for i in eps qep svd st ip
+#for i in eps qep svd st ip
+pushd src
+for i in $(find ./ -name examples)
 do
-	install -d %buildroot%_docdir/lib%oname-%version/examples/$i
-	cp -fR src/$i/examples/* \
-		%buildroot%_docdir/lib%oname-%version/examples/$i
+	j=$(echo $i |sed 's|/examples||')
+	install -d %buildroot%_docdir/lib%oname-%version/examples/$j
+	cp -fR $i/* \
+		%buildroot%_docdir/lib%oname-%version/examples/$j/
 done
+popd
 %endif
 
 # pkg-config
@@ -232,6 +238,17 @@ sed -i 's|@VERSION@|%version|g' %name.pc
 sed -i 's|@PYVER@|%_python_version|g' %name.pc
 install -d %buildroot%_pkgconfigdir
 install -m644 %name.pc %buildroot%_pkgconfigdir/
+
+mv %buildroot%ldir/conf/files \
+	%buildroot%ldir/conf/slepc_files
+mv %buildroot%ldir/conf/gmakegen.py \
+	%buildroot%ldir/conf/slepc_gmakegen.py
+mv %buildroot%ldir/include/finclude/ftn-custom/makefile \
+	%buildroot%ldir/include/finclude/ftn-custom/slepc_makefile
+mv %buildroot%ldir/include/finclude/makefile \
+	%buildroot%ldir/include/finclude/slepc_makefile
+
+sed -i 's|%buildroot||g' %buildroot%ldir/conf/*
 
 %files
 %doc COPYING COPYING.LESSER README
@@ -259,6 +276,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.4-alt1.git20140625
+- New snapshot from git
+
 * Fri May 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.4-alt1
 - Version 3.4.4
 

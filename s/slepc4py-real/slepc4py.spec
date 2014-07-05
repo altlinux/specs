@@ -12,7 +12,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4
-Release: alt1.git20140214
+Release: alt1.git20140627
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -196,6 +196,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140627
+- New snapshot
+
 * Sat Mar 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140214
 - New snapshot
 
