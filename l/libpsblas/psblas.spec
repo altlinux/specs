@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %define somver 0
-%define sover %somver.2.4
+%define sover %somver.3.2
 
 Name: libpsblas
-Version: 3.1.2.1
+Version: 3.2.0.0
 Release: alt1
 Summary: Parallel Sparse Basic Linear Algebra Subroutines
 License: BSD
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 
 BuildPreReq: %mpiimpl-devel libblacs-devel liblapack-devel
-BuildPreReq: libmetis-devel
+BuildPreReq: libmetis-devel libsuitesparse-devel
 
 %description
 Most computationally intensive applications work on irregular and sparse domains
@@ -67,10 +67,12 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-%add_optflags %optflags_shared -DHAVE_METIS
+%add_optflags %optflags_shared -DHAVE_METIS -DHAVE_AMD
+%add_optflags -I%_includedir/metis -I%_includedir/suitesparse
 chmod +x autogen.sh
 ./autogen.sh
 
+export CPPFLAGS="%optflags"
 %configure \
 	--with-ccopt="%optflags %optflags_shared" \
 	--with-fcopt="%optflags %optflags_shared" \
@@ -78,7 +80,12 @@ chmod +x autogen.sh
 	--with-blas="-lopenblas" \
 	--with-lapack="-llapack" \
 	--with-blacs="-lblacs" \
-	--with-metis="-lmetis -lm"
+	--with-metis="-lmetis -lm" \
+	--with-metisdir=%prefix \
+	--with-metisincdir=%_includedir/metis \
+	--with-amd="-lamd" \
+	--with-amddir=%prefix \
+	--with-amdincdir=%_includedir/suitesparse
 %make_build
 
 %install
@@ -102,7 +109,7 @@ pushd tmp
 for i in $LIBS; do
 	ar x ../lib$i.a
 	mpif90 -shared -Wl,-soname,lib$i.so.%somver * -Wl,-rpath,%mpidir/lib \
-		-o ../lib$i.so.%sover $LINKS -lmetis -llapack -lopenblas
+		-o ../lib$i.so.%sover $LINKS -lmetis -llapack -lopenblas -lamd
 	ln -s lib$i.so.%sover ../lib$i.so.%somver
 	ln -s lib$i.so.%somver ../lib$i.so
 	rm -f *
@@ -129,6 +136,9 @@ popd
 %doc test
 
 %changelog
+* Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.0-alt1
+- Version 3.2.0-0
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2.1-alt1
 - Version 3.1.2-1
 
