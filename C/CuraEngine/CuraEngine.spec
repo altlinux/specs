@@ -3,7 +3,7 @@ Group: Engineering
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           CuraEngine
-Version:        14.01
+Version:        14.03
 Release:        alt1_1
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
@@ -25,7 +25,7 @@ application look at cura with is the graphical frontend for %{name}.
 
 # bundled clipper
 rm -rf clipper
-sed -i 's|#include "clipper/clipper.hpp"|#include <polyclipping/clipper.hpp>|' utils/*.h
+sed -i 's|#include "../clipper/clipper.hpp"|#include <polyclipping/clipper.hpp>|' utils/*.h
 sed -i 's|\($(CXX).*\)|\1 $(LIBS)|g' Makefile
 sed -i 's| clipper/clipper.cpp||g' Makefile
 
@@ -47,6 +47,9 @@ make test
 %{_bindir}/%{name}
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 14.03-alt1_1
+- update to new release by fcimport
+
 * Sat Jun 07 2014 Igor Vlasenko <viy@altlinux.ru> 14.01-alt1_1
 - by request of Dmitry Derjavin <dd@>
 
