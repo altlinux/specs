@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
 Name: docbook5-style-xsl
 Version: 1.78.1
-Release: alt1_2
+Release: alt1_3
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -85,6 +85,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_2
 - update to new release by fcimport
 
