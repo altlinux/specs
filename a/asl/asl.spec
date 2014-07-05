@@ -1,4 +1,4 @@
-%define fedora 20
+%define fedora 21
 # spec file for package asl
 # 
 # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
@@ -12,7 +12,7 @@
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.19.%{patchlevel}
+Release:        alt2_0.20.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -87,6 +87,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.20.bld92
+- update to new release by fcimport
+
 * Wed Mar 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.19.bld92
 - update to new release by fcimport
 
