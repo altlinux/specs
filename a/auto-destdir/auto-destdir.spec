@@ -1,6 +1,6 @@
 Name:		auto-destdir
 Version:	1.11
-Release:	alt2_6
+Release:	alt2_7
 Summary:	Automate DESTDIR support for "make install"
 
 Group:		Development/Tools
@@ -44,6 +44,9 @@ chmod a-x %{buildroot}/%{_mandir}/man1/*
 %doc README COPYING
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_6
 - update to new release by fcimport
 
