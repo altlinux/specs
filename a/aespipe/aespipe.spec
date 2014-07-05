@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/md5sum
 Summary:        AES-based encryption tool for tar/cpio and loop-aes images
 Name:           aespipe
 Version:        2.4c
-Release:        alt2_5
+Release:        alt2_7
 License:        GPLv2+
 Group:          File tools
 URL:            http://loop-aes.sourceforge.net/
@@ -38,22 +38,29 @@ kernel module.
 %ifarch %{ix86}
 %global make_target x86
 %endif
-%{__make} %{?_smp_mflags} %{make_target}
+make %{?_smp_mflags} %{make_target}
 
 %check
-%{__make} tests
+make tests
 
 %install
-%{__install} -Dp -m0644 bz2aespipe examples/bz2aespipe
-%{__install} -Dp -m0644 aespipe.1 %{buildroot}%{_mandir}/man1/aespipe.1
-%{__install} -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
+mkdir -p %{buildroot}%{_defaultdocdir}/%{name}/examples
+cp -p ChangeLog README %{buildroot}%{_defaultdocdir}/%{name}
+install -Dp -m0644 bz2aespipe %{buildroot}%{_defaultdocdir}/%{name}/examples
+install -Dp -m0644 aespipe.1 %{buildroot}%{_mandir}/man1/aespipe.1
+install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
+
 
 %files
-%doc ChangeLog README examples
+%dir %{_defaultdocdir}/%{name}
+%{_defaultdocdir}/%{name}/*
 %{_mandir}/man1/*
 %{_bindir}/aespipe
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4c-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.4c-alt2_5
 - update to new release by fcimport
 
