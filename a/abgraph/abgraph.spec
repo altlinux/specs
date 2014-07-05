@@ -1,6 +1,6 @@
 Name:		abgraph
 Version:	1.1
-Release:	alt2_8
+Release:	alt2_9
 
 Summary:	ABGraph is a simple tool to benchmark webservers
 
@@ -34,6 +34,9 @@ install -Dpm 755 abgraph.sh $RPM_BUILD_ROOT%{_bindir}/abgraph
 
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8
 - update to new release by fcimport
 
