@@ -2,7 +2,7 @@
 Summary: DocBook Slides document type and stylesheets
 Name: docbook-slides
 Version: 3.4.0
-Release: alt3_14
+Release: alt3_15
 License: MIT
 Group: Text tools
 URL: http://sourceforge.net/projects/docbook
@@ -139,6 +139,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_15
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_14
 - update to new release by fcimport
 
