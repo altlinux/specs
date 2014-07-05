@@ -1,7 +1,7 @@
 Summary: OpenNode Textual User Interface RPM
 Name: opennode-tui
 Version: 2.0.1
-Release: alt4.git.43b881d
+Release: alt5.git.43b881d
 License: Apache License v2
 Group: System/Configuration/Other
 Url: http://github.com/opennode/opennode-tui
@@ -50,6 +50,9 @@ cp scripts/* %buildroot/%_bindir/
 cp conf/* %buildroot%_sysconfdir/opennode/
 cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 
+#fix repocop warning for bin  permissions
+chmod 755 %buildroot/%_bindir/detect-ip.py
+
 %post
 %__python -c "from opennode.cli.actions import storage; storage.add_pool('local')" ||:
 ##ln -sf %python_sitelibdir_noarch/opennode/cli/actions %buildroot%python_sitelibdir/salt/modules/onode ||:
@@ -78,6 +81,9 @@ cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 %python_sitelibdir_noarch/opennode/*.*
 
 %changelog
+* Sat Jul 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt5.git.43b881d
+- Fix repocop warning for bin permissions 
+
 * Fri Jul 04 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.1-alt4.git.43b881d
 - Updated from git
 
