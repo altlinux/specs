@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.8.4
-Release: alt4
+Release: alt5
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -567,6 +567,12 @@ install -d -m755 %{buildroot}%ant_home/bin
 install -d -m 755 %{buildroot}%{_javadir}/%{name}
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 
+for jarname in ant ant-bootstrap ant-launcher; do
+  destname=
+  # jar aliases
+  ln -sf ../../java${destname}/${jarname}.jar $RPM_BUILD_ROOT%{ant_home}/lib/${jarname}.jar
+done
+
 pushd java-repository
 %{__cp} -p org/apache/ant/ant/%{namedversion}/ant-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{__ln_s} %{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-nodeps.pom
@@ -1081,6 +1087,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Sat Jul 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt5
+- restored symlinks in /usr/share/ant/lib
+
 * Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt4
 - fixed ant-testutil location
 
