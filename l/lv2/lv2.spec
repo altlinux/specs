@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: waf
 # END SourceDeps(oneline)
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lv2
 %define version 1.8.0
 %global debug_package %{nil}
@@ -10,7 +10,7 @@ BuildRequires: waf
 
 Name:           lv2
 Version:        1.8.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Audio Plugin Standard
 Group:          System/Libraries
 
@@ -122,6 +122,9 @@ done
 %{_pkgdocdir}/
 
 %changelog
+* Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
+- update to new release by fcimport
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1
 - update to new release by fcimport
 
