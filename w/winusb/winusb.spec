@@ -1,7 +1,7 @@
 Summary:        Creates Windows USB stick installer from a Windows DVD or image
 Name:		winusb
 Version:        1.0.10
-Release:        alt2
+Release:        alt3
 URL:            http://en.congelli.eu/prog_info_winusb.html
 Source: 	%name-%version.tar
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -40,7 +40,7 @@ convert -size 48x48 %buildroot%_datadir/pixmaps/winusbgui-icon.png -resize $size
 done
 
 #fix for freedesktop-categories
-sed -i 's/Categories=System;/Categories=System;Filesystem;/' %buildroot%_datadir/applications/winusbgui.desktop
+sed -i 's/Categories=System;/Categories=System;Filesystem;FileTools;/' %buildroot%_datadir/applications/winusbgui.desktop
 
 
 %files
@@ -62,6 +62,9 @@ sed -i 's/Categories=System;/Categories=System;Filesystem;/' %buildroot%_datadir
 
 
 %changelog
+* Sat Jul 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt3
+- Trying to fix repocop warning again (alt2)
+
 * Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt2
 - Fixed freedesktop-categories in .desktop file
 
