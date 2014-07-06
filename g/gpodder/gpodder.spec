@@ -1,5 +1,5 @@
 Name: gpodder
-Version: 3.1.2
+Version: 3.7.0
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -8,9 +8,10 @@ Group: Sound
 Url: http://gpodder.org
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
-BuildRequires: python-devel rpm-build-python python-module-mygpoclient python-module-feedparser help2man intltool desktop-file-utils
+BuildRequires: python-devel rpm-build-python python-module-mygpoclient
+BuildRequires: python-module-feedparser help2man intltool desktop-file-utils
 
 %description
 gPodder enables you to subscribe to RSS feeds and download
@@ -20,16 +21,13 @@ be synchronized to portable MP3 players (including iPods)
 or played back on the user's desktop.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make
 
 %install
-%make DESTDIR=%buildroot install
-
-rm -f %buildroot%python_sitelibdir/gpodder/gtkui/macosx.*
-rm -f %buildroot%_datadir/%name/extensions/ubuntu_*
+%makeinstall_std
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -43,10 +41,22 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/dbus-1/services/org.gpodder.service
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.svg
-%_iconsdir/hicolor/*/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/%name.ico
 %_man1dir/*
 
+# non-linux os-specific stuff
+%exclude %python_sitelibdir/gpodder/gtkui/macosx.*
+%exclude %_datadir/%name/extensions/ubuntu_*
+%exclude %_datadir/%name/extensions/notification-win32.py*
+%exclude %_datadir/%name/extensions/taskbar_progress.py*
+# https://github.com/SoCo/SoCo
+%exclude %_datadir/%name/extensions/sonos.py*
+
 %changelog
+* Mon Jul 07 2014 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.2-alt1
 - 3.1.2
 
