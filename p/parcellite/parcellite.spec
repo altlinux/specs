@@ -1,11 +1,13 @@
 Name: parcellite
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: http://parcellite.sourceforge.net/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Requires: xdotool
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -38,6 +40,9 @@ print for those who like simplicity.
 %_man1dir/%name.1*
 
 %changelog
+* Sun Jul 06 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.8-alt1
+- 1.1.8
+
 * Fri Oct 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.7-alt1
 - 1.1.7
 
