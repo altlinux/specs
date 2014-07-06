@@ -1,10 +1,10 @@
-%define branch 0.8
-%define svn svn4266
+%define branch 0.9
+%define svn svn4344
 
-Version: %branch.0.1
+Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: alt2.%svn
+Release: alt1.%svn
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -668,7 +668,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.8*
+%_libdir/*.so.0.9*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -818,11 +818,14 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %_libdir/*.so
 
 %files -n %name-docs
-%doc AUTHORS ChangeLog* README* doc/html doc/latex
+%doc AUTHORS ChangeLog* README* doc/html
 
 %files -n %name-full
 
 %changelog
+* Sun Jul 06 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4344
+- 0.9.0 svn4344 version
+
 * Wed Apr 23 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn4266
 - 0.8.0 svn4266 version
 
