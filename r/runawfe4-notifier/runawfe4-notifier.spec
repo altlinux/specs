@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
 Version: 4.1.0
-Release: alt5
+Release: alt7
 
 Summary: Runawfe notifier client
 
@@ -23,7 +23,7 @@ Requires: java libwebkitgtk2
 
 #BuildPreReq:
 #BuildRequires: maven
-#BuildArch: noarch
+BuildArch: noarch
 
 %define runauser _runa
 %define runadir /var/lib/runawfe4-notifier
@@ -93,6 +93,12 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Sun Jul 06 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
+- Change arch to noarch
+
+* Fri Jul 04 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt6
+- Fix restore from taskbar
+
 * Wed Jun 25 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt5
 - Workaround pixmaps, fix with new swt
 
