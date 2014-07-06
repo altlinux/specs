@@ -1,9 +1,9 @@
 %set_verify_elf_method textrel=relaxed
 
-%define		branch 0.8
-%define		svn svn4266
+%define		branch 0.9
+%define		svn svn4344
 
-Version:	%branch.0.1
+Version:	%branch.0
 Name:		qmmp-plugin-pack
 Release:	alt1.%svn
 Summary:	Plugin pack is a set of extra plugins for Qmmp.
@@ -111,6 +111,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Sun Jul 06 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn4344
+- build svn4344
+
 * Wed Apr 23 2014 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn4266
 - build svn4266
 
