@@ -1,23 +1,26 @@
 # vim: set ft=spec : -*- rpm-spec -*-
 %define autossh_user      _autossh
 %define autossh_group     _autossh
+%define autossh_dir      /var/lib/autosshd
 
 Name: autosshd
-Version: 0.0.2
-Release: alt8
+Version: 0.0.3
+Release: alt1
 
 Summary: System administration - AutoSSH system level service
+
 Group: System/Servers
 License: GPL
 Url: http://wiki.etersoft.ru/Autosshd
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# http://git.etersoft.ru/people/lav/packages/autosshd.git
-Source: %name.tar
+#Source-git: https://github.com/vitlav/autosshd
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-PreReq: pwgen shadow-utils openssh-common
+PreReq: shadow-utils openssh-common
 
 BuildPreReq: rpm-build-intro
 
@@ -27,69 +30,62 @@ Requires: autossh
 Run autossh as system service at startup.
 
 %prep
-%setup -n autosshd
+%setup
 
 %install
-mkdir -p %buildroot%_initdir/
-mkdir -p %buildroot%_sysconfigdir/
-mkdir -p %buildroot/var/run/%name/
-mkdir -p %buildroot/var/lock/subsys/%name/
-mkdir -p %buildroot/lib/tmpfiles.d
-echo 'd /var/run/%name 0755 %autossh_user %autossh_group' > %buildroot/lib/tmpfiles.d/%name.conf
-echo 'd /var/lock/subsys/%name 0755 root root' >> %buildroot/lib/tmpfiles.d/%name.conf
-mkdir -p %buildroot/var/lib/%name/.ssh
+mkdir -p %buildroot%_sysconfdir/autossh.d/
+
+mkdir -p %buildroot%_runtimedir/%name/
+mkdir -p %buildroot%_locksubsysdir/%name/
+mkdir -p %buildroot/%_tmpfilesdir/
+
+cat <<EOF >%buildroot/%_tmpfilesdir/%name.conf
+d %_runtimedir/%name 0755 %autossh_user %autossh_group
+d %_locksubsysdir/%name 0755 root root
+EOF
+
+mkdir -p %buildroot/%autossh_dir/.ssh/
+echo "StrictHostKeyChecking no" > %buildroot%autossh_dir/.ssh/config
+
 mkdir -p %buildroot%_docdir/%name/
 
 install -D -m750 etc/rc.d/init.d/autosshd %buildroot%_initdir/%name
+# TODO: we need automate filling of this config
 install -D -m640 etc/sysconfig/autosshd %buildroot%_sysconfigdir/%name
+
+install -m644 etc/autossh.d/*.conf.template %buildroot%_sysconfdir/autossh.d/
 
 %pre
 # Add the "_autossh" user
 %_sbindir/groupadd -r -f %autossh_group 2>/dev/null ||:
-%_sbindir/useradd  -r -g %autossh_group -c 'Autossh daemon' \
-	-s /dev/null -d /var/lib/autosshd %autossh_user 2>/dev/null ||:
-%_sbindir/usermod -p `pwgen -s 24 1` %autossh_user
+%_sbindir/useradd -M -r -g %autossh_group -c 'Autossh daemon' \
+	-s /dev/null -d %autossh_dir %autossh_user 2>/dev/null ||:
 
 %post
-if [ ! -f /var/lib/autosshd/.ssh/id_dsa ]; then
-    mkdir -p /var/lib/autosshd/.ssh
-    /usr/bin/ssh-keygen -t dsa -b 1024 -C "AutoSSH daemon" -N "" -q -f /var/lib/autosshd/.ssh/id_dsa
-    echo "StrictHostKeyChecking no" > /var/lib/autosshd/.ssh/config
-    cp /var/lib/autosshd/.ssh/id_dsa.pub /var/lib/autosshd/.ssh/authorized_keys
-fi
-chown -R %autossh_user:%autossh_group /var/lib/autosshd/
-
 %post_service %name
 
 %preun
 %preun_service %name
 
-%triggerpostun -- autosshd < 0.0.2-alt5
-echo "Fixing permissions after faulty previous package:"
-%_sbindir/groupadd -r -f %autossh_group ||:
-%_sbindir/useradd  -r -g %autossh_group -c 'Autossh daemon' \
-	-s /dev/null -d /var/lib/autosshd %autossh_user ||:
-%_sbindir/usermod -p `pwgen -s 24 1` %autossh_user
-# We need to re-create the dir because userdel -r (from old postun) has removed it
-if [ ! -f /var/lib/autosshd/.ssh/id_dsa ]; then
-    mkdir -p /var/lib/autosshd/.ssh
-    /usr/bin/ssh-keygen -t dsa -b 1024 -C "AutoSSH daemon" -N "" -q -f /var/lib/autosshd/.ssh/id_dsa
-    echo "StrictHostKeyChecking no" > /var/lib/autosshd/.ssh/config
-    cp /var/lib/autosshd/.ssh/id_dsa.pub /var/lib/autosshd/.ssh/authorized_keys
-fi
-chown -R %autossh_user:%autossh_group /var/lib/autosshd/
-chown %autossh_user:%autossh_group /var/run/autosshd/
-
 %files
 %doc doc/*
-%_initdir/%name
+%attr(750,%autossh_user,%autossh_group) %dir %autossh_dir/
+%config(noreplace) %attr(750,%autossh_user,%autossh_group) %autossh_dir/.ssh/
 %config(noreplace) %_sysconfigdir/%name
-/lib/tmpfiles.d/%name.conf
-%attr(755,%autossh_user,%autossh_group) %dir /var/lib/%name/
-%attr(755,%autossh_user,%autossh_group) %dir /var/run/%name/
-%dir /var/lock/subsys/%name/
+%_sysconfdir/autossh.d/
+%_initdir/%name
+%_tmpfilesdir/%name.conf
+%attr(750,%autossh_user,%autossh_group) %dir %_runtimedir/%name/
+%dir %_locksubsysdir/%name/
 
 %changelog
+* Mon Jul 07 2014 Vitaly Lipatov <lav@altlinux.ru> 0.0.3-alt1
+- development release
+- rewrite init script
+- add anyssh.ru.conf.example
+- add unused generate key script
+- cleanup spec, move initialize code to a separate script
+
 * Sat Jan 11 2014 Ivan Zakharyaschev <imz@altlinux.org> 0.0.2-alt8
 - doc: Added links to some guides (how to make use of autosshd).
 
