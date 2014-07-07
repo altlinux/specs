@@ -19,7 +19,7 @@
 Summary: Cluster File System
 Name: glusterfs3
 Version: %major.1
-Release: alt1
+Release: alt2
 License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
@@ -350,6 +350,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Mon Jul 07 2014 Anton Farygin <rider@altlinux.ru> 3.5.1-alt2
+- initscript: start glusterd before netfs
+
 * Tue Jul 01 2014 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
 - new version
 
