@@ -1,31 +1,35 @@
-%define fname liberation
-%define oname liberation-fonts-ttf
+%define priority  59
+%define fontname liberation
+%define fontconf %{priority}-%{fontname}
+%define oldname liberation-fonts
 
-Name: fonts-ttf-%fname
-Version: 1.06.0.20100721
+Name: fonts-ttf-%fontname
+Version: 2.00.1
 Release: alt1
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
-# The license of the Liberation Fonts is a EULA that contains
-# GPLv2 and two exceptions:
-# The first exception is the standard FSF font exception.
-# The second exception is an anti-lockdown clause somewhat like
-# the one in GPLv3. This license is Free, but GPLv2 and GPLv3
-# incompatible.
-License: Liberation
+License: SIL Open Font License Version 1.1
 Group: System/Fonts/True type
 Url: http://fedorahosted.org/liberation-fonts/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: https://fedorahosted.org/releases/l/i/%oname/%oname-%version.tar
+Source: https://fedorahosted.org/releases/l/i/%oldname/%oldname-ttf-%version.tar
+Source2:          %{oldname}-mono.conf
+Source3:          %{oldname}-sans.conf
+Source4:          %{oldname}-serif.conf
 
 BuildArch: noarch
 
 Provides: fonts-ttf-core
 
-BuildRequires: rpm-build-fonts
+# TODO: split into subpackages
+Provides: fonts-ttf-liberation-mono = %version
+Provides: fonts-ttf-liberation-sans = %version
+Provides: fonts-ttf-liberation-serif = %version
+
+BuildRequires: rpm-build-fonts rpm-macros-fontpackages
 
 %description
 The Liberation Fonts are intended to be replacements for the three
@@ -33,21 +37,38 @@ most commonly used fonts on Microsoft systems: Times New Roman,
 Arial, and Courier New.
 
 %prep
-%setup -n %oname-%version
+%setup -n %oldname-ttf-%version
 
 %install
-%ttf_fonts_install %fname
+%ttf_fonts_install %fontname
 
-%post
-%post_fonts
+mkdir -p %{buildroot}%{_fontconfig_templatedir}/ %{buildroot}%{_fontconfig_confdir}/
+# Repeat for every font family
+install -m 0644 -p %{SOURCE2} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-mono.conf
+install -m 0644 -p %{SOURCE3} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sans.conf
+install -m 0644 -p %{SOURCE4} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-serif.conf
 
-%postun
-%postun_fonts
+for fconf in %{fontconf}-mono.conf \
+             %{fontconf}-sans.conf \
+             %{fontconf}-serif.conf; do
+  ln -s %{_fontconfig_templatedir}/$fconf \
+        %{buildroot}%{_fontconfig_confdir}/$fconf
+done
 
-%files -f %fname.files
-%doc License.txt README AUTHORS ChangeLog
+%files -f %fontname.files
+%doc LICENSE README AUTHORS ChangeLog
+%{_fontconfig_templatedir}/*-%{fontname}-*.conf
+%config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Mon Jul 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.00.1-alt1
+- new version (closes: #30161)
+- new license
+- old license liberation-narrow moved to separate package
+
 * Sat Oct 02 2010 Vitaly Lipatov <lav@altlinux.ru> 1.06.0.20100721-alt1
 - build new upstream release
 
