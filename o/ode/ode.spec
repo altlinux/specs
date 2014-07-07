@@ -1,13 +1,13 @@
 Name: ode
-Version: 0.13
-Release: alt1.svn20140203
+Version: 0.13.1
+Release: alt1.hg20140702
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
 Url: http://www.ode.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://opende.svn.sourceforge.net/svnroot/opende/trunk
+# hg clone https://bitbucket.org/odedevs/ode
 Source: %name-%version.tar
 Source1: http://www.ode.org/ode-latest-userguide.pdf
 Source2: http://www.ode.org/joints.pdf
@@ -138,7 +138,7 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 	%buildroot%_docdir/lib%name-devel
 
 %files -n lib%name
-%doc CHANGELOG.txt LICENSE.TXT README.txt
+%doc CHANGELOG.txt LICENSE* README.md
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -154,6 +154,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt1.hg20140702
+- Version 0.13.1
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20140203
 - Version 0.13
 
