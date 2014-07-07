@@ -1,7 +1,7 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
 Version: 2.0.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 URL: http://www.openinfosecfoundation.org
@@ -30,6 +30,14 @@ Group: Development/C
 #Version: 0.5.10
 %description -n libhtp-devel
 Development headers for LibHTP
+
+%package -n libhtp-devel-static
+Summary: Static library for libhtp
+Group: Development/C
+#Version: 0.5.10
+%description -n libhtp-devel-static
+Static library for libhtp
+
 
 %package -n python-module-suricata
 Summary: python module for interacting with unix socket
@@ -167,8 +175,10 @@ EOF
 %files -n libhtp-devel
 %_includedir/*
 %_libdir/pkgconfig/htp.pc
-%_libdir/libhtp.a
 %_libdir/libhtp.so
+
+%files -n libhtp-devel-static
+%_libdir/libhtp.a
 
 %files -n python-module-suricata
 %dir %python_sitelibdir_noarch/suricatasc
@@ -176,6 +186,9 @@ EOF
 %python_sitelibdir_noarch/suricatasc-0.9-py2.7.egg-info
 
 %changelog
+* Mon Jul 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.2-alt2
+- Add subpackage libhtp-devel-static
+
 * Fri Jul 04 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 2.0.2-alt1
 - New version
 
