@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-shapercontrol
-Version: 0.2
+Version: 0.3
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 
 Requires: alterator alterator-sh-functions
 Requires: alterator-l10n
+Requires: shapercontrol
 
 BuildPreReq: alterator
 BuildPreReq: rpm-build-licenses
@@ -35,6 +36,10 @@ Alterator module for shapercontrol administration.
 %_libexecdir/%name/
 
 %changelog
+* Mon Jul 07 2014 Timur Aitov <timonbl4@altlinux.org> 0.3-alt1
+- Fix apply state button
+- Add Requires: shapercontrol
+
 * Fri Jul 04 2014 Timur Aitov <timonbl4@altlinux.org> 0.2-alt1
 - Fix get interfaces list
 
