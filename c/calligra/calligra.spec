@@ -8,8 +8,8 @@
 %def_disable RDF
 
 Name: calligra
-Version: 2.8.3
-Release: alt2
+Version: 2.8.5
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -38,6 +38,7 @@ Source1: FindOkular.cmake
 # FC
 Patch1: calligra-2.7.90-no_mpxj.patch
 Patch2: 0001-switch-to-librevenge-based-import-libs.patch
+Patch3: calligra-eigen3.patch
 # ALT
 Patch101: calligra-2.6.0-alt-build-active.patch
 Patch102: calligra-2.8.0-alt-fix-compile.patch
@@ -46,7 +47,7 @@ Patch103: calligra-2.8.0-alt-disable-rdf.patch
 # Automatically added by buildreq on Fri Nov 02 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: attica-devel boost-devel-headers cups-filters cvs eigen2 gcc-c++ git-core glib2-devel jdkgcj kde4-okular-devel kde4edu-devel kde4pimlibs-devel libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libkdcraw4-devel liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel libqca2-devel libqt3-devel libsqlite3-devel libxbase-devel mercurial openexr-devel postgresql-devel pstoedit python-module-distribute rpm-build-ruby soprano sqlite3 subversion valgrind zlib-devel-static
-BuildRequires: attica-devel boost-devel eigen2 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
+BuildRequires: attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
 BuildRequires: kde4-okular-devel kde4edu-devel kde4pimlibs-devel libkdcraw4-devel kde-common-devel kde4base-workspace-devel
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
@@ -256,6 +257,7 @@ Requires: %name-common = %EVR
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 #%patch101 -p1
 %patch102 -p1
 %if_disabled RDF
@@ -267,7 +269,6 @@ cp -ar %SOURCE1 cmake/modules/
 %K4cmake \
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
-    -DEIGEN2_INCLUDE_DIR:PATH=%_includedir/eigen2 \
     -DNEPOMUK=OFF \
     -DPACKAGERS_BUILD=OFF \
     -DKDE4_BUILD_TESTS=OFF \
@@ -320,6 +321,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/koreport_webplugin.desktop
 %_K4lib/calligra_filter_eps2svgai.so
 %_K4lib/calligra_filter_pdf2svg.so
+%_K4lib/calligra_filter_kpr2odp.so
 %_K4lib/calligra_textediting_spellcheck.so
 %_K4lib/calligra_textinlineobject_variables.so
 %_K4lib/calligra_textediting_thesaurus.so
@@ -357,6 +359,7 @@ cp -ar %SOURCE1 cmake/modules/
 #%_K4srv/koreport_chartplugin.desktop
 %_K4srv/calligra_filter_eps2svgai.desktop
 %_K4srv/calligra_filter_pdf2svg.desktop
+%_K4srv/calligra_filter_kpr2odp.desktop
 %_K4srv/calligra_textediting_spellcheck.desktop
 %_K4srv/calligra_textinlineobject_variables.desktop
 %_K4srv/calligra_textediting_thesaurus.desktop
@@ -671,6 +674,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Mon Jul 07 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.5-alt1
+- new version
+
 * Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0:2.8.3-alt2
 - switch to librevenge-based import libs
 
