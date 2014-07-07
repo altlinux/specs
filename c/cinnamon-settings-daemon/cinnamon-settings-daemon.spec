@@ -10,7 +10,7 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.2
-Release: alt3
+Release: alt4
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -61,6 +61,8 @@ BuildRequires: libgnomekbd-devel >= %gnomekbd_ver
 BuildRequires: libxklavier-devel >= %xklavier_ver
 BuildRequires: libxklavier-devel >= %xklavier_ver
 BuildRequires: libibus-devel >= %ibus_ver
+BuildRequires: libcom_err-devel
+BuildRequires: libkrb5-devel
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
 
@@ -190,6 +192,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-automount
 
 %changelog
+* Mon Jul 7 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt4
+- fix build deps
+
 * Mon Jun 9 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt3
 - rebuild with new colord
 
