@@ -1,7 +1,7 @@
 %define testname init-lsb
 
 Name: repocop-unittest-%testname
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -22,19 +22,32 @@ The test warns packages that do not have lsb compliant init scripts.
 %build
 cat > posttest <<'EOF'
 #!/bin/sh
+sqlite3 "$REPOCOP_DISTROTEST_DBDIR/rpm.db" <<EOSQL
+.mode tabs
+.output $REPOCOP_TEST_TMPDIR/systemd_services
+SELECT filename FROM rpm_files WHERE FILENAME glob '/lib/systemd/system/*.service';
+EOSQL
+sed -i -e 's,^/lib/systemd/system/,,;s,\.service$,,' $REPOCOP_TEST_TMPDIR/systemd_services
+
+
 for repocop_pkg_key in `ls $REPOCOP_STATEDIR/init-script`; do
     keydir="$REPOCOP_STATEDIR/init-script/$repocop_pkg_key"
     STATUS=ok
     MESSAGE=
     for i in "$keydir"/*; do
-        filename=${i##$keydir}
+        filename=${i##$keydir/}
 	if [ -x $i ]; then
 	    HAS_INIT=`grep '# chkconfig:' $i`
 	    HAS_LSB_INIT=`grep '### BEGIN INIT INFO' $i`
             if [ -z "$HAS_LSB_INIT" ]; then
                 if [ -n "$HAS_INIT" ]; then
-                    STATUS=warn
-                    MESSAGE="$MESSAGE%_initdir/$filename: lsb init header missing. "
+		    if grep -q '^'$filename'$' $REPOCOP_TEST_TMPDIR/systemd_services; then
+			STATUS=warn
+			MESSAGE="$MESSAGE%_initdir/$filename: lsb init header missing. "
+                    else
+			STATUS=fail
+			MESSAGE="$MESSAGE%_initdir/$filename: not systemd compatible: lsb init header missing and ${filename}.service is not present. "
+	            fi
                 else
 		    STATUS=warn
                     MESSAGE="$MESSAGE%_initdir/$filename: strange executable: neither lsb header nor chkconfig header aren't found. "
@@ -44,6 +57,7 @@ for repocop_pkg_key in `ls $REPOCOP_STATEDIR/init-script`; do
     done
     repocop-test-$STATUS -k $repocop_pkg_key "$MESSAGE See http://www.altlinux.org/Services_Policy for details."
 done
+rm -f $REPOCOP_TEST_TMPDIR/systemd_services
 EOF
 
 cat > description <<'EOF'
@@ -63,6 +77,9 @@ install -m 644 description $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Mon Jul 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- error if lsb header is missing and unit file is not present.
+
 * Wed Aug 17 2011 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - rewritten as posttest
 
