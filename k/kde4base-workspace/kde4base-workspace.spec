@@ -1,11 +1,5 @@
 %define _kde_alternate_placement 1
-%define polkit_ver %{get_version libpolkit-devel}
 
-%_K_if_ver_gteq %polkit_ver 0.105
-%def_enable systemd
-%else
-%def_disable systemd
-%endif
 %def_disable google
 %if_enabled kde_mobile
 %def_disable desktop
@@ -27,7 +21,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -47,6 +41,7 @@ Source1: pam-kde4
 Source2: pam-kde4-np
 Source3: pam-kde4-kscreensaver
 Source4: kdm.logrotate
+Source5: kdm.service
 
 # upstream
 # RH
@@ -122,10 +117,6 @@ Patch1053: kdebase-workspace-4.11.5-alt-oxygen-decoration-color-selinux.patch
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
 BuildRequires(pre): libpolkit-devel
-%if_enabled systemd
-%else
-BuildRequires: libConsoleKit-devel
-%endif
 %if_enabled google
 BuildRequires: google-gadgets-devel
 %endif
@@ -142,9 +133,7 @@ BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel
 BuildRequires: python-module-sip python-devel libselinux-devel
-%if_enabled systemd
 BuildRequires: libsystemd-login-devel libsystemd-journal-devel libsystemd-id128-devel libsystemd-daemon-devel systemd-devel
-%endif
 #BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: kde4libs-devel >= %version
 
@@ -216,11 +205,7 @@ Summary: KDE Display Manager (KDM)
 Group: Graphical desktop/KDE
 PreReq(post,preun): alternatives >= 0.2
 Requires: design-graphics >= 11.0.0 xinitrc
-%if_enabled systemd
 #Requires: systemd
-%else
-Requires: ConsoleKit-x11
-%endif
 Requires: %name-common = %version-%release
 Provides: kde4base-kdm = %version-%release
 Provides: kde4-kdm = %version-%release
@@ -511,9 +496,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
-%if_enabled systemd
 %patch29 -p1
-%endif
 #
 %patch850 -p1
 %patch851 -p1
@@ -590,9 +573,7 @@ grep -q X-KDE-SubstituteUID kdm/kcm/kdm.desktop \
     -DKDM_CONFIG_INSTALL_DIR=%x11confdir/kdm4 \
     -DKDE4_KSCREENSAVER_PAM_SERVICE=kde4-kscreensaver \
     -DPYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=%python_sitelibdir \
-%if_enabled systemd
     -DKWORKSPACE_USE_SYSTEMD=ON \
-%endif
     -DKDE_DEFAULT_HOME:STRING=".kde4"
 %K4make
 
@@ -675,6 +656,10 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 mkdir -p %buildroot/%_sysconfdir/logrotate.d
 install -m 0644 %SOURCE4 %buildroot/%_sysconfdir/logrotate.d/kdm4
 
+# install systemd service file
+mkdir -p %buildroot/%_unitdir
+install -m 0644 %SOURCE5 %buildroot/%_unitdir/kdm4.service
+
 # default user face
 mkdir -p %buildroot/%_sysconfdir/firsttime.d/
 cat >%buildroot/%_sysconfdir/firsttime.d/kdm4 <<__EOF__
@@ -714,6 +699,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %config %_sysconfdir/alternatives/packages.d/kde4-kdm
 %_sysconfdir/firsttime.d/kdm4
 %config %_sysconfdir/logrotate.d/kdm4
+%_unitdir/kdm4.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.kde.kcontrol.kcmkdm.conf
 %exclude %_K4conf/kdm
 %_kde4_bindir/genkdmconf
@@ -948,6 +934,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jul 07 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.10-alt2
+- add kdm4.service
+
 * Tue Jun 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.10-alt1
 - new version
 
