@@ -1,6 +1,6 @@
 Name: xpra
-Version: 0.11.0
-Release: alt2
+Version: 0.13.6
+Release: alt1
 
 Summary: X Persistent Remote Applications
 
@@ -47,13 +47,13 @@ Xpra is open-source (GPLv2+), multi-platform and multi-language,
 with current clients written in Python and Java.
 
 On the machine which will export the application (xterm in this example):
- # xpra start :100 --start-child=xterm
+> xpra start :100 --start-child=xterm
 
 We can then attach to this session from the same machine, with:
- # xpra attach :100
+> xpra attach :100
 
 If connecting from a remote machine, you would use something like (or you can also use the GUI):
- # xpra attach ssh:serverhostname:100
+> xpra attach ssh:serverhostname:100
 
 
 %prep
@@ -66,10 +66,10 @@ patch -p1 <patches/old-libav-pixfmtconsts.patch
 patch -p1 <patches/old-libav-no0RGB.patch
 
 %build
-%python_build --without-dec_avcodec
+%python_build --without-dec_avcodec --without-dec_avcodec2
 
 %install
-%python_install --without-dec_avcodec
+%python_install --without-dec_avcodec --without-dec_avcodec2
 
 %files
 %dir %_sysconfdir/%name/
@@ -84,6 +84,11 @@ patch -p1 <patches/old-libav-no0RGB.patch
 %_datadir/xpra/
 
 %changelog
+* Mon Jul 07 2014 Vitaly Lipatov <lav@altlinux.ru> 0.13.6-alt1
+- new version 0.13.6 (with rpmrb script)
+- fix description (ALT bug #30130)
+- build without avcodec2
+
 * Mon May 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.0-alt2
 - rebuilt with recent libx264
 
