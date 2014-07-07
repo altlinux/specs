@@ -1,14 +1,14 @@
 Name: mili
-Version: 17
-Release: alt1.svn20120420
+Version: 18
+Release: alt1.hg20140430
 Summary: Minimalistic headers-only C++ Library
-License: GPL v3 or later
+License: Boost Software License v1.0
 Group: Development/C++
 Url: http://code.google.com/p/mili/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
-# http://mili.googlecode.com/svn/trunk
+# hg clone https://code.google.com/p/mili/
 Source: %name-%version.tar.gz
 
 %description
@@ -42,13 +42,16 @@ install -d %buildroot%_includedir/%name
 install -p -m644 %name/* %buildroot%_includedir/%name
 
 %files devel
-%doc CHANGELOG CONTRIBUTORS README gpl.txt
+%doc CHANGELOG CONTRIBUTORS README LICENSE_1_0.txt
 %_includedir/*
 
 %files examples
 %doc examples/*
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 18-alt1.hg20140430
+- Version 18
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 17-alt1.svn20120420
 - New snapshot
 
