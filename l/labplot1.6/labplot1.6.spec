@@ -5,7 +5,7 @@
 %define pre %nil
 Name: labplot1.6
 Version: 1.6.0.2
-Release: alt2.qa7
+Release: alt2.qa8
 
 Summary: Function and Data Plotter
 Summary(ru_RU.KOI8-R): Построитель графиков по данным и функциям
@@ -25,7 +25,7 @@ BuildPreReq: automake autoconf kdebase-wm libaudiofile-devel chrpath
 BuildPreReq: kdelibs-devel
 # manually removed: boson gcc-g77 hostinfo
 # Automatically added by buildreq on Sun Jan 18 2009
-BuildRequires: gcc-c++ gcc-fortran ghostscript-utils imake kdepim-devel libGL-devel libImageMagick-devel libXt-devel libcdf-devel libfftw3-devel libgsl-devel libhdf5-devel libjasper-devel libjpeg-devel libnetcdf-devel libqt3-qsa-devel libtiff-devel pstoedit qt3-designer xml-utils xorg-cf-files
+BuildRequires: gcc-c++ gcc-fortran ghostscript-utils imake kdepim-devel libGL-devel libImageMagick-devel libXt-devel libcdf-devel libfftw3-devel libgsl90-devel libhdf5-devel libjasper-devel libjpeg-devel libnetcdf-devel libqt3-qsa-devel libtiff-devel pstoedit qt3-designer xml-utils xorg-cf-files
 
 #BuildRequires: bzlib-devel fontconfig freetype2-devel gcc-c++ kde-settings kdelibs-devel libImageMagick-devel libarts-devel libaudiofile-devel libfftw3-devel libgsl-devel libjasper-devel libjpeg-devel liblcms-devel libnetcdf-devel libpng-devel libqscintilla-designer libqt3-devel libqt3-qsa-devel libqt3-settings libqwt-devel libstdc++-devel libtiff-devel pstoedit qt3-designer xml-utils xorg-x11-devel xorg-x11-libs zlib-devel
 
@@ -96,6 +96,9 @@ done
 %_libdir/libLabPlotqwtplot3d.so.*
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0.2-alt2.qa8
+- Rebuilt with gsl90 instead of gsl
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0.2-alt2.qa7
 - Rebuilt with libtiff5 and libpng15
 

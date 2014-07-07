@@ -1,7 +1,7 @@
 %define oname pygsl
 Name: python-module-%oname
 Version: 0.9.5
-Release: alt2.1.1
+Release: alt3
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPLv2
 Group: Development/Python
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar.gz
 
-BuildPreReq: libgsl-devel libnumpy-devel
+BuildPreReq: libgsl90-devel libnumpy-devel swig
 
 %description
 This project provides a python interface for the GNU scientific library
@@ -65,6 +65,8 @@ This package contains examples for Python interface for GSL.
 %prep
 %setup
 
+rm -f swig_src/*
+
 %build
 %python_build_debug
 
@@ -89,6 +91,9 @@ This package contains examples for Python interface for GSL.
 %doc examples/*
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
+- Rebuilt with gsl90 instead of gsl
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.5-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 

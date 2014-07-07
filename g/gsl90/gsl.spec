@@ -1,6 +1,6 @@
-Name: gsl
+Name: gsl90
 Version: 1.16
-Release: alt1.git20140602
+Release: alt2.bzr20131023
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -21,12 +21,13 @@ BuildRequires: ghostscript-module-X ghostscript-utils
 
 %package -n lib%name
 Summary: Shared librairies for Scientific Library
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %package -n lib%name-devel
 Summary: Development environment for Scientific Library
 Group: Development/C
 Requires: lib%name = %version-%release
+Conflicts: libgsl-devel
 
 %package -n lib%name-doc
 Summary: book for Scientific Library
@@ -94,7 +95,6 @@ Sources of examples for using with GSL
 ./autogen.sh
 %configure
 sed -i 's|\(GSL_MINOR_VERSION.*\)+|\1|' gsl_version.h
-sed -i 's|\(GSL_VERSION.*\)+"|\1"|' gsl_version.h
 %make_build
 
 pushd doc
@@ -116,11 +116,13 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 	DONE VOLUNTEERS NOTES \
 	%buildroot%_docdir/lib%name-%version
 
+%if 0
 %files
 %_bindir/*
 %exclude %_bindir/%name-config
 %_man1dir/*
 %exclude %_man1dir/%name-config.1*
+%endif
 
 %files -n lib%name
 %doc %dir %_docdir/lib%name-%version
@@ -128,14 +130,15 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%_bindir/%name-config
+%_bindir/gsl-config
 %_libdir/*.so
 %_libdir/pkgconfig/*
 %_includedir/*
 %_datadir/aclocal/*
-%_man1dir/%name-config.1*
+%_man1dir/gsl-config.1*
 %_man3dir/*
 
+%if 0
 %files -n lib%name-doc
 %doc %dir %_docdir/lib%name-%version
 %doc %_docdir/lib%name-%version/*
@@ -148,10 +151,11 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %files -n lib%name-examples
 %doc %dir %_docdir/lib%name-%version
 %doc %_docdir/lib%name-%version/examples
+%endif
 
 %changelog
-* Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.git20140602
-- New snapshot
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt2.bzr20131023
+- Moved this version into System/Legacy libraries
 
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16-alt1.bzr20131023
 - Version 1.16

@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.28
-Release: alt1
+Release: alt1.1
 
 Summary: Descriptive vector graphics language
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/%name/%name-%version.src.tar
 Patch: asymptote-1.91-alt-DSO.patch
 Patch1: asymptote-1.91-alt-glibc-2.16.patch
+Patch2: asymptote-2.28-alt-gsl1.16.patch
 
 # manually removed: libsubversion-auth-gnome-keyring libsubversion-auth-kwallet subversion tetex-core
 # Automatically added by buildreq on Sat Feb 20 2010
@@ -37,6 +38,7 @@ Documentation and examples for %name.
 %setup
 #patch0 -p2
 #patch1 -p2
+%patch2 -p2
 # some incompatibilities?
 %__subst "s|@printindex cp||g" doc/%name.texi
 gzip ChangeLog
@@ -65,6 +67,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28-alt1.1
+- Rebuilt with new gsl
+
 * Tue Jun 03 2014 Vitaly Lipatov <lav@altlinux.ru> 2.28-alt1
 - new version 2.28 (with rpmrb script)
 

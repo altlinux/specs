@@ -2,7 +2,7 @@
 
 Name:           ocaml-gsl
 Version:        0.6.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
@@ -13,7 +13,7 @@ Packager:	%packager
 Source:         ocamlgsl-%{version}.tar.bz2
 
 # Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: libgsl-devel ocaml
+BuildRequires: libgsl90-devel ocaml
 
 %description
 This is an interface to GSL (GNU scientific library), for the
@@ -56,6 +56,9 @@ install -pm644 dllmlgsl.so %buildroot/%ocamlsitelib/gsl
 #%%ocamlsitelib/gsl/*.ml
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.1
+- Rebuilt with gsl90 instead of gsl
+
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
 - rebuild with new ocaml
 
