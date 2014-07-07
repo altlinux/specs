@@ -1,12 +1,13 @@
 Summary:        Creates Windows USB stick installer from a Windows DVD or image
 Name:		winusb
 Version:        1.0.10
-Release:        alt3
+Release:        alt4
 URL:            http://en.congelli.eu/prog_info_winusb.html
 Source: 	%name-%version.tar
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
 License: 	GPLv2
 Group: 		System/Configuration/Hardware
+Patch0:		winusb-1.0.10-alt4-fix-desktop.patch
 
 BuildRequires:  libwxGTK-devel gcc-c++ ImageMagick-tools
 
@@ -23,6 +24,7 @@ WinUSB can create bootable windows installer on usb.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %configure
@@ -40,7 +42,7 @@ convert -size 48x48 %buildroot%_datadir/pixmaps/winusbgui-icon.png -resize $size
 done
 
 #fix for freedesktop-categories
-sed -i 's/Categories=System;/Categories=System;Filesystem;FileTools;/' %buildroot%_datadir/applications/winusbgui.desktop
+#sed -i 's/Categories=System;/Categories=System;Filesystem;FileTools;/' %buildroot%_datadir/applications/winusbgui.desktop
 
 
 %files
@@ -62,6 +64,9 @@ sed -i 's/Categories=System;/Categories=System;Filesystem;FileTools;/' %buildroo
 
 
 %changelog
+* Mon Jul 07 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt4
+- Add winusb-1.0.10-alt4-fix-desktop.patch
+
 * Sat Jul 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0.10-alt3
 - Trying to fix repocop warning again (alt2)
 
