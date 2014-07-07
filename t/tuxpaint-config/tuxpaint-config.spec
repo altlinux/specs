@@ -13,7 +13,7 @@ Url: http://www.tuxpaint.org/
 License: GPL v2 or later
 Group: Graphics
 Version: 0.0.12
-Release: alt1.2
+Release: alt1.3
 Requires: tuxpaint
 
 Source: %name-%version.tar.gz
@@ -23,7 +23,7 @@ Patch2: tuxpaint-config-desktop.patch
 # optimized out: fontconfig libX11-devel libXext-devel libstdc++-devel xorg-xproto-devel
 BuildRequires: gcc-c++ libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpaper-devel libpixman-devel
 
-BuildRequires: desktop-file-utils libXfixes-devel
+BuildRequires: desktop-file-utils libXfixes-devel libXcursor-devel
 
 %description
 Tux Paint has a rich set of configuration options, controllable via
@@ -32,7 +32,7 @@ provides a point-and-click interface for administrators to tailor
 Tux Paint to suit the needs of their users.
 
 %prep
-%setup -q
+%setup
 find . -name CVS | xargs rm -rf
 %patch1
 %patch2
@@ -43,7 +43,7 @@ make  PREFIX=%prefix X11_ICON_PREFIX=/usr/include/X11/pixmaps/
 %install
 mkdir -p %buildroot%_bindir
 make PREFIX=%buildroot%prefix X11_ICON_PREFIX=%buildroot%_includedir/X11/pixmaps/ DOC_PREFIX=%buildroot%_defaultdocdir/%name install
-install -D -m644 src/%name.desktop %buildroot%_desktopdir/%name.desktop
+install -pDm644 src/%name.desktop %buildroot%_desktopdir/%name.desktop
 
 # fix file permissions
 find %buildroot%_defaultdocdir/%name -type f -exec chmod 644 {} \;
@@ -70,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Jul 07 2014 Michael Shigorin <mike@altlinux.org> 0.0.12-alt1.3
+- NMU: updated BR:
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.12-alt1.2
 - Rebuilt with updated libfltk
 
