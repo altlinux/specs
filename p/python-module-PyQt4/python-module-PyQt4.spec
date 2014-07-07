@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 4.11
-Release: alt3
+Version: 4.11.1
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -109,21 +109,22 @@ cp -a . ../python3
 export QT4DIR=%_qt4dir
 %add_optflags -I$PWD/qpy/QtGui
 
-cp -fR ../PyQt-x11-gpl ../_tmp_
-pushd ../_tmp_
-echo 'yes' | python configure.py \
-	--debug \
-	--verbose \
-	-q %_qt4dir/bin/qmake \
-	-d %python_sitelibdir \
-	-p %_qt4dir/plugins \
-	-a --confirm-license \
-	--qsci-api \
-	--enable=designer-plugin \
-	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
-popd
+#cp -fR ../PyQt-x11-gpl ../_tmp_
+#pushd ../_tmp_
+#echo 'yes' | python configure.py \
+#	--debug \
+#	--verbose \
+#	-q %_qt4dir/bin/qmake \
+#	-d %python_sitelibdir \
+#	-p %_qt4dir/plugins \
+#	-a --confirm-license \
+#	--qsci-api \
+#	--enable=designer-plugin \
+#	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
+#popd
 
-echo 'yes' | python configure-ng.py \
+#echo 'yes' | python configure-ng.py \
+echo 'yes' | python configure.py \
 	--debug \
 	--verbose \
 	-q %_qt4dir/bin/qmake \
@@ -176,8 +177,8 @@ rm -fR %buildroot%python3_sitelibdir/%oname/uic/port_v2
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
-install -m644 ../_tmp_/pyqtconfig.py \
-	%buildroot%python_sitelibdir/%oname/
+#install -m644 ../_tmp_/pyqtconfig.py \
+#	%buildroot%python_sitelibdir/%oname/
 
 ##wait ##
 install -d %buildroot/usr/share/sip/PyQt4/Qsci \
@@ -219,6 +220,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.1-alt1
+- Version 4.11.1
+
 * Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11-alt3
 - Rebuilt with new SIP
 

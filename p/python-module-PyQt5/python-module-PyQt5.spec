@@ -1,8 +1,8 @@
 %define oname PyQt5
 
 Name: python-module-%oname
-Version: 5.3
-Release: alt3
+Version: 5.3.1
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -118,6 +118,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %doc examples
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.1-alt1
+- Version 5.3.1
+
 * Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt3
 - Rebuilt with new SIP
 
