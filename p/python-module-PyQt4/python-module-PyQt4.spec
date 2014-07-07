@@ -1,10 +1,10 @@
 %define oname PyQt4
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 4.11.1
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -28,7 +28,7 @@ BuildPreReq: python-module-dbus-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-dbus-devel
-BuildPreReq: python3-module-qscintilla2-qt4-devel
+#BuildPreReq: python3-module-qscintilla2-qt4-devel
 BuildPreReq: python3-module-sip-devel
 %endif
 
@@ -168,7 +168,7 @@ pushd ../python3
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i py3_$i
+	mv $i $i.py3
 done
 popd
 rm -fR %buildroot%python3_sitelibdir/%oname/uic/port_v2
@@ -188,7 +188,7 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %files
 %_bindir/*
 %if_with python3
-%exclude %_bindir/py3_*
+%exclude %_bindir/*.py3
 %endif
 %python_sitelibdir/*
 %_qt4dir/plugins/designer/libpyqt4.so
@@ -209,7 +209,7 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 
 %if_with python3
 %files -n python3-module-%oname
-%_bindir/py3_*
+%_bindir/*.py3
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
@@ -220,6 +220,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.1-alt2
+- Added module for Python 3 (ALT #30196)
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.1-alt1
 - Version 4.11.1
 
