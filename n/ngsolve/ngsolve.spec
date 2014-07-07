@@ -5,7 +5,7 @@
 
 Name: ngsolve
 Version: 5.3
-Release: alt1.svn20140618
+Release: alt1.svn20140704
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -157,6 +157,9 @@ mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
 #doc %_datadir/%name
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.svn20140704
+- New snapshot
+
 * Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.svn20140618
 - Version 5.3
 
