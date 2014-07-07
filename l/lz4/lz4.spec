@@ -1,6 +1,6 @@
 Name: lz4
-Version: r117
-Release: alt1.svn20140422
+Version: r119
+Release: alt1.svn20140702
 Summary: Extremely Fast Compression algorithm
 License: BSD
 Group: Archiving/Compression
@@ -79,6 +79,9 @@ LIB_SUFFIX=64
 %_libdir/*.so
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r119-alt1.svn20140702
+- New snapshot
+
 * Wed Jun 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r117-alt1.svn20140422
 - Initial build for Sisyphus
 
