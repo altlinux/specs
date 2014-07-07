@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.4.0
-Release: alt1.git20140529
+Release: alt1.git20140703
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -402,6 +402,9 @@ done
 %endif
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.git20140703
+- New snapshot
+
 * Fri Jun 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.git20140529
 - Version 2.4.0
 
@@ -475,4 +478,3 @@ done
 
 * Sun Oct 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.svn20091001
 - Initial build for Sisyphus
-
