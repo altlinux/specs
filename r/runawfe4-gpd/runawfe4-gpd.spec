@@ -1,6 +1,6 @@
 Name: runawfe4-gpd
 Version: 4.1.0
-Release: alt2
+Release: alt8
 
 Summary: Runawfe Graphic Process Designer
 
@@ -19,7 +19,7 @@ Source2: runawfe4-gpd.png
 Packager: Danil Mikhailov <danil@altlinux.org>
 
 AutoReq: yes,noperl,nopython
-Requires: java >= 1.7 libwebkitgtk2
+Requires: java >= 1.7, libwebkitgtk2
 Provides: osgi(ru.runa.gpd.form.ftl)
 BuildRequires: chrpath
 
@@ -59,10 +59,26 @@ mkdir -p %buildroot/%_bindir/
 cat >%buildroot/%_bindir/runawfe4-gpd <<EOF
 #!/bin/sh
 gpddir="\$HOME/runawfe4-gpd"
+gpdconfdir="\$HOME/runawfe4-gpd/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings"
+gpdconf="\$gpdconfdir/ru.runa.gpd.prefs"
 mkdir -p "\$gpddir"
+mkdir -p \$gpdconfdir
+
+if [ ! -e \$gpdconf ] ; then
+
+echo "eclipse.preferences.version=1" >> \$gpdconf
+echo "defaultFCKEditor=ck4" >> \$gpdconf
+
+fi
+
 cd "\$gpddir"
 %runadir/runawfe4-gpd
+
 EOF
+
+
+#Enable CKEditor4 by default #TODO remove this hack than released 4.2.0
+
 
 %check
 
@@ -76,6 +92,15 @@ EOF
 #%attr(755,root,root) %runadir/workspace/
 
 %changelog
+* Tue Jul 01 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt8
+- Added comma separation to requires
+
+* Thu Apr 24 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
+- Enable CKEditor4 by default. Fixed home dir. Fix3
+
+* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt3
+- Fixed desktop file categories
+
 * Fri Apr 04 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt2
 - Clean spec with rpmcs, added categories to desktop
 
