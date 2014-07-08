@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 %define ver_major 3.12
 %def_enable clutter
@@ -6,8 +7,8 @@
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
 License: %gpl2plus
@@ -70,10 +71,10 @@ This project has the following features:
   be used for a specific device. This is session activated and is only started
   when it is needed, and quits after a small period of idleness.
 
-%define libexecdir %_prefix/libexec
+
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -85,7 +86,7 @@ This project has the following features:
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # The license
 ln -sf %_licensedir/GPL-2 COPYING
@@ -114,6 +115,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - rebuilt against libcolord.so.2
 
