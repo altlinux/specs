@@ -6,8 +6,8 @@
 
 %define rname kdeconnect-kde
 Name: kde4-connect
-Version: 0.7.1
-Release: alt2
+Version: 0.7.2
+Release: alt1
 
 Group: Communications
 Summary: KDE Connect client for communication with smartphones
@@ -20,6 +20,8 @@ Provides: kde-connect = %version
 Requires: fuse-sshfs qca2-ossl
 
 Source: %rname-%version.tar
+
+Patch1: alt-old-cmake.patch
 
 # Automatically added by buildreq on Thu May 29 2014 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-xml libqt4-xmlpatterns libsoprano-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -64,7 +66,7 @@ Development files for %name
 
 %prep
 %setup -n %rname-%version
-
+%patch1 -p0
 
 %build
 %K4build
@@ -86,7 +88,6 @@ Development files for %name
 
 %_K4lib/kcm_kdeconnect.so
 %_kde4_xdg_apps/kdeconnect.desktop
-%_K4srv/kcm_kdeconnect.desktop
 
 #%_K4lib/kio_kdeconnect.so
 #%_K4srv/kdeconnect.protocol
@@ -115,7 +116,8 @@ Development files for %name
 %_kde4_iconsdir/hicolor/*/apps/kdeconnect.*
 
 %files -n %libkdeconnectcore
-%_K4libdir/libkdeconnectcore.so
+%_K4libdir/libkdeconnectcore.so.%sover
+%_K4libdir/libkdeconnectcore.so.%sover.*
 
 %files -n %libkdeconnectinterfaces
 %_K4libdir/libkdeconnectinterfaces.so.%sover
@@ -128,6 +130,9 @@ Development files for %name
 %_K4link/lib*.so
 
 %changelog
+* Tue Jul 08 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
+- new version
+
 * Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt2
 - fix requires
 
