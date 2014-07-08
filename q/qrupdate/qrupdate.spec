@@ -1,6 +1,6 @@
 Name: qrupdate
 Version: 1.1.2
-Release: alt2
+Release: alt3
 Summary: Library for fast updating of QR and Cholesky decompositions
 License: GPLv3+
 Group: Sciences/Mathematics
@@ -52,6 +52,9 @@ sed -i 's|^\(LIBDIR\).*|\1=%_lib|' Makeconf*
 %_libdir/*.so
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt3
+- Rebuilt with updated openblas
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 

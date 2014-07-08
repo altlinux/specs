@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/mkoctfile /usr/bin/octave
 %define octave_descr_name OdePkg
 Name: octave-%octave_pkg_name
 Version: 0.8.4
-Release: alt2
+Release: alt2.1
 Summary: OdePkg
 
 Group: Sciences/Mathematics
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt2.1
+- Rebuilt with updated openblas
+
 * Tue Jan 14 2014 Paul Wolneykien <manowar@altlinux.ru> 0.8.4-alt2
 - Rebuild with the next version of Octave: 3.8.0
 
