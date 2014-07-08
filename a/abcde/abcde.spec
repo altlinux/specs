@@ -4,7 +4,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(WebService/MusicBrainz/Artist.pm) perl(W
 # END SourceDeps(oneline)
 Name:           abcde
 Version:        2.5.4
-Release:        alt1_4
+Release:        alt1_5
 Summary:        A Better CD Encoder
 
 # Public domain after 2010-01-01, see comments in abcde and cddb-tool
@@ -65,6 +65,9 @@ rm $RPM_BUILD_ROOT%{_bindir}/abcde-musicbrainz-tool # optional, some deps N/A
 
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_5
+- update to new release by fcimport
+
 * Fri Jun 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_4
 - converted for ALT Linux by srpmconvert tools
 
