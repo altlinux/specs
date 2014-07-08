@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.12
 %define kernel_sublevel	.24
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Jul 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.24-alt2
+- CVE-2014-4699 fixed
+
 * Mon Jul 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.24-alt1
 - 3.12.24
 
