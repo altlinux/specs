@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Unidecode
 Name: perl-%dist
-Version: 0.04
-Release: alt2
+Version: 1.01
+Release: alt1
 
 Summary: US-ASCII transliterations of Unicode text
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SB/SBURKE/Text-Unidecode-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +40,9 @@ the pronunciation expressed by the text in some other writing system.
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt2
 - rebuilt
 
