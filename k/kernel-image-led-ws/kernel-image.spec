@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.3
-Release: alt6
+Version: 3.15.4
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 3
+%define kernel_stable_version 4
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1883,6 +1883,37 @@ done)
 
 
 %changelog
+* Tue Jul 08 2014 Led <led@altlinux.ru> 3.15.4-alt1
+- 3.15.4
+- removed:
+  + fix-mm--nmu
+  + fix-sound-pci-hda--snd-hda-codec-hdmi
+- updated:
+  + fix-arch-x86
+  + fix-drivers-block--zram
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-vga--vga_switcheroo
+  + fix-drivers-infiniband-hw--cxgb4
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_core
+  + fix-drivers-scsi--hpsa
+  + fix-fs-btrfs
+  + fix-fs-cifs
+  + fix-fs-nfsd
+  + fix-fs-proc
+  + fix-fs-reiserfs
+  + fix-fs-xfs
+  + fix-sound-pci-hda--snd-hda-intel
+  + feat-kernel-vserver
+- added:
+  + fix-mm--huge_memory
+  + fix-mm--ksm
+  + fix-mm--migrate
+  + fix-mm--mmu
+
 * Fri Jul 04 2014 Led <led@altlinux.ru> 3.15.3-alt6
 - updated:
   + fix-arch-x86 (CVE-2014-4699)
