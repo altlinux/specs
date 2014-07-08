@@ -1,7 +1,7 @@
 %define _altdata_dir %_sysconfdir/alterator
 
 Name: alterator-openldap-functions
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 BuildArch: noarch
@@ -33,6 +33,9 @@ helper functions for alterator openldap based backends
 %dir %_altdata_dir/openldap
 
 %changelog
+* Tue Jul 08 2014 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Fix warning message.
+
 * Fri Sep 28 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
 - Detect if Kerberos is enabled
 
