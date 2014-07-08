@@ -9,7 +9,7 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.5
+Version: 1.5.7
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -17,12 +17,12 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://code.google.com/p/%name/
 
-Source: http://%name.googlecode.com/files/%name-%version.tar.gz
+Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
 Source1: ibus-xinput
 Source2: ibus-xkb-%ibus_xkb_ver.tar.gz
 
 # fedora's patches
-Patch0: ibus-1.5.5-up.patch
+Patch0: ibus-1.5.7-up.patch
 
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
@@ -272,6 +272,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.7-alt1
+- 1.5.7
+- updated fc patchset
+
 * Fri Feb 07 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
 - 1.5.5
 - updated fc patchset
