@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist CGI.pm
 Name: perl-CGI
-Version: 4.02
+Version: 4.03
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -42,6 +43,9 @@ bzip2 -k Changes
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.03-alt1
+- automated CPAN update
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 4.02-alt1
 - automated CPAN update
 
