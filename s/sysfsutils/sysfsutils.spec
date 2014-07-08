@@ -6,7 +6,7 @@
 
 Name: sysfsutils
 Version: 2.1.0
-Release: alt6.1.qa1
+Release: alt7
 
 %define lib_name libsysfs
 %define docdir %_docdir/%lib_name-%version
@@ -121,6 +121,11 @@ bzip2 -9f %buildroot%docdir/{ChangeLog,*.txt}
 %endif
 
 %changelog
+* Tue Jul 08 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt7
+- NMU: update init script:
+  + do not auto enable service
+  + add LSB header
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.0-alt6.1.qa1
 - NMU: rebuilt for updated dependencies.
 
