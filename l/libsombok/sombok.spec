@@ -3,10 +3,10 @@ BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sombok
-%define fedora 20
+%define fedora 21
 Name:           libsombok
 Version:        2.3.1
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
@@ -74,6 +74,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_2
+- update to new release by fcimport
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_1
 - moved to Sisyphus for perl-Text-vCard
 
