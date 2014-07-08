@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Source: %name-%version.tar
@@ -46,6 +46,9 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Tue Jul 08 2014 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
+- Fix addition/removal local groups.
+
 * Mon Jun 10 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1
 - No wrap checkbox text
 - Localization support for system group combobox
