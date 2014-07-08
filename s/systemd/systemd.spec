@@ -40,7 +40,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 214
-Release: alt9
+Release: alt10
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -569,11 +569,10 @@ intltoolize --force --automake
 %find_lang %name
 
 # Make sure these directories are properly owned
-mkdir -p %buildroot%_unitdir/{basic,default,dbus,syslog,poweroff,rescue,reboot}.target.wants
+mkdir -p %buildroot%_unitdir/{basic,default,dbus,graphical,poweroff,rescue,reboot}.target.wants
 
 
 ln -s rc-local.service %buildroot%_unitdir/local.service
-mkdir -p %buildroot%_unitdir/graphical.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-update_chrooted.service
 ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
@@ -862,9 +861,12 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 /lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
 
-# rm symlinks for network.service after drop network.service
+# rm symlinks for network.service
 [ -L %_sysconfdir/systemd/system/network.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/network.target.wants/network.service  >/dev/null 2>&1 || :
 [ -L %_sysconfdir/systemd/system/multi-user.target.wants/network.service ] && rm -f %_sysconfdir/systemd/system/multi-user.target.wants/network.service  >/dev/null 2>&1 || :
+
+# rm symlinks for prefdm.service
+[ -L %_sysconfdir/systemd/system/graphical.target.wants/prefdm.service ] && rm -f %_sysconfdir/systemd/system/graphical.target.wants/prefdm.service  >/dev/null 2>&1 || :
 
 # Make sure new journal files will be owned by the "systemd-journal" group
 chgrp systemd-journal /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null` %_localstatedir/log/journal/ %_localstatedir/log/journal/`cat /etc/machine-id 2> /dev/null` >/dev/null 2>&1 || :
@@ -874,27 +876,20 @@ chmod g+s  /run/log/journal/ /run/log/journal/`cat /etc/machine-id 2> /dev/null`
 /usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx %_localstatedir/log/journal/ >/dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
-        # Try to read default runlevel from the old inittab if it exists
-        runlevel=$(/bin/awk -F ':' '$3 == "initdefault" && $1 !~ "^#" { print $2 }' /etc/inittab 2> /dev/null)
-        if [ -z "$runlevel" ] ; then
-                target="%_unitdir/graphical.target"
-        else
-                target="%_unitdir/runlevel$runlevel.target"
-        fi
-
-        # And symlink what we found to the new-style default.target
-        /bin/ln -sf "$target" %_sysconfdir/systemd/system/default.target 2>&1 || :
-
         # Enable the services we install by default
         /sbin/systemctl preset \
-                getty@tty1.service \
                 remote-fs.target \
-                systemd-readahead-replay.service \
-                systemd-readahead-collect.service \
-                systemd-networkd.service \
+                getty@.service \
+                serial-getty@.service \
                 console-getty.service \
                 console-shell.service \
                 debug-shell.service \
+                systemd-readahead-replay.service \
+                systemd-readahead-collect.service \
+                systemd-timesyncd.service \
+                systemd-networkd.service \
+                systemd-networkd-wait-online.service \
+                systemd-resolved.service \
                  >/dev/null 2>&1 || :
 fi
 
@@ -906,17 +901,22 @@ fi
 %preun
 if [ $1 -eq 0 ] ; then
         /sbin/systemctl disable \
-                getty@.service \
                 remote-fs.target \
-                systemd-readahead-replay.service \
-                systemd-readahead-collect.service \
-                systemd-networkd.service \
+                getty@.service \
+                serial-getty@.service \
                 console-getty.service \
                 console-shell.service \
                 debug-shell.service \
+                systemd-readahead-replay.service \
+                systemd-readahead-collect.service \
+                systemd-networkd.service \
+                systemd-timesyncd.service \
+                systemd-networkd.service \
+                systemd-networkd-wait-online.service \
+                systemd-resolved.service \
                  >/dev/null 2>&1 || :
 
-        /bin/rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
+        rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
 
 %post -n libnss-myhostname
@@ -943,6 +943,9 @@ update_chrooted all
 
 %post journal-gateway
 %post_service systemd-journal-gatewayd
+
+%preun journal-gateway
+%preun_service systemd-journal-gatewayd
 
 %endif
 
@@ -1027,6 +1030,10 @@ update_chrooted all
 %if_enabled myhostname
 %exclude %_man8dir/nss-myhostname.*
 %endif
+%if_enabled microhttpd
+%exclude %_man8dir/systemd-journal-gatewayd.*
+%exclude %_man8dir/systemd-journal-remote.*
+%endif
 %_datadir/systemd
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
@@ -1048,6 +1055,7 @@ update_chrooted all
 %exclude /lib/systemd/systemd-udevd
 %if_enabled microhttpd
 %exclude /lib/systemd/systemd-journal-gatewayd
+%exclude /lib/systemd/systemd-journal-remote
 %exclude %_unitdir/systemd-journal-gatewayd.*
 %exclude %_datadir/systemd/gatewayd
 %endif
@@ -1176,8 +1184,11 @@ update_chrooted all
 %if_enabled microhttpd
 %files journal-gateway
 /lib/systemd/systemd-journal-gatewayd
+/lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
 %_datadir/systemd/gatewayd
+%_man8dir/systemd-journal-gatewayd.*
+%_man8dir/systemd-journal-remote.*
 %endif
 
 %if_enabled coredump
@@ -1313,6 +1324,13 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Jul 08 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt10
+- backport patches for generator from upstream master
+- fix preun journal-gateway
+- drop detect and set default.target
+- update presets services
+- skip log_parse_environment for initrd
+
 * Wed Jul 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt9
 - add alias for halt and reboot services
 - don't do automatic cleanup in $XDG_RUNTIME_DIR
