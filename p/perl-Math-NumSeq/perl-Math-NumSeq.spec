@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(B/Concise.pm) perl(Bit/Vector.pm) perl(Class/Singleton.pm) perl(Compress/Zlib.pm) perl(Data/Float.pm) perl(Devel/Peek.pm) perl(Devel/TimeThis.pm) perl(Encode.pm) perl(File/Find.pm) perl(File/Map.pm) perl(Graph/Easy.pm) perl(HTML/Entities/Interpolate.pm) perl(IO/Select.pm) perl(IO/Uncompress/Gunzip.pm) perl(List/MoreUtils.pm) perl(Locale/Messages.pm) perl(Math/BaseCnv.pm) perl(Math/BigFloat.pm) perl(Math/BigRat.pm) perl(Math/Fibonacci.pm) perl(Math/Prime/Util.pm) perl(Math/Sequence.pm) perl(Math/Symbolic/AuxFunctions.pm) perl(Math/Symbolic/Custom/Simplification.pm) perl(Math/Symbolic/Custom/Transformation.pm) perl(Math/Symbolic/Derivative.pm) perl(Path/Class.pm) perl(Safe.pm) perl(Search/Dict.pm) perl(Smart/Comments.pm) perl(String/BitCount.pm) perl(String/Parity.pm) perl(Symbol.pm) perl(Test/Weaken.pm) perl(Text/Tabs.pm) perl(Tie/File.pm) perl(Tie/IxHash.pm) perl(Time/HiRes.pm) perl(URI/Escape.pm) perl(X11/Keysyms.pm) perl(X11/Protocol.pm) perl(X11/Protocol/WM.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-NumSeq
-Version:        70
+Version:        71
 Release:        alt1
 Summary:        Number sequences
 License:        GPLv3+
@@ -100,6 +101,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 71-alt1
+- automated CPAN update
+
 * Wed Apr 09 2014 Igor Vlasenko <viy@altlinux.ru> 70-alt1
 - automated CPAN update
 
