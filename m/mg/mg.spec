@@ -1,6 +1,6 @@
 Name:		mg
-Version:	20110905
-Release:	alt2_6
+Version:	20140414
+Release:	alt1_1
 Summary:	Tiny Emacs-like editor
 
 Group:		Editors
@@ -9,6 +9,7 @@ URL:		http://homepage.boetes.org/software/mg/
 Source0:	http://homepage.boetes.org/software/mg/%{name}-%{version}.tar.gz
 
 BuildRequires:	ncurses-devel
+BuildRequires:	libbsd-devel
 Source44: import.info
 
 %description
@@ -20,9 +21,6 @@ reason to learn more editor types than Emacs or vi.
 %setup -q
 
 %build
-# configure takes no arguments and will fail if you give it any, therefore we
-# do not use the configure macro here
-./configure
 make %{?_smp_mflags} CFLAGS="%{optflags}" LDFLAGS="%{optflags} -lncurses" libdir="%{_libdir}"
 
 %install
@@ -35,6 +33,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 20140414-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20110905-alt2_6
 - update to new release by fcimport
 
