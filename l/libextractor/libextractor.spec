@@ -1,5 +1,5 @@
 Name: libextractor
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -14,11 +14,13 @@ Patch1: %name-0.5.15.patch
 
 BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
-BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-devel libvorbis-devel libflac-devel
+BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-devel
+BuildRequires: libopus-devel libvorbis-devel libflac-devel
 BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 # requires libjpeg-8 API (jpeg_mem_src()) -- plugin disabled
 BuildRequires: libjpeg-devel
-BuildRequires: gst-plugins1.0-devel libavutil-devel libswscale-devel
+BuildRequires: gst-plugins1.0-devel libavcodec-devel libavutil-devel
+BuildRequires: libavformat-devel libavresample-devel libswscale-devel
 
 %description
 libextractor is a simple library for keyword extraction.
@@ -90,6 +92,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Thu Dec 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
