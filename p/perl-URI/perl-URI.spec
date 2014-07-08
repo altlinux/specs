@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist URI
 Name: perl-%dist
-Version: 1.60
+Version: 1.61
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/URI-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +37,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.60-alt1
 - 1.59 -> 1.60
 
