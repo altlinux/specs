@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.24.0
-Release: alt5.svn20140223
+Release: alt6.svn20140223
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -24,6 +24,7 @@ BuildPreReq: flite-devel libicns-devel /proc gnustep-base-doc
 BuildPreReq: texinfo texi2html texlive-latex-base
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libdispatch-objc2-devel
+BuildPreReq: libkrb5-devel
 
 Requires: lib%name = %version-%release
 Requires: aspell flite
@@ -152,6 +153,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt6.svn20140223
+- Fixed build
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.24.0-alt5.svn20140223
 - rebuild with new ImageMagick
 
