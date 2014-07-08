@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist POE-Component-IKC
 Name: perl-%dist
-Version: 0.2401
+Version: 0.2402
 Release: alt1
 
 Summary: Inter-Kernel Communication for POE
@@ -37,6 +37,9 @@ as a point of reference for discusion of issues involved.
 %perl_vendor_privlib/POE
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2402-alt1
+- automated CPAN update
+
 * Mon May 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.2401-alt1
 - automated CPAN update
 
