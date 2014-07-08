@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(IO/All.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Module-Manifest-Skip
 Version:        0.17
-Release:        alt2_3
+Release:        alt2_4
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_4
+- update to new release by fcimport
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_3
 - Sisyphus build
 
