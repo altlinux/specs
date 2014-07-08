@@ -13,7 +13,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt13
+Release: alt14
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -156,6 +156,9 @@ done
 #endif
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt14
+- Fixed build
+
 * Tue Mar 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt13
 - Built with gcc 4.7
 
