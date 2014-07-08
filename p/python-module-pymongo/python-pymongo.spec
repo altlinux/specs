@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 
 Name:           python-module-pymongo
 Version:        2.5.2
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python
@@ -234,6 +234,9 @@ nosetests --exclude="$exclude"
 popd
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_5
+- update to new release by fcimport
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_4
 - update to new release by fcimport
 
