@@ -1,6 +1,6 @@
 Name: alterator-quota
-Version: 1.5
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -40,6 +40,9 @@ alterator module for managing filesystem quotas
 %_bindir/*
 
 %changelog
+* Thu Jul 03 2014 Mikhail Efremov <sem@altlinux.org> 1.5.1-alt1
+- alterator-quota: Show first mountpoint only.
+
 * Sun Feb 28 2010 Vladislav Zavjalov <slazav@altlinux.org> 1.5-alt2
 - fix error with empty lists in ajax.scm
 
