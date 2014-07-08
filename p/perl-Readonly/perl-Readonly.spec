@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Build.pm)
 %def_without bootstrap
 
 Name: perl-%dist
-Version: 1.04
+Version: 2.00
 Release: alt1
 
 Summary: Readonly - facility for creating read-only scalars, arrays, hashes
@@ -43,6 +43,9 @@ should not be changed.
 %perl_vendor_privlib/Readonly*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Thu Jan 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
 - automated CPAN update
 
