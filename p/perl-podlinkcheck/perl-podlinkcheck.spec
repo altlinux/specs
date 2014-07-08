@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(CPAN/SQLite.pm) perl(CPAN/SQLite/Index.pm) per
 # END SourceDeps(oneline)
 Name:           perl-podlinkcheck
 Version:        12
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Check Perl POD L<> link references
 License:        GPLv3+
 Group:          Development/Perl
@@ -82,6 +82,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 12-alt2_4
+- update to new release by fcimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 12-alt2_3
 - Sisyphus build
 
