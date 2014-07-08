@@ -5,7 +5,7 @@ Group: Other
 %add_optflags %optflags_shared
 Name:           libsigrok
 Version:        0.2.2
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Basic hardware access drivers for logic analyzers
 # Combined GPLv3+ and GPLv2+ and BSD
 License:        GPLv3+
@@ -13,6 +13,8 @@ URL:            http://www.sigrok.org/
 Source0:        http://sigrok.org/download/source/libsigrok/%{name}-%{version}.tar.gz
 # http://sigrok.org/gitweb/?p=libsigrok.git;a=commit;h=8dce54f7aa9eed362f2c9e41412c6b71ba1a32b6
 Patch0:		%{name}-0.2.1-udev.patch
+# update for libftdi-1 detection
+Patch1:		%{name}-0.2.2-libftdi1.patch
 
 BuildRequires:  glib2-devel
 BuildRequires:  libzip-devel
@@ -22,9 +24,10 @@ BuildRequires:  libftdi-devel
 BuildRequires:  libalsa-devel
 BuildRequires:  doxygen
 BuildRequires:  graphviz
-Source44: import.info
 # link-mso19 driver was disabed by upstream for this release (only udev user)
 #BuildRequires:  libudev-devel
+BuildRequires:	libtool
+Source44: import.info
 
 %description
 %{name} is a shared library written in C which provides the basic API
@@ -55,6 +58,9 @@ with %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .udev
+%patch1 -p1 -b .ftdi1
+
+autoreconf -vif
 
 
 %build
@@ -91,6 +97,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_3
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_1
 - update to new release by fcimport
 
