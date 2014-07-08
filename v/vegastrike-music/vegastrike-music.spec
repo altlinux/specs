@@ -1,6 +1,6 @@
 Name:           vegastrike-music
 Version:        0.5.1
-Release:        alt2_5.r1
+Release:        alt2_6.r1
 Summary:        Music for Vega Strike
 Group:          Games/Other
 License:        GPL+
@@ -65,6 +65,9 @@ cp -r music communications sounds $RPM_BUILD_ROOT%{_datadir}/vegastrike
 
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_6.r1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_5.r1
 - update to new release by fcimport
 
