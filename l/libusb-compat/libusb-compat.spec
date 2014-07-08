@@ -1,7 +1,6 @@
 Name: libusb-compat
-Version: 0.1.3
-Release: alt3
-
+Version: 0.1.5
+Release: alt1
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPL
 Group: System/Libraries
@@ -65,6 +64,12 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/libusb.pc
 
 %changelog
+* Tue Jul 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.1.5-alt1
+- 0.1.5
+
+* Thu Apr 26 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.1.4-alt1
+- 0.1.4
+
 * Wed Mar 09 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.1.3-alt3
 - rebuilt for debuginfo
 
