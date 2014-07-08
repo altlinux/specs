@@ -1,20 +1,20 @@
-%define module_version 0.34
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.35
 %define module_name Reply
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(App/Nopaste.pm) perl(B/Keywords.pm) perl(Carp/Always.pm) perl(Class/Refresh.pm) perl(Config/INI/Reader/Ordered.pm) perl(Data/Dump.pm) perl(Data/Dumper.pm) perl(Data/Printer.pm) perl(Devel/LexAlias.pm) perl(Eval/Closure.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find.pm) perl(File/HomeDir.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(Getopt/Long.pm) perl(MRO/Compat.pm) perl(Module/Runtime.pm) perl(Package/Stash.pm) perl(PadWalker.pm) perl(Proc/InvokeEditor.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) perl(Term/ReadLine.pm) perl(Test/More.pm) perl(Time/HiRes.pm) perl(Try/Tiny.pm) perl(base.pm) perl(mro.pm) perl(overload.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.34
-Release: alt2
+Version: 0.35
+Release: alt1
 Summary: read, eval, print, loop, yay!
 Group: Development/Perl
 License: mit
 URL: http://metacpan.org/release/Reply
 
-Source0: http://cpan.org.ua/authors/id/D/DO/DOY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Reply-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -46,6 +46,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.34-alt2
 - uploaded to Sisyphus as Scalar-Does dependency
 
