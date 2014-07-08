@@ -2,7 +2,7 @@
 
 Name: openblas
 Version: 0.2.9
-Release: alt1.rc2.git20140306
+Release: alt2.git20140629
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
 Group: Sciences/Mathematics
@@ -12,8 +12,6 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://github.com/xianyi/OpenBLAS
 Source: %name-%version.tar
 
-#set_gcc_version 4.5
-#BuildPreReq: gcc4.5-fortran
 BuildPreReq: gcc-fortran
 
 %description
@@ -129,6 +127,9 @@ install -p -m644 *.h %buildroot%_includedir/%name
 %_includedir/*
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt2.git20140629
+- Version 0.2.9
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.rc2.git20140306
 - Version 0.2.9.rc2
 
