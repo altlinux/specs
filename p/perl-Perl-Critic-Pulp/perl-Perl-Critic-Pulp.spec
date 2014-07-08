@@ -4,7 +4,7 @@ BuildRequires: perl(AptPkg/Policy.pm) perl(B/Concise.pm) perl(Devel/Mallinfo.pm)
 # END SourceDeps(oneline)
 Name:           perl-Perl-Critic-Pulp
 Version:        85
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Some add-on perlcritic policies
 License:        GPLv3+
 Group:          Development/Perl
@@ -112,6 +112,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 85-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 05 2014 Igor Vlasenko <viy@altlinux.ru> 85-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
