@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 4.5.6
+Version: 4.6.1
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -12,8 +12,6 @@ Summary: Free easy personal accounting for all!
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: http://%name.free.fr/index.php
-
-Packager: Alexey Rusakov <ktirf@altlinux.ru>
 
 Source: http://%name.free.fr/public/%name-%_version.tar.gz
 
@@ -94,6 +92,9 @@ read and rather useful for a first time user.
 %exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
+- 4.6.1
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 4.5.6-alt1
 - 4.5.6
 
