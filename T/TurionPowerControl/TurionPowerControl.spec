@@ -1,50 +1,49 @@
 %define srcname tpc
 
 Name: TurionPowerControl
-Version: 0.43
-Release: alt0.1
+Version: 0.44
+Release: alt1.rc2
 
 Summary: Utility to tweak AMD processors parameters
 License: BSD like
 Group: System/Configuration/Hardware
 URL: http://code.google.com/p/turionpowercontrol/downloads/list
-#Url: http://http://amdath800.dyndns.org/amd/
 
-Source: http://amdath800.dyndns.org/amd/tpc/tpc-0.43.tar.gz
-Source1: tpc.init
+Source: http://turionpowercontrol.googlecode.com/files/tpc-0.44-rc2.tar.gz
+Source1: TurionPowerControl.conf
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libncurses-devel
 
 %description
 TurionPowerControl is a nice command line tool 
 that allows users to tweak AMD processors parameters.
 
 %prep
-%setup -c
+%setup -n %srcname-%version-rc2
 
 %build
 cd src
 %make_build
 
 %install
-install -D -m755 src/%name %buildroot%_sbindir/%name
-install -D -m755 %{S:1} %buildroot%_initdir/tpc
+cd src
+install -D -m755 %name %buildroot%_sbindir/%name
+install -D -m755 %{S:1} %buildroot%_modulesloaddir/%name.conf
 
 %post
 modprobe cpuid ||:
 modprobe msr ||:
-%post_service tpc
-
-%preun
-%preun_service tpc
 
 %files
 %doc doc
-%doc bin/Ubuntu-x86_64/example.cfg
+%doc bin/Ubuntu-amd64/example.cfg
 %_sbindir/%name
-%_initdir/tpc
+%_modulesloaddir/%name.conf
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1.rc2
+- new version
+
 * Wed Apr 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.43-alt0.1
 - updated version
 
