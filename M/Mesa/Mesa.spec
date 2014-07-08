@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 10.2.2
+Version: 10.2.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -359,6 +359,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Jul 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.2.3-alt1
+- 10.2.3
+
 * Wed Jun 25 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.2.2-alt1
 - 10.2.2
 
