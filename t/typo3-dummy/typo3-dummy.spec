@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: typo3-%origname
-Version: 4.5.34
+Version: 4.5.35
 Release: alt1
 
 Summary: Dummy site for TYPO3
@@ -65,6 +65,9 @@ mv _.htaccess %buildroot%installdir/.htaccess ||:
 %doc *.txt
 
 %changelog
+* Tue Jul 08 2014 Michael Shigorin <mike@altlinux.org> 4.5.35-alt1
+- 4.5.35
+
 * Thu May 22 2014 Michael Shigorin <mike@altlinux.org> 4.5.34-alt1
 - 4.5.34
 
