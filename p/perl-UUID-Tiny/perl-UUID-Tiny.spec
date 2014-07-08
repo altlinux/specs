@@ -4,7 +4,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(Exporter.pm) perl(IO/File.pm) perl(IO/Ha
 # END SourceDeps(oneline)
 Name:           perl-UUID-Tiny
 Version:        1.04
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Pure Perl UUID Support With Functional Interface
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_3
+- update to new release by fcimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1_2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
