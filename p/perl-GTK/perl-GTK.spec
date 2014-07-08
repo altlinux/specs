@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Gtk-Perl
 Name: perl-GTK
-Version: 0.7009
-Release: alt7
+Version: 0.7010
+Release: alt1
 
 Summary: Perl module for the GTK+ 1.2 library
 License: GPL or Artistic
 Group: Development/GNOME and GTK+
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/Gtk-Perl-%{version}.tar.gz
 
 Patch0: perl-GTK-0.7002-mdk-ensure_focus.patch
 Patch1: perl-GTK-0.7003-mdk-gdk_event_copy-withnowindow.patch
@@ -17,7 +18,6 @@ Patch3: perl-GTK-0.7008-mdk-GdkPixbuf-memleak.patch
 Patch4: perl-GTK-0.7009-alt-gendoc-no-parent.patch
 Patch5: perl-GTK-0.7009-alt-pkgconfig.patch
 Patch6: perl-GTK-0.7009-alt-typemap.patch
-Patch7: perl-GTK-0.7009-alt-perl518.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: gtk+-devel perl-XML-Parser perl-XML-Writer perl-devel
@@ -36,7 +36,6 @@ graphical user interfaces for the X Window System.
 %patch4 -p1
 %patch5 -p2
 %patch6 -p2
-%patch7 -p2
 
 # disable build dependency on perl-podlators
 sed -i- '/MAN3PODS/,/}/s/^/#/' Gtk/Makefile.PL
@@ -61,15 +60,26 @@ rm -r %buildroot%perl_vendor_archlib/Gtk/Install
 	%perl_vendor_archlib/Gtk.pm
 %dir	%perl_vendor_archlib/Gtk
 	%perl_vendor_archlib/Gtk/Atoms.pm
+	%perl_vendor_archlib/Gtk/CListModel.pm
+	%perl_vendor_archlib/Gtk/ColorSelectButton.pm
 	%perl_vendor_archlib/Gtk/Gdk.pm
+	%perl_vendor_archlib/Gtk/io.pm
 	%perl_vendor_archlib/Gtk/Keysyms.pm
 	%perl_vendor_archlib/Gtk/Types.pm
 	%perl_vendor_archlib/Gtk/TypesLazy.pm
 	%perl_vendor_archlib/Gtk/lazy.pm
+	%perl_vendor_archlib/Gtk/LWP.pm
+%dir	%perl_vendor_archlib/Gtk/LWP
+	%perl_vendor_archlib/Gtk/LWP/http.pm
+	%perl_vendor_archlib/Gtk/LogHandler.pm
+
 %doc	%perl_vendor_archlib/Gtk/*.pod
 	%perl_vendor_autolib/Gtk
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.7010-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.7009-alt7
 - built for perl 5.18
 - fixed build with perl 5.18 (SvUPGRADE is no longer an expression)
