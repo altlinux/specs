@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.7.19
+Version: 1.7.21
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -185,7 +185,7 @@ develop programs which make use of Wine.
 %if_with build64
 	--enable-win64 \
 %endif
-	--disable-tests 
+	--disable-tests
 
 %__make depend
 %make_build
@@ -217,10 +217,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 %if_without build64
 %_bindir/wine
-%_bindir/wine-preloader
+%_bindir/wine-*
 %else
 %_bindir/wine64
-%_bindir/wine64-preloader
+%_bindir/wine64-*
 %endif
 
 %_bindir/regsvr32
@@ -345,6 +345,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue Jul 08 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.21-alt1
+- new version 1.7.21
+
 * Sun May 18 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.19-alt1
 - new version 1.7.19
 
