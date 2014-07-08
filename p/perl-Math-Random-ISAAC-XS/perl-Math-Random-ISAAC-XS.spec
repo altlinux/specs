@@ -1,13 +1,15 @@
-%define module_version 1.004
-%define module_name Math-Random-ISAAC-XS
 Group: Development/Perl
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Benchmark.pm) perl(Chart/Bars.pm) perl(Config.pm) perl(Test/Valgrind.pm) perl(XSLoader.pm) perl-Module-Build perl-devel perl-podlators
+# END SourceDeps(oneline)
 Name:           perl-Math-Random-ISAAC-XS
 Version:        1.004
-Release:        alt4_10
+Release:        alt4_11
 Summary:        C implementation of the ISAAC PRNG algorithm
-License:        unrestricted
-URL:            http://search.cpan.org/dist/Math-Random-ISAAC-XS
-Source0:        http://cpan.org.ua/authors/id/J/JA/JAWNSY/%module_name-%module_version.tar.gz
+License:        MIT or GPL+ or Artistic
+URL:            http://search.cpan.org/dist/Math-Random-ISAAC-XS/
+Source0:        http://www.cpan.org/authors/id/J/JA/JAWNSY/Math-Random-ISAAC-XS-%{version}.tar.gz
 BuildRequires:  perl(ExtUtils/CBuilder.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
 BuildRequires:  perl(Math/Random/ISAAC.pm)
@@ -26,7 +28,7 @@ be used as a drop-in replacement. This is the recommended implementation of the
 module, based on Bob Jenkins' reference implementation in C.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Math-Random-ISAAC-XS-%{version}
 # rm -f weaver.ini dist.ini
 sed -i 's/\r//' examples/*.pl
 
@@ -46,11 +48,14 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 ./Build test
 
 %files
-%doc LICENSE Changes README examples
+%doc Changes examples LICENSE README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.004-alt4_11
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.004-alt4_10
 - build for Sisyphus (required for perl update)
 
