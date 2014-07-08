@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist perlindex
 Name: perl-Text-English
-Version: 1.605
+Version: 1.606
 Release: alt1
 
 Summary: Pod indexer, Porter's stemming algorithm
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/U/UL/ULPFR/perlindex-%{version}.tar.gz
 
 Patch0: perl-Text-English-1.302-alt-home-idir.patch
 Patch1: perl-Text-English-1.302-alt-perldoc.patch
@@ -43,6 +44,9 @@ algorithm.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.606-alt1
+- automated CPAN update
+
 * Wed Dec 22 2010 Alexey Tourbin <at@altlinux.ru> 1.605-alt1
 - 1.401 -> 1.605
 
