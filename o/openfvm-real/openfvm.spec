@@ -7,7 +7,7 @@
 
 Name: openfvm-%scalar_type
 Version: 1.4
-Release: alt4.svn20140225
+Release: alt5.svn20140225
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
@@ -140,6 +140,9 @@ done
 %endif
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt5.svn20140225
+- Fixed build
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt4.svn20140225
 - New snapshot
 
