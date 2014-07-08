@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.2rc1
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for FLTK library
 
@@ -24,7 +24,7 @@ BuildRequires: libfltk-devel libjpeg-devel libpng-devel python3-devel
 BuildRequires: libX11-devel libGLU-devel swig
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
-BuildPreReq: libXfixes-devel
+BuildPreReq: libXfixes-devel libXcursor-devel
 
 %description
 pyFLTK: Python Wrapper for the FLTK library.
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2rc1-alt2
+- Fixed build
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2rc1-alt1
 - Version 1.3.2rc1
 
