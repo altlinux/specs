@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 8.2
-Release: alt1.pre.svn20140626
+Release: alt1.pre.svn20140707
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -16,6 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://svn.dealii.org/trunk/
 Source: %name-%version.tar
+Patch: %oname-8.2pre-alt-i586.patch
 
 BuildPreReq: python-module-petsc-config zlib-devel
 BuildPreReq: gcc-c++ doxygen graphviz %mpiimpl-devel libqt4-devel
@@ -28,6 +29,7 @@ BuildPreReq: libmumps-devel libhypre-devel libsuitesparse-devel
 BuildPreReq: chrpath rpm-macros-make boost-signals-devel
 BuildPreReq: libnetcdf_c++-mpi-devel libdakota-devel cmake
 BuildPreReq: libdakota-devel bzlib-devel libmuparser-devel
+BuildPreReq: libsc-devel
 
 Requires: lib%name = %version-%release
 
@@ -123,6 +125,10 @@ deal.II.
 %prep
 %setup
 
+%ifnarch x86_64
+%patch -p2
+%endif
+
 rm -fR bundled/tbb* bundled/boost* bundled/umfpack
 #sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
 
@@ -135,6 +141,8 @@ sed -i "s|@TRILINOS_VERSION_MINOR@|$TRILINOS_VERSION_MINOR|" \
 TRILINOS_VERSION_SUBMINOR=$(rpm -q --queryformat="%{VERSION}" libtrilinos10 |sed 's|[0-9]*\.[0-9]*\.\(.*\)|\1|')
 sed -i "s|@TRILINOS_VERSION_SUBMINOR@|$TRILINOS_VERSION_SUBMINOR|" \
 	include/deal.II/base/config.h.in
+sed -i 's|@P4EST_VERSION_SUBMINOR@|0|' include/deal.II/base/config.h.in
+sed -i 's|@P4EST_VERSION_PATCH@|0|' include/deal.II/base/config.h.in
 
 %build
 source %_bindir/petsc-%scalar_type.sh
@@ -214,6 +222,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140707
+- New snapshot
+
 * Fri Jun 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.2-alt1.pre.svn20140626
 - New snapshot
 
