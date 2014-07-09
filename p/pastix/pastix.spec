@@ -5,7 +5,8 @@
 %define sover %somver.40.30
 Name: pastix
 %define ldir %_libdir/%name
-Version: 4030
+Epoch: 1
+Version: 5.2.2.11
 Release: alt1
 Summary: Parallel Sparse matriX package
 License: CeCILL
@@ -15,8 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: https://gforge.inria.fr/frs/download.php/26891/pastix_release_%version.tar.bz2
 Source1: config.in
+# git://scm.gforge.inria.fr/murge/murge.git
+Source2: murge.tar
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildPreReq: libscotch-devel libmetis0-devel %mpiimpl-devel
 BuildPreReq: libopenblas-devel chrpath
@@ -42,9 +45,7 @@ Summary: Development files of PaStiX
 Group: Development/C
 Requires: %mpiimpl-devel
 #Requires: %name = %version-%release
-Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < %version-%release
-Obsoletes: lib%name-devel < %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 PaStiX (Parallel Sparse matriX package) is a scientific library that
@@ -68,6 +69,10 @@ This package contains development documentation for PaStiX.
 %prep
 %setup
 install -m644 %SOURCE1 src
+
+pushd src
+tar -xf %SOURCE2
+popd
 
 %ifarch x86_64
 LIB64=64
@@ -167,10 +172,13 @@ simpleShare()
 }
 
 shareIt() {
-	if [ "$1" = "pastix" -o "$1" = "sopalin3d" -o "$1" = "pastix_murge" ]
+	if [ "$1" = "pastix" -o "$1" = "sopalin3d" ]
 	then
 		#FINLIB="-lpthread -L. -lkass"
 		FINLIB=
+	elif [ "$1" = "pastix_murge" ]
+	then
+		FINLIB="-L. -lpastix_s -lpastix_d -lpastix_c -lpastix_z"
 	elif [ "$1" = "common" ]; then
 		FINLIB=
 	elif [ "$1" = "pastixutils" -o "$1" = "blend3d" -o "$1" = "kass" ]
@@ -229,7 +237,7 @@ popd
 #_bindir/print_options
 
 %files -n lib%name
-%doc src/Licence_CeCILL_V2-en.txt src/README.txt
+%doc Licence_CeCILL_V2-en.txt README.txt
 %dir %ldir
 %_libdir/*.so.*
 
@@ -246,6 +254,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2.2.11-alt1
+- Version 5.2.2.11
+
 * Thu Jul 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4030-alt1
 - Version 4030
 
