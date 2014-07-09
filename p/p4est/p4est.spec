@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: p4est
-Version: 0.3.4.2
+Version: 1.0
 Release: alt1
 Summary: Parallel AMR on Forests of Octrees
 License: GPLv2+
@@ -13,7 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: %mpiimpl-devel liblapack-devel splint
-BuildPreReq: pkgconfig(lua) zlib-devel chrpath
+BuildPreReq: pkgconfig(lua) zlib-devel chrpath libsc-devel
+BuildPreReq: libmetis-devel doxygen graphviz
 
 Requires: lib%name = %version-%release
 
@@ -64,6 +65,8 @@ This package contains development documentation and examples for p4est.
 %prep
 %setup
 
+sed -i 's|@VERSION@|%version|' configure.ac
+
 %build
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -72,16 +75,24 @@ export MPIDIR=%mpidir
 mkdir _ex
 cp -fR example _ex/
 
-./bootstrap
+%add_optflags -I%_includedir/metis
+%autoreconf
 %configure \
 	--with-blas=-lopenblas \
 	--enable-vtk-doubles \
 	--enable-mpi \
 	--enable-mpiio \
 	--enable-shared \
-	--enable-static=no
+	--enable-static=no \
+	--enable-pthread \
+	--with-metis \
+	--with-sc=%prefix
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+sed -i 's|^Makefile:|Makefile_:|' Makefile
 %make_build
+
+doxygen
+mv doxygen/html doxygen/doxygen
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -94,23 +105,29 @@ rm -f %buildroot%_libdir/*.a
 chrpath -r %mpidir/lib %buildroot%_bindir/* ||:
 
 %files
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 %_bindir/*
+%_datadir/data
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libp4est-*.so
 
 %files -n lib%name-devel
 %_sysconfdir/*
 %_includedir/*
 %_aclocaldir/*
 %_libdir/*.so
+%exclude %_libdir/libp4est-*.so
 
 %files -n lib%name-devel-doc
 %doc doc/*
 %doc _ex/*
+%doc doxygen/doxygen
 
 %changelog
+* Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
+- Version 1.0
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4.2-alt1
 - Version 0.3.4.2
 
