@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: maven-scm maven2-default-skin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       xmlrpc
 Version:    3.1.3
-Release:    alt5_2jpp7
+Release:    alt6_2jpp7
 Epoch:      1
 Summary:    Java XML-RPC implementation
 License:    ASL 2.0
@@ -107,7 +106,7 @@ sed -i 's/\r//' LICENSE.txt
 
 %build
 # ignore test failure because server part needs network
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild \
   -e \
   -Dmaven.local.depmap.file=%{SOURCE1} \
   -Dmaven.test.failure.ignore=true \
@@ -169,6 +168,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}3-server.jar
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt6_2jpp7
+- fixed deps
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt5_2jpp7
 - fc update
 
