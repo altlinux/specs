@@ -1,6 +1,8 @@
+%def_with vkontakte
+
 Name: clementine
 Version: 1.2.3
-Release: alt1
+Release: alt2
 Summary: A music player and library organiser
 
 Group: Sound
@@ -10,10 +12,18 @@ Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Source1: clementine_48.png
-Patch: %name-1.2.0-alt-desktop.patch
+Patch: %name-1.2.3-alt-desktop.patch
 Patch1: %name-1.2.0-chromaprint-avcodec.patch
 Patch2: clementine-0.6-alt-install-icons.patch
 Patch3: %name-1.2.2-alt-unistd.patch
+%if_with vkontakte
+# Vkontakte support. Patches are taken from Rosa
+# https://abf.io/current/clementine.git
+Source2: %name-vk-files.tar.bz2
+Patch4: %name-1.2.2-rosa-vkontakte-advanced.patch
+Patch5: %name-1.2.0-rosa-vkontakte-tags.patch
+Patch6: %name-1.2.0-rosa-ru-vkontakte.patch
+%endif
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -21,6 +31,10 @@ BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-d
 BuildRequires: kde-common-devel libqt4-sql-sqlite gst-plugins-gio libqca2-devel protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
+%if_with vkontakte
+# Enable VK support
+BuildRequires: libvreen-devel
+%endif
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel libpcre-devel
 BuildPreReq: libprotobuf-devel qjson-devel gst-plugins-devel libcdio-devel
 %description
@@ -36,6 +50,13 @@ advantage of Qt4.
 %patch1 -p2
 %patch2 -p1
 %patch3 -p2
+
+%if_with vkontakte
+tar -xf %{SOURCE2}
+%patch4 -p1 -b .vkontakte~
+%patch5 -p1 -b .vkontakte~
+%patch6 -p1 -b .vkontakte~
+%endif
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -53,6 +74,9 @@ advantage of Qt4.
 %_datadir/clementine
 
 %changelog
+* Mon Jul 7 2014 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt2
+- add vkontakte support (closes: #29522)
+
 * Mon May 19 2014 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt1
 - Version 1.2.3
 
