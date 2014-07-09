@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.10.0
-Release: alt1.svn20140521
+Release: alt1.svn20140707
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -592,6 +592,9 @@ cp -fR doc/doxygen/html doxygen
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1.svn20140707
+- New snapshot
+
 * Sun Jun 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1.svn20140521
 - Version 5.10.0
 - Built with wxGTK3.1
