@@ -1,255 +1,115 @@
-Patch33: paranamer-1.5-alt-drop-xsite.patch
-#BuildRequires: sun-annotation-1.0-api
-# tmp hack
-#BuildRequires: maven2-plugin-plugin
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:             paranamer
+Version:          2.4.1
+Release:          alt1_5jpp7
+Summary:          Library for accessing non-private method parameter names at run-time
+Group:            Development/Java
+License:          BSD
+URL:              http://paranamer.codehaus.org
 
-%define gcj_support 0
+# git clone git://git.codehaus.org/paranamer-git.git paranamer-2.4.1
+# cd paranamer-2.4.1 && git checkout paranamer-2.4.1
+# find . -name '*.jar' -delete
+# rm -rf .git
+# cd .. && tar cafJ paranamer-2.4.1-CLEAN.tar.xz paranamer-2.4.1
+Source0:          paranamer-%{version}-CLEAN.tar.xz
 
-# If you don't want to build with maven, and use straight ant instead,
-# give rpmbuild option '--without maven'
+BuildArch:        noarch
 
-%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
-%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
+BuildRequires:    jpackage-utils
+BuildRequires:    maven-local
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-javadoc-plugin
+BuildRequires:    jmock
 
-
-Summary:        Method parameter name access
-Name:           paranamer
-Version:        1.5
-Release:        alt4_1jpp6
-Epoch:          0
-License:        Apache-style Software License
-URL:            http://paranamer.codehaus.org/
-Group:          Development/Java
-Source0:        paranamer-1.5.tar.gz
-# svn export http://svn.codehaus.org/paranamer/tags/paranamer-1.5/
-# tar czf paranamer-1.5.tar.gz paranamer-1.5/
-
-
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Patch0:         paranamer-generator-pom.patch
-Patch1:         paranamer-paranamer-pom.patch
-Patch2:         paranamer-distribution-pom.patch
-Patch3:         paranamer-distribution-skin.patch
-
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: ant-junit
-%if %{with_maven}
-BuildRequires: maven2 >= 2.0.8
-BuildRequires: maven2-plugin-ant
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-dependency
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-pmd
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-common-poms >= 1.0
-BuildRequires: maven-plugin-tools
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-surefire-report-maven-plugin
-BuildRequires: maven-release
-BuildRequires: mojo-maven2-plugin-cobertura
-BuildRequires: apache-commons-parent
-BuildRequires: jmock1 >= 0:1.0
-#BuildRequires: xsite
-%endif
-
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
-
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
+Requires:         jpackage-utils
 Source44: import.info
 
-
 %description
-Paranamer is a library that allows the parameter names of 
-non-private methods and constructors to be accessed at 
-runtime. Normally this information is dropped by the 
-compiler. In effect, methods like 
-'doSometing(mypkg.Person toMe)' currently look like 
-'doSomething(mypackage.Person ???)' to people using i
-Java's reflection to inspect methods.  
+It is a library that allows the parameter names of non-private methods
+and constructors to be accessed at runtime.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:          Javadocs for %{name}
+Group:            Development/Java
+Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%if %{with_maven}
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
-%endif
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q 
-cp %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
+%setup -q
 
+chmod -x LICENSE.txt
 
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch2 -b .sav2
-%patch3 -b .sav3
-%patch33 -b .sav33
+# Remove wagon extension
+%pom_xpath_remove "pom:build/pom:extensions"
+# Disable distribution module
+%pom_disable_module paranamer-distribution
+# Specify version in the plugin
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'paranamer-maven-plugin']" "<version>%{version}</version>" paranamer/pom.xml
 
 %build
-%if %{with_maven}
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-mkdir -p target/site
-
-mvn-jpp \
-        -e \
-        -s settings.xml \
-        -Dproject.build.directory=$(pwd)/target \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven.test.failure.ignore=true \
-	install
-#       ant:ant install javadoc:javadoc site
-
-%else
-ant -Dbuild.sysclasspath=only jar test javadoc
-%endif
+# Test failures
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
-
-# jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -m 644 %{name}-ant/target/%{name}-ant-%{version}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}/ant-%{version}.jar
-install -m 644 %{name}-generator/target/%{name}-generator-%{version}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}/generator-%{version}.jar
-install -m 644 %{name}-maven-plugin/target/%{name}-maven-plugin-%{version}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}/maven-plugin-%{version}.jar
-install -m 644 %{name}-more-integration-tests/target/%{name}-more-integration-tests-%{version}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}/more-integration-tests-%{version}.jar
-install -m 644 %{name}/target/%{name}-%{version}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}/core-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-
-
-
-# poms
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer-parent %{version} JPP/%{name} parent
-install -m 644 %{name}-ant/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ant.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer-ant %{version} JPP/%{name} ant
-install -m 644 %{name}-generator/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-generator.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer-generator %{version} JPP/%{name} generator
-install -m 644 %{name}-maven-plugin/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer-maven-plugin %{version} JPP/%{name} maven-plugin
-install -m 644 %{name}-more-integration-tests/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-more-integration-tests.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer-more-integration-tests %{version} JPP/%{name} more-integration-tests
-install -m 644 %{name}/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-core.pom
-%add_to_maven_depmap  com.thoughtworks.paranamer paranamer %{version} JPP/%{name} core
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
+# JAR
+install -pm 644 paranamer-generator/target/paranamer-generator-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-generator.jar
+install -pm 644 paranamer-maven-plugin/target/paranamer-maven-plugin-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-maven-plugin.jar
+install -pm 644 paranamer-integration-tests/it-011/target/paranamer-it-011-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-it-011.jar
+install -pm 644 paranamer-ant/target/paranamer-ant-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-ant.jar
+install -pm 644 paranamer/target/paranamer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-#cp -pr target/docs/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-rm -rf target/docs/javadoc
+# POM
+install -pm 644 paranamer-generator/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-generator.pom
+install -pm 644 paranamer-maven-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-maven-plugin.pom
+install -pm 644 paranamer-integration-tests/it-011/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-it-011.pom
+install -pm 644 paranamer-integration-tests/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-it.pom
+install -pm 644 paranamer-ant/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-ant.pom
+install -pm 644 paranamer/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
 
-# manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%if %{with_maven}
-#cp -pr target/docs $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%endif
+# DEPMAP
+%add_maven_depmap JPP.%{name}-%{name}-generator.pom %{name}/%{name}-generator.jar
+%add_maven_depmap JPP.%{name}-%{name}-maven-plugin.pom %{name}/%{name}-maven-plugin.jar
+%add_maven_depmap JPP.%{name}-%{name}-it-011.pom %{name}/%{name}-it-011.jar
+%add_maven_depmap JPP.%{name}-%{name}-ant.pom %{name}/%{name}-ant.jar
+%add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar
 
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
+%add_maven_depmap JPP.%{name}-%{name}-it.pom
+%add_maven_depmap JPP.%{name}-%{name}-parent.pom
+
+# APIDOCS
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_javadir}/*
+%doc LICENSE.txt
 
-#%files javadoc
-#%doc %{_javadocdir}/*
-
-%if %{with_maven}
-#%files manual
-#%doc %{_docdir}/%{name}-%{version}
-%endif
+%files javadoc
+%{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_5jpp7
+- converted from JPackage by jppimport script
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt4_1jpp6
 - use jmock1 (TODO: try jmock2)
 
