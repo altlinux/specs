@@ -1,21 +1,24 @@
 %define _name apsw
 %define rel r1
+%def_with python3
 
 Name: python-module-%_name
-Version: 3.7.15.2
+Version: 3.8.3.1
 Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
 Group: Development/Python
-Packager: Alexey Shabalin <shaba@altlinux.ru>
-Url: http://code.google.com/p/apsw/
-
-Source: http://apsw.googlecode.com/files/%_name-%version-%rel.zip
+Url: http://rogerbinns.github.io/apsw
+Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_name-%version-%rel.zip
 
 BuildPreReq: unzip rpm-build-python
-BuildRequires: libsqlite3-devel >= %version
+BuildRequires: libsqlite3-devel
 BuildRequires: python-devel python-module-setuptools
+%if_with python3
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-devel python3-module-distribute
+%endif
 
 %description
 APSW is a Python wrapper for the SQLite embedded relational database
@@ -23,21 +26,58 @@ engine. In contrast to other wrappers such as pysqlite it focuses on
 being a minimal layer over SQLite attempting just to translate the
 complete SQLite API into Python.
 
+%package -n python3-module-%_name
+Summary: Another Python SQLite Wrapper Python 3 packages
+Group: Development/Python3
+
+%description -n python3-module-%_name
+APSW is a Python 3 wrapper for the SQLite embedded relational database
+engine. In contrast to other wrappers such as pysqlite it focuses on
+being a minimal layer over SQLite attempting just to translate the
+complete SQLite API into Python 3.
+
+
 %prep
 %setup -q -n %_name-%version-%rel
 
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+find ../python3 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+%endif
+find -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
+
 %build
 %python_build
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%python_sitelibdir/%_name-*.egg-info
-%python_sitelibdir/%_name.so
-%doc doc
+%python_sitelibdir/*
+%doc doc/*
+
+%if_with python3
+%files -n python3-module-%_name
+%python3_sitelibdir/*
+%doc doc/*
+%endif
 
 %changelog
+* Wed Jul 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3.8.3.1-alt1.r1
+- 3.8.3.1
+- add python3 package
+
 * Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.15.2-alt1.r1
 - 3.7.15.2-r1
 
