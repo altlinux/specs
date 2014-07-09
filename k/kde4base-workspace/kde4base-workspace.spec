@@ -21,7 +21,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -561,6 +561,8 @@ grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
 grep -q X-KDE-SubstituteUID kdm/kcm/kdm.desktop \
     || echo "X-KDE-SubstituteUID=true" >>kdm/kcm/kdm.desktop
 
+sed -i 's|@KDM_BIN_DIR@|%_K4exec|' altlinux/kdm.service
+
 %build
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4cmake \
@@ -658,7 +660,7 @@ install -m 0644 %SOURCE4 %buildroot/%_sysconfdir/logrotate.d/kdm4
 
 # install systemd service file
 mkdir -p %buildroot/%_unitdir
-install -m 0644 %SOURCE5 %buildroot/%_unitdir/kdm4.service
+install -m 0644 altlinux/kdm.service %buildroot/%_unitdir/kdm4.service
 
 # default user face
 mkdir -p %buildroot/%_sysconfdir/firsttime.d/
@@ -934,6 +936,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jul 09 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.10-alt3
+- fix path in kdm4.service
+
 * Mon Jul 07 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.10-alt2
 - add kdm4.service
 
