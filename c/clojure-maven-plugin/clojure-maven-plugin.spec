@@ -1,4 +1,8 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global upstream    talios
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        1.3.10
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Clojure plugin for Maven
 
 License:        EPL
@@ -21,7 +25,7 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -100,6 +104,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.10-alt1_4jpp7
+- update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.10-alt1_2jpp7
 - new version
 
