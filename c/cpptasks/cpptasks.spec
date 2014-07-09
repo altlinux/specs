@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_8jpp7
+Release:	alt2_9jpp7
 Summary:	Compile and link task for ant
 
 Group:		Development/Java
@@ -35,7 +38,7 @@ MIDL and Windows Resource files.
 %package        javadoc
 Summary:	Javadoc for %{name}
 Group:		Development/Java
-Requires:	cpptasks >= %{version}-%{release}
+Requires:	%{name} >= %{version}-%{release}
 Requires:	jpackage-utils
 BuildArch: noarch
 
@@ -76,7 +79,7 @@ cp -p %{SOURCE1} ./README.fedora
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars javadocs 
+ant jars javadocs 
 
 #In lieu of maven built docs, which requires clirr
 #a URL is supplied in README.fedora
@@ -137,6 +140,9 @@ install -D -m 644 pom.xml $RPM_BUILD_ROOT%_mavenpomdir/JPP-%{name}.pom
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_9jpp7
+- update
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_8jpp7
 - added jpp compatible symlink
 
