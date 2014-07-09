@@ -1,6 +1,6 @@
 Name: qutim
 Version: 0.3.2
-Release: alt2
+Release: alt3.1
 Epoch: 7
 
 Summary: qutIM Instant Messenger
@@ -48,6 +48,7 @@ BuildRequires: libtelepathy-qt4-devel
 BuildRequires: libxkbfile-devel
 BuildRequires: phonon-devel
 BuildRequires: qt4-mobility-devel
+BuildRequires: libvreen-devel
 
 %description
 qutIM - free open-source multiprotocol (ICQ, Jabber, Mail.Ru, IRC, VKontakte) instant messenger for Windows, Linux, MacOS X, OS/2, Symbian, Haiku, Solaris, Maemo/MeeGo and *BSD systems
@@ -169,27 +170,10 @@ Quetzal protocol support for qutIM
 Summary: VKontakte.Ru protocol for %name
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
-Requires: libvreen = %version-%release
+Requires: libvreen >= 0.9.5
 
 %description -n %name-protocol-vkontakte
 VKontakte.Ru protocol support for qutIM
-
-# Vreen library (for vkontakte protocol)
-%package -n libvreen
-Summary: Shared library for vkontakte protocol for qutIM
-Group: System/Libraries
-
-%description -n libvreen
-Shared library for vkontakte protocol for qutIM
-
-# Vreen development files
-%package -n libvreen-devel
-Summary: Shared library for vkontakte protocol for qutIM
-Group: Development/C++
-Requires: libvreen = %version-%release
-
-%description -n libvreen-devel
-Shared library for vkontakte protocol for qutIM
 
 # Adium webview plugin
 %package -n %name-plugin-adiumwebview
@@ -743,7 +727,8 @@ cmake .. \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DLIB_SUFFIX:STRING='%lib_suffix' \
 	-DSYSTEM_JREEN:BOOL=TRUE \
-	-DKDEINTEGRATION:BOOL=FALSE
+	-DKDEINTEGRATION:BOOL=FALSE \
+	-DSYSTEM_VREEN:BOOL=TRUE
 popd
 
 %make_build -C %_target_platform
@@ -904,12 +889,6 @@ done
 %files -n %name-protocol-vkontakte
 %_libdir/%name/plugins/libvkontakte.so
 %_datadir/apps/%name/vphotoalbum
-
-%files -n libvreen
-%_libdir/libvreen.so.*
-
-%files -n libvreen-devel
-%_libdir/libvreen.so
 
 %files -n %name-plugin-adiumwebview
 %_libdir/%name/plugins/libadiumwebview.so
@@ -1120,6 +1099,12 @@ done
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Wed Jul 9 2014 Vladimir Didenko <cow@altlinux.org> 7:0.3.2-alt3.1
+- fix build
+
+* Tue Jul 8 2014 Vladimir Didenko <cow@altlinux.org> 7:0.3.2-alt3
+- rebuild with system libvreen
+
 * Fri Feb 21 2014 Nazarov Denis <nenderus@altlinux.org> 7:0.3.2-alt2
 - Remove broken phononsound plugon
 
