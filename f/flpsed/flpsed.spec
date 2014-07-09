@@ -1,6 +1,6 @@
 Name: flpsed
 Version: 0.7.2
-Release: alt1.2
+Release: alt2
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Add arbitrary text lines to existing PostScript document
 Summary(ru_RU.UTF-8): Добавление и редактирование текстовых полей в готовый PostScript-документ
@@ -10,9 +10,9 @@ License: GPL
 Source: %name-%version.tar.gz
 Url: http://www.ecademix.com/JohannesHofmann/
 
-# Automatically added by buildreq on Fri Oct 07 2011
-# optimized out: fontconfig libX11-devel libstdc++-devel xorg-xproto-devel
-BuildRequires: gcc-c++ libXext-devel libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpixman-devel
+# Automatically added by buildreq on Wed Jul 09 2014
+# optimized out: fontconfig libX11-devel libXext-devel libcloog-isl4 libstdc++-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libXcursor-devel libXfixes-devel libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpixman-devel
 
 BuildPreReq: libXfixes-devel
 
@@ -65,6 +65,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Wed Jul 09 2014 Fr. Br. George <george@altlinux.ru> 0.7.2-alt2
+- Fix buildreq
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.2
 - Rebuilt with updated libfltk
 
