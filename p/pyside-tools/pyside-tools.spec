@@ -1,13 +1,13 @@
 Name: pyside-tools
-Version: 0.2.14
-Release: alt1.git20120427
+Version: 0.2.15
+Release: alt1.git20131028
 Summary: Tools for python bindings for the Qt cross-platform application
 License: GPLv2 & BSD
 Group: Development/Tools
 Url: http://www.pyside.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# git://gitorious.org/pyside/pyside-tools.git
+# https://github.com/PySide/Tools.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel gcc-c++ cmake libqt4-devel
@@ -56,7 +56,7 @@ cmake \
 %makeinstall_std
 
 %files
-%doc AUTHORS LICENSE*
+%doc AUTHORS LICENSE* *.rst
 %_bindir/*
 %_man1dir/*
 
@@ -65,6 +65,9 @@ cmake \
 %exclude %python_sitelibdir/pysideuic/port_v3
 
 %changelog
+* Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.15-alt1.git20131028
+- Version 0.2.15
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.14-alt1.git20120427
 - Version 0.2.14
 
