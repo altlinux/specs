@@ -6,8 +6,8 @@
 %define gtkver 3
 
 Name: NetworkManager-vpnc
-Version: 0.9.8.6
-Release: alt3%git_date
+Version: 0.9.10.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -18,10 +18,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libgnome-keyring-devel perl-XML-Parser
+BuildRequires: perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
+BuildRequires: libnm-gtk-devel >= %nm_applet_version
 BuildRequires: libgtk+%gtkver-devel
+BuildRequires: libsecret-devel
 BuildRequires: libdbus-devel             >= 1.1
 BuildRequires: libpng-devel
 BuildRequires: intltool gettext
@@ -59,7 +61,6 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--with-gtkver=%gtkver \
 	--enable-more-warnings=yes
 %make_build
 
@@ -90,6 +91,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Jul 09 2014 Mikhail Efremov <sem@altlinux.org> 0.9.10.0-alt1
+- Spec updated for new version.
+- Updated to 0.9.10.0.
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt3
 - Update requires: NetworkManager -> NetworkManager-daemon.
 - Update BR: Use libnm-glib-vpn-devel.
