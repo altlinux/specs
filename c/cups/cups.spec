@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.7.3
-Release: alt3
+Release: alt4
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -121,6 +121,7 @@ Patch506: ALT-1.6.2-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
 Patch508: ALT-644.patch
 Patch509: ALT-1.7.2-local_ipv6.patch
+Patch510: ALT-config-nolibs.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -282,6 +283,7 @@ services using the main CUPS library "libcups".
 %patch507 -p1
 %patch508 -p1
 %patch509 -p1
+%patch510 -p1
 
 # make some temporary hacks
 sed -i 's/EndComments comment."/EndComments comment.\\n"/' systemv/cupstestdsc.c
@@ -436,6 +438,9 @@ install -D %name.alternative %buildroot%_altdir/%name
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed Jul 09 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt4
+- Restore part of the previous for being debian-unspecific
+
 * Thu Jul 03 2014 Fr. Br. George <george@altlinux.ru> 1.7.3-alt3
 - Remove Debian-specific config patch
 
