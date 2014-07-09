@@ -37,7 +37,7 @@
 %define somajor_glib 8
 %define major 0
 %define minor 26
-%define bugfix 1
+%define bugfix 2
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -397,6 +397,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Wed Jul 09 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.2-alt1
+- new version
+
 * Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.1-alt1
 - new version
 
