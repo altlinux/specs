@@ -2,7 +2,7 @@
 
 Name: py
 Version: 1.4.21
-Release: alt1.dev1.hg20140602
+Release: alt1.dev3.hg20140705
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -150,6 +150,9 @@ done
 %endif
 
 %changelog
+* Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.21-alt1.dev3.hg20140705
+- Version 1.4.21.dev3
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.21-alt1.dev1.hg20140602
 - Version 1.4.21.dev1
 
