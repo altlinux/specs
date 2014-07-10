@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: sun-annotation-1.0-api
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        1.2
-Release:        alt1_11jpp7
+Release:        alt1_13jpp7
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://objenesis.googlecode.com/svn/docs/index.html
@@ -56,7 +57,7 @@ Patch2:         JRockitInstantntiatorCharacters.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -112,11 +113,11 @@ This package contains the API documentation for %{name}.
 
 
 # Skipped till xsite avilable in fedora
-#%%%package manual
+#%%package manual
 #Group:          Documentation
 #Summary:        Documents for %%{name}
 #
-#%%%description manual
+#%%description manual
 #This package contains the %%{name} manual.
 
 
@@ -129,7 +130,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # tests are skipped because of missing dependency spring-osgi-test
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+mvn-rpmbuild -e \
           -Dyear=2009 \
           -Dmaven.test.skip=true \
           install javadoc:javadoc
@@ -176,6 +177,9 @@ cp -pr tck/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
 
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_13jpp7
+- update
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_11jpp7
 - fc update
 
