@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
-BuildRequires: maven-enforcer-plugin oss-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             base64coder
 Version:          20101219
-Release:          alt1_5jpp7
+Release:          alt1_7jpp7
 Summary:          Fast and compact Base64 encoder/decoder Java library
 License:          EPL or LGPLv2+ or GPLv2+ or ASL 2.0+ or BSD
 Group:            Development/Java
@@ -22,7 +22,7 @@ Source0:          http://repo2.maven.org/maven2/biz/source_code/%{name}/%{long_v
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-enforcer-plugin
@@ -86,6 +86,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 20101219-alt1_7jpp7
+- update
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 20101219-alt1_5jpp7
 - new release
 
