@@ -5,17 +5,18 @@ BuildRequires: unzip
 %define oldname adobe-source-sans-pro-fonts
 %global fontname source-sans-pro
 %global fontconf 63-%{fontname}.conf
+%define fversion 2.010roman-1.065-italic
 
 Name:           fonts-otf-adobe-source-sans-pro
-Version:        1.050
-Release:        alt1_3
+Version:        1.065
+Release:        alt1_0
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
 URL:            http://sourceforge.net/projects/sourcesans.adobe/
 
 #unable to build from source : source format is unbuldable with free software
-Source0:        http://downloads.sourceforge.net/sourcesans.adobe/SourceSansPro_FontsOnly-%{version}.zip
+Source0:        http://downloads.sourceforge.net/sourcesans.adobe/SourceSansPro_FontsOnly-%{fversion}.zip
 Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
@@ -28,7 +29,7 @@ user interface (UI) environments, as well as in text setting for screen and
 print.
 
 %prep
-%setup -q -n SourceSansPro_FontsOnly-%{version}
+%setup -q -n source-sans-pro-2.010R-ro-1.065R-it
 
 sed -i "s|\r||" LICENSE.txt
 
@@ -90,6 +91,9 @@ fi
 
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.065-alt1_0
+- new version 2.010roman-1.065-italic
+
 * Thu Jun 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.050-alt1_3
 - update to new release by fcimport
 
