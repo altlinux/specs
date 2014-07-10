@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt1
+Release: alt1.1
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -19,7 +19,7 @@ BuildPreReq: flex zlib-devel %{?_with_mysql: libMySQL-devel} %{?_with_pgsql: pos
 
 # Automatically added by buildreq on Tue Jul 02 2013
 # optimized out: OpenSP docbook-dtds docbook-style-dsssl libpq-devel openjade perl-SGMLSpm sgml-common zlib-devel
-BuildRequires: checkstyle checkstyle4 docbook-utils flex glibc-devel libwrap-devel postgresql-devel w3c-markup-validator-libs
+BuildRequires: checkstyle docbook-utils flex glibc-devel libwrap-devel postgresql-devel w3c-markup-validator-libs
 
 Requires: lib%name = %version-%release
 
@@ -117,5 +117,8 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0.68.5-alt1.1
+- NMU: corrected java dependencies
+
 * Tue Jul 02 2013 Vitaly Lipatov <lav@altlinux.ru> 0.68.5-alt1
 - initial build flow-tools fork for ALT Linux Sisyphus (ALT bug #16128)
