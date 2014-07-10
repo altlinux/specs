@@ -1,16 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: gcc-c++
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# one of the sources is a zip file
-BuildRequires: unzip
 %global    _version 2.0.17
 %global    _compat_version 1.1.0
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_5.1jpp6
+Release:   alt1_8.1jpp7
 Summary:   LALR Parser Generator
 Group:     Development/Java
 # although the text of the licence isn't distributed with some of the source,
@@ -57,7 +59,7 @@ BuildArch:     noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: ant-apache-regexp
-Requires: jpackage-utils
+Requires:      jpackage-utils
 
 %description   java
 Java runtime library for parsers generated with the LALR Parser Generator
@@ -72,7 +74,7 @@ BuildArch:     noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: ant
-Requires: jpackage-utils
+Requires:      jpackage-utils
 
 %description   java-compat
 Compatibility Java runtime library for parsers generated with the LALR Parser
@@ -143,6 +145,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_javadir}/%{name}javaruntime*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_8.1jpp7
+- update
+
 * Thu Mar 10 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_5.1jpp6
 - OSGi manifest for new eclipse-mdt-ocl
 
