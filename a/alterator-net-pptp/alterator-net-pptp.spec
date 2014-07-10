@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-pptp
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Url: http://www.altlinux.org/Alterator
@@ -48,6 +48,9 @@ alterator module for pptp connections configuration
 # - cleanup PPTP-over-PPP hasty fix
 
 %changelog
+* Thu Jul 10 2014 Timur Aitov <timonbl4@altlinux.org> 0.10.3-alt1
+- add maxfail, holdoff, lcp-echo-interval, lcp-echo-failure options
+
 * Sat Aug 20 2011 Michael Shigorin <mike@altlinux.org> 0.10.2-alt1
 - implemented --clamp-mss-to-pmtu autosetup (closes: #26124)
   + should help when a remote host pings and works ok from gateway
