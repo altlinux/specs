@@ -1,350 +1,238 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: perl(FileHandle.pm) unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
+# GCJ note: findbugs currently cannot be compiled with GCJ.  There are several
+# problems, most of which could be fixed with a little effort.  However,
+# findbugs uses java.util.regex.Pattern.LITERAL, which is part of the Java 5
+# specification, but Classpath does not support it.  This is a fatal problem.
 
 Name:           findbugs
 Version:        1.3.9
-Release:        alt2_5jpp6
-Epoch:          0
-Summary:        Bug Pattern Detector for Java
+Release:        alt2_12jpp7
+Summary:        Find bugs in Java code
+
+Group:          Development/Java
 License:        LGPLv2+
 URL:            http://findbugs.sourceforge.net/
-Group:          Development/Java
-Source0:        http://download.sourceforge.net/findbugs/findbugs-%{version}-source.zip
-Source1:        findbugs-script
-Source2:        findbugs-16x16.png
-Source3:        findbugs-32x32.png
-Source4:        findbugs-48x48.png
-Source5:        findbugs.desktop
-Source6:        http://repo1.maven.org/maven2/com/google/code/findbugs/findbugs/1.3.9/findbugs-1.3.9.pom
-Source7:        http://repo1.maven.org/maven2/com/google/code/findbugs/annotations/1.3.9/annotations-1.3.9.pom
-Source8:        http://repo1.maven.org/maven2/com/google/code/findbugs/findbugs-ant/1.3.9/findbugs-ant-1.3.9.pom
-Source9:        http://repo1.maven.org/maven2/com/google/code/findbugs/bcel/1.3.9/bcel-1.3.9.pom
-Source10:       http://repo1.maven.org/maven2/com/google/code/findbugs/jFormatString/1.3.9/jFormatString-1.3.9.pom
-Source11:       http://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.pom
-Patch0:         findbugs-build_xml.patch
-Patch1:         findbugs-bcel.patch
-Patch2:         findbugs-manifest.patch
-Patch3:         findbugs-pom.patch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires:       ant
-Requires:       bcel5.3
-Requires:       dom4j
-Requires:       jakarta-commons-lang
-Requires:       jaxen
-Requires:       jcip-annotations
-Requires:       jformatstring
-Requires:       jpackage-utils >= 0:1.7.3
-Requires:       jsr-305
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-nodeps
-BuildRequires:  ant-junit
-BuildRequires:  bcel5.3
-BuildRequires:  desktop-file-utils
-BuildRequires:  docbook-xsl >= 0:1.75.2
-BuildRequires:  dom4j
-BuildRequires:  jakarta-commons-lang
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-source.zip
+Source1:        findbugs-ant
+Source2:        findbugs-tools-README
+
+# Versions will be fixed in a patch
+Source3:        http://repo1.maven.org/maven2/net/sourceforge/findbugs/findbugs/1.3.7/findbugs-1.3.7.pom
+Source4:        http://repo1.maven.org/maven2/net/sourceforge/findbugs/annotations/1.3.2/annotations-1.3.2.pom
+
+# This patch has not been submitted upstream, as it contains Fedora-specific
+# changes.  It looks in /usr/share/java for jar files at both compile time and
+# run time, instead of in findbugs' lib directory.
+Patch0:         findbugs-1.3.9-build.patch
+
+# Build against ASM 3.3 instead of 3.1. Already changed upstream; see:
+# http://code.google.com/p/findbugs/source/detail?r=12605
+# http://code.google.com/p/findbugs/source/detail?r=12606
+Patch1:         findbugs-asm-version.patch
+%define asm_version 3.3
+
+# Updates the version information in POMs, as we don't have up to date POM's :(
+Patch2:         findbugs-1.3.9-pom.patch
+
+# Fedora-specific patch: use Fedora JAR filenames
+Patch3:         findbugs-jar-filenames.patch
+
+# Fedora-specific patch to cope with removal of Class-Path & Main-Class entries
+# from findbugs.jar manifest
+Patch4:         findbugs-remove-classpath.patch
+
+# Fedora-specific patch to allow FindBugs launcher scripts to be run from
+# /bin or /usr/bin (#848612)
+Patch5:         findbugs-home.patch
+
+BuildArch:      noarch
+
+BuildRequires:  findbugs-bcel
+BuildRequires:  ant
+BuildRequires:  docbook-style-xsl
+BuildRequires:  apache-commons-lang
 BuildRequires:  jaxen
 BuildRequires:  jcip-annotations
 BuildRequires:  jdepend
-BuildRequires:  jformatstring
-BuildRequires:  jpackage-utils >= 0:1.7.3
+BuildRequires:  jFormatString
+BuildRequires:  jpackage-utils
 BuildRequires:  jsr-305
 BuildRequires:  junit4
-BuildRequires:  objectweb-asm >= 0:3.0
-BuildRequires:  saxon6 >= 0:6.5.5
-BuildArch:      noarch
+BuildRequires:  objectweb-asm >= %{asm_version}
+BuildRequires:  perl
+BuildRequires: /usr/bin/latex texlive-latex-recommended
+Requires:       findbugs-bcel
+Requires:       apache-commons-lang
+Requires:       jaxen
+Requires:       jcip-annotations
+Requires:       jFormatString
+Requires:       jpackage-utils
+Requires:       jsr-305
+Requires:       junit4
+Requires:       objectweb-asm >= %{asm_version}
 Source44: import.info
 
 %description
-FindBugs is a program to find bugs in Java programs. It looks for 
-instances of ``bug patterns''---code instances that are likely to be 
-errors.
+Findbugs is a program which uses static analysis to look for bugs in Java code.
+It can check for null pointer exceptions, multithreaded code errors, and other
+bugs.
+
+%package -n ant-findbugs
+Group:          Development/Java
+Summary:        Ant task for findbugs
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       ant
+
+%description -n ant-findbugs
+This package defines an ant task for findbugs for easy integration of findbugs
+into your ant-controlled project.
 
 %package javadoc
-Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-Requires:       jpackage-utils
+Summary:        Javadoc documentation for findbugs
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+Javadoc documentation for findbugs.
 
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
+%package tools
+Group:          Development/Java
+Summary:        Addon tools for findbugs
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       junit4
 
-%description manual
-%{summary}.
+%description tools
+This package contains additional tools for use with findbugs.  See
+README.fedora for more information.
 
 %prep
 %setup -q
-%patch0 -p0 -b .sav0
-%patch1 -p1 -b .sav1
-%patch2 -p1 -b .sav2
-%{__cp} %{SOURCE6} findbugs-1.3.9.pom
-%patch3 -p0 -b .sav3
+%patch0 -p1
+%patch1 -p1
 
-%{_bindir}/find -type f -name "*.bat" | %{_bindir}/xargs -t %{__rm}
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%{__rm} -r doc
+cp -p %{SOURCE3} findbugs.pom
+cp -p %{SOURCE4} annotations.pom
 
-%{__rm} src/java/edu/umd/cs/findbugs/gui/OSXAdapter.java
-%{__rm} src/java5/edu/umd/cs/findbugs/gui2/OSXAdapter.java
-%{__rm} -r src/java5/net/jcip/annotations
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
-pushd lib
-%{__ln_s} $(build-classpath ant) ant.jar
-%{__ln_s} $(build-classpath bcel5.3) bcel.jar
-%{__ln_s} $(build-classpath commons-lang) commons-lang.jar
-%{__ln_s} $(build-classpath dom4j) dom4j.jar
-%{__ln_s} $(build-classpath jaxen) jaxen.jar
-%{__ln_s} $(build-classpath jcip-annotations) jcip-annotations.jar
-%{__ln_s} $(build-classpath jdepend) jdepend-2.9.jar
-%if %without bundled_jformatstring
-%{__ln_s} $(build-classpath jformatstring) jFormatString.jar
-%endif
-%{__ln_s} $(build-classpath jsr-305) jsr305.jar
-%{__ln_s} $(build-classpath junit4) junit.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm) asm.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-analysis) asm-analysis.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-commons) asm-commons.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-tree) asm-tree.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-util) asm-util.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-xml) asm-xml.jar
-popd
+cp -p %{SOURCE2} README.fedora
 
-%if 0
-# FIXME: setup is monolithic right now, as especially the ant task
-# doesn't read the CLASSPATH
-%{__perl} -p -i -e 's|^Class-Path:.*\n||g' etc/*.MF
-%endif
+# Make sure we don't accidentally use any existing JAR files
+rm -f lib/*.jar
 
-%{__perl} -pi -e 's/\r$//g;' src/doc/manual_ja.xml
+# Use the system jcip-annotations instead of building it in
+rm -fr src/java5/net
 
-%{__unzip} -qq %{_javadir}/docbook-xsl-ns-resources.zip
-# offline
-sed -i -e s,http://findbugs.googlecode.com/svn/trunk/findbugs/etc/docbook/docbookx.dtd,`pwd`/etc/docbook/docbookx.dtd,g `grep -rl 'http://findbugs.googlecode.com/svn/trunk/findbugs/etc/docbook/docbookx.dtd' .`
+# Get rid of code for Mac OS X that depends on a jar from Apple
+rm -f src/java/edu/umd/cs/findbugs/gui/OSXAdapter.java
+rm -f src/java5/edu/umd/cs/findbugs/gui2/OSXAdapter.java
 
-sed -i -e 's,saxon.home}/saxon.jar,saxon.home}/saxon6.jar,' build.xml
+# Turn on the executable bits for some auxiliary scripts
+chmod a+x etc/summarizeBugs etc/diffBugSummaries design/architecture/mkdep.pl
+
+# Remove Class-Path & Main-Class entries from findbugs.jar manifest
+sed -i '/class-path/I d' etc/MANIFEST-findbugs.MF
+sed -i '/Main-Class/ d' etc/MANIFEST-findbugs.MF
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/{junit,nodeps}`"
-%{ant} -Dsaxon.home=%{_javadir} -Dfop.home=%{_javadir} -Dxsl.stylesheet.home=`pwd`/docbook dist
+# Build the class files
+ant
 
-%install
+# Build the javadocs
+ant apiJavadoc
 
-%{__mkdir_p} %{buildroot}%{_javadir}/%{name}
-%{__cp} -p lib/findbugs.jar %{buildroot}%{_javadir}/%{name}/findbugs-%{version}.jar
-%{__cp} -p lib/findbugs-ant.jar %{buildroot}%{_javadir}/%{name}/findbugs-ant-%{version}.jar
-%{__cp} -p lib/annotations.jar %{buildroot}%{_javadir}/%{name}/annotations-%{version}.jar
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
-
-pushd %{buildroot}%{_javadir}/%{name}
-%{__ln_s} $(build-classpath ant) ant.jar
-%{__ln_s} $(build-classpath bcel5.3) bcel.jar
-%{__ln_s} $(build-classpath commons-lang) commons-lang.jar
-%{__ln_s} $(build-classpath dom4j) dom4j.jar
-%{__ln_s} $(build-classpath jaxen) jaxen.jar
-%{__ln_s} $(build-classpath jcip-annotations) jcip-annotations.jar
-%if %without bundled_jformatstring
-%{__ln_s} $(build-classpath jformatstring) jFormatString.jar
-%endif
-%{__ln_s} $(build-classpath jsr-305) jsr305.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm) asm.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-analysis) asm-analysis.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-commons) asm-commons.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-tree) asm-tree.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-util) asm-util.jar
-%{__ln_s} $(build-classpath objectweb-asm/asm-xml) asm-xml.jar
+# Build the architecture PDF
+pushd design/architecture
+make depend
+make
 popd
 
-%{__mkdir_p} %{buildroot}%{_sysconfdir}/ant.d
-%{__cat} > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
-findbugs/findbugs findbugs/findbugs-ant
-EOF
+# Package up the tools
+cd build/classes
+jar cf ../../lib/findbugs-tools.jar edu/umd/cs/findbugs/tools
 
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p findbugs-1.3.9.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-findbugs.pom
-%{__cp} -p %{SOURCE7} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-annotations.pom
-%{__cp} -p %{SOURCE8} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-findbugs-ant.pom
-%{__cp} -p %{SOURCE9} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-bcel.pom
-%{__cp} -p %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-jFormatString.pom
-%{__cp} -p %{SOURCE11} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-jsr305.pom
+%install
+# Install the jars
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p lib/annotations.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-annotations-%{version}.jar
+ln -s %{name}-annotations-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-annotations.jar
+cp -p lib/%{name}-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-%{version}.jar
+ln -s %{name}-tools-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools.jar
+cp -p lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap com.google.code.findbugs annotations %{version} JPP/%{name} annotations
-%add_to_maven_depmap com.google.code.findbugs bcel %{version} JPP/%{name} bcel
-%add_to_maven_depmap com.google.code.findbugs findbugs %{version} JPP/%{name} findbugs
-%add_to_maven_depmap com.google.code.findbugs findbugs-ant %{version} JPP/%{name} findbugs-ant
-%add_to_maven_depmap com.google.code.findbugs jFormatString %{version} JPP/%{name} jFormatString
-%add_to_maven_depmap com.google.code.findbugs jsr305 %{version} JPP/%{name} jsr305
+# Install the ant task
+mkdir -p $RPM_BUILD_ROOT%{_javadir}/ant
+cp -p lib/%{name}-ant.jar $RPM_BUILD_ROOT%{_javadir}/ant/ant-%{name}-%{version}.jar
+ln -s ant-%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/ant/ant-%{name}.jar
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
-%add_to_maven_depmap net.sourceforge.findbugs annotations 1.3.2 JPP/%{name} annotations
-%add_to_maven_depmap net.sourceforge.findbugs bcel 1.3.2 JPP/%{name} bcel
-%add_to_maven_depmap net.sourceforge.findbugs findbugs 1.3.2 JPP/%{name} findbugs
-%add_to_maven_depmap net.sourceforge.findbugs findbugs-ant 1.3.2 JPP/%{name} findbugs-ant
-%add_to_maven_depmap net.sourceforge.findbugs jsr305 1.3.2 JPP/%{name} jsr305
+# Install the javadocs
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
+cp -a apiJavaDoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_bindir}
-%{__cp} -p %{SOURCE1} %{buildroot}%{_bindir}/%{name}
+# Install the scripts
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+for f in $(find bin -maxdepth 1 -type f \! -name '*.bat'); do
+  cp -p $f $RPM_BUILD_ROOT%{_bindir}
+done
 
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr web/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+# Install the shared files
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a etc plugin $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_datadir}/applications
-%{_bindir}/desktop-file-install --vendor jpackage --dir %{buildroot}%{_datadir}/applications %{SOURCE5}
-%{__install} -D -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
-%{__install} -D -p -m 644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-%{__install} -D -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-%{__install} -D -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/pixmaps/%{name}.png
+# Remove now unnecessary build-only manual files so %%doc doesn't get them
+rm -f doc/manual*.xml doc/manual*.xsl
 
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}
-%{__cp} -pr bin %{buildroot}%{_datadir}/%{name}-%{version}
-%{__ln_s} %{_javadir}/%{name} %{buildroot}%{_datadir}/%{name}-%{version}/lib
-%{__cp} -pr plugin %{buildroot}%{_datadir}/%{name}-%{version}
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}/src/xsl
-%{__cp} -p src/xsl/*.xsl %{buildroot}%{_datadir}/%{name}-%{version}/src/xsl
-%{__ln_s} %{_docdir}/%{name}-%{version} %{buildroot}%{_datadir}/%{name}-%{version}/doc
-%{__ln_s} %{name}-%{version} %{buildroot}%{_datadir}/%{name}
+# Install poms
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+cp findbugs.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+cp annotations.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-annotations.pom
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/%name.conf`
-touch $RPM_BUILD_ROOT/etc/%name.conf
-# fix to report
-sed -i -e 's,Categories=Development;X-JPackage;,Categories=X-JPackage;Java;Development;Debugger;,' $RPM_BUILD_ROOT%_desktopdir/*.desktop
+# Add depmaps
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{name}-annotations.pom %{name}-annotations.jar
 
 %files
-%doc LICENSE.txt README.txt
-%attr(0755,root,root) %{_bindir}/findbugs
-%dir %{_datadir}/%{name}-%{version}
-%dir %{_datadir}/%{name}-%{version}/lib
-%dir %{_datadir}/%{name}-%{version}/plugin
-%doc %{_datadir}/%{name}-%{version}/plugin/README
-%dir %{_datadir}/%{name}-%{version}/bin
-%dir %{_datadir}/%{name}-%{version}/bin/deprecated
-%dir %{_datadir}/%{name}-%{version}/bin/experimental
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/addMessages
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/computeBugHistory
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/convertXmlToText
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/copyBuggySource
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/defectDensity
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/deprecated/bugHistory
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/deprecated/unionBugs
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/deprecated/unionResults
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/deprecated/updateBugs
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/experimental/churn
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/experimental/treemapVisualization
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/fbwrap
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/filterBugs
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/findbugs
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/findbugs2
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/findbugs-dbStats
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/findbugs-msv
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/listBugDatabaseInfo
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/mineBugHistory
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/printAppVersion
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/printClass
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/rejarForAnalysis
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/setBugDatabaseInfo
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/unionBugs
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/xpathFind
-%dir %{_datadir}/%{name}-%{version}/doc
-%dir %{_datadir}/%{name}-%{version}/src
-%dir %{_datadir}/%{name}-%{version}/src/xsl
-%{_datadir}/%{name}-%{version}/src/xsl/default.xsl
-%{_datadir}/%{name}-%{version}/src/xsl/fancy-hist.xsl
-%{_datadir}/%{name}-%{version}/src/xsl/fancy.xsl
-%{_datadir}/%{name}-%{version}/src/xsl/plain.xsl
-%{_datadir}/%{name}-%{version}/src/xsl/summary.xsl
-%dir %{_datadir}/%{name}
-%{_iconsdir}/hicolor/16x16/apps/findbugs.png
-%{_iconsdir}/hicolor/32x32/apps/findbugs.png
-%{_iconsdir}/hicolor/48x48/apps/findbugs.png
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/annotations-%{version}.jar
-%{_javadir}/%{name}/annotations.jar
-%{_javadir}/%{name}/ant.jar
-%{_javadir}/%{name}/asm-analysis.jar
-%{_javadir}/%{name}/asm-commons.jar
-%{_javadir}/%{name}/asm-tree.jar
-%{_javadir}/%{name}/asm-util.jar
-%{_javadir}/%{name}/asm-xml.jar
-%{_javadir}/%{name}/asm.jar
-%{_javadir}/%{name}/bcel.jar
-%{_javadir}/%{name}/commons-lang.jar
-%{_javadir}/%{name}/dom4j.jar
-%{_javadir}/%{name}/findbugs-%{version}.jar
-%{_javadir}/%{name}/findbugs-ant-%{version}.jar
-%{_javadir}/%{name}/findbugs-ant.jar
-%{_javadir}/%{name}/findbugs.jar
-%{_javadir}/%{name}/jFormatString.jar
-%{_javadir}/%{name}/jaxen.jar
-%{_javadir}/%{name}/jcip-annotations.jar
-%{_javadir}/%{name}/jsr305.jar
-%{_datadir}/maven2/poms/JPP.%{name}-annotations.pom
-%{_datadir}/maven2/poms/JPP.%{name}-findbugs-ant.pom
-%{_datadir}/maven2/poms/JPP.%{name}-findbugs.pom
-%{_datadir}/maven2/poms/JPP.%{name}-jFormatString.pom
-%{_datadir}/maven2/poms/JPP.%{name}-bcel.pom
-%{_datadir}/maven2/poms/JPP.%{name}-jsr305.pom
-%{_mavendepmapfragdir}/%{name}
-%{_sysconfdir}/ant.d/%{name}
-%{_datadir}/applications/*%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
-%config(noreplace,missingok) /etc/%name.conf
-#unpackaged directory: 
-%dir %_datadir/%name-%version/bin/deprecated
-%dir %_datadir/%name-%version/bin/experimental
+%doc LICENSE.txt design/DecouplingFromBCEL.txt design/VisitingAndCaching.txt
+%doc README.txt design/eclipse\ findbugs\ plugin\ features.sxw
+%doc design/architecture/architecture.pdf doc
+%{_bindir}/*
+%{_datadir}/%{name}
+%{_javadir}/findbugs-annotations*
+%{_javadir}/findbugs-%{version}.jar
+%{_javadir}/findbugs.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+
+%files -n ant-findbugs
+%doc LICENSE.txt
+%{_javadir}/ant/*
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%{_javadocdir}/*
 
-%files manual
-%doc design
-%doc src/doc
+%files tools
+%doc LICENSE.txt README.fedora
+%{_javadir}/findbugs-tools*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt2_12jpp7
+- converted from JPackage by jppimport script
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt2_5jpp6
 - build with saxon6
 
