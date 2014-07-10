@@ -31,22 +31,11 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# If you want repolib package to be built,
-# issue the following: 'rpmbuild --with repolib'
-
-%define _with_repolib 1
-
-%define with_repolib %{?_with_repolib:1}%{!?_with_repolib:0}
-%define without_repolib %{!?_with_repolib:1}%{?_with_repolib:0}
-
-%define repodir %{_javadir}/repository.jboss.com/sun-servlet/2.5-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
 
 
 Name:		servletapi6
 Version:	6.0.18
-Release:	alt1_1jpp5
+Release:	alt2_1jpp5
 Epoch:		0
 Summary:	Java servlet and JSP implementation classes
 License: 	ASL 2.0
@@ -54,7 +43,6 @@ Group: 		Development/Java
 Source0:	http://www.apache.org/dist/tomcat/tomcat-6/v6.0.18/src/apache-tomcat-6.0.18-src.tar.gz
 Source1:	servletapi6-servlet-build.xml
 Source2:	servletapi6-jsp-build.xml
-Source3:	servletapi6-component-info.xml
 Url: 		http://tomcat.apache.org/
 #Requires(post,postun):       /usr/sbin/update-alternatives
 BuildRequires: jpackage-utils >= 0:1.6
@@ -62,23 +50,17 @@ BuildRequires: ant >= 0:1.6.5
 BuildRequires: java-javadoc
 BuildArch:	noarch
 Provides:	servlet
-Provides:	servlet6
-Provides:	servlet25
+Provides:	servletapi
+Provides:	servlet_api
+Provides:	servlet_2_5_api
+Provides:	jsp_api
+Provides:	jsp_2_1_api
+#Provides:	servlet6
+#Provides:	servlet25
 
 %description
 This subproject contains the source code for the implementation classes
 of the Java Servlet 2.5 and JSP 2.1 APIs (packages javax.servlet).
-
-%if %{with_repolib}
-%package repolib
-Summary:	 Artifacts to be uploaded to a repository library
-Group:	         Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
 
 %package javadoc
 Group: 		Development/Documentation
@@ -122,21 +104,34 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 popd
 
-%if %{with_repolib}
-	install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-	install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-	install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        sed -i "s/@VERSION@/2.5-brew/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-        sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-	install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-	install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-	cp -p $RPM_BUILD_ROOT%{_javadir}/servletapi6-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/servlet-api.jar
-	cp -p $RPM_BUILD_ROOT%{_javadir}/jspapi6-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/jsp-api.jar
-%endif
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/servlet_%{name}<<EOF
+%{_javadir}/servlet.jar	%{_javadir}/%{name}-%{version}.jar	20300
+EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/servlet_2_5_api_%{name}<<EOF
+%{_javadir}/servlet_2_5_api.jar	%{_javadir}/%{name}-%{version}.jar	20300
+EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/servlet_api_%{name}<<EOF
+%{_javadir}/servlet_api.jar	%{_javadir}/%{name}-%{version}.jar	20300
+EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_2_1_api_%{name}<<EOF
+%{_javadir}/jsp_2_1_api.jar	%{_javadir}/jspapi6-%{version}.jar	10200
+EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_api_%{name}<<EOF
+%{_javadir}/jsp_api.jar	%{_javadir}/jspapi6-%{version}.jar	10200
+EOF
+
+cat >>$RPM_BUILD_ROOT/%_altdir/servletapi_%{name}<<EOF
+%{_javadir}/servletapi.jar	%{_javadir}/%{name}-%{version}.jar	20300
+EOF
 
 %files
 %doc apache-tomcat-%{version}-src/LICENSE apache-tomcat-%{version}-src/NOTICE
+%_altdir/jsp_api_%{name}
+%_altdir/jsp_2_1_api_%{name}
+%_altdir/servlet_api_%{name}
+%_altdir/servlet_2_5_api_%{name}
+%_altdir/servlet_%{name}
+%_altdir/servletapi_%{name}
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %{_javadir}/jspapi6-%{version}.jar
@@ -144,15 +139,11 @@ popd
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
-#%ghost %{_javadocdir}/%{name}
-#%ghost %{_javadocdir}/jsp-api
-
-%if %{with_repolib}
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.0.18-alt2_1jpp5
+- added jpackage alternatives
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:6.0.18-alt1_1jpp5
 - new version
 
