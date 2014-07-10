@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Thu Jul 10 2014 Paul Wolneykien <manowar@altlinux.org> 0.1.10-alt1
+- update_srcdir: Fix: strip 1 path component by default.
+
 * Sat Feb 01 2014 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt1
 - Handle full URIs in a pubdir answer properly.
 
