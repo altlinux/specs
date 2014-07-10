@@ -1,8 +1,11 @@
 Epoch: 1
-BuildRequires: docbook-xml docbook-dtds
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: docbook-dtds
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate3
 %define version 3.6.10
 %global namedreltag .Final
@@ -11,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name: hibernate3
 Version: 3.6.10
-Release: alt1_6jpp7
+Release: alt2_6jpp7
 Summary: Relational persistence and query service
 
 Group: Development/Java
@@ -273,6 +276,9 @@ ln -s hibernate3/hibernate-core.jar %buildroot%_javadir/hibernate3.jar
 %{_mavendepmapfragdir}/%{name}-testing
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt2_6jpp7
+- fixed deps
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_6jpp7
 - new fc release
 
