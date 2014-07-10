@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,173 +35,98 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 Name:           objectweb-asm
 Version:        3.3.1
-Release:        alt5_4jpp6
+Release:        alt5_4jpp7
 Epoch:          0
-Summary:        Code manipulation tool to implement adaptable systems
+Summary:        A code manipulation tool to implement adaptable systems
 License:        BSD
 URL:            http://asm.objectweb.org/
 Group:          Development/Java
-Source0:        http://download.forge.objectweb.org/asm/asm-%{version}.tar.gz
-Source1:        asm-%{version}.pom
-#based on Source1:        http://repo1.maven.org/maven2/asm/asm/3.3.1/asm-3.3.1.pom
-Source2:        asm-analysis-%{version}.pom
-#based on Source2:        http://repo1.maven.org/maven2/asm/asm-analysis/3.3.1/asm-analysis-3.3.1.pom
-Source3:        asm-commons-%{version}.pom
-#based on Source3:        http://repo1.maven.org/maven2/asm/asm-commons/3.3.1/asm-commons-3.3.1.pom
-Source4:        asm-tree-%{version}.pom
-#based on Source4:        http://repo1.maven.org/maven2/asm/asm-tree/3.3.1/asm-tree-3.3.1.pom
-Source5:        asm-util-%{version}.pom
-#based on Source5:        http://repo1.maven.org/maven2/asm/asm-util/3.3.1/asm-util-3.3.1.pom
-Source6:        asm-xml-%{version}.pom
-#based on Source6:        http://repo1.maven.org/maven2/asm/asm-xml/3.3.1/asm-xml-3.3.1.pom
-Source7:        asm-all-%{version}.pom
-#based on Source7:        http://repo1.maven.org/maven2/asm/asm-all/3.3.1/asm-all-3.3.1.pom
-Source8:        asm-parent-%{version}.pom
-#based on Source8:        http://repo1.maven.org/maven2/asm/asm-parent/3.3.1/asm-parent-3.3.1.pom
-Source9:        asm-MANIFEST.MF
-Source10:        asm-debug-all-%{version}.pom
-#based on Source10:        http://repo1.maven.org/maven2/asm/asm-debug-all/3.3.1/asm-debug-all-3.3.1.pom
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
+Source0:        http://download.forge.objectweb.org/asm/asm-3.3.1.tar.gz
+Source1:        asm-MANIFEST.MF
+Patch0:         objectweb-asm-no-classpath-in-manifest.patch
 # Needed by asm-xml.jar
 Requires:       xml-commons-jaxp-1.3-apis
-BuildRequires:  ant >= 0:1.7
-BuildRequires:  jpackage-utils
+Requires(post): jpackage-utils >= 0:1.7.4
+Requires(postun): jpackage-utils >= 0:1.7.4
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  objectweb-anttask
 BuildRequires:  xml-commons-jaxp-1.3-apis
 BuildRequires:  zip
 BuildArch:      noarch
 Source44: import.info
-Source45: asm-all.jar-OSGi-MANIFEST.MF
 
 %description
 ASM is a code manipulation tool to implement adaptable systems.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
+Group:          Development/Java
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 Javadoc for %{name}.
 
 %prep
 %setup -q -n asm-%{version}
+%patch0 -p1
 perl -pi -e 's/\r$//g' LICENSE.txt README.txt
 
 mkdir META-INF
-cp -p %{SOURCE9} META-INF/MANIFEST.MF
+cp -p %{SOURCE1} META-INF/MANIFEST.MF
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dobjectweb.ant.tasks.path=$(build-classpath objectweb-anttask) jar jdoc
+ant -Dobjectweb.ant.tasks.path=$(build-classpath objectweb-anttask) jar jdoc
 
 %install
-
 # jars
-mkdir -p %{buildroot}%{_javadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 for jar in output/dist/lib/*.jar; do
-    cp -p ${jar} %{buildroot}%{_javadir}/%{name}/`basename ${jar}`
+install -m 644 ${jar} \
+$RPM_BUILD_ROOT%{_javadir}/%{name}/`basename ${jar/-%{version}/}`
 done
 
 touch META-INF/MANIFEST.MF
-zip -q -u output/dist/lib/all/asm-all-%{version}.jar META-INF/MANIFEST.MF
+zip -u output/dist/lib/all/asm-all-%{version}.jar META-INF/MANIFEST.MF
 
-cp -p output/dist/lib/all/asm-all-%{version}.jar %{buildroot}%{_javadir}/%{name}/
-cp -p output/dist/lib/all/asm-debug-all-%{version}.jar %{buildroot}%{_javadir}/%{name}/
-
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do ln -s ${jar} ${jar/-%{version}/}; done)
+install -m 644 output/dist/lib/all/asm-all-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/asm-all.jar
+install -m 644 output/dist/lib/all/asm-all-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.objectweb-asm-asm-all.pom
 
 # pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm.pom
-%add_to_maven_depmap org.objectweb.asm asm %{version} JPP/%{name} asm
-%add_to_maven_depmap asm asm %{version} JPP/%{name} asm
-cp -p %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-analysis.pom
-%add_to_maven_depmap org.objectweb.asm asm-analysis %{version} JPP/%{name} asm-analysis
-%add_to_maven_depmap asm asm-analysis %{version} JPP/%{name} asm-analysis
-cp -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-commons.pom
-%add_to_maven_depmap org.objectweb.asm asm-commons %{version} JPP/%{name} asm-commons
-%add_to_maven_depmap asm asm-commons %{version} JPP/%{name} asm-commons
-cp -p %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-debug-all.pom
-%add_to_maven_depmap org.objectweb.asm asm-debug-all %{version} JPP/%{name} asm-debug-all
-%add_to_maven_depmap asm asm-debug-all %{version} JPP/%{name} asm-debug-all
-cp -p %{SOURCE4} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-tree.pom
-%add_to_maven_depmap org.objectweb.asm asm-tree %{version} JPP/%{name} asm-tree
-%add_to_maven_depmap asm asm-tree %{version} JPP/%{name} asm-tree
-cp -p %{SOURCE5} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-util.pom
-%add_to_maven_depmap org.objectweb.asm asm-util %{version} JPP/%{name} asm-util
-%add_to_maven_depmap asm asm-util %{version} JPP/%{name} asm-util
-cp -p %{SOURCE6} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-xml.pom
-%add_to_maven_depmap org.objectweb.asm asm-xml %{version} JPP/%{name} asm-xml
-%add_to_maven_depmap asm asm-xml %{version} JPP/%{name} asm-xml
-cp -p %{SOURCE7} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-all.pom
-%add_to_maven_depmap org.objectweb.asm asm-all %{version} JPP/%{name} asm-all
-%add_to_maven_depmap asm asm-all %{version} JPP/%{name} asm-all
-cp -p %{SOURCE8} %{buildroot}%{_datadir}/maven2/poms/JPP.objectweb-asm-asm-parent.pom
-%add_to_maven_depmap org.objectweb.asm asm-parent %{version} JPP/%{name} asm-parent
-%add_to_maven_depmap asm asm-parent %{version} JPP/%{name} asm-parent
+for pom in output/dist/lib/*.pom; do
+install -m 644 ${pom} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.objectweb-asm-`basename ${pom/-%{version}/}`
+done
+%add_maven_depmap JPP.objectweb-asm-asm.pom %{name}/asm.jar
+%add_maven_depmap JPP.objectweb-asm-asm-analysis.pom %{name}/asm-analysis.jar
+%add_maven_depmap JPP.objectweb-asm-asm-commons.pom %{name}/asm-commons.jar
+%add_maven_depmap JPP.objectweb-asm-asm-tree.pom %{name}/asm-tree.jar
+%add_maven_depmap JPP.objectweb-asm-asm-util.pom %{name}/asm-util.jar
+%add_maven_depmap JPP.objectweb-asm-asm-xml.pom %{name}/asm-xml.jar
+%add_maven_depmap JPP.objectweb-asm-asm-all.pom %{name}/asm-all.jar
+%add_maven_depmap JPP.objectweb-asm-asm-parent.pom
 
 # javadoc
-install -p -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-# inject OSGi manifest asm-all.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-# update even MANIFEST.MF already exists
-# touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/objectweb-asm/asm-all.jar META-INF/MANIFEST.MF
-
-# poms use asm group now - incompatible with oweb-asm 3.2 and confilcts with asm2 :( 
-# seems like we need to patch asm2 to have asm2 group.
-sed -i -e 's,<groupId>asm</groupId>,<groupId>org.objectweb.asm</groupId>,g' %buildroot/usr/share/maven2/poms/JPP.objectweb-asm-asm*
-# end inject OSGi manifest asm-all.jar-OSGi-MANIFEST.MF
+install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr output/dist/doc/javadoc/user/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %doc LICENSE.txt README.txt
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/asm-%{version}.jar
-%{_javadir}/%{name}/asm-all-%{version}.jar
-%{_javadir}/%{name}/asm-all.jar
-%{_javadir}/%{name}/asm-analysis-%{version}.jar
-%{_javadir}/%{name}/asm-analysis.jar
-%{_javadir}/%{name}/asm-commons-%{version}.jar
-%{_javadir}/%{name}/asm-commons.jar
-%{_javadir}/%{name}/asm-debug-all-%{version}.jar
-%{_javadir}/%{name}/asm-debug-all.jar
-%{_javadir}/%{name}/asm-tree-%{version}.jar
-%{_javadir}/%{name}/asm-tree.jar
-%{_javadir}/%{name}/asm-util-%{version}.jar
-%{_javadir}/%{name}/asm-util.jar
-%{_javadir}/%{name}/asm-xml-%{version}.jar
-%{_javadir}/%{name}/asm-xml.jar
-%{_javadir}/%{name}/asm.jar
-%{_datadir}/maven2/poms/JPP.%{name}-asm-all.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-analysis.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-commons.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-debug-all.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-parent.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-tree.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-util.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm-xml.pom
-%{_datadir}/maven2/poms/JPP.%{name}-asm.pom
-%{_mavendepmapfragdir}/%{name}
+%{_javadir}/%{name}/*.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt5_4jpp7
+- update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt5_4jpp6
 - updated OSGi manifest to match version
 
