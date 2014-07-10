@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %major.1.0
-Release: alt1.svn20140528
+Release: alt1.svn20140708
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -376,6 +376,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1.0-alt1.svn20140708
+- New snapshot
+
 * Mon Jun 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1.0-alt1.svn20140528
 - Initial build for Sisyphus
 
