@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.1
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -96,7 +96,25 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %config(noreplace) %_sysconfdir/fonts/conf.avail/*.conf
 %_sysconfdir/fonts/conf.d/README
 %_sysconfdir/fonts/conf.d/[2-9]*.conf
-%ghost %_sysconfdir/fonts/conf.d/1*.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-antialias.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-style-full.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
+%ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
+%ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
+%ghost %_sysconfdir/fonts/conf.d/10-no-sub-pixel.conf
+%ghost %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
+%ghost %_sysconfdir/fonts/conf.d/10-style-light.conf
+%ghost %_sysconfdir/fonts/conf.d/10-style-medium.conf
+%ghost %_sysconfdir/fonts/conf.d/10-style-none.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-bgr.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vbgr.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vrgb.conf
+%ghost %_sysconfdir/fonts/conf.d/10-unhinted.conf
+%ghost %_sysconfdir/fonts/conf.d/11-lcdfilter-legacy.conf
+%ghost %_sysconfdir/fonts/conf.d/11-lcdfilter-light.conf
+%ghost %_sysconfdir/fonts/conf.d/11-lcdfilter-none.conf
 %ghost %config(missingok,noreplace) %_sysconfdir/fonts/local.conf
 %_bindir/fc-*
 %_libdir/*.so.*
@@ -118,6 +136,13 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Jul 10 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt2
+- by default turn on antialias lcdfilter-default hinting style-full sub-pixel-rgb
+- by default decrease ms fonts priority
+
+* Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt0.M70P.1
+- built for M70P
+
 * Wed Mar 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt1
 - new version
 
