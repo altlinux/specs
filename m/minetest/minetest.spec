@@ -1,8 +1,9 @@
+%def_without l10n
 %define _hardened_build 1
 %global gitname celeron55
 
 Name:		minetest
-Version:	0.4.9
+Version:	0.4.10
 Release:	alt1
 Summary:	Multiplayer infinite-world block sandbox with survival mode
 
@@ -33,6 +34,7 @@ BuildRequires:	bzip2-devel jthread-devel libsqlite3-devel
 BuildRequires:	libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel
 BuildRequires:	libopenal-devel libvorbis-devel
 BuildRequires:	systemd
+BuildRequires:	gettext-tools
 
 Requires:	%name-server = %version-%release
 Requires:	icon-theme-hicolor
@@ -63,10 +65,12 @@ popd
 cp %SOURCE7 doc/
 
 %build
-%cmake_insource -DJTHREAD_INCLUDE_DIR=%_builddir/%gitname-%name/src/jthread
-#pushd BUILD
+%cmake_insource \
+%if_with l10n
+	-DENABLE_GETTEXT=TRUE \
+%endif
+	-DJTHREAD_INCLUDE_DIR=%_builddir/%gitname-%name/src/jthread 
 %make_build
-#popd
 
 %install
 %makeinstall_std 
@@ -100,7 +104,11 @@ cp -p %SOURCE5 README
 #mv  %buildroot%{_datadir}/doc/%{name}/* __doc
 #rm -rf %buildroot%{_datadir}/doc/%{name}
 
-# %find_lang %{name}
+%if_with l10n
+%find_lang %name
+%else
+touch %name.lang
+%endif
 
 %pre server
 getent group %{name} >/dev/null || groupadd -r %{name}
@@ -129,15 +137,15 @@ if [ $1 -ge 1 ] ; then
     /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
 fi
 
-# %%files -f %{name}.lang
-%files
+%files -f %{name}.lang
 %doc doc/lgpl-2.1.txt README
 %doc %_docdir/%name
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%{name}.desktop
 %_datadir/icons/hicolor/scalable/apps/%{name}-icon.svg
-%_man6dir/minetest.*
+%doc %_man6dir/minetest.*
+%_datadir/appdata/%{name}.appdata.xml
 
 %files server
 %doc README.txt doc/lgpl-2.1.txt doc/mapformat.txt doc/protocol.txt README
@@ -151,6 +159,11 @@ fi
 
 
 %changelog
+* Tue Jul 08 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.10-alt1
+- New version
+- Add appdata to package
+- Support localization disabled by default
+
 * Sun Jan 05 2014 Andrey Cherepanov <cas@altlinux.org> 0.4.9-alt1
 - New version
 
