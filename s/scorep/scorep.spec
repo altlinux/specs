@@ -4,20 +4,20 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: scorep
-Version: 1.2.3
-Release: alt1
+Version: 1.3
+Release: alt1.rc2
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
 Group: Development/Tools
 Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/scorep/scorep-1.2.3.tar.gz
+Source: %name-%version.tar.gz
 
 BuildPreReq: %mpiimpl-devel libotf2-devel opari2-devel libcube-devel
 BuildPreReq: libbfd-devel uncrustify doxygen libpapi-devel flex
 BuildPreReq: libopenpdt-devel libcube-devel graphviz texlive-base-bin
-BuildPreReq: chrpath lockfile-progs binutils-devel
+BuildPreReq: chrpath lockfile-progs binutils-devel otf2 libgomp-devel
 
 %description
 The Score-P (Scalable Performance Measurement Infrastructure for
@@ -73,7 +73,7 @@ pushd build-backend
 %make_build V=1 libscorep_mutex_mockup.la
 %make_build V=1 libscorep_adapter_compiler_mgmt.la
 %make_build V=1 libscorep_measurement.la
-%make_build V=1 libscorep_adapter_pomp_omp_mgmt_mockup.la
+#make_build V=1 libscorep_adapter_pomp_omp_mgmt_mockup.la
 %make_build V=1 libscorep_online_access_mockup.la
 %make_build V=1 libscorep_mutex_mockup.la
 popd
@@ -104,6 +104,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.rc2
+- Version 1.3-rc2
+
 * Tue Jun 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1
 - Version 1.2.3
 

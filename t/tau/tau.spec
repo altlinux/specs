@@ -3,7 +3,7 @@
 
 Name: tau
 Version: 2.23
-Release: alt1
+Release: alt2
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -399,6 +399,9 @@ ln -s %_bindir/tau2otf2 %buildroot%_bindir/tau2otf
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23-alt2
+- Rebuilt with new OTF2
+
 * Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23-alt1
 - Version 2.23
 

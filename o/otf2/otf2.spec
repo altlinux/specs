@@ -4,12 +4,12 @@ Name: otf2
 License: BSD
 Group: Development/Tools
 Summary: Open Trace Format 2 (OTF2)
-Version: 1.2.1
+Version: 1.4
 Release: alt1
 Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.2.1.tar.gz
+Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.4.tar.gz
 
 BuildPreReq: uncrustify doxygen graphviz texlive-base-bin
 BuildPreReq: gcc-c++
@@ -80,11 +80,6 @@ This package contains documentation for OTF2.
 %install
 %makeinstall_std
 
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
-
 pushd %buildroot%_libdir
 gcc -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive -lm \
 	-Wl,-soname,lib%name.so.%sover -o lib%name.so.%sover
@@ -95,8 +90,7 @@ popd
 %doc AUTHORS ChangeLog COPYING README
 %_bindir/*
 %exclude %_bindir/%name-config
-%dir %_datadir/%name
-%_datadir/%name/python
+%_datadir/%name
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -110,6 +104,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
+- Version 1.4
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 
