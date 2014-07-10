@@ -3,7 +3,7 @@ License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
 Version: 4.2.0
-Release: alt4.svn20140428
+Release: alt5.svn20140428
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -210,6 +210,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt5.svn20140428
+- Added lsb init header
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt4.svn20140428
 - Enabled ZIOP
 
