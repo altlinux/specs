@@ -1,3 +1,5 @@
+%define oversion 14.03.4-2
+
 %def_enable shared
 %def_enable static
 %def_disable debug
@@ -19,13 +21,14 @@
 %define Name SLURM
 Name: slurm
 %define lname lib%name
-Version: 2.6.4
+Version: 14.03.4.2
 %define pre %nil
 Release: alt1
 Summary: Simple Linux Utility for Resource Management
 License: %gpl2plus
 Group: System/Base
 Url: https://computing.llnl.gov/linux/%name
+# git://github.com/SchedMD/slurm.git
 Source0: %name-%version%pre.tar
 Source1: %name.init
 Source2: %{name}ctl.init
@@ -33,7 +36,6 @@ Source3: %{name}db.init
 Source11: %name.conf.in
 Source12: %{name}dbd.conf.in
 Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libmysqlclient-devel libgtk+2-devel libncurses-devel service
@@ -259,7 +261,7 @@ touch AUTHORS NEWS.bz2 README.rst RELEASE_NOTES DISCLAIMER
 
 %make_install DESTDIR=%buildroot install
 install -d -m 0755 %buildroot{%_sysconfdir/{sysconfig,%name},%_initdir}
-install -m 0644 AUTHORS NEWS.* README.rst RELEASE_NOTES DISCLAIMER %buildroot%_docdir/%name-%version/
+install -m 0644 AUTHORS NEWS.* README.rst RELEASE_NOTES DISCLAIMER %buildroot%_docdir/%name-%oversion/
 :> %buildroot%_sysconfdir/sysconfig/%name
 :> %buildroot%_sysconfdir/%name/%name.key
 :> %buildroot%_sysconfdir/%name/%name.cert
@@ -268,7 +270,7 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/%{name}ctl
 install -m 0755 %SOURCE3 %buildroot%_initdir/%{name}db
 install -m 0644 %SOURCE11 %buildroot%_sysconfdir/%name.conf
 install -m 0644 %SOURCE12 %buildroot%_sysconfdir/%{name}dbd.conf
-install -m 0644 etc/%name{*.conf.example,.epilog.clean} %buildroot%_docdir/%name-%version/
+install -m 0644 etc/%name{*.conf.example,.epilog.clean} %buildroot%_docdir/%name-%oversion/
 rm -rf %buildroot%_libdir/%name/src
 rm -f %buildroot{%_libdir/%name/*a,%_man3dir/%{name}_*_trigger*}
 
@@ -308,11 +310,11 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %files common
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/AUTHORS
-%doc %_docdir/%name-%version/DISCLAIMER
-%doc %_docdir/%name-%version/README.rst
-%doc %_docdir/%name-%version/RELEASE_NOTES
+%doc %dir %_docdir/%name-%oversion
+%doc %_docdir/%name-%oversion/AUTHORS
+%doc %_docdir/%name-%oversion/DISCLAIMER
+%doc %_docdir/%name-%oversion/README.rst
+%doc %_docdir/%name-%oversion/RELEASE_NOTES
 %config %_sysconfdir/%name.*
 %config %_sysconfdir/sysconfig/%name
 
@@ -368,11 +370,11 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %files doc
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/html
-%_docdir/%name-%version/NEWS.*
-%_docdir/%name-%version/%name.epilog.clean
-%_docdir/%name-%version/*.conf.example
+%dir %_docdir/%name-%oversion
+%_docdir/%name-%oversion/html
+%_docdir/%name-%oversion/NEWS.*
+%_docdir/%name-%oversion/%name.epilog.clean
+%_docdir/%name-%oversion/*.conf.example
 
 
 %if_enabled shared
@@ -416,6 +418,9 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.03.4.2-alt1
+- Version 14.03.4.2
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1
 - Version 2.6.4
 
