@@ -20,10 +20,10 @@ Version: 4.4.1
 %define pre -rc1
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt0.1
+Release: alt0.2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
-%define qemu_ver 4.4.0
+%define qemu_ver %version%pre
 URL: http://www.xenproject.org/
 Source0: http://bits.%{name}source.com/oss-%name/release/%version/%name-%version%pre.tar
 Source1: qemu-upstream-%version%pre.tar
@@ -176,6 +176,7 @@ running under the Xen hypervisor.
 Summary: Shared libraries for Xen tools
 Group: System/Libraries
 Provides: %name-libs = %version-%release
+Obsoletes: %name-libs
 Requires: xen-licenses
 
 %description -n lib%name
@@ -736,6 +737,10 @@ done
 
 
 %changelog
+* Thu Jul 10 2014 Led <led@altlinux.ru> 4.4.1-alt0.2
+- upstream updates
+- libxen obsoletes xen-libs (ALT#30173)
+
 * Sat Jun 21 2014 Led <led@altlinux.ru> 4.4.1-alt0.1
 - 4.4.1-rc1
 
