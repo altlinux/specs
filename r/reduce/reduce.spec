@@ -7,8 +7,8 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20140515
-Release: alt2
+Version: 20140706
+Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
 Group: Sciences/Mathematics
@@ -36,7 +36,7 @@ BuildPreReq: gcc-c++ gnuplot libGL-devel libGLU-devel libXcursor-devel
 BuildPreReq: libXft-devel libjpeg-devel libpng-devel libtiff-devel
 BuildPreReq: libXext-devel libX11-devel libncurses-devel
 BuildPreReq: libtinfo-devel ghostscript-utils libwxGTK3.0-devel
-BuildPreReq: libcrlibm-devel
+BuildPreReq: libcrlibm-devel tex4ht
 
 %description
 This is the REDUCE - symbolic mathematics system. REDUCE has two modes of
@@ -178,10 +178,16 @@ popd
 # docs
 
 install -p -m644 buglist/* %buildroot%_docdir/%name/buglist
-pushd doc/help
-./mkhelp
-install -m644 redhelp.dvi %buildroot%_docdir/%name
+pushd doc/manual
+./mkhtml.sh
+install -d %buildroot%_docdir/%name/manual
+install -m644 *.css *.png *.html %buildroot%_docdir/%name/manual/
 popd
+pushd doc/misc
+%make
+install -m644 *.pdf %buildroot%_docdir/%name/
+popd
+cp -fR doc/manual2 %buildroot%_docdir/%name/
 pushd doc/util
 ./mkman2
 ./mkpdf.bat
@@ -215,6 +221,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140706-alt1
+- New snapshot
+
 * Sat May 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140515-alt2
 - Rebuilt with updated crlibm (soname changed)
 
