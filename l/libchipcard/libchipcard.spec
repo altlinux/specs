@@ -1,7 +1,7 @@
 
 Name:     libchipcard
 Version:  5.0.2
-Release:  alt2
+Release:  alt3
 
 Summary:  A library for easy access to smart cards (chipcards)
 License:  LGPL
@@ -106,6 +106,9 @@ install %SOURCE1 %buildroot%_initrddir/chipcardd
 
 
 %changelog
+* Thu Jul 10 2014 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt3
+- Fix watch file
+
 * Mon Jan 16 2012 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt2
 - Remove standard library path from RPATH
 - Add watch file
