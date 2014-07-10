@@ -2,7 +2,7 @@
 
 Name: jpicedt
 Version: 1.4.1.03
-Release: alt2.3_jpp5
+Release: alt3_jpp5
 
 Summary: Interactive picture editor for LaTeX and PSTricks.
 License: GPL
@@ -21,8 +21,8 @@ BuildRequires: java-devel-default jpackage-utils ant junit3 unzip
 Requires: java
 
 # pkg deps
-BuildRequires: bsh2
-Requires: bsh2
+BuildRequires: bsh
+Requires: bsh
 
 BuildArch: noarch
 
@@ -58,7 +58,7 @@ find . -name "*.class" -exec rm -f {} \;
 
 %build
 export LANG=en_US.ISO8859-1
-export CLASSPATH=$(build-classpath junit3 bsh2)
+export CLASSPATH=$(build-classpath junit3 bsh)
 %ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
 	-Dbuild.sysclasspath=only \
 	all
@@ -112,6 +112,9 @@ install -m755 -D jpicedt.sh %buildroot%_bindir/jpicedt
 #%doc dist/docs/*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1.03-alt3_jpp5
+- use bsh
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.1.03-alt2.3_jpp5
 - explicitly use junit3
 
