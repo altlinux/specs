@@ -1,4 +1,3 @@
-BuildRequires:  oss-parent
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -10,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             snakeyaml18
 Version:          1.8
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 Group:            Development/Java
@@ -109,6 +108,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_6jpp7
+- fixed deps
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_6jpp7
 - new version
 
