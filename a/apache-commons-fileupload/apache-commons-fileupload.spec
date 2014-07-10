@@ -1,5 +1,8 @@
-BuildRequires: tomcat5-servlet-2.4-api
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       fileupload
@@ -7,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.2.2
-Release:          alt2_7jpp7
+Release:          alt3_7jpp7
 Summary:          This package provides an api to work with html file upload
 License:          ASL 2.0
 Group:            Development/Java
@@ -39,10 +42,10 @@ Requires:         apache-commons-io
 Requires:         portlet-2.0-api
 
 Provides:         jakarta-%{short_name} = 1:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 1:%{version}
-Conflicts:        jakarta-%{short_name} < 1:%{version}
-Provides:         %{short_name} = 1:%{version}-%{release}
+Obsoletes:        jakarta-%{short_name} < 1:1.2.2
 Source44: import.info
+Provides: %{short_name} = %{version}
+Conflicts:	jakarta-%{short_name} < 1:%version
 
 %description
 The javax.servlet package lacks support for rfc 1867, html file
@@ -56,7 +59,7 @@ Summary:          API documentation for %{name}
 Group:            Development/Java
 Requires:         jpackage-utils
 
-Obsoletes:        jakarta-%{short_name}-javadoc < 1:1.2.1-alt1_7jpp6
+Obsoletes:        jakarta-%{short_name}-javadoc < 1:1.2.1-2
 BuildArch: noarch
 
 %description javadoc
@@ -77,9 +80,7 @@ sed -i "s|<groupId>portlet-api</groupId>|<groupId>javax.portlet</groupId>|" pom.
 
 %build
 # fix build with generics support
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 \
- -Dmaven.local.depmap.file=commons-fileupload-1.2.2-jpp-depmap.xml \
- install javadoc:javadoc
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 install javadoc:javadoc
 # -----------------------------------------------------------------------------
 
 %install
@@ -88,7 +89,6 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -p -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 pushd $RPM_BUILD_ROOT%{_javadir}
     ln -sf %{name}.jar %{short_name}.jar
-    ln -sf %{name}.jar jakarta-%{short_name}.jar
 popd # come back from javadir
 
 # javadoc
@@ -109,7 +109,6 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc LICENSE.txt NOTICE.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{short_name}.jar
-%{_javadir}/jakarta-%{short_name}.jar
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{short_name}.pom
 
@@ -120,6 +119,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt3_7jpp7
+- fixed BR deps
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt2_7jpp7
 - proper Obsoletes on jakarta-* (closes: 27808)
 
