@@ -2,11 +2,11 @@
 %define sover %somver.2.0
 Name: sparskit
 Version: 2.0
-Release: alt7
+Release: alt8
 Summary: A basic tool-kit for sparse matrix computations (Version 2)
 License: LGPL
 Group: Sciences/Mathematics
-Url: http://www-users.cs.umn.edu/~saad/software/SPARSKIT/sparskit.html
+Url: http://www-users.cs.umn.edu/~saad/software/SPARSKIT/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www-users.cs.umn.edu/~saad/software/SPARSKIT/SPARSKIT2.tar.gz
@@ -103,13 +103,17 @@ popd
 %files -n lib%name-devel
 %_libdir/*.so
 
-%files -n lib%name-devel-static
-%_libdir/*.a
+#files -n lib%name-devel-static
+#_libdir/*.a
 
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt8
+- Updated
+- Disabled devel-static package
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt7
 - Built with OpenBLAS instead of GotoBLAS2
 
