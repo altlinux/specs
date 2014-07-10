@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.26
+Version: 2.26.1
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -388,6 +388,16 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Jul 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.26.1-alt1
+- New version
+- Security fixes:
+  + MFSA 2014-54 Buffer overflow in Gamepad API
+  + MFSA 2014-53 Buffer overflow in Web Audio Speex resampler
+  + MFSA 2014-52 Use-after-free with SMIL Animation Controller
+  + MFSA 2014-51 Use-after-free in Event Listener Manager
+  + MFSA 2014-49 Use-after-free and out of bounds issues found using Address Sanitizer
+  + MFSA 2014-48 Miscellaneous memory safety hazards
+
 * Mon May 19 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.26-alt1
 - New version
 - Security fixes:
