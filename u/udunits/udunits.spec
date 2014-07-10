@@ -1,5 +1,5 @@
 Name: udunits
-Version: 2.2.12
+Version: 2.2.16
 Release: alt1
 Summary: Conversion of unit specifications between formatted and binary forms, etc
 License: Open source
@@ -89,6 +89,9 @@ rm -fR expat
 %_infodir/*
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.16-alt1
+- Version 2.2.16
+
 * Sat Jun 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.12-alt1
 - Version 2.2.12
 
