@@ -3,7 +3,7 @@
 
 Name:    gdesklets
 Version: 0.36.3
-Release: alt2
+Release: alt3
 
 Summary: gDesklets - an advanced architecture for desktop applets
 License: GPL
@@ -15,7 +15,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: http://gdesklets.de/files/gdesklets-%{version}.tar.bz2
 Source1: %name-16.png
 Source2: %name-32.png
-Source3: %name.watch
 
 Patch1:  %name-alt-desktopfile.patch
 Patch2:  %name-transition.patch
@@ -124,6 +123,9 @@ fi
 #%_pkgconfigdir/*
 
 %changelog
+* Thu Jul 10 2014 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt3
+- Remove watch file because upstream is dead
+
 * Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt2
 - Rebuild with new version of libgtop
 
