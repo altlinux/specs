@@ -1,5 +1,4 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: servletapi4
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-soap
 Version:	2.3.1
-Release:	alt1_5jpp5
+Release:	alt2_5jpp5
 Epoch:		0
 Summary:        Simple Object Access Protocol
 License:        Apache Software License
@@ -57,7 +56,7 @@ BuildRequires: ant >= 1.6.5
 BuildRequires: ejb
 BuildRequires: jaf
 BuildRequires: javamail
-BuildRequires: servletapi5
+BuildRequires: servletapi4
 BuildRequires: xerces-j2
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
@@ -149,6 +148,9 @@ fi
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt2_5jpp5
+- fixed build
+
 * Tue Dec 02 2008 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_5jpp5
 - fixed build with java 5
 
