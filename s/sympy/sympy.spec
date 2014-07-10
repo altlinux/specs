@@ -3,7 +3,7 @@
 Name: sympy
 Version: 0.7.5
 Epoch: 1
-Release: alt1.git20140609
+Release: alt1.git20140710
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
@@ -256,6 +256,9 @@ cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.5-alt1.git20140710
+- New snapshot
+
 * Mon Jun 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.5-alt1.git20140609
 - Version 0.7.5
 
