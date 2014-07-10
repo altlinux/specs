@@ -38,19 +38,19 @@ BuildRequires: jpackage-compat
 
 Name:		ws-soap
 Version:	2.3.1
-Release:	alt2_5jpp5
+Release:	alt3_5jpp5
 Epoch:		0
 Summary:        Simple Object Access Protocol
 License:        Apache Software License
 Group:          Development/Java
 Url:            http://ws.apache.org/soap/
 Source0:        http://www.apache.org/dist/ws/soap/version-2.3.1/soap-src-2.3.1.tar.gz
-Requires: jpackage-utils >= 0:1.6
-Requires: ejb
-Requires: jaf
-Requires: javamail
-Requires: servletapi5
-Requires: xerces-j2
+#Requires: jpackage-utils >= 0:1.6
+#Requires: ejb
+#Requires: jaf
+#Requires: javamail
+#Requires: servletapi4
+#Requires: xerces-j2
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 1.6.5
 BuildRequires: ejb
@@ -148,6 +148,9 @@ fi
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt3_5jpp5
+- and fixed deps too
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt2_5jpp5
 - fixed build
 
