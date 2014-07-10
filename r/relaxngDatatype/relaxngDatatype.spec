@@ -1,4 +1,6 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -33,63 +35,72 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 Name:           relaxngDatatype
 Version:        1.0
-Release:        alt3_4jpp6
-Epoch:          0
+Release:        alt3_8.3jpp7
 Summary:        RELAX NG Datatype API
 
 Group:          Development/Java
 License:        BSD
 URL:            https://sourceforge.net/projects/relaxng
-Source0:        relaxngDatatype-1.0.zip
+Source0:        %{name}-%{version}.zip
+Patch0:         %{name}-compressjar.patch
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:5.0.0
-BuildRequires:  ant >= 0:1.7
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+Requires:       jpackage-utils
+Provides:       msv <= %{version}
+#Obsoletes:      msv <= %{version}
 Source44: import.info
 
 %description
-%{summary}
+RELAX NG is a public space for test cases and other ancillary software
+related to the construction of the RELAX NG language and its
+implementations.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
+Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
+%patch0 -p0
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only 
+ant -Dbuild.sysclasspath=only
+sed -i 's/\r//g' copying.txt
 
 %install
 install -Dpm 644 %{name}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-#
+
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-#
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+pushd $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+for f in `find -name \*.html -o -name \*.css`; do
+    sed -i 's/\r//g' $f > /dev/null
+done
+popd
 
 %files
 %doc copying.txt
 %{_javadir}/*.jar
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_8.3jpp7
+- update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_4jpp6
 - new jpp relase
 
