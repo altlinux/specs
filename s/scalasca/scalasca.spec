@@ -1,13 +1,13 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 2.0
+%define over 2.1
 %define cubever 3.4.2.%over
 %define somver 0
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt1
+Release: alt1.rc2
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -128,7 +128,7 @@ export MPIDIR=%mpidir
 
 export CC="mpicc -g"
 export CXX="mpicxx -g"
-#autoreconf
+%autoreconf
 %configure \
 	--prefix=%prefix \
 	--with-papi=%prefix \
@@ -164,6 +164,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export TOPDIR=$PWD
 %makeinstall_std
 
+install -d %buildroot%_includedir
 install -m644 src/epik/*.h %buildroot%_includedir/
 
 for i in %buildroot%_libdir/*.so %buildroot%_bindir/*; do
@@ -191,6 +192,9 @@ done
 %_includedir/*
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.rc2
+- Version 2.1-rc2
+
 * Mon Sep 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Version 2.0
 
