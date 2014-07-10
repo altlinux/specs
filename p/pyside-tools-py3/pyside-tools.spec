@@ -1,6 +1,6 @@
 Name: pyside-tools-py3
-Version: 0.2.14
-Release: alt2.git20120427.1
+Version: 0.2.15
+Release: alt1.git20131028
 Summary: Tools for python bindings for the Qt cross-platform application (Python 3)
 License: GPLv2 & BSD
 Group: Development/Tools
@@ -81,6 +81,9 @@ popd
 %exclude %python3_sitelibdir/pysideuic/port_v2
 
 %changelog
+* Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.15-alt1.git20131028
+- Version 0.2.15
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 0.2.14-alt2.git20120427.1
 - Rebuild with Python-3.3
 
