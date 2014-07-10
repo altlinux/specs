@@ -1,5 +1,5 @@
 Name: chrony
-Version: 1.29.1
+Version: 1.30
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -21,7 +21,6 @@ BuildRequires: libnss-devel
 
 Conflicts: ntpd openntpd
 
-%define _sysconfdir /etc/%name
 %define _localstatedir %_var
 
 %description
@@ -36,12 +35,20 @@ Internet. chronyd can also act as an RFC1305-compatible NTP server.
 
 %prep
 %setup
+# prepare git sources (make_release)
+# version in version.txt file
+echo %version > version.txt
+mandate=$(date +'%B %Y')
+for m in chrony.1 chronyc.1.in chrony.conf.5.in chronyd.8.in; do
+  sed -e "s|@VERSION@|%version|;s|@MAN_DATE@|${mandate}|" \
+    < $m > ${m}_
+  mv -f ${m}_ $m
+done
 
 %build
-export CFLAGS="$CFLAGS %optflags -pie -fpie"
-export LDFLAGS="$LDFLAGS -Wl,-z,relro,-z,now"
 
 %configure \
+	--with-user=_chrony \
 	--with-sendmail=%_sbindir/sendmail
 
 %make_build getdate all docs
@@ -51,8 +58,8 @@ export LDFLAGS="$LDFLAGS -Wl,-z,relro,-z,now"
 install -pD -m755 %_sourcedir/chronyd.init %buildroot%_initrddir/chronyd
 install -pD -m644 %_sourcedir/chrony.conf %buildroot%_sysconfdir/chrony.conf
 install -pD -m644 %_sourcedir/chrony.keys %buildroot%_sysconfdir/chrony.keys
-install -pD -m644 %_sourcedir/chrony.logrotate %buildroot/etc/logrotate.d/chrony
-install -pD -m644 %_sourcedir/chronyd.sysconfig %buildroot/etc/sysconfig/chronyd
+install -pD -m644 %_sourcedir/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
+install -pD -m644 %_sourcedir/chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 %_sourcedir/chronyd.service %buildroot%_unitdir/chronyd.service
 install -pD -m644 %_sourcedir/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
 
@@ -69,6 +76,10 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_sbindir/useradd -r -g _chrony -d %_localstatedir/lib/%name -s /dev/null -c "Chrony User" _chrony 2> /dev/null ||:
 
 %post
+# Move old configs to /etc
+[ -e %_sysconfdir/%name/chrony.conf ] && mv %_sysconfdir/%name/chrony.conf %_sysconfdir/chrony.conf >/dev/null 2>&1 || :
+[ -e %_sysconfdir/%name/chrony.keys ] && mv %_sysconfdir/%name/chrony.keys %_sysconfdir/chrony.keys >/dev/null 2>&1 || :
+
 %post_service chronyd
 
 %preun
@@ -76,14 +87,14 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 
 %files
 %exclude %_docdir/chrony
-%doc chrony.txt
+%doc COPYING NEWS README chrony.txt examples/*
 %_initrddir/chronyd
 %_unitdir/*.service
 /lib/systemd/ntp-units.d/50-chronyd.list
-%config(noreplace) /etc/sysconfig/chronyd
-%dir %_sysconfdir
-%config(noreplace) %_sysconfdir/*
-%config(noreplace) /etc/logrotate.d/chrony
+%config(noreplace) %_sysconfdir/sysconfig/chronyd
+%config(noreplace) %_sysconfdir/chrony.conf
+%config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
+%config(noreplace) %_sysconfdir/logrotate.d/chrony
 %_bindir/*
 %_sbindir/*
 %dir %attr(-,_chrony,_chrony) %_localstatedir/lib/%name
@@ -95,6 +106,10 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Thu Jul 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.30-alt1
+- 1.30
+- moved configs to /etc
+
 * Fri Mar 07 2014 Alexey Shabalin <shaba@altlinux.ru> 1.29.1-alt1
 - 1.29.1
 - drop root priveleges to user _chrony for chronyd daemon
