@@ -1,6 +1,7 @@
 Epoch: 0
-BuildRequires: oss-parent maven-enforcer-plugin
-Requires: oss-parent
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             testng
 Version:          6.0.1
-Release:          alt2_4jpp7
+Release:          alt3_4jpp7
 Summary:          Java-based testing framework
 License:          ASL 2.0
 Group:            Development/Java
@@ -114,6 +115,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.0.1-alt3_4jpp7
+- fixed deps
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.0.1-alt2_4jpp7
 - new release
 
