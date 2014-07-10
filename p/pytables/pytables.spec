@@ -5,7 +5,7 @@
 
 Name: py%oname
 Version: 3.1.1
-Release: alt1.git20140325
+Release: alt2.git20140325
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -26,7 +26,7 @@ BuildPreReq: python-module-sphinx
 BuildPreReq: python-module-numexpr-tests
 BuildPreReq: python-devel python-module-Pyrex libnumpy-devel
 BuildPreReq: libhdf5-devel liblzo2-devel bzlib-devel
-BuildPreReq: xsltproc inkscape xmlgraphics-fop excalibur-avalon-logkit
+BuildPreReq: xsltproc inkscape fop
 BuildPreReq: java-devel-default docbook-tldp-xsl docbook-dtds
 BuildPreReq: w3c-markup-validator-libs python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
@@ -328,6 +328,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.1-alt2.git20140325
+- NMU: corrected java deps
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.1-alt1.git20140325
 - Version 3.1.1
 
