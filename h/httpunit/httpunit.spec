@@ -1,11 +1,10 @@
-BuildRequires: /proc  maven-dependency-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-%define version 1.7
-%define name httpunit
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,78 +34,38 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/httpunit/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-
 Name:           httpunit
 Version:        1.7
-Release:        alt3_4jpp6
+Release:        alt3_11jpp7
 Epoch:          0
-Summary:        Library for testing websites programmatically
+Summary:        Automated web site testing toolkit
 License:        MIT
-Group:          Development/Java
+Source0:        http://download.sourceforge.net/httpunit/httpunit-%{version}.zip
+Source1:        http://repo1.maven.org/maven2/httpunit/httpunit/1.7/httpunit-1.7.pom
+Patch1:         %{name}-JavaScript-NotAFunctionException.patch
+Patch2:         %{name}-servlettest.patch
+Patch3:         %{name}-not-implemented.patch
+Patch4:         junit4.patch
 URL:            http://httpunit.sourceforge.net/
-# svn export https://httpunit.svn.sourceforge.net/svnroot/httpunit/tags/httpunit_1_7/httpunit httpunit-1.7 && tar cjf httpunit-1.7.tar.bz2 httpunit-1.7
-# Exported revision 1078.
-Source0:        httpunit-1.7.tar.bz2
-Source1:        httpunit-component-info.xml
-Source2:        httpunit-jpp-depmap.xml
-Patch0:         httpunit.build.patch
-Patch1:         httpunit-JavaScript-NotAFunctionException.patch
-Patch2:         httpunit-servlettest.patch
-Patch3:         httpunit-no-mojo.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-# 1.6R5
-Requires:       rhino >= 0:1.6
-Requires:       junit >= 0:3.8.1
-Requires:       nekohtml >= 0:0.9.5
-Requires:       servlet_2_5_api
-# 4aug2000r7-dev
-Requires:       jtidy
-Requires:       xerces-j2 >= 0:2.6.1
-Requires:       xml-commons-jaxp-1.3-apis
-#
-Requires:       jpackage-utils
-# 1.6R5
-BuildRequires:  rhino >= 0:1.6
-BuildRequires:  junit >= 0:3.8.1
-BuildRequires:  nekohtml >= 0:0.9.5
-# 2.4
-BuildRequires:  servlet_2_5_api
-# 4aug2000r7-dev
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  nekohtml
 BuildRequires:  jtidy
-BuildRequires:  xerces-j2 >= 0:2.6.1
-BuildRequires:  xml-commons-jaxp-1.3-apis
-# scope=test
-BuildRequires:  javamail_1_4_api
-#
-BuildRequires:  commons-parent
-BuildRequires:  jpackage-utils
-BuildRequires:  maven2
-BuildRequires:  maven2-plugin-compiler
-BuildRequires:  maven2-plugin-deploy
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-release
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven2-plugin-source
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-jxr
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-surefire-report-maven-plugin
-%if 0
-BuildRequires:  mojo-maven2-plugin-build-helper
-BuildRequires:  mojo-maven2-plugin-cobertura
-%endif
+BuildRequires:  junit >= 0:3.8
+BuildRequires:  tomcat-servlet-3.0-api
+BuildRequires:  javamail >= 0:1.3
+BuildRequires:  rhino
+BuildRequires:  %{__unzip}
+Requires:       junit >= 0:3.8
+Requires:       jpackage-utils
+Requires:       tomcat-servlet-3.0-api
+# As of 1.5, requires either nekohtml or jtidy, and prefers nekohtml.
+Requires:       nekohtml
+Requires:       rhino
+Group:          Development/Java
 BuildArch:      noarch
+Obsoletes:      %{name}-demo < %{epoch}:%{version}
 Source44: import.info
-Patch33: httpunit-1.7-alt-jtidy8.patch
 
 %description
 HttpUnit emulates the relevant portions of browser behavior, including form
@@ -115,131 +74,94 @@ redirection, and allows Java test code to examine returned pages either as
 text, an XML DOM, or containers of forms, tables, and links.
 A companion framework, ServletUnit is included in the package.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
-%description javadoc
-Javadoc for %{name}.
+%description    javadoc
+Javadoc for %{name}
 
-%package manual
-Summary:        Manual for %{name}
+%package        doc
+Summary:        Documentation for %{name}
 Group:          Development/Java
-BuildArch: noarch
+Requires:       %{name}-javadoc
 
-%description manual
-Documentation for %{name}.
-
-%package demo
-Summary:        Demo for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-
-%description demo
-Demonstrations and samples for %{name}.
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
+%description    doc
+Documentation for %{name}
 
 %prep
 %setup -q
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
-%patch3 -p0 -b .sav3
+# to create the test and examples jar
+#%%patch0 -p0
+# patch to work with rhino 1.5
+%patch1 -b .sav
+# add META-INF
+%patch2
+%patch3 -p1
+#%%{__unzip} -qd META-INF lib/httpunit.jar "*.dtd" # 1.6 dist zip is borked
+# remove all binary libs and javadocs
 
-%{__rm} .cvsignore doc/.cvsignore doc/tutorial/.cvsignore
+%patch4
 
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%patch33 -p1
+sed -i -e 's|destdir|encoding="iso-8859-1" destdir|g' build.xml
+
+sed -i -e 's|setCharEncoding( org.w3c.tidy.Configuration.UTF8 )|setInputEncoding("UTF-8")|g' src/com/meterware/httpunit/parsing/JTidyHTMLParser.java
+find . -name "*.jar" -exec rm -f {} \;
+rm -rf doc/api
+ln -s \
+  %{_javadir}/junit.jar \
+  %{_javadir}/jtidy.jar \
+  %{_javadir}/nekohtml.jar \
+  %{_javadir}/tomcat-servlet-api.jar \
+  %{_javadir}/js.jar \
+  %{_javadir}/xerces-j2.jar \
+  jars
+
+cp %{SOURCE1} pom.xml
+
 
 %build
-export LANG=en_US.ISO8859-1
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.repo.local=`pwd`/maven2-brew -Dmaven2.jpp.depmap.file=%{SOURCE2} -DaltDeploymentRepository=oss-releases::default::file:`pwd`/maven2-brew -Dmaven.test.failure.ignore install javadoc:aggregate
-
-find maven2-brew \! -path '*/httpunit/httpunit/*' -type f -delete ||:
-find maven2-brew \! -path '*/httpunit/httpunit/*' -type d -exec rmdir -p {} \; ||:
+export CLASSPATH=$(build-classpath javamail)
+export ANT_OPTS="-Dfile.encoding=iso-8859-1"
+ant -Dbuild.compiler=modern -Dbuild.sysclasspath=last \
+  jar javadocs test servlettest 
 
 %install
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p target/httpunit-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__cp} -p target/httpunit-%{version}-sources.jar %{buildroot}%{_javadir}/%{name}-%{version}-sources.jar
-%{__cp} -p target/httpunit-%{version}-test-sources.jar %{buildroot}%{_javadir}/%{name}-%{version}-test-sources.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
+# Javadoc
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap httpunit httpunit %{version} JPP %{name}
+# POM
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}
-%{__cp} -pr examples %{buildroot}%{_datadir}/%{name}
+# Avoid having api in doc
+rm -rf doc/api
 
-%if %with repolib
-%{__mkdir_p} %{buildroot}%{repodir}
-%{__mkdir_p} %{buildroot}%{repodirlib}
-%{__cp} -p %{SOURCE1} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__mkdir_p} %{buildroot}%{repodirsrc}
-%{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{PATCH0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{PATCH1} %{buildroot}%{repodirsrc}
-%{__cp} -p %{PATCH2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{PATCH3} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/httpunit.pom
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/httpunit.jar
-%endif
-
-%if %with repolib
-%{__mkdir_p} %{buildroot}%{_javadir}/repository.jboss.com
-%{__cp} -pr maven2-brew %{buildroot}%{_javadir}/repository.jboss.com
-%endif
+# Fix link between doc and javadoc
 
 %files
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_javadir}*/%{name}-%{version}-sources.jar
-%{_javadir}*/%{name}-sources.jar
-%{_javadir}*/%{name}-%{version}-test-sources.jar
-%{_javadir}*/%{name}-test-sources.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_javadir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
-%files manual
-%doc --no-dereference doc/*
-
-%files demo
-%{_datadir}/%{name}
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}*
-%exclude %dir %{_javadocdir}
-%{_javadir}*/repository.jboss.com
-%endif
+%files doc
+%doc doc/*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_11jpp7
+- update
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_4jpp6
 - fixed build
 
