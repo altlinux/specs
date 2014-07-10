@@ -1,10 +1,10 @@
-BuildRequires: maven2-plugin-compiler maven2-plugin-jar maven2-plugin-install maven2-plugin-javadoc
+BuildRequires: maven-compiler-plugin maven-jar-plugin maven-install-plugin maven-javadoc-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name: metainf-services
 Version: 1.4
-Release: alt2_0jpp6
+Release: alt3_0jpp6
 Summary: A Java META-INF/services generator
 
 Group: Development/Java
@@ -12,19 +12,15 @@ License: MIT
 Url: http://metainf-services.kohsuke.org/
 
 Source0: %name-%version.tar
-Source1: settings.xml
 
 Patch0: fix-extra-deps.patch
 
 BuildRequires: jpackage-utils >= 0:5.0.0
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven2-plugin-resources
+BuildRequires: maven
+BuildRequires: maven-resources-plugin
 BuildRequires: junit4
 
-Requires: jpackage-utils >= 0:5.0.0
-
-Requires(post): jpackage-utils >= 0:5.0.0
-Requires(postun): jpackage-utils >= 0:5.0.0
+Requires: jpackage-utils 
 
 BuildArch: noarch
 
@@ -48,28 +44,15 @@ This package contains generated documentation.
 %prep
 %setup
 %patch0 -p2
-cp -p %SOURCE1 settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-mkdir external_repo
-ln -s %_javadir external_repo/JPP
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven.repo.local=$MAVEN_REPO_LOCAL -Djava.awt.headless=true -Daggregate=true -Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true"
-export MAVEN_SETTINGS=$(pwd)/settings.xml
+export MAVEN_OPTS="-Djava.awt.headless=true -Daggregate=true -Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true"
 
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $MAVEN_SETTINGS \
         install javadoc:javadoc
 
 %install
-%__rm -rf %buildroot
-
 # jar
 %__mkdir_p %buildroot%_javadir
 %__install -m 644 target/%name-%version.jar %buildroot%_javadir
@@ -77,9 +60,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %__ln_s ${jar} ${jar/-%version/}; done)
 
 # poms
-%__mkdir_p %buildroot%_datadir/maven2/poms
+%__mkdir_p %buildroot%_mavenpomdir/
 %__install -m 644 pom.xml \
-               $RPM_BUILD_ROOT%_datadir/maven2/poms/JPP-%name.pom
+               $RPM_BUILD_ROOT%_mavenpomdir/JPP-%name.pom
 %add_to_maven_depmap org.kohsuke.metainf-services %name %version JPP %name
 
 # javadoc
@@ -90,7 +73,7 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 
 %files
 %_javadir/*.jar
-%_datadir/maven2/poms/*
+%_mavenpomdir/*
 %_mavendepmapfragdir/*
 
 %files javadoc
@@ -98,6 +81,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %_javadocdir/%name
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_0jpp6
+- migrated to mvn-rpmbuild
+
 * Thu Feb 28 2013 Paul Wolneykien <manowar@altlinux.ru> 1.4-alt2_0jpp6
 - Fix the groupId in the generated POM part.
 
