@@ -1,5 +1,7 @@
 Epoch: 0
-BuildRequires: maven2-plugin-site
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -14,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt2_6jpp7
+Release:        alt3_6jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -219,6 +221,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt3_6jpp7
+- fixed deps
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_6jpp7
 - new fc release
 
