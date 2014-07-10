@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        ASL 1.1
@@ -76,7 +76,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 %package demo
 Summary:        Demos for %{name}
@@ -84,7 +84,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 
 %prep
@@ -132,6 +132,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
 %doc LICENSE.txt
 
 %changelog
+* Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_4jpp7
+- update
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_3jpp7
 - fc update
 
