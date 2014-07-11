@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacvs
 Version:        5.0
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        Netbeans CVS module and library
 
@@ -149,11 +149,11 @@ ln -s cvslib-%{version}.jar \
 %add_to_maven_depmap org.netbeans.lib cvsclient %{version} JPP/%{name} cvsclient
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-cvslib.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-cvslib.pom
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-cvsclient.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-cvsclient.pom
 
 # javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-lib
@@ -164,7 +164,7 @@ cp -pr nbbuild/build/javadoc/cvsclient/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-l
 
 %files lib
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 
 %files lib-javadoc
@@ -172,6 +172,9 @@ cp -pr nbbuild/build/javadoc/cvsclient/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-l
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt2_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt1_5jpp6
 - jpp6 update
 
