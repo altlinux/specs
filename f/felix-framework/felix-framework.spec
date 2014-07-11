@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -10,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{project}-framework
 Version:        4.0.2
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        Apache Felix Framework
 
 Group:          Development/Java
@@ -26,9 +29,7 @@ BuildRequires:  jpackage-utils
 BuildRequires:  felix-osgi-compendium
 BuildRequires:  felix-osgi-core
 BuildRequires:  maven
-BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
-BuildRequires:  maven-invoker-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-release-plugin
@@ -60,6 +61,7 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{bundle}-%{version}
 %patch0 -p1
+%pom_remove_plugin :maven-compiler-plugin
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -92,6 +94,9 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_4jpp7
+- new version
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_3jpp7
 - new release
 
