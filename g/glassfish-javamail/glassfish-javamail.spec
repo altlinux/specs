@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-javamail
 Version:        1.4.0
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        Glassfish - JavaMail API
 License:        CDDL
@@ -137,21 +137,21 @@ for jar in *-%{version}*.jar; do ln -sf ${jar} `echo ${jar} | sed "s|-%{version}
 touch $RPM_BUILD_ROOT%{_javadir}/javamail.jar
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-monolithic.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-monolithic.pom
 install -pm 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-dsn.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-dsn.pom
 install -pm 644 %{SOURCE4} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-imap.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-imap.pom
 install -pm 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-mailapi.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-mailapi.pom
 install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-pop3.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-pop3.pom
 install -pm 644 %{SOURCE7} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-smtp.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-smtp.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -190,7 +190,7 @@ sed -i s,sun-javamail,glassfish/javamail, $RPM_BUILD_ROOT%{compatrepodir}/compon
 %{_javadir}/%{name}-monolithic-%{version}.jar
 %{_javadir}/%{name}-monolithic.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_javadir}/%{name}
 %exclude %{_javadir}/javamail.jar
@@ -205,6 +205,9 @@ sed -i s,sun-javamail,glassfish/javamail, $RPM_BUILD_ROOT%{compatrepodir}/compon
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt3_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Oct 20 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt2_5jpp6
 - jbossas42 compatible repolib
 
