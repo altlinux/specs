@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          msv
 Epoch:         1
 Version:       2009.1
-Release:       alt2_12jpp7
+Release:       alt3_12jpp7
 Summary:       Multi-Schema Validator
 Group:         Development/Java
 License:       BSD
@@ -62,7 +66,6 @@ Requires:      relaxngDatatype
 Requires:      xerces-j2
 Requires:      msv-xsdlib
 Provides: msv = %version
-Obsoletes: msv < 1.3
 
 %description   msv
 %{summary}.
@@ -75,7 +78,7 @@ Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xalan-j2
 Requires:      xerces-j2
-Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      msv-msv
 Requires:      msv-xsdlib
 
 %description   relames
@@ -88,7 +91,7 @@ Requires:      jpackage-utils
 Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xerces-j2
-Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      msv-msv
 Requires:      msv-xsdlib
 
 %description   rngconv
@@ -101,7 +104,7 @@ Requires:      jpackage-utils
 Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xerces-j2
-Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      msv-msv
 Requires:      msv-xsdlib
 
 %description    xmlgen
@@ -117,7 +120,6 @@ Requires:      xerces-j2
 
 # Can remove these obsoletes at Fedora 17 time
 Obsoletes:     xsdlib < %{version}-%{release}
-Conflicts: msv < 1.3
 Provides: xsdlib
 
 %description   xsdlib
@@ -272,11 +274,6 @@ cp -pr xsdlib/examples/* %{buildroot}%{_datadir}/%{name}-%{version}/xsdlib
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/msv.conf`
 touch $RPM_BUILD_ROOT/etc/java/msv.conf
-ln -s msv-core.jar %buildroot%_javadir/msv.jar
-# compat depmap
-%add_to_maven_depmap msv msv %{version} JPP %{name}
-%add_to_maven_depmap msv xsdlib %{version} JPP %{name}-xsdlib
-
 
 %files msv
 %{_bindir}/msv
@@ -333,6 +330,9 @@ ln -s msv-core.jar %buildroot%_javadir/msv.jar
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt3_12jpp7
+- fixed deps
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt2_12jpp7
 - applied repocop patches
 
