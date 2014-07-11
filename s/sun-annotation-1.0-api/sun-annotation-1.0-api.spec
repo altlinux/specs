@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-annotation-1.0-api
 Version:        1.0
-Release:	alt3_2jpp5
+Release:	alt4_2jpp5
 Epoch:          0
 Summary:        Common Annotations 1.0 API
 License:        CDDL
@@ -100,9 +100,9 @@ ln -s %{name}-%{version}.jar annotation_api.jar
 ln -sf %{name}-%{version}.jar %{name}.jar)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -140,7 +140,7 @@ fi
 %{_docdir}/%{name}-%{version}/CDDLv1.0.html
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -157,6 +157,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_2jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_2jpp5
 - fixes for java6 support
 
