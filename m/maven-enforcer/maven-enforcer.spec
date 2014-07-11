@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-enforcer
 Version:        1.0.1
-Release:        alt3_5jpp7
+Release:        alt3_6jpp7
 Summary:        Maven Enforcer
 
 Group:          Development/Java
@@ -135,6 +136,7 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %files
+%doc LICENSE NOTICE
 %dir %{_javadir}/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
@@ -155,10 +157,14 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/%{name}-plugin
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt3_6jpp7
+- new version
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt3_5jpp7
 - new fc release
 
