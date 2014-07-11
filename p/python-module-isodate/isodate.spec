@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.9
+Version: 0.5.0
 Release: alt1
 Summary: An ISO 8601 date/time/duration parser and formater
 License: BSD
@@ -118,7 +118,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -127,7 +127,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -136,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
+- Version 0.5.0
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9-alt1
 - Version 0.4.9
 
