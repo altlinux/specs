@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           day-jcr-1.0-api
 Version:        1.0
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        Content Repository for Java Technology (JSR-170) API
 
@@ -101,8 +101,8 @@ ln -sf %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -116,7 +116,7 @@ EOF
 %_altdir/jcr_1_0_api_day-jcr-1.0-api
 %{_javadir}/*.jar
 %doc target/classes/META-INF/*LICENSE.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -125,6 +125,9 @@ EOF
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_2jpp6
 - fixed build with java 7
 
