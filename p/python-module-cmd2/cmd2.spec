@@ -2,17 +2,16 @@
 
 %def_with python3
 
-Version: 0.6.4
-Release: alt5.1
+Version: 0.6.7
+Release: alt1
 %setup_python_module %oname
 
 Name: python-module-%oname
 Summary: A toolkit for simple interactive command-line applications
-# hg clone http://hg.assembla.com/python-cmd2 cmd2
 Source: %name-%version.tar
 License: MIT
 Group: Development/Python
-Url: http://www.assembla.com/wiki/show/python-cmd2
+Url: https://bitbucket.org/catherinedevlin/cmd2
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildArch: noarch
@@ -121,6 +120,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt1
+- Version 0.6.7
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6.4-alt5.1
 - Rebuild with Python-3.3
 
