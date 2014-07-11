@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-graph
 Version:        0.8.1
-Release:        alt1_0.cvs20040118.5jpp6
+Release:        alt2_0.cvs20040118.5jpp6
 Epoch:          1
 Summary:        Commons Graph Package
 
@@ -101,9 +101,9 @@ ln -s %{base_name}-%{version}.jar \
 
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -119,7 +119,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc LICENSE.txt
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -130,6 +130,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt2_0.cvs20040118.5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_0.cvs20040118.5jpp6
 - new jpp relase
 
