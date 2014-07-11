@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        A Free Java-PDF library
 Name:           itext1
 Version:        1.4
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          1
 License:        Mozilla Public License & LGPL
 URL:            http://www.lowagie.com/iText/
@@ -114,8 +114,8 @@ cp -pr build/examples $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp -pr build/tutorial $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 # Install the pom
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cp -pr %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+cp -pr %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 %add_to_maven_depmap itext itext 1.3 JPP %{name}
 %add_to_maven_depmap com.lowagie itext 1.3 JPP %{name}
 
@@ -132,7 +132,7 @@ fi
 %doc %{_docdir}/%{name}-%{version}/MPL-1.1.txt
 %doc %{_docdir}/%{name}-%{version}/lgpl.txt
 %{_javadir}
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -147,6 +147,9 @@ fi
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt3_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt2_5jpp6
 - renamed to itext1
 
