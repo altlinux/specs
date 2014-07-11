@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           d-haven-mpool
 Version:        1.0
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        D-Haven Managed Pool async
 License:        ASL 2.0
@@ -95,8 +95,8 @@ $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 # poms
 %add_to_maven_depmap %{name} managed-pool %{version} JPP %{name}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -108,7 +108,7 @@ rm -rf target/docs/apidocs
 %files
 %doc LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -117,6 +117,9 @@ rm -rf target/docs/apidocs
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_5jpp6
 - new jpp relase
 
