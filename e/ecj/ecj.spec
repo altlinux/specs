@@ -12,7 +12,7 @@ Epoch: 1
 Summary: Eclipse Compiler for Java
 Name: ecj
 Version: 3.4.2
-Release: alt4_7jpp6.qa1
+Release: alt5_7jpp6.qa1
 URL: http://www.eclipse.org
 License: EPL
 Group: System/Internationalization
@@ -105,9 +105,9 @@ sed --in-place "s:@JAVADIR@:%{_javadir}:" $RPM_BUILD_ROOT%{_bindir}/ecj
 aot-compile-rpm
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
     
 %add_to_maven_depmap org.eclipse.jdt core %{version} JPP jdtcore
 
@@ -120,6 +120,9 @@ install -pm 644 pom.xml \
 %{_libdir}/gcj/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.4.2-alt5_7jpp6.qa1
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.4.2-alt4_7jpp6.qa1
 - NMU: rebuilt for debuginfo.
 
