@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        Object-Graph Navigation Language
 Name:           ognl
 Version:        2.7.3
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 License:        BSD -style
 URL:            http://www.ognl.org/
@@ -153,8 +153,8 @@ install -m 0644 build/%{name}-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # javadoc
@@ -187,7 +187,7 @@ fi
 %files
 %doc %{_docdir}/%{name}-%{version}/copyright.html
 %{_javadir}/*.jar
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -208,6 +208,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.3-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Jan 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7.3-alt1_1jpp6
 - new version
 
