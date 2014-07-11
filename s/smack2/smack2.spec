@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           smack2
 Version:        2.2.1
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Open Source XMPP (Jabber) client library
 
@@ -133,11 +133,11 @@ install -m 644 %{oname}x-debug.jar \
 %add_to_maven_depmap jivesoftware %{oname}x-debug %{version} JPP/%{name} %{name}x-debug
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}x.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}x.pom
 
 # javadocs
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -155,7 +155,7 @@ cp -pr documentation/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %files
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
@@ -169,6 +169,9 @@ cp -pr documentation/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt3_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt2_2jpp6
 - fixed build with java 7
 
