@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 
 Name:           joesnmp
 Version:        0.3.4
-Release:	alt2_4jpp6
+Release:	alt3_4jpp6
 Epoch:          0
 Summary:        Java SNMP class library 
 Group:          Development/Java
@@ -103,8 +103,8 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dfilters.noload=t
 %{__ln_s} %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap joesnmp joesnmp %{version} JPP %{name}
 
 %{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -122,14 +122,14 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__cp} -p %{PATCH0} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/joesnmp.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/joesnmp.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/joesnmp.pom
 %endif
 
 %files
 %doc docs/FAQ.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -142,6 +142,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.3.4-alt3_4jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.3.4-alt2_4jpp6
 - added pom
 
