@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           sf-collections-generic
 Version:        4.01
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Commons Collections with Generics
 
@@ -136,8 +136,8 @@ install -m 644 build/collections-generic-%{version}.jar \
 
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap net.sourceforge.collections collections-generic %{version} JPP %{name}
 
 # javadocs
@@ -152,7 +152,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
@@ -163,6 +163,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.01-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:4.01-alt1_1jpp6
 - new version
 
