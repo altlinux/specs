@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           smack
 Version:        3.1.0
-Release:        alt1_3jpp6
+Release:        alt2_3jpp6
 Epoch:          0
 Summary:        Open Source XMPP (Jabber) client library
 
@@ -133,13 +133,13 @@ install -m 644 target/%{name}x-debug.jar \
 %add_to_maven_depmap org.igniterealtime.smack %{name}x-debug %{version} JPP %{name}x-debug
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}x.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}x.pom
 install -m 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}x-debug.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}x-debug.pom
 
 # javadocs
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -157,7 +157,7 @@ cp -pr documentation/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %files
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
@@ -171,6 +171,9 @@ cp -pr documentation/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_3jpp6
 - new jpp relase
 
