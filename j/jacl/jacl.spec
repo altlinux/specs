@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jacl
 Version:        1.4.1
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java Tcl integration
 
@@ -104,10 +104,10 @@ install -m 644 build/dist/lib/tcljava1.4.1/tjc.jar \
 
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-jacl.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jacl.pom
 %add_to_maven_depmap jacl jacl %{version} JPP/%{name} jacl
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-tcljava.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-tcljava.pom
 %add_to_maven_depmap jacl tcljava %{version} JPP/%{name} tcljava
 
 # javadoc
@@ -118,7 +118,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -126,6 +126,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt2_1jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt1_1jpp5
 - new version
 
