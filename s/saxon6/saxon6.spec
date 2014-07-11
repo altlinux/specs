@@ -38,7 +38,7 @@ BuildRequires: unzip
 Summary:        Java XSLT processor
 Name:           saxon6
 Version:        6.5.5
-Release:        alt4_3jpp6
+Release:        alt5_3jpp6
 Epoch:          0
 License:        MPL
 Group:          Development/Java
@@ -163,15 +163,15 @@ cp -p build/lib/%{oldname}-jdom.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}-jdom.jar
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE4} \
-         $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{oldname} %{oldname} %{version} JPP %{name}
 install -m 644 %{SOURCE5} \
-         $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-aelfred.pom
+         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-aelfred.pom
 %add_to_maven_depmap %{oldname} %{oldname}-aelfred %{version} JPP %{name}
 install -m 644 %{SOURCE6} \
-         $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-jdom.pom
+         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-jdom.pom
 %add_to_maven_depmap %{oldname} %{oldname}-jdom %{version} JPP %{name}
 
 # javadoc
@@ -202,7 +202,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %files
 %_altdir/jaxp_transform_impl_saxon6
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files aelfred
@@ -226,6 +226,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %attr(0644,root,root) %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt5_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt4_3jpp6
 - bugfix in script
 
