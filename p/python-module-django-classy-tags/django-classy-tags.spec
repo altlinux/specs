@@ -1,6 +1,6 @@
 %define oname django-classy-tags
 Name: python-module-%oname
-Version: 0.4
+Version: 0.5.1
 Release: alt1
 Summary: Class based template tags for Django
 License: BSD
@@ -43,6 +43,9 @@ This package contains tests for Django classytags.
 %python_sitelibdir/classytags/test*
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1
+- Version 0.5.1
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Version 0.4
 
