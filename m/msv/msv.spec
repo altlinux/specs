@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 Name:          msv
 Epoch:         1
 Version:       2009.1
-Release:       alt3_12jpp7
+Release:       alt4_12jpp7
 Summary:       Multi-Schema Validator
 Group:         Development/Java
 License:       BSD
@@ -65,7 +65,6 @@ Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xerces-j2
 Requires:      msv-xsdlib
-Provides: msv = %version
 
 %description   msv
 %{summary}.
@@ -120,7 +119,6 @@ Requires:      xerces-j2
 
 # Can remove these obsoletes at Fedora 17 time
 Obsoletes:     xsdlib < %{version}-%{release}
-Provides: xsdlib
 
 %description   xsdlib
 %{summary}.
@@ -330,6 +328,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt4_12jpp7
+- dropped compat msv provides
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt3_12jpp7
 - fixed deps
 
