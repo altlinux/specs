@@ -6,16 +6,15 @@ License: GPL2+
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt1jpp1
+Release: alt2jpp1
 
-Requires: apache-taglibs-standard
+Requires: jakarta-taglibs-standard
 Requires: geronimo-annotation
 Requires: geronimo-jaspic-spec
 Requires: geronimo-jta
 Requires: glassfish-jaf
 Requires: glassfish-javamail
 Requires: glassfish-jsp
-Requires: glassfish-jstl
 Requires: objectweb-asm
 Requires: tomcat-el-2.2-api
 Requires: tomcat-jsp-2.2-api
@@ -147,7 +146,7 @@ cat > $RPM_BUILD_ROOT%_mavendepmapfragdir/%name << 'EOF'
     </maven>
     <jpp>
         <groupId>JPP</groupId>
-        <artifactId>glassfish-jstl</artifactId>
+        <artifactId>taglibs-standard</artifactId>
         <version>3.0</version>
     </jpp>
 </dependency>
@@ -194,5 +193,8 @@ EOF
 %_mavendepmapfragdir/%name
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2jpp1
+- updated depmap
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1jpp1
 - maven depmap for org.eclipse.jetty.orbit jetty pom dependencies
