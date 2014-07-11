@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           dtdparser
 Version:        1.21
-Release:	alt1_8jpp6
+Release:	alt2_8jpp6
 Epoch:          0
 Summary:        Java DTD Parser
 License:        LGPLv2+
@@ -109,8 +109,8 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 build createdoc
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap dtdparser dtdparser %{version} JPP %{name}
 # XXX: for jboss
 %add_to_maven_depmap wutka-dtdparser dtdparser121 1.2.1 JPP %{name}
@@ -130,14 +130,14 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__mkdir_p} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__cp} -p %{buildroot}%{_javadir}/dtdparser.jar %{buildroot}%{repodirlib}/dtdparser.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/dtdparser.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/dtdparser.pom
 %endif
 
 %files
 %doc CHANGES LICENSE README
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -151,6 +151,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_8jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt1_8jpp6
 - new jpp relase
 
