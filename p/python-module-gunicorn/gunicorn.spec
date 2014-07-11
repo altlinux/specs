@@ -1,7 +1,7 @@
 %define oname gunicorn
 Name: python-module-%oname
-Version: 18.1
-Release: alt1.git20131125
+Version: 19.1.0
+Release: alt1.git20140703
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -78,6 +78,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/pickle
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 19.1.0-alt1.git20140703
+- Version 19.1.0
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 18.1-alt1.git20131125
 - Version 18.1
 
