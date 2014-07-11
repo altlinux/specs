@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           java2html
 Version:        1.4
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java to HTML converter
 License:        GPL v2
@@ -94,9 +94,9 @@ for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done
 %add_to_maven_depmap %{name} j2h %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/temp/releaseZip/docsapi/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -115,7 +115,7 @@ install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/j2h
 %doc %{_docdir}/%{name}-%{version}/*
 %dir %{_docdir}/%{name}-%{version}
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -124,6 +124,9 @@ install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/j2h
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_1jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp5
 - new version
 
