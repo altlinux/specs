@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           directory-naming
 Version:        0.8
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 Summary:        Directory Naming
 License:        Apache Software License 2.0
@@ -68,13 +68,13 @@ BuildRequires: jakarta-commons-pool
 BuildRequires: javamail_1_3_1_api
 #BuildRequires:  mx4j
 
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-dbcp
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-pool
-Requires: javamail_1_3_1_api
+#Requires: jakarta-commons-collections
+#Requires: jakarta-commons-dbcp
+#Requires: jakarta-commons-digester
+#Requires: jakarta-commons-lang
+#Requires: jakarta-commons-logging
+#Requires: jakarta-commons-pool
+#Requires: javamail_1_3_1_api
 #Requires:  mx4j
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
@@ -119,7 +119,7 @@ commons-lang \
 commons-logging \
 commons-pool \
 hsqldb \
-javamail_1_3_1_api \
+javamail \
 junit \
 )
 
@@ -157,18 +157,18 @@ done
 (cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %__ln_s ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-%__mkdir_p %{buildroot}%{_datadir}/maven2/poms
-%__install -m 644 %{SOURCE5}  %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-core.pom
+%__mkdir_p %{buildroot}%{_mavenpomdir}
+%__install -m 644 %{SOURCE5}  %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-core.pom
 %add_to_maven_depmap %{name} naming-core %{version} JPP/%{name} naming-core
-%__install -m 644 %{SOURCE6}  %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-config.pom
+%__install -m 644 %{SOURCE6}  %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-config.pom
 %add_to_maven_depmap %{name} naming-config %{version} JPP/%{name} naming-config
-%__install -m 644 %{SOURCE7}  %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-factory.pom
+%__install -m 644 %{SOURCE7}  %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-factory.pom
 %add_to_maven_depmap %{name} naming-factory %{version} JPP/%{name} naming-factory
-%__install -m 644 %{SOURCE8}  %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-java.pom
+%__install -m 644 %{SOURCE8}  %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-java.pom
 %add_to_maven_depmap %{name} naming-java %{version} JPP/%{name} naming-java
-%__install -m 644 %{SOURCE9}  %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-management.pom
+%__install -m 644 %{SOURCE9}  %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-management.pom
 %add_to_maven_depmap %{name} naming-management %{version} JPP/%{name} naming-management
-%__install -m 644 %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-naming-resources.pom
+%__install -m 644 %{SOURCE10} %{buildroot}%{_mavenpomdir}/JPP.%{name}-naming-resources.pom
 %add_to_maven_depmap %{name} naming-resources %{version} JPP/%{name} naming-resources
 
 # javadocs
@@ -187,7 +187,7 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %files
 %{_docdir}/%{name}-%{version}/LICENSE.txt 
 %{_javadir}/%{name}
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
@@ -200,6 +200,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8-alt5_4jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Dec 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.8-alt4_4jpp6
 - fixed build
 
