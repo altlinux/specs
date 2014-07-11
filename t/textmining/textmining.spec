@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 Summary:        Textmining Extractors
 Name:           textmining
 Version:        1.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 License:        Apache License 2.0
 URL:            http://code.google.com/p/text-mining/
@@ -101,9 +101,9 @@ ant run-tests create-jar
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.textmining tm-extractors %{version} JPP %{name}
 
 install -m 644 build/bin/tm-extractors-%{version}.jar \
@@ -124,7 +124,7 @@ install -m 644 etc/lgpl-2_1.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %files
 %{_docdir}/%{name}-%{version}/*.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -134,6 +134,9 @@ install -m 644 etc/lgpl-2_1.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Jan 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_1jpp6
 - converted from JPackage by jppimport script
 
