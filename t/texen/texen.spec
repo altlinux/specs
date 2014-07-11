@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           texen
 Version:        1.0
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 Summary:        Text generating utility
 
@@ -109,14 +109,14 @@ cd build
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 install -m 644 bin/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -m 644 pom.xml \
-  $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.apache.texen texen %{version} JPP %{name}
 
 # javadoc
@@ -127,7 +127,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*.jar
 %doc LICENSE
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -136,6 +136,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_2jpp6
 - new jpp relase
 
