@@ -1,5 +1,5 @@
 Name: repocop-unittest-vendor-tag
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: vendor-tag intergration tests for repocop test platform
@@ -25,7 +25,7 @@ vendor-tag intergration tests for repocop test platform.
 
 %install
 mkdir -p %buildroot%_datadir/repocop/pkgtests/vendor-tag/
-install -p -m 755 %SOURCE0 %buildroot%_datadir/repocop/pkgtests/vendor-tag/done
+install -p -m 755 %SOURCE0 %buildroot%_datadir/repocop/pkgtests/vendor-tag/posttest
 
 mkdir -p %buildroot%_datadir/repocop/fixscripts/
 install -p -m 644 %SOURCE1 %buildroot%_datadir/repocop/fixscripts/
@@ -33,10 +33,13 @@ install -p -m 644 %SOURCE1 %buildroot%_datadir/repocop/fixscripts/
 
 %files
 %dir %_datadir/repocop/pkgtests/vendor-tag/
-%_datadir/repocop/pkgtests/vendor-tag/done
+%_datadir/repocop/pkgtests/vendor-tag/posttest
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- made posttest
+
 * Wed Nov 09 2011 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1
 - adapted for new fixscript syntax
 
