@@ -2,12 +2,12 @@
 
 Name: docbook-style-xsl
 Version: 1.78.1
-Release: alt1
+Release: alt2
 Group: Publishing
 
 Summary: Norman Walsh's XSL stylesheets for DocBook XML
 
-License: Distributable
+License: DMIT
 Url: http://docbook.sourceforge.net/projects/xsl/
 
 %ifdef snapshot
@@ -22,8 +22,8 @@ Url: http://docbook.sourceforge.net/projects/xsl/
 %define xmlconfdir	%_sysconfdir/xml
 %define hack_output_encodings koi8-r koi8-u windows-1251
 
-Provides: docbook-xsl
-#PreReq: docbook-dtd-xml
+Provides: docbook-xsl = %{version}
+Requires: docbook-dtd-xml
 PreReq: xml-common xml-utils
 
 AutoReq: yes
@@ -154,6 +154,10 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt2
+- added versioned Provides: docbook-xsl = %{version}
+- updated License: from Distributable to DMIT
+
 * Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 1.78.1-alt1
 - Updated to 1.78.1.
 - Fixed "find -perm" usage.
