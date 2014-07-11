@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt2.3
+Release: alt2.4
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -165,25 +165,25 @@ cat > %_bindir/%name-set-lang << EOF
 # который и установит нужный язык.
 #
 
-if [ -e $HOME/.%name/%name-%version.conf ]; then 
+if [ -e ~/.%name/%name-%version.conf ]; then
 	echo "File exist. GOOD!";
 else
 	echo "File doesn't exist. Creating!"
-	cp %_defaultdocdir/%name-%version/%name-%version.conf $HOME/.%name/
+	cp %_defaultdocdir/%name-%version/%name-%version.conf ~/.%name/
 fi
 
-case $1 in
+case \$1 in
 ru)
     echo "Set DOSBox language to Russian"
-    sed -i -e 's/^language=$/language=\/usr\/share\/doc\/%name-%version\/russian.txt/' \
+    sed -i -e 's/^language=$/language=\/usr\/share\/doc\/%name-%version\/DOSBox-russian-lang\/russian.txt/' \
 	   -e 's/^keyboardlayout=auto/keyboardlayout=RU/' \
-	$HOME/.%name/%name-%version.conf
+	~/.%name/%name-%version.conf
 	;;
 en) 
     echo "Set DOSBox language to English"
-    sed -i -e 's/language=\/usr\/share\/doc\/%name-%version\/russian.txt/language=/' \
+    sed -i -e 's/language=\/usr\/share\/doc\/%name-%version\/DOSBox-russian-lang\/russian.txt/language=/' \
 	   -e 's/^keyboardlayout=RU/keyboardlayout=auto/' \
-	$HOME/.%name/%name-%version.conf
+	~/.%name/%name-%version.conf
 	;;
 *)
     echo "Please set correct options: en or ru";
@@ -196,6 +196,9 @@ EOF
 rm -f %_bindir/%name-set-lang
 
 %changelog
+* Fri Jul 11 2014 Mikhail Kolchin <mvk@altlinux.org> 0.74-alt2.4
+- fixed script dosbox-set-lang (ALT#24306)
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.74-alt2.3
 - fix requires (ALT#28864)
 
