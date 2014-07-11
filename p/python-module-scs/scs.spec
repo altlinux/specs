@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: scs: splittling cone solver
 License: GPLv3
 Group: Development/Python
@@ -19,6 +19,9 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel libnumpy-py3-devel
 %endif
 
+%py_provides %oname
+%py_requires numpy scipy
+
 %description
 Solves convex cone programs via operator splitting. Can solve: linear
 programs (LPs) second-order cone programs (SOCPs), semidefinite programs
@@ -27,6 +30,8 @@ programs (LPs) second-order cone programs (SOCPs), semidefinite programs
 %package -n python3-module-%oname
 Summary: scs: splittling cone solver
 Group: Development/Python3
+%py3_provides %oname
+%py3_requires numpy scipy
 
 %description -n python3-module-%oname
 Solves convex cone programs via operator splitting. Can solve: linear
@@ -69,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2
+- Added necessary requirements and provides
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
 
