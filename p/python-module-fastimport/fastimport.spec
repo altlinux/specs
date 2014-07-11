@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.2
-Release: alt2
+Version: 0.9.4
+Release: alt1
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python
@@ -97,7 +97,7 @@ popd
 %endif
 
 %files
-%doc AUTHORS COPYING.txt NEWS
+%doc PKG-INFO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -106,7 +106,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS COPYING.txt NEWS
+%doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -115,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1
+- Version 0.9.4
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
