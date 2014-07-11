@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           d-haven-event
 Version:        1.1.0
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        D-Haven Event based processing
 License:        ASL 2.0
@@ -99,9 +99,9 @@ ln -sf ${jar} ${jar/-%{version}/}; done)
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -113,7 +113,7 @@ rm -rf target/docs/apidocs
 %files
 %doc LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -121,6 +121,9 @@ rm -rf target/docs/apidocs
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt3_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt2_5jpp6
 - new jpp relase
 
