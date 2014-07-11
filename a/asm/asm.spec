@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           asm
 Version:        1.5.3
-Release:        alt2_8jpp6
+Release:        alt3_8jpp6
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD
@@ -119,40 +119,40 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dobjectweb.ant.ta
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 install -p -m 644 output/dist/lib/asm-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm.pom
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm.pom
 %add_to_maven_depmap asm asm %{version} JPP/%{name} asm
 %add_to_maven_depmap asm1 asm %{version} JPP/%{name} asm
 
 install -p -m 644 output/dist/lib/asm-analysis-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm-analysis.pom
+install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm-analysis.pom
 %add_to_maven_depmap asm asm-analysis %{version} JPP/%{name} asm-analysis
 %add_to_maven_depmap asm1 asm-analysis %{version} JPP/%{name} asm-analysis
 
 install -p -m 644 output/dist/lib/asm-attrs-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm-attrs.pom
+install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm-attrs.pom
 %add_to_maven_depmap asm asm-attrs %{version} JPP/%{name} asm-attrs
 %add_to_maven_depmap asm1 asm-attrs %{version} JPP/%{name} asm-attrs
 
 install -p -m 644 output/dist/lib/asm-tree-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm-tree.pom
+install -p -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm-tree.pom
 %add_to_maven_depmap asm asm-tree %{version} JPP/%{name} asm-tree
 %add_to_maven_depmap asm1 asm-tree %{version} JPP/%{name} asm-tree
 
 install -p -m 644 output/dist/lib/asm-util-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm-util.pom
+install -p -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm-util.pom
 %add_to_maven_depmap asm asm-util %{version} JPP/%{name} asm-util
 %add_to_maven_depmap asm1 asm-util %{version} JPP/%{name} asm-util
 
 install -p -m 644 output/dist/lib/asm-xml-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-asm-xml.pom
+install -p -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-asm-xml.pom
 %add_to_maven_depmap asm asm-xml %{version} JPP/%{name} asm-xml
 %add_to_maven_depmap asm1 asm-xml %{version} JPP/%{name} asm-xml
 
 install -p -m 644 output/dist/lib/kasm-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
-install -p -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-kasm.pom
+install -p -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.asm-kasm.pom
 %add_to_maven_depmap asm kasm %{version} JPP/%{name} kasm
 %add_to_maven_depmap asm1 kasm %{version} JPP/%{name} kasm
 
@@ -184,7 +184,7 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/asm/asm-attrs.jar $RPM_BUILD_ROOT%{repodirlib}
 %doc README.txt faq.html asm-eng.pdf
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -201,6 +201,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/asm/asm-attrs.jar $RPM_BUILD_ROOT%{repodirlib}
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt3_8jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt2_8jpp6
 - added versioned pom groupid asm1
 
