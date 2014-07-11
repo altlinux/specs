@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-ws-metadata-2.0-api
 Version:        1.0.MR1
-Release:        alt3_3jpp6
+Release:        alt4_3jpp6
 Epoch:          0
 Summary:        Web Services Metadata 2.0 MR API
 License:        CDDL
@@ -119,8 +119,8 @@ ln -s %{name}-%{version}.jar ws_metadata_api.jar
 ln -s %{name}-%{version}.jar %{name}.jar)
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -145,7 +145,7 @@ EOF
 %{_javadir}/%{name}-%{version}.jar
 %exclude %{_javadir}/ws_metadata_2_0_api.jar
 %exclude %{_javadir}/ws_metadata_api.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
@@ -158,6 +158,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.MR1-alt4_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.MR1-alt3_3jpp6
 - new jpp relase
 
