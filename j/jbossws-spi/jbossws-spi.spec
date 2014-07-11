@@ -1,25 +1,26 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-spi
-%define version 2.0.3
-%global namedreltag .GA
+%define version 2.1.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jbossws-spi
-Version:          2.0.3
-Release:          alt1_3jpp7
+Version:          2.1.0
+Release:          alt1_1jpp7
 Summary:          JBossWS SPI
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 
-# svn export http://anonsvn.jboss.org/repos/jbossws/spi/tags/jbossws-spi-2.0.3.GA/ jbossws-spi-2.0.3.GA
-# tar cafJ jbossws-spi-2.0.3.GA.tar.xz jbossws-spi-2.0.3.GA
-Source0:          %{name}-%{namedversion}.tar.xz
-
-Patch0:           %{name}-%{namedversion}-pom.patch
+# svn export http://anonsvn.jboss.org/repos/jbossws/spi/tags/jbossws-spi-2.1.0.Final/ jbossws-spi-2.1.0.Final
+# tar cafJ jbossws-spi-2.1.0.Final.tar.xz jbossws-spi-2.1.0.Final
+Source0:          jbossws-spi-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
@@ -29,20 +30,29 @@ BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-enforcer-plugin
+BuildRequires:    maven-clean-plugin
+BuildRequires:    maven-eclipse-plugin
+BuildRequires:    maven-war-plugin
+BuildRequires:    maven-help-plugin
+BuildRequires:    maven-dependency-plugin
 BuildRequires:    jboss-jms-1.1-api
 BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    jbossws-api
+BuildRequires:    jbossws-parent
 
 Requires:         jpackage-utils
 Requires:         jboss-jms-1.1-api
 Requires:         jboss-logging
+Requires:         jboss-logging-tools
 Requires:         jboss-servlet-3.0-api
 Requires:         jbossws-api
 Source44: import.info
 
 %description
-JBoss WS SPI classes.
+JBoss WS SPI classes
 
 %package javadoc
 Summary:          Javadocs for %{name}
@@ -54,22 +64,10 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-
-%patch0 -p1
-
-# Message.properties files are not included in jar, make it available
-for file in $(find src/ -name '*.properties'); do
-  dest=$(echo $file | sed s/\\/java\\//\\/resources\\//)
-  dir=$(dirname $dest)
-  mkdir -p $dir
-  cp $file $dest
-done
+%setup -q -n jbossws-spi-%{namedversion}
 
 %build
-# tests skipped because testParse fails
 mvn-rpmbuild \
-  -Dmaven.test.skip=true \
   -Dproject.build.sourceEncoding=UTF-8 \
   install javadoc:aggregate
 
@@ -85,7 +83,7 @@ install -pm 644 target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 # APIDOCS
 cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -99,6 +97,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_1jpp7
+- update
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.3-alt1_3jpp7
 - new version
 
