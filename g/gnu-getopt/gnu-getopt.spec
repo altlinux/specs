@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-getopt
 Version:        1.0.13
-Release:        alt1_6.1jpp7
+Release:        alt2_6.1jpp7
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -98,7 +98,7 @@ export OPT_JAR_LIST=:
 # poms
 %add_to_maven_depmap gnu-getopt getopt %{version} JPP %{name}
 %add_to_maven_depmap urbanophile java-getopt %{version} JPP %{name}
-%{__install} -D -p -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__install} -D -p -m 0644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 %files
 %doc gnu/getopt/COPYING.LIB gnu/getopt/README
@@ -106,7 +106,7 @@ export OPT_JAR_LIST=:
 %{_javadir}/%{name}.jar
 %{_javadir}/gnu.getopt-%{version}.jar
 %{_javadir}/gnu.getopt.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -116,6 +116,9 @@ export OPT_JAR_LIST=:
 %{_javadocdir}/gnu.getopt
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.13-alt2_6.1jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.13-alt1_6.1jpp7
 - fc update
 
