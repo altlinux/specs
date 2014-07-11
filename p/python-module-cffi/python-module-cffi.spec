@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-cffi
-Version: 0.6
-Release: alt3
+Version: 0.8.6
+Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -15,7 +15,7 @@ Url: http://pypi.python.org/pypi/%modulename/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://pypi.python.org/packages/source/c/%modulename/%modulename-%version.tar
-Patch: cffi-0.6-alt-link.patch
+Patch: cffi-0.8.6-alt-link.patch
 
 %setup_python_module %modulename
 
@@ -72,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.6-alt1
+- new version 0.8.6 (with rpmrb script) (ALT bug #30174)
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3
 - Added module for Python3
 
