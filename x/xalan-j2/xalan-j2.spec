@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -36,17 +39,17 @@ BuildRequires: jpackage-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt2_16jpp7
+Release:        alt2_17jpp7
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        ASL 2.0 and W3C
-Source0:        http://www.apache.org/dist/xml/xalan-j/xalan-j_2_7_1-src.tar.gz
+Source0:        http://archive.apache.org/dist/xml/xalan-j/xalan-j_2_7_1-src.tar.gz
 Source1:        %{name}-serializer-MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom
 Source3:        http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom
 Source4:        xsltc-%{version}.pom
-Source5:	%{name}-MANIFEST.MF
+Source5:        %{name}-MANIFEST.MF
 Patch0:         %{name}-noxsltcdeps.patch
 # Fix the serializer JAR filename in xalan-j2's MANIFEST.MF
 # https://bugzilla.redhat.com/show_bug.cgi?id=718738
@@ -62,7 +65,6 @@ Requires(preun): chkconfig
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant
 BuildRequires:  bcel
-BuildRequires:  jlex
 BuildRequires:  java_cup
 BuildRequires:  regexp
 BuildRequires:  sed
@@ -80,11 +82,6 @@ Obsoletes: xalan-j <= 2.7.0-alt3
 #Provides:       jaxp_transform_impl
 Source11:        xalan-j2-2.7.0-component-info.xml
 
-%def_with repolib
-%define reltag patch02
-%define repodir %{_javadir}/repository.jboss.com/apache-xalan/%{version}.%{reltag}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
 
 
 %description
@@ -99,7 +96,6 @@ Summary:        XSLT compiler
 Group:          Development/Java
 Requires:       java_cup
 Requires:       bcel
-Requires:       jlex
 Requires:       regexp
 Requires:       xerces-j2
 
@@ -154,6 +150,12 @@ sed -i '/<!-- Expand jaxp sources/,/<delete file="${xml-commons-srcs.tar}"/{d}' 
 mv tools/xalan2jdoc.jar.no tools/xalan2jdoc.jar
 mv tools/xalan2jtaglet.jar.no tools/xalan2jtaglet.jar
 
+# Remove classpaths from manifests
+sed -i '/class-path/I d' $(find -iname *manifest*)
+
+# Convert CR-LF to LF-only
+sed -i s/// KEYS LICENSE.txt NOTICE.txt
+
 %build
 if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{java_home}" ; fi
 pushd lib
@@ -166,12 +168,11 @@ popd
 pushd tools
 ln -sf $(build-classpath java_cup) java_cup.jar
 ln -sf $(build-classpath ant) ant.jar
-ln -sf $(build-classpath jlex) JLex.jar
 ln -sf $(build-classpath xml-stylebook) stylebook-1.0-b3_xalan-2.jar
 popd
 export CLASSPATH=$(build-classpath servlet)
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+ant \
   -Djava.awt.headless=true \
   -Dapi.j2se=%{_javadocdir}/java \
   -Dbuild.xalan-interpretive.jar=build/xalan-interpretive.jar \
@@ -236,7 +237,6 @@ EOF
 
 find $RPM_BUILD_ROOT -name '*.sh' -print0 | xargs -0 dos2unix
 grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
-ln -s xalan-j2.jar $RPM_BUILD_ROOT/%{_javadir}/xalan-j.jar
 # jpp compat
 ln -s %{name}-serializer.jar $RPM_BUILD_ROOT/%{_javadir}/serializer.jar
 ln -s %{name}.jar $RPM_BUILD_ROOT/%{_javadir}/xalan.jar
@@ -249,42 +249,15 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_transfor
 %{_javadir}/jaxp_transform_impl.jar	%{_javadir}/xsltc.jar	10
 EOF
 
-%if_with repolib
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -p -m 644 %{SOURCE11} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i 's/@VERSION@/%{version}.%{reltag}-brew/g' $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/serializer.jar $RPM_BUILD_ROOT%{repodirlib}/serializer.jar
-cp -p $RPM_BUILD_ROOT%{_javadir}/xalan.jar $RPM_BUILD_ROOT%{repodirlib}/xalan.jar
-
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 
 
 %files
 %{_javadir}/serializer.jar
 %{_javadir}/xalan.jar
-%{_javadir}/xalan-j.jar
 %_altdir/jaxp_transform_impl_xalan-j2
 %doc KEYS LICENSE.txt NOTICE.txt readme.html
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-serializer.jar
-%exclude %{_javadir}/jaxp_transform_impl.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}-serializer.pom
@@ -307,6 +280,9 @@ can be extracted through rpm2cpio.
 %{_datadir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_17jpp7
+- update
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_16jpp7
 - new release
 
