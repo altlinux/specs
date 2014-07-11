@@ -37,7 +37,7 @@ Name:		carol-irmi
 Summary:	IRMI: Intercepting RMI implementation for the Java platform
 Url:		http://carol.objectweb.org/
 Version:	1.0.1
-Release:	alt1_3jpp6
+Release:	alt2_3jpp6
 Epoch:		0
 License:	LGPL
 Group:		Development/Java
@@ -98,9 +98,9 @@ ln -sf ow_%{jarname}-%{version}.jar ow_%{jarname}.jar
 popd
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-ow_%{jarname}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-ow_%{jarname}.pom
 %add_to_maven_depmap org.objectweb.carol irmi %{version} JPP ow_%{jarname}
 
 # javadoc
@@ -112,13 +112,16 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadir}/ow_%{jarname}.jar
 %{_javadir}/ow_%{jarname}-%{version}.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt2_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_3jpp6
 - new jpp relase
 
