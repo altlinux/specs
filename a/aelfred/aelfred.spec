@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           aelfred
 Version:        1.2
-Release:        alt1_0.a.9jpp5
+Release:        alt2_0.a.9jpp5
 Epoch:          0
 Summary:        Java-based XML parser
 License:        BSD-Style
@@ -102,8 +102,8 @@ cd src
 
 # jar
 export JAVA_HOME=%{java_home}
-%__mkdir_p %{buildroot}%{_datadir}/maven2/poms
-%__cp -a %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%__mkdir_p %{buildroot}%{_mavenpomdir}
+%__cp -a %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 cd src
@@ -132,7 +132,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc README.txt FILES
 %{_javadir}/*
 %dir %{_datadir}/%{name}
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -148,6 +148,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_datadir}/%{name}/Demo
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_0.a.9jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_0.a.9jpp5
 - new version
 
