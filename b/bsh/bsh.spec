@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           bsh
 Version:        1.3.0
-Release:        alt3_20jpp7
+Release:        alt4_20jpp7
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 License:        SPL or LGPLv2+
@@ -168,11 +168,11 @@ install -m 644 dist/%{name}-util-%{version}.jar \
 %add_to_maven_depmap %{name} %{name}-bsf %{version} JPP %{name}-bsf
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-bsf.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-bsf.pom
 
 # manual
 find docs -name ".cvswrappers" -exec rm -f {} \;
@@ -287,7 +287,7 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_javadir}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/webapps
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %config(noreplace,missingok) /etc/%{name}.conf
 
@@ -310,6 +310,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt4_20jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt3_20jpp7
 - fc update
 
