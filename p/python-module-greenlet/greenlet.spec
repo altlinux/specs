@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.git20130902
+Version: 0.4.2
+Release: alt1.git20140626
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20140626
+- Version 0.4.2
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20130902
 - Version 0.4.1
 
