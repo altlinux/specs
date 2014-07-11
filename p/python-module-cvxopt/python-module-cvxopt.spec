@@ -3,12 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
-Url: http://abel.ee.ucla.edu/cvxopt/
+Url: http://cvxopt.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 %setup_python_module %oname
@@ -180,6 +180,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt1
+- Verson 1.1.7
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt1
 - Version 1.1.6
 
