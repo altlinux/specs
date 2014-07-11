@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-im-exporter
 Version:        1.1
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        XML Im-/Exporter
 License:        LGPLv2+
@@ -95,14 +95,14 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # maven
 %add_to_maven_depmap de.zeigermann.xml %{name} %{version} JPP %{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 
 %files
 %doc doc/index.html *.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -110,6 +110,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.po
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_5jpp6
 - new jpp relase
 
