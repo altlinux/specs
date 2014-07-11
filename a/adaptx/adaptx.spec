@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           adaptx
 Version:        0.9.14
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        AdaptX
 License:        Exolab Software License
@@ -115,8 +115,8 @@ ant -buildfile src/build.xml doc
 
 %install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.codehaus.castor %{name} %{version} JPP %{name}
 
 # jar
@@ -135,7 +135,7 @@ rm -rf build/doc/javadoc
 %files
 %doc src/etc/contributors.html src/doc/license.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
@@ -148,6 +148,9 @@ rm -rf build/doc/javadoc
 %doc build/doc/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.14-alt2_1jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Mar 06 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.9.14-alt1_1jpp5
 - new version
 
