@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           kilim1
 Version:        1.1.3
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        A generic configuration framework for Java
 License:        BSD
@@ -100,9 +100,9 @@ install -m 644 distrib/kilim-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tools-
 ln -sf ${jar} ${jar/-%{version}/}; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap kilim kilim %{version} JPP %{name}
 
 install -p -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
@@ -121,7 +121,7 @@ cp -pr doc/GettingStarted $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadir}/*.jar
 %doc %{_datadir}/%{name}-%{version}/Readme.txt
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
@@ -131,6 +131,9 @@ cp -pr doc/GettingStarted $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt2_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_5jpp6
 - new jpp relase
 
