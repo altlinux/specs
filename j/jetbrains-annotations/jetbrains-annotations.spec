@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetbrains-annotations
 Version:        6.0.2
-Release:	alt2_2jpp5
+Release:	alt3_2jpp5
 Epoch:          0
 Summary:        Jetbrains Annotations
 License:        Apache Software License 2.0
@@ -96,9 +96,9 @@ install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 for jar in *-%{version}*.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -122,7 +122,7 @@ fi
 
 %files
 %{_javadir}/%{name}*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -134,6 +134,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.0.2-alt3_2jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:6.0.2-alt2_2jpp5
 - fixes for java6 support
 
