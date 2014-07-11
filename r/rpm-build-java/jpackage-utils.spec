@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt31
+Release:        alt32
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -503,6 +503,10 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt32
+- moved %%_mavendepmapfragdir to %%{_datadir}/maven-fragments
+  and %%_mavenpomdir to %%{_datadir}/maven-poms
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt31
 - sync with javapackages-tools = 0.14.1
 
