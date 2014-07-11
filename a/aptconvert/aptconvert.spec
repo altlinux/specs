@@ -38,7 +38,7 @@ Name:           aptconvert
 Summary:        Convert Almost Plain Text files
 Url:            http://www.xmlmind.com/aptconvert.html
 Version:        050713
-Release:        alt1_3jpp5
+Release:        alt2_3jpp5
 Epoch:          0
 License:        BSD-style
 Group:          Development/Java
@@ -134,9 +134,9 @@ install -m 644 aptall-jakarta.jar \
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -162,7 +162,7 @@ cp -pr distrib/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-gnu-%{version}.jar.*
@@ -175,7 +175,7 @@ cp -pr distrib/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadir}/%{name}-jakarta-%{version}.jar
 %{_javadir}/%{name}-jakarta.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-jakarta-%{version}.jar.*
@@ -191,6 +191,9 @@ cp -pr distrib/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:050713-alt2_3jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Mar 30 2009 Igor Vlasenko <viy@altlinux.ru> 0:050713-alt1_3jpp5
 - new jpp release
 
