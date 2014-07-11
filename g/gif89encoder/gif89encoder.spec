@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:		gif89encoder
 Version:	0.90
-Release:	alt1_0.b.3jpp5
+Release:	alt2_0.b.3jpp5
 Epoch:		0
 Summary:	Java class library for encoding GIF's
 License:	BSD
@@ -99,9 +99,9 @@ popd
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 %__mkdir_p %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -117,7 +117,7 @@ install -m 644 %{SOURCE1} \
 %{_javadir}/%{name}.jar
 %{_javadir}//%{name}-%{version}.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -130,6 +130,9 @@ install -m 644 %{SOURCE1} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.90-alt2_0.b.3jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Mar 30 2009 Igor Vlasenko <viy@altlinux.ru> 0:0.90-alt1_0.b.3jpp5
 - new jpp release
 
