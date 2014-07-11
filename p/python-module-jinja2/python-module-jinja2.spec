@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.8
-Release: alt2.git20140110
+Release: alt2.git20140610
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -164,6 +164,9 @@ make test
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt2.git20140610
+- New snapshot
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt2.git20140110
 - New snapshot
 
