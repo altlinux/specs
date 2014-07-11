@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           xslthl
 Version:        2.0.2
-Release:	alt2_1jpp6
+Release:	alt3_1jpp6
 Epoch:          0
 Summary:        XSLT Syntax Highlighting
 License:        zlib/libpng
@@ -113,8 +113,8 @@ for jar in *-%{version}*; do ln -s ${jar} `/bin/echo ${jar} | sed  "s|-%{version
 )
 
 # pom
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap net.sf.xslthl xslthl %{version} JPP %{name}
 
 # javadoc
@@ -129,7 +129,7 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %files
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -141,6 +141,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt3_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt2_1jpp6
 - build with saxon6
 
