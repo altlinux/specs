@@ -61,7 +61,7 @@ BuildRequires: jpackage-compat
 
 Name:           antlr
 Version:        2.7.7
-Release:	alt10_13jpp6
+Release:	alt11_13jpp6
 Epoch:          0
 Summary:        ANother Tool for Language Recognition
 License:        Public Domain
@@ -245,8 +245,8 @@ cp -p work/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -s ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
 
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE5} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap antlr antlr %{version} JPP %{name}
 
 # script
@@ -277,7 +277,7 @@ install -p -m 644 %{PATCH0} %{buildroot}%{repodirsrc}
 install -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
 install -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
 cp -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/antlr.jar
-cp -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/antlr.pom
+cp -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/antlr.pom
 %endif
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%{name}_antlr<<EOF
 %{_bindir}/antlr	%{_bindir}/antlr-java	10
@@ -312,7 +312,7 @@ install -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 %doc INSTALL.txt LICENSE.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %attr(0755,root,root) %ghost %{_bindir}/antlr
 %attr(0755,root,root) %{_bindir}/antlr-java
@@ -349,6 +349,9 @@ install -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt11_13jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt10_13jpp6
 - added ant-junit BR:
 
