@@ -37,7 +37,7 @@ Name:           sun-dtdparser
 Summary:        DTD Parser
 Url:            https://jaxb2-sources.dev.java.net/
 Version:        1.0
-Release:	alt3_2jpp5
+Release:	alt4_2jpp5
 Epoch:          0
 License:        BSD-style
 Group:          Development/Java
@@ -82,8 +82,8 @@ install -m 644 target/%{bname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap com.sun.xml.dtdparser dtd-parser %{version} JPP %{name}
 
 # javadoc
@@ -106,7 +106,7 @@ fi
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -116,6 +116,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_2jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_2jpp5
 - fixes for java6 support
 
