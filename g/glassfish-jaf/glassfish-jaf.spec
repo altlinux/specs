@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-jaf
 Version:        1.1.0
-Release:        alt3_6jpp6
+Release:        alt4_6jpp6
 Epoch:          0
 Summary:        Glassfish - JavaBeans Activation Framework
 License:        CDDL
@@ -128,9 +128,9 @@ touch $RPM_BUILD_ROOT%{_javadir}/jaf_api.jar
 touch $RPM_BUILD_ROOT%{_javadir}/jaf_1_1_api.jar
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -180,7 +180,7 @@ sed -i s,sun-jaf,glassfish/jaf, $RPM_BUILD_ROOT%{compatrepodir}/component-info.x
 %doc build/META-INF/LICENSE.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 #%{_javadir}/jaf-%{jafver}.jar
 %exclude %{_javadir}/jaf.jar
@@ -200,6 +200,9 @@ sed -i s,sun-jaf,glassfish/jaf, $RPM_BUILD_ROOT%{compatrepodir}/component-info.x
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt4_6jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Oct 20 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt3_6jpp6
 - jbossas42 compatible repolib
 
