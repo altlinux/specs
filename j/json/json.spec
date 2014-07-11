@@ -38,7 +38,7 @@ Name:		json
 Summary:	JavaScript Object Notation
 Url:		http://www.json.org/java/index.html
 Version:	20080425
-Release:	alt2_2jpp6
+Release:	alt3_2jpp6
 Epoch:		0
 License:	Open Source
 Group:		Development/Java
@@ -91,8 +91,8 @@ install -m 644 target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-json.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-json.pom
 %add_to_maven_depmap org.json json %{version} JPP json
 
 # javadoc
@@ -102,7 +102,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 %files
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -110,6 +110,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt3_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt2_2jpp6
 - new jpp relase
 
