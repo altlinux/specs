@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Name:		backport-util-concurrent
 Summary:	Backport of java.util.concurrent API, introduced in Java 5.0
 Version:	3.1
-Release:	alt1_8jpp7
+Release:	alt2_8jpp7
 URL:		http://backport-jsr166.sourceforge.net
 License:	Public Domain
 Group:		Development/Java
@@ -90,8 +90,8 @@ ln -s %{name}-%{version}.jar \
 
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
@@ -105,7 +105,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc license.html
 %doc README.html
 %{_javadir}/*.jar
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 
 %files javadoc
@@ -114,6 +114,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt2_8jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_8jpp7
 - fc update
 
