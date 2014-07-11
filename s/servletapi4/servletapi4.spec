@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           servletapi4
 Version:        4.0.4
-Release:	alt3_7jpp6
+Release:	alt4_7jpp6
 Epoch:          0
 Summary:        Java Servlet 2.3 and JSP 1.2 API classes
 License:        Apache License
@@ -87,8 +87,8 @@ popd
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 dist/lib/servlet.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 %add_to_maven_depmap javax.servlet servlet-api 2.3 JPP servlet_2_3_api
 %add_to_maven_depmap tomcat servlet-api %{version} JPP %{name}
@@ -128,7 +128,7 @@ EOF
 %_altdir/servlet_servletapi4
 %doc LICENSE README.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %_altdir/servletapi_*
 
@@ -136,6 +136,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.0.4-alt4_7jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.4-alt3_7jpp6
 - fixed build - use fedora' aqute-bnd instead of aqute-bndlib
 
