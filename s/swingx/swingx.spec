@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6.5
-Release:        alt1_0jpp6
+Release:        alt2_0jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -123,9 +123,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
 # poms
-%__mkdir_p %{buildroot}%{_datadir}/maven2/poms
+%__mkdir_p %{buildroot}%{_mavenpomdir}
 %__install -m 644 pom.xml \
-               $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+               $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # javadoc 
@@ -136,7 +136,7 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc 
@@ -144,6 +144,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %{_javadocdir}/%{name} 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt2_0jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Thu Feb 28 2013 Paul Wolneykien <manowar@altlinux.ru> 1.6.5-alt1_0jpp6
 - Install all target JARs.
 - Add "metainf-services" and "mockito" to the set of build requisites.
