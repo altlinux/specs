@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           jug
 Version:        2.0.0
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        Java UUID Generator
 License:        Apache Software License 2.0
@@ -125,11 +125,11 @@ for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done
 %add_to_maven_depmap org.safehaus.jug %{name}-lgpl %{version} JPP %{name}-lgpl
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-asl.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-asl.pom
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-lgpl.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-lgpl.pom
 
 install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp -pr release-notes $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
@@ -144,7 +144,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %dir %{_docdir}/%{name}-%{version}
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -153,6 +153,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt3_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt2_1jpp6
 - added ant-junit BR:
 
