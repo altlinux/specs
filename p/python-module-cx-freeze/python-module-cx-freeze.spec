@@ -1,5 +1,5 @@
-Version: 4.3.2
-Release: alt1.svn20131105
+Version: 4.3.3
+Release: alt1.hg20140508
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -10,7 +10,7 @@ Summary: Scripts and modules for freezing Python scripts into executables
 License: PSF
 URL: http://cx-freeze.sourceforge.net/
 Provides: cx_Freeze
-# https://cx-freeze.svn.sourceforge.net/svnroot/cx-freeze/trunk
+# hg clone https://bitbucket.org/anthony_tuininga/cx_freeze
 Source: %origname-%version.tar.bz2
 Group: Development/Python
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -99,6 +99,9 @@ This package contains samples for cx_Freeze.
 
 %prep
 %setup
+
+rm -f test/samples/invalid_syntax.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -163,6 +166,9 @@ rm -f $(find %buildroot -name 'windist*')
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.3-alt1.hg20140508
+- Version 4.3.3
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.svn20131105
 - Version 4.3.2
 
