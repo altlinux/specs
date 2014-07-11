@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           gjt-jpl-util
 Version:        0.6
-Release:        alt1_6jpp6
+Release:        alt2_6jpp6
 Epoch:          0
 Summary:        Miscellaneous utility classes and methods
 License:        GPL
@@ -92,8 +92,8 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -p -m 644 util/build/jpl-util-0_6.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap jpl-util jpl-util %{version} JPP %{name}
 
 # javadoc
@@ -109,7 +109,7 @@ cp -pr util/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/License
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -122,6 +122,9 @@ cp -pr util/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt2_6jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt1_6jpp6
 - new jpp relase
 
