@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           tlddoc
 Version:        1.3
-Release:	alt1_3jpp6
+Release:	alt2_3jpp6
 Epoch:          0
 Summary:        Tag Library Documentation Generator
 License:        BSD
@@ -110,8 +110,8 @@ cp -p taglibrarydoc/dist/taglibrarydoc-`echo %{version} | sed -e 's/\./_/'`/%{na
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+mkdir -p %{buildroot}%{_mavenpomdir}
+cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap taglibrarydoc tlddoc %{version} JPP %{name}
 
 # javadoc
@@ -127,7 +127,7 @@ cp -pr taglibrarydoc/doc/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc taglibrarydoc/license.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -138,6 +138,9 @@ cp -pr taglibrarydoc/doc/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_3jpp6
 - added pom
 
