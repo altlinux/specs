@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           spymemcached
 Version:        2.5
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Java client for memcached
 License:        BSD
@@ -105,8 +105,8 @@ popd
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-memcached.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-memcached.pom
 %add_to_maven_depmap spy memcached %{version} JPP memcached
 
 # javadoc
@@ -118,7 +118,7 @@ popd
 %doc LICENSE.txt
 %{_javadir}*/memcached-%{version}.jar
 %{_javadir}*/memcached.jar
-%{_datadir}/maven2/poms/JPP-memcached.pom
+%{_mavenpomdir}/JPP-memcached.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -126,6 +126,9 @@ popd
 %{_javadocdir}/memcached
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Dec 29 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_1jpp6
 - new version
 
