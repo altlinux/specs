@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           doctypechanger
 Version:        1.1
-Release:	alt1_2jpp6
+Release:	alt2_2jpp6
 Epoch:          0
 Summary:        Modifies DOCTYPE declaration from a byte stream as it is fed into an XML parser
 Group:          Development/Java
@@ -81,8 +81,8 @@ export OPT_JAR_LIST=:
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap net.socialchange.doctype doctype-changer %{version} JPP %{name}
 
 # javadocs
@@ -98,7 +98,7 @@ export OPT_JAR_LIST=:
 %{_javadir}/%{name}.jar
 %{_javadir}/DoctypeChanger-%{version}.jar
 %{_javadir}/DoctypeChanger.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -108,6 +108,9 @@ export OPT_JAR_LIST=:
 %{_javadocdir}/DoctypeChanger
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_2jpp6
 - new version
 
