@@ -74,7 +74,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-commons
 Version:        1.3.04
-Release:        alt5_10jpp7
+Release:        alt6_10jpp7
 Summary:        Common code for XML projects
 Epoch:          0
 License:        ASL 2.0
@@ -482,13 +482,13 @@ ln -sf %{name}-jaxp-1.3-apis.jar dom3.jar
 popd
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE200} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-jaxp-1.3-apis.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE200} %{buildroot}%{_mavenpomdir}/JPP-%{name}-jaxp-1.3-apis.pom
 %add_to_maven_depmap xml-apis xml-apis %{version} JPP %{name}-jaxp-1.3-apis
-%{__ln_s} JPP-%{name}-jaxp-1.3-apis.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-apis.pom
-%{__cp} -p %{SOURCE201} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-jaxp-1.3-apis-ext.pom
+%{__ln_s} JPP-%{name}-jaxp-1.3-apis.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}-apis.pom
+%{__cp} -p %{SOURCE201} %{buildroot}%{_mavenpomdir}/JPP-%{name}-jaxp-1.3-apis-ext.pom
 %add_to_maven_depmap xml-apis xml-apis-ext %{version} JPP %{name}-jaxp-1.3-apis-ext
-%{__cp} -p %{SOURCE202} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-resolver12.pom
+%{__cp} -p %{SOURCE202} %{buildroot}%{_mavenpomdir}/JPP-%{name}-resolver12.pom
 %add_to_maven_depmap xml-resolver xml-resolver %{version} JPP %{name}-resolver12
 
 # javadoc
@@ -1024,9 +1024,9 @@ fi
 %{_javadir}*/%{name}-jaxp-1.3-apis.jar
 %{_javadir}*/%{name}-jaxp-1.3-apis-ext-%{version}.jar
 %{_javadir}*/%{name}-jaxp-1.3-apis-ext.jar
-%{_datadir}/maven2/poms/JPP-%{name}-apis.pom
-%{_datadir}/maven2/poms/JPP-%{name}-jaxp-1.3-apis.pom
-%{_datadir}/maven2/poms/JPP-%{name}-jaxp-1.3-apis-ext.pom
+%{_mavenpomdir}/JPP-%{name}-apis.pom
+%{_mavenpomdir}/JPP-%{name}-jaxp-1.3-apis.pom
+%{_mavenpomdir}/JPP-%{name}-jaxp-1.3-apis-ext.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{name}-jaxp-1.3-apis*.jar.*
 %endif
@@ -1070,7 +1070,7 @@ fi
 %attr(0755,root,root) %{_bindir}/xml-resolver12
 %attr(0755,root,root) %{_bindir}/xml-xread12
 %attr(0755,root,root) %{_bindir}/xml-xparse12
-%{_datadir}/maven2/poms/JPP-%{name}-resolver12.pom
+%{_mavenpomdir}/JPP-%{name}-resolver12.pom
 %{_mandir}/man1/xml-resolver12.1*
 %{_mandir}/man1/xml-xread12.1*
 %{_mandir}/man1/xml-xparse12.1*
@@ -1087,6 +1087,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt6_10jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt5_10jpp7
 - added compat symlink xml-commons-apis-ext.jar
 
