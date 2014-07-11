@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.2501
+Version: 0.2502
 Release: alt1
 
 Summary: finance - Financial Risk Calculations
@@ -104,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2502-alt1
+- Version 0.2502
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2501-alt1
 - Initial build for Sisyphus
 
