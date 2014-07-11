@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           opendmk
 Version:        1.0
-Release:        alt1_0.b01.ea.1jpp6
+Release:        alt2_0.b01.ea.1jpp6
 Summary:        Open Dynamic Management Kit
 
 Group:          Development/Java
@@ -117,16 +117,16 @@ done
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
 # pom
-%__install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+%__install -d -m 755 %{buildroot}%{_mavenpomdir}
 %__install -m 644 %{SOURCE1} \
-        %{buildroot}%{_datadir}/maven2/poms/JPP.opendmk-jmxremote_optional.pom
+        %{buildroot}%{_mavenpomdir}/JPP.opendmk-jmxremote_optional.pom
 %add_to_maven_depmap org.jvnet.opendmk jmxremote_optional 1.0_01-ea JPP/opendmk jmxremote_optional
 %add_to_maven_depmap javax.management jmxremote_optional 1.0_01-ea JPP/opendmk jmxremote_optional
 %__install -m 644 %{SOURCE2} \
-        %{buildroot}%{_datadir}/maven2/poms/JPP.opendmk-jdmkrt.pom
+        %{buildroot}%{_mavenpomdir}/JPP.opendmk-jdmkrt.pom
 %add_to_maven_depmap org.jvnet.opendmk jdmkrt 1.0_01-ea JPP/opendmk jdmkrt
 %__install -m 644 %{SOURCE3} \
-        %{buildroot}%{_datadir}/maven2/poms/JPP.opendmk-jdmktk.pom
+        %{buildroot}%{_mavenpomdir}/JPP.opendmk-jdmktk.pom
 %add_to_maven_depmap org.jvnet.opendmk jdmktk 1.0_01-ea JPP/opendmk jdmktk
 
 %__install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -150,7 +150,7 @@ done
 %{_javadir}/%{name}/*.jar
 %{_datadir}/%{name}
 %{_docdir}/%{name}-%{version}
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -159,6 +159,9 @@ done
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.b01.ea.1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Oct 19 2010 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.b01.ea.1jpp6
 - new version
 
