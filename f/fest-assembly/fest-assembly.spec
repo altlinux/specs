@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           fest-%{module}
 Version:        1.0
-Release:        alt4_0.r1039.1jpp7
+Release:        alt5_0.r1039.1jpp7
 Summary:        Fixtures for Easy Software Testing Shared Assembly Descriptor
 
 Group:          Development/Java
@@ -96,17 +96,20 @@ install -m 644 target/%{name}-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir}/fest && for jar in *-%{version}*; do \
 ln -s ${jar} ${jar/-%{version}/}; done)
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 %add_to_maven_depmap org.easytesting %{name} %{version} JPP/fest %{module}
 
 %files
 %dir %{_javadir}/fest
 %{_javadir}/fest/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_0.r1039.1jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.r1039.1jpp7
 - fixed build
 
