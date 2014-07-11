@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-xsom
 Version:        20070515
-Release:        alt2_3jpp6
+Release:        alt3_3jpp6
 Epoch:          0
 Summary:        XML Schema Object Model
 License:        CDDL
@@ -136,9 +136,9 @@ install -m 644 results/%{bname}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{bname}-
 for jar in *-%{version}*.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{bname}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{bname}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -153,7 +153,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc license.txt
 %{_javadir}/%{name}/%{bname}-%{version}.jar
 %{_javadir}/%{name}/%{bname}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -165,6 +165,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:20070515-alt3_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Sep 28 2010 Igor Vlasenko <viy@altlinux.ru> 0:20070515-alt2_3jpp6
 - new jpackage release
 
