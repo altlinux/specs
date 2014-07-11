@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           easymock2
 Version:        2.5.2
-Release:        alt4_7jpp7
+Release:        alt5_7jpp7
 Summary:        Easy mock objects
 License:        ASL 2.0
 Group:          Development/Java
@@ -74,9 +74,9 @@ install -m 644 target/%{name}-%{version}.jar \
     %{buildroot}%{_javadir}/%{name}.jar
 
 # pom
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -87,13 +87,16 @@ rm -rf target/site/apidocs
 %files
 %doc LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 
 %files javadoc
 %doc %{_javadocdir}/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt5_7jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt4_7jpp7
 - added osgi provides
 
