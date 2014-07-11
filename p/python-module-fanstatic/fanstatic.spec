@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.a4
+Release: alt1.a5
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -152,6 +152,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a5
+- Version 1.0a5
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a4
 - Version 1.0a4
 
