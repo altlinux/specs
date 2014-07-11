@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           nanoxml
 Version:        2.2.3
-Release:        alt2_6jpp6
+Release:        alt3_6jpp6
 Epoch:          0
 Summary:        NanoXML is a small XML parser for Java
 License:        zlib License
@@ -109,12 +109,12 @@ install -pm 644 Output/%{name}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap be.cyberelf.nanoxml %{name} %{version} JPP %{name}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-lite.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-lite.pom
 %add_to_maven_depmap be.cyberelf.nanoxml lite %{version} JPP %{name}-lite
 
 # javadoc
@@ -129,14 +129,14 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadir}/%{name}-sax-%{version}.jar
 %{_javadir}/%{name}-sax.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 
 %files lite
 %{_javadir}/%{name}-lite-%{version}.jar
 %{_javadir}/%{name}-lite.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files manual
 %doc Documentation/NanoXML-Java/*
@@ -150,6 +150,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt3_6jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt2_6jpp6
 - new jpp relase
 
