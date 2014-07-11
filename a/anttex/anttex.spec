@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        TeX Extensions to Ant
 Name:           anttex
 Version:        0.2
-Release:        alt1_5jpp5
+Release:        alt2_5jpp5
 Epoch:          0
 License:        Open Source
 URL:            http://ls10-www.informatik.uni-dortmund.de/~alfert/ant-extension/
@@ -82,9 +82,9 @@ cp -p %{base_name}.jar \
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -93,7 +93,7 @@ install -m 644 %{SOURCE1} \
 %files
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -101,6 +101,9 @@ install -m 644 %{SOURCE1} \
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt2_5jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue May 19 2009 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt1_5jpp5
 - new jpp release
 
