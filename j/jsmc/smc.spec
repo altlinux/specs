@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           jsmc
 Version:        5.0.2
-Release:	alt2_3jpp6
+Release:	alt3_3jpp6
 Epoch:          0
 Summary:        State Machine Compiler
 License:        Mozilla Public License 1.1
@@ -139,8 +139,8 @@ install -m 644 net/sf/smc/Smc.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{oldname}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{oldname}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{oldname}-%{version}
@@ -158,8 +158,8 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 %files
 %{_javadir}/*
-%{_datadir}/maven2
-%{_mavendepmapfragdir}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{oldname}-%{version}.jar.*
@@ -173,6 +173,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_docdir}/%{oldname}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.2-alt3_3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.2-alt2_3jpp6
 - fixed build with java 7
 
