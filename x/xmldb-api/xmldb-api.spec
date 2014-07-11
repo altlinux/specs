@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmldb-api
 Version:        0.1
-Release:        alt4_0.20041010.5jpp6
+Release:        alt5_0.20041010.5jpp6
 Epoch:          1
 Summary:        XML:DB API for Java
 License:        BSD
@@ -138,15 +138,15 @@ install -m 644 dist/xmldb/%{bname}-common.jar $RPM_BUILD_ROOT%{_javadir}/%{bname
 
 # poms
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap xmldb xmldb-api %{version} JPP %{name}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-sdk.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-sdk.pom
 %add_to_maven_depmap xmldb xmldb-api-sdk %{version} JPP %{name}-sdk
 install -m 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{bname}-common.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{bname}-common.pom
 %add_to_maven_depmap xmldb xmldb-common %{version} JPP %{bname}-common
 
 # javadoc
@@ -162,7 +162,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc src/{AUTHORS,LICENSE,README,config.xml}
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %dir %{_libdir}/gcj/%{name}
@@ -188,6 +188,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.1-alt5_0.20041010.5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 1:0.1-alt4_0.20041010.5jpp6
 - jpp 6 release
 
