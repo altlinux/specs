@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-poi
 Version:        3.8
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        The Java API for Microsoft Documents
 
 Group:          Development/Java
@@ -139,8 +139,8 @@ do
   ln -s apache-${jar}.jar $RPM_BUILD_ROOT%{_javadir}/poi/${jar}.jar
 done
 #pom
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cp -p %SOURCE2 $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-poi.pom
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+cp -p %SOURCE2 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-poi.pom
 %add_to_maven_depmap org.apache.poi poi %{version}%{?rcver}-%{reldate} JPP/poi poi
 
 #javadoc
@@ -161,7 +161,7 @@ ant -propertyfile build.properties test
 %doc KEYS LICENSE NOTICE
 %{_javadir}/poi/
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/JPP-poi.pom
+%{_mavenpomdir}/JPP-poi.pom
 
 %files javadoc
 %doc LICENSE
@@ -172,6 +172,9 @@ ant -propertyfile build.properties test
 
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.8-alt2_3jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.8-alt1_3jpp7
 - new version
 
