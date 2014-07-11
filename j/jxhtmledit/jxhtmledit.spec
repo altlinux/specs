@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jxhtmledit
 Version:        4.0.005
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Summary:        Browser-based HTML/XHTML content authoring tool
 
 Group:          Development/Java
@@ -136,8 +136,8 @@ xmlconfigreader \
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do \
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
-%__install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-%__install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+%__install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%__install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap com.tecnick.htmlutils %{name} %{version} JPP %{name}
 
 # javadoc
@@ -148,7 +148,7 @@ xmlconfigreader \
 %files
 %doc *.TXT
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -156,6 +156,9 @@ xmlconfigreader \
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.005-alt4_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.005-alt3_1jpp6
 - added ant-junit BR:
 
