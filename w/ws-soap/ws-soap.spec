@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-soap
 Version:	2.3.1
-Release:	alt3_5jpp5
+Release:	alt4_5jpp5
 Epoch:		0
 Summary:        Simple Object Access Protocol
 License:        Apache Software License
@@ -53,7 +53,7 @@ Source0:        http://www.apache.org/dist/ws/soap/version-2.3.1/soap-src-2.3.1.
 #Requires: xerces-j2
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 1.6.5
-BuildRequires: ejb
+BuildRequires: geronimo-ejb
 BuildRequires: jaf
 BuildRequires: javamail
 BuildRequires: servletapi4
@@ -92,7 +92,7 @@ Javadoc for %{name}.
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-export CLASSPATH=$(build-classpath ejb jaf javamail servletapi4 xerces-j2)
+export CLASSPATH=$(build-classpath jaf javamail servletapi4 xerces-j2)
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 compile
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 javadocs
 
@@ -148,6 +148,9 @@ fi
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt4_5jpp5
+- and again fixed build (use geronimo-ejb)
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt3_5jpp5
 - and fixed deps too
 
