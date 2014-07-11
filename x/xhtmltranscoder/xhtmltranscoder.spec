@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           xhtmltranscoder
 Version:        1.0.007
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Convert broken HTML to XHTML
 
 Group:          Development/Java
@@ -120,8 +120,8 @@ LANG=en_US.iso88591
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do \
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
-%__install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-%__install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+%__install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%__install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap com.tecnick.htmlutils %{name} %{version} JPP %{name}
 
 # javadoc
@@ -132,7 +132,7 @@ LANG=en_US.iso88591
 %files
 %doc *.TXT
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -140,6 +140,9 @@ LANG=en_US.iso88591
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.007-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.007-alt1_1jpp6
 - new version
 
