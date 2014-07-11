@@ -1,5 +1,5 @@
 Name: alterator-service-functions
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -25,6 +25,9 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Fri Jul 11 2014 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
+- sd_service_control: Fix condreload.
+
 * Fri Jul 12 2013 Paul Wolneykien <manowar@altlinux.org> 2.0.2-alt1
 - Use </dev/null with eval (safer for the message handler).
 - Fix output redirection in debug mode.
