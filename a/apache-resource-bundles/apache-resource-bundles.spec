@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-resource-bundles
 Version:        3
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Apache Resource Bundles
 License:        ASL 2.0
@@ -173,16 +173,16 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
 (cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{source_release_assembly_descriptor_version_real}*; do %{__ln_s}f ${jar} `echo $jar | %{__sed} "s|-%{source_release_assembly_descriptor_version_real}||g"`; done)
 
 # pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+mkdir -p %{buildroot}%{_mavenpomdir}
+%{__cp} -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.apache apache-resource-bundles %{version_real} JPP %{name}
-%{__cp} -p apache-incubator-disclaimer-resource-bundle/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
+%{__cp} -p apache-incubator-disclaimer-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
 %add_to_maven_depmap org.apache apache-incubator-disclaimer-resource-bundle %{incubator_disclaimer_version_real} JPP/%{name} apache-incubator-disclaimer-resource-bundle
-%{__cp} -p apache-jar-resource-bundle/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apache-jar-resource-bundle.pom
+%{__cp} -p apache-jar-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-jar-resource-bundle.pom
 %add_to_maven_depmap org.apache apache-jar-resource-bundle  %{jar_version_real} JPP/%{name} apache-jar-resource-bundle
-%{__cp} -p apache-license-header-resource-bundle/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apache-license-header-resource-bundle.pom
+%{__cp} -p apache-license-header-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-license-header-resource-bundle.pom
 %add_to_maven_depmap org.apache apache-license-header-resource-bundle %{license_header_version_real} JPP/%{name} apache-license-header-resource-bundle
-%{__cp} -p apache-source-release-assembly-descriptor/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apache-source-release-assembly-descriptor.pom
+%{__cp} -p apache-source-release-assembly-descriptor/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-source-release-assembly-descriptor.pom
 %add_to_maven_depmap org.apache apache-source-release-assembly-descriptor %{source_release_assembly_descriptor_version_real} JPP/%{name} apache-source-release-assembly-descriptor
 
 %if 0
@@ -194,28 +194,28 @@ mkdir -p %{buildroot}%{_datadir}/maven2/poms
 
 %files
 %dir %{_javadir}/%{name}
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files -n apache-incubator-disclaimer-resource-bundle
 %{_javadir}/%{name}/apache-incubator-disclaimer-resource-bundle-%{incubator_disclaimer_version_real}.jar
 %{_javadir}/%{name}/apache-incubator-disclaimer-resource-bundle.jar
-%{_datadir}/maven2/poms/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
+%{_mavenpomdir}/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
 
 %files -n apache-jar-resource-bundle
 %{_javadir}/%{name}/apache-jar-resource-bundle-%{jar_version_real}.jar
 %{_javadir}/%{name}/apache-jar-resource-bundle.jar
-%{_datadir}/maven2/poms/JPP.%{name}-apache-jar-resource-bundle.pom
+%{_mavenpomdir}/JPP.%{name}-apache-jar-resource-bundle.pom
 
 %files -n apache-license-header-resource-bundle
 %{_javadir}/%{name}/apache-license-header-resource-bundle-%{license_header_version_real}.jar
 %{_javadir}/%{name}/apache-license-header-resource-bundle.jar
-%{_datadir}/maven2/poms/JPP.%{name}-apache-license-header-resource-bundle.pom
+%{_mavenpomdir}/JPP.%{name}-apache-license-header-resource-bundle.pom
 
 %files -n apache-source-release-assembly-descriptor
 %{_javadir}/%{name}/apache-source-release-assembly-descriptor-%{source_release_assembly_descriptor_version_real}.jar
 %{_javadir}/%{name}/apache-source-release-assembly-descriptor.jar
-%{_datadir}/maven2/poms/JPP.%{name}-apache-source-release-assembly-descriptor.pom
+%{_mavenpomdir}/JPP.%{name}-apache-source-release-assembly-descriptor.pom
 
 %if 0
 %files javadoc
@@ -224,6 +224,9 @@ mkdir -p %{buildroot}%{_datadir}/maven2/poms
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3-alt3_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:3-alt2_2jpp6
 - fixed build
 
