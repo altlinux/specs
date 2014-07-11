@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 
 Name:           odmg
 Version:        3.0
-Release:	alt1_7jpp6
+Release:	alt2_7jpp6
 Epoch:          0
 Summary:        ODMG 3.0 Java Binding 
 Group:          Development/Java
@@ -111,8 +111,8 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist.bin
 %{__ln_s} %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap odmg odmg %{version} JPP %{name}
 
 # javadoc
@@ -131,13 +131,13 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__cp} -p %{PATCH0} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
 cp -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/odmg.jar
-cp -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/odmg.pom
+cp -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/odmg.pom
 %endif
 
 %files
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -150,6 +150,9 @@ cp -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirl
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt2_7jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_7jpp6
 - added pom
 
