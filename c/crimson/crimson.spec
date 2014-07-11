@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           crimson
 Version:        1.1.3
-Release:	alt1_19jpp6
+Release:	alt2_19jpp6
 Epoch:          0
 Summary:        Java XML parser
 Group:          Development/Java
@@ -150,8 +150,8 @@ export ANT_OPTS="-Djava.endorsed.dirs=$(pwd)/lib"
 %{__ln_s} %{_sysconfdir}/alternatives %{buildroot}%{_javadir}/jaxp_parser_impl.jar
 
 # maven
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap crimson crimson %{version} JPP %{name}
 
 %if %{gcj_support}
@@ -187,7 +187,7 @@ fi
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %exclude %{_javadir}/jaxp_parser_impl.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -205,6 +205,9 @@ fi
 %{_datadir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt2_19jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Nov 27 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_19jpp6
 - full build
 
