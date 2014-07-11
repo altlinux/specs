@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           felix-osgi-obr
 Version:        1.0.2
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Felix OSGi OBR Service API
 
 Group:          Development/Java
@@ -57,9 +57,9 @@ install -m 644 target/%{bundle}-%{version}.jar \
 %add_to_maven_depmap org.apache.felix %{bundle} %{version} JPP/felix %{bundle}
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
-%{buildroot}%{_datadir}/maven2/poms/JPP.felix-%{bundle}.pom
+%{buildroot}%{_mavenpomdir}/JPP.felix-%{bundle}.pom
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -68,13 +68,16 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %files
 %doc LICENSE NOTICE
 %{_javadir}/felix/*.jar
-%{_datadir}/maven2/poms/JPP.felix-%{bundle}.pom
+%{_mavenpomdir}/JPP.felix-%{bundle}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_6jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_6jpp7
 - new release
 
