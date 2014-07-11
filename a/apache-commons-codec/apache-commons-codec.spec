@@ -1,6 +1,8 @@
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -10,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-%{short_name}
 Version:       1.6
-Release:       alt2_4jpp7
+Release:       alt2_5jpp7
 Summary:       Implementations of common encoders and decoders
 Group:         Development/Java
 License:       ASL 2.0
@@ -43,29 +45,6 @@ Provides:      %{short_name} = %{version}-%{release}
 Obsoletes:     %{short_name} < %{version}-%{release}
 Source44: import.info
 
-%def_with repolib
-%define repodir %{_javadir}/repository.jboss.com/apache-%{base_name}/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirres %{repodir}/resources
-%define repodirsrc %{repodir}/src
-
-%if_with repolib
-Source3:        %{name}-component-info.xml
-Source45: commons-codec.jar-OSGi-MANIFEST.MF
-
-%package	 repolib
-Summary:	 Artifacts to be uploaded to a repository library
-Group:	Development/Java
-Provides:       jakarta-%{short_name}-repolib = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-repolib < %{epoch}:%{version}-%{release}
-
-%description	 repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio
-%endif
-
-
 %description
 Commons Codec is an attempt to provide definitive implementations of
 commonly used encoders and decoders. Examples include Base64, Hex,
@@ -94,6 +73,7 @@ mvn-rpmbuild install javadoc:javadoc
 install -d -m 755 %{buildroot}%{_javadir}
 install -p -m 644 target/%{short_name}-%{version}.jar \
   %{buildroot}%{_javadir}/%{short_name}.jar
+ln -sf %{short_name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadocs
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -105,47 +85,23 @@ install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 %add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "%{short_name}:%{short_name}"
 # jakarta compat
 ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
-ln -s %{short_name}.jar %buildroot%_javadir/apache-%{short_name}.jar
+#ln -s %{short_name}.jar %buildroot%_javadir/apache-%{short_name}.jar
 
-%if %with repolib
-%{__install} -d -m 0755 %{buildroot}%{repodir}
-%{__install} -d -m 0755 %{buildroot}%{repodirlib}
-%{__install} -p -m 0644 %{SOURCE3} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i 's/project name=""/project name="%{name}"/g' %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 0755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE3} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{short_name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
-%endif
-
-# inject OSGi manifest commons-codec.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-# update even MANIFEST.MF already exists
-# touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/commons-codec.jar META-INF/MANIFEST.MF
-# end inject OSGi manifest commons-codec.jar-OSGi-MANIFEST.MF
 
 %files
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES*
 %{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*
 %{_javadir}/*
-%if %with repolib
-%exclude %{repodir}
-%files repolib
-%{repodir}
-%endif
 
 %files javadoc
 %doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_5jpp7
+- new version
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp7
 - added OSGi manifest
 
