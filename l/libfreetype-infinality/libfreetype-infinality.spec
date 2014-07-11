@@ -1,8 +1,8 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.4.12
-Release: alt2
+Version: 2.5.3
+Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -15,20 +15,17 @@ Source0: %name-%version.tar
 Source91: infinality-settings.sh
 Source92: README.infinality
 
-Patch1: freetype-2.4.10-alt-compat-version-script.patch
-Patch2: freetype-2.4.10-alt-fttrigon.patch
-
-Patch11: freetype-2.4.10-rh-enable-valid.patch
-
-#Infinality patches
-Patch91: freetype-entire-infinality-patchset-20130514-01.patch
+Patch1: freetype-2.4.10-rh-enable-valid.patch
+# Infinality patches. Now we use bohoomil upstream:
+# https://github.com/bohoomil/fontconfig-ultimate/ 
+Patch91: freetype-2.5.3-bohoomil-infinality-20140707.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
 
 %def_disable static
 
-BuildRequires: libX11-devel zlib-devel
+BuildRequires: libX11-devel zlib-devel libpng-devel
 
 %description
 The FreeType engine is a free and portable TrueType font rendering
@@ -45,11 +42,7 @@ overrides the system library using ld.so.conf.d mechanism.
 %setup -n %name-%version 
 
 %patch1 -p1
-%patch2 -p1
-
-%patch11 -p1
-
-%patch91 -p1
+%patch91 -p2
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -96,12 +89,16 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %set_verify_elf_method strict
 
 %files
+%exclude %_mandir/
 %docdir
 %_libdir/%name/
 %config %_sysconfdir/X11/profile.d/infinality-settings.sh
 %config %ld_so_conf
 
 %changelog
+* Thu Jul 10 2014 Vladimir Didenko <cow@altlinux.ru> 2.5.3-alt1
+- 2.5.3
+
 * Mon Jun 24 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.12-alt2
 - infinality-settings.sh: relocated from /etc/profile.d/ to
   /etc/X11/profile.d/ (closes: #29093).
