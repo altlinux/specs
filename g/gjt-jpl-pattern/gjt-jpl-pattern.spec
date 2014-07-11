@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           gjt-jpl-pattern
 Version:        0.2
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        Support for using design patterns.
 License:        GPL
@@ -95,8 +95,8 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -p -m 644 pattern/build/jpl-pattern-0_2.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} `/bin/echo ${jar} | sed "s|-%{version}||g"`; done)
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap jpl-pattern jpl-pattern %{version} JPP %{name}
 
 # javadoc
@@ -112,7 +112,7 @@ cp -pr pattern/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/LICENSE
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -125,6 +125,9 @@ cp -pr pattern/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt2_5jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt1_5jpp6
 - new jpp relase
 
