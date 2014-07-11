@@ -19,7 +19,7 @@ BuildRequires: jpackage-compat
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt6_11jpp7
+Release:                   alt7_11jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -235,8 +235,8 @@ ln -s $(relative %{_localstatedir}/jython/cachedir %{_datadir}/jython/) $RPM_BUI
 %add_to_maven_depmap org.python %{name} %{version} JPP %{name}                  
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cat > $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom <<'EOF'
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+cat > $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom <<'EOF'
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>jython</groupId>
@@ -284,7 +284,7 @@ fi || :
 #%ghost %{_localstatedir}/jython/cachedir/packages
 %{_datadir}/jython/cachedir
 # pom
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -300,6 +300,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_11jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt6_11jpp7
 - fc update
 
