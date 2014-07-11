@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacc3
 Version:        3.2
-Release:        alt3_7jpp6
+Release:        alt4_7jpp6
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -132,8 +132,8 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 bin/lib/%{_basename}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 %add_to_maven_depmap %{_basename} %{_basename} %{version} JPP %{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms/
-install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-javacc3.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}/
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-javacc3.pom
 
 install -d -m 755 $RPM_BUILD_ROOT/usr/bin
 install -m 755 javacc3 jjdoc3 jjtree3 $RPM_BUILD_ROOT/usr/bin
@@ -157,7 +157,7 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodir
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %doc LICENSE README
 #%defattr(0755,root,root,0755)
@@ -178,6 +178,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodir
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt4_7jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_7jpp6
 - new jpp relase
 
