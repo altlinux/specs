@@ -1,6 +1,6 @@
 Name: alterator-bacula
-Version: 1.2
-Release: alt4
+Version: 1.2.1
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -88,6 +88,9 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Wed Jun 25 2014 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
+- bacula-local-backup: Fix disk change.
+
 * Mon Feb 24 2014 Andrey Kolotov <qwest@altlinux.org> 1.2-alt4
 - Backup list is filled in local-backup (closes: #29839).
 
