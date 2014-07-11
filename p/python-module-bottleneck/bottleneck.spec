@@ -3,13 +3,13 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Fast NumPy array functions written in Cython
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/Bottleneck/0.7.0
+Url: https://pypi.python.org/pypi/Bottleneck/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -82,8 +82,13 @@ Cython.
 This package contains tests for Bottleneck.
 %endif
 
+
 %prep
 %setup
+
+for i in $(find %oname -type d); do
+	touch $i/__init__.py
+done
 
 %if_with python3
 rm -rf ../python3
@@ -148,6 +153,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1
+- Version 0.8.0
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus
 
