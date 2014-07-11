@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           forehead
 Version:        1.0
-Release:        alt1_0.b4.3jpp6
+Release:        alt2_0.b4.3jpp6
 Epoch:          1
 Summary:        Forehead: Java ClassLoader Management Framework
 
@@ -94,9 +94,9 @@ install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -111,7 +111,7 @@ cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -123,6 +123,9 @@ cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2_0.b4.3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_0.b4.3jpp6
 - new jpp relase
 
