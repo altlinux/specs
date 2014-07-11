@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           google-parent
 Version:        1
-Release:        alt1_0.760.1jpp6
+Release:        alt2_0.760.1jpp6
 Epoch:          0
 Summary:        Google code parent pom
 License:        ASL 2.0
@@ -60,15 +60,18 @@ Google code projects parent pom.
 %install
 
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE0} %{buildroot}%{_datadir}/maven2/poms/JPP-google.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE0} %{buildroot}%{_mavenpomdir}/JPP-google.pom
 %add_to_maven_depmap com.google google %{namedversion} JPP google
 
 %files
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1-alt2_0.760.1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1-alt1_0.760.1jpp6
 - new version
 
