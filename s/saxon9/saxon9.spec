@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           saxon9
 Version:        B.9.0.0.8
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        Java  Basic XPath 2.0, XSLT 2.0, and XQuery 1.0 implementation
 License:        MPL
@@ -328,26 +328,26 @@ cd saxon9-B.9.0.0.8
 
 # maven
 %add_to_maven_depmap net.sf.saxon saxon %{version} JPP %{stdname}
-%{__install} -D -p -m 0644 %{SOURCE6} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}.pom
+%{__install} -D -p -m 0644 %{SOURCE6} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}.pom
 %add_to_maven_depmap net.sf.saxon saxon-dom %{version} JPP %{stdname}-dom
-%{__install} -D -p -m 0644 %{SOURCE7} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-dom.pom
+%{__install} -D -p -m 0644 %{SOURCE7} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-dom.pom
 %add_to_maven_depmap net.sf.saxon saxon-jdom %{version} JPP %{stdname}-jdom
-%{__install} -D -p -m 0644 %{SOURCE8} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-jdom.pom
+%{__install} -D -p -m 0644 %{SOURCE8} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-jdom.pom
 %add_to_maven_depmap net.sf.saxon saxon-sql %{version} JPP %{stdname}-sql
-%{__install} -D -p -m 0644 %{SOURCE9} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-sql.pom
+%{__install} -D -p -m 0644 %{SOURCE9} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-sql.pom
 %if %with xom
 %add_to_maven_depmap net.sf.saxon saxon-xom %{version} JPP %{stdname}-xom
-%{__install} -D -p -m 0644 %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-xom.pom
+%{__install} -D -p -m 0644 %{SOURCE10} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-xom.pom
 %endif
 %add_to_maven_depmap net.sf.saxon saxon-xpath %{version} JPP %{stdname}-xpath
-%{__install} -D -p -m 0644 %{SOURCE11} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-xpath.pom
+%{__install} -D -p -m 0644 %{SOURCE11} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-xpath.pom
 
 %add_to_maven_depmap net.sf.saxon saxon-ant %{version} JPP %{stdname}-ant
-%{__install} -D -p -m 0644 %{SOURCE14} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-ant.pom
+%{__install} -D -p -m 0644 %{SOURCE14} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-ant.pom
 %add_to_maven_depmap net.sf.saxon saxon-dom4j %{version} JPP %{stdname}-dom4j
-%{__install} -D -p -m 0644 %{SOURCE15} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-dom4j.pom
+%{__install} -D -p -m 0644 %{SOURCE15} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-dom4j.pom
 %add_to_maven_depmap net.sf.saxon saxon-xqj %{version} JPP %{stdname}-xqj
-%{__install} -D -p -m 0644 %{SOURCE16} %{buildroot}%{_datadir}/maven2/poms/JPP-%{stdname}-xqj.pom
+%{__install} -D -p -m 0644 %{SOURCE16} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-xqj.pom
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -361,7 +361,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %_altdir/jaxp_transform_impl_%{name}
 %{_javadir}/%{stdname}.jar
 %{_javadir}/%{stdname}-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{stdname}.pom
+%{_mavenpomdir}/JPP-%{stdname}.pom
 %{_mavendepmapfragdir}/%{name}
 %exclude %{_javadir}/jaxp_transform_impl.jar
 %if %{gcj_support}
@@ -372,7 +372,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files xpath
 %{_javadir}/%{stdname}-xpath*
-%{_datadir}/maven2/poms/JPP-%{stdname}-xpath.pom
+%{_mavenpomdir}/JPP-%{stdname}-xpath.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-xpath*
 %endif
@@ -380,7 +380,7 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %if %with xom
 %files xom
 %{_javadir}/%{stdname}-xom*
-%{_datadir}/maven2/poms/JPP-%{stdname}-xom.pom
+%{_mavenpomdir}/JPP-%{stdname}-xom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-xom*
 %endif
@@ -388,42 +388,42 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files sql
 %{_javadir}/%{stdname}-sql*
-%{_datadir}/maven2/poms/JPP-%{stdname}-sql.pom
+%{_mavenpomdir}/JPP-%{stdname}-sql.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-sql*
 %endif
 
 %files jdom
 %{_javadir}/%{stdname}-jdom*
-%{_datadir}/maven2/poms/JPP-%{stdname}-jdom.pom
+%{_mavenpomdir}/JPP-%{stdname}-jdom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-jdom*
 %endif
 
 %files dom
 %{_javadir}/%{stdname}-dom*
-%{_datadir}/maven2/poms/JPP-%{stdname}-dom.pom
+%{_mavenpomdir}/JPP-%{stdname}-dom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-dom*
 %endif
 
 %files ant
 %{_javadir}/%{stdname}-ant*
-%{_datadir}/maven2/poms/JPP-%{stdname}-ant.pom
+%{_mavenpomdir}/JPP-%{stdname}-ant.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-ant*
 %endif
 
 %files dom4j
 %{_javadir}/%{stdname}-dom4j*
-%{_datadir}/maven2/poms/JPP-%{stdname}-dom4j.pom
+%{_mavenpomdir}/JPP-%{stdname}-dom4j.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-dom4j*
 %endif
 
 %files xqj
 %{_javadir}/%{stdname}-xqj*
-%{_datadir}/maven2/poms/JPP-%{stdname}-xqj.pom
+%{_mavenpomdir}/JPP-%{stdname}-xqj.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-xqj*
 %endif
@@ -444,6 +444,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 #%attr(0644,root,root) %{_mandir}/man1/%{stdname}q.1*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:B.9.0.0.8-alt2_2jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:B.9.0.0.8-alt1_2jpp6
 - new version
 
