@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           relaxngDatatype
 Version:        1.0
-Release:        alt3_8.3jpp7
+Release:        alt4_8.3jpp7
 Summary:        RELAX NG Datatype API
 
 Group:          Development/Java
@@ -50,7 +50,7 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 Requires:       jpackage-utils
-Provides:       msv <= %{version}
+#Provides:       msv <= %{version}
 #Obsoletes:      msv <= %{version}
 Source44: import.info
 
@@ -98,6 +98,9 @@ popd
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_8.3jpp7
+- rebuild to properly resolve msv conflict
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_8.3jpp7
 - update
 
