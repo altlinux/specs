@@ -38,7 +38,7 @@ Name:           swixml
 Summary:        SwiXml GUI generating engine
 Url:            http://www.swixml.org/
 Version:        1.5
-Release:        alt1_0.b149.3jpp6
+Release:        alt2_0.b149.3jpp6
 Epoch:          0
 License:        BSD
 Group:          Development/Java
@@ -123,9 +123,9 @@ install -m 644 build/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.j
 %add_to_maven_depmap org.swixml %{name} %{version}.149 JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # examples
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -152,7 +152,7 @@ cp -pr build/tagdocs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/tagdocs
 %files
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/*.txt
 %if %{gcj_support}
@@ -172,6 +172,9 @@ cp -pr build/tagdocs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/tagdocs
 %{_datadir}/%{name}/samples
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_0.b149.3jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Thu Jan 27 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_0.b149.3jpp6
 - new version
 
