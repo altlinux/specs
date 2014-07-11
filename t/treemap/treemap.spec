@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           treemap
 Version:        2.5.1
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Treemap
 
 Group:          Development/Java
@@ -89,9 +89,9 @@ done
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
 # pom
-%__install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+%__install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 %__install -m 644 %{SOURCE1} \
-        $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 %__install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -100,7 +100,7 @@ done
 
 %files
 %{_javadir}/%{name}*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -109,6 +109,9 @@ done
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Oct 19 2010 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_1jpp6
 - new version
 
