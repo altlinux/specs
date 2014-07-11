@@ -1,7 +1,7 @@
 %define oname keyring
 
 Name: python-module-%oname
-Version: 3.2.1
+Version: 3.8
 Release: alt1
 
 Summary: Store and access your passwords safely
@@ -40,7 +40,7 @@ This package contains tests for keyring.
 %python_install
 
 %files
-%doc *.rst *.txt demo
+%doc *.rst *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -48,6 +48,9 @@ This package contains tests for keyring.
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8-alt1
+- Version 3.8
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
