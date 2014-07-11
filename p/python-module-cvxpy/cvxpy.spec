@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1
-Release: alt3.svn20130211
+Version: 0.2.4
+Release: alt1.git20140710
 Summary: Python package for modeling optimization problems
 License: GPLv3
 Group: Development/Python
-Url: http://www.stanford.edu/~ttinoco/cvxpy/
+Url: https://github.com/cvxgrp/cvxpy
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://cvxpy.googlecode.com/svn/trunk/
+# https://github.com/cvxgrp/cvxpy.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -29,6 +29,18 @@ CVXPY is a free software package for modeling optimization problems in
 Python. It provides a modeling framework that allows users to describe
 optimization problems in a natural mathematical form and solve them.
 
+%package tests
+Summary: Tests for CVXPY
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+CVXPY is a free software package for modeling optimization problems in
+Python. It provides a modeling framework that allows users to describe
+optimization problems in a natural mathematical form and solve them.
+
+This package contains tests for CVXPY.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: Python 3 package for modeling optimization problems
@@ -38,6 +50,18 @@ Group: Development/Python3
 CVXPY is a free software package for modeling optimization problems in
 Python. It provides a modeling framework that allows users to describe
 optimization problems in a natural mathematical form and solve them.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for CVXPY
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+CVXPY is a free software package for modeling optimization problems in
+Python. It provides a modeling framework that allows users to describe
+optimization problems in a natural mathematical form and solve them.
+
+This package contains tests for CVXPY.
 %endif
 
 %prep
@@ -51,7 +75,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
+find %oname -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -66,13 +90,24 @@ popd
 
 %files
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20140710
+- Version 0.2.4
+
 * Wed May 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.svn20130211
 - Fixed build
 
