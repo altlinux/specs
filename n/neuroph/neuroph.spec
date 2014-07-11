@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           neuroph
 Version:        2.4
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Java Neural Network Framework
 
@@ -105,7 +105,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*
 #%{_mavendepmapfragdir}/*
-#%{_datadir}/maven2/poms/*
+#%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
@@ -116,6 +116,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_1jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_1jpp6
 - new version
 
