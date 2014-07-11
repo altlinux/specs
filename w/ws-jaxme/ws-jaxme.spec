@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 Requires: xmldb-api-sdk
 BuildRequires: xmldb-api-sdk
-BuildRequires: docbook-xml docbook-dtds
+BuildRequires: docbook-dtds
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -37,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt2_6jpp7
+Release:        alt3_6jpp7
 Epoch:          0
 Summary:        Open source implementation of JAXB
 
@@ -184,6 +187,9 @@ install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt3_6jpp7
+- fixed deps
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt2_6jpp7
 - fc release
 
