@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt1_12jpp7
+Release:        alt2_12jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
@@ -101,17 +101,17 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # pom
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cp -pr %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+cp -pr %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap dumbster %{name} 1.6 JPP %{name}
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/maven2
-ln -s %{_datadir}/maven2/poms $RPM_BUILD_ROOT%{_javadir}/maven2/poms
+ln -s %{_mavenpomdir} $RPM_BUILD_ROOT%{_javadir}/maven2/poms
 
 %files
 %doc license.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms
+%{_mavenpomdir}
 %{_javadir}/maven2
 %{_mavendepmapfragdir}
 
@@ -119,6 +119,9 @@ ln -s %{_datadir}/maven2/poms $RPM_BUILD_ROOT%{_javadir}/maven2/poms
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_12jpp7
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_12jpp7
 - fc update
 
