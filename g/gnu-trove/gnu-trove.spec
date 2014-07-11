@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-%{short_name}
 Version:        1.0.2
-Release:	alt1_9jpp6
+Release:	alt2_9jpp6
 Epoch:          0
 Summary:        High performance collections for Java
 License:        LGPLv2+
@@ -127,8 +127,8 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspa
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap trove trove %{version} JPP %{name}
 
 # javadoc
@@ -157,7 +157,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_javadir}/%{old_name}.jar
 %{_javadir}/%{short_name}-%{version}.jar
 %{_javadir}/%{short_name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -170,6 +170,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_9jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt1_9jpp6
 - added pom
 
