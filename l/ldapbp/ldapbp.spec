@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           ldapbp
 Version:        1.1.1
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        JNDI LDAP Booster Pack
 
@@ -80,8 +80,8 @@ install -m 644 %{name}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap com.sun ldapbp %{version} JPP %{name}
 
 # javadoc
@@ -91,7 +91,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -99,6 +99,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_1jpp5
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt1_1jpp5
 - new version
 
