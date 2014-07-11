@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           easymock-java5
 Version:        1.2
-Release:	alt1_6jpp6
+Release:	alt2_6jpp6
 Epoch:          0
 Summary:        Easy mock objects
 
@@ -96,14 +96,14 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspa
 unzip %{oname}%{version}_Java1.5.zip
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 install -m 644 %{oname}%{version}_Java1.5/%{oname}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap easymock easymock 1.2_Java1.5 JPP %{name}
 
 # javadoc
@@ -114,7 +114,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %{_javadir}/*.jar
 %doc %{oname}%{version}_Java1.5/{Documentation,License}.html
-%{_datadir}/maven2/poms
+%{_mavenpomdir}
 %{_mavendepmapfragdir}
 
 %files javadoc
@@ -122,6 +122,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_6jpp6
+- NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
+
 * Sat Jan 08 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_6jpp6
 - jpp 6 release
 
