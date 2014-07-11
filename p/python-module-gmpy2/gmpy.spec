@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
@@ -125,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
+- Version 2.0.3
+
 * Thu Sep 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
 - Version 2.0.2
 
