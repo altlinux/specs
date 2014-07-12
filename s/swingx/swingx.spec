@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6.5
-Release:        alt3_0jpp6
+Release:        alt4_0jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -130,6 +130,9 @@ mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javad
 %{_javadocdir}/%{name} 
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt4_0jpp6
+- depmap cleanup
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt3_0jpp6
 - migration to mvn-rpmbuild
 
