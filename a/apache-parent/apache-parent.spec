@@ -1,5 +1,3 @@
-BuildRequires: apache-jar-resource-bundle
-Requires:      apache-jar-resource-bundle
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -7,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-parent
 Version:        10
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Parent pom file for Apache projects
 Group:          Development/Java
 License:        ASL 2.0
@@ -17,11 +15,11 @@ BuildArch:      noarch
 
 BuildRequires:  maven
 BuildRequires:  jpackage-utils
-BuildRequires:  apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires:  maven-remote-resources-plugin
 
 Requires:       jpackage-utils
-Requires:       apache-resource-bundles
+Requires: apache-resource-bundles apache-jar-resource-bundle
 Requires:       maven-remote-resources-plugin
 Source44: import.info
 
@@ -56,6 +54,9 @@ mvn-rpmbuild verify
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 10-alt2_7jpp7
+- rebuild with new apache-resource-bundles
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 10-alt1_7jpp7
 - fc update
 
