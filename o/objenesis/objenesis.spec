@@ -3,7 +3,6 @@ Epoch: 0
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
 # END SourceDeps(oneline)
-BuildRequires: sun-annotation-1.0-api
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -39,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        1.2
-Release:        alt1_13jpp7
+Release:        alt2_13jpp7
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://objenesis.googlecode.com/svn/docs/index.html
@@ -177,6 +176,9 @@ cp -pr tck/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
 
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_13jpp7
+- rebuild with new apache-resource-bundles
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_13jpp7
 - update
 
