@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
 Version:        2.7.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Plugin to support reporting of changes between releases
 
 Group:          Development/Java
@@ -46,8 +47,8 @@ BuildRequires: plexus-i18n
 BuildRequires: plexus-interpolation
 BuildRequires: plexus-utils
 BuildRequires: plexus-velocity
-BuildRequires: xmlrpc3-client
-BuildRequires: xmlrpc3-common
+BuildRequires: xmlrpc-client
+BuildRequires: xmlrpc-common
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: velocity
@@ -70,8 +71,8 @@ Requires: plexus-interpolation
 Requires: plexus-mail-sender
 Requires: plexus-utils
 Requires: plexus-velocity
-Requires: xmlrpc3-client
-Requires: xmlrpc3-common
+Requires: xmlrpc-client
+Requires: xmlrpc-common
 Requires: xerces-j2
 Requires: xml-commons-apis
 Requires: velocity
@@ -137,6 +138,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt2_2jpp7
+- fixed deps
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_2jpp7
 - new version
 
