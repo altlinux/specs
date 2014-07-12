@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt2_9jpp7
+Release:        alt3_9jpp7
 Summary:        Maven plugin to update header licenses of source files
 
 Group:          Development/Java
@@ -116,6 +116,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt3_9jpp7
+- rebuild with new apache-resource-bundles
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt2_9jpp7
 - fc update
 
