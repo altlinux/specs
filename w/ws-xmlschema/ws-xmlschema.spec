@@ -1,10 +1,12 @@
-BuildRequires: apache-jar-resource-bundle
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # vim: set ts=4 sw=4 sts=4 et:
 Name:           ws-xmlschema
 Version:        2.0.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Apache XMLSchema
 Group:          Development/Java
 License:        ASL 2.0
@@ -21,7 +23,7 @@ Patch0:         xmlschema-2.0.2-no-w3c-testcase-module.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires:  maven
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -91,6 +93,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_4jpp7
+- rebuild with new apache-resource-bundles
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_4jpp7
 - new version
 
