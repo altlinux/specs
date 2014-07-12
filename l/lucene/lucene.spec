@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++ perl(LWP/UserAgent.pm)
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
-BuildRequires: jpackage-core
+BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-core
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        3.6.0
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -57,8 +58,6 @@ BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
-BuildRequires:  ant-junit4 >= 0:1.6
-BuildRequires:  junit4
 BuildRequires:  javacc
 BuildRequires:  java-javadoc
 BuildRequires:  jline
@@ -80,6 +79,7 @@ Obsoletes:      lucene-devel < %{epoch}:%{version}-%{release}
 Obsoletes:      lucene-demo < %{epoch}:%{version}-%{release}
 BuildArch:      noarch
 
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -101,7 +101,6 @@ BuildArch: noarch
 Summary:        Lucene contributed extensions
 Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Provides: lucene-demo = %{epoch}:%{version}-%{release}
 
 %description contrib
 %{summary}.
@@ -129,7 +128,7 @@ find contrib -iname '*.pom.xml.template' -exec \
 cp %{SOURCE3} .
 
 #modify artifactIds to make it easier to map to fedora
-sed -i -e "s|ant-junit|ant/ant-junit4|g" test-framework/ivy.xml
+sed -i -e "s|ant-junit|ant/ant-junit|g" test-framework/ivy.xml
 sed -i -e "s|xercesImpl|xerces-j2|g" contrib/benchmark/ivy.xml
 sed -i -e "s|jakarta-regexp|regexp|g" contrib/queries/ivy.xml
 
@@ -137,7 +136,7 @@ sed -i -e "s|jakarta-regexp|regexp|g" contrib/queries/ivy.xml
 %build
 mkdir -p docs
 mkdir -p lib
-export OPT_JAR_LIST="ant/ant-junit4 junit4 ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath jline jtidy regexp commons-digester apache-commons-compress icu4j ivy)
 
 ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
@@ -230,6 +229,9 @@ cp -pr build/docs/api/* \
 %doc contrib/CHANGES.txt
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_6jpp7
+- new version
+
 * Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_5jpp7
 - new version
 
