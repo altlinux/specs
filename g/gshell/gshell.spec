@@ -1,10 +1,12 @@
-BuildRequires: apache-jar-resource-bundle xpp3-minimal maven-license-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          gshell
 Version:       2.6.5
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       A command-line shell framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -59,7 +61,7 @@ BuildRequires: xstream
 BuildRequires: junit
 
 BuildRequires: animal-sniffer
-BuildRequires: apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven
 BuildRequires: maven-compiler-plugin
@@ -204,9 +206,8 @@ install -pm 644 %{name}-maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{n
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-cp -p target/maven-shared-archive-resources/META-INF/LICENSE.txt . ||:
-cp -p target/maven-shared-archive-resources/META-INF/NOTICE.txt . ||:
-cp -p gshell-dist/gshell-assembly/src/main/resources/LICENSE.txt . ||:
+cp -p target/maven-shared-archive-resources/META-INF/LICENSE.txt .
+cp -p target/maven-shared-archive-resources/META-INF/NOTICE.txt .
 
 %files
 %dir %{_javadir}/%{name}
@@ -243,20 +244,22 @@ cp -p gshell-dist/gshell-assembly/src/main/resources/LICENSE.txt . ||:
 %{_mavenpomdir}/JPP.%{name}-%{name}-util.pom
 %{_mavenpomdir}/JPP.%{name}-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%doc README.md LICENSE.txt
-#NOTICE.txt
+%doc README.md LICENSE.txt NOTICE.txt
 
 %files maven-plugin
 %{_javadir}/%{name}/%{name}-maven-plugin.jar
 %{_mavenpomdir}/JPP.%{name}-%{name}-maven-plugin.pom
 %{_mavendepmapfragdir}/%{name}-maven-plugin
-%doc LICENSE.txt 
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.5-alt2_3jpp7
+- rebuild with new apache-resource-bundles
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.5-alt1_3jpp7
 - new release
 
