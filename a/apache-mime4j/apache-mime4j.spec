@@ -1,13 +1,13 @@
-BuildRequires: apache-jar-resource-bundle
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Apache JAMES Mime4j
 
 Group:          Development/Java
@@ -24,7 +24,7 @@ BuildRequires: apache-james-project
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven-remote-resources-plugin
 BuildRequires: apache-rat-plugin
-BuildRequires: apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 Requires: apache-commons-logging
 Requires: log4j
 Requires: apache-commons-io
@@ -91,6 +91,9 @@ rm -rf target/site/api*
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt2_3jpp7
+- rebuild with new apache-resource-bundles
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt1_3jpp7
 - new release
 
