@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit3
 Version:        3.8.2
-Release:	alt8_10jpp6
+Release:	alt9_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -223,10 +223,15 @@ EOF
 %{_javadir}/repository.jboss.com
 %endif
 
+%if_with alternatives
 %files -n junit-junit3
 %_altdir/%{name}
+%endif
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt9_10jpp6
+- dropped junit-junit3 virtual provider - no more needed
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt8_10jpp6
 - renamed to junit3; added junit-junit3 virtual provider
 
