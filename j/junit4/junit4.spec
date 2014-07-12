@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit4
 Version:        4.10
-Release:        alt3_6jpp7
+Release:        alt4_6jpp7
 Epoch:          0
 Summary:        Java regression test package
 License:        CPL
@@ -76,9 +76,9 @@ Group:          Development/Java
 Summary:        %{oldname} provider
 BuildArch: noarch
 Requires: %name = %epoch:%{version}-%{release}
-#Provides: junit = 0:%{version}
-#Provides: junit = %{epoch}:%{version}-%{release}
-#Provides: %_javadir/junit.jar
+Provides: junit = 0:%{version}
+Provides: junit = %{epoch}:%{version}-%{release}
+Provides: %_javadir/junit.jar
 
 %description -n junit-junit4
 Virtual junit package based on %{name}.
@@ -174,6 +174,9 @@ EOF
 %_altdir/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt4_6jpp7
+- made junit-junit4 provider default
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt3_6jpp7
 - added junit-junit4 provider
 
