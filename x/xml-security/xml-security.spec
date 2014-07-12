@@ -1,4 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -36,32 +38,41 @@ BuildRequires: jpackage-compat
 %global oname xmlsec
 
 Name:           xml-security
-Version:        1.4.5
-Release:        alt1_4jpp7.qa1
+Version:        1.5.5
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
 URL:            http://santuario.apache.org/
-Group:          Development/Java
-Source0:        http://archive.apache.org/dist/santuario/java-library/xml-security-src-1_4_5.zip
-Source1:        xml-security-component-info.xml
-Source2:        http://repo1.maven.org/maven2/org/apache/santuario/xmlsec/1.4.5/xmlsec-1.4.5.pom
-Patch0:         xml-security-build_xml.patch
-Patch1:         xml-security-disable-test-fail.patch
-Patch2:         xml-security-notest.patch
+Source0:        http://archive.apache.org/dist/santuario/java-library/1_5_5/xml-security-src-1_5_5.zip
+# Certain tests fail with new JUnit
+Patch0:         %{name}-removed-tests.patch
 
 Requires:       apache-commons-logging
 Requires:       log4j
-Requires:       xalan-j2 >= 0:2.7
-Requires:       xerces-j2 >= 0:2.7
+Requires:       xalan-j2
+Requires:       xerces-j2
+Requires:       xml-commons-apis
+Requires:       bouncycastle
 
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  ant
-BuildRequires:  ant-junit
+BuildRequires:  jpackage-utils
+BuildRequires:  maven
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  junit
 BuildRequires:  apache-commons-logging
 BuildRequires:  log4j
-BuildRequires:  xalan-j2 >= 0:2.7
-BuildRequires:  xerces-j2 >= 0:2.7
+BuildRequires:  xalan-j2
+BuildRequires:  xerces-j2
+BuildRequires:  xml-commons-apis
+BuildRequires:  bouncycastle
+
 BuildArch:      noarch
 Source44: import.info
 
@@ -75,7 +86,7 @@ W3C standards :
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -89,64 +100,50 @@ Group:          Development/Java
 Samples for %{name}.
 
 %prep
-%setup -q -n xml-security-1_4_5
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
+%setup -q -n xml-security-1_5_5
+%patch0 -p1
 
-find . -name \*.jar -type f -exec rm -f {} \;
-
-mkdir -p libs/endorsed
-pushd libs
-ln -s $(build-classpath commons-logging)
-ln -s $(build-classpath commons-logging-api)
-ln -s $(build-classpath junit)
-ln -s $(build-classpath log4j)
-ln -s $(build-classpath xalan-j2)
-ln -s $(build-classpath xalan-j2-serializer)
-ln -s $(build-classpath xerces-j2)
-ln -s $(build-classpath xml-commons-jaxp-1.3-apis)
-popd
+sed -i "s|bcprov-jdk15on|bcprov-jdk16|" pom.xml
 
 %build
-ant -Djava.endorsed.dirs=libs build.src build.jar build.docs
-# FIXME: (dwalluck) AES key size above 128 will fail with default Sun JCE provider policy
-# ant -Djava.endorsed.dirs=libs -Dlib.xalan.3=libs/xml-commons-jaxp-1.3-apis.jar test
+
+mvn-rpmbuild package javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 build/%{oname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 target/%{oname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{oname}.jar
-install -m 644 build/xmlsecSamples-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-samples.jar
-ln -s %{name}-samples.jar $RPM_BUILD_ROOT%{_javadir}/xmlsecSamples.jar
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/docs/html/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{oname}.pom
-%add_maven_depmap JPP-%{oname}.pom %{oname}.jar -a "org.apache.santuario:xmlsec"
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap
 
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr src_samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files
-%doc LICENSE
 %{_javadir}/%{name}.jar
 %{_javadir}/%{oname}.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%doc LICENSE NOTICE
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc LICENSE NOTICE
 
 %files demo
-%doc LICENSE
-%{_javadir}/%{name}-samples.jar
-%{_javadir}/xmlsecSamples.jar
+%doc LICENSE NOTICE
 %{_datadir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt1_1jpp7
+- update
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0:1.4.5-alt1_4jpp7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
