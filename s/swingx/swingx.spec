@@ -1,4 +1,4 @@
-BuildRequires: maven2-plugin-compiler maven-surefire-maven-plugin maven2-plugin-jar maven2-plugin-install maven2-plugin-javadoc jmock maven-doxia-sitetools
+BuildRequires: maven-compiler-plugin maven-surefire-plugin maven-jar-plugin maven-install-plugin maven-javadoc-plugin jmock maven-doxia-sitetools
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6.5
-Release:        alt2_0jpp6
+Release:        alt3_0jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -42,13 +42,12 @@ URL:            https://swingx.java.net/
 
 Source0:        swingx-project-%version.zip
 
-Source1:        %{name}-settings.xml
 Source2:        %{name}-jpp-depmap.xml
 
 
-BuildRequires: jpackage-utils >= 0:5.0.0
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven2-plugin-resources
+BuildRequires: jpackage-utils
+BuildRequires: maven
+BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-provider-junit4
 #BuildRequires: mojo-maven2-plugin-emma
 BuildRequires: jhlabs-filters
@@ -56,14 +55,9 @@ BuildRequires: junit4
 BuildRequires: metainf-services
 BuildRequires: mockito
 
-Requires: jpackage-utils >= 0:5.0.0
 Requires: jhlabs-filters
 
-Requires(post): jpackage-utils >= 0:5.0.0
-Requires(postun): jpackage-utils >= 0:5.0.0
-
 BuildArch:      noarch
-Source44: import.info
 
 %description
 Contains extensions to the Swing GUI toolkit, including new
@@ -93,23 +87,15 @@ BuildArch: noarch
 
 %prep
 %setup -q -n swingx-project-%version
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
+
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Djava.awt.headless=true -Daggregate=true -Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true"
-export MAVEN_SETTINGS=$(pwd)/settings.xml
-
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $MAVEN_SETTINGS \
+	-Djava.awt.headless=true \
+	-Daggregate=true \
+	-Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true \
+	-Dmaven.local.depmap.file=%{SOURCE2} \
         install javadoc:javadoc
 
 
@@ -144,6 +130,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %{_javadocdir}/%{name} 
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt3_0jpp6
+- migration to mvn-rpmbuild
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt2_0jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
