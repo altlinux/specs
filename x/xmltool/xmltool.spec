@@ -1,10 +1,12 @@
 Epoch: 0
-BuildRequires: apache-jar-resource-bundle
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt2_5jpp7
+Release:        alt3_5jpp7
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Java
@@ -22,7 +24,7 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven
 BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -82,6 +84,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_5jpp7
+- rebuild with new apache-resource-bundles
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt2_5jpp7
 - new fc release
 
