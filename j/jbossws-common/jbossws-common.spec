@@ -1,26 +1,26 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-common
-%define version 2.0.4
-%global namedreltag .GA
+%define version 2.1.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jbossws-common
-Version:          2.0.4
-Release:          alt1_4jpp7
+Version:          2.1.0
+Release:          alt1_1jpp7
 Summary:          JBossWS Common
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 
-# svn export http://anonsvn.jboss.org/repos/jbossws/common/tags/jbossws-common-2.0.4.GA/ jbossws-common-2.0.4.GA
-# tar cafJ jbossws-common-2.0.4.GA.tar.xz jbossws-common-2.0.4.GA
-
-Source0:          %{name}-%{namedversion}.tar.xz
-
-Patch0:           %{name}-%{namedversion}-pom.patch
+# svn export http://anonsvn.jboss.org/repos/jbossws/common/tags/jbossws-common-2.1.0.Final/ jbossws-common-2.1.0.Final
+# tar cafJ jbossws-common-2.1.0.Final.tar.xz jbossws-common-2.1.0.Final
+Source0:          jbossws-common-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
@@ -31,6 +31,7 @@ BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-enforcer-plugin
 BuildRequires:    jboss-common-core
 BuildRequires:    jboss-ejb-3.1-api
 BuildRequires:    jboss-jaxb-intros
@@ -40,6 +41,7 @@ BuildRequires:    jboss-jms-1.1-api
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    jbossws-api
 BuildRequires:    jbossws-spi
+BuildRequires:    jbossws-parent
 BuildRequires:    jboss-logging
 BuildRequires:    wsdl4j
 
@@ -69,23 +71,14 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jbossws-common-%{namedversion}
 
-%patch0 -p1
-
-# Message.properties files are not included in jar, make it available
-for file in $(find src/ -name '*.properties'); do
-  dest=$(echo $file | sed s/\\/java\\//\\/resources\\//)
-  dir=$(dirname $dest)
-  mkdir -p $dir
-  cp $file $dest
-done
+# Add jaxrpc dependency, since it's required
+%pom_xpath_inject "pom:dependencies" "<dependency><groupId>org.jboss.spec.javax.xml.rpc</groupId><artifactId>jboss-jaxrpc-api_1.1_spec</artifactId><version>1.0.1.Final</version></dependency>"
 
 %build
-# many tests fail
 mvn-rpmbuild \
     -Dproject.build.sourceEncoding=UTF-8 \
-    -Dmaven.test.skip=true \
     install javadoc:aggregate
 
 %install
@@ -94,7 +87,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # JAR
-install -pm 644 target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -pm 644 target/jbossws-common-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # POM
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
@@ -114,6 +107,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_1jpp7
+- update
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_4jpp7
 - new version
 
