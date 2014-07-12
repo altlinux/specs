@@ -1,229 +1,132 @@
+Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+Provides: apache-jar-resource-bundle
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 3
-%define name apache-resource-bundles
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%global jar_version 1.4
+%global lh_version 1.1
+%global id_version 1.1
 
+Name:		apache-resource-bundles
+Version:	2
+Release:	alt1_8jpp7
+Summary:	Apache Resource Bundles
 
-%define incubator_disclaimer_version 1.2
-%define jar_version 1.5
-%define license_header_version 1.2
-%define source_release_assembly_descriptor_version 1.0
+Group:		Development/Java
+License:	ASL 2.0
+URL:		http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
+Source0:	http://repo1.maven.org/maven2/org/apache/%{name}/%{version}/%{name}-%{version}.pom
+Source1:	http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}-sources.jar
+Source2:	http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}.pom
+Source3:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}-sources.jar
+Source4:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}.pom
+Source5:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
+Source6:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
 
-%define incubator_disclaimer_version_real 1.2-SNAPSHOT
-%define jar_version_real 1.5-SNAPSHOT
-%define license_header_version_real 1.2-SNAPSHOT
-%define source_release_assembly_descriptor_version_real 1.0-SNAPSHOT
+BuildRequires:	maven
+BuildRequires:	maven-compiler-plugin
+BuildRequires:	maven-install-plugin
+BuildRequires:	maven-jar-plugin
+BuildRequires:	maven-remote-resources-plugin
+BuildRequires:	maven-resources-plugin
+BuildRequires:	maven-surefire-plugin
+BuildRequires:  maven-site-plugin
 
-%global parent_version %{version}
-%global parent_version_real %{version}
-%global parent_epoch %{epoch}
+# Requirements from the POMs
+Requires:	maven-remote-resources-plugin
 
-Name:           apache-resource-bundles
-Version:        3
-Release:        alt3_2jpp6
-Epoch:          0
-Summary:        Apache Resource Bundles
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://svn.apache.org/repos/asf/maven/resources/tags/apache-resource-bundles-3/
-# svn export http://svn.apache.org/repos/asf/maven/resources/tags/apache-resource-bundles-3/ && tar cjf apache-resource-bundles-3.tar.bz2 apache-resource-bundles-3
-# Exported revision 1055633.
-Source0:        apache-resource-bundles-3.tar.bz2
-Source1:        apache-resource-bundles-jpp-depmap.xml
-Source2:        apache-resource-bundles-settings.xml
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires:       jpackage-utils
-Requires:       maven2
-Requires:       maven2-plugin-remote-resources
-BuildRequires:  apache-commons-parent
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  maven2 >= 0:2.0.7
-BuildRequires:  maven2-plugin-compiler
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-plugin
-BuildRequires:  maven2-plugin-remote-resources
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven2-plugin-source
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-release
-BuildRequires:  maven-shared-verifier >= 0:1.2
-BuildRequires:  maven-surefire-maven-plugin
-BuildArch:      noarch
+Requires(post):	jpackage-utils
+Requires(postun): jpackage-utils
+
+BuildArch:	noarch
 Source44: import.info
 
 %description
-Apache Resource Bundles.
-
-%package -n apache-incubator-disclaimer-resource-bundle
-Version:        %{incubator_disclaimer_version}
-Epoch:          0
-Summary:        Apache Incubator Disclaimer Resource Bundle
-Group:          Development/Java
-Requires:       %{name} = %{parent_epoch}:%{parent_version}-%{release}
-
-%description -n apache-incubator-disclaimer-resource-bundle
-An archive which contains the standard Apache Incubator disclaimer.
-
-%package -n apache-jar-resource-bundle
-Version:        %{jar_version}
-Epoch:          0
-Summary:        Apache JAR Resource Bundle
-Group:          Development/Java
-Requires:       %{name} = %{parent_epoch}:%{parent_version}-%{release}
-
-%description -n apache-jar-resource-bundle
-An archive which contains templates for generating the necessary license files and notices for all Apache releases.
-
-%package -n apache-license-header-resource-bundle
-Version:        %{license_header_version}
-Epoch:          0
-Summary:        Apache License Header Resource Bundle
-Group:          Development/Java
-Requires:       %{name} = %{parent_epoch}:%{parent_version}-%{release}
-
-%description -n apache-license-header-resource-bundle
-An archive which contains the notice file template.
-
-%package -n apache-source-release-assembly-descriptor
-Version:        %{source_release_assembly_descriptor_version}
-Epoch:          0
-Summary:        Apache Source Release Assembly Descriptor
-Group:          Development/Java
-Requires:       %{name} = %{parent_epoch}:%{parent_version}-%{release}
-
-%description -n apache-source-release-assembly-descriptor
-This jar contains a customized source assembly descriptor to produce Apache compliant source bundles.
-
-%if 0
-%package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-%endif
+An archive which contains templates for generating the necessary license files
+and notices for all Apache releases.
 
 %prep
-%setup -q 
+%setup -c -T
+cp %SOURCE0 ./pom.xml
 
-%{__cp} -p %{SOURCE2} maven2-settings.xml
+# jar
+mkdir -p apache-jar-resource-bundle
+pushd apache-jar-resource-bundle
+jar xvf %SOURCE1
+cp %SOURCE2 ./pom.xml
+mkdir -p src/main/resources
+mv META-INF src/main/resources
+popd
 
-%{__sed} -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-%{__sed} -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-%{__sed} -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-%{__sed} -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-%{__sed} -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
+# license-header
+mkdir -p apache-license-header-resource-bundle
+pushd apache-license-header-resource-bundle
+jar xvf %SOURCE3
+cp %SOURCE4 ./pom.xml
+mkdir -p src/main/resources
+mv META-INF src/main/resources
+popd
 
-%{__mkdir} external_repo
-%{__ln_s} %{_javadir} external_repo/JPP
+# incubator-disclaimer
+mkdir -p apache-incubator-disclaimer-resource-bundle
+pushd apache-incubator-disclaimer-resource-bundle
+jar xvf %SOURCE5
+cp %SOURCE6 ./pom.xml
+mkdir -p src/main/resources
+mv META-INF src/main/resources
+popd
+
 
 %build
-export M2SETTINGS=`pwd`/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-        -Dmaven2.jpp.depmap.file=%{SOURCE1} \
-        install javadoc:aggregate
+mvn-rpmbuild install
 
 %install
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}/%{name}
-%{__cp} -p apache-incubator-disclaimer-resource-bundle/target/apache-incubator-disclaimer-resource-bundle-%{incubator_disclaimer_version_real}.jar %{buildroot}%{_javadir}/%{name}/apache-incubator-disclaimer-resource-bundle-%{incubator_disclaimer_version_real}.jar
-%{__cp} -p apache-jar-resource-bundle/target/apache-jar-resource-bundle-%{jar_version_real}.jar %{buildroot}%{_javadir}/%{name}/apache-jar-resource-bundle-%{jar_version_real}.jar
-%{__cp} -p apache-license-header-resource-bundle/target/apache-license-header-resource-bundle-%{license_header_version_real}.jar %{buildroot}%{_javadir}/%{name}/apache-license-header-resource-bundle-%{license_header_version_real}.jar
-%{__cp} -p apache-source-release-assembly-descriptor/target/apache-source-release-assembly-descriptor-%{source_release_assembly_descriptor_version_real}.jar %{buildroot}%{_javadir}/%{name}/apache-source-release-assembly-descriptor-%{source_release_assembly_descriptor_version_real}.jar
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{incubator_disclaimer_version_real}*; do %{__ln_s}f ${jar} `echo $jar | %{__sed} "s|-%{incubator_disclaimer_version_real}||g"`; done)
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{jar_version_real}*; do %{__ln_s}f ${jar} `echo $jar | %{__sed} "s|-%{jar_version_real}||g"`; done)
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{license_header_version_real}*; do %{__ln_s}f ${jar} `echo $jar | %{__sed} "s|-%{license_header_version_real}||g"`; done)
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{source_release_assembly_descriptor_version_real}*; do %{__ln_s}f ${jar} `echo $jar | %{__sed} "s|-%{source_release_assembly_descriptor_version_real}||g"`; done)
+# jar
+# 
+pushd apache-jar-resource-bundle
+install -m 644 \
+	target/apache-jar-resource-bundle-%{jar_version}.jar \
+	$RPM_BUILD_ROOT%{_javadir}/%{name}/jar.jar
+cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jar.pom
+%add_to_maven_depmap org.apache apache-jar-resource-bundle %{jar_version} JPP/%{name} jar
+popd
 
-# pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-%{__cp} -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.apache apache-resource-bundles %{version_real} JPP %{name}
-%{__cp} -p apache-incubator-disclaimer-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
-%add_to_maven_depmap org.apache apache-incubator-disclaimer-resource-bundle %{incubator_disclaimer_version_real} JPP/%{name} apache-incubator-disclaimer-resource-bundle
-%{__cp} -p apache-jar-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-jar-resource-bundle.pom
-%add_to_maven_depmap org.apache apache-jar-resource-bundle  %{jar_version_real} JPP/%{name} apache-jar-resource-bundle
-%{__cp} -p apache-license-header-resource-bundle/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-license-header-resource-bundle.pom
-%add_to_maven_depmap org.apache apache-license-header-resource-bundle %{license_header_version_real} JPP/%{name} apache-license-header-resource-bundle
-%{__cp} -p apache-source-release-assembly-descriptor/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-apache-source-release-assembly-descriptor.pom
-%add_to_maven_depmap org.apache apache-source-release-assembly-descriptor %{source_release_assembly_descriptor_version_real} JPP/%{name} apache-source-release-assembly-descriptor
+# license-header
+pushd apache-license-header-resource-bundle
+install -m 644 \
+	target/apache-license-header-resource-bundle-%{lh_version}.jar \
+	$RPM_BUILD_ROOT%{_javadir}/%{name}/license-header.jar
+cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-license-header.pom
+%add_to_maven_depmap org.apache apache-license-header-resource-bundle %{lh_version} JPP/%{name} license-header
+popd
 
-%if 0
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%endif
+# incubator-disclaimer
+pushd apache-incubator-disclaimer-resource-bundle
+install -m 644 \
+	target/apache-incubator-disclaimer-resource-bundle-%{id_version}.jar \
+	$RPM_BUILD_ROOT%{_javadir}/%{name}/incubator-disclaimer.jar
+cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-incubator-disclaimer.pom
+%add_to_maven_depmap org.apache apache-incubator-disclaimer-resource-bundle %{id_version} JPP/%{name} incubator-disclaimer
+popd
+
+# Add parent to depmap too
+cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_to_maven_depmap org.apache %{name} %{version} JPP %{name}
 
 %files
-%dir %{_javadir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files -n apache-incubator-disclaimer-resource-bundle
-%{_javadir}/%{name}/apache-incubator-disclaimer-resource-bundle-%{incubator_disclaimer_version_real}.jar
-%{_javadir}/%{name}/apache-incubator-disclaimer-resource-bundle.jar
-%{_mavenpomdir}/JPP.{name}-apache-incubator-disclaimer-resource-bundle.pom
-
-%files -n apache-jar-resource-bundle
-%{_javadir}/%{name}/apache-jar-resource-bundle-%{jar_version_real}.jar
-%{_javadir}/%{name}/apache-jar-resource-bundle.jar
-%{_mavenpomdir}/JPP.%{name}-apache-jar-resource-bundle.pom
-
-%files -n apache-license-header-resource-bundle
-%{_javadir}/%{name}/apache-license-header-resource-bundle-%{license_header_version_real}.jar
-%{_javadir}/%{name}/apache-license-header-resource-bundle.jar
-%{_mavenpomdir}/JPP.%{name}-apache-license-header-resource-bundle.pom
-
-%files -n apache-source-release-assembly-descriptor
-%{_javadir}/%{name}/apache-source-release-assembly-descriptor-%{source_release_assembly_descriptor_version_real}.jar
-%{_javadir}/%{name}/apache-source-release-assembly-descriptor.jar
-%{_mavenpomdir}/JPP.%{name}-apache-source-release-assembly-descriptor.pom
-
-%if 0
-%files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-%endif
+%{_javadir}/%{name}
+%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/*.pom
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt1_8jpp7
+- update
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3-alt3_2jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
