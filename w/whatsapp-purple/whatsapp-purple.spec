@@ -1,14 +1,14 @@
 Name: whatsapp-purple
-Version: 0.3
+Version: 0.5
 Release: alt1
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
 License: GPLv2+
 Group: Networking/Instant messaging
-Url: https://github.com/davidgfnet/whatsapp-purple
+URL: https://github.com/davidgfnet/whatsapp-purple
 Packager: Mikhail Kolchin <mvk@altlinux.org>
 
-Source: http://github.com/davidgfnet/whatsapp-purple/releases/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 
 Requires: pidgin
 
@@ -22,7 +22,7 @@ to the WhatsApp servers using the password (which needs to be retrieved
 separately). Only one client can connect at a time (including your phone).
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -36,5 +36,8 @@ separately). Only one client can connect at a time (including your phone).
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Sat Jul 12 2014 Mikhail Kolchin <mvk@altlinux.org> 0.5-alt1
+- new version
+
 * Mon Jun 30 2014 Mikhail Kolchin <mvk@altlinux.org> 0.3-alt1
 - initial build for ALT Linux Sisyphus
