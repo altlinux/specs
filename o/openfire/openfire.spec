@@ -1,10 +1,10 @@
 Summary: Openfire XMPP Server
 Name: openfire
 Version: 3.9.3
-Release: alt2
+Release: alt3
 
-Source0: openfire_src_3_9_3.tar.gz
-Source1: openfire.init
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 Group: Networking/Instant messaging
 License: Apache Software License 2.0
 Url: http://www.igniterealtime.org/
@@ -15,9 +15,9 @@ BuildArch: noarch
 
 Requires: /usr/bin/java
 
-BuildPreReq: /proc rpm-build-java java-1.6.0-sun-devel
-# Automatically added by buildreq on Sun Apr 06 2008
-BuildRequires: ant-bsf ant-commons-logging ant-commons-net ant-junit ant-log4j ant-xml-resolver antlr jakarta-oro sun-jaf xalan-j2
+BuildPreReq: /proc rpm-build-java java-1.7.0-openjdk-devel
+# Automatically added by buildreq on Sat Jul 12 2014
+BuildRequires: ant-apache-bsf ant-apache-log4j ant-apache-resolver ant-commons-logging ant-commons-net ant-junit
 
 %description
 Openfire is a leading Open Source, cross-platform IM server based on the
@@ -25,7 +25,8 @@ XMPP (Jabber) protocol. It has great performance, is easy to setup and use,
 and delivers an innovative feature set.
 
 %prep
-%setup -q -n openfire_src
+%setup -q
+%patch0 -p1
 
 %build
 cd build
@@ -47,15 +48,13 @@ cd ..
 %__install -p -m 644 target/%name/bin/extra/redhat/openfire-sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %__install -p -m 644 target/%name/conf/openfire.xml %buildroot%_sysconfdir/%name/%name.xml
 %__install -p -m 644 target/%name/conf/security.xml %buildroot%_sysconfdir/%name/security.xml
-%__install -p -m 755 %SOURCE1 %buildroot%_initrddir/%name
+%__install -p -m 755 %name.init %buildroot%_initdir/%name
 %__install -p -m 755 target/%name/bin/extra/embedded-db.rc %buildroot%_bindir/embedded-db.rc
 %__install -p -m 755 target/%name/bin/extra/embedded-db-viewer.sh %buildroot%_bindir/embedded-db-viewer.sh
 %__cp -aRf target/%name/lib %buildroot%firedir/
 %__cp -aRf target/%name/plugins %buildroot%_localstatedir/%name/
-%__cp -aRf resources/i18n %buildroot%firedir/resources/
 %__cp -aRf target/%name/resources/database %buildroot%firedir/resources/
 %__cp -aRf target/%name/resources/security %buildroot%_sysconfdir/%name
-#%__cp -aRf target/%name/resources/spank %buildroot%firedir/resources/
 
 ln -s %_sysconfdir/%name %buildroot%firedir/conf
 ln -s %_sysconfdir/%name/security %buildroot%firedir/resources/security
@@ -76,7 +75,7 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 
 %files
 %doc documentation/docs
-%doc changelog.html LICENSE.html README.html
+%doc documentation/dist/changelog.html documentation/dist/LICENSE.html documentation/dist/README.html
 %_bindir/*
 %attr(-,_%name,_%name) %firedir
 %attr(-,_%name,_%name) %_localstatedir/%name
@@ -94,6 +93,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %exclude %firedir/lib/*.dll
 
 %changelog
+* Sat Jul 12 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt3
+- Rebuild with java-1.7.0-openjdk
+
 * Thu Jul 03 2014 Alexei Takaseev <taf@altlinux.org> 3.9.3-alt2
 - Add lost config file
 
