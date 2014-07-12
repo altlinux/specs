@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: maven2-plugin-dependency maven-shared-filtering
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ini4j
 Version:        0.5.1
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Java API for handling files in Windows .ini format
 Group:          Development/Java
 License:        ASL 2.0
@@ -48,8 +48,8 @@ BuildRequires:  maven-site-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  plexus-mail-sender
-BuildRequires:  xmlrpc3-client
-BuildRequires:  xmlrpc3-common
+BuildRequires:  xmlrpc-client
+BuildRequires:  xmlrpc-common
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -128,6 +128,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7jpp7
+- fixed deps
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_7jpp7
 - new version
 
