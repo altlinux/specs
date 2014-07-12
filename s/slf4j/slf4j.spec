@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -31,16 +34,16 @@ BuildRequires: jpackage-compat
 #
 
 Name:           slf4j
-Version:        1.7.1
-Release:        alt1_1jpp7
+Version:        1.7.2
+Release:        alt1_4jpp7
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
-License:        MIT
+# the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
+License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
 Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit >= 0:1.6.5
@@ -101,8 +104,10 @@ Manual for %{name}.
 %prep
 %setup -q
 find . -name "*.jar" | xargs rm
+cp -p %{SOURCE1} APACHE-LICENSE
 
 %pom_disable_module integration
+%pom_disable_module osgi-over-slf4j
 %pom_remove_plugin :maven-source-plugin
 
 # Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
@@ -119,6 +124,14 @@ find . -name "*.jar" | xargs rm
 # dos2unix
 %{_bindir}/find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
     %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
+
+# The general pattern is that the API package exports API classes and does
+# not require impl classes. slf4j was breaking that causing "A cycle was
+# detected when generating the classpath slf4j.api, slf4j.nop, slf4j.api."
+# The API bundle requires impl package, so to avoid cyclic dependencies
+# during build time, it is necessary to mark the imported package as an
+# optional one.
+sed -i "/Import-Package/s/.$/;resolution:=optional&/" slf4j-api/src/main/resources/META-INF/MANIFEST.MF
 
 %build
 mvn-rpmbuild \
@@ -153,19 +166,6 @@ install -m 644 slf4j-nop/target/%{name}-nop-%{version}.jar \
 install -m 644 slf4j-simple/target/%{name}-simple-%{version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/simple.jar
 
-%add_to_maven_depmap org.slf4j jcl-over-slf4j %{version} JPP/slf4j jcl-over-slf4j
-%add_to_maven_depmap org.slf4j jul-to-slf4j %{version} JPP/slf4j jul-to-slf4j
-%add_to_maven_depmap org.slf4j log4j-over-slf4j %{version} JPP/slf4j log4j-over-slf4j
-%add_to_maven_depmap org.slf4j %{name}-parent %{version} JPP/slf4j parent
-%add_to_maven_depmap org.slf4j %{name}-api %{version} JPP/slf4j api
-%add_to_maven_depmap org.slf4j %{name}-ext %{version} JPP/slf4j ext
-%add_to_maven_depmap org.slf4j %{name}-jcl %{version} JPP/slf4j jcl
-%add_to_maven_depmap org.slf4j %{name}-jdk14 %{version} JPP/slf4j jdk14
-%add_to_maven_depmap org.slf4j %{name}-log4j12 %{version} JPP/slf4j log4j12
-%add_to_maven_depmap org.slf4j %{name}-migrator %{version} JPP/slf4j migrator
-%add_to_maven_depmap org.slf4j %{name}-nop %{version} JPP/slf4j nop
-%add_to_maven_depmap org.slf4j %{name}-simple %{version} JPP/slf4j simple
-
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml \
@@ -193,6 +193,19 @@ install -pm 644 slf4j-nop/pom.xml \
 install -pm 644 slf4j-simple/pom.xml \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-simple.pom
 
+%add_maven_depmap JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-jcl-over-slf4j.pom %{name}/jcl-over-slf4j.jar
+%add_maven_depmap JPP.%{name}-jul-to-slf4j.pom %{name}/jul-to-slf4j.jar
+%add_maven_depmap JPP.%{name}-log4j-over-slf4j.pom %{name}/log4j-over-slf4j.jar
+%add_maven_depmap JPP.%{name}-api.pom %{name}/api.jar
+%add_maven_depmap JPP.%{name}-ext.pom %{name}/ext.jar
+%add_maven_depmap JPP.%{name}-jcl.pom %{name}/jcl.jar
+%add_maven_depmap JPP.%{name}-jdk14.pom %{name}/jdk14.jar
+%add_maven_depmap JPP.%{name}-log4j12.pom %{name}/log4j12.jar
+%add_maven_depmap JPP.%{name}-migrator.pom %{name}/migrator.jar
+%add_maven_depmap JPP.%{name}-nop.pom %{name}/nop.jar
+%add_maven_depmap JPP.%{name}-simple.pom %{name}/simple.jar
+
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
@@ -202,37 +215,26 @@ rm -rf target/site/api*
 install -d -m 0755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 rm -f target/site/.htaccess
 cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-install -m 644 LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-# compat for jpp
-pushd %buildroot%{_javadir}/slf4j
-for i in *.jar; do
-        ln -s $i slf4j-$i
-done
 
 
-%files
-%dir %{_docdir}/%{name}-%{version}
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%{_javadir}/%{name}
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
-
-%{_javadir}/slf4j/api.jar
-%{_javadir}/slf4j/jdk14.jar
-%{_javadir}/slf4j/nop.jar
-
+%files -f .mfiles
+%doc LICENSE.txt APACHE-LICENSE
+%dir %{_javadir}/%{name}
 
 %files javadoc
+%doc LICENSE.txt APACHE-LICENSE
 %{_javadocdir}/%{name}
 
 %files manual
-%{_docdir}/%{name}-%{version}/site
+%doc LICENSE.txt APACHE-LICENSE
+#%{_docdir}/%{name}-%{version}/site
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt1_4jpp7
+- update
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_1jpp7
 - new version
 
