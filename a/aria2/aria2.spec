@@ -1,6 +1,6 @@
 Name: aria2
-Version: 1.18.3
-Release: alt3
+Version: 1.18.6
+Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster
 License: GPLv2+ with exceptions
@@ -8,7 +8,7 @@ Group: Networking/File transfer
 Url: http://aria2.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 
 # Automatically added by buildreq on Thu Mar 23 2006
 BuildRequires: gcc-c++ libssl-devel libstdc++-devel
@@ -17,7 +17,7 @@ BuildRequires: cppunit-devel
 BuildRequires: gettext
 BuildRequires: libcares-devel
 BuildRequires: libgcrypt-devel
-BuildRequires: libgnutls-devel
+BuildRequires: libgnutls-devel libgnutls-openssl-devel libgnutls-extra-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
@@ -45,8 +45,11 @@ Currently it has following features:
 
 %prep
 %setup -n %name-%version
+#set_gcc_version 4.7
+
 
 %build
+
 
 %configure --enable-bittorrent \
            --enable-metalink \
@@ -67,7 +70,7 @@ Currently it has following features:
 #__install -pD -m755 src/aria2c %buildroot%_bindir/aria2c
 
 %makeinstall
-%find_lang aria2 --with-man
+%find_lang aria2 --with-man --all-name
 
 ln -s aria2c  %buildroot%_bindir/%name
 
@@ -80,16 +83,30 @@ install -pD -m644 doc/manual-src/en/_build/man/aria2c.1.bz2 %buildroot%_mandir/e
 install -pD -m644 doc/manual-src/ru/_build/man/aria2c.1.bz2 %buildroot%_mandir/ru/man1/aria2c.1.bz2
 install -pD -m644 doc/manual-src/pt/_build/man/aria2c.1.bz2 %buildroot%_mandir/pt/man1/aria2c.1.bz2
 
+mkdir %buildroot%_docdir/%name-%version
+mv %buildroot%_docdir/aria2/README.* %buildroot%_docdir/%name-%version
+#mkdir %buildroot%_docdir/%name-%version/bash_completion
+#mv %buildroot%_docdir/aria2/bash_completion/* %buildroot%_docdir/%name-%version/bash_completion
+#mkdir %buildroot%_docdir/%name-%version/xmlrpc
+#mv %buildroot%_docdir/aria2/xmlrpc/* %buildroot%_docdir/%name-%version/xmlrpc
+
+
 %files -f aria2.lang
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README*
 %_bindir/%name
 %_bindir/aria2c
 %_man1dir/aria2c.1.bz2
-%_mandir/*/man1/aria2c.1.bz2
+%_mandir/*/man1/aria2c.1.bz2*
+%_docdir/%name/bash_completion/*
+%_docdir/%name/xmlrpc/*
+
 #_datadir/locale/*/LC_MESSAGES/aria2.mo
 
 
 %changelog
+* Mon Jul 14 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.6-alt1
+- 1.18.6
+
 * Mon Mar 03 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.3-alt3
 - fix locales man pages
 
