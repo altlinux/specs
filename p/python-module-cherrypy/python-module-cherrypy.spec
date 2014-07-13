@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 3.2.4
-Release: alt2.hg20131113
+Version: 3.5.1
+Release: alt1.hg20140627
 
 %setup_python_module %modulename
 
@@ -13,7 +13,6 @@ License: BSD
 Group: Development/Python
 
 URL: http://www.cherrypy.org
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 BuildArch: noarch
 
 # hg clone https://bitbucket.org/cherrypy/cherrypy
@@ -22,6 +21,8 @@ Source: http://download.cherrypy.org/cherrypy/%version/%name-%version.tar
 Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
 
 BuildPreReq: %py_dependencies setuptools
+BuildPreReq: python-module-sphinx-devel python-module-nose
+BuildPreReq: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -52,6 +53,31 @@ them anywhere you can run Python applications. Apache is not required,
 but it's possible to run a CherryPy application behind it.
 
 This package contains tests for CherryPy.
+
+%package pickles
+Summary: Pickles for CherryPy
+Group: Development/Python
+
+%description pickles
+Your CherryPy powered web applications are in fact stand-alone Python
+applications embedding their own multi-threaded web server. You can deploy
+them anywhere you can run Python applications. Apache is not required,
+but it's possible to run a CherryPy application behind it.
+
+This package contains pickles for CherryPy.
+
+%package docs
+Summary: Documentation for CherryPy
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Your CherryPy powered web applications are in fact stand-alone Python
+applications embedding their own multi-threaded web server. You can deploy
+them anywhere you can run Python applications. Apache is not required,
+but it's possible to run a CherryPy application behind it.
+
+This package contains documentation for CherryPy.
 
 %if_with python3
 %package -n python3-module-%modulename
@@ -91,6 +117,9 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
 %python_build
 %if_with python3
@@ -112,12 +141,27 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 %python_install
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+pushd docs
+sphinx-build -b pickle -d build/doctrees . build/pickle
+sphinx-build -b html -d build/doctrees . build/html
+popd
+
+cp -fR docs/build/pickle %buildroot%python_sitelibdir/%modulename/
+
 %files
 %doc cherrypy/tutorial
 %_bindir/cherryd
 %python_sitelibdir/%modulename/
+%exclude %python_sitelibdir/%modulename/pickle
 %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/*/test
+
+%files pickles
+%python_sitelibdir/%modulename/pickle
+
+%files docs
+%doc docs/build/html/*
 
 %files tests
 %python_sitelibdir/*/test
@@ -134,6 +178,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 
 %changelog
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1.hg20140627
+- Version 3.5.1
+
 * Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt2.hg20131113
 - Moved tests into separate package
 
