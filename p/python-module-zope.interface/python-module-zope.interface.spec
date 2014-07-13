@@ -1,4 +1,4 @@
-%define version 4.0.5
+%define version 4.1.1
 #define subver c1
 %define release alt1
 %define oname zope.interface
@@ -19,12 +19,11 @@ Release: %release
 Source0: %name-%version.tar
 License: ZPL
 Group: Development/Python
-Packager: Python Development Team <python@packages.altlinux.org>
 
-BuildPreReq: python-module-distribute python-module-zope.fixers
+BuildPreReq: python-module-setuptools python-module-zope.fixers
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.fixers
 %endif
 
@@ -108,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
+- Version 4.1.1
+
 * Sat Mar 16 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.5-alt1
 - Version 4.0.5
 
