@@ -2,7 +2,8 @@
 Summary: Python library for working with CouchDB. 
 Name: python-module-%sname
 Version: 0.10
-Release: alt1
+Release: alt1.hg20140707
+# hg clone https://code.google.com/p/couchdb-python/
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/C/CouchDB/CouchDB-%{version}.tar.gz
 License: BSD
@@ -13,6 +14,8 @@ BuildArch: noarch
 # Automatically added by buildreq on Thu Jul 10 2008
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+
+%add_findreq_skiplist %python_sitelibdir/%sname/util3.py
 
 %description
 A Python library for CouchDB. It provides a convenient high level interface for the CouchDB server.
@@ -32,6 +35,9 @@ A Python library for CouchDB. It provides a convenient high level interface for 
 %python_sitelibdir/*
 
 %changelog
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.hg20140707
+- New snapshot
+
 * Thu Dec 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1
 - Version 0.10
 
