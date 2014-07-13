@@ -1,9 +1,8 @@
 Name: fslint
-Version: 2.42
-Release: alt1.1
+Version: 2.44
+Release: alt1
 Summary: FSlint - a utility to find and clean "lint" on a filesystem
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: File tools
 License: GPL
 Url: http://www.pixelbeat.org/fslint/
@@ -84,6 +83,9 @@ desktop-file-install \
 
 
 %changelog
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.44-alt1
+- Version 2.44
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.42-alt1.1
 - Rebuild with Python-2.7
 
