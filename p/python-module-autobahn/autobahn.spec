@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.10
-Release: alt1.git20140710
+Release: alt2.git20140710
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -27,6 +27,18 @@ BuildPreReq: python-tools-2to3
 Autobahn WebSockets for Python provides an implementation of the
 WebSockets protocol which can be used to build WebSockets clients and
 servers.
+
+%package tests
+Summary: Tests for Autobahn
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Autobahn WebSockets for Python provides an implementation of the
+WebSockets protocol which can be used to build WebSockets clients and
+servers.
+
+This package contains tests for Autobahn.
 
 %package pickles
 Summary: Pickles for Autobahn
@@ -59,6 +71,18 @@ Group: Development/Python3
 Autobahn WebSockets for Python provides an implementation of the
 WebSockets protocol which can be used to build WebSockets clients and
 servers.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Autobahn
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Autobahn WebSockets for Python provides an implementation of the
+WebSockets protocol which can be used to build WebSockets clients and
+servers.
+
+This package contains tests for Autobahn.
 %endif
 
 %prep
@@ -106,6 +130,10 @@ popd
 %doc *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/*/test
+
+%files tests
+%python_sitelibdir/*/*/test
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -117,9 +145,16 @@ popd
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test
 %endif
 
 %changelog
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt2.git20140710
+- Moved tests into separate package
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt1.git20140710
 - Version 0.8.10
 
