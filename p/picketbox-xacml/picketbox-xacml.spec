@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             picketbox-xacml
 Version:          2.0.7
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss XACML
 Group:            Development/Java
 License:          LGPLv2+
@@ -89,6 +89,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1_3jpp7
 - new version
 
