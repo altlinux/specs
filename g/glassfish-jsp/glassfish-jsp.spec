@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:       glassfish-jsp
 Version:    2.2.6
-Release:    alt1_2jpp7
+Release:    alt2_2jpp7
 Summary:    Glassfish J2EE JSP API implementation
 
 Group:      Development/Java
@@ -100,6 +100,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_2jpp7
 - new release
 
