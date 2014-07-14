@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-metadata
 Version: 7.0.1
-Release: alt1_3jpp7
+Release: alt2_3jpp7
 Summary: JBoss Metadata
 Group: Development/Java
 License: LGPLv2+
@@ -127,6 +127,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:7.0.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:7.0.1-alt1_3jpp7
 - new version
 
