@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jarjar
 Version:        1.0
-Release:        alt3_6jpp7
+Release:        alt4_6jpp7
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -172,6 +172,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_6jpp7
 - new release
 
