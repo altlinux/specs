@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-common
 Version:        1.0.11
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        FEST: Fixtures for Easy Software Testing
 
 Group:          Development/Java
@@ -53,6 +53,9 @@ install -pm 644 pom.xml \
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_5jpp7
 - new version
 
