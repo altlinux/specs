@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 Summary:          Bouncy Castle Crypto Package for Java
 Name:             bouncycastle
 Version:          %{ver}
-Release:          alt2_6jpp7
+Release:          alt3_6jpp7
 Group:            System/Libraries
 License:          MIT
 URL:              http://www.%{name}.org/
@@ -170,6 +170,9 @@ fi
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt3_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt2_6jpp7
 - fc release
 
