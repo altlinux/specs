@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:          mvel
 Version:       2.0.19
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       MVFLEX Expression Language
 Group:         Development/Java
 License:       ASL 2.0
@@ -103,6 +103,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt1_2jpp7
 - new version
 
