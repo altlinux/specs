@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt1_5jpp7
+Release:	alt2_5jpp7
 Summary:	Universal Description, Discovery and Integration registry API for Java
 Group:		Development/Java
 License:	IBM
@@ -96,6 +96,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt1_5jpp7
 - new release
 
