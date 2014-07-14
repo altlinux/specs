@@ -1,5 +1,5 @@
-%define version 1.5.1
-%define release alt1.hg20120916
+%define version 1.5.2
+%define release alt1.hg20131227
 %define oname PasteDeploy
 
 %def_with python3
@@ -8,8 +8,8 @@
 
 Name: %packagename
 Version:%version
-Release: alt1.hg20120916.1
-Serial: 1
+Release: alt1.hg20131227
+Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
 
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.2-alt1.hg20131227
+- Version 1.5.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.5.1-alt1.hg20120916.1
 - Rebuild with Python-3.3
 
