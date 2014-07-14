@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{project}-%{pkgname}
 Version:          0.6.0
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          Parent package for Felix Gogo
 Group:            Development/Java
 License:          ASL 2.0
@@ -50,6 +50,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3jpp7
 - new version
 
