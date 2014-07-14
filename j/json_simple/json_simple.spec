@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 
 Name:           json_simple
 Version:        1.1.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Simple Java toolkit for JSON
 
 Group:          Development/Java
@@ -86,6 +86,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_2jpp7
 - new version
 
