@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             avro
 Version:          1.6.2
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Data serialization system
 Group:            Development/Java
 License:          ASL 2.0
@@ -114,6 +114,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_4jpp7
 - new version
 
