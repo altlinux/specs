@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           piccolo2d
 Version:        1.3.1
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Structured 2D graphics toolkit
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc license-piccolo.txt 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1jpp7
 - new release
 
