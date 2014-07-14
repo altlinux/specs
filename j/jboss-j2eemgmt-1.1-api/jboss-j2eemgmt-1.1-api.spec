@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jboss-j2eemgmt-1.1-api
 Version:       1.0.1
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Java EE Management 1.1 API
 Group:         Development/Java
 License:       LGPLv2+
@@ -79,6 +79,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp7
 - new version
 
