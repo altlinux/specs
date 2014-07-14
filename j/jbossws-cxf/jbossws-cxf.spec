@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-cxf
 Version:          4.0.2
-Release:          alt2_2jpp7
+Release:          alt3_2jpp7
 Summary:          JBoss Web Services CXF stack
 Group:            Development/Java
 License:          LGPLv2+
@@ -84,6 +84,9 @@ install -pm 644 modules/resources/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{n
 #%{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt3_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt2_2jpp7
 - fixed build
 
