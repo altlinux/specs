@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           aqute-bndlib
 Version:        1.50.0
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        BND Library
 License:        ASL 2.0
 Group:          Development/Java
@@ -96,6 +96,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt1_3jpp7
 - new version
 
