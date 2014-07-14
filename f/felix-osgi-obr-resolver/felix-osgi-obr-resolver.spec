@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-osgi-obr-resolver
 Version:          0.1.0
-Release:          alt1_0.5.Beta1jpp7
+Release:          alt2_0.5.Beta1jpp7
 Summary:          Apache Felix Resolver
 Group:            Development/Java
 License:          ASL 2.0
@@ -94,6 +94,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.5.Beta1jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_0.5.Beta1jpp7
 - new version
 
