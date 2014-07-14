@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-connector-1.6-api
 Version:          1.0.1
-Release:          alt1_0.3.20120310git9dc9a5jpp7
+Release:          alt2_0.3.20120310git9dc9a5jpp7
 Summary:          Connector Architecture 1.6 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.3.20120310git9dc9a5jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_0.3.20120310git9dc9a5jpp7
 - new version
 
