@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-build-helper
 Version:        1.5
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Build Helper Maven Plugin
 
 Group:          Development/Java
@@ -91,6 +91,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp7
 - added jpp compatible provides
 
