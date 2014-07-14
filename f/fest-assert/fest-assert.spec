@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-assert
 Version:        1.4
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        FEST Fluent Assertions
 
 Group:          Development/Java
@@ -82,6 +82,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_7jpp7
 - new version
 
