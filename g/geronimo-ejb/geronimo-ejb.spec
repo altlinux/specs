@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Java
 License:          ASL 2.0
@@ -112,6 +112,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp7
 - new version
 
