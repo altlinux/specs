@@ -1,7 +1,7 @@
 %define oname numdifftools
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1
+Version: 0.6.0
+Release: alt1.svn20140221
 Summary: Solves automatic numerical differentiation problems in one or more variables
 License: BSD
 Group: Development/Python
@@ -76,6 +76,9 @@ This package contains documentation for Numdifftools.
 %doc %oname/doc/*
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.svn20140221
+- Version 0.6.0
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Version 0.4.0
 
