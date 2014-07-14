@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Jetty version management Maven plugin
 
 Group:          Development/Java
@@ -73,6 +73,9 @@ popd
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt2_4jpp7
 - fixed build
 
