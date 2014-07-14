@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.8.0
+Version: 1.10.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -92,6 +92,9 @@ make check
 
 
 %changelog
+* Mon Jul 14 2014 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
 * Wed Dec 18 2013 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Update description.
 - Updated to 1.8.0.
