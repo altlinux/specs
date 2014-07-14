@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Jetty Toolchain main POM file
 
 Group:          Development/Java
@@ -49,6 +49,9 @@ popd
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_4jpp7
 - fixed build
 
