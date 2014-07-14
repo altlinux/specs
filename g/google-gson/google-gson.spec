@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             google-%{short_name}
 Version:          2.2.1
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          Java lib for conversion of Java objects into JSON representation
 License:          ASL 2.0
 Group:            Development/Java
@@ -80,6 +80,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_3jpp7
 - new version
 
