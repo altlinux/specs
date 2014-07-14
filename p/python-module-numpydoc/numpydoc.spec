@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.dev.git20131021
+Version: 0.6
+Release: alt1.dev.git20140608
 Epoch: 1
 
 Summary: Numpy's Sphinx extensions
@@ -101,7 +101,7 @@ popd
 %python_install
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
@@ -110,7 +110,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6-alt1.dev.git20140608
+- Version 0.6.dev
+
 * Wed Oct 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.5-alt1.dev.git20131021
 - Initial build for Sisyphus
 
