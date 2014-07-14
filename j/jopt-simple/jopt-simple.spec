@@ -32,7 +32,7 @@ BuildRequires: jpackage-compat
 #
 Name: jopt-simple
 Version: 3.3
-Release: alt1_6jpp7
+Release: alt2_6jpp7
 Summary: A Java command line parser
 License: MIT
 Group: Development/Java
@@ -93,6 +93,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt1_6jpp7
 - new version
 
