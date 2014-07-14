@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jul-to-slf4j-stub
 Version:          1.0.0
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          JUL log records SLF4J bridge
 Group:            Development/Java
 License:          LGPLv2+ and MIT
@@ -78,6 +78,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp7
 - stub package
 
