@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             stax2-api
 Version:          3.1.1
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
 Group:            Development/Java
@@ -74,6 +74,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_4jpp7
 - new version
 
