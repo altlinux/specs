@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-threads
 Version:          2.0.0
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss Threads
 Group:            Development/Java
 License:          LGPLv2+
@@ -80,6 +80,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_6jpp7
 - new version
 
