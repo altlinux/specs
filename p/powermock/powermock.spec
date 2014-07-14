@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           powermock
 Version:        1.4.12
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        A Java mocking framework
 Group:          Development/Java
 
@@ -245,6 +245,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.12-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.12-alt1_5jpp7
 - new version
 
