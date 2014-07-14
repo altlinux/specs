@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 Summary:          S/MIME and CMS libraries for Bouncy Castle
 Name:             bouncycastle-mail
 Version:          %{ver}
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Group:            System/Libraries
 License:          MIT
 URL:              http://www.bouncycastle.org/
@@ -112,6 +112,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1_6jpp7
 - fc release
 
