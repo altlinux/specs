@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 Name:           clojure
 Epoch:          1
 Version:        1.4.0
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
@@ -76,6 +76,9 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_3jpp7
 - new release
 
