@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cargo-parent
 Version:        4.11
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Parent pom file for cargo.codehaus.org project
 
 Group:          Development/Java
@@ -57,6 +57,9 @@ install -pm 644 pom.xml  \
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.11-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.11-alt1_2jpp7
 - new release
 
