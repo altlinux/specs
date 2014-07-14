@@ -1,6 +1,6 @@
 %define oname Ming
 Name: python-module-%oname
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 Summary: Bringing order to Mongo since 2009
 License: MIT
@@ -38,7 +38,7 @@ This package contains tests for Ming.
 %python_install
 
 %files
-%doc PKG-INFO
+%doc PKG-INFO README
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -46,6 +46,9 @@ This package contains tests for Ming.
 %python_sitelibdir/*/tests
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
+- Version 0.5.0
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
 - Version 0.4.2
 
