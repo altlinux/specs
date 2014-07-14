@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-test
 Version:        1.2.1
-Release:        alt4_4jpp7
+Release:        alt5_4jpp7
 Summary:        FEST Testing
 
 Group:          Development/Java
@@ -95,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt5_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_4jpp7
 - fc release
 
