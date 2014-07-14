@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-classfilewriter
 Version:          1.0.3
-Release:          alt1_1jpp7
+Release:          alt2_1jpp7
 Summary:          JBoss Class File Writer
 Group:            Development/Java
 License:          LGPLv2+
@@ -82,6 +82,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1jpp7
 - new version
 
