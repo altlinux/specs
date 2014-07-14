@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-modules
 Version:          1.1.1
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Summary:          A Modular Classloading System
 Group:            Development/Java
 License:          LGPLv2+
@@ -87,6 +87,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6jpp7
 - new version
 
