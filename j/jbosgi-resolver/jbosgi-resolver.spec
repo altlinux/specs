@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbosgi-resolver
 Version:          2.0.0
-Release:          alt1_0.3.Beta2jpp7
+Release:          alt2_0.3.Beta2jpp7
 Summary:          Standalone OSGi Resolver 
 Group:            Development/Java
 License:          LGPLv2+
@@ -109,6 +109,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_0.3.Beta2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.3.Beta2jpp7
 - new version
 
