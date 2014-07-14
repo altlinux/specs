@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Java
@@ -144,6 +144,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_7jpp7
 - new version
 
