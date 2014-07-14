@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-msc
 Version:          1.0.2
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss Modular Service Container
 Group:            Development/Java
 License:          LGPLv2+
@@ -96,6 +96,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp7
 - new version
 
