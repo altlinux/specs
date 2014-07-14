@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: glassfish-jaxb
 Version: 2.2.5
-Release: alt1_3jpp7
+Release: alt2_3jpp7
 Summary: JAXB Reference Implementation
 
 Group: Development/Java
@@ -212,6 +212,9 @@ cp -rp apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt1_3jpp7
 - fc version
 - jaxb 2.2 api
