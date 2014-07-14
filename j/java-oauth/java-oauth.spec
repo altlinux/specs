@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 %global oname oauth
 Name:          java-oauth
 Version:       20100601
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       An open protocol to allow API authentication
 Group:         Development/Java
 License:       ASL 2.0
@@ -116,6 +116,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oname}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 20100601-alt1_3jpp7
 - new version
 
