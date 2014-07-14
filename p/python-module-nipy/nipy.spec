@@ -1,10 +1,10 @@
 %define oname nipy
 
-%def_enable docs
+%def_disable docs
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2.git20131031
+Release: alt2.git20140617
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -24,6 +24,7 @@ BuildPreReq: python-module-nibabel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: graphviz ghostscript-utils
 BuildPreReq: %py_dependencies pl
+BuildPreReq: xvfb-run python-module-pygobject3 python-module-pycairo
 %setup_python_module %oname
 
 %description
@@ -109,8 +110,8 @@ cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc ~/.matplotlib/
 sed -i 's|^\(backend\).*|\1 : PDF|' ~/.matplotlib/matplotlibrc
 
 %if_enabled docs
-%make -C doc pickle
-%make -C doc html
+xvfb-run make -C doc pickle
+xvfb-run make -C doc html
 #make -C doc pdf
 %endif
 
@@ -168,6 +169,9 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20140617
+- New snapshot
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20131031
 - New snapshot
 
