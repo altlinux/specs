@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: apache-mina
 Version: 2.0.4
-Release: alt1_4jpp7
+Release: alt2_4jpp7
 Summary: Apache MINA
 
 Group: Development/Java
@@ -105,6 +105,9 @@ cp -rp src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_4jpp7
 - new release
 
