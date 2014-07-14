@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           checkstyle
 Version:        5.5
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -197,6 +197,9 @@ fi
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt1_4jpp7
 - new version
 
