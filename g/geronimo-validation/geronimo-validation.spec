@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           geronimo-validation
 Version:        1.1
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Geronimo implementation of JSR 303
 Group:          Development/Java
 License:        ASL 2.0
@@ -68,6 +68,9 @@ cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5jpp7
 - new version
 
