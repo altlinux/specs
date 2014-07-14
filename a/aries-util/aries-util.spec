@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          aries-util
 Version:       0.4
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Apache Aries Util
 License:       ASL 2.0
 Group:         Development/Java
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_2jpp7
 - new version
 
