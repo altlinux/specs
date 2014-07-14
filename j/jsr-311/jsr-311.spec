@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jsr-311
 Version: 1.1.1
-Release: alt1_2jpp7
+Release: alt2_2jpp7
 Summary: JAX-RS: Java API for RESTful Web Services
 Group: Development/Java
 License: CDDL
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_2jpp7
 - new version
 
