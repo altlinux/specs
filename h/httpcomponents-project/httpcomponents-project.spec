@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 Name:              httpcomponents-project
 Summary:           Common POM file for HttpComponents
 Version:           6
-Release:           alt1_1jpp7
+Release:           alt2_1jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -51,6 +51,9 @@ install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{name}.pom
 %{_mavenpomdir}/JPP.%{name}.pom
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 6-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 6-alt1_1jpp7
 - new version
 
