@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          directory-project
 Version:       27
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       Apache Directory Project Root pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -63,6 +63,9 @@ mvn-rpmbuild install
 %doc LICENSE.txt NOTICE.txt README.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 27-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 27-alt1_1jpp7
 - new version
 
