@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-skins
 Version:        5
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Maven Skins
 
 Group:          Development/Java
@@ -76,6 +76,9 @@ install -pm 644 maven-stylus-skin/pom.xml \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 5-alt1_6jpp7
 - new version
 
