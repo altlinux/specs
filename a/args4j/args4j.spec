@@ -8,7 +8,7 @@ Name:              args4j
 %global site_name  %{name}-site
 
 Version:          2.0.16
-Release:          alt1_8jpp7
+Release:          alt2_8jpp7
 Summary:          Small Java lib that makes it easy to parse command line options/args in CUI apps
 License:          MIT and BSD
 Group:            Development/Java
@@ -110,6 +110,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.16-alt2_8jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.16-alt1_8jpp7
 - new version
 
