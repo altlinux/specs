@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt1_9jpp7
+Release:          alt2_9jpp7
 Summary:          OSGI spec bundle support
 Group:            Development/Java
 License:          ASL 2.0 and W3C
@@ -96,6 +96,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9jpp7
 - new version
 
