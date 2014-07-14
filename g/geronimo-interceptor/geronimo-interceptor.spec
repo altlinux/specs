@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-interceptor
 Version:          1.0.1
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          Java EE: Interceptor API v3.0
 Group:            Development/Java
 License:          ASL 2.0
@@ -72,6 +72,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp7
 - new version
 
