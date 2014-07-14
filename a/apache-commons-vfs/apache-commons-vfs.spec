@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-vfs
 Version:       2.0
-Release:       alt3_4jpp7
+Release:       alt4_4jpp7
 Summary:       Commons Virtual File System
 Group:         Development/Java
 License:       ASL 2.0
@@ -189,6 +189,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_4jpp7
 - fc version
 
