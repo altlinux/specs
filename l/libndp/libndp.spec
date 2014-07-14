@@ -1,5 +1,5 @@
 Name: libndp
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Library for Neighbor Discovery Protocol
@@ -61,6 +61,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Jul 14 2014 Mikhail Efremov <sem@altlinux.org> 1.3-alt1
+- Updated to 1.3.
+
 * Thu Feb 06 2014 Mikhail Efremov <sem@altlinux.org> 1.2-alt1
 - Patch from upstream git:
   + fix [cppcheck] Undefined behavior
