@@ -1,7 +1,7 @@
 %define oname meshpy
 Name: python-module-%oname
-Version: 2013.1.2
-Release: alt1.git20131122
+Version: 2014.1
+Release: alt1.git20140706
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -10,6 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://git.tiker.net/trees/meshpy.git
 Source: %oname-%version.tar
+# git://github.com/inducer/bpl-subset
+Source1: bpl-subset.tar
 
 BuildPreReq: boost-python-devel gcc-c++ python-module-setuptools
 BuildPreReq: libnumpy-devel python-module-epydoc
@@ -50,6 +52,9 @@ This package contains documentation for MeshPy.
 %prep
 %setup
 
+rm -fR bpl-subset
+tar -xf %SOURCE1
+
 %build
 %python_build_debug
 
@@ -76,6 +81,9 @@ cp -fR test %buildroot%python_sitelibdir/%oname/
 %doc doc/html/*
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt1.git20140706
+- Version 2014.1
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1.git20131122
 - New snapshot
 
