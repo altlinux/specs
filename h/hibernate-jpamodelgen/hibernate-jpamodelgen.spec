@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 %global with_test 0
 Name:          hibernate-jpamodelgen
 Version:       1.2.0
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Hibernate JPA 2 Metamodel Generator
 Group:         Development/Java
 License:       ASL 2.0
@@ -104,6 +104,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_2jpp7
 - new version
 
