@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-commons-woden
 Version:        1.0
-Release:        alt1_0.2.M9jpp7
+Release:        alt2_0.2.M9jpp7
 Summary:        Web Service Description Language (WSDL) validating parser
 
 Group:          Development/Java
@@ -95,6 +95,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oldname}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.2.M9jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.2.M9jpp7
 - new version
 
