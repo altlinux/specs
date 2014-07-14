@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: txw2
 Version: 20110809
-Release: alt1_4jpp7
+Release: alt2_4jpp7
 Summary: Typed XML writer for Java
 Group: Development/Java
 License: CDDL and GPLv2 with exceptions
@@ -109,6 +109,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 20110809-alt1_4jpp7
 - new version
 
