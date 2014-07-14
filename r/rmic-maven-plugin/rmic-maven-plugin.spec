@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             rmic-maven-plugin
 Version:          1.2.0
-Release:          alt2_1jpp7
+Release:          alt3_1jpp7
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 Group:            Development/Java
@@ -88,6 +88,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_1jpp7
 - fixed build
 
