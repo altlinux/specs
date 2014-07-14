@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbosgi-vfs
 Version:          1.1.2
-Release:          alt1_0.4.CR1jpp7
+Release:          alt2_0.4.CR1jpp7
 Summary:          JBoss OSGi Virtual File System
 Group:            Development/Java
 License:          LGPLv2+
@@ -94,6 +94,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt2_0.4.CR1jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_0.4.CR1jpp7
 - new version
 
