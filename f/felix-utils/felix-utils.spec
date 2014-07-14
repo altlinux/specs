@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-utils
 Version:          1.1.0
-Release:          alt1_5jpp7
+Release:          alt2_5jpp7
 Summary:          Utility classes for OSGi
 License:          ASL 2.0
 Group:            Development/Java
@@ -68,6 +68,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_5jpp7
 - new release
 
