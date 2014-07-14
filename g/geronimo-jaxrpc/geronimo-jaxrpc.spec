@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-jaxrpc
 Version:          2.1
-Release:          alt1_9jpp7
+Release:          alt2_9jpp7
 Summary:          Java EE: Java API for XML Remote Procedure Call v1.1
 Group:            Development/Java
 License:          ASL 2.0 and W3C
@@ -106,6 +106,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_9jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_9jpp7
 - new version
 
