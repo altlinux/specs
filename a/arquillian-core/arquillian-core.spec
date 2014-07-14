@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           arquillian-core
 Version:        1.0.2
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Arquillian is a revolutionary testing platform built on the JVM
 Group:          Development/Java
 License:        ASL 2.0
@@ -205,6 +205,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp7
 - new version
 
