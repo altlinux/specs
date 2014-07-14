@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    jbosscache-support
 Version: 1.6
-Release: alt3_2jpp7
+Release: alt4_2jpp7
 Summary: JBossCache support package
 
 Group:   Development/Java
@@ -89,6 +89,9 @@ install -m 644 xslt/pom.xml \
 %{_mavenpomdir}/JPP-%{name}-xslt.pom
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_2jpp7
 - new version
 
