@@ -4,14 +4,14 @@
 %define oname pyipopt
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.svn20120531
+Release: alt2.git20140116
 Summary: Python interface to Ipopt
 License: Artistic License/GPL
-Group: Sciences/Mathematics
-Url: http://code.google.com/p/pyipopt/
+Group: Development/Python
+Url: https://github.com/xuy/pyipopt
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://pyipopt.googlecode.com/svn/trunk
+# https://github.com/xuy/pyipopt.git
 Source: %oname-%version.tar.gz
 
 %setup_python_module %oname
@@ -24,39 +24,38 @@ optimization problems. Unfortunately, the only interface available is
 C/C++ or Fortran. As Python becomes more popular these days, a connector
 to python is necessary.
 
+%package examples
+Summary: Examples for Python interface to Ipopt
+Group: Development/Python
+BuildArch: noarch
+
+%description examples
+Ipopt is a state-of-the-art optimization solver for nonlinear
+optimization problems. Unfortunately, the only interface available is
+C/C++ or Fortran. As Python becomes more popular these days, a connector
+to python is necessary.
+
 %prep
 %setup
-sed -i 's|@PY_DIR@|%python_sitelibdir|g' makefile
-sed -i \
-	"s|@PY_INC@|$(pkg-config python --cflags|sed 's|\-I||g')|g" \
-	makefile
-sed -i "s|@PY_LIB@|$(pkg-config python --libs)|g" makefile
 
 %install
 export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
 
-TOPDIR=$PWD
-#pushd %mpidir/lib/%mpiimpl
-#for i in $(ls *.so |sed -e 's/\.so//'); do
-#	ln -s %mpidir/lib/%mpiimpl/$i.so $TOPDIR/lib$i.so
-#	MCAS="$MCAS -l$i"
-#done
-MCAS="$MCAS -lompi_dbg_msgq -lmpi_cxx -lmpi_f77"
-MCAS="-L$TOPDIR $MCAS -lmpi_f90 -lmpi -lopen-pal"
-#popd
-
-%make_build pyipopt \
-	MPIDIR=%mpidir MPIIMPL=%mpiimpl MPILIBS="$MCAS"
-
-%makeinstall_std \
-	MPIDIR=%mpidir MPIIMPL=%mpiimpl MPILIBS="$MCAS"
+%add_optflags -fno-strict-aliasing -I%_includedir/coin
+%python_build_debug
+%python_install
 
 %files
-%doc README VERSION
+%doc Changelog README.md
 %python_sitelibdir/*
 
+%files examples
+%doc examples/*
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.git20140116
+- New snapshot
+
 * Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20120531
 - New snapshot
 
