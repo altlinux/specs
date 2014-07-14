@@ -1,8 +1,8 @@
 %define oname pandas
 
 Name: python-module-%oname
-Version: 0.12.0
-Release: alt3
+Version: 0.14.1
+Release: alt1
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python
 BuildPreReq: libnumpy-devel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-json ipython
+BuildPreReq: gcc-c++
 
 %setup_python_module %oname
 
@@ -68,12 +69,12 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
-#pushd doc
-#./make.py html
-#popd
+pushd doc
+./make.py html
+popd
 
 %files
-%doc README.rst RELEASE.md
+%doc *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/test*
@@ -83,11 +84,14 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %python_sitelibdir/*/*/test*
 
 %files docs
-#doc doc/build/html
-%doc doc/source
+%doc doc/build/html
+#doc doc/source
 %doc examples
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt1
+- Version 0.14.1
+
 * Thu Nov 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt3
 - Applied repocop patch
 
