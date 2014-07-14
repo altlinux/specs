@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-jaxb-2.2-api
 Version: 1.0.4
-Release: alt1_3jpp7
+Release: alt2_3jpp7
 Summary: Java Architecture for XML Binding 2.2
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_3jpp7
 - new release
 
