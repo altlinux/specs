@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: mojarra
 Version: 2.1.7
-Release: alt1_4jpp7
+Release: alt2_4jpp7
 Summary: JSF Reference Implementation
 
 Group: Development/Java
@@ -222,6 +222,9 @@ cp -rp jsf-api/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt1_4jpp7
 - new version
 
