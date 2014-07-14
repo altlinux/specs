@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 7.0.28
+%define version 7.0.32
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -36,7 +39,7 @@ BuildRequires: jpackage-compat
 %global jspspec 2.2
 %global major_version 7
 %global minor_version 0
-%global micro_version 28
+%global micro_version 32
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 3.0
 %global elspec 2.2
@@ -59,7 +62,7 @@ BuildRequires: jpackage-compat
 Name:          tomcat
 Epoch:         0
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_0jpp7
+Release:       alt1_1jpp7
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -105,7 +108,7 @@ BuildRequires: jakarta-taglibs-standard
 BuildRequires: jpackage-utils >= 0:1.7.0
 BuildRequires: junit
 BuildRequires: log4j
-BuildRequires: geronimo-jaxrpc-1.1-api
+BuildRequires: geronimo-jaxrpc
 BuildRequires: wsdl4j
 Requires:      apache-commons-daemon
 Requires:      apache-commons-logging
@@ -221,7 +224,7 @@ Provides: el_api = %{elspec}
 Expression Language 1.0.
 
 %package webapps
-Group: Development/Java
+Group: Networking/WWW
 Summary: The ROOT and examples web applications for Apache Tomcat
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: jakarta-taglibs-standard >= 0:1.1
@@ -325,6 +328,8 @@ zip -u output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
 %{__install} -d -m 0755 ${RPM_BUILD_ROOT}%{libdir}
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{logdir}
 /bin/touch ${RPM_BUILD_ROOT}%{logdir}/catalina.out
+%{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{_var}/run
+/bin/touch ${RPM_BUILD_ROOT}%{_var}/run/%{name}.pid
 /bin/echo "%{name}-%{major_version}.%{minor_version}.%{micro_version} RPM installed" >> ${RPM_BUILD_ROOT}%{logdir}/catalina.out
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{apphomedir}
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{tempdir}
@@ -426,6 +431,18 @@ pushd ${RPM_BUILD_ROOT}%{appdir}/sample
 popd
 %{__rm} ${RPM_BUILD_ROOT}%{appdir}/docs/appdev/sample/sample.war
 
+# Allow linking for example webapp
+%{__mkdir_p} ${RPM_BUILD_ROOT}%{appdir}/examples/META-INF
+pushd ${RPM_BUILD_ROOT}%{appdir}/examples/META-INF
+echo '<?xml version="1.0" encoding="UTF-8"?>'>context.xml
+echo '<Context allowLinking="true"/>'>>context.xml
+popd
+
+pushd ${RPM_BUILD_ROOT}%{appdir}/examples/WEB-INF/lib
+%{__ln_s} -f $(build-classpath jakarta-taglibs-core) jstl.jar
+%{__ln_s} -f $(build-classpath jakarta-taglibs-standard) standard.jar
+popd
+
 
 # Install the maven metadata
 %{__install} -d -m 0755 ${RPM_BUILD_ROOT}%{_mavenpomdir}
@@ -472,6 +489,11 @@ done
 
 # replace temporary copy with link
 %{__ln_s} -f %{bindir}/tomcat-juli.jar ${RPM_BUILD_ROOT}%{libdir}/
+
+mkdir -p ${RPM_BUILD_ROOT}%{_tmpfilesdir}
+cat > ${RPM_BUILD_ROOT}%{_tmpfilesdir}/%{name}.conf <<EOF
+f %{_var}/run/%{name}.pid 0644 tomcat tomcat -
+EOF
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_tomcat-jsp-2.2-api<<EOF
 %{_javadir}/jsp.jar	%{_javadir}/%{name}-jsp-%{jspspec}-api.jar	20200
 EOF
@@ -482,21 +504,19 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/elspec_tomcat
 %{_javadir}/elspec.jar	%{_javadir}/%{name}-el-%{elspec}-api.jar	20300
 EOF
 
+chmod 644 %buildroot%{_tmpfilesdir}/%{name}.conf
 
 %pre
 %{_sbindir}/groupadd -g %{tcuid} -r tomcat 2>/dev/null || :
 %{_sbindir}/useradd -c "Apache Tomcat" -u %{tcuid} -g tomcat \
     -s /bin/nologin -r -d %{apphomedir} tomcat 2>/dev/null || :
 
-%post systemv
-/sbin/chkconfig --add %{name}
-
-%preun systemv
-    %{_initrddir}/%{name} stop >/dev/null 2>&1
-    /sbin/chkconfig --del %{name}
+%post
+%post_service %{name}
 
 %preun
 %{__rm} -rf %{workdir}/* %{tempdir}/*
+%preun_service %{name}
 
 %files
 %defattr(0664,root,tomcat,0755)
@@ -513,6 +533,7 @@ EOF
 %defattr(0664,root,tomcat,0770)
 %attr(0770,root,tomcat) %dir %{logdir}
 %attr(0660,tomcat,tomcat) %{logdir}/catalina.out
+%attr(0644,tomcat,tomcat) %{_var}/run/%{name}.pid
 %attr(0770,root,tomcat) %dir %{cachedir}
 %attr(0770,root,tomcat) %dir %{tempdir}
 %attr(0770,root,tomcat) %dir %{workdir}
@@ -520,14 +541,15 @@ EOF
 %attr(0775,root,tomcat) %dir %{appdir}
 %attr(0775,root,tomcat) %dir %{confdir}/Catalina
 %attr(0775,root,tomcat) %dir %{confdir}/Catalina/localhost
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/%{name}.conf
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/*.policy
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/*.properties
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/context.xml
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/server.xml
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/%{name}.conf
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/*.policy
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/*.properties
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/context.xml
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/server.xml
 %attr(0660,tomcat,tomcat) %config(noreplace) %{confdir}/tomcat-users.xml
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/web.xml
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/web.xml
 %attr(0755,root,root) %dir %{apphomedir}
+%{_tmpfilesdir}/%{name}.conf
 %attr(0644,root,root) %{bindir}/bootstrap.jar
 %attr(0644,root,root) %{bindir}/catalina-tasks.xml
 %{apphomedir}/lib
@@ -537,6 +559,9 @@ EOF
 %{apphomedir}/logs
 %{apphomedir}/conf
 %attr(0755,root,root) %dir %{bindir}
+%defattr(755,root,root,0755)
+%{_sbindir}/d%{name}
+%{_initrddir}/%{name}
 
 %files admin-webapps
 %defattr(0664,root,tomcat,0755)
@@ -597,18 +622,17 @@ EOF
 %{appdir}/examples
 %{appdir}/sample
 
-%files systemv
-%defattr(755,root,root,0755)
-%{_sbindir}/d%{name}
-%{_initrddir}/%{name}
 
-#files jsvc
-#defattr(755,root,root,0755)
-#%{_sbindir}/%{name}-jsvc
-#%{_sbindir}/%{name}-jsvc-sysd
-#%attr(0644,root,root) %{_unitdir}/%{name}-jsvc.service
+%files jsvc
+%defattr(755,root,root,0755)
+%{_sbindir}/%{name}-jsvc
+%{_sbindir}/%{name}-jsvc-sysd
+%attr(0644,root,root) %{_unitdir}/%{name}-jsvc.service
 
 %changelog
+* Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:7.0.32-alt1_1jpp7
+- new version
+
 * Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:7.0.28-alt1_0jpp7
 - bootstrap build (w/o jsvc)
 
