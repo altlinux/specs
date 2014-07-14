@@ -1,7 +1,7 @@
 %define oname pycollada
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20130302
+Version: 0.4.1
+Release: alt1.git20140411
 Summary: A python COLLADA library. Can be used to create, edit and load COLLADA documents
 License: BSD
 Group: Development/Python
@@ -57,6 +57,9 @@ This package contains tests for pycollada
 %python_sitelibdir/collada/tests
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20140411
+- Version 0.4.1
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20130302
 - Version 0.4
 
