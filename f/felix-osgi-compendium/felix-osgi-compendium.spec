@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:    felix-osgi-compendium
 Version: 1.4.0
-Release: alt2_12jpp7
+Release: alt3_12jpp7
 Summary: Felix OSGi R4 Compendium Bundle
 
 Group:   Development/Java
@@ -103,6 +103,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_12jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_12jpp7
 - new release
 
