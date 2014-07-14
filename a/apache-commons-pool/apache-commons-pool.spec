@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          Apache Commons Pool Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -77,6 +77,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_2jpp7
 - new version
 
