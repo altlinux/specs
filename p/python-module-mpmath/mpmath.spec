@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.17
-Release: alt2.1
+Version: 0.18
+Release: alt1
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
@@ -141,11 +141,11 @@ popd
 %endif
 
 %files
-%doc CHANGES LICENSE README
+%doc CHANGES LICENSE README*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/libmp/exec_py3.py*
+#exclude %python_sitelibdir/%oname/libmp/exec_py3.py*
 
 %files doc
 %doc doc/build/* demo
@@ -155,12 +155,16 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
+%doc CHANGES LICENSE README*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/libmp/exec_py2.py*
+#exclude %python3_sitelibdir/%oname/libmp/exec_py2.py*
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1
+- Version 0.18
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.17-alt2.1
 - Rebuild with Python-3.3
 
