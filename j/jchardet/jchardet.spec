@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jchardet
 Version:        1.1
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 Group:          Development/Java
@@ -87,6 +87,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_4jpp7
 - new version
 
