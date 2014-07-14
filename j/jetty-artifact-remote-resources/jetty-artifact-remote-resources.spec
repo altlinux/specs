@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-artifact-remote-resources
 Version:        1.0
-Release:        alt2_5jpp7
+Release:        alt3_5jpp7
 Summary:        Jetty toolchain artifact remote resources
 
 Group:          Development/Java
@@ -48,6 +48,9 @@ install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5jpp7
 - fixed build
 
