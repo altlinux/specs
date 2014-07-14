@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-annotations-1.1-api
 Version: 1.0.1
-Release: alt1_0.3.20120212git76e1a2jpp7
+Release: alt2_0.3.20120212git76e1a2jpp7
 Summary: Common Annotations 1.1 API
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.3.20120212git76e1a2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_0.3.20120212git76e1a2jpp7
 - new version
 
