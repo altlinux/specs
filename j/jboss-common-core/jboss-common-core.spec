@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-common-core
 Version:          2.2.18
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          JBoss Common Classes
 Group:            Development/Java
 License:          LGPLv2+ and ASL 1.1
@@ -98,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt1_7jpp7
 - new version
 
