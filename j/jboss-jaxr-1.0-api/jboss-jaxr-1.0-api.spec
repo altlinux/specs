@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          jboss-jaxr-1.0-api
 Version:       1.0.2
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Java(TM) API for XML Registries 1.0 (JAXR)
 Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_2jpp7
 - new version
 
