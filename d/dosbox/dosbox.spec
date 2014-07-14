@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt2.4
+Release: alt3
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -50,6 +50,10 @@ BuildPreReq: libX11-devel
 BuildPreReq: xsltproc 
 BuildPreReq: unzip
 
+# Automatically added by buildreq on Sat Jul 12 2014
+# optimized out: gnu-config libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libstdc++-devel libtinfo-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: gcc-c++ libSDL_net-devel libSDL_sound-devel libalsa-devel libncurses-devel libpng-devel
+
 %description
 DOSBox is graphical application that provides rich programming emulation
 of Intel 8086 real-mode, SVGA and DOS with XMS/EMS (but no DPMI!).
@@ -95,58 +99,7 @@ DOSBox позволяет запускать на современном ком�
 %prep
 %setup
 %patch -p2
-
-%build
-%configure \
-	--enable-core-inline \
-	--disable-fpu-x86 \
-	--disable-dynamic-x86
-
-%make_build
-
-%install
-%makeinstall_std
-
-# install additional scripts
-%__install -D -p %{SOURCE2} %buildroot/%_bindir/%name-install
-%__install -D -p %{SOURCE3} %buildroot/%_bindir/%name-wrapper
-
-# make manual pages dir
-%__mkdir_p %buildroot/%_man1dir
-pushd %buildroot/%_man1dir
-xsltproc %docbook_man %{SOURCE4}
-popd
-
-# install DOSBox-russian-docs
-%__mkdir_p %buildroot/%_defaultdocdir/%name-%version/
-unzip %{SOURCE1} -d %buildroot/%_defaultdocdir/%name-%version/
-
-# install upstream docs
-%__cp AUTHORS ChangeLog NEWS README THANKS %buildroot/%_defaultdocdir/%name-%version
-%__cp docs/{README.video,PORTING} %buildroot/%_defaultdocdir/%name-%version
-
-# create directory for data files and for placing games
-%__mkdir_p %buildroot{%_datadir/%name,%_gamesbindir/%name}
-
-# install icons and desktop file
-%__install -D -m 0644 %{SOURCE5} %buildroot/%_iconsdir/%name.xpm
-%__install -D -m 0644 %{SOURCE6} %buildroot/%_desktopdir/%name.desktop
-
-# fix #24306 bug
-%__cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
-
-%files
-%_bindir/*
-%dir %_datadir/%name
-%_man1dir/%{name}*
-%doc %_defaultdocdir/*
-%_iconsdir/*
-%_desktopdir/*
-
-%post
-# Create script dosbox-set-lang (#24306)
-
-cat > %_bindir/%name-set-lang << EOF
+cat > %name-set-lang << EOF
 #!/bin/bash
 #
 # This script is distributed under terms of GPLv2 or later
@@ -190,12 +143,66 @@ en)
 esac
 EOF
 
-%__chmod +x %_bindir/%name-set-lang
+%build
+%configure \
+	--enable-debug=heavy \
+	--enable-core-inline \
+	--disable-fpu-x86
 
-%postun
-rm -f %_bindir/%name-set-lang
+%make_build
+cp -a src/dosbox src/dosbox.debug
+
+make distclean
+%configure \
+	--enable-core-inline \
+	--disable-fpu-x86
+
+%make_build
+xsltproc %docbook_man %{SOURCE4}
+
+%install
+%makeinstall_std
+install src/dosbox.debug %buildroot%_bindir/dosbox.debug
+
+# install additional scripts
+install -D -p %{SOURCE2} %buildroot/%_bindir/%name-install
+install -D -p %{SOURCE3} %buildroot/%_bindir/%name-wrapper
+
+# install dosbox-install manual
+install -D dosbox-install.1 %buildroot/%_man1dir/dosbox-install.1
+
+# install DOSBox-russian-docs
+mkdir -p %buildroot/%_defaultdocdir/%name-%version/
+unzip %{SOURCE1} -d %buildroot/%_defaultdocdir/%name-%version/
+
+# install upstream docs
+cp AUTHORS ChangeLog NEWS README THANKS %buildroot/%_defaultdocdir/%name-%version
+cp docs/{README.video,PORTING} %buildroot/%_defaultdocdir/%name-%version
+
+# create directory for data files and for placing games
+mkdir -p %buildroot{%_datadir/%name,%_gamesbindir/%name}
+
+# install icons and desktop file
+install -D -m 0644 %{SOURCE5} %buildroot/%_iconsdir/%name.xpm
+install -D -m 0644 %{SOURCE6} %buildroot/%_desktopdir/%name.desktop
+
+install -m755 %name-set-lang %buildroot%_bindir/%name-set-lang
+
+# fix #24306 bug
+cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
+
+%files
+%_bindir/*
+%dir %_datadir/%name
+%_man1dir/%{name}*
+%doc %_defaultdocdir/*
+%_iconsdir/*
+%_desktopdir/*
 
 %changelog
+* Sat Jul 12 2014 Fr. Br. George <george@altlinux.ru> 0.74-alt3
+- add debugger-enabled binary
+
 * Fri Jul 11 2014 Mikhail Kolchin <mvk@altlinux.org> 0.74-alt2.4
 - fixed script dosbox-set-lang (ALT#24306)
 
