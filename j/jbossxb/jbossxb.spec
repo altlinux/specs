@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jbossxb
 Version:        2.0.3
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        JBoss XML Binding
 
 Group:          Development/Java
@@ -104,6 +104,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/jboss/jboss-xml-binding.jar
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt1_1jpp7
 - new version
 
