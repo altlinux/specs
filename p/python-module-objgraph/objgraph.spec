@@ -1,6 +1,9 @@
 %define oname objgraph
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 1.7.2
+Version: 1.8.1
 Release: alt1
 Summary: Draws Python object reference graphs with graphviz
 License: MIT
@@ -11,9 +14,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
+objgraph is a module that lets you visually explore Python object
+graphs.
+
+You'll need graphviz if you want to draw the pretty graphs.
+
+I recommend xdot for interactive use. pip install xdot should suffice;
+objgraph will automatically look for it in your PATH.
+
+%package -n python3-module-%oname
+Summary: Draws Python object reference graphs with graphviz
+Group: Development/Python3
+
+%description -n python3-module-%oname
 objgraph is a module that lets you visually explore Python object
 graphs.
 
@@ -25,17 +45,43 @@ objgraph will automatically look for it in your PATH.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%doc *.txt docs
+%doc *.rst docs
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst docs
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1
+- Version 1.8.1
+- Added module for Python 3
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt1
 - Version 1.7.2
 
