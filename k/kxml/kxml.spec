@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           kxml
 Version:        2.2.2
-Release:        alt3_12jpp7
+Release:        alt4_12jpp7
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
@@ -108,6 +108,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_12jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt3_12jpp7
 - added jpp compatible symlink
 
