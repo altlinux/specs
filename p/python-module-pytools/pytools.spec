@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2013.5.7
+Version: 2014.3
 Release: alt1
 Summary: A collection of tools for Python
 License: MIT
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.3-alt1
+- Version 2014.3
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.5.7-alt1
 - Version 2013.5.7
 
