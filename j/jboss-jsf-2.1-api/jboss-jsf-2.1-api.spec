@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-jsf-2.1-api
 Version: 2.0.2
-Release: alt2_3jpp7
+Release: alt3_3jpp7
 Summary: JavaServer Faces 2.1 API
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -108,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_3jpp7
 - new version
 
