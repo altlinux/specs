@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          sshj
 Version:       0.8.1
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       SSHv2 library for Java
 Group:         Development/Java
 License:       ASL 2.0
@@ -87,6 +87,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_1jpp7
 - new version
 
