@@ -1,5 +1,5 @@
 Epoch: 0
-BuildRequires: jakarta-poi
+#BuildRequires: jakarta-poi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.9
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Commons Configuration Package
 
 Group:          Development/Java
@@ -125,6 +125,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_1jpp7
 - new version
 
