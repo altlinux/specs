@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		mongo-java-driver
 Version:	2.7.3
-Release:	alt1_2jpp7
+Release:	alt2_2jpp7
 Summary:	A Java driver for MongoDB
 
 Group:		Development/Java
@@ -107,6 +107,9 @@ cp -rp docs/bson/2.7.2 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-bson/%{version}
 %doc README.md LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt1_2jpp7
 - full version
 
