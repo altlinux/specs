@@ -1,10 +1,6 @@
-%def_disable static
-
-%def_disable faac
-
 Name: mpeg4ip
 Version: 1.5.0.1
-Release: alt14
+Release: alt15
 
 Summary: Set of linux video stream processing utilities
 License: MPL
@@ -25,12 +21,6 @@ BuildRequires: esound-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel
 BuildPreReq: libICE-devel libavformat-devel libpostproc-devel
 BuildPreReq: libswscale-devel libavdevice-devel libavfilter-devel
 BuildPreReq: libv4l-devel
-
-%{?_enable_faac:BuildRequires: libfaac-devel}
-
-%if_enabled static
-BuildRequires: xorg-x11-devel-static
-%endif
 
 %description
 The MPEG4IP project provides a standarts-based system
@@ -109,16 +99,6 @@ Requires: lib%name = %version-%release
 %description live
 MPEG4IP Live streaming server
 
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: MPEG4IP Static development files
-Group: Development/C
-Requires: lib%name = %version-%release
-
-%description -n lib%name-devel-static
-MPEG4IP Static development files
-%endif
-
 %prep
 %setup -n %name-%version
 %patch0 -p2
@@ -137,9 +117,9 @@ touch {common/video/iso-mpeg4,lib/{rtp,SDLAudio}}/{NEWS,AUTHORS,ChangeLog}
 %add_optflags -D__STDC_CONSTANT_MACROS
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	--enable-server \
-	--enable-player \
+	--disable-static \
+	--disable-server \
+	--disable-player \
 	--enable-mp4live \
 	--without-arts \
 	--enable-warns-as-err=no \
@@ -152,13 +132,6 @@ make
 
 %install
 %make_install install DESTDIR=%buildroot -j1
-
-# remove non-packaged files.
-rm -f %buildroot%_libdir/mp4player_plugin/*.la
-
-%if_disabled static
-rm -f %buildroot%_libdir/mp4player_plugin/*.a
-%endif
 
 #strange .mpt file. go to docs for now...
 mkdir -p %buildroot%_docdir/%name-%version
@@ -185,34 +158,14 @@ rm -rf %buildroot%_datadir/doc/%name-%version/{mp4v2,programs}
 %_includedir/*
 %_man3dir/*
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
-
-%files player
-%_bindir/mp4player
-
-%files player-plugins
-%dir %_libdir/mp4player_plugin
-%_libdir/mp4player_plugin/*.so
-
-#files player-gui
-#_bindir/gmp4player
-
-%files live
-%_bindir/mp4live
-
 %files tools
 %_bindir/*
-#exclude %_bindir/gmp4player
-%exclude %_bindir/mp4player
 %exclude %_bindir/mpeg4ip-config
-%exclude %_bindir/mp4live
-
-# TODO: fix checking of x264, when x264 will upgraded
 
 %changelog
+* Mon Jul 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0.1-alt15
+- built libraries and tools only
+
 * Mon Jan 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0.1-alt14
 - fixed build with libav9
 
