@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 Summary:        Java implementation of a binary protocol for web services 
 Name:           hessian
 Version:        4.0.7
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Epoch:          1
 License:        ASL 1.1
 URL:            http://hessian.caucho.com/
@@ -68,6 +68,9 @@ cp -rp doc/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc apache.license
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.0.7-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.0.7-alt1_4jpp7
 - new version
 
