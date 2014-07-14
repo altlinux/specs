@@ -1,6 +1,6 @@
 %define version 4.1.1
 #define subver c1
-%define release alt1
+%define release alt2
 %define oname zope.interface
 %setup_python_module %oname
 
@@ -92,21 +92,28 @@ popd
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/zope/interface/tests
+%exclude %python_sitelibdir/zope/interface/common/tests
 %doc *.txt
 
 %files tests
 %python_sitelibdir/zope/interface/tests
+%python_sitelibdir/zope/interface/common/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/zope/interface/tests
+%exclude %python3_sitelibdir/zope/interface/common/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/zope/interface/tests
+%python3_sitelibdir/zope/interface/common/tests
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
+- Moved all tests into tests subpackage
+
 * Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Version 4.1.1
 
