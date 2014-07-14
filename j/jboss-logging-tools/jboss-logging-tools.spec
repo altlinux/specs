@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-logging-tools
 Version:          1.0.0
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss Logging I18n Annotation Processor
 Group:            Development/Java
 License:          LGPLv2+
@@ -87,6 +87,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp7
 - new version
 
