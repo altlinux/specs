@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-wagon-ahc
 Version:	1.2.1
-Release:	alt1_2jpp7
+Release:	alt2_2jpp7
 Summary:	A wagon provider for HTTP transfers
 
 Group:		Development/Java
@@ -88,6 +88,9 @@ install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2jpp7
 - new version
 
