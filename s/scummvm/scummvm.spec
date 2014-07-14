@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -12,20 +12,15 @@ Patch: scummvm-1.3.0-mp2player.patch
 
 Provides: %_gamesdatadir/%name
 
-# Automatically added by buildreq on Thu Nov 10 2011 (-bi)
-# optimized out: elfutils libGL-devel libGLU-devel libalsa-devel libogg-devel libstdc++-devel pkg-config zlib-devel
-BuildRequires: gcc-c++ libSDL-devel libfaad-devel libflac-devel libfluidsynth-devel libmad-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
+# Automatically added by buildreq on Mon Jul 14 2014 (-bi)
+# optimized out: elfutils libGL-devel libGLU-devel libalsa-devel libcloog-isl4 libogg-devel libstdc++-devel pkg-config python-base zlib-devel
+BuildRequires: gcc-c++ git-core libSDL-devel libfaad-devel libflac-devel libfluidsynth-devel libfreetype-devel libjpeg-devel libmad-devel libmpeg2-devel libpng-devel libreadline-devel libtheora-devel libvorbis-devel
 
 %description
 ScummVM is a collection of interpreters, capable of emulating several
 adventure game engines. ScummVM mainly supports games created using
 SCUMM (Script Creation Utility for Maniac Mansion), used in various
 LucasArts games such as Monkey Island, Day of the Tentacle, and others.
-
-ScummVM also contains interpreters for several non-SCUMM games. Currently
-these are Beneath a Steel Sky, Broken Sword 1 & 2, Flight of the Amazon
-Queen, Simon the Sorcerer 1 & 2, The Legend of Kyrandia and The Feeble
-Files.
 
 %prep
 %setup
@@ -40,7 +35,9 @@ Files.
 	--prefix=%prefix \
 	--bindir=%_bindir \
 	--mandir=%_mandir \
+	--libdir=%_libdir \
 	--enable-release \
+	--enable-plugins --default-dynamic \
 	--disable-nasm --disable-tremor \
 	--enable-text-console --enable-opengl
 %make_build
@@ -67,10 +64,15 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/pixmaps/scummvm.xpm
 %_datadir/applications/%name.desktop
 %_iconsdir/hicolor/*/apps/*
+%dir %_libdir/%name
+%_libdir/%name/*
 %dir %_datadir/%name
 %_datadir/%name/*
 
 %changelog
+* Mon Jul 14 2014 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
+- Autobuild version bump to 1.7.0
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Autobuild version bump to 1.6.0
 
