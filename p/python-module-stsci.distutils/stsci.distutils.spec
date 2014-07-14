@@ -1,9 +1,9 @@
 %define oname stsci.distutils
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: distutils/packaging-related utilities used by some of STScI's packages
@@ -26,6 +26,7 @@ BuildPreReq: python-tools-2to3 python3-module-d2to1
 %endif
 
 Requires: python-module-stsci.core = %EVR
+Requires: python-module-zest.releaser
 
 %description
 This package contains utilities used to package some of STScI's Python
@@ -72,6 +73,7 @@ Core package for stsci.
 Summary: distutils/packaging-related utilities used by some of STScI's packages
 Group: Development/Python3
 Requires: python3-module-stsci.core = %EVR
+Requires: python3-module-zest.releaser
 
 %description -n python3-module-%oname
 This package contains utilities used to package some of STScI's Python
@@ -178,6 +180,10 @@ popd
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.7-alt1
+- Version 0.3.7
+- Added module for Python 3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1
 - Version 0.3.6
 
