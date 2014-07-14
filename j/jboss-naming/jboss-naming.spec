@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-naming
 Version:          5.0.6
-Release:          alt1_0.4.CR1jpp7
+Release:          alt2_0.4.CR1jpp7
 Summary:          JBoss Naming
 Group:            Development/Java
 License:          LGPLv2+
@@ -90,6 +90,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc JBossORG-EULA.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.4.CR1jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt1_0.4.CR1jpp7
 - new version
 
