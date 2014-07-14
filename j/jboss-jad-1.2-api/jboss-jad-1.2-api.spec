@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:          jboss-jad-1.2-api
 Version:       1.0.1
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       JavaEE Application Deployment 1.2 API
 Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc README LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_3jpp7
 - new version
 
