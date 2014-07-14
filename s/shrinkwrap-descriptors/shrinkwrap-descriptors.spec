@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt1_0.2.alpha2jpp7
+Release:       alt2_0.2.alpha2jpp7
 Summary:       ShrinkWrap subproject for creating Archive Descriptors
 Group:         Development/Java
 License:       ASL 2.0
@@ -130,6 +130,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_0.2.alpha2jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_0.2.alpha2jpp7
 - new version
 
