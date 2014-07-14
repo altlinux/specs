@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-scout
 Version:          1.2.6
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JSR 93 (JAXR) implementation
 Group:            Development/Java
 License:          ASL 2.0
@@ -94,6 +94,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_3jpp7
 - new version
 
