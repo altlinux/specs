@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{project}-gogo-shell
 Version:          0.10.0
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Community OSGi R4 Service Platform Implementation - Basic Commands
 Group:            Development/Java
 License:          ASL 2.0
@@ -83,6 +83,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt1_4jpp7
 - new release
 
