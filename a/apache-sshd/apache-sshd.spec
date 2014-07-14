@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: apache-sshd
 Version: 0.7.0
-Release: alt1_1jpp7
+Release: alt2_1jpp7
 Summary: Apache SSHD
 
 Group: Development/Java
@@ -132,6 +132,9 @@ cp -rp src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_1jpp7
 - new release
 
