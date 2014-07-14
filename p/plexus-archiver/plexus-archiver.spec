@@ -32,7 +32,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-archiver
 Version:        2.1.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        MIT and ASL 2.0
@@ -117,6 +117,9 @@ cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt1_2jpp7
 - new version
 
