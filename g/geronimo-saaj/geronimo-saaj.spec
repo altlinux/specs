@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-saaj
 Version:          1.1
-Release:          alt1_8jpp7
+Release:          alt2_8jpp7
 Summary:          Java EE: SOAP with Attachments API Package v1.3
 Group:            Development/Java
 License:          ASL 2.0 and W3C
@@ -78,6 +78,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8jpp7
 - new version
 
