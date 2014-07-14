@@ -1,33 +1,22 @@
 Summary: Twm based window manager for the X Window System
 Summary(ru_RU.KOI8-R): Основанный на twm оконный менеджер для X Window System
 Name: ctwm
-%define rcfile ctwmrc
-%define start startctwm
-Version: 3.9devel
-Release: alt2
-# Initialise database
-#  mtn --db=YOUR_DATABASE_DIRECTORY/ctwm.mtn db init
-# Pull the repository
-#  mtn  --db=YOUR_DATABASE_DIRECTORYI/ctwm.mtn pull guardian.lp.se free.lp.se:X.ctwm
-# Check out the source 
-#  mtn --db=YOUR_DATABASE_DIRECTORY/ctwm.mtn --branch=free.lp.se:X.ctwm co CTWM_WORK_DIRECTORY
+Version: 3.8.2
+Epoch: 1
+Release: alt1
 
-Source: %name-%version.tar.gz
-URL: http://ctwm.free.lp.se
+Source: %name-%version.tar.xz
+Url: http://ctwm.free.lp.se
 Packager: Fr. Br. George <george@altlinux.ru>
 
 #Source1: http://slhp1.epfl.ch/public/ctwm/ctwm-images.tar.gz
-Source1: %start
+Source1: startctwm
 Source2: %name.wmsession
 Source3: %name.icon64x64.xpm
 #Source4: ctwm-3.7-Imakefile.local-additional
 
-Patch0: %name-patches-aa
-Patch1: %name-3.8-m4exec.patch
-#Patch2: %name-3.7.patch1
-Patch3: %name-3.7-dirs-patch
-Patch4: %name-strlen.patch
-Patch5: %name-MAX_BUTTONS.patch
+Patch: ctwm-3.8-dirs.patch
+Patch1: ctwm-strlen.patch
 License: BSD
 Group: Graphical desktop/Other
 
@@ -49,47 +38,51 @@ San Diego Supercomputer Center] and xwd files.  Ctwm can be compiled
 to use both, either or none of the above icon/pixmap formats.
 
 %description -l ru-RU.KOI8-R
-Ctwm -- оконный менеждер для X Windows System, основанный на одном из старейших  оконных менеджеров для X11 -- twm (Tab Window Manager) из дистрибутива Mit X11. Под влиянием vuewm от Hewlett-Packard в ctwm добавлена поддержка "трёхмерных" заголовков, рамоки меню, виртуальные экраны и многое другое. Ctwm поддерживает макросы в настройках, разнообразные стили перемещения фокуса, заливку фона и т. д., а также имеет несколько уникальных функций, например movepush, когда окно, перемещаемое по экрану, расталкивает прочие окна в стороны.
+Ctwm -- оконный менеждер для X Windows System, основанный на одном из
+старейших  оконных менеджеров для X11 -- twm (Tab Window Manager) из
+дистрибутива Mit X11. Под влиянием vuewm от Hewlett-Packard в ctwm
+добавлена поддержка "трёхмерных" заголовков, рамоки меню, виртуальные
+экраны и многое другое. Ctwm поддерживает макросы в настройках,
+разнообразные стили перемещения фокуса, заливку фона и т. д., а также
+имеет несколько уникальных функций, например movepush, когда окно,
+перемещаемое по экрану, расталкивает прочие окна в стороны.
 
 %prep
 %setup
-#%setup -T -D -a 1
-%patch -p0
+%patch -p1
 %patch1 -p0
-#patch2 -p0
-%patch3 -p0
-%patch4 -p0
-#patch5 -p0
-#cat Imakefile.local-template %%SOURCE4 > Imakefile.local
 cp Imakefile.local-template Imakefile.local
+sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' twm.h
 
 %build
 xmkmf
-%make
+%make_build
 
 %install
-mkdir -p %buildroot/%_sysconfdir/X11/wmsession.d
-mkdir -p %buildroot/%_sysconfdir/X11/%name
-mkdir -p %buildroot/%_iconsdir
-mkdir -p %buildroot/%_bindir
-mkdir -p %buildroot/%_mandir/man1
 %make install DESTDIR=%buildroot
-install %name.man %buildroot/%_mandir/man1/%name.1x
-#convert -crop 680x280+28+4 xpm/welcome.xpm -resize 64x64! %buildroot/%_niconsdir/%name.xpm
+install -D %name.man %buildroot/%_mandir/man1/%name.1x
 install -pD -m644 %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -pD -m644 %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
-install -m 755 %SOURCE1 %buildroot/%_bindir/%start
+install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 
 %files
-%doc README CHANGES PROBLEMS
+%doc README CHANGES PROBLEMS TODO*
 %_iconsdir/hicolor/64x64/apps/*
 %_bindir/*
 %_mandir/man1/*
-%config(noreplace) %_sysconfdir/X11/%name/system.%rcfile
+%config(noreplace) %_sysconfdir/X11/%name/system.ctwmrc
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/X11/%name/
 
 %changelog
+* Mon Jul 14 2014 Fr. Br. George <george@altlinux.ru> 1:3.8.2-alt1
+- Autobuild version bump to 3.8.2
+- Clean up spec
+
+* Thu Aug 29 2013 Fr. Br. George <george@altlinux.ru> 1:3.8.1-alt1
+- Update to current mtn
+- Introducing epoch (version switched back to 3.8.*)
+
 * Mon Mar 14 2011 Fr. Br. George <george@altlinux.ru> 3.9devel-alt2
 - Buildreq regenerated
 
