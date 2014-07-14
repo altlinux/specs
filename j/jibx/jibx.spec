@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name: jibx
 Version:	1.2.4
-Release:	alt1_6jpp7
+Release:	alt2_6jpp7
 Summary:	Framework for binding XML data to Java objects
 
 Group:		Development/Java
@@ -149,6 +149,9 @@ cp -rp %{_builddir}/%{name}/build/docs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.4-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.4-alt1_6jpp7
 - new version
 
