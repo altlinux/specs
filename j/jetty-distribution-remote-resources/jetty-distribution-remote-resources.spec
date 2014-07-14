@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Jetty toolchain artifact for distribution remote resources
 
 Group:          Development/Java
@@ -49,6 +49,9 @@ install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_4jpp7
 - fixed build
 
