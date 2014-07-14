@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 
 Name:          portals-pom
 Version:       1.3
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Apache Portals parent pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -56,6 +56,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp7
 - new version
 
