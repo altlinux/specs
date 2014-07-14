@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Java Expression Language (JEXL)
 
 Group:          Development/Java
@@ -100,6 +100,9 @@ cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt1_3jpp7
 - new version
 
