@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-saaj-1.3-api
 Version: 1.0.2
-Release: alt1_3jpp7
+Release: alt2_3jpp7
 Summary: SOAP with Attachments API for Java 1.3
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp7
 - new version
 
