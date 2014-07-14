@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name: weld-core
 Version: 1.1.5
-Release: alt1_4.AS71.Finaljpp7
+Release: alt2_4.AS71.Finaljpp7
 Summary: Reference Implementation for JSR-299: Contexts and Dependency Injection (CDI)
 Group: Development/Java
 License: ASL 2.0 and LGPLv2+ and (CDDL or GPLv2 with exceptions)
@@ -118,6 +118,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt2_4.AS71.Finaljpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt1_4.AS71.Finaljpp7
 - new version
 
