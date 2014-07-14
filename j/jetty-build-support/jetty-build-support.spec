@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-build-support
 Version:        1.1
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Jetty build support files
 
 Group:          Development/Java
@@ -82,6 +82,9 @@ popd
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_2jpp7
 - fixed build
 
