@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Java
@@ -47,6 +47,9 @@ install -Dp -m 644 target/%{name}-1.4.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4jpp7
 - fixed build
 
