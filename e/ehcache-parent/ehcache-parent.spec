@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-parent
 Version:       2.3
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Ehcache Parent
 Group:         Development/Java
 License:       ASL 2.0
@@ -48,6 +48,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_3jpp7
 - new version
 
