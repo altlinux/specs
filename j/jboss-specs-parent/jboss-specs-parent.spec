@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt1_0.5.Beta2jpp7
+Release:          alt2_0.5.Beta2jpp7
 Summary:          JBoss Specification API Parent POM
 Group:            Development/Java
 # The license is not included because it's not a part of this tag. License file
@@ -49,6 +49,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.5.Beta2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.5.Beta2jpp7
 - new release
 
