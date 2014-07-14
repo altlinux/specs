@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		rome
 Version:	0.9
-Release:	alt2_12jpp7
+Release:	alt3_12jpp7
 Summary:	RSS and Atom Utilities
 
 Group:		Development/Java
@@ -80,6 +80,9 @@ cp -rp dist/docs/api/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_12jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_12jpp7
 - fc version
 
