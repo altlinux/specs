@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.7
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       Java Architecture for XML Binding
 Group:         Development/Java
 License:       CDDL or GPLv2 with exception
@@ -96,6 +96,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oname}
 %{_javadocdir}/%{oname}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_1jpp7
 - new version
 
