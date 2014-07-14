@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: codemodel
 Version: 2.6
-Release: alt1_6jpp7
+Release: alt2_6jpp7
 Summary: Java library for code generators
 Group: Development/Java
 License: CDDL and GPLv2
@@ -108,6 +108,9 @@ cp -p codemodel-annotation-compiler/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{na
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_6jpp7
 - new release
 
