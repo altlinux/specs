@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          apacheds
 Version:       1.5.7
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Apache Directory Server
 # these packages are not configured to run as a server
 Group:         Development/Java
@@ -453,6 +453,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt1_2jpp7
 - fc release
 
