@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-interceptors-1.1-api
 Version:          1.0.2
-Release:          alt1_0.3.20120319git49a904jpp7
+Release:          alt2_0.3.20120319git49a904jpp7
 Summary:          Interceptors 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_0.3.20120319git49a904jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_0.3.20120319git49a904jpp7
 - new version
 
