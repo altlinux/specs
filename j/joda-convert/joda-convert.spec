@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           joda-convert
 Version:        1.2
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Java library for conversion to and from standard string formats
 
 Group:          Development/Java
@@ -79,6 +79,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
 - new version
 
