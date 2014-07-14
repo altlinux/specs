@@ -6,7 +6,7 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 
 Group: System/Libraries
@@ -54,7 +54,7 @@ Conflicts: kde4pimlibs < 4.12
 %package devel
 Group: Development/KDE and QT
 Summary: Header files for %name
-Requires: boost-devel
+Requires: boost-devel libgpgme-devel
 Requires: kde4libs-devel => %version
 Requires: %name-common = %version-%release
 Requires: %name = %version-%release
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
+- new version
+
 * Tue Jun 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
 - new version
 

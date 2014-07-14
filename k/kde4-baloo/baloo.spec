@@ -2,7 +2,7 @@
 
 %define rname baloo
 Name: kde4-baloo
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -100,10 +100,7 @@ Requires: %name-common = %EVR
 %_datadir/dbus-1/interfaces/org.kde.baloo.file.indexer.xml
 %_datadir/dbus-1/system-services/org.kde.baloo.filewatch.service
 %_kde4_iconsdir/hicolor/*/*/*.*
-%_K4srv/baloo_contactsearchstore.desktop
-%_K4srv/baloo_emailsearchstore.desktop
-%_K4srv/baloo_filesearchstore.desktop
-%_K4srv/baloo_notesearchstore.desktop
+%_K4srv/baloo_*searchstore.desktop
 %_K4srv/baloosearch.protocol
 %_K4srv/kcm_baloofile.desktop
 %_K4srv/plasma-runner-baloosearch.desktop
@@ -113,10 +110,7 @@ Requires: %name-common = %EVR
 %_datadir/polkit-1/actions/org.kde.baloo.filewatch.policy
 %_K4lib/akonadi/akonadi_baloo_searchplugin.so
 %_K4lib/akonadi/akonadibaloosearchplugin.desktop
-%_K4lib/baloo_contactsearchstore.so
-%_K4lib/baloo_emailsearchstore.so
-%_K4lib/baloo_filesearchstore.so
-%_K4lib/baloo_notesearchstore.so
+%_K4lib/baloo_*searchstore.so
 %_K4lib/kcm_baloofile.so
 %_K4lib/kio_baloosearch.so
 %_K4lib/kio_tags.so
@@ -138,6 +132,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooxapian.so.*
 
 %changelog
+* Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
+- new version
+
 * Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
 - new version
 
