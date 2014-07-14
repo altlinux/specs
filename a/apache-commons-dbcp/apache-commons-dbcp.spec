@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt1_10jpp7
+Release:          alt2_10jpp7
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -108,6 +108,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_10jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_10jpp7
 - new version
 
