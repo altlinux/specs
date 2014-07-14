@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-util
 Version:        1.2.0
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        FEST Util
 
 Group:          Development/Java
@@ -82,6 +82,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_4jpp7
 - new version
 
