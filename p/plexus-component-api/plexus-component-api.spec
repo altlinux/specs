@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt1_0.10.alpha15jpp7
+Release:        alt2_0.10.alpha15jpp7
 Summary:        Plexus Component API
 
 Group:          Development/Java
@@ -87,6 +87,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.10.alpha15jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.10.alpha15jpp7
 - new release
 
