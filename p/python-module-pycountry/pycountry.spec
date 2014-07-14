@@ -8,8 +8,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.3
-Release: alt1.dev0
+Version: 1.8
+Release: alt1
 Summary: ISO country, subdivision, language, currency and script definitions
 License: LGPLv2.1
 Group: Development/Python
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1
+- Version 1.8
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.dev0
 - Version 1.3.dev0
 
