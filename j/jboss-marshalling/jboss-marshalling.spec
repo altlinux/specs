@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-marshalling
 Version:          1.3.13
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss Marshalling
 Group:            Development/Java
 License:          LGPLv2+
@@ -103,6 +103,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt1_3jpp7
 - new version
 
