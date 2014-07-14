@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sisu
 Version:        2.2.3
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Sonatype dependency injection framework
 
 
@@ -176,6 +176,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt2_6jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt1_6jpp7
 - complete build
 
