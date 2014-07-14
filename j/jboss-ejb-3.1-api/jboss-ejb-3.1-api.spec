@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-ejb-3.1-api
 Version:          1.0.2
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          EJB 3.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_3jpp7
 - new version
 
