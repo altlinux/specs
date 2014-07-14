@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-axiom
 Version:        1.2.12
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Epoch:          0
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -103,6 +103,9 @@ cp -rp target/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{oldname}
 %{_javadocdir}/%{oldname}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt1_3jpp7
 - new version
 
