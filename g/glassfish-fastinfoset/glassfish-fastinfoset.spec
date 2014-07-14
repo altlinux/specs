@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: glassfish-fastinfoset
 Version: 1.2.12
-Release: alt4_4jpp7
+Release: alt5_4jpp7
 Summary: Fast Infoset
 Group: Development/Java
 License: ASL 2.0
@@ -109,6 +109,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt5_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt4_4jpp7
 - bugfix in alternative
 
