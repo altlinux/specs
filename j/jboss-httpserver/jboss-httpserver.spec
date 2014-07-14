@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-%{realname}
 Version:          1.0.0
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss httpserver
 Group:            Development/Java
 License:          GPLv2 and GPLv2 with exceptions
@@ -77,6 +77,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp7
 - new version
 
