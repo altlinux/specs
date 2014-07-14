@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-logmanager
 Version:          1.2.2
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JBoss Log Manager
 Group:            Development/Java
 License:          LGPLv2+
@@ -91,6 +91,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt1_3jpp7
 - new version
 
