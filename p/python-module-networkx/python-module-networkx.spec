@@ -4,8 +4,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.9
-Release:        alt1.git20131127
+Version:        2.0
+Release:        alt1.git20140713
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -20,10 +20,10 @@ BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
 BuildPreReq: python-module-pydot python-module-matplotlib
 BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: graphviz
+BuildPreReq: graphviz python-module-setuptools python-module-decorator
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
+BuildRequires: python3-devel python-tools-2to3 python3-module-setuptools
 %endif
 
 Requires: python-module-pygraphviz ipython python-module-numpy
@@ -120,6 +120,8 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find -type f -name '*.py' -exec sed -i \
+	's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 %python3_build_debug
 popd
 %endif
@@ -196,6 +198,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140713
+- Version 2.0
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1.git20131127
 - New snapshot
 
