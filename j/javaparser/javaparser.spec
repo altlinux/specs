@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          javaparser
 Version:       1.0.8
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       Java 1.5 Parser and AST
 Group:         Development/Java
 License:       GPLv3+ and LGPLv3+
@@ -101,6 +101,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc COPYING COPYING.LESSER readme.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_1jpp7
 - new version
 
