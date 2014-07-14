@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-vfs
 Version:          3.1.0
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          JBoss Virtual File System
 Group:            Development/Java
 License:          LGPLv2+
@@ -101,6 +101,9 @@ ln -s ../jboss-vfs.jar $RPM_BUILD_ROOT%{_javadir}/jboss/%{name}.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt1_4jpp7
 - new version
 
