@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 #
 Name:          janino
 Version:       2.6.1
-Release:       alt1_14jpp7
+Release:       alt2_14jpp7
 Summary:       An embedded Java compiler
 Group:         Development/Java
 License:       BSD
@@ -159,6 +159,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc new_bsd_license.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_14jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt1_14jpp7
 - fc release
 
