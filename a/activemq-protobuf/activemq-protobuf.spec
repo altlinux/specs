@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          activemq-protobuf
 Version:       1.1
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       ActiveMQ Protocol Buffers
 Group:         Development/Java
 License:       ASL 2.0
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
 - new version
 
