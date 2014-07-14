@@ -53,7 +53,7 @@ BuildRequires: jpackage-compat
 
 Name:           icu4j
 Version:        4.4.2.2
-Release:        alt1_12jpp7
+Release:        alt2_12jpp7
 Epoch:          1
 Summary:        International Components for Unicode for Java
 License:        MIT and EPL 
@@ -199,6 +199,9 @@ cp %{name}-4.4.2.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %endif
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.4.2.2-alt2_12jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.4.2.2-alt1_12jpp7
 - new version
 
