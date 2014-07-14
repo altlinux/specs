@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:     jgroups
 Version:  3.0.6
-Release:  alt1_2jpp7
+Release:  alt2_2jpp7
 Summary:  Toolkit for reliable multicast communication
 License:  LGPLv2+
 URL:      http://www.jgroups.org
@@ -91,6 +91,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.6-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.0.6-alt1_2jpp7
 - new version
 
