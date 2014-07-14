@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        2.4
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -139,6 +139,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_7jpp7
 - new release
 
