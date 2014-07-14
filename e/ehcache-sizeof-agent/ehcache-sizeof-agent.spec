@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-sizeof-agent
 Version:       1.0.1
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Ehcache Size Of Agent
 Group:         Development/Java
 License:       ASL 2.0
@@ -70,6 +70,9 @@ cp -rp target/sizeof-agent-1.0.1-javadoc.jar $RPM_BUILD_ROOT%{_javadocdir}/%{nam
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2jpp7
 - new version
 
