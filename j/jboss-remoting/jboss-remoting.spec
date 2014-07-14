@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-remoting
 Version:          3.2.4
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          JBoss Remoting 3
 Group:            Development/Java
 License:          LGPLv2+
@@ -97,6 +97,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt1_2jpp7
 - new version
 
