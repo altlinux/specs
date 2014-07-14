@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 %define fedora 16
 Name:           jna
 Version:        3.4.0
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Pure Java access to native libraries
 
 Group:          Development/Java
@@ -183,6 +183,9 @@ cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_5jpp7
 - update to new release by jppimport
 
