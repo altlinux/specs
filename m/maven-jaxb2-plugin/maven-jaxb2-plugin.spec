@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: maven-jaxb2-plugin
 Version: 0.8.1
-Release: alt1_7jpp7
+Release: alt2_7jpp7
 Summary: Provides the capability to generate java sources from schemas
 Group: Development/Java
 License: BSD and ASL 2.0
@@ -113,6 +113,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt1_7jpp7
 - new version
 
