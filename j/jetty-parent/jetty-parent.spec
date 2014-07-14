@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-parent
 Version:        19
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty parent POM file
 
 Group:          Development/Java
@@ -36,6 +36,9 @@ install -pm 644 %{SOURCE0} \
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 19-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 19-alt1_4jpp7
 - new version
 
