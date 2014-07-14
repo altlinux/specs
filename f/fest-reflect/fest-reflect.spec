@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-reflect
 Version:        1.3
-Release:        alt1_8jpp7
+Release:        alt2_8jpp7
 Summary:        FEST Reflection
 
 Group:          Development/Java
@@ -93,6 +93,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_8jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_8jpp7
 - new version
 
