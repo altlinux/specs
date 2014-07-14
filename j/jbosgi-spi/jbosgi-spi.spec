@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbosgi-spi
 Version:          3.0.1
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          JBossOSGi SPI
 Group:            Development/Java
 License:          LGPLv2+
@@ -90,6 +90,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_2jpp7
 - new version
 
