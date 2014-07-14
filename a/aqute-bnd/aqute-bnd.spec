@@ -32,7 +32,7 @@ BuildRequires: jpackage-compat
 
 Name:           aqute-bnd
 Version:        0.0.363
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        BND Tool
 License:        ASL 2.0
 Group:          Development/Java
@@ -140,6 +140,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt1_7jpp7
 - complete build
 
