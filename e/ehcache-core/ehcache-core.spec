@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-core
 Version:       2.6.0
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Easy Hibernate Cache
 Group:         Development/Java
 License:       ASL 2.0
@@ -123,6 +123,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp7
 - new version
 
