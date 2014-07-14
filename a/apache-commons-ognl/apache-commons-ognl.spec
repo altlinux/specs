@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-ognl
 Version:        3.0.2
-Release:        alt1_2.20120313svn1102435jpp7
+Release:        alt2_2.20120313svn1102435jpp7
 Summary:        Object Graph Navigation Library
 
 Group:          Development/Java
@@ -70,6 +70,9 @@ cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_2.20120313svn1102435jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_2.20120313svn1102435jpp7
 - new version
 
