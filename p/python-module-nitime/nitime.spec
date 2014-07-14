@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Nitime: timeseries analysis for neuroscience data
@@ -24,7 +24,7 @@ BuildPreReq: python-module-mpl_toolkits python-module-nibabel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 libnumpy-py3-devel
 %endif
 
 %description
@@ -145,6 +145,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
+- Version 0.5
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Initial build for Sisyphus
 
