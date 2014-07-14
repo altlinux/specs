@@ -1,8 +1,8 @@
-%define  git_commit 8108ee4
+%define  git_commit 87b1134
 
 Name: 	 kiwix
 Version: 0.9
-Release: alt0.rc4.4.git%git_commit
+Release: alt0.rc4.5.git%git_commit
 Summary: Kiwix is an offline reader for Web content like Wikipedia
 
 License: GPLv3
@@ -13,11 +13,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version.tar
 Source1: %name.desktop
-
-# Fix build with xulrunner 27.x (see https://bugzilla.mozilla.org/show_bug.cgi?id=951984#c7)
-Patch1:  %name-build-with-xulrunner-27.patch
-# Start xulrunner executable search from more expected  name
-Patch2:  %name-optimize-xulrunner-executable-find.patch
 
 BuildRequires: aria2 >= 1.18.3
 BuildRequires: bzip2-devel
@@ -51,8 +46,6 @@ ZIM files, a highly compressed open format with additional meta-data.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
 
 # Prepare environment for automake
 touch NEWS
@@ -70,7 +63,7 @@ cp -f %SOURCE1 desktop/%name.desktop
 %install
 %makeinstall_std
 # Put main executable file in /usr/bin
-ln -s %_libdir/%name/%name %buildroot%_bindir/%name
+ln -s %_libdir/%name/%{name}-launcher %buildroot%_bindir/%name
 
 %files
 %doc ChangeLog COPYING AUTHORS README
@@ -87,6 +80,9 @@ ln -s %_libdir/%name/%name %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Mon Jul 14 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc4.5.git87b1134
+- New snapshot
+
 * Tue May 13 2014 Andrey Cherepanov <cas@altlinux.org> 0.9-alt0.rc4.4.git8108ee4
 - Rebuild with Xulrunner 29.x
 
