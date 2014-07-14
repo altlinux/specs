@@ -1,7 +1,10 @@
 %define oname pycmd
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 1.0.a2dev1
-Release: alt1.hg20130918
+Version: 1.1
+Release: alt1.hg20140627
 Summary: Command line tools for helping with Python development
 License: MIT
 Group: Development/Python
@@ -14,6 +17,10 @@ Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 Conflicts: py
 
@@ -21,21 +28,66 @@ Conflicts: py
 Collection of command line tools for dealing with python files
 (locating, counting LOCs, cleaning up pyc files ...)
 
+%package -n python3-module-%oname
+Summary: Command line tools for helping with Python development
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Collection of command line tools for dealing with python files
+(locating, counting LOCs, cleaning up pyc files ...)
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+	%buildroot%python3_sitelibdir/%oname/*.py
+%endif
+
 %python_install
 
 %files
 %doc AUTHORS CHANGELOG LICENSE *.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS CHANGELOG LICENSE *.txt
+%_bindir/*.py3
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.hg20140627
+- Version 1.1
+- Added module for Python 3
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.a2dev1-alt1.hg20130918
 - New snapshot
 
