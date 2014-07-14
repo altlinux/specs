@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt2_3jpp7
+Release:          alt3_3jpp7
 Summary:          JavaServer(TM) Pages 2.2 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE README
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3jpp7
 - fixed build
 
