@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           felix-parent
 Version:        1.2.1
-Release:        alt4_8jpp7
+Release:        alt5_8jpp7
 Summary:        Parent POM file for Apache Felix Specs
 
 Group:          Development/Java
@@ -98,6 +98,9 @@ install -pD -T -m 644 pom.xml \
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt5_8jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt4_8jpp7
 - new release
 
