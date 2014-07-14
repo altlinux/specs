@@ -1,5 +1,5 @@
-%define version 2.4.0
-%define release alt1.alpha
+%define version 2.4.1
+%define release alt1
 %define modulename markdown
 
 %def_with python3
@@ -13,7 +13,7 @@ Release: %release
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python
 License: %gpl2plus | %bsd
-Url: http://pypi.python.org/pypi/Markdown/2.1.1
+Url: http://pypi.python.org/pypi/Markdown/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/waylan/Python-Markdown.git
@@ -103,6 +103,9 @@ ln -s %{modulename}_py %buildroot%_bindir/%modulename
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1
+- Version 2.4.1
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.alpha
 - Version 2.4.0.alpha
 
