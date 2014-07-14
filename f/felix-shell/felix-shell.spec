@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 %global bundle org.apache.felix.shell
 Name:           felix-shell
 Version:        1.4.2
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 Summary:        Apache Felix Shell Service
 
 Group:          Development/Java
@@ -77,6 +77,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt3_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt2_7jpp7
 - new release
 
