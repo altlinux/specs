@@ -52,7 +52,7 @@ Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
 Patch0:         %{name}-ecj-bootclasspath.patch
 Name:           bea-stax
 Version:        %{mainver}
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 License:        ASL 2.0
 Group:          Development/Java
 BuildArch:      noarch
@@ -133,6 +133,9 @@ install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt2_4jpp7
 - fc version
 
