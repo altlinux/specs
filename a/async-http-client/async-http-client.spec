@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 
 Name:           async-http-client
 Version:        1.6.1
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Asynchronous Http Client for Java
 
 Group:          Development/Java
@@ -91,6 +91,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_4jpp7
 - complete build
 
