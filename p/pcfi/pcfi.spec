@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:		pcfi
 Version:	2010.08.09
-Release:	alt1_4.20111103gitbd245c9jpp7
+Release:	alt2_4.20111103gitbd245c9jpp7
 Summary:	PDF Core Font Information
 
 Group:		Publishing
@@ -54,6 +54,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_4.20111103gitbd245c9jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt1_4.20111103gitbd245c9jpp7
 - new release
 
