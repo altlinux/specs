@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt1_4jpp7
+Release:       alt2_4jpp7
 Summary:       Glassfish JPA Toplink Essentials
 Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
@@ -113,6 +113,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt1_4jpp7
 - new version
 
