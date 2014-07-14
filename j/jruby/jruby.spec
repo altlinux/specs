@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           jruby
 Version:        1.6.3
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Summary:        Pure Java implementation of the Ruby interpreter
 Group:          Development/Java
 License:        (CPL or GPLv2+ or LGPLv2+) and ASL 1.1 and MIT and Ruby
@@ -238,6 +238,9 @@ ln -s %{_datadir}/%{name}/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/%{name}-yecht.jar
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt3_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt2_3jpp7
 - applied repocop patches
 
