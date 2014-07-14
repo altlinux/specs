@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{short_name}-project
 Version:          1.6
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          Main project POM files and resources
 License:          ASL 2.0
 Group:            Development/Java
@@ -73,6 +73,9 @@ install -pm 644 project/server/%{server_ver}/pom.xml %{buildroot}%{_mavenpomdir}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3jpp7
 - new release
 
