@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt7_0.2.20120509SNAPSHOTjpp7
+Release:       alt8_0.2.20120509SNAPSHOTjpp7
 Summary:       Commons Javaflow
 Group:         Development/Java
 License:       ASL 2.0
@@ -135,6 +135,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.2.20120509SNAPSHOTjpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.2.20120509SNAPSHOTjpp7
 - new version
 
