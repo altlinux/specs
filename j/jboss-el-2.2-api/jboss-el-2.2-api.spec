@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-el-2.2-api
 Version: 1.0.1
-Release: alt1_0.4.20120212git2fabd8jpp7
+Release: alt2_0.4.20120212git2fabd8jpp7
 Summary: Expression Language 2.2 API
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -90,6 +90,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.4.20120212git2fabd8jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_0.4.20120212git2fabd8jpp7
 - new version
 
