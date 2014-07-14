@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-logmanager-log4j
 Version:          1.0.0
-Release:          alt1_5jpp7
+Release:          alt2_5jpp7
 Summary:          JBoss LogManager Log4j Compatibility Library 
 Group:            Development/Java
 License:          LGPLv2+
@@ -84,6 +84,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp7
 - new version
 
