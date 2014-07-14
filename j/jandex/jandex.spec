@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             jandex
 Version:          1.0.3
-Release:          alt1_5jpp7
+Release:          alt2_5jpp7
 Summary:          Java Annotation Indexer
 Group:            Development/Java
 License:          LGPLv2+
@@ -80,6 +80,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_5jpp7
 - new version
 
