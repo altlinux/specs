@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 
 Name:          annox
 Version:       0.5.0
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Java annotations in XML resources
 Group:         Development/Java
 License:       BSD
@@ -104,6 +104,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_3jpp7
 - update to new release by jppimport
 
