@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.3.0.4
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 License:        MPLv1.0 and ASL 1.1
 Group:          Text tools
@@ -212,6 +212,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt1_5jpp7
 - new version
 
