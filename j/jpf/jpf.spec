@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:		jpf
 Version:	1.5.1
-Release:	alt1_5jpp7
+Release:	alt2_5jpp7
 Summary:	Java Plug-in Framework
 Group:		Development/Java
 License:	LGPLv2
@@ -91,6 +91,9 @@ cp -r build/docs/api ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_5jpp7
 - new version
 
