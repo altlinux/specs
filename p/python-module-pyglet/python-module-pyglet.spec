@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt4.alpha1.hg20131128
+Release: alt4.alpha1.hg20140614
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python
@@ -142,6 +142,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt4.alpha1.hg20140614
+- New snapshot
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt4.alpha1.hg20131128
 - Fixed build
 
