@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             joda-time
 Version:          1.6.2
-Release:          alt2_8.tzdata2011fjpp7
+Release:          alt3_8.tzdata2011fjpp7
 Summary:          Java date and time API
 
 Group:            Development/Java
@@ -92,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt3_8.tzdata2011fjpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt2_8.tzdata2011fjpp7
 - fixed build
 
