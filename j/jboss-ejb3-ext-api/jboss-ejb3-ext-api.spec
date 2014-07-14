@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jboss-ejb3-ext-api
 Version:          2.0.0
-Release:          alt2_2jpp7
+Release:          alt3_2jpp7
 Summary:          JBoss EJB 3 Extension API
 Group:            Development/Java
 License:          LGPLv3+
@@ -77,6 +77,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2jpp7
 - fixed build
 
