@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.2.1
-Release:           alt1_3jpp7
+Release:           alt2_3jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -144,6 +144,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_3jpp7
 - new version
 
