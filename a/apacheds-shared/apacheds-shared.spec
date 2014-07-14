@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          apacheds-shared
 Version:       0.9.19
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       Shared APIs of Apache Directory Project
 Group:         Development/Java
 License:       ASL 2.0
@@ -140,6 +140,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt1_1jpp7
 - fc release
 
