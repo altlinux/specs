@@ -8,7 +8,7 @@
 Name: kde4edu
 %define major 4
 %define minor 13
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -65,7 +65,7 @@ BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobi
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data) shared-mime-info
 BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
-BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel
+BuildRequires: kde4base-runtime-devel kde4base-workspace-devel
 
 %description
 %name metapackage, which contains:
@@ -1147,6 +1147,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
+- new version
+
 * Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
 - new version
 
