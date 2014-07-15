@@ -1,7 +1,10 @@
 %define oname pyublas
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 2013.1
-Release: alt1.git20130718
+Release: alt1.git20140620
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -13,10 +16,33 @@ Source: %oname-%version.tar
 
 BuildPreReq: boost-python-devel libnumpy-devel python-module-sphinx-devel
 BuildPreReq: gcc-c++
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-setuptools
+%endif
 
 %description
 PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
 use with Boost.Python.
+
+%package -n python3-module-%oname
+Summary: Seamless Numpy-UBlas interoperability
+Group: Development/Python3
+
+%description -n python3-module-%oname
+PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
+use with Boost.Python.
+
+%package -n python3-module-%oname-devel
+Summary: Development files of PyUblas
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-devel
+PyUblas provides a seamless glue layer between Numpy and Boost.Ublas for
+use with Boost.Python.
+
+This package contains development files of PyUblas.
 
 %package devel
 Summary: Development files of PyUblas
@@ -53,16 +79,35 @@ This package contains pickles for PyUblas.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %make -C doc html
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -d %buildroot%_includedir
+ln -s %python3_sitelibdir/pyublas/include/pyublas \
+	%buildroot%_includedir/%oname-py3
+popd
+%endif
 
 install -d %buildroot%_includedir
 ln -s %python_sitelibdir/pyublas/include/pyublas %buildroot%_includedir/
@@ -79,8 +124,8 @@ rm -fR %_includedir/pyublas
 %exclude %python_sitelibdir/pyublas/testhelp_ext.so
 
 %files devel
-#doc test/*
-%_includedir/*
+%doc test/*
+%_includedir/%oname
 %python_sitelibdir/pyublas/include
 
 %files docs
@@ -89,7 +134,23 @@ rm -fR %_includedir/pyublas
 %files pickles
 %python_sitelibdir/%oname/pickle
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/pyublas/include
+%exclude %python3_sitelibdir/pyublas/testhelp_ext.*.so
+
+%files -n python3-module-%oname-devel
+%doc test/*
+%_includedir/%oname-py3
+%python3_sitelibdir/pyublas/include
+%endif
+
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20140620
+- New snapshot
+- Added module for Python 3
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130718
 - New snapshot
 
