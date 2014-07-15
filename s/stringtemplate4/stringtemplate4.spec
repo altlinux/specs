@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:      stringtemplate4
 Version:   4.0.4
-Release:   alt1_4jpp7
+Release:   alt2_4jpp7
 Summary:   A Java template engine
 URL:       http://www.stringtemplate.org/
 Source0:   http://www.stringtemplate.org/download/%{pkgname}-%{version}-src.zip
@@ -97,6 +97,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_4jpp7
 - new version
 
