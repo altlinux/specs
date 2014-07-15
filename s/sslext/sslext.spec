@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          sslext
 Version:       1.2
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Struts SSL Switching Extension
 Group:         Development/Java
 License:       ASL 1.1
@@ -101,6 +101,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
 - new version
 
