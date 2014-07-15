@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt1
+Version: 1.7.3
+Release: alt1.hg20140713
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.3-alt1.hg20140713
+- Version 1.7.3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 
