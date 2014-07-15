@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-exec
 Version:        1.2.1
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Exec Maven Plugin
 
 Group:          Development/Java
@@ -91,6 +91,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_3jpp7
 - new version
 
