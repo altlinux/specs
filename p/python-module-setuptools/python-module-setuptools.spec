@@ -4,14 +4,13 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 1.4.2
+Version: 5.4.1
 Release: alt1
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
 Group: Development/Python
 URL: http://pypi.python.org/pypi/setuptools
-Packager: Python Development Team <python@packages.altlinux.org>
 
 Source0: %modulename.tar
 
@@ -82,10 +81,10 @@ This package contains tests for Setuptools.
 %prep
 %setup -n %modulename
 
-mv "setuptools/script template.py" \
-	setuptools/script_template.py
-mv "setuptools/script template (dev).py" \
-	"setuptools/script_template_(dev).py"
+#mv "setuptools/script template.py" \
+#	setuptools/script_template.py
+#mv "setuptools/script template (dev).py" \
+#	"setuptools/script_template_(dev).py"
 
 %if_with python3
 rm -rf ../python3
@@ -147,6 +146,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.4.1-alt1
+- Version 5.4.1
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.2-alt1
 - Version 1.4.2
 
