@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name: scannotation
 Version: 1.0.3
-Release:  alt1_0.4.r12jpp7
+Release:  alt2_0.4.r12jpp7
 Summary: A Java annotation scanner
 Group: Development/Java
 License: ASL 2.0
@@ -99,6 +99,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.4.r12jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_0.4.r12jpp7
 - new version
 
