@@ -1,6 +1,6 @@
 Name: runawfe4-notifier
 Version: 4.1.0
-Release: alt7
+Release: alt12
 
 Summary: Runawfe notifier client
 
@@ -23,7 +23,7 @@ Requires: java libwebkitgtk2
 
 #BuildPreReq:
 #BuildRequires: maven
-BuildArch: noarch
+#BuildArch: noarch
 
 %define runauser _runa
 %define runadir /var/lib/runawfe4-notifier
@@ -67,12 +67,22 @@ mkdir -p %buildroot/var/log/runawfe4-notifier/
 touch %buildroot/var/log/runawfe4-notifier/rtn.log
 ln -s /var/log/runawfe4-notifier/rtn.log %buildroot/%runadir/rtn.log
 
-#in notifier/ dir
-%ifarch x86_64
-cp target/rtn_x86_64.jar %buildroot/%runadir/rtn.jar
+%if %_vendor == "debian"
+#gpd copy path for vendor
+%define rtn_path target/deb_rtn
 %else
-cp target/rtn.jar %buildroot/%runadir/
+%define rtn_path target/rtn
 %endif
+
+#gpd copy path for multi arch
+%ifarch x86_64
+%define rtn_path_arch %{rtn_path}_x86_64.jar
+%else
+%define rtn_path_arch %{rtn_path}.jar
+%endif
+
+#in notifier/ dir
+cp %rtn_path_arch %buildroot/%runadir/rtn.jar
 
 #onAppShutdown.wav  onAppStart.wav  onNewTask.wav  unreadTasksNotification.wav
 cp target/classes/*.wav %buildroot/%runadir/
@@ -93,6 +103,21 @@ cp target/classes/*.wav %buildroot/%runadir/
 %attr(766,root,root) /var/log/runawfe4-notifier/rtn.log
 %attr(755,root,root) %_bindir/runawfe4-notifier
 %changelog
+* Tue Jul 15 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt12
+- Fix alt x86
+
+* Thu Jul 10 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt11
+- Remove noarch
+
+* Thu Jul 10 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt10
+- Fix arch
+
+* Thu Jul 10 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt9
+- Fix target path
+
+* Thu Jul 10 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt8
+- Added Debian support
+
 * Sun Jul 06 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
 - Change arch to noarch
 
