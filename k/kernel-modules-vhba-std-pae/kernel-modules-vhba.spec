@@ -1,6 +1,6 @@
 %define module_name     vhba
 %define module_version  20140629
-%define module_release alt2
+%define module_release alt3
 
 %define flavour         std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -20,8 +20,6 @@ Group: System/Kernel and hardware
 
 Url: http://cdemu.sourceforge.net/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
-
-Source2: vhba.init
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
@@ -54,23 +52,20 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %install
 install -d %buildroot/%module_dir
 cp -a %module_name.ko %buildroot/%module_dir/
-install -Dp -m0755 %SOURCE2 %buildroot%_initdir/%module_name
-
-%preun
-%preun_service %module_name
-/sbin/service %module_name condstop ||:
-
-%post
-%post_service %module_name
-/sbin/service %module_name condrestart ||:
 
 %files
+%dir %module_dir
 %module_dir/%module_name.ko
-%_initdir/%module_name
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jul 15 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt3
+- Move init script to cdemu-daemon
+
+* Fri Jul 04 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1.M70T.1
+- Build for branch t7
 
 * Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt2
 - Fix correct unload vhba module when CDemu daemon is running
