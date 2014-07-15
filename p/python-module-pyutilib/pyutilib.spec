@@ -1,7 +1,7 @@
 %define oname pyutilib
 Name: python-module-%oname
-Version: 4.7
-Release: alt1.svn20131118
+Version: 4.8
+Release: alt1.svn20140714
 Summary: A Python Utility Library
 License: BSD, LGPL
 Group: Development/Python
@@ -601,6 +601,9 @@ touch %buildroot%python_sitelibdir/%oname/component/__init__.py
 %python_sitelibdir/%oname/autodist
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.8-alt1.svn20140714
+- Version 4.8
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7-alt1.svn20131118
 - Version 4.7
 
