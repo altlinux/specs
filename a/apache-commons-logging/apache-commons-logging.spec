@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.1.1
-Release:        alt5_20jpp7
+Release:        alt6_20jpp7
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 Group:          Development/Java
@@ -37,36 +40,7 @@ Requires:       jpackage-utils >= 0:1.6
 # This should go away with F-17
 Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} <= 0:1.0.4
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
 Source44: import.info
-
-%def_with repolib
-%define repodir %{_javadir}/repository.jboss.com/apache-%{base_name}/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirres %{repodir}/resources
-%define repodirsrc %{repodir}/src
-
-Source3:        %{name}-component-info.xml
-%if_with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-Provides:       jakarta-%{short_name}-repolib = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-repolib < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-repolib = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-repolib < %{epoch}:%{version}-%{release}
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
-%if_with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
 
 %description
 The commons-logging package provides a simple, component oriented
@@ -85,7 +59,6 @@ Group:          Development/Java
 Requires:       jpackage-utils
 
 Obsoletes:      jakarta-%{short_name}-javadoc <= 0:1.0.4
-Provides:       jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
 BuildArch: noarch
 
 %description    javadoc
@@ -127,7 +100,6 @@ install -p -m 644 target/%{short_name}-adapters-%{version}.jar $RPM_BUILD_ROOT%{
 pushd $RPM_BUILD_ROOT%{_javadir}
 for jar in %{name}*; do
     ln -sf ${jar} `echo $jar| sed "s|apache-||g"`
-    ln -sf ${jar} jakarta-`echo $jar| sed "s|apache-||g"`
 done
 popd
 
@@ -150,23 +122,6 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}-api
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-ln -s %{name} %buildroot%{_javadocdir}/jakarta-%{short_name}
-
-%if_with repolib
-%{__install} -d -m 0755 %{buildroot}%{repodir}
-%{__install} -d -m 0755 %{buildroot}%{repodirlib}
-%{__install} -p -m 0644 %{SOURCE3} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-
-%{__sed} -i 's/project name=""/project name="%{name}"/g' %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 0755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{short_name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
-%endif
 
 %files
 %doc PROPOSAL.html STATUS.html LICENSE.txt RELEASE-NOTES.txt
@@ -174,16 +129,18 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavenpomdir}/JPP-%{short_name}-api.pom
 %{_mavendepmapfragdir}/*
-%exclude %{_javadir}/repository.jboss.com
+
 
 %files javadoc
 %doc LICENSE.txt
 %{_javadocdir}/%{name}
-%{_javadocdir}/jakarta-%{short_name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jul 15 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt6_20jpp7
+- fixed build
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt5_20jpp7
 - added jakarta cpmpat symlinks
 
