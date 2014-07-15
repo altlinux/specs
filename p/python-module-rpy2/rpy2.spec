@@ -1,6 +1,9 @@
 %define oname rpy2
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 2.3.8
+Version: 2.4.2
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -14,11 +17,17 @@ Requires: R-base
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
+BuildPreReq: python-module-setuptools
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
-#BuildPreReq: graphviz texlive-latex-recommended
+#BuildPreReq: graphviz
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 %setup_python_module %oname
 
-%add_python_req_skip pandas
+#add_python_req_skip pandas
+Requires: %oname-common = %EVR
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -30,6 +39,41 @@ the R system can be used from within Python.
 rpy2 is a redesign and rewrite of rpy. It is providing a low-level
 interface to R, a proposed high-level interface, including wrappers to
 graphical libraries, as well as R-like structures and functions.
+
+%package -n python3-module-%oname
+Summary: A simple and efficient access to R from Python, version 2
+Group: Development/Python3
+Requires: %oname-common = %EVR
+
+%description -n python3-module-%oname
+RPy is a very simple, yet robust, Python interface to the R Programming
+Language. It can manage all kinds of R objects and can execute arbitrary
+R functions (including the graphic functions). All errors from the R
+language are converted to Python exceptions. Any module installed for
+the R system can be used from within Python.
+
+rpy2 is a redesign and rewrite of rpy. It is providing a low-level
+interface to R, a proposed high-level interface, including wrappers to
+graphical libraries, as well as R-like structures and functions.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for RPy, version 2
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%add_python3_req_skip testRevents
+
+%description -n python3-module-%oname-tests
+RPy is a very simple, yet robust, Python interface to the R Programming
+Language. It can manage all kinds of R objects and can execute arbitrary
+R functions (including the graphic functions). All errors from the R
+language are converted to Python exceptions. Any module installed for
+the R system can be used from within Python.
+
+rpy2 is a redesign and rewrite of rpy. It is providing a low-level
+interface to R, a proposed high-level interface, including wrappers to
+graphical libraries, as well as R-like structures and functions.
+
+This package contains tests for RPy, version 2.
 
 %package tests
 Summary: Tests for RPy, version 2
@@ -86,22 +130,57 @@ graphical libraries, as well as R-like structures and functions.
 This package contains development documentation and demos for RPy,
 version 2.
 
+%package -n %oname-common
+Summary: Common files for Python 2 and Python 3 modules of RPy, version 2
+Group: Development/Other
+Conflicts: %name < %EVR
+
+%description -n %oname-common
+RPy is a very simple, yet robust, Python interface to the R Programming
+Language. It can manage all kinds of R objects and can execute arbitrary
+R functions (including the graphic functions). All errors from the R
+language are converted to Python exceptions. Any module installed for
+the R system can be used from within Python.
+
+rpy2 is a redesign and rewrite of rpy. It is providing a low-level
+interface to R, a proposed high-level interface, including wrappers to
+graphical libraries, as well as R-like structures and functions.
+
+This package contains common files for Python 2 and Python 3 modules of
+RPy, version 2.
+
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
-#prepare_sphinx .
+#prepare_sphinx doc
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 #export PYTHONPATH=%buildroot%python_sitelibdir
 #pushd doc
-#make latex
+#make html
 #popd
 
 #install -d %buildroot%_docdir/%oname/demos
@@ -118,12 +197,14 @@ export R_HOME=%_libdir/R
 EOF
 
 %files
-%doc AUTHORS GPL_LICENSE LGPL_LICENSE MPL_LICENSE NEWS README
+%doc AUTHORS NEWS README
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
 #exclude %python_sitelibdir/%oname/pickle
+
+%files -n %oname-common
 %_sysconfdir/profile.d/*
 
 %files tests
@@ -138,7 +219,25 @@ EOF
 #files doc
 #_docdir/%oname
 
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS NEWS README
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests*
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests*
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+%endif
+
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
+- Version 2.4.2
+- Added module for Python 3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.8-alt1
 - Version 2.3.8
 

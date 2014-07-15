@@ -1,8 +1,10 @@
 %define oname pandas
 
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -16,6 +18,10 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: libnumpy-devel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-json ipython
 BuildPreReq: gcc-c++
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-Cython
+%endif
 
 %setup_python_module %oname
 
@@ -23,6 +29,27 @@ BuildPreReq: gcc-c++
 pandas is an open source, BSD-licensed library providing
 high-performance, easy-to-use data structures and data analysis tools
 for the Python programming language.
+
+%package -n python3-module-%oname
+Summary: Python Data Analysis Library
+Group: Development/Python3
+
+%description -n python3-module-%oname
+pandas is an open source, BSD-licensed library providing
+high-performance, easy-to-use data structures and data analysis tools
+for the Python programming language.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for pandas
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+pandas is an open source, BSD-licensed library providing
+high-performance, easy-to-use data structures and data analysis tools
+for the Python programming language.
+
+This package contains tests for pandas.
 
 %package tests
 Summary: Tests for pandas
@@ -51,6 +78,10 @@ This package contains documentation for pandas.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx doc
 ln -s ../objects.inv doc/source/
 
@@ -60,8 +91,20 @@ sed -i 's|@PYPATH@|%buildroot%python_sitelibdir|' doc/make.py
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
@@ -88,7 +131,22 @@ popd
 #doc doc/source
 %doc examples
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.md
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/test*
+%endif
+
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt2
+- Added module for Python 3
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt1
 - Version 0.14.1
 
