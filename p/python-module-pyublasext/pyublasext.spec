@@ -1,7 +1,10 @@
 %define oname pyublasext
+
+%def_without python3
+
 Name: python-module-%oname
 Version: 0.92.4
-Release: alt6.git20130722
+Release: alt6.git20140527
 Summary: Added functionality for PyUblas
 License: BSD
 Group: Development/Python
@@ -16,6 +19,12 @@ BuildPreReq: liblapack-devel libode-devel libnumpy-devel
 BuildPreReq: libarpack-devel libsuitesparse-devel gcc-fortran
 BuildPreReq: libmtl4-devel libdaskr-devel boost-numeric-bindings
 BuildPreReq: python-module-py python-module-pytest
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-pyublas-devel
+BuildPreReq: libnumpy-py3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
 PyUblasExt is a companion to PyUblas and exposes a variety of useful
@@ -27,6 +36,41 @@ additions to it:
   * An ARPACK interface that also uses this operator class
   * An UMFPACK interface for PyUblas's sparse matrices
   * An interface to the DASKR ODE solver.
+
+%package -n python3-module-%oname
+Summary: Added functionality for PyUblas
+Group: Development/Python3
+
+%description -n python3-module-%oname
+PyUblasExt is a companion to PyUblas and exposes a variety of useful
+additions to it:
+
+  * A cross-language "operator" class for building matrix-free
+    algorithms
+  * CG and BiCGSTAB linear solvers that use this operator class
+  * An ARPACK interface that also uses this operator class
+  * An UMFPACK interface for PyUblas's sparse matrices
+  * An interface to the DASKR ODE solver.
+
+%package -n python3-module-%oname-devel
+Summary: Development files of PyUblasExt
+Group: Development/Python3
+BuildArch: noarch
+Requires: python3-module-%oname = %version-%release
+Requires: python3-module-pyublas-devel
+
+%description -n python3-module-%oname-devel
+PyUblasExt is a companion to PyUblas and exposes a variety of useful
+additions to it:
+
+  * A cross-language "operator" class for building matrix-free
+    algorithms
+  * CG and BiCGSTAB linear solvers that use this operator class
+  * An ARPACK interface that also uses this operator class
+  * An UMFPACK interface for PyUblas's sparse matrices
+  * An interface to the DASKR ODE solver.
+
+This package contains development files of PyUblasExt.
 
 %package devel
 Summary: Development files of PyUblasExt
@@ -51,11 +95,29 @@ This package contains development files of PyUblasExt.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %add_optflags
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build_debug
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+exit 1
+%endif
+
 %python_install
 
 %files
@@ -65,7 +127,19 @@ This package contains development files of PyUblasExt.
 %doc test/*
 %_includedir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+
+%files -n python3-module-%oname-devel
+%doc test/*
+%_includedir/*
+%endif
+
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt6.git20140527
+- New snapshot
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt6.git20130722
 - New snapshot
 
