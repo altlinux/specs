@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 %global project_version 1.0-alpha-2
 Name:           maven-stage-plugin
 Version:        1.0
-Release:        alt1_0.6.alpha2jpp7
+Release:        alt2_0.6.alpha2jpp7
 Summary:        Plugin to copy artifacts from one repository to another
 
 Group:          Development/Java
@@ -86,6 +86,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.6.alpha2jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.6.alpha2jpp7
 - new version
 
