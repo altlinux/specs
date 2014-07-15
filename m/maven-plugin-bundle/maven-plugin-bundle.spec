@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-plugin-bundle
 Version:        2.3.7
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Maven Bundle Plugin
 
 Group:          Development/Java
@@ -110,6 +110,9 @@ rm -rf target/site/api*
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_4jpp7
 - new version
 
