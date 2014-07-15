@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 Summary:        Enterprise Job Scheduler for Java
 Name:           quartz
 Version:        2.1.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.quartz-scheduler.org/
@@ -115,6 +115,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_4jpp7
 - new version
 
