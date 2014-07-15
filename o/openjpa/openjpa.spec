@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 %global with_tests 0
 Name:          openjpa
 Version:       2.2.0
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Java Persistence 2.0 API
 Group:         Development/Java
 # # For a breakdown of the licensing, see NOTICE file
@@ -272,6 +272,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt1_2jpp7
 - fc version
 
