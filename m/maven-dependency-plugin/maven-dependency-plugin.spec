@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-dependency-plugin
 Version:        2.4
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 
 Group:          Development/Java
@@ -114,6 +114,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_2jpp7
 - new release
 
