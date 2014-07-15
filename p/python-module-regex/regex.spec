@@ -1,6 +1,9 @@
 %define oname regex
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 2013.10.26
+Version: 2014.06.28
 Release: alt1
 Summary: Alternate regular expression module, to replace re
 License: PSFL
@@ -10,28 +13,68 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
+This new regex implementation is intended eventually to replace Python's
+current re module implementation.
+
+%package -n python3-module-%oname
+Summary: Alternate regular expression module, to replace re
+Group: Development/Python3
+
+%description -n python3-module-%oname
 This new regex implementation is intended eventually to replace Python's
 current re module implementation.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%doc README
+%doc README docs/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README docs/*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/test*
+%exclude %python3_sitelibdir/__pycache__/test*
+%endif
+
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.06.28-alt1
+- Version 2014.06.28
+- Added module for Python 3
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.10.26-alt1
 - Version 2013-10-26
 
