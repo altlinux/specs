@@ -1,7 +1,7 @@
 %define oname repoze.filesafe
 Name: python-module-%oname
-Version: 2.0b2
-Release: alt1.gi20130320
+Version: 2.1
+Release: alt1.gi20140506
 Summary: Transaction-aware file creation
 License: BSD
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.gi20140506
+- Version 2.1
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0b2-alt1.gi20130320
 - New snapshot
 
