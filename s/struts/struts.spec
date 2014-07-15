@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 %global master_version 4
 Name:          struts
 Version:       1.3.10
-Release:       alt3_5jpp7
+Release:       alt4_5jpp7
 Summary:       Web application framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -322,6 +322,9 @@ install -p -m 0644 src/core/src/main/resources/org/apache/struts/validator/vali*
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt3_5jpp7
 - fc version
 
