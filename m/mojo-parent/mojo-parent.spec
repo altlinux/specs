@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-parent
 Version:        30
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Codehaus MOJO parent project pom file
 
 Group:          Development/Java
@@ -50,6 +50,9 @@ install -pm 644 pom.xml \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Aug 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:30-alt1_1jpp7
 - new version
 
