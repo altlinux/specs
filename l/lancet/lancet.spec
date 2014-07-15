@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        1.0.1
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        A build tool like Ant or Rake
 
 Group:          Development/Java
@@ -74,6 +74,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadir}/%{name}.jar
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_5jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp7
 - new version
 
