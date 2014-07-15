@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 License:        GPLv2+ or AFL
@@ -118,6 +118,9 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc LICENSE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt1_2jpp7
 - new version
 
