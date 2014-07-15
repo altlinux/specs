@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name: xsom
 Version: 0
-Release: alt1_6.20110809svnjpp7
+Release: alt2_6.20110809svnjpp7
 Summary: XML Schema Object Model (XSOM)
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -120,6 +120,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_6.20110809svnjpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_6.20110809svnjpp7
 - new version
 
