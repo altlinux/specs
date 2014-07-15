@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          serp
 Version:       1.14.2
-Release:       alt1_0.2.20120406cvsjpp7
+Release:       alt2_0.2.20120406cvsjpp7
 Summary:       Bytecode manipulation framework
 Group:         Development/Java
 License:       BSD
@@ -92,6 +92,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.2.20120406cvsjpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt1_0.2.20120406cvsjpp7
 - new release
 
