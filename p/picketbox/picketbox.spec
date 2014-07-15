@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             picketbox
 Version:          4.0.6
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          Security framework for Java Applications
 Group:            Development/Java
 License:          LGPLv2+
@@ -167,6 +167,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.6-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.6-alt1_7jpp7
 - new version
 
