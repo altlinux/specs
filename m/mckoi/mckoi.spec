@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          mckoi
 Version:       1.0.4
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Open Source Java SQL Database
 Group:         Development/Java
 License:       GPLv2
@@ -132,6 +132,9 @@ sh ./runLocalTest.sh
 %doc docs/*
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt1_2jpp7
 - new version
 
