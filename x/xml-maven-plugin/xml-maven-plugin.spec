@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt2_4jpp7
+Release:       alt3_4jpp7
 Summary:       Maven XML Plugin
 Group:         Development/Java
 License:       ASL 2.0
@@ -93,6 +93,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/xml-maven-plugin
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4jpp7
 - fixed build
 
