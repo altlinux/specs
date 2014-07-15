@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Plexus Security Dispatcher Component
 
 Group:          Development/Java
@@ -83,6 +83,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_7jpp7
 - fixed build
 
