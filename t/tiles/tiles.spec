@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Java templating framework for web application user interfaces
 Group:         Development/Java
 License:       ASL 2.0
@@ -170,6 +170,9 @@ cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt1_3jpp7
 - new version
 
