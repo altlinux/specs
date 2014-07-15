@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-checkstyle-plugin
 Version:          2.9.1
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          Plugin that generates a report regarding the code style used by the developers
 Group:            Development/Java
 License:          ASL 2.0
@@ -104,6 +104,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_2jpp7
 - new version
 
