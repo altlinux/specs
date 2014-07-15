@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-script-interpreter
 Version:        1.0
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Maven Script Interpreter
 Group:          Development/Java
 License:        ASL 2.0
@@ -77,6 +77,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_1jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1jpp7
 - new version
 
