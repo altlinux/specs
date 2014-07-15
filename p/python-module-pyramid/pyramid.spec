@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5
-Release: alt1.a2.git20131127
+Version: 1.6
+Release: alt1.dev.git20140714
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -164,10 +164,12 @@ popd
 %endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/test*
+%exclude %python_sitelibdir/%oname/*/test*
 
 %files tests
-%python_sitelibdir/%oname/tests
+%python_sitelibdir/%oname/test*
+%python_sitelibdir/%oname/*/test*
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -180,13 +182,22 @@ popd
 %doc *.txt *.rst
 %_bindir/py3_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
+%exclude %python3_sitelibdir/%oname/test*
+%exclude %python3_sitelibdir/%oname/__pycache__/testing.*
+%exclude %python3_sitelibdir/%oname/*/test*
+%exclude %python3_sitelibdir/%oname/*/__pycache__/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/__pycache__/testing.*
+%python3_sitelibdir/%oname/*/test*
+%python3_sitelibdir/%oname/*/__pycache__/test*
 %endif
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20140714
+- Version 1.6dev
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.a2.git20131127
 - Version 1.5a2
 
