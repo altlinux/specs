@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jackrabbit
 Version:	2.4.2
-Release:	alt1_2jpp7
+Release:	alt2_2jpp7
 Summary:	Implementation of the Content Repository for Java Technology API
 License:	ASL 2.0
 Source0:	http://archive.apache.org/dist/%{name}/%{version}/%{name}-%{version}-src.zip
@@ -14,8 +15,6 @@ Patch0:		0001-Conform-to-newer-servlet-API.patch
 URL:		http://jackrabbit.apache.org/
 Group:		Development/Java
 BuildArch:	noarch
-# hack
-Source33:	%{name}-%{version}-jpp-depmap.xml
 
 BuildRequires:	servlet = 2.5
 BuildRequires:	jpackage-utils
@@ -68,8 +67,7 @@ This package contains the API documentation for %{name}-webdav.
 
 %build
 cd %{name}-webdav
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE33} \
-	-Dmaven.test.skip=true package javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true package javadoc:aggregate
 
 
 %install
@@ -102,6 +100,9 @@ touch -r %{name}-webdav/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-webd
 
 
 %changelog
+* Tue Jul 15 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt2_2jpp7
+- fixed build
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt1_2jpp7
 - new version
 
