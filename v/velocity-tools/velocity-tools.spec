@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          velocity-tools
 Version:       2.0
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       Collection of useful tools for Velocity template engine
 Group:         Development/Java
 License:       ASL 2.0
@@ -128,6 +128,9 @@ cp -pr dist/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt1_2jpp7
 - fc version
 
