@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{core_name}
 Version:          4.1.2
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          High-performance XML processor
 License:          ASL 2.0 or LGPLv2+
 Group:            Development/Java
@@ -114,6 +114,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_3jpp7
 - new version
 
