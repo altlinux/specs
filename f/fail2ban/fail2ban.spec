@@ -1,7 +1,7 @@
 %define module_name fail2ban
 Name: %module_name
 Version: 0.8.13
-Release: alt1
+Release: alt2
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -11,6 +11,7 @@ Url: http://www.fail2ban.org
 
 Source: %name-%version.tar
 Source1: alt-initd
+Source2: fail2ban.service
 
 BuildArch: noarch
 
@@ -34,9 +35,14 @@ cd man
 %install
 mkdir -p %buildroot%_man1dir
 cp man/*.1 %buildroot%_man1dir
+mkdir -p %buildroot%_man5dir
+cp man/*.5 %buildroot%_man5dir
 
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
+install -pD -m 744 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD -m 744 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
 %python_install
+rm -rf %buildroot/%_docdir/%name/
 
 %files
 %doc ChangeLog README.md THANKS TODO
@@ -48,9 +54,15 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 %config(noreplace) %_sysconfdir/%module_name/*.d/*.conf
 %_var/run/fail2ban
 %_initdir/fail2ban
+%_unitdir/%name.service
 %_man1dir/*
+%_man5dir/*
+%_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Jul 15 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.13-alt2
+- add missed systemd server script, man jail.conf, tmpfiles file (ALT bug #29469)
+
 * Fri May 30 2014 Anton Farygin <rider@altlinux.ru> 0.8.13-alt1
 - new version
 
