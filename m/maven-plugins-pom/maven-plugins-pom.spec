@@ -1,5 +1,5 @@
-#BuildRequires: mvn(xerces:xercesImpl) mvn(net.sf.cglib:cglib) mvn(net.sf.jtidy:jtidy) mvn(backport-util-concurrent:backport-util-concurrent) mvn(commons-beanutils:commons-beanutils) mvn(commons-digester:commons-digester) mvn(oro:oro) mvn(bsh:bsh)
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        23
-Release:        alt1_0jpp7
+Release:        alt1_2jpp7
 Summary:        Maven Plugins POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -16,7 +16,11 @@ License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/
 Source:         http://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{short_name}/%{version}/%{short_name}-%{version}-source-release.zip
 
+BuildRequires:  jpackage-utils
 BuildRequires:  maven
+BuildRequires:  maven-enforcer-plugin
+
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -25,21 +29,24 @@ Apache Maven plugins.
 
 %prep
 %setup -q -n %{short_name}-%{version}
-# Enforcer plugin is used to ban plexus-component-api.
-%pom_remove_plugin :maven-enforcer-plugin
 
-%build
+%check
+mvn-rpmbuild verify
 
 %install
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom
 
 %files
+%doc LICENSE NOTICE
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Tue Jul 15 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt1_2jpp7
+- new version
+
 * Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 23-alt1_0jpp7
 - intermediate build
 
