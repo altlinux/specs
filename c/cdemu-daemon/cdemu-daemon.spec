@@ -1,6 +1,6 @@
 Name: cdemu-daemon
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -10,6 +10,7 @@ URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2 
+Source1: vhba.init
 
 BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
@@ -48,6 +49,15 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
+%__install -Dp -m0755 %SOURCE1 %buildroot%_initdir/vhba
+
+%preun
+%preun_service vhba
+/sbin/service vhba condstop ||:
+
+%post
+%post_service vhba
+/sbin/service vhba condrestart ||:
 
 %files
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
@@ -58,8 +68,16 @@ popd
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/services
 %_datadir/dbus-1/services/*.service
+%_initdir/vhba
 
 %changelog
+* Tue Jul 15 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt2
+- Add vhba init script
+- Add LSB init header
+
+* Fri Jul 04 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt0.M70T.1
+- Build for branch t7
+
 * Thu Jul 03 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
 - Version 3.0.0
 
