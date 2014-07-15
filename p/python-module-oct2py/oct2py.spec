@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Python to GNU Octave bridge --> run m-files from python
 License: MIT
@@ -144,6 +144,7 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
@@ -154,18 +155,24 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files tests
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
 %endif
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
+- Moved all tests into tests subpackage
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 - Added module for Python 3
