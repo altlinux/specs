@@ -3,8 +3,8 @@
 
 %define rname pykde4
 Name: kde4-python
-Version: 4.13.0
-Release: alt2
+Version: 4.13.3
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -16,7 +16,6 @@ Source: %rname-%version.tar
 Patch10: make_pykde4_respect_sip_flags.diff
 # FC
 Patch20: pykde4-4.12.3-sip_4_15_5.patch
-Patch21: pykde4-4.13.1-sip416.patch
 # ALT
 Patch100: pykde4-4.8.0-alt-mobile.patch
 Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
@@ -58,7 +57,6 @@ Python bindings for KDE4
 %_K_if_ver_gteq %python_sip_ver 4.15.5
 %patch20 -p1
 %endif
-%patch21 -p1
 %ifarch %arm
 %patch100 -p1
 %endif
@@ -87,6 +85,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
+- new version
+
 * Fri Jun 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt2
 - fix to build with new sip
 
