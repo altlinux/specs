@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          tuscany-sdo-java
 Version:       1.1.1
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Service Data Objects 2.1 Java API spec
 Group:         Development/Java
 License:       ASL 2.0
@@ -111,6 +111,9 @@ install -pm 644 sdo-api/pom.xml %{buildroot}%{_mavenpomdir}/JPP-tuscany-sdo-api.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_3jpp7
 - fc release
 
