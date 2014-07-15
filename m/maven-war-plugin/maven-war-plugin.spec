@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-war-plugin
 Version:        2.2
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Maven WAR Plugin
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_2jpp7
+- NMU rebuild to move poms and fragments
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp7
 - new release
 
