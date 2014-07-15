@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           spin
 Version:        1.5
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
 Group:          Development/Java
@@ -76,6 +76,9 @@ cp -r target/site/apidocs ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_7jpp7
 - new version
 
