@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -95,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_7jpp7
+- NMU rebuild to move poms and fragments
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_7jpp7
 -  new release
 
