@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-signatures
 Version:        1.1
-Release:        alt1_0.8.svn11457jpp7
+Release:        alt2_0.8.svn11457jpp7
 Summary:        Mojo API signatures project
 
 Group:          Development/Java
@@ -93,6 +93,9 @@ done
 
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.8.svn11457jpp7
+- NMU rebuild to move poms and fragments
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.8.svn11457jpp7
 - new release
 
