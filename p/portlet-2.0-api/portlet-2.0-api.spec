@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Java Portlet Specification V2.0
 Group:         Development/Java
 License:       ASL 2.0
@@ -89,6 +89,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_3jpp7
+- NMU rebuild to move poms and fragments
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_3jpp7
 - new version
 
