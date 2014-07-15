@@ -2,7 +2,7 @@
 
 Summary: python refactoring library
 Name: python-module-%real_name
-Version: 0.9.4
+Version: 0.10.2
 Release: alt1
 License: GPL
 Group: Development/Python
@@ -39,7 +39,7 @@ This package contains tests for rope.
 cp -fR ropetest %buildroot%python_sitelibdir/
 
 %files
-%doc COPYING README.txt docs
+%doc CONTRIBUTORS COPYING README* docs
 %python_sitelibdir/*
 %exclude %python_sitelibdir/ropetest
 
@@ -47,6 +47,9 @@ cp -fR ropetest %buildroot%python_sitelibdir/
 %python_sitelibdir/ropetest
 
 %changelog
+* Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.2-alt1
+- Version 0.10.2
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1
 - Version 0.9.4
 
