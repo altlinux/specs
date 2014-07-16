@@ -1,7 +1,7 @@
 %define oname Persistence
 Name: python-module-%oname
 Version: 2.13.2
-Release: alt2.1.1
+Release: alt3
 Summary: Persistent ExtensionClass
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
 
-%py_requires ExtensionClass ZODB3
+%py_requires ExtensionClass
 
 %description
 This package provides a variant of the persistent base class that's an
@@ -49,6 +49,9 @@ This package contains tests for Persistent ExtensionClass.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt3
+- Avoid requirement on ZODB3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.13.2-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
