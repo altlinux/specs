@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.1.1
-Release: alt3.1
+Version: 2.2.0
+Release: alt1
 Summary: Yet Another Python Parser System
 
 Group: Development/Python
@@ -19,10 +19,10 @@ Patch1: 0002-Bring-closer-to-Python-3-keep-Pytho2-compatibile.patch
 Patch2: 0003-bring-closer-to-Python-3-support-compatible-with-new.patch
 Patch3: 0004-full-Python3-port-no-backward-compatibile.patch
 
-BuildPreReq: python-devel
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %py_provides yapps
@@ -78,15 +78,16 @@ original YAPPS source:
 rm -rf ../python3
 cp -a . ../python3
 pushd ../python3
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#patch0 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
 popd
 %endif
 
 %build
 %python_build
+
 %if_with python3
 pushd ../python3
 %python3_build
@@ -94,12 +95,18 @@ popd
 %endif
 
 %install
-%python_install
 %if_with python3
 pushd ../python3
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
+
+%python_install
 
 # There is a file in the package with a name starting with <tt>._</tt>, 
 # the file name pattern used by Mac OS X to store resource forks in non-native 
@@ -111,16 +118,24 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %files
-%doc changelog doc/*.html examples test
+%doc ChangeLog NOTES README.md doc/*.html doc/yapps_grammar.g examples test
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc changelog doc/*.html examples test
+%doc ChangeLog NOTES README.md doc/*.html doc/yapps_grammar.g examples test
+%_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
+- Version 2.2.0
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.1-alt3.1
 - Rebuild with Python-3.3
 
