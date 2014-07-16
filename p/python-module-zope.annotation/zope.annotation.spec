@@ -1,7 +1,7 @@
 %define oname zope.annotation
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt1
+Release: alt2
 Summary: Object annotation mechanism
 License: ZPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
 
-%py_requires zope.interface zope.component zope.location zope.proxy ZODB3
+%py_requires zope.interface zope.component zope.location zope.proxy
 
 %description
 This package provides a mechanism to store additional information about
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt2
+- Avoid requirement on ZODB3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1
 - Version 4.2.0
 
