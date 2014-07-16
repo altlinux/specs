@@ -5,7 +5,7 @@
 
 Name: epiphany
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -102,6 +102,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Wed Jul 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt3
+- updated to d7b781a2 (fixed BGO ##730129, 732784, 732784, 727139)
+
 * Sat Jun 07 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
 - updated to 7c38eeaee (fixed BGO ##730503, 730464, 730464)
 
