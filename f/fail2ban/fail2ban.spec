@@ -1,7 +1,6 @@
-%define module_name fail2ban
-Name: %module_name
+Name: fail2ban
 Version: 0.8.13
-Release: alt2
+Release: alt3
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -15,8 +14,7 @@ Source2: fail2ban.service
 
 BuildArch: noarch
 
-%setup_python_module %module_name
-
+%setup_python_module %name
 
 %description
 Fail2Ban is an intrusion prevention framework written in the Python
@@ -33,25 +31,25 @@ cd man
 ./generate-man
 
 %install
-mkdir -p %buildroot%_man1dir
-cp man/*.1 %buildroot%_man1dir
-mkdir -p %buildroot%_man5dir
-cp man/*.5 %buildroot%_man5dir
+mkdir -p %buildroot%_man1dir/
+cp man/*.1 %buildroot%_man1dir/
+mkdir -p %buildroot%_man5dir/
+cp man/*.5 %buildroot%_man5dir/
 
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
-install -pD -m 744 %SOURCE2 %buildroot%_unitdir/%name.service
-install -pD -m 744 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
+install -pD -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD -m 644 files/fail2ban-tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
 %python_install
 rm -rf %buildroot/%_docdir/%name/
 
 %files
 %doc ChangeLog README.md THANKS TODO
-%_datadir/%module_name
-%_bindir/%module_name-*
-%dir %_sysconfdir/%module_name
-%dir %_sysconfdir/%module_name/*.d
-%config(noreplace) %_sysconfdir/%module_name/*.conf
-%config(noreplace) %_sysconfdir/%module_name/*.d/*.conf
+%_datadir/%name
+%_bindir/%name-*
+%dir %_sysconfdir/%name/
+%dir %_sysconfdir/%name/*.d
+%config(noreplace) %_sysconfdir/%name/*.conf
+%config(noreplace) %_sysconfdir/%name/*.d/*.conf
 %_var/run/fail2ban
 %_initdir/fail2ban
 %_unitdir/%name.service
@@ -60,6 +58,9 @@ rm -rf %buildroot/%_docdir/%name/
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Jul 16 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.13-alt3
+- cleanup spec, fix config file permissions
+
 * Tue Jul 15 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.13-alt2
 - add missed systemd server script, man jail.conf, tmpfiles file (ALT bug #29469)
 
