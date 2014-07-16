@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.1
+Version: 1.4
 Release: alt1
 Summary: WSGI request and response object
 License: MIT
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
+- Version 1.4
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 
