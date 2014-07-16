@@ -1,7 +1,7 @@
 %define oname sphinxjp.themecore
 
 Name: python-module-%oname
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 Summary: A sphinx theme plugin support extension
 License: MIT
@@ -46,6 +46,9 @@ touch %buildroot%python_sitelibdir/sphinxjp/__init__.py
 %python_sitelibdir/*/__init__.py*
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
+- Version 0.2.0
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1
 - Initial build for Sisyphus
 
