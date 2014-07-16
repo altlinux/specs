@@ -1,7 +1,7 @@
 %define oname AccessControl
 Name: python-module-%oname
 Version: 3.0.8
-Release: alt1
+Release: alt2
 Summary: Security framework for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 
 %py_requires Acquisition DateTime ExtensionClass Persistence Record
-%py_requires RestrictedPython transaction zExceptions ZODB3
+%py_requires RestrictedPython transaction zExceptions
 %py_requires zope.component zope.configuration zope.deferredimport
 %py_requires zope.interface zope.publisher zope.schema zope.security
 %py_requires zope.testing
@@ -49,6 +49,9 @@ This package contains tests for Security framework for Zope2.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt2
+- Avoid requirement on ZODB3
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt1
 - Version 3.0.8
 
