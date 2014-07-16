@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.5
-Release: alt1
+Release: alt2
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -27,7 +27,7 @@ Patch0: wmgenmenu.patch
 Patch1: WindowMaker-alt-Makefile.patch
 
 Requires: xvt, wmsetbg = %version-%release, libWINGs = %version-%release, cpp
-Requires: fonts-bitmap-cyr_rfx-iso10646-0400, xlockmore
+Requires: xlockmore
 Requires: design-graphics
 Obsoletes: windowmaker, windowmaker-devel, windowmaker-libs
 Obsoletes: wmakerconf <= 2.5
@@ -304,6 +304,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Wed Jul 16 2014 Andrey Bergman <vkni@altlinux.org> 0.95.5-alt2
+- Removed dependency on bitmap fonts.
+
 * Thu Sep 12 2013 Andrey Bergman <vkni@altlinux.org> 0.95.5-alt1
 - Update to a new version. Removed unnecessary patches.
 
