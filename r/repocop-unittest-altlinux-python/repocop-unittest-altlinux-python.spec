@@ -3,7 +3,7 @@
 
 Name: repocop-unittest-altlinux-python
 Version: 0.10
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Url: http://repocop.altlinux.org
@@ -13,7 +13,7 @@ Group: Development/Other
 License: GPL or Artistic
 Source: %name-%version.tar
 
-Requires: repocop >= 0.10
+Requires: repocop > 0.40
 Requires: repocop-collector-specfile
 
 %description
@@ -47,6 +47,9 @@ install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 %endif
 
 %changelog
+* Wed Jul 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3
+- test exception for python3-module-testscenarios (requested by REAL@)
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2
 - test exception for python3-module-testtools (requested by REAL@)
 
