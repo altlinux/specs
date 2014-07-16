@@ -10,8 +10,8 @@
 %endif
 
 Name: python-module-%modulename
-Version: 4.0.6
-Release: alt1.1
+Version: 4.0.8
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -31,6 +31,8 @@ BuildPreReq: python-module-coverage
 BuildPreReq: python-module-nose
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
 
 %if_with python3
 BuildPreReq: rpm-build-python3
@@ -46,6 +48,16 @@ BuildPreReq: python3-module-setuptools-tests
 This package contains a generic persistence implementation for Python.
 It forms the core protocol for making objects interact "transparently"
 with a database such as the ZODB.
+
+%package docs
+Summary: Documentation for translucent persistent objects
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+This package contains documentation for persistence implementation for
+Python. It forms the core protocol for making objects interact
+"transparently" with a database such as the ZODB.
 
 %package tests
 Summary: Tests for translucent persistent objects
@@ -86,6 +98,9 @@ rm -rf ../%py3dir
 cp -a . ../%py3dir
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
 %python_build
 %if_with python3
@@ -98,9 +113,17 @@ popd
 %if_with python3
 pushd ../%py3dir
 %python3_install
+install -p -m644 persistent/_compat.h \
+	%buildroot%_includedir/python%_python3_version%_python3_abiflags/
 popd
 %endif
+
 %python_install
+install -p -m644 persistent/_compat.h \
+	%buildroot%_includedir/python%_python_version/
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
 
 %check
 %__python setup.py test -q
@@ -111,7 +134,7 @@ popd
 %endif
 
 %files
-%doc CHANGES.txt COPYRIGHT.txt LICENSE.txt README.txt
+%doc *.txt
 %_includedir/python%_python_version
 %python_sitelibdir/%modulename/
 %exclude %python_sitelibdir/%modulename/test*
@@ -120,9 +143,12 @@ popd
 %files tests
 %python_sitelibdir/%modulename/test*
 
+%files docs
+%doc docs/_build/html/*
+
 %if_with python3
 %files -n %py3name
-%doc CHANGES.txt COPYRIGHT.txt LICENSE.txt README.txt
+%doc *.txt
 %_includedir/python%_python3_version%_python3_abiflags
 %python3_sitelibdir/%modulename/
 %exclude %python3_sitelibdir/%modulename/test*
@@ -133,6 +159,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt1
+- Version 4.0.8
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.6-alt1.1
 - Fixed build
 
