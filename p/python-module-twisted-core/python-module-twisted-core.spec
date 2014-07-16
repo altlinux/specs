@@ -2,8 +2,8 @@
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 13.2.0
-Release: alt2
+Version: 14.0.0
+Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
 
@@ -239,6 +239,16 @@ Twisted is an event-based framework for internet applications.
 Twisted Pair: The framework of your ethernet.
 Low-level networking transports and utilities.
 
+%package -n %prefx-positioning
+Summary: The Twisted positioning framework.
+Group: Development/Python
+Requires: %name
+
+%description -n %prefx-positioning
+Twisted is an event-based framework for internet applications.
+
+The Twisted positioning framework.
+
 %prep
 %setup -n %origname-%version
 
@@ -365,7 +375,8 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 
 
 %files doc
-%doc doc/core doc/fun
+#doc doc/core doc/fun
+%doc doc/core
 
 %files gui
 %python_sitelibdir/twisted/internet/pyuisupport.py*
@@ -428,6 +439,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/names/test
 %python_sitelibdir/twisted/pair/test
 %python_sitelibdir/twisted/persisted/test
+%python_sitelibdir/twisted/positioning/test
 
 %files -n %prefx-news
 %python_sitelibdir/twisted/news/
@@ -501,7 +513,14 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %python_sitelibdir/twisted/pair/
 %exclude %python_sitelibdir/twisted/pair/test
 
+%files -n %prefx-positioning
+%python_sitelibdir/twisted/positioning/
+%exclude %python_sitelibdir/twisted/positioning/test
+
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.0.0-alt1
+- Version 14.0.0
+
 * Mon May 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.2.0-alt2
 - Avoid requirement on python-devel for %name
 
