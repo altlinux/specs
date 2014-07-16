@@ -1,7 +1,7 @@
 %define oname tempstorage
 Name: python-module-%oname
 Version: 2.12.2
-Release: alt1
+Release: alt2
 Summary: A RAM-based storage for ZODB
 License: ZPLv2.1
 Group: Development/Python
@@ -12,8 +12,6 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
-
-%py_requires ZODB3
 
 %description
 A storage implementation which uses RAM to persist objects, much like
@@ -52,6 +50,9 @@ This package contains tests for tempstorage.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.2-alt2
+- Avoid requirement on ZODB3
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.2-alt1
 - Version 2.12.2
 
