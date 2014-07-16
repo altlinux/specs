@@ -1,7 +1,7 @@
 %define _altdata_dir %_sysconfdir/alterator
 
 Name: alterator-openldap-functions
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 BuildArch: noarch
@@ -13,6 +13,8 @@ License: GPL
 Group: System/Base
 
 BuildPreReq: libshell >= 0.0.5-alt1
+
+Requires: alterator-service-functions
 
 Conflicts: alterator < 3.4-alt1
 
@@ -33,6 +35,9 @@ helper functions for alterator openldap based backends
 %dir %_altdata_dir/openldap
 
 %changelog
+* Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
+- Use alterator-service-functions.
+
 * Tue Jul 08 2014 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
 - Fix warning message.
 
