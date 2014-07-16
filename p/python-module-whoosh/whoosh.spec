@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.0
-Release: alt1.hg20131128
+Release: alt1.hg20140505
 Summary: Fast pure-Python indexing and search library
 
 Group: Development/Python
@@ -155,6 +155,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.hg20140505
+- New snapshot
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.hg20131128
 - Version 2.6.0
 
