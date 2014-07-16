@@ -1,6 +1,6 @@
 %define oname veusz
 Name: python-module-%oname
-Version: 1.19.1
+Version: 1.21
 Release: alt1
 Summary: A Scientific Plotting Package
 License: GPLv2+
@@ -97,6 +97,9 @@ install -m644 Documents/*.1 %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.21-alt1
+- Version 1.21
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.19.1-alt1
 - Version 1.19.1
 
