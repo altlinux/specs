@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.11
-Release: alt1.dev0.git20131122
+Version: 2.0.16
+Release: alt1.dev0.git20140629
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python
@@ -17,8 +17,9 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx python-module-Pygments
-BuildPreReq: python-module-objects.inv
+BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: python-module-BeautifulSoup4 python-module-webob
+BuildPreReq: python-module-waitress
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -33,6 +34,21 @@ This provides convenient full-stack testing of applications written
 with any WSGI-compatible framework.
 
 This is based on ``paste.fixture.TestApp``.
+
+%package pickles
+Summary: Pickles for WebTest
+Group: Development/Python
+
+%description pickles
+This wraps any WSGI application and makes it easy to send test
+requests to that application, without starting up an HTTP server.
+
+This provides convenient full-stack testing of applications written
+with any WSGI-compatible framework.
+
+This is based on ``paste.fixture.TestApp``.
+
+This package contains pickles for WebTest.
 
 %if_with python3
 %package -n python3-module-%oname
@@ -51,10 +67,14 @@ This is based on ``paste.fixture.TestApp``.
 
 %prep
 %setup
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
@@ -64,9 +84,6 @@ pushd ../python3
 popd
 %endif
 
-# for docs
-make -C docs html SPHINXBUILD=sphinx-build PYTHONPATH=`pwd`
-
 %install
 %python_install
 %if_with python3
@@ -75,9 +92,20 @@ pushd ../python3
 popd
 %endif
 
+# for docs
+export PYTHONPATH=%buildroot%python_sitelibdir
+make -C docs pickle SPHINXBUILD=sphinx-build
+make -C docs html SPHINXBUILD=sphinx-build
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
 %files
-%doc docs/_build/*
+%doc docs/_build/html/*
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %if_with python3
 %files -n python3-module-%oname
@@ -85,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.16-alt1.dev0.git20140629
+- Version 2.0.16.dev0
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.11-alt1.dev0.git20131122
 - Version 2.0.11.dev0
 
