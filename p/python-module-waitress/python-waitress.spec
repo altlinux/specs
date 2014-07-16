@@ -11,8 +11,8 @@
 %endif
 
 Name: python-module-waitress
-Version: 0.8.2
-Release: alt2.1
+Version: 0.8.9
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -156,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.9-alt1
+- Version 0.8.9
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt2.1
 - Fixed build
 
