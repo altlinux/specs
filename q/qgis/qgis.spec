@@ -2,8 +2,8 @@
 # http://hub.qgis.org/issues/5274
 
 Name:    qgis
-Version: 2.2.0
-Release: alt1
+Version: 2.4.0
+Release: alt1.git4dce5ec
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
@@ -17,8 +17,10 @@ Source: %name-%version.tar
 # %%name-mapserver-README.fedora
 
 # Fix detection problem for GRASS libraries
-Patch0: %name-1.5.0-fedora-grass.patch
-Patch2: %name-2.0.1-httplib2.patch
+Patch0: %name-2.4.0-grass.patch
+Patch1: %name-ignore-bundled-modules.patch
+Patch2: %name-2.4.0-qreal.patch
+Patch3: %name-2.4.0-sip.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -60,6 +62,7 @@ BuildRequires: spatialindex-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: python-module-qscintilla2-qt4-devel
 BuildRequires: libqscintilla2-qt4-devel
+BuildRequires: python-module-OWSLib
 
 Requires: gpsbabel
 
@@ -123,7 +126,9 @@ Please refer to %name-mapserver-README for details!
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Delete bundled libs
 rm -rf src/core/spatialite
@@ -131,9 +136,9 @@ rm -rf src/core/gps/qwtpolar
 rm -rf src/core/gps/qextserialport
 
 # TODO Don't build unsupported Python bindings
-subst 's/^\(ADD_SUBDIRECTORY(otb)\)/#\1/' python/plugins/processing/CMakeLists.txt
-subst 's/^\(ADD_SUBDIRECTORY(saga)\)/#\1/' python/plugins/processing/CMakeLists.txt
-rm -rf python/plugins/processing/{otb,saga}
+subst 's/^\(ADD_SUBDIRECTORY(otb)\)/#\1/' python/plugins/processing/algs/CMakeLists.txt
+subst 's/^\(ADD_SUBDIRECTORY(saga)\)/#\1/' python/plugins/processing/algs/CMakeLists.txt
+rm -rf python/plugins/processing/algs/{otb,saga}
 subst 's/^\(.*OTBAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
 subst 's/^\(.*SagaAlgorithmProvider\)/#\1/g' python/plugins/processing/core/Processing.py
 
@@ -293,6 +298,10 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr{_Latn,@latin}.qm
 %_libexecdir/%name
 
 %changelog
+* Tue Aug 26 2014 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1.git4dce5ec
+- New version 2.4.0 with update source to Git commit 4dce5ec
+- Merge patchset with Fedora
+
 * Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 - New version
 
