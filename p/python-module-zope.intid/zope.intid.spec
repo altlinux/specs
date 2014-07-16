@@ -1,7 +1,7 @@
 %define oname zope.intid
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a1
+Release: alt2.a1
 Summary: Integer Id Utility
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
 
-%py_requires zope ZODB3 zope.lifecycleevent zope.component zope.event
+%py_requires zope zope.lifecycleevent zope.component zope.event
 %py_requires zope.interface zope.keyreference zope.location zope.security
 
 %description
@@ -62,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
+- Avoid requirement on ZODB3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
 - Version 4.0.0a1
 
