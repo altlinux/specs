@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.15
 %define kernel_sublevel	.5
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Jul 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.5-alt2
+- EFI_MIXED enabled
+
 * Wed Jul 09 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.5-alt1
 - 3.15.5
 
