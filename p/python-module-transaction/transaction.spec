@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.1
+Version: 1.4.3
 Release: alt1
 Summary: Transaction management for Python
 License: ZPLv2.1
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
 %py_requires zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -82,12 +84,48 @@ manager in transaction.tests.test_SampleDataManager.
 
 This package contains tests for Transaction management for Python.
 
+%package pickles
+Summary: Pickles for Transaction management for Python
+Group: Development/Python
+
+%description pickles
+This package contains a generic transaction implementation for Python.
+It is mainly used by the ZODB, though.
+
+Note that the data manager API, transaction.interfaces.IDataManager, is
+syntactically simple, but semantically complex. The semantics were not
+easy to express in the interface. This could probably use more work. The
+semantics are presented in detail through examples of a sample data
+manager in transaction.tests.test_SampleDataManager.
+
+This package contains pickles for Transaction management for Python.
+
+%package docs
+Summary: Documentation for Transaction management for Python
+Group: Development/Documentation
+
+%description docs
+This package contains a generic transaction implementation for Python.
+It is mainly used by the ZODB, though.
+
+Note that the data manager API, transaction.interfaces.IDataManager, is
+syntactically simple, but semantically complex. The semantics were not
+easy to express in the interface. This could probably use more work. The
+semantics are presented in detail through examples of a sample data
+manager in transaction.tests.test_SampleDataManager.
+
+This package contains documentation for Transaction management for
+Python.
+
 %prep
 %setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
@@ -105,10 +143,23 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs pickle
+%make -C docs html
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
+%exclude %python_sitelibdir/%oname/pickle
+
+%files pickles
+%python_sitelibdir/%oname/pickle
+
+%files docs
+%doc docs/_build/html/*
 
 %files tests
 %python_sitelibdir/%oname/tests
@@ -124,6 +175,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1
+- Version 1.4.3
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 
