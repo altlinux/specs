@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -65,13 +65,6 @@ for n in archive settings clients schedule; do
      > %buildroot/%altdir/applications/bacula-$n.desktop
 done
 
-%define hookdir %_datadir/install2/postinstall.d
-mkdir -p %buildroot%hookdir
-install -pm755 postinstall.d/*.sh %buildroot%hookdir/
-
-%post
-/usr/sbin/bacula-reset-settings ||:
-
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
 %_datadir/alterator/ui/*
@@ -84,10 +77,14 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %_datadir/alterator/type/*
 %_bindir/*
 %_sbindir/*
-%hookdir/*
 %altdir/desktop-directories/*
 
 %changelog
+* Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Don't wait mysqld when password is set.
+- bacula-sh-functions: Don't exit from function, just return.
+- Drop postinstall script and don't setup bacula at %%post.
+
 * Wed Jun 25 2014 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
 - bacula-local-backup: Fix disk change.
 
