@@ -1,6 +1,9 @@
 %define oname zope.proxy
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 4.1.3
+Version: 4.1.4
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope zope.interface
 
@@ -19,6 +26,30 @@ Proxies are special objects which serve as mostly-transparent wrappers
 around another object, intervening in the apparent behavior of the
 wrapped object only when necessary to apply the policy (e.g., access
 checking, location brokering, etc.) for which the proxy is responsible.
+
+%package -n python3-module-%oname
+Summary: Generic Transparent Proxies
+Group: Development/Python3
+%py3_requires zope zope.interface
+
+%description -n python3-module-%oname
+Proxies are special objects which serve as mostly-transparent wrappers
+around another object, intervening in the apparent behavior of the
+wrapped object only when necessary to apply the policy (e.g., access
+checking, location brokering, etc.) for which the proxy is responsible.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Generic Transparent Proxies
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+Proxies are special objects which serve as mostly-transparent wrappers
+around another object, intervening in the apparent behavior of the
+wrapped object only when necessary to apply the policy (e.g., access
+checking, location brokering, etc.) for which the proxy is responsible.
+
+This package contains tests for Generic Transparent Proxies.
 
 %package tests
 Summary: Tests for Generic Transparent Proxies
@@ -36,15 +67,34 @@ This package contains tests for Generic Transparent Proxies.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %python_install
 
 %files
-%doc *.txt *.rst
+%doc *.txt *.rst docs/*.rst
 %_includedir/*
+%if_with python3
+%exclude %_includedir/python3*
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -52,7 +102,23 @@ This package contains tests for Generic Transparent Proxies.
 %files tests
 %python_sitelibdir/*/*/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt *.rst docs/*.rst
+%_includedir/python3*
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests
+%endif
+
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt1
+- Version 4.1.4
+- Added module for Python 3
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1
 - Version 4.1.3
 
