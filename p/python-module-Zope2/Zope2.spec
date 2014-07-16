@@ -1,6 +1,6 @@
 %define oname Zope2
 Name: python-module-%oname
-Version: 2.13.21
+Version: 2.13.22
 Release: alt1
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
@@ -114,6 +114,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt1
+- Version 2.13.22
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.21-alt1
 - Version 2.13.21
 
