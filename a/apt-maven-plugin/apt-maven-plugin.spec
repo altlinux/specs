@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             apt-maven-plugin
 Version:          1.0
-Release:          alt2_0.3.alpha4jpp7
+Release:          alt3_0.3.alpha4jpp7
 Summary:          Apt Maven Plugin
 Group:            Development/Java
 License:          MIT
@@ -97,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.3.alpha4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.3.alpha4jpp7
 - NMU rebuild to move poms and fragments
 
