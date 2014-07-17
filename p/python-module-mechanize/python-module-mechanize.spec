@@ -1,7 +1,10 @@
 %define oname mechanize
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Stateful programmatic web browsing
 
@@ -14,6 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 %setup_python_module %oname
 
 Source: http://wwwsearch.sourceforge.net/mechanize/src/%oname-%version.tar
+Patch: mechanize-0.2.5-alt-python3.patch
 
 BuildArch: noarch
 
@@ -21,25 +25,66 @@ BuildPreReq: rpm-build-compat >= 1.2
 
 # manually removed: all
 BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
+Stateful programmatic web browsing in Python,
+after Andy Lester's Perl module WWW::Mechanize.
+
+%package -n python3-module-%oname
+Summary: Stateful programmatic web browsing
+Group: Development/Python3
+
+%description -n python3-module-%oname
 Stateful programmatic web browsing in Python,
 after Andy Lester's Perl module WWW::Mechanize.
 
 %prep
 %setup -n %oname-%version
 
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+%patch -p2
+popd
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc docs/ examples/
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.1
+- Added module for Python 3
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
 - new version 0.2.5 (with rpmrb script)
 
