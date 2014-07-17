@@ -1,7 +1,10 @@
 %define oname zope.security
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1.dev.git20130709
+Version: 4.0.2
+Release: alt1.dev.git20140319
 Summary: Zope Security Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -11,16 +14,72 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.security.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.proxy
+BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-repoze.sphinx.autointerface
+BuildPreReq: python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.schema python-module-zope.location
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.testing
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-zope.proxy
+%endif
 
 Requires: python-module-zope.i18nmessageid
 %py_requires zope.component zope.interface zope.location zope.proxy
-%py_requires zope.schema
+%py_requires zope.schema zope.configuration
 
 %description
 The Security framework provides a generic mechanism to implement
 security policies on Python objects.
+
+%package -n python3-module-%oname
+Summary: Zope Security Framework
+Group: Development/Python3
+Requires: python3-module-zope.i18nmessageid
+%py3_requires zope.component zope.interface zope.location zope.proxy
+%py3_requires zope.schema zope.configuration
+
+%description -n python3-module-%oname
+The Security framework provides a generic mechanism to implement
+security policies on Python objects.
+
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Zope Security Framework
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing
+
+%description -n python3-module-%oname-tests
+The Security framework provides a generic mechanism to implement
+security policies on Python objects.
+
+This package contains tests for Zope Security Framework.
+
+%package pickles
+Summary: Pickles for Zope Security Framework
+Group: Development/Python
+
+%description pickles
+The Security framework provides a generic mechanism to implement
+security policies on Python objects.
+
+This package contains pickles for Zope Security Framework.
+
+%package docs
+Summary: Documentation for Zope Security Framework
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+The Security framework provides a generic mechanism to implement
+security policies on Python objects.
+
+This package contains documentation for Zope Security Framework.
 
 %package tests
 Summary: Tests for Zope Security Framework
@@ -48,18 +107,45 @@ This package contains examples for Zope Security Framework.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
-
 touch src/zope/security/examples/__init__.py
 cp -fR src/zope/security/examples \
 	%buildroot%python_sitelibdir/zope/security/
-
 install -p -m644 src/zope/security/*.zcml \
 	%buildroot%python_sitelibdir/zope/security/
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -p -m644 src/zope/security/*.zcml \
+	%buildroot%python3_sitelibdir/zope/security/
+popd
+%endif
+
+export PYTHONPATH=$PWD/src
+%make -C docs pickle
+%make -C docs html
+
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc *.txt
@@ -67,6 +153,14 @@ install -p -m644 src/zope/security/*.zcml \
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
 %exclude %python_sitelibdir/*/*/examples
+%dir %python_sitelibdir/%oname
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
 
 %files tests
 %python_sitelibdir/*/*/test*
@@ -74,7 +168,24 @@ install -p -m644 src/zope/security/*.zcml \
 %files examples
 %python_sitelibdir/*/*/examples
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.dev.git20140319
+- Version 4.0.2dev
+- Added module for Python 3
+
 * Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20130709
 - Version 4.0.1dev
 
