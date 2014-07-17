@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             avro
 Version:          1.6.2
-Release:          alt2_4jpp7
+Release:          alt3_4jpp7
 Summary:          Data serialization system
 Group:            Development/Java
 License:          ASL 2.0
@@ -114,6 +115,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt3_4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
