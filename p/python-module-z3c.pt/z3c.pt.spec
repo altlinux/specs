@@ -1,7 +1,10 @@
 %define oname z3c.pt
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt1.a2.dev0.git20130313
+Release: alt2.a2.dev0.git20130313
 Summary: Python template compiler which supports ZPT
 License: ZPLv2.1
 Group: Development/Python
@@ -11,12 +14,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # git://github.com/zopefoundation/z3c.pt.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-python
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel python-module-zope.interface
 BuildPreReq: python-module-zope.i18n python-module-zope.component
 BuildPreReq: python-module-zope.event python-module-zope.i18nmessageid
 BuildPreReq: python-module-texttemplate python-module-zope.schema
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires z3c zope.interface zope.component zope.i18n zope.traversing
 %py_requires zope.contentprovider chameleon
@@ -27,6 +34,33 @@ which uses Chameleon to compile templates to byte-code.
 
 The package provides application support equivalent to
 ``zope.app.pagetemplate``.
+
+%package -n python3-module-%oname
+Summary: Python template compiler which supports ZPT
+Group: Development/Python3
+%py3_requires z3c zope.interface zope.component zope.i18n zope.traversing
+%py3_requires zope.contentprovider chameleon
+
+%description -n python3-module-%oname
+This is a fast implementation of the ZPT template engine for Zope 3
+which uses Chameleon to compile templates to byte-code.
+
+The package provides application support equivalent to
+``zope.app.pagetemplate``.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for z3c.pt
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+This is a fast implementation of the ZPT template engine for Zope 3
+which uses Chameleon to compile templates to byte-code.
+
+The package provides application support equivalent to
+``zope.app.pagetemplate``.
+
+This package contains tests for z3c.pt
 
 %package -n python-module-z3c
 Summary: z3c core package
@@ -88,14 +122,30 @@ This package contains documentation for z3c.pt
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx .
 ln -s ../objects.inv docs/
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
@@ -113,6 +163,10 @@ install -p -m644 src/z3c/__init__.py %buildroot%python3_sitelibdir/z3c/
 %ifarch x86_64
 mv %buildroot%python_sitelibdir_noarch/z3c/* \
 	%buildroot%python_sitelibdir/z3c/
+%if_with python3
+mv %buildroot%python3_sitelibdir_noarch/z3c/* \
+	%buildroot%python3_sitelibdir/z3c/
+%endif
 %endif
 cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 
@@ -144,7 +198,25 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %files docs
 %doc docs/.build/html/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%ifnarch x86_64
+%exclude %python3_sitelibdir/*.pth
+%endif
+%exclude %python3_sitelibdir/z3c/__init__.py*
+%exclude %python3_sitelibdir/z3c/__pycache__/__init__.*
+%exclude %python3_sitelibdir/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt2.a2.dev0.git20130313
+- Added module for Python 3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.a2.dev0.git20130313
 - Version 3.0.0a2.dev0
 
