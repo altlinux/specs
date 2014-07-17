@@ -11,7 +11,7 @@
 
 Name: python-module-%modulename
 Version: 4.0.8
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -24,8 +24,6 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 # git://github.com/zopefoundation/persistent.git
 Source: %name-%version.tar
-
-Conflicts: python-module-ZODB3
 
 BuildPreReq: python-module-coverage
 BuildPreReq: python-module-nose
@@ -159,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt2
+- Avoid conflict with ZODB3
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt1
 - Version 4.0.8
 
