@@ -1,8 +1,9 @@
+%def_with python3
 
 #add_findreq_skiplist %python_sitelibdir/pyudev/*
 
 Name: python-module-pyudev
-Version: 0.14
+Version: 0.16.1
 Release: alt1
 %setup_python_module pyudev
 
@@ -15,15 +16,27 @@ BuildArch: noarch
 
 Source: pyudev-%version.tar
 
-
-# Automatically added by buildreq on Tue Feb 14 2012 (-bi)
-# optimized out: python-base python-devel python-module-4Suite-XML python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-cups python-module-dateutil python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-imaging python-module-jinja2 python-module-lxml python-module-mako python-module-matplotlib python-module-mpmath python-module-nose python-module-numpy python-module-protobuf python-module-pyExcelerator python-module-pyglet python-module-pylib python-module-pytz python-module-simplejson python-module-sphinx python-module-sympy python-module-whoosh python-module-xlwt python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings
-#BuildRequires: dblatex java-1.5.0-gcj-aot-compile libudev mercurial python-module-Reportlab python-module-cupshelpers python-module-numpydoc python-module-pyxdg python-module-scipy rpm-build-gir
 BuildRequires: libudev-devel python-devel python-module-distribute
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires:      python3-devel
+BuildRequires:      python3-module-distribute
+%endif
+
 %description
-A Python binding to libudev, the hardware management library and service found
-in modern linux systems.
+A Python binding to libudev, the hardware management library and service
+found in modern linux systems.
+
+%if_with python3
+%package -n python3-module-pyudev
+Summary:            Udev bindings for Python
+Group:              Development/Python3
+
+%description -n python3-module-pyudev
+A Python3 binding to libudev, the hardware management library and
+service found in modern linux systems.
+%endif
 
 %prep
 %setup -q -n pyudev-%version
@@ -31,7 +44,15 @@ in modern linux systems.
 %build
 %python_build
 
+%if_with python3
+%python3_build
+%endif
+
 %install
+%if_with python3
+%python3_install
+%endif
+
 %python_install
 
 %files
@@ -39,6 +60,19 @@ in modern linux systems.
 %python_sitelibdir/pyudev
 %python_sitelibdir/pyudev-*
 
+%if_with python3
+%files -n python3-module-pyudev
+%doc CHANGES.rst COPYING README.rst
+%python3_sitelibdir/pyudev
+%python3_sitelibdir/pyudev-*
+%endif
+
+
+
 %changelog
+* Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.16.1-alt1
+- New version
+- Package with Python3 too
+
 * Tue Feb 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.14-alt1
 - initial build
