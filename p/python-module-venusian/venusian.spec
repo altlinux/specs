@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.a7
+Release: alt2
 Summary: A library for deferring decorator actions
 License: BSD-derived
 Group: Development/Python
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
+#BuildPreReq: python-module-
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -112,12 +113,6 @@ pushd ../python3
 popd
 %endif
 
-pushd docs
-ln -s %_datadir/pylons_sphinx_theme _themes
-%make pickle
-%make html
-popd
-
 %install
 %python_install
 %if_with python3
@@ -126,7 +121,13 @@ pushd ../python3
 popd
 %endif
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+export PYTHONPATH=%buildroot%python_sitelibdir
+pushd docs
+ln -s %_datadir/pylons_sphinx_theme _themes
+%make pickle
+%make html
+cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
+popd
 
 %files
 %doc *.txt
@@ -153,6 +154,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2
+- Version 1.0
+
 * Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0-alt1.a7
 - Version 1.0a7
 
