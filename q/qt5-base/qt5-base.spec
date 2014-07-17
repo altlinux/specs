@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -706,6 +706,12 @@ done
 
 
 %changelog
+* Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt5
+- fix install_qt5 macro
+
+* Wed Jul 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt3.M70P.1
+- built for M70P
+
 * Wed Jul 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt4
 - fix qmake_qt5 macro
 
