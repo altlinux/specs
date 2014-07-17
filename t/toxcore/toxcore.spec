@@ -5,7 +5,7 @@
 Name: toxcore
 Summary: %name
 Version: 0.0.1
-Release: alt1.20140628
+Release: alt1.20140717
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel
@@ -79,7 +79,7 @@ Requires: toxcore-devel
 %_libdir/libtoxdns.so.0.0.0
 
 %files devel
-%dir %_includedir/tox
+%_includedir/tox
 %_libdir/libtoxav.so
 %_libdir/libtoxcore.so
 %_libdir/libtoxdns.so
@@ -92,6 +92,12 @@ Requires: toxcore-devel
 %_libdir/libtoxdns.a
 
 %changelog
+* Thu Jul 17 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20140717
+- update from upstream git
+
+* Thu Jul 17 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20140628.1
+- package tox/tox.h (ALT #30195)
+
 * Sat Jun 28 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20140628
 - update from upstream git
 
