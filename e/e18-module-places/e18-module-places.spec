@@ -2,7 +2,7 @@
 
 Name: e18-module-%_name
 Version: 0.5.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -37,6 +37,9 @@ This module manage the volumes device attached to the system.
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Fri Jul 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt0.3
+- rebuilt for e18-0.18.5
+
 * Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt0.2
 - rebuilt for e18-0.18.5
 
