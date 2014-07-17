@@ -1,7 +1,10 @@
 %define oname zope.container
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a3
+Release: alt2
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -10,10 +13,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 Requires: python-module-zope.i18nmessageid
-
 %py_requires zope.interface zope.dottedname zope.schema 
 %py_requires zope.component zope.event zope.location zope.security
 %py_requires zope.lifecycleevent
@@ -23,6 +29,34 @@ This package define interfaces of container components, and provides
 container implementations such as a BTreeContainer and OrderedContainer,
 as well as the base class used by zope.site.folder for the Folder
 implementation.
+
+%package -n python3-module-%oname
+Summary: Zope Container
+Group: Development/Python3
+Requires: python3-module-zope.i18nmessageid
+%py3_requires zope.interface zope.dottedname zope.schema 
+%py3_requires zope.component zope.event zope.location zope.security
+%py3_requires zope.lifecycleevent
+
+%description -n python3-module-%oname
+This package define interfaces of container components, and provides
+container implementations such as a BTreeContainer and OrderedContainer,
+as well as the base class used by zope.site.folder for the Folder
+implementation.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Zope Container
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing
+
+%description -n python3-module-%oname-tests
+This package define interfaces of container components, and provides
+container implementations such as a BTreeContainer and OrderedContainer,
+as well as the base class used by zope.site.folder for the Folder
+implementation.
+
+This package contains tests for Zope Container.
 
 %package tests
 Summary: Tests for Zope Container
@@ -41,11 +75,28 @@ This package contains tests for Zope Container.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc *.txt
@@ -56,7 +107,22 @@ This package contains tests for Zope Container.
 %files tests
 %python_sitelibdir/*/*/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
+- Version 4.0.0
+- Added module for Python 3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a3
 - Version 4.0.0a3
 
