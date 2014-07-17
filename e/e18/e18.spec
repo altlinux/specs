@@ -13,7 +13,7 @@
 %def_with pam_helper
 
 Name: e18
-Version: 0.18.5
+Version: 0.18.8
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -30,8 +30,8 @@ URL: http://www.enlightenment.org/
 %ifdef cvs_date
 Source: %_name-%version-%cvs_date.tar
 %else
-#Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
-Source: %_name-%version.tar
+Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
+#Source: %_name-%version.tar
 %endif
 
 Source1: E-18.png
@@ -57,7 +57,7 @@ Provides: %_name = %version-%release
 Provides: e18-default
 
 # default terminal
-#Requires: terminology
+Requires: terminology
 Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players
 #Requires: empower
 # for menu
@@ -184,6 +184,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Jul 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.8-alt1
+- 0.18.8
+
 * Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.5-alt1
 - 0.18.5
 
