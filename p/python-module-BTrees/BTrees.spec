@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.8
-Release: alt1
+Release: alt2
 Summary: Scalable persistent object containers
 License: ZPL
 Group: Development/Python
@@ -22,9 +22,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.interface python3-module-persistent
 %endif
-
-Conflicts: python-module-ZODB3
-Obsoletes: python-module-ZODB3
 
 %description
 BTrees: scalable persistent components.
@@ -166,6 +163,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt2
+- Avoid conflict with ZODB3
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt1
 - Initial build for Sisyphus
 
