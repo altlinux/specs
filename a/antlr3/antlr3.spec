@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 BuildRequires: perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators python-devel unzip
@@ -16,7 +17,7 @@ BuildRequires: jpackage-compat
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Version:            %{antlr_version}
-Release:            alt2_12jpp7
+Release:            alt3_12jpp7
 URL:                http://www.antlr.org/
 Source0:            http://www.antlr.org/download/antlr-%{antlr_version}.tar.gz
 Source1:            http://www.antlr.org/download/C/libantlr3c-%{antlr_version}.tar.gz
@@ -323,6 +324,9 @@ popd
 %{_datadir}/antlr/
 
 %changelog
+* Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3_12jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.4-alt2_12jpp7
 - NMU rebuild to move poms and fragments
 
