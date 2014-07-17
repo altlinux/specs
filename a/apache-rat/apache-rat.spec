@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global snapdate 20100827
@@ -5,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-rat
 Version:        0.8
-Release:        alt2_6jpp7
+Release:        alt3_6jpp7
 Summary:        Apache Release Audit Tool (RAT)
 
 Group:          Development/Java
@@ -170,6 +171,9 @@ cp -rp target/site/apidocs \
 
 
 %changelog
+* Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_6jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
