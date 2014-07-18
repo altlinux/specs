@@ -1,12 +1,12 @@
 %def_with python
 %def_without python-qt3
 %def_without qt3
-%def_without python3
+%def_with python3
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.8.3
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -336,16 +336,20 @@ python configure.py --debug -n ../Qt5 -o ../Qt5 \
 popd
 
 %if_with python3
+OLDPATH=$PATH
+export PATH=$PATH:%_qt4dir/bin
 pushd ../python3
 python3 configure.py \
 	--apidir=%_datadir/qt4/qsci3 \
-	--sipdir=%_datadir/sip3/PyQt4 \
+	--sip=%_bindir/sip3 \
+	--pyqt-sipdir=%_datadir/sip3/PyQt4 \
 	--debug -n ../Qt4Qt5 -o ../Qt4Qt5
 sed -i \
-	's|-lpython%_python3_version|-lpython%{_python3_version}mu|g' \
+	's|-lpython%_python3_version|-lpython%{_python3_version}m|g' \
 	Makefile
 %make_build
 popd
+export PATH=$OLDPATH
 %endif
 
 %endif
@@ -364,7 +368,7 @@ popd
 %if_with python3
 pushd ../python3
 mkdir -p %buildroot%python3_sitelibdir/PyQt4
-%makeinstall_std
+%makeinstall_std INSTALL_ROOT=%buildroot
 popd
 %endif
 pushd Python-qt4
@@ -543,6 +547,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt2
+- Added module for Python 3 for Qt4
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt1
 - Version 2.8.3
 
