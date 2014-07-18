@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -6,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:      jacoco
 Version:   0.5.9
-Release:   alt1_2jpp7
+Release:   alt2_2jpp7
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
@@ -151,6 +152,9 @@ cp -rf org.jacoco.build/target/site/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt2_2jpp7
+- fixed build
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt1_2jpp7
 - new release
 
