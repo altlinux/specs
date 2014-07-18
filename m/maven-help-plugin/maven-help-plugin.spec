@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt3_7jpp7
+Release:        alt4_7jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -95,6 +96,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4_7jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_7jpp7
 - NMU rebuild to move poms and fragments
 
