@@ -1,12 +1,14 @@
 %define version 2.2.1
 #define subver b20
-%define release alt1
+%define release alt2
 %define oname zc.buildout
 %setup_python_module %oname
 
+%def_with python3
+
 Summary: The Buildout project provides support for creating Python applications.
 Name: python-module-%oname
-URL: https://pypi.python.org/pypi/zc.buildout/2.2.1
+URL: https://pypi.python.org/pypi/zc.buildout/
 Version: %version
 %ifdef subver
 Release: %release.%subver
@@ -19,6 +21,10 @@ License: ZPL
 Group: Development/Python
 
 BuildRequires: %py_dependencies setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 The Buildout project provides support for creating applications,
@@ -26,6 +32,32 @@ especially Python applications.  It provides tools for assembling
 applications from multiple parts, Python or otherwise.  An application
 may actually contain multiple programs, processes, and configuration
 settings.
+
+%package -n python3-module-%oname
+Summary: The Buildout project provides support for creating Python applications
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The Buildout project provides support for creating applications,
+especially Python applications.  It provides tools for assembling
+applications from multiple parts, Python or otherwise.  An application
+may actually contain multiple programs, processes, and configuration
+settings.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Buildout
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing
+
+%description -n python3-module-%oname-tests
+The Buildout project provides support for creating applications,
+especially Python applications.  It provides tools for assembling
+applications from multiple parts, Python or otherwise.  An application
+may actually contain multiple programs, processes, and configuration
+settings.
+
+This package contains tests for Buildout
 
 %package tests
 Summary: Tests for Buildout
@@ -49,13 +81,38 @@ This package contains tests for Buildout
 %setup
 %endif
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_module_declare %python_sitelibdir/zc
 %python_build_install --optimize=2 --record=INSTALLED_FILES
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -65,6 +122,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt doc/*
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/zc/*/test*
@@ -72,7 +132,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt doc/*
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/zc/*/test*
+%exclude %python3_sitelibdir/zc/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/zc/*/test*
+%python3_sitelibdir/zc/*/*/test*
+%endif
+
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt2
+- Added module for Python 3
+
 * Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1
 - Version 2.2.1
 
