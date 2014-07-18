@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
 Version:        2.4
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
@@ -106,6 +107,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt3_7jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
