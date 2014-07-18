@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cal10n
 Version:        0.7.4
-Release:        alt3_9jpp7
+Release:        alt4_9jpp7
 Summary:        Compiler assisted localization library (CAL10N)
 
 Group:          Development/Java
@@ -119,6 +120,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt4_9jpp7
+- fixed build
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt3_9jpp7
 - fc update
 
