@@ -2,8 +2,8 @@
 %def_with python3
 
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.12
-Release: alt1.svn20130917
+Version: 0.13
+Release: alt1.svn20140708
 %setup_python_module %oname
 Name: %packagename
 # http://svn.code.sf.net/p/docutils/code/trunk/docutils/
@@ -83,8 +83,8 @@ popd
 install -d %buildroot%_datadir/%modulename
 cp -rp tools %buildroot%_datadir/%modulename
 
-install -p -m644 docutils/utils/roman.py \
-	%buildroot%python_sitelibdir
+#install -p -m644 docutils/utils/roman.py \
+#	%buildroot%python_sitelibdir
 
 export LC_ALL=en_US.UTF-8
 
@@ -101,7 +101,7 @@ popd
 %files -f INSTALLED_FILES
 %doc docs *.txt
 %_datadir/%modulename
-%python_sitelibdir/roman.py*
+#python_sitelibdir/roman.py*
 %if_with python3
 %exclude %_bindir/py3_*
 
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.svn20140708
+- Version 0.13
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt1.svn20130917
 - Version 0.12
 

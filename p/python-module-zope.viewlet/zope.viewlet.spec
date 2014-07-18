@@ -1,7 +1,10 @@
 %define oname zope.viewlet
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a1
+Release: alt2.a1
 Summary: Zope Viewlets
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope zope.browserpage zope.component zope.configuration
 %py_requires zope.contentprovider zope.event zope.i18nmessageid
@@ -20,6 +27,30 @@ BuildPreReq: python-devel python-module-distribute
 %description
 Viewlets provide a generic framework for building pluggable user
 interfaces.
+
+%package -n python3-module-%oname
+Summary: Zope Viewlets
+Group: Development/Python3
+%py3_requires zope zope.browserpage zope.component zope.configuration
+%py3_requires zope.contentprovider zope.event zope.i18nmessageid
+%py3_requires zope.interface zope.location zope.publisher zope.schema
+%py3_requires zope.security zope.traversing
+
+%description -n python3-module-%oname
+Viewlets provide a generic framework for building pluggable user
+interfaces.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Zope Viewlets
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing zope.size
+
+%description -n python3-module-%oname-tests
+Viewlets provide a generic framework for building pluggable user
+interfaces.
+
+This package contains tests for Zope Viewlets.
 
 %package tests
 Summary: Tests for Zope Viewlets
@@ -36,16 +67,36 @@ This package contains tests for Zope Viewlets.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -57,7 +108,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
+- Added module for Python 3
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
 - Version 4.0.0a1
 

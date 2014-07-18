@@ -1,7 +1,10 @@
 %define oname zope.app.locales
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 3.7.4
-Release: alt1
+Release: alt2
 Summary: Zope locale extraction and management utilities
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_requires zope.app zope.i18nmessageid zope.interface
 
@@ -20,6 +28,33 @@ messages that occur in Zope software. More specifically, i18n messages
 can occur in Python code, in Page Templates and in ZCML declarations.
 zope.app.locales provides a utility that can extract messages from all
 three and write them to a standard gettext template (pot file).
+
+%package -n python3-module-%oname
+Summary: Zope locale extraction and management utilities
+Group: Development/Python3
+%py3_requires zope.app zope.i18nmessageid zope.interface
+
+%description -n python3-module-%oname
+This package provides some facilities for extracting and managing i18n
+messages that occur in Zope software. More specifically, i18n messages
+can occur in Python code, in Page Templates and in ZCML declarations.
+zope.app.locales provides a utility that can extract messages from all
+three and write them to a standard gettext template (pot file).
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.app.locales
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.i18n zope.tal zope.testing
+
+%description -n python3-module-%oname-tests
+This package provides some facilities for extracting and managing i18n
+messages that occur in Zope software. More specifically, i18n messages
+can occur in Python code, in Page Templates and in ZCML declarations.
+zope.app.locales provides a utility that can extract messages from all
+three and write them to a standard gettext template (pot file).
+
+This package contains tests for zope.app.locales.
 
 %package tests
 Summary: Tests for zope.app.locales
@@ -39,12 +74,38 @@ This package contains tests for zope.app.locales.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
-%install
-%python_install
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build
+popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -54,6 +115,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/tests.*
@@ -61,7 +125,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/*/tests.*
+%python3_sitelibdir/*/*/*/*/tests.*
+%endif
+
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.4-alt2
+- Added module for Python 3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.4-alt1
 - Version 3.7.4
 
