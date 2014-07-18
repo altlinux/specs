@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: maven-antrun-plugin maven-clean-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt3_4jpp7
+Release:       alt4_4jpp7
 Summary:       Maven XML Plugin
 Group:         Development/Java
 License:       ASL 2.0
@@ -93,6 +94,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/xml-maven-plugin
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
