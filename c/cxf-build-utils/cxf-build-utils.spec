@@ -1,8 +1,9 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cxf-build-utils
 Version:          2.4.1
-Release:          alt2_4jpp7
+Release:          alt3_4jpp7
 Summary:          Apache CXF Build Utils
 Group:            Development/Java
 License:          ASL 2.0
@@ -80,6 +81,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt3_4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
