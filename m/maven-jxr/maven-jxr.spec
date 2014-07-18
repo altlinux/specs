@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jxr
 Version:        2.3
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Epoch:          0
 Summary:        Source cross referencing tool
 License:        ASL 2.0
@@ -155,6 +156,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadir}/maven-plugin-jxr*.jar
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_3jpp7
+- fixed build
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_3jpp7
 - applied repocop patches
 
