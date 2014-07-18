@@ -1,13 +1,13 @@
 
 Name:           kraft
-Version:        0.53
+Version:        0.55
 Release:        alt1
 
 Summary:        Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
 License:        GPL, LGPL
 Group:          Office
-URL:            http://kraft.sourceforge.net
+URL:            http://www.volle-kraft-voraus.de/
 
 Source0:        kraft-%{version}.tar.bz2
 
@@ -17,7 +17,9 @@ BuildRequires:  cmake
 BuildRequires:  kde4-nepomuk-core-devel
 BuildRequires:  kde4pimlibs-devel
 BuildRequires:  libctemplate-devel
+
 Requires: 	libctemplate python-module-Reportlab trmltools
+Requires:	akonadi
 
 %description
 Kraft is software for helping people drinving small businesses
@@ -49,6 +51,10 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 
 
 %changelog 
+* Fri Jul 18 2014 Andrey Cherepanov <cas@altlinux.org> 0.55-alt1
+- New version
+- Application strictly requires Akonadi for work
+
 * Tue Nov 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.53-alt1
 - new version 0.53
 
