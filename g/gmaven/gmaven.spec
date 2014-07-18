@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          gmaven
 Version:       1.4
-Release:       alt2_1jpp7
+Release:       alt3_1jpp7
 Summary:       Integration of Groovy into Maven
 Group:         Development/Java
 License:       ASL 2.0
@@ -324,6 +325,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_1jpp7
+- fixed build
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_1jpp7
 - rebuild with new apache-resource-bundles
 
