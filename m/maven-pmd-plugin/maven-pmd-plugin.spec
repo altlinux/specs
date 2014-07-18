@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-pmd-plugin
 Version:        2.7.1
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Maven PMD Plugin
 
 Group:          Development/Java
@@ -94,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt2_3jpp7
+- fixed build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_3jpp7
 - new fc release
 
