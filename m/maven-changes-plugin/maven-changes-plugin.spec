@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
 Version:        2.7.1
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Plugin to support reporting of changes between releases
 
 Group:          Development/Java
@@ -138,6 +139,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt3_2jpp7
+- fixed build
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt2_2jpp7
 - fixed deps
 
