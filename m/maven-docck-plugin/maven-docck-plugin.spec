@@ -1,8 +1,9 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-docck-plugin
 Version:        1.0
-Release:        alt1_8jpp7
+Release:        alt2_8jpp7
 Summary:        Maven Documentation Checker Plugin
 
 Group:          Development/Java
@@ -82,6 +83,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp7
+- fixed build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_8jpp7
 - new fc release
 
