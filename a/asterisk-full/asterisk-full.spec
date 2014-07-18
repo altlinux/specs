@@ -1,6 +1,10 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: asterisk-full
 Summary: Asterisk -- last stable version
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -13,7 +17,6 @@ Group: System/Servers
 BuildArch: noarch
 Conflicts: asterisk-full < %version-%release
 Provides: asterisk-full = %version-%release
-Requires: appliance-asterisk-office
 Requires: asterisk1.8-complete
 Requires: asterisk1.8-devel-doc
 Requires: asterisk1.8-sources
@@ -29,7 +32,6 @@ Summary: Asterisk 11 -- full package
 Group: System/Servers
 BuildArch: noarch
 Conflicts: asterisk-full < %version-%release
-Requires: appliance-asterisk-office
 Requires: asterisk11-sources
 Requires: asterisk11-complete
 Requires: asterisk11-chan_dongle
@@ -45,6 +47,9 @@ Asterisk -- last stable version
 %files -n asterisk11-full
 
 %changelog
+* Fri Jul 18 2014 Denis Smirnov <mithraen@altlinux.ru> 4.0.3-alt1
+- remove requires to appliance-asterisk-office
+
 * Fri Jul 05 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt1
 - import asterisk11-full and asterisk1.8-full as subpackages
 - remove asterisk-full virtual package
