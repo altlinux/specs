@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-scm
 Version:        1.7
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 Group:          Development/Java
@@ -190,6 +191,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_3jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
