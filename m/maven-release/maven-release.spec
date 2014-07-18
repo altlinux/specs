@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Release a project updating the POM and tagging in the SCM
 
 Group:          Development/Java
@@ -140,6 +141,9 @@ install -pm 644 %{name}-plugin/pom.xml  \
 
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_4jpp7
+- fixed build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt2_4jpp7
 - new fc release
 
