@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.2
-Release: alt1.dev.git20140319
+Release: alt2.dev.git20140319
 Summary: Zope Security Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -47,6 +47,16 @@ Requires: python3-module-zope.i18nmessageid
 The Security framework provides a generic mechanism to implement
 security policies on Python objects.
 
+%package -n python3-module-%oname-examples
+Summary: Examples for Zope Security Framework
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-examples
+The Security framework provides a generic mechanism to implement
+security policies on Python objects.
+
+This package contains examples for Zope Security Framework.
 
 %package -n python3-module-%oname-tests
 Summary: Tests for Zope Security Framework
@@ -175,13 +185,20 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/examples
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-examples
+%python3_sitelibdir/*/*/examples
 %endif
 
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2.dev.git20140319
+- Python 3: moved examples into separate package
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.dev.git20140319
 - Version 4.0.2dev
 - Added module for Python 3
