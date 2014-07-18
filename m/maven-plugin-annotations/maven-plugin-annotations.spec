@@ -1,9 +1,10 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Not to be confused with maven-annotation-plugin from code.google!
 Name:           maven-plugin-annotations
 Version:        3.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Maven Plugin Java 5 Annotations
 
 Group:          Development/Java
@@ -70,6 +71,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_2jpp7
+- fixed build
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_2jpp7
 - new release
 
