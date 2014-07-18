@@ -1,8 +1,8 @@
 %define module jpackage-default-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ ln -s 6.0 %buildroot/usr/share/distromap/jpackage/default
 /usr/share/distromap/*
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- db updates
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - db updates
 
