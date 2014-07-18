@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jasypt
 Version:       1.9.0
-Release:       alt1_2jpp7
+Release:       alt1_4jpp7
 Summary:       Java Simplified Encryption
 Group:         Development/Java
 License:       ASL 2.0
@@ -38,7 +42,7 @@ BuildRequires: apache-commons-codec
 BuildRequires: icu4j
 BuildRequires: tomcat-servlet-3.0-api
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -104,6 +108,9 @@ cp -pr target/site/api/jasypt/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_4jpp7
+- update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_2jpp7
 - new version
 
