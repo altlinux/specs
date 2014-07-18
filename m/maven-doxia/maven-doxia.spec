@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: bouncycastle-tsp
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-doxia
 Version:        1.2
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -223,6 +224,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_4jpp7
+- fixed build
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_4jpp7
 - use fc geronimo
 
