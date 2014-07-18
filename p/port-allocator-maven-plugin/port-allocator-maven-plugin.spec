@@ -1,8 +1,9 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		port-allocator-maven-plugin
 Version:	1.2
-Release:	alt2_3jpp7
+Release:	alt3_3jpp7
 Summary:	Port Allocator Maven Plugin
 
 Group:		Development/Java
@@ -85,6 +86,9 @@ install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_3jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
