@@ -1,22 +1,30 @@
-Name: maven-plugin-annotations
+Name: maven-plugin-tools-java
 Version: 3.1
-Summary: Maven Plugin Java 5 Annotations
+Summary: Maven Plugin Tool for Java
 License: ASL 2.0
 Url: http://maven.apache.org/plugin-tools/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-shared-plugin-tools-java
 Requires: java
 Requires: jpackage-utils
 Requires: maven
+Requires: maven-plugin-descriptor
 Requires: maven-plugin-tools
+Requires: maven-plugin-tools-api
+Requires: maven-project
+Requires: plexus-containers-component-annotations
+Requires: plexus-containers-container-default
+Requires: plexus-utils
+Requires: qdox
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: maven-plugin-annotations-3.1-5.fc18.cpio
+Release: alt0.1jpp
+Source: maven-plugin-tools-java-3.1-5.fc18.cpio
 
 %description
-This package contains Java 5 annotations to use in Mojos.
+Descriptor extractor for plugins written in Java.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
@@ -36,14 +44,7 @@ done
 %files -f %name-list
 
 %changelog
-* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt2jpp
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
-
-%changelog
-* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_2jpp7
-- fixed build
-
-* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_2jpp7
-- new release
 
