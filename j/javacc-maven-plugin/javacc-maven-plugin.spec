@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt1_10jpp7
+Release:        alt2_10jpp7
 Summary:        JavaCC Maven Plugin
 
 Group:          Development/Java
@@ -89,6 +90,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt2_10jpp7
+- fixed build
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_10jpp7
 - fc update
 
