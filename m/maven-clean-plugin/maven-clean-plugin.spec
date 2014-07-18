@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-clean-plugin
 Version:        2.5
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Maven Clean Plugin
 
 Group:          Development/Java
@@ -80,6 +81,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_2jpp7
+- fixed build
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2jpp7
 - new release
 
