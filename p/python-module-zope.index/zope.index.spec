@@ -1,7 +1,10 @@
 %define oname zope.index
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt2
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope ZODB3 zope.interface
 
@@ -22,6 +29,37 @@ These include:
   * a keyword index,
   * a topic index,
   * a text index (with support for lexicon, splitter, normalizer, etc.)
+
+%package -n python3-module-%oname
+Summary: Indices for using with catalog like text, field, etc.
+Group: Development/Python3
+%py3_requires zope ZODB3 zope.interface
+
+%description -n python3-module-%oname
+The zope.index package provides several indices for the Zope catalog.
+These include:
+
+  * a field index (for indexing orderable values),
+  * a keyword index,
+  * a topic index,
+  * a text index (with support for lexicon, splitter, normalizer, etc.)
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.index
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing
+
+%description -n python3-module-%oname-tests
+The zope.index package provides several indices for the Zope catalog.
+These include:
+
+  * a field index (for indexing orderable values),
+  * a keyword index,
+  * a topic index,
+  * a text index (with support for lexicon, splitter, normalizer, etc.)
+
+This package contains tests for zope.index.
 
 %package tests
 Summary: Tests for zope.index
@@ -43,11 +81,27 @@ This package contains tests for zope.index.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc *.txt
@@ -60,7 +114,25 @@ This package contains tests for zope.index.
 %python_sitelibdir/*/*/tests*
 %python_sitelibdir/*/*/*/tests*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests*
+%exclude %python3_sitelibdir/*/*/*/tests*
+%exclude %python3_sitelibdir/*/*/*/*/tests*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests*
+%python3_sitelibdir/*/*/*/tests*
+%python3_sitelibdir/*/*/*/*/tests*
+%endif
+
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
+- Added module for Python 3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1
 
