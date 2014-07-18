@@ -1,10 +1,11 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global ver_suffix -alpha-1
 
 Name:           maven-plugin-testing
 Version:        2.0
-Release:        alt1_4.alpha1jpp7
+Release:        alt2_4.alpha1jpp7
 Summary:        Maven Plugin Testing
 
 Group:          Development/Java
@@ -144,6 +145,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/%{name}-maven-test-tools
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_4.alpha1jpp7
+- fixed build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_4.alpha1jpp7
 - new fc release
 
