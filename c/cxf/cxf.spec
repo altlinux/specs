@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 Name:           cxf
 Epoch:          1
 Version:        2.6.9
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Apache CXF
 License:        ASL 2.0
 Group:          Development/Java
@@ -536,6 +537,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.6.9-alt2_1jpp7
+- fixed build
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.6.9-alt1_1jpp7
 - update
 
