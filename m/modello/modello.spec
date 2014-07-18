@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           modello
 Version:        1.5
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Epoch:          0
 Summary:        Modello Data Model toolkit
 License:        MIT
@@ -173,6 +174,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_3jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
