@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-tools
 Version:        2.7
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Epoch:          0
 Summary:        Maven Plugin Tools
 
@@ -264,6 +265,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/maven-plugin-plugin
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt2_6jpp7
+- fixed build
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_6jpp7
 - new version
 
