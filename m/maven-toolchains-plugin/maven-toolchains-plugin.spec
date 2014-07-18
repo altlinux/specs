@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-toolchains-plugin
 Version:	1.0
-Release:	alt2_4jpp7
+Release:	alt3_4jpp7
 Summary:	Maven plugin for sharing configuration across projects
 
 Group:		Development/Java
@@ -75,6 +76,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
