@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        23
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Maven Plugins POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -44,6 +45,9 @@ install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt2_2jpp7
+- fixed build
+
 * Tue Jul 15 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt1_2jpp7
 - new version
 
