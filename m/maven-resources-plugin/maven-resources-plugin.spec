@@ -1,8 +1,9 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-resources-plugin
 Version:        2.5
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Maven Resources Plugin
 
 Group:          Development/Java
@@ -99,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_6jpp7
+- fixed build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_6jpp7
 - new fc release
 
