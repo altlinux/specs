@@ -1,5 +1,5 @@
 Name: xorg-fontsproto-devel
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: X.org FontsProto protocol headers
@@ -39,6 +39,9 @@ X.org FontsProto protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 18 2014 Valery Inozemtsev <shrek@altlinux.ru> 2.1.3-alt1
+- 2.1.3
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.1.2-alt1
 - 2.1.2
 
