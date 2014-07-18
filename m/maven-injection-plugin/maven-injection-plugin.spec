@@ -1,9 +1,10 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-injection-plugin
 Version:          1.0.2
-Release:          alt2_5jpp7
+Release:          alt3_5jpp7
 Summary:          Bytecode injection at Maven build time
 Group:            Development/Java
 License:          LGPLv2+
@@ -84,6 +85,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_5jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
