@@ -15,8 +15,8 @@
 %define nv_version 304
 %define nv_release 121
 %define nv_minor %nil
-%define pkg_rel alt119
-%def_enable kernelsource
+%define pkg_rel alt120
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -320,6 +320,9 @@ fi
 %endif
 
 %changelog
+* Fri Jul 18 2014 Sergey V Turchin <zerg@altlinux.org> 304.121-alt120
+- don't package kernel module sources
+
 * Fri May 16 2014 Sergey V Turchin <zerg@altlinux.org> 304.121-alt119
 - add patch against 3.14 kernel
 
