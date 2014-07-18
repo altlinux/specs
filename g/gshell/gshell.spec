@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          gshell
 Version:       2.6.5
-Release:       alt2_3jpp7
+Release:       alt3_3jpp7
 Summary:       A command-line shell framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -257,6 +258,9 @@ cp -p target/maven-shared-archive-resources/META-INF/NOTICE.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.5-alt3_3jpp7
+- fixed build
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.5-alt2_3jpp7
 - rebuild with new apache-resource-bundles
 
