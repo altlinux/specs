@@ -1,7 +1,10 @@
 %define oname zope.password
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Password encoding and checking utilities
 License: ZPL
 Group: Development/Python
@@ -10,13 +13,38 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope zope.component zope.configuration zope.interface
 
 %description
 This package provides a password manager mechanism. Password manager is
 an utility object that can encode and check encoded passwords.
+
+%package -n python3-module-%oname
+Summary: Password encoding and checking utilities
+Group: Development/Python3
+%py3_requires zope zope.component zope.configuration zope.interface
+
+%description -n python3-module-%oname
+This package provides a password manager mechanism. Password manager is
+an utility object that can encode and check encoded passwords.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.password
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.schema
+
+%description -n python3-module-%oname-tests
+This package provides a password manager mechanism. Password manager is
+an utility object that can encode and check encoded passwords.
+
+This package contains tests for zope.password.
 
 %package tests
 Summary: Tests for zope.password
@@ -33,12 +61,37 @@ This package contains tests for zope.password.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
-%install
-%python_install
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -48,6 +101,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -55,7 +111,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
+- Added module for Python 3
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 

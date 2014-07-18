@@ -1,7 +1,10 @@
 %define oname zope.app.testing
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 3.10.0
-Release: alt1
+Release: alt2
 Summary: Zope Application Testing Support
 License: ZPL
 Group: Development/Python
@@ -10,7 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_requires zope.annotation zope.app.appsetup
 %py_requires zope.processlifetime zope.app.debug zope.app.dependable
@@ -18,10 +26,8 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires zope.i18n zope.interface zope.password zope.publisher
 %py_requires zope.schema zope.security zope.site zope.testing
 %py_requires zope.testbrowser zope.traversing
-
 %py_requires ZODB3 zope.app.authentication zope.app.zcmlfiles zope.login
 %py_requires zope.publisher zope.securitypolicy
-
 Requires: python-module-zope.app = %EVR
 
 %description
@@ -29,6 +35,39 @@ This package provides testing support for Zope 3 applications. Besides
 providing numerous setup convenience functions, it implements a testing
 setup that allows the user to make calls to the publisher allowing to
 write functional tests.
+
+%package -n python3-module-%oname
+Summary: Zope Application Testing Support
+Group: Development/Python3
+%py3_requires zope.annotation zope.app.appsetup
+%py3_requires zope.processlifetime zope.app.debug zope.app.dependable
+%py3_requires zope.app.publication zope.component zope.container
+%py3_requires zope.i18n zope.interface zope.password zope.publisher
+%py3_requires zope.schema zope.security zope.site zope.testing
+%py3_requires zope.testbrowser zope.traversing
+%py3_requires ZODB3 zope.app.authentication zope.app.zcmlfiles zope.login
+%py3_requires zope.publisher zope.securitypolicy
+Requires: python3-module-zope.app = %EVR
+
+%description -n python3-module-%oname
+This package provides testing support for Zope 3 applications. Besides
+providing numerous setup convenience functions, it implements a testing
+setup that allows the user to make calls to the publisher allowing to
+write functional tests.
+
+%package -n python3-module-zope.app
+Summary: Core files for zope.app
+Group: Development/Python3
+Requires: python3-module-zope
+%py3_provides zope.app
+
+%description -n python3-module-zope.app
+This package provides testing support for Zope 3 applications. Besides
+providing numerous setup convenience functions, it implements a testing
+setup that allows the user to make calls to the publisher allowing to
+write functional tests.
+
+This package contains core files for zope.app.
 
 %package -n python-module-zope.app
 Summary: Core files for zope.app
@@ -47,19 +86,41 @@ This package contains core files for zope.app.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+sed -i 's|rfc822|rfc822py3|g' $(find ./ -name '*.py')
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
-
 touch %buildroot%python_sitelibdir/zope/app/__init__.py
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+touch %buildroot%python3_sitelibdir/zope/app/__init__.py
+%endif
 
 %files
 %doc *.txt
@@ -70,7 +131,23 @@ touch %buildroot%python_sitelibdir/zope/app/__init__.py
 %files -n python-module-zope.app
 %python_sitelibdir/zope/app/__init__.py*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/zope/app/__init__.py
+%exclude %python3_sitelibdir/zope/app/__pycache__/__init__.*
+
+%files -n python3-module-zope.app
+%python3_sitelibdir/zope/app/__init__.py
+%python3_sitelibdir/zope/app/__pycache__/__init__.*
+%endif
+
 %changelog
+* Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt2
+- Added module for Python 3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt1
 - Version 3.10.0
 

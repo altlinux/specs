@@ -1,7 +1,10 @@
 %define oname zope.intid
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2.a1
+Release: alt3.a1
 Summary: Integer Id Utility
 License: ZPLv2.1
 Group: Development/Python
@@ -10,9 +13,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
-%py_requires zope zope.lifecycleevent zope.component zope.event
+%py_requires zope zope.lifecycleevent zope.component zope.event ZODB3
 %py_requires zope.interface zope.keyreference zope.location zope.security
 
 %description
@@ -21,6 +28,34 @@ objects can be looked up by their id as well. This functionality is
 commonly used in situations where dealing with objects is undesirably,
 such as in search indices or any code that needs an easy hash of an
 object.
+
+%package -n python3-module-%oname
+Summary: Integer Id Utility
+Group: Development/Python3
+%py3_requires zope zope.lifecycleevent zope.component zope.event ZODB3
+%py3_requires zope.interface zope.keyreference zope.location zope.security
+
+%description -n python3-module-%oname
+This package provides an API to create integer ids for any object. Later
+objects can be looked up by their id as well. This functionality is
+commonly used in situations where dealing with objects is undesirably,
+such as in search indices or any code that needs an easy hash of an
+object.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.intid
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing zope.site zope.traversing zope.container
+
+%description -n python3-module-%oname-tests
+This package provides an API to create integer ids for any object. Later
+objects can be looked up by their id as well. This functionality is
+commonly used in situations where dealing with objects is undesirably,
+such as in search indices or any code that needs an easy hash of an
+object.
+
+This package contains tests for zope.intid.
 
 %package tests
 Summary: Tests for zope.intid
@@ -40,16 +75,36 @@ This package contains tests for zope.intid.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -61,7 +116,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 %changelog
+* Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3.a1
+- Added module for Python 3
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
 - Avoid requirement on ZODB3
 
