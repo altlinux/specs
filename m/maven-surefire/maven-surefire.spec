@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-surefire
 Version:        2.12
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0
@@ -378,6 +379,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.12-alt2_5jpp7
+- fixed build
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.12-alt1_5jpp7
 - complete build
 
