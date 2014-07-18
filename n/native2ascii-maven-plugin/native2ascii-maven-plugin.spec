@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 BuildRequires: maven-clean-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          native2ascii-maven-plugin
 Version:       1.0
-Release:       alt2_0.2.beta1jpp7
+Release:       alt3_0.2.beta1jpp7
 Summary:       Native2Ascii Maven Plugin
 Group:         Development/Java
 License:       MIT
@@ -89,6 +90,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.2.beta1jpp7
+- fixed build
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.2.beta1jpp7
 - fixed build
 
