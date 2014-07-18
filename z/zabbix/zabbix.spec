@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -317,16 +317,16 @@ install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A
 
 # start scripts
 install -pDm0755 sources/%{name}_agentd.init %buildroot%_initdir/%{name}_agentd
-install -pDm0755 sources/%{name}_agentd.service %buildroot%_unitdir/%{name}_agentd.service
+install -pDm0644 sources/%{name}_agentd.service %buildroot%_unitdir/%{name}_agentd.service
 install -pDm0644 sources/zabbix_server %buildroot%_sysconfdir/sysconfig/zabbix_server
 %if_with pgsql
 install -pDm0755 sources/%{name}_pgsql.init %buildroot%_initdir/%{name}_pgsql
-install -pDm0755 sources/%{name}_pgsql.service %buildroot%_unitdir/%{name}_pgsql.service
+install -pDm0644 sources/%{name}_pgsql.service %buildroot%_unitdir/%{name}_pgsql.service
 %endif
 install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
-install -pDm0755 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
+install -pDm0644 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
-install -pDm0755 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
+install -pDm0644 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
 
 # migrator
 install -m0755 sources/zabbix.migrate.sh migrate.sh
@@ -461,6 +461,10 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Fri Jul 18 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.5-alt1
+- 2.2.5
+- Removed executable permission bits on *.service (ALT#30177)
+
 * Tue Jun 24 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.4-alt1
 - 2.2.4
 
