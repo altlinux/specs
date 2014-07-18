@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -6,7 +7,7 @@ Name:           xbean
 Version:        3.11.1
 BuildArch:      noarch
 
-Release:        alt3_3jpp7
+Release:        alt4_3jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -237,6 +238,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.11.1-alt4_3jpp7
+- fixed build
+
 * Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.11.1-alt3_3jpp7
 - restored rcp dep
 
