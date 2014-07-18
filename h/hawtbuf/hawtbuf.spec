@@ -1,3 +1,4 @@
+BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          hawtbuf
 Version:       1.9
-Release:       alt2_2jpp7
+Release:       alt3_2jpp7
 Summary:       A rich byte buffer library
 Group:         Development/Java
 License:       ASL 2.0
@@ -131,6 +132,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt notice.md
 
 %changelog
+* Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_2jpp7
+- fixed build
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_2jpp7
 - fixed maven1 dependency
 
