@@ -1,47 +1,87 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global bootstrap 0
 
 Name:           maven-javadoc-plugin
-Version:        2.8.1
-Release:        alt2_2jpp7
+Version:        2.9.1
+Release:        alt1_1.1jpp7
 Summary:        Maven Javadoc Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         remove-test-deps.patch
-Patch1:         pom.patch
-Patch2:         reduce-exceptions.patch
-Patch3:         %{name}-compat.patch
+Patch0:         reduce-exceptions.patch
 
-BuildRequires:  maven
+BuildRequires:  apache-commons-io
+BuildRequires:  apache-commons-lang
+BuildRequires:  apache-commons-logging
+BuildRequires:  httpcomponents-client
+BuildRequires:  log4j
+BuildRequires:  maven-local
+BuildRequires:  maven-archiver
+BuildRequires:  maven-artifact
+BuildRequires:  maven-artifact-manager
 BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-common-artifact-filters
 BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-doxia
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-model
+BuildRequires:  maven-plugin-annotations
 BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  maven-project
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-settings
 BuildRequires:  maven-shade-plugin
-BuildRequires:  plexus-interactivity
 BuildRequires:  maven-shared-invoker
-BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-shared-reporting-api
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-toolchain
+BuildRequires:  maven-wagon
 BuildRequires:  modello
+BuildRequires:  plexus-archiver
+BuildRequires:  plexus-containers-container-default
+BuildRequires:  plexus-interactivity
+BuildRequires:  plexus-utils
+BuildRequires:  qdox
 %if ! %{bootstrap}
 BuildRequires:  maven-javadoc-plugin
 %endif        
 
-Requires:       jpackage-utils
+Requires:       apache-commons-io
+Requires:       apache-commons-lang
+Requires:       apache-commons-logging
+Requires:       httpcomponents-client
+Requires:       log4j
 Requires:       maven
+Requires:       maven-archiver
+Requires:       maven-artifact
+Requires:       maven-artifact-manager
+Requires:       maven-common-artifact-filters
+Requires:       maven-doxia
+Requires:       maven-doxia-sitetools
+Requires:       maven-model
+Requires:       maven-plugin-annotations
+Requires:       maven-project
+Requires:       maven-settings
 Requires:       maven-shared-invoker
+Requires:       maven-shared-reporting-api
+Requires:       maven-toolchain
+Requires:       maven-wagon
+Requires:       plexus-archiver
+Requires:       plexus-containers-container-default
+Requires:       plexus-interactivity
+Requires:       plexus-utils
+Requires:       qdox
 
 BuildArch: noarch
 
@@ -67,11 +107,19 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0 -b .sav
 # Update source for use with newer doxia
-%patch1
-%patch2
-%patch3 -p1
+%patch0
+
+# Remove test dependencies because tests are skipped anyways.
+%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+
+%pom_add_dep org.codehaus.plexus:plexus-interactivity-api pom.xml "
+<exclusions>
+    <exclusion>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-component-api</artifactId>
+    </exclusion>
+</exclusions>"
 
 sed -i -e "s|org.apache.maven.doxia.module.xhtml.decoration.render|org.apache.maven.doxia.sink.render|g" src/main/java/org/apache/maven/plugin/javadoc/JavadocReport.java
 
@@ -104,17 +152,19 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 rm -rf target/site/api*
 %endif
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE NOTICE 
 
 %if ! %{bootstrap}
 %files javadoc
+%doc LICENSE NOTICE 
 %{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_1.1jpp7
+- update
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt2_2jpp7
 - fixed build
 
