@@ -1,8 +1,10 @@
-%define version 0.7.6
+%define version 0.8.4
 %define release alt1
 %define oname south
 %setup_python_module %oname
 %add_python_req_skip cx_Oracle
+
+%def_with python3
 
 Name: python-module-%oname
 Version:%version
@@ -21,23 +23,139 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Mon Mar 01 2010
 BuildRequires: python-devel
 
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
+
 %description
 South is an intelligent database migrations library for the Django web framework.
 It is database-independent and DVCS-friendly, as well as a whole host of other features.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+South is an intelligent database migrations library for the Django web framework.
+It is database-independent and DVCS-friendly, as well as a whole host of other features.
+
+This package contains tests for %oname.
+
+%package pickles
+Summary: Pickles for %oname
+Group: Development/Python
+
+%description pickles
+South is an intelligent database migrations library for the Django web framework.
+It is database-independent and DVCS-friendly, as well as a whole host of other features.
+
+This package contains pickles for %oname.
+
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+
+%description docs
+South is an intelligent database migrations library for the Django web framework.
+It is database-independent and DVCS-friendly, as well as a whole host of other features.
+
+This package contains documentation for %oname.
+
+%package -n python3-module-%oname
+Summary: Migrations for Django
+Group: Development/Python3
+%add_python3_req_skip cx_Oracle
+
+%description -n python3-module-%oname
+South is an intelligent database migrations library for the Django web framework.
+It is database-independent and DVCS-friendly, as well as a whole host of other features.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+South is an intelligent database migrations library for the Django web framework.
+It is database-independent and DVCS-friendly, as well as a whole host of other features.
+
+This package contains tests for %oname.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs pickle
+%make -C docs html
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+
 %files
+%doc AUTHORS README
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/*/*/test.*
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
+
+%files tests
+%python_sitelibdir/*/test*
+%python_sitelibdir/*/*/*/test.*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS README
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test.*
+%exclude %python3_sitelibdir/*/*/*/*/test.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test.*
+%python3_sitelibdir/*/*/*/*/test.*
+%endif
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
+- Version 0.8.4
+- Added module for Python 3
+
 * Thu Feb 28 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7.6-alt1
 - 0.7.6
 
