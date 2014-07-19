@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-filtering
 Version:          1.0
-Release:          alt2_8jpp7
+Release:          alt2_9jpp7
 Summary:          Shared component providing resource filtering
 Group:            Development/Java
 License:          ASL 2.0
@@ -76,10 +77,13 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc LICENSE
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
+- new release
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp7
 - full build
 
