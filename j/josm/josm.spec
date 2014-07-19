@@ -6,12 +6,12 @@ BuildRequires: jpackage-compat
 #
 # spec file for package josm
 
-%global svn_revision 5608
+%global svn_revision 6115
 
 
 Name:           josm
 Version:        0
-Release:        alt1_0.38.5608svnjpp7
+Release:        alt1_0.47.6115svnjpp7
 Summary:        An editor for  OpenStreetMap (OSM)
 Group:          Networking/WWW
 License:        GPLv2+
@@ -42,7 +42,7 @@ BuildRequires:  metadata-extractor >= 2.3.1
 BuildRequires:  svgsalamander
 BuildRequires:  apache-commons-codec
 BuildRequires:  gnu-getopt
-BuildRequires:  gdata-java
+#BuildRequires:  gdata-java
 Requires:       jpackage-utils
 Requires:       icon-theme-hicolor
 Requires:       metadata-extractor >= 2.3.1
@@ -50,8 +50,8 @@ Requires:       ant
 Requires:       signpost-core >= 1.2.1.1
 Requires:       svgsalamander
 Requires:       gnu-getopt
-Requires:       gdata-java
 Source44: import.info
+#Requires:       gdata-java
 
 %description
 JOSM is an editor for OpenStreetMap (OSM) written in Java 
@@ -72,7 +72,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
@@ -140,6 +140,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %SOURCE2
 
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.47.6115svnjpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.38.5608svnjpp7
 - fc update
 
