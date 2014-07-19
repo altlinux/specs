@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:           mercury
 Version:        1.0
-Release:        alt1_0.11.alpha6jpp7
+Release:        alt1_0.12.alpha6jpp7
 Summary:        Replacement for the Maven Artifact subsystem
 
 Group:          Development/Java
@@ -45,7 +45,6 @@ BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-wagon
 BuildRequires:  plexus-archiver
 BuildRequires:  plexus-compiler
-BuildRequires:  plexus-container-default
 BuildRequires:  plexus-digest
 BuildRequires:  plexus-i18n
 BuildRequires:  plexus-utils
@@ -109,6 +108,9 @@ cp -a target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.12.alpha6jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.11.alpha6jpp7
 - update
 
