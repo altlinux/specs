@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 1.11.1
-Release: alt1.git20130921
+Release: alt1.git20140716
 
 Summary: DNS toolkit
 License: BSD-like
@@ -59,6 +59,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20140716
+- New snapshot
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20130921
 - Version 1.11.1
 
