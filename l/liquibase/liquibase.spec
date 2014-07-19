@@ -1,23 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 2.0.5
-Release: alt1_2jpp7
+Version: 3.0.7
+Release: alt1_4jpp7
 License: ASL 2.0
 Group: Databases
 
 # Liquibase does not distribute source releases. To generate:
 #   git clone https://github.com/liquibase/liquibase.git
-#   cd liquibase-core/
-#   git archive --prefix=liquibase-2.0.5/ liquibase-parent-2.0.5 liquibase-core/ samples/ changelog.txt LICENSE.txt | gzip >liquibase-2.0.5.tar.gz
+#   cd liquibase/
+#   git archive --format=tar.gz --prefix=liquibase-3.0.7/ liquibase-parent-3.0.7 liquibase-core/ changelog.txt LICENSE.txt pom.xml > liquibase-3.0.7.tar.gz
 Source0: %{name}-%{version}.tar.gz
 Source1: build.xml
-# Our custom launcher script:
-Source2: liquibase
 
 BuildRequires: jpackage-utils
 %if 0%{?rhel} && 0%{?rhel} <= 6
@@ -39,40 +37,66 @@ for tracking, managing and applying database changes. It is built on a simple
 premise: All database changes are stored in a human readable but tracked in
 source control.
 
+%package javadoc
+Group: Development/Java
+Summary: API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains %{summary}.
+
 %prep
 %setup -q
-cp -p %SOURCE1 liquibase-core/
-cp -p %SOURCE2 .
+cp -p %SOURCE1 %{name}-core/
 
-# Remove the Spring wrapper, this is not available as a build dependency:
-rm liquibase-core/src/main/java/liquibase/integration/spring/SpringLiquibase.java
+# Remove the Spring wrapper; this is not available as a build dependency:
+rm %{name}-core/src/main/java/liquibase/integration/spring/SpringLiquibase.java
+rm %{name}-core/src/main/java/liquibase/integration/spring/MultiTenantSpringLiquibase.java
+
+# Liquibase requires snakeyaml which is not available in EPEL.
+rm %{name}-core/src/main/java/liquibase/parser/core/yaml/YamlChangeLogParser.java
+rm %{name}-core/src/main/java/liquibase/parser/core/json/JsonChangeLogParser.java
+rm %{name}-core/src/main/java/liquibase/serializer/core/yaml/YamlChangeLogSerializer.java
+rm %{name}-core/src/main/java/liquibase/serializer/core/json/JsonChangeLogSerializer.java
+
+%{__mkdir} -p %{name}-core/lib
+build-jar-repository -s -p %{name}-core/lib ant servlet
 
 %build
-cd liquibase-core
-ant -Dlibdir=%{_datarootdir}/java clean package
-javadoc -sourcepath src/main/java/ -d javadoc/ liquibase
+ant -f %{name}-core/build.xml clean package javadoc
 
 %install
 %{__mkdir} -p %{buildroot}%{_bindir}
-%{__install} -d -m 755 %{buildroot}%{_javadir}
+%{__install} -d -m 755 %{buildroot}%{_javadir}/%{name}
+%{__install} -m 0644 -D -p %{name}-core/dist/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}/%{name}-core.jar
+pushd %{buildroot}%{_javadir}
+ln -sf %{name}/%{name}-core.jar %{name}.jar
+popd
+%jpackage_script liquibase.integration.commandline.Main "" "" %{name} %{name} true
+
+# javadoc
 %{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-%{__install} -m 0644 -D -p liquibase-core/dist/lib/liquibase.jar %{buildroot}%{_javadir}
-%{__install} -m 0755 -D -p liquibase %{buildroot}%{_bindir}
-%{__install} -m 0755 -D -p liquibase %{buildroot}%{_bindir}
-cp -R liquibase-core/javadoc %{buildroot}%{_javadocdir}/%{name}
+cp -rp %{name}-core/dist/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files
-%doc samples changelog.txt LICENSE.txt
-%{_javadocdir}/liquibase/*
+%doc changelog.txt LICENSE.txt
+%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/%{name}-core.jar
+%{_javadir}/%{name}.jar
 %{_bindir}/%{name}
-%{_javadir}/liquibase.jar
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
+%files javadoc
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.7-alt1_4jpp7
+- update
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt1_2jpp7
 - new version
 
