@@ -6,6 +6,7 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        3.6.0
-Release:        alt1_6jpp7
+Release:        alt1_11jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -48,12 +49,9 @@ Source0:        http://www.apache.org/dist/lucene/java/%{version}/%{name}-%{vers
 Source1:        lucene-%{version}-core-OSGi-MANIFEST.MF
 Source2:        lucene-%{version}-analysis-OSGi-MANIFEST.MF
 Source3:        ivy-conf.xml
-#svn checkout http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_3_6_0/dev-tools
+#svn export http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_3_6_0/dev-tools@r1416452
 #tar caf dev-tools.tar.xz dev-tools/
 Source4:        dev-tools.tar.xz
-Patch1:         0001-Remove-bdb-packageset.patch
-Patch2:         0002-Fix-version-string.patch
-Patch3:         0003-Remove-classpath.patch
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
@@ -67,11 +65,14 @@ BuildRequires:  apache-commons-digester
 BuildRequires:  unzip
 BuildRequires:  zip
 BuildRequires:  apache-commons-compress
-BuildRequires:  icu4j
 BuildRequires:  apache-ivy
 BuildRequires:  lucene
 # for tests
 BuildRequires:  subversion
+# BR for lucene-contrib
+%if 0%{?fedora}
+BuildRequires:  icu4j
+%endif
 
 Provides:       lucene-core = %{epoch}:%{version}-%{release}
 # previously used by eclipse but no longer needed
@@ -97,6 +98,7 @@ BuildArch: noarch
 %description javadoc
 %{summary}.
 
+%if 0%{?fedora}
 %package contrib
 Summary:        Lucene contributed extensions
 Group:          Development/Java
@@ -104,6 +106,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description contrib
 %{summary}.
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -114,10 +117,6 @@ tar xfs %{SOURCE4}
 pushd dev-tools
 find . -name "pom.xml.template" -exec sed -i "s/@version@/%{version}/g" '{}' \;
 popd
-
-#%patch1 -p1 -b .db-javadoc
-#%patch2 -p1 -b .fixmanifests
-#%patch3 -p1 -b .removeclasspath
 
 iconv --from=ISO-8859-1 --to=UTF-8 CHANGES.txt > CHANGES.txt.new
 
@@ -137,7 +136,8 @@ sed -i -e "s|jakarta-regexp|regexp|g" contrib/queries/ivy.xml
 mkdir -p docs
 mkdir -p lib
 export OPT_JAR_LIST="ant/ant-junit junit"
-export CLASSPATH=$(build-classpath jline jtidy regexp commons-digester apache-commons-compress icu4j ivy)
+export CLASSPATH=$(build-classpath jline jtidy regexp commons-digester apache-commons-compress ivy)
+
 
 ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
   -Djavacc.home=%{_bindir}/javacc \
@@ -147,14 +147,29 @@ ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
   -Dversion=%{version} \
   -Dfailonjavadocwarning=false \
   -Dmaven-tasks.uptodate=true \
-  jar-lucene-core jar-test-framework docs javadocs build-contrib
-        
+  jar-lucene-core docs javadocs-core
+
+%if 0%{?fedora}
+export CLASSPATH=$(build-classpath jline jtidy regexp commons-digester apache-commons-compress icu4j ivy)
+ant -Divy.settings.file=ivy-conf.xml -Dbuild.sysclasspath=first \
+  -Djavacc.home=%{_bindir}/javacc \
+  -Djavacc.jar=%{_javadir}/javacc.jar \
+  -Djavacc.jar.dir=%{_javadir} \
+  -Djavadoc.link=file://%{_javadocdir}/java \
+  -Dversion=%{version} \
+  -Dfailonjavadocwarning=false \
+  -Dmaven-tasks.uptodate=true \
+  jar-test-framework javadocs build-contrib
+%endif
+    
 # add missing OSGi metadata to manifests
 mkdir META-INF
 unzip -o build/core/lucene-core-%{version}.jar META-INF/MANIFEST.MF
 cp %{SOURCE1} META-INF/MANIFEST.MF
 sed -i '/^\r$/d' META-INF/MANIFEST.MF
 zip -u build/core/lucene-core-%{version}.jar META-INF/MANIFEST.MF
+
+%if 0%{?fedora}
 unzip -o build/contrib/analyzers/common/lucene-analyzers-%{version}.jar META-INF/MANIFEST.MF
 cp %{SOURCE2} META-INF/MANIFEST.MF
 sed -i '/^\r$/d' META-INF/MANIFEST.MF
@@ -162,6 +177,7 @@ zip -u build/contrib/analyzers/common/lucene-analyzers-%{version}.jar META-INF/M
 
 mv build/contrib/analyzers/common build/contrib/analyzers/analyzers
 mv dev-tools/maven/lucene/contrib/analyzers/common dev-tools/maven/lucene/contrib/analyzers/analyzers
+%endif
 
 %install
 
@@ -169,11 +185,20 @@ mv dev-tools/maven/lucene/contrib/analyzers/common dev-tools/maven/lucene/contri
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
 install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 0644 build/core/%{name}-core-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+ln -sf %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-core.jar
+
+# core pom + parents
 install -m 0644 dev-tools/maven/lucene/core/pom.xml.template \
            $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-core.pom
-ln -sf %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-core.jar
 %add_maven_depmap JPP-lucene-core.pom %{name}-core.jar
+install -m 0644 dev-tools/maven/lucene/pom.xml.template \
+       $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-parent.pom
+%add_maven_depmap JPP-lucene-parent.pom
+install -m 0644 dev-tools/maven/pom.xml.template \
+       $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-solr-grandparent.pom
+%add_maven_depmap JPP-lucene-solr-grandparent.pom
 
+%if 0%{?fedora}
 # contrib jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}-contrib
 for c in benchmark demo facet grouping highlighter \
@@ -197,16 +222,11 @@ for c in analyzers kuromoji phonetic smartcn stempel; do
     %add_maven_depmap JPP.lucene-contrib-lucene-$c.pom %{name}-contrib/%{name}-${c}.jar
 done
 
-# main poms
+# contrib pom
 install -m 0644 dev-tools/maven/lucene/contrib/pom.xml.template \
        $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-contrib.pom
 %add_maven_depmap JPP-lucene-contrib.pom
-install -m 0644 dev-tools/maven/lucene/pom.xml.template \
-       $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-parent.pom
-%add_maven_depmap JPP-lucene-parent.pom
-install -m 0644 dev-tools/maven/pom.xml.template \
-       $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-solr-grandparent.pom
-%add_maven_depmap JPP-lucene-solr-grandparent.pom
+%endif
 
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -224,11 +244,16 @@ cp -pr build/docs/api/* \
 %doc LICENSE.txt
 %{_javadocdir}/%{name}
 
+%if 0%{?fedora}
 %files contrib
 %{_javadir}/%{name}-contrib
 %doc contrib/CHANGES.txt
+%endif
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_11jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_6jpp7
 - new version
 
