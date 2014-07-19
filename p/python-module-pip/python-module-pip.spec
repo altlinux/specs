@@ -1,36 +1,121 @@
-%define version 1.0
+%define version 1.5.6
 %define release alt1
 %setup_python_module pip
+
+%def_with python3
 
 Summary: pip installs packages.  Python packages.  An easy_install replacement
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 Source0: %modulename.tar
+Patch: pip-1.5.6-alt-python3.patch
 License: MIT
 Group: Development/Python
 BuildArch: noarch
 URL: http://www.pip-installer.org
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools-tests
+%endif
 
 %description
 %summary
 
+%package pickles
+Summary: Pickles for pip
+Group: Development/Python
+
+%description pickles
+%summary
+
+This package contains pickles for pip.
+
+%package docs
+Summary: Documentation for pip
+Group: Development/Documentation
+
+%description docs
+%summary
+
+This package contains documentation for pip.
+
+%package -n python3-module-%modulename
+Summary: pip installs packages.  Python packages.  An easy_install replacement
+Group: Development/Python3
+%py3_provides %modulename
+
+%description -n python3-module-%modulename
+%summary
+
 %prep
-%setup -q -n %modulename
+%setup -n %modulename
+
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+%patch -p2
+popd
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
-%__python setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%__python setup.py install --root=%buildroot --optimize=2 --record=INSTALLED_FILES
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
-%files -f INSTALLED_FILES
-%defattr(-,root,root)
+%python_install
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs pickle
+%make -C docs html
+
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
+
+%files
+%doc *.txt *.rst
+%_bindir/*
+%if_with python3
+%exclude %_bindir/pip3*
+%endif
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
+
+%files docs
+%doc docs/_build/html/*
+
+%if_with python3
+%files -n python3-module-%modulename
+%doc *.txt *.rst
+%_bindir/pip3*
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.6-alt1
+- Version 1.5.6
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt1.1
 - Rebuild with Python-2.7
 
