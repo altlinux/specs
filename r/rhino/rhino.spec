@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -43,12 +44,12 @@ Name:           rhino
 # of Javascript version 1.7 (which is independent from this particular implementation,
 # e.g., there is C++ implementation in Spidermonkey)
 Version:        1.7R3
-Release:        alt1_6jpp7
+Release:        alt1_9jpp7
 Summary:        JavaScript for Java
 License:        MPLv1.1 or GPLv2+
 
 Source0:        ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino%{cvs_version}.zip
-
+Source1:        http://repo1.maven.org/maven2/%{name}/js/1.7R2/js-1.7R2.pom
 Source2:        %{name}.script
 
 Patch0:         %{name}-build.patch
@@ -57,12 +58,13 @@ Patch0:         %{name}-build.patch
 # http://www.eclipse.org/downloads/download.php?r=1&file=/tools/orbit/downloads/drops/R20110523182458/repository/plugins/org.mozilla.javascript_1.7.2.v201005080400.jar
 Patch1:         %{name}-addOrbitManifest.patch
 Patch2:         %{name}-1.7R3-crosslink.patch
+Patch3:         %{name}-shell-manpage.patch
 
 URL:            http://www.mozilla.org/rhino/
 Group:          Development/Java
 
 BuildRequires:  ant
-BuildRequires:  java-1.7.0-openjdk-devel
+BuildRequires:  java-1.7.0-openjdk-devel >= 1.6.0.0
 Requires:       jpackage-utils
 Requires:       jline
 
@@ -108,6 +110,7 @@ Javadoc for %{name}.
 %patch0 -p1 -b .build
 %patch1 -p1 -b .fixManifest
 %patch2 -p1 -b .crosslink
+%patch3 -p1 -b .manpage
 
 # Fix build
 sed -i -e '/.*<get.*src=.*>$/d' build.xml testsrc/build.xml \
@@ -143,6 +146,10 @@ cp -a build/%{name}%{cvs_version}/%{name}-examples.jar %{buildroot}%{_javadir}/%
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -a build/%{name}%{cvs_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
+# man page
+mkdir -p %{buildroot}%{_mandir}/man1/
+install -m 644 build/%{name}%{cvs_version}/man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
+ 
 ## script
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
@@ -151,6 +158,11 @@ install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -a examples/* %{buildroot}%{_datadir}/%{name}
 find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
+
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
@@ -162,6 +174,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %files
 %attr(0755,root,root) %{_bindir}/*
 %{_javadir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%{_mandir}/man1/%{name}.1*
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files demo
@@ -176,6 +191,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7R3-alt1_9jpp7
+- update
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7R3-alt1_6jpp7
 - R3
 
