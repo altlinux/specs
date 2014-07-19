@@ -4,14 +4,14 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:	SimplyHTML		
-Version:	0.16.5
+Version:	0.16.7
 Release:	alt1_1jpp7
 Summary:	Application and a java component for rich text processing
 
 Group:		Development/Java
 License:	GPLv2 and BSD
 URL:		http://simplyhtml.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_16_05.tar.gz
+Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_16_07.tar.gz
 Source1:	simplyhtml.sh
 Patch0:	simplyhtml-build.xml-classpath.patch
 Patch1:	simplyhtml-manifest-classpath.patch
@@ -46,10 +46,10 @@ Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n simplyhtml-0_16_05
+%setup -q -n simplyhtml-0_16_07
 %patch0 -p1
 %patch1 -p1
 find -name '*.class' -exec rm -f '{}' \;
@@ -103,6 +103,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_1jpp7
+- new version
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.5-alt1_1jpp7
 - fc update
 
