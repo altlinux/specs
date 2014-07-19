@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: docbook-simple
@@ -35,12 +36,12 @@ BuildRequires: jpackage-compat
 #
 
 Name:           xmlunit
-Version:        1.3
-Release:        alt2_6jpp7
+Version:        1.4
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Provides classes to do asserts on xml
 License:        BSD
-Source0:        http://downloads.sourceforge.net/project/xmlunit/xmlunit%%20for%%20Java/XMLUnit%%20for%%20Java%%201.3/xmlunit-1.3-src.zip
+Source0:        http://downloads.sourceforge.net/project/xmlunit/xmlunit%%20for%%20Java/XMLUnit%%20for%%20Java%%201.4/xmlunit-1.4-src.zip
 Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
 URL:            http://xmlunit.sourceforge.net/
 BuildRequires:  jpackage-utils >= 0:1.7.3
@@ -110,10 +111,10 @@ install -m 0644 build/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{na
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
 
 
 # Javadoc
@@ -124,7 +125,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %{_javadir}/*
 %doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf 
-%{_mavenpomdir}/*
+%{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -132,6 +133,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_6jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
