@@ -1,21 +1,46 @@
-Name: maven-ant-tasks
-Version: 2.1.1
-Summary: Allow Maven artifact handling features to be used from within an Ant build
-License: ASL 2.0
-Url: http://maven.apache.org/ant-tasks/index.html
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: java
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           maven-ant-tasks
+Version:        2.1.3
+Release:        alt1_4jpp7
+Summary:        Allow Maven artifact handling features to be used from within an Ant build
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-ant-tasks-2.1.1-9.fc17.cpio
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://maven.apache.org/ant-tasks/index.html
+#The ant-tasks-in-ant-run-plugin test needs a dependency on ant-launcher
+#http://jira.codehaus.org/browse/MANTTASKS-208
+Source0:        http://www.apache.org/dist/maven/source/maven-ant-tasks-%{version}-src.zip
+Source1:        %{name}.depmap
+#Fix up ant groupId
+Patch0:         maven-ant-tasks-2.1.1-ant-groupId.patch
+BuildArch:      noarch
+
+BuildRequires:  jpackage-utils
+BuildRequires:  ant >= 1.8.0
+BuildRequires:  maven-local
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-invoker-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-error-diagnostics
+BuildRequires:  objectweb-asm
+BuildRequires:  plexus-interpolation
+
+Requires:       jpackage-utils
+Requires:       ant >= 1.8.0
+Requires:       maven
+Requires:       maven-error-diagnostics
+Source44: import.info
 
 %description
 Maven Ant Tasks allow several of Maven's artifact handling features to be
@@ -27,60 +52,71 @@ used from within an Ant build. These include:
   other with extensions)
 * POM processing - for reading and writing a Maven 2 pom.xml file
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
-
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
-
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+%setup -q
+%patch0 -p1 -b .ant-groupId
+#Need to tell maven invoker to run in jpp mode, write test.properties files
+for f in src/it/*/invoker.properties
+do
+   tp=${f/invoker/test}
+   cat >> $tp <<EOF
+maven2.jpp.mode=1
+EOF
 done
 
-%post
 
-echo -e "<dependencies>\n" > /etc/maven/maven2-depmap.xml
-if [ -d /usr/share/maven-fragments ] && [ -n "`find /usr/share/maven-fragments -type f`" ]; then
-cat /usr/share/maven-fragments/* >> /etc/maven/maven2-depmap.xml
-fi
-echo -e "</dependencies>\n" >> /etc/maven/maven2-depmap.xml
-
-%postun
-
-echo -e "<dependencies>\n" > /etc/maven/maven2-depmap.xml
-if [ -d /usr/share/maven-fragments ] && [ -n "`find /usr/share/maven-fragments -type f`" ]; then
-cat /usr/share/maven-fragments/* >> /etc/maven/maven2-depmap.xml
-fi
-echo -e "</dependencies>\n" >> /etc/maven/maven2-depmap.xml
+%build
+# Skip tests because they fail with maven 3, see upstream bug:
+# http://jira.codehaus.org/browse/MANTTASKS-165
+mvn-rpmbuild \
+   -Dmaven.local.depmap.file="%{SOURCE1}" \
+   -Dmaven.test.skip=true \
+   install javadoc:javadoc
 
 
-%files -f %name-list
+%install
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p target/original-%{name}-%{version}.jar \
+      $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
+cp -rp target/site/apidocs \
+       $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml \
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+
+%files
+%doc DEPENDENCIES LICENSE NOTICE README.txt
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%{_javadir}/*
+
+%files javadoc
+%doc LICENSE NOTICE
+%{_javadocdir}/%{name}
+
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_4jpp7
+- update
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
-
-%changelog
-* Tue Dec 14 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.9-alt2_1jpp6
-- build with velocity15
-
-* Mon Oct 18 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.9-alt1_1jpp6
-- new version
-
-* Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.7-alt3_1jpp5
-- java6 translation ready
-
-* Thu Jun 04 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.0.7-alt2_1jpp5
-- added non-versioned maven-artifact-ant symlink
-
-* Tue Feb 10 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.0.7-alt1_1jpp5
-- manually updated to 2.0.7 and added maven-artifact-ant provides
-
-* Tue Feb 10 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_1jpp5
-- import
 
