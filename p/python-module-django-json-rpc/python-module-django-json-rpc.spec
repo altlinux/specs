@@ -1,9 +1,12 @@
 %define module_name django-json-rpc
 
-%define git_commit 699856
+%define git_commit 0d98fb
+
+%def_with python3
+
 Name: python-module-%module_name
 Version: 0.6.2
-Release: alt1.git%git_commit.1
+Release: alt2.git%git_commit
 
 Summary: Simple Reference JSON-RPC Implementation for Django
 
@@ -18,9 +21,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %setup_python_module %module_name
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 
 %description
+Simple Reference JSON-RPC Implementation for Django
+
+%package -n python3-module-%module_name
+Summary: Simple Reference JSON-RPC Implementation for Django
+Group: Development/Python3
+
+%description -n python3-module-%module_name
 Simple Reference JSON-RPC Implementation for Django
 
 %prep
@@ -31,19 +46,46 @@ sed -i -e "s/packages=\['jsonrpc'\]/packages=['django_jsonrpc']/" setup.py
 sed -i -e "s/package_data={'jsonrpc'/package_data={'django_jsonrpc'/" setup.py
 mv jsonrpc django_jsonrpc
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%doc README.ALT
+%doc README.*
 %python_sitelibdir/django_jsonrpc*
 %python_sitelibdir/django_json_rpc*
 
+%if_with python3
+%files -n python3-module-%module_name
+%doc README.*
+%python3_sitelibdir/django_jsonrpc*
+%python3_sitelibdir/django_json_rpc*
+%endif
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git0d98fb
+- New snapshot
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.2-alt1.git699856.1
 - Rebuild with Python-2.7
 
