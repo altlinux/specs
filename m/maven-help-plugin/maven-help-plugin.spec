@@ -1,13 +1,12 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt4_7jpp7
+Release:        alt4_8jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -31,13 +30,16 @@ BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-exec
 BuildRequires: xstream
 BuildRequires: jpackage-utils
 BuildRequires: plexus-containers-component-metadata
+BuildRequires: maven-plugin-tools-generators
 Requires: ant
 Requires: maven
 Requires: jpackage-utils
 Requires: xstream
+Requires: maven-plugin-tools-generators
 
 Obsoletes: maven2-plugin-help < 0:%{version}-%{release}
 Provides: maven2-plugin-help = 0:%{version}-%{release}
@@ -66,6 +68,32 @@ API documentation for %{name}.
 %patch1
 %patch2 -p1
 
+# In newer versions of maven-plugin-tools the PluginUtils.toText()
+# static method was moved to GeneratorUtils class.
+%pom_add_dep org.apache.maven.plugin-tools:maven-plugin-tools-generators
+sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUtils.toText|" \
+    src/main/java/org/apache/maven/plugins/help/DescribeMojo.java
+
+# Generated HelpMojo.java is missing package declaration.  Use exec
+# plugin to inject package declaration during process-sources phase.
+%pom_add_plugin org.codehaus.mojo:exec-maven-plugin . "
+  <executions>
+    <execution>
+      <phase>process-sources</phase>
+      <goals>
+        <goal>exec</goal>
+      </goals>
+    </execution>
+  </executions>
+  <configuration>
+    <executable>sed</executable>
+    <arguments>
+      <argument>-i</argument>
+      <argument>1ipackage org.apache.maven.plugins.help;</argument>
+      <argument>target/generated-sources/plugin/org/apache/maven/plugins/help/HelpMojo.java</argument>
+    </arguments>
+  </configuration>"
+
 %build
 # no junit-addons, skip test
 mvn-rpmbuild \
@@ -88,14 +116,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
+%doc LICENSE NOTICE
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4_8jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4_7jpp7
 - fixed build
 
