@@ -4,9 +4,9 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+%define fedora 21
 Name:             dogtag-pki-theme
-Version:          10.0.0
+Version:          10.0.6
 Release:          alt1_1jpp7
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
@@ -16,7 +16,7 @@ Group:            System/Base
 BuildArch:        noarch
 
 
-BuildRequires:    ctest cmake
+BuildRequires: ctest cmake
 %if 0%{?fedora} >= 16
 BuildRequires:    jpackage-utils >= 1.7.5-10
 %else
@@ -141,7 +141,7 @@ the Dogtag textual and graphical user interface for the PKI Server Framework.
 
 This package is used by the Dogtag Certificate System.
 
-%%{overview}
+%{overview}
 
 
 %package -n       dogtag-pki-console-theme
@@ -166,7 +166,7 @@ the Dogtag textual and graphical user interface for the PKI Console.
 
 This package is used by the Dogtag Certificate System.
 
-%%{overview}
+%{overview}
 
 
 %prep
@@ -215,6 +215,9 @@ cd build
 
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 10.0.6-alt1_1jpp7
+- new version
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 10.0.0-alt1_1jpp7
 - fc update
 
