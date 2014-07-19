@@ -1,18 +1,23 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           Mars
-Version:        4.1
-Release:        alt1_5jpp7
+Version:        4.3
+Release:        alt1_1jpp7
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
 License:        MIT
 URL:            http://courses.missouristate.edu/KenVollmar/MARS/
-Source0:        http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_1_Jan_2011/Mars_4_1.jar
+Source0:        http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_3_Jan2013/Mars4_3.jar
 Source1:        Mars
 Source2:        Mars.desktop
+Source3:        build.xml
 BuildArch:      noarch
 
+BuildRequires:  ant
 BuildRequires:  jpackage-utils
 BuildRequires:  desktop-file-utils
 
@@ -25,36 +30,35 @@ programming in MIPS assembly language, intended for educational-level
 use with Patterson and Hennessy's Computer Organization and Design.
 
 %prep
-%setup -q -c Mars-%{version}
+%setup -q -c %{name}-%{version}
 
-find -name '*.class' -exec rm -f '{}' \;
+find . -name '*.jar'   -exec rm -f '{}' \;
+find . -name '*.class' -exec rm -f '{}' \;
 
 %build
 sed -i 's/\r//' MARSlicense.txt
 
-cat << EOF > META-INF/MANIFEST.MF
-Manifest-Version: 1.0
-Main-Class: Mars
-EOF
-
-find . -name "*.java" -exec javac '{}' \;
-jar cmf META-INF/MANIFEST.MF Mars.jar PseudoOps.txt Config.properties Syscall.properties Settings.properties MARSlicense.txt mainclass.txt CreateMarsJar.bat Mars.java Mars.class docs help images mars
+cp -p %{SOURCE3} build.xml
+ant
 
 %install
-install -Dpm 644 Mars.jar ${RPM_BUILD_ROOT}%{_javadir}/Mars.jar
-install -Dpm 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{_bindir}/Mars
+install -Dpm 644 %{name}.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
+install -Dpm 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{_bindir}/%{name}
 desktop-file-install                                \
     --add-category="Development"                    \
     --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
     %{SOURCE2}
 
 %files
-%{_javadir}/*
-%{_bindir}/*
+%{_javadir}/%{name}.jar
+%{_bindir}/%{name}
 %{_datadir}/applications/Mars.desktop
 %doc MARSlicense.txt
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_1jpp7
+- new version
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_5jpp7
 - new version
 
