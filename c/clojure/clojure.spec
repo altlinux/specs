@@ -1,28 +1,30 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global project     clojure
 %global groupId     org.clojure
 %global artifactId  clojure
 %global archivename %{project}-%{artifactId}
-%global commit_hash 0ba3ff1
 
 Name:           clojure
 Epoch:          1
-Version:        1.4.0
-Release:        alt2_3jpp7
+Version:        1.5.1
+Release:        alt1_1jpp7
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
 License:        EPL
 URL:            http://clojure.org/
-# wget --content-disposition \
-#   https://github.com/clojure/clojure/tarball/clojure-%{version}
-Source0:        %{project}-%{archivename}-%{version}-0-g%{commit_hash}.tar.gz
+Source0:        https://github.com/%{name}/%{name}/archive/%{name}-%{version}.zip
 
 Source1:        clojure.sh
 
 BuildArch:      noarch
 
+BuildRequires:  maven-local
 BuildRequires:  ant >= 1.6
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  objectweb-asm
@@ -44,10 +46,10 @@ optional type hints and type inference, to ensure that calls to Java
 can avoid reflection.
 
 %prep
-%setup -q -n %{archivename}-8306949
+%setup -q -n %{archivename}-%{version}
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant -Dmaven.test.skip=1
 
 %install
 # jar - link to prefix'd jar so that java stuff knows where to look
@@ -76,6 +78,9 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_bindir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.5.1-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
