@@ -5,7 +5,7 @@
 
 Name: python3-module-%modulename
 Version: 1.11.1
-Release: alt1.git20130902
+Release: alt1.git20140411
 
 Summary: DNS toolkit (Python 3)
 License: BSD-like
@@ -55,6 +55,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20140411
+- New snapshot
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20130902
 - Version 1.11.1
 
