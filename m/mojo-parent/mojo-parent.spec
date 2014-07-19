@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-parent
 Version:        30
-Release:        alt2_1jpp7
+Release:        alt2_2jpp7
 Summary:        Codehaus MOJO parent project pom file
 
 Group:          Development/Java
@@ -43,13 +44,16 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
     %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom -a org.codehaus.mojo:mojo
 
 %files
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt2_2jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
