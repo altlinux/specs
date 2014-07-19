@@ -1,12 +1,12 @@
 %define oname pysqlite2
-%define version 2.6.0
-%define release alt3
+%define version 2.6.3
+%define release alt1
 %setup_python_module %oname
 
 Summary: Python interface to SQLite 3.0
 Name: python-module-%oname
 Version: %version
-Release: %release.1
+Release: %release
 URL: http://pypi.python.org/pypi/pysqlite/
 Source0: pysqlite.tar
 License: zlib/libpng license
@@ -90,6 +90,9 @@ cp -fR doc/sphinx/.build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/%oname/test/py25
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.3-alt1
+- Version 2.6.3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.6.0-alt3.1
 - Rebuild with Python-2.7
 
