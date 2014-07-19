@@ -1,6 +1,5 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,8 +7,8 @@ BuildRequires: jpackage-compat
 %global bootstrap 0
 
 Name:           maven-surefire
-Version:        2.12
-Release:        alt2_5jpp7
+Version:        2.12.4
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0
@@ -25,6 +24,7 @@ Patch1:         0004-Surefire-2.12-bootstrap.patch
 
 BuildArch:      noarch
 BuildRequires:  ant
+BuildRequires:  apache-commons-lang3
 BuildRequires:  classworlds
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  junit >= 3.8.2
@@ -39,6 +39,7 @@ BuildRequires:  maven-install-plugin
 BuildRequires:  maven-invoker-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-plugin-annotations
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
@@ -57,6 +58,7 @@ BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  bsf
 BuildRequires:  javacc-maven-plugin
 
+Requires:       apache-commons-lang3
 Requires:       classworlds
 Requires:       maven
 Requires:       maven-toolchain
@@ -75,8 +77,8 @@ Surefire is a test framework project.
 %package plugin
 Summary:                Surefire plugin for maven
 Group:                  Development/Java
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
-Requires:               maven-surefire-provider-junit = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
+Requires:               %{name}-provider-junit = %{epoch}:%{version}-%{release}
 Obsoletes:              maven2-plugin-surefire <= 0:2.0.4
 Provides:               maven2-plugin-surefire = %{epoch}:%{version}-%{release}
 Obsoletes:              maven-surefire-maven-plugin < 0:2.6
@@ -88,7 +90,7 @@ Maven surefire plugin for running tests via the surefire framework.
 %package report-plugin
 Summary:                Surefire reports plugin for maven
 Group:                  Development/Java
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
 Obsoletes:              maven2-plugin-surefire-report <= 0:2.0.4
 Provides:               maven2-plugin-surefire-report = %{epoch}:%{version}-%{release}
 Obsoletes:              maven-surefire-report-maven-plugin < 0:2.6
@@ -101,7 +103,7 @@ Plugin for generating reports from surefire test runs.
 Summary:                JUnit3 provider for Maven Surefire
 Group:                  Development/Java
 Requires:               junit
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
 Obsoletes:              maven2-plugin-surefire-report <= 0:2.0.4O
 #Obsoletes:              maven-surefire-junit = 2.3.1
 Provides:               maven2-plugin-surefire-report = %{epoch}:%{version}-%{release}
@@ -113,8 +115,8 @@ JUnit3 provider for Maven Surefire.
 %package provider-junit4
 Summary:                JUnit4 provider for Maven Surefire
 Group:                  Development/Java
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
-Requires:               maven-surefire-provider-junit = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
+Requires:               %{name}-provider-junit = %{epoch}:%{version}-%{release}
 Requires:               junit4
 
 %description provider-junit4
@@ -123,7 +125,7 @@ JUnit4 provider for Maven Surefire.
 %package provider-testng
 Summary:                TestNG provider for Maven Surefire
 Group:                  Development/Java
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
 Requires:               testng
 
 %description provider-testng
@@ -132,7 +134,7 @@ TestNG provider for Maven Surefire.
 %package -n maven-failsafe-plugin
 Summary:                Maven plugin for running integration tests
 Group:                  Development/Java
-Requires:               maven-surefire = %{epoch}:%{version}-%{release}
+Requires:               %{name} = %{epoch}:%{version}-%{release}
 
 %description -n maven-failsafe-plugin
 The Failsafe Plugin is designed to run integration tests while the
@@ -176,6 +178,7 @@ sed -i 's:${shadedVersion}:%{version}:' surefire-integration-tests/pom.xml
 # tests turned off because they need jmock
 mvn-rpmbuild -e \
         -Dmaven.test.skip=true \
+        -Dmaven.local.depmap.file=%{SOURCE1} \
         install javadoc:aggregate
 
 %install
@@ -312,11 +315,9 @@ ln -s %{_javadir}/maven-surefire/maven-plugin.jar \
 ln -s %{_javadir}/maven-surefire/report-maven-plugin.jar \
       $RPM_BUILD_ROOT%{_datadir}/maven2/plugins/surefire-report-plugin.jar
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
+%doc LICENSE NOTICE
 %dir %{_javadir}/maven-surefire
 %{_javadir}/maven-surefire/api.jar
 %{_javadir}/maven-surefire/booter.jar
@@ -376,9 +377,13 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadir}/maven-failsafe-plugin.jar
 
 %files javadoc
+%doc LICENSE NOTICE
 %doc %{_javadocdir}/*
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.12.4-alt1_2jpp7
+- update
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.12-alt2_5jpp7
 - fixed build
 
