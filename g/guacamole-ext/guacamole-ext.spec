@@ -1,29 +1,33 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
 Name:             guacamole-ext
-Version:          0.7.0
-Release:          alt1_2jpp7
+Version:          0.8.0
+Release:          alt1_3jpp7
 Summary:          Common interfaces for extending the main Guacamole web application
 License:          MPLv1.1 or GPLv2+ or LGPLv2+
-Group:            Development/Java
 URL:              http://guac-dev.org/
 Source0:          http://guac-dev.org/pub/dist/source/%{name}-%{version}.tar.gz
 BuildArch:        noarch
 
-# Generic Buildrequires:
-# https://fedoraproject.org/wiki/Packaging:Java#maven_3
-
-# Specific ones:
-BuildRequires:    guacamole-common >= 0.7.0
-Requires:         guacamole-common >= 0.7.0
-%if 0%{?fedora} || 0%{?rhel} > 6
-%else
-%endif
+BuildRequires:    guacamole-common >= 0.8.0
+BuildRequires:    jpackage-utils
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-dependency-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-local
+BuildRequires:    maven-release-plugin
+BuildRequires:    maven-resources-plugin
+BuildRequires:    maven-surefire-plugin
+BuildRequires:    servlet3
+Requires:         guacamole-common >= 0.8.0
+Requires:         jpackage-utils
 Source44: import.info
 
 %description
@@ -33,21 +37,22 @@ server acts as a tunnel and proxy, allowing access to multiple desktops through
 a web browser. No plugins are needed: the client requires nothing more than a
 web browser supporting HTML5 and AJAX.
 
-%%{name} is a Java library used by the Guacamole web application to allow
+%{name} is a Java library used by the Guacamole web application to allow
 its built-in functionality, such as authentication, to be extended or modified.
-%%{name} provides an interface for retrieving a set of authorized
+%{name} provides an interface for retrieving a set of authorized
 connection configurations for a given set of arbitrary credentials. Classes
 implementing this interface can be referenced in guacamole.properties to allow
 different authentication mechanisms (such as LDAP or SSL client authentication)
 to be used. 
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
+Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -80,6 +85,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.guacamole-%{name}.pom
 
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_3jpp7
+- new version
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_2jpp7
 - fc update
 
