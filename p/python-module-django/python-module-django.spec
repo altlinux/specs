@@ -1,6 +1,6 @@
-%define branch 1.5
-%define version %branch.1
-%define release alt1.1
+%define branch 1.6
+%define version %branch.5
+%define release alt1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -376,6 +376,9 @@ popd
 %endif
 
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.5-alt1
+- Version 1.6.5
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.1
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
