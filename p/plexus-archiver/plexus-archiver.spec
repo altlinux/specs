@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -31,26 +35,28 @@ BuildRequires: jpackage-compat
 #
 
 Name:           plexus-archiver
-Version:        2.1.1
-Release:        alt2_2jpp7
+Version:        2.3
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Plexus Archiver Component
 License:        MIT and ASL 2.0
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/plexus-components/plexus-archiver/
-# git clone https://github.com/sonatype/plexus-archiver
-# Fetched from https://github.com/sonatype/plexus-archiver/tarball/plexus-archiver-2.1.1
-Source0:        sonatype-plexus-archiver-plexus-archiver-2.1.1-0-ge64d181.tar.gz
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:        http://apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         %{name}-CVE-2012-2098.patch
 
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  apache-commons-compress >= 1.4.1
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  classworlds >= 0:1.1
-BuildRequires:  plexus-container-default
+BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  plexus-io
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
@@ -60,19 +66,21 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 BuildRequires: maven-shared-reporting-impl
 BuildRequires: maven-doxia-sitetools
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  apache-commons-compress >= 1.4.1
 Requires:       classworlds >= 0:1.1
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 Requires:       plexus-utils
 Requires:       jpackage-utils
 Requires:       plexus-io
 Source44: import.info
 
 %description
-The Plexus project seeks to create end-to-end developer tools for 
-writing applications. At the core is the container, which can be 
-embedded or for a full scale application server. There are many 
-reusable components for hibernate, form processing, jndi, i18n, 
-velocity, etc. Plexus also includes an application server which 
+The Plexus project seeks to create end-to-end developer tools for
+writing applications. At the core is the container, which can be
+embedded or for a full scale application server. There are many
+reusable components for hibernate, form processing, jndi, i18n,
+velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
 
@@ -87,7 +95,9 @@ Javadoc for %{name}.
 
 
 %prep
-%setup -q -n sonatype-plexus-archiver-25364f5
+%setup -q -n %{name}-%{name}-%{version}
+cp %{SOURCE1} .
+%patch0 -p1
 
 %build
 mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
@@ -97,7 +107,7 @@ mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
 install -pm 644 target/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/plexus/archiver.jar
-                  
+
 # pom
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
@@ -108,15 +118,17 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
