@@ -1,4 +1,7 @@
-Epoch: 0
+Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global bootstrap 0
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:	    maven2
 Version:	2.2.1
-Release:	alt3_32jpp7
+Release:	alt3_37jpp7
 Summary:	Java project management and project comprehension tool
 
 Group:		Development/Java
@@ -19,42 +22,12 @@ URL:		http://maven.apache.org
 # tar czvf %{name}-%{version}.tar.gz apache-maven-%{version}
 Source0:	%{name}-%{version}.tar.gz
 
-# Since we are using the entire dependency set "as is", we need to atleast try
-# and make it so that only one version is packaged in the binary blob. This
-# server an additional (and more important) purpose ... it ensures that a
-# single version of each module is enough; because if not, versioned rpm names
-# would be needed for those dependencies. The idea is as follows:
-
-# Required by maven:
-#  org/codehaus/plexus/1.0/plexus-1.0.jar
-#  org/codehaus/plexus/1.1/plexus-1.1.jar
-# What we package in the blob:
-#  org/codehaus/plexus/1.1/plexus-1.1.jar
-#  org/codehaus/plexus/1.0/plexus-1.0.jar -> ../1.1/plexus-1.1.jar
-
-# Doing this for the hundreds of jars is a huge pain.. so we do the only
-# thing sane people can. Crazy scripting magic! To generate the tarball
-
-# rm -rf ~/.m2
-# tar xzf SOURCE0
-# cd apache-maven-%{version}
-# export M2_HOME=`pwd`/installation/apache-maven-%{version}
-# ant
-# cd ~/.m2
-# SOURCE100
-# Find maven-%{version}-bootstrapdeps.tar.gz in ./
-Source1:    %{name}-%{version}-bootstrapdeps.tar.gz
 
 # 1xx for non-upstream/created sources
 Source100:    %{name}-%{version}-settings.xml
-Source101:    %{name}-JPackageRepositoryLayout.java
-Source102:    %{name}-MavenJPackageDepmap.java
 Source103:    %{name}-%{version}-depmap.xml
-Source104:    %{name}-empty-dep.pom
-Source105:    %{name}-empty-dep.jar
 
 Patch0:     %{name}-antbuild.patch
-Patch1:     %{name}-%{version}-jpp.patch
 Patch2:     %{name}-%{version}-update-tests.patch
 Patch3:     %{name}-%{version}-enable-bootstrap-repo.patch
 Patch4:     %{name}-%{version}-unshade.patch
@@ -66,7 +39,7 @@ Patch7:     %{name}-%{version}-classworlds.patch
 %if %{bootstrap}
 BuildRequires: ant
 %else
-BuildRequires: apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires: objectweb-asm
 BuildRequires: backport-util-concurrent
 BuildRequires: buildnumber-maven-plugin
@@ -85,36 +58,31 @@ BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-shade-plugin
 %endif
 
-Requires: classworlds
-Requires: jdom
-
-%if !%{bootstrap}
-Requires: maven-artifact-manager = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-error-diagnostics = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-model = 1:%{version}-%{release}
-Requires: maven-monitor = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-plugin-registry = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-profile = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-project = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-toolchain = %{?epoch:%epoch:}%{version}-%{release}
-Requires: maven-plugin-descriptor = %{?epoch:%epoch:}%{version}-%{release}
-%endif
 
 BuildArch: noarch
 Source44: import.info
-Source45: maven3-jpp-script
 
-Provides:        maven2-bootstrap = %{epoch}:%{version}-%{release}
 Obsoletes:       maven2-plugin-jxr <= 0:2.0.4 
 Obsoletes:       maven2-plugin-surefire <= 0:2.0.4 
 Obsoletes:       maven2-plugin-surefire-report <= 0:2.0.4 
 Obsoletes:       maven2-plugin-release <= 0:2.0.4 
+Source45: maven3-jpp-script
 
 
 %description
 Apache Maven is a software project management and comprehension tool. Based on
 the concept of a project object model (POM), Maven can manage a project's
 build, reporting and documentation from a central piece of information.
+
+%package -n maven-artifact
+Group:          Development/Java
+Summary:        Compatibility Maven artifact artifact
+Requires:       jpackage-utils
+Requires:       plexus-utils
+Requires:       plexus-containers-container-default
+
+%description -n maven-artifact
+Maven artifact manager artifact
 
 %package -n maven-artifact-manager
 Group:          Development/Java
@@ -124,6 +92,7 @@ Requires:       plexus-classworlds
 Requires:       plexus-utils
 Requires:       plexus-containers-container-default
 Requires:       backport-util-concurrent
+Requires:       maven-artifact = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       maven-wagon
 
 %description -n maven-artifact-manager
@@ -143,7 +112,7 @@ Group:          Development/Java
 Summary:        Compatibility Maven model artifact
 Requires:       jpackage-utils
 Requires:       plexus-utils
-Epoch: 1
+# it was a tmp package during migration
 Obsoletes:       maven-model22 < 0:%{version}-%{release}
 
 %description -n maven-model
@@ -162,7 +131,6 @@ Group:          Development/Java
 Summary:        Compatibility Maven plugin registry artifact
 Requires:       jpackage-utils
 Requires:       plexus-utils
-Requires:       plexus-interpolation
 Requires:       plexus-containers-container-default
 
 %description -n maven-plugin-registry
@@ -172,6 +140,7 @@ Maven plugin registry artifact
 Group:          Development/Java
 Summary:        Compatibility Maven profile artifact
 Requires:       jpackage-utils
+Requires:       maven-model = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       plexus-utils
 Requires:       plexus-interpolation
 Requires:       plexus-containers-container-default
@@ -183,16 +152,29 @@ Maven profile artifact
 Group:          Development/Java
 Summary:        Compatibility Maven project artifact
 Requires:       jpackage-utils
-Requires:       maven-artifact-manager
-Requires:       maven-profile
-Requires:       maven-plugin-registry
-Requires:       maven-model
+Requires:       maven-artifact-manager = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       maven-profile = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       maven-plugin-registry = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       maven-model = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       maven-settings = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       plexus-interpolation
 Requires:       plexus-utils
 Requires:       plexus-containers-container-default
 
 %description -n maven-project
 Maven project artifact
+
+%package -n maven-settings
+Group:          Development/Java
+Summary:        Compatibility Maven settings artifact
+Requires:       jpackage-utils
+Requires:       maven-model = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       plexus-interpolation
+Requires:       plexus-utils
+Requires:       plexus-containers-container-default
+
+%description -n maven-settings
+Maven settings artifact
 
 %package -n maven-toolchain
 Group:          Development/Java
@@ -218,7 +200,6 @@ Maven toolchain artifact
 %setup -q -n apache-maven-2.2.1
 
 %patch0 -b .antbuild
-%patch1 -p1 -b .jpp
 %patch2 -b .update-tests
 
 %if ! %{bootstrap}
@@ -257,9 +238,6 @@ mkdir $M2_REPO
 )
 %endif
 
-cp %{SOURCE101} maven-artifact/src/main/java/org/apache/maven/artifact/repository/layout/JPackageRepositoryLayout.java
-cp %{SOURCE102} maven-artifact/src/main/java/org/apache/maven/artifact/repository/layout/MavenJPackageDepmap.java
-
 # disable parallel artifact resolution
 %patch5 -p1 -b .parallel-artifacts-resolution
 
@@ -268,13 +246,12 @@ cp %{SOURCE102} maven-artifact/src/main/java/org/apache/maven/artifact/repositor
 
 %patch7 -p1 -b .classworlds
 
-# test case is incorrectly assuming that target executed by antcall
-# can propagate references to its parent (stopped working with ant 1.8)
-rm maven-script/maven-script-ant/src/test/java/org/apache/maven/script/ant/AntMojoWrapperTest.java
-
-# FIXIT: look why these tests are failing with maven-surefire 2.6
-rm maven-artifact/src/test/java/org/apache/maven/artifact/resolver/DefaultArtifactCollectorTest.java
-rm maven-project/src/test/java/org/apache/maven/project/validation/DefaultModelValidatorTest.java
+for nobuild in apache-maven maven-artifact-test \
+               maven-compat maven-core maven-plugin-api \
+               maven-plugin-parameter-documenter maven-reporting \
+               maven-script;do
+    %pom_disable_module $nobuild
+done
 
 %build
 export M2_REPO=`pwd`/.m2
@@ -294,92 +271,41 @@ sed -i -s s:__M2_SETTINGS_FILE__:$M2_HOME/conf/settings.xml:g build.xml
 %if %{bootstrap}
 ant -Dmaven.repo.local=$M2_REPO/cache
 %else
-# FIXME: These tests fail when building with maven for an unknown reason
-rm -f maven-core/src/test/java/org/apache/maven/WagonSelectorTest.java
-rm -f maven-artifact-manager/src/test/java/org/apache/maven/artifact/manager/DefaultWagonManagerTest.java
-for nobuild in apache-maven maven-artifact-test \
-               maven-compat maven-core maven-plugin-api \
-               maven-plugin-parameter-documenter maven-reporting \
-               maven-script;do
-    sed -i "s:<module>$nobuild</module>::"  pom.xml
-done
-mvn-rpmbuild -X -Dmaven.test.skip=true -P all-models -Dmaven.repo.local=$(pwd)/.m2 -Dmaven.local.depmap.file=%{SOURCE103} install
+mvn-rpmbuild -X -Dmaven.local.debug=true -Dmaven.test.skip=true -P all-models -Dmaven.repo.local=$(pwd)/.m2 -Dmaven.local.depmap.file=%{SOURCE103} install
 %endif
 
 %install
 
 # maven2 directory in /usr/share/java
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-
-###########
-# M2_HOME #
-###########
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{main_pkg}
 install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-################
-# M2_HOME/poms #
-#*##############
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/poms
-
-########################
-# /etc/maven/fragments #
-########################
-install -dm 755 $RPM_BUILD_ROOT/%{_sysconfdir}/maven/fragments
-
-##############################
-# /usr/share/java repository #
-##############################
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/repository
-ln -s %{_javadir} $RPM_BUILD_ROOT%{_datadir}/%{name}/repository/JPP
-
-##################
-# javadir/maven2 #
-#*################
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-
-#######################
-# javadir/maven2/poms #
-#*#####################
-ln -s %{_datadir}/%{name}/poms $RPM_BUILD_ROOT%{_javadir}/%{name}/poms
-
-############
-# /usr/bin #
-############
-install -dm 755 $RPM_BUILD_ROOT%{_bindir}
-
-# Install files
-install -m 644 %{SOURCE104} $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/JPP.maven2-empty-dep.pom
-install -m 644 %{SOURCE105} $RPM_BUILD_ROOT%{_javadir}/%{name}/empty-dep.jar
-
-
-###################
-# Individual jars #
-###################
 
 # parts of maven2 now go into separate subpackages
 for subdir in maven-artifact-manager maven-error-diagnostics \
-              maven-model maven-monitor maven-plugin-registry \
+              maven-monitor maven-plugin-registry \
               maven-profile maven-project maven-toolchain maven-plugin-descriptor ;do
      pushd $subdir
-     install -m 644 target/$subdir-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$subdir.jar
-     install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/JPP.%{name}-$subdir.pom
-     %add_to_maven_depmap org.apache.maven $subdir %{version} JPP/%{name} $subdir
-     mv $RPM_BUILD_ROOT%{_mavendepmapfragdir}/%{name} \
-        $RPM_BUILD_ROOT%{_mavendepmapfragdir}/$subdir
+     install -m 644 target/$subdir-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{main_pkg}/$subdir.jar
+     install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{main_pkg}-$subdir.pom
+     %add_maven_depmap JPP.%{main_pkg}-$subdir.pom %{main_pkg}/$subdir.jar -f $subdir
      popd
 done
 
-
-
-# maven-reporting pom
-install -m 644 maven-reporting/pom.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/JPP.%{name}-maven-reporting.pom
-%add_to_maven_depmap org.apache.maven.reporting maven-reporting %{version} JPP/%{name} maven-reporting
-
-# maven pom
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/JPP.%{name}-maven.pom
-%add_to_maven_depmap org.apache.maven maven %{version} JPP/%{name} maven
+# these parts are compatibility versions which are available in
+# maven-3.x as well. We default to maven-3, but if someone asks for
+# 2.x we provide few compat versions
+for subdir in \
+  maven-artifact \
+  maven-model \
+  maven-settings;
+do
+     pushd $subdir
+     install -m 644 target/$subdir-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{main_pkg}/$subdir.jar
+     install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{main_pkg}-$subdir.pom
+     %add_maven_depmap JPP.%{main_pkg}-$subdir.pom %{main_pkg}/$subdir.jar -f $subdir -v "2.0.2,2.0.6,2.0.7,2.0.8"
+     popd
+done
 
 # Items in %%{_bindir}
 install -Dm 755 %{SOURCE45} $RPM_BUILD_ROOT%{_bindir}/mvn-jpp
@@ -397,80 +323,72 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 
 
 
-%files
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/poms
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-artifact-manager.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-error-diagnostics.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-model.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-monitor.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-plugin-registry.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-profile.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-project.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-toolchain.pom
-%exclude %{_datadir}/%{name}/poms/JPP.%{name}-maven-plugin-descriptor.pom
-%{_datadir}/%{name}/repository
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}
-%exclude %{_javadir}/%{name}/maven-artifact-manager.jar
-%exclude %{_javadir}/%{name}/maven-error-diagnostics.jar
-%exclude %{_javadir}/%{name}/maven-model.jar
-%exclude %{_javadir}/%{name}/maven-monitor.jar
-%exclude %{_javadir}/%{name}/maven-plugin-registry.jar
-%exclude %{_javadir}/%{name}/maven-profile.jar
-%exclude %{_javadir}/%{name}/maven-project.jar
-%exclude %{_javadir}/%{name}/maven-toolchain.jar
-%exclude %{_javadir}/%{name}/maven-plugin-descriptor.jar
+
+
+%files -n maven-artifact
+%{_mavendepmapfragdir}/%{name}-maven-artifact
+%{_javadir}/%{main_pkg}/maven-artifact-2.*.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-artifact-2.*.pom
+
+%files -n maven-artifact-manager
+%{_mavendepmapfragdir}/%{name}-maven-artifact-manager
+%{_javadir}/%{main_pkg}/maven-artifact-manager.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-artifact-manager.pom
+
+%files -n maven-error-diagnostics
+%{_mavendepmapfragdir}/%{name}-maven-error-diagnostics
+%{_javadir}/%{main_pkg}/maven-error-diagnostics.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-error-diagnostics.pom
+
+%files -n maven-model
+%{_mavendepmapfragdir}/%{name}-maven-model
+%{_javadir}/%{main_pkg}/maven-model-*.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-model-*.pom
+
+%files -n maven-monitor
+%{_mavendepmapfragdir}/%{name}-maven-monitor
+%{_javadir}/%{main_pkg}/maven-monitor.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-monitor.pom
+
+%files -n maven-plugin-registry
+%{_mavendepmapfragdir}/%{name}-maven-plugin-registry
+%{_javadir}/%{main_pkg}/maven-plugin-registry.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-plugin-registry.pom
+
+%files -n maven-profile
+%{_mavendepmapfragdir}/%{name}-maven-profile
+%{_javadir}/%{main_pkg}/maven-profile.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-profile.pom
+
+%files -n maven-project
+%{_mavendepmapfragdir}/%{name}-maven-project
+%{_javadir}/%{main_pkg}/maven-project.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-project.pom
+
+%files -n maven-settings
+%{_mavendepmapfragdir}/%{name}-maven-settings
+%{_javadir}/%{main_pkg}/maven-settings-*.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-settings-*.pom
+
+%files -n maven-toolchain
+%{_mavendepmapfragdir}/%{name}-maven-toolchain
+%{_javadir}/%{main_pkg}/maven-toolchain.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-toolchain.pom
+
+%files -n maven-plugin-descriptor
+%{_mavendepmapfragdir}/%{name}-maven-plugin-descriptor
+%{_javadir}/%{main_pkg}/maven-plugin-descriptor.jar
+%{_mavenpomdir}/JPP.%{main_pkg}-maven-plugin-descriptor.pom
+
+%files 
 %attr(0755,root,root) %{_bindir}/mvn-jpp
 
 
-%files -n maven-artifact-manager
-%{_mavendepmapfragdir}/maven-artifact-manager
-%{_javadir}/%{name}/maven-artifact-manager.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-artifact-manager.pom
-
-%files -n maven-error-diagnostics
-%{_mavendepmapfragdir}/maven-error-diagnostics
-%{_javadir}/%{name}/maven-error-diagnostics.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-error-diagnostics.pom
-
-%files -n maven-model
-%{_mavendepmapfragdir}/maven-model
-%{_javadir}/%{name}/maven-model.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-model.pom
-
-%files -n maven-monitor
-%{_mavendepmapfragdir}/maven-monitor
-%{_javadir}/%{name}/maven-monitor.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-monitor.pom
-
-%files -n maven-plugin-registry
-%{_mavendepmapfragdir}/maven-plugin-registry
-%{_javadir}/%{name}/maven-plugin-registry.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-plugin-registry.pom
-
-%files -n maven-profile
-%{_mavendepmapfragdir}/maven-profile
-%{_javadir}/%{name}/maven-profile.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-profile.pom
-
-%files -n maven-project
-%{_mavendepmapfragdir}/maven-project
-%{_javadir}/%{name}/maven-project.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-project.pom
-
-%files -n maven-toolchain
-%{_mavendepmapfragdir}/maven-toolchain
-%{_javadir}/%{name}/maven-toolchain.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-toolchain.pom
-
-%files -n maven-plugin-descriptor
-%{_mavendepmapfragdir}/maven-plugin-descriptor
-%{_javadir}/%{name}/maven-plugin-descriptor.jar
-%{_datadir}/%{name}/poms/JPP.%{name}-maven-plugin-descriptor.pom
-
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_37jpp7
+- update
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt3_32jpp7
 - restored maven-model subpackage 
 
