@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jtype
 Version:        0.1.2
-Release:        alt1_3jpp7
+Release:        alt1_5jpp7
 Summary:        A small library for working with the Java 5 type system
 
 Group:          Development/Java
@@ -16,7 +20,7 @@ Patch0:         %{name}-disable-wagon-svn.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -74,6 +78,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_5jpp7
+- new release
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_3jpp7
 - new version
 
