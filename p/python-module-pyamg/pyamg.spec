@@ -1,7 +1,10 @@
 %define oname pyamg
+
+%def_without python3
+
 Name: python-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: BSD
 Group: Development/Python
@@ -12,10 +15,36 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel libnumpy-devel gcc-c++
 BuildPreReq: python-module-sphinx-devel python-module-scipy
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel
+%endif
+
+%add_python_req_skip example
 
 %description
 PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
 convenient Python interface.
+
+%package -n python3-module-%oname
+Summary: PyAMG: Algebraic Multigrid Solvers in Python
+Group: Development/Python3
+%add_python3_req_skip example
+
+%description -n python3-module-%oname
+PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
+convenient Python interface.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for PyAMG
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
+convenient Python interface.
+
+This package contains tests for PyAMG.
 
 %package docs
 Summary: Documentation for PyAMG
@@ -52,14 +81,30 @@ This package contains tests for PyAMG.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx Docs
 ln -s ../objects.inv Docs/source/
 
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C Docs html
@@ -68,6 +113,7 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
+%doc *.txt *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/tests
@@ -87,7 +133,28 @@ cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/example*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt *.md
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/example*
+%exclude %python3_sitelibdir/*/*/*/example*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/testing
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/example*
+%python3_sitelibdir/*/*/*/example*
+%endif
+
 %changelog
+* Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2
+- Avoid requirement on pythonX.Y(example)
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
