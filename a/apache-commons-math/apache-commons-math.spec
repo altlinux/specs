@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 %global short_name commons-%{base_name}3
 
 Name:             apache-commons-math
-Version:          3.1.1
+Version:          3.2
 Release:          alt1_1jpp7
 Summary:          Java library of lightweight mathematics and statistics components
 
@@ -38,7 +38,7 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 
 %prep
@@ -74,6 +74,9 @@ cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt1_1jpp7
+- new version
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_1jpp7
 - fc update
 
