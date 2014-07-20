@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Note to packagers: When rebasing this to a later version, do not
@@ -6,17 +10,23 @@ BuildRequires: jpackage-compat
 # the Requires list.
 
 Name:           groovy
-Version:        1.8.7
-Release:        alt1_1jpp7
+Version:        1.8.9
+Release:        alt1_2jpp7
 Summary:        Dynamic language for the Java Platform
 
 Group:          Development/Java
-License:        ASL 2.0
+# Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
+# by the EPL. We include copies of both for completeness.
+License:        ASL 2.0 and BSD and EPL
 URL:            http://groovy.codehaus.org/
 Source0:        http://dist.groovy.codehaus.org/distributions/%{name}-src-%{version}.zip
 Source1:        groovy-script
 Source2:        groovy-starter.conf
 Source3:        groovy.desktop
+Source4:	cpl-v10.txt
+Source5:	epl-v10.txt
+# http://jira.codehaus.org/browse/GROOVY-6085
+Patch0:         groovy-inner-interface-annotations.patch
 BuildArch:      noarch
 
 BuildRequires:  ant
@@ -28,7 +38,7 @@ BuildRequires:  apache-ivy
 BuildRequires:  jansi
 BuildRequires:  jline
 BuildRequires:  tomcat-jsp-2.2-api
-BuildRequires:  junit4
+BuildRequires:  junit
 BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  xstream
 BuildRequires:  desktop-file-utils
@@ -50,7 +60,7 @@ Requires:       apache-ivy
 Requires:       jansi
 Requires:       jline
 Requires:       tomcat-jsp-2.2-api
-Requires:       junit4
+Requires:       junit
 Requires:       tomcat-servlet-3.0-api
 Requires:       xstream
 Source44: import.info
@@ -76,7 +86,9 @@ JavaDoc documentation for %{name}
 
 %prep
 %setup -q
+cp %{SOURCE4} %{SOURCE5} .
 
+%patch0 -p1
 
 %build
 mkdir -p target/lib/{compile,tools}
@@ -86,7 +98,7 @@ build-jar-repository target/lib/compile servlet jsp \
         objectweb-asm/asm-tree objectweb-asm/asm \
         objectweb-asm/asm-util objectweb-asm/asm-analysis \
         antlr ant/ant-antlr antlr \
-        bsf jline xstream ant junit4 ivy commons-cli \
+        bsf jline xstream ant junit ivy commons-cli \
         jansi
 
 # Build
@@ -144,14 +156,18 @@ touch $RPM_BUILD_ROOT/etc/groovy.conf
 %{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*
 %config(noreplace) %{_sysconfdir}/*
-%doc LICENSE.txt NOTICE.txt README.md 
+%doc LICENSE.txt NOTICE.txt README.md cpl-v10.txt epl-v10.txt
 %config(noreplace,missingok) /etc/groovy.conf
 
 
 %files javadoc
 %{_javadocdir}/*
+%doc LICENSE.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Sun Jul 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_2jpp7
+- update
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.7-alt1_1jpp7
 - new version
 
