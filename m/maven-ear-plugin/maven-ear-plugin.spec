@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ear-plugin
-Version:        2.7
-Release:        alt2_2jpp7
+Version:        2.8
+Release:        alt1_2jpp7
 Summary:        Maven EAR Plugin
 
 Group:          Development/Java
@@ -14,34 +14,32 @@ License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-ear-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# plexus-container-default needs to be before plexus-plugin-api in the
-# classpath as there is a duplication and incompatibility of classes
-Patch0:         %{name}-plexus-dep.patch
-
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
+BuildRequires: junit
 BuildRequires: maven
-BuildRequires: maven-plugin-plugin
+BuildRequires: maven-archiver
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-annotations
+BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-archiver
-BuildRequires: plexus-archiver
-BuildRequires: plexus-container-default > 0:1.0-0.5.a9
-BuildRequires: plexus-utils
 BuildRequires: maven-shared-filtering
 BuildRequires: maven-shared-verifier
+BuildRequires: maven-surefire-plugin
+BuildRequires: plexus-archiver
+BuildRequires: plexus-containers-container-default
+BuildRequires: plexus-utils
 BuildRequires: xmlunit
-BuildRequires: junit
 
 Requires:       maven
 Requires:       jpackage-utils
+Requires:       maven-plugin-annotations
 Requires:       plexus-archiver
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 Requires:       plexus-utils
 
 Obsoletes: maven2-plugin-ear <= 0:2.0.8
@@ -63,7 +61,9 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0 -p1 -F3
+
+# Was missing
+%pom_add_dep org.codehaus.plexus:plexus-container-default:1.0
 
 %build
 mvn-rpmbuild \
@@ -83,14 +83,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
+%doc LICENSE NOTICE
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_2jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_2jpp7
 - fixed build
 
