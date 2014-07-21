@@ -1,5 +1,5 @@
 Name: installer-feature-bacula-stage3
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary:Installer hook for alterator-bacula setup
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Jul 21 2014 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
+- Use full path for bacula-reset-settings script.
+- Don't require install2-init-functions.
+
 * Mon Jul 14 2014 Mikhail Efremov <sem@altlinux.org> 0.1-alt1
 - Initial build.
 
