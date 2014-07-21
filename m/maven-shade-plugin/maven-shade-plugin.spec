@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires:  maven2-plugin-deploy
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-shade-plugin
-Version:        1.7.1
-Release:        alt3_2jpp7
+Version:        2.0
+Release:        alt1_1jpp7
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 
 Group:          Development/Java
@@ -66,7 +66,8 @@ rm src/test/jars/plexus-utils-1.4.1.jar
 ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+# A class from aopalliance is not found. Simply adding BR does not solve it
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip
 
 %install
 # jars
@@ -75,7 +76,7 @@ install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}
 # poms
 install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 # javadoc
 install -dm 755 %{buildroot}%{_javadocdir}/%{name}
@@ -90,9 +91,12 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_1jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt3_2jpp7
 - fixed build
 
