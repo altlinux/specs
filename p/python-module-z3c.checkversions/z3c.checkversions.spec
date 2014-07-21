@@ -1,7 +1,10 @@
 %define oname z3c.checkversions
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Summary: Find newer package versions on PyPI
 License: ZPLv2.1
 Group: Development/Python
@@ -10,13 +13,39 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 Find newer versions of your installed Python packages, or newer versions
 of packages in a buildout file.
 
 This package provides a console script named checkversions.
+
+%package -n python3-module-%oname
+Summary: Find newer package versions on PyPI
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Find newer versions of your installed Python packages, or newer versions
+of packages in a buildout file.
+
+This package provides a console script named checkversions.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for z3c.checkversions
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zc.buildout
+
+%description -n python3-module-%oname-tests
+Find newer versions of your installed Python packages, or newer versions
+of packages in a buildout file.
+
+This package contains tests for z3c.checkversions.
 
 %package tests
 Summary: Tests for z3c.checkversions
@@ -33,12 +62,37 @@ This package contains tests for z3c.checkversions.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
-%install
-%python_install
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -48,6 +102,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.rst
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -55,7 +112,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%endif
+
 %changelog
+* Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2
+- Added module for Python 3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
 - Version 0.4.2
 
