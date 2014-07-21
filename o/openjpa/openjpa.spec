@@ -1,7 +1,7 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,15 +9,13 @@ BuildRequires: jpackage-compat
 %global with_tests 0
 Name:          openjpa
 Version:       2.2.0
-Release:       alt3_2jpp7
+Release:       alt3_3jpp7
 Summary:       Java Persistence 2.0 API
 Group:         Development/Java
 # # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
 Url:           http://openjpa.apache.org/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/%{name}/%{version}/apache-%{name}-%{version}-source.zip
-# force tomcat 7.x apis
-Source1:       %{name}-%{version}-depmap
 
 # remove org.codehaus.mojo ianal-maven-plugin 1.0-alpha-1
 Patch0:        %{name}-%{version}-remove-ianal-plugin.patch
@@ -44,6 +42,9 @@ Patch9:        %{name}-%{version}-jest-pom.patch
 Patch10:       %{name}-%{version}-tools-it-poms.patch
 # remove testing profiles for unavailable drivers: db2jcc informix-driver jcc-driver jdbc-driver jdbc-oracle jtds sqljdbc
 Patch11:       %{name}-%{version}-remove-test-profiles.patch
+# CVE-2013-1768 Disable logging during brokerfactory de-serialization.
+# Added type checking of plugin values.
+Patch12:       %{name}-2.2.0-CVE-2013-1768.patch
 
 BuildRequires: jpackage-utils
 
@@ -174,6 +175,7 @@ find . -name "*.jar" -delete
 %patch9 -p0
 %patch10 -p0
 %patch11 -p1
+%patch12 -p1
 
 sed -i "s|<module>openjpa</module>|<!--module>openjpa</module-->|" pom.xml
 sed -i "s|<module>openjpa-all</module>|<!--module>openjpa-all</module-->|" pom.xml
@@ -191,7 +193,8 @@ rm -r openjpa-jdbc/src/test/java/org/apache/openjpa/jdbc/sql/*
 
 %build
 # test random fails
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+# force tomcat 7.x apis
+mvn-rpmbuild -e \
 %if %{with_tests}
   -Ptest-derby \
 %else
@@ -199,7 +202,7 @@ mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javad
 %endif
   -DfailIfNoTests=false \
   -Dmaven.test.failure.ignore=true \
-  -Dmaven.local.depmap.file="%{SOURCE1}" \
+  -Dmaven.local.depmap.file="%{_mavendepmapfragdir}/tomcat-tomcat-servlet-api" \
   install javadoc:aggregate process-resources
 
 %install
@@ -273,6 +276,9 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_3jpp7
+- update
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_2jpp7
 - fixed build
 
