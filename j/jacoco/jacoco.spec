@@ -1,19 +1,22 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global tag 201207300726
+%global tag 201210061924
 
 Name:      jacoco
-Version:   0.5.9
-Release:   alt2_2jpp7
+Version:   0.6.0
+Release:   alt1_3jpp7
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
 URL:       http://www.eclemma.org/jacoco/
-#https://github.com/jacoco/jacoco/tags
-Source0:   eclemma-v0.5.9.tar.gz
+#https://github.com/jacoco/jacoco/archive/v0.6.0.tar.gz
+Source0:   https://github.com/jacoco/jacoco/archive/jacoco-0.6.0.tar.gz
 Patch0:    removeGroovyScripting.patch
 
 #jacoco can't be build with maven 3. https://github.com/jacoco/jacoco/issues/21
@@ -35,8 +38,9 @@ BuildRequires:    maven-release-plugin maven-resources-plugin maven-shade-plugin
 BuildRequires:    maven-plugin-tools-javadoc
 BuildRequires:    dos2unix
 BuildRequires:    fest-assert
+BuildRequires:    objectweb-asm4
 Requires:         ant
-Requires:         objectweb-asm
+Requires:         objectweb-asm4
 Source44: import.info
 
 %description
@@ -59,16 +63,19 @@ This package contains the API documentation for %{name}.
 Summary:    A Jacoco plugin for maven
 Group:      System/Libraries
 Requires:   maven
-Requires:   objectweb-asm
+Requires:   objectweb-asm4
 Requires:   %{name} = %{version}-%{release}
 
 %description maven-plugin
 A Jacoco plugin for maven.
 
 %prep
-%setup -q -n v%{version}
+%setup -q 
 %patch0 -p3
 %patch1
+
+sed -i -e "s|0.13.0|0.16.0|g" org.jacoco.build/pom.xml
+sed -i -e "s|4.1.0|5.0.0|g" org.jacoco.core/META-INF/MANIFEST.MF org.jacoco.report/META-INF/MANIFEST.MF
 
 # make sure upstream hasn't sneaked in any jars we don't know about
 JARS=""
@@ -85,11 +92,9 @@ fi
 %build
 # Note: Tests must be disabled because they introduce circular dependency
 # right now.
-OPTIONS="-DrandomNumner=${RANDOM} -Dtycho.targetPlatform=%_libdir/eclipse clean package javadoc:aggregate" 
+OPTIONS="-DrandomNumber=${RANDOM} -DskipTychoVersionCheck clean package javadoc:aggregate" 
 
-pushd org.jacoco.build
-    mvn-rpmbuild $OPTIONS
-popd
+mvn-rpmbuild $OPTIONS
 
 dos2unix org.jacoco.doc/docroot/doc/.resources/doc.css 
 
@@ -97,7 +102,6 @@ dos2unix org.jacoco.doc/docroot/doc/.resources/doc.css
 install -d -m 755 %{buildroot}%{_javadir}/%{name}
 
 for f in    org.jacoco.agent \
-            org.jacoco.agent.rt \
             org.jacoco.ant \
             org.jacoco.core \
             org.jacoco.report \
@@ -106,7 +110,9 @@ do
     cp $f/target/$f-%{version}.%{tag}.jar %{buildroot}%{_javadir}/%{name}/$f.jar
 done;
 
-# Intsall maven stuff.
+cp org.jacoco.agent.rt/target/org.jacoco.agent.rt-%{version}.%{tag}-all.jar %{buildroot}%{_javadir}/%{name}/org.jacoco.agent.rt.jar
+
+# Install maven stuff.
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 org.jacoco.build/pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom
@@ -123,7 +129,7 @@ done;
 
 # javadoc 
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rf org.jacoco.build/target/site/* %{buildroot}%{_javadocdir}/%{name}
+cp -rf target/site/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_mavendepmapfragdir}/%{name}
@@ -152,6 +158,9 @@ cp -rf org.jacoco.build/target/site/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3jpp7
+- update
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt2_2jpp7
 - fixed build
 
