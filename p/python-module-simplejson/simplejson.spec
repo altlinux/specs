@@ -1,7 +1,9 @@
 %define shortname simplejson
 
+%def_with python3
+
 Name: python-module-simplejson
-Version: 3.3.1
+Version: 3.5.3
 Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
@@ -11,11 +13,26 @@ Group: Development/Python
 Url: http://undefined.org/python/#simplejson
 
 Source0: %shortname-%version.tar
+Patch: simplejson-3.5.3-alt-python3.patch
 
 BuildRequires: python-module-setuptools python-module-sphinx
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 
 %description
+Simplejson is a simple, fast, complete, correct and extensible JSON
+encoder and decoder for Python 2.3+. It is pure Python code with no
+dependencies.
+
+%package -n python3-module-simplejson
+Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
+Group: Development/Python3
+
+%description -n python3-module-simplejson
 Simplejson is a simple, fast, complete, correct and extensible JSON
 encoder and decoder for Python 2.3+. It is pure Python code with no
 dependencies.
@@ -36,13 +53,34 @@ This package contains documentation for simplejson.
 %prep
 %setup -n %shortname-%version
 
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+%patch -p2
+popd
+%endif
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
+
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build_debug
+popd
+%endif
+
 ./scripts/make_docs.py
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %python_sitelibdir/%shortname/
@@ -51,11 +89,27 @@ This package contains documentation for simplejson.
 
 %check
 python setup.py check
+%if_with python3
+pushd ../python3
+python3 setup.py check
+popd
+%endif
 
 %files doc
 %doc docs/*
 
+%if_with python3
+%files -n python3-module-simplejson
+%python3_sitelibdir/%shortname/
+%exclude %python3_sitelibdir/%shortname/tests
+%python3_sitelibdir/*.egg-info
+%endif
+
 %changelog
+* Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1
+- Version 3.5.3
+- Added module for Python 3
+
 * Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1
 - Version 3.3.1
 
