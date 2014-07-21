@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -7,24 +8,23 @@ BuildRequires: rpm-build-java-osgi
 %global install_loc  %{_datadir}/eclipse/dropins/eclemma
 
 Name:      eclipse-eclemma
-Version:   2.1.4
-Release:   alt1_2jpp7
+Version:   2.2.0
+Release:   alt1_1jpp7
 Summary:   Java code coverage tool plugin for Eclipse
 Group:     Development/Java
 License:   EPL and ASL 2.0
 URL:       http://www.eclemma.org
 
-# Source tarball and script used to generate it
-# http://eclemma.svn.sourceforge.net/viewvc/eclemma/eclemma/tags/v2.1.2/?view=tar
-Source0:   eclemma-v%{version}.tar.gz
+Source0:   https://github.com/jacoco/eclemma/archive/v2.2.0.tar.gz
 
 BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    eclipse-pde >= 1:4.2.0
-BuildRequires:    jacoco >= 0.5.9
+BuildRequires:    jacoco >= 0.6.0
 Requires:         jpackage-utils
 Requires:         eclipse-jdt >= 1:4.2.0
-Requires:         jacoco >= 0.5.9
+Requires:         jacoco >= 0.6.0
+Requires:         objectweb-asm4
 Source44: import.info
 
 %description
@@ -34,7 +34,11 @@ coverage analysis summaries, and highlighting in Java source code
 editors.
 
 %prep
-%setup -q -n v%{version}
+%setup -q -n eclemma-%{version}
+
+#git does not handle empty folders - but this one is necessary
+
+mkdir -p com.mountainminds.eclemma.asm/src
 rm -fr com.mountainminds.eclemma.debug.ui.compatibility/src/org/eclipse/debug/ui/actions/RelaunchLastAction.java
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -45,10 +49,11 @@ pushd orbitDeps
 ln -s %{_javadir}/jacoco/org.jacoco.core.jar
 ln -s %{_javadir}/jacoco/org.jacoco.agent.jar
 ln -s %{_javadir}/jacoco/org.jacoco.report.jar
+ln -s %{_javadir}/objectweb-asm4/asm-all.jar
 popd
 
 %build
-eclipse-pdebuild -a "-DforceContextQualifier="`date date '+%%Y%%m%%d0000'`  -o `pwd`/orbitDeps
+eclipse-pdebuild -o `pwd`/orbitDeps
 
 %install
 install -d -m 755 %{buildroot}/%{install_loc}
@@ -60,7 +65,7 @@ rm -fr org.objectweb.asm*
 ln -s %{_javadir}/jacoco/org.jacoco.agent.jar 
 ln -s %{_javadir}/jacoco/org.jacoco.core.jar 
 ln -s %{_javadir}/jacoco/org.jacoco.report.jar
-ln -s %{_javadir}/objectweb-asm/asm-all.jar
+ln -s %{_javadir}/objectweb-asm4/asm-all.jar
 popd
 
 %files
@@ -70,6 +75,9 @@ popd
 %{install_loc}
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp7
+- new version
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.4-alt1_2jpp7
 - new release
 
