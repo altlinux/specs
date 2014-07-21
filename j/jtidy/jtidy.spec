@@ -1,13 +1,17 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global jtidyversion r938
 
 Name:             jtidy
 Version:          1.0
-Release:          alt1_0.10.20100930svn1125jpp6
+Release:          alt1_0.13.20100930svn1125jpp7
 Epoch:            3
 Summary:          HTML syntax checker and pretty printer
-Group:            Development/Java
+Group:            Networking/WWW
 License:          zlib
 URL:              http://jtidy.sourceforge.net/
 # svn export -r1125 https://jtidy.svn.sourceforge.net/svnroot/jtidy/trunk/jtidy/ jtidy
@@ -15,13 +19,14 @@ URL:              http://jtidy.sourceforge.net/
 Source0:          %{name}.tar.xz
 Source1:          %{name}.jtidy.script
 BuildArch:        noarch
-Patch: jtidy-1.0-alt-cleanup-pom-deps.patch
 
-BuildRequires: jpackage-utils
-BuildRequires: ant
+BuildRequires:    jpackage-utils
+BuildRequires:    ant
+BuildRequires:    xml-commons-apis
 
-Requires: jpackage-utils
-Requires(post): jpackage-utils
+Requires:         jpackage-utils
+Requires:         xml-commons-apis
+Requires(post):   jpackage-utils
 Requires(postun): jpackage-utils
 
 Obsoletes:        %{name}-scripts < 2:1.0-0.5
@@ -37,7 +42,7 @@ parser for real-world HTML.
 %package javadoc
 Summary:          Javadoc for %{name}
 Group:            Development/Java
-Requires: jpackage-utils
+Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -45,10 +50,12 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch -p0
+
+%pom_remove_dep xerces:dom3-xml-apis
+
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+ant \
     -Dant.build.javac.source=1.4
 
 %install
@@ -78,7 +85,6 @@ mkdir -p %{buildroot}%{_sysconfdir}/ant.d
 cat > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
 jtidy
 EOF
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 
 %files
@@ -96,6 +102,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt1_0.13.20100930svn1125jpp7
+- new release
+
 * Tue Feb 22 2011 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt1_0.10.20100930svn1125jpp6
 - new version
 
