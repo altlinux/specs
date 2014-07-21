@@ -3,7 +3,7 @@
 %def_disable rpm
 
 Name: lib%_name
-Version: 0.2.1
+Version: 0.2.3
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -12,7 +12,6 @@ License: LGPLv2+
 Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
-Patch: libappstream-glib-0.2.1-alt-build.patch
 
 BuildRequires: intltool glib2-devel >= 2.16.1 libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel libgdk-pixbuf-devel
@@ -104,7 +103,6 @@ GObject introspection devel data for the AppStream builder library.
 
 %prep
 %setup -n %_name-%version
-%patch
 
 %build
 %autoreconf
@@ -167,6 +165,9 @@ GObject introspection devel data for the AppStream builder library.
 
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Sun Jun 29 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
