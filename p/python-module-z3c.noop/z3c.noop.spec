@@ -1,7 +1,10 @@
 %define oname z3c.noop
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.1
+Release: alt3
 Summary: z3c.noop provides traverser that simply skips a path element
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope.component zope.interface zope.publisher
 %py_requires zope.traversing
@@ -21,6 +28,34 @@ z3c.noop provides traverser that simply skips a path element, so
 
 This is useful for example to generate varying URLs to work around
 browser caches[#test-setup]_.
+
+%package -n python3-module-%oname
+Summary: z3c.noop provides traverser that simply skips a path element
+Group: Development/Python3
+%py3_requires zope.component zope.interface zope.publisher
+%py3_requires zope.traversing
+
+%description -n python3-module-%oname
+z3c.noop provides traverser that simply skips a path element, so
+/foo/++noop++qux/bar is equivalent to /foo/bar.
+
+This is useful for example to generate varying URLs to work around
+browser caches[#test-setup]_.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for z3c.noop
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.app.testing zope.app.zcmlfiles zope.testing
+
+%description -n python3-module-%oname-tests
+z3c.noop provides traverser that simply skips a path element, so
+/foo/++noop++qux/bar is equivalent to /foo/bar.
+
+This is useful for example to generate varying URLs to work around
+browser caches[#test-setup]_.
+
+This package contains tests for z3c.noop.
 
 %package tests
 Summary: Tests for z3c.noop
@@ -40,16 +75,36 @@ This package contains tests for z3c.noop.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -61,7 +116,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 %changelog
+* Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt2.1
 - Rebuild with Python-2.7
 
