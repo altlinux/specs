@@ -1,38 +1,57 @@
-Name: plexus-tools-pom
-Version: 1.0.11
-Summary: Plexus Tools POM
-License: ASL 2.0
-Url: http://plexus.codehaus.org/plexus-tools
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+%global short_name plexus-tools
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-tools-pom-1.0.11-7.fc19.cpio
+Name:           %{short_name}-pom
+Version:        1.0.11
+Release:        alt1_2jpp7
+Summary:        Plexus Tools POM
+BuildArch:      noarch
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://plexus.codehaus.org/%{short_name}
+Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_name}/%{version}/%{short_name}-%{version}.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  jpackage-utils
+BuildRequires:  maven
+
+Requires:       jpackage-utils
+Source44: import.info
 
 %description
 This package provides Plexus Tools parent POM used by different
 Plexus packages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} LICENSE
 
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%pom_disable_module plexus-cdc
+%pom_disable_module plexus-cdc-anno
+%pom_disable_module plexus-cli
+%pom_disable_module plexus-javadoc
+
+%check
+mvn-rpmbuild verify
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom
 
-
-%files -f %name-list
+%files
+%doc LICENSE
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1_2jpp7
+- update
+
 * Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
