@@ -16,8 +16,8 @@
 %endif
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.14.3
-Release: alt2
+Version: 3.14.6
+Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -100,21 +100,25 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.14.3-2-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.14.3-2-hplip-strstr-const.patch
-Patch103: fedora-3.14.3-2-hplip-ui-optional.patch
-Patch104: fedora-3.14.3-2-hplip-no-asm.patch
-Patch105: fedora-3.14.3-2-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.14.3-2-hplip-udev-rules.patch
-Patch107: fedora-3.14.3-2-hplip-retry-open.patch
-Patch108: fedora-3.14.3-2-hplip-snmp-quirks.patch
-Patch109: fedora-3.14.3-2-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.14.3-2-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.14.3-2-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.14.3-2-hplip-logdir.patch
-Patch113: fedora-3.14.3-2-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.14.3-2-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.14.3-2-hplip-ppd-ImageableArea.patch
+Patch101: fedora-3.14.6-4-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.14.6-4-hplip-strstr-const.patch
+Patch103: fedora-3.14.6-4-hplip-ui-optional.patch
+Patch104: fedora-3.14.6-4-hplip-no-asm.patch
+Patch105: fedora-3.14.6-4-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.14.6-4-hplip-udev-rules.patch
+Patch107: fedora-3.14.6-4-hplip-retry-open.patch
+Patch108: fedora-3.14.6-4-hplip-snmp-quirks.patch
+Patch109: fedora-3.14.6-4-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.14.6-4-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.14.6-4-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.14.6-4-hplip-logdir.patch
+Patch113: fedora-3.14.6-4-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.14.6-4-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.14.6-4-hplip-ppd-ImageableArea.patch
+Patch116: fedora-3.14.6-4-hplip-scan-tmp.patch
+Patch117: fedora-3.14.6-4-hplip-codec.patch
+Patch118: fedora-3.14.6-4-hplip-log-stderr.patch
+Patch119: fedora-3.14.6-4-hplip-avahi-parsing.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -457,6 +461,18 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 
 # Fix ImageableArea for Laserjet 8150/9000 (bug #596298).
 %patch115 -p1 -b .ImageableArea
+
+# Scan to /var/tmp instead of /tmp (bug #1076954).
+%patch116 -p1 -b .scan-tmp
+
+# Fixed codec issue (bug #984167).
+%patch117 -p1 -b .codec
+
+# Treat logging before importing of logger module (bug #984699).
+%patch118 -p1 -b .log-stderr
+
+# Fix parsing of avahi-daemon output (bug #1096939).
+%patch119 -p1 -b .parsing
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -940,6 +956,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.6-alt1
+- new version (closes: #30203)
+
 * Mon Jun 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.14.3-alt2
 - added watch file
 - added upstream-signing-key.asc
