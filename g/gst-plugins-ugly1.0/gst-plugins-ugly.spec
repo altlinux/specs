@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -9,8 +9,8 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue May 13 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt2
 - rebuilt with recent x264, again
 

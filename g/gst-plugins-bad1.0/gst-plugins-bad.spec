@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.2
+%define ver_major 1.4
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -16,8 +16,8 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Requires: lib%_name%api_ver >= 1.0.5
-Requires: gstreamer%api_ver >= 1.0.5
+Requires: lib%_name%api_ver >= %ver_major
+Requires: gstreamer%api_ver >= %ver_major
 
 Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
@@ -88,7 +88,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %dir %_gst_libdir
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
-%_typelibdir/GstEGL-%api_ver.typelib
+#%_typelibdir/GstEGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
@@ -99,7 +99,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_includedir/gstreamer-%api_ver/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_girdir/GstEGL-%api_ver.gir
+#%_girdir/GstEGL-%api_ver.gir
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
 
@@ -110,6 +110,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 

@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -7,7 +7,7 @@
 %def_disable gtk-doc
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -156,6 +156,9 @@ Gstreamer plugins.
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
