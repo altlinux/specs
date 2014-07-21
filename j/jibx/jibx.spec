@@ -1,6 +1,6 @@
-BuildArch: noarch
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,17 +8,18 @@ BuildRequires: jpackage-compat
 %define debug_package %{nil}
 
 Name: jibx
-Version:	1.2.4
-Release:	alt2_6jpp7
+Version:	1.2.5
+Release:	alt1_2jpp7
 Summary:	Framework for binding XML data to Java objects
 
 Group:		Development/Java
 License:	BSD and ASL 1.1
 URL:		http://sourceforge.net/projects/jibx/
-Source0:	http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.4/%{name}_1_2_4.zip
+Source0:	http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.5/%{name}_1_2_5.zip
 Patch0: %{name}-classpath.patch
 Patch1: %{name}-%{version}-poms.patch
 
+BuildArch: noarch
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: junit
@@ -116,7 +117,7 @@ pushd build/
 sed -i -e s:stax-api.jar:bea-stax-api.jar:g build.xml
 
 export CLASSPATH=$(build-classpath junit)
-ant current #test-multiples test-singles test-extras basic-blackbox blackbox devdoc javadoc
+ant current -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 #test-multiples test-singles test-extras basic-blackbox blackbox devdoc javadoc
 
 %install
 install -d -m 755 %{buildroot}/%{_javadir}/%{name}
@@ -149,6 +150,9 @@ cp -rp %{_builddir}/%{name}/build/docs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_2jpp7
+- update
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.4-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
