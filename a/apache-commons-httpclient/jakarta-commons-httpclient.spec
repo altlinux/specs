@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        alt5_13jpp7
+Release:        alt6_13jpp7
 Epoch:          1
 Summary: Jakarta Commons HTTPClient implements the client side of HTTP standards
 License:        ASL 2.0 and (ASL 2.0 or LGPLv2+)
@@ -75,8 +75,8 @@ Provides:       jakarta-commons-httpclient3 = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-commons-httpclient3 < %{epoch}:%{version}-%{release}
 Source44: import.info
 # jpackage compat
-Provides:       jakarta-commons-httpclient = %{epoch}:%version
-Obsoletes:      jakarta-commons-httpclient < %{epoch}:%version
+Provides:       jakarta-commons-httpclient = %{epoch}:%{version}-%{release}
+Obsoletes:      jakarta-commons-httpclient < %{epoch}:%{version}-%{release}
 
 %description
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant
@@ -209,6 +209,9 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{oldname}.pom
 
 
 %changelog
+* Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_13jpp7
+- updated provides
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt5_13jpp7
 - update
 
