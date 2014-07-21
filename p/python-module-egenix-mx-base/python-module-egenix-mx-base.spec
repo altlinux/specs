@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 3.2.6
+Version: 3.2.8
 Release: alt1
 
 Summary: eGenix.com mx Base Distribution
@@ -74,6 +74,10 @@ cp -a . ../python3
 %endif
 
 %build
+%add_optflags -fno-strict-aliasing
+
+cp $(find ./ -name '*.pdf') ./
+
 %if_with python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
@@ -103,7 +107,7 @@ rm -f %buildroot/%python3_sitelibdir/mx/{BeeBase/showBeeDict.py,Misc/FileLock.py
 %files
 %python_sitelibdir/mx/
 %python_sitelibdir/*.egg-info
-%doc COPYRIGHT LICENSE README
+%doc COPYRIGHT LICENSE README *.pdf
 
 %if_with python3
 %files -n python3-module-%oname
@@ -112,6 +116,9 @@ rm -f %buildroot/%python3_sitelibdir/mx/{BeeBase/showBeeDict.py,Misc/FileLock.py
 %endif
 
 %changelog
+* Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.8-alt1
+- Version 3.2.8
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.6-alt1
 - Version 3.2.6
 
