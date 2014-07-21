@@ -1,6 +1,9 @@
 %define oname z3c.formwidget.query
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 0.9
+Version: 0.10
 Release: alt1
 Summary: A source query widget for z3c.form
 License: ZPLv2.1
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires z3c.formwidget z3c.form zope.app.form zope.interface
 %py_requires zope.schema zope.component zope.i18nmessageid
@@ -22,6 +29,36 @@ select from the results.
 The widget works with zope.schema.Choice-fields supplying a query
 source, optionally in conjunction with a collection field which then
 allows multiple selections.
+
+%package -n python3-module-%oname
+Summary: A source query widget for z3c.form
+Group: Development/Python3
+%py3_requires z3c.formwidget z3c.form zope.app.form zope.interface
+%py3_requires zope.schema zope.component zope.i18nmessageid
+
+%description -n python3-module-%oname
+This package implements a widget that lets users enter a query and
+select from the results.
+
+The widget works with zope.schema.Choice-fields supplying a query
+source, optionally in conjunction with a collection field which then
+allows multiple selections.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for z3c.formwidget.query
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.app.testing zope.testing
+
+%description -n python3-module-%oname-tests
+This package implements a widget that lets users enter a query and
+select from the results.
+
+The widget works with zope.schema.Choice-fields supplying a query
+source, optionally in conjunction with a collection field which then
+allows multiple selections.
+
+This package contains tests for z3c.formwidget.query.
 
 %package tests
 Summary: Tests for z3c.formwidget.query
@@ -42,16 +79,36 @@ This package contains tests for z3c.formwidget.query.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -63,7 +120,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/*/tests.*
+%python3_sitelibdir/*/*/*/*/tests.*
+%endif
+
 %changelog
+* Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1
+- Version 0.10
+- Added module for Python 3
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
 - Version 0.9
 
