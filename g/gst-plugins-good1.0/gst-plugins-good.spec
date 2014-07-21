@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-good%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -73,6 +73,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 

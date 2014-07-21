@@ -1,14 +1,14 @@
-%define ver_major 1.2
+%define ver_major 1.4
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
-%def_without system_libav
+%def_with system_libav
 %if_without system_libav
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: gst-libav
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
 Group: System/Libraries
@@ -17,7 +17,9 @@ Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-BuildRequires: gst-plugins%gst_api_ver-devel libavformat-devel >= 9.9
+%define libav_ver 10.2
+
+BuildRequires: gst-plugins%gst_api_ver-devel libavformat-devel >= %libav_ver
 BuildRequires: liborc-devel libswscale-devel zlib-devel bzlib-devel gtk-doc
 %{?_without_system_libav:BuildRequires: glibc-devel-static libSDL-devel libXvMC-devel liblzo2-devel libvdpau-devel orc nasm}
 
@@ -33,10 +35,17 @@ GStreamer Libav plug-in contains one plugin with a set of elements
 using the FFmpeg library code. It contains most popular decoders as
 well as very fast colorspace conversion elements.
 
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+This package contains development documentation for the GStreamer Libav
+plug-in.
+
 %prep
 %setup
-
-#touch ABOUT-NLS config.rpath
 
 %build
 %autoreconf
@@ -50,11 +59,19 @@ well as very fast colorspace conversion elements.
 %makeinstall_std
 
 %files
-%doc AUTHORS NEWS README TODO
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
+%doc AUTHORS NEWS README TODO
+
+%files devel-doc
+%_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+- built against system libav
+- new devel-doc subpackage
+
 * Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt2
 - use internal libav code
 
