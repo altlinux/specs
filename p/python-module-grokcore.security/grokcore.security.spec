@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.2
-Release: alt2
+Release: alt3
 Summary: Grok-like configuration for Zope security components
 License: ZPL
 Group: Development/Python
@@ -20,7 +20,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires grokcore grokcore.component martian zope.component
-%py_requires zope.interface zope.security
+%py_requires zope.interface zope.security zope.securitypolicy
 
 %description
 This package provides basic elements for defining Zope permissions and
@@ -30,7 +30,7 @@ security checkers without ZCML.
 Summary: Grok-like configuration for Zope security components
 Group: Development/Python3
 %py3_requires grokcore grokcore.component martian zope.component
-%py3_requires zope.interface zope.security
+%py3_requires zope.interface zope.security zope.securitypolicy
 
 %description -n python3-module-%oname
 This package provides basic elements for defining Zope permissions and
@@ -118,6 +118,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt3
+- Added requirement on zope.securitypolicy
+
 * Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt2
 - Added module for Python 3
 
