@@ -1,11 +1,12 @@
-Name: girar-utils
-Version: 1.5.3
-Release: alt1
+Name:     girar-utils
+Version:  1.5.4
+Release:  alt1
 
-Summary: git.alt client utilities
-License: GPL
-Group: Development/Other
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Summary:  git.alt client utilities
+License:  GPL
+Group:    Development/Other
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -22,13 +23,16 @@ This package contains client utilities for git.alt.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/*
 %_mandir/man?/*
 
 %changelog
+* Tue Jul 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
+- Add girar-show: show highlighted task list and task log
+
 * Sat Nov 21 2009 Alexey I. Froloff <raorn@altlinux.org> 1.5.3-alt1
 - girar-import: provide options to try import only from /gears/ or
   /srpms/ hierarchy
