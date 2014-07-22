@@ -1,14 +1,14 @@
-%define oname grokcore.json
+%define oname grokcore.catalog
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt2
-Summary: JSON View component for Grok
+Version: 2.0
+Release: alt1
+Summary: Grok-like configuration for catalog and indexes
 License: ZPL
 Group: Development/Python
-Url: http://pypi.python.org/pypi/grokcore.json/
+Url: https://pypi.python.org/pypi/grokcore.catalog/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -19,42 +19,46 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
-%py_requires grokcore grokcore.component grokcore.security grokcore.view
-%py_requires martian simplejson zope.component zope.interface
-%py_requires zope.publisher
+%py_requires grokcore.component grokcore.site zc.buildout zope.catalog
+%py_requires zope.component zc.catalog zope.interface
+%py_requires zope.lifecycleevent zope.intid zope.exceptions
 
 %description
-JSON View component for Grok.
+Grok-like configuration for catalog and indexes.
 
 %package -n python3-module-%oname
-Summary: JSON View component for Grok
+Summary: Grok-like configuration for catalog and indexes
 Group: Development/Python3
-%py3_requires grokcore grokcore.component grokcore.security grokcore.view
-%py3_requires martian simplejson zope.component zope.interface
-%py3_requires zope.publisher
+%py3_requires grokcore.component grokcore.site zc.buildout zope.catalog
+%py3_requires zope.component zc.catalog zope.interface
+%py3_requires zope.lifecycleevent zope.intid zope.exceptions
 
 %description -n python3-module-%oname
-JSON View component for Grok.
+Grok-like configuration for catalog and indexes.
 
 %package -n python3-module-%oname-tests
-Summary: Tests for grokcore.json
+Summary: Tests for %oname
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
+%py3_requires grokcore.content zope.index zope.configuration
+%py3_requires zope.app.wsgi.testlayer zope.testing
 
 %description -n python3-module-%oname-tests
-JSON View component for Grok.
+Grok-like configuration for catalog and indexes.
 
-This package contains tests for grokcore.json.
+This package contains tests for %oname.
 
 %package tests
-Summary: Tests for grokcore.json
+Summary: Tests for %oname
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
+%py_requires grokcore.content zope.index zope.configuration
+%py_requires zope.app.wsgi.testlayer zope.testing
 
 %description tests
-JSON View component for Grok.
+Grok-like configuration for catalog and indexes.
 
-This package contains tests for grokcore.json.
+This package contains tests for %oname.
 
 %prep
 %setup
@@ -64,11 +68,11 @@ cp -fR . ../python3
 %endif
 
 %build
-%python_build
+%python_build_debug
 
 %if_with python3
 pushd ../python3
-%python3_build
+%python3_build_debug
 popd
 %endif
 
@@ -106,21 +110,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/*test*
+%exclude %python3_sitelibdir/*/*/*/*test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/*test*
+%python3_sitelibdir/*/*/*/*test*
 %endif
 
 %changelog
-* Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
-- Added module for Python 3
-
-* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
-- Version 1.2
-
-* Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.1
-- Rebuild with Python-2.7
-
-* Wed Jun 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
+* Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Initial build for Sisyphus
 
