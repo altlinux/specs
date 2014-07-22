@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.2
-Release: alt4
+Version: %ver_major.4
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -192,6 +192,10 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-automount
 
 %changelog
+* Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt1
+- 2.2.4
+- add Alt Linux datetime mechanism
+
 * Mon Jul 7 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt4
 - fix build deps
 
