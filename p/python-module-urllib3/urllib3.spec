@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 20140708
-Release: alt1
+Release: alt2
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 License: MIT
@@ -12,11 +12,15 @@ Group: Development/Python
 
 Url: https://github.com/shazow/urllib3/
 
+# make all imports of things in packages try system copies first
+Patch0:         python-urllib3-unbundle.patch
+
 # https://github.com/shazow/urllib3.git
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
+BuildRequires:  python-module-six python-module-backports.ssl_match_hostname python-module-ordereddict
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -26,6 +30,7 @@ BuildPreReq: python3-devel
 %setup_python_module %oname
 
 Requires: python-module-ndg-httpsclient
+Requires: python-module-six python-module-backports.ssl_match_hostname python-module-ordereddict ca-certificates
 
 %description
 Python HTTP library with thread-safe connection pooling, file post
@@ -84,6 +89,10 @@ This package contains documentation for urllib3.
 
 %prep
 %setup
+
+rm -rf urllib3/packages/
+
+%patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -144,6 +153,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Jul 22 2014 Lenar Shakirov <snejok@altlinux.ru> 20140708-alt2
+- Unbundle ssl_match_hostname, ordereddict and six package
+- Use system python-module-{six,backports.ssl_match_hostname,ordereddict}
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140708-alt1
 - New snapshot
 - Added module for Python 3
