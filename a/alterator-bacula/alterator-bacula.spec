@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -20,6 +20,7 @@ Requires: ntfs-3g
 Requires: alterator >= 4.10-alt5
 Requires: alterator-l10n >= 2.7-alt19
 Requires: alterator-sh-functions alterator-net-functions alterator-hw-functions >= 0.6-alt1
+Requires: alterator-service-functions
 Requires: passwdqc-utils
 Requires: bacula-director-mysql
 Requires: MySQL-server-control
@@ -80,6 +81,10 @@ done
 %altdir/desktop-directories/*
 
 %changelog
+* Tue Jul 22 2014 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
+- Ensure that mysqld is really started.
+- Use alterator-service-functions.
+
 * Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - Don't wait mysqld when password is set.
 - bacula-sh-functions: Don't exit from function, just return.
