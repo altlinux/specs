@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.2
-Release: alt2
+Version: 0.3.3
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for snort administration
@@ -10,6 +10,7 @@ Packager: Mikhail Efremov <sem@altlinux.org>
 Source: %name-%version.tar
 
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
+Requires: alterator-service-functions
 Requires: snort barnyard2-mysql snort-rules
 Requires: oinkmaster wget
 Requires: alterator-l10n >= 2.8-alt4
@@ -51,6 +52,10 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Tue Jul 22 2014 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
+- Use alterator-service-functions.
+- reset-snort-db.sh: Fix password setup.
+
 * Wed Jul 16 2014 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt2
 - Require snort.
 
