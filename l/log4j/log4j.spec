@@ -1,6 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++ maven
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           log4j
 Version:        1.2.17
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Epoch:          0
 Summary:        Java logging package
 BuildArch:      noarch
@@ -67,7 +70,7 @@ variety of output targets.
 %package        manual
 Summary:        Developer manual for %{name}
 Group:          Development/Java
-Requires:       %{name}-javadoc = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name}-javadoc = %{version}-%{release}
 BuildArch: noarch
 
 %description    manual
@@ -104,8 +107,8 @@ for i in contribs/JimMoore/mail*;do
 done
 
 # remove all the stuff we'll build ourselves
-find . \( -name "*.jar" -o -name "*.class" \) -exec rm -f {} \;
-rm -rf docs/api
+find . \( -name "*.jar" -o -name "*.class" \) -exec %__rm -f {} \;
+%__rm -rf docs/api
 
 
 
@@ -156,7 +159,7 @@ install -pD -T -m 644 %{SOURCE7} \
   %{buildroot}%{_datadir}/sgml/%{name}/catalog
 
 # fix perl location
-perl -p -i -e 's|/opt/perl5/bin/perl|%{__perl}|' \
+%__perl -p -i -e 's|/opt/perl5/bin/perl|%{__perl}|' \
 contribs/KitchingSimon/udpserver.pl
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/chainsaw.conf`
@@ -213,6 +216,9 @@ fi
 
 
 %changelog
+* Tue Jul 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt3_3jpp7
+- osgi fix
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt2_3jpp7
 - applied repocop patches
 
