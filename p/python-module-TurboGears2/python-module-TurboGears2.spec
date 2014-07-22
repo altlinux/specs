@@ -1,9 +1,9 @@
 %define oname TurboGears2
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 2.2.0
+Version: 2.3.3
 Release: alt1
 
 Summary: Back-to-front web development in Python
@@ -111,9 +111,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -127,11 +125,10 @@ popd
 %endif
 
 %files
-%doc README.txt
+%doc *.txt *.rst
 %python_sitelibdir/tg/
 %python_sitelibdir/%{oname}*.egg-info
-#exclude %python_sitelibdir/tg/test_stack
-#exclude %python_sitelibdir/tg/tests
+%exclude %python_sitelibdir/tests
 
 #files tests
 #python_sitelibdir/tg/test_stack
@@ -139,10 +136,9 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/tg/test_stack
-%exclude %python3_sitelibdir/tg/tests
+%exclude %python3_sitelibdir/tests
 
 #files -n python3-module-%oname-tests
 #python3_sitelibdir/tg/test_stack
@@ -150,6 +146,10 @@ popd
 %endif
 
 %changelog
+* Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt1
+- Version 2.3.3
+- Added module for Python 3
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 
