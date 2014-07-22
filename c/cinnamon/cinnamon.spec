@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 2.2.13
-Release: alt2
+Version: 2.2.14
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -231,6 +231,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.14-alt1
+- 2.2.14
+
 * Thu May 29 2014 Vladimir Didenko <cow@altlinux.org> 2.2.13-alt2
 - use mintlocale for language selection
 
