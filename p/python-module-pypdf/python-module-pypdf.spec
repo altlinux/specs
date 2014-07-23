@@ -1,8 +1,8 @@
 %define modulename pypdf
 
 Name: python-module-%modulename
-Version: 1.12
-Release: alt1.1
+Version: 1.13
+Release: alt1
 Summary: A Pure-Python library built as a PDF toolkit
 %setup_python_module %modulename
 
@@ -48,6 +48,9 @@ It is therefore a useful tool for websites that manage or manipulate PDFs.
 
 
 %changelog
+* Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13-alt1
+- Version 1.13
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.12-alt1.1
 - Rebuild with Python-2.7
 
