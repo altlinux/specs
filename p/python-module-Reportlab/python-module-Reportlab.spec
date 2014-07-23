@@ -1,6 +1,10 @@
 %define rname reportlab
-Name: python-module-Reportlab
-Version: 2.7
+%define oname Reportlab
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 3.0
 Release: alt1
 License: BSD license (see LICENSE.txt for details)
 Summary: The Reportlab Toolkit
@@ -12,12 +16,36 @@ Source: %name-%version.tar
 
 BuildRequires: rpm-build-python >= 0.8
 BuildRequires: python-devel python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %add_python_req_skip rlextra
 
 %description
 The ReportLab Toolkit.
 An Open Source Python library for generating PDFs and graphics.
+
+%package -n python3-module-%oname
+Summary: The Reportlab Toolkit
+Group: Development/Python3
+%add_python3_req_skip rlextra __main__
+
+%description -n python3-module-%oname
+The ReportLab Toolkit.
+An Open Source Python library for generating PDFs and graphics.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Reportlab Toolkit
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+The ReportLab Toolkit.
+An Open Source Python library for generating PDFs and graphics.
+
+This package contains tests for Reportlab Toolkit.
 
 %package tests
 Summary: Tests for Reportlab Toolkit
@@ -44,11 +72,23 @@ This package contains documentation for Reportlab Toolkit.
 
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
 
 %make -C docs html
 
@@ -58,6 +98,13 @@ ln -s ../objects.inv docs/source/
 	--record=INSTALLED_FILES
 
 cp -fR tests %buildroot%python_sitelibdir/%rname/
+
+%if_with python3
+pushd ../python3
+%python3_install
+cp -fR tests %buildroot%python3_sitelibdir/%rname/
+popd
+%endif
 
 %files -f INSTALLED_FILES
 %doc *.txt
@@ -70,7 +117,20 @@ cp -fR tests %buildroot%python_sitelibdir/%rname/
 %files docs
 %doc docs/build/html docs/userguide demos
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%rname/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%rname/tests
+%endif
+
 %changelog
+* Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
+- Added module for Python 3
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1
 - Version 2.7
 
