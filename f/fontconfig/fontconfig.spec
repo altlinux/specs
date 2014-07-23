@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.1
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -11,7 +11,11 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
+# FC
 Patch1: fontconfig-sleep-less.patch
+Patch2: fontconfig-fix-fccache-fail.patch
+Patch3: fontconfig-fix-broken-cache.patch
+# ALT
 Patch11: alt-symbols-map.patch
 Patch12: alt-config.patch
 Patch13: alt-fc-conf.patch
@@ -39,6 +43,8 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -136,6 +142,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Jul 23 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt3
+- sync patches with FC
+
 * Thu Jul 10 2014 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt2
 - by default turn on antialias lcdfilter-default hinting style-full sub-pixel-rgb
 - by default decrease ms fonts priority
