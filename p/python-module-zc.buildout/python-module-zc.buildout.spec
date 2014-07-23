@@ -1,6 +1,6 @@
 %define version 2.2.1
 #define subver b20
-%define release alt2
+%define release alt3
 %define oname zc.buildout
 %setup_python_module %oname
 
@@ -26,6 +26,8 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
+%py_requires zc.zlibstorage zc.recipe.egg
+
 %description
 The Buildout project provides support for creating applications,
 especially Python applications.  It provides tools for assembling
@@ -36,6 +38,7 @@ settings.
 %package -n python3-module-%oname
 Summary: The Buildout project provides support for creating Python applications
 Group: Development/Python3
+%py3_requires zc.zlibstorage zc.recipe.egg
 
 %description -n python3-module-%oname
 The Buildout project provides support for creating applications,
@@ -147,6 +150,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3
+- Added necessary requirements
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt2
 - Added module for Python 3
 
