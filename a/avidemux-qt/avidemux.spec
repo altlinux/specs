@@ -5,7 +5,7 @@
 
 Name: avidemux-qt
 Version: 2.6.8
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -25,6 +25,7 @@ Source1: ffmpeg.tar.bz2
 %endif
 Source2: avidemux.desktop
 Source3: http://gitorious.org/avidemux2-6/avidemux2-6/blobs/raw/7cf44bbc1f33894594b2bc84089d1779edc5c2b9/avidemux_plugins/ADM_autoScrips/lib/ADM_resize.py
+Source4: avidemux_ru.ts
 
 %if_enabled ownffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
@@ -97,6 +98,8 @@ Common files for %name
 %patch3 -p1
 %patch4 -p1
 %patch100 -p1
+
+cp -f %SOURCE4 po/
 
 %if_enabled ownffmpeg
 install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
@@ -172,6 +175,9 @@ done
 %exclude %_includedir/avidemux
 
 %changelog
+* Wed Jul 23 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.8-alt2
+- Convert Russian localization from gettext to qt linguist format
+
 * Thu May 15 2014 Sergey V Turchin <zerg@altlinux.org> 2.6.8-alt1
 - new version
 
