@@ -1,5 +1,5 @@
 Name: xfdashboard
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
@@ -54,6 +54,9 @@ mkdir m4
 %_datadir/themes/%name/
 
 %changelog
+* Wed Jul 23 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Tue Jul 01 2014 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Updated to 0.2.0.
 
