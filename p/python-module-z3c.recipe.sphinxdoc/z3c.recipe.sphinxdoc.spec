@@ -1,7 +1,10 @@
 %define oname z3c.recipe.sphinxdoc
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Use Sphinx to build documentation for zope.org
 License: ZPL
 Group: Development/Python
@@ -10,15 +13,32 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-zc.buildout
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-zc.buildout
+%endif
 
 %py_requires z3c zc.buildout zc.recipe.egg docutils
 %py_requires sphinx
-
 Requires: python-module-z3c.recipe = %EVR
 
 %description
+This buildout recipe aids in the generation of documentation for the
+zope.org website from restructured text files located in a package. It
+uses Sphinx to build static html files which can stand alone as a very
+nice looking website.
+
+%package -n python3-module-%oname
+Summary: Use Sphinx to build documentation for zope.org
+Group: Development/Python3
+%py3_requires z3c zc.buildout zc.recipe.egg docutils
+%py3_requires sphinx
+Requires: python3-module-z3c.recipe = %EVR
+
+%description -n python3-module-%oname
 This buildout recipe aids in the generation of documentation for the
 zope.org website from restructured text files located in a package. It
 uses Sphinx to build static html files which can stand alone as a very
@@ -36,21 +56,54 @@ nice looking website.
 
 This package contains Core package for z3c.repice.
 
+%package -n python3-module-z3c.recipe
+Summary: Core package for z3c.repice
+Group: Development/Python3
+
+%description -n python3-module-z3c.recipe
+This buildout recipe aids in the generation of documentation for the
+zope.org website from restructured text files located in a package. It
+uses Sphinx to build static html files which can stand alone as a very
+nice looking website.
+
+This package contains Core package for z3c.repice.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 touch %buildroot%python_sitelibdir/z3c/recipe/__init__.py
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+touch %buildroot%python3_sitelibdir/z3c/recipe/__init__.py
+%endif
 
 %files
 %doc *.txt
@@ -61,7 +114,23 @@ touch %buildroot%python_sitelibdir/z3c/recipe/__init__.py
 %files -n python-module-z3c.recipe
 %python_sitelibdir/z3c/recipe/__init__.py*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/z3c/recipe/__init__.py
+%exclude %python3_sitelibdir/z3c/recipe/__pycache__/__init__.*
+
+%files -n python3-module-z3c.recipe
+%python3_sitelibdir/z3c/recipe/__init__.py
+%python3_sitelibdir/z3c/recipe/__pycache__/__init__.*
+%endif
+
 %changelog
+* Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
+- Added module for Python 3
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
