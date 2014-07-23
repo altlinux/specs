@@ -3,7 +3,7 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 1.10.0
+Version: 2.1
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -19,7 +19,7 @@ Source2: %name.sysconfig
 Source3: %name-tmpfs.conf
 Source4: %name.service
 
-BuildRequires: libdaemon-devel
+BuildRequires: libcheck-devel
 BuildRequires: flex, byacc
 
 %description
@@ -79,6 +79,9 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Wed Jul 23 2014 Mikhail Efremov <sem@altlinux.org> 2.1-alt1
+- Updated to 2.1.
+
 * Fri Mar 21 2014 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - Updated to 1.10.0.
 
