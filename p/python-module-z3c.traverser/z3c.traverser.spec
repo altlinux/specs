@@ -1,7 +1,10 @@
 %define oname z3c.traverser
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.a2
+Release: alt2.a2
 Summary: Pluggable Traversers And URL handling utilities
 License: ZPLv2.1
 Group: Development/Python
@@ -10,10 +13,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-eggtestinfo python-module-zope.testrunner
 BuildPreReq: python-module-zope.interface python-module-zope.exceptions
 BuildPreReq: python-module-six
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-eggtestinfo python3-module-zope.testrunner
+BuildPreReq: python3-module-zope.interface python3-module-zope.exceptions
+BuildPreReq: python3-module-six
+%endif
 
 %py_requires zope.component zope.contentprovider zope.interface
 %py_requires zope.publisher zope.traversing zope.viewlet
@@ -30,6 +40,40 @@ subpackages:
 * stackinfo - provides a way to consume parts of url and store them as
   attributes of the "consumer" object. Useful for urls like:
   /blog/2009/02/02/hello-world
+
+%package -n python3-module-%oname
+Summary: Pluggable Traversers And URL handling utilities
+Group: Development/Python3
+%py3_requires zope.component zope.contentprovider zope.interface
+%py3_requires zope.publisher zope.traversing zope.viewlet
+
+%description -n python3-module-%oname
+This package provides the pluggable traverser mechanism allowing
+developers to add new traversers to an object without altering the
+original traversal implementation.
+
+In addition to the pluggable traversers, this package contains two more
+subpackages:
+
+* viewlet - provides a way to traverse to viewlets using namespaces
+* stackinfo - provides a way to consume parts of url and store them as
+  attributes of the "consumer" object. Useful for urls like:
+  /blog/2009/02/02/hello-world
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Pluggable Traversers And URL handling utilities
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.app.testing zope.app.securitypolicy
+%py3_requires zope.app.zcmlfiles zope.testbrowser
+
+%description -n python3-module-%oname-tests
+This package provides the pluggable traverser mechanism allowing
+developers to add new traversers to an object without altering the
+original traversal implementation.
+
+This package contains tests for Pluggable Traversers And URL handling
+utilities.
 
 %package tests
 Summary: Tests for Pluggable Traversers And URL handling utilities
@@ -49,16 +93,36 @@ utilities.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -72,7 +136,25 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 %python_sitelibdir/*/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
+%endif
+
 %changelog
+* Thu Jul 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.a2
+- Added module for Python 3
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.a2
 - Version 1.0.0a2
 
