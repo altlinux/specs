@@ -1,5 +1,5 @@
 Name: gear-cronbuild
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: gear repository automated build utility
@@ -12,8 +12,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 # TODO use /usr/bin/gear-rules-print-specfile
-BuildRequires: perl-RPM-Source-Editor perl-RPM perl-devel /usr/bin/pod2man perl-Gear-Rules
-Requires: gear rpm-uscan > 0.4 perl-Gear-Rules > 0.10
+BuildRequires: perl-RPM-Source-Editor perl-RPM perl-devel /usr/bin/pod2man /usr/bin/gear-rules-print-specfile /usr/bin/gear-restore-remotes
+Requires: gear rpm-uscan > 0.15 gear-uupdate > 0.16
 
 %description
 %summary
@@ -45,6 +45,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- specgen support
+
 * Sat Jun 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - use perl-Gear-Rules for gear API
 
