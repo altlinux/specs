@@ -1,5 +1,5 @@
 Name: youtube-dl
-Version: 2013.04.03
+Version: 2014.07.24
 Release: alt2
 
 Summary: Download videos from YouTube
@@ -31,6 +31,9 @@ cp -r youtube_dl %buildroot%python_sitelibdir/
 %python_sitelibdir/youtube_dl
 
 %changelog
+* Thu Jul 24 2014 Mykola Grechukh <gns@altlinux.ru> 2014.07.24-alt2
+- 2014.07.24
+
 * Mon Apr 08 2013 Mykola Grechukh <gns@altlinux.ru> 2013.04.03-alt2
 - build from source tree
 
