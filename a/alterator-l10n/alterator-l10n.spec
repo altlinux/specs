@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.4
+Version: 2.9.5
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,12 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Jul 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.5-alt1
+- Add Russian translation for:
+  + alterator-ddos
+  + alterator-shapercontrol
+  + alterator-zabbix-server
+
 * Mon Feb 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.4-alt1
 - Add attention from alterator-console
 
