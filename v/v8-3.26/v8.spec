@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     26
 %define BUILD_NUMBER      31
-%define PATCH_LEVEL       8
+%define PATCH_LEVEL       11
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -99,6 +99,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Thu Jul 24 2014 Andrey Cherepanov <cas@altlinux.org> 3.26.31.11-alt1
+- new version
+
 * Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 3.26.31.8-alt1
 - new version
 
