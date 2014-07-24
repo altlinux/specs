@@ -38,8 +38,8 @@ BuildRequires: jpackage-compat
 
 Name:           junit4
 Version:        4.10
-Release:        alt4_6jpp7
-Epoch:          0
+Release:        alt5_6jpp7
+Epoch:          1
 Summary:        Java regression test package
 License:        CPL
 URL:            http://www.junit.org/
@@ -174,6 +174,9 @@ EOF
 %_altdir/%{name}
 
 %changelog
+* Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.10-alt5_6jpp7
+- bumped epoch for junit-junit4
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt4_6jpp7
 - made junit-junit4 provider default
 
