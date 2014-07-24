@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 2.99
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jul 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt2
+- Use Alterator colors and Clearlooks theme from Centaurus
+- Decorate progressbar in Alterator as stripped bar
+- [ahttpd] Solid background for error message
+- [grub] Use colors from bootloader
+
 * Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt1
 - Prepare for new version
 - Support Plymouth and grub2
