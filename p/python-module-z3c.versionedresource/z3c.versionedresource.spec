@@ -1,7 +1,10 @@
 %define oname z3c.versionedresource
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt2.1
+Release: alt3
 Summary: Versioned Resources
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_requires zope.component zope.configuration zope.interface
 %py_requires zope.security zope.publisher zope.app.publisher
@@ -18,6 +26,28 @@ BuildPreReq: python-devel python-module-distribute
 %description
 Versioned Resources insert a version number in the URL of a resource, so
 that cache behavior can be customized.
+
+%package -n python3-module-%oname
+Summary: Versioned Resources
+Group: Development/Python3
+%py3_requires zope.component zope.configuration zope.interface
+%py3_requires zope.security zope.publisher zope.app.publisher
+
+%description -n python3-module-%oname
+Versioned Resources insert a version number in the URL of a resource, so
+that cache behavior can be customized.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Versioned Resources
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing zope.app.testing z3c.coverage
+
+%description -n python3-module-%oname-tests
+Versioned Resources insert a version number in the URL of a resource, so
+that cache behavior can be customized.
+
+This package contains tests for Versioned Resources.
 
 %package tests
 Summary: Tests for Versioned Resources
@@ -34,12 +64,38 @@ This package contains tests for Versioned Resources.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
-%install
-%python_install
+%if_with python3
+pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python3_build
+popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -49,6 +105,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -56,7 +115,22 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests
+%endif
+
 %changelog
+* Thu Jul 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt3
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.0-alt2.1
 - Rebuild with Python-2.7
 
