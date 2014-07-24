@@ -8,7 +8,7 @@
 
 Name:           jogl2
 Version:        2.0
-Release:        alt%{pkg_release}.1
+Release:        alt%{pkg_release}.2
 Summary:        Java bindings for the OpenGL API
 
 Group:          Development/Java
@@ -33,7 +33,7 @@ BuildRequires:  libXrender-devel
 BuildRequires:  libXxf86vm-devel
 BuildRequires:  libXrandr-devel
 BuildRequires:  maven
-BuildRequires:  junit-junit4
+BuildRequires:  junit
 
 Requires:       java >= 1.6.0
 Requires:       jpackage-utils
@@ -155,6 +155,9 @@ subst "s|/deployment/jogamp-next/javadoc/jogl/javadoc|%_javadocdir/%name|g" \
 %_docdir/%name
 
 %changelog
+* Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt11.2
+- NMU: fixed BR: junit-junit4 no more
+
 * Sun Apr 21 2013 Andrey Cherepanov <cas@altlinux.org> 2.0-alt11.1
 - Initial build in Sisyphus (thanks Fedora maintainers)
 - Disable Broadcom native support
