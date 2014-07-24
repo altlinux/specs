@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: oro plexus-resources junit-junit4
+BuildRequires: oro plexus-resources junit
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 #
 Name:           pmd
 Version:        4.2.5
-Release:        alt4_14jpp7
+Release:        alt5_14jpp7
 Epoch:          0
 Summary:        Scans Java source code and looks for potential problems
 License:        BSD
@@ -148,6 +148,9 @@ cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt5_14jpp7
+- merged junit-junit4
+
 * Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt4_14jpp7
 - fixed build with new junit
 
