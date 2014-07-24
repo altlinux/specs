@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.15
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ Requires: gear perl(Pod/Text.pm)
 %_bindir/*
 
 %changelog
+* Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
+- bugfix release
+
 * Mon Jun 30 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - new version
 
