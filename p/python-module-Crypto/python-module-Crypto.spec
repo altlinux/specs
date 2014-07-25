@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-%define modulever  2.5
-%define version    2.5
-%define release    alt2
+%define modulever  2.6.1
+%define version    2.6.1
+%define release    alt1
 %define sourcename pycrypto
 %define oname Crypto
 
@@ -15,9 +15,11 @@ Summary: Cryptography Toolkit for python
 Summary(ru_RU.UTF-8): Криптографический инструментарий для python
 Name: %packagename
 Version: %version
-Release: alt2.1
+Release: alt1
 # git://git.pycrypto.org:9419/crypto/pycrypto-2.x.git
 Source: %sourcename-%modulever.tar.bz2
+Patch0: python-crypto-2.4-optflags.patch
+Patch1: python-crypto-2.4-fix-pubkey-size-divisions.patch
 License: LGPL
 Group: Development/Python
 Prefix: %_prefix
@@ -118,6 +120,13 @@ Test for %name.
 
 %prep
 %setup -n %sourcename-%modulever
+
+# Use distribution compiler flags rather than upstream's
+%patch0 -p1
+
+# Fix divisions within benchmarking suite:
+%patch1 -p1
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -132,9 +141,7 @@ popd
 %endif
 
 export PYTHONPATH=$PWD/lib
-pushd Doc
-epydoc --config=epydoc-config
-popd
+epydoc --config=Doc/epydoc-config
 
 %install
 %python_build_install --optimize=2 \
@@ -150,7 +157,7 @@ subst '/\/test/d' INSTALLED_FILES
 
 mkdir -p %buildroot%moduledocdir/API
 # install can't be [easily] used for a recursive installations :-(
-cp -pr Doc/html/* %buildroot%moduledocdir/API
+cp -pr Doc/apidoc/* %buildroot%moduledocdir/API
 #cp -pr Demo %buildroot%moduledocdir/
 install -p -m644 ACKS COPYRIGHT ChangeLog README TODO \
 	%buildroot%moduledocdir/
@@ -190,6 +197,10 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Jul 18 2014 Lenar Shakirov <snejok@altlinux.ru> 2.6.1-alt1
+- Version 2.6.1
+- Based on Fedora 2.6.1-5.fc21.src.rpm
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.5-alt2.1
 - Rebuild with Python-3.3
 
