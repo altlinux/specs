@@ -1,5 +1,5 @@
 Name: perl-Test-Requires
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Checks to see if the module can be loaded
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm)
 %doc Changes LICENSE README.md
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt1
 - New version 0.07
 
