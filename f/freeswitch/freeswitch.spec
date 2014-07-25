@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.5.5
-Release: alt2
+Version: 1.5.13
+Release: alt1
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -15,14 +15,15 @@ BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmpeg4ip-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel libapr1-devel libaprutil1-devel
-BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel mongo-devel
+BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
-BuildRequires: libpcap-devel libvlc-devel perl-devel python-devel
+BuildRequires: libpcap-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
-BuildRequires: erlang-devel postgresql-devel
+BuildRequires: libuuid-devel erlang-devel postgresql-devel
 BuildRequires: java-common java-1.7.0-openjdk-devel /proc
+BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel
 %ifarch %ix86 x86_64
 BuildRequires: libsangoma-devel
 %endif
@@ -122,9 +123,13 @@ Summary: Python support for the FreeSWITCH open source telephony platform
 Group: Development/Python
 Requires: %name-daemon = %version-%release
 
-%package spidermonkey
+%package v8
 Summary: JavaScript support for the FreeSWITCH open source telephony platform
 Group: Development/Other
+
+%package webui
+Summary: Web-based UI for FreeSWITCH
+Group: System/Servers
 Requires: %name-daemon = %version-%release
 
 # {{{ descriptions
@@ -144,16 +149,14 @@ See http://wiki.freeswitch.org/wiki/FreeTDM for details
 FreeTDM development part
 
 %description daemon
-FreeSWITCH is an open source telephony platform designed to facilitate the creation of voice 
-and chat driven products scaling from a soft-phone up to a soft-switch.  It can be used as a
-simple switching engine, a media gateway or a media server to host IVR applications using 
-simple scripts or XML to control the callflow. 
+FreeSWITCH is an open source telephony platform designed to facilitate
+the creation of voice and chat driven products scaling from a soft-phone
+up to a soft-switch.  It can be used as a simple switching engine,
+a media gateway or a media server to host IVR applications using simple
+scripts or XML to control the callflow.
 
 %description freetdm
 FreeTDM modules for FreeSWITCH
-
-%description spidermonkey
-JavaScript support for the FreeSWITCH open source telephony platform
 
 %description java
 Java support for the FreeSWITCH open source telephony platform
@@ -167,26 +170,45 @@ Perl support for the FreeSWITCH open source telephony platform
 %description python
 Python support for the FreeSWITCH open source telephony platform
 
+%description v8
+JavaScript support for the FreeSWITCH open source telephony platform
+
 %description lang-de
-German language phrases module and directory structure for say module and voicemail
+German language phrases module and directory structure for
+say module and voicemail
 
 %description lang-en
-English language phrases module and directory structure for say module and voicemail
+English language phrases module and directory structure for
+say module and voicemail
 
 %description lang-es
-Spanish language phrases module and directory structure for say module and voicemail
+Spanish language phrases module and directory structure for
+say module and voicemail
 
 %description lang-fr
-French language phrases module and directory structure for say module and voicemail
+French language phrases module and directory structure for
+say module and voicemail
 
 %description lang-he
-Hebrew language phrases module and directory structure for say module and voicemail
+Hebrew language phrases module and directory structure for
+say module and voicemail
 
 %description lang-pt
-Portugal language phrases module and directory structure for say module and voicemail
+Portugal language phrases module and directory structure for
+say module and voicemail
 
 %description lang-ru
-Russian language phrases module and directory structure for say module and voicemail
+Russian language phrases module and directory structure for
+say module and voicemail
+
+%description webui
+FreeSWITCH is an open source telephony platform designed to facilitate
+the creation of voice and chat driven products scaling from a soft-phone
+up to a soft-switch.  It can be used as a simple switching engine,
+a media gateway or a media server to host IVR applications using simple
+scripts or XML to control the callflow.
+
+This package provides simple web-based UI.
 
 # }}}
 
@@ -196,6 +218,8 @@ Russian language phrases module and directory structure for say module and voice
 %build
 %autoreconf
 %configure \
+    --enable-fhs \
+    --enable-system-xmlrpc-c \
     --localstatedir=%_var \
     --with-logfiledir=%_var/log/freeswitch \
     --with-dbdir=%_var/lib/freeswitch/db \
@@ -320,6 +344,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/erlang_event.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fax.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fifo.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/format_cdr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/gsmopen.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/hash.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/httapi.conf.xml
@@ -328,11 +353,12 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/lcr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/local_stream.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/logfile.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/memcache.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/memcache.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/modules.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/mongo.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/nibblebill.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opal.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opus.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/osp.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/oreka.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/pocketsphinx.conf.xml
@@ -354,6 +380,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/tts_commandline.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unicall.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unimrcp.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/verto.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail_ivr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_cdr.conf.xml
@@ -453,6 +480,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_expr.so
 %_libdir/%name/mod_fifo.so
 %_libdir/%name/mod_flite.so
+%_libdir/%name/mod_format_cdr.so
 %_libdir/%name/mod_fsk.so
 %_libdir/%name/mod_fsv.so
 %_libdir/%name/mod_g723_1.so
@@ -471,11 +499,12 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_local_stream.so
 %_libdir/%name/mod_logfile.so
 %_libdir/%name/mod_loopback.so
-#_libdir/%name/mod_memcache.so
+%_libdir/%name/mod_memcache.so
 %_libdir/%name/mod_mp4.so
 %_libdir/%name/mod_mp4v.so
 %_libdir/%name/mod_native_file.so
 %_libdir/%name/mod_nibblebill.so
+%_libdir/%name/mod_opus.so
 %_libdir/%name/mod_oreka.so
 %_libdir/%name/mod_posix_timer.so
 %_libdir/%name/mod_random.so
@@ -500,7 +529,6 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_sonar.so
 %_libdir/%name/mod_soundtouch.so
 %_libdir/%name/mod_spandsp.so
-%_libdir/%name/mod_speex.so
 %_libdir/%name/mod_spy.so
 %_libdir/%name/mod_syslog.so
 %_libdir/%name/mod_theora.so
@@ -510,14 +538,14 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_tts_commandline.so
 %_libdir/%name/mod_unimrcp.so
 %_libdir/%name/mod_valet_parking.so
-#_libdir/%name/mod_vlc.so
+%_libdir/%name/mod_verto.so
 %_libdir/%name/mod_vmd.so
 %_libdir/%name/mod_voicemail.so
 %_libdir/%name/mod_voicemail_ivr.so
-%_libdir/%name/mod_voipcodecs.so
 %_libdir/%name/mod_vp8.so
 %_libdir/%name/mod_xml_cdr.so
 %_libdir/%name/mod_xml_curl.so
+%_libdir/%name/mod_xml_rpc.so
 %_libdir/%name/mod_yaml.so
 
 %dir %_datadir/%name
@@ -525,9 +553,6 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %dir %_datadir/%name/sounds
 %dir %_datadir/%name/htdocs
 %dir %_datadir/%name/grammar
-#dir %_datadir/%name/grammar/model
-#dir %_datadir/%name/grammar/model/communicator
-#dir %_datadir/%name/grammar/model/wsj1
 
 %dir %attr(0770, root, _pbx) %_spooldir/%name
 
@@ -543,10 +568,6 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %files freetdm
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/freetdm.conf.xml
 %_libdir/%name/mod_freetdm.so
-
-%files spidermonkey
-%_libdir/%name/mod_spidermonkey*.so*
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/spidermonkey.conf.xml
 
 %files java
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/java.conf.xml
@@ -567,6 +588,10 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/python.conf.xml
 %_libdir/%name/mod_python.so*
 %python_sitelibdir/freeswitch.py*
+
+%files v8
+%_libdir/%name/mod_v8.so*
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/v8.conf.xml
 
 %files lang-de
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de
@@ -651,7 +676,13 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/ru/vm/*.xml
 %_libdir/%name/mod_say_ru.so*
 
+%files webui
+%_datadir/%name/htdocs/portal
+
 %changelog
+* Fri Jul 25 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.13-alt1
+- 1.5.13 released
+
 * Fri Oct 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.5-alt2
 - built mod_gsmopen
 
