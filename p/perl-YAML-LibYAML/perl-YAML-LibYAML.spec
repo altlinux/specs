@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators perl-unicore
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
-Version:        0.41
-Release: alt2
+Version:        0.44
+Release: alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/YAML-LibYAML/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/YAML-LibYAML-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/I/IN/INGY/YAML-LibYAML-%{version}.tar.gz
 Patch0:         YAML-LibYAML-0.35-format-error.patch
 
 # Install
@@ -76,6 +77,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.41-alt2
 - built for perl 5.18
 
