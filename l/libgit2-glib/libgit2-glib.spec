@@ -2,7 +2,7 @@
 %define api_ver 1.0
 
 Name: libgit2-glib
-Version: %ver_major.18
+Version: %ver_major.20
 Release: alt1
 
 Summary: Git library for GLib
@@ -18,6 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gnome-common gtk-doc
 BuildRequires: libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver gobject-introspection-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+BuildRequires: vala-tools
 
 %description
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -86,6 +87,8 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
 %_libdir/pkgconfig/%name-%api_ver.pc
+%_vapidir/ggit-%api_ver.vapi
+%_vapidir/ggit-%api_ver.deps
 
 %files gir
 %_typelibdir/Ggit-%api_ver.typelib
@@ -97,6 +100,9 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %_datadir/gtk-doc/*
 
 %changelog
+* Fri Jul 25 2014 Yuri N. Sedunov <aris@altlinux.org> 0.0.20-alt1
+- 0.0.20
+
 * Mon Jun 30 2014 Yuri N. Sedunov <aris@altlinux.org> 0.0.18-alt1
 - 0.0.18
 
