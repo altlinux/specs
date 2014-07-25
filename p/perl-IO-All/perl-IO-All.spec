@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-All
 Name: perl-%dist
-Version: 0.65
+Version: 0.66
 Release: alt1
 
 Summary: IO::All of it to Graham and Damian!
@@ -42,6 +42,9 @@ rm t/os.t
 %perl_vendor_privlib/IO
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1
+- automated CPAN update
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
 - automated CPAN update
 
