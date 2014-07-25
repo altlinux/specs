@@ -1,5 +1,5 @@
 Name: perl-Future
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: represent an operation awaiting completion
@@ -26,9 +26,13 @@ BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test
 
 %files
 %perl_vendor_privlib/Future*
+%perl_vendor_privlib/Test/Future*
 %doc Changes LICENSE README
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
