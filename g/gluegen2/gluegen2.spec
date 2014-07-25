@@ -1,4 +1,3 @@
-BuildRequires: junit ant-junit
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -8,7 +7,7 @@ BuildRequires: jpackage-compat
 # baserelease defines which build revision of this version we're building.
 # The magical name baserelease is matched by the rpmdev-bumpspec tool, which
 # you should use.
-%global baserelease 7
+%global baserelease 8
 
 %global pkg_name gluegen
 %global pkg_version 2.0
@@ -24,7 +23,7 @@ BuildRequires: jpackage-compat
 
 Name:           gluegen2
 Version:        %{pkg_version}
-Release:        alt3_7jpp7
+Release:        alt3_8jpp7
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
 Group:          Development/Java
@@ -41,9 +40,9 @@ BuildRequires:  jpackage-utils
 BuildRequires: p7zip-standalone p7zip
 BuildRequires:  ant-antlr
 BuildRequires:  ant-contrib
-BuildRequires:  ant-junit4 junit4
+BuildRequires:  ant-junit
 BuildRequires:  cpptasks
-BuildRequires:  maven
+BuildRequires:  maven-local
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -65,7 +64,7 @@ BuildArch:      noarch
 Requires:       %{name} = %{version}-%{release}
 Requires:       ant-antlr
 Requires:       ant-contrib
-Requires:       ant-junit4
+Requires:       ant-junit
 Requires:       cpptasks
 
 %description devel
@@ -147,9 +146,9 @@ ant -Djavacdebug=true \
     -Dc.compiler.debug=true \
     \
     -Dantlr.jar=%{_javadir}/antlr.jar \
-    -Djunit.jar=%{_javadir}/junit4.jar \
+    -Djunit.jar=%{_javadir}/junit.jar \
     -Dant.jar=%{_javadir}/ant.jar \
-    -Dant-junit.jar=%{_javadir}/ant/ant-junit4.jar \
+    -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
     \
     -Djavadoc.link=%{_javadocdir}/java \
     \
@@ -229,6 +228,9 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
 %{_docdir}/%{name}
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_8jpp7
+- build with ant-junit
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_7jpp7
 - merged junit-junit4
 
