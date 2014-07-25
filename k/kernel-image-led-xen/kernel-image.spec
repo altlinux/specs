@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.4
-Release: alt1
+Version: 3.15.6
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 4
+%define kernel_stable_version 6
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -155,8 +155,8 @@ Release: alt1
 %Extra_modules zfs 0.6.3
 %if "%sub_flavour" != "xen"
 %Extra_modules vmware 6.0.2
-%Extra_modules vboxhost 4.3.12
-%Extra_modules vboxguest 4.3.12
+%Extra_modules vboxhost 4.3.14
+%Extra_modules vboxguest 4.3.14
 %endif
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
@@ -572,6 +572,20 @@ for solid state file systems on embedded devices.
 This package contains Memory Technology Devices driver and fs modules for
 the Linux kernel package %name-%version-%release.
 %endif
+
+
+%package -n kernel-modules-drivers-extra-%flavour
+Summary: Linux extra drivers modules
+%kernel_modules_package_std_body drivers-extra
+%kernel_modules_package_add_provides fmc
+%kernel_modules_package_add_provides ipack
+%kernel_modules_package_add_provides macintosh
+%kernel_modules_package_add_provides spmi
+%kernel_modules_package_add_provides misc-extra
+
+%description -n kernel-modules-drivers-extra-%flavour
+This package contains extra drivers modules modules for the Linux kernel package
+%name-%version-%release.
 
 
 %package -n kernel-modules-fs-extra-%flavour
@@ -994,6 +1008,9 @@ config_val nr_cpus 4
 %ifarch %intel_64 %intel_32
 config_disable cpu_sup_{amd,centaur,{cyrix,transmeta,umc}_32}
 config_enable cpu_sup_intel
+%else
+# Only intel_rapl uses powercap now
+config_disable powercap
 %endif
 
 %ifarch %amd_64 %amd_32
@@ -1070,7 +1087,7 @@ config_disable \
 	%{?_disable_smack:security_smack} \
 	%{?_disable_yama:securyty_yama} \
 	%{?_disable_thp:transparent_hugepage} \
-	%{?_disable_guest:virtio drm_{bochs,cirrus_qemu,qxl,vmwgfx} vmware_balloon} \
+	%{?_disable_guest:virtio drm_{bochs,cirrus_qemu,qxl,vmwgfx} vmware_balloon vmxnet3} \
 	%{?_disable_kvm:kvm} \
 	%{?_disable_hypervisor_guest:hypervisor_guest} \
 	%{?_disable_paravirt:paravirt} \
@@ -1095,6 +1112,7 @@ config_disable \
 
 %if "%sub_flavour" != "ws"
 config_disable preempt hz_1000 sched_cfs_boost
+config_disable x86_16bit
 config_enable preempt_voluntary hz_250
 %endif
 
@@ -1463,8 +1481,9 @@ gen_rpmmodfile input-extra \
 	%{?_enable_tablet:drivers/input/tablet} \
 	%{?_enable_touchscreen:drivers/input/touchscreen}
 %if "%sub_flavour" != "guest"
-%{?_enable_guest:gen_rpmmodfile guest {drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{bochs,cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
+%{?_enable_guest:gen_rpmmodfile guest {drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*,net/vmxnet3%{?_enable_drm:,gpu/drm/{bochs,cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
 %endif
+gen_rpmmodfile drivers-extra drivers/{fmc,ipack,macintosh,spmi,misc/{altera-stapl,c2port,ibmasm,genwqe}}
 sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_oprofile:%add_verify_elf_skiplist %modules_dir/vmlinux}
@@ -1497,6 +1516,8 @@ hardlink -c %buildroot%firmware_dir
 %{?_enable_watchdog:%kernel_modules_package_post watchdog}
 
 %{?_enable_mtd:%kernel_modules_package_post mtd}
+
+%kernel_modules_package_post drivers-extra
 
 %kernel_modules_package_post fs-extra
 
@@ -1658,6 +1679,8 @@ done)
 %kernel_modules_package_files ipmi
 
 %kernel_modules_package_files input-extra
+
+%kernel_modules_package_files drivers-extra
 
 %{?_enable_edac:%kernel_modules_package_files edac}
 
@@ -1883,6 +1906,129 @@ done)
 
 
 %changelog
+* Fri Jul 25 2014 Led <led@altlinux.ru> 3.15.6-alt4
+- updated:
+  + fix-drivers-bluetooth--ath3k
+  + fix-drivers-hv--hv_utils
+  + fix-drivers-usb-core
+  + fix-drivers-usb-host--ohci-hcd
+  + fix-mm
+  + feat-tools--kvm
+- added:
+  + fix-drivers-net-usb--cdc_ether
+  + fix-drivers-net-usb--cdc_subset
+  + fix-fs-fuse
+  + fix-sound-pci-hda--snd-hda-intel
+
+* Wed Jul 23 2014 Led <led@altlinux.ru> 3.15.6-alt3
+- updated;
+  + fix-mm
+  + feat-fs-aufs
+
+* Fri Jul 18 2014 Led <led@altlinux.ru> 3.15.6-alt2
+- updated:
+  + fix-drivers-firmware--iscsi_ibft
+- added:
+  + fix-net-l2tp--l2tp_ppp
+
+* Fri Jul 18 2014 Led <led@altlinux.ru> 3.15.6-alt1
+- remove:
+  + fix-drivers-hv--hv_vmbus
+  + fix-fs-f2fs
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs-ext4
+
+* Thu Jul 17 2014 Led <led@altlinux.ru> 3.15.5-alt10
+- updated:
+  + fix-fs-xfs
+- added:
+  + fix-drivers-firmware--iscsi_ibft
+  + feat-arch-x86--espfix
+- disabled SGI_IOC4 (ws)
+- disabled x86_16bit for non-ws kernels
+
+* Wed Jul 16 2014 Led <led@altlinux.ru> 3.15.5-alt9
+- added:
+  + fix-fs-f2fs
+- vboxguest 4.3.14
+- vboxhost 4.3.14
+
+* Tue Jul 15 2014 Led <led@altlinux.ru> 3.15.5-alt8
+- cleaned up spec
+
+* Tue Jul 15 2014 Led <led@altlinux.ru> 3.15.5-alt7
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs-ext4
+
+* Mon Jul 14 2014 Led <led@altlinux.ru> 3.15.5-alt6
+- move vmxnet3 from kernel-image-* to kernel-modules-guest-* subpackage
+- disabled POWERCAP for non-Intel platforms
+- added subpackage kernel-modules-drivers-extra-*
+- move drivers/{fmc,ipack,macintosh,remoteproc,spmi} and
+  drivers/misc/{altera-stapl,c2port,genwqe,ibmasm} from kernel-image-* to
+  kernel-modules-drivers-extra-* subpackage
+- added:
+  + fix-drivers-misc--ioc4
+  + fix-drivers-powercap--intel_rapl
+
+* Mon Jul 14 2014 Led <led@altlinux.ru> 3.15.5-alt5
+- updated:
+  + fix-drivers-scsi--hv_storvsc
+- added:
+  + fix-block--blk-cgroup
+  + fix-drivers-firmware-efi
+
+* Mon Jul 14 2014 Led <led@altlinux.ru> 3.15.5-alt4
+- updated:
+  + feat-fs-aufs
+
+* Fri Jul 11 2014 Led <led@altlinux.ru> 3.15.5-alt3
+- removed:
+  + fix-drivers-video--s3fb
+- added:
+  + fix-drivers-hv--hv_utils
+  + fix-drivers-hv--hv_vmbus
+  + fix-drivers-scsi--hv_storvsc
+  + fix-drivers-video-fbdev--hyperv_fb
+  + fix-drivers-video-fbdev--s3fb
+
+* Thu Jul 10 2014 Led <led@altlinux.ru> 3.15.5-alt2
+- updated:
+  + feat-fs-aufs
+
+* Thu Jul 10 2014 Led <led@altlinux.ru> 3.15.5-alt1
+- 3.15.5
+- removed:
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-sound-pci-hda--snd-hda-intel
+- updated:
+  + fix--Makefile
+  + fix-drivers-block--zram
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-vga--vga_switcheroo
+  + fix-drivers-iommu--intel-iommu
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_core
+  + fix-drivers-scsi--scsi_mod
+  + fix-fs-btrfs
+  + fix-fs-cifs
+  + fix-fs-ext4
+  + fix-fs-nfsd
+  + fix-fs-proc
+  + fix-mm--mmu
+  + feat-arch-x86-mach-xen
+- added:
+  + fix-firmware
+
 * Tue Jul 08 2014 Led <led@altlinux.ru> 3.15.4-alt1
 - 3.15.4
 - removed:
