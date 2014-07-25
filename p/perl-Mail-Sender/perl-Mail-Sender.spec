@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Mail-Sender
 
 Name: perl-%dist
-Version: 0.8.22
+Version: 0.8.23
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -52,6 +53,9 @@ rm -f %buildroot%perl_vendor_privlib/Mail/Sender/CType/Win32.pm
 %perl_vendor_privlib/Mail
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.23-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.22-alt1
 - automated CPAN update
 
