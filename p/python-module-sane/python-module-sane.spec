@@ -1,6 +1,6 @@
 Name: python-module-sane
 Version: 2.0.1
-Release: alt1.1.1
+Release: alt1.2
 %setup_python_module sane
 
 Summary: Pyhon interface for Sane
@@ -32,6 +32,9 @@ Pyhon interface for Sane
 
 
 %changelog
+* Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.2
+- Rebuilt
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 

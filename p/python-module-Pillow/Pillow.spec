@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.5.1
-Release: alt1
+Release: alt2
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/Pillow/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: PIL.pth
 
 BuildPreReq: python-devel python-module-setuptools liblcms2-devel
 BuildPreReq: zlib-devel libjpeg-devel libtiff-devel libfreetype-devel
@@ -25,7 +26,9 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-modules-tkinter
 %endif
 
-Conflicts: python-module-imaging
+Conflicts: python-module-imaging < %EVR
+Obsoletes: python-module-imaging < %EVR
+Provides: python-module-imaging = %EVR
 
 %description
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
@@ -92,6 +95,7 @@ popd
 %endif
 
 %python_install
+install -m 644 %SOURCE1 %buildroot%python_sitelibdir/
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs pickle
@@ -123,6 +127,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
+- Provides python-module-imaging
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt1
 - Initial build for Sisyphus
 
