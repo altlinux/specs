@@ -1,4 +1,3 @@
-BuildRequires: ant ant-junit4
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           jing-trang
 Version:        20091111
-Release:        alt2_11jpp7
+Release:        alt3_11jpp7
 Summary:        Schema validation and conversion based on RELAX NG
 
 Group:          Text tools
@@ -117,7 +116,7 @@ find . -name "OldSaxon*.java" -delete # No "old" saxon available in Fedora
 
 %build
 CLASSPATH=$(build-classpath beust-jcommander xalan-j2 xalan-j2-serializer) \
-%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dlib.dir=%{_javadir} -Dbuild.sysclasspath=last dist
+%ant -Dlib.dir=%{_javadir} -Dbuild.sysclasspath=last dist
 
 
 %install
@@ -162,6 +161,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_11jpp7
+- build with ant-junit
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt2_11jpp7
 - fc update
 
