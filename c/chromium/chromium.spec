@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.24
+#%%define v8_ver 3.26
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        34.0.1847.137
+Version:        36.0.1985.125
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -59,15 +59,12 @@ Patch17:	chromium-system-glew.patch
 Patch28:	chromium-system-speex.patch
 # PATCH-FIX-OPENSUSE patches in the system libvpx library
 Patch32:	chromium-system-libvpx.patch
-# PATCH-FIX-OPENSUSE patches in the system v8 library
-Patch63:	chromium-system-v8.patch
 
 # Patches from other vendors
 # ALT: Fix krb5 includes path
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-set-desktop-file-name.patch
-Patch72:	chromium-gn-r0.patch
 
 # Patches from Debian
 Patch80:	chromium-nspr.patch
@@ -83,13 +80,17 @@ Patch91:	chromium-arm.patch
 # New from Debian
 Patch92:	chromium-third-party-cookies-off-by-default.patch
 Patch93:	chromium-ps-print.patch
-Patch94:	chromium-window-placement.patch
+Patch94:	chromium-linker-flags.patch
 
 # Patches from upstream
 
 # Patches from ALT Linux
 Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
+# See https://code.google.com/p/chromium/issues/detail?id=393535
+Patch97:	chromium-fix-russian-translations.patch
+# Fix relocation of readonly section in ffmpeg on i586
+Patch98: 	chromium-fix-relocation-in-ffmpeg.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -110,6 +111,7 @@ BuildRequires:  libcap-devel
 BuildRequires:  libcups-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libelf-devel
+BuildRequires:  libexif-devel
 BuildRequires:  libevent1.4-devel
 BuildRequires:  libexpat-devel
 BuildRequires:  libflac-devel
@@ -117,6 +119,7 @@ BuildRequires:  libglew-devel
 BuildRequires:  libgcrypt-devel
 BuildRequires:  libgnome-keyring-devel
 BuildRequires:  libhunspell-devel
+BuildRequires:  libharfbuzz-devel
 #BuildRequires:  libicu-devel >= 4.0
 BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
@@ -131,7 +134,7 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-devel = %v8_ver
+#BuildRequires:  libv8-devel = %%v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
@@ -219,7 +222,6 @@ to Gnome's Keyring.
 %setup -q -n %name
 tar xf %SOURCE10 -C src
 
-%patch63 -p2
 %patch5  -p0 -d src
 %patch6  -p0 -d src
 %patch8  -p2
@@ -232,13 +234,12 @@ tar xf %SOURCE10 -C src
 %patch66 -p1
 %patch69 -p2
 %patch71 -p2
-%patch72 -p0 -d src
 
 %patch80 -p2
-%patch81 -p1
+#%%patch81 -p1
 %patch82 -p1
 %patch85 -p1
-%patch86 -p1
+%patch86 -p0
 %patch87 -p1
 %patch88 -p1
 %patch90 -p1
@@ -248,11 +249,13 @@ tar xf %SOURCE10 -C src
 %patch94 -p1
 %patch95 -p0
 %patch96 -p0
+%patch97 -p1
+%patch98 -p0
 
 # Replace anywhere v8 to system package
-subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
-sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
-grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
+#subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
+#sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
+#grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -290,9 +293,7 @@ pushd src
 %if_disabled nacl
 	-Ddisable_nacl=1 \
 %endif
-%ifnarch x86_64
 	-Ddisable_sse2=1 \
-%endif
 	-Denable_plugin_installation=0 \
 	-Dgoogle_api_key="$_google_api_key" \
 	-Dgoogle_default_client_id="$_google_default_client_id" \
@@ -356,7 +357,7 @@ pushd src
 	-Duse_system_protobuf=0 \
 	-Duse_system_speex=1 \
 	-Duse_system_sqlite=0 \
-	-Duse_system_v8=1 \
+	-Duse_system_v8=0 \
 	-Duse_system_vpx=0 \
 	-Duse_system_xdg_utils=0 \
 	-Duse_system_yasm=1 \
@@ -489,6 +490,32 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.125-alt1
+- New version
+- Security fixes:
+  - Medium CVE-2014-3160: Same-Origin-Policy bypass in SVG.
+- Fix wrong Russian translation (ALT #30182)
+- Add flags to avoid memory exhaustion while linking on i586
+- Use internal version of v8 library
+
+* Mon Jul 14 2014 Andrey Cherepanov <cas@altlinux.org> 35.0.1916.153-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-3154: Use-after-free in filesystem api.
+  - High CVE-2014-3155: Out-of-bounds read in SPDY.
+  - Medium CVE-2014-3156: Buffer overflow in clipboard.
+  - CVE-2014-3157: Heap overflow in media.
+
+* Wed May 21 2014 Andrey Cherepanov <cas@altlinux.org> 35.0.1916.114-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-1743: Use-after-free in styles.
+  - High CVE-2014-1744: Integer overflow in audio.
+  - High CVE-2014-1745: Use-after-free in SVG.
+  - Medium CVE-2014-1746: Out-of-bounds read in media filters.
+  - Medium CVE-2014-1747: UXSS with local MHTML file.
+  - Medium CVE-2014-1748: UI spoofing with scrollbar.
+
 * Wed May 14 2014 Andrey Cherepanov <cas@altlinux.org> 34.0.1847.137-alt1
 - New version
 - Security fixes:
