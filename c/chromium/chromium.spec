@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        36.0.1985.125
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -83,6 +83,7 @@ Patch93:	chromium-ps-print.patch
 Patch94:	chromium-linker-flags.patch
 
 # Patches from upstream
+Patch100:	chromium-fix-small-fonts.patch
 
 # Patches from ALT Linux
 Patch95:	chromium-fix-shrank-by-one-character.patch
@@ -251,6 +252,7 @@ tar xf %SOURCE10 -C src
 %patch96 -p0
 %patch97 -p1
 %patch98 -p0
+%patch100 -p1 -d src
 
 # Replace anywhere v8 to system package
 #subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
@@ -490,6 +492,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Jul 25 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.125-alt2
+- Fix small user interface fonts (see https://code.google.com/p/chromium/issues/detail?id=375824)
+
 * Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.125-alt1
 - New version
 - Security fixes:
