@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-File-Flock
-Version: 2013.11
+Version: 2014.01
 Release: alt1
 
 Summary: Wrapper for flock() to make file locking trivial
@@ -58,6 +58,9 @@ new name rather than the original name.
 %perl_vendor_privlib/File/*
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 2014.01-alt1
+- automated CPAN update
+
 * Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 2013.11-alt1
 - automated CPAN update
 
