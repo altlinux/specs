@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-DNS
 
 # hack to save perl autodep finder from crashing (suggested by Alexey Tourbin)
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.77
+Version: 0.78
 Release: alt1
 
 Packager: Vladimir Didenko <cow@altlinux.org>
@@ -48,6 +49,9 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- automated CPAN update
+
 * Mon Jun 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
 - automated CPAN update
 
