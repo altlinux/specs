@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 2.99
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Jul 25 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt3
+- [grub] Set color for selected menu item background similar gfxboot as
+  pixmap `selected_blob_c.png`
+- [browser-qt] Return old Chainmail colors, but use Clearlooks theme
+
 * Thu Jul 24 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt2
 - Use Alterator colors and Clearlooks theme from Centaurus
 - Decorate progressbar in Alterator as stripped bar
