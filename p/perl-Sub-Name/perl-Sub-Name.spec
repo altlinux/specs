@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Sub-Name
 Name: perl-%dist
-Version: 0.05
-Release: alt5
+Version: 0.07
+Release: alt1
 Epoch: 1
 
 Summary: (re)name a sub
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Sub-Name-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -33,6 +34,9 @@ Assigns a new name to referenced sub.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.07-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1:0.05-alt5
 - built for perl 5.18
 
