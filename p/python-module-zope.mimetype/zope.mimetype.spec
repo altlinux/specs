@@ -1,7 +1,10 @@
 %define oname zope.mimetype
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.a1
+Release: alt2.a1
 Summary: A simple package for working with MIME content types
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope zope.browser zope.browserresource zope.component
 %py_requires zope.configuration zope.contenttype zope.event zope.formlib
@@ -21,6 +28,32 @@ BuildPreReq: python-devel python-module-distribute
 This package provides a way to work with MIME content types. There are
 several interfaces defined here, many of which are used primarily to
 look things up based on different bits of information.
+
+%package -n python3-module-%oname
+Summary: A simple package for working with MIME content types
+Group: Development/Python3
+%py3_requires zope zope.browser zope.browserresource zope.component
+%py3_requires zope.configuration zope.contenttype zope.event zope.formlib
+%py3_requires zope.i18n zope.i18nmessageid zope.interface zope.publisher
+%py3_requires zope.schema zope.security
+
+%description -n python3-module-%oname
+This package provides a way to work with MIME content types. There are
+several interfaces defined here, many of which are used primarily to
+look things up based on different bits of information.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.mimetype
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.component
+
+%description -n python3-module-%oname-tests
+This package provides a way to work with MIME content types. There are
+several interfaces defined here, many of which are used primarily to
+look things up based on different bits of information.
+
+This package contains tests for zope.mimetype.
 
 %package tests
 Summary: Tests for zope.mimetype
@@ -38,16 +71,36 @@ This package contains tests for zope.mimetype.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -59,7 +112,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 %changelog
+* Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.a1
+- Added module for Python 3
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
 - Version 2.0.0a1
 
