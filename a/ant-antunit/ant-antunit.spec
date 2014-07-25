@@ -1,11 +1,13 @@
-BuildRequires: ant-junit4
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       antunit
 
 Name:             ant-%{base_name}
 Version:          1.2
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Provide antunit ant task
 Group:            Development/Java
 License:          ASL 2.0
@@ -92,6 +94,9 @@ echo "ant/ant-antunit" > %{buildroot}%{_sysconfdir}/%{name}.d/antunit
 
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4jpp7
+- build with ant-junit
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp7
 - new fc release
 
