@@ -3,7 +3,7 @@
 
 Name: sK1
 Version: 0.9.1
-Release: alt2.1.1.1
+Release: alt2.2
 
 Summary: Vector graphics editor
 
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %python_sitelibdir/sk1/
 
 %changelog
+* Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.2
+- Rebuilt
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.1-alt2.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
