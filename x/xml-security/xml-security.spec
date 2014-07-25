@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-security
 Version:        1.5.5
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
@@ -107,7 +107,7 @@ sed -i "s|bcprov-jdk15on|bcprov-jdk16|" pom.xml
 
 %build
 
-mvn-rpmbuild package javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true package javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -141,6 +141,9 @@ cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_1jpp7
+- fixed build
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt1_1jpp7
 - update
 
