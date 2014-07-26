@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.6.2
+Version: 1.6.8
 Release: alt1
 
 Group: System/Libraries
@@ -48,6 +48,11 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md
 
 %changelog
+* Sat Jul 26 2014 Terechkov Evgenii <evg@altlinux.org> 1.6.8-alt1
+- 1.6.8
+- CVE-2014-4966 and CVE-2014-4967 fixed in v1.6.7
+
+
 * Sun Jun  1 2014 Terechkov Evgenii <evg@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
