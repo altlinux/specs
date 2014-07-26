@@ -3,7 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.2.2
+Epoch: 1
+Version: 4.1.1
 Release: alt1
 Summary: Zope 3 Deprecation Infrastructure
 License: ZPLv2.1
@@ -47,7 +48,7 @@ objects.
 %package -n python3-module-%oname-tests
 Summary: Tests for Zope 3 Deprecation Infrastructure (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 %py3_requires zope.testing
 %add_python3_req_skip deprecation
 
@@ -65,7 +66,7 @@ This package contains tests for Zope 3 Deprecation Infrastructure.
 %package tests
 Summary: Tests for Zope 3 Deprecation Infrastructure
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py_requires zope.testing
 %add_python_req_skip deprecation
 
@@ -136,6 +137,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.1.1-alt1
+- Version 4.1.1
+
 * Wed Mar 13 2013 Aleksey Avdeev <solo@altlinux.ru> 4.2.2-alt1
 - Version 4.0.2
 
