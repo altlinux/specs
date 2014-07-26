@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name shrinkwrap-resolver
 %define version 1.0.0
 %global namedreltag .beta7
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             shrinkwrap-resolver
 Version:          1.0.0
-Release:          alt1_0.2.beta7jpp7
+Release:          alt2_0.2.beta7jpp7
 Summary:          ShrinkWrap Resolver
 Group:            Development/Java
 License:          ASL 2.0
@@ -68,7 +71,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # The build pulls the incorrect maven-model.jar, so we need to explicitly require mvn3 version of it
-mvn-rpmbuild -Dmaven.local.depmap.file=%{_mavendepmapfragdir}/maven install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true  -Dmaven.local.depmap.file=%{_mavendepmapfragdir}/maven install javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
@@ -104,6 +107,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.2.beta7jpp7
+- fixed build
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.2.beta7jpp7
 - full build
 
