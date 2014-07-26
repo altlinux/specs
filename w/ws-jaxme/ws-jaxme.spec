@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt3_6jpp7
+Release:        alt4_6jpp7
 Epoch:          0
 Summary:        Open source implementation of JAXB
 
@@ -135,7 +135,7 @@ DOCBOOKX_DTD=`%{_bindir}/xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASI
 %patch7 -p1
 
 %build
-export CLASSPATH=$(build-classpath antlr hsqldb commons-codec junit log4j xerces-j2 xalan-j2)
+export CLASSPATH=$(build-classpath antlr hsqldb commons-codec junit log4j xerces-j2 xalan-j2 xalan-j2-serializer)
 ant all Docs.all \
 -Dbuild.sysclasspath=first \
 -Ddocbook.home=%{_datadir}/sgml/docbook \
@@ -187,6 +187,9 @@ install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_6jpp7
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt3_6jpp7
 - fixed deps
 
