@@ -1,7 +1,10 @@
 %define oname zc.zservertracelog
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: Zope 3 tracelog implementation for zserver
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_requires zope.app.appsetup zope.app.server zope.app.wsgi zope.server
 %py_requires zc
@@ -20,6 +28,33 @@ This package implements a Zope2-style (extended) tracelog. A tracelog is
 a kind of access log that records several low-level events for each
 request. Each log entry starts with a record type, a request identifier
 and the time. Some log records have additional data.
+
+%package -n python3-module-%oname
+Summary: Zope 3 tracelog implementation for zserver
+Group: Development/Python3
+%py3_requires zope.app.appsetup zope.app.server zope.app.wsgi zope.server
+%py3_requires zc
+
+%description -n python3-module-%oname
+This package implements a Zope2-style (extended) tracelog. A tracelog is
+a kind of access log that records several low-level events for each
+request. Each log entry starts with a record type, a request identifier
+and the time. Some log records have additional data.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Zope 3 tracelog implementation for zserver
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing
+
+%description -n python3-module-%oname-tests
+This package implements a Zope2-style (extended) tracelog. A tracelog is
+a kind of access log that records several low-level events for each
+request. Each log entry starts with a record type, a request identifier
+and the time. Some log records have additional data.
+
+This package contains tests for Zope 3 tracelog implementation for
+zserver.
 
 %package tests
 Summary: Tests for Zope 3 tracelog implementation for zserver
@@ -39,12 +74,38 @@ zserver.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
-%install
-%python_install
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
+%install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
@@ -54,6 +115,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -61,7 +125,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt2
+- Added module for Python 3
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
 - Version 1.3.2
 
