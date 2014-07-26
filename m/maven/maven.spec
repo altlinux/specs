@@ -9,11 +9,11 @@ BuildRequires: jpackage-compat
 
 Name:           maven
 Version:        3.0.4
-Release:        alt5_21jpp7
+Release:        alt6_21.3jpp7
 Summary:        Java project management and project comprehension tool
 
 Group:          Development/Java
-License:        ASL 2.0 and MIT and BSD
+License:        ASL 2.0
 URL:            http://maven.apache.org/
 # Source URL is for testing only, final version will be in different place:
 # http://www.apache.org/dyn/closer.cgi/maven/source/apache-%{name}-%{version}-src.tar.gz
@@ -107,6 +107,7 @@ Requires:       plexus-sec-dispatcher
 Requires:       plexus-utils
 Requires:       sisu >= 2.1.1-2
 Requires:       sonatype-oss-parent
+Requires:       tar
 Requires:       xbean
 Requires:       xerces-j2
 %if 0%{?fedora}
@@ -390,11 +391,14 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 %config(noreplace,missingok) /etc/mavenrc
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Jul 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt6_21.3jpp7
+- update
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt5_21jpp7
 - non-bootstrap build
 
