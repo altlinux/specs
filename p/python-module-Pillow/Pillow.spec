@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.5.1
-Release: alt2
+Release: alt3
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -87,6 +87,7 @@ popd
 pushd ../python3
 %python3_install
 popd
+install -m 644 %SOURCE1 %buildroot%python3_sitelibdir/
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
@@ -127,6 +128,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3
+- Added PIL.pth into python3-module-%oname
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
 - Provides python-module-imaging
 
