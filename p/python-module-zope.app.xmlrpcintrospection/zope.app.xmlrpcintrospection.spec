@@ -1,7 +1,10 @@
 %define oname zope.app.xmlrpcintrospection
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 3.5.1
-Release: alt2.1
+Release: alt3
 Summary: XML-RPC Method Introspection Support for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -10,12 +13,36 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope.app zope.component zope.interface zope.publisher
 
 %description
 This Zope 3 package provides an XML-RPC introspection mechanism.
+
+%package -n python3-module-%oname
+Summary: XML-RPC Method Introspection Support for Zope 3
+Group: Development/Python3
+%py3_requires zope.app zope.component zope.interface zope.publisher
+
+%description -n python3-module-%oname
+This Zope 3 package provides an XML-RPC introspection mechanism.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for zope.app.xmlrpcintrospection
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.app.testing zope.site zope.app.securitypolicy
+%py3_requires zope.app.zcmlfiles zope.login
+
+%description -n python3-module-%oname-tests
+This Zope 3 package provides an XML-RPC introspection mechanism.
+
+This package contains tests for zope.app.xmlrpcintrospection.
 
 %package tests
 Summary: Tests for zope.app.xmlrpcintrospection
@@ -32,16 +59,36 @@ This package contains tests for zope.app.xmlrpcintrospection.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -53,7 +100,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
+%endif
+
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt3
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.5.1-alt2.1
 - Rebuild with Python-2.7
 
