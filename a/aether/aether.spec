@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           aether
 Version:        1.13.1
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Sonatype library to resolve, install and deploy artifacts the Maven way
 
 Group:          Development/Java
@@ -69,7 +72,7 @@ for module in asynchttpclient wagon; do (
 %pom_remove_plugin :clirr-maven-plugin aether-spi
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true  install javadoc:aggregate
 
 
 %install
@@ -103,6 +106,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt3_4jpp7
+- fixed build
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
