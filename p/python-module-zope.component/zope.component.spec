@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.0
-Release: alt1.1
+Version: 4.2.1
+Release: alt1
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
@@ -129,12 +129,17 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
+- Version 4.2.1
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.1
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
