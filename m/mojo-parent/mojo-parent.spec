@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-parent
 Version:        30
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Codehaus MOJO parent project pom file
 
 Group:          Development/Java
@@ -34,6 +34,8 @@ Codehaus MOJO parent project pom file
 
 %prep
 %setup -q
+# hack for proper compliation of maven plugins
+sed -i -e 's,<mojo.java.target>1.4</mojo.java.target>,<mojo.java.target>${maven.compiler.target}</mojo.java.target>,' pom.xml
 
 %build
 mvn-rpmbuild install
@@ -51,6 +53,9 @@ install -pm 644 pom.xml \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Sat Jul 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt3_2jpp7
+- fixed 1.4 java mojo target in pom
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt2_2jpp7
 - new release
 
