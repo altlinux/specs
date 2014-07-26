@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL
@@ -143,6 +143,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
+- Version 4.0.3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
