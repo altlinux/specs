@@ -1,11 +1,11 @@
 %define _name gssdp
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.14.8
+Version: 0.14.9
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -15,7 +15,7 @@ Url: http://www.gupnp.org/
 
 Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
 
-BuildRequires: gnome-common gtk-doc libsoup-devel >= 2.26.1 glib2-devel >= 2.22 libgio-devel >= 2.22
+BuildRequires: gnome-common gtk-doc libsoup-devel >= 2.26.1 libgio-devel >= 2.32
 BuildRequires: vala-tools rpm-build-vala libvala-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
 
@@ -33,7 +33,7 @@ This package provides files for development with gSSDP.
 
 %package devel-doc
 Summary: Development documentation for gSSDP
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version
 
@@ -61,7 +61,7 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the GSSDP library
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 [ ! -d m4 ] && mkdir m4
 
@@ -75,7 +75,7 @@ GObject introspection devel data for the GSSDP library
 %make_build
 
 %install
-%make  DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -101,6 +101,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Sat Jul 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.9-alt1
+- 0.14.9
+
 * Mon May 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.8-alt1
 - 0.14.8
 
