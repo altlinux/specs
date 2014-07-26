@@ -1,13 +1,12 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-antrun-plugin maven-clean-plugin
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat maven-clean-plugin
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt4_4jpp7
+Release:       alt5_4jpp7
 Summary:       Maven XML Plugin
 Group:         Development/Java
 License:       ASL 2.0
@@ -66,8 +65,11 @@ done
 rm -rf src/it/it8
 rm -rf src/it/mojo-1438-validate
 
+# quick hack
+sed -i -e 's,<mavenVersion>2.0.7</mavenVersion>,<mavenVersion>2.2.1</mavenVersion>,' pom.xml
+
 %build
-mvn-rpmbuild -e -X -DskipTests -Dmaven.test.skip=true -DskipITs install javadoc:aggregate
+mvn-rpmbuild -DskipTests -Dmaven.test.skip=true -DskipITs install javadoc:aggregate
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -94,6 +96,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/xml-maven-plugin
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jul 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_4jpp7
+- fixed build
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_4jpp7
 - fixed build
 
