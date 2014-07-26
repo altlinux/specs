@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jasypt
 Version:       1.9.0
-Release:       alt1_4jpp7
+Release:       alt2_2jpp7
 Summary:       Java Simplified Encryption
 Group:         Development/Java
 License:       ASL 2.0
@@ -42,7 +41,7 @@ BuildRequires: apache-commons-codec
 BuildRequires: icu4j
 BuildRequires: tomcat-servlet-3.0-api
 
-BuildRequires: maven-local
+BuildRequires: maven
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -83,7 +82,7 @@ This package contains javadoc for %{name}.
 
 %build
 
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE1} -D_javadir=%{_javadir} install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true  -Dmaven.local.depmap.file=%{SOURCE1} -D_javadir=%{_javadir} install javadoc:aggregate
 
 %install
 
@@ -108,6 +107,9 @@ cp -pr target/site/api/jasypt/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2_2jpp7
+- fixed build
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_4jpp7
 - update
 
