@@ -1,4 +1,3 @@
-BuildRequires: servletapi5
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -6,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             owasp-esapi-java
 Version:          2.0.1
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          OWASP Enterprise Security API
 Group:            Development/Java
 License:          BSD
@@ -101,7 +100,6 @@ This package contains the documentation for %{name}.
 
 %build
 mvn-rpmbuild \
-    -Dmaven.test.skip=true \
     -Dproject.build.sourceEncoding=UTF-8 \
     package javadoc:aggregate
 
@@ -134,6 +132,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc documentation/*
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_3jpp7
+- fixed build
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp7
 - fc update
 
