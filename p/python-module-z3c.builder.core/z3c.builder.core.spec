@@ -1,11 +1,11 @@
 %define ocore z3c.builder
 %define oname %ocore.core
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt5
+Release: alt6
 Summary: A utility to help jump start Zope 3 projects
 License: ZPLv2.1
 Group: Development/Python
@@ -39,6 +39,7 @@ Requires: python3-module-%ocore = %EVR
 %py3_requires rwproperty zc.buildout zope.component
 %py3_requires zope.configuration zope.container zope.interface
 %py3_requires zope.schema lxml
+%add_findreq_skiplist %python3_sitelibdir/z3c/builder/core/file-templates/*
 
 %description -n python3-module-%oname
 z3c.builder is a tool that helps you jump start development of a Zope 3
@@ -100,8 +101,8 @@ export LC_ALL=en_US.UTF-8
 
 %if_with python3
 pushd ../python3
-for i in $(find -type f -name '*.py'); do
-	2to3 -w -n $i ||:
+for i in $(find -type f -name '*.py' |grep -v 'file-templates'); do
+	2to3 -w -n $i
 done
 %python3_build
 popd
@@ -145,7 +146,7 @@ cp %buildroot%python_sitelibdir/z3c/builder/__init__.py \
 
 %files -n python3-module-%ocore
 %python3_sitelibdir/z3c/builder/__init__.py
-%python3_sitelibdir/z3c/builder/__pycache__/__init__.*
+#python3_sitelibdir/z3c/builder/__pycache__/__init__.*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -153,7 +154,7 @@ cp %buildroot%python_sitelibdir/z3c/builder/__init__.py \
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/z3c/builder/__init__.py
-%exclude %python3_sitelibdir/z3c/builder/__pycache__/__init__.*
+#exclude %python3_sitelibdir/z3c/builder/__pycache__/__init__.*
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/*/test*
 
@@ -163,6 +164,9 @@ cp %buildroot%python_sitelibdir/z3c/builder/__init__.py \
 %endif
 
 %changelog
+* Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6
+- Added module for Python 3
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt5
 - Extracted %ocore into separate package
 
