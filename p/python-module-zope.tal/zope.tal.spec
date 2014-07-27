@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a1
+Release: alt2
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -139,13 +139,18 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/runtest.*
+%exclude %python3_sitelibdir/*/*/*/runtest.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/runtest.*
+%python3_sitelibdir/*/*/*/runtest.*
 %endif
 
 %changelog
+* Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
+- Version 4.0.0
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
 - Version 4.0.0a1
 
