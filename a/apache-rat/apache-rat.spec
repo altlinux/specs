@@ -1,4 +1,7 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global snapdate 20100827
@@ -6,12 +9,12 @@ BuildRequires: jpackage-compat
 
 Name:           apache-rat
 Version:        0.8
-Release:        alt3_6jpp7
+Release:        alt3_8jpp7
 Summary:        Apache Release Audit Tool (RAT)
 
 Group:          Development/Java
 License:        ASL 2.0
-URL:            http://incubator.apache.org/rat/
+URL:            http://creadur.apache.org/rat/
 #svn had a number of needed bugfixes
 #svn export -r 990212 http://svn.apache.org/repos/asf/incubator/rat/main/trunk apache-rat-0.8-20100707
 #Source0:        %{name}-%{version}-%{snapdate}.tar.bz2
@@ -22,7 +25,7 @@ Patch2:         apache-rat-0.8-test.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-dependency-plugin
@@ -73,6 +76,8 @@ Requires:       junit
 
 %description core
 The core functionality of RAT, shared by the Ant tasks, and the Maven plugin.
+It also includes a wrapper script "apache-rat" that should be the equivalent
+to running upstream's "java -jar apache-rat.jar".
 
 
 %package plugin
@@ -111,7 +116,7 @@ This package contains the API documentation for %{name}.
 
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+mvn-rpmbuild -DskipTests=true package javadoc:aggregate
 
 %install
 #Dirs
@@ -133,6 +138,9 @@ do
   %add_maven_depmap JPP.%{name}-${jarname}.pom %{name}/${jarname}.jar
 done
 
+#Wrapper script
+%jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true 
+
 #Ant taksks
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "apache-rat/rat-core apache-rat/rat-tasks" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
@@ -141,6 +149,9 @@ echo "apache-rat/rat-core apache-rat/rat-tasks" > $RPM_BUILD_ROOT%{_sysconfdir}/
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/
 cp -rp target/site/apidocs \
    $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/apache-rat.conf`
+touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %files
@@ -152,7 +163,9 @@ cp -rp target/site/apidocs \
 %files core
 %doc LICENSE NOTICE
 %{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
+%{_bindir}/%{name}
 %{_javadir}/%{name}/%{name}-core.jar
+%config(noreplace,missingok) /etc/java/apache-rat.conf
 
 %files plugin
 %doc LICENSE NOTICE
@@ -171,6 +184,9 @@ cp -rp target/site/apidocs \
 
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_8jpp7
+- fixed build
+
 * Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_6jpp7
 - fixed build
 
