@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     3
-%define postgresql_subminor  4
-%define postgresql_altrel    5
+%define postgresql_subminor  5
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -40,7 +40,6 @@ Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
-#Patch7: 0001-Apply-chroot-patch.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
 
@@ -244,6 +243,7 @@ for the backend.
 Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
+Provides: postgresql-perl = %version-%release
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -269,7 +269,6 @@ database.
 %patch3 -p2
 %patch4 -p2
 %patch6 -p2
-#patch7 -p1
 %patch8 -p1
 #%%patch9 -p1
 
@@ -761,6 +760,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Mon Jul 28 2014 Alexei Takaseev <taf@altlinux.org> 9.3.5-alt1
+- 9.3.5
+- Fix ALT#30197
+
 * Wed Apr 16 2014 Alexei Takaseev <taf@altlinux.org> 9.3.4-alt5
 - Add postgresql-devel-static subpackage
 
