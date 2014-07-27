@@ -1,4 +1,4 @@
-%define ver_major 5.3
+%define ver_major 5.4
 %define api_ver 1.0
 
 %def_disable static
@@ -14,7 +14,7 @@ Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/LibXklavier
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: http://people.freedesktop.org/~svu/%name-%version.tar.bz2
 
 # From configure.in
 %define libxml_ver 2.0.0
@@ -30,6 +30,7 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: iso-codes-devel libX11-devel
 BuildPreReq: xkbcomp libXi-devel >= 1.1.3
 %{?_enable_introspection:BuildRequires:gobject-introspection-devel}
+BuildRequires: vala-tools
 
 %description
 This library allows you simplify XKB-related development.
@@ -97,6 +98,8 @@ This package provides GObject introspection devel data for libxklavier.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%_vapidir/%name.vapi
+%_vapidir/%name.deps
 
 %files devel-doc
 %_gtk_docdir/%name
@@ -108,6 +111,9 @@ This package provides GObject introspection devel data for libxklavier.
 %_girdir/Xkl-%api_ver.gir
 
 %changelog
+* Sun Jul 27 2014 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
 - 5.3
 
