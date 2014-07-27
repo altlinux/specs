@@ -26,6 +26,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 %define build_microblaze	%{build_all}
 %define build_mips64		%{build_all}
 %define build_mn10300		%{build_all}
+%define build_nios2		%{build_all}
 %define build_openrisc		%{build_all}
 %define build_powerpc64		%{build_all}
 %define build_s390x		%{build_all}
@@ -52,7 +53,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
 Version: 2.24
-Release: alt1_2
+Release: alt1_5
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -63,6 +64,10 @@ URL: http://sources.redhat.com/binutils
 Source: http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.bz2
 
 Source2: binutils-2.19.50.0.1-output-format.sed
+
+# Bring up to date with what's in the git release branch
+Patch00: binutils-2.24-cab6c3ee9785f072a373afe31253df0451db93cf.patch
+
 Patch01: binutils-2.20.51.0.2-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-ppc64-pie.patch
 Patch03: binutils-2.20.51.0.2-ia64-lib64.patch
@@ -87,9 +92,17 @@ Patch14: binutils-2.24-s390-mkopc.patch
 Patch15: binutils-2.24-elfnn-aarch64.patch
 # Fix decoding of abstract instance names using DW_FORM_ref_addr.
 Patch16: binutils-2.24-DW_FORM_ref_addr.patch
+# Fix compiling using gcc 4.9
+Patch17: binutils-2.24-set-section-macros.patch
+# Fix detections of uncompressed .debug_str sections that look like they have been compressed.
+Patch18: binutils-2.24-fake-zlib-sections.patch
+# Fix detections little endian PPC shared libraries
+Patch19: binutils-2.24-ldforcele.patch
 
 # Fix formatless sprintfs in Score-specific code.
 Patch100: cross-binutils-2.24-score-sprintf.patch
+Patch101: binutils-2.24-kernel-ld-r-fix.patch
+Patch102: cross-binutils-2.24-m68k-gcc-error.patch
 
 BuildRequires: texinfo >= 4.0 gettext flex bison zlib-devel
 # BZ 920545: We need pod2man in order to build the manual pages.
@@ -166,6 +179,7 @@ Cross-build binary image generation, manipulation and query tools. \
 %do_package mips-linux-gnu	%{build_mips}
 %do_package mips64-linux-gnu	%{build_mips64}
 %do_package mn10300-linux-gnu	%{build_mn10300}
+%do_package nios2-linux-gnu	%{build_nios2}
 %do_package openrisc-linux-gnu	%{build_openrisc}
 %do_package powerpc-linux-gnu	%{build_powerpc}
 %do_package powerpc64-linux-gnu	%{build_powerpc64}
@@ -197,6 +211,7 @@ Cross-build binary image generation, manipulation and query tools. \
 %define srcdir binutils-%{version}
 %setup -q -n %{srcdir} -c
 cd %{srcdir}
+%patch00 -p1 -b .latest-git~
 %patch01 -p0 -b .libtool-lib64~
 %patch02 -p0 -b .ppc64-pie~
 %ifarch ia64
@@ -217,10 +232,15 @@ cd %{srcdir}
 %patch12 -p0 -b .kernel-ld-r~
 %patch13 -p0 -b .aarch64~
 %patch14 -p0 -b .mkopc~
-%patch15 -p0 -b .elf-aarch64~
+#%patch15 -p0 -b .elf-aarch64~
 %patch16 -p0 -b .ref-addr~
+%patch17 -p0 -b .sec-macros~
+%patch18 -p0 -b .fake-zlib~
+%patch19 -p0 -b .ldforcele~
 
 %patch100 -p1 -b .score~
+%patch101 -p0 -b .kernel-ld-r-fix~
+%patch102 -p1 -b .m68k-config-fix~
 
 # We cannot run autotools as there is an exact requirement of autoconf-2.59.
 
@@ -278,6 +298,7 @@ cd ..
     prep_target mips-linux-gnu		%{build_mips}
     prep_target mips64-linux-gnu	%{build_mips64}
     prep_target mn10300-linux-gnu	%{build_mn10300}
+    prep_target nios2-linux-gnu		%{build_nios2}
     prep_target openrisc-linux-gnu	%{build_openrisc}
     prep_target powerpc-linux-gnu	%{build_powerpc}
     prep_target powerpc64-linux-gnu	%{build_powerpc64}
@@ -640,6 +661,7 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files mips-linux-gnu	%{build_mips}
 %do_files mips64-linux-gnu	%{build_mips64}
 %do_files mn10300-linux-gnu	%{build_mn10300}
+%do_files nios2-linux-gnu	%{build_nios2}
 %do_files openrisc-linux-gnu	%{build_openrisc}
 %do_files powerpc-linux-gnu	%{build_powerpc}
 %do_files powerpc64-linux-gnu	%{build_powerpc64}
@@ -659,6 +681,9 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_5
+- new version
+
 * Thu Apr 03 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_2
 - new version
 
