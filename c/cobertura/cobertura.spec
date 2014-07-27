@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           cobertura
 Version:        1.9.4.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Java tool that calculates the percentage of code accessed by tests
 
 Group:          Development/Java
@@ -64,7 +64,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
@@ -153,6 +153,9 @@ touch $RPM_BUILD_ROOT/etc/cobertura-report.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4.1-alt2_2jpp7
+- fixed build of maven-plugin -- set asm version to 3.3.1 in pom
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4.1-alt1_2jpp7
 - fc update
 
