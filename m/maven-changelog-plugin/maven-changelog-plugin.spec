@@ -1,9 +1,11 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changelog-plugin
 Version:        2.2
-Release:        alt2_10jpp7
+Release:        alt3_10jpp7
 Summary:        Produce SCM changelog reports
 
 Group:          Development/Java
@@ -34,7 +36,7 @@ BuildRequires: plexus-utils
 BuildRequires: junit
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: plexus-container-default
-BuildRequires: netbeans-cvsclient
+#BuildRequires: netbeans-cvsclient
 
 Requires:       maven
 Requires:       jpackage-utils
@@ -98,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_10jpp7
+- fixed build
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_10jpp7
 - fixed build
 
