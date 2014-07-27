@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.1.1
-Release:        alt6_20jpp7
+Release:        alt7_20jpp7
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 Group:          Development/Java
@@ -24,6 +24,7 @@ Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{sh
 Patch0:         %{short_name}-avalon-update.patch
 
 Patch1:         %{short_name}-eclipse-manifest.patch
+Patch33:	commons-logging-alt-avalon-logkit.patch
 BuildArch:      noarch
 BuildRequires:  maven
 BuildRequires:  jpackage-utils >= 0:1.6
@@ -71,6 +72,7 @@ BuildArch: noarch
 
 %patch0 -p1
 %patch1
+%patch33 -p1
 
 sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt
 
@@ -138,6 +140,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt7_20jpp7
+- fixed build
+
 * Tue Jul 15 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt6_20jpp7
 - fixed build
 
