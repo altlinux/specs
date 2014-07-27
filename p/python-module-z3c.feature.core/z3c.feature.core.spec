@@ -1,11 +1,11 @@
 %define ocore z3c.feature
 %define oname %ocore.core
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt3
+Release: alt4
 Summary: Core Features to use with z3c.builder.core
 License: ZPL
 Group: Development/Python
@@ -22,7 +22,8 @@ BuildPreReq: python-tools-2to3
 %endif
 
 Requires: python-module-%ocore = %EVR
-%py_requires z3c.builder.core
+%py_requires z3c.builder.core zope.schema zope.interface z3c.form
+%py_requires zc.buildout zope.app.pagetemplate
 
 %description
 Core Features to use with z3c.builder.core
@@ -33,7 +34,8 @@ This package provides the ZBoiler Core Features.
 Summary: Core Features to use with z3c.builder.core
 Group: Development/Python3
 Requires: python3-module-%ocore = %EVR
-%py3_requires z3c.builder.core
+%py3_requires z3c.builder.core zope.schema zope.interface z3c.form
+%py3_requires zc.buildout zope.app.pagetemplate
 
 %description -n python3-module-%oname
 Core Features to use with z3c.builder.core
@@ -44,7 +46,8 @@ This package provides the ZBoiler Core Features.
 Summary: Tests for z3c.builder.core
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing z3c.coverage
+%py3_requires zope.testing z3c.coverage zope.testing zope.component
+%py3_requires zope.configuration
 
 %description -n python3-module-%oname-tests
 Core Features to use with z3c.builder.core
@@ -55,7 +58,8 @@ This package contains tests for z3c.builder.core.
 Summary: Tests for z3c.builder.core
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing z3c.coverage
+%py_requires zope.testing z3c.coverage zope.testing zope.component
+%py_requires zope.configuration
 
 %description tests
 Core Features to use with z3c.builder.core
@@ -137,19 +141,24 @@ touch %buildroot%python3_sitelibdir/z3c/feature/__init__.py
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
-%python_sitelibdir/*
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/*/test*
 %exclude %python3_sitelibdir/z3c/feature/__init__.py
 %exclude %python3_sitelibdir/z3c/feature/__pycache__/__init__.*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/*/test*
 %python3_sitelibdir/*/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/*/test*
 %endif
 
 %changelog
+* Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt4
+- Added module for Python 3
+
 * Mon Jul 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt3
 - Moved %ocore into separate package
 
