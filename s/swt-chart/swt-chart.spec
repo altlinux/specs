@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven eclipse-jdt
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           swt-chart
 Version:        0.8.0
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        SWTChart Feature
 
 Group:          Development/Java
@@ -45,7 +45,7 @@ BuildArch: noarch
 mvn-rpmbuild org.eclipse.tycho:tycho-pomgenerator-plugin:generate-poms -DgroupId=org.swtchart
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true  install javadoc:aggregate
 
 %install
 install -d -m 755 %{buildroot}%{_javadir}
@@ -74,6 +74,9 @@ cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2_5jpp7
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_5jpp7
 - new version
 
