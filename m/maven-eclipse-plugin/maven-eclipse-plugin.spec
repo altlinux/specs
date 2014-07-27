@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt3_2jpp7
+Release:        alt4_2jpp7
 Summary:        Maven Eclipse Plugin
 
 Group:          Development/Java
@@ -92,6 +92,8 @@ API documentation for %{name}.
 %patch2 -p1
 
 sed -i -e "s|3.3.0-v20070604|3.7.100.v20110510-0712|g" pom.xml
+sed -i -e '/<version>0.0.145<.version>/d' pom.xml
+
 
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
@@ -133,6 +135,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt4_2jpp7
+- fixed build
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt3_2jpp7
 - fixed build
 
