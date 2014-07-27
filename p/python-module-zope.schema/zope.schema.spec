@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.3.2
+Version: 4.4.1
 Release: alt1
 Summary: zope.interface extension for defining data schemas
 License: ZPLv2.1
@@ -149,6 +149,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.1-alt1
+- Version 4.4.1
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
 - Version 4.3.2
 
