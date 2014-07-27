@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.8.4
-Release: alt5
+Release: alt6
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -200,7 +200,7 @@ BuildRequires: regexp
 BuildRequires: javamail
 BuildRequires: jdepend
 BuildRequires: jsch
-BuildRequires: junit junit4
+BuildRequires: junit junit4 junit3
 BuildRequires: log4j
 BuildRequires: xml-stylebook
 BuildRequires: xalan-j2 >= 2.0
@@ -1087,6 +1087,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt6
+- fixed build
+
 * Sat Jul 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt5
 - restored symlinks in /usr/share/ant/lib
 
