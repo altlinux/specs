@@ -1,8 +1,12 @@
+BuildRequires: junit3
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mars-sim
 Version:        2.84
-Release:        alt1_9jpp7
+Release:        alt2_9jpp7
 Summary:        Mars Simulation Project
 
 Group:          Games/Other
@@ -136,6 +140,9 @@ touch $RPM_BUILD_ROOT/etc/mars-sim.conf
 
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.84-alt2_9jpp7
+- fixed build
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 2.84-alt1_9jpp7
 - new version
 
