@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
 Version:        2.4
-Release:        alt3_7jpp7
+Release:        alt4_7jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
@@ -36,7 +36,7 @@ BuildRequires: apache-commons-validator
 BuildRequires: httpunit
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: servlet3
-BuildRequires: netbeans-cvsclient
+#BuildRequires: netbeans-cvsclient
 BuildRequires: maven-jarsigner-plugin
 BuildRequires: keytool-maven-plugin
 BuildRequires: joda-time
@@ -107,6 +107,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt4_7jpp7
+- fixed build
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt3_7jpp7
 - fixed build
 
