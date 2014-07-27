@@ -1,7 +1,10 @@
 %define oname zope.paste
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.3
-Release: alt2.1
+Release: alt3
 Summary: Zope 3 and PasteDeploy
 License: ZPL
 Group: Development/Python
@@ -10,7 +13,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires zope paste.deploy zope.interface zope.app.appsetup
 %py_requires zope.app.wsgi zope.app.twisted zope.app.server
@@ -24,19 +31,54 @@ zope.paste allows you to
 using PasteDeploy. These are two completely different modi operandi
 which only have in common that they are facilitate PasteDeploy.
 
+%package -n python3-module-%oname
+Summary: Zope 3 and PasteDeploy
+Group: Development/Python3
+%py3_requires zope paste.deploy zope.interface zope.app.appsetup
+%py3_requires zope.app.wsgi zope.app.twisted zope.app.server
+
+%description -n python3-module-%oname
+zope.paste allows you to
+
+* employ WSGI middlewares inside a Zope 3 application
+* deploy the Zope 3 application server on any WSGI-capable webserver
+
+using PasteDeploy. These are two completely different modi operandi
+which only have in common that they are facilitate PasteDeploy.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -44,7 +86,17 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%endif
+
 %changelog
+* Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3-alt2.1
 - Rebuild with Python-2.7
 
