@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apache-commons-jci
 %define version 1.0
 %global base_name  jci
@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-commons-jci
 Version:       1.0
-Release:       alt2_5jpp7
+Release:       alt3_5jpp7
 Summary:       Commons Java Compiler Interface
 Group:         Development/Java
 License:       ASL 2.0
@@ -38,6 +38,7 @@ Patch3:        %{name}-%{namedversion}-examples-pom.patch
 Patch4:        %{name}-%{namedversion}-janino26.patch
 
 Patch5:        %{name}-%{namedversion}-ecj4.patch
+Patch6:	apache-commons-jci-1.0-alt-pom.patch
 
 BuildRequires: jpackage-utils
 
@@ -112,7 +113,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 # compilers
 
@@ -163,6 +164,7 @@ find . -name "*.jar" -delete
 %patch3 -p0
 %patch4 -p1
 %patch5 -p0
+%patch6 -p1
 
 # require old version of jdependency
 %pom_disable_module compilers/javac
@@ -246,6 +248,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}-rhino
 
 %changelog
+* Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_5jpp7
+- fixed build
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2_5jpp7
 - fixed maven1 dependency
 
