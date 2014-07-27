@@ -1,6 +1,6 @@
 Name: spl
 Version: 0.6.3
-Release: alt2
+Release: alt4
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -89,6 +89,12 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Jul 26 2014 Led <led@altlinux.ru> 0.6.3-alt4
+- upstream updates
+
+* Thu Jul 03 2014 Led <led@altlinux.ru> 0.6.3-alt3
+- upstream updates and fixes
+
 * Mon Jun 16 2014 Led <led@altlinux.ru> 0.6.3-alt2
 - removed stupidly defined 'hz'
 
