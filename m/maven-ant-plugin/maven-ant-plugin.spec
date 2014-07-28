@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ant-plugin
 Version:        2.3
-Release:        alt2_9jpp7
+Release:        alt2_12jpp7
 Summary:        Maven Ant Plugin
 
 Group:          Development/Java
@@ -12,12 +15,13 @@ URL:            http://maven.apache.org/plugins/maven-ant-plugin
 #svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-ant-plugin-2.3/
 #tar jcf maven-ant-plugin-2.3.tar.bz2 maven-ant-plugin-2.3/
 Source0:        %{name}-%{version}.tar.bz2
-Patch0:        %{name}-pom.patch
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:         %{name}-pom.patch
 
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -27,7 +31,7 @@ BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-container-default
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: junit
 
@@ -35,11 +39,8 @@ Requires:       maven
 Requires:       jpackage-utils
 Requires:       plexus-utils
 Requires:       ant
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 Requires:       junit
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 
 Obsoletes: maven2-plugin-ant <= 0:2.0.8
 Provides: maven2-plugin-ant = 0:%{version}-%{release}
@@ -61,6 +62,7 @@ API documentation for %{name}.
 %prep
 %setup -q 
 %patch0 -p0
+cp -p %{SOURCE1} .
 
 %build
 mvn-rpmbuild \
@@ -81,14 +83,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
+%doc LICENSE-2.0.txt
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_12jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_9jpp7
 - fixed build
 
