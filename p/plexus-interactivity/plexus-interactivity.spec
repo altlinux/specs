@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-interactivity
 Version:        1.0
-Release:        alt4_0.7.alpha6jpp7
+Release:        alt4_0.10.alpha6jpp7
 Epoch:          0
 Summary:        Plexus Interactivity Handler Component
 License:        MIT
@@ -54,7 +55,7 @@ Patch1:         plexus-interactivity-dependencies.patch
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-site-plugin
@@ -63,11 +64,9 @@ BuildRequires:  maven-install-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  jline
-BuildRequires:  plexus-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  plexus-component-api
 
-Requires:  plexus-container-default
 Requires:  plexus-component-api
 Requires:  plexus-utils
 Requires:  jline
@@ -95,7 +94,7 @@ API documentation for %{name}.
 %patch1 -p1
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+mvn-rpmbuild -e \
         -Dmaven.test.skip=true \
         install javadoc:aggregate
 
@@ -114,10 +113,10 @@ install -pm 644 \
 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
 install -pm 644 \
 plexus-interactivity-api/pom.xml \
- 	$RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-interactivity-api.pom
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-interactivity-api.pom
 install -pm 644 \
 plexus-interactivity-jline/pom.xml \
- 	$RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-interactivity-jline.pom
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-interactivity-jline.pom
 
 %add_maven_depmap JPP.%{parent}-%{subname}.pom
 %add_maven_depmap JPP.%{parent}-interactivity-api.pom  plexus/interactivity-api.jar
@@ -141,6 +140,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.10.alpha6jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.7.alpha6jpp7
 - fc update
 
