@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           electric
 Version:        8.09
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Sophisticated ASIC and MEM CAD System
 
 Group:          Engineering
@@ -100,13 +103,16 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/%{name}-%{version}.jar
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_6jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_5jpp7
 - new version
 
