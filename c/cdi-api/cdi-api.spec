@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cdi-api
 %define version 1.0
 %global namedreltag .SP4
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             cdi-api
 Version:          1.0
-Release:          alt1_6.SP4jpp7
+Release:          alt1_9.SP4jpp7
 Summary:          CDI API
 Group:            Development/Java
 License:          ASL 2.0
@@ -24,7 +25,7 @@ Source0:          cdi-api-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -36,6 +37,7 @@ BuildRequires:    jboss-el-2.2-api
 BuildRequires:    jboss-interceptors-1.1-api
 BuildRequires:    jboss-ejb-3.1-api
 BuildRequires:    geronimo-annotation
+BuildRequires:    geronimo-parent-poms
 BuildRequires:    weld-parent
 
 Requires:         jpackage-utils
@@ -55,7 +57,7 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n cdi-api-%{namedversion}
@@ -89,6 +91,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9.SP4jpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6.SP4jpp7
 - fc update
 
