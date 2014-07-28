@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           h2
 Version:        1.3.168
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Java SQL database
 
 Group:          Development/Java
@@ -80,6 +81,9 @@ cp -rp %SOURCE1 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc src/docsrc/html/license.html
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.168-alt1_3jpp7
+- new release
+
 * Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.168-alt1_2jpp7
 - new version
 
