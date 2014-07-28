@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-common
 Version:        1.0.11
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        FEST: Fixtures for Easy Software Testing
 
 Group:          Development/Java
@@ -19,7 +23,7 @@ Patch1:         no-site.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-dependency-plugin
 
@@ -53,6 +57,9 @@ install -pm 644 pom.xml \
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
