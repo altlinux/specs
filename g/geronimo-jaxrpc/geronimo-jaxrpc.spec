@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: geronimo-saaj
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-jaxrpc
 Version:          2.1
-Release:          alt2_9jpp7
+Release:          alt2_11jpp7
 Summary:          Java EE: Java API for XML Remote Procedure Call v1.1
 Group:            Development/Java
 License:          ASL 2.0 and W3C
@@ -19,7 +23,7 @@ Patch1:           use_parent_pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 BuildRequires:    saaj_api
@@ -106,6 +110,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_11jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_9jpp7
 - NMU rebuild to move poms and fragments
 
