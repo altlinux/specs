@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname oauth
 Name:          java-oauth
 Version:       20100601
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       An open protocol to allow API authentication
 Group:         Development/Java
 License:       ASL 2.0
@@ -35,7 +39,7 @@ BuildRequires: httpcomponents-client
 BuildRequires: jakarta-commons-httpclient
 BuildRequires: tomcat-servlet-3.0-api
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -116,6 +120,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oname}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
