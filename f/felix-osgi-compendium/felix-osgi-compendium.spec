@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:    felix-osgi-compendium
 Version: 1.4.0
-Release: alt3_12jpp7
+Release: alt3_14jpp7
 Summary: Felix OSGi R4 Compendium Bundle
 
 Group:   Development/Java
@@ -29,7 +33,7 @@ Patch4:         0005-Add-getResourceURL-method-to-make-jbosgi-framework-h.patch
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -103,6 +107,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_14jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_12jpp7
 - NMU rebuild to move poms and fragments
 
