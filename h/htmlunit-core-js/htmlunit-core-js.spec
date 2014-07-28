@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           htmlunit-core-js
 Version:        2.9
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        Rhino fork for htmlunit
 
 Group:          Development/Java
@@ -69,6 +72,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
