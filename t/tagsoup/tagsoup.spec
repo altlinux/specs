@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: xalan-j2
@@ -37,10 +38,12 @@ BuildRequires: jpackage-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_2jpp7
+Release:        alt2_5jpp7
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
-License:        GPLv2+ or AFL
+# AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
+# likely mixup of upstream but needs to be cleared up
+License:        ASL 2.0 and (GPLv2+ or AFL)
 Source0:        http://home.ccil.org/~cowan/XML/tagsoup/tagsoup-1.2.1-src.zip
 URL:            http://home.ccil.org/~cowan/XML/tagsoup/
 Group:          Development/Java
@@ -53,8 +56,6 @@ BuildRequires:  ant-apache-xalan2
 BuildRequires:  bash
 BuildRequires:  xalan-j2
 Requires:       jpackage-utils >= 0:1.6
-# see https://bugzilla.redhat.com/show_bug.cgi?id=502328
-ExcludeArch:    ppc64
 BuildArch:      noarch
 Source44: import.info
 
@@ -118,6 +119,9 @@ install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
