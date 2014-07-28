@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jsr-311
 Version: 1.1.1
-Release: alt2_2jpp7
+Release: alt2_4jpp7
 Summary: JAX-RS: Java API for RESTful Web Services
 Group: Development/Java
 License: CDDL
@@ -19,7 +23,7 @@ BuildRequires: jpackage-utils
 
 BuildRequires: buildnumber-maven-plugin
 BuildRequires: junit
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -88,6 +92,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
