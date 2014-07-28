@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          pegdown
 Version:       1.1.0
-Release:       alt3_2jpp7
+Release:       alt3_4jpp7
 Summary:       Java library for Markdown processing
 Group:         Development/Java
 License:       ASL 2.0
@@ -19,7 +22,7 @@ BuildRequires: parboiled
 BuildRequires: jtidy
 BuildRequires: testng
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -84,6 +87,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_4jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_2jpp7
 - fixed build
 
