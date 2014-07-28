@@ -1,6 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-modules
 %define version 1.1.1
 %global namedreltag .GA
@@ -8,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-modules
 Version:          1.1.1
-Release:          alt2_6jpp7
+Release:          alt2_9jpp7
 Summary:          A Modular Classloading System
 Group:            Development/Java
 License:          LGPLv2+
@@ -24,7 +29,7 @@ Patch0:           MODULES-128.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    jboss-parent
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -35,8 +40,10 @@ BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    apiviz
 BuildRequires:    junit4
+%if 0%{?fedora}
+BuildRequires:    apiviz
+%endif
 
 Requires:         jpackage-utils
 Source44: import.info
@@ -57,6 +64,11 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{namedversion}
 
 %patch0 -p1
+
+# Conditionally remove dependency on apiviz
+if [ %{?rhel} ]; then
+    %pom_remove_plugin :maven-javadoc-plugin
+fi
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -87,6 +99,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
