@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spec_ver 1.3
@@ -5,20 +9,19 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-saaj
 Version:          1.1
-Release:          alt2_8jpp7
+Release:          alt2_11jpp7
 Summary:          Java EE: SOAP with Attachments API Package v1.3
 Group:            Development/Java
 License:          ASL 2.0 and W3C
 
 URL:              http://geronimo.apache.org/
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
-Source1:          %{name}.depmap
 # Use parent pom files instead of unavailable 'genesis-java5-flava'
 Patch1:           use_parent_pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-provider-junit
@@ -49,11 +52,10 @@ This package contains the API documentation for %{name}.
 iconv -f iso8859-1 -t utf-8 LICENSE > LICENSE.conv && mv -f LICENSE.conv LICENSE
 sed -i 's/\r//' LICENSE NOTICE
 %patch1 -p0
+%pom_remove_dep :geronimo-activation_1.1_spec
 
 %build
-mvn-rpmbuild \
-        -Dmaven.local.depmap.file="%{SOURCE1}" \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 install -d -m 755 %{buildroot}%{_javadir}
@@ -78,6 +80,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
