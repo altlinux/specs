@@ -1,9 +1,13 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jbossxb
 Version:        2.0.3
-Release:        alt2_1jpp7
+Release:        alt2_3jpp7
 Summary:        JBoss XML Binding
 
 Group:          Development/Java
@@ -27,7 +31,7 @@ BuildRequires:  jboss-common-core
 BuildRequires:  jboss-jaxb-2.2-api
 BuildRequires:  jboss-logging
 BuildRequires:  jboss-reflect
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-jar-plugin
@@ -72,7 +76,6 @@ find -type f -name *.class -delete
 %patch0
 
 %build
-export LANG=en_US.ISO8859-1
 mvn-rpmbuild package javadoc:aggregate
 
 %install
@@ -89,21 +92,20 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-# jpp compat symlink
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/jboss
-ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/jboss/jboss-xml-binding.jar
 
 %files
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}.jar
-%{_javadir}/jboss/jboss-xml-binding.jar
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
