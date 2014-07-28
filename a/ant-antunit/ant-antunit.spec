@@ -7,14 +7,13 @@ BuildRequires: jpackage-compat
 
 Name:             ant-%{base_name}
 Version:          1.2
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          Provide antunit ant task
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://ant.apache.org/antlibs/%{base_name}/
 Source0:          http://www.apache.org/dist/ant/antlibs/%{base_name}/source/apache-%{name}-%{version}-src.tar.bz2
 BuildArch:        noarch
-ExcludeArch:      ppc64
 
 BuildRequires:    jpackage-utils
 BuildRequires:    ant-junit
@@ -94,6 +93,9 @@ echo "ant/ant-antunit" > %{buildroot}%{_sysconfdir}/%{name}.d/antunit
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
+- new release
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4jpp7
 - build with ant-junit
 
