@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -38,16 +39,17 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.2
-Release:        alt3_12jpp7
+Release:        alt3_17jpp7
 Epoch:          0
 Summary:        Command Line Interface facilitator for Plexus
-License:        ASL 2.0 and Plexus
+License:        ASL 2.0
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
 # svn export http://svn.codehaus.org/plexus/archive/plexus-tools/tags/plexus-cli-1.2
 # tar czf plexus-cli-%{version}-src.tar.gz plexus-cli-%{version}
 # Note: Exported revision 8188.
 Source0:        %{name}-%{version}-src.tar.gz
+Source1:        LICENSE-2.0.txt
 
 # License headers missing from some files
 # http://jira.codehaus.org/browse/PLX-418
@@ -56,18 +58,13 @@ Patch0:         plexus-cli-licenseheaders.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-release
 BuildRequires:  plexus-classworlds
 BuildRequires:  plexus-containers-container-default
@@ -77,8 +74,6 @@ BuildRequires:  apache-commons-cli
 Requires:  plexus-classworlds
 Requires:  plexus-containers-container-default
 Requires:  plexus-utils
-Requires(post):    jpackage-utils >= 0:1.7.3
-Requires(postun):  jpackage-utils >= 0:1.7.3
 Source44: import.info
 
 %description
@@ -104,35 +99,38 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %patch0 -p3
 
+cp -p %{SOURCE1} .
+
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
 install -pm 644 target/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/plexus/%{subname}.jar
-%add_to_maven_depmap org.codehaus.plexus %{name} %{namedversion} JPP/%{parent} %{subname}
 
 # pom
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
 
+%add_maven_depmap JPP.%{parent}-%{subname}.pom plexus/%{subname}.jar
+
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{parent}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
 %files javadoc
-%doc %{_javadocdir}/*
-
+%doc LICENSE-2.0.txt
+%{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_17jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_12jpp7
 - fc update
 
