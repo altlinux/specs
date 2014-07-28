@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
 Version:	9.2.1002
-Release:	alt1_1jpp7
+Release:	alt1_2jpp7
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
 Group:		Databases
@@ -137,6 +137,9 @@ install -m 644 JPP-postgresql-jdbc.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-postgr
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_2jpp7
+- new release
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_1jpp7
 - fc update
 
