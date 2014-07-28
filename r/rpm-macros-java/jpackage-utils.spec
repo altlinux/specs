@@ -35,9 +35,9 @@
 %def_disable gcj_support
 %def_without lua_scripts
 
-Name:           rpm-build-java
+Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt33
+Release:        alt34
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -76,19 +76,21 @@ Patch25: jpackage-utils-build-classpath-symlink-fix.patch
 
 BuildRequires:  awk, grep
 
-#package -n rpm-build-java
+#package -n rpm-macros-java
 Summary: RPM helper macros to build Java packages
 Group: Development/Java
-#Requires: rpm-build-java-osgi = %{version}-%{release}
+Conflicts: rpm-build-java < 0:5.0.0-alt34
 
-# for maven_depmap.pl
-BuildRequires:  perl-XML-Simple
+# can't due to the jni path
+#BuildArch:      noarch
 
-Provides: javapackages-tools = %javapackagestoolsver
+%description -n rpm-macros-java
+These helper macros facilitate creation of RPM packages containing Java
+bytecode archives and Javadoc documentation.
 
 %package -n jpackage-utils
 Summary:        JPackage utilities
-#Requires:       rpm-build-java = %{version}-%{release}
+#Requires:       rpm-build-java = %{epoch}:%{version}-%{release}
 Group:          Development/Java
 
 # can't due to the jni path
@@ -133,9 +135,19 @@ Utilities for the JPackage Project <http://www.jpackage.org/>:
 It contains also the License, man pages, documentation, XSL files of general
 use with maven2, a header file for spec files etc.
 
+%package -n rpm-build-java
+Summary: RPM build helpers for Java packages
+Group: Development/Java
+BuildArch:      noarch
+#Requires:       jpackage-utils = %{epoch}:%{version}-%{release}
+Requires: 	rpm-macros-java = %{epoch}:%{version}-%{release}
+#Requires: rpm-build-java-osgi = %{epoch}:%{version}-%{release}
+# for maven_depmap.pl
+BuildRequires:  perl-XML-Simple
+Provides: javapackages-tools = %javapackagestoolsver
+
 %description -n rpm-build-java
-These helper macros facilitate creation of RPM packages containing Java
-bytecode archives and Javadoc documentation.
+RPM build helpers for Java packages.
 
 %package -n rpm-build-java-osgi
 Summary: RPM build helpers for Java packages with OSGi dependencies
@@ -148,8 +160,10 @@ RPM build helpers for Java packages with OSGi dependencies
 %package -n rpm-build-maven-local
 Summary:        Macros and scripts for Maven packaging support
 Group: Development/Java
-Provides: maven-local = %javapackagestoolsver
-Requires:       %{name} = %{?epoch:%{epoch}}%{version}-%{release}
+BuildArch:	noarch
+
+Provides:	maven-local = %javapackagestoolsver
+Requires:       rpm-build-java = %{?epoch:%{epoch}}%{version}-%{release}
 Requires:       maven
 Requires:       xmvn
 # POM files needed by maven itself
@@ -166,7 +180,7 @@ Requires:       plexus-pom
 Requires:       plexus-tools-pom
 Requires:       sonatype-oss-parent
 Requires:       weld-parent
-# added by viy@ for initial bootstrapping transaction
+# added by viy@ for initial bootstrapping transaction TODO drop
 Requires:       sonatype-forge-parent
 # Common Maven plugins required by almost every build. It wouldn't make
 # sense to explicitly require them in every package built with Maven.
@@ -441,7 +455,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/xmvn
 install -pm 644 macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-fjava
 install -pm 644 macros.xmvn ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-xmvn
 install -p -m 644 metadata/*.xml $RPM_BUILD_ROOT%{_sysconfdir}/maven
-install -p -m 644 scripts/xmvn_config_editor.sh $RPM_BUILD_ROOT${_javadir}-utils
+install -p -m 755 scripts/xmvn_config_editor.sh $RPM_BUILD_ROOT${_javadir}-utils
 install -p -m 755 scripts/mvn-* $RPM_BUILD_ROOT%{_bindir}
 
 install -p -m 644 configs/configuration*.xml $RPM_BUILD_ROOT%{_datadir}/xmvn
@@ -478,13 +492,16 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %_sysconfdir/java/security
 %_sysconfdir/java/security/security.d
 %endif
+%exclude %{_datadir}/java-utils/xmvn_config_editor.sh
 
-%files -n rpm-build-java
+%files -n rpm-macros-java
 %_rpmmacrosdir/jpackage
 %_rpmmacrosdir/jpackage-eclipse
 %_rpmmacrosdir/libjvm
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-xmvn
+
+%files -n rpm-build-java
 /usr/lib/rpm/maven.*
 
 %files -n rpm-build-java-osgi
@@ -503,6 +520,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt34
+- added rpm-macros-java due to excessive dependencies
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt33
 - bugfix release
 
