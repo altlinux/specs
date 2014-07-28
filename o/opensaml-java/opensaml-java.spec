@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java
 Version:       2.5.3
-Release:       alt1_2jpp7
+Release:       alt1_4jpp7
 Summary:       Java OpenSAML library
 License:       ASL 2.0
 Group:         Development/Java
@@ -18,7 +19,7 @@ Source0:       opensaml-java-%{version}.tar.xz
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -117,6 +118,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_4jpp7
+- new release
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2jpp7
 - fc update
 
