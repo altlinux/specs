@@ -1,10 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:           aqute-bndlib
 Version:        1.50.0
-Release:        alt2_3jpp7
+Release:        alt2_5jpp7
 Summary:        BND Library
 License:        ASL 2.0
 Group:          Development/Java
@@ -16,7 +20,7 @@ Source1:        http://repo1.maven.org/maven2/biz/aQute/bndlib/1.50.0/bndlib-1.5
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-provider-junit4
 
 Requires:       jpackage-utils
@@ -96,6 +100,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
