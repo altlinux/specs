@@ -1,12 +1,14 @@
 Name:           grub-customizer
-Version:        4.0.4
-Release:        alt2
+Version:        4.0.6
+Release:        alt1
 Summary:        Grub Customizer is a graphical interface to configure the grub2/burg settings
 
 License:        GPLv3
 Group: 		System/Configuration/Boot and Init
 URL:            https://launchpad.net/grub-customizer
+
 Source0:        https://launchpad.net/grub-customizer/4.0/%{version}/+download/%{name}_%{version}.tar.gz
+Source1:	%name.watch
 
 BuildRequires(pre): cmake
 BuildRequires:  ctest
@@ -67,6 +69,10 @@ install -m 0644 grub.cfg %{buildroot}%{_sysconfdir}/%{name}/grub.cfg
 
 
 %changelog
+* Mon Jul 28 2014 Andrey Cherepanov <cas@altlinux.org> 4.0.6-alt1
+- New version
+- Add .watch file for update automation
+
 * Wed Jul 16 2014 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt2
 - Build in Sisyphus (ALT #30193)
 
