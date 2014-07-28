@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jtnef
 Version:        1.6.0
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Java TNEF package
 
 Group:          Development/Java
@@ -87,6 +88,9 @@ cp -rp javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_8jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_7jpp7
 - new version
 
