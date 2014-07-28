@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-deploy-plugin
 Version:        2.7
-Release:        alt2_3jpp7
+Release:        alt2_7jpp7
 Summary:        Maven Deploy Plugin
 
 Group:          Development/Java
@@ -14,29 +14,25 @@ License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-deploy-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# Dependency on maven-compat was missing in pom.xml resulting in missing classes
-Patch0:         %{name}-maven-compat-dep.patch
-
 BuildArch: noarch
 
 # Basic stuff
 BuildRequires: jpackage-utils
 
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-jar-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-archiver
+BuildRequires: mvn(org.apache.maven:maven-artifact:2.0.6)
+BuildRequires: mvn(org.apache.maven:maven-model:2.0.6)
 # The following maven packages haven't updated yet
 BuildRequires: maven-idea-plugin
 BuildRequires: maven-changes-plugin
@@ -45,6 +41,8 @@ BuildRequires: maven-invoker-plugin
 
 Requires: maven
 Requires: jpackage-utils
+Requires: mvn(org.apache.maven:maven-artifact:2.0.6)
+Requires: mvn(org.apache.maven:maven-model:2.0.6)
 
 Provides:       maven2-plugin-deploy = 0:%{version}-%{release}
 Obsoletes:      maven2-plugin-deploy <= 0:2.0.8
@@ -64,7 +62,12 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+
+%pom_xpath_inject pom:project "<build><plugins/></build>"
+%pom_add_plugin :maven-plugin-plugin . "
+        <configuration>
+          <helpPackageName>org.apache.maven.plugin.deploy</helpPackageName>
+        </configuration>"
 
 %build
 # A test class doesn't compile
@@ -97,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_3jpp7
 - fixed build
 
