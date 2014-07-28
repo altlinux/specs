@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:		ldapjdk
 Version:	4.18
-Release:	alt1_12jpp7
+Release:	alt1_13jpp7
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
@@ -50,7 +50,7 @@ Obsoletes:      openjmx-javadoc
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %%{name}
+Javadoc for %{name}
 
 %prep
 %setup -q
@@ -108,6 +108,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_13jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_12jpp7
 - fc update
 
