@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-swing
 Version:        1.2.1
-Release:        alt1_7jpp7
+Release:        alt1_9jpp7
 Summary:        FEST Swing
 
 Group:          Development/Java
@@ -30,7 +34,7 @@ BuildRequires:  fest-util = 1.2.0
 BuildRequires:  fest-reflect = 1.3
 BuildRequires:  fest-assert = 1.4
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-provider-junit4
@@ -99,6 +103,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_9jpp7
+- new release
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_7jpp7
 - new release
 
