@@ -1,10 +1,10 @@
-BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name bval
 %define version 0.5
 %global namedreltag %{nil}
@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 %global with_guice 0
 Name:          bval
 Version:       0.5
-Release:       alt1_1jpp7
+Release:       alt1_4jpp7
 Summary:       Apache Bean Validation
 Group:         Development/Java
 License:       ASL 2.0
@@ -33,6 +33,7 @@ BuildRequires: apache-commons-beanutils
 BuildRequires: apache-commons-lang3
 BuildRequires: bean-validation-api
 BuildRequires: freemarker
+BuildRequires: geronimo-parent-poms
 BuildRequires: geronimo-validation
 BuildRequires: glassfish-jaxb
 BuildRequires: glassfish-jaxb-api
@@ -74,6 +75,7 @@ BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-jaxb2-plugin
+BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
@@ -213,6 +215,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_4jpp7
+- new release
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_1jpp7
 - new fc release
 
