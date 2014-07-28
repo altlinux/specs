@@ -1,4 +1,6 @@
-BuildRequires: java-1.5.0-devel
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global     builddir        build-mysql-jdbc
@@ -10,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Summary:    Official JDBC driver for MySQL
 Name:       mysql-connector-java
-Version:    5.1.22
+Version:    5.1.24
 Release:    alt1_1jpp7
 Epoch:      1 
 
@@ -34,7 +36,7 @@ URL:        http://dev.mysql.com/downloads/connector/j/
 # src/lib/slf4j-api-1.6.1.jar
 #
 # See http://bugs.mysql.com/bug.php?id=28512 for details.
-Source0:            %{name}-%{version}.tar.xz
+Source0:            %{name}-%{version}.tar.gz
 
 # Patch to build with JDBC 4.1/Java 7
 Patch0:             %{name}-jdbc-4.1.patch
@@ -56,7 +58,9 @@ BuildRequires:      jpackage-utils >= 1.6
 BuildRequires:      jta >= 1.0
 BuildRequires:      junit
 BuildRequires:      slf4j
+%if %{gcj_support}
 BuildRequires:      java-1.5.0-gcj-devel
+%endif
 BuildRequires:      jakarta-commons-logging
 
 Requires:           jta >= 1.0
@@ -65,9 +69,6 @@ Requires:               jpackage-utils
 Requires(post):         jpackage-utils
 Requires(postun):       jpackage-utils
 Source44: import.info
-
-Provides: mysql-connector-jdbc = %{epoch}:%version-%release
-Obsoletes: mysql-connector-jdbc < %version
 
 %description
 MySQL Connector/J is a native Java driver that converts JDBC (Java Database
@@ -90,10 +91,11 @@ sed -i 's/\r//' docs/README.txt
 %patch0 -p1 -F3
 
 %build
-JAVA_HOME=/usr/lib/jvm/java-1.5.0
 
 # We need both JDK1.5 (for JDBC3.0; appointed by $JAVA_HOME) and JDK1.6 (for JDBC4.0; appointed in the build.xml)
-export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.jar ant-contrib)
+export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.jar)
+%if %{gcj_support}
+%endif
 
 # We currently need to disable jboss integration because of missing jboss-common-jdbc-wrapper.jar (built from sources).
 # See BZ#480154 and BZ#471915 for details.
@@ -106,7 +108,6 @@ rm src/testsuite/simple/jdbc4/StatementsTest.java
 ant -DbuildDir=%{builddir} -DdistDir=%{distdir} -Dcom.mysql.jdbc.java6.rtjar=%{java6_rtpath} -Dcom.mysql.jdbc.java6.javac=%{java6_javacpath} -Dcom.mysql.jdbc.java6.java=%{java6_javapath}
 
 %install
-JAVA_HOME=/usr/lib/jvm/java-1.5.0
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 %{builddir}/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT-bin.jar \
@@ -126,10 +127,6 @@ sed -i 's/>@.*</>%{version}</' $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_to_maven_depmap mysql %{name} %{version} JPP %{name}
 
-pushd %buildroot%_javadir
-ln -s mysql-connector-java.jar mysql-connector-jdbc.jar
-popd
-
 
 %files
 %doc CHANGES COPYING docs
@@ -139,9 +136,11 @@ popd
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
 %endif
-%_javadir/mysql-connector-jdbc.jar
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.1.24-alt1_1jpp7
+- new release
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.1.22-alt1_1jpp7
 - new version
 
