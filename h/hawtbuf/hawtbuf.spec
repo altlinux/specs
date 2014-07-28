@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: maven-clean-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          hawtbuf
 Version:       1.9
-Release:       alt3_2jpp7
+Release:       alt3_5jpp7
 Summary:       A rich byte buffer library
 Group:         Development/Java
 License:       ASL 2.0
@@ -24,7 +24,7 @@ BuildRequires: apache-commons-logging
 BuildRequires: junit
 BuildRequires: log4j
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -36,6 +36,9 @@ BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
+
+# B/R for maven-archiver
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
 Requires:      apache-commons-logging
 
@@ -76,7 +79,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q
@@ -84,8 +87,8 @@ This package contains javadoc for %%{name}.
 
 %build
 
-mvn-rpmbuild -Prun-its install javadoc:aggregate
-
+mvn-rpmbuild install javadoc:aggregate
+# -Prun-its
 %install
 
 mkdir -p %{buildroot}%{_mavenpomdir}
@@ -109,6 +112,7 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
+%dir %{_javadir}/%{name}
 %{_javadir}/%{name}/%{name}.jar
 %{_mavenpomdir}/JPP.%{name}-project.pom
 %{_mavenpomdir}/JPP.%{name}-%{name}.pom
@@ -132,6 +136,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt notice.md
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_5jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_2jpp7
 - fixed build
 
