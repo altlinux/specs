@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -32,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacc
 Version:        5.0
-Release:        alt4_7jpp7
+Release:        alt4_8jpp7
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -62,7 +65,7 @@ a tool called JJTree included with JavaCC), actions, debugging, etc.
 %package manual
 Summary:        Manual for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description manual
@@ -71,7 +74,7 @@ Manual for %{name}.
 %package demo
 Summary:        Examples for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Examples for %{name}.
@@ -126,6 +129,9 @@ ln -s javacc.sh %buildroot%_bindir/%name
 %doc examples
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt4_8jpp7
+- new release
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt4_7jpp7
 - applied repocop patches
 
