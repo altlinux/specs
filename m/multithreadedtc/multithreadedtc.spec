@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt3_12jpp7
+Release:        alt3_13jpp7
 Summary:        A framework for testing concurrent Java application
 
 Group:          Development/Java
@@ -60,7 +60,7 @@ sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' README.txt
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 %install
 
@@ -96,6 +96,9 @@ rm -rf web/docs
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_13jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_12jpp7
 - fc update
 
