@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-taglibs-standard
 Version:        1.1.2
-Release:        alt4_6jpp7
+Release:        alt4_9jpp7
 Epoch:          0
 Summary:        An open-source implementation of the JSP Standard Tag Library
 License:        ASL 2.0
@@ -93,7 +93,7 @@ rm -fr standard/src/org/apache/taglibs/standard/lang/jstl/test/EvaluationTest.ja
 cat > build.properties <<EOBP
 build.dir=build
 dist.dir=dist
-servlet24.jar=$(build-classpath servlet)
+servlet24.jar=$(build-classpath tomcat-servlet-3.0-api)
 jsp20.jar=$(build-classpath jsp)
 jaxp-api.jar=$(build-classpath xalan-j2)
 EOBP
@@ -121,25 +121,30 @@ cp -p standard/dist/standard/lib/standard.jar $RPM_BUILD_ROOT%{_javadir}/jakarta
 
 mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 jstl-1.1.2.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jakarta-taglibs-core.pom
-%add_maven_depmap JPP-jakarta-taglibs-core.pom jakarta-taglibs-core.jar -a "javax.servlet:jstl"
+%add_maven_depmap JPP-jakarta-taglibs-core.pom jakarta-taglibs-core.jar -a "javax.servlet:jstl,org.eclipse.jetty.orbit:javax.servlet.jsp.jstl"
 install -pm 644 standard-1.1.2.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.eclipse.jetty.orbit:org.apache.taglibs.standard.glassfish"
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr standard/dist/standard/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE NOTICE
 %doc standard/README_src.txt standard/README_bin.txt standard/dist/doc/doc/standard-doc/*.html
 %{_javadir}/*
 %{_mavenpomdir}/JPP-*.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc LICENSE NOTICE
 %doc %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt4_9jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt4_6jpp7
 - update
 
