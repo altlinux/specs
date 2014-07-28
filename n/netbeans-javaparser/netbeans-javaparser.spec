@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -5,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           netbeans-javaparser
 Version:        7.0.1
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        NetBeans Java Parser
 License:        GPLv2 with exceptions
 Url:            http://netbeans.org/
@@ -51,6 +54,9 @@ find . -name "*.jar" -exec %__rm -f {} \;
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_4jpp7
+- new release
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_3jpp7
 - new version
 
