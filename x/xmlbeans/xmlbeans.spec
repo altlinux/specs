@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        XML-Java binding tool
 Group:          Development/Java
 URL:            http://xmlbeans.apache.org/
@@ -155,7 +155,7 @@ ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
 sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css
 
 # Build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Djavac.source=1.5 -Djavac.target=1.5 default docs
+ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Djavac.source=1.5 -Djavac.target=1.5 default docs
 
 %install
 
@@ -224,6 +224,9 @@ mv tmp $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/guide/tools.html
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_3jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp7
 - fc update
 
