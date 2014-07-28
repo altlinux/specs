@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jmock
 %define version 2.5.1
 %global namedreltag %{nil}
@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          jmock
 Version:       2.5.1
-Release:       alt1_1jpp7
+Release:       alt1_2jpp7
 Summary:       Java library for testing code with mock objects
 Group:         Development/Java
 License:       BSD
@@ -151,6 +151,9 @@ cp -pr build/%{name}-%{namedversion}/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.1-alt1_2jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.5.1-alt1_1jpp7
 - fc update
 
