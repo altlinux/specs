@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           bluecove
 Version:        2.1.1
-Release:        alt1_0.4.20101024snap63jpp7
+Release:        alt1_0.5.20101024snap63jpp7
 Summary:        Implementation of JSR-82 Java Bluetooth API
 
 Group:          System/Libraries
@@ -146,6 +147,9 @@ cp -p bluecove-emu-%{version}-SNAPSHOT/target/bluecove-emu-%{version}.jar \
 %doc AUTHORS.txt README.txt LICENSE.txt stacks.txt todo.txt AUTHORS-gpl.txt LICENSE-gpl.txt README.dist
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.5.20101024snap63jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.4.20101024snap63jpp7
 - update to new release by jppimport
 
