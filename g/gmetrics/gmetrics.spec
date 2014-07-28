@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname GMetrics
-%global with_gmaven 1
+
 Name:          gmetrics
 Version:       0.6
-Release:       alt1_1jpp7
+Release:       alt1_5jpp7
 Summary:       Groovy library that provides reports and metrics for Groovy code
 Group:         Development/Java
 License:       ASL 2.0
@@ -15,8 +19,8 @@ Source0:       http://downloads.sourceforge.net/project/%{name}/%{name}-%{versio
 # change artifactId groovy-all in groovy
 Patch0:        gmetrics-0.5-pom.patch
 # replace runtime 1.5 witn runtime 1.8
-# add groovy-all deps
-Patch1:        gmetrics-0.5-enable-gmaven.patch
+# add groovy-all deps with generic version
+Patch1:        gmetrics-0.6-antrun-plugin.patch
 
 BuildRequires: jpackage-utils
 
@@ -28,9 +32,11 @@ BuildRequires: antlr
 BuildRequires: apache-commons-cli
 BuildRequires: objectweb-asm
 BuildRequires: fusesource-pom
+BuildRequires: slf4j
 
-BuildRequires: gmaven
-BuildRequires: maven
+# depend on rhbz#914056 BuildRequires: gmaven
+BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -73,6 +79,8 @@ rm -rf docs/*
 %patch0 -p0
 %patch1 -p0
 
+sed -i "s|pom.version|project.version|" pom.xml
+
 chmod 644 README.txt
 
 for d in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
@@ -113,6 +121,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_5jpp7
+- new release
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_1jpp7
 - new version
 
