@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jhighlight
 Version:        1.0
-Release:        alt3_3jpp7
+Release:        alt3_4jpp7
 Summary:        An embeddable pure Java syntax highlighting library
 
 Group:          Development/Java
@@ -60,7 +60,7 @@ ln -s %{_javadir}/tomcat-servlet-3.0-api.jar
 popd
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 %install
 
@@ -90,6 +90,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_4jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_3jpp7
 - fc update
 
