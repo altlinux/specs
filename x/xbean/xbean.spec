@@ -1,13 +1,28 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+%define fedora 21
+# Conditionals to help breaking eclipse <-> xbean dependency cycle
+# when bootstrapping for new architectures
+%if 0%{?fedora}
+%bcond_without equinox
+%bcond_without spring
+%endif
+
 Name:           xbean
-Version:        3.11.1
+Version:        3.12
 BuildArch:      noarch
 
-Release:        alt4_3jpp7
+Release:        alt1_4jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -16,8 +31,8 @@ URL:            http://geronimo.apache.org/xbean/
 
 # unfortunately no source/binary releases are being made lately, just
 # tags in repos and binary releases in maven repositories
-# svn export http://svn.apache.org/repos/asf/geronimo/xbean/tags/xbean-3.8
-# tar caf xbean-3.8.tar.xz xbean-3.8
+# svn export http://svn.apache.org/repos/asf/geronimo/xbean/tags/%{name}-%{version}
+# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
 Source0:        xbean-%{version}.tar.xz
 Source1:        xbean.depmap
 
@@ -39,8 +54,20 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-shade-plugin
-%if !0%{?rhel:1}
-BuildRequires:  eclipse-rcp
+%if %{with equinox}
+BuildRequires:  eclipse-equinox-osgi
+%else
+BuildRequires:  felix-framework
+%endif
+%if %{with spring}
+BuildRequires:  apache-commons-jexl
+BuildRequires:  aries-blueprint
+# test deps BuildRequires:  cglib
+BuildRequires:  felix-osgi-compendium
+BuildRequires:  felix-osgi-core
+BuildRequires:  geronimo-annotation
+BuildRequires:  pax-logging
+
 BuildRequires:  maven-archiver
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-project
@@ -50,15 +77,16 @@ BuildRequires:  springframework
 BuildRequires:  springframework-beans
 BuildRequires:  springframework-context
 BuildRequires:  springframework-web
-%else
-BuildRequires:  felix-framework
 %endif
 
-Requires:       jpackage-utils
 Requires:       apache-commons-logging
 Requires:       objectweb-asm
 Requires:       slf4j
-Requires:       eclipse-rcp
+%if %{with equinox}
+Requires:       eclipse-equinox-osgi
+%else
+Requires:       felix-framework
+%endif
 Source44: import.info
 
 %description
@@ -70,7 +98,33 @@ support for running with no IoC system, JMX without JMX code,
 lifecycle and class loader management, and a rock solid Spring
 integration.
 
-%if !0%{?rhel:1}
+%if %{with spring}
+# For now blueprint module fails to compile. Disable it.
+%if 0
+%package        blueprint
+Group: Development/Java
+Summary:        Schema-driven namespace handler for Apache Aries Blueprint
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       apache-commons-jexl
+Requires:       aries-blueprint
+Requires:       felix-osgi-compendium
+Requires:       geronimo-annotation
+Requires:       pax-logging
+
+%description    blueprint
+This package provides %{summary}.
+%endif
+
+%package        classloader
+Group: Development/Java
+Summary:        A flexibie multi-parent classloader
+# maven-xbean-plugin
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       springframework-beans
+
+%description    classloader
+This package provides %{summary}.
+
 %package        spring
 Group: Development/Java
 Summary:        Schema-driven namespace handler for spring contexts
@@ -104,7 +158,6 @@ This package provides %{summary}.
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -121,52 +174,49 @@ rm src/site/site.xml
 
 # These aren't needed for now
 %pom_disable_module xbean-asm-shaded
-%pom_disable_module xbean-blueprint
-%pom_disable_module xbean-classloader
 %pom_disable_module xbean-finder-shaded
 %pom_disable_module xbean-telnet
 
 # Prevent modules depending on springframework from building.
-if [ %{?rhel} ]; then
+%if %{without spring}
    %pom_remove_dep org.springframework:
+   #%%pom_disable_module xbean-blueprint
+   %pom_disable_module xbean-classloader
    %pom_disable_module xbean-spring
    %pom_disable_module maven-xbean-plugin
-fi
+%endif
+# blueprint FTBFS, disable for now
+%pom_disable_module xbean-blueprint
 
-%pom_add_plugin :maven-compiler-plugin . "
-    <configuration>
-      <source>1.5</source>
-      <target>1.5</target>
-    </configuration>"
 
-# Force use of Equinox
+# Replace generic OSGi dependencies with either Equinox or Felix
 %pom_remove_dep :org.osgi.core xbean-bundleutils
 %pom_remove_dep org.eclipse:osgi xbean-bundleutils
-%pom_xpath_inject "pom:project/pom:dependencies" "
-    <dependency>
-      <groupId>org.eclipse.osgi</groupId>
-      <artifactId>org.eclipse.osgi</artifactId>
-      <version>any</version>
-    </dependency>" xbean-bundleutils
+%if %{with equinox}
+  %pom_add_dep org.eclipse.osgi:org.eclipse.osgi xbean-bundleutils
+%else
+  rm -rf xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/equinox/
+  %pom_add_dep org.apache.felix:org.apache.felix.framework xbean-bundleutils
+%endif
 
 
 # Fix dependency on xbean-asm-shaded to original objectweb-asm
 sed -i 's/org.apache.xbean.asm/org.objectweb.asm/' \
     xbean-reflect/src/main/java/org/apache/xbean/recipe/XbeanAsmParameterNameLoader.java
 
+# disable copy of internal aries-blueprint
+sed -i "s|<Private-Package>|<!--Private-Package>|" xbean-blueprint/pom.xml
+sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
+
 # Fix ant groupId
 find -name pom.xml -exec sed -i "s|<groupId>ant</groupId>|<groupId>org.apache.ant</groupId>|" {} \;
-
-# Do not build equinox specific part for rhel.
-if [ %{?rhel} ]; then
-   rm -rf xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/equinox/
-   sed -i "s|<groupId>org.eclipse|<groupId>org.apache.felix|g" xbean-bundleutils/pom.xml
-   sed -i "s|<artifactId>osgi|<artifactId>org.apache.felix.framework|g" xbean-bundleutils/pom.xml
-fi
-
+# Fix cglib artifactId
+find -name pom.xml -exec sed -i "s|<artifactId>cglib-nodep</artifactId>|<artifactId>cglib</artifactId>|" {} \;
 
 %build
 mvn-rpmbuild -e \
+        -Dmaven.compiler.source=1.5 \
+        -Dmaven.compiler.target=1.5 \
         -Dmaven.local.depmap.file="%{SOURCE1}" \
         -Dmaven.test.skip=true \
         install javadoc:aggregate
@@ -188,16 +238,17 @@ for sub in bundleutils classpath finder naming reflect; do
     %add_maven_depmap JPP.%{name}-%{name}-${sub}.pom %{name}/%{name}-${sub}.jar
 done
 
-if [ %{?fedora} ]; then
-   # xbean-spring
-   install -m 644 %{name}-spring/target/%{name}-spring-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/%{name}-spring.jar
-   install -pm 644 %{name}-spring/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-spring.pom
-   %add_maven_depmap JPP.%{name}-%{name}-spring.pom %{name}/%{name}-spring.jar -f spring
+%if %{with spring}
+   for m in classloader spring; do  # blueprint should be there too
+       install -m 644 %{name}-${m}/target/%{name}-${m}-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/%{name}-${m}.jar;
+       install -pm 644 %{name}-${m}/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
+       %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar -f ${m}
+   done
    # maven-xbean-plugin
    install -m 644 maven-%{name}-plugin/target/maven-%{name}-plugin-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/maven-%{name}-plugin.jar
    install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-maven-%{name}-plugin.pom
    %add_maven_depmap JPP.%{name}-maven-%{name}-plugin.pom %{name}/maven-%{name}-plugin.jar -f maven-plugin
-fi
+%endif
 
 # javadocs
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -219,7 +270,21 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_mavenpomdir}/JPP.%{name}-%{name}-reflect.pom
 %{_mavendepmapfragdir}/%{name}
 
-%if !0%{?rhel:1}
+%if %{with spring}
+%if 0
+%files blueprint
+%doc LICENSE NOTICE %{name}-blueprint/target/restaurant.xsd*
+%{_javadir}/%{name}/%{name}-blueprint.jar
+%{_mavenpomdir}/JPP.%{name}-%{name}-blueprint.pom
+%{_mavendepmapfragdir}/%{name}-blueprint
+%endif
+
+%files classloader
+%doc LICENSE NOTICE
+%{_javadir}/%{name}/%{name}-classloader.jar
+%{_mavenpomdir}/JPP.%{name}-%{name}-classloader.pom
+%{_mavendepmapfragdir}/%{name}-classloader
+
 %files spring
 %doc LICENSE NOTICE
 %{_javadir}/%{name}/%{name}-spring.jar
@@ -238,6 +303,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.12-alt1_4jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.11.1-alt4_3jpp7
 - fixed build
 
