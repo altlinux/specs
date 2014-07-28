@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt3_5jpp7
+Release:        alt3_6jpp7
 Summary:        A Java API to read, write and modify Excel spreadsheets
 License:        LGPLv3
 Group:          Development/Java
@@ -55,7 +55,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 %prep
 %setup -n %{name} -q
@@ -112,6 +112,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_6jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_5jpp7
 - fc update
 
