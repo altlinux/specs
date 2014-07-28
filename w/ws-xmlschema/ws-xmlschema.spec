@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # vim: set ts=4 sw=4 sts=4 et:
 Name:           ws-xmlschema
 Version:        2.0.2
-Release:        alt2_4jpp7
+Release:        alt2_7jpp7
 Summary:        Apache XMLSchema
 Group:          Development/Java
 License:        ASL 2.0
@@ -24,7 +25,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -34,6 +35,7 @@ BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-shade-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  xmlunit
+BuildRequires:  maven-shared
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -93,6 +95,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_7jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_4jpp7
 - rebuild with new apache-resource-bundles
 
