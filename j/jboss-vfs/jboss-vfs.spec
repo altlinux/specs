@@ -1,7 +1,11 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-vfs
 %define version 3.1.0
 %global namedreltag .Final
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-vfs
 Version:          3.1.0
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss Virtual File System
 Group:            Development/Java
 License:          LGPLv2+
@@ -27,7 +31,7 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -88,10 +92,6 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 # APIDOCS
 cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# jpp compat
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/jboss
-ln -s ../jboss-vfs.jar $RPM_BUILD_ROOT%{_javadir}/jboss/%{name}.jar
-
 %files
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
@@ -101,6 +101,9 @@ ln -s ../jboss-vfs.jar $RPM_BUILD_ROOT%{_javadir}/jboss/%{name}.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
