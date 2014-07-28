@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          guava
 Version:       13.0
-Release:       alt1_1jpp7
+Release:       alt1_3jpp7
 Summary:       Google Core Libraries for Java
 
 Group:         Development/Java
@@ -15,7 +19,7 @@ Source0:       %{name}-%{version}.tar.xz
 BuildRequires: jpackage-utils
 BuildRequires: sonatype-oss-parent
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
 BuildRequires: maven-install-plugin
@@ -89,6 +93,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %doc COPYING
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 13.0-alt1_3jpp7
+- new release
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 13.0-alt1_1jpp7
 - new version
 
