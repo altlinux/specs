@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_8.1jpp7
+Release:   alt1_10jpp7
 Summary:   LALR Parser Generator
 Group:     Development/Java
 # although the text of the licence isn't distributed with some of the source,
@@ -43,7 +43,6 @@ Patch0:    %{name}-bootstrap-target.patch
 # change build script to build the base jar with osgi bundle info
 Patch1:    %{name}-osgi-jar.patch
 Source44: import.info
-
 
 %description
 The LALR Parser Generator (LPG) is a tool for developing scanners and parsers
@@ -120,7 +119,6 @@ make clean install ARCH=linux_x86 \
 popd
 
 %install
-
 install -pD -T lpg-java-runtime/%{name}runtime.jar \
   %{buildroot}%{_javadir}/%{name}runtime-%{_version}.jar
 install -pD -T lpgdistribution/%{name}javaruntime.jar \
@@ -137,14 +135,17 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_bindir}/%{name}
 
 %files java
-%doc lpg-java-runtime/Eclipse\ Public\ License\ -\ Version\ 1_0.htm
+%doc lpg-java-runtime/Eclipse*.htm
 %{_javadir}/%{name}runtime*
 
 %files java-compat
-%doc lpg-java-runtime/Eclipse\ Public\ License\ -\ Version\ 1_0.htm
+%doc lpg-java-runtime/Eclipse*.htm
 %{_javadir}/%{name}javaruntime*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_10jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_8.1jpp7
 - update
 
