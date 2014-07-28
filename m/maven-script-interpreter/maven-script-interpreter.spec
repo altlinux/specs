@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-script-interpreter
 Version:        1.0
-Release:        alt2_1jpp7
+Release:        alt2_3jpp7
 Summary:        Maven Script Interpreter
 Group:          Development/Java
 License:        ASL 2.0
@@ -19,7 +20,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  groovy
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  plexus-containers-component-metadata
 
@@ -77,6 +78,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
