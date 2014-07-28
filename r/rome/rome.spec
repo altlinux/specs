@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		rome
 Version:	0.9
-Release:	alt3_12jpp7
+Release:	alt3_13jpp7
 Summary:	RSS and Atom Utilities
 
 Group:		Development/Java
@@ -57,7 +60,7 @@ cp -p %{SOURCE2} pom.xml
 %patch1
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dnoget=true dist
+ant -Dnoget=true dist
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -80,6 +83,9 @@ cp -rp dist/docs/api/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_13jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_12jpp7
 - NMU rebuild to move poms and fragments
 
