@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -32,7 +36,7 @@ BuildRequires: jpackage-compat
 #
 Name: jopt-simple
 Version: 3.3
-Release: alt2_6jpp7
+Release: alt2_8jpp7
 Summary: A Java command line parser
 License: MIT
 Group: Development/Java
@@ -42,7 +46,7 @@ Source0: https://download.github.com/pholser-jopt-simple-jopt-simple-%{version}-
 Patch0: jopt-simple-buildfixes.patch
 BuildArch: noarch
 BuildRequires: jpackage-utils
-BuildRequires: maven maven-scm
+BuildRequires: maven-local maven-scm
 BuildRequires: maven-enforcer-plugin maven-dependency-plugin
 Requires: jpackage-utils
 Source44: import.info
@@ -93,6 +97,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt2_8jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
