@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		port-allocator-maven-plugin
 Version:	1.2
-Release:	alt3_3jpp7
+Release:	alt3_5jpp7
 Summary:	Port Allocator Maven Plugin
 
 Group:		Development/Java
@@ -21,7 +24,7 @@ Patch0:		%{name}-parent.patch
 BuildArch:	noarch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-enforcer-plugin
 BuildRequires:	maven-plugin-plugin
@@ -86,6 +89,9 @@ install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_5jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_3jpp7
 - fixed build
 
