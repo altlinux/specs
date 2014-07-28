@@ -1,29 +1,31 @@
 # TODO: fix urls and install icons like
 #/usr/share/linuxmint/mintMenu/search_engines/dictionary.png
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
-%define	rev	6a7cf3f
 
 Name:           mintmenu
-Version:        5.5.3
-Release:        alt1.git%rev
+Version:        5.5.8
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
 
 Group:          Graphical desktop/GNOME
-Url:            https://launchpad.net/mintmenu
+Url:            http://packages.linuxmint.com/pool/main/m/mintmenu/
+# VCS:		https://github.com/linuxmint/mintmenu.git
 Source0:        http://packages.linuxmint.com/pool/main/m/mintmenu/%{name}_%{version}.tar.gz
-Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_2013.11.26.tar.gz
+Source1:        http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_2014.05.25.tar.gz
 Source33:	mintmenu_test.sh
 Source34:	list-mintmenu.conf
 Source35:	list-mintmenu.lua
 Source36:	list-mintmenu.ignore
 
+Source50:	mintmenu.watch
+
 # SUSE patches from http://download.opensuse.org/repositories/home:/unamanic/Fedora_14/src/
 # PATCH-FIX-OPENSUSE mintmenu-suse_branding.patch william@witt-famiylnet: Suse branding
 Patch2:         mintmenu-alt_branding.patch
 # PATCH-FIX-OPENSUSE mintmenu-datadir.patch william@witt-famiylnet: move from /usr/lib to /usr/share
-Patch3:         mintmenu-5.5.1-alt-datadir.patch
+Patch3:         mintmenu-5.5.8-alt-datadir.patch
 # PATCH-FIX-OPENSUSE mintmenu-run_as_superuser.patch william@witt-famiylnet: fix run as superuser
 Patch4:         mintmenu-run_as_superuser.patch
 # PATCH-FIX-OPENSUSE mintmenu-mintmenu_executables.patch william@witt-famiylnet: update paths for executable and bonobo server
@@ -37,6 +39,8 @@ Patch37:	mintmenu-5.2.1-alt-GPL-path.patch
 Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
 #Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
 Patch40:	mintmenu-5.5.1-alt-xfce-logout.patch
+# Use Synaptic via consolehelper intead of gksu
+Patch41:	mintmenu-alt-fix-package-manager.patch
 
 Requires: GConf2 alacarte gnome-search-tool
 Requires: python-module-gnome-menus
@@ -82,6 +86,7 @@ tar -xf %{SOURCE1}
 %patch38 -p1
 #%%patch39 -p1
 %patch40 -p1
+%patch41 -p1
 
 # drop deprecated plugins
 rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
@@ -96,14 +101,17 @@ rm -f usr/lib/linuxmint/mintMenu/plugins/easygconf.py
 find . -name '*.orig' -exec rm -f {} ';'
 find . -name '*.pyc' -exec rm -f {} ';'
 find . -name '*.pot' -exec rm -f {} ';'
-find mint-translations-2013.11.26/ -not -name 'mintmenu.mo' -type f -exec rm -f {} ';'
+find mint-translations-2014.05.25/ -not -name 'mintmenu.mo' -type f -exec rm -f {} ';'
 
 mkdir -p %buildroot%prefix
 cp -av usr/bin usr/share %buildroot%prefix
 
 cp -av usr/lib/linuxmint %buildroot%_datadir
 
-cp -r mint-translations-2013.11.26/usr/share/linuxmint/* %buildroot%_datadir
+# Make utilites executable
+chmod +x %buildroot%_datadir/linuxmint/mintMenu/*.py
+
+cp -r mint-translations-2014.05.25/usr/share/linuxmint/* %buildroot%_datadir
 chmod -R u+rw,g-w,g+r,o+r,o-w %buildroot%_datadir/locale/*
 
 %find_lang %name --with-gnome
@@ -128,6 +136,13 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Mon Jul 28 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.8-alt1
+- New version
+- Add .watch file
+- Update translations to 2014.05.25
+- Fix Package manager open
+- Fix Preferences open (ALT #30118)
+
 * Wed Apr 30 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.3-alt1.git6a7cf3f
 - New version
 
