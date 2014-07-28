@@ -1,6 +1,6 @@
 Name: klish
 Version: 1.6.8
-Release: alt1
+Release: alt2
 
 Summary: A framework for implementing a CISCO-like CLI on a UNIX systems
 
@@ -178,8 +178,9 @@ This package contains the package documentation, the clish XML Schema
 file and the example CLI description files. To run the example CISCO-like
 CLI use
 
-  clish -x /usr/share/doc/%name-%version/clish
+  clish -x %_docdir/%name-%version/clish
 
+See %_docdir/%name-%version for other examples.
 
 %prep
 %setup -q -n %name-%version
@@ -241,8 +242,13 @@ CLI use
 %doc README
 %doc clish.xsd
 %doc xml-examples/clish
+%doc xml-examples/klish
 
 %changelog
+* Mon Jul 28 2014 Paul Wolneykien <manowar@altlinux.org> 1.6.8-alt2
+- FR fix: Include the klish-specific examples into the doc package
+  (closes #30209).
+
 * Thu Jul 10 2014 Paul Wolneykien <manowar@altlinux.org> 1.6.8-alt1
 - Freshed up to v1.6.8 with the help of cronbuild and update-source-functions.
 
