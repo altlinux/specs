@@ -1,7 +1,10 @@
 %define oname repoze.who-testutil
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.svn20100816.1.1
+Release: alt2.svn20100816
 Summary: Test utilities for repoze.who-powered applications
 License: BSD
 Group: Development/Python
@@ -11,15 +14,37 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.repoze.org/whoplugins/whotestutil/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel python-module-PasteDeploy
 BuildPreReq: python-module-zope.interface python-module-repoze.who
 BuildPreReq: python-module-nose python-module-coverage
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_provides repoze.who-testutil
 %py_requires repoze.who zope.interface paste paste.deploy
 
 %description
+repoze.who-testutil is a repoze.who plugin which modifies repoze.who's
+original middleware to make it easier to forge authentication, without
+bypassing identification (this is, running the metadata providers).
+
+It's been created in order to ease testing of repoze.who-powered
+applications, in a way independent of the identifiers, authenticators
+and challengers used originally by your application, so that you won't
+have to update your test suite as your application grows and the
+authentication method changes.
+
+%package -n python3-module-%oname
+Summary: Test utilities for repoze.who-powered applications
+Group: Development/Python3
+%py3_provides repoze.who-testutil
+%py3_requires repoze.who zope.interface paste paste.deploy
+
+%description -n python3-module-%oname
 repoze.who-testutil is a repoze.who plugin which modifies repoze.who's
 original middleware to make it easier to forge authentication, without
 bypassing identification (this is, running the metadata providers).
@@ -68,11 +93,22 @@ This package contains documentation for repoze.who-testutil.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 export PYTHONPATH=$PWD
 pushd docs
@@ -82,11 +118,21 @@ popd
 
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 install -d %buildroot%python_sitelibdir/%oname
@@ -105,7 +151,18 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %files docs
 %doc docs/build/html/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/tests
+%endif
+
 %changelog
+* Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2.svn20100816
+- Added module for Python 3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.2-alt1.svn20100816.1.1
 - Rebuild with Python-2.7
 
