@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_3jpp7
+Release:       alt2_4jpp7
 Summary:       An HTML Report of API Differences
 Group:         Development/Java
 License:       GPL+ and LGPLv2+
@@ -71,7 +71,7 @@ native2ascii -encoding UTF8 test/new/ChangedPackageDoc2/ChangedMethod.java test/
 
 %build
 export CLASSPATH=$(build-classpath junit):`pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only release
+%{ant} -Dbuild.sysclasspath=only release
 
 %javadoc -classpath `pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar:$(build-classpath xerces-j2 ant.jar ../jvm/java/lib/tools) \
 -d apidocs -sourcepath src -subpackages jdiff
@@ -109,6 +109,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_4jpp7
+- new release
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_3jpp7
 - fc update
 
