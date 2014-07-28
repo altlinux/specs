@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Summary:        An open source data binding framework for Java
 Name:           castor
 Version:        1.3.2
-Release:        alt1_3jpp7
+Release:        alt1_6jpp7
 Epoch:          0
 Group:          Development/Java
 License:        BSD and MPLv1.1 and W3C
@@ -11,7 +15,7 @@ URL:            http://castor.codehaus.org
 Source0:        http://dist.codehaus.org/castor/1.3.2/castor-1.3.2-src.tgz
 Patch0:         disable-modules.patch
 BuildArch:      noarch
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  codehaus-parent
 BuildRequires:  maven-enforcer-plugin
 Requires:       apache-commons-logging
@@ -41,6 +45,8 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 %patch0 -b .sav
 
+%pom_xpath_remove "pom:build/pom:extensions"
+
 sed -i 's/Class-Path: xerces.jar jdbc-se2.0.jar jndi.jar jta1.0.1.jar//' src/etc/MANIFEST.MF
 
 %build
@@ -62,6 +68,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_6jpp7
+- new release
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_3jpp7
 - new version
 
