@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt2_3.20110719svnjpp7
+Release:        alt2_7.20110719svnjpp7
 Summary:        Common utilities for the Java Gaming Interface
 
 Group:          Development/Java
@@ -19,15 +20,9 @@ Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-local
 
 Requires:       jpackage-utils
-Requires:       maven
 Source44: import.info
 
 %description
@@ -38,12 +33,11 @@ for the other Java Games Initiative APIs.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
-BuildArch:      noarch
+BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 
 %prep
@@ -51,7 +45,8 @@ This package contains the API documentation for %%{name}.
 sed -i 's/-SNAPSHOT//' pom.xml
 
 %build
-mvn-rpmbuild -e -Dmaven.test.skip=true install javadoc:aggregate
+# Skip tests because they require an X display
+mvn-rpmbuild -e -Dmaven.test.skip=true -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -80,6 +75,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7.20110719svnjpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3.20110719svnjpp7
 - fixed maven1 dependency
 
