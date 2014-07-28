@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hornetq
 Version:          2.2.13
-Release:          alt2_5jpp7
+Release:          alt2_6jpp7
 Summary:          High performance messaging system
 Group:            Development/Java
 License:          ASL 2.0
@@ -174,6 +175,9 @@ mv $RPM_BUILD_ROOT/%{_bindir}/disktest $RPM_BUILD_ROOT/%{_bindir}/%{name}-diskte
 %doc licenses/LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
