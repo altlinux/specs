@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(Fcntl.pm) perl(IO/File.pm) perl(find.pl)
+BuildRequires: gcc-c++ perl(DynaLoader.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(find.pl)
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-web-native
 %define version 2.0.10
 %global namedreltag .GA
@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-web-native
 Version:          2.0.10
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          JBoss Web Native
 Group:            Development/Java
 License:          LGPLv2+ and ASL 2.0
@@ -73,11 +73,13 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/libjbnative-1.so.*
 
 %files devel
-#%{_libdir}/libjbnative-1.*a
 %{_libdir}/libjbnative-1.so
 %{_libdir}/pkgconfig/jbnative-1.pc
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_4jpp7
+- new release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_3jpp7
 - new version
 
