@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ear-plugin
 Version:        2.8
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Maven EAR Plugin
 
 Group:          Development/Java
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: junit
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-archiver
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -93,6 +93,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_2jpp7
 - new version
 
