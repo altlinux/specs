@@ -1,11 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name felix-gogo-parent
+%define version 0.6.0
 %global project   felix-gogo
 %global pkgname   parent
 
-Name:             %{project}-%{pkgname}
+%{!?scl:%global pkg_name %{name}}
+%{?scl:%scl_package %{project}-%{pkgname}}
+
+Name:             %{?scl_prefix}%{project}-%{pkgname}
 Version:          0.6.0
-Release:          alt2_3jpp7
+Release:          alt2_6jpp7
 Summary:          Parent package for Felix Gogo
 Group:            Development/Java
 License:          ASL 2.0
@@ -15,11 +25,12 @@ Source0:          http://apache.mirror.rbftpnetworks.com//felix/gogo-parent-0.6.
 
 BuildArch:        noarch
 
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    jpackage-utils
 
-BuildRequires:    maven
+BuildRequires:    maven-local
 Requires:         jpackage-utils
+%{?scl:Requires: %scl_runtime}
 Source44: import.info
 
 %description
@@ -40,16 +51,19 @@ mvn-rpmbuild install
 %install
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom 
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{pkg_name}.pom
+%add_maven_depmap JPP-%{pkg_name}.pom 
 
 
 %files
 %doc LICENSE NOTICE
-%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{pkg_name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
