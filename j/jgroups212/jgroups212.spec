@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:     jgroups212
 Version:  2.12.3
-Release:  alt1_3jpp7
+Release:  alt1_5jpp7
 Summary:  A toolkit for reliable multicast communication
 
 Group:    Development/Java
@@ -16,7 +20,7 @@ Source0:  %{name}-%{version}.Final.tar.xz
 Patch0:   %{name}-groupid.patch
 BuildArch:     noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -90,6 +94,9 @@ chmod 644 README
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_5jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_3jpp7
 - new fc release
 
