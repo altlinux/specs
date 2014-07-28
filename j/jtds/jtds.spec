@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jtds
 Version:       1.2.6
-Release:       alt1_1jpp7
+Release:       alt1_2jpp7
 Summary:       SQL Server and Sybase JDBC driver
 Group:         Development/Java
 License:       MIT and LGPLv2+
@@ -41,11 +44,11 @@ BuildArch:     noarch
 Source44: import.info
 
 %description
-TDS is an open source 100%% pure Java (type 4) JDBC 3.0 driver 
+TDS is an open source 100% pure Java (type 4) JDBC 3.0 driver 
 for Microsoft SQL Server (6.5, 7, 2000,2005, and 2008) and
 Sybase (10, 11, 12, 15). jTDS is based on FreeTDS and is currently the
 fastest production-ready JDBC  driver for SQL Server and Sybase.
-jTDS is 100%% JDBC 3.0 compatible, supporting forward-only and
+jTDS is 100% JDBC 3.0 compatible, supporting forward-only and
 scrollable/updateable ResultSets, concurrent (completely 
 independent) Statements and implementing all the DatabaseMetaData and 
 ResultSetMetaData methods. 
@@ -103,6 +106,9 @@ cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_2jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_1jpp7
 - new version
 
