@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:          portals-pom
 Version:       1.3
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Apache Portals parent pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -15,7 +19,7 @@ Source0:       portals-pom-1.3-src-svn.tar.gz
 Patch0:        portals-pom-1.3-pom.patch
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 
 Requires:      jpackage-utils
@@ -56,6 +60,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
