@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++ swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -16,7 +17,7 @@ BuildRequires: jpackage-compat
 
 Name:           opengrok
 Version:        0.9
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Source browser and indexer
 
 Group:          Development/Java
@@ -233,6 +234,9 @@ touch $RPM_BUILD_ROOT/etc/opengrok.conf
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_5jpp7
+- new release
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_4jpp7
 - new version
 
