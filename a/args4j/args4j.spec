@@ -1,14 +1,16 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
-%global group_id   args4j
 
 Name:              args4j
 %global tools_name %{name}-tools
 %global site_name  %{name}-site
 
 Version:          2.0.16
-Release:          alt2_8jpp7
+Release:          alt2_11jpp7
 Summary:          Small Java lib that makes it easy to parse command line options/args in CUI apps
 License:          MIT and BSD
 Group:            Development/Java
@@ -28,12 +30,10 @@ Patch3:           %{name}-srcencoding.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
-BuildRequires:    maven-surefire-plugin
+BuildRequires:    maven-local
+BuildRequires:    maven-surefire-provider-junit
 
 Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
@@ -88,9 +88,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{site_name}.pom
 install -pm 644 %{name}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 install -pm 644 %{tools_name}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{tools_name}.pom
 
-%add_to_maven_depmap %{group_id} %{site_name} %{version} JPP %{site_name}
-%add_to_maven_depmap %{group_id} %{name} %{version} JPP %{name}
-%add_to_maven_depmap %{group_id} %{tools_name} %{version} JPP %{tools_name}
+%add_maven_depmap JPP-%{site_name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{tools_name}.pom %{tools_name}.jar
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -110,6 +110,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.16-alt2_11jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.16-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
