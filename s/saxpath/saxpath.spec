@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       saxpath
 Version:    1.0
-Release:    alt4_4.7jpp7
+Release:    alt4_5.8jpp7
 Summary:    Simple API for XPath
 
 Group:      Development/Java
@@ -46,7 +46,7 @@ find -type f -name "*.jar" -exec rm -f '{}' \;
 mkdir src/conf
 touch src/conf/MANIFEST.MF
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 # fix rpmlint warings: saxpath-javadoc.noarch: W: wrong-file-end-of-line-encoding /usr/share/javadoc/saxpath/**/*.css
 for file in `find build/doc -type f | grep .css`; do
@@ -61,8 +61,8 @@ cp -p build/saxpath.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}.jar
 
 #install pom
-install -dm 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
-cp -p %{SOURCE1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-saxpath.pom
+install -dm 755 $RPM_BUILD_ROOT/%{_datadir}/maven2/poms
+cp -p %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-saxpath.pom
 
 #depmap entry
 %add_to_maven_depmap saxpath saxpath %{version}-FCS JPP saxpath
@@ -73,14 +73,17 @@ cp -a build/doc/* $RPM_BUILD_ROOT/%{_javadocdir}/%{name}/
 
 %files
 %{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}
+%{_datadir}/maven2/poms/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/*
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_5.8jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_4.7jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
