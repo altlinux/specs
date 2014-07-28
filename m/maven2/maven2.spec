@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:	    maven2
 Version:	2.2.1
-Release:	alt3_37jpp7
+Release:	alt4_37jpp7
 Summary:	Java project management and project comprehension tool
 
 Group:		Development/Java
@@ -386,6 +386,9 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt4_37jpp7
+- versioned provides
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_37jpp7
 - update
 
