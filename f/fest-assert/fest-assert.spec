@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-assert
 Version:        1.4
-Release:        alt2_7jpp7
+Release:        alt2_9jpp7
 Summary:        FEST Fluent Assertions
 
 Group:          Development/Java
@@ -15,7 +19,7 @@ Source0:        https://github.com/alexruiz/fest-assert-1.x/tarball/1.4/fest-ass
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-provider-junit4
@@ -82,6 +86,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
