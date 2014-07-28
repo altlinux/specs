@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 Summary:          Bouncy Castle Crypto Package for Java
 Name:             bouncycastle
 Version:          %{ver}
-Release:          alt3_6jpp7
+Release:          alt3_7jpp7
 Group:            System/Libraries
 License:          MIT
 URL:              http://www.%{name}.org/
@@ -38,7 +39,7 @@ the additional infrastructure to conform the algorithms to the JCE framework.
 Summary:        Javadoc for %{name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       bouncycastle = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 
 %description javadoc
@@ -128,8 +129,7 @@ popd
   done
 } || :
 
-:
-
+: 
 %postun
 if [ $1 -eq 0 ] ; then
 
@@ -155,8 +155,7 @@ if [ $1 -eq 0 ] ; then
   } || :
 
 fi
-:
-
+: 
 %files
 %doc *.html
 %{_javadir}/bcprov.jar
@@ -170,6 +169,9 @@ fi
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt3_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt3_6jpp7
 - NMU rebuild to move poms and fragments
 
