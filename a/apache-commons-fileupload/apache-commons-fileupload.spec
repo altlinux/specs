@@ -5,12 +5,13 @@ BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 %global base_name       fileupload
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
 Version:          1.2.2
-Release:          alt3_7jpp7
+Release:          alt3_11jpp7
 Summary:          This package provides an api to work with html file upload
 License:          ASL 2.0
 Group:            Development/Java
@@ -19,9 +20,11 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 BuildArch:        noarch
 
 Patch1:           %{name}-portlet20.patch
+Patch2:           %{name}-remove-portlet.patch
 
+BuildRequires:    maven-local
 BuildRequires:    junit >= 0:3.8.1
-BuildRequires:    servlet25
+BuildRequires:    servlet
 BuildRequires:    apache-commons-io
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-assembly-plugin
@@ -35,11 +38,15 @@ BuildRequires:    maven-plugin-bundle
 BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
+%if 0%{?fedora}
 BuildRequires:    portlet-2.0-api
+%endif
 
 Requires:         jpackage-utils
 Requires:         apache-commons-io
+%if 0%{?fedora}
 Requires:         portlet-2.0-api
+%endif
 
 Provides:         jakarta-%{short_name} = 1:%{version}-%{release}
 Obsoletes:        jakarta-%{short_name} < 1:1.2.2
@@ -72,15 +79,23 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 
+%if 0%{?fedora}
 %patch1 -p1
 # fix gId
 sed -i "s|<groupId>portlet-api</groupId>|<groupId>javax.portlet</groupId>|" pom.xml
+%else
+# Non-Fedora: remove portlet stuff
+%patch2 -p0
+rm -rf src/java/org/apache/commons/fileupload/portlet
+rm -f src/test/org/apache/commons/fileupload/*Portlet*
+%endif
 
 # -----------------------------------------------------------------------------
 
 %build
 # fix build with generics support
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 install javadoc:javadoc
+# tests fail to compile because they use an obsolete version of servlet API (2.4)
+mvn-rpmbuild -Dmaven.test.skip=true -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 install javadoc:javadoc
 # -----------------------------------------------------------------------------
 
 %install
@@ -119,6 +134,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt3_11jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt3_7jpp7
 - fixed BR deps
 
