@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-build-helper
 Version:        1.5
-Release:        alt3_6jpp7
+Release:        alt3_8jpp7
 Summary:        Build Helper Maven Plugin
 
 Group:          Development/Java
@@ -21,7 +24,7 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: plexus-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
@@ -92,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt3_8jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt3_6jpp7
 - fixed build
 
