@@ -1,10 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-injection-plugin
 Version:          1.0.2
-Release:          alt3_5jpp7
+Release:          alt3_8jpp7
 Summary:          Bytecode injection at Maven build time
 Group:            Development/Java
 License:          LGPLv2+
@@ -17,7 +20,7 @@ Source0:          %{name}-%{version}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -31,12 +34,8 @@ BuildRequires:    javassist
 BuildRequires:    jboss-parent
 BuildRequires:    junit
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
 
 Requires:         javassist
 Requires:         jpackage-utils
@@ -85,6 +84,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_8jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_5jpp7
 - fixed build
 
