@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -35,10 +39,14 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-container-default
 Version:        1.0
-Release:        alt5_0.9.a9jpp7
+Release:        alt5_0.13.a9jpp7
 Epoch:          0
 Summary:        Default Plexus Container
-License:        ASL 2.0 and MIT
+# varied mixture of licenses
+# ASL 1.1: grep for 'The Apache Software License, Version 1.1'
+# ASL 2.0: grep for 'Apache License, Version 2.0'
+# MIT: grep for 'The MIT License'
+License:        ASL 2.0 and MIT and ASL 1.1
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
 # git clone git://github.com/sonatype/plexus-containers.git
@@ -52,7 +60,7 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  classworlds >= 0:1.1
 BuildRequires:  plexus-utils
 Requires:  classworlds >= 0:1.1
@@ -80,9 +88,13 @@ Javadoc for %{name}.
 %prep
 %setup -q -n plexus-containers
 %patch0 -p1
+# We don't need wagon-webdav
+%pom_xpath_remove pom:build/pom:extensions
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+# ignoring test failures caused by getting rid of old classworlds
+mvn-rpmbuild -Dmaven.test.failure.ignore=true \
+             install javadoc:aggregate
 
 
 %install
@@ -116,6 +128,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.13.a9jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.9.a9jpp7
 - new fc release
 
