@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-test
 Version:        1.2.1
-Release:        alt5_4jpp7
+Release:        alt5_6jpp7
 Summary:        FEST Testing
 
 Group:          Development/Java
@@ -30,7 +34,7 @@ BuildRequires:  mockito
 BuildRequires:  junit
 BuildRequires:  jpackage-utils
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-provider-junit4
@@ -95,6 +99,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt5_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt5_4jpp7
 - NMU rebuild to move poms and fragments
 
