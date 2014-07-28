@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jemmy
 %define version 2.3.0.0
 # Prevent brp-java-repack-jars from being run.
@@ -13,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_8jpp7
+Release:        alt2_9jpp7
 Summary:        Java UI testing library
 
 Group:          Development/Java
@@ -53,7 +56,7 @@ also do any other operations needed to be done from test.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jemmy = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -66,10 +69,9 @@ find . -type f -name '*.jar' | xargs -t rm
 echo "Please, visit http://jemmy.java.net for more info about Jemmy." > README.txt
 
 %build
-%ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
+%ant jar javadoc
 
 %install
-%__rm -rf %{buildroot}
 
 # jar
 %__mkdir_p %{buildroot}%{_javadir}
@@ -97,6 +99,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
