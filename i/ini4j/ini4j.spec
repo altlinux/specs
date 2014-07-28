@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ini4j
 Version:        0.5.1
-Release:        alt2_7jpp7
+Release:        alt2_9jpp7
 Summary:        Java API for handling files in Windows .ini format
 Group:          Development/Java
 License:        ASL 2.0
@@ -26,14 +26,18 @@ Patch4:         %{name}-remove-checkstyle-and-pmd-checks.patch
 Patch5:         %{name}-encoding.patch
 # removing maven-license-plugin BR
 Patch6:         %{name}-remove-license-plugin.patch
+# need to specify version explicitly for maven-dependency-plugin:unpack
+# the normal version a specified in the dependency elment is ignored by maven
+Patch7:         %{name}-add-version-bsh.patch
 
 BuildArch:      noarch
 
 # See http://ini4j.sourceforge.net/dependencies.html
 BuildRequires:  jpackage-utils
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 
+BuildRequires:  bsh
 BuildRequires:  javamail
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
@@ -48,8 +52,8 @@ BuildRequires:  maven-site-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  plexus-mail-sender
-BuildRequires:  xmlrpc-client
-BuildRequires:  xmlrpc-common
+BuildRequires:  xmlrpc3-client
+BuildRequires:  xmlrpc3-common
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -85,6 +89,7 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 
 %build
@@ -128,6 +133,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_9jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7jpp7
 - fixed deps
 
