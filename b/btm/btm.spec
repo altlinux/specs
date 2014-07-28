@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -6,7 +7,7 @@ BuildRequires: jpackage-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -93,6 +94,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_3jpp7
+- new release
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_2jpp7
 - use fc geronimo
 
