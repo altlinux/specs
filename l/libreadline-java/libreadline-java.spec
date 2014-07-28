@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:    libreadline-java
 Version: 0.8.0
-Release: alt2_30jpp7
+Release: alt2_31jpp7
 Summary: Java wrapper for the EditLine library
 Group:   Development/Java
 
@@ -47,7 +47,7 @@ sed -i 's|@LIBDIR@|%{_libdir}|' src/org/gnu/readline/Readline.java
 %__subst s,termcap,tinfo, src/native/Makefile
 
 %build
-#export JAVA_HOME=%{java_home}
+export JAVA_HOME=%{java_home}
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
 make CFLAGS="$RPM_OPT_FLAGS -fPIC -DPOSIX" T_LIBS=JavaEditline
 make apidoc
@@ -83,6 +83,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_31jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_30jpp7
 - fc update
 
