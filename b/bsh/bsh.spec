@@ -35,10 +35,10 @@ BuildRequires: jpackage-compat
 
 Name:           bsh
 Version:        1.3.0
-Release:        alt4_20jpp7
+Release:        alt4_24jpp7
 Epoch:          0
 Summary:        Lightweight Scripting for Java
-License:        SPL or LGPLv2+
+License:        (SPL or LGPLv2+) and Public Domain
 Source0:        %{name}-%{version}-src.tar.bz2
 #cvs -d:pserver:anonymous@beanshell.cvs.sourceforge.net:/cvsroot/beanshell login
 #cvs -z3 -d:pserver:anonymous@beanshell.cvs.sourceforge.net:/cvsroot/beanshell export -r rel_1_3_0_final BeanShell
@@ -88,6 +88,7 @@ Documentation for %{name}.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -165,14 +166,15 @@ install -m 644 dist/%{name}-util-%{version}.jar \
 
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+%add_to_maven_depmap org.beanshell %{name} %{version} JPP %{name}
 %add_to_maven_depmap %{name} %{name}-bsf %{version} JPP %{name}-bsf
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-bsf.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-bsf.pom
 
 # manual
 find docs -name ".cvswrappers" -exec rm -f {} \;
@@ -189,7 +191,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # menu entry
-desktop-file-install --vendor=fedora --mode=644 \
+desktop-file-install --mode=644 \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE3}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
 convert src/bsh/util/lib/icon.gif \
@@ -287,8 +289,8 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_javadir}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/webapps
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}
+%{_datadir}/maven2/poms/*
+%{_mavendepmapfragdir}/%{name}
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %ifnarch ppc64 s390x
@@ -306,10 +308,13 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 %files utils
 %attr(0755,root,root) %{_bindir}/%{name}*
-%{_datadir}/applications/*%{name}-desktop.desktop
+%{_datadir}/applications/%{name}-desktop.desktop
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt4_24jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt4_20jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
