@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname jaxb-api
 Name:          glassfish-jaxb-api
 Version:       2.2.7
-Release:       alt2_1jpp7
+Release:       alt2_3jpp7
 Summary:       Java Architecture for XML Binding
 Group:         Development/Java
 License:       CDDL or GPLv2 with exception
@@ -24,7 +25,7 @@ BuildRequires: jpackage-utils
 BuildRequires: java-javadoc
 BuildRequires: jvnet-parent
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -96,6 +97,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oname}
 %{_javadocdir}/%{oname}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
