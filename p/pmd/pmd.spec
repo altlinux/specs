@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-BuildRequires: oro plexus-resources junit
+BuildRequires: oro plexus-resources
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 #
 Name:           pmd
 Version:        4.2.5
-Release:        alt5_14jpp7
+Release:        alt5_15jpp7
 Epoch:          0
 Summary:        Scans Java source code and looks for potential problems
 License:        BSD
@@ -109,8 +109,8 @@ find . -name "*.jar" -exec rm -f {} \;
 rm -f etc/fr_docs/copy_up.sh
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f bin/build.xml -Ddir.lib=%{_javadir} javadoc
+ant
+ant -f bin/build.xml -Ddir.lib=%{_javadir} javadoc
 
 %install
 # jar
@@ -148,6 +148,9 @@ cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt5_15jpp7
+- new release
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt5_14jpp7
 - merged junit-junit4
 
