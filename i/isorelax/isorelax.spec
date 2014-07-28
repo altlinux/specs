@@ -41,7 +41,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.10.release20050331jpp7
+Release:        alt1_0.12.release20050331jpp7
 License:        MIT and ASL 1.1
 Group:          Development/Java
 BuildArch:      noarch
@@ -58,6 +58,7 @@ BuildArch:      noarch
 Source0:        %{name}-%{cvstag}-src.tar.bz2
 # There's no license in the upstream tarball so include it here
 Source1:        license.txt
+Source2:        http://repo2.maven.org/maven2/%{name}/%{name}/20030108/%{name}-20030108.pom
 Patch0:         %{name}-apidocsandcompressedjar.patch
 
 BuildRequires:  jpackage-utils >= 0:1.6
@@ -87,7 +88,7 @@ ln -s %{_javadir}/ant.jar lib/
 cp %{SOURCE1} .
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  release
+ant release
 
 %install
 # jars
@@ -98,15 +99,25 @@ install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
+
 %files
 %doc license.txt
 %{_javadir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc license.txt
 %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.12.release20050331jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.10.release20050331jpp7
 - fc update
 
