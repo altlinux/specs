@@ -1,6 +1,7 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,12 +10,14 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_9jpp7
+Release:          alt1_11jpp7
 Summary:          Model MBeans utility classes
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
 Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+# POM file based on the one from an unreleased upstream snapstream
+Source1:          pom.xml
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
@@ -22,18 +25,12 @@ BuildRequires:    ant
 BuildRequires:    apache-commons-beanutils
 BuildRequires:    apache-commons-digester
 BuildRequires:    apache-commons-logging
-BuildRequires:    junit
+BuildRequires:    maven-local
 
 Requires:         jpackage-utils
 Requires:         apache-commons-beanutils
 Requires:         apache-commons-digester
 Requires:         apache-commons-logging
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
-
-# This should go away with F-17
-Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 0:2.0.1-6
 Source44: import.info
 
 %description
@@ -46,8 +43,6 @@ actual Model MBean instances.
 Summary:          Javadoc for %{name}
 Group:            Development/Java
 Requires:         jpackage-utils
-# This should go away with F-17
-Obsoletes:        jakarta-%{short_name}-javadoc < 0:2.0.1-6
 BuildArch: noarch
 
 %description javadoc
@@ -59,39 +54,48 @@ sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' RELEASE-NOTES.txt
 sed -i 's/\r//' NOTICE.txt
 
-%build
-# TODO: Use Maven for building as soon as upstream provides proper build.xml. 
-export CLASSPATH=$(build-classpath \
-                   apache-commons-logging \
-                   apache-commons-digester \
-                   apache-commons-beanutils \
-                   junit )
+# Copy pom file into place
+cp -p %{SOURCE1} .
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first test dist
+# Remove redundant dep on mx4j
+%pom_remove_dep mx4j:mx4j-jmx
+
+# Fix ant dependency
+%pom_remove_dep ant:ant
+%pom_add_dep org.apache.ant:ant:1.8
+
+%build
+mvn-rpmbuild install javadoc:aggregate -Dproject.build.sourceEncoding=UTF-8
 
 %install
-
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 dist/%{short_name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+(cd %{buildroot}%{_javadir} && for jar in *; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
+
+# pom
+install -d -m 0755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a "org.apache.commons:%{short_name}" JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr dist/docs/api*/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 %{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_11jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_9jpp7
 - fc update
 
