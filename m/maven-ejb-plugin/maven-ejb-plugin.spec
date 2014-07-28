@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ejb-plugin
 Version:        2.3
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        Maven EJB Plugin
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -92,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_5jpp7
 - fixed build
 
