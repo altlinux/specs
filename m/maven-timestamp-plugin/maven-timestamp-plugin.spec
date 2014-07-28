@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-timestamp-plugin
 Version:        1.1
-Release:        alt3_3jpp7
+Release:        alt3_7jpp7
 Summary:        Provides formatted timestamps for maven builds
 
 Group:          Development/Java
@@ -17,7 +20,7 @@ Source0:        maven-timestamp-plugin-1.1.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-source-plugin
@@ -29,7 +32,6 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  maven-timestamp-plugin
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -85,14 +87,19 @@ install -pm 644 pom.xml  \
 
 %files
 %doc README
+%doc license.txt
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_javadir}/*
 
 %files javadoc
+%doc license.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_3jpp7
 - fixed build
 
