@@ -1,8 +1,11 @@
-BuildRequires: javassist
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-remoting
 %define version 3.2.4
 %global namedreltag .GA
@@ -10,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-remoting
 Version:          3.2.4
-Release:          alt2_2jpp7
+Release:          alt2_4jpp7
 Summary:          JBoss Remoting 3
 Group:            Development/Java
 License:          LGPLv2+
@@ -25,7 +28,7 @@ Source0:          %{name}-%{namedversion}-CLEAN.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -97,6 +100,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
