@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jcharts
 Version:	0.7.5
-Release:	alt3_9jpp7
+Release:	alt3_10jpp7
 Summary:	A java based charts library
 
 Group:		Publishing
@@ -27,7 +28,7 @@ Source44: import.info
 
 
 %description
-jCharts is a 100%% Java based charting utility that outputs a variety 
+jCharts is a 100% Java based charting utility that outputs a variety 
 of charts. This package has been designed from the ground up by 
 volunteers for displaying charts via Servlets, JSP's, and Swing apps.
 
@@ -78,6 +79,9 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_10jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_9jpp7
 - new fc release
 
