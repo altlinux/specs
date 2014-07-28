@@ -1,9 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		schlichtherle-oss-parent
 Version:	9
-Release:	alt1_4jpp7
+Release:	alt1_6jpp7
 Summary:	Parent Pom for OSS Projects
 
 License:	ASL 2.0
@@ -17,7 +21,7 @@ Patch0:		%{name}-versions.patch
 BuildArch:	noarch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-enforcer-plugin
 BuildRequires:	sonatype-oss-parent
 
@@ -53,6 +57,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 9-alt1_6jpp7
+- new release
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 9-alt1_4jpp7
 - new version
 
