@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jdbm
 Version:        1.0
-Release:        alt2_2jpp7
+Release:        alt2_3jpp7
 Summary:        A transactional persistence engine for Java
 
 Group:          Development/Java
@@ -60,7 +60,7 @@ find . -name "*.jar" -exec rm -f {} \;
 sed -i 's///g' src/examples/FruitBasket.java
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f src/build.xml main examples tests jar javadoc
+ant -f src/build.xml main examples tests jar javadoc
 
 %check
 ant -f src/build.xml tests.run
@@ -88,6 +88,9 @@ cp -pr build/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_3jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_2jpp7
 - fc update
 
