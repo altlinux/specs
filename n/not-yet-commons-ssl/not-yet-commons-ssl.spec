@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           not-yet-commons-ssl
 Version:        0.3.11
-Release:        alt2_8jpp7
+Release:        alt2_9jpp7
 Summary:        Library to make SSL and Java Easier
 
 Group:          Development/Java
@@ -71,7 +71,7 @@ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -dm 755 %{buildroot}/%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
     $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.apache.commons.ssl:not-yet-commons-ssl
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
 %{_javadir}/*
@@ -83,6 +83,9 @@ install -pm 644 %{SOURCE2} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.3.11-alt2_9jpp7
+- new release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.3.11-alt2_8jpp7
 - added compat depmap
 
