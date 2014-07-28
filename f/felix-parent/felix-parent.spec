@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           felix-parent
 Version:        1.2.1
-Release:        alt5_8jpp7
+Release:        alt5_11jpp7
 Summary:        Parent POM file for Apache Felix Specs
 
 Group:          Development/Java
@@ -20,7 +24,7 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: junit
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: easymock2
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
@@ -32,7 +36,6 @@ BuildRequires: maven-assembly-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-deploy-plugin
 BuildRequires: maven-gpg-plugin
-BuildRequires: maven-site-plugin
 BuildRequires: maven-project-info-reports-plugin
 BuildRequires: maven-release-plugin
 BuildRequires: maven-surefire-plugin
@@ -53,7 +56,6 @@ Requires: maven-assembly-plugin
 Requires: maven-source-plugin
 Requires: maven-deploy-plugin
 Requires: maven-gpg-plugin
-Requires: maven-site-plugin
 Requires: maven-project-info-reports-plugin
 Requires: maven-release-plugin
 Requires: maven-surefire-plugin
@@ -73,6 +75,8 @@ Parent POM file for Apache Felix Specs.
 %prep
 %setup -q 
 %patch0 -p0 -b .sav
+
+%pom_remove_plugin org.apache.maven.plugins:maven-site-plugin
 
 %build
 mvn-rpmbuild \
@@ -98,6 +102,9 @@ install -pD -T -m 644 pom.xml \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt5_11jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt5_8jpp7
 - NMU rebuild to move poms and fragments
 
