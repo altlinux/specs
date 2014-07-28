@@ -1,11 +1,15 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global bundle org.osgi.core
 
 Name:    felix-osgi-core
 Version: 1.4.0
-Release: alt3_10jpp7
+Release: alt3_12jpp7
 Summary: Felix OSGi R4 Core Bundle
 
 Group:   Development/Java
@@ -15,6 +19,7 @@ Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
 BuildArch: noarch
 
+BuildRequires: maven-local
 BuildRequires: felix-parent
 BuildRequires: maven-surefire-provider-junit4
 BuildRequires: jpackage-utils
@@ -66,6 +71,9 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt3_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt3_10jpp7
 - NMU rebuild to move poms and fragments
 
