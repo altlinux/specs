@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-jar-plugin
 Version:        2.4
-Release:        alt2_2jpp7
+Release:        alt2_5jpp7
 Summary:        Maven JAR Plugin
 
 Group:          Development/Java
@@ -19,7 +19,8 @@ Patch0:         %{name}-maven-core-dep.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: javapackages-tools >= 0.7.0
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-install-plugin
@@ -49,7 +50,7 @@ Obsoletes:      maven2-plugin-jar <= 0:2.0.8
 Source44: import.info
 
 %description
-Builds a Java Archive (JAR) file from the compiled 
+Builds a Java Archive (JAR) file from the compiled
 project classes and resources.
 
 %package javadoc
@@ -63,7 +64,7 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q 
+%setup -q
 %patch0 -p1
 
 #let plexus-container-default be retrieved as a dependency
@@ -88,15 +89,17 @@ install -pm 644 pom.xml \
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE NOTICE
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_5jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_2jpp7
 - fixed build
 
