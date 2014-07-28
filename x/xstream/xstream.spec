@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           xstream
 Version:        1.3.1
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Java XML serialization library
 
 Group:          Development/Java
@@ -151,9 +151,9 @@ popd
 # Build
 pushd xstream
 %if %with test
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  library javadoc
+ant library javadoc
 %else
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  benchmark:compile jar javadoc
+ant benchmark:compile jar javadoc
 %endif
 popd
 
@@ -202,6 +202,9 @@ install -pm 644 xstream/pom.xml \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_5jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_4jpp7
 - fc update
 
