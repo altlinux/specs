@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Test of properly function library need DNS querys. It work perfectly on my machine and pass all tests.
@@ -7,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_3jpp7
+Release:       alt1_4jpp7
 Summary:       Java DNS implementation
 Group:         System/Libraries
 License:       BSD and MIT
@@ -108,6 +111,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_4jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_3jpp7
 - new fc release
 
