@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           easymock3
 Version:        3.1
-Release:        alt3_9jpp7
+Release:        alt3_11jpp7
 Summary:        Easy mock objects
 Group:          Development/Java
 License:        ASL 2.0
@@ -34,7 +35,7 @@ BuildArch:      noarch
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires:  jpackage-utils
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-plugin-bundle
@@ -126,6 +127,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_11jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_9jpp7
 - rebuild with new apache-resource-bundles
 
