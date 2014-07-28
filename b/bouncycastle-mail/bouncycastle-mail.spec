@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -9,7 +10,7 @@ BuildRequires: jpackage-compat
 Summary:          S/MIME and CMS libraries for Bouncy Castle
 Name:             bouncycastle-mail
 Version:          %{ver}
-Release:          alt2_6jpp7
+Release:          alt2_7jpp7
 Group:            System/Libraries
 License:          MIT
 URL:              http://www.bouncycastle.org/
@@ -41,7 +42,7 @@ generators/processors for S/MIME and CMS, for Bouncy Castle.
 Summary:        Javadoc for %{name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       bouncycastle-mail = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 
 %description javadoc
@@ -112,6 +113,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
