@@ -38,9 +38,9 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xpp2
 Version:        2.1.10
-Release:        alt4_11.3jpp7
+Release:        alt4_16jpp7
 Epoch:          0
-License:        ASL 1.1
+License:        xpp and ASL 1.1 and Public Domain
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/
 Group:          Development/Java
 Source0:        http://www.extreme.indiana.edu/xgws/xsoap/xpp/download/PullParser2/PullParser2.1.10.tgz
@@ -86,15 +86,15 @@ Requires:       %{name} = %{epoch}:%{version}
 
 %prep
 %setup -q -n %{originalname}%{version}
-# remove all binary libs
-find . -name "*.jar" -exec rm -f {} \;
+# remove all binary libs and prebuilt classes
+find \( -name *.class -o -name *.jar \) -delete
 
 %patch0 -b .sav
 
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath xml-commons-apis)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all api api.impl
+ant all api api.impl
 CLASSPATH=$CLASSPATH:$(build-classpath junit):build/tests:build/lib/PullParser-2.1.10.jar
 java AllTests
 
@@ -158,6 +158,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_16jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_11.3jpp7
 - fc update
 
