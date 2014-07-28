@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -35,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     4.3
-Release:     alt2_7jpp7
+Release:     alt2_8jpp7
 Epoch:       0
 Summary:     Java components interfaces
 License:     ASL 2.0
@@ -162,6 +165,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt2_8jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
