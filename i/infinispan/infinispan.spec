@@ -1,7 +1,10 @@
-BuildRequires: maven-antrun-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name infinispan
 %define version 5.1.2
 %global namedreltag .FINAL
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             infinispan
 Version:          5.1.2
-Release:          alt2_3jpp7
+Release:          alt2_6jpp7
 Summary:          Data grid platform
 Group:            Development/Java
 License:          LGPLv2+
@@ -27,6 +30,7 @@ Patch1:           %{name}-%{namedversion}-avro.patch
 BuildArch:        noarch
 
 BuildRequires:    apache-commons-math
+BuildRequires:    apache-commons-pool
 BuildRequires:    avro
 BuildRequires:    c3p0
 BuildRequires:    jcip-annotations
@@ -36,7 +40,7 @@ BuildRequires:    jboss-naming
 BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    jgroups >= 3.0.3
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-plugin-exec
 BuildRequires:    maven-resources-plugin
@@ -45,6 +49,7 @@ BuildRequires:    rhq-plugin-annotations
 BuildRequires:    staxmapper
 
 Requires:         apache-commons-math
+Requires:         apache-commons-pool
 Requires:         avro
 Requires:         c3p0
 Requires:         jcip-annotations
@@ -59,7 +64,7 @@ Source44: import.info
 
 %description
 Infinispan is an extremely scalable, highly available data grid
-platform - 100%% open source, and written in Java. The purpose of
+platform - 100% open source, and written in Java. The purpose of
 Infinispan is to expose a data structure that is highly concurrent,
 designed ground-up to make the most of modern multi-processor/multi-core
 architectures while at the same time providing distributed cache
@@ -140,6 +145,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
