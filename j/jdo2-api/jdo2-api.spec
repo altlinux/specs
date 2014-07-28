@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:          jdo2-api
 Version:       2.2
-Release:       alt2_4jpp7
+Release:       alt2_5jpp7
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
 Group:         Development/Java
 License:       ASL 2.0
@@ -79,6 +82,9 @@ cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
