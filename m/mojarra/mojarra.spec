@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: mojarra
 Version: 2.1.7
-Release: alt2_4jpp7
+Release: alt2_6jpp7
 Summary: JSF Reference Implementation
 
 Group: Development/Java
@@ -61,7 +64,7 @@ BuildArch: noarch
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: ant-contrib
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: groovy
 BuildRequires: aqute-bnd
 BuildRequires: tomcat-servlet-3.0-api
@@ -158,7 +161,7 @@ done
 mkdir -p common/lib
 ln -s `build-classpath aqute-bnd` common/lib/bnd-0.0.249.jar
 
-export OPT_JAR_LIST="ant-contrib"
+
 # Build it the binaries:
 ant \
   -Dbuild.sysclasspath=last \
@@ -222,6 +225,9 @@ cp -rp jsf-api/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
