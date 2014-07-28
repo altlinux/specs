@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global upstream    technomancy
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{groupId}-%{artifactId}
 Version:        1.2.0
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        Extension mechanism for Clojure functions
 
 # upstream asked to include license text:
@@ -85,6 +88,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
