@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global api_version 2.0
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Java Portlet Specification V2.0
 Group:         Development/Java
 License:       ASL 2.0
@@ -20,7 +24,7 @@ BuildRequires: portals-pom
 
 BuildRequires: tomcat-servlet-3.0-api
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-javadoc-plugin
@@ -89,6 +93,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
