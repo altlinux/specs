@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          apacheds
 Version:       1.5.7
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Apache Directory Server
 # these packages are not configured to run as a server
 Group:         Development/Java
@@ -57,7 +61,7 @@ BuildRequires: slf4j
 # test deps
 BuildRequires: apache-commons-net
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
@@ -201,12 +205,12 @@ Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 %description utils
 Contains utility classes for ApacheDS. 
 
-#%%% package xbean-spring
+#%% package xbean-spring
 # BR/R xbean-spring maven-xbean-plugin
 # BR/R springframework-beans
 # BR/R springframework-context
 # BR/R springframework-core 
-#%%% description xbean-spring
+#%% description xbean-spring
 
 %package xdbm
 Group:         Development/Java
@@ -453,6 +457,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
