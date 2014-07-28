@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           stax-utils
 Version:        0
-Release:        alt1_0.2.20110309svn238jpp7
+Release:        alt1_0.4.20110309svn238jpp7
 Summary:        StAX utility classes
 Group:          Development/Java
 License:        BSD
@@ -27,7 +27,8 @@ Source1:        http://repo1.maven.org/maven2/net/java/dev/stax-utils/stax-utils
 Patch0:         %{name}-build-fixes.patch
 BuildArch:      noarch
 
-BuildRequires: ant ant-junit
+BuildRequires: ant
+BuildRequires: ant-junit
 BuildRequires: jpackage-utils
 Requires:      jpackage-utils
 Source44: import.info
@@ -81,6 +82,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.4.20110309svn238jpp7
+- new release
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.2.20110309svn238jpp7
 - fc update
 
