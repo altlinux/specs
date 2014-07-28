@@ -1,13 +1,19 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsr-305
 Version:        0
-Release:        alt2_0.10.20090319svnjpp7
+Release:        alt2_0.13.20090319svnjpp7
 Summary:        Correctness annotations for Java code
 
 Group:          Development/Java
-License:        BSD
+# The majority of code is BSD-licensed, but some Java sources
+# are licensed under CC-BY license, see: $ grep -r Creative .
+License:        BSD and CC-BY
 URL:            http://jsr-305.googlecode.com/
 # There has been no official release yet.  This is a snapshot of the Subversion
 # repository as of 19 Mar 2009.  Use the following commands to generate the
@@ -17,7 +23,7 @@ URL:            http://jsr-305.googlecode.com/
 #   xz jsr-305-0.4.20090319.tar
 Source0:        jsr-305-0.4.20090319.tar.xz
 
-BuildRequires:  jpackage-utils maven
+BuildRequires:  jpackage-utils maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -89,6 +95,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt2_0.13.20090319svnjpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt2_0.10.20090319svnjpp7
 - NMU rebuild to move poms and fragments
 
