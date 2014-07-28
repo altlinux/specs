@@ -1,12 +1,10 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name bea-stax
-%define version 1.2.0
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -45,15 +43,10 @@ URL:            http://stax.codehaus.org/Home
 Source0:        http://dist.codehaus.org/stax/distributions/stax-src-1.2.0.zip
 Source1:        http://dist.codehaus.org/stax/jars/stax-1.2.0.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
-# XXX: 
-# since libgcj already includes classes in javax.xml.stream.events.* which
-# are not api compliant with those in the api jar, the build fails in gcj
-# unless added to bootclasspath
-Patch0:         %{name}-ecj-bootclasspath.patch
 Name:           bea-stax
 Version:        %{mainver}
-Release:        alt3_4jpp7
-License:        ASL 2.0
+Release:        alt3_7jpp7
+License:        ASL 1.1 and ASL 2.0
 Group:          Development/Java
 BuildArch:      noarch
 
@@ -94,7 +87,7 @@ BuildArch: noarch
 
 %build
 export CLASSPATH=`pwd`/build/stax-api-%{apiver}.jar
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all javadoc
+ant all javadoc
 
 %install
 # jar
@@ -133,6 +126,9 @@ install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
