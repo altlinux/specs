@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jboss-classpool-scoped
 Version:        1.0.0
-Release:        alt2_3jpp7
+Release:        alt2_5jpp7
 Summary:        A custom class pool for several JBoss products
 
 Group:          Development/Java
@@ -20,7 +24,7 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 
 BuildRequires:  javassist
-BuildRequires:  maven
+BuildRequires:  maven-local
 
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-resources-plugin
@@ -80,6 +84,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
