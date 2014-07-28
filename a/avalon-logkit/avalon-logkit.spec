@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     2.1
-Release:     alt2_11jpp7
+Release:     alt2_12jpp7
 Epoch:       0
 Summary:     Java logging toolkit
 License:     ASL 2.0
@@ -125,6 +126,9 @@ cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_12jpp7
+- new release
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_11jpp7
 - added avalon:avalon-logkit depmap
 
