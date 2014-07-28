@@ -42,7 +42,7 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xom
 Version:        1.0
-Release:        alt1_9jpp7
+Release:        alt1_12jpp7
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -57,12 +57,13 @@ Patch0:         %{name}-gjdocissues.patch
 # I don't know if this is a libgcj bug or if this is a legitimate typo
 # in build.xml
 Patch1:         %{name}-betterdocclasspath.patch
+# Replace icu4j by java.text from JDK to reduce dependency chain
+Patch2:         %{name}-Replace-icu4j-with-JDK.patch
 
 BuildRequires:  ant >= 0:1.6 jpackage-utils >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
-BuildRequires:  icu4j
 %if %{with_dom4j}
 BuildRequires:  dom4j
 %endif
@@ -76,7 +77,6 @@ BuildRequires:  servlet
 
 Requires:  xalan-j2
 Requires:  xerces-j2
-Requires:  icu4j
 Requires:  xml-commons-apis
 Requires:  jpackage-utils
 BuildArch: noarch
@@ -112,15 +112,27 @@ Requires:       %{name} = 0:%{version}
 %setup -q -n XOM
 %patch0
 %patch1
+%patch2 -p1
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
+# disable tests that require icu4j
+rm -f src/nu/xom/tests/{Encoding,Verifier}Test.java
+
+cp %{SOURCE1} pom.xml
+# fix xml stuff in pom
+sed -i 's%<project>%<project xmlns="http://maven.apache.org/POM/4.0.0" \
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 \
+http://maven.apache.org/maven-v4_0_0.xsd ">%' pom.xml
+# remove it from pom.xml since it's not needed anymore
+%pom_remove_dep com.ibm.icu:icu4j
+
 
 %build
 pushd lib
 ln -sf $(build-classpath junit) junit.jar
 ln -sf $(build-classpath xerces-j2) xercesImpl.jar
 ln -sf $(build-classpath xalan-j2) xalan.jar
-ln -sf $(build-classpath icu4j) normalizer.jar
 ln -sf $(build-classpath xml-commons-apis) xmlParserAPIs.jar
 popd
 mkdir lib2
@@ -135,7 +147,7 @@ ln -sf $(build-classpath dom4j) dom4j.jar
 ln -sf $(build-classpath servlet) servlet.jar
 popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar samples betterdoc
+ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 jar samples betterdoc
 
 # Fix encoding
 sed -i 's/\r//g' LICENSE.txt
@@ -164,7 +176,7 @@ install -m 644 build/xom-samples.jar $RPM_BUILD_ROOT%{_datadir}/%{name}-%{versio
 
 # POM
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
@@ -187,6 +199,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}-%{version}/xom-samples.jar
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_12jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_9jpp7
 - fc update
 
