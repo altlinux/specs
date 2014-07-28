@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt34
+Release:        alt35
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -520,6 +520,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt35
+- support for versioned mvn(g:a:v) triplet provides
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt34
 - added rpm-macros-java due to excessive dependencies
 
