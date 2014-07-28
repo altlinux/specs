@@ -1,10 +1,12 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt4_4jpp7
+Release:        alt4_7jpp7
 Summary:        Jetty version management Maven plugin
 
 Group:          Development/Java
@@ -17,7 +19,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-lang3
-BuildRequires:  maven >= 3.0.3-14
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  jetty-toolchain
 
@@ -43,11 +45,17 @@ BuildArch: noarch
 
 %prep
 %setup -q
+cp -p jetty-distribution-remote-resources/src/main/resources/* .
+
+# we have java.util stuff in JVM directly now
+# https://bugs.eclipse.org/bugs/show_bug.cgi?id=401163
+sed -i 's|edu.emory.mathcs.backport.||' \
+    jetty-version-maven-plugin/src/main/java/org/eclipse/jetty/toolchain/version/Release.java
 
 %build
 pushd %{name}
 # skip tests because we don't have jetty-test-helper (yet)
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 # poms
@@ -65,15 +73,17 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 popd
 
 
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
+%files -f %{name}/.mfiles
+%doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 
 %files javadoc
+%doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_4jpp7
 - fixed build
 
