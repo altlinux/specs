@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jcommon
 Version: 1.0.18
-Release: alt1_1jpp7
+Release: alt1_2jpp7
 Summary: JFree Java utility classes
 License: LGPLv2+
 Group: System/Libraries
@@ -33,7 +33,7 @@ Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 
 %description javadoc -l fr
@@ -86,6 +86,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.18-alt1_2jpp7
+- new release
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.18-alt1_1jpp7
 - fc update
 
