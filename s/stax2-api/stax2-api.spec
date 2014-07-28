@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             stax2-api
 Version:          3.1.1
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
 Group:            Development/Java
@@ -16,7 +20,7 @@ BuildArch:        noarch
 
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    bea-stax-api
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    jpackage-utils
 
 Requires:         bea-stax-api
@@ -74,6 +78,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
