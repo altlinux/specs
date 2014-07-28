@@ -37,11 +37,12 @@ BuildRequires: jpackage-compat
 
 Name:           junitperf
 Version:        1.9.1
-Release:        alt1_8jpp7
+Release:        alt1_11jpp7
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
 Group:          Development/Java
 Source0:        http://www.clarkware.com/software/junitperf-1.9.1.zip
+Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-uploads/junitperf/junitperf/%{version}/junitperf-%{version}.pom
 URL:            http://www.clarkware.com/software/JUnitPerf.html
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -88,6 +89,10 @@ CLASSPATH=$(build-classpath junit) ant -Dbuild.sysclasspath=first jar test javad
 install -pD -T dist/%{name}-%{version}.jar \
   %{buildroot}%{_javadir}/%{name}.jar
 
+install -d -m 0755 %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/docs/api/* %{buildroot}%{_javadocdir}/%{name}
@@ -103,6 +108,8 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files
 %doc LICENSE README docs/JUnitPerf.html
 %{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE
@@ -113,6 +120,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_11jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_8jpp7
 - fc update
 
