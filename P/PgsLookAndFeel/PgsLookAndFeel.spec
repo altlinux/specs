@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		PgsLookAndFeel
 Version:	1.1
-Release:	alt1_7.20090805cvsjpp7
+Release:	alt1_8.20090805cvsjpp7
 Summary:	Nice looking LookAndFeel for Swing
 License:	ASL 2.0
 Group:		Development/Java
@@ -99,6 +102,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8.20090805cvsjpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_7.20090805cvsjpp7
 - new version
 
