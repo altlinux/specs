@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Name:           xml-commons-apis12
 Epoch:          0
 Version:        1.2.04
-Release:        alt1_0jpp7
+Release:        alt1_9jpp7
 Summary:        JAXP 1.2, DOM 2, SAX 2.0.1, SAX2-ext 1.0 apis
 Group:          System/Libraries
 URL:            http://xml.apache.org/commons/
@@ -98,11 +98,10 @@ for jar in *-%{version}*; do
 ln -sf ${jar} $(echo $jar | sed -e 's|-%{version}\.jar|.jar|');
 done
 
-#ln -sf %{name}.jar xml-commons-jaxp-1.2-apis.jar
-#ln -sf %{name}.jar jaxp12.jar
-#ln -sf %{name}.jar dom2.jar
+ln -sf %{name}.jar xml-commons-jaxp-1.2-apis.jar
+ln -sf %{name}.jar jaxp12.jar
+ln -sf %{name}.jar dom2.jar
 popd
-
 
 
 # javadoc
@@ -120,9 +119,9 @@ cp -pr xml-commons-external-1_2_04/java/external/build/docs/* $RPM_BUILD_ROOT%{_
 
 %files 
 %{_javadir}/%{name}*.jar
-#%{_javadir}/jaxp12.jar
-#%{_javadir}/dom2.jar
-#%{_javadir}/xml-commons-jaxp-1.2-apis.jar
+%{_javadir}/jaxp12.jar
+%{_javadir}/dom2.jar
+%{_javadir}/xml-commons-jaxp-1.2-apis.jar
 %doc xml-commons-external-1_2_04/java/external/LICENSE
 %doc xml-commons-external-1_2_04/java/external/LICENSE.dom-documentation.txt
 %doc xml-commons-external-1_2_04/java/external/LICENSE.dom-software.txt
@@ -142,6 +141,9 @@ cp -pr xml-commons-external-1_2_04/java/external/build/docs/* $RPM_BUILD_ROOT%{_
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt1_9jpp7
+- new release
+
 * Wed Jul 09 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt1_0jpp7
 - intermediate release
 
