@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name bean-validation-api
 %define version 1.0.0
 %global namedreltag .GA
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             bean-validation-api
 Version:          1.0.0
-Release:          alt1_5jpp7
+Release:          alt1_8jpp7
 Summary:          Bean Validation API
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,13 +23,17 @@ URL:              http://www.hibernate.org/subprojects/validator.html
 Source0:          %{name}-%{namedversion}-src-svn.tar.gz
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    maven-docck-plugin
+BuildRequires:    maven-invoker-plugin
+BuildRequires:    maven-clean-plugin
+BuildRequires:    maven-dependency-plugin
 
 Requires:         jpackage-utils
 BuildArch:        noarch
@@ -45,6 +53,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
+
+%pom_xpath_remove "pom:build/pom:extensions"
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -77,6 +87,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_8jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp7
 - new fc release
 
