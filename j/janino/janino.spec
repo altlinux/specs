@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 #
 Name:          janino
 Version:       2.6.1
-Release:       alt2_14jpp7
+Release:       alt2_16jpp7
 Summary:       An embedded Java compiler
 Group:         Development/Java
 License:       BSD
@@ -56,7 +57,7 @@ BuildRequires: ant
 BuildRequires: junit4
 
 BuildRequires: buildnumber-maven-plugin
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -159,6 +160,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc new_bsd_license.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_16jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_14jpp7
 - NMU rebuild to move poms and fragments
 
