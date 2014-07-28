@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_15jpp7
+Release:        alt1_16jpp7
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -83,7 +83,7 @@ sed -i -e 's/..\/sun-u.c.license.pdf/http:\/\/gee.cs.oswego.edu\/dl\/classes\/ED
 %build
 pushd src/EDU/oswego/cs/dl/util/concurrent
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+ant \
   -Dversion=%{version} \
   -Dj2se.apiurl=%{_javadocdir}/java \
   dist javadoc
@@ -118,6 +118,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_16jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_15jpp7
 - fc update
 
