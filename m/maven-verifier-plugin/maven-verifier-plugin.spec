@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt2_6jpp7
+Release:        alt2_8jpp7
 Summary:        Maven Verifier Plugin
 
 Group:          Development/Java
@@ -16,7 +19,7 @@ Source0:        %{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -82,6 +85,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_6jpp7
 - fixed build
 
