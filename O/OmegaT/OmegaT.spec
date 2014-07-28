@@ -1,49 +1,73 @@
+%filter_from_requires /^.usr.bin.run/d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name:		OmegaT
-%define namer	omegat
-Summary:	Computer Aid Translation tool
-Version:	2.3.0_06
-#%define versionr	2.2.3_04_Beta
-%define versionr	%{version}
-Release:	alt1_6jpp7
-#Release:	0.2.04_Beta%{?dist}
-Source0:	http://downloads.sourceforge.net/omegat/%{name}_%{versionr}_Source.zip
-Source2:	OmegaT-lib-mnemonics-build.xml
-Source3:	OmegaT-build.xml
-Source4:	OmegaT.sh
-Url:		http://www.omegat.org/
-Group:		Text tools
+# TODO:
+# - add subpackages for:
+#       - OmegaT-LanguageTool-src_0.4-2.3.zip
+#       - OmegaT-Scripting-src_0.5-2.5.0_03.zip
+#       - OmegaT-tokenizers-src_0.4_2-2.1.zip
+# - fix desktop-install warning
+# - new logo
+# - update l10n.es
 
-BuildRequires:	ant jpackage-utils
-BuildRequires:	desktop-file-utils dos2unix
-BuildRequires:	htmlparser vldocking >= 2.1.4
-BuildRequires:	jna
-BuildRequires:	ws-jaxme
-BuildRequires:	swing-layout
-BuildRequires:	hunspell <= 1.4.0
+# fixing #901660
+%global debug_package  %{nil}
 
-Requires:	jpackage-utils
-Requires:	vldocking >= 2.1.4
-Requires:	htmlparser
-Requires:	hunspell <= 1.4.0
-Requires:	jna
-Requires:	swing-layout
-Requires:	ws-jaxme
+Name:           OmegaT
+%global namer   omegat
+Summary:        Computer Aid Translation tool
+Version:        2.6.1
+%global versionr 2.6.1_01_Beta
+#Release:       1%{?dist}
+Release:        alt1_0.9.Betajpp7
+Source0:        http://downloads.sourceforge.net/omegat/%{name}_%{versionr}_Source.zip
+Source2:        OmegaT-lib-mnemonics-build.xml
+Source3:        OmegaT-build.xml
+Url:            http://www.omegat.org/
+Group:          Text tools
 
-License:	GPLv2+
+BuildRequires:  ant jpackage-utils
+BuildRequires:  desktop-file-utils dos2unix
+BuildRequires:  htmlparser vldocking >= 2.1.4
+BuildRequires:  jna
+BuildRequires:  ws-jaxme
+BuildRequires:  swing-layout
+BuildRequires:  hunspell <= 1.4.0
+
+BuildRequires:  svnkit >= 1.7.5
+BuildRequires:  jsch
+BuildRequires:  sqljet >= 1.1.4
+# OmegaT brings org.eclipse.jgit-1.2.0.201112221803-r.jar but Fedora is 1.1.0
+BuildRequires:  jgit
+BuildRequires:  antlr3-tool
+
+Requires:       jpackage-utils
+Requires:       vldocking >= 2.1.4
+Requires:       htmlparser
+Requires:       hunspell <= 1.4.0
+Requires:       jna
+Requires:       swing-layout
+Requires:       ws-jaxme
+Requires:       svnkit
+Requires:       jsch
+Requires:       sqljet
+Requires:       jgit
+Requires:       antlr3-java
+
+License:        GPLv2+
 # http://svn.debian.org/wsvn/pkg-java/trunk04-get-rid-of-MRJAdapter.patch
-Patch1:		OmegaT-04-get-rid-of-MRJAdapter.patch
-Patch2:		OmegaT-help-path.patch
+Patch1:         OmegaT-04-get-rid-of-MRJAdapter.patch
+Patch2:         OmegaT-help-path.patch
 # http://svn.debian.org/wsvn/pkg-java/trunk/omegat/debian/patches/05-remove-jmyspell-alternative.patch
-Patch3:		OmegaT-05-remove-jmyspell-alternative.patch
-# based on http://svn.debian.org/wsvn/pkg-java/trunk/omegat/debian/patches/06-use-external-hunspell.patch
-Patch4:		OmegaT-06-use-external-hunspell.patch
-Patch5:		OmegaT-07-use-openjdk-swingworker.patch
+Patch3:         OmegaT-05-remove-jmyspell-alternative.patch
+Patch4:         OmegaT-06-use-system-hunspell.patch
+
+# reported at http://sourceforge.net/mailarchive/forum.php?thread_name=CAARR2rZ2uT1KOrLLVF9wdS6Ybq_sU_o1u08U54BLzxqxZoyRUQ%40mail.gmail.com&forum_name=omegat-development
+Patch5:         OmegaT-07-use-openjdk-swingworker.patch
 Source44: import.info
 
 %description
@@ -59,12 +83,12 @@ OmegaT has the following features:
  * Simultaneous use of multiple translation memories
  * External glossaries
  * Document file formats:
-	XHTML and HTML
-	Microsoft Office 2007 XML
-	OpenOffice.org/StarOffice
-	XLIFF (Okapi)
-	MediaWiki (Wikipedia)
-	Plain text
+        XHTML and HTML
+        Microsoft Office 2007 XML
+        OpenOffice.org/StarOffice
+        XLIFF (Okapi)
+        MediaWiki (Wikipedia)
+        Plain text
  * Unicode (UTF-8) support: can be used with non-Latin alphabets
  * Support for right-to-left languages
  * Compatible with other translation memory applications (TMX)
@@ -75,7 +99,7 @@ OmegaT has the following features:
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%ifarch x86_64 # get rids the hardlink to hunspell 
+%ifarch x86_64  # get rids the hardlink to hunspell 
 sed -i -e "s|/usr/lib/libhunspell|/usr/lib64/libhunspell|g" src/org/omegat/util/OConsts.java
 %endif
 
@@ -85,6 +109,18 @@ sed -i -e "s|/usr/lib/libhunspell|/usr/lib64/libhunspell|g" src/org/omegat/util/
 rm nbproject/org-netbeans-modules-java-j2seproject-copylibstask.jar
 
 # clean dependencies:
+rm lib/svnkit-1.7.5.jar
+rm lib/jsch-0.1.46.jar
+rm lib/sqljet-1.1.3.jar
+rm lib/org.eclipse.jgit-1.2.0.201112221803-r.jar
+rm lib/antlr-runtime-3.4.jar
+
+# is not really used??
+rm lib/sjsxp-1.0.2.jar
+
+# seems to be included in svnkit:
+rm lib/sequence-library-1.0.2.jar 
+
 rm lib/vldocking_2.1.4.jar
 rm lib/htmlparser.jar
 rm lib/sources/htmlparser1_6_20060610.zip-source.zip
@@ -114,6 +150,7 @@ rm -rf ./test/lib/xmlunit-1.1.jar
 ## gen/lib/jaxb-xjc.jar
 rm -rf gen/lib/jaxb-xjc.jar
 
+# using the internal openjdk one:
 rm -rf lib/swing-worker-1.2.jar
 
 %build
@@ -130,32 +167,32 @@ cp %{SOURCE3} build.xml
 ant dist
 
 %install 
+rm -Rf %{buildroot}
+
+#install our jar file
 #make some install dirs
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{namer}/docs
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{namer}/images
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_javadir}
+mkdir -p %{buildroot}%{_datadir}/%{namer}/docs
+mkdir -p %{buildroot}%{_datadir}/%{namer}/images
 
-install -pm  0755 dist/OmegaT.jar $RPM_BUILD_ROOT%{_javadir}/OmegaT-%{version}.jar
-install -pm  0755 lib-mnemonics/dist/lib-mnemonics.jar $RPM_BUILD_ROOT%{_javadir}/OmegaT-lib-mnemonics-%{version}.jar
+install -pm  0755 dist/OmegaT.jar %{buildroot}%{_javadir}/OmegaT-%{version}.jar
+install -pm  0755 lib-mnemonics/dist/lib-mnemonics.jar %{buildroot}%{_javadir}/OmegaT-lib-mnemonics-%{version}.jar
 
-pushd $RPM_BUILD_ROOT%{_javadir}
-	ln -s OmegaT-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/OmegaT.jar
-	ln -s OmegaT-lib-mnemonics-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/lib-mnemonics.jar
+pushd %{buildroot}%{_javadir}
+        ln -s OmegaT-%{version}.jar %{buildroot}%{_javadir}/OmegaT.jar
+        ln -s OmegaT-lib-mnemonics-%{version}.jar %{buildroot}%{_javadir}/lib-mnemonics.jar
 popd
 
-cp -pR release/index.html docs/ images/ $RPM_BUILD_ROOT%{_datadir}/%{namer}/
+cp -pR release/index.html docs/ images/ %{buildroot}%{_datadir}/%{namer}/
 
-#create our launch wrapper script
-install -pm  0755 %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/%{namer}
+%jpackage_script org.omegat.Main "" "" OmegaT:svnkit:jsch:sqljet:antlr3-runtime:jgit/jgit:htmlparser:vldocking:jna:lib-mnemonics:jaxme/jaxme2:jaxme/jaxme2-rt:jaxme/jaxmejs:jaxme/jaxmepm:jaxme/jaxmexs:swing-layout %{namer} true
 
-#make our launch wrapper executable
-chmod +x $RPM_BUILD_ROOT%{_bindir}/*
 
 #Menu entry
 install -d -m755 %{buildroot}%{_datadir}/applications
 
-cat > %{buildroot}%{_datadir}/applications/fedora-%{namer}.desktop <<EOF
+cat > %{buildroot}%{_datadir}/applications/%{namer}.desktop <<EOF
 [Desktop Entry]
 Encoding=UTF-8
 Name=%name
@@ -169,7 +206,7 @@ Categories=Translation;Java;Office;
 X-AppInstall-Package=%{namer}
 EOF
 
-desktop-file-install  --vendor "fedora" --dir=%{buildroot}%{_datadir}/applications/ %{buildroot}%{_datadir}/applications/fedora-%{namer}.desktop 
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %{buildroot}%{_datadir}/applications/%{namer}.desktop
 
 # fixing end of line making rpmlint happy
 dos2unix -k -f release/*.txt
@@ -177,18 +214,24 @@ dos2unix -k -f release/*.txt
 mkdir -p %{buildroot}%{_jnidir}/
 ln -s %_javadir/OmegaT.jar %{buildroot}%{_jnidir}/OmegaT.jar
 
+mkdir -p %buildroot%_sysconfdir/java/
+touch %buildroot%_sysconfdir/java/%{name}.conf
+
 %files
 %dir %{_datadir}/%{namer}
 %{_datadir}/%{namer}/*
 %{_bindir}/*
 %{_javadir}/*
-%{_datadir}/applications/fedora-%{namer}.desktop
+%{_datadir}/applications/*%{namer}.desktop
 
 %doc ./release/changes.txt release/doc-license.txt release/license.txt release/readme*.txt release/join.html
 %_jnidir/*
-
+%_sysconfdir/java/%{name}.conf
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1_0.9.Betajpp7
+- new version
+
 * Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.0_06-alt1_6jpp7
 - fixed maven1 dependency
 
