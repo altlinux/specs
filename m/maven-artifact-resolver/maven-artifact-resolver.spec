@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-artifact-resolver
 Version:        1.0
-Release:        alt1_4jpp7
+Release:        alt1_7jpp7
 # Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
 Epoch:          1
 Summary:        Maven Artifact Resolution API
@@ -21,13 +21,17 @@ Patch0:         %{name}-plexus.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  maven-artifact-manager
+BuildRequires:  maven-project
+BuildRequires:  maven-shared
 
 Requires:       jpackage-utils
 Requires:       maven-artifact-manager
 Requires:       maven-project
+Requires:       maven-shared
 
 Obsoletes:      maven-shared-artifact-resolver < %{epoch}:%{version}-%{release}
 Provides:       maven-shared-artifact-resolver = %{epoch}:%{version}-%{release}
@@ -42,7 +46,7 @@ Group:          Development/Java
 Summary:        Javadoc for %{name}
 Requires:       jpackage-utils
 BuildArch: noarch
-    
+
 %description javadoc
 API documentation for %{name}.
 
@@ -91,6 +95,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_7jpp7
+- new release
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_4jpp7
 - update
 
