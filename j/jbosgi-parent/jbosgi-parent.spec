@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jbosgi-parent
 Version:          1.0.22
-Release:          alt2_3jpp7
+Release:          alt2_5jpp7
 Summary:          JBossOSGi Parent
 Group:            Development/Java
 License:          LGPLv2+
@@ -12,7 +16,7 @@ Source0:          https://raw.github.com/jbosgi/jbosgi-parent/%{version}/pom.xml
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -45,6 +49,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.22-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.22-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
