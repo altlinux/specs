@@ -10,7 +10,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-%{pkgname}
 Version:        0.8.0
-Release:        alt1_9.20100810svnjpp7
+Release:        alt1_10.20100810svnjpp7
 Summary:        Eclipse-based doxygen plugin
 
 Group:          System/Libraries
@@ -63,6 +63,9 @@ unzip -d %{buildroot}%{install_loc} -q build/rpmBuild/org.gna.%{pkgname}.zip
 %{install_loc}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_10.20100810svnjpp7
+- new release
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_9.20100810svnjpp7
 - new release
 
