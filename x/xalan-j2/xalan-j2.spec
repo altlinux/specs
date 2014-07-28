@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt2_17jpp7
+Release:        alt2_18jpp7
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -280,6 +280,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_18jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_17jpp7
 - update
 
