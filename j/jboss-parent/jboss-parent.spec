@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:                 jboss-parent
 Version:              6
-Release:              alt2_8jpp7
+Release:              alt2_10jpp7
 Summary:              JBoss Parent POM
 Group:                Development/Java
 License:              LGPLv2+
@@ -17,7 +21,7 @@ Patch0:               %{name}-%{version}-deps.patch
 BuildArch:            noarch
 
 BuildRequires:        jpackage-utils
-BuildRequires:        maven
+BuildRequires:        maven-local
 BuildRequires:        maven-install-plugin
 BuildRequires:        maven-javadoc-plugin
 BuildRequires:        maven-release-plugin
@@ -52,6 +56,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:6-alt2_10jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:6-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
