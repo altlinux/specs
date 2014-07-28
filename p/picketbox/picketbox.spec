@@ -1,7 +1,10 @@
-BuildRequires: geronimo-jpa
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name picketbox
 %define version 4.0.6
 %global namedreltag .final
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             picketbox
 Version:          4.0.6
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Security framework for Java Applications
 Group:            Development/Java
 License:          LGPLv2+
@@ -39,7 +42,7 @@ BuildRequires:    jboss-parent
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-injection-plugin
@@ -167,6 +170,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.6-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.6-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
