@@ -1,10 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt2_3jpp7
+Release:       alt2_6jpp7
 Summary:       Java templating framework for web application user interfaces
 Group:         Development/Java
 License:       ASL 2.0
@@ -47,7 +51,7 @@ BuildRequires: tomcat-servlet-3.0-api
 BuildRequires: easymock2
 BuildRequires: junit4
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -55,6 +59,10 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
+
+# requires by remote-resources-plugin
+BuildRequires: mvn(org.apache.maven.shared:maven-artifact-resolver)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
 Requires:      apache-commons-digester
 Requires:      apache-commons-ognl
@@ -170,6 +178,9 @@ cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
