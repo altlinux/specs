@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: flute
 Version: 1.3.0
-Release: alt1_9.OOo31jpp7
+Release: alt1_10.OOo31jpp7
 Summary: Java CSS parser using SAC
 # The entire source code is W3C except ParseException.java which is LGPLv2+
 License: W3C and LGPLv2+
@@ -36,7 +36,7 @@ mkdir -p lib
 build-jar-repository -s -p lib sac
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 %install
 
@@ -55,6 +55,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_10.OOo31jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_9.OOo31jpp7
 - fc update
 
