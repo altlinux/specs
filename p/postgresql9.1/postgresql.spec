@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  13
+%define postgresql_subminor  14
 %define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
@@ -707,6 +707,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Mon Jul 28 2014 Alexei Takaseev <taf@altlinux.org> 9.1.14-alt1
+- 9.1.14
+
 * Tue Apr 01 2014 Alexei Takaseev <taf@altlinux.org> 9.1.13-alt1
 - 9.1.13
 - Disable devel
