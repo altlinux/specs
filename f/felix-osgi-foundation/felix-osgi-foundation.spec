@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:    felix-osgi-foundation
 Version: 1.2.0
-Release: alt3_10jpp7
+Release: alt3_12jpp7
 Summary: Felix OSGi Foundation EE Bundle
 
 Group:   Development/Java
@@ -20,6 +24,7 @@ Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -75,6 +80,9 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_10jpp7
 - NMU rebuild to move poms and fragments
 
