@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:      brazil
 Version:   2.3
-Release:   alt3_9jpp7
+Release:   alt3_10jpp7
 Summary:   Extremely small footprint Java HTTP stack
 Group:     Development/Java
 License:   SPL
@@ -97,6 +100,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_10jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_9jpp7
 - new fc release
 
