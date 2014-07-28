@@ -1,6 +1,7 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_3jpp7
+Release:       alt1_6jpp7
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 Group:         Development/Java
 License:       ASL 2.0
@@ -33,7 +34,7 @@ BuildRequires: tomcat-servlet-3.0-api
 # test deps
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -43,6 +44,7 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-site-plugin
 BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit
 
 Requires:      apache-commons-beanutils
 Requires:      apache-commons-digester
@@ -123,6 +125,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_6jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_3jpp7
 - fc update
 
