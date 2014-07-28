@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_16jpp7
+Release:        alt1_17jpp7
 Summary:        Java NFA regular expression engine implementation
 License:        LGPLv2+ and GPLv2+
 Source0:        ftp://ftp.tralfamadore.com/pub/java/gnu.regexp-1.1.4.tar.gz
@@ -87,7 +87,7 @@ find . -name "*.jar" -exec %__rm -f {} \;
 
 %build
 export CLASSPATH=$(build-classpath gnu.getopt)
-%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+%ant jar javadoc
 
 %install
 
@@ -119,6 +119,9 @@ export CLASSPATH=$(build-classpath gnu.getopt)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_17jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_16jpp7
 - fc update
 
