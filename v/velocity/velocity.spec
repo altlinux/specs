@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -105,7 +105,7 @@ Group:          Development/Java
 BuildArch: noarch
 
 %description    manual
-Documentation for %%{name}.
+Documentation for %{name}.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
@@ -114,7 +114,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 %package        demo
 Summary:        Demo for %{name}
@@ -122,7 +122,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 # -----------------------------------------------------------------------------
 
@@ -216,6 +216,9 @@ install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_7jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_6jpp7
 - fc update
 
