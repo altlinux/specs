@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           umlgraph
 Version:        5.6
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        Automated Drawing of UML Diagrams
 
 Group:          Development/Java
@@ -43,7 +46,7 @@ done
 %patch0 -b .sav
 
 %build
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 compile test javadocs
+ant compile test javadocs
 
 %install
 # jars
@@ -71,6 +74,9 @@ cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
