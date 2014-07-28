@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Summary:        Release a project updating the POM and tagging in the SCM
 
 Group:          Development/Java
@@ -16,10 +16,12 @@ URL:            http://maven.apache.org/plugins/maven-release-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/release/%{name}/%{version}/%{name}-%{version}-source-release.zip
 # Remove deps needed for tests, till jmock gets packaged
 Patch1:         002-mavenrelease-fixbuild.patch
+Patch2:         003-fixing-migration-to-component-metadata.patch
+
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-scm
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-jar-plugin
@@ -84,7 +86,10 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
+
 %patch1 -p1
+%patch2 -p1
+
 cat > README << EOT
 %{name}-%{version}
 
@@ -141,6 +146,9 @@ install -pm 644 %{name}-plugin/pom.xml  \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_4jpp7
 - fixed build
 
