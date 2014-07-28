@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-specs-parent
 %define version 1.0.0
 %global namedreltag .Beta2
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-specs-parent
 Version:          1.0.0
-Release:          alt2_0.5.Beta2jpp7
+Release:          alt2_0.6.Beta2jpp7
 Summary:          JBoss Specification API Parent POM
 Group:            Development/Java
 # The license is not included because it's not a part of this tag. License file
@@ -49,6 +52,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.6.Beta2jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.5.Beta2jpp7
 - NMU rebuild to move poms and fragments
 
