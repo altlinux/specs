@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        1.12.1
-Release:        alt1_2jpp7
+Release:        alt1_5jpp7
 Epoch:          1
 License:        ASL 2.0
 URL:            http://qdox.codehaus.org/
@@ -50,7 +51,7 @@ BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit >= 0:3.8.1
 BuildRequires:  byaccj
 BuildRequires:  jflex
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-changes-plugin
@@ -105,6 +106,7 @@ rm -rf bootstrap
 %pom_remove_plugin :maven-jflex-plugin
 %pom_remove_plugin :maven-resources-plugin
 %pom_remove_plugin :xsite-maven-plugin
+%pom_xpath_remove pom:build/pom:extensions
 
 %build
 # Generate scanner (upstream does this with maven-jflex-plugin)
@@ -127,7 +129,7 @@ byaccj \
        ../../../../../../grammar/parser.y)
 
 # Build artifact
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild \
         -Dmaven.test.skip=true \
         install \
         javadoc:aggregate
@@ -164,6 +166,9 @@ cp -pr target/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_5jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_2jpp7
 - fc update
 
