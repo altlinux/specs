@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(B.pm) perl(Exporter.pm) perl(IO/File.pm) perl(Pod/Checker.pm) perl(Scalar/Util.pm) perl(XML/Parser.pm) perl(overload.pm) unzip
+BuildRequires: perl(B.pm) perl(Config.pm) perl(Devel/Peek.pm) perl(Encode.pm) perl(Exporter.pm) perl(HTML/Entities.pm) perl(IO/File.pm) perl(IO/Socket.pm) perl(LWP.pm) perl(PadWalker.pm) perl(Pod/Checker.pm) perl(Scalar/Util.pm) perl(Text/Iconv.pm) perl(Unicode/Map8.pm) perl(Unicode/String.pm) perl(XML/Parser.pm) perl(base.pm) perl(overload.pm) perl(threads.pm) perl(threads/shared.pm) unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 Name:      eclipse-epic
 Version:   0.6.44
-Release:   alt1_2jpp7
+Release:   alt1_3jpp7
 Summary:   Perl Eclipse plug-in
 Group:     Development/Java
 License:   CPL
@@ -112,6 +112,9 @@ popd
 %{_datadir}/eclipse/dropins/epic
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.44-alt1_3jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.44-alt1_2jpp7
 - fc update
 
