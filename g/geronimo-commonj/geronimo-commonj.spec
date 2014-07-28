@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: geronimo-commonj
 Version: 1.1.0
-Release: alt2_3jpp7
+Release: alt2_6jpp7
 Summary: CommonJ Specification
 Group: Development/Java
 License: ASL 2.0
@@ -17,12 +21,13 @@ Patch0: %{name}-version-fix.patch
 
 BuildArch: noarch
 
+BuildRequires: geronimo-parent-poms
 BuildRequires: jpackage-utils
-BuildRequires: maven
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-local
 
 
 Requires: jpackage-utils
@@ -89,6 +94,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
