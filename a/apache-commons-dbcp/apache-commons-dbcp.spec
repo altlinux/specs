@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       dbcp
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_10jpp7
+Release:          alt2_12jpp7
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -25,7 +29,7 @@ BuildRequires:    apache-commons-pool
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    jta
 BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 Requires:         jpackage-utils
 Requires:         apache-commons-pool
@@ -79,7 +83,6 @@ mvn-rpmbuild \
 install -d -m 0755 %{buildroot}%{_javadir}
 install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -s %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
@@ -99,7 +102,6 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{short_name}.jar
-%{_javadir}/jakarta-%{short_name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
@@ -108,6 +110,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_10jpp7
 - NMU rebuild to move poms and fragments
 
