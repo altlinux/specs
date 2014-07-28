@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           jing-trang
 Version:        20091111
-Release:        alt3_11jpp7
+Release:        alt3_12jpp7
 Summary:        Schema validation and conversion based on RELAX NG
 
 Group:          Text tools
@@ -161,6 +161,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_12jpp7
+- new release
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_11jpp7
 - build with ant-junit
 
