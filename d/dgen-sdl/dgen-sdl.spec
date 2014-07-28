@@ -1,7 +1,7 @@
 %define _name   dgen
 
 Name: dgen-sdl
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -58,6 +58,9 @@ install -D -pm 644 dgen_tobin.1 %buildroot%_man1dir/dgen_tobin.1
 %_man5dir/*
 
 %changelog
+* Mon Jul 28 2014 Ilya Mashkin <oddity@altlinux.ru> 1.33-alt1
+- New version 1.33
+
 * Sat Feb 16 2013 Ilya Mashkin <oddity@altlinux.ru> 1.32-alt1
 - New version 1.32
 
