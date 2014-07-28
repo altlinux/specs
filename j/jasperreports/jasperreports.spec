@@ -1,12 +1,16 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 Name:          jasperreports
 # the JR newest release requires
 # xmlbeans >= 2.5.0
 # castor-xml modules see also https://bugzilla.redhat.com/show_bug.cgi?id=820676
 Version:       4.0.2
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Report-generating tool
 Group:         Development/Java
 License:       LGPLv3+
@@ -33,25 +37,13 @@ Patch4:        %{name}-%{version}-use_commons-codec.patch
 Patch5:        %{name}-%{version}-disable_fonts.patch
 # disable build of sampleref
 Patch6:        %{name}-%{version}-disable_sampleref.patch
-# add
-#     asm
-#     commons-codec
-# change
-#     artifactId groovy-all in groovy
-#     eclipse jdtcore in org.eclipse.jdt core
-#     commons-javaflow version 20060411 >> 1.0
-#     org.beanshell bsh 2.0b4 in  bsh bsh 1.3.0
-# remove unavailable build deps
-#     com.keypoint png-encoder 1.5
-#     mondrian mondrian 3.1.1.12687
-#     net.sf.barcode4j barcode4j 2.0
-#     net.sourceforge.barbecue barbecue 1.5-beta1
-Patch7:       %{name}-%{version}-pom.patch
+
+Patch7:        %{name}-%{version}-ecj4.patch
 
 BuildRequires: jpackage-utils
 
 BuildRequires: ant
-BuildRequires: antlr
+BuildRequires: antlr-tool
 BuildRequires: apache-commons-beanutils
 BuildRequires: apache-commons-codec
 BuildRequires: apache-commons-collections
@@ -69,7 +61,7 @@ BuildRequires: groovy
 BuildRequires: hibernate3
 BuildRequires: hibernate-jpa-2.0-api
 BuildRequires: hsqldb
-BuildRequires: iText
+BuildRequires: itext-core
 BuildRequires: jaxen
 BuildRequires: jcommon
 BuildRequires: jexcelapi
@@ -95,7 +87,7 @@ Requires:      bcel
 Requires:      ecj >= 1:3.4.2-13
 Requires:      geronimo-saaj
 Requires:      hsqldb
-Requires:      iText
+Requires:      itext-core
 Requires:      jcommon
 Requires:      jfreechart
 Requires:      springframework
@@ -162,8 +154,12 @@ ln -sf $(build-classpath commons-javaflow) lib/commons-javaflow-20060411.jar
 ln -sf $(build-classpath commons-logging) lib/commons-logging-1.0.4.jar
 ln -sf $(build-classpath dom4j) lib/dom4j-1.6.1.jar
 ln -sf $(build-classpath ecj) lib/jdt-compiler-3.1.1.jar
+%if %{?fedora} > 17
+ln -sf $(build-classpath hibernate3/hibernate-core-3) lib/hibernate3.jar
+%else
 ln -sf $(build-classpath hibernate3/hibernate-core) lib/hibernate3.jar
-ln -sf $(build-classpath hibernate/hibernate-jpa-2.0-api) lib/jpa.jar
+%endif
+ln -sf $(build-classpath hibernate-jpa-2.0-api) lib/jpa.jar
 ln -sf $(build-classpath springframework/spring-beans) lib/spring-beans-2.5.5.jar
 ln -sf $(build-classpath springframework/spring-core) lib/spring-core-2.5.5.jar
 ln -sf $(build-classpath groovy) lib/groovy-all-1.7.5.jar
@@ -190,11 +186,98 @@ rm -rf src/org/w3c/tools/codec/Base64*
 
 # remove. cause: unavailable build deps
 rm -rf src/net/sf/jasperreports/data/mondrian/* \
-  src/net/sf/jasperreports/olap/*
+  src/net/sf/jasperreports/olap/* \
+  src/net/sf/jasperreports/components/barcode4j/* \
+  src/net/sf/jasperreports/components/barbecue/*
 
 sed -i 's|deprecation="true"|deprecation="false"|' build.xml
 
+%pom_remove_dep net.sf.barcode4j:barcode4j
+%pom_remove_dep net.sourceforge.barbecue:barbecue
+%pom_remove_dep mondrian:mondrian
+%pom_remove_dep com.keypoint:png-encoder
+
+%pom_add_dep commons-codec:commons-codec:any:compile
+
+%pom_remove_dep org.beanshell:bsh
+%pom_add_dep bsh:bsh:any:compile
+
+%pom_remove_dep eclipse:jdtcore
+%pom_add_dep org.eclipse.jdt:core:any:compile
+
+%pom_remove_dep org.codehaus.groovy:groovy-all
+%pom_add_dep org.codehaus.groovy:groovy:any:compile
+
+%pom_remove_dep jfree:jcommon
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+  <groupId>org.jfree</groupId>
+  <artifactId>jcommon</artifactId>
+  <version>1.0.15</version>
+  <scope>compile</scope>
+  <exclusions>
+    <exclusion>
+      <groupId>gnujaxp</groupId>
+      <artifactId>gnujaxp</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>"
+
+%pom_remove_dep jfree:jfreechart
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+  <groupId>org.jfree</groupId>
+  <artifactId>jfreechart</artifactId>
+  <version>1.0.14</version>
+  <scope>compile</scope>
+  <exclusions>
+    <exclusion>
+      <groupId>gnujaxp</groupId>
+      <artifactId>gnujaxp</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>"
+
+%pom_remove_dep org.hibernate:hibernate
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-core</artifactId>
+  <version>3</version>
+  <scope>compile</scope>
+  <exclusions>
+    <exclusion>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>"
+
+%pom_remove_dep commons-javaflow:commons-javaflow
+%pom_add_dep org.apache.commons:commons-javaflow:any:compile
+
+# At the moment these deps don't provides maven files
+%pom_remove_dep jaxen:jaxen
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+  <groupId>jaxen</groupId>
+  <artifactId>jaxen</artifactId>
+  <version>1.1.1</version>
+  <scope>system</scope>
+  <systemPath>$(build-classpath jaxen)</systemPath>
+</dependency>"
+%pom_remove_dep rhino:js
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+  <groupId>rhino</groupId>
+  <artifactId>js</artifactId>
+  <version>1.7R1</version>
+  <scope>system</scope>
+  <systemPath>$(build-classpath rhino)</systemPath>
+</dependency>"
+
 %build
+
 # DO NOT USE maven for build
 %ant jar docs
 
@@ -228,6 +311,9 @@ rm -rf dist/docs/api
 %doc license.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
