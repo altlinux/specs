@@ -1,4 +1,8 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # use dcm4che-test as name, no use carrying the version in the name
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt3_0.3.20110530svn15516jpp7
+Release:        alt3_0.5.20110530svn15516jpp7
 Summary:        Test images for dcm4che2
 
 License:        MPLv1.1 or GPLv2 or LGPLv2
@@ -19,7 +23,7 @@ BuildArch:      noarch
 Source0:        dcm4che2-test-%{version}.tar.gz
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -83,6 +87,9 @@ find $RPM_BUILD_ROOT%{_javadocdir}/%{name} -name "javadoc.sh" -exec chmod a-x '{
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.5.20110530svn15516jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.3.20110530svn15516jpp7
 - new fc release
 
