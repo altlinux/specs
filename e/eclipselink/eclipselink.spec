@@ -1,11 +1,11 @@
-#BuildRequires: geronimo-jpa
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipselink
 %define version 2.3.2
 %global reltag .v20111125-r10461
@@ -13,7 +13,7 @@ BuildRequires: rpm-build-java-osgi
 Name:          eclipselink
 # for the next release is require hibernate-jpa-2.1-api unavailable at the moment
 Version:       2.3.2
-Release:       alt2_1jpp7
+Release:       alt2_2jpp7
 Summary:       Eclipse Persistence Services Project
 Group:         Development/Java
 License:       EPL and BSD
@@ -150,6 +150,9 @@ cp -pr target/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.html
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_2jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
