@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global registry geronimo-osgi-registry
@@ -5,14 +9,13 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt2_9jpp7
+Release:          alt2_12jpp7
 Summary:          OSGI spec bundle support
 Group:            Development/Java
 License:          ASL 2.0 and W3C
 URL:              http://geronimo.apache.org/
 
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{name}/%{version}/%{name}-%{version}-source-release.tar.gz
-Source1:          %{name}.depmap
 # Use parent pom files instead of unavailable 'genesis-java5-flava'
 Patch1:           use_parent_pom.patch
 # Remove itests due to unavailable dependencies
@@ -20,7 +23,7 @@ Patch2:           remove-itests.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    felix-osgi-core
 BuildRequires:    felix-osgi-compendium
 BuildRequires:    geronimo-parent-poms
@@ -38,7 +41,7 @@ Source44: import.info
 %description
 This project is a set of bundles and integration tests for implementing
 OSGi-specific lookup in the Geronimo spec projects.
-    
+
 
 %package javadoc
 Group:            Development/Java
@@ -61,9 +64,7 @@ sed -i 's/\r//' LICENSE NOTICE
     <Export-Package>!*</Export-Package>" geronimo-osgi-locator
 
 %build
-mvn-rpmbuild \
-        -Dmaven.local.depmap.file="%{SOURCE1}" \
-        install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
@@ -96,6 +97,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
 - NMU rebuild to move poms and fragments
 
