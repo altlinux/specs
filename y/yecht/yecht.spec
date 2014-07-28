@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global commitversion 157cf13
@@ -6,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:     yecht
 Version:  0.0.2
-Release:  alt1_7jpp7
+Release:  alt1_8jpp7
 Summary:  A YAML processor based on Syck
 Group:    Development/Java
 License:  MIT
@@ -67,6 +70,9 @@ cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_8jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_7jpp7
 - new fc release
 
