@@ -1,12 +1,13 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-util
 Version:        1.0.1
-Release:        alt1_23jpp7
+Release:        alt1_26jpp7
 Summary:        Common utilities from the Apache Web Services Project
 
 Group:          System/Libraries
@@ -20,7 +21,7 @@ Patch1:         %{name}-maven-eclipse-plugin.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 1.5
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -28,11 +29,6 @@ BuildRequires:  maven-source-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  junit
 BuildRequires:  java-javadoc
 
 Requires:       jpackage-utils
@@ -80,9 +76,12 @@ cp -pR target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files javadoc
 %doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_26jpp7
+- new release
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_23jpp7
 - fc update
 
