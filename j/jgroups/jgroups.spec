@@ -1,7 +1,11 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jgroups
 %define version 3.0.6
 %global namedreltag .Final
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:     jgroups
 Version:  3.0.6
-Release:  alt2_2jpp7
+Release:  alt2_4jpp7
 Summary:  Toolkit for reliable multicast communication
 License:  LGPLv2+
 URL:      http://www.jgroups.org
@@ -29,7 +33,7 @@ BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: bsh
 BuildRequires: log4j
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-source-plugin
@@ -91,6 +95,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.6-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.6-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
