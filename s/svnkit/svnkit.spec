@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           svnkit
 Version:        1.7.6
-Release:        alt2_6jpp7
+Release:        alt2_7jpp7
 Summary:        Pure java subversion client library
 
 Group:          Development/Java
@@ -24,6 +24,8 @@ Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
 
 # patch reported at http://issues.tmatesoft.com/_persistent/svnkit-jna-3.5.0.patch?file=67-134&v=0&c=true
 Patch0:         svnkit-jna-3.5.0.patch
+# Fix for current trilead-ssh2
+Patch1:		svnkit-1.7.6-trilead-ssh2-215.patch
 
 BuildArch:      noarch
 
@@ -32,7 +34,7 @@ BuildRequires:          ant
 BuildRequires:          sequence-library
 BuildRequires:          subversion-javahl >= 1.5
 BuildRequires:          jna >= 3.0
-BuildRequires:          trilead-ssh2 >= 213
+BuildRequires:          trilead-ssh2 >= 215
 BuildRequires:          sqljet >= 1.1.4
 BuildRequires:          tomcat-servlet-3.0-api >= 7.0.0
 Requires:               jpackage-utils >= 0:1.6
@@ -160,6 +162,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_7jpp7
+- new release
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_6jpp7
 - target 5 build
 
