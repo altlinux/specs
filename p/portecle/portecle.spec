@@ -1,18 +1,19 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name portecle
 %define version 1.7
 %global docdir  %{_docdir}/%{name}-%{version}/doc
 
 Name:           portecle
 Version:        1.7
-Release:        alt2_6jpp7
+Release:        alt2_8jpp7
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
@@ -59,7 +60,11 @@ install -Dpm 644 build/portecle.jar $RPM_BUILD_ROOT%{_javadir}/portecle.jar
 
 install -Dpm 644 src/icons/portecle.png \
     $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/portecle.png
-desktop-file-install --vendor=fedora --mode=644 \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+    --vendor=fedora \
+%endif
+    --mode=644 \
     --add-mime-type=application/x-pkcs7-certificates \
     --dir=$RPM_BUILD_ROOT%{_datadir}/applications src/etc/portecle.desktop
 
@@ -84,6 +89,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_8jpp7
+- new release
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_6jpp7
 - new version
 
