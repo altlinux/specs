@@ -1,14 +1,17 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name properties-maven-plugin
 %define version 1.0
 %global namedreltag -alpha-2
 %global namedversion %{version}%{?namedreltag}
 Name:          properties-maven-plugin
 Version:       1.0
-Release:       alt3_0.2.alpha2jpp7
+Release:       alt3_0.4.alpha2jpp7
 Summary:       Properties Maven Plugin
 Group:         Development/Java
 License:       ASL 2.0
@@ -20,7 +23,7 @@ Source0:       %{name}-%{namedversion}-src-svn.tar.gz
 BuildRequires: jpackage-utils
 BuildRequires: mojo-parent
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: plexus-utils
 
 # test deps (no test to run)
@@ -88,6 +91,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.4.alpha2jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.2.alpha2jpp7
 - fixed build
 
