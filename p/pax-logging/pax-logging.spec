@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          pax-logging
 Version:       1.6.9
-Release:       alt1_3jpp7
+Release:       alt1_5jpp7
 Summary:       OSGi Logging framework implementation
 Group:         Development/Java
 License:       ASL 2.0 and BSD and MIT
@@ -21,7 +22,7 @@ BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: log4j
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-javadoc-plugin
@@ -122,6 +123,9 @@ cp -rp pax-logging-api/NOTICE.txt .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_5jpp7
+- new release
+
 * Sat Mar 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_3jpp7
 - fc update
 
