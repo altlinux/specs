@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global githash g0d9d058
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdependency
 Version:        0.7
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        This project provides an API to analyse class dependencies
 
 Group:          Development/Java
@@ -17,7 +21,7 @@ Source0:        tcurdt-jdependency-jdependency-%{version}-0-%{githash}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires:     maven
+BuildRequires:     maven-local
 BuildRequires:     maven-compiler-plugin
 BuildRequires:     maven-install-plugin
 BuildRequires:     maven-jar-plugin
@@ -83,6 +87,9 @@ install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-jdependency.pom
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7-alt1_6jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7-alt1_4jpp7
 - new fc release
 
