@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-common
 Version:          2.1.0
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          JBossWS Common
 Group:            Development/Java
 License:          LGPLv2+
@@ -25,7 +26,7 @@ Source0:          jbossws-common-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-install-plugin
@@ -107,6 +108,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_3jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_1jpp7
 - update
 
