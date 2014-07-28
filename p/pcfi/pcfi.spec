@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global commit bd245c9
 
 Name:		pcfi
 Version:	2010.08.09
-Release:	alt2_4.20111103gitbd245c9jpp7
+Release:	alt2_6.20111103gitbd245c9jpp7
 Summary:	PDF Core Font Information
 
 Group:		Publishing
@@ -13,7 +17,7 @@ URL:		https://github.com/jukka/pcfi
 Source0:	https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{commit}.tar.gz
 Source1:	http://opensource.adobe.com/wiki/display/cmap/License
 BuildArch:	noarch
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-surefire-provider-junit
 Requires:	jpackage-utils
 Source44: import.info
@@ -54,6 +58,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_6.20111103gitbd245c9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_4.20111103gitbd245c9jpp7
 - NMU rebuild to move poms and fragments
 
