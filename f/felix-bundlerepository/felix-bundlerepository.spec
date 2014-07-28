@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global site_name org.apache.felix.bundlerepository
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-bundlerepository
 Version:          1.6.6
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Bundle repository service
 License:          ASL 2.0 and BSD
 Group:            Development/Java
@@ -21,8 +25,8 @@ BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    felix-shell
 BuildRequires:    felix-utils
-BuildRequires:    kxml2
-BuildRequires:    maven
+BuildRequires:    kxml
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    woodstox-core
 BuildRequires:    xpp3
@@ -30,7 +34,7 @@ BuildRequires:    xpp3
 Requires:         jpackage-utils
 Requires:         felix-shell
 Requires:         felix-utils
-Requires:         kxml2
+Requires:         kxml
 Requires:         woodstox-core
 Requires:         xpp3
 Source44: import.info
@@ -81,6 +85,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
