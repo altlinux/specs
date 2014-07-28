@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:          annox
 Version:       0.5.0
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Java annotations in XML resources
 Group:         Development/Java
 License:       BSD
@@ -32,7 +36,7 @@ BuildRequires: apache-commons-lang
 BuildRequires: glassfish-jaxb
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -104,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
