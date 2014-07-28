@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           vecmath1.2
 Version:        1.14
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Free version of vecmath from the Java3D 1.2 specification
 Group:          System/Libraries
 License:        MIT
@@ -30,7 +33,7 @@ Generic matrices' LU and SV decomposition are also there.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       vecmath1.2 = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 # Necessary due to architecture change to noarch
 Obsoletes:      %{name}-javadoc < %{version}-%{release}
 BuildArch: noarch
@@ -71,6 +74,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_9jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_8jpp7
 - update to new release by jppimport
 
