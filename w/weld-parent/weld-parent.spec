@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             weld-parent
 Version:          17
-Release:          alt2_4jpp7
+Release:          alt2_7jpp7
 Summary:          Parent POM for Weld
 Group:            Development/Java
 License:          ASL 2.0
@@ -16,7 +20,8 @@ Patch0:           weld-parent-%{version}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
+BuildRequires:    maven-shared
 BuildRequires:    maven-enforcer-plugin
 
 Requires:         jpackage-utils
@@ -48,6 +53,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 17-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 17-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
