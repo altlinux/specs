@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           miglayout
 Version:        4.0
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Versatile and flexible Swing and SWT layout manager
 URL:            http://www.miglayout.com/
 License:        BSD
@@ -84,6 +87,9 @@ cp -a doc %{buildroot}%{_javadocdir}/%{name}
 %doc net/miginfocom/examples/*.java
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_4jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2jpp7
 - new version
 
