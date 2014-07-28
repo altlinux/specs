@@ -1,7 +1,11 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-naming
 %define version 5.0.6
 %global namedreltag .CR1
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-naming
 Version:          5.0.6
-Release:          alt2_0.4.CR1jpp7
+Release:          alt2_0.6.CR1jpp7
 Summary:          JBoss Naming
 Group:            Development/Java
 License:          LGPLv2+
@@ -27,7 +31,7 @@ BuildRequires:    jboss-common-core
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    rmic-maven-plugin
@@ -90,6 +94,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc JBossORG-EULA.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.6.CR1jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.6-alt2_0.4.CR1jpp7
 - NMU rebuild to move poms and fragments
 
