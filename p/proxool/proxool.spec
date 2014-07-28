@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define git_commit 659fc71
@@ -5,7 +8,7 @@ BuildRequires: jpackage-compat
 Summary: Java connection pool library
 Name:    proxool
 Version: 0.9.1
-Release: alt2_8jpp7
+Release: alt2_9jpp7
 Epoch: 0
 License: ASL 2.0
 URL: http://proxool.sourceforge.net/
@@ -93,6 +96,9 @@ install -m 0644 %{S:1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_9jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_8jpp7
 - new fc release
 
