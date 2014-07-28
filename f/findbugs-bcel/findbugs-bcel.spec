@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # This is a version of BCEL that has been modified by the findbugs team.  They
@@ -11,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs-bcel
 Version:        5.2
-Release:        alt3_1.3.8.7jpp7
+Release:        alt3_1.3.8.8jpp7
 Summary:        Byte Code Engineering Library with findbugs extensions
 
 Group:          Development/Java
@@ -80,6 +83,9 @@ ln -s findbugs-bcel-%{findbugsver} $RPM_BUILD_ROOT%{_javadocdir}/findbugs-bcel
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5.2-alt3_1.3.8.8jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 5.2-alt3_1.3.8.7jpp7
 - new fc release
 
