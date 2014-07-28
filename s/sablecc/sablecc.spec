@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sablecc
 Version:        3.2
-Release:        alt3_3jpp7
+Release:        alt3_4jpp7
 Summary:        A parser generator written in Java
 Group:          Development/Java
 License:        LGPLv2+
@@ -40,13 +40,13 @@ rm %{name}-anttask-1.0.1.tar.gz
 # classes directory.  Don't copy everything, because there's a 
 # namespace collision that will break the build.
 pushd %{name}-anttask-1.0.1
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  
+ant 
 mkdir -p ../classes/org/sablecc/ant/taskdef/
 cp classes/org/sablecc/ant/taskdef/Sablecc.class ../classes/org/sablecc/ant/taskdef/
 popd
 
 # the define here prevents ant from redownloading the deleted tarball
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dsablecc-anttask_available=true jar
+ant -Dsablecc-anttask_available=true jar
 
 %install
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
@@ -61,6 +61,9 @@ install -m 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 %doc doc/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_4jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_3jpp7
 - fc update
 
