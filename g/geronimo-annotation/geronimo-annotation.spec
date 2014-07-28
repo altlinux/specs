@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spec_ver 1.1
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-annotation
 Version:          1.0
-Release:          alt2_9jpp7
+Release:          alt2_12jpp7
 Summary:          Java EE: Annotation API v1.1
 Group:            Development/Java
 License:          ASL 2.0
@@ -16,7 +20,7 @@ Patch1:           use_parent_pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 
@@ -55,7 +59,7 @@ ln -s %{name}.jar %{buildroot}%{_javadir}/annotation.jar
 # poms
 install -d -m 0755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.geronimo.specs:geronimo-annotation_1.0_spec,javax.annotation:jsr250-api"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.geronimo.specs:geronimo-annotation_1.0_spec,javax.annotation:jsr250-api,org.eclipse.jetty.orbit:javax.annotation"
 
 
 # javadoc
@@ -73,6 +77,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
 - NMU rebuild to move poms and fragments
 
