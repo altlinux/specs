@@ -1,9 +1,12 @@
-BuildRequires: maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Summary:        Jetty Toolchain main POM file
 
 Group:          Development/Java
@@ -14,7 +17,7 @@ Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/s
 Source1:        .rpmlint
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  jetty-parent
 
@@ -28,10 +31,11 @@ Jetty Toolchain main POM file
 
 %prep
 %setup -q
+cp -p jetty-distribution-remote-resources/src/main/resources/* .
 
 %build
 pushd %{name}
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install
+mvn-rpmbuild install
 
 %install
 # poms
@@ -44,11 +48,15 @@ install -pm 644 pom.xml \
 popd
 
 %files
+%doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
