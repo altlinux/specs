@@ -1,9 +1,12 @@
-BuildRequires: maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt3_4jpp7
+Release:        alt3_6jpp7
 Summary:        Jetty toolchain artifact for distribution remote resources
 
 Group:          Development/Java
@@ -13,7 +16,7 @@ Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/s
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  jetty-toolchain
 
@@ -30,7 +33,7 @@ Jetty toolchain artifact for distribution remote distribution resources
 %setup -q
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # poms
@@ -49,6 +52,9 @@ install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
