@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:			antlr-maven-plugin
 Version:		2.2
-Release:		alt3_6jpp7
+Release:		alt3_9jpp7
 Summary:		Maven plugin that generates files based on grammar file(s)
 License:		ASL 2.0
 URL:			http://mojo.codehaus.org/antlr-maven-plugin/
@@ -23,7 +23,7 @@ BuildArch:		noarch
 
 BuildRequires:		jpackage-utils
 BuildRequires:		antlr
-BuildRequires:		maven
+BuildRequires:		maven-local
 BuildRequires:		maven-enforcer-plugin
 BuildRequires:		maven-compiler-plugin
 BuildRequires:		maven-install-plugin
@@ -77,6 +77,13 @@ This package contains the API documentation for %{name}.
 %patch0 -p1 -b .modello
 %patch2 -p1 -b .sink
 
+# reporting eventually pulls in another antlr and we'd break with weird errors
+%pom_xpath_inject "pom:dependency[pom:artifactId[text()='maven-reporting-impl']]/pom:exclusions" "
+        <exclusion>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </exclusion>"
+
 # remove all binary bits
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -107,6 +114,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_9jpp7
+- new release
+
 * Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_6jpp7
 - fixed build
 
