@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_8jpp7
+Release: alt1_9jpp7
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -53,6 +56,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_9jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_8jpp7
 - new version
 
