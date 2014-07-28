@@ -1,7 +1,10 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name papaki
 %define version 1.0.0
 %global namedreltag .Beta3
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt1_0.2.Beta3jpp7
+Release:        alt1_0.3.Beta3jpp7
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -113,6 +116,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.3.Beta3jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.2.Beta3jpp7
 - new version
 
