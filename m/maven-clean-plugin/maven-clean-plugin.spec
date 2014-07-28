@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-clean-plugin
 Version:        2.5
-Release:        alt2_2jpp7
+Release:        alt2_5jpp7
 Summary:        Maven Clean Plugin
 
 Group:          Development/Java
@@ -16,7 +16,7 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
@@ -50,6 +50,11 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
+# maven-core has scope "provided" in Plugin Testing Harness, so we
+# need to provide it or tests will fail to compile.  This works for
+# upstream because upstream uses a different version of Plugin Testing
+# Harness in which scope of maven-core dependency is "compile".
+%pom_add_dep org.apache.maven:maven-core::test
 
 %build
 mvn-rpmbuild \
@@ -81,6 +86,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_5jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_2jpp7
 - fixed build
 
