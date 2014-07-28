@@ -1,12 +1,13 @@
+Group: File tools
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: File tools
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           OpenStego
 Version:        0.5.2
-Release:        alt2_10jpp7
+Release:        alt2_11jpp7
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
@@ -92,6 +93,9 @@ touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_11jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_10jpp7
 - new fc release
 
