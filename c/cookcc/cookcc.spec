@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cookcc
 Version:          0.3.3
-Release:          alt2_6jpp7
+Release:          alt2_7jpp7
 Summary:          Lexer and Parser Generator
 Group:            Development/Java
 License:          BSD
@@ -80,6 +83,9 @@ cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE_cookcc.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
