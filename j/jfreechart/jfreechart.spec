@@ -1,32 +1,41 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 # TODO: junit QA tests
 
 Name:           jfreechart
 Version:        1.0.14
-Release:        alt3_3jpp7
+Release:        alt3_9jpp7
 Summary:        Java chart library
 
 Group:          Development/Java
 License:        LGPLv2+
 URL:            http://www.jfree.org/jfreechart/
 Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.tar.gz
+Source1:        bnd.properties
 
 Requires:       servlet jpackage-utils
 Requires:       jcommon >= 1.0.17
-BuildRequires:  %{requires} ant eclipse-swt servlet
+BuildRequires:  %{requires} ant servlet
+%if 0%{?fedora}
+BuildRequires:  eclipse-swt
+%endif
 # Required for converting jars to OSGi bundles
 BuildRequires:  aqute-bnd
 
 BuildArch:      noarch
+Patch0:         remove_itext_dep.patch
 Source44: import.info
 
 %description
-JFreeChart is a free 100%% Java chart library that makes it easy for
+JFreeChart is a free 100% Java chart library that makes it easy for
 developers to display professional quality charts in their applications.
 
-
+%if 0%{?fedora}
 %package swt
 Summary:        Experimental swt extension for jfreechart
 Group:          Development/Java
@@ -35,7 +44,7 @@ Requires:       eclipse-swt jpackage-utils
 
 %description swt
 Experimental swt extension for jfreechart.
-
+%endif
 
 %package javadoc
 Summary:        Javadocs for %{name}
@@ -54,20 +63,25 @@ Javadoc pour %{name}.
 
 %prep
 %setup -q
-
 # Erase prebuilt files
 find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' \;
+%patch0
 
 %build
 CLASSPATH=$(build-classpath jcommon servlet) \
         ant -f ant/build.xml \
         compile javadoc
+%if 0%{?fedora}
+# See RHBZ#912664. There seems to be some dispute about build-classpath.
+# So don't use it for swt.
 ant -f ant/build-swt.xml \
-        -Dswt.jar=$(build-classpath swt) \
+        -Dswt.jar=%{_libdir}/eclipse/swt.jar \
         -Djcommon.jar=$(build-classpath jcommon) \
         -Djfreechart.jar=lib/jfreechart-%{version}.jar
+%endif
 # Convert to OSGi bundle
-java -jar $(build-classpath aqute-bnd) wrap lib/%{name}-%{version}.jar
+java -Djfreechart.bundle.version="%{version}" -jar $(build-classpath aqute-bnd) \
+   wrap -output lib/%{name}-%{version}.bar -properties %{SOURCE1} lib/%{name}-%{version}.jar
 
 %install
 # Directory structure
@@ -77,8 +91,10 @@ install -d $RPM_BUILD_ROOT%{_mavenpomdir}
 
 # JARs and JavaDoc
 install -m 644 lib/jfreechart-%{version}.bar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
+%if 0%{?fedora}
 install -m 644 lib/swtgraphics2d.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/swtgraphics2d.jar
 install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-swt.jar
+%endif
 cp -rp javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # POM
@@ -96,14 +112,19 @@ ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
 %doc ChangeLog licence-LGPL.txt NEWS README.txt
 %{_javadir}/%{name}.jar
 
+%if 0%{?fedora}
 %files swt
 %{_javadir}/%{name}/swtgraphics2d*.jar
 %{_javadir}/%{name}/%{name}-swt*.jar
+%endif
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_9jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_3jpp7
 - new fc release
 
