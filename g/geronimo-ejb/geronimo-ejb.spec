@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: geronimo-annotation geronimo-interceptor
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,9 +23,8 @@ Patch1:           use_parent_pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven2 >= 2.2.1
+BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
-BuildRequires:    maven-resources-plugin
 BuildRequires:    jta
 BuildRequires:    interceptor_api
 BuildRequires:    annotation_api
@@ -112,6 +115,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
