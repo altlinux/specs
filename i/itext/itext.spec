@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_15jpp7
+Release:          alt2_19jpp7
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -32,6 +32,8 @@ Source6:          itext-toolbox.desktop
 # cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/tools checkout -r v2_1_7 org.eclipse.orbit/com.lowagie.text/META-INF/MANIFEST.MF
 # tar cf export-manifest.tar org.eclipse.orbit/com.lowagie.text/META-INF/MANIFEST.MF
 Source7:          export-manifest.tar
+Source8:          http://repo2.maven.org/maven2/com/lowagie/itext-rtf/%{version}/itext-rtf-%{version}.pom
+Source9:          http://repo2.maven.org/maven2/com/lowagie/itext-rups/%{version}/itext-rups-%{version}.pom
 Patch1:           itext-2.1.5-pdftk.patch
 
 # The iText POM specifies that it requires bouncycastle's "jdk14" JARs
@@ -90,22 +92,18 @@ especially useful in combination with Java(TM) technology-based Servlets: The
 look and feel of HTML is browser dependent; with iText and PDF you can control
 exactly how your servlet's output will look.
 
-
 %package core
 Summary:          The core iText Java-PDF library
 Group:            Development/Java
 BuildArch:        noarch
 Requires:         bouncycastle-tsp >= 1.46-4
 Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Obsoletes:        itext < 2.1.7-12
 Obsoletes: itext2 <= 2.1.7-alt1_9jpp6
 
 %description core
 The core package contains the main iText library and the related maven POM
 files.
-
 
 %package rtf
 Summary:        Library to output Rich Text Files
@@ -118,7 +116,6 @@ Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 The RTF package is an extension of the iText library and allows iText to output
 Rich Text Files in addition to PDF files. These files can then be viewed and
 edited with RTF viewers such as OpenOffice.org Writer.
-
 
 %package rups
 Summary:        Reading/Updating PDF Syntax
@@ -134,14 +131,12 @@ iText RUPS is a tool that combines SUN's PDF Renderer (to view PDF documents),
 iText's PdfReader (to inspect the internal structure of a PDF file), and
 iText's PdfStamper to manipulate a PDF file.
 
-
 %package toolbox
 Summary:        Some %{alternate_name} tools
 Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or MIT
-Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
-
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description toolbox
 iText is a free open source Java-PDF library released on SF under the MPL/LGPL;
@@ -149,7 +144,6 @@ iText comes with a simple GUI: the iText toolbox. The original developers of
 iText want to publish this toolbox as a separate project under the more
 permissive MIT license. This is a utility that allows you to use a number of
 iText tools.
-
 
 %package javadoc
 Summary:        Javadoc for %{alternate_name}
@@ -159,7 +153,7 @@ Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 
 %description javadoc
-API documentation for the %%{alternate_name} package.
+API documentation for the %{alternate_name} package.
 
 
 %prep
@@ -170,6 +164,18 @@ cp -pr %{SOURCE2} JPP-itext.pom
 %patch3 -p0 -b .xmloutput
 %patch4 -p0
 %patch5 -p0
+
+cp -pr %{SOURCE8} JPP-%{name}-rtf.pom
+cp -pr %{SOURCE9} JPP-%{name}-rups.pom
+
+for p in JPP-%{name}-rtf.pom JPP-%{name}-rups.pom ; do
+%pom_remove_dep bouncycastle:bcmail-jdk14 ${p}
+%pom_add_dep org.bouncycastle:bcmail-jdk16 ${p}
+%pom_remove_dep bouncycastle:bcprov-jdk14 ${p}
+%pom_add_dep org.bouncycastle:bcprov-jdk16 ${p}
+%pom_remove_dep bouncycastle:bctsp-jdk14 ${p}
+%pom_add_dep org.bouncycastle:bctsp-jdk16 ${p}
+done
 
 # move manifest to build area
 tar -xf %{SOURCE7}
@@ -250,7 +256,7 @@ cp -a %{name}.png \
 %if %{with_gcj}
  RPM_OPT_FLAGS="$RPM_OPT_FLAGS -fno-indirect-classes" %{_bindir}/aot-compile-rpm
 %endif
-
+      
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -258,8 +264,12 @@ cp -pr build/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # Install the pom
 install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
-%add_to_maven_depmap itext itext %{version} JPP itext
-%add_to_maven_depmap com.lowagie itext %{version} JPP itext
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "itext:itext"
+
+cp -pr JPP-%{name}-rtf.pom $RPM_BUILD_ROOT%{_mavenpomdir}
+%add_maven_depmap JPP-%{name}-rtf.pom %{name}-rtf.jar -f rtf
+cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
+%add_maven_depmap JPP-%{name}-rups.pom %{name}-rups.jar  -f rups
 
 %files
 %if %{with_gcj}
@@ -281,11 +291,15 @@ cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 %files rtf
 %{_javadir}/%{name}-rtf.jar
 %{_javadir}/%{name}-rtf-%{version}.jar
+%{_mavenpomdir}/JPP-%{name}-rtf.pom
+%{_mavendepmapfragdir}/%{name}-rtf
 
 %files rups
 %doc src/rups/com/lowagie/rups/view/icons/copyright_notice.txt
 %{_javadir}/%{name}-rups.jar
 %{_javadir}/%{name}-rups-%{version}.jar
+%{_mavenpomdir}/JPP-%{name}-rups.pom
+%{_mavendepmapfragdir}/%{name}-rups
 %{_bindir}/%{name}-rups
 %{_datadir}/applications/%{name}-rups.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}-rups.png
@@ -300,10 +314,14 @@ cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc build/bin/com/lowagie/text/{apache_license,lgpl,misc_licenses,MPL-1.1}.txt
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_19jpp7
+- new release
+
 * Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_15jpp7
 - fixed build
 
