@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt4_9jpp7
+Release:        alt4_14jpp7
 Summary:        Maven plugin to update header licenses of source files
 
 Group:          Development/Java
@@ -24,7 +24,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-deploy-plugin
 BuildRequires:  maven-jar-plugin
@@ -44,8 +44,8 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-repository-plugin
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-site-plugin
-BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-shared
+BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  maven-release-plugin
 BuildRequires:  plexus-utils
@@ -55,6 +55,7 @@ BuildRequires:  xmltool
 
 Requires:       jpackage-utils
 Requires:       maven
+Requires:       maven-shared
 Requires:       xmltool
 Source44: import.info
 
@@ -85,6 +86,8 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 
+# Remove wagon-webdav extension which is not available
+%pom_xpath_remove pom:build/pom:extensions
 
 %build
 mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
@@ -117,6 +120,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt4_14jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt4_9jpp7
 - fixed build
 
