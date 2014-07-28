@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          serp
 Version:       1.14.2
-Release:       alt2_0.2.20120406cvsjpp7
+Release:       alt2_0.4.20120406cvsjpp7
 Summary:       Bytecode manipulation framework
 Group:         Development/Java
 License:       BSD
@@ -19,7 +23,7 @@ Patch0:        serp-1.13.1-pom_xml.patch
 
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -92,6 +96,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.4.20120406cvsjpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.2.20120406cvsjpp7
 - NMU rebuild to move poms and fragments
 
