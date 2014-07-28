@@ -1,15 +1,19 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		javamail
 Version:	1.4.3
-Release:	alt1_12jpp7
+Release:	alt1_16jpp7
 Summary:	Java Mail API
 
 Group:		Development/Java
 License:	CDDL or GPLv2 with exceptions
-URL:		http://java.sun.com/products/javamail/
+URL:		http://www.oracle.com/technetwork/java/javamail
 
 # Parent POM
 Source0:	http://download.java.net/maven/2/com/sun/mail/all/%{version}/all-%{version}.pom
@@ -37,7 +41,7 @@ Patch0:		%{name}-add-osgi-info.patch
 Patch1:		%{name}-cleanup-poms.patch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-assembly-plugin
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-dependency-plugin
@@ -139,7 +143,7 @@ for sub in mailapi imap pop3 smtp; do
 done
 
 # Add maven dependency information
-%add_maven_depmap JPP.%{name}-mail.pom %{name}/mail.jar -a "javax.mail:mailapi,com.sun.mail:imap,com.sun.mail:pop3,com.sun.mail:smtp"
+%add_maven_depmap JPP.%{name}-mail.pom %{name}/mail.jar -a "javax.mail:mailapi,com.sun.mail:imap,com.sun.mail:pop3,com.sun.mail:smtp,org.eclipse.jetty.orbit:javax.mail.glassfish"
 %add_maven_depmap JPP.%{name}-dsn.pom %{name}/dsn.jar
 
 install -m 644 poms/%{name}-parent-distrib.pom \
@@ -158,6 +162,9 @@ install -m 644 poms/%{name}-parent-distrib.pom \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_16jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_12jpp7
 - added OSGi info
 
