@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsoup
 Version:        1.6.1
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        Java library for working with real-world HTML
 
 Group:          Development/Java
@@ -16,7 +20,7 @@ Source0:        %{name}-%{version}.tar.xz
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-javadoc-plugin
@@ -86,6 +90,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_7jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_5jpp7
 - new fc release
 
