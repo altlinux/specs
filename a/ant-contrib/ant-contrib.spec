@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.20.b3jpp7
+Release:        alt5_0.21.b3jpp7
 License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
 Group:          Development/Java
@@ -45,7 +45,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Api documentation for %%{name}.
+Api documentation for %{name}.
 
 %prep
 %setup -q  -n %{name}
@@ -99,6 +99,9 @@ ln -s ant/ant-contrib.jar %buildroot%_javadir/ant-contrib.jar
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.21.b3jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.20.b3jpp7
 - fc update
 
