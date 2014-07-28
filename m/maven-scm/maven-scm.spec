@@ -1,7 +1,7 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-scm
 Version:        1.7
-Release:        alt3_3jpp7
+Release:        alt3_6jpp7
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 Group:          Development/Java
@@ -45,6 +45,7 @@ URL:            http://maven.apache.org/scm
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        %{name}-jpp-depmap.xml
+Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # fix modello configuration in vss provider pom and the cast as above
 Patch0:         005_maven-scm_fix-vss-provider-pom.patch
@@ -56,7 +57,7 @@ Patch5:         012-plexus-component-metadata.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -116,6 +117,8 @@ Javadoc for %{name}.
 %patch1 -p1
 %patch5 -p1
 
+cp -p %{SOURCE2} LICENSE
+
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin maven-scm-plugin
 
@@ -173,6 +176,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/api*
 %{_javadir}/%{name}/client*
@@ -183,14 +187,19 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/*
 
 %files test
+%doc LICENSE
 %{_javadir}/%{name}/provider-cvstest*
 %{_javadir}/%{name}/provider-svntest*
 %{_javadir}/%{name}/test*
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_6jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_3jpp7
 - fixed build
 
