@@ -1,7 +1,10 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name shrinkwrap-descriptors
 %define version 2.0.0
 %global namedreltag -alpha-2
@@ -10,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.2.alpha2jpp7
+Release:       alt3_0.4.alpha2jpp7
 Summary:       ShrinkWrap subproject for creating Archive Descriptors
 Group:         Development/Java
 License:       ASL 2.0
@@ -29,7 +32,7 @@ BuildRequires: jpackage-utils
 BuildRequires: apiviz
 BuildRequires: junit4
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-checkstyle-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
@@ -131,6 +134,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.4.alpha2jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.2.alpha2jpp7
 - fixed build
 
