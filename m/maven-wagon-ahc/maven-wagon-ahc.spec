@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-wagon-ahc
 Version:	1.2.1
-Release:	alt2_2jpp7
+Release:	alt2_7jpp7
 Summary:	A wagon provider for HTTP transfers
 
 Group:		Development/Java
@@ -17,26 +21,24 @@ Source2:	http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:	noarch
 
-BuildRequires:	animal-sniffer
 BuildRequires:	async-http-client
 BuildRequires:	easymock2
 BuildRequires:	forge-parent
 BuildRequires:	jpackage-utils
 BuildRequires:	junit
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-jar-plugin
 BuildRequires:	maven-javadoc-plugin
 BuildRequires:	maven-resources-plugin
 BuildRequires:	maven-surefire-plugin
 BuildRequires:	maven-wagon
-BuildRequires:	plexus-container-default
+BuildRequires:	plexus-containers-container-default
 BuildRequires:	plexus-utils
 
-Requires:	async-http-client
-Requires:	jpackage-utils
-Requires:	maven-wagon
-Requires:	plexus-utils
+Requires:      async-http-client
+Requires:      maven-wagon
+Requires:      plexus-utils
 Source44: import.info
 
 
@@ -46,7 +48,6 @@ A wagon provider for HTTP transfers based on the async-http-client.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -59,6 +60,14 @@ find -name '*.class' -delete
 find -name '*.jar' -delete
 
 cp %{SOURCE1} .
+
+# We're not testing yet so these aren't necessary
+%pom_remove_dep org.apache.maven.wagon:wagon-provider-test
+%pom_remove_dep ch.qos.logback:logback-classic
+
+# This plugin breaks build on f19+
+# It's just checking for compatibility with older JDK API
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 
 %build
 # we don't have all test deps, so tests fail
@@ -88,6 +97,9 @@ install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
