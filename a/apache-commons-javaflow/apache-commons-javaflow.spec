@@ -1,7 +1,11 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apache-commons-javaflow
 %define version 1.0
 %global base_name  javaflow
@@ -10,7 +14,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt8_0.2.20120509SNAPSHOTjpp7
+Release:       alt8_0.4.20120509SNAPSHOTjpp7
 Summary:       Commons Javaflow
 Group:         Development/Java
 License:       ASL 2.0
@@ -33,7 +37,7 @@ BuildRequires: objectweb-asm
 BuildRequires: junit
 BuildRequires: junit-addons
 
-BuildRequires: maven
+BuildRequires: maven-local
 #BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -135,6 +139,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.4.20120509SNAPSHOTjpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.2.20120509SNAPSHOTjpp7
 - NMU rebuild to move poms and fragments
 
