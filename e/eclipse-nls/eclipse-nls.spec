@@ -20,7 +20,7 @@ License: EPL
 URL: http://www.eclipse.org/babel/
 
 Version: 4.2.0.v20121120043402
-Release: alt1_1jpp7
+Release: alt1_2jpp7
 # Babel language pack (zipped p2 update site) via: http://www.eclipse.org/babel/downloads.php
 Source0: http://download.eclipse.org/technology/babel/update-site/R0.10.1/babel-R0.10.1-juno.zip
 Requires:   eclipse-platform >= 1:4.2
@@ -154,6 +154,9 @@ mkdir -p $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse/
 mv eclipse/plugins/ $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0.v20121120043402-alt1_2jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.0.v20121120043402-alt1_1jpp7
 - fc update
 
