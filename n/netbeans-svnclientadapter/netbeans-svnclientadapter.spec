@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -12,7 +15,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{nb_}-svnclientadapter
 Version:        %{nb_ver}
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Subversion Client Adapter
 
 License:        ASL 2.0
@@ -69,6 +72,9 @@ ant -verbose svnClientAdapter.jar
 %{_javadir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_6jpp7
+- new release
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_5jpp7
 - new version
 
