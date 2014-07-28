@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-velocity
 Version:        1.1.8
-Release:        alt2_11jpp7
+Release:        alt2_14jpp7
 Epoch:          0
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
@@ -52,7 +53,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -64,12 +65,12 @@ BuildRequires:  maven-doxia-sitetools
 BuildRequires:  ant-contrib
 BuildRequires:  classworlds >= 0:1.1
 BuildRequires:  apache-commons-collections
-BuildRequires:  plexus-container-default
+BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  velocity
 Requires:  classworlds >= 0:1.1
 Requires:  apache-commons-collections
-Requires:  plexus-container-default
+Requires:  plexus-containers-container-default
 Requires:  plexus-utils
 Requires:  velocity
 Source44: import.info
@@ -88,7 +89,7 @@ Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 %prep
 %setup -q -n plexus-velocity-%{version}
@@ -128,6 +129,9 @@ cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt2_14jpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt2_11jpp7
 - fixed maven1 dependency
 
