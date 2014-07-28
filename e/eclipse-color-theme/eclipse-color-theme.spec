@@ -1,7 +1,7 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipse-color-theme
 %define version 0.11.1
 %global install_loc     %{_datadir}/eclipse/dropins/%{name}
@@ -10,7 +10,7 @@ BuildRequires: rpm-build-java-osgi
 Summary:        An Eclipse plugin which permits color theme switching
 Name:           eclipse-color-theme
 Version:        0.11.1
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 License:        EPL
 Group:          Development/Java
 URL:            http://www.eclipsecolorthemes.org/
@@ -46,6 +46,9 @@ install -d -m 755 $RPM_BUILD_ROOT%{install_loc}
 %{install_loc}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_5jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_4jpp7
 - new version
 
