@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           gettext-commons
 Version:        0.9.6
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Java internationalization (i18n) library
 
 Group:          Development/Java
@@ -93,6 +96,9 @@ popd
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_8jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_7jpp7
 - new version
 
