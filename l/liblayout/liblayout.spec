@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: liblayout
 Version: 0.2.10
-Release: alt1_5jpp7
+Release: alt1_7jpp7
 Summary: CSS based layouting framework
-License: LGPLv2+
+License: LGPLv2+ and UCD
 Group: System/Libraries
 Source: http://downloads.sourceforge.net/jfreereport/liblayout-%{version}.zip
 URL: http://reporting.pentaho.org/
@@ -64,6 +65,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_7jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.10-alt1_5jpp7
 - new version
 
