@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.1
-Release:        alt8_14jpp7
+Release:        alt8_16jpp7
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 Group:          Development/Java
@@ -22,7 +23,7 @@ Patch4:         commons-collections-3.2-build_xml.patch
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
@@ -111,9 +112,9 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %build
 
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  tf.javadoc
+ant tf.javadoc
 
 %install
 
@@ -167,6 +168,9 @@ ln -s %{name}-testframework-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-tes
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt8_16jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt8_14jpp7
 - fc update
 
