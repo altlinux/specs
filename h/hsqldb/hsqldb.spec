@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           hsqldb
 Version:        1.8.1.3
-Release:        alt3_9jpp7
+Release:        alt3_10jpp7
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -246,6 +246,9 @@ install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt3_10jpp7
+- new release
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt3_9jpp7
 - fixed init script
 
