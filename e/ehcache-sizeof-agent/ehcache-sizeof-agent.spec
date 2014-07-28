@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-sizeof-agent
 Version:       1.0.1
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Ehcache Size Of Agent
 Group:         Development/Java
 License:       ASL 2.0
@@ -11,6 +15,8 @@ URL:           http://www.terracotta.org/
 # tar czf ehcache-sizeof-agent-1.0.1.tar.gz sizeof-agent-1.0.1
 Source0:       %{name}-%{version}.tar.gz
 BuildRequires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: maven-shared
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-gpg-plugin
 BuildRequires: maven-idea-plugin
@@ -70,6 +76,9 @@ cp -rp target/sizeof-agent-1.0.1-javadoc.jar $RPM_BUILD_ROOT%{_javadocdir}/%{nam
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
