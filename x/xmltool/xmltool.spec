@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt3_5jpp7
+Release:        alt3_8jpp7
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Java
@@ -17,13 +18,12 @@ URL:            http://code.google.com/p/xmltool
 # svn export http://xmltool.googlecode.com/svn/tags/xmltool-3.3 xmltool
 # tar cfJ xmltool-3.3.tar.xz xmltool
 Source0:        %{name}-%{version}.tar.xz
-# remove dependency on maven-license-plugin and dependencies for tests
-Patch0:         001-xmltool-fixbuild.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
+BuildRequires:  maven-surefire-provider-testng
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 
 Requires:       jpackage-utils
@@ -38,7 +38,6 @@ together, using the Fluent Interface pattern to facilitate XML manipulations.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -47,14 +46,17 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
 
 # Fix end-of-line encoding
 sed -i 's/\r//' LICENSE.txt
 
 
 %build
-# tests require surefire/testng, not currently available
+# Remove dep on maven-wagon and maven-license plugins
+%pom_xpath_remove "pom:build/pom:extensions"
+%pom_remove_plugin com.google.code.maven-license-plugin:maven-license-plugin
+
+# Disable tests because they require an internet connection to run!
 mvn-rpmbuild \
   -Dmaven.test.skip=true \
   install javadoc:javadoc
@@ -81,9 +83,13 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %files javadoc
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_8jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_5jpp7
 - rebuild with new apache-resource-bundles
 
