@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-util
 Version:        1.2.0
-Release:        alt2_4jpp7
+Release:        alt2_6jpp7
 Summary:        FEST Util
 
 Group:          Development/Java
@@ -19,7 +23,7 @@ BuildArch:      noarch
 
 BuildRequires:  junit
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-provider-junit4
@@ -82,6 +86,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
