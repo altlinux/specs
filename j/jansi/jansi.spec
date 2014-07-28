@@ -1,13 +1,14 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 Requires: fusesource-pom
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jansi
 Version:          1.9
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 Group:            Development/Java
 License:          ASL 2.0
@@ -20,7 +21,7 @@ Source0:          jansi-%{version}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -98,6 +99,9 @@ install -pm 644 %{name}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc license.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_3jpp7
+- new release
+
 * Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_1jpp7
 - new release
 
