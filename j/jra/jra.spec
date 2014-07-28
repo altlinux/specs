@@ -1,10 +1,11 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jra
 %define version 1.0
 %global namedreltag -alpha-4
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.2.alpha4jpp7
+Release:       alt2_0.5.alpha4jpp7
 Summary:       Java REST Annotations
 License:       ASL 2.0
 Group:         Development/Java
@@ -26,7 +27,7 @@ Source0:       %{name}-%{namedversion}.tar.xz
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -57,8 +58,10 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 
+%pom_xpath_remove pom:build/pom:extensions
+
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild \
   -Dproject.build.sourceEncoding=UTF-8 \
   package javadoc:aggregate
 
@@ -90,6 +93,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.5.alpha4jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.2.alpha4jpp7
 - fc update
 
