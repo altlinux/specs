@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       pool
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt2_2jpp7
+Release:          alt2_5jpp7
 Summary:          Apache Commons Pool Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -15,7 +19,7 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 
 Requires:         jpackage-utils
@@ -55,12 +59,11 @@ mvn-rpmbuild -Dmaven.test.failure.ignore=true install javadoc:javadoc
 install -d -m 0755 %{buildroot}%{_javadir}
 install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 (cd %{buildroot}%{_javadir} && for jar in *%{name}*; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
-ln -s %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name}"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -73,10 +76,13 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
