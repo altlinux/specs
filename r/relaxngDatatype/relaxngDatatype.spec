@@ -37,21 +37,23 @@ BuildRequires: jpackage-compat
 
 Name:           relaxngDatatype
 Version:        1.0
-Release:        alt4_8.3jpp7
+Release:        alt4_10.4jpp7
 Summary:        RELAX NG Datatype API
 
 Group:          Development/Java
 License:        BSD
 URL:            https://sourceforge.net/projects/relaxng
-Source0:        %{name}-%{version}.zip
+# wget http://netcologne.dl.sourceforge.net/project/relaxng/datatype%20%28java%29/Ver.%{version}/%{name}-%{version}.zip
+Source0:        http://netcologne.dl.sourceforge.net/project/relaxng/datatype%%20%%28java%%29/Ver.%{version}/%{name}-%{version}.zip
+Source1:        http://repo1.maven.org/maven2/%{name}/%{name}/20020414/%{name}-20020414.pom
 Patch0:         %{name}-compressjar.patch
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 Requires:       jpackage-utils
-#Provides:       msv <= %{version}
-#Obsoletes:      msv <= %{version}
+Provides:       msv <= %{version}
+Obsoletes:      msv <= %{version}
 Source44: import.info
 
 %description
@@ -90,14 +92,24 @@ for f in `find -name \*.html -o -name \*.css`; do
 done
 popd
 
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
+
 %files
 %doc copying.txt
 %{_javadir}/*.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_10.4jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_8.3jpp7
 - rebuild to properly resolve msv conflict
 
