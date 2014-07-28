@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xpp3
 Version:        1.1.3.8
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Epoch:          1
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
@@ -99,7 +99,7 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %build
 export CLASSPATH=$(build-classpath xml-commons-apis junit)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  xpp3 junit apidoc
+ant xpp3 junit apidoc
 
 %install
 
@@ -148,6 +148,9 @@ install -pm 644 %{SOURCE2} \
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1.3.8-alt1_8jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.1.3.8-alt1_7jpp7
 - fc update
 
