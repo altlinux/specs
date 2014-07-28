@@ -1,10 +1,10 @@
 %define oname twill
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: twill Web browsing language
 License: MIT
 Group: Development/Python
@@ -129,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2
+- Added module for Python 3
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1
 - Version 1.8.0
 
