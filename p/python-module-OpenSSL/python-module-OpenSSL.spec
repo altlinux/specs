@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-%define version    0.13.1
+%define version    0.14
 %define release    alt1
 
 %define source_version %version
@@ -20,12 +20,13 @@ Group: Development/Python
 Url: http://pyopenssl.sourceforge.net/
 Packager: Alexey Morozov <morozov@altlinux.org>
 BuildPreReq: rpm-build-python > 0.12-alt3
+BuildArch: noarch
 
 # Automatically added by buildreq on Mon Jan 12 2004
-BuildRequires: libssl-devel python-devel
+BuildRequires: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-distribute
 %endif
 
 Provides: %__python_module_prefix-pyOpenSSL
@@ -115,10 +116,10 @@ cp -a . ../python3
 %endif
 
 %build
-%python_build_debug
+%python_build
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -129,17 +130,19 @@ popd
 %endif
 
 %install
-%python_build_install --optimize=2 \
-		--record=INSTALLED_FILES
+%python_install
+
 %if_with python3
 pushd ../python3
-%python3_build_install --optimize=2
+%python3_install
 popd
 %endif
 
 
-%files -f INSTALLED_FILES
+%files
 %doc ChangeLog INSTALL README TODO
+%python_sitelibdir/%modulename/
+%exclude %python_sitelibdir/*.egg-info
 %exclude %python_sitelibdir/OpenSSL/test
 
 %files tests
@@ -155,6 +158,7 @@ popd
 %files -n python3-module-%modulename
 %doc ChangeLog INSTALL README TODO
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.egg-*
 %exclude %python3_sitelibdir/OpenSSL/test
 
 %files -n python3-module-%modulename-tests
@@ -162,6 +166,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 29 2014 Vladimir Didenko <cow@altlinux.org> 0.14-alt1
+- Version 0.14
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt1
 - Version 0.13.1
 
