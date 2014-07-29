@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: apache-mina
 Version: 2.0.4
-Release: alt2_4jpp7
+Release: alt2_6jpp7
 Summary: Apache MINA
 
 Group: Development/Java
@@ -19,7 +23,7 @@ BuildArch: noarch
 Requires: jpackage-utils
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: pmd
 
 BuildRequires: maven-compiler-plugin
@@ -105,6 +109,9 @@ cp -rp src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
