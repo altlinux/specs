@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       email
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.2
-Release:          alt2_3jpp7
+Release:          alt2_5jpp7
 Summary:          Apache Commons Email Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -18,12 +22,10 @@ Source1:          %{short_name}.depmap
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
+BuildRequires:    maven-local
 BuildRequires:    javamail
 Requires:         javamail
 Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
@@ -60,8 +62,8 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
 
 # poms
 install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_to_maven_depmap org.apache.commons %{short_name} %{version} JPP %{short_name}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name}"
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -70,14 +72,17 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %files
 %doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
 %{_javadir}/*
-%{_mavenpomdir}/JPP-%{short_name}.pom
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
