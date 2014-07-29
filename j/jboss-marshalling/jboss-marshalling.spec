@@ -1,6 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-marshalling
 %define version 1.3.13
 %global namedreltag .GA
@@ -8,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-marshalling
 Version:          1.3.13
-Release:          alt2_3jpp7
+Release:          alt2_7jpp7
 Summary:          JBoss Marshalling
 Group:            Development/Java
 License:          LGPLv2+
@@ -22,7 +27,7 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    jboss-parent
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -32,15 +37,14 @@ BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-surefire-provider-testng
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    testng
 BuildRequires:    jboss-modules
 BuildRequires:    qdox
-BuildRequires:    apiviz
 BuildRequires:    jdepend
 BuildRequires:    graphviz
-BuildRequires:    gdata-java
+%if 0%{?fedora}
+BuildRequires:    apiviz
+%endif
 
 Requires:         jboss-modules
 Requires:         jpackage-utils
@@ -61,6 +65,11 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 %patch0 -p1
+
+# Conditionally remove dependency on apiviz
+if [ %{?rhel} ]; then
+    %pom_remove_plugin :maven-javadoc-plugin
+fi
 
 %build
 # Caused by: java.lang.ClassNotFoundException: com.thoughtworks.qdox.model.AbstractInheritableJavaEntity
@@ -103,6 +112,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
