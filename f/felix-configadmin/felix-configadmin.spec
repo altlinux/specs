@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global site_name org.apache.felix.configadmin
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-configadmin
 Version:          1.4.0
-Release:          alt2_3jpp7
+Release:          alt2_7jpp7
 Summary:          Felix Configuration Admin Service
 License:          ASL 2.0
 Group:            Development/Java
@@ -16,11 +20,13 @@ Source0:          http://www.fightrice.com/mirrors/apache/felix/%{site_name}-%{v
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    felix-osgi-compendium >= 1.4.0-10
 BuildRequires:    felix-osgi-core
 BuildRequires:    aqute-bndlib
+BuildRequires:    animal-sniffer
+BuildRequires:    maven-shared
 
 Requires:         jpackage-utils
 Requires:         felix-osgi-compendium >= 1.4.0-10
@@ -71,6 +77,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
