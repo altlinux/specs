@@ -8,7 +8,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-cmakeed
 Version:        1.1.6
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        CMake Editor plug-in for Eclipse
 
 Group:          Development/Java
@@ -48,6 +48,9 @@ eclipse-pdebuild
 %doc com.cthing.cmakeed.feature/License.html
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_5jpp7
+- new release
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_4jpp7
 - new version
 
