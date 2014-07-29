@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        A pure-Java implementation of Clearsilver
 
 Group:          Development/Java
@@ -16,7 +20,7 @@ Source0:        jsilver-1.0.0.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -75,6 +79,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp7
 - new version
 
