@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name felix-osgi-obr-resolver
 %define version 0.1.0
 %global namedreltag .Beta1
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-osgi-obr-resolver
 Version:          0.1.0
-Release:          alt2_0.5.Beta1jpp7
+Release:          alt2_0.7.Beta1jpp7
 Summary:          Apache Felix Resolver
 Group:            Development/Java
 License:          ASL 2.0
@@ -27,7 +31,7 @@ Patch2:           0003-Compile-with-target-1.5-or-greater.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -94,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.7.Beta1jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.5.Beta1jpp7
 - NMU rebuild to move poms and fragments
 
