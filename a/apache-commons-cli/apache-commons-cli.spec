@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.2
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Command Line Interface Library for Java
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,7 +19,7 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
+BuildRequires:    maven-local
 
 Requires:         jpackage-utils
 
@@ -49,7 +49,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{short_name}-%{version}-src
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 # jars
@@ -60,7 +60,7 @@ install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{na
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name}"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -78,6 +78,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_9jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_7jpp7
 - fc update
 
