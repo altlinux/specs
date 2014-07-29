@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-swing-junit
 Version:        1.2.1
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        FEST Swing JUnit support
 
 Group:          Development/Java
@@ -16,7 +20,7 @@ Patch0:         fest-swing-junit-remove-fest-test-dep.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  junit
@@ -86,6 +90,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_6jpp7
+- new release
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp7
 - new release
 
