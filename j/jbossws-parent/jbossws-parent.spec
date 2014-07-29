@@ -1,10 +1,11 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-parent
 %define version 1.1.0
 %global namedreltag .GA
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-parent
 Version:          1.1.0
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          JBossWS Parent
 Group:            Development/Java
 License:          LGPLv2+
@@ -22,7 +23,7 @@ Source0:          https://repository.jboss.org/nexus/service/local/repositories/
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -60,6 +61,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_3jpp7
+- new release
+
 * Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_1jpp7
 - new release
 
