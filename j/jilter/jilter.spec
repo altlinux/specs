@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jilter
 Version:        1.2
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Sendmail milter protocol for Java
 
 Group:          Development/Java
@@ -67,6 +70,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_6jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_5jpp7
 - new version
 
