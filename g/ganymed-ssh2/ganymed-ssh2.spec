@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ganymed-ssh2
 Version:        210
-Release:        alt1_12jpp7
+Release:        alt1_13jpp7
 Summary:        SSH-2 protocol implementation in pure Java
 
 Group:          Development/Java
@@ -53,7 +53,7 @@ sed -i 's/\r//' LICENSE.txt README.txt HISTORY.txt faq/FAQ.html
 find examples -name \*.java -exec sed -i 's/\r//' {} \;
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 %install
 
@@ -75,6 +75,9 @@ cp -pr javadoc/* \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:210-alt1_13jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:210-alt1_12jpp7
 - fc update
 
