@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-interceptor
 %define version 2.0.0
 %global namedreltag .Final
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-interceptor
 Version:          2.0.0
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss EJB Interceptor Library
 Group:            Development/Java
 License:          ASL 2.0 and LGPLv2.1+
@@ -24,7 +28,7 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -101,6 +105,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
