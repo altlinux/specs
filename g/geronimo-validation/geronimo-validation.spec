@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spec_ver 1.0
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           geronimo-validation
 Version:        1.1
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        Geronimo implementation of JSR 303
 Group:          Development/Java
 License:        ASL 2.0
@@ -17,7 +21,7 @@ Patch0:         %{name}-build.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  geronimo-parent-poms
@@ -68,6 +72,9 @@ cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
