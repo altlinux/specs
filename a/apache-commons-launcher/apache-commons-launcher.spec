@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-%{short_name}
 Version:       1.1
-Release:       alt1_10.20100521svn936225jpp7
+Release:       alt1_12.20100521svn936225jpp7
 Summary:       A cross platform Java application launcher
 Group:         Development/Java
 License:       ASL 2.0
@@ -40,18 +40,7 @@ Patch0:        %{short_name}-pom.patch
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-idea-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
+BuildRequires: maven-local
 Requires:      jpackage-utils
 Source44: import.info
 
@@ -99,7 +88,7 @@ sed -i 's/\r//' README.txt LICENSE.txt NOTICE.txt
 sed -i "s|\<groupId\>ant\<\/groupId\>|<groupId>org.apache.ant</groupId>|g" build.xml
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
@@ -113,12 +102,9 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 # pom
-install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_to_maven_depmap org.apache.commons %{short_name} %{version} JPP %{short_name}
-
-# following line is only for backwards compatibility. New packages
-# should use proper groupid org.apache.commons
-%add_to_maven_depmap %{short_name} %{short_name} %{version} JPP %{short_name}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
+%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name}"
 
 %files
 %doc LICENSE.txt NOTICE.txt README.txt
@@ -131,6 +117,9 @@ install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_12.20100521svn936225jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_10.20100521svn936225jpp7
 - fc update
 
