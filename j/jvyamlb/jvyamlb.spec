@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global git_commit e0fdedc
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           jvyamlb
 Version:        0.2.5
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        YAML processor for JRuby
 
 Group:          Development/Java
@@ -52,7 +55,6 @@ build-jar-repository -s -p lib joda-time bytelist jcodings
 
 
 %install
-%__rm -rf %{buildroot}
 %__mkdir_p %{buildroot}%{_javadir}
 
 %__cp -p lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
@@ -66,12 +68,14 @@ popd
 
 
 %files
-%defattr(644,root,root,755)
 %{_javadir}/*
 %doc LICENSE README CREDITS
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_8jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_7jpp7
 - new version
 
