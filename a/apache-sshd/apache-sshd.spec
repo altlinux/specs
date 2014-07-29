@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: apache-sshd
 Version: 0.7.0
-Release: alt2_1jpp7
+Release: alt2_3jpp7
 Summary: Apache SSHD
 
 Group: Development/Java
@@ -26,9 +30,6 @@ Patch3: %{name}-use-tomcat-apr-as-system-dependency.patch
 # User version of bouncycastle for JDK6:
 Patch4: %{name}-use-bouncycastle-for-jdk6.patch
 
-# Use slf4j-api:
-#Patch5: %{name}-use-slf4j-api.patch
-
 BuildArch: noarch
 
 Requires: jpackage-utils
@@ -38,7 +39,7 @@ Requires: jzlib >= 1.1.0
 Requires: tomcat-lib >= 7.0.25
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 
 BuildRequires: apache-mina >= 2.0.4
 BuildRequires: jzlib >= 1.1.0
@@ -63,7 +64,7 @@ BuildArch: noarch
 
 
 %description
-Apache SSHD is a 100%% pure java library to support the SSH protocols on both
+Apache SSHD is a 100% pure java library to support the SSH protocols on both
 the client and server side.
 
 
@@ -78,7 +79,6 @@ This package contains javadoc for %{name}.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
 
 %build
 
@@ -132,6 +132,9 @@ cp -rp src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
