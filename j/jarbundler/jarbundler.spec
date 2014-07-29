@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jarbundler	
 Version: 2.2.0
-Release: alt1_3jpp7
+Release: alt1_4jpp7
 Summary: A feature-rich Ant task which will create a Mac OS X application bundle
 
 Group:	Development/Java
@@ -90,6 +93,9 @@ echo "jarbundler" >  %{buildroot}/%{_sysconfdir}/ant.d/jarbundler
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_4jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_3jpp7
 - new version
 
