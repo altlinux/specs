@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cookxml
 Version:          3.0.2
-Release:          alt2_4jpp7
+Release:          alt2_5jpp7
 Summary:          Dynamic XML data binding tool
 Group:            Development/Java
 License:          BSD
@@ -74,6 +75,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
