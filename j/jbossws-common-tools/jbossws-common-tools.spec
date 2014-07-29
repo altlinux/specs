@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-common-tools
 Version:          1.1.0
-Release:          alt1_5jpp7
+Release:          alt1_7jpp7
 Summary:          JBossWS Common Tools
 Group:            Development/Java
 License:          LGPLv2+ and ASL 2.0
@@ -27,8 +28,8 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    ant
-BuildRequires:    maven
-BuildRequires:    maven
+BuildRequires:    maven-local
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-install-plugin
@@ -108,6 +109,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_7jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_5jpp7
 - update
 
