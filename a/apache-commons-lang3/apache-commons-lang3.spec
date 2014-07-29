@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.1
-Release:        alt2_3jpp7
+Release:        alt2_5jpp7
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Java
@@ -16,7 +20,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  maven-site-plugin
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  apache-commons-parent
 BuildRequires:  apache-commons-io
 BuildRequires:  junit4
@@ -97,6 +101,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
