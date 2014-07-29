@@ -1,14 +1,18 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-jaxr-1.0-api
 %define version 1.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 Name:          jboss-jaxr-1.0-api
 Version:       1.0.2
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Java(TM) API for XML Registries 1.0 (JAXR)
 Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
@@ -23,7 +27,7 @@ Patch0:        %{name}-%{namedversion}-pom.patch
 BuildRequires: jboss-specs-parent
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -82,6 +86,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
