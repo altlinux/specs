@@ -6,8 +6,8 @@
 %define ppp_version 2.4.5
 
 Name: NetworkManager-l2tp
-Version: 0.9.8.6
-Release: alt2%git_date
+Version: 0.9.8.7
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -88,6 +88,9 @@ sed -i '/m4/ d' Makefile.am
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 29 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.7-alt1
+- Updated to 0.9.8.7.
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt2
 - Update requires: NetworkManager -> NetworkManager-daemon.
 - Update translations from upstream git.
