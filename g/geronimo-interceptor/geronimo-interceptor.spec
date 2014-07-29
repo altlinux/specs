@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spec_ver 3.0
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-interceptor
 Version:          1.0.1
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Java EE: Interceptor API v3.0
 Group:            Development/Java
 License:          ASL 2.0
@@ -17,9 +21,8 @@ Source0:          %{spec_name}-%{version}.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven2 >= 2.2.1
+BuildRequires:    maven-local
 BuildRequires:    geronimo-parent-poms
-BuildRequires:    maven-resources-plugin
 
 Requires:         jpackage-utils
 
@@ -72,6 +75,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
