@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-connector-1.6-api
 %define version 1.0.1
 %global namedreltag .20120310git9dc9a5
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-connector-1.6-api
 Version:          1.0.1
-Release:          alt2_0.3.20120310git9dc9a5jpp7
+Release:          alt2_0.5.20120310git9dc9a5jpp7
 Summary:          Connector Architecture 1.6 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -21,7 +25,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildRequires:    jboss-specs-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-install-plugin
@@ -51,7 +55,6 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}
 
 %build
-export LANG=en_US.ISO8859-1
 mvn-rpmbuild install javadoc:aggregate
 
 %install
@@ -82,6 +85,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.5.20120310git9dc9a5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.3.20120310git9dc9a5jpp7
 - NMU rebuild to move poms and fragments
 
