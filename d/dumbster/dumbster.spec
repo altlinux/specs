@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt2_12jpp7
+Release:        alt2_14jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
@@ -50,6 +50,7 @@ BuildRequires:  ant >= 0:1.6
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  javamail
 BuildRequires:  junit
+Requires:       jpackage-utils
 Requires:       java-sasl
 Requires:       javamail
 
@@ -66,6 +67,7 @@ Dumbster for later extraction and verification.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -86,39 +88,33 @@ ln -sf $(build-classpath junit)
 ln -sf $(build-classpath sasl)
 popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 %install
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
-install -m 0644 build/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-cp -pr %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap dumbster %{name} 1.6 JPP %{name}
-
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/maven2
-ln -s %{_mavenpomdir} $RPM_BUILD_ROOT%{_javadir}/maven2/poms
+cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
 %doc license.txt
-%{_javadir}/*.jar
-%{_mavenpomdir}
-%{_javadir}/maven2
-%{_mavendepmapfragdir}
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc license.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_14jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_12jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
