@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    jbosscache-support
 Version: 1.6
-Release: alt4_2jpp7
+Release: alt4_5jpp7
 Summary: JBossCache support package
 
 Group:   Development/Java
@@ -13,7 +17,7 @@ URL:     http://www.jboss.org/jbosscache
 # tar cJf jbosscache-support-1.6.tar.xz jbosscache-support-1.6
 Source0: %{name}-%{version}.tar.xz
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -53,6 +57,9 @@ The %{name}-xslt package contains xslt doc support for jbosscache.
 %setup -q
 find . -name \*.jar -exec rm -f {} \;
 
+# webdav package was dropped from maven-wagon
+%pom_xpath_remove "pom:build/pom:extensions/pom:extension[pom:artifactId = 'wagon-webdav']"
+
 %build
 # Does not include javadocs or tests
 mvn-rpmbuild install -Dmaven.test.skip=true
@@ -89,6 +96,9 @@ install -m 644 xslt/pom.xml \
 %{_mavenpomdir}/JPP-%{name}-xslt.pom
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_2jpp7
 - NMU rebuild to move poms and fragments
 
