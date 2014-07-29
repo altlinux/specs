@@ -1,9 +1,12 @@
-BuildRequires: geronimo-saaj
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-scout
 Version:          1.2.6
-Release:          alt2_3jpp7
+Release:          alt2_6jpp7
 Summary:          JSR 93 (JAXR) implementation
 Group:            Development/Java
 License:          ASL 2.0
@@ -18,7 +21,7 @@ Patch0:           0001-Change-guid-aid-of-deps.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -32,6 +35,7 @@ BuildRequires:    jboss-jaxb-2.2-api
 BuildRequires:    axis
 BuildRequires:    aspectjweaver
 BuildRequires:    wsdl4j
+BuildRequires:    geronimo-parent-poms
 
 Requires:         axis
 Requires:         apache-juddi
@@ -94,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
