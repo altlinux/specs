@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global         over 0_9
@@ -6,7 +9,7 @@ BuildRequires: jpackage-compat
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
 Version:        0.9
-Release:        alt1_8.r74jpp7
+Release:        alt1_9.r74jpp7
 Group:          File tools
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
@@ -62,6 +65,9 @@ ant -f build/release.xml
 %{_javadir}/%{name}.jar
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_9.r74jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_8.r74jpp7
 - new version
 
