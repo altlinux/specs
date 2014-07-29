@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           json-lib
 Version:        2.3
-Release:        alt2_8jpp7
+Release:        alt2_10jpp7
 Summary:        JSON library for Java
 License:        ASL 2.0
 URL:            http://json-lib.sourceforge.net/
@@ -29,6 +29,8 @@ BuildRequires:  groovy >= 1.7.2-2
 BuildRequires:  jakarta-oro
 BuildRequires:  junit
 BuildRequires:  log4j
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-surefire-maven-plugin
 BuildRequires:  maven-surefire-provider-junit
@@ -64,7 +66,7 @@ API documentation for %{name}.
 # Not strictly needed, but it makes no harm to be on the safe side
 find -name '*.jar' -o -name '*.class' -delete
 
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 # Code
@@ -89,6 +91,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_10jpp7
+- new release
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_8jpp7
 - fc update
 
