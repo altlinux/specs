@@ -1,11 +1,15 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name vfs
 %global short_name commons-%{base_name}
 Name:          apache-commons-vfs
 Version:       2.0
-Release:       alt4_4jpp7
+Release:       alt4_6jpp7
 Summary:       Commons Virtual File System
 Group:         Development/Java
 License:       ASL 2.0
@@ -23,7 +27,7 @@ Patch0:        %{name}-%{version}-build.patch
 BuildRequires: jpackage-utils
 BuildRequires: apache-commons-parent
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -62,7 +66,6 @@ Requires:      jsch
 Requires:      jpackage-utils
 BuildArch:     noarch
 Provides:      %{name}2 = %{version}-%{release}
-Provides:      jakarta-%{short_name} = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -127,7 +130,7 @@ sed -i "s|<module>dist</module>|<!--module>dist</module-->|" pom.xml
 
 %build
 
-mvn-rpmbuild -Dmaven.test.skip=true -Dmaven.test.failure.ignore=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.failure.ignore=true install javadoc:aggregate
 
 %install
 
@@ -135,16 +138,15 @@ mkdir -p %{buildroot}%{_javadir}
 install -m 644 core/target/%{short_name}2-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 install -m 644 examples/target/%{short_name}2-examples-%{version}.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 
-pushd %{buildroot}%{_javadir}
+(
+  cd %{buildroot}%{_javadir}
   ln -s %{name}.jar %{short_name}.jar
   ln -s %{name}-examples.jar %{short_name}-examples.jar
-  ln -s %{name}.jar jakarta-%{short_name}.jar
-  ln -s %{name}-examples.jar jakarta-%{short_name}-examples.jar
   ln -s %{name}.jar %{name}2.jar
   ln -s %{name}-examples.jar %{name}2-examples.jar
   ln -s %{name}.jar %{short_name}2.jar
   ln -s %{name}-examples.jar %{short_name}2-examples.jar
-popd
+)
 
 mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}-project.pom
@@ -166,7 +168,6 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %{_javadir}/%{name}2.jar
 %{_javadir}/%{short_name}.jar
 %{_javadir}/%{short_name}2.jar
-%{_javadir}/jakarta-%{short_name}.jar
 %{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavenpomdir}/JPP-%{short_name}-project.pom
 %{_mavendepmapfragdir}/%{name}
@@ -177,7 +178,6 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %{_javadir}/%{name}2-examples.jar
 %{_javadir}/%{short_name}-examples.jar
 %{_javadir}/%{short_name}2-examples.jar
-%{_javadir}/jakarta-%{short_name}-examples.jar
 %{_mavenpomdir}/JPP-%{short_name}-examples.pom
 %{_mavendepmapfragdir}/%{name}-examples
 
@@ -189,6 +189,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_4jpp7
 - NMU rebuild to move poms and fragments
 
