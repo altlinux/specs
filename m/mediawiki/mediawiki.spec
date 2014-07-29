@@ -1,8 +1,8 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.22
+%define major 1.23
 
 Name: mediawiki
-Version: %major.4
+Version: %major.1
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
@@ -86,6 +86,16 @@ Obsoletes: mediawiki-extensions-PdfHandler
 
 Conflicts: mediawiki-extensions-FCKEditor
 
+Provides: mediawiki-extensions-TitleBlacklist
+Provides: mediawiki-extensions-SpamBlacklist
+Provides: mediawiki-extensions-InputBox
+Provides: mediawiki-extensions-LocalisationUpdate
+
+# since 1.22
+Provides: mediawiki-extensions-SimpleAntiSpam
+Provides: mediawiki-extensions-PostEdit
+Provides: mediawiki-extensions-Vector
+
 %description -n %name-common
 %summary
 
@@ -148,14 +158,18 @@ mkdir -p %buildroot%_mediawikidir
 
 # Copy to buildroot all files and directories exclude unneeded
 cp -r * %buildroot%_mediawikidir/
+
 # Not needed in the package
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
 rm -rf %buildroot%_mediawikidir/maintenance/cssjanus/
-rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/}
+rm -rf %buildroot%_mediawikidir/maintenance/{Makefile,mwjsduck-gen,jsduck/,resources/update-oojs.sh}
 rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
 rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
+rm -rf %buildroot%_mediawikidir/resources/lib/oojs-ui/update-oojs-ui.sh
 
+# packed as docs
+rm -rf %buildroot%_mediawikidir/docs/
 
 # do not use follow bundled extension:
 rm -rf %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/
@@ -270,9 +284,9 @@ exit 0
 %webappdir/images/*
 %webappdir/config/AdminSettings.sample
 
-%doc COPYING CREDITS docs FAQ HISTORY README RELEASE-NOTES-%major UPGRADE StartProfiler.sample
+%doc COPYING CREDITS FAQ HISTORY README RELEASE-NOTES-%major UPGRADE StartProfiler.sample
 %doc README.ALT-ru_RU.UTF-8 README.UPGRADE.ALT-ru_RU.UTF-8 install_php_config.sh mediawiki.ini
-
+%doc docs
 
 %files -n %name-apache2
 %config %apache2_mods_start/*.conf
@@ -293,6 +307,9 @@ exit 0
 
 
 %changelog
+* Sat Jul 26 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.1-alt1
+- new version 1.23.1 (with rpmrb script)
+
 * Thu Mar 13 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.4-alt1
 - new version 1.22.4 (with rpmrb script)
 - drop php5-apc requires
