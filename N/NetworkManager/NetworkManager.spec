@@ -23,10 +23,11 @@
 %def_enable nmtui
 
 %define _name %name-daemon
+%define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 Name: NetworkManager
-Version: 0.9.9.98
-Release: alt2%git_date
+Version: 0.9.10.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -35,11 +36,10 @@ Url: http://www.gnome.org/projects/NetworkManager/
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: 50-ntpd
-Source4: 10-netfs
 Source5: 20-hostname
 Source6: NetworkManager.sysconfig
 Source7: 30-efw
-Source8: 80-etcnet-post
+Source8: 80-etcnet-iface-scripts
 Source9: NetworkManager-prestart
 Source10: libgsystem.tar
 Patch: %name-%version-%release.patch
@@ -366,12 +366,17 @@ mkdir -p %buildroot/%_var/lib/NetworkManager
 touch %buildroot/%_var/lib/NetworkManager/timestamps
 touch %buildroot/%_var/lib/NetworkManager/NetworkManager.state
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/NetworkManager/
-install -m 0755 %SOURCE2 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
-install -m 0755 %SOURCE4 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
-install -m 0755 %SOURCE5 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
-install -m 0755 %SOURCE7 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
-install -m 0755 %SOURCE8 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
+install -m 0755 %SOURCE2 %buildroot%dispatcherdir/
+install -m 0755 %SOURCE5 %buildroot%dispatcherdir/
+install -m 0755 %SOURCE7 %buildroot%dispatcherdir/
+install -m 0755 %SOURCE8 %buildroot%dispatcherdir/
 install -Dm0644 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%name
+
+# Create pre-down.d/pre-up.d directories and
+# symlink scripts if needed
+mkdir -p %buildroot%dispatcherdir/pre-{up,down}.d
+ln -s ../80-etcnet-iface-scripts %buildroot%dispatcherdir/pre-up.d/80-etcnet-iface-scripts
+ln -s ../80-etcnet-iface-scripts %buildroot%dispatcherdir/pre-down.d/80-etcnet-iface-scripts
 
 # Install initscript
 install -Dm0755 initscript/Alt/NetworkManager %buildroot%_initdir/NetworkManager
@@ -443,16 +448,15 @@ fi
 %config(noreplace) %_sysconfdir/NetworkManager/%name.conf
 %_initrddir/NetworkManager
 %dir %_sysconfdir/NetworkManager
-%dir %_sysconfdir/NetworkManager/dispatcher.d
 %dir %_sysconfdir/NetworkManager/VPN
 %dir %_sysconfdir/NetworkManager/system-connections
 %dir %_var/lib/NetworkManager
+%dispatcherdir/
 %ghost %config(noreplace) %_var/log/NetworkManager
 %ghost %config(noreplace) %_var/lib/NetworkManager/NetworkManager.state
 %ghost %config(noreplace) %_var/lib/NetworkManager/timestamps
 /lib/udev/rules.d/*
 %_datadir/polkit-1/actions/*.policy
-%_sysconfdir/NetworkManager/dispatcher.d/*
 %_datadir/bash-completion/completions/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %{?_enable_systemd:/lib/systemd/system/%name.service}
@@ -544,6 +548,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Jul 25 2014 Mikhail Efremov <sem@altlinux.org> 0.9.10.0-alt1
+- Package pre-down.d/pre-up.d directories.
+- Replace 80-etcnet-post with 80-etcnet-iface-scripts.
+- Drop 10-netfs hook.
+- Updated to 0.9.10.0.
+
 * Mon Jun 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.9.98-alt2
 - define DISTRO_NETWORK_SERVICE=network.service for ALTLinux
 - don't order NetworkManager-wait-online.service before network.target
