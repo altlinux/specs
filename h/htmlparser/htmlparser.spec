@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		htmlparser
 Version:	1.6
-Release:	alt1_10jpp7
+Release:	alt1_11jpp7
 Summary:	HTML Parser, a Java library used to parse HTML
 Group:		Development/Java
 License:	LGPLv2+
@@ -78,6 +78,9 @@ cp -rp docs/javadoc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_11jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_10jpp7
 - fc update
 
