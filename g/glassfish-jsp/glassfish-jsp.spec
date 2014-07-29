@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -8,23 +12,25 @@ BuildRequires: jpackage-compat
 
 Name:       glassfish-jsp
 Version:    2.2.6
-Release:    alt2_2jpp7
+Release:    alt2_7jpp7
 Summary:    Glassfish J2EE JSP API implementation
 
 Group:      Development/Java
-License:    CDDL and GPLv2 with exceptions
+License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
 Source0:    %{artifactId}-%{version}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
 Source1:    generate_tarball.sh
+Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
 
 Patch0:     %{name}-build-eclipse-compilers.patch
 
 BuildArch:  noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-jar-plugin
@@ -69,6 +75,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %{artifactId}-%{version}
 %patch0
+cp -p %{SOURCE2} LICENSE
+cp -p %{SOURCE3} cddllicense.txt
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -88,18 +96,23 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap -a "javax.servlet:jsp-api"
+%add_maven_depmap -a "javax.servlet:jsp-api,org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
 
 %files
+%doc LICENSE cddllicense.txt
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %files javadoc
+%doc LICENSE cddllicense.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
