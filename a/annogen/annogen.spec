@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           annogen 
 Version:        0.1.0
-Release:        alt1_3jpp7
+Release:        alt1_5jpp7
 Summary:        Java framework for JSR-175 annotations
 
 Group:          Development/Java
@@ -51,8 +51,11 @@ find docs -name '*.html' -o -name '*.css' | xargs dos2unix
 
 %build
 export CLASSPATH=$( build-classpath qdox)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  docs
+for x in *.xml; do 
+  sed -i -e "s/source='1.4'/source='1.5'/; s/target='1.4'/target='1.5'/" $x;
+done
+ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 jars
+ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 docs
 
 %install
 install -d -m 755 %{buildroot}%{_javadir}
@@ -77,6 +80,9 @@ cp -rp build/docs/* %{buildroot}%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_5jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_3jpp7
 - fc update
 
