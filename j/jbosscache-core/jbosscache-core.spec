@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       jbosscache-core
 Version:    3.2.8
-Release:    alt1_5jpp7
+Release:    alt1_7jpp7
 Summary:    JBoss objects cache
 
 Group:      Development/Java
@@ -16,7 +17,7 @@ URL:        http://jboss.org/jbosscache
 Source0:    %{name}-%{version}.tar.xz
 Patch0:     %{name}-jgroups212.patch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-surefire
@@ -111,6 +112,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_7jpp7
+- new release
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_5jpp7
 - new fc release
 
