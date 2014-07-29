@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           fest-reflect
 Version:        1.3
-Release:        alt2_8jpp7
+Release:        alt2_10jpp7
 Summary:        FEST Reflection
 
 Group:          Development/Java
@@ -33,7 +37,7 @@ BuildRequires:  fest-common = 1.0.11
 BuildRequires:  fest-util = 1.2.0
 BuildRequires:  fest-test = 1.2.1
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-provider-junit4
@@ -93,6 +97,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
