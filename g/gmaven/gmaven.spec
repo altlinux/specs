@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          gmaven
 Version:       1.4
-Release:       alt3_1jpp7
+Release:       alt3_4jpp7
 Summary:       Integration of Groovy into Maven
 Group:         Development/Java
 License:       ASL 2.0
@@ -55,7 +55,7 @@ BuildRequires: jpackage-utils
 
 BuildRequires: ant
 # groovy-all rebundle libraries
-BuildRequires: antlr
+BuildRequires: antlr-tool
 BuildRequires: apache-commons-cli
 BuildRequires: objectweb-asm
 
@@ -64,7 +64,7 @@ BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires: groovy
 BuildRequires: gshell
 BuildRequires: jline2
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-artifact-manager
 BuildRequires: maven-monitor
 BuildRequires: maven-plugin-descriptor
@@ -105,7 +105,7 @@ BuildRequires: maven-surefire-report-plugin
 BuildRequires: plexus-containers-component-metadata
 
 Requires:      ant
-Requires:      antlr
+Requires:      antlr-tool
 Requires:      apache-commons-cli
 Requires:      apache-commons-lang
 Requires:      groovy
@@ -196,8 +196,7 @@ Provides some example plugins implemented in Groovy.
 %patch8 -p1
 
 # https://jira.codehaus.org/browse/GMAVEN-98
-sed -i "s|return new Version(1, 8, 5);|return new Version(1, 8, 7);|" gmaven-runtime/gmaven-runtime-1.8/src/main/java/org/codehaus/gmaven/runtime/v1_8/ProviderImpl.java
-
+sed -i "s|return new Version(1, 8, 5);|return new Version(1, 8, 8);|" gmaven-runtime/gmaven-runtime-1.8/src/main/java/org/codehaus/gmaven/runtime/v1_8/ProviderImpl.java
 
 %build
 
@@ -325,6 +324,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_4jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_1jpp7
 - fixed build
 
