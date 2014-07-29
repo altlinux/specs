@@ -1,11 +1,14 @@
-BuildRequires: maven-antrun-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oversion 4.0-incubating-SNAPSHOT
 
 Name:           apache-commons-ognl
 Version:        3.0.2
-Release:        alt2_2.20120313svn1102435jpp7
+Release:        alt2_4.20120313svn1102435jpp7
 Summary:        Object Graph Navigation Library
 
 Group:          Development/Java
@@ -17,7 +20,7 @@ Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: javassist
@@ -70,6 +73,9 @@ cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_4.20120313svn1102435jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_2.20120313svn1102435jpp7
 - NMU rebuild to move poms and fragments
 
