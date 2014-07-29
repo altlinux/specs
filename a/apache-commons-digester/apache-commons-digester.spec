@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-%{short_name}
 Version:       1.8.1
-Release:       alt3_11jpp7
+Release:       alt3_14jpp7
 Summary:       XML to Java object mapping module
 Group:         Development/Java
 License:       ASL 2.0
@@ -23,6 +23,7 @@ BuildArch:     noarch
 BuildRequires: jpackage-utils
 BuildRequires: apache-commons-beanutils >= 1.8
 BuildRequires: apache-commons-logging >= 1.1.1
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
@@ -65,7 +66,7 @@ BuildArch: noarch
 sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate
 
 # Build rss -- needed by struts
 export CLASSPATH=$(build-classpath commons-beanutils commons-collections commons-logging junit)
@@ -77,7 +78,8 @@ popd
 
 %install
 # jars
-install -pD -T target/%{short_name}-%{version}.jar \
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 target/%{short_name}-%{version}.jar \
   %{buildroot}%{_javadir}/%{short_name}.jar
 ln -s %{short_name}.jar %{buildroot}/%{_javadir}/%{name}.jar
 
@@ -86,7 +88,8 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 # pom
-install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 %add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "%{short_name}:%{short_name}"
 # rss -- needed by struts
 cp -p src/examples/rss/dist/%{short_name}-rss.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-rss-%{version}.jar
@@ -105,9 +108,13 @@ ln -s %{name}-rss-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-r
 #%{_javadir}/*-rss*.jar
 
 %files javadoc
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.1-alt3_14jpp7
+- new release
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8.1-alt3_11jpp7
 - fc update
 
