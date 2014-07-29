@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-remote-naming
 %define version 1.0.2
 %global namedreltag .Final
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          jboss-remote-naming
 Version:       1.0.2
-Release:       alt2_4jpp7
+Release:       alt2_6jpp7
 Summary:       JBoss Remote Naming
 Group:         Development/Java
 License:       LGPLv2+
@@ -20,7 +24,7 @@ Source0:       %{name}-%{namedversion}.tar.xz
 
 BuildRequires: jpackage-utils
 BuildRequires: jboss-parent
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -101,6 +105,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
