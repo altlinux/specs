@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-spi
 Version:          2.1.0
-Release:          alt1_1jpp7
+Release:          alt1_4jpp7
 Summary:          JBossWS SPI
 Group:            Development/Java
 License:          LGPLv2+
@@ -25,7 +26,7 @@ Source0:          jbossws-spi-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -40,7 +41,7 @@ BuildRequires:    jboss-jms-1.1-api
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-logging-tools
 BuildRequires:    jboss-servlet-3.0-api
-BuildRequires:    jbossws-api
+BuildRequires:    jbossws-api >= 1.0.1
 BuildRequires:    jbossws-parent
 
 Requires:         jpackage-utils
@@ -48,7 +49,7 @@ Requires:         jboss-jms-1.1-api
 Requires:         jboss-logging
 Requires:         jboss-logging-tools
 Requires:         jboss-servlet-3.0-api
-Requires:         jbossws-api
+Requires:         jbossws-api >= 1.0.1
 Source44: import.info
 
 %description
@@ -97,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_4jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_1jpp7
 - update
 
