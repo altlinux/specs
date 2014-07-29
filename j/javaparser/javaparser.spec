@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          javaparser
 Version:       1.0.8
-Release:       alt2_1jpp7
+Release:       alt2_3jpp7
 Summary:       Java 1.5 Parser and AST
 Group:         Development/Java
 License:       GPLv3+ and LGPLv3+
@@ -21,7 +22,7 @@ BuildRequires: jpackage-utils
 BuildRequires: junit
 
 BuildRequires: javacc
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -101,6 +102,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc COPYING COPYING.LESSER readme.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
