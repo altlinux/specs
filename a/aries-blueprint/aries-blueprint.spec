@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          aries-blueprint
 Version:       0.3.1
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Apache Aries Blueprint
 License:       ASL 2.0
 Group:         Development/Java
@@ -18,7 +22,7 @@ Patch1:        %{name}-%{version}-java.patch
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -108,6 +112,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
