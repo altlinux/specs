@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jargs
 Version:        1.0
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Summary:        Java command line option parsing suite
 
 Group:          Development/Java
@@ -44,7 +44,7 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  runtimejar javadoc
+ant runtimejar javadoc
 
 
 %install
@@ -66,6 +66,9 @@ cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_10jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_9jpp7
 - fc update
 
