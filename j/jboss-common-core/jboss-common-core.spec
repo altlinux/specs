@@ -1,7 +1,11 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-common-core
 %define version 2.2.18
 %global namedreltag .GA
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-common-core
 Version:          2.2.18
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          JBoss Common Classes
 Group:            Development/Java
 License:          LGPLv2+ and ASL 1.1
@@ -24,7 +28,7 @@ Patch0:           %{name}-%{namedversion}-URLLister-removal.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -67,7 +71,6 @@ This package contains the API documentation for %{name}.
 rm -rf projectSet.psf .settings/ .project .classpath
 
 %build
-export LANG=en_US.ISO8859-1
 # Some failed tests
 # Failed tests: testJavaLangEditors(org.jboss.test.util.test.propertyeditor.PropertyEditorsUnitTestCase):
 #   PropertyEditor: org.jboss.util.propertyeditor.BooleanEditor, getAsText() == expectedStringOutput ' expected:<null> but was:<null>
@@ -98,6 +101,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
