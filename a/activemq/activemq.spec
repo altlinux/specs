@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          activemq
 Version:       5.6.0
-Release:       alt1_3jpp7
+Release:       alt1_5jpp7
 Summary:       Open source messaging and Integration Patterns server
 Group:         Development/Java
 License:       ASL 2.0
@@ -146,6 +150,7 @@ rm -rf %{name}-core/src/main/java/org/apache/activemq/transport/mqtt
 %pom_remove_dep org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec %{name}-core/pom.xml
 %pom_remove_dep org.apache.geronimo.specs:geronimo-jta_1.0.1B_spec %{name}-core/pom.xml
 %pom_remove_dep org.apache.geronimo.specs:geronimo-jacc_1.1_spec %{name}-core/pom.xml
+%pom_remove_dep org.apache.geronimo.specs:geronimo-annotation_1.0_spec %{name}-core/pom.xml
 
 chmod 644 LICENSE README.txt
 
@@ -201,6 +206,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavenpomdir}/JPP.%{name}-kahadb.pom
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_5jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_3jpp7
 - new version
 

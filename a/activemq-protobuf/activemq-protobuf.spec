@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          activemq-protobuf
 Version:       1.1
-Release:       alt3_2jpp7
+Release:       alt3_4jpp7
 Summary:       ActiveMQ Protocol Buffers
 Group:         Development/Java
 License:       ASL 2.0
@@ -20,7 +23,7 @@ BuildRequires: jpackage-utils
 
 BuildRequires: junit4
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
@@ -89,6 +92,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_4jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_2jpp7
 - fixed build
 

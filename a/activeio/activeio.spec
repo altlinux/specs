@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          activeio
 Version:       3.1.4
-Release:       alt1_3jpp7
+Release:       alt1_5jpp7
 Summary:       Apache ActiveMQ ActiveIO :: Core
 Group:         Development/Java
 License:       ASL 2.0
@@ -24,7 +28,7 @@ BuildRequires: jboss-j2eemgmt-1.1-api
 
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -184,6 +188,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_5jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_3jpp7
 - new version
 
