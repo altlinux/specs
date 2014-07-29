@@ -1,7 +1,10 @@
 %define oname weberror
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.10.3
-Release: alt1.1
+Release: alt2
 Summary: Web Error handling and exception catching
 License: MIT
 Group: Development/Python
@@ -13,24 +16,62 @@ Source: WebError-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
+Web Error handling and exception catching.
+
+%package -n python3-module-%oname
+Summary: Web Error handling and exception catching
+Group: Development/Python3
+
+%description -n python3-module-%oname
 Web Error handling and exception catching.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc CHANGELOG LICENSE
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc CHANGELOG LICENSE
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Tue Jul 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.3-alt2
+- Added module for Python 3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.10.3-alt1.1
 - Rebuild with Python-2.7
 
