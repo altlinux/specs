@@ -1,11 +1,15 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global jarname commons-jexl
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_3jpp7
+Release:        alt2_5jpp7
 Summary:        Java Expression Language (JEXL)
 
 Group:          Development/Java
@@ -17,7 +21,7 @@ Patch0:         %{name}-bsf.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-parent
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  apache-rat-plugin
 BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  javacc-maven-plugin
@@ -29,8 +33,6 @@ BuildArch:      noarch
 
 Requires:       jpackage-utils
 Provides:       %{jarname} = %{version}-%{release}
-Provides:       jakarta-%{jarname} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{jarname} < 0:2.0
 Source44: import.info
 
 %description
@@ -68,14 +70,13 @@ find -name '*.txt' -exec sed -i 's/\r//' '{}' +
 
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp target/%{jarname}-%{version}.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{jarname}.jar
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/jakarta-%{jarname}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -rp target/site/apidocs \
@@ -92,7 +93,6 @@ cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}.jar
 %{_javadir}/%{jarname}.jar
-%{_javadir}/jakarta-%{jarname}.jar
 
 %files javadoc
 %doc LICENSE.txt
@@ -100,6 +100,9 @@ cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
