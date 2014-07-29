@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global major 2.0
@@ -5,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_11jpp7
+Release:	alt1_12jpp7
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -53,7 +56,7 @@ Summary:	LaTeX style file axodraw4j.sty for documents generated with jaxodraw
 Group:		Engineering
 License:	LPPL
 # In order to compile documents one needs a LaTeX compiler
-Requires:	/usr/bin/latex texlive-latex-recommended
+Requires: /usr/bin/latex texlive-latex-recommended
 
 %description latex
 This package contains the LaTeX style file that is needed for EPS export
@@ -118,6 +121,9 @@ install -D -p -m 644 axodraw4j.sty %{buildroot}%{_datadir}/texmf/tex/latex/axodr
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_12jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_11jpp7
 - new version
 
