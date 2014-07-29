@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt3
+Release: alt4
 Summary: The repoze.bfg web application framework
 License: BSD
 Group: Development/Python
@@ -105,6 +105,7 @@ install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
+touch %buildroot%python_sitelibdir/repoze/bfg/__init__.py
 
 %if_with python3
 pushd ../python3
@@ -115,6 +116,7 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
+touch %buildroot%python3_sitelibdir/repoze/bfg/__init__.py
 %endif
 
 %files
@@ -149,6 +151,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jul 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt4
+- Added repoze/bfg/__init__.py
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt3
 - Added module for Python 3
 
