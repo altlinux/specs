@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:		jpf
 Version:	1.5.1
-Release:	alt2_5jpp7
+Release:	alt2_7jpp7
 Summary:	Java Plug-in Framework
 Group:		Development/Java
 License:	LGPLv2
@@ -19,7 +20,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.zip
 Patch0:		jpf-1.5.1-build_javadoc.patch
 Patch1:		jpf-1.5.1-no-class-manifest.patch
 
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	jpackage-utils
 
 BuildRequires:	apache-commons-logging
@@ -91,6 +92,9 @@ cp -r build/docs/api ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
