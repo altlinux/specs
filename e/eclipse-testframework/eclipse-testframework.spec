@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
@@ -8,7 +11,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-testframework
 Version:        4.2.0
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Eclipse Test Framework
 
 Group:          Development/Java
@@ -75,6 +78,9 @@ popd
 %doc org.eclipse.test-feature/rootfiles/notice.html
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_3jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_2jpp7
 - new version
 
