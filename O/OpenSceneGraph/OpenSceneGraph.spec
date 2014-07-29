@@ -5,11 +5,11 @@
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 
-%define apiver 3.2.0
+%define apiver 3.2.1
 %define osgbranch 3.2
 
 Name: OpenSceneGraph
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: High performance real-time graphics toolkit
@@ -334,6 +334,9 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Tue Jul 29 2014 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Thu Sep 26 2013 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
 - 3.2.0
 - fixed inter-subpackage deps
