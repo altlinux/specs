@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: glassfish-dtd-parser
 Version: 1.2
-Release: alt2_0.4.20120120svnjpp7
+Release: alt2_0.6.20120120svnjpp7
 Summary: Library for parsing XML DTDs
 Group: Development/Java
 License: CDDL 1.1 and GPLv2 with exceptions
@@ -15,7 +19,7 @@ Source0: %{name}-%{version}-SNAPSHOT-src-svn.tar.gz
 
 BuildRequires: jpackage-utils
 BuildRequires: bsf
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: sonatype-oss-parent
@@ -80,6 +84,9 @@ cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.6.20120120svnjpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_0.4.20120120svnjpp7
 - NMU rebuild to move poms and fragments
 
