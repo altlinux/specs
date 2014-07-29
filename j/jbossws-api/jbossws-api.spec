@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-api
 Version:          1.0.1
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          JBossWS API
 Group:            Development/Java
 License:          LGPLv2+
@@ -24,7 +25,7 @@ Source0:          jbossws-api-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -88,6 +89,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp7
+- new release
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1jpp7
 - update
 
