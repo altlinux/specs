@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.11.1
+Version: 4.11.2
 Release: alt1
 
 Summary: Window manager for Xfce
@@ -23,6 +23,8 @@ BuildPreReq: libexo-devel
 BuildRequires: gnome-doc-utils xml-utils xsltproc
 BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel libdrm-devel
 BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
+
+Requires: xfce4-common
 
 %description
 %name is a window manager compatable with GNOME, GNOME2, KDE2, KDE3 and
@@ -68,6 +70,11 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Tue Jul 29 2014 Mikhail Efremov <sem@altlinux.org> 4.11.2-alt1
+- Add missing include.
+- Require xfce4-common.
+- Updated to 4.11.2.
+
 * Fri Dec 27 2013 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 4.11.1.
