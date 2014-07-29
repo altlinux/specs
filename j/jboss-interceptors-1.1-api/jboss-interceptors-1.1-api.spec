@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-interceptors-1.1-api
 %define version 1.0.2
 %global namedreltag .20120319git49a904
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-interceptors-1.1-api
 Version:          1.0.2
-Release:          alt2_0.3.20120319git49a904jpp7
+Release:          alt2_0.5.20120319git49a904jpp7
 Summary:          Interceptors 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -20,7 +24,7 @@ Source0:          jboss-interceptors-1.1-api-%{namedversion}.tar.xz
 
 BuildRequires:    jboss-specs-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -82,6 +86,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_0.5.20120319git49a904jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_0.3.20120319git49a904jpp7
 - NMU rebuild to move poms and fragments
 
