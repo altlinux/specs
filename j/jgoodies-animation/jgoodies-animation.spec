@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jgoodies-animation
 Version:       1.3.0
-Release:       alt1_2jpp7
+Release:       alt1_3jpp7
 Summary:       Framework for time-based real-time animations in Java
 Group:         Development/Java
 License:       BSD
@@ -44,7 +44,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
@@ -86,6 +86,9 @@ install -Dm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_2jpp7
 - initial build
 
