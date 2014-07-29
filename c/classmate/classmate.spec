@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          classmate
 Version:       0.5.4
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Java introspection library
 Group:         Development/Java
 License:       ASL 2.0
@@ -21,7 +22,7 @@ BuildRequires: sonatype-oss-parent
 
 BuildRequires: junit4
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -47,7 +48,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q
@@ -85,6 +86,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt2_4jpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.4-alt2_2jpp7
 - fixed maven1 dependency
 
