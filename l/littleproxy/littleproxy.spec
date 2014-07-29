@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+%define fedora 21
 Name:          littleproxy
 Version:       0.4
-Release:       alt1_2jpp7
+Release:       alt1_4jpp7
 Summary:       High Performance HTTP Proxy
 Group:         Development/Java
 License:       ASL 2.0
@@ -30,7 +34,7 @@ BuildRequires: slf4j
 # test deps
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -102,6 +106,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_4jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_2jpp7
 - new version
 
