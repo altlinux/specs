@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Beans Binding (JSR 295) reference implementation
 
 Group:          Development/Java
@@ -43,7 +44,7 @@ Javadoc for %{name}.
 find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__rm} -f
 
 %build
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist
+%{ant} dist
 
 %install
 # jar
@@ -63,6 +64,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__
 %{_javadocdir}/%{name}-%{version}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_9jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_8jpp7
 - update to new release by jppimport
 
