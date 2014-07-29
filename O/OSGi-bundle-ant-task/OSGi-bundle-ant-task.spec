@@ -1,10 +1,13 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global svn_rev 1242
 Name:           OSGi-bundle-ant-task
 Version:        0.2.0
-Release:        alt1_0.8.svn1242jpp7
+Release:        alt1_0.9.svn1242jpp7
 Summary:        A wrapper around Bnd to allow easy bundle creation from ant builds
 
 License:        BSD
@@ -48,6 +51,9 @@ cp -pa dist/lib/net.luminis.build.plugin-0.2.0.jar  $RPM_BUILD_ROOT%{_javadir}/n
 %{_javadir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.9.svn1242jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_0.8.svn1242jpp7
 - new version
 
