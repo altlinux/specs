@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-jaxb-2.2-api
 %define version 1.0.4
 %global namedreltag .Final
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-jaxb-2.2-api
 Version: 1.0.4
-Release: alt2_3jpp7
+Release: alt2_5jpp7
 Summary: Java Architecture for XML Binding 2.2
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -21,7 +25,7 @@ Source0: %{name}-%{namedversion}.tar.xz
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -88,6 +92,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
