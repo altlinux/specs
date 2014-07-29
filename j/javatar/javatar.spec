@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javatar
 Version:        2.5
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Java tar archive io package
 
 Group:          Development/Java
@@ -77,6 +80,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_9jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_8jpp7
 - new version
 
