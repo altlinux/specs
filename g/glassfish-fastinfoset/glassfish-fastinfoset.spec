@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: glassfish-fastinfoset
 Version: 1.2.12
-Release: alt5_4jpp7
+Release: alt5_7jpp7
 Summary: Fast Infoset
 Group: Development/Java
 License: ASL 2.0
@@ -20,7 +24,7 @@ Patch0: %{name}-%{version}-pom.patch
 
 BuildRequires: jpackage-utils
 BuildRequires: bea-stax-api
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -109,6 +113,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt5_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt5_4jpp7
 - NMU rebuild to move poms and fragments
 
