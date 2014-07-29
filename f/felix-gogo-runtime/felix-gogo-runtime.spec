@@ -1,11 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name felix-gogo-runtime
+%define version 0.10.0
 %global project   felix
 %global bundle    org.apache.felix.gogo.runtime
 
-Name:             %{project}-gogo-runtime
+%{!?scl:%global pkg_name %{name}}
+%{?scl:%scl_package %{project}-gogo-runtime}
+
+Name:            %{?scl_prefix}%{project}-gogo-runtime
 Version:          0.10.0
-Release:          alt2_5jpp7
+Release:          alt2_8jpp7
 Summary:          Community OSGi R4 Service Platform Implementation - Basic Commands
 Group:            Development/Java
 License:          ASL 2.0
@@ -16,24 +26,26 @@ Source0:          http://www.mirrorservice.org/sites/ftp.apache.org//felix/org.a
 # Typecast an Event constructor call with java.util.Properties to 
 # java.util.Dictionary because the call to the constructor with Properties
 # was ambiguous.
-Patch1:           %{name}-dictionary.patch
+Patch1:           %{pkg_name}-dictionary.patch
 # Changed path to DEPENDENCIES, LICENSE and NOTICE from META-INF to root dir
-Patch2:           %{name}-bundle-resources.patch
+Patch2:           %{pkg_name}-bundle-resources.patch
 # Removed failing thread IO test
-Patch3:           %{name}-deleted-io-test.patch
+Patch3:           %{pkg_name}-deleted-io-test.patch
 # Removed relativePath to parent pom
-Patch4:           %{name}-parent.patch
+Patch4:           %{pkg_name}-parent.patch
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    felix-osgi-core
 BuildRequires:    felix-osgi-compendium
 BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    felix-gogo-parent
+BuildRequires:    %{?scl_prefix}felix-gogo-parent
+%{?scl:BuildRequires:	  %{?scl_prefix}build}
 
 Requires:         jpackage-utils
+%{?scl:Requires: %scl_runtime}
 Source44: import.info
 
 %description
@@ -62,6 +74,7 @@ This package contains the API documentation for %{name}.
 %patch4 -p1
 
 %build
+%{?scl:%scl_maven_opts}
 mvn-rpmbuild install javadoc:aggregate 
 
 %install
@@ -75,8 +88,8 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
 %add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{pkg_name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{pkg_name}
 
 
 %files
@@ -87,9 +100,12 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %files javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
+%{_javadocdir}/%{pkg_name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_8jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
