@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_4jpp7
+Release:       alt1_5jpp7
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
 Group:         Development/Java
 License:       LGPLv2+
@@ -49,7 +49,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 %package demos
 Group:         Development/Java
@@ -57,7 +57,7 @@ Summary:       Demostrations and samples for %{name}
 Requires:      %{name} = %{version}-%{release}
 
 %description demos
-This package contains demostrations and samples for %%{name}.
+This package contains demostrations and samples for %{name}.
 
 %prep
 %setup -q -c
@@ -157,6 +157,9 @@ cp -pr doc/full/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt1_5jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 8-alt1_4jpp7
 - fc update
 
