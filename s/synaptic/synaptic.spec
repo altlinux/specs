@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt14.1
+Release: alt14.2
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -126,6 +126,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed Jul 30 2014 Michael Shigorin <mike@altlinux.org> 0.58-alt14.2
+- NMU: rebuilt with libapt
+
 * Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 0.58-alt14.1
 - NMU: rebuild with libapt
 
