@@ -1,10 +1,13 @@
 Epoch: 0
-BuildRequires: hsqldb
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-core
 Version:       2.6.0
-Release:       alt2_2jpp7
+Release:       alt2_5jpp7
 Summary:       Easy Hibernate Cache
 Group:         Development/Java
 License:       ASL 2.0
@@ -33,7 +36,7 @@ BuildRequires: ehcache-parent
 BuildRequires: jpackage-utils
 
 BuildRequires: geronimo-jta
-BuildRequires: hibernate3
+BuildRequires: hibernate3 >= 3.6.10-7
 BuildRequires: ehcache-sizeof-agent
 BuildRequires: slf4j
 BuildRequires: tomcat-servlet-3.0-api
@@ -51,7 +54,7 @@ BuildRequires: tomcat-servlet-3.0-api
 #BuildRequires: mockito
 #BuildRequires: xsom
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
@@ -67,7 +70,7 @@ BuildRequires: plexus-resources
 
 Requires:      ehcache-sizeof-agent
 Requires:      geronimo-jta
-Requires:      hibernate3
+Requires:      hibernate3 >= 3.6.10-7
 Requires:      slf4j
 Requires:      tomcat-servlet-3.0-api
 
@@ -93,12 +96,13 @@ This package contains javadoc for %{name}.
 %patch1 -p0
 %patch2 -p0
 
-sed -i 's,<filter>${project.build.directory}/filter.properties</filter>,<filter>src/assemble/filter.properties</filter>,' pom.xml
-
+# Make sure we require version '3' of Hibernate
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']/pom:version"
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']" "<version>3</version>"
 %build
 
 # tests skipped. cause: missing dependencies
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -X -Dmaven.local.depmap.file="%{SOURCE1}" -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 
@@ -123,6 +127,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
