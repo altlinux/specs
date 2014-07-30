@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: java-1.5.0-devel
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-signatures
 Version:        1.1
-Release:        alt2_0.8.svn11457jpp7
+Release:        alt2_0.11.svn11457jpp7
 Summary:        Mojo API signatures project
 
 Group:          Development/Java
@@ -24,7 +28,7 @@ BuildArch:      noarch
 # specific release required for objectweb-asm dependency in pom.xml
 BuildRequires:  animal-sniffer >= 1.6-3
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-install-plugin
@@ -39,11 +43,7 @@ BuildRequires:  mojo-parent
 
 # specific release required for handling "signature" packaging
 Requires:       maven
-Requires:       mojo-parent
-
 Requires:       jpackage-utils
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 Source44: import.info
 
 %description
@@ -93,6 +93,9 @@ done
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.11.svn11457jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.8.svn11457jpp7
 - NMU rebuild to move poms and fragments
 
