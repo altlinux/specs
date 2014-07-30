@@ -8,6 +8,7 @@ BuildRequires: jline
 # recommends
 Requires: jline libreadline-java
 AutoReq: yes, nopython
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %{expand: %%define pyver %(python -c 'import sys;print(sys.version[0:3])')}
@@ -19,7 +20,7 @@ BuildRequires: jpackage-compat
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt7_11jpp7
+Release:                   alt7_12jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -56,7 +57,7 @@ Source44: import.info
 %description
 Jython is an implementation of the high-level, dynamic, object-oriented
 language Python seamlessly integrated with the Java platform. The
-predecessor to Jython, JPython, is certified as 100%% Pure Java. Jython is
+predecessor to Jython, JPython, is certified as 100% Pure Java. Jython is
 freely available for both commercial and non-commercial use and is
 distributed with source code. Jython is complementary to Java and is
 especially suited for the following tasks: Embedded scripting - Java
@@ -77,7 +78,7 @@ Group:             Development/Java
 BuildArch: noarch
 
 %description javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 %package manual
 Summary:           Manual for %{name}
@@ -85,7 +86,7 @@ Group:             Development/Java
 BuildArch: noarch
 
 %description manual
-Usage documentation for %%{name}.
+Usage documentation for %{name}.
 
 %package demo
 Summary:           Demo for %{name}
@@ -95,7 +96,7 @@ AutoReq: yes, nopython
 #AutoProv: yes, nopython
 
 %description demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n %{name}-svn-%{svn_tag}
@@ -235,8 +236,8 @@ ln -s $(relative %{_localstatedir}/jython/cachedir %{_datadir}/jython/) $RPM_BUI
 %add_to_maven_depmap org.python %{name} %{version} JPP %{name}                  
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-cat > $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom <<'EOF'
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+cat > $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom <<'EOF'
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>jython</groupId>
@@ -284,7 +285,7 @@ fi || :
 #%ghost %{_localstatedir}/jython/cachedir/packages
 %{_datadir}/jython/cachedir
 # pom
-%{_mavenpomdir}/*
+%{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -300,6 +301,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_12jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_11jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
