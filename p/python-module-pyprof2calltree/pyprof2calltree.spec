@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: Help visualize profiling data from cProfile with kcachegrind
 License: BSD
 Group: Development/Python
@@ -18,6 +18,7 @@ BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -35,6 +36,7 @@ kdesdk package.
 %package -n python3-module-%oname
 Summary: Help visualize profiling data from cProfile with kcachegrind
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 Script to help visualize profiling data collected with the cProfile
@@ -53,6 +55,7 @@ kdesdk package.
 
 %if_with python3
 cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -94,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt2
+- Added provides %oname for Python 3
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
 - Version 1.3.2
 - Added module for Python 3
