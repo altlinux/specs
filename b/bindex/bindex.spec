@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # SVN info
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_6.svn96jpp7
+Release: alt3_7.svn96jpp7
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Java
@@ -49,7 +52,7 @@ find . -type f -iname "*.jar" | xargs -t %__rm -f ;
 export CLASSPATH=$(build-classpath ant kxml junit \
                                    felix/org.osgi.service.obr \
                                    felix/org.osgi.core)
-javac  -target 1.5 -source 1.5 -d bin $(find src -name *.java)
+javac -d bin $(find src -name *.java)
 pushd jar
   %__ln_s $(build-classpath ant.jar)
   %__ln_s $(build-classpath kxml.jar) kxml2-min.jar
@@ -68,6 +71,9 @@ java -jar $(build-classpath aqute-bnd.jar) \
 %{_javadir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_7.svn96jpp7
+- new release
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_6.svn96jpp7
 - added jpp compatible symlink
 
