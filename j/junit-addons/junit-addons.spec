@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:          junit-addons
 Version:       1.4
-Release:       alt3_3jpp7
+Release:       alt3_4jpp7
 Summary:       JUnitX helper classes for JUnit
 Group:         Development/Java
 License:       ASL 1.1
@@ -128,6 +128,9 @@ cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_4jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_3jpp7
 - fc update
 
