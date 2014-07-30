@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           metadata-extractor
 Version:        2.3.1
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Summary:        JPEG metadata extraction framework
 
 Group:          Development/Java
@@ -103,6 +106,9 @@ popd
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_10jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_9jpp7
 - new version
 
