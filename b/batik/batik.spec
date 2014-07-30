@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           batik
 Version:        1.8
-Release:        alt1_0.5.svn1230816jpp7
+Release:        alt1_0.7.svn1230816jpp7
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
@@ -58,7 +58,6 @@ BuildRequires:  ant-nodeps
 BuildRequires:  subversion
 BuildRequires:  zip
 
-BuildRequires:  jython
 BuildRequires:  rhino >= 1.5
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  xerces-j2
@@ -192,7 +191,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 %package        demo
 Summary:        Demo for %{name}
@@ -200,7 +199,7 @@ Group:          Development/Java
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 
 %prep
@@ -478,6 +477,9 @@ popd
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.7.svn1230816jpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.5.svn1230816jpp7
 - fc update
 
