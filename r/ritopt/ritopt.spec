@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/find /usr/bin/jar /usr/bin/java /usr/bin/javadoc gcc-c++
+BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/find gcc-c++ java-devel-default
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_6jpp7
+Release:        alt1_8jpp7
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Group:          Development/Java
@@ -18,7 +19,7 @@ BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  ant-nodeps
 BuildRequires:  dos2unix
-BuildRequires:  texlive-latex-recommended
+BuildRequires: /usr/bin/latex texlive-latex-recommended
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -70,6 +71,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_8jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_6jpp7
 - new version
 
