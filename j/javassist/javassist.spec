@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javassist
 Version:        3.16.1
-Release:        alt2_2jpp7
+Release:        alt2_5jpp7
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 Group:          Development/Java
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
@@ -16,7 +17,7 @@ BuildArch:      noarch
 
 BuildRequires:     jpackage-utils
 
-BuildRequires:     maven
+BuildRequires:     maven-local
 BuildRequires:     maven-compiler-plugin
 BuildRequires:     maven-install-plugin
 BuildRequires:     maven-jar-plugin
@@ -26,7 +27,6 @@ BuildRequires:     maven-surefire-plugin
 BuildRequires:     maven-surefire-provider-junit
 BuildRequires:     maven-source-plugin
 BuildRequires:     maven-antrun-plugin
-BuildRequires:     maven-doxia
 BuildRequires:     maven-doxia-sitetools
 
 Requires:          jpackage-utils
@@ -94,6 +94,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.16.1-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.16.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
