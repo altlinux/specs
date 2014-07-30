@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    jgrapht
 Version: 0.8.1
-Release: alt1_5jpp7
+Release: alt1_6jpp7
 Summary: A free Java graph library that provides mathematical graph objs and algorithms
 Group:   Development/Java
 License: LGPLv2+
@@ -69,6 +69,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_6jpp7
+- new release
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_5jpp7
 - fc update
 
