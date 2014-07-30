@@ -1,13 +1,13 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           axis2
 Version:        1.6.1
-Release:        alt2_4jpp7
+Release:        alt2_7jpp7
 Summary:        Java-based Web Services / SOAP / WSDL engine
 
 Group:          Development/Java
@@ -25,11 +25,17 @@ Patch2:         %{name}-AXIS2-5349.patch
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
+BuildRequires: maven-shared
+BuildRequires: maven-clean-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: geronimo-jta
+BuildRequires: geronimo-saaj
+BuildRequires: geronimo-parent-poms
 BuildRequires: ws-commons-XmlSchema
 BuildRequires: apache-commons-logging
 BuildRequires: ws-commons-axiom
-BuildRequires: ws-commons-neethi
+BuildRequires: neethi
 BuildRequires: jsr-311
 BuildRequires: ws-commons-woden
 BuildRequires: javamail
@@ -44,7 +50,7 @@ Requires:      apache-commons-logging
 Requires:      log4j
 Requires:      xerces-j2
 Requires:      ws-commons-axiom
-Requires:      ws-commons-neethi
+Requires:      neethi
 Requires:      jsr-311
 Requires:      ws-commons-woden
 Requires:      javamail
@@ -114,6 +120,9 @@ cp -rp target/site/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_7jpp7
+- new release
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_4jpp7
 - new version
 
