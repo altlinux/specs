@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname hamcrest
 
 Name:           hamcrest12
 Version:        1.2
-Release:        alt2_4jpp7
+Release:        alt2_6jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -113,6 +116,9 @@ cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
