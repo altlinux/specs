@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ python-devel
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++ maven python-devel
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             avro
 Version:          1.6.2
-Release:          alt3_4jpp7
+Release:          alt3_6jpp7
 Summary:          Data serialization system
 Group:            Development/Java
 License:          ASL 2.0
@@ -22,7 +22,7 @@ Patch0:           avro-%{version}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -115,6 +115,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt3_6jpp7
+- new release
+
 * Thu Jul 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt3_4jpp7
 - fixed build
 
