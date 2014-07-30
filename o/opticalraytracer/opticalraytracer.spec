@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		opticalraytracer
 Version:	2.7
-Release:	alt1_5jpp7
+Release:	alt1_7jpp7
 Summary:	Utility that analyzes systems of lenses
 
 Group:		Toys
@@ -47,7 +50,7 @@ ant
 
 %install
 
-desktop-file-install --vendor="fedora" \
+desktop-file-install \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
 %{SOURCE1}
 
@@ -75,7 +78,7 @@ cp -rp dist/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %{_javadir}/*
 %{_bindir}/raytracer
-%{_datadir}/applications/fedora-opticalraytracer.desktop
+%{_datadir}/applications/*opticalraytracer.desktop
 %{_datadir}/icons/hicolor/32x32/apps/OpticalRayTracer.png
 %doc src/opticalraytracer/help_resources/*
 
@@ -84,6 +87,9 @@ cp -rp dist/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_7jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_5jpp7
 - new version
 
