@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jchardet
 Version:        1.1
-Release:        alt2_4jpp7
+Release:        alt2_6jpp7
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 Group:          Development/Java
@@ -16,7 +17,7 @@ Source0:        http://download.sourceforge.net/jchardet/%{version}/jchardet-%{v
 Source1:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/1.0/%{name}-1.0.pom
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  jpackage-utils
 
@@ -87,6 +88,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
