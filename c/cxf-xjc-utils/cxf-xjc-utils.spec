@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cxf-xjc-utils
 Version:          2.6.0
-Release:          alt3_3jpp7
+Release:          alt3_5jpp7
 Summary:          Apache CXF XJC-Utils
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,7 +22,7 @@ Patch0:           %{name}-%{version}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -106,6 +109,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt3_5jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt3_3jpp7
 - fixed build
 
