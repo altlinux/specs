@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          directory-project
 Version:       27
-Release:       alt2_1jpp7
+Release:       alt2_3jpp7
 Summary:       Apache Directory Project Root pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -26,7 +29,7 @@ Patch0:        directory-project-27-pom.patch
 
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 
 Requires:      maven
@@ -63,6 +66,9 @@ mvn-rpmbuild install
 %doc LICENSE.txt NOTICE.txt README.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 27-alt2_3jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 27-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
