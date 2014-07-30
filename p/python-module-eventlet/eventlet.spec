@@ -1,10 +1,10 @@
 %define oname eventlet
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.15.0
-Release: alt1
+Release: alt2
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -38,6 +38,7 @@ larger application.
 %package -n python3-module-%oname
 Summary: Highly concurrent networking library (Python 3)
 Group: Development/Python3
+%add_python3_req_skip stackless
 
 %description -n python3-module-%oname
 Eventlet is a concurrent networking library for Python that allows you
@@ -91,6 +92,7 @@ This package contains documentation for Eventlet.
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %prepare_sphinx .
@@ -100,9 +102,6 @@ ln -s ../objects.inv doc/
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
 %python3_build
 popd
 %endif
@@ -138,6 +137,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt2
+- Added module for Python 3
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1
 - Version 0.15.0
 
