@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_7jpp7
+Release:        alt4_8jpp7
 Epoch:          0
 Group:          Development/Java
 License:        LGPLv2+
@@ -83,7 +83,7 @@ find . -name "*.jar" -exec rm {} \;
 %build
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
 export CLASSPATH=$(build-classpath asm2/asm2)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.compiler=modern -Dbuild.sysclasspath=first jar jdoc
+ant -Dbuild.compiler=modern -Dbuild.sysclasspath=first jar jdoc
 
 %install
 # jars
@@ -109,6 +109,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_8jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_7jpp7
 - fc update
 
