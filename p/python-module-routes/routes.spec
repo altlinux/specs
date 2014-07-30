@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.git20140108
+Release: alt2.git20140108
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
@@ -14,6 +14,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # git://github.com/bbangert/routes
 Source: %oname-%version.tar.gz
 BuildArch: noarch
+
+Requires: python-module-repoze.lru
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
@@ -37,6 +39,7 @@ comes with an extensive unit test suite.
 %package -n python3-module-%oname
 Summary: Routing Recognition and Generation Tools
 Group: Development/Python3
+Requires: python3-module-repoze.lru
 
 %description -n python3-module-%oname
 Routes is a Python re-implementation of the Rails routes system for
@@ -129,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 30 2014 Lenar Shakirov <snejok@altlinux.ru> 2.0-alt2.git20140108
+- python-module-repoze.lru added to Requires
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140108
 - New snapshot
 - Added module for Python 3
