@@ -1,7 +1,10 @@
 %define oname pylons
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20120813
+Release: alt2.git20120813
 Epoch: 1
 Summary: Lightweight web framework emphasizing flexibility and rapid development
 License: BSD
@@ -16,6 +19,11 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
 #BuildPreReq: python-module-sphinx python-module-Pygments
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
 The Pylons web framework is aimed at making webapps and large
@@ -27,6 +35,32 @@ programmatic website development in Python easy. Several key points:
   to expand on
 
 * Harness existing knowledge about Python
+
+%package -n python3-module-%oname
+Summary: Lightweight web framework emphasizing flexibility and rapid development
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The Pylons web framework is aimed at making webapps and large
+programmatic website development in Python easy. Several key points:
+
+* A framework to make writing web applications in Python easy
+
+* Utilizes a minimalist, component-based philosophy that makes it easy
+  to expand on
+
+* Harness existing knowledge about Python
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Pylons
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+The Pylons web framework is aimed at making webapps and large
+programmatic website development in Python easy.
+
+This package contains tests for Pylons.
 
 %package pickles
 Summary: Pickles for Pylons
@@ -62,12 +96,24 @@ This package contains documentation for Pylons.
 
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 install -p -m644 %SOURCE1 .
 
 #prepare_sphinx .
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 #export PYTHONPATH=$PWD
 #pushd pylons/docs/en
@@ -80,6 +126,12 @@ install -p -m644 %SOURCE1 .
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 #install -d %buildroot%_docdir/%name
 #cp -fR pylons/docs/en/_build/html/* %buildroot%_docdir/%name/
@@ -108,7 +160,28 @@ install -p -m644 %SOURCE1 .
 %files doc
 %doc *.pdf
 
+%if_with python3
+%files -n python3-module-%oname
+%doc CHANGELOG LICENSE README.txt UPGRADING
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/test_files
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/test_files
+%endif
+
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.1-alt2.git20120813
+- Added module for Python 3
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.1-alt1.git20120813
 - Version 1.0.1
 
