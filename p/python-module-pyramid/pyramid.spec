@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt1.dev.git20140714
+Release: alt1.dev.git20140728
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -188,13 +188,16 @@ popd
 %exclude %python3_sitelibdir/%oname/*/__pycache__/test*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/tests
+%python3_sitelibdir/%oname/test*
 %python3_sitelibdir/%oname/__pycache__/testing.*
 %python3_sitelibdir/%oname/*/test*
 %python3_sitelibdir/%oname/*/__pycache__/test*
 %endif
 
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20140728
+- New snapshot
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.dev.git20140714
 - Version 1.6dev
 
