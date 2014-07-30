@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jcip-annotations
 Version:        1
-Release:        alt1_5.20060626jpp7
+Release:        alt1_7.20060626jpp7
 Summary:        Java annotations for multithreaded software
 
 Group:          Development/Java
@@ -21,8 +21,6 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 
 Requires:       jpackage-utils
-Requires(pre):   jpackage-utils
-Requires(post):  jpackage-utils
 Source44: import.info
 
 
@@ -72,15 +70,11 @@ mv %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 # install maven metadata
 mkdir -p %{buildroot}/%{_mavenpomdir}
 cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap net.jcip jcip-annotations %{version} JPP jcip-annotations
+%add_maven_depmap
 
 # install javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %{_javadir}/%{name}.jar
@@ -91,6 +85,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1-alt1_7.20060626jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:1-alt1_5.20060626jpp7
 - fc update
 
