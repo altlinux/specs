@@ -6,7 +6,7 @@
 %def_without gnutls
 
 Name: openconnect
-Version: 5.99
+Version: 6.00
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(zlib)
 %{?_with_stoken:BuildRequires: pkgconfig(stoken)}
 %{?_with_liboath:BuildRequires: pkgconfig(liboath)}
 BuildRequires: vpnc-script
+BuildRequires: libkrb5-devel
 BuildRequires: python-modules python-modules-xml groff-extra
 Requires: vpnc-script
 %{?_with_openssl:Requires: openssl >= 1.0.1e}
@@ -84,6 +85,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 6.00-alt1
+- 6.00
+
 * Wed Mar 05 2014 Alexey Shabalin <shaba@altlinux.ru> 5.99-alt1
 - 5.99
 - switch to openssl back
