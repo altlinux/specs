@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           objectweb-asm
 Version:        3.3.1
-Release:        alt5_4jpp7
+Release:        alt5_7jpp7
 Epoch:          0
 Summary:        A code manipulation tool to implement adaptable systems
 License:        BSD
@@ -106,7 +106,7 @@ done
 %add_maven_depmap JPP.objectweb-asm-asm-tree.pom %{name}/asm-tree.jar
 %add_maven_depmap JPP.objectweb-asm-asm-util.pom %{name}/asm-util.jar
 %add_maven_depmap JPP.objectweb-asm-asm-xml.pom %{name}/asm-xml.jar
-%add_maven_depmap JPP.objectweb-asm-asm-all.pom %{name}/asm-all.jar
+%add_maven_depmap JPP.objectweb-asm-asm-all.pom %{name}/asm-all.jar -a "org.eclipse.jetty.orbit:org.objectweb.asm"
 %add_maven_depmap JPP.objectweb-asm-asm-parent.pom
 
 # javadoc
@@ -124,6 +124,9 @@ cp -pr output/dist/doc/javadoc/user/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt5_7jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt5_4jpp7
 - update
 
