@@ -1,9 +1,12 @@
-BuildRequires: maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Summary:        Jetty test policy files
 
 Group:          Development/Java
@@ -12,10 +15,12 @@ URL:            http://www.eclipse.org/jetty/
 Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
 # rpmlint config file (fedpkg lint will use this)
 #Source1:        .rpmlint
+Source2:        http://www.eclipse.org/legal/epl-v10.html
+Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jetty-toolchain
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-surefire-provider-junit
@@ -40,9 +45,10 @@ BuildArch: noarch
 
 %prep
 %setup -q
+cp -p %{SOURCE2} %{SOURCE3} .
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # poms
@@ -59,14 +65,19 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files
+%doc epl-v10.html LICENSE-2.0.txt
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc epl-v10.html LICENSE-2.0.txt
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
