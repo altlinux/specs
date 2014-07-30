@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    appframework
 Version: 1.03
-Release: alt2_9jpp7
+Release: alt2_10jpp7
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -50,7 +51,7 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %patch1 -p1 -b .sav
 
 %build
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dlibs.swing-layout.classpath=%{_javadir}/swing-layout.jar dist
+%{ant} -Dlibs.swing-layout.classpath=%{_javadir}/swing-layout.jar dist
 
 %install
 %{__rm} -fr %{buildroot}
@@ -71,6 +72,9 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{_javadocdir}/%{name}-%{version}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_10jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_9jpp7
 - update to new release by jppimport
 
