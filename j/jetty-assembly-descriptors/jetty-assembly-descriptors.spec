@@ -1,9 +1,12 @@
-BuildRequires: maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Java
@@ -12,8 +15,11 @@ URL:            http://www.eclipse.org/jetty/
 Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
 BuildArch:      noarch
 
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:        http://www.eclipse.org/legal/epl-v10.html
+
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jetty-toolchain
 BuildRequires:  maven-surefire-provider-junit
 
@@ -27,9 +33,10 @@ Jetty assembly descriptors used for building
 
 %prep
 %setup -q
+cp -p %{SOURCE1} %{SOURCE2} .
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # poms
@@ -42,11 +49,15 @@ install -Dp -m 644 target/%{name}-1.4.jar %{buildroot}%{_javadir}/%{name}.jar
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
+%doc LICENSE-2.0.txt epl-v10.html
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
 - NMU rebuild to move poms and fragments
 
