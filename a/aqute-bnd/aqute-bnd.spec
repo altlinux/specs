@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
@@ -32,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           aqute-bnd
 Version:        0.0.363
-Release:        alt2_7jpp7
+Release:        alt2_8jpp7
 Summary:        BND Tool
 License:        ASL 2.0
 Group:          Development/Java
@@ -140,6 +143,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_8jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
