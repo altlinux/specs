@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # TODO: junit QA tests
 
 Name:           plexus-graph
 Version:        0.13.1
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Graph data structures manipulation library
 
 Group:          Development/Java
@@ -64,6 +67,9 @@ cp -rp doc/javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_8jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_7jpp7
 - new version
 
