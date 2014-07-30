@@ -1,10 +1,14 @@
-BuildRequires: xpp3-minimal
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:          mvel
 Version:       2.0.19
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       MVFLEX Expression Language
 Group:         Development/Java
 License:       ASL 2.0
@@ -24,7 +28,7 @@ BuildRequires: objectweb-asm
 BuildRequires: junit
 BuildRequires: xstream
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -103,6 +107,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc LICENSE.txt
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
