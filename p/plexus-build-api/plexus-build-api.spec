@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt1_4jpp7
+Release:        alt1_8jpp7
 Summary:        Plexus Build API
 
 Group:          Development/Java
@@ -11,12 +15,13 @@ License:        ASL 2.0
 URL:            https://github.com/sonatype/sisu-build-api
 #Fetched from https://github.com/sonatype/sisu-build-api/tarball/plexus-build-api-0.0.7
 Source0:        sonatype-sisu-build-api-plexus-build-api-0.0.7-0-g883ea67.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 Patch0:         %{name}-migration-to-component-metadata.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-jar-plugin
@@ -26,7 +31,7 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-doxia-sitetools
-BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-utils
 BuildRequires: forge-parent
 BuildRequires: spice-parent
@@ -36,7 +41,7 @@ BuildRequires: maven-shared-reporting-impl
 BuildRequires: plexus-digest
 BuildRequires: maven-surefire-provider-junit4
 
-Requires: plexus-container-default
+Requires: plexus-containers-container-default
 Requires: plexus-utils
 Requires: jpackage-utils
 Requires: spice-parent
@@ -56,6 +61,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n sonatype-sisu-build-api-f1f8849
+cp -p %{SOURCE1} .
 
 %patch0 -p1
 
@@ -79,14 +85,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 
 %files
+%doc LICENSE-2.0.txt
 %{_javadir}/plexus/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_8jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_4jpp7
 - new fc release
 
