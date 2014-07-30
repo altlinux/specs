@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.9.beta2jpp7
+Release:        alt2_0.12.beta2jpp7
 Summary:        Plexus Container-Backed Active Collections
 
 Group:          Development/Java
@@ -24,7 +25,7 @@ BuildArch: noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -32,13 +33,9 @@ BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-shared-reporting-impl
 BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  plexus-containers-component-metadata
 BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-component-api
@@ -62,7 +59,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 
 %prep
@@ -101,6 +98,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.12.beta2jpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.9.beta2jpp7
 - fixed maven1 dependency
 
