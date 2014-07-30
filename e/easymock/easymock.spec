@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           easymock
 Version:        1.2
-Release:        alt1_18jpp7
+Release:        alt1_20jpp7
 Epoch:          0
 Summary:        Easy mock objects
 Group:          Development/Java
@@ -97,7 +97,7 @@ echo "java\ compiler=%{javac}" >> easymockbuild.properties
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first
+%{ant} -Dbuild.sysclasspath=first
 
 %install
 unzip -qq %{name}%{version}_Java1.3.zip
@@ -128,6 +128,9 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_20jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_18jpp7
 - fc update
 
