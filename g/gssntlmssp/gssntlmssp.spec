@@ -1,5 +1,5 @@
 Name: gssntlmssp
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 Summary: GSSAPI NTLMSSP Mechanism
 
@@ -61,5 +61,8 @@ make test_gssntlmssp
 %_includedir/krb5/gssapi/*
 
 %changelog
+* Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Mon Jun 16 2014 Alexey Shabalin <shaba@altlinux.ru> 0.3.1-alt1
 - initial build
