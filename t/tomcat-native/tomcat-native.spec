@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           tomcat-native
 Version:        1.1.27
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Tomcat native library
 
 License:        ASL 2.0
@@ -60,6 +60,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.27-alt1_2jpp7
+- new release
+
 * Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.27-alt1_1jpp7
 - fc update
 
