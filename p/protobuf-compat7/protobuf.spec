@@ -3,10 +3,11 @@
 %add_findprov_skiplist /usr/include/google/protobuf/message.h
 
 %define soversion 7
+%define _name protobuf
 
-Name: protobuf-compat%{soversion}
+Name: %{_name}-compat%{soversion}
 Version: 2.4.1
-Release: alt3
+Release: alt4
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -25,23 +26,27 @@ Protocol Buffers are a way of encoding structured data in
 an efficient yet extensible format. Google uses Protocol Buffers for
 almost all of its internal RPC protocols and file formats.
 
-%package -n lib%{name}%{soversion}
+%package -n lib%{_name}%{soversion}
 Summary: Protocol Buffer c++ library.
 Group: System/Libraries
 
 Provides: libprotobuf = %version-%release
+Provides: libprotobuf-compat77 = %version-%release
+Obsoletes: libprotobuf-compat77 < %version-%release
 
-%description -n lib%{name}%{soversion}
+%description -n lib%{_name}%{soversion}
 Protocol Buffers are a way of encoding structured data in
 an efficient yet extensible format. Google uses Protocol Buffers for
 almost all of its internal RPC protocols and file formats.
 
-%package -n lib%{name}%{soversion}-lite
+%package -n lib%{_name}%{soversion}-lite
 Summary: Protocol Buffers LITE_RUNTIME libraries
 Group: System/Libraries
 Provides: libprotobuf-lite = %version-%release
+Provides: libprotobuf-compat77-lite = %version-%release
+Obsoletes: libprotobuf-compat77-lite < %version-%release
 
-%description -n lib%{name}%{soversion}-lite
+%description -n lib%{_name}%{soversion}-lite
 Protocol Buffers built with optimize_for = LITE_RUNTIME.
 
 The "optimize_for = LITE_RUNTIME" option causes the compiler to generate code
@@ -75,15 +80,18 @@ export PTHREAD_LIBS="-lpthread"
 %install
 %makeinstall_std
 
-%files -n lib%{name}%{soversion}
+%files -n lib%{_name}%{soversion}
 %doc CONTRIBUTORS.txt README.txt examples/
 %_libdir/*.so.*
 %exclude %_libdir/libprotobuf-lite.so.*
 
-%files -n lib%{name}%{soversion}-lite
+%files -n lib%{_name}%{soversion}-lite
 %_libdir/libprotobuf-lite.so.*
 
 %changelog
+* Thu Jul 31 2014 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt4
+- fixed package name
+
 * Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt3
 - build only library package for compat
 

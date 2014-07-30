@@ -1,7 +1,6 @@
-%set_automake_version 1.11
 
 Name: libgadu
-Version: 1.11.3
+Version: 1.12.0
 Release: alt1
 
 Summary: Library for Handling of Gadu-Gadu Instant Messaging
@@ -11,7 +10,10 @@ Url: http://toxygen.net/libgadu/
 
 Source: %name-%version.tar
 
-BuildRequires: doxygen libgnutls-devel libxml2-devel zlib-devel
+BuildRequires: doxygen
+BuildRequires: libgnutls-devel >= 2.10.0
+BuildRequires: libxml2-devel zlib-devel
+BuildRequires: libprotobuf-c-devel protobuf-c-compiler
 
 %description
 libgadu is a library for handling of protocol of a popular Polish
@@ -34,9 +36,10 @@ instant messenger Gadu-Gadu.
 %autoreconf
 %configure \
 	--disable-static \
+	--with-gnutls-system-trust-store=/usr/share/ca-certificates/ca-bundle.crt \
 	--without-bind \
-	--without-openssl \
-	--with-pthread
+	--without-openssl
+
 
 %make_build
 
@@ -54,6 +57,9 @@ instant messenger Gadu-Gadu.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
+- 1.12.0
+
 * Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.3-alt1
 - 1.11.3
 
