@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -12,7 +15,7 @@ echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
 
 Name:           freemarker
 Version:        %{fm_ver}
-Release:        alt2_4jpp7
+Release:        alt2_5jpp7
 Summary:        A template engine
 
 Group:          Development/Java
@@ -149,7 +152,7 @@ dos2unix -k docs/docs/api/package-list
 %checkForbiddenJARFiles
 
 %build
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+%{ant}
 
 %install
 # jars
@@ -178,6 +181,9 @@ dos2unix -k docs/docs/api/package-list
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.19-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.19-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
