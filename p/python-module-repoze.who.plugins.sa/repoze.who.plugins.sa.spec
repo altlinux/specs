@@ -1,7 +1,10 @@
 %define oname repoze.who.plugins.sa
+
+%def_with python3
+
 Name:           python-module-%oname
 Version:        1.0.1
-Release:        alt1
+Release:        alt2
 Summary:        The repoze.who SQLAlchemy plugin
 Group:          Development/Python
 License:        BSD-derived
@@ -9,17 +12,43 @@ URL:            http://pypi.python.org/pypi/repoze.who.plugins.sa/
 Source:         %oname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: python-devel python-module-sphinx-devel
+BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-repoze.who python-module-SQLAlchemy
 BuildPreReq: python-module-nose python-module-coverage
 BuildPreReq: python-module-elixir python-module-pysqlite2
 #BuildPreReq: texlive-latex-recommended gif2png
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires repoze.who SQLAlchemy
 
 %description
 This plugin provides one repoze.who authenticator and one metadata
 provider which works with SQLAlchemy or Elixir-based models.
+
+%package -n python3-module-%oname
+Summary: The repoze.who SQLAlchemy plugin
+Group: Development/Python3
+%py3_requires repoze.who SQLAlchemy
+
+%description -n python3-module-%oname
+This plugin provides one repoze.who authenticator and one metadata
+provider which works with SQLAlchemy or Elixir-based models.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for repoze.who.plugins.sa
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires repoze.who coverage nose SQLAlchemy elixir
+
+%description -n python3-module-%oname-tests
+This plugin provides one repoze.who authenticator and one metadata
+provider which works with SQLAlchemy or Elixir-based models.
+
+This package contains tests for repoze.who.plugins.sa.
 
 %package tests
 Summary: Tests for repoze.who.plugins.sa
@@ -58,10 +87,20 @@ This package contains pickles for repoze.who.plugins.sa.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 #prepare_sphinx docs
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 #export PYTHONPATH=$PWD
 #pushd docs/source/_static
@@ -71,11 +110,21 @@ This package contains pickles for repoze.who.plugins.sa.
 
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 #install -d %buildroot%python_sitelibdir/%oname
@@ -98,7 +147,18 @@ mv %buildroot%python_sitelibdir_noarch/* \
 #files pickles
 #python_sitelibdir/%oname/pickle
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt PKG-INFO
+%python3_sitelibdir/%{oname}*
+%exclude %python3_sitelibdir/*.pth
+%python3_sitelibdir/repoze/who/plugins/*
+%endif
+
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
+- Added module for Python 3
+
 * Tue Dec 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 
