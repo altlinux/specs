@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_9jpp7
+Release:        alt2_10jpp7
 Epoch:          0
 Group:          Development/Java
 License:        CPL
@@ -142,6 +143,9 @@ cp -pr out/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_10jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_9jpp7
 - NMU rebuild to move poms and fragments
 
