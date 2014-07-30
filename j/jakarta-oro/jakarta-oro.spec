@@ -37,13 +37,14 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_11jpp7
+Release:        alt2_13jpp7
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
 Group:          Development/Java
 Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
 Source1:        MANIFEST.MF
+Source2:        http://repo1.maven.org/maven2/%{base_name}/%{base_name}/%{version}/%{base_name}-%{version}.pom
 Patch1:         %{name}-build-xml.patch
 URL:            http://jakarta.apache.org/oro
 BuildRequires:  jpackage-utils > 1.6
@@ -83,7 +84,7 @@ for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
 cp %{SOURCE1} .
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dfinal.name=%{base_name} jar javadocs
+ant -Dfinal.name=%{base_name} jar javadocs
 
 %install
 #jars
@@ -94,6 +95,11 @@ install -m 644 %{base_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf docs/api
+
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 # pom
 mkdir -p %{buildroot}%{_mavenpomdir}
 cp -p %{SOURCE45} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
@@ -106,6 +112,8 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files
 %doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS LICENSE STYLE
 %{_javadir}/*.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 %_mavendepmapfragdir/*
 %_mavenpomdir/*.pom
 
@@ -114,6 +122,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_13jpp7
+- new release
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_11jpp7
 - fc update
 
