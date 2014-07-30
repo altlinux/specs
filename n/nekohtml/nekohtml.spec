@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           nekohtml
 Version:        1.9.14
-Release:        alt2_9jpp7
+Release:        alt2_11jpp7
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -59,7 +60,7 @@ BuildRequires:  java-javadoc
 BuildRequires:  bcel
 BuildRequires:  bcel-javadoc
 BuildRequires:  xerces-j2 >= 0:2.7.1
-#BuildRequires:  xerces-j2-javadoc-apis
+BuildRequires:  xerces-j2-javadoc
 BuildRequires:  xml-commons-apis
 BuildArch:      noarch
 Source44: import.info
@@ -103,7 +104,7 @@ Demonstrations and samples for %{name}.
 
 %build
 export CLASSPATH=$(build-classpath bcel xerces-j2)
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+%{ant} \
     -Dbuild.sysclasspath=first \
     -Dlib.dir=%{_javadir} \
     -Djar.file=%{name}.jar \
@@ -127,7 +128,7 @@ install -Dpm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}-filter
 # POM
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap -a nekohtml:nekohtml
 
 # Javadocs
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -148,6 +149,9 @@ cp -a build/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}-samples.jar
 
 %changelog
+* Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_11jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_9jpp7
 - fc update
 
