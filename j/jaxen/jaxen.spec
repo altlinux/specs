@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jaxen
 Version:        1.1.3
-Release:        alt3_5jpp7
+Release:        alt3_9jpp7
 Epoch:          0
 Summary:        An XPath engine written in Java
 License:        BSD
@@ -43,7 +43,7 @@ URL:            http://jaxen.codehaus.org/
 Group:          Development/Java
 Source0:        http://dist.codehaus.org/jaxen/distributions/jaxen-%{version}-src.tar.gz
 Source1:        build.xml
-Patch0:         %{name}-xom-dep.patch
+Source2:        http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 Requires:       dom4j >= 0:1.6.1
 Requires:       jdom >= 0:1.0-0.rc1.1jpp
 Requires:       xalan-j2
@@ -81,9 +81,9 @@ BuildArch: noarch
 
 %prep
 %setup -q 
-%patch0 -p1
 find . -name "*.jar" -exec rm -f {} \;
 cp %{SOURCE1} .
+cp %{SOURCE2} pom.xml
 mkdir -p target/lib
 pushd target/lib
 build-jar-repository . dom4j-1.6.1.jar jdom-1.0.jar 
@@ -91,11 +91,14 @@ ln -s %{_javadir}/xerces-j2.jar xercesImpl-2.6.2.jar
 popd
 rm -rf src/java/main/org/jaxen/xom
 rm src/java/test/org/jaxen/test/XOM*.java
+%pom_remove_dep xom:xom
+%pom_remove_dep :maven-cobertura-plugin
+%pom_remove_dep :maven-findbugs-plugin
 
 %build
 mkdir .maven
 export CLASSPATH=$(build-classpath xml-commons-apis)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dant.build.sysclasspath=first jar javadoc
+ant -Dant.build.sysclasspath=first jar javadoc
 
 %install
 # jars
@@ -111,9 +114,16 @@ cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/samples
 cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/samples
 
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a saxpath:saxpath
+
 %files
 %doc LICENSE.txt
 %{_javadir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc %{_javadocdir}/*
@@ -122,6 +132,9 @@ cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/samples
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_9jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_5jpp7
 - fc update
 
