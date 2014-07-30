@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Open Source Java SQL Database
 Group:         Development/Java
 License:       GPLv2
@@ -20,7 +21,7 @@ Patch1:        %{name}-%{version}-fix_fsf-address.patch
 BuildRequires: jpackage-utils
 
 BuildRequires: javacc
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -132,6 +133,9 @@ sh ./runLocalTest.sh
 %doc docs/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
