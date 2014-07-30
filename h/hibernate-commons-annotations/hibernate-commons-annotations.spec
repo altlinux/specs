@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-commons-annotations
 %define version 4.0.1
 %global namedreltag .Final
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             hibernate-commons-annotations
 Version:          4.0.1
-Release:          alt2_2jpp7
+Release:          alt2_4jpp7
 Summary:          Hibernate Annotations
 
 Group:            Development/Java
@@ -37,7 +41,7 @@ BuildRequires:    junit
 BuildRequires:    slf4j
 BuildRequires:    apache-commons-logging
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 BuildRequires:    maven-processor-plugin
 
@@ -100,6 +104,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.hibernate-%{name}.pom
 %doc lgpl.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
