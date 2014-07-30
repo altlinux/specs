@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             owasp-esapi-java
 Version:          2.0.1
-Release:          alt2_3jpp7
+Release:          alt2_7jpp7
 Summary:          OWASP Enterprise Security API
 Group:            Development/Java
 License:          BSD
@@ -20,12 +21,12 @@ Patch0:           0001-Remove-validator-implementation-bsed-on-Antisammy.patch
 # Use different directory in tests
 Patch1:           0002-Use-different-directory-to-testing-bin-is-a-symlink.patch
 # Missing implementations
-Patch2:           0003-Implement-getContextPath-method-in-MockServletContex.patch
+Patch2:           0003-Implement-missing-servlet-3.0-methods-in-mock.patch
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-install-plugin
@@ -37,7 +38,7 @@ BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-eclipse-plugin
 BuildRequires:    sonatype-oss-parent
-BuildRequires:    tomcat6-servlet-2.5-api
+BuildRequires:    tomcat-servlet-3.0-api
 BuildRequires:    tomcat-jsp-2.2-api
 BuildRequires:    bsh
 BuildRequires:    junit
@@ -46,15 +47,18 @@ BuildRequires:    apache-commons-collections
 BuildRequires:    apache-commons-fileupload
 BuildRequires:    log4j
 BuildRequires:    xom
+BuildRequires:    ecj
+BuildRequires:    maven-shared
 
 Requires:         jpackage-utils
-Requires:         tomcat6-servlet-2.5-api
+Requires:         tomcat-servlet-3.0-api
 Requires:         tomcat-jsp-2.2-api
 Requires:         apache-commons-collections
 Requires:         apache-commons-fileupload
 Requires:         log4j
 Requires:         bsh
 Requires:         xom
+Requires:         ecj
 Source44: import.info
 
 %description
@@ -98,6 +102,8 @@ This package contains the documentation for %{name}.
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='bsh-core']" "<systemPath>$(build-classpath bsh-core)</systemPath>"
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='bsh-core']" "<scope>system</scope>"
 
+sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/java/org/owasp/esapi/reference/HTTPUtilitiesTest.java
+
 %build
 mvn-rpmbuild \
     -Dproject.build.sourceEncoding=UTF-8 \
@@ -132,6 +138,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc documentation/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_7jpp7
+- new release
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_3jpp7
 - fixed build
 
