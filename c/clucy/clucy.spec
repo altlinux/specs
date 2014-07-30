@@ -1,4 +1,7 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global vendor      weavejester
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        0.3.0
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        Clojure interface to Lucene
 
 License:        EPL
@@ -77,6 +80,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
