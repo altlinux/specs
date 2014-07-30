@@ -1,10 +1,13 @@
-BuildRequires: geronimo-jta geronimo-ejb geronimo-jms
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Summary:        Enterprise Job Scheduler for Java
 Name:           quartz
 Version:        2.1.2
-Release:        alt2_4jpp7
+Release:        alt2_7jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.quartz-scheduler.org/
@@ -14,7 +17,12 @@ Group:          Development/Java
 Source0:        %{name}-%{version}.tar.xz
 Patch0:         %{name}-%{version}-dep-fixes.patch
 BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  maven
+BuildRequires:  geronimo-parent-poms
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-pmd-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -115,6 +123,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
