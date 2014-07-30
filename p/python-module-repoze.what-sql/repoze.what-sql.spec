@@ -1,7 +1,10 @@
 %define oname repoze.what-sql
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20110412.1.1
+Release: alt2.git20110412
 Summary: The repoze.what 1.0 SQLAlchemy plugin
 License: BSD
 Group: Development/Python
@@ -11,16 +14,34 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.what-sql.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx-devel python-module-SQLAlchemy
 BuildPreReq: python-module-repoze.what python-module-PasteDeploy
 BuildPreReq: python-module-repoze.who-testutil python-module-nose
 BuildPrereq: python-module-zope.interface python-module-coverage
 BuildPrereq: python-module-pysqlite2
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires repoze.what.plugins repoze.what sqlalchemy
 
 %description
+This is an adapters plugin for repoze.what.
+
+The SQL plugin makes repoze.what support sources defined in
+SQLAlchemy-managed databases by providing one group adapter, one
+permission adapter and one utility to configure both in one go
+(optionally, when the group source and the permission source have a
+relationship).
+
+%package -n python3-module-%oname
+Summary: The repoze.what 1.0 SQLAlchemy plugin
+Group: Development/Python3
+%py3_requires repoze.what.plugins repoze.what sqlalchemy
+
+%description -n python3-module-%oname
 This is an adapters plugin for repoze.what.
 
 The SQL plugin makes repoze.what support sources defined in
@@ -69,8 +90,21 @@ Requires: python-module-repoze.what
 %description -n python-module-repoze.what.plugins
 Core package for repoze.what.plugins.
 
+%package -n python3-module-repoze.what.plugins
+Summary: Core package for repoze.what.plugins
+Group: Development/Python3
+%py3_provides repoze.what.plugins
+Requires: python3-module-repoze.what
+
+%description -n python3-module-repoze.what.plugins
+Core package for repoze.what.plugins.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %prepare_sphinx docs
 ln -s ../objects.inv docs/source/
@@ -78,6 +112,12 @@ ln -s ../objects.inv docs/source/
 %build
 export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch:$PWD
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 pushd docs
 %make pickle
@@ -87,14 +127,24 @@ popd
 %install
 export PYTHONPATH=%python_sitelibdir:%python_sitelibdir_noarch:$PWD
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
-
 touch %buildroot%python_sitelibdir/repoze/what/plugins/__init__.py
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+touch %buildroot%python3_sitelibdir/repoze/what/plugins/__init__.py
+%endif
 
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
@@ -115,7 +165,23 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %files -n python-module-repoze.what.plugins
 %python_sitelibdir/repoze/what/plugins/__init__.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/repoze/what/plugins/__init__.*
+%exclude %python3_sitelibdir/repoze/what/plugins/__pycache__/__init__.*
+
+%files -n python3-module-repoze.what.plugins
+%python3_sitelibdir/repoze/what/plugins/__init__.*
+%python3_sitelibdir/repoze/what/plugins/__pycache__/__init__.*
+%endif
+
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20110412
+- Added module for Python 3
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt1.git20110412.1.1
 - Rebuild with Python-2.7
 

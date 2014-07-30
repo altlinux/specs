@@ -1,7 +1,10 @@
 %define oname twod.wsgi
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.b1
+Release: alt2.b1
 Summary: Enhanced WSGI support for Django applications
 License: BSD
 Group: Development/Python
@@ -11,18 +14,53 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
-Requires: python-module-django
+Requires: python-module-django python-module-twod
 
 %description
 twod.wsgi unlocks Django applications so developers can take advantage
 of the wealth of existing WSGI software, as the other popular Python
 frameworks do. It won't break you existing Django applications because
-it's 100% compatible with Django and you can start using the
+it's 100%% compatible with Django and you can start using the
 functionality offered by this library progressively. It should be really
 easy to get started, particularly for developers who are familiar with
 frameworks like Pylons or TurboGears.
+
+%package -n python3-module-%oname
+Summary: Enhanced WSGI support for Django applications
+Group: Development/Python3
+Requires: python3-module-django python3-module-twod
+
+%description -n python3-module-%oname
+twod.wsgi unlocks Django applications so developers can take advantage
+of the wealth of existing WSGI software, as the other popular Python
+frameworks do. It won't break you existing Django applications because
+it's 100%% compatible with Django and you can start using the
+functionality offered by this library progressively. It should be really
+easy to get started, particularly for developers who are familiar with
+frameworks like Pylons or TurboGears.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for twod.wsgi
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+twod.wsgi unlocks Django applications so developers can take advantage
+of the wealth of existing WSGI software, as the other popular Python
+frameworks do. It won't break you existing Django applications because
+it's 100%% compatible with Django and you can start using the
+functionality offered by this library progressively. It should be really
+easy to get started, particularly for developers who are familiar with
+frameworks like Pylons or TurboGears.
+
+This package contains tests for twod.wsgi.
 
 %package tests
 Summary: Tests for twod.wsgi
@@ -33,7 +71,7 @@ Requires: %name = %version-%release
 twod.wsgi unlocks Django applications so developers can take advantage
 of the wealth of existing WSGI software, as the other popular Python
 frameworks do. It won't break you existing Django applications because
-it's 100% compatible with Django and you can start using the
+it's 100%% compatible with Django and you can start using the
 functionality offered by this library progressively. It should be really
 easy to get started, particularly for developers who are familiar with
 frameworks like Pylons or TurboGears.
@@ -48,16 +86,41 @@ Group: Development/Python
 %description -n python-module-twod
 Core package for twod.
 
+%package -n python3-module-twod
+Summary: Core package for twod
+Group: Development/Python3
+%py3_provides twod
+
+%description -n python3-module-twod
+Core package for twod.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 touch %buildroot%python_sitelibdir/twod/__init__.py
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+touch %buildroot%python3_sitelibdir/twod/__init__.py
+%endif
 
 %files
 %doc README.txt
@@ -72,7 +135,23 @@ touch %buildroot%python_sitelibdir/twod/__init__.py
 %files -n python-module-twod
 %python_sitelibdir/twod/__init__.py*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/twod/__init__.py
+%exclude %python3_sitelibdir/twod/__pycache__/__init__.*
+
+%files -n python3-module-twod
+%python3_sitelibdir/twod/__init__.py
+%python3_sitelibdir/twod/__pycache__/__init__.*
+%endif
+
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.b1
+- Added module for Python 3
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.b1
 - Version 2.0b1
 
