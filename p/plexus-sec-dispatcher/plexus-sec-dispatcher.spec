@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt2_7jpp7
+Release:        alt2_10jpp7
 Summary:        Plexus Security Dispatcher Component
 
 Group:          Development/Java
@@ -16,7 +20,7 @@ Patch0:        %{name}-pom.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -26,7 +30,6 @@ BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: plexus-utils
 BuildRequires: plexus-cipher
-BuildRequires: plexus-container-default
 BuildRequires: plexus-containers-component-metadata
 BuildRequires: junit
 BuildRequires: forge-parent
@@ -34,7 +37,6 @@ BuildRequires: spice-parent
 BuildRequires: maven-surefire-provider-junit
 
 Requires:       jpackage-utils
-Requires:       spice-parent
 Source44: import.info
 
 %description
@@ -70,10 +72,6 @@ install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom
 install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 %files
 %{_javadir}/plexus/*
 %{_mavenpomdir}/JPP.plexus-%{name}.pom
@@ -83,6 +81,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_10jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
