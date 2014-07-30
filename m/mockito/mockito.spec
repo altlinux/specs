@@ -1,10 +1,13 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mockito
 Version:        1.9.0
-Release:        alt2_9jpp7
+Release:        alt2_12jpp7
 Summary:        A Java mocking framework
 
 License:        MIT
@@ -15,6 +18,7 @@ Patch0:         fixup-ant-script.patch
 Patch1:         fix-cglib-refs.patch
 Patch2:         maven-cglib-dependency.patch
 Patch3:         fix-bnd-config.patch
+Patch4:         %{name}-matcher.patch
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
@@ -55,6 +59,7 @@ This package contains the API documentation for %{name}.
 # Set Bundle-Version properly
 sed -i 's/Bundle-Version= ${version}/Bundle-Version= %{version}/' conf/mockito-core.bnd
 %patch3
+%patch4 -p1
 
 %build
 ant jar javadoc
@@ -90,6 +95,9 @@ cp -rp target/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt2_12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt2_9jpp7
 - NMU rebuild to move poms and fragments
 
