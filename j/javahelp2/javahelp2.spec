@@ -4,6 +4,7 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %def_without demo
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_12jpp7
+Release:	alt3_13jpp7
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.dev.java.net/
@@ -92,7 +93,7 @@ ln -s %{_javadir}/servlet.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
 export CLASSPATH=$(build-classpath ant/ant-nodeps)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f javahelp_nbproject/build.xml -Djdic-jar-present=true -Djdic-zip-present=true -Dservlet-jar-present=true -Dtomcat-zip-present=true release javadoc
+ant -f javahelp_nbproject/build.xml -Djdic-jar-present=true -Djdic-zip-present=true -Dservlet-jar-present=true -Dtomcat-zip-present=true release javadoc
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -127,6 +128,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_13jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_12jpp7
 - fc update
 
