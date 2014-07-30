@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 16
+%define fedora 21
 %global project     clojure
 %global groupId     org.clojure
 %global artifactId  clojure
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           clojure-compat
 Version:     	1.2.1
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
@@ -80,6 +83,9 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 #{_datadir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
