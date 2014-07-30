@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-jpamodelgen
 %define version 1.2.0
 %global namedreltag .Final
@@ -8,7 +12,7 @@ BuildRequires: jpackage-compat
 %global with_test 0
 Name:          hibernate-jpamodelgen
 Version:       1.2.0
-Release:       alt2_2jpp7
+Release:       alt2_4jpp7
 Summary:       Hibernate JPA 2 Metamodel Generator
 Group:         Development/Java
 License:       ASL 2.0
@@ -33,7 +37,7 @@ BuildRequires: testng >= 6.3.1
 BuildRequires: maven-surefire-report-plugin >= 2.11
 %endif
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -104,6 +108,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
