@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           easymock2
 Version:        2.5.2
-Release:        alt5_7jpp7
+Release:        alt5_9jpp7
 Summary:        Easy mock objects
 License:        ASL 2.0
 Group:          Development/Java
@@ -55,7 +55,7 @@ tar xzf %{SOURCE2}
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dmaven.mode.offline=true -Dmaven.repo.local=.m2 -Dmaven.test.skip=true package javadoc
+ant -Dmaven.mode.offline=true -Dmaven.repo.local=.m2 -Dmaven.test.skip=true package javadoc
 mv target/easymock-2.5.jar target/%{name}-%{version}.jar
 
 # inject OSGi manifests
@@ -65,18 +65,16 @@ touch META-INF/MANIFEST.MF
 zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 
 %install
-
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
-%add_to_maven_depmap org.easymock easymock %{version} JPP %{name}
 
 install -m 644 target/%{name}-%{version}.jar \
     %{buildroot}%{_javadir}/%{name}.jar
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -86,14 +84,18 @@ rm -rf target/site/apidocs
 
 %files
 %doc LICENSE.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc LICENSE.txt
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt5_9jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt5_7jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
