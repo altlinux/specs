@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %define _without_tests 1
 BuildRequires: /proc
@@ -34,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt2_15jpp7
+Release:        alt2_17jpp7
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -42,6 +45,17 @@ Group:          Development/Java
 Source0:        %{name}-%{version}-src.tar.gz
 Source1:        %{name}-build.policy
 Source2:        CatalogManager.properties
+
+Source3:        http://repo1.maven.org/maven2/mx4j/mx4j/%{version}/mx4j-%{version}.pom
+Source4:        http://repo1.maven.org/maven2/mx4j/mx4j-jmx/%{version}/mx4j-jmx-%{version}.pom
+Source5:        http://repo1.maven.org/maven2/mx4j/mx4j-jmx-remote/%{version}/mx4j-jmx-remote-%{version}.pom
+Source6:        http://repo1.maven.org/maven2/mx4j/mx4j-remote/%{version}/mx4j-remote-%{version}.pom
+Source7:        http://repo1.maven.org/maven2/mx4j/mx4j-tools/%{version}/mx4j-tools-%{version}.pom
+# not available
+Source8:        http://repo1.maven.org/maven2/mx4j/mx4j-impl/2.1.1/mx4j-impl-2.1.1.pom
+Source9:        http://repo1.maven.org/maven2/mx4j/mx4j-rimpl/2.1.1/mx4j-rimpl-2.1.1.pom
+Source10:       http://repo1.maven.org/maven2/mx4j/mx4j-rjmx/2.1.1/mx4j-rjmx-2.1.1.pom
+
 Patch0:         mx4j-javaxssl.patch
 Patch1:         mx4j-%{version}.patch
 Patch2:         mx4j-build.patch
@@ -118,6 +132,11 @@ Documentation for %{name}.
 cp %{SOURCE1} build
 cp %{_sourcedir}/CatalogManager.properties %{_builddir}/%{name}-%{version}/build/
 
+cp %{SOURCE8} %{name}-impl-%{version}.pom
+cp %{SOURCE9} %{name}-rimpl-%{version}.pom
+cp %{SOURCE10} %{name}-rjmx-%{version}.pom
+sed -i "s|<version>2.1.1</version>|<version>%{version}</version>|" %{name}-*-%{version}.pom
+
 pushd lib
    ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
    ln -sf $(build-classpath xerces-j2) xercesImpl.jar
@@ -157,6 +176,23 @@ install -m 644 dist/lib/boa/%{name}-rjmx-boa.jar $RPM_BUILD_ROOT%{_javadir}/%{na
 install -m 644 dist/lib/boa/%{name}-rimpl-boa.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/boa/%{name}-rimpl-boa.jar
 install -m 644 dist/lib/boa/%{name}-remote-boa.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/boa/%{name}-remote-boa.jar
 
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
+%add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar
+install -pm 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-jmx.pom
+%add_maven_depmap JPP.%{name}-%{name}-jmx.pom %{name}/%{name}-jmx.jar
+install -pm 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-remote.pom
+%add_maven_depmap JPP.%{name}-%{name}-remote.pom %{name}/%{name}-remote.jar
+install -pm 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-tools.pom
+%add_maven_depmap JPP.%{name}-%{name}-tools.pom %{name}/%{name}-tools.jar
+
+install -pm 644 %{name}-impl-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-impl.pom
+%add_maven_depmap JPP.%{name}-%{name}-impl.pom %{name}/%{name}-impl.jar
+install -pm 644 %{name}-rimpl-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-rimpl.pom
+%add_maven_depmap JPP.%{name}-%{name}-rimpl.pom %{name}/%{name}-rimpl.jar
+install -pm 644 %{name}-rjmx-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-rjmx.pom
+%add_maven_depmap JPP.%{name}-%{name}-rjmx.pom %{name}/%{name}-rjmx.jar
+
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 dos2unix dist/docs/styles.css README.txt LICENSE.txt
 cp -r dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -170,6 +206,8 @@ rm -f %{_javadir}/%{name}.jar
 %files
 %_altdir/jmxri_mx4j
 %{_javadir}/%{name}
+%{_mavenpomdir}/JPP.%{name}-*.pom
+%{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt
 %doc README.txt
 
@@ -180,6 +218,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_17jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_15jpp7
 - fixed xml-commons dep
 
