@@ -10,8 +10,11 @@ BuildRequires: jpackage-compat
 Summary:        A 100% Java PDF renderer and viewer
 Name:           pdf-renderer
 Version:        0
-Release:        alt3_0.10.128svn.20110310jpp7
-License:        LGPLv2+
+Release:        alt3_0.13.128svn.20110310jpp7
+#src/com/sun/pdfview/decode/CCITTFaxDecoder.java under a BSD-alike License
+#src/com/sun/pdfview/font/ttf/resource/glyphlist.txt and src/com/sun/pdfview/font/ttf/AdobeGlyphList.java
+#are under Adobe Glyph List License
+License:        LGPLv2+ and MIT and BSD
 URL:            https://pdf-renderer.dev.java.net/
 Group:          Development/Java
 Source0:        %{name}-%{svn_version}-%{svn_date}.tar.bz2
@@ -86,7 +89,7 @@ popd
 # -------------------------------------------------------------
 
 %build
-%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+%ant
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -112,6 +115,9 @@ ln -s pdf-renderer.jar PDFRenderer.jar
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.13.128svn.20110310jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.10.128svn.20110310jpp7
 - fc update
 
