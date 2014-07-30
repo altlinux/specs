@@ -1,12 +1,12 @@
-BuildRequires: maven-dependency-plugin not-yet-commons-ssl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java-xmltooling
 Version:       1.3.4
-Release:       alt1_3jpp7
+Release:       alt1_5jpp7
 Summary:       Java XMLTooling library
 License:       ASL 2.0 and W3C
 Group:         Development/Java
@@ -20,7 +20,7 @@ Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -116,6 +116,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_5jpp7
+- new release
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_3jpp7
 - fc update
 
