@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           atinject
 Version:        1
-Release:        alt4_8.20100611svn86jpp7
+Release:        alt4_10.20100611svn86jpp7
 Summary:        Dependency injection specification for Java (JSR-330)
 
 Group:          Development/Java
@@ -23,7 +24,7 @@ Source0:        %{name}-%{version}.tar.xz
 Source1:        MANIFEST.MF
 BuildArch:      noarch
 
-BuildRequires:       maven
+BuildRequires:       maven-local
 BuildRequires:       maven-install-plugin
 BuildRequires:       maven-jar-plugin
 BuildRequires:       maven-surefire-provider-junit4
@@ -128,6 +129,9 @@ cp -pr build/tck/javadoc/* %{buildroot}%{_javadocdir}/%{name}-tck
 %doc %{_javadocdir}/%{name}-tck
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1-alt4_10.20100611svn86jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1-alt4_8.20100611svn86jpp7
 - new fc release
 
