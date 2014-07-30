@@ -7,7 +7,7 @@ Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name regexp
 %define version 1.5
 # Copyright (c) 2000-2005, JPackage Project
@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           regexp
 Version:        1.5
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Epoch:          0
 Summary:        Simple regular expressions API
 License:        ASL 2.0
@@ -82,7 +82,7 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %build
 mkdir lib
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Djakarta-site2.dir=. jar javadocs
+ant -Djakarta-site2.dir=. jar javadocs
 
 
 %install
@@ -111,6 +111,9 @@ install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_10jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_9jpp7
 - fc update
 
