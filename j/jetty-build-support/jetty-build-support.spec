@@ -1,10 +1,13 @@
-BuildRequires: maven-enforcer-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-build-support
 Version:        1.1
-Release:        alt3_2jpp7
+Release:        alt3_6jpp7
 Summary:        Jetty build support files
 
 Group:          Development/Java
@@ -19,7 +22,7 @@ Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/s
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-source-plugin
@@ -34,7 +37,7 @@ Requires:       maven-enforcer
 Requires:       jpackage-utils
 Requires:       jetty-toolchain
 Requires:       maven-enforcer-api
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 Source44: import.info
 
 %description
@@ -55,7 +58,7 @@ BuildArch: noarch
 
 %build
 pushd %{name}
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # poms
@@ -74,14 +77,19 @@ popd
 
 
 %files
+%doc jetty-distribution-remote-resources/src/main/resources/*
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc jetty-distribution-remote-resources/src/main/resources/*
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_2jpp7
 - NMU rebuild to move poms and fragments
 
