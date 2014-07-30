@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           bcel
 Version:        5.2
-Release:        alt4_13jpp7
+Release:        alt4_15jpp7
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
@@ -124,7 +124,7 @@ sed -i 's/\r//' docs/verifier/V_API_SD.eps docs/eps/classloader.fig
 
 %build
 #ant -Dregexp.jar="file://$(build-classpath regexp)" jar javadoc
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5      -Dbuild.dest=build/classes -Dbuild.dir=build -Ddocs.dest=docs \
+ant     -Dbuild.dest=build/classes -Dbuild.dir=build -Ddocs.dest=docs \
         -Ddocs.src=xdocs -Djakarta.site2=jakarta-site2 -Djdom.jar=jdom.jar \
         -Dregexp.jar="file://$(build-classpath regexp)" \
         jar javadoc xdocs
@@ -158,6 +158,7 @@ zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 %{__mkdir_p} %{buildroot}%{_docdir}/%{name}-%{version}
 %{__cp} -pr docs/* %{buildroot}%{_docdir}/%{name}-%{version}
 %{__cp} LICENSE.txt %{buildroot}%{_docdir}/%{name}-%{version}
+%{__cp} NOTICE.txt %{buildroot}%{_docdir}/%{name}-%{version}
 
 %files
 %doc %{_docdir}/%{name}-%{version}
@@ -172,6 +173,9 @@ zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_15jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_13jpp7
 - fc update
 
