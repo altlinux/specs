@@ -8,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ezmorph
 Version:        1.0.6
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        Object transformation library for Java
 License:        ASL 2.0
 URL:            http://ezmorph.sourceforge.net/
@@ -24,6 +24,8 @@ Patch0:         ezmorph-1.0.6-maven.patch
 BuildRequires:  jpackage-utils
 BuildRequires:  jakarta-oro
 BuildRequires:  junit
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-surefire-plugin
@@ -51,7 +53,7 @@ API documentation for %{name}.
 %patch0 -p1 -b .maven
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 # Code
@@ -77,6 +79,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_7jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_5jpp7
 - fc update
 
