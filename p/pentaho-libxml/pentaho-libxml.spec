@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -7,11 +8,14 @@ BuildRequires: jpackage-compat
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_5jpp7
+Release: alt1_8jpp7
 Summary: Namespace aware SAX-Parser utility library
-License: LGPLv2+
+License: LGPLv2
 Group: System/Libraries
-Source: http://downloads.sourceforge.net/jfreereport/%{origname}-%{version}.zip
+#Original source: http://downloads.sourceforge.net/jfreereport/%{origname}-%{version}.zip
+#unzip, find . -name "*.jar" -exec rm {} \;
+#to simplify the licensing
+Source: %{origname}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
 BuildRequires: ant ant-contrib ant-nodeps jpackage-utils libbase libloader
 Requires: jpackage-utils libbase >= 1.1.2 libloader >= 1.1.2
@@ -69,6 +73,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_8jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_5jpp7
 - new version
 
