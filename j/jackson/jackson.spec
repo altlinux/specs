@@ -1,9 +1,11 @@
-BuildRequires: junit4
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jackson
 Version: 1.9.4
-Release: alt2_5jpp7
+Release: alt2_6jpp7
 Summary: Jackson Java JSON-processor
 
 Group: Development/Java
@@ -82,7 +84,7 @@ ln -s $(build-classpath objectweb-asm/asm) lib/ext/asm/asm.jar
 ln -s $(build-classpath objectweb-asm/asm) lib/repackaged/jackson-asm.jar
 ln -s $(build-classpath cglib) lib/ext/cglib/cglib-nodep.jar
 ln -s $(build-classpath groovy) lib/ext/groovy/groovy.jar
-ln -s $(build-classpath junit4) lib/junit/junit.jar
+ln -s $(build-classpath junit) lib/junit/junit.jar
 
 
 %build
@@ -131,6 +133,9 @@ cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
