@@ -1,14 +1,13 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
-BuildRequires: jetty6-servlet-2.5-api
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           htmlunit
 Version:        2.9
-Release:        alt3_3jpp7
+Release:        alt3_5jpp7
 Summary:        A headless web browser for automated testing
 
 Group:          Development/Java
@@ -33,7 +32,7 @@ BuildRequires:  cssparser
 BuildRequires:  nekohtml
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  htmlunit-core-js
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
@@ -111,6 +110,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt3_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt3_3jpp7
 - NMU rebuild to move poms and fragments
 
