@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           objectweb-asm4
 Version:        4.1
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        A code manipulation tool to implement adaptable systems
 License:        BSD
@@ -67,7 +67,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n asm-%{version}
@@ -132,6 +132,9 @@ cp -pr output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_3jpp7
+- new release
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.1-alt1_2jpp7
 - fc update
 
