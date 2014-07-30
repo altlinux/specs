@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             rhq-plugin-annotations
 Version:          3.0.4
-Release:          alt2_3jpp7
+Release:          alt2_5jpp7
 Summary:          RHQ plugin annotations
 Group:            Development/Java
 License:          GPL and LGPLv2+
@@ -18,7 +22,7 @@ Patch0:           rhq-plugin-annotations-%{version}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -72,6 +76,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
