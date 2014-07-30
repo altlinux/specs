@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             fusesource-pom
 Version:          1.9
-Release:          alt1_1jpp7
+Release:          alt1_4jpp7
 Summary:          Parent POM for FuseSource Maven projects
 Group:            Development/Java
 License:          ASL 2.0
@@ -14,7 +18,7 @@ Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-release-plugin
@@ -30,8 +34,12 @@ This is a shared POM parent for FuseSource Maven projects
 
 %prep
 cp %{SOURCE0} pom.xml
-%pom_remove_plugin :clirr-maven-plugin
 cp -p %{SOURCE1} LICENSE
+
+%pom_remove_plugin :clirr-maven-plugin
+
+# WebDAV wagon is not available in Fedora.
+%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
 
 %build
 mvn-rpmbuild install
@@ -50,6 +58,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_4jpp7
+- new release
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_1jpp7
 - new version
 
