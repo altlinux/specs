@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global  git_commit d0ec879
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt1_3jpp7
+Release:        alt1_5jpp7
 Summary:        A java library for lists of bytes
 
 Group:          Development/Java
@@ -36,38 +39,41 @@ A small java library for manipulating lists of bytes.
 %prep
 %setup -q -n %{cluster}-%{name}-%{git_commit}
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
 
 
 %build
 echo "See %{url} for more info about the %{name} project." > README.txt
 
 export CLASSPATH=$(build-classpath junit jcodings)
-%__mkdir_p lib
-%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+mkdir -p lib
+%ant
 
 
 %install
-%__rm -rf %{buildroot}
-%__mkdir_p %{buildroot}%{_javadir}
+mkdir -p %{buildroot}%{_javadir}
 
-%__cp -p lib/%{name}-1.0.2.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-pushd %{buildroot}%{_javadir}/
-  %__ln_s %{name}-%{version}.jar %{name}.jar
-popd
+cp -p lib/%{name}-1.0.2.jar %{buildroot}%{_javadir}/%{name}.jar
 
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %check
 export CLASSPATH=$(build-classpath junit jcodings)
 %ant test
 
-
 %files
 %{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %doc README.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_5jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_3jpp7
 - new release
 
