@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.9
-Release: alt2.git20110411
+Release: alt3.git20110411
 Summary: Authorization for Python/WSGI applications
 License: BSD
 Group: Development/Python
@@ -122,6 +122,7 @@ install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
+touch %buildroot%python_sitelibdir/repoze/what/__init__.py
 
 %if_with python3
 pushd ../python3
@@ -132,6 +133,7 @@ install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
+touch %buildroot%python3_sitelibdir/repoze/what/__init__.py
 %endif
 
 install -d %buildroot%python_sitelibdir/%oname
@@ -157,6 +159,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9-alt3.git20110411
+- Added repoze/what/__init__.py
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9-alt2.git20110411
 - Added module for Python 3
 
