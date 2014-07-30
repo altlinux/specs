@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.82
+Version: 0.83
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -239,10 +239,12 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %files devel
 %_includedir/cephfs/
 %_includedir/rados/
+%_includedir/radosstriper/
 %_includedir/rbd/
 %_libdir/libcephfs.so
 %_libdir/librbd.so
 %_libdir/librados.so
+%_libdir/libradosstriper.so
 
 %files radosgw
 %_initdir/ceph-radosgw
@@ -259,6 +261,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 
 %files -n librados2
 %_libdir/librados.so.*
+%_libdir/libradosstriper.so.*
 
 %files -n librbd1
 %_libdir/librbd.so.*
@@ -270,6 +273,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Jul 30 2014 Alexei Takaseev <taf@altlinux.org> 0.83-alt1
+- 0.83
+
 * Sat Jun 28 2014 Alexei Takaseev <taf@altlinux.org> 0.82-alt1
 - 0.82
 
