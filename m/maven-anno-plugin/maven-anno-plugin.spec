@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: maven-anno-plugin
 Version: 1.4.1
-Release: alt3_3jpp7
+Release: alt3_6jpp7
 Summary: Maven Annotated Mojo
 Group: Development/Java
 License: ASL 2.0
@@ -13,6 +16,8 @@ Url: http://wiki.jfrog.org/confluence/display/OSS/Maven+Anno+Mojo
 # cd maven-anno-mojo
 # git archive --prefix=maven-anno-plugin-1.4.1/ maven-plugin-anno-parent-1.4.1 | xz > maven-anno-plugin-1.4.1.tar.xz
 Source0: %{name}-%{version}.tar.xz
+
+Source1: http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Fork tests, otherwise one of the tests of the tools module fails:
 Patch0: %{name}-fork-tools-tests.patch
@@ -30,7 +35,7 @@ BuildRequires: maven-site-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-report-plugin
 BuildRequires: maven-plugin-descriptor
-BuildRequires: maven
+BuildRequires: maven-local
 
 Requires: jpackage-utils
 
@@ -57,6 +62,7 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 %patch0 -p1
+cp -p %{SOURCE1} .
 
 
 %build
@@ -90,6 +96,7 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files
+%doc LICENSE-2.0.txt
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
@@ -97,10 +104,14 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_6jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_3jpp7
 - fixed build
 
