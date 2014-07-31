@@ -1,6 +1,6 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,10 +36,11 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jxr
 Version:        2.3
-Release:        alt3_3jpp7
+Release:        alt3_7jpp7
 Epoch:          0
 Summary:        Source cross referencing tool
-License:        ASL 2.0
+# BSD: maven-jxr/src/main/java/org/apache/maven/jxr/JavaCodeTransform.java
+License:        ASL 2.0 and BSD
 Group:          Development/Java
 URL:            http://maven.apache.org/doxia/
 
@@ -49,7 +50,7 @@ Patch0:         add-oro-dep.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-resources-plugin
@@ -91,7 +92,7 @@ API documentation for %{name}.
 %package -n maven-plugin-jxr
 Summary:        Maven plugin for JXR
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description -n maven-plugin-jxr
 Maven plugin for JXR.
@@ -99,6 +100,12 @@ Maven plugin for JXR.
 %prep
 %setup -q -n jxr-%{version}
 %patch0
+# maven-core has scope "provided" in Plugin Testing Harness, so we
+# need to provide it or tests will fail to compile.  This works for
+# upstream because upstream uses a different version of Plugin Testing
+# Harness in which scope of maven-core dependency is "compile".
+%pom_xpath_inject pom:project "<dependencies/>"
+%pom_add_dep org.apache.maven:maven-core::test
 
 %build
 
@@ -143,12 +150,14 @@ cp -pr target/site/apidocs/* \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
+%doc LICENSE NOTICE
 %{_javadir}/%{name}*.jar
 %{_mavenpomdir}/JPP-%{name}-parent.pom
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc LICENSE NOTICE
 %doc %{_javadocdir}/*
 
 %files -n maven-plugin-jxr
@@ -156,6 +165,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadir}/maven-plugin-jxr*.jar
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_7jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_3jpp7
 - fixed build
 
