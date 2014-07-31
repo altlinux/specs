@@ -1,10 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: maven-jaxb2-plugin
 Version: 0.8.1
-Release: alt3_7jpp7
+Release: alt3_9jpp7
 Summary: Provides the capability to generate java sources from schemas
 Group: Development/Java
 License: BSD and ASL 2.0
@@ -33,7 +36,7 @@ Patch4: %{name}-remove-enconding-option.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: jpackage-utils
 BuildRequires: xml-commons-resolver
 BuildRequires: maven-enforcer-plugin
@@ -114,6 +117,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt3_9jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt3_7jpp7
 - fixed build
 
