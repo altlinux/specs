@@ -1,7 +1,10 @@
-BuildRequires: maven-enforcer-plugin geronimo-jpa geronimo-jta
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name weld-api
 %define version 1.1
 %global namedreltag .Final
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             weld-api
 Version:          1.1
-Release:          alt2_4jpp7
+Release:          alt2_7jpp7
 Summary:          Weld API
 Group:            Development/Java
 License:          ASL 2.0
@@ -25,7 +28,7 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -37,9 +40,10 @@ BuildRequires:    jboss-interceptors-1.1-api
 BuildRequires:    jboss-ejb-3.1-api
 BuildRequires:    jboss-jsf-2.1-api
 BuildRequires:    hibernate-jpa-2.0-api
-BuildRequires:    jboss-transaction-1.1-api
+BuildRequires:    geronimo-jta
 BuildRequires:    geronimo-annotation
 BuildRequires:    weld-parent
+BuildRequires:    geronimo-parent-poms
 
 Requires:         jpackage-utils
 Requires:         cdi-api
@@ -48,7 +52,7 @@ Requires:         jboss-interceptors-1.1-api
 Requires:         jboss-ejb-3.1-api
 Requires:         jboss-jsf-2.1-api
 Requires:         hibernate-jpa-2.0-api
-Requires:         jboss-transaction-1.1-api
+Requires:         geronimo-jta
 Requires:         geronimo-annotation
 Source44: import.info
 
@@ -104,6 +108,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
