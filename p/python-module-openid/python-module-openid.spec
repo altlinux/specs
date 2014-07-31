@@ -1,6 +1,8 @@
+%def_with python3
+
 Name: python-module-openid
 Version: 2.2.5
-Release: alt1.1
+Release: alt2
 
 Summary: OpenID support for servers and consumers
 
@@ -20,7 +22,25 @@ Source: http://openidenabled.com/files/python-openid/packages/python-openid-%ver
 # Automatically added by buildreq on Wed May 14 2008
 BuildRequires: python-devel
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildPreReq: python-tools-2to3
+%endif
+
 %description
+This is a set of Python packages to support use of the OpenID
+decentralized identity system in your application.
+Want to enable single sign-on for your web site?
+Use the openid.consumer package.
+Want to run your own OpenID server? Check out openid.server.
+Includes example code and support for a variety of storage back-ends.
+
+%package -n python3-module-%modulename
+Summary: OpenID support for servers and consumers
+Group: Development/Python3
+
+%description -n python3-module-%modulename
 This is a set of Python packages to support use of the OpenID
 decentralized identity system in your application.
 Want to enable single sign-on for your web site?
@@ -45,13 +65,30 @@ Includes example code and support for a variety of storage back-ends.
 This package contains examples for OpenOD Python package.
 
 %prep
-%setup -q -n python-%modulename-%version
+%setup -n python-%modulename-%version
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc README CHANGES* LICENSE NEWS NOTICE *.txt
@@ -61,7 +98,17 @@ This package contains examples for OpenOD Python package.
 %files examples
 %doc examples
 
+%if_with python3
+%files -n python3-module-%modulename
+%doc README CHANGES* LICENSE NEWS NOTICE *.txt
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*.egg-info
+%endif
+
 %changelog
+* Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt2
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2.5-alt1.1
 - Rebuild with Python-2.7
 
