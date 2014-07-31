@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_2jpp7
+Release:       alt4_3jpp7
 Summary:       Open source XA JDBC Pool
 Group:         Development/Java
 License:       LGPLv2+
@@ -70,7 +70,7 @@ rm -r src/org/enhydra/jdbc/instantdb \
 
 %build
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
+ant dist
 
 %install
 
@@ -95,6 +95,9 @@ cp -pr output/dist/jdoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_3jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_2jpp7
 - fc update
 
