@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           laf-widget
 Version:        4.3
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Support for common "feel" widgets in look-and-feel libraries
 
 Group:          Development/Java
@@ -70,7 +70,7 @@ for j in $(find . -name "*.jar"); do
 done
 %patch0 -b .sav0
 
-ln -s %{_javadir}/asm2-all.jar lib/asm-all-2.2.2.jar
+ln -s %{_javadir}/asm2-all*.jar lib/asm-all-2.2.2.jar
 
 %build
 %{ant} -Djdk.home=%{_jvmdir}/java all javadoc
@@ -96,6 +96,9 @@ ln -s %{name}-%{version} %{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt2_1jpp6
+- fixed build with compat asm2
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_1jpp6
 - new version
 

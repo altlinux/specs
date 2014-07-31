@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           asm2
 Version:        2.2.3
-Release:        alt5_10jpp7
+Release:        alt5_13jpp7
 Epoch:          0
 Summary:        A code manipulation tool to implement adaptable systems
 License:        BSD
@@ -168,7 +168,7 @@ find -name build.xml | xargs sed -i -e 's/="1.[0-4]"/="1.5"/g'
 %if %{tests}
 export CLASSPATH=$(build-classpath asm2/asm2 asm2/asm2-tree)
 %endif
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+ant \
   -Dbcel.path=$(build-classpath bcel) \
   -Djanino.path=$(build-classpath janino) \
   -Djavassist.path=$(build-classpath javassist) \
@@ -216,11 +216,6 @@ done
 install -m 644 output/dist/lib/all/asm-all-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}-all-%{version}.jar
 
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do \
-ln -sf ${jar} ${jar/-%{version}/}; done)
-(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}*; do \
-ln -sf ${jar} ${jar/-%{version}/}; done)
-
 %add_to_maven_depmap asm asm-parent %{version} JPP asm2-parent
 %add_to_maven_depmap asm2 asm-parent %{version} JPP asm2-parent
 %add_to_maven_depmap asm asm-all %{version} JPP asm2-all
@@ -241,16 +236,16 @@ ln -sf ${jar} ${jar/-%{version}/}; done)
 %add_to_maven_depmap asm2 asm %{version} JPP/asm2 asm2
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-all.pom
-install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-analysis.pom
-install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-attrs.pom
-install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-commons.pom
-install -m 644 %{SOURCE10} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -m 644 %{SOURCE11} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-tree.pom
-install -m 644 %{SOURCE12} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-util.pom
-install -m 644 %{SOURCE13} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-xml.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-%{version}.pom
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-all-%{version}.pom
+install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-analysis-%{version}.pom
+install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-attrs-%{version}.pom
+install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-commons-%{version}.pom
+install -m 644 %{SOURCE10} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-parent-%{version}.pom
+install -m 644 %{SOURCE11} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-tree-%{version}.pom
+install -m 644 %{SOURCE12} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-util-%{version}.pom
+install -m 644 %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-xml-%{version}.pom
 
 # javadoc
 install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -282,7 +277,7 @@ cp -pr output/dist/examples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
 %{_javadir}/*.jar
-%{_mavenpomdir}/*
+%{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
@@ -305,6 +300,9 @@ cp -pr output/dist/examples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/examples
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt5_13jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt5_10jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
