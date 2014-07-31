@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define _without_gcj 1
@@ -6,14 +7,18 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        Natural layout for Swing panels
-
 Group:          Development/Java
 License:        LGPLv2
 URL:            https://swing-layout.dev.java.net/
-# Need to register to download, from url above
+# https://svn.java.net/svn/swing-layout~svn/trunk/
 Source0:        %{name}-%{version}-src.zip
+# from http://java.net/jira/secure/attachment/27303/pom.xml
+Source1:        %{name}-pom.xml
+# use javac target/source 1.5
+Patch0:         %{name}-%{version}-project_properties.patch
+Patch1:         %{name}-%{version}-fix-incorrect-fsf-address.patch
 
 BuildRequires:  jpackage-utils >= 1.6
 BuildRequires:  ant
@@ -37,29 +42,43 @@ Documentation for Swing Layout code.
 %prep
 %setup -q
 dos2unix releaseNotes.txt
+%patch0 -p0
+%patch1 -p0
+sed -i 's/\r//' COPYING
 
+cp -p %{SOURCE1} pom.xml
+sed -i "s|<version>1.0.3</version>|<version>%{version}</version>|" pom.xml
 
 %build
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc dist
 
+%{ant} jar javadoc dist
 
 %install
-install -d $RPM_BUILD_ROOT%{_javadir} \
-        $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-install -m 644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+
+mkdir -p %{buildroot}%{_javadir}
+install -m 644 dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%{_javadir}/%{name}*.jar
-%doc releaseNotes.txt
-
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%doc releaseNotes.txt COPYING
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-
+%{_javadocdir}/%{name}
+%doc COPYING
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_7jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5jpp7
 - update to new release by jppimport
 
