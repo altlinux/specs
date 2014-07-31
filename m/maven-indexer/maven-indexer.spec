@@ -1,12 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 Name:           maven-indexer
 Version:        4.1.2
-Release:        alt1_3jpp7
+Release:        alt1_5jpp7
 Summary:        Standard for producing indexes of Maven repositories
 
 License:        ASL 2.0
@@ -42,7 +44,7 @@ BuildRequires:  jpackage-utils
 BuildRequires:  junit
 BuildRequires:  lucene
 BuildRequires:  lucene-contrib
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-archetype-catalog
 BuildRequires:  maven-archetype-common
 BuildRequires:  maven-compiler-plugin
@@ -110,6 +112,10 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 %patch0
 
+%if %fedora <= 17
+%patch1
+%endif
+
 %build
 # skip tests because of unpackaged test deps
 mvn-rpmbuild package javadoc:aggregate -Dmaven.test.skip=true
@@ -156,6 +162,9 @@ install -p -m 0644 indexer-core/pom.xml \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_5jpp7
+- new release
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_3jpp7
 - new version
 
