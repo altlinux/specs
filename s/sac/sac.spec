@@ -9,11 +9,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: sac
 Version: 1.3
-Release: alt3_13jpp7
+Release: alt3_15jpp7
 Summary: Java standard interface for CSS parser
 License: W3C
 Group: System/Libraries
-Source0: http://www.w3.org/2002/06/%{name}java-%{version}.zip
+#Original source: http://www.w3.org/2002/06/%{name}java-%{version}.zip
+#unzip, find . -name "*.jar" -exec rm {} \;
+#to simplify the licensing
+Source0: %{name}java-%{version}-jarsdeleted.zip
 Source1: %{name}-build.xml
 Source2: %{name}-MANIFEST.MF
 Source3: http://mirrors.ibiblio.org/pub/mirrors/maven2/org/w3c/css/sac/1.3/sac-1.3.pom
@@ -41,7 +44,7 @@ install -m 644 %{SOURCE1} build.xml
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 %install
 
@@ -75,6 +78,9 @@ install -pm 644 %{SOURCE3} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_15jpp7
+- new release
+
 * Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_13jpp7
 - added osgi provides
 
