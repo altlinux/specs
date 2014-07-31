@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -34,9 +38,13 @@ BuildRequires: jpackage-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.3.0.4
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
-License:        MPLv1.0 and ASL 1.1
+# net/sf/saxon/option/jdom/ is MPLv1.1
+# net/sf/saxon/serialize/codenorm/ is UCD
+# net/sf/saxon/expr/sort/GenericSorter.java is MIT
+# net/sf/saxon/expr/Tokenizer.java and few other bits are BSD
+License:        MPLv1.0 and MPLv1.1 and ASL 1.1 and UCD and MIT
 Group:          Text tools
 URL:            http://saxon.sourceforge.net/
 Source0:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon9-3-0-4source.zip
@@ -47,6 +55,8 @@ Source4:        %{name}.1
 Source5:        %{name}q.1
 Source6:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon-resources9-3.zip
 Source7:        http://irrational.googlecode.com/svn/trunk/maven-repo/net/sf/saxon/saxon-he/9.3.0.4/saxon-he-9.3.0.4.pom
+Source8:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.0.txt
+Source9:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.1.txt
 BuildRequires:  unzip
 BuildRequires:  ant
 BuildRequires:  jpackage-utils >= 0:1.6
@@ -78,7 +88,7 @@ Saxon HE is Saxonica's non-schema-aware implementation of the XPath 2.0,
 XSLT 2.0, and XQuery 1.0 specifications aligned with the W3C Candidate
 Recommendation published on 3 November 2005. It is a complete and
 conformant implementation, providing all the mandatory features of
-those specifications and nearly all the optional features. 
+those specifications and nearly all the optional features.
 
 
 %package        manual
@@ -134,6 +144,7 @@ rm -rf net/sf/saxon/option/sql/SQLElementFactory.java
 rm -rf docs/api
 find . \( -name "*.jar" -name "*.pyc" \) -delete
 
+cp %{SOURCE8} %{SOURCE9} .
 
 %build
 mkdir -p build/classes
@@ -190,10 +201,10 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %_altdir/jaxp_transform_impl_saxon
+%doc mpl-1.0.txt mpl-1.1.txt
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%exclude %{_javadir}/jaxp_transform_impl.jar
 
 %files manual
 %doc doc/*
@@ -212,6 +223,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
