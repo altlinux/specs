@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat maven-clean-plugin
+BuildRequires: jpackage-compat
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt5_4jpp7
+Release:       alt5_7jpp7
 Summary:       Maven XML Plugin
 Group:         Development/Java
 License:       ASL 2.0
@@ -17,8 +17,10 @@ BuildRequires: jpackage-utils
 BuildRequires: mojo-parent
 
 BuildRequires: apache-rat-plugin
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-changes-plugin
+BuildRequires: maven-checkstyle-plugin
+BuildRequires: maven-clean-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
@@ -26,7 +28,6 @@ BuildRequires: maven-invoker-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
 
 BuildRequires: plexus-component-api
@@ -65,11 +66,13 @@ done
 rm -rf src/it/it8
 rm -rf src/it/mojo-1438-validate
 
-# quick hack
-sed -i -e 's,<mavenVersion>2.0.7</mavenVersion>,<mavenVersion>2.2.1</mavenVersion>,' pom.xml
+# In maven 3, the functionality we need has been moved to maven-core
+%pom_remove_dep org.apache.maven:maven-project
+%pom_add_dep org.apache.maven:maven-core
 
 %build
-mvn-rpmbuild -DskipTests -Dmaven.test.skip=true -DskipITs install javadoc:aggregate
+mvn-rpmbuild -Dmojo.java.target=1.5 -Dmaven.test.skip=true -DskipITs \
+  install javadoc:aggregate
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -96,6 +99,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/xml-maven-plugin
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_7jpp7
+- new release
+
 * Sat Jul 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_4jpp7
 - fixed build
 
