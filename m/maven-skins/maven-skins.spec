@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global app_version 1.0-SNAPSHOT
@@ -7,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-skins
 Version:        5
-Release:        alt2_6jpp7
+Release:        alt2_8jpp7
 Summary:        Maven Skins
 
 Group:          Development/Java
@@ -18,7 +22,7 @@ URL:            http://maven.apache.org/skins/
 Source0:        %{name}-%{version}.tar.xz
 BuildArch: noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-compiler-plugin
@@ -76,6 +80,9 @@ install -pm 644 maven-stylus-skin/pom.xml \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_8jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
