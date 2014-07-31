@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           spin
 Version:        1.5
-Release:        alt2_7jpp7
+Release:        alt2_9jpp7
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
 Group:          Development/Java
@@ -15,7 +16,7 @@ BuildArch:      noarch
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-all.zip
 Patch0:         %{name}-pom_xml.patch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 
 BuildRequires:  cglib
@@ -76,6 +77,9 @@ cp -r target/site/apidocs ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
