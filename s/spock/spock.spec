@@ -1,7 +1,9 @@
-BuildRequires: junit
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name spock
 %define version 0.6
 %global namedreltag  -groovy-1.8
@@ -9,7 +11,7 @@ BuildRequires: jpackage-compat
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.6
-Release:       alt3_0.3%(echo -groovy-1.8 | tr - . )jpp7
+Release:       alt3_0.5.groovy.1.8jpp7
 Summary:       A testing and specification framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -19,9 +21,9 @@ URL:           http://code.google.com/p/spock/
 Source0:       spock-%{namedversion}-src-git.tar.xz
 Source1:       http://repo1.maven.org/maven2/org/spockframework/spock-core/%{namedversion}/spock-core-%{namedversion}.pom
 Source2:       http://repo1.maven.org/maven2/org/spockframework/spock-guice/%{namedversion}/spock-guice-%{namedversion}.pom
-Source3:       spock-0.6-groovy-1.8-build.xml
+Source3:       spock-%{namedversion}-build.xml
 # fix deps aId
-Patch0:        spock-0.6-groovy-1.8-core-pom.patch
+Patch0:        spock-%{namedversion}-core-pom.patch
 
 BuildRequires: jpackage-utils
 
@@ -93,7 +95,7 @@ ant build javadoc
 
 %install
 
-# TODO spring
+# TODO spring requires org.springframework:spring-test
 mkdir -p %{buildroot}%{_javadir}
 for m in core guice; do
   install -m 644 %{name}-${m}/build/libs/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}-${m}.jar
@@ -125,6 +127,9 @@ cp -pr dist/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_0.5.groovy.1.8jpp7
+- new release
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_0.3.groovy.1.8jpp7
 - merged junit-junit4
 
