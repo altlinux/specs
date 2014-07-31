@@ -1,11 +1,15 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global shortname gossip
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_5jpp7
+Release:          alt1_7jpp7
 Summary:          SLF4j Gossip Provider
 Group:            Development/Java
 License:          ASL 2.0
@@ -20,7 +24,7 @@ Patch0:           %{shortname}-%{version}-use-java5-modello.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-license-plugin
 BuildRequires:    maven-install-plugin
@@ -94,6 +98,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc header.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_7jpp7
+- new release
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_5jpp7
 - new release
 
