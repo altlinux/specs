@@ -1,37 +1,45 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jacorb
 Version:          2.3.1
-Release:          alt1_3.20120215gitjpp7
+Release:          alt1_5jpp7
 Summary:          The Java implementation of the OMG's CORBA standard
 Group:            Development/Java
 License:          LGPLv2
 URL:              http://www.jacorb.org/index.html
 
-# git clone git://github.com/sguilhen/jacorb.git
-# find jacorb/ -name '*.jar' -delete
-# tar cafJ jacorb-20120215git5481b0.tar.xz jacorb
-Source0:          jacorb-20120215git5481b0.tar.xz
+Source0:          http://www.jacorb.org/releases/%{version}/jacorb-%{version}-src.zip
 Source1:          http://central.maven.org/maven2/org/jacorb/jacorb-parent/%{version}/jacorb-parent-%{version}.pom
 Source2:          http://central.maven.org/maven2/org/jacorb/jacorb/%{version}/jacorb-%{version}.pom
 Source3:          http://central.maven.org/maven2/org/jacorb/jacorb-idl-compiler/%{version}/jacorb-idl-compiler-%{version}.pom
 
 # These methods are not implemented in the current 
-Patch0:           0001-Implement-a-few-methods-in-GSSUPContextSpi-to-make-i.patch
+Patch0:           jacorb-2.3.1-Implement-a-few-methods-in-GSSUPContextSpi-to-make-i.patch
 
-# We need to modify the build script to build an intermediate jacorb.jar and use
-# java.endorsed.dirs to point to the jar to override JDK classes
-Patch1:           0002-Create-jacorb.jar-to-use-it-in-java.endorsed.dirs-pa.patch
+# Set proper versions
+Patch1:           jacorb-2.3.1-version.patch
 
 # Fix "error: unmappable character for encoding ASCII" JDK issues
-Patch2:           0003-Set-encoding-to-UTF-8-when-generating-javadoc.patch
+Patch2:           jacorb-2.3.1-Set-encoding-to-UTF-8-when-generating-javadoc.patch
 
 # Remove the Class-Path entry to fix class-path-in-manifest issue
-Patch3:           0004-Removed-Class-Path-entry-from-MANIFEST.MF.patch
+Patch3:           jacorb-2.3.1-Removed-Class-Path-entry-from-MANIFEST.MF.patch
 
-# Remove unnecessary deps from POM since we don't have notification module available
-Patch4:           jacorb-%{version}-notification-dependencies-removal.patch
+# This patch resets the port of the primary address to zero when an
+# IORInterceptor adds a TAG_CSI_SEC_MECH_LIST component with transport
+# protection requirements (SSL), as it should be per the CSI v2 specification.
+Patch4:           jacorb-2.3.1-primaddress_port.patch
+
+# read_boolean() now only adjusts positions if the chunk_end_pos == pos,
+# no longer calling handle_chunking(). The problem with handle_chunking()
+# is that it aligns the current position and this can cause CDRInputStream
+# to "skip" valid boolean values, as those are not padded.
+Patch5:           jacorb-2.3.1-read_boolean.patch
 
 BuildArch:        noarch
 
@@ -46,6 +54,7 @@ Requires:         antlr-tool
 Requires:         avalon-logkit
 Requires:         slf4j
 Source44: import.info
+Source33: jacorb.pom-hide-compile.patch
 
 %description
 This package contains the Java implementation of the OMG's CORBA standard
@@ -60,7 +69,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jacorb
+%setup -q -n jacorb-%{version}
 
 cp %{SOURCE1} jacorb-parent.pom
 cp %{SOURCE2} jacorb.pom
@@ -68,12 +77,14 @@ cp %{SOURCE3} jacorb-idl-compiler.pom
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.zip' -exec rm -f '{}' \;
 
 %patch0 -p1
-%patch1 -p1
+%patch1 -p0
 %patch2 -p1
-%patch3 -p1
+%patch3 -p0
 %patch4 -p0
+%patch5 -p0
 
 # No xdoclet available
 sed -i 's|,notification||' src/org/jacorb/build.xml
@@ -110,6 +121,11 @@ install -pm 644 jacorb-idl-compiler.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{nam
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
+# hack for old maven
+pushd $RPM_BUILD_ROOT%{_mavenpomdir}/
+patch JPP-%{name}.pom < %{SOURCE33}
+popd
+
 %files
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
@@ -121,6 +137,9 @@ cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc doc/LICENSE
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_5jpp7
+- new release
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_3.20120215gitjpp7
 - new version
 
