@@ -36,7 +36,7 @@ BuildRequires: servletapi4
 Summary:        High performance J2EE caching solution
 Name:           oscache
 Version:        2.4.1
-Release:        alt4_1jpp5
+Release:        alt5_1jpp5
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -164,6 +164,9 @@ mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt5_1jpp5
+- fixed build with new hibernate3
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt4_1jpp5
 - explicitly use junit3
 
