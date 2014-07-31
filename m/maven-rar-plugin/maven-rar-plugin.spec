@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-rar-plugin
 Version:        2.2
-Release:        alt2_8jpp7
+Release:        alt2_10jpp7
 Summary:        Plugin to create Resource Adapter Archive which can be deployed to a J2EE server
 
 Group:          Development/Java
@@ -18,7 +21,7 @@ BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
@@ -90,6 +93,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_10jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8jpp7
 - fixed build
 
