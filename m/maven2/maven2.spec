@@ -1,6 +1,7 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:	    maven2
 Version:	2.2.1
-Release:	alt4_37jpp7
+Release:	alt4_44jpp7
 Summary:	Java project management and project comprehension tool
 
 Group:		Development/Java
@@ -41,7 +42,6 @@ BuildRequires: ant
 %else
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires: objectweb-asm
-BuildRequires: backport-util-concurrent
 BuildRequires: buildnumber-maven-plugin
 BuildRequires: bsh
 BuildRequires: jsch
@@ -53,9 +53,11 @@ BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-cli
 BuildRequires: apache-commons-collections
 BuildRequires: apache-commons-parent
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-shade-plugin
+BuildRequires: plexus-containers
+BuildRequires: plexus-containers-container-default
 %endif
 
 
@@ -91,7 +93,6 @@ Requires:       jpackage-utils
 Requires:       plexus-classworlds
 Requires:       plexus-utils
 Requires:       plexus-containers-container-default
-Requires:       backport-util-concurrent
 Requires:       maven-artifact = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       maven-wagon
 
@@ -190,10 +191,19 @@ Summary:        Maven Plugin Description Model
 Requires:       jpackage-utils
 Requires:       maven
 Requires:       plexus-classworlds
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 
 %description -n maven-plugin-descriptor
 Maven toolchain artifact
+
+%package javadoc
+Summary:        Javadoc for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
 
 
 %prep
@@ -253,6 +263,16 @@ for nobuild in apache-maven maven-artifact-test \
     %pom_disable_module $nobuild
 done
 
+# Don't depend on backport-util-concurrent
+%pom_remove_dep :backport-util-concurrent
+%pom_remove_dep :backport-util-concurrent maven-artifact-manager
+sed -i s/edu.emory.mathcs.backport.// `find -name DefaultArtifactResolver.java`
+
+# Tests are skipped, so remove dependencies with scope 'test'.
+for pom in $(grep -l ">test<" $(find -name pom.xml | grep -v /test/)); do
+    %pom_xpath_remove "pom:dependency[pom:scope[text()='test']]" $pom
+done
+
 %build
 export M2_REPO=`pwd`/.m2
 export M2_HOME=`pwd`/installation/apache-maven-%{version}
@@ -271,7 +291,11 @@ sed -i -s s:__M2_SETTINGS_FILE__:$M2_HOME/conf/settings.xml:g build.xml
 %if %{bootstrap}
 ant -Dmaven.repo.local=$M2_REPO/cache
 %else
-mvn-rpmbuild -X -Dmaven.local.debug=true -Dmaven.test.skip=true -P all-models -Dmaven.repo.local=$(pwd)/.m2 -Dmaven.local.depmap.file=%{SOURCE103} install
+unset M2_HOME
+export M2_HOME
+mvn-rpmbuild -Dmaven.test.skip=true -P all-models \
+             -Dmaven.local.depmap.file=%{SOURCE103} \
+             install javadoc:aggregate
 %endif
 
 %install
@@ -307,8 +331,9 @@ do
      popd
 done
 
-# Items in %%{_bindir}
-install -Dm 755 %{SOURCE45} $RPM_BUILD_ROOT%{_bindir}/mvn-jpp
+# javadoc
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %post
 # clear the old links
@@ -324,68 +349,80 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 
 
 
-
 %files -n maven-artifact
 %{_mavendepmapfragdir}/%{name}-maven-artifact
 %{_javadir}/%{main_pkg}/maven-artifact-2.*.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-artifact-2.*.pom
 
 %files -n maven-artifact-manager
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-artifact-manager
 %{_javadir}/%{main_pkg}/maven-artifact-manager.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-artifact-manager.pom
 
 %files -n maven-error-diagnostics
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-error-diagnostics
 %{_javadir}/%{main_pkg}/maven-error-diagnostics.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-error-diagnostics.pom
 
 %files -n maven-model
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-model
 %{_javadir}/%{main_pkg}/maven-model-*.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-model-*.pom
 
 %files -n maven-monitor
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-monitor
 %{_javadir}/%{main_pkg}/maven-monitor.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-monitor.pom
 
 %files -n maven-plugin-registry
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-plugin-registry
 %{_javadir}/%{main_pkg}/maven-plugin-registry.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-plugin-registry.pom
 
 %files -n maven-profile
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-profile
 %{_javadir}/%{main_pkg}/maven-profile.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-profile.pom
 
 %files -n maven-project
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-project
 %{_javadir}/%{main_pkg}/maven-project.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-project.pom
 
 %files -n maven-settings
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-settings
 %{_javadir}/%{main_pkg}/maven-settings-*.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-settings-*.pom
 
 %files -n maven-toolchain
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-toolchain
 %{_javadir}/%{main_pkg}/maven-toolchain.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-toolchain.pom
 
 %files -n maven-plugin-descriptor
+%doc LICENSE.txt NOTICE.txt
 %{_mavendepmapfragdir}/%{name}-maven-plugin-descriptor
 %{_javadir}/%{main_pkg}/maven-plugin-descriptor.jar
 %{_mavenpomdir}/JPP.%{main_pkg}-maven-plugin-descriptor.pom
 
-%files 
-%attr(0755,root,root) %{_bindir}/mvn-jpp
-
+%files javadoc
+%doc LICENSE.txt NOTICE.txt
+%{_javadocdir}/*
 
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt4_44jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt4_37jpp7
 - versioned provides
 
