@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global checkout 20110809
 
 Name: xsom
 Version: 0
-Release: alt2_6.20110809svnjpp7
+Release: alt2_9.20110809svnjpp7
 Summary: XML Schema Object Model (XSOM)
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -24,7 +28,7 @@ Patch0: %{name}-%{checkout}svn-pom.patch
 
 BuildRequires: jpackage-utils
 BuildRequires: junit4
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-plugin-build-helper
 BuildRequires: maven-compiler-plugin
@@ -35,6 +39,7 @@ BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-shared
 BuildRequires: relaxngDatatype
 BuildRequires: relaxngcc
 BuildRequires: sonatype-oss-parent
@@ -120,6 +125,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_9.20110809svnjpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_6.20110809svnjpp7
 - NMU rebuild to move poms and fragments
 
