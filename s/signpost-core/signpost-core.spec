@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		signpost-core
 Version:	1.2.1.2
-Release:	alt1_2jpp7
+Release:	alt1_3jpp7
 Summary:	A simple, light-weight, and modular OAuth client library for the Java platform
 
 Group:		Development/Java
@@ -76,6 +79,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt1_3jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1.2-alt1_2jpp7
 - new version
 
