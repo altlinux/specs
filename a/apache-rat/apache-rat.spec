@@ -2,6 +2,7 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global snapdate 20100827
@@ -9,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-rat
 Version:        0.8
-Release:        alt3_8jpp7
+Release:        alt3_10jpp7
 Summary:        Apache Release Audit Tool (RAT)
 
 Group:          Development/Java
@@ -38,8 +39,6 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-wagon
 
 BuildRequires:  ant-antunit
@@ -129,13 +128,14 @@ cp -p pom.xml \
 %add_maven_depmap JPP.%{name}-%{name}.pom
 
 #Components
-for jarname in %{name}{-core,-plugin,-tasks}
+for comp in core plugin tasks
 do
+  jarname=%{name}-${comp}
   jarfile=$jarname/target/${jarname}-%{version}.jar
   cp -p $jarfile $RPM_BUILD_ROOT%{_javadir}/%{name}/${jarname}.jar
   cp -p ${jarname}/pom.xml \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-${jarname}.pom
-  %add_maven_depmap JPP.%{name}-${jarname}.pom %{name}/${jarname}.jar
+  %add_maven_depmap JPP.%{name}-${jarname}.pom %{name}/${jarname}.jar -f ${comp}
 done
 
 #Wrapper script
@@ -157,12 +157,13 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 %files
 %doc DISCLAIMER.txt LICENSE NOTICE README.txt RELEASE_NOTES.txt
 %{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%{_mavendepmapfragdir}/*
+%{_mavendepmapfragdir}/%{name}
 %dir %{_javadir}/%{name}
 
 %files core
 %doc LICENSE NOTICE
 %{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
+%{_mavendepmapfragdir}/%{name}-core
 %{_bindir}/%{name}
 %{_javadir}/%{name}/%{name}-core.jar
 %config(noreplace,missingok) /etc/java/apache-rat.conf
@@ -170,12 +171,14 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 %files plugin
 %doc LICENSE NOTICE
 %{_mavenpomdir}/JPP.%{name}-%{name}-plugin.pom
+%{_mavendepmapfragdir}/%{name}-plugin
 %{_javadir}/%{name}/%{name}-plugin.jar
 
 %files tasks
 %doc LICENSE NOTICE
 %{_sysconfdir}/ant.d/%{name}
 %{_mavenpomdir}/JPP.%{name}-%{name}-tasks.pom
+%{_mavendepmapfragdir}/%{name}-tasks
 %{_javadir}/%{name}/%{name}-tasks.jar
 
 %files javadoc
@@ -184,6 +187,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_10jpp7
+- new release
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_8jpp7
 - fixed build
 
