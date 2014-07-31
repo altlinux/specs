@@ -1,13 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-patch-plugin
 Version:        1.1.1
-Release:        alt2_4jpp7
+Release:        alt2_6jpp7
 Summary:        Maven Patch Plugin
 
 Group:          Development/Java
@@ -21,7 +20,7 @@ BuildArch: noarch
 BuildRequires: jpackage-utils
 
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-clean-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
@@ -51,7 +50,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 %prep
 %setup -q
@@ -84,6 +83,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_4jpp7
 - fixed build
 
