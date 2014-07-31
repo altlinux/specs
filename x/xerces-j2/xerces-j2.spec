@@ -2,6 +2,7 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt1_11jpp7
+Release:       alt1_14jpp7
 Summary:       Java XML parser
 Group:         Development/Java
 License:       ASL 2.0
@@ -21,6 +22,8 @@ URL:           http://xerces.apache.org/xerces2-j/
 Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
 Source1:       %{name}-version.sh
 Source2:       %{name}-constants.sh
+Source11:      %{name}-version.1
+Source12:      %{name}-constants.1
 
 # Custom javac ant task used by the build
 Source3:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/XJavac.java
@@ -173,6 +176,11 @@ cp -pr build/docs/javadocs/other/* %{buildroot}%{_javadocdir}/%{name}/other
 install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%{name}-version
 install -pD -m755 -T %{SOURCE2} %{buildroot}%{_bindir}/%{name}-constants
 
+# manual pages
+install -d -m 755 %{buildroot}%{_mandir}/man1
+install -p -m 644 %{SOURCE11} %{buildroot}%{_mandir}/man1
+install -p -m 644 %{SOURCE12} %{buildroot}%{_mandir}/man1
+
 # demo
 install -pD -T build/xercesSamples.jar %{buildroot}%{_datadir}/%{name}/%{name}-samples.jar
 cp -pr data %{buildroot}%{_datadir}/%{name}
@@ -197,6 +205,7 @@ EOF
 %{_mavenpomdir}/*
 %{_javadir}/%{name}*
 %{_bindir}/*
+%{_mandir}/*/*
 
 %files javadoc
 %{_javadocdir}/%{name}/impl
@@ -208,6 +217,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt1_14jpp7
+- new release
+
 * Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt1_11jpp7
 - fc update
 
