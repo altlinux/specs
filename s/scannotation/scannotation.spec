@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name scannotation
 %define version 1.0.3
 %global namedreltag .Final
@@ -9,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name: scannotation
 Version: 1.0.3
-Release:  alt2_0.4.r12jpp7
+Release:  alt2_0.6.r12jpp7
 Summary: A Java annotation scanner
 Group: Development/Java
 License: ASL 2.0
@@ -30,7 +34,7 @@ BuildRequires: junit4
 BuildRequires: javassist
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -99,6 +103,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.6.r12jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.4.r12jpp7
 - NMU rebuild to move poms and fragments
 
