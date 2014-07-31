@@ -1,15 +1,17 @@
+
+%define soversion 0
 %define _name protobuf-c
 
-Name: lib%_name
+Name: %{_name}-compat%{soversion}
 Version: 0.15
-Release: alt2
+Release: alt3
 Summary: C bindings for Google's Protocol Buffers
 
 Group: System/Libraries
 License: ASL 2.0
 Url: http://code.google.com/p/protobuf-c/
 
-Source: http://protobuf-c.googlecode.com/files/protobuf-c-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libprotobuf-devel protobuf-compiler
@@ -19,18 +21,18 @@ Protocol Buffers are a way of encoding structured data in an efficient yet
 extensible format. This package provides a code generator and run-time
 libraries to use Protocol Buffers from pure C (not C++).
 
-It uses a modified version of protoc called protoc-c.
+%package -n lib%{_name}%{soversion}
+Summary: Protocol Buffer c++ library.
+Group: System/Libraries
+Provides: lib%{_name} = %version-%release
 
-%package devel
-Summary: Protocol Buffers C headers and libraries
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-This package contains protobuf-c headers and libraries.
+%description -n lib%{_name}%{soversion}
+Protocol Buffers are a way of encoding structured data in an efficient yet
+extensible format. This package provides a code generator and run-time
+libraries to use Protocol Buffers from pure C (not C++).
 
 %prep
-%setup -q -n %_name-%version
+%setup -q
 
 %build
 %autoreconf
@@ -43,18 +45,13 @@ This package contains protobuf-c headers and libraries.
 %install
 %makeinstall_std
 
-%files
-%_bindir/protoc-c
-%_libdir/libprotobuf-c.so.*
-%doc TODO ChangeLog
-
-%files devel
-%dir %_includedir/google
-%_includedir/google/protobuf-c
-%_libdir/libprotobuf-c.so
-%_pkgconfigdir/libprotobuf-c.pc
+%files -n lib%{_name}%{soversion}
+%_libdir/*.so.*
 
 %changelog
+* Thu Jul 31 2014 Alexey Shabalin <shaba@altlinux.ru> 0.15-alt3
+- build only library package for compat
+
 * Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.15-alt2
 - rebuilt for protobuf-2.5.0
 
