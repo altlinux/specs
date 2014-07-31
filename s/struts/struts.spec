@@ -1,10 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global master_version 4
 Name:          struts
 Version:       1.3.10
-Release:       alt4_5jpp7
+Release:       alt4_7jpp7
 Summary:       Web application framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -52,7 +56,7 @@ BuildRequires: jboss-servlet-3.0-api
 # not only a test dep
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -82,128 +86,6 @@ BuildArch:     noarch
 Obsoletes:     %{name}-manual < %{version}
 Obsoletes:     %{name}-webapps-tomcat5 < %{version}
 Source44: import.info
-
-# Provides: struts-core = 0:1.3.8
-# Provides: struts-el = 0:1.3.8
-# Provides: struts-extras = 0:1.3.8
-# Provides: struts-faces = 0:1.3.8
-# Provides: struts-mailreader-dao = 0:1.3.8
-# Provides: struts-scripting = 0:1.3.8
-# Provides: struts-taglib = 0:1.3.8
-# Provides: struts-tiles = 0:1.3.8
-# Obsoletes: struts-core < 0:1.3.10-alt3_3
-# Obsoletes: struts-el < 0:1.3.10-alt3_3
-# Obsoletes: struts-extras < 0:1.3.10-alt3_3
-# Obsoletes: struts-faces < 0:1.3.10-alt3_3
-# Obsoletes: struts-mailreader-dao < 0:1.3.10-alt3_3
-# Obsoletes: struts-scripting < 0:1.3.10-alt3_3
-# Obsoletes: struts-taglib < 0:1.3.10-alt3_3
-# Obsoletes: struts-tiles < 0:1.3.10-alt3_3
-
-%package core
-Summary:        Core for %{name}
-Group:          Development/Java
-#Requires: antlr
-#Requires: apache-commons-beanutils
-#Requires: apache-commons-chain
-#Requires: apache-commons-digester
-#Requires: apache-commons-logging
-#Requires: apache-commons-validator
-#Requires: jakarta-oro
-Requires: %{name} = %{epoch}:%{version}-%{release}
-#Requires: commons-parent
-
-%description core
-%{summary}.
-
-%package el
-Summary:        EL extension for %{name}
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-#Requires: jakarta-taglibs-standard
-
-%description el
-%{summary}.
-
-%package extras
-Summary:        Extras for %{name}
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-
-%description extras
-%{summary}.
-
-%package faces
-Summary:        Integration library for %{name}-faces
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-
-%description faces
-%{summary}.
-
-%package mailreader-dao
-Summary:        %{name} mailreader-dao library
-Group:          Development/Java
-#Requires: apache-commons-digester
-#Requires: apache-commons-logging
-
-%description mailreader-dao
-%{summary}.
-
-%package scripting
-Summary:        %{name} scripting library
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-#Requires: bsf
-
-%description scripting
-%{summary}.
-
-%package taglib
-Summary:        %{name} taglib library
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-
-%description taglib
-%{summary}.
-
-%package tiles
-Summary:        %{name} tiles library
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-
-%description tiles
-%{summary}.
-
-%files core
-%{_javadir}/%{name}-core.jar
-%{_javadir}/%{name}.jar
-
-%files el
-%{_javadir}/%{name}-el.jar
-
-%files extras
-%{_javadir}/%{name}-extras.jar
-
-%files faces
-%{_javadir}/%{name}-faces.jar
-
-%files mailreader-dao
-%{_javadir}/%{name}-mailreader-dao.jar
-
-%files scripting
-%{_javadir}/%{name}-scripting.jar
-
-%files taglib
-%{_javadir}/%{name}-taglib.jar
-
-%files tiles
-%{_javadir}/%{name}-tiles.jar
-
 
 %description
 Welcome to the Struts Framework! The goal of this project is to provide
@@ -250,7 +132,7 @@ cp -p %{SOURCE1} pom.xml
 %build
 
 cd src
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild \
   -Dproject.build.sourceEncoding=UTF-8 \
   install javadoc:aggregate
 
@@ -281,47 +163,20 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 
-for m in core \
- el \
- extras \
- faces \
- mailreader-dao \
- scripting \
- taglib \
- tiles; do
-  ln -s %{name}/${m}.jar %{buildroot}%{_javadir}/%{name}-${m}.jar
-done
-
-# struts-all compat jar
-mkdir tmp-all
-pushd tmp-all
-for i in %{buildroot}%{_javadir}/%{name}/*.jar; do
-jar xf $i;
-done
-jar cf %{buildroot}%{_javadir}/%{name}.jar *
-popd
-
-# data
-install -d -m 755 %{buildroot}%{_datadir}/%{name}
-install -p -m 0644 src/el/src/main/resources/META-INF/tld/*.tld %{buildroot}%{_datadir}/%{name}
-install -p -m 0644 src/faces/src/main/resources/META-INF/tld/*.tld %{buildroot}%{_datadir}/%{name}
-install -p -m 0644 src/taglib/src/main/resources/META-INF/tld/*.tld %{buildroot}%{_datadir}/%{name}
-install -p -m 0644 src/tiles/src/main/resources/META-INF/tld/*.tld %{buildroot}%{_datadir}/%{name}
-#install -p -m 0644 src/target/site/dtds/*.dtd %{buildroot}%{_datadir}/%{name}
-install -p -m 0644 src/core/src/main/resources/org/apache/struts/validator/vali*.xml %{buildroot}%{_datadir}/%{name}
-
 %files
 %{_javadir}/%{name}/*.jar
 %{_mavenpomdir}/JPP.%{name}-*.pom
 %{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
-%{_datadir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_5jpp7
 - NMU rebuild to move poms and fragments
 
