@@ -1,6 +1,6 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             maven-jarsigner-plugin
 Version:          1.2
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          Signs or verifies a project artifact and attachments using jarsigner
 License:          ASL 2.0
 Group:            Development/Java
@@ -19,16 +19,12 @@ Source0:          http://search.maven.org/remotecontent?filepath=org/apache/mave
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
-Requires:         jpackage-utils
 Requires:         maven
 Requires:         plexus-utils
-
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
+
 
 %description
 This plugin provides the capability to sign or verify
@@ -67,7 +63,7 @@ install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap %{group_id} %{name} %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -80,10 +76,13 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc LICENSE
+%doc LICENSE NOTICE
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4jpp7
 - fixed build
 
