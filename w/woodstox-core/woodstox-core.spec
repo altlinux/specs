@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name woodstox
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{core_name}
 Version:          4.1.2
-Release:          alt2_3jpp7
+Release:          alt2_5jpp7
 Summary:          High-performance XML processor
 License:          ASL 2.0 or LGPLv2+
 Group:            Development/Java
@@ -24,7 +28,7 @@ BuildRequires:    relaxngDatatype
 BuildRequires:    msv-xsdlib
 BuildRequires:    msv-msv
 BuildRequires:    stax2-api
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    jpackage-utils
 
 Requires:         felix-osgi-core
@@ -114,6 +118,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
