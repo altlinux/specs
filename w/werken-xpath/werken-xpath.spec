@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt1_8.beta.12.4jpp7
+Release:        alt1_10.beta.12.4jpp7
 Epoch:          0
 Summary:        XPath implementation using JDOM
 # Worth noting that this ASL 1.1 has slightly different wording.
@@ -64,8 +64,8 @@ BuildRequires:  xml-commons-apis
 BuildRequires:  jpackage-utils >= 0:1.6
 Group:          Development/Java
 BuildArch:      noarch
-Provides:    werken.xpath = %{epoch}:%{version}-%{release}
-Obsoletes:   werken.xpath < 0.9.4
+Provides:       werken.xpath = %{epoch}:%{version}-%{release}
+Obsoletes:      werken.xpath < 0.9.4
 Source44: import.info
 
 %description
@@ -78,10 +78,10 @@ werken.canonical (XML canonicalization) packages.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildRequires:  java-javadoc
-Provides:    werken.xpath-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:   werken.xpath-javadoc < 0.9.4
+Provides:       werken.xpath-javadoc = %{epoch}:%{version}-%{release}
+Obsoletes:      werken.xpath-javadoc < 0.9.4
 BuildArch: noarch
 
 %description    javadoc
@@ -103,22 +103,16 @@ Javadoc for %{name}.
 
 # remove all binary libs
 for j in $(find . -name "*.jar"); do
-	mv $j $j.no
+         mv $j $j.no
 done
 
 cp %{SOURCE1} .
-
-#pushd lib
-#ln -sf $(build-classpath antlr) antlr-runtime.jar
-#ln -sf $(build-classpath jdom) jdom.jar
-#ln -sf $(build-classpath xerces-j2) xerces.jar
-#popd
 
 # -----------------------------------------------------------------------------
 
 %build
 export CLASSPATH=$(build-classpath jdom antlr xerces-j2 xml-commons-apis)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.compiler=modern package javadoc compile-test
+ant -Dbuild.compiler=modern package javadoc compile-test
 # Note that you'll have to java in PATH for this to work, it is by default
 # when using a JPackage JVM.
 CLASSPATH=$CLASSPATH:build/werken.xpath.jar:build/test/classes
@@ -127,7 +121,6 @@ sh runtests.sh
 # -----------------------------------------------------------------------------
 
 %install
-
 # jars
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p build/%{dotname}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
@@ -139,8 +132,8 @@ cp -pr build/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # maven
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{name}-%{version}.pom \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 
 # -----------------------------------------------------------------------------
@@ -148,15 +141,19 @@ install -pm 644 %{name}-%{version}.pom \
 %files
 %doc INSTALL LICENSE LIMITATIONS README TODO
 %{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_10.beta.12.4jpp7
+- new release
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_8.beta.12.4jpp7
 - fc update
 
