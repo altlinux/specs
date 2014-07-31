@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt4_6jpp7
+Release:        alt4_8jpp7
 Epoch:          0
 Summary:        Open source implementation of JAXB
 
@@ -187,6 +187,9 @@ install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_8jpp7
+- new release
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_6jpp7
 - fixed build
 
