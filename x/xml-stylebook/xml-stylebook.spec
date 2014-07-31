@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.10.b3_xalan2.svn313293jpp7
+Release:       alt2_0.11.b3_xalan2.svn313293jpp7
 Summary:       Apache XML Stylebook
 Group:         Development/Java
 License:       ASL 1.1
@@ -82,7 +82,7 @@ if [ ! -z "$JARS" ]; then
 fi
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 # Build the examples (this serves as a good test suite)
 pushd docs
@@ -124,6 +124,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.11.b3_xalan2.svn313293jpp7
+- new release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.10.b3_xalan2.svn313293jpp7
 - fc update
 
