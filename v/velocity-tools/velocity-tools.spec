@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_2jpp7
+Release:       alt2_5jpp7
 Summary:       Collection of useful tools for Velocity template engine
 Group:         Development/Java
 License:       ASL 2.0
@@ -46,13 +50,17 @@ BuildRequires: velocity
 # xerces xmlParserAPIs 2.6.2
 BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
+
+# required by resources-plugin
+BuildRequires: maven-filtering
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
 Requires:      apache-commons-beanutils
 Requires:      apache-commons-chain
@@ -128,6 +136,9 @@ cp -pr dist/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
