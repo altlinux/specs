@@ -10,11 +10,12 @@ BuildRequires: jpackage-compat
 %define version 3.6.10
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
+%global majorversion 3
 %global oname hibernate-orm
 
 Name: hibernate3
 Version: 3.6.10
-Release: alt2_6jpp7
+Release: alt2_7jpp7
 Summary: Relational persistence and query service
 
 Group: Development/Java
@@ -35,6 +36,7 @@ Patch3:  hibernate-orm-infinispan-5-support.patch
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
+BuildRequires: javapackages-tools >= 0.7.2
 BuildRequires: maven
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -61,6 +63,7 @@ BuildRequires: infinispan
 BuildRequires: rhq-plugin-annotations
 
 Requires: jpackage-utils
+Requires: javapackages-tools >= 0.7.2
 Requires: apache-commons-collections
 Requires: dom4j
 Requires: geronimo-validation
@@ -200,35 +203,42 @@ mvn-rpmbuild \
 
 # POM files:
 install -d -m 755 %{buildroot}%{_mavenpomdir}
+
 install -pm 644 hibernate-parent/pom.xml  %{buildroot}%{_mavenpomdir}/JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-parent.pom
+
+%add_maven_depmap JPP-%{name}-parent.pom -v "%{majorversion},%{namedversion}"
 
 # Jar files:
 install -d -m 755 %{buildroot}%{_javadir}/%{name}
+
 install -m 644 hibernate-core/target/hibernate-core-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/hibernate-core.jar
 install -pm 644 hibernate-core/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-hibernate-core.pom
-%add_maven_depmap JPP.%{name}-hibernate-core.pom %{name}/hibernate-core.jar
+
+%add_maven_depmap JPP.%{name}-hibernate-core.pom %{name}/hibernate-core.jar -v "%{majorversion},%{namedversion}"
 
 for module in c3p0 ehcache infinispan jbosscache proxool \
               entitymanager envers testing; do
     install -m 644 hibernate-${module}/target/hibernate-${module}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/hibernate-${module}.jar
     install -pm 644 hibernate-${module}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-hibernate-${module}.pom
-%add_maven_depmap JPP.%{name}-hibernate-${module}.pom %{name}/hibernate-${module}.jar -f ${module}
+%add_maven_depmap JPP.%{name}-hibernate-${module}.pom %{name}/hibernate-${module}.jar -f ${module} -v "%{majorversion},%{namedversion}"
 done
 
 # Javadoc files:
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-# compat symlink
-ln -s hibernate3/hibernate-core.jar %buildroot%_javadir/hibernate3.jar
 
 %files
-%_javadir/hibernate3.jar
 %doc changelog.txt lgpl.txt
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/hibernate-core.jar
-%{_mavenpomdir}/JPP-%{name}-parent.pom
-%{_mavenpomdir}/JPP.%{name}-hibernate-core.pom
+%{_javadir}/%{name}/hibernate-core-%{version}.jar
+%{_javadir}/%{name}/hibernate-core-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-core-%{namedversion}.jar
+%{_mavenpomdir}/JPP-%{name}-parent-%{version}.pom
+%{_mavenpomdir}/JPP-%{name}-parent-%{majorversion}.pom
+%{_mavenpomdir}/JPP-%{name}-parent-%{namedversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-core-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-core-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-core-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -236,46 +246,81 @@ ln -s hibernate3/hibernate-core.jar %buildroot%_javadir/hibernate3.jar
 %{_javadocdir}/%{name}
 
 %files entitymanager
-%{_javadir}/%{name}/hibernate-entitymanager.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-entitymanager.pom
+%{_javadir}/%{name}/hibernate-entitymanager-%{version}.jar
+%{_javadir}/%{name}/hibernate-entitymanager-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-entitymanager-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-entitymanager-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-entitymanager-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-entitymanager-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-entitymanager
 
 %files envers
-%{_javadir}/%{name}/hibernate-envers.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-envers.pom
+%{_javadir}/%{name}/hibernate-envers-%{version}.jar
+%{_javadir}/%{name}/hibernate-envers-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-envers-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-envers-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-envers-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-envers-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-envers
 
 %files c3p0
-%{_javadir}/%{name}/hibernate-c3p0.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-c3p0.pom
+%{_javadir}/%{name}/hibernate-c3p0-%{version}.jar
+%{_javadir}/%{name}/hibernate-c3p0-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-c3p0-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-c3p0-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-c3p0-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-c3p0-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-c3p0
 
 %files ehcache
-%{_javadir}/%{name}/hibernate-ehcache.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-ehcache.pom
+%{_javadir}/%{name}/hibernate-ehcache-%{version}.jar
+%{_javadir}/%{name}/hibernate-ehcache-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-ehcache-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-ehcache-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-ehcache-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-ehcache-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-ehcache
 
 %files infinispan
-%{_javadir}/%{name}/hibernate-infinispan.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-infinispan.pom
+%{_javadir}/%{name}/hibernate-infinispan-%{version}.jar
+%{_javadir}/%{name}/hibernate-infinispan-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-infinispan-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-infinispan-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-infinispan-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-infinispan-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-infinispan
 
 %files proxool
-%{_javadir}/%{name}/hibernate-proxool.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-proxool.pom
+%{_javadir}/%{name}/hibernate-proxool-%{version}.jar
+%{_javadir}/%{name}/hibernate-proxool-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-proxool-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-proxool-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-proxool-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-proxool-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-proxool
 
 %files jbosscache
-%{_javadir}/%{name}/hibernate-jbosscache.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-jbosscache.pom
+%{_javadir}/%{name}/hibernate-jbosscache-%{version}.jar
+%{_javadir}/%{name}/hibernate-jbosscache-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-jbosscache-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-jbosscache-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-jbosscache-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-jbosscache-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-jbosscache
 
 %files testing
-%{_javadir}/%{name}/hibernate-testing.jar
-%{_mavenpomdir}/JPP.%{name}-hibernate-testing.pom
+%{_javadir}/%{name}/hibernate-testing-%{version}.jar
+%{_javadir}/%{name}/hibernate-testing-%{majorversion}.jar
+%{_javadir}/%{name}/hibernate-testing-%{namedversion}.jar
+%{_mavenpomdir}/JPP.%{name}-hibernate-testing-%{version}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-testing-%{majorversion}.pom
+%{_mavenpomdir}/JPP.%{name}-hibernate-testing-%{namedversion}.pom
 %{_mavendepmapfragdir}/%{name}-testing
 
 %changelog
+* Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt2_7jpp7
+- new release
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt2_6jpp7
 - fixed deps
 
