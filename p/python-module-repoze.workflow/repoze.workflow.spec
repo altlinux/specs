@@ -1,7 +1,10 @@
 %define oname repoze.workflow
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20130926
+Release: alt2.git20130926
 Summary: Declarative state machine for content-lifecycle workflows
 License: BSD
 Group: Development/Python
@@ -11,7 +14,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.workflow.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_requires repoze repoze.zcml zope.component zope.interface
 %py_requires zope.configuration
@@ -19,6 +27,28 @@ BuildPreReq: python-devel python-module-distribute
 %description
 repoze.workflow is a state machine and associated configuration system
 useful for workflow-like applications.
+
+%package -n python3-module-%oname
+Summary: Declarative state machine for content-lifecycle workflows
+Group: Development/Python3
+%py3_requires repoze repoze.zcml zope.component zope.interface
+%py3_requires zope.configuration
+
+%description -n python3-module-%oname
+repoze.workflow is a state machine and associated configuration system
+useful for workflow-like applications.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for repoze.workflow
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+%py3_requires zope.testing repoze.sphinx.autointerface
+
+%description -n python3-module-%oname-tests
+repoze.workflow is a state machine and associated configuration system
+useful for workflow-like applications.
+
+This package contains tests for repoze.workflow.
 
 %package tests
 Summary: Tests for repoze.workflow
@@ -35,16 +65,37 @@ This package contains tests for repoze.workflow.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
+%endif
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 %endif
 
 %files
@@ -56,7 +107,23 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files tests
 %python_sitelibdir/*/*/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt docs/*.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%endif
+
 %changelog
+* Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2.git20130926
+- Added module for Python 3
+
 * Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20130926
 - New snapshot
 
