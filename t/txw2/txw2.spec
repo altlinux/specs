@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: txw2
 Version: 20110809
-Release: alt2_4jpp7
+Release: alt2_7jpp7
 Summary: Typed XML writer for Java
 Group: Development/Java
 License: CDDL and GPLv2 with exceptions
@@ -22,7 +26,7 @@ Patch1: %{name}-%{version}-args4j.patch
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -32,6 +36,7 @@ BuildRequires: maven-release-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-shared
 BuildRequires: args4j
 BuildRequires: xsom
 BuildRequires: rngom
@@ -109,6 +114,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_7jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
