@@ -1,13 +1,17 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name shrinkwrap
 %define version 1.0.0
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 Name:          shrinkwrap
 Version:       1.0.0
-Release:       alt2_2jpp7
+Release:       alt2_5jpp7
 Summary:       A simple mechanism to assemble Java archives
 Group:         Development/Java
 License:       ASL 2.0
@@ -15,15 +19,16 @@ Url:           http://www.jboss.org/shrinkwrap/
 # git clone git://github.com/shrinkwrap/shrinkwrap.git shrinkwrap-1.0.0
 # cd shrinkwrap-1.0.0 && git archive --format=tar --prefix=shrinkwrap-1.0.0/ 1.0.0 | xz > ../shrinkwrap-1.0.0.tar.xz
 Source0:       %{name}-%{namedversion}.tar.xz
-Patch33:	shrinkwrap-1.0.0-no-checkstyle.patch
+# shrinkwrap package don't include the license file
+Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires: jboss-parent
 BuildRequires: jpackage-utils
 
 BuildRequires: apiviz
-BuildRequires: junit4
+BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-checkstyle-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
@@ -35,7 +40,11 @@ BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      junit4
+# required by enforcer-plugin
+BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+
+Requires:      junit
 
 Requires:      jpackage-utils
 BuildArch:     noarch
@@ -57,15 +66,15 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 
-sed -i "s|<module>dist</module>|<!--module>dist</module-->|" pom.xml
-
-#sed -i -e 's,<violationSeverity>error</violationSeverity>,<violationSeverity>warning</violationSeverity>,g' `find . -name pom.xml`
-
-%patch33 -p1
+#sed -i "s|<module>dist</module>|<!--module>dist</module-->|" pom.xml
+%pom_disable_module dist
+cp -p %{SOURCE1} .
+sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
-export LANG=en_US.ISO8859-1
+
 export JAVA5_HOME=%{_jvmdir}/java
+export JAVA_HOME=$JAVA5_HOME
 mvn-rpmbuild install javadoc:aggregate
 
 %install
@@ -101,11 +110,16 @@ cp -r target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/*.jar
 %{_mavenpomdir}/JPP.%{name}-*.pom
 %{_mavendepmapfragdir}/%{name}
+%doc LICENSE-2.0.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
