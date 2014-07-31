@@ -1,7 +1,10 @@
-BuildRequires: javassist
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xnio
 %define version 3.0.3
 %global namedreltag .GA
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             xnio
 Version:          3.0.3
-Release:          alt2_3jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss XNIO
 Group:            Development/Java
 License:          LGPLv2+
@@ -23,7 +26,7 @@ Patch00:          %{name}-%{namedversion}-jmock.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -44,6 +47,7 @@ BuildRequires:    jboss-logmanager
 BuildRequires:    maven-injection-plugin
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    junit4
+BuildRequires:    maven-shared
 
 Requires:         jboss-logmanager
 Requires:         jboss-logging
@@ -105,6 +109,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc COPYING.txt
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
