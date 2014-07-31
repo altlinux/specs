@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: stax-ex
 Version: 1.7.1
-Release: alt1_2jpp7
+Release: alt1_4jpp7
 Summary: StAX API extensions
 Group: Development/Java
 License: CDDL or GPLv2
@@ -22,7 +23,7 @@ BuildRequires: dos2unix
 BuildRequires: jpackage-utils
 BuildRequires: junit
 BuildRequires: jvnet-parent
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 
 Requires: bea-stax
@@ -51,7 +52,7 @@ BuildArch: noarch
 
 
 %description javadoc
-This package contains javadoc for %%{name}.
+This package contains javadoc for %{name}.
 
 
 %prep
@@ -102,6 +103,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_4jpp7
+- new release
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_2jpp7
 - fc update
 
