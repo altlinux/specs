@@ -1,23 +1,43 @@
 %define oname python-ldap
 
+%def_without python3
+%def_without docs
+
 Summary: LDAP client API for Python
 Name: python-module-ldap
-Version: 2.3.11
-Release: alt2.1.1
+Version: 2.4.15
+Release: alt1
 Source0: %oname-%version.tar
 License: Python-style license
 Group: Development/Python
 Url: http://python-ldap.sourceforge.net/
 
-BuildPreReq: python-devel
+BuildPreReq: python-devel libsasl2-devel
 BuildPreReq: rpm-build-python >= 0.8
 BuildRequires: libldap-devel >= 2.3 libssl-devel
-BuildPreReq: texlive-latex-recommended python-module-sphinx
+#BuildPreReq: texlive-latex-recommended python-module-sphinx
+BuildPreReq: python-module-sphinx
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+BuildPreReq: python-tools-2to3
+%endif
 
 Obsoletes: python-ldap
-Packager: Python Development Team <python@packages.altlinux.org>
 
 %description
+python-ldap provides an object-oriented API to access LDAP
+directory servers from Python programs. Mainly it wraps the
+OpenLDAP 2.x libs for that purpose.
+
+Additionally the package contains modules for other LDAP-related
+stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
+
+%package -n python3-module-ldap
+Summary: LDAP client API for Python
+Group: Development/Python3
+
+%description -n python3-module-ldap
 python-ldap provides an object-oriented API to access LDAP
 directory servers from Python programs. Mainly it wraps the
 OpenLDAP 2.x libs for that purpose.
@@ -89,20 +109,48 @@ This package contains pickles for python-ldap.
 %prep
 %setup -n %oname-%version
 
-%build
-env CFLAGS="$RPM_OPT_FLAGS" python setup.py build
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
-%make -C Doc latex
+%build
+%add_optflags -I%_includedir/sasl
+export LC_ALL=en_US.UTF-8
+
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%if_with docs
+%make -C Doc html
+%endif
 
 %install
-%python_install --optimize=2
+export LC_ALL=en_US.UTF-8
 
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%if_with docs
 cp -fR Doc/.build/pickle %buildroot%python_sitelibdir/ldap/
+%endif
 
 %files
 %doc LICENCE CHANGES README TODO
 %python_sitelibdir/*
+%if_with docs
 %exclude %python_sitelibdir/ldap/pickle
+%endif
 
 %files demos
 %doc Demo
@@ -110,13 +158,24 @@ cp -fR Doc/.build/pickle %buildroot%python_sitelibdir/ldap/
 %files tests
 %doc Tests
 
+%if_with docs
 %files doc
 %doc Doc/.build/html Doc/.build/latex/*.pdf
 
 %files pickles
 %python_sitelibdir/ldap/pickle
+%endif
+
+%if_with python3
+%files -n python3-module-ldap
+%doc LICENCE CHANGES README TODO
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.15-alt1
+- Version 2.4.15
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3.11-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
