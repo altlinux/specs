@@ -1,14 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-enforcer
-Version:        1.0.1
-Release:        alt4_6jpp7
+Version:        1.2
+Release:        alt1_4jpp7
 Summary:        Maven Enforcer
 
 Group:          Development/Java
@@ -16,15 +15,10 @@ License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{version}/enforcer-%{version}-source-release.zip
 
-#748074 - maven-enforcer-plugin is not compatible with maven3
-Patch0:         %{name}-requirePluginVersions-maven3-compatibility.patch
-Patch1:         %{name}-migration-to-component-metadata.patch
-Patch2:         %{name}-maven3-compat.patch
-
 BuildArch: noarch
 
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
@@ -83,6 +77,7 @@ Summary: Enforcer Rules
 Group: Development/Java
 Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires: %{name}-rules
+Requires: forge-parent
 Obsoletes: maven2-plugin-enforcer <= 0:2.0.8
 Provides: maven2-plugin-enforcer = 1:%{version}-%{release}
 
@@ -93,9 +88,11 @@ This component contains the standard Enforcer Rules.
 %prep
 %setup -q -n enforcer-%{version}
 
-%patch0 -p0
-%patch1 -p1
-%patch2 -p1
+%pom_add_dep org.apache.maven:maven-compat enforcer-rules
+
+sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-component-metadata</artifactId>|" \
+    -e "s|<goal>descriptor</goal>|<goal>generate-metadata</goal>|" \
+    -i enforcer-{api,rules}/pom.xml
 
 %build
 mvn-rpmbuild \
@@ -131,11 +128,6 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
 %files
 %doc LICENSE NOTICE
 %dir %{_javadir}/%{name}
@@ -163,6 +155,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_4jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt4_6jpp7
 - fixed build
 
