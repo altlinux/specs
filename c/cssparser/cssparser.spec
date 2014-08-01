@@ -1,9 +1,13 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cssparser
-Version:        0.9.6
-Release:        alt1_3jpp7
+Version:        0.9.7
+Release:        alt1_1jpp7
 Summary:        CSS Parser
 
 Group:          Development/Java
@@ -16,8 +20,9 @@ Source1:        fetch-cssparser.sh
 BuildArch: noarch
 
 BuildRequires: sac >= 1.3-6
-BuildRequires: junit4
+BuildRequires: junit
 BuildRequires: javacc-maven-plugin >= 2.6-3
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-jar-plugin
@@ -77,6 +82,9 @@ rm -rf target/site/api*
 %doc LICENSE.txt
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.7-alt1_1jpp7
+- new version
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.6-alt1_3jpp7
 - new version
 
