@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,39 +10,29 @@ BuildRequires: jpackage-compat
 %global project felix
 %global bundle org.apache.felix.framework
 %global groupId org.apache.felix
-%global artifactId %{bundle}
 
 Name:           %{project}-framework
-Version:        4.0.2
-Release:        alt1_4jpp7
+Version:        4.2.1
+Release:        alt1_1jpp7
 Summary:        Apache Felix Framework
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://felix.apache.org
-Source0:        http://apache.miloslavbrada.cz//felix/%{bundle}-%{version}-source-release.tar.gz
-
-Patch0:         felix-framework-encoding.patch 
+Source0:        http://www.apache.org/dist/%{project}/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  felix-osgi-core
-BuildRequires:  maven
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  apache-rat-plugin
+BuildRequires: jpackage-utils
+BuildRequires: felix-osgi-compendium
+BuildRequires: felix-osgi-core
+BuildRequires: maven-local
+BuildRequires: maven-surefire-provider-junit4
+BuildRequires: apache-rat-plugin
 
-
-Requires:       felix-osgi-compendium
-Requires:       felix-osgi-core
+Requires: felix-osgi-compendium
+Requires: felix-osgi-core
+Requires: jpackage-utils
 Source44: import.info
 
 %description
@@ -56,19 +47,15 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
-%global POM %{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-
 %prep
 %setup -q -n %{bundle}-%{version}
-%patch0 -p1
-%pom_remove_plugin :maven-compiler-plugin
 
 %build
 mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
+install -d -m 755 %{buildroot}%{_javadir}/%{project}
 install -m 644 target/%{bundle}-%{version}.jar \
         %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
 
@@ -79,9 +66,8 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
 %add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %doc LICENSE NOTICE
@@ -94,6 +80,9 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_1jpp7
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_4jpp7
 - new version
 
