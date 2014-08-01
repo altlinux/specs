@@ -1,9 +1,12 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          maven-processor-plugin
-Version:       2.0.5
-Release:       alt3_3jpp7
+Version:       2.1.1
+Release:       alt1_1jpp7
 Summary:       Maven Processor Plugin
 Group:         Development/Java
 # some classes and pom file are annotated with ASL 2.0
@@ -11,17 +14,16 @@ Group:         Development/Java
 # contacted the project owner (available in POM) and clarified the license status in LGPLv3
 License:       LGPLv3 and ASL 2.0
 Url:           http://code.google.com/p/maven-annotation-plugin/
-# svn export http://maven-annotation-plugin.googlecode.com/svn/tags/maven-processor-plugin-2.0.5
-# tar czf maven-processor-plugin-2.0.5-src-svn.tar.gz maven-processor-plugin-2.0.5
-Source0:       %{name}-%{version}-src-svn.tar.gz
-# remove 
-# org.jvnet.wagon-svn wagon-svn 1.8
-# com.vineetmanohar maven-twitter-plugin 0.1
-Patch0:        %{name}-%{version}-pom.patch
+# git clone https://code.google.com/p/maven-annotation-plugin/ maven-processor-plugin-2.1.1
+# (cd maven-processor-plugin-2.1.1/ && git archive --format=tar --prefix=maven-processor-plugin-2.1.1/ maven-processor-plugin-2.1.1 | xz > ../maven-processor-plugin-2.1.1-src-git.tar.xz)
+Source0:       %{name}-%{version}-src-git.tar.xz
+
 BuildRequires: jpackage-utils
 
-BuildRequires: junit4
-BuildRequires: maven
+# test deps
+BuildRequires: junit
+
+BuildRequires: maven-local
 
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -57,7 +59,10 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%pom_xpath_remove pom:project/pom:profiles
+%pom_xpath_remove pom:build/pom:extensions
+
+cp -p src/main/resources/COPYING.LESSER .
 
 %build
 
@@ -80,11 +85,16 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%doc COPYING.LESSER
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc COPYING.LESSER
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_1jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt3_3jpp7
 - fixed build
 
