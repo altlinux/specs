@@ -1,26 +1,22 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-remote-resources-plugin
-Version:        1.3
-Release:        alt2_2jpp7
+Version:        1.4
+Release:        alt1_4jpp7
 Summary:        Maven Remote Resources Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-remote-resources-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-#Class org.apache.maven.shared.artifact.filter.collection.TransitivityFilter which ProcessRemoteResourcesMojo.java imports
-#is renamed as org.apache.maven.shared.artifact.filter.collection.ProjectTransitivityFilter in
-#the version 1.3 of maven-shared-common-artifact-filters package.
-Patch0:        %{name}-mojo.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -29,7 +25,7 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-shared-filtering
-BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-container-default
 BuildRequires: velocity
 BuildRequires: maven-shared-artifact-resolver
 BuildRequires: maven-shared-common-artifact-filters
@@ -46,11 +42,18 @@ BuildRequires: maven-surefire-provider-junit
 BuildRequires: modello
 
 Requires:       maven
-Requires:       jpackage-utils
-Requires:       maven-wagon
-Requires:       maven-shared-artifact-resolver
-Requires:       maven-shared-downloader
+Requires:       maven-artifact-resolver
+Requires:       maven-common-artifact-filters
+Requires:       maven-filtering
+Requires:       maven-monitor
+Requires:       maven-plugin-annotations
+Requires:       maven-project
+Requires:       plexus-containers-container-default
+Requires:       plexus-interpolation
 Requires:       plexus-resources
+Requires:       plexus-utils
+Requires:       plexus-velocity
+Requires:       velocity
 
 Obsoletes:      maven2-plugin-remote-resources <= 0:2.0.8
 Provides:       maven2-plugin-remote-resources = 1:%{version}-%{release}
@@ -77,7 +80,10 @@ API documentation for %{name}.
 %prep
 %setup -q
 
-%patch0 -p1
+#Class org.apache.maven.shared.artifact.filter.collection.TransitivityFilter which ProcessRemoteResourcesMojo.java imports
+#is renamed as org.apache.maven.shared.artifact.filter.collection.ProjectTransitivityFilter in
+#the version 1.3 of maven-shared-common-artifact-filters package.
+sed -i "s/TransitivityFilter/Project&/" `find -name ProcessRemoteResourcesMojo.java`
 
 %build
 # fix 613582
@@ -110,6 +116,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_2jpp7
 - fixed build
 
