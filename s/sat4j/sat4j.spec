@@ -1,27 +1,38 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global eclipse_base %{_libdir}/eclipse
-# We want the version to match that shipped in Eclipse's Orbit project
-%global qualifier 20100429
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name sat4j
+%define version 2.3.5
+%{?scl:%scl_package sat4j}
+%{!?scl:%global pkg_name %{name}}
 
-Name:           sat4j
-Version:        2.3.0
-Release:        alt1_4jpp7
+%global eclipse_base %{_libdir}/eclipse
+
+# should be consistent across one release
+%global build_date 20130405
+
+Name:           %{?scl_prefix}sat4j
+Version:        2.3.5
+Release:        alt1_1jpp7
 Summary:        A library of SAT solvers written in Java
 
 Group:          Development/Java
 License:        EPL or LGPLv2
 URL:            http://www.sat4j.org/
-# Created by sh %{name}-fetch.sh
-Source0:        %{name}-%{version}.tar.xz
-Source1:        %{name}-fetch.sh
-Patch0:         %{name}-classpath.patch
+# Created by sh %{pkg_name}-fetch.sh
+Source0:        %{pkg_name}-%{version}.tar.xz
+Source1:        %{pkg_name}-fetch.sh
+Patch0:         %{pkg_name}-classpath.patch
 
 BuildRequires:  ant
 BuildRequires:  ecj
 Requires:       jpackage-utils
+%{?scl:Requires: %scl_runtime}
 
 BuildArch:      noarch
 Source44: import.info
@@ -33,14 +44,19 @@ boxes", those willing to embed SAT technologies into their application
 without worrying about the details.
 
 %prep
-%setup -q
+%setup -q -n %{pkg_name}-%{version}
 %patch0
 
-# Only used for the tests
-rm lib/commons-cli.jar
+pushd lib
+	ln -s /usr/share/java/commons-beanutils.jar
+	ln -s /usr/share/java/commons-logging.jar
+	ln -s /usr/share/java/mockito.jar mockito-all-1.9.5.jar
+popd
 
 %build
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.compiler=modern -Drelease=%{version} -DBUILD_DATE=%{qualifier} -Dtarget=1.5 p2 
+ant -Dbuild.compiler=modern -Drelease=%{version} \
+ -Dtarget=1.5 -DBUILD_DATE=%{build_date} p2 
+
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -54,6 +70,9 @@ cp -rp dist/%{version}/org.sat4j.pb.jar \
 %{_javadir}/org.sat4j*
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_1jpp7
+- new version
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_4jpp7
 - update to new release by jppimport
 

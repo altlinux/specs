@@ -39,8 +39,8 @@ BuildRequires: jpackage-compat
 
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
-Version:        3.6.0
-Release:        alt1_11jpp7
+Version:        3.6.2
+Release:        alt1_2jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -49,7 +49,10 @@ Source0:        http://www.apache.org/dist/lucene/java/%{version}/%{name}-%{vers
 Source1:        lucene-%{version}-core-OSGi-MANIFEST.MF
 Source2:        lucene-%{version}-analysis-OSGi-MANIFEST.MF
 Source3:        ivy-conf.xml
-#svn export http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_3_6_0/dev-tools@r1416452
+# DictionaryBasedBreakIterator was moved into the base RuleBasedBreakIterator
+# in icu4j. v49 => v50
+Patch0:         lucene_contrib_icu4j_v50.patch
+#svn export http://svn.apache.org/repos/asf/lucene/dev/tags/lucene_solr_3_6_2/dev-tools@r1450168
 #tar caf dev-tools.tar.xz dev-tools/
 Source4:        dev-tools.tar.xz
 BuildRequires:  jpackage-utils >= 0:1.6
@@ -121,8 +124,8 @@ popd
 iconv --from=ISO-8859-1 --to=UTF-8 CHANGES.txt > CHANGES.txt.new
 
 # prepare pom files (replace @version@ with real version)
-find contrib -iname '*.pom.xml.template' -exec \
-             sed -i "s:@version@:%{version}:g" \{\} \;
+find . -name '*pom.xml.template' -exec \
+              sed -i "s:@version@:%{version}:g" '{}' \;
 
 cp %{SOURCE3} .
 
@@ -131,6 +134,8 @@ sed -i -e "s|ant-junit|ant/ant-junit|g" test-framework/ivy.xml
 sed -i -e "s|xercesImpl|xerces-j2|g" contrib/benchmark/ivy.xml
 sed -i -e "s|jakarta-regexp|regexp|g" contrib/queries/ivy.xml
 
+# ICU4J v50 compatibility
+%patch0 -p2
 
 %build
 mkdir -p docs
@@ -251,6 +256,9 @@ cp -pr build/docs/api/* \
 %endif
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_2jpp7
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.0-alt1_11jpp7
 - new release
 

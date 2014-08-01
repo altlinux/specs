@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt8_7jpp7
+Release:        alt9_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -722,6 +722,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt9_7jpp7
+- rebuild with new lucene
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt8_7jpp7
 - rebuild with lucene 3.6
 
