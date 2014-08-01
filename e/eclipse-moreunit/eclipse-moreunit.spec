@@ -1,24 +1,29 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-%global src_repo_tag   V_2_4_6
+%global src_repo_tag   v3.0.2
 %global install_loc    %{_datadir}/eclipse/dropins/moreunit
 
 Name:           eclipse-moreunit
-Version:        2.4.6
-Release:        alt1_2jpp7
+Version:        3.0.2
+Release:        alt1_1jpp7
 Summary:        An Eclipse plugin that assists with writing more unit tests
 
 Group:          Development/Java
 License:        EPL
 URL:            http://moreunit.sourceforge.net
-## sh %{name}-fetch-src.sh V_2_4_6 2.4.6
+## sh %{name}-fetch-src.sh v3.0.2 3.0.2
 Source0:        %{name}-%{version}.tar.xz
 Source1:        %{name}-fetch-src.sh
 
 BuildArch: noarch
 
 BuildRequires: eclipse-pde >= 1:3.6.0
+BuildRequires: tycho
+BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
 Requires: eclipse-jdt >= 3.6.0
 Source44: import.info
 
@@ -36,19 +41,41 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 %build
-eclipse-pdebuild -f org.moreunit
+pushd org.moreunit.build
+%pom_disable_module ../org.moreunit.test.dependencies
+%pom_disable_module ../org.moreunit.core.test
+%pom_disable_module ../org.moreunit.test
+%pom_disable_module ../org.moreunit.mock.test
+%pom_disable_module ../org.moreunit.mock.it
+mvn-rpmbuild -DskipTychoVersionCheck=true clean install
+popd
 
 %install
 install -d -m 755 %{buildroot}%{install_loc}
 
 %{__unzip} -q -d %{buildroot}%{install_loc} \
-     build/rpmBuild/org.moreunit.zip 
+     org.moreunit.updatesite/target/org.moreunit-%{version}.zip 
+pushd %{buildroot}%{install_loc}
+mv org.moreunit-%{version}/features/ .
+mv org.moreunit-%{version}/plugins/ .
+rm -fr org.moreunit-%{version}
+pushd features
+for f in `ls -1 * | grep jar$`; do
+    unzip $f -d ./${f/.jar//};
+done
+rm -fr ./*.jar
+popd
+
+popd
 
 %files
 %{install_loc}
 %doc org.moreunit.plugin/help/documentation.html
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_1jpp7
+- new version
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 2.4.6-alt1_2jpp7
 - fc update
 
