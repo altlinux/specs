@@ -1,12 +1,12 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-assembly-plugin
-Version:        2.3
-Release:        alt2_2jpp7
+Version:        2.4
+Release:        alt1_5jpp7
 Summary:        Maven Assembly Plugin
 
 Group:          Development/Java
@@ -21,7 +21,7 @@ Provides:  maven2-plugin-assembly = 1:%{version}-%{release}
 
 BuildRequires: jpackage-utils >= 0:1.7.2
 BuildRequires:  ant
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -35,7 +35,7 @@ BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-doxia
 BuildRequires:  maven-doxia-sitetools
 
-BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-utils
 BuildRequires: plexus-active-collections
 BuildRequires: plexus-containers-component-metadata
@@ -60,7 +60,7 @@ Requires: easymock
 Requires: jdom
 Requires: jaxen
 Requires: saxpath
-Requires: plexus-container-default
+Requires: plexus-containers-container-default
 Requires: plexus-utils
 Requires: plexus-active-collections
 Requires: plexus-containers-component-metadata
@@ -124,6 +124,9 @@ rm -rf target/site/api*
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_5jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_2jpp7
 - fixed build
 
