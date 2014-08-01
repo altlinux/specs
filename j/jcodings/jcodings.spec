@@ -1,25 +1,37 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global git_commit 3e70a1e
-%global cluster jruby
+%global commit_hash d50ee0e
+%global tag_hash d50ee0e
 
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack %{nil}
 
 Name:           jcodings
-Version:        1.0.5
-Release:        alt1_3jpp7
+Version:        1.0.9
+Release:        alt1_1jpp7
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Java
 License:        MIT
-URL:            http://github.com/%{cluster}/%{name}
-Source0:        http://download.github.com/%{cluster}-%{name}-%{version}-0-g%{git_commit}.tar.gz
+URL:            http://github.com/jruby/%{name}
+Source0:        https://github.com/jruby/jcodings/tarball/%{version}/jruby-%{name}-%{version}-0-g%{commit_hash}.tar.gz
 
 BuildArch:      noarch
 
-BuildRequires:  ant
 BuildRequires:  jpackage-utils
+
+BuildRequires:  maven
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit4
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -29,32 +41,35 @@ Java-based codings helper classes for Joni and JRuby.
 
 
 %prep
-%setup -q -n %{cluster}-%{name}-%{git_commit}
+%setup -q -n jruby-%{name}-%{tag_hash}
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
 
 %build
 echo "See %{url} for more info about the %{name} project." > README.txt
 
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
-
+mvn-rpmbuild install javadoc:aggregate
 
 %install
-%__rm -rf %{buildroot}
-%__mkdir_p %{buildroot}%{_javadir}
+mkdir -p %{buildroot}%{_javadir}
 
-%__cp -p target/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-pushd %{buildroot}%{_javadir}/
-  %__ln_s %{name}-%{version}.jar %{name}.jar
-popd
+cp -p target/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
 %{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %doc README.txt
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1jpp7
+- new version
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_3jpp7
 - new release
 
