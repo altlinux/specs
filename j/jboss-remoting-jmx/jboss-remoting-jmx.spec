@@ -1,29 +1,30 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-remoting-jmx
-%define version 1.0.2
+%define version 1.0.5
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jboss-remoting-jmx
-Version:       1.0.2
-Release:       alt2_4jpp7
+Version:       1.0.5
+Release:       alt1_1jpp7
 Summary:       JMX via JBoss Remoting
 Group:         Development/Java
 License:       LGPLv2+
 URL:           http://www.jboss.org/
 
 # git clone git://github.com/jbossas/remoting-jmx.git
-# cd remoting-jmx/ && git archive --format=tar --prefix=jboss-remoting-jmx-1.0.2.Final/ 1.0.2.Final | xz > jboss-remoting-jmx-1.0.2.Final.tar.xz
-Source0:       %{name}-%{namedversion}.tar.xz
+# cd remoting-jmx/ && git archive --format=tar --prefix=jboss-remoting-jmx-1.0.5.Final/ 1.0.5.Final | xz > jboss-remoting-jmx-1.0.5.Final.tar.xz
+Source0:       jboss-remoting-jmx-%{namedversion}.tar.xz
 
 BuildRequires: jpackage-utils
 BuildRequires: jboss-parent
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-injection-plugin
@@ -68,13 +69,13 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-remoting-jmx-%{namedversion}
 
 %build
-mvn-rpmbuild -e -Dmaven.test.failure.ignore=true install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -104,6 +105,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc COPYING.txt
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1jpp7
+- new version
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_4jpp7
 - fixed build
 
