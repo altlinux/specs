@@ -1,13 +1,13 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cal10n
-Version:        0.7.4
-Release:        alt4_9jpp7
+Version:        0.7.7
+Release:        alt1_1jpp7
 Summary:        Compiler assisted localization library (CAL10N)
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Patch0:         %{name}-fix-maven.patch
 BuildArch: noarch
 
 BuildRequires: junit4
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -72,7 +72,7 @@ find . -name "*.jar" | xargs rm
 %patch0
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dproject.build.sourceEncoding=ISO-8859-1 install javadoc:aggregate
+mvn-rpmbuild -Dproject.build.sourceEncoding=ISO-8859-1 install javadoc:aggregate
 
 %install
 
@@ -100,26 +100,29 @@ install -pm 644 maven-cal10n-plugin/pom.xml \
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %files
 %dir %{_javadir}/%{name}
+%doc LICENSE.txt
 %{_javadir}/%{name}/%{name}*.jar
 %{_mavenpomdir}/JPP.%{name}-%{name}-parent*
 %{_mavenpomdir}/JPP.%{name}-%{name}-api*
 %{_mavendepmapfragdir}/%{name}
 
 %files -n maven-cal10n-plugin
+%doc LICENSE.txt
 %{_javadir}/%{name}/maven*.jar
 %{_mavenpomdir}/JPP.%{name}-maven*
 
 %files javadoc
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_1jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt4_9jpp7
 - fixed build
 
