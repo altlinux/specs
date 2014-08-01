@@ -7,44 +7,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # set to 0 provides a minimal test suite
 %global with_tests 0
+
 Name:          openjpa
-Version:       2.2.0
-Release:       alt3_3jpp7
+Version:       2.2.1
+Release:       alt1_4jpp7
 Summary:       Java Persistence 2.0 API
 Group:         Development/Java
 # # For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
 Url:           http://openjpa.apache.org/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/%{name}/%{version}/apache-%{name}-%{version}-source.zip
-
-# remove org.codehaus.mojo ianal-maven-plugin 1.0-alpha-1
-Patch0:        %{name}-%{version}-remove-ianal-plugin.patch
-# remove unavailable deps
-Patch1:        %{name}-%{version}-parent-pom.patch
-Patch2:        %{name}-%{version}-remove-checkstyle-plugin.patch
-# remove com.ibm.websphere websphere_uow_api 0.0.1
-# change org.osgi org.osgi.core 4.2.0 in org.apache.felix 1.4.0
-Patch3:        %{name}-%{version}-kernel-pom.patch
-# remove unavailable test deps org.jmock jmock jmock-junit3 2.5.1
-Patch4:        %{name}-%{version}-jdbc-pom.patch
-# change 
-#   org.osgi org.osgi.core 4.2.0 in org.apache.felix 1.4.0
-#   org.apache.geronimo.specs geronimo-jpa_2.0_spec 1.1 with org.hibernate.javax.persistence hibernate-jpa-2.0-api 1.0.1.Final
-Patch5:        %{name}-%{version}-persistence-pom.patch
+# force tomcat 7.x apis
+Source1:       %{name}-2.2.0-depmap
 # fix test failure
-Patch6:        %{name}-%{version}-persistence-jdbc-DynamicEnhancementSuite.patch
-# replace 
-#   org.apache.bval org.apache.bval.bundle with bval-core and bval-jsr303
-#   org.apache.geronimo.specs geronimo-jpa_2.0_spec with org.hibernate.javax.persistence hibernate-jpa-2.0-api
-Patch7:        %{name}-%{version}-maven-plugin-pom.patch
-Patch8:        %{name}-%{version}-slice-pom.patch
-Patch9:        %{name}-%{version}-jest-pom.patch
-Patch10:       %{name}-%{version}-tools-it-poms.patch
+Patch0:        %{name}-2.2.0-persistence-jdbc-DynamicEnhancementSuite.patch
 # remove testing profiles for unavailable drivers: db2jcc informix-driver jcc-driver jdbc-driver jdbc-oracle jtds sqljdbc
-Patch11:       %{name}-%{version}-remove-test-profiles.patch
-# CVE-2013-1768 Disable logging during brokerfactory de-serialization.
-# Added type checking of plugin values.
-Patch12:       %{name}-2.2.0-CVE-2013-1768.patch
+Patch1:        %{name}-2.2.0-remove-test-profiles.patch
 
 BuildRequires: jpackage-utils
 
@@ -73,6 +51,7 @@ BuildRequires: apache-commons-dbcp
 BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-pool
+BuildRequires: bval
 BuildRequires: felix-osgi-core
 BuildRequires: geronimo-jms
 BuildRequires: geronimo-jta
@@ -80,8 +59,11 @@ BuildRequires: geronimo-validation
 BuildRequires: glassfish-jaxb
 BuildRequires: glassfish-jaxb-api
 BuildRequires: hibernate-jpa-2.0-api
+BuildRequires: hsqldb
 BuildRequires: log4j
+BuildRequires: maven-local
 BuildRequires: objectweb-asm
+BuildRequires: plexus-utils
 BuildRequires: postgresql-jdbc
 BuildRequires: serp
 BuildRequires: slf4j
@@ -90,10 +72,11 @@ BuildRequires: tomcat-servlet-3.0-api
 # test deps
 BuildRequires: apache-commons-jci-rhino
 BuildRequires: derby
-BuildRequires: hsqldb
 BuildRequires: httpunit
+BuildRequires: jmock
 #BuildRequires: jtds
 BuildRequires: junit
+BuildRequires: maven-plugin-testing-harness
 BuildRequires: mysql-connector-java
 BuildRequires: regexp
 BuildRequires: simple-jndi
@@ -111,6 +94,7 @@ Requires:      geronimo-validation
 Requires:      glassfish-jaxb
 Requires:      glassfish-jaxb-api
 Requires:      hibernate-jpa-2.0-api
+Requires:      hsqldb
 Requires:      log4j
 Requires:      objectweb-asm
 Requires:      postgresql-jdbc
@@ -134,8 +118,6 @@ which simplifies storing objects in databases.
 %package tools
 Group:         Development/Java
 Summary:       OpenJPA tools - Maven Plugin
-BuildRequires: bval
-BuildRequires: plexus-utils
 Requires:      maven
 Requires:      bval
 Requires:      geronimo-validation
@@ -163,37 +145,108 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p0
-%patch6 -p0
-%patch7 -p0
-%patch8 -p0
-%patch9 -p0
-%patch10 -p0
-%patch11 -p1
-%patch12 -p1
+%pom_remove_plugin com.agilejava.docbkx:docbkx-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
 
-sed -i "s|<module>openjpa</module>|<!--module>openjpa</module-->|" pom.xml
-sed -i "s|<module>openjpa-all</module>|<!--module>openjpa-all</module-->|" pom.xml
-sed -i "s|<module>openjpa-examples</module>|<!--module>openjpa-examples</module-->|" pom.xml
-sed -i "s|<module>openjpa-integration</module>|<!--module>openjpa-integration</module-->|" pom.xml
-sed -i "s|<module>openjpa-project</module>|<!--module>openjpa-project</module-->|" pom.xml
-sed -i "s|<module>openbooks</module>|<!--module>openbooks</module-->|" openjpa-examples/pom.xml
+%pom_remove_dep net.sourceforge.findbugs:annotations
 
+%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec
+%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
+  <dependency>
+    <groupId>org.hibernate.javax.persistence</groupId>
+    <artifactId>hibernate-jpa-2.0-api</artifactId>
+    <version>1.0.1.Final</version>
+  </dependency>"
+%pom_remove_dep org.apache.bval:org.apache.bval.bundle
+%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-core</artifactId>
+    <version>0.5</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-jsr303</artifactId>
+    <version>0.5</version>
+  </dependency>"
+
+%pom_remove_dep com.ibm.websphere:websphere_uow_api openjpa-kernel
 # require non free com.ibm.websphere websphere_uow_api 0.0.1
 rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/WASRegistryManagedRuntime.java
 rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/AutomaticManagedRuntime.java
 
-# require unavailable jmock
-rm -r openjpa-jdbc/src/test/java/org/apache/openjpa/jdbc/sql/*
+for p in kernel persistence; do
+%pom_remove_dep org.osgi:org.osgi.core openjpa-${p}
+%pom_xpath_inject "pom:project/pom:dependencies" "
+  <dependency>
+    <groupId>org.apache.felix</groupId>
+    <artifactId>org.osgi.core</artifactId>
+    <version>1.4.0</version>
+    <scope>provided</scope>
+  </dependency>" openjpa-${p}
+done
+
+for p in openjpa-jest \
+  openjpa-persistence \
+  openjpa-tools/openjpa-maven-plugin \
+  openjpa-tools/openjpa-maven-plugin/src/it/default_settings \
+  openjpa-tools/openjpa-maven-plugin/src/it/dependingArtifact \
+  openjpa-tools/openjpa-maven-plugin/src/it/nonDefaultPersistenceXml \
+  openjpa-tools/openjpa-maven-plugin/src/it/testDependencies \
+  ; do
+%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec ${p}
+%pom_xpath_inject "pom:project/pom:dependencies" "
+  <dependency>
+    <groupId>org.hibernate.javax.persistence</groupId>
+    <artifactId>hibernate-jpa-2.0-api</artifactId>
+    <version>1.0.1.Final</version>
+  </dependency>" ${p}
+done
+
+%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec openjpa-slice
+%pom_xpath_inject "pom:project/pom:dependencies" "
+  <dependency>
+    <groupId>org.hibernate.javax.persistence</groupId>
+    <artifactId>hibernate-jpa-2.0-api</artifactId>
+    <version>1.0.1.Final</version>
+    <scope>test</scope>
+  </dependency>" openjpa-slice
+
+%pom_remove_dep org.apache.bval:org.apache.bval.bundle openjpa-tools/openjpa-maven-plugin
+%pom_xpath_inject "pom:project/pom:dependencies" "
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-core</artifactId>
+    <version>0.5</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-jsr303</artifactId>
+    <version>0.5</version>
+  </dependency>" openjpa-tools/openjpa-maven-plugin
+
+%patch0 -p0
+%patch1 -p1
+# in f17 buildnumber dont work
+#om_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+
+
+%pom_disable_module openjpa
+%pom_disable_module openjpa-all
+%pom_disable_module openjpa-examples
+%pom_disable_module openjpa-integration
+%pom_disable_module openjpa-project
+%pom_disable_module openbooks openjpa-examples
+
+# break build in f19
+%pom_remove_plugin :maven-invoker-plugin openjpa-tools/openjpa-maven-plugin
 
 %build
 # test random fails
-# force tomcat 7.x apis
+
 mvn-rpmbuild -e \
 %if %{with_tests}
   -Ptest-derby \
@@ -202,7 +255,7 @@ mvn-rpmbuild -e \
 %endif
   -DfailIfNoTests=false \
   -Dmaven.test.failure.ignore=true \
-  -Dmaven.local.depmap.file="%{_mavendepmapfragdir}/tomcat-tomcat-servlet-api" \
+  -Dmaven.local.depmap.file="%{SOURCE1}" \
   install javadoc:aggregate process-resources
 
 %install
@@ -270,12 +323,16 @@ install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 %{_mavenpomdir}/JPP.%{name}-tools.pom
 %{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
 %{_mavendepmapfragdir}/%{name}-tools
+%doc LICENSE NOTICE
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_4jpp7
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_3jpp7
 - update
 
