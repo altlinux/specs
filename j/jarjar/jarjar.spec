@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -35,32 +36,23 @@ BuildRequires: jpackage-compat
 #
 
 Name:           jarjar
-Version:        1.0
-Release:        alt4_6jpp7
+Version:        1.4
+Release:        alt1_1jpp7
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
 Group:          Development/Java
-# svn export http://jarjar.googlecode.com/svn/tags/release-1-0/jarjar jarjar-1.0
-Source0:        jarjar-src-1.0.zip
+Source0:        http://jarjar.googlecode.com/files/jarjar-src-1.4.zip
 Source1:        jarjar.pom
 Source2:        jarjar-util.pom
-# Change version from "snapshot" to "1.0"
-Patch0:         jarjar-1.0-build_xml.patch
-# Add a cast to make a method unambiguous
-Patch1:         jarjar-AntJarProcessor-cast.patch
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  jpackage-utils
 BuildRequires:  junit
-BuildRequires:  objectweb-asm
-BuildRequires:  gnu-regexp
-BuildRequires:  maven
-Requires:       objectweb-asm
-Requires:       gnu-regexp
-Requires:       jpackage-utils >= 0:1.7.2
-Requires(post):    jpackage-utils >= 0:1.7.2
-Requires(postun):  jpackage-utils >= 0:1.7.2
+BuildRequires:  objectweb-asm4
+BuildRequires:  maven-local
+Requires:       objectweb-asm4
+Requires:       jpackage-utils
 
 BuildArch:      noarch
 
@@ -81,7 +73,7 @@ another library.
 Summary:        Maven plugin for %{name}
 Group:          Development/Java
 Requires:       maven
-Requires:       jarjar = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Obsoletes: %{name}-maven2-plugin <= 1.0
 Provides: %{name}-maven2-plugin = %{version}-%{release}
 
@@ -101,14 +93,11 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 # remove all binary libs
 rm -f lib/*.jar
-%patch0 -p1
-%patch1 -p1
 
 %build
 pushd lib
-ln -sf $(build-classpath gnu-regexp)
-ln -sf $(build-classpath objectweb-asm/asm-3.1) asm-3.1.jar
-ln -sf $(build-classpath objectweb-asm/asm-commons-3.1) asm-commons-3.1.jar
+ln -sf $(build-classpath objectweb-asm4/asm) asm-4.0.jar
+ln -sf $(build-classpath objectweb-asm4/asm-commons) asm-commons-4.0.jar
 ln -sf $(build-classpath maven/maven-plugin-api) maven-plugin-api.jar
 popd
 export OPT_JAR_LIST="ant/ant-junit junit"
@@ -152,9 +141,6 @@ cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # compat for old groovy 1 jpp5
 %add_to_maven_depmap com.tonicsystems jarjar %{version} JPP %{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc COPYING
@@ -165,13 +151,18 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/*
 
 %files maven-plugin
+%doc COPYING
 %{_mavenpomdir}/JPP-%{name}-plugin.pom
 %{_javadir}/%{name}-maven-plugin.jar
 
 %files javadoc
+%doc COPYING
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_6jpp7
 - NMU rebuild to move poms and fragments
 
