@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -36,35 +40,30 @@ BuildRequires: jpackage-compat
 %global subname classworlds
 
 Name:           %{parent}-%{subname}
-Version:        2.4
-Release:        alt2_7jpp7
+Version:        2.4.2
+Release:        alt1_4jpp7
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
-# git clone git://github.com/sonatype/plexus-classworlds.git
-# git archive --prefix="plexus-classworlds/" --format=tar plexus-classworlds-2.4 > plexus-classworlds-2.4.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-logging
 BuildRequires:  xml-commons-jaxp-1.3-apis
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-release-plugin
 BuildRequires:  maven-shared-invoker
 BuildRequires:  maven-shared-reporting-impl
 BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  plexus-utils
 Source44: import.info
@@ -89,7 +88,7 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{name}-%{version}
 for j in $(find . -name "*.jar" | grep -v /test-data/ | grep -v /test-jars/); do
   rm $j
 done
@@ -112,6 +111,8 @@ sed -i 's:<groupId>ant</groupId>:<groupId>org.apache.ant</groupId>:' pom.xml
           </configuration>
         </plugin>"
 
+cp %{SOURCE1} .
+
 %build
 mvn-rpmbuild -e install javadoc:javadoc
 
@@ -132,13 +133,16 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{parent}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%doc LICENSE.txt
+%doc LICENSE.txt LICENSE-2.0.txt
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt LICENSE-2.0.txt
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt1_4jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt2_7jpp7
 - NMU rebuild to move poms and fragments
 
