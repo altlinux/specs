@@ -1,12 +1,12 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-%global src_repo_tag   R4_2
+%global src_repo_tag   R4_2_1
 %global eclipse_base   %{_libdir}/eclipse
 %global install_loc    %{_datadir}/eclipse/dropins/discovery
 
 Name:           eclipse-p2-discovery
-Version:        4.2.0
+Version:        4.2.1
 Release:        alt1_2jpp7
 Summary:        Equinox p2 Discovery
 
@@ -43,6 +43,9 @@ install -d -m 755 %{buildroot}%{install_loc}
 %{install_loc}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_2jpp7
+- new version
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_2jpp7
 - new version
 
