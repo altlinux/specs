@@ -4,8 +4,8 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmlgraphics-commons
-Version:        1.4
-Release:        alt2_6jpp7
+Version:        1.5
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -13,19 +13,17 @@ Group:          Development/Java
 License:        ASL 2.0
 URL:            http://xmlgraphics.apache.org/
 Source0:        http://apache.skknet.net/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
-Patch0:         %{name}-java-7-fix.patch
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  jpackage-utils
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
-BuildRequires:  apache-commons-io >= 0:1.1
-BuildRequires:  apache-commons-logging >= 0:1.0.4
-Requires:       apache-commons-logging >= 0:1.0.4
-Requires:       apache-commons-io >= 0:1.1
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
+BuildRequires:  apache-commons-io >= 1.3.1
+BuildRequires:  apache-commons-logging >= 1.0.4
+Requires:       jpackage-utils
+Requires:       apache-commons-io >= 1.3.1
+Requires:       apache-commons-logging >= 1.0.4
 Source44: import.info
 
 %description
@@ -50,7 +48,6 @@ BuildArch: noarch
 %prep
 %setup -q %{name}-%{version}
 rm -f `find . -name "*.jar"`
-%patch0
 
 # create pom from template
 sed "s:@version@:%{version}:g" %{name}-pom-template.pom \
@@ -63,13 +60,13 @@ export OPT_JAR_LIST="ant/ant-junit junit"
 pushd lib
 ln -sf $(build-classpath commons-io) .
 popd
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  package javadocs
+ant package javadocs
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -Dpm 0644 build/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -pm 644 %{name}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.xmlgraphics %{name} %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -86,6 +83,9 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp7
+- new version
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_6jpp7
 - fc update
 
