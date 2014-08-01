@@ -5,8 +5,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xz-java
-Version:        1.1
-Release:        alt1_2jpp7
+Version:        1.3
+Release:        alt1_1jpp7
 Summary:        Java implementation of XZ data compression
 Group:          Development/Java
 BuildArch:      noarch
@@ -14,7 +14,6 @@ BuildArch:      noarch
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
 Source0:        http://tukaani.org/xz/xz-java-%{version}.zip
-Patch0:			xz-java-osgi.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
@@ -36,11 +35,10 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -c %{name}-%{version}
-%patch0
 
 %build
 # During documentation generation the upstream build.xml tries to download
@@ -74,6 +72,9 @@ install -pm 644 build/maven/xz-%{version}.pom %{buildroot}/%{_mavenpomdir}/JPP-%
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1jpp7
+- new version
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
 - fc update
 
