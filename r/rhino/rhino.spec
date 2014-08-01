@@ -3,6 +3,7 @@ Epoch: 0
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -37,19 +38,19 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define cvs_version 1_7R3
+%define scm_version 1_7R4
 
 Name:           rhino
 # R3 doesn't mean a prerelease, but behind R there is a version of this implementation
 # of Javascript version 1.7 (which is independent from this particular implementation,
 # e.g., there is C++ implementation in Spidermonkey)
-Version:        1.7R3
-Release:        alt1_9jpp7
+Version:        1.7R4
+Release:        alt1_2jpp7
 Summary:        JavaScript for Java
-License:        MPLv1.1 or GPLv2+
+License:        MPLv2.0 
 
-Source0:        ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino%{cvs_version}.zip
-Source1:        http://repo1.maven.org/maven2/%{name}/js/1.7R2/js-1.7R2.pom
+Source0:        https://github.com/mozilla/rhino/archive/Rhino%{scm_version}_RELEASE.zip
+Source1:        http://repo1.maven.org/maven2/org/mozilla/rhino/%{version}/rhino-%{version}.pom
 Source2:        %{name}.script
 
 Patch0:         %{name}-build.patch
@@ -58,13 +59,11 @@ Patch0:         %{name}-build.patch
 # http://www.eclipse.org/downloads/download.php?r=1&file=/tools/orbit/downloads/drops/R20110523182458/repository/plugins/org.mozilla.javascript_1.7.2.v201005080400.jar
 Patch1:         %{name}-addOrbitManifest.patch
 Patch2:         %{name}-1.7R3-crosslink.patch
-Patch3:         %{name}-shell-manpage.patch
 
 URL:            http://www.mozilla.org/rhino/
 Group:          Development/Java
 
 BuildRequires:  ant
-BuildRequires:  java-1.7.0-openjdk-devel >= 1.6.0.0
 Requires:       jpackage-utils
 Requires:       jline
 
@@ -106,11 +105,10 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}%{cvs_version}
+%setup -q -n %{name}-Rhino%{scm_version}_RELEASE
 %patch0 -p1 -b .build
 %patch1 -p1 -b .fixManifest
 %patch2 -p1 -b .crosslink
-%patch3 -p1 -b .manpage
 
 # Fix build
 sed -i -e '/.*<get.*src=.*>$/d' build.xml testsrc/build.xml \
@@ -123,33 +121,26 @@ sed -i -e '/^Class-Path:.*$/d' src/manifest
 sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-%ant deepclean jar copy-all javadoc -Dno-xmlbeans=1
+ant deepclean jar copy-all javadoc -Dno-xmlbeans=1
 
 pushd examples
 
-export CLASSPATH=../build/%{name}%{cvs_version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
+export CLASSPATH=../build/%{name}%{scm_version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
 %{javac} *.java
-%{jar} cvf ../build/%{name}%{cvs_version}/%{name}-examples.jar *.class
+%{jar} cvf ../build/%{name}%{scm_version}/%{name}-examples.jar *.class
 popd
 
 %install
-
 # jars
 mkdir -p %{buildroot}%{_javadir}
-cp -a build/%{name}%{cvs_version}/js.jar %{buildroot}%{_javadir}
+cp -a build/%{name}%{scm_version}/js.jar %{buildroot}%{_javadir}
 ln -s js.jar %{buildroot}%{_javadir}/%{name}.jar
-cp -a build/%{name}%{cvs_version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
+cp -a build/%{name}%{scm_version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 
 # javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a build/%{name}%{cvs_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+cp -a build/%{name}%{scm_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-# man page
-mkdir -p %{buildroot}%{_mandir}/man1/
-install -m 644 build/%{name}%{cvs_version}/man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
- 
 ## script
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
@@ -162,21 +153,16 @@ find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
 # POM and depmap
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "rhino:js"
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-%__rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %attr(0755,root,root) %{_bindir}/*
 %{_javadir}/*
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%{_mandir}/man1/%{name}.1*
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files demo
@@ -184,13 +170,16 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 %files manual
 %if 0
-%doc build/%{name}%{cvs_version}/docs/*
+%doc build/%{name}%{scm_version}/docs/*
 %endif
 
 %files javadoc
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7R4-alt1_2jpp7
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7R3-alt1_9jpp7
 - update
 
