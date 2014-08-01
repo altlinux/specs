@@ -1,27 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           animal-sniffer
-Version:        1.8
-Release:        alt1_1jpp7
+Version:        1.9
+Release:        alt1_3jpp7
 Summary:        Tools to assist verifying backward compatibility of Java classes
 
 Group:          Development/Java
-License:        MIT
+License:        MIT and ASL 2.0
 URL:            http://mojo.codehaus.org/animal-sniffer/
 
 Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/animal-sniffer-parent/%{version}/animal-sniffer-parent-%{version}-source-release.zip
 Source1:        %{name}.sh
+Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # this should be upstreamable
 Patch2:         0003-Remove-catch-for-unthrown-PlexusConfigurationExcepti.patch
 
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-invoker-plugin
@@ -64,6 +66,7 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-parent-%{version}
 %patch2 -p1
+cp %{SOURCE2} LICENSE
 %pom_add_dep org.apache.maven:maven-compat animal-sniffer-enforcer-rule
 %pom_add_dep org.apache.maven:maven-compat animal-sniffer-maven-plugin
 
@@ -111,6 +114,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE
 %{_bindir}/%{name}
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/%{name}
@@ -118,9 +122,13 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/*.jar
 
 %files javadoc
+%doc LICENSE
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_3jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_1jpp7
 - non-bootstrap build
 
