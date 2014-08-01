@@ -38,8 +38,8 @@ BuildRequires: jpackage-compat
 
 Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
-Version:        1.6.2
-Release:        alt4_7jpp7
+Version:        1.6.3
+Release:        alt1_1jpp7
 Epoch:          0
 Group:          Development/Java
 License:        CPL
@@ -50,7 +50,7 @@ Source1:        %{name}-MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/wsdl4j/wsdl4j/%{version}/wsdl4j-%{version}.pom
 Requires:       jpackage-utils
 BuildRequires:  ant ant-junit
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  jpackage-utils
 BuildRequires:  zip
 Source44: import.info
 
@@ -70,10 +70,10 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-1_6_2
+%setup -q -n %{name}-1_6_3
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  compile javadocs
+ant compile javadocs
 
 %install
 # inject OSGi manifests
@@ -97,11 +97,6 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
 %files
 %doc license.html
 %{_javadir}/*
@@ -113,6 +108,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_1jpp7
+- new version
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt4_7jpp7
 - fc update
 
