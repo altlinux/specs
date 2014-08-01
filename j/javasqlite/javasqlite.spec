@@ -1,13 +1,13 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsqlite-devel
 # END SourceDeps(oneline)
-Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define fedora 21
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name javasqlite
-%define version 20120209
+%define version 20130214
 # javaver nil: build for 1.5.0 and 1.6.0
 # javaver something else: build only for that
 
@@ -26,8 +26,8 @@ BuildRequires: jpackage-compat
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\.so$
 
 Name:           javasqlite
-Version:        20120209
-Release:        alt1_2jpp7
+Version:        20130214
+Release:        alt1_1jpp7
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -45,6 +45,9 @@ Requires:       jre-%{javaver}
 %else
 BuildRequires:  java-1.6.0-javadoc
 Requires:       jre >= 1.5.0
+%endif
+%ifarch aarch64 #925605
+BuildRequires:  libtool
 %endif
 Source44: import.info
 
@@ -68,6 +71,9 @@ API documentation for %{name}.
 sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH0} | patch -p1 --fuzz=0
 sed -i -e 's/\r//g' doc/ajhowto.txt
 f=ChangeLog ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
+%ifarch aarch64 #925605
+autoreconf -if
+%endif
 
 
 %build
@@ -126,7 +132,7 @@ for javaver in %{?javaver} %{!?javaver:1.5.0 1.6.0} ; do
     jdir=%{_jvmdir}/java-$javaver/bin
     export PATH="$jdir:$origpath" # bug 460761
     # test2 is for SQLite 2.x, which we don't support
-    make JAVA_RUN="$jdir/java" JAVAC="$jdir/javac" test test3
+    make JAVA_RUN="$jdir/java" JAVAC="$jdir/javac" test test3 testg
 done
 
 
@@ -142,6 +148,9 @@ done
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 20130214-alt1_1jpp7
+- new version
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 20120209-alt1_2jpp7
 - new version
 
