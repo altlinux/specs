@@ -1,12 +1,16 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       dbutils
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
-Version:          1.4
-Release:          alt2_3jpp7
+Version:          1.5
+Release:          alt1_3jpp7
 Summary:          Apache Commons DbUtils Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -15,7 +19,10 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
+BuildRequires:    maven-local
+BuildRequires:    hamcrest
+BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    mockito
 Requires:         jpackage-utils
 Source44: import.info
 
@@ -40,34 +47,36 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' *.txt
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}
 install -m 644 target/%{short_name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
 
 # poms
 install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 %{_javadir}/*
-%{_mavenpomdir}/JPP-%{short_name}.pom
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_3jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
