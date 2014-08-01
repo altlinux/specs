@@ -1,25 +1,22 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-resources-plugin
-Version:        2.5
-Release:        alt2_6jpp7
+Version:        2.6
+Release:        alt1_3jpp7
 Summary:        Maven Resources Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-resources-plugin
-#svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-resources-plugin-2.5 maven-resources-plugin-2.5
-#tar zcf maven-resources-plugin-2.5.tar.gz maven-resources-plugin-2.5/
-Source0:        %{name}-%{version}.tar.gz
-
-# Relocation of plexus-container-default is necessary as sisu gets to the
-# classpath first and uses an old version of a class from container-default
-Patch0:         %{name}-plexus-dep.patch
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-jar-plugin
@@ -68,7 +65,6 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
 
 %build
 mvn-rpmbuild \
@@ -100,6 +96,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_3jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_6jpp7
 - fixed build
 
