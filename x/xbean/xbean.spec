@@ -1,6 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -19,21 +20,17 @@ BuildRequires: jpackage-compat
 %endif
 
 Name:           xbean
-Version:        3.12
+Version:        3.13
 BuildArch:      noarch
 
-Release:        alt1_4jpp7
+Release:        alt1_1jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
 
-# unfortunately no source/binary releases are being made lately, just
-# tags in repos and binary releases in maven repositories
-# svn export http://svn.apache.org/repos/asf/geronimo/xbean/tags/%{name}-%{version}
-# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
-Source0:        xbean-%{version}.tar.xz
+Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        xbean.depmap
 
 BuildRequires:  apache-commons-beanutils
@@ -42,7 +39,7 @@ BuildRequires:  objectweb-asm
 BuildRequires:  ant
 BuildRequires:  qdox
 BuildRequires:  slf4j
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
@@ -303,6 +300,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.13-alt1_1jpp7
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.12-alt1_4jpp7
 - new version
 
