@@ -1,21 +1,26 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           joda-convert
-Version:        1.2
-Release:        alt2_3jpp7
+Version:        1.3
+Release:        alt1_1jpp7
 Summary:        Java library for conversion to and from standard string formats
 
 Group:          Development/Java
 License:        ASL 2.0 
 
 URL:            https://github.com/JodaOrg/joda-convert/
-# wget -O joda-convert-1.2.tar.gz https://github.com/JodaOrg/joda-convert/tarball/v1.2
-Source0:        joda-convert-1.2.tar.gz
+# wget -O joda-convert-1.3.tar.gz https://github.com/JodaOrg/joda-convert/tarball/v1.3
+Source0:        joda-convert-1.3.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -45,7 +50,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n JodaOrg-joda-convert-c6eb10b
+%setup -q -n JodaOrg-joda-convert-df6d6c9
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -79,6 +84,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
