@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-ivy
-Version:        2.2.0
-Release:        alt3_5jpp7
+Version:        2.3.0
+Release:        alt1_1jpp7
 Summary:        Java-based dependency manager
 
 Group:          Development/Java
@@ -75,7 +78,7 @@ mkdir -p lib
 build-jar-repository lib ant jakarta-commons-httpclient jakarta-oro jsch 
 
 # Build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  /localivy /offline -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc
+ant /localivy /offline -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc
 
 
 %install
@@ -112,6 +115,9 @@ ln -s ivy.jar %buildroot%_javadir/%{name}.jar
 %doc LICENSE
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.0-alt1_1jpp7
+- new version
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_5jpp7
 - fc release
 
