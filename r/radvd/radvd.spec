@@ -3,8 +3,8 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 2.1
-Release: alt1
+Version: 2.4
+Release: alt2
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
@@ -40,6 +40,9 @@ services.
 %autoreconf
 %configure --with-pidfile=/var/run/radvd/radvd.pid
 %make_build
+
+#check
+#make check
 
 %install
 %makeinstall_std
@@ -79,6 +82,13 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Fri Aug 01 2014 Mikhail Efremov <sem@altlinux.org> 2.4-alt2
+- Disable tests.
+
+* Fri Aug 01 2014 Mikhail Efremov <sem@altlinux.org> 2.4-alt1
+- Enable tests.
+- Updated to 2.4.
+
 * Wed Jul 23 2014 Mikhail Efremov <sem@altlinux.org> 2.1-alt1
 - Updated to 2.1.
 
