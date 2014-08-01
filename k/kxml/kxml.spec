@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -34,14 +35,14 @@ BuildRequires: jpackage-compat
 #
 
 Name:           kxml
-Version:        2.2.2
-Release:        alt4_12jpp7
+Version:        2.3.0
+Release:        alt1_1jpp7
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
 Group:          Development/Java
-Source0:        http://dl.sourceforge.net/sourceforge/kxml/kxml2-src-2.2.2.zip
-Source1:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2/2.2.2/kxml2-2.2.2.pom
+Source0:        http://downloads.sourceforge.net/sourceforge/kxml/kxml2-src-%{version}.zip
+Source1:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2/%{version}/kxml2-%{version}.pom
 BuildRequires:  jpackage-utils >= 0:1.7.4
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  xpp3 >= 0:1.1.3.1
@@ -74,7 +75,7 @@ done
 ln -sf $(build-classpath xpp3) lib/xmlpull_1_1_3_1.jar
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
@@ -108,6 +109,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_12jpp7
 - NMU rebuild to move poms and fragments
 
