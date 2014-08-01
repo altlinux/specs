@@ -1,18 +1,21 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           buildnumber-maven-plugin
-Version:        1.1
-Release:        alt3_2jpp7
+Version:        1.2
+Release:        alt1_3jpp7
 Summary:        Build Number Maven Plugin
 
 Group:          Development/Java
 License:        MIT and ASL 2.0
-URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.1
+URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.2
 
-# svn export http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.1 buildnumber-maven-plugin
-# tar caf buildnumber-maven-plugin-1.1.tar.xz buildnumber-maven-plugin
-Source0:        buildnumber-maven-plugin-1.1.tar.xz
+# svn export http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.2 buildnumber-maven-plugin
+# tar caf buildnumber-maven-plugin-1.2.tar.xz buildnumber-maven-plugin
+Source0:        buildnumber-maven-plugin-1.2.tar.xz
 Source1:	%{name}-depmap.xml
 Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
@@ -22,7 +25,7 @@ BuildArch: 	noarch
 BuildRequires: jpackage-utils
 
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven2-common-poms
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-idea-plugin
@@ -33,9 +36,6 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-invoker-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
@@ -131,6 +131,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_2jpp7
 - fixed build
 
