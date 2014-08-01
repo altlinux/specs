@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.6
-Release: alt4
+Version: 3.15.8
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 6
+%define kernel_stable_version 8
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1906,6 +1906,51 @@ done)
 
 
 %changelog
+* Fri Aug 01 2014 Led <led@altlinux.ru> 3.15.8-alt1
+- 3.15.8
+- removed:
+  + fix-block--blk-cgroup
+  + fix-fs-fuse
+  + fix-fs-nfs--nfsv3
+- updated:
+  + fix--Makefile
+  + fix-arch-x86
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs
+  + feat-arch-x86-mach-xen
+
+* Thu Jul 31 2014 Led <led@altlinux.ru> 3.15.7-alt3
+- updated:
+  + fix-drivers-scsi--hpsa
+  + fix-drivers-scsi--sd_mod
+  + fix-mm--huge_memory
+  + feat-tools--kvm
+- added:
+  + fix-drivers-scsi--be2iscsi
+
+* Tue Jul 29 2014 Led <led@altlinux.ru> 3.15.7-alt2
+- updated:
+  + fix--Makefile
+  + fix-arch-x86
+  + fix-drivers-gpu-drm--radeon
+  + fix-fs
+- added:
+  + fix-fs-fuse
+  + fix-fs-nfs--nfsv3
+  + fix-net-sctp--sctp (CVE-2014-5077)
+
+* Mon Jul 28 2014 Led <led@altlinux.ru> 3.15.7-alt1
+- 3.15.7
+- removed:
+  + fix-drivers-hv--hv_utils
+  + fix-drivers-media-usb-gspca--gspca_pac7302
+  + fix-fs-fuse
+  + fix-net-sctp--sctp
+  + fix-sound-pci-hda--snd-hda-intel
+- updated:
+  + fix-drivers-bluetooth--ath3k
+  + fix-mm
+
 * Fri Jul 25 2014 Led <led@altlinux.ru> 3.15.6-alt4
 - updated:
   + fix-drivers-bluetooth--ath3k
