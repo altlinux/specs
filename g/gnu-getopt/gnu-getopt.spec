@@ -33,10 +33,9 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 Name:           gnu-getopt
-Version:        1.0.13
-Release:        alt2_6.1jpp7
+Version:        1.0.14
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -46,12 +45,12 @@ Source2:        gnu-getopt-%{version}.pom
 Group:          Development/Java
 Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
+BuildArch:      noarch
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
-BuildArch:      noarch
+Requires:       jpackage-utils
 Source44: import.info
+
 
 %description
 The GNU Java getopt classes support short and long argument parsing in
@@ -64,6 +63,7 @@ appreciate bug reports as well as hearing about positive experiences.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
+Requires:       jpackage-utils
 Provides:       gnu.getopt-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt-javadoc < %{epoch}:%{version}-%{release}
 BuildArch: noarch
@@ -73,49 +73,43 @@ BuildArch: noarch
 
 %prep
 %setup -q -c
-%{__mv} gnu/getopt/buildx.xml build.xml
+mv gnu/getopt/buildx.xml build.xml
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 %install
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p build/lib/gnu.getopt.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__ln_s} %{name}-%{version}.jar %{buildroot}%{_javadir}/gnu.getopt-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+install -p -m 644 build/lib/gnu.getopt.jar %{buildroot}%{_javadir}/%{name}.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/gnu.getopt.jar
 
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr build/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/gnu.getopt-%{version}
-%{__ln_s} gnu.getopt-%{version} %{buildroot}%{_javadocdir}/gnu.getopt
+install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a urbanophile:java-getopt
 
-# poms
-%add_to_maven_depmap gnu-getopt getopt %{version} JPP %{name}
-%add_to_maven_depmap urbanophile java-getopt %{version} JPP %{name}
-%{__install} -D -p -m 0644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc gnu/getopt/COPYING.LIB gnu/getopt/README
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_javadir}/gnu.getopt-%{version}.jar
 %{_javadir}/gnu.getopt.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc gnu/getopt/COPYING.LIB
 %{_javadocdir}/%{name}
-%{_javadocdir}/gnu.getopt-%{version}
-%{_javadocdir}/gnu.getopt
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_2jpp7
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.13-alt2_6.1jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
