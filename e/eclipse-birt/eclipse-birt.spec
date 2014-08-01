@@ -7,9 +7,9 @@ BuildRequires: xml-commons-jaxp-1.3-apis
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipse-birt
-%define version 4.2.1
+%define version 4.2.2
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
 # Match the context qualifier with the upstream p2 repo
@@ -20,11 +20,11 @@ BuildRequires: rpm-build-java-osgi
 #  sed "s/org.eclipse.birt.feature.group=//" | \
 #  sed "s/%%{version}.//" | \
 #  sed "s/-.*//"
-%global qualifier v201209121721
-%global tag BIRT_4_2_1_Release_201209121721
+%global qualifier v201302161152
+%global tag BIRT_4_2_2_Release_201302161152
 
 Name:      eclipse-birt
-Version:   4.2.1
+Version:   4.2.2
 Release:   alt1_1jpp7
 Summary:   Eclipse-based reporting system
 Group:     System/Libraries
@@ -185,6 +185,9 @@ popd
 %doc org.eclipse.birt.data.fedora.feature/epl-v10.html
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1_1jpp7
+- new version
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_1jpp7
 - fc update
 
