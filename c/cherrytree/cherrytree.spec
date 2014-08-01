@@ -1,6 +1,6 @@
 Name: cherrytree
 Version: 0.33.4
-Release: alt3
+Release: alt4
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8): Прикольная записнуля для заметок
@@ -12,6 +12,7 @@ Url: http://www.giuspen.com/cherrytree/
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: http://www.giuspen.com/software/%name-%version.tar
+Patch: categories.patch
 
 BuildArch: noarch
 
@@ -37,6 +38,7 @@ file with extension ".ctd".
 
 %prep
 %setup
+%patch -p0
 # remove shebang to make rpmlint happy
 #sed '/\/usr\/bin\/env/d' modules/main.py > modules/main.py.new && \
 #  touch -r modules/main.py modules/main.py.new && \
@@ -70,6 +72,12 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Fri Aug 01 2014 Konstantin Artyushkin <akv@altlinux.org> 0.33.4-alt4
+- 0.33.4-alt3 categories.patch
+- new build 0.33.4-alt4 (with rpmlog script)
+- plus categories.patch
+- plus categories.patch
+
 * Thu Jul 31 2014 Konstantin Artyushkin <akv@altlinux.org> 0.33.4-alt3
 - + datadir/appadata/name.appdata.xml
 
