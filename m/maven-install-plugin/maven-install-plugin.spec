@@ -1,23 +1,22 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-install-plugin
-Version:        2.3.1
-Release:        alt2_6jpp7
+Version:        2.4
+Release:        alt1_4jpp7
 Summary:        Maven Install Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-install-plugin
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         0001-Fix-up-dependencies-for-maven-3.patch
 
 BuildArch:      noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-install-plugin
@@ -33,11 +32,15 @@ BuildRequires: plexus-digest
 BuildRequires: junit
 BuildRequires: maven-archiver
 BuildRequires: maven-shared-reporting-impl
+BuildRequires: mvn(org.apache.maven:maven-artifact:2.0.6)
+BuildRequires: mvn(org.apache.maven:maven-model:2.0.6)
 
 Requires: maven
 Requires: jpackage-utils
 Requires: maven-archiver
 Requires: plexus-digest
+Requires: mvn(org.apache.maven:maven-artifact:2.0.6)
+Requires: mvn(org.apache.maven:maven-model:2.0.6)
 
 Provides:       maven2-plugin-install = %{version}-%{release}
 Obsoletes:      maven2-plugin-install <= 0:2.0.8
@@ -58,8 +61,11 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-#Add dependency to make this work properly with maven 3
-%patch0 -p1
+# maven-core has scope "provided" in Plugin Testing Harness, so we
+# need to provide it or tests will fail to compile.  This works for
+# upstream because upstream uses a different version of Plugin Testing
+# Harness in which scope of maven-core dependency is "compile".
+%pom_add_dep org.apache.maven:maven-core::test
 
 %build
 mvn-rpmbuild \
@@ -88,12 +94,17 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%doc LICENSE NOTICE
 
 %files javadoc
 %doc LICENSE
 %{_javadocdir}/%{name}
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_4jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_6jpp7
 - fixed build
 
