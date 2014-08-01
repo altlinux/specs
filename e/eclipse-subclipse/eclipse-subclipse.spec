@@ -8,14 +8,14 @@ BuildRequires: rpm-build-java-osgi
 %global eclipse_name       eclipse
 %global eclipse_base       %{_libdir}/%{eclipse_name}
 %global install_loc        %{_datadir}/eclipse/dropins
-%global javahl_plugin_name org.tigris.subversion.clientadapter.javahl_*
+%global javahl_plugin_name org.tigris.subversion.clientadapter.javahl_1.7.9.1
 
 # Add a comment to have something to commit to try to reproduce Adam
 # Williamson's deadlock bug.
 
 Name:           eclipse-subclipse
-Version:        1.8.13
-Release:        alt1_3jpp7
+Version:        1.8.20
+Release:        alt1_1jpp7
 Summary:        Subversion Eclipse plugin
 
 Group:          Development/Java
@@ -97,8 +97,13 @@ install -d -m 755 $installBase/subclipse-graph
 unzip -q -d $installBase/subclipse-graph build/rpmBuild/org.tigris.subversion.subclipse.graph.feature.zip
 
 # replacing jar with links to system libraries
-rm $installBase/subclipse-clientadapter-javahl/eclipse/plugins/%{javahl_plugin_name}/svn-javahl.jar
-ln -s %{_javadir}/svn-javahl.jar $installBase/subclipse-clientadapter-javahl/eclipse/plugins/%{javahl_plugin_name}
+pushd $installBase/subclipse-clientadapter-javahl/eclipse/plugins/
+unzip %{javahl_plugin_name}.jar -d %{javahl_plugin_name}
+rm %{javahl_plugin_name}.jar
+cd %{javahl_plugin_name}
+rm svn-javahl.jar
+ln -s %{_javadir}/svn-javahl.jar
+popd
 
 %files
 %{install_loc}/subclipse
@@ -110,6 +115,9 @@ ln -s %{_javadir}/svn-javahl.jar $installBase/subclipse-clientadapter-javahl/ecl
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.20-alt1_1jpp7
+- new version
+
 * Tue Jul 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.13-alt1_3jpp7
 - fixed build
 
