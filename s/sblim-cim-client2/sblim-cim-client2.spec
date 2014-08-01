@@ -1,18 +1,19 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sblim-cim-client2
-%define version 2.2.0
+%define version 2.2.1
 
 %global project_folder %{name}-%{version}-src
 %global archive_folder build
 
 Name:           sblim-cim-client2
-Version:        2.2.0
-Release:        alt1_1jpp7
+Version:        2.2.1
+Release:        alt1_2jpp7
 Summary:        Java CIM Client library
 
 Group:          Development/Java
@@ -130,6 +131,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_2jpp7
+- new version
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp7
 - new release
 
