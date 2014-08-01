@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: libpeas
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -181,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Fri Aug 01 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Thu Apr 03 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
