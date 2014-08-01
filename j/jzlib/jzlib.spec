@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,19 +35,19 @@ BuildRequires: jpackage-compat
 #
 
 Name:           jzlib
-Version:        1.1.0
-Release:        alt2_3jpp7
+Version:        1.1.1
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 
 Group:          Development/Java
 License:        BSD
 URL:            http://www.jcraft.com/jzlib/
-Source0:        http://www.jcraft.com/jzlib/jzlib-%{version}.tar.gz
+Source0:        http://www.jcraft.com/jzlib/jzlib-%{version}.zip
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-resources-plugin
 Requires:       jpackage-utils
 Source44: import.info
@@ -65,7 +66,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%%{summary}.
+%{summary}.
 
 %package        demo
 Summary:        Examples for %{name}
@@ -73,7 +74,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
-%%{summary}.
+%{summary}.
 
 
 %prep
@@ -115,6 +116,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_datadir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt1_3jpp7
+- new version
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt2_3jpp7
 - fixed maven1 dependency
 
