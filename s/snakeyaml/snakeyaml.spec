@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: swig unzip
+BuildRequires: maven swig unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 
 %global group_id  org.yaml
 
 Name:             snakeyaml
-Version:          1.9
-Release:          alt3_3jpp7
+Version:          1.11
+Release:          alt1_4jpp7
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 Group:            Development/Java
@@ -18,16 +19,15 @@ URL:              http://code.google.com/p/%{name}
 # http://snakeyaml.googlecode.com/files/SnakeYAML-all-1.9.zip
 Source0:          http://%{name}.googlecode.com/files/SnakeYAML-all-%{version}.zip
 
-Patch0:           %{name}-spring-removal-workaround.patch
-
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
-BuildRequires:    maven-plugin-cobertura
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    cobertura
 BuildRequires:    joda-time
 BuildRequires:    gnu-getopt
+%{?fedora:BuildRequires: springframework}
 
 Requires:         jpackage-utils
 Source44: import.info
@@ -55,8 +55,10 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 
-%patch0 -p1
-%pom_add_dep org.codehaus.mojo:cobertura-maven-plugin:any:test
+%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+%pom_add_dep net.sourceforge.cobertura:cobertura:any:test
+sed -i "/<artifactId>spring</s/spring/&-core/" pom.xml
+rm -f src/test/java/examples/SpringTest.java
 
 # remove bundled stuff
 rm -rf target
@@ -66,8 +68,13 @@ rm -rf src/main/java/biz
 # convert CR+LF to LF
 sed -i 's/\r//g' LICENSE.txt
 
+%if !0%{?fedora}
+# Remove test dependencies because tests are skipped anyways.
+%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+%endif
+
 %build
-mvn-rpmbuild install
+mvn-rpmbuild %{!?fedora:-Dmaven.test.skip=true} install
 
 %install
 # jars
@@ -94,6 +101,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_4jpp7
+- new version
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_3jpp7
 - fixed build
 
