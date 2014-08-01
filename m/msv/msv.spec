@@ -2,34 +2,36 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          msv
 Epoch:         1
-Version:       2009.1
-Release:       alt4_12jpp7
+Version:       2013.2.3
+Release:       alt1_1jpp7
 Summary:       Multi-Schema Validator
 Group:         Development/Java
-License:       BSD
-URL:           https://msv.dev.java.net/
+License:       BSD and ASL 1.1
+URL:           http://msv.java.net/
 
 # To generate tarball from upstream source control:
-# $ svn export https://msv.dev.java.net/svn/msv/tags/msv-2009.1/ --username guest
-# $ tar zcf msv-2009.1.tar.gz msv-2009.1
+# $ svn co https://svn.java.net/svn/msv~svn/tags/msv-2013.2.3/ msv-2013.2.3
+# $ tar zcf msv-2013.2.3.tar.gz msv-2013.2.3
 Source0:       %{name}-%{version}.tar.gz
 
-# The "maven-wagon-svn" plug-in is not in Fedora
-Patch0:        %{name}-disable-maven-wagon-svn.patch
+# Parent POM is no longer in svn, get it from Maven central repository
+Source1:       http://repo1.maven.org/maven2/net/java/dev/%{name}/%{name}-parent/2009.1/%{name}-parent-2009.1.pom
 
 # There is a build time dependency on crimson which needs to be stripped
 # (We're using xerces-j2 instead)
-Patch1:        %{name}-disable-crimson.patch
+Patch0:        %{name}-Disable-crimson.patch
 
-# Link to locally installed javadocs
-Patch2:        %{name}-link-local-javadoc.patch
+# Use CatalogResolver from xml-commons-resolver package
+Patch1:        %{name}-Use-CatalogResolver-class-from-xml-commons-resolver.patch
 
 BuildRequires: java-javadoc
 BuildRequires: jpackage-utils
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -46,6 +48,8 @@ BuildRequires: relaxngDatatype-javadoc
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: junit
+BuildRequires: jvnet-parent
+BuildRequires: xml-commons-resolver
 
 BuildArch:     noarch
 Source44: import.info
@@ -165,6 +169,17 @@ Requires:      jpackage-utils
 %prep
 %setup -q
 
+# We don't have this plugin
+%pom_remove_plugin :buildnumber-maven-plugin
+
+# Needed becuase of patch3
+%pom_add_dep xml-resolver:xml-resolver
+
+# Enable relames module
+%pom_xpath_inject "pom:modules" "<module>relames</module>"
+
+cp %{SOURCE1} parent-pom.xml
+
 # Delete anything pre-compiled
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -176,9 +191,8 @@ for m in $(find . -name MANIFEST.MF) ; do
 done
 
 # Apply patches
-%patch0 -p0 -b .orig
-%patch1 -p0 -b .orig
-%patch2 -p0 -b .orig2
+%patch0 -p1
+%patch1 -p1
 
 # Change encoding of non utf-8 files
 for m in $(find . -name copyright.txt) ; do
@@ -193,7 +207,7 @@ mvn-rpmbuild install javadoc:aggregate
 # Jars
 install -pD -T msv/target/%{name}-core-%{version}.jar \
   %{buildroot}%{_javadir}/%{name}-core.jar
-install -pD -T relames/target/%{name}-relames-%{version}.jar \
+install -pD -T relames/target/%{name}-relames-2009.1.jar \
   %{buildroot}%{_javadir}/%{name}-relames.jar
 install -pD -T rngconverter/target/%{name}-rngconverter-%{version}.jar \
   %{buildroot}%{_javadir}/%{name}-rngconverter.jar
@@ -216,7 +230,7 @@ ln -s xsdlib.jar               \
 
 # Poms
 install -pD -T -m 644 pom.xml              %{buildroot}%{_mavenpomdir}/JPP-msv.pom
-install -pD -T -m 644 parent/pom.xml       %{buildroot}%{_mavenpomdir}/JPP-msv-parent.pom
+install -pD -T -m 644 parent-pom.xml       %{buildroot}%{_mavenpomdir}/JPP-msv-parent.pom
 install -pD -T -m 644 msv/pom.xml          %{buildroot}%{_mavenpomdir}/JPP-msv-core.pom
 install -pD -T -m 644 relames/pom.xml      %{buildroot}%{_mavenpomdir}/JPP-msv-relames.pom
 install -pD -T -m 644 rngconverter/pom.xml %{buildroot}%{_mavenpomdir}/JPP-msv-rngconverter.pom
@@ -248,15 +262,15 @@ install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}/relames
 install -m 644 relames/doc/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/relames
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}/rngconverter
-install -m 644 rngconverter/doc/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/rngconverter
+install -m 644 rngconverter/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/rngconverter
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}/generator
-install -m 644 generator/doc/*.html     %{buildroot}%{_docdir}/%{name}-%{version}/generator
-install -m 644 generator/doc/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/generator
+install -m 644 generator/*.html     %{buildroot}%{_docdir}/%{name}-%{version}/generator
+install -m 644 generator/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/generator
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}/xsdlib
-install -m 644 xsdlib/doc/*.html     %{buildroot}%{_docdir}/%{name}-%{version}/xsdlib
-install -m 644 xsdlib/doc/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/xsdlib
+install -m 644 xsdlib/*.html     %{buildroot}%{_docdir}/%{name}-%{version}/xsdlib
+install -m 644 xsdlib/README.txt %{buildroot}%{_docdir}/%{name}-%{version}/xsdlib
 
 # Examples
 install -d -m 755 %{buildroot}%{_datadir}/%{name}-%{version}/msv
@@ -281,6 +295,7 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_javadir}/%{name}-msv.jar
 %{_javadir}/%{name}-testharness*
 %doc msv/doc/license.txt
+%doc msv/doc/Apache-LICENSE-1.1.txt
 %config(noreplace,missingok) /etc/java/msv.conf
 
 %files relames
@@ -288,29 +303,31 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_mavenpomdir}/JPP-%{name}-relames.pom
 %{_javadir}/%{name}-relames.jar
 %doc relames/doc/copyright.txt
+%doc relames/doc/Apache-LICENSE-1.1.txt
+%doc relames/License.txt
 
 %files rngconv
 %{_bindir}/rngconv
 %{_mavenpomdir}/JPP-%{name}-rngconverter.pom
 %{_javadir}/%{name}-rngconverter.jar
 %{_javadir}/%{name}-rngconv.jar
-%doc rngconverter/doc/license.txt
-%doc rngconverter/doc/copyright.txt
+%doc rngconverter/License.txt
+%doc rngconverter/Apache-LICENSE-1.1.txt
 
 %files xmlgen
 %{_bindir}/xmlgen
 %{_mavenpomdir}/JPP-%{name}-generator.pom
 %{_javadir}/%{name}-generator.jar
 %{_javadir}/%{name}-xmlgen.jar
-%doc generator/doc/license.txt
-%doc generator/doc/copyright.txt
+%doc generator/License.txt
+%doc generator/Apache-LICENSE-1.1.txt
 
 %files xsdlib
 %{_mavenpomdir}/JPP-xsdlib.pom
 %{_javadir}/xsdlib.jar
 %{_javadir}/%{name}-xsdlib.jar
-%doc xsdlib/doc/license.txt
-%doc xsdlib/doc/copyright.txt
+%doc xsdlib/License.txt
+%doc xsdlib/Apache-LICENSE-1.1.txt
 
 # This subpackage wins the parent poms and the depmap because all the other
 # subpackages require this one
@@ -328,6 +345,9 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:2013.2.3-alt1_1jpp7
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt4_12jpp7
 - dropped compat msv provides
 
