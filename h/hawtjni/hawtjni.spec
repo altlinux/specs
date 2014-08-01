@@ -1,21 +1,20 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: eclipse-rse
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
-Version:          1.5
-Release:          alt4_5jpp7
+Version:          1.6
+Release:          alt1_4jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
 
 # git clone git://github.com/fusesource/hawtjni.git
-# cd hawtjni && git archive --format=tar --prefix=hawtjni-1.5/ hawtjni-project-1.5 | xz > hawtjni-1.5.tar.xz
+# cd hawtjni && git archive --format=tar --prefix=hawtjni-1.6/ hawtjni-project-1.6 | xz > hawtjni-1.6.tar.xz
 Source0:          %{name}-%{version}.tar.xz
 Patch0:           0001-Fix-shading-and-remove-unneeded-modules.patch
 Patch1:           0002-Fix-xbean-compatibility.patch
@@ -25,7 +24,7 @@ Patch3:           0004-Remove-eclipse-plugin.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-idea-plugin
 BuildRequires:    maven-plugin-plugin
@@ -61,7 +60,7 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %package -n maven-%{name}-plugin
 Summary:          Use HawtJNI from a maven plugin
@@ -128,6 +127,9 @@ install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-
 %{_javadir}/maven-%{name}-plugin.jar
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt4_5jpp7
 - fixed build
 
