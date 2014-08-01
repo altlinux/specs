@@ -1,14 +1,14 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
 BuildRequires: xpp3-minimal
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-war-plugin
-Version:        2.2
-Release:        alt3_2jpp7
+Version:        2.3
+Release:        alt1_5jpp7
 Summary:        Maven WAR Plugin
 
 Group:          Development/Java
@@ -21,13 +21,10 @@ BuildArch: noarch
 # Basic stuff
 BuildRequires: jpackage-utils
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-jar-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
@@ -38,7 +35,6 @@ BuildRequires: maven-install-plugin
 BuildRequires: maven-idea-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-changes-plugin
-BuildRequires: maven-invoker-plugin
 # Others
 BuildRequires: xstream
 
@@ -90,11 +86,16 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%doc LICENSE NOTICE
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_5jpp7
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_2jpp7
 - fixed build
 
