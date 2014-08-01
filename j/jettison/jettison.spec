@@ -1,17 +1,21 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jettison
-Version:        1.3.1
-Release:        alt1_5jpp7
+Version:        1.3.3
+Release:        alt1_1jpp7
 Summary:        A JSON StAX implementation
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://jettison.codehaus.org/
-# svn export http://svn.codehaus.org/jettison/tags/jettison-1.3.1 jettison-1.3.1
-# rm -rf jettison-1.3.1/trunk
-# tar cjvf jettison-1.3.1.tar.gz jettison-1.3.1
-Source0: %{name}-%{version}.tar.bz2
+# svn export http://svn.codehaus.org/jettison/tags/jettison-1.3.3 jettison-1.3.3
+# rm -rf jettison-1.3.3/trunk
+# tar cvJf jettison-1.3.3.tar.xz jettison-1.3.3
+Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
 # Change the POM to use the version of woodstox that we have available:
@@ -21,7 +25,7 @@ Patch0: %{name}-update-woodstox-version.patch
 %else
 %endif
 BuildRequires:     jpackage-utils
-BuildRequires:     maven
+BuildRequires:     maven-local
 BuildRequires:     maven-compiler-plugin
 BuildRequires:     maven-install-plugin
 BuildRequires:     maven-jar-plugin
@@ -55,7 +59,8 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %patch0 -p1
-
+# We don't need wagon-webdav
+%pom_xpath_remove pom:build/pom:extensions
 
 %build
 # Disable the tests until BZ#796739 is fixed:
@@ -87,10 +92,14 @@ cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %files javadoc
+%doc src/main/resources/META-INF/LICENSE
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_1jpp7
+- new version
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_5jpp7
 - new version
 
