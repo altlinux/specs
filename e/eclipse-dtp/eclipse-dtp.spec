@@ -1,20 +1,17 @@
-%def_enable lucene3
-# todo: fix provides
-Provides: osgi(org.eclipse.datatools.sqltools.result) = 1.1.3
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
-BuildRequires: eclipse-emf-sdk
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipse-dtp
-%define version 1.10
+%define version 1.10.2
 %global eclipse_base     %{_libdir}/eclipse
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
-%global tag DTP_1_10_0_Release_201206131012
+%global tag DTP_1_10_2_Release_201302061842
 # Match the context qualifier with the upstream p2 repo
 # 
 # eclipse -consolelog -nosplash -application org.eclipse.equinox.p2.director \
@@ -27,11 +24,11 @@ BuildRequires: rpm-build-java-osgi
 # For 1.10 M6, use this zip
 # http://www.eclipse.org/downloads/download.php?file=/datatools/downloads/drops/N_DTP_1.10/dtp-p2repo-1.10.0M6-201203160500.zip
 # and get the IU list as above
-%global qualifier v201201161512
+%global qualifier v201302061842
 
 Name:      eclipse-dtp
-Version:   1.10
-Release:   alt2_2jpp7
+Version:   1.10.2
+Release:   alt1_1jpp7
 Summary:   Eclipse Data Tools Platform
 Group:     System/Libraries
 License:   EPL
@@ -65,13 +62,8 @@ Patch0:    %{name}-java7.patch
 # connectivity feature)
 Patch1:    %{name}-remove-duplicate-plugin.patch
 
-# Build against newer Lucene
-Patch2:    %{name}-useluceneCoreUpTo30.patch
-Patch3:    %{name}-anyluceneCoreinsqldevtoolsResultsfeature.patch
-Patch4:    %{name}-use-TopDocs-instead-of-Hits.patch
-Patch5:    %{name}-use-ANALYZED-instead-of-TOKENIZED.patch
 Patch6:    %{name}-enable-newer-javax.wsdl.patch
-
+Patch7:    %{name}-remove-javaxxml.patch 
 
 %if 0%{?rhel} >= 6
 ExclusiveArch: %{ix86} x86_64
@@ -81,7 +73,8 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    eclipse-pde >= 1:4.2.0-0.4
-BuildRequires:    eclipse-emf >= 2.6.0
+BuildRequires:    eclipse-emf-core >= 2.6.0
+BuildRequires:    eclipse-emf
 BuildRequires:    eclipse-gef >= 3.6.1
 BuildRequires:    wsdl4j >= 1.5.2-6.6
 BuildRequires:    xerces-j2 >= 2.7.1-10.3
@@ -92,6 +85,7 @@ BuildRequires:    lpg-java-compat = 1.1.0
 
 Requires:         jpackage-utils
 Requires:         eclipse-platform >= 1:3.4.2
+Requires:         eclipse-emf-core
 Requires:         eclipse-emf
 Requires:         eclipse-gef
 Requires:         wsdl4j >= 1.5.2-6.6
@@ -117,16 +111,13 @@ popd
 pushd org.eclipse.datatools.build-%{tag}
 %patch1 -p1
 popd
-pushd org.eclipse.datatools.sqltools-%{tag}/plugins/org.eclipse.datatools.sqltools.result
-%patch2
-%patch4 -p3
-%patch5 -p3
-popd
-pushd org.eclipse.datatools.build-%{tag}/features/org.eclipse.datatools.sqldevtools.results.feature
-%patch3
-popd
+
 pushd org.eclipse.datatools.enablement.oda-%{tag}
 %patch6 -p1
+popd
+
+pushd org.eclipse.datatools.build-%{tag}/
+%patch7 -p2
 popd
 
 pushd org.eclipse.datatools.build-%{tag}/features
@@ -158,23 +149,23 @@ ln -s %{_javadir}/lucene.jar lucene.jar
 ln -s %{_javadir}/xerces-j2.jar org.apache.xerces_2.9.0.jar
 ln -s %{_javadir}/xalan-j2-serializer.jar org.apache.xml.serializer_2.7.1.jar
 ln -s %{_javadir}/xml-commons-resolver.jar org.apache.xml.resolver_1.2.0.jar
-ln -s %{_javadir}/xml-commons-apis.jar javax.xml_1.3.4.jar
 ln -s %{_javadir}/wsdl4j.jar javax.wsdl_1.5.1.jar
 ln -s %{_javadir}/lpgjavaruntime.jar net.sourceforge.lpg.lpgjavaruntime_1.1.0.jar
+ln -s %{_javadir}/emf/eclipse/plugins/org.eclipse.emf* .
 popd
 
 %build
-OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=%{qualifier} -Dtycho.targetPlatform=%_libdir/eclipse"
+OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=%{qualifier}"
 
 # build all features except for documentation and SDK features TODO: build everything
 eclipse-pdebuild -f org.eclipse.datatools.modelbase.feature \
-  -d "emf emf-sdk gef" -o `pwd`/orbitDeps -a "$OPTIONS"
+  -d "emf gef" -o `pwd`/orbitDeps -a "$OPTIONS"
 eclipse-pdebuild -f org.eclipse.datatools.connectivity.feature \
-  -d "emf emf-sdk gef" -o `pwd`/orbitDeps -a "$OPTIONS"
+  -d "emf gef" -o `pwd`/orbitDeps -a "$OPTIONS"
 eclipse-pdebuild -f org.eclipse.datatools.sqldevtools.feature \
-  -d "emf emf-sdk gef" -o `pwd`/orbitDeps -a "$OPTIONS"
+  -d "emf gef" -o `pwd`/orbitDeps -a "$OPTIONS"
 eclipse-pdebuild -f org.eclipse.datatools.enablement.feature \
-  -d "emf emf-sdk gef" -o `pwd`/orbitDeps -a "$OPTIONS"
+  -d "emf gef" -o `pwd`/orbitDeps -a "$OPTIONS"
 
 %install
 install -d -m 755 %{buildroot}%{eclipse_dropin}
@@ -186,26 +177,16 @@ unzip -q -d %{buildroot}%{eclipse_dropin}/dtp-enablement build/rpmBuild/org.ecli
 # use system bundles
 pushd %{buildroot}%{eclipse_dropin}/dtp-enablement/eclipse/plugins
 rm org.apache.xerces_*.jar
-ln -s ../../../../../java/xerces-j2.jar org.apache.xerces_2.9.0.jar
 rm org.apache.xml.serializer_*.jar
 ln -s ../../../../../java/xalan-j2-serializer.jar org.apache.xml.serializer_2.7.1.jar
 rm org.apache.xml.resolver_*.jar
 ln -s ../../../../../java/xml-commons-resolver.jar org.apache.xml.resolver_1.2.0.jar
-rm javax.xml_*.jar
-ln -s ../../../../../java/xml-commons-apis.jar javax.xml_1.3.4.jar
 rm javax.wsdl_*.jar
 ln -s ../../../../../java/wsdl4j.jar javax.wsdl_1.5.1.jar
 popd
 pushd %{buildroot}%{eclipse_dropin}/dtp-sqldevtools/eclipse/plugins
 rm net.sourceforge.lpg.lpgjavaruntime_*.jar
 ln -s ../../../../../java/lpgjavaruntime.jar net.sourceforge.lpg.lpgjavaruntime_1.1.0.jar
-%if_enabled lucene3
-rm -f org.apache.lucene.core_3.5.0.v20120319-2345.jar
-ln -s  %{_javadir}/lucene.jar org.apache.lucene.core_3.5.0.v20120319-2345.jar
-%else
-rm -f org.apache.lucene.core_2.9.1.v201101211721.jar
-ln -s  %{_javadir}/lucene.jar org.apache.lucene.core_2.9.1.v201101211721.jar
-%endif
 popd
 
 %files
@@ -216,6 +197,9 @@ popd
 %doc org.eclipse.datatools.build-%{tag}/features/org.eclipse.datatools.sdk-all.feature/rootfiles/*
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1jpp7
+- new version
+
 * Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_2jpp7
 - build with lucene3
 
