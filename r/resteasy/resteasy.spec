@@ -1,7 +1,10 @@
-BuildRequires: weld-parent
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name resteasy
 %define version 2.3.2
 %global namedreltag .Final
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name: resteasy
 Version: 2.3.2
-Release: alt3_9jpp7
+Release: alt3_12jpp7
 Summary: Framework for RESTful Web services and Java applications
 Group: Development/Java
 License: ASL 2.0 and CDDL
@@ -19,7 +22,6 @@ URL: http://www.jboss.org/resteasy
 # cd Resteasy
 # git archive --prefix=resteasy-2.3.2.Final/ --output=resteasy-2.3.2.Final.tgz RESTEASY_JAXRS_2_3_2_FINAL
 Source0: %{name}-%{namedversion}.tgz
-Source33: resteasy-2.3.2-jpp-depmap.xml
 
 Patch0: %{name}-%{namedversion}-remove-dependenciesA.patch
 Patch1: %{name}-%{namedversion}-fix-tests.patch
@@ -27,6 +29,7 @@ Patch2: %{name}-%{namedversion}-remove-currently-unbuilt-modules.patch
 Patch3: %{name}-%{namedversion}-fix-javadoc.patch
 # Support for mime4j 0.7.2
 Patch4: %{name}-%{namedversion}-mime4j-0.7.2.patch
+Patch5: %{name}-%{namedversion}-Removed-Tomcat-6-dependency.patch
 
 BuildArch: noarch
 
@@ -61,6 +64,8 @@ BuildRequires: javassist
 BuildRequires: jandex >= 1.0.3-4
 # BuildRequires: jboss-ejb3-ext-api
 # BuildRequires: jbosscache-core
+BuildRequires: jboss-servlet-2.5-api
+BuildRequires: jboss-servlet-3.0-api
 # BuildRequires: jboss-web
 BuildRequires: jcip-annotations
 BuildRequires: jettison
@@ -79,16 +84,12 @@ BuildRequires: snakeyaml
 BuildRequires: glassfish-fastinfoset
 #BuildRequires: sun-sjsxp
 BuildRequires: tomcat-el-2.2-api
-BuildRequires: tomcat-servlet-3.0-api
-BuildRequires: tomcat6-servlet-2.5-api
-#BuildRequires: tomcat6
-#BuildRequires: tomcat6-lib
 BuildRequires: cdi-api
 BuildRequires: xerces-j2
 
 #BuildRequires: findbugs-maven-plugin
 BuildRequires: jetty-version-maven-plugin
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-checkstyle-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-deploy-plugin
@@ -146,6 +147,8 @@ Requires: jackson
 Requires: jakarta-commons-httpclient
 Requires: javamail
 Requires: javassist
+Requires: jboss-servlet-2.5-api
+Requires: jboss-servlet-3.0-api
 Requires: jcip-annotations
 Requires: jettison
 Requires: jpackage-utils
@@ -156,11 +159,7 @@ Requires: slf4j
 Requires: snakeyaml
 
 # T:
-#Requires: tomcat6
-#Requires: tomcat6-lib
 Requires: tomcat-el-2.2-api
-Requires: tomcat6-servlet-2.5-api
-Requires: tomcat-servlet-3.0-api
 Requires: ws-jaxme
 Requires: xerces-j2
 Source44: import.info
@@ -187,10 +186,10 @@ This package contains the API documentation for %{name}.
 %patch2 -p1 -b .p2
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE33} \
- -Dmaven.test.skip=true -e install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true -e install javadoc:aggregate
 
 %install
 
@@ -275,6 +274,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc License.html
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt3_12jpp7
+- new release
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt3_9jpp7
 - fixed build with new cdc - added BR: weld-parent
 
