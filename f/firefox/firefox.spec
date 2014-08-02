@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        29.0.1
+Version:        31.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -24,6 +24,7 @@ Source6:	firefox.desktop
 Source7:	firefox.c
 Source8:	firefox-prefs.js
 
+Patch5:		firefox-duckduckgo.patch
 Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
@@ -33,10 +34,12 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
+BuildRequires: rpm-macros-alternatives
 BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
+BuildRequires: zip unzip
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
@@ -44,15 +47,17 @@ BuildRequires: libwireless-devel
 BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
-BuildRequires: zip unzip
+BuildRequires: libproxy-devel
 BuildRequires: libshell
 BuildRequires: libvpx-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
-BuildRequires: rpm-macros-alternatives
+BuildRequires: libffi-devel
 BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libicu-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -62,7 +67,6 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: xulrunner-devel     >= 20.0-alt1
 BuildRequires: libnspr-devel       >= 4.9.6-alt1
 BuildRequires: libnss-devel        >= 3.14.3-alt1
 BuildRequires: libnss-devel-static >= 3.14.3-alt1
@@ -107,6 +111,7 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
+%patch5  -p1
 %patch6  -p1
 %patch14 -p1
 %patch16 -p1
@@ -116,15 +121,24 @@ tar -xf %SOURCE2
 
 cp -f %SOURCE4 .mozconfig
 
+%ifnarch %{ix86} x86_64 armh
+echo "ac_add_options --disable-methodjit" >> .mozconfig
+echo "ac_add_options --disable-monoic" >> .mozconfig
+echo "ac_add_options --disable-polyic" >> .mozconfig
+echo "ac_add_options --disable-tracejit" >> .mozconfig
+%endif
+
 %build
 cd mozilla
 
 %add_optflags %optflags_shared
+%add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
 
 cat >> browser/confvars.sh <<EOF
 MOZ_UPDATER=
+MOZ_JAVAXPCOM=
 MOZ_EXTENSIONS_DEFAULT=' gio'
 MOZ_CHROME_FILE_FORMAT=jar
 EOF
@@ -138,11 +152,13 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
-export LDFLAGS='-Wl,-rpath-link,%xulr_develdir/lib'
+
+# Add fake RPATH
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
-export XULSDK="%xulr_develdir"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
@@ -167,7 +183,7 @@ make -f client.mk \
 %__cc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DXUL_APP_FILE=\"%firefox_prefix/browser/application.ini\" \
+	-DMOZ_PROGRAM=\"%firefox_prefix/firefox-bin\" \
 	%SOURCE7 -o firefox
 
 
@@ -200,11 +216,6 @@ for s in 16 22 24 32 48 256; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/firefox.png
 done
 
-# searchplugins
-cp -a -- \
-	searchplugins/* \
-	%buildroot/%firefox_prefix/browser/searchplugins/
-
 # install rpm-build-firefox
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
@@ -235,6 +246,31 @@ rm -f -- \
 	./%firefox_prefix/firefox \
 	./%firefox_prefix/removed-files
 
+# Remove devel files
+rm -rf -- \
+	./%_includedir/%name \
+	./%_datadir/idl/%name \
+	./%_libdir/%name-devel \
+#
+
+# Add real RPATH
+(set +x
+	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+
+	find \
+		%buildroot/%firefox_prefix \
+	-type f |
+	while read f; do
+		t="$(readlink -ev "$f")"
+
+		file "$t" | fgrep -qs ELF || continue
+
+		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
+			chrpath -r "%firefox_prefix" "$t"
+		fi
+	done
+)
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -258,6 +294,33 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Jul 27 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
+- New release (31.0).
+- Fixed:
+  + MFSA 2014-66 IFRAME sandbox same-origin access through redirect
+  + MFSA 2014-65 Certificate parsing broken by non-standard character encoding
+  + MFSA 2014-64 Crash in Skia library when scaling high quality images
+  + MFSA 2014-63 Use-after-free while when manipulating certificates in the trusted cache
+  + MFSA 2014-62 Exploitable WebGL crash with Cesium JavaScript library
+  + MFSA 2014-61 Use-after-free with FireOnStateChange event
+  + MFSA 2014-60 Toolbar dialog customization event spoofing
+  + MFSA 2014-59 Use-after-free in DirectWrite font handling
+  + MFSA 2014-58 Use-after-free in Web Audio due to incorrect control message ordering
+  + MFSA 2014-57 Buffer overflow during Web Audio buffering for playback
+  + MFSA 2014-56 Miscellaneous memory safety hazards (rv:31.0 / rv:24.7)
+
+* Tue Jul 01 2014 Alexey Gladkov <legion@altlinux.ru> 30.0-alt1
+- New release (30.0).
+- Built without xulrunner.
+- Fixed:
+  + MFSA 2014-54 Buffer overflow in Gamepad API
+  + MFSA 2014-53 Buffer overflow in Web Audio Speex resampler
+  + MFSA 2014-52 Use-after-free with SMIL Animation Controller
+  + MFSA 2014-51 Use-after-free in Event Listener Manager
+  + MFSA 2014-50 Clickjacking through cursor invisability after Flash interaction
+  + MFSA 2014-49 Use-after-free and out of bounds issues found using Address Sanitizer
+  + MFSA 2014-48 Miscellaneous memory safety hazards (rv:30.0 / rv:24.6)
+
 * Sun May 11 2014 Alexey Gladkov <legion@altlinux.ru> 29.0.1-alt1
 - New release (29.0.1).
 

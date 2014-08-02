@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	29.0
+Version:	31.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -51,6 +51,7 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
+BuildRequires: zip unzip
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
@@ -59,7 +60,6 @@ BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
 BuildRequires: libproxy-devel
-BuildRequires: zip unzip
 BuildRequires: libshell
 BuildRequires: libvpx-devel
 BuildRequires: libgio-devel
@@ -152,25 +152,7 @@ tar -xf %SOURCE1
 
 cp -f %SOURCE3 .mozconfig
 
-%ifarch armv7hl
-echo "ac_add_options --with-arch=armv7-a" >> .mozconfig
-echo "ac_add_options --with-float-abi=hard" >> .mozconfig
-echo "ac_add_options --with-fpu=vfpv3-d16" >> .mozconfig
-echo "ac_add_options --disable-elf-hack" >> .mozconfig
-%endif
-%ifarch armv7hnl
-echo "ac_add_options --with-arch=armv7-a" >> .mozconfig
-echo "ac_add_options --with-float-abi=hard" >> .mozconfig
-echo "ac_add_options --with-fpu=neon" >> .mozconfig
-echo "ac_add_options --disable-elf-hack" >> .mozconfig
-%endif
-%ifarch armv5tel
-echo "ac_add_options --with-arch=armv5te" >> .mozconfig
-echo "ac_add_options --with-float-abi=soft" >> .mozconfig
-echo "ac_add_options --disable-elf-hack" >> .mozconfig
-%endif
-
-%ifnarch %{ix86} x86_64
+%ifnarch %{ix86} x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
 echo "ac_add_options --disable-polyic" >> .mozconfig
@@ -198,9 +180,13 @@ cat >> xulrunner/confvars.sh <<EOF
 MOZ_UPDATER=
 MOZ_JAVAXPCOM=
 MOZ_NATIVE_NSPR=1
-MOZ_SERVICES_SYNC=1
-MOZ_SERVICES_HEALTHREPORT=1
 MOZ_ENABLE_WARNINGS_AS_ERRORS=
+MOZ_SERVICES_COMMON=1
+MOZ_SERVICES_CRYPTO=1
+MOZ_SERVICES_FXACCOUNTS=1
+MOZ_SERVICES_HEALTHREPORT=1
+MOZ_SERVICES_METRICS=1
+MOZ_SERVICES_SYNC=1
 EOF
 
 %__autoconf
@@ -212,7 +198,7 @@ cd -
 MOZ_SMP_FLAGS=-j1
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh
 [ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
@@ -267,9 +253,9 @@ install -D -m644 \
 	rpm-build/mozilla-sh-functions \
 	%buildroot/%_datadir/rpm-build-mozilla/mozilla-sh-functions
 
-install -D -m755 \
-	rpm-build/xulrunner.req* \
-	%buildroot/%_rpmlibdir/
+#install -D -m755 \
+#	rpm-build/xulrunner.req* \
+#	%buildroot/%_rpmlibdir/
 
 mkdir -p -- %buildroot/%_rpmmacrosdir
 sed \
@@ -351,10 +337,36 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_bindir/installrdf.sh
 %_bindir/applicationini.sh
 %_rpmmacrosdir/xulrunner
-%_rpmlibdir/xulrunner.req*
+#_rpmlibdir/xulrunner.req*
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Wed Jul 23 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
+- New release (31.0).
+- Fixed:
+  + MFSA 2014-66 IFRAME sandbox same-origin access through redirect
+  + MFSA 2014-65 Certificate parsing broken by non-standard character encoding
+  + MFSA 2014-64 Crash in Skia library when scaling high quality images
+  + MFSA 2014-63 Use-after-free while when manipulating certificates in the trusted cache
+  + MFSA 2014-62 Exploitable WebGL crash with Cesium JavaScript library
+  + MFSA 2014-61 Use-after-free with FireOnStateChange event
+  + MFSA 2014-60 Toolbar dialog customization event spoofing
+  + MFSA 2014-59 Use-after-free in DirectWrite font handling
+  + MFSA 2014-58 Use-after-free in Web Audio due to incorrect control message ordering
+  + MFSA 2014-57 Buffer overflow during Web Audio buffering for playback
+  + MFSA 2014-56 Miscellaneous memory safety hazards (rv:31.0 / rv:24.7)
+
+* Tue Jun 24 2014 Alexey Gladkov <legion@altlinux.ru> 30.0-alt1
+- New release (30.0).
+- Fixed:
+  + MFSA 2014-54 Buffer overflow in Gamepad API
+  + MFSA 2014-53 Buffer overflow in Web Audio Speex resampler
+  + MFSA 2014-52 Use-after-free with SMIL Animation Controller
+  + MFSA 2014-51 Use-after-free in Event Listener Manager
+  + MFSA 2014-50 Clickjacking through cursor invisability after Flash interaction
+  + MFSA 2014-49 Use-after-free and out of bounds issues found using Address Sanitizer
+  + MFSA 2014-48 Miscellaneous memory safety hazards (rv:30.0 / rv:24.6)
+
 * Tue May 06 2014 Alexey Gladkov <legion@altlinux.ru> 29.0-alt1
 - New release (29.0).
 - Fixed:

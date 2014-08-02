@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.5.0
+Version:	31.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -19,7 +19,6 @@ Source4:	thunderbird-mozconfig
 Source5:	thunderbird-default-prefs.js
 
 Patch6:		01_locale.patch
-Patch7:		xulrunner-noarch-extensions.patch
 Patch8:		thunderbird-timezoes.patch
 Patch9:		thunderbird-install-paths.patch
 
@@ -33,19 +32,22 @@ BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
+BuildRequires: zip unzip
+BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
 BuildRequires: libwireless-devel
 BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
-BuildRequires: zip unzip
 BuildRequires: libvpx-devel
 BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: libproxy-devel
+BuildRequires: libopus-devel
+BuildRequires: libpulseaudio-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -58,10 +60,10 @@ BuildRequires: python-modules-json
 BuildRequires:	libnspr-devel
 BuildRequires:	libnss-devel
 BuildRequires:	libnss-devel-static
-BuildRequires:	xulrunner-devel
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
+Obsoletes:	thunderbird-calendar-timezones
 
 Provides:	thunderbird-gnome-support = %version-%release
 Obsoletes:	thunderbird-gnome-support
@@ -90,7 +92,7 @@ organizational needs.
 
 %if_with enigmail
 %package enigmail
-%define engimail_version 1.6
+%define engimail_version 1.7
 %define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
@@ -134,18 +136,6 @@ Provides: gdata-provider = %version-%release
 
 %description google-calendar
 Allows bidirectional access to Google Calendar
-
-%package calendar-timezones
-%define calendar_timezones_ciddir %mozilla_noarch_extdir/%tbird_cid/calendar-timezones@mozilla.org
-#Version: 1.2011b
-Summary: Timezone Definitions for Mozilla Calendar
-Group: Office
-Url: http://www.mozilla.org/projects/calendar/lightning/
-
-Requires: %name = %version-%release
-
-%description calendar-timezones
-Timezone definitions required by Sunbird and Lightning
 %endif
 
 %package devel
@@ -176,14 +166,13 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 cd mozilla
 
 %if_with enigmail
-tar -xf %SOURCE1 -C mailnews/extensions/
+tar -xf %SOURCE1
 %endif
 
 tar -xf %SOURCE2
 
 %patch6 -p1
-%patch7 -p1
-%patch8 -p2
+#patch8 -p2
 %patch9 -p1
 
 #echo %version > mail/config/version.txt
@@ -192,6 +181,13 @@ cp -f %SOURCE4 .mozconfig
 
 %if_with lightning
 echo 'ac_add_options --enable-calendar' >> .mozconfig
+%endif
+
+%ifnarch %{ix86} x86_64 armh
+echo "ac_add_options --disable-methodjit" >> .mozconfig
+echo "ac_add_options --disable-monoic"    >> .mozconfig
+echo "ac_add_options --disable-polyic"    >> .mozconfig
+echo "ac_add_options --disable-tracejit"  >> .mozconfig
 %endif
 
 sed -i -e '\,hyphenation/,d' mail/installer/removed-files.in
@@ -225,12 +221,12 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 %endif
 
-export PREFIX="%_prefix"
-export SHELL="/bin/sh"
-export LIBDIR="%_libdir"
-export XULSDK="%xulr_develdir"
+export PREFIX='%_prefix'
+export LIBDIR='%_libdir'
+export INCLUDEDIR='%_includedir'
+export LIBIDL_CONFIG='/usr/bin/libIDL-config-2'
 export srcdir="$PWD"
-export MOZILLA_SRCDIR="$srcdir/mozilla"
+export SHELL=/bin/sh
 
 %__autoconf
 
@@ -242,24 +238,27 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
-make -f client.mk build \
-	mozappdir=%tbird_prefix \
+mkdir objdir mozilla/objdir
+
+make -f client.mk \
 	STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+	mozappdir=%buildroot/%tbird_prefix \
+	build
 
 %if_with enigmail
 dir="$PWD/objdir"
 
-cd mailnews/extensions/enigmail
-	./makemake -r
-cd -
-cd $dir/mailnews/extensions/enigmail
+cd enigmail
+	./configure
 	make \
 		STRIP="/bin/true" \
 		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
-	make xpi
-	mv -f -- $dir/mozilla/dist/bin/enigmail-*.xpi $dir/mozilla/dist/xpi-stage/
-	make clean
+	mkdir -p -- \
+		$dir/mozilla/dist
+	mv -f -- \
+		build/dist \
+		$dir/mozilla/dist/enigmail
 cd -
 %endif
 
@@ -367,9 +366,9 @@ sed -i \
 dir="$PWD/objdir"
 
 %if_with enigmail
-mkdir -p %buildroot/%enigmail_ciddir
-unzip -q -u -d %buildroot/%enigmail_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/enigmail*.xpi
+mv -f -- \
+	$dir/mozilla/dist/enigmail \
+	%buildroot/%enigmail_ciddir
 %endif
 
 %if_with lightning
@@ -381,12 +380,12 @@ mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 	$dir/mozilla/dist/xpi-stage/gdata-provider*.xpi
 
-mkdir -p %buildroot/%calendar_timezones_ciddir
-unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/calendar-timezones*.xpi
+#mkdir -p %buildroot/%calendar_timezones_ciddir
+#unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
+#	$dir/mozilla/dist/xpi-stage/calendar-timezones*.xpi
 
-rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
-rm -f -- %buildroot/%lightning_ciddir/application.ini
+#rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
+#rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
 
 # Add real RPATH
@@ -430,7 +429,6 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %if_with lightning
 %exclude %lightning_ciddir
 %exclude %google_calendar_ciddir
-%exclude %calendar_timezones_ciddir
 %endif
 
 %if_with enigmail
@@ -444,9 +442,6 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 
 %files google-calendar
 %google_calendar_ciddir
-
-%files calendar-timezones
-%calendar_timezones_ciddir
 %endif
 
 %files devel
@@ -458,6 +453,27 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Jul 28 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
+- New version (31.0).
+- Fixed:
+  + MFSA 2014-66 IFRAME sandbox same-origin access through redirect
+  + MFSA 2014-65 Certificate parsing broken by non-standard character encoding
+  + MFSA 2014-64 Crash in Skia library when scaling high quality images
+  + MFSA 2014-63 Use-after-free while when manipulating certificates in the trusted cache
+  + MFSA 2014-62 Exploitable WebGL crash with Cesium JavaScript library
+  + MFSA 2014-61 Use-after-free with FireOnStateChange event
+  + MFSA 2014-59 Use-after-free in DirectWrite font handling
+  + MFSA 2014-58 Use-after-free in Web Audio due to incorrect control message ordering
+  + MFSA 2014-57 Buffer overflow during Web Audio buffering for playback
+  + MFSA 2014-56 Miscellaneous memory safety hazards (rv:31.0 / rv:24.7)
+
+* Mon Jul 21 2014 Alexey Gladkov <legion@altlinux.ru> 24.6.0-alt1
+- New version (24.6.0).
+- Fixed:
+  + MFSA 2014-52 Use-after-free with SMIL Animation Controller
+  + MFSA 2014-49 Use-after-free and out of bounds issues found using Address Sanitizer
+  + MFSA 2014-48 Miscellaneous memory safety hazards (rv:30.0 / rv:24.6)
+
 * Sun May 11 2014 Alexey Gladkov <legion@altlinux.ru> 24.5.0-alt1
 - New version (24.5.0).
 - Fixed:

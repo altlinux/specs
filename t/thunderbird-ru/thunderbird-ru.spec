@@ -5,7 +5,7 @@
 %define cid_dict_dir   %tbird_noarch_extensionsdir/%cid_dict
 
 Name:		thunderbird-ru
-Version:	24.5.0
+Version:	31.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird
 
@@ -68,6 +68,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %cid_dict_dir
 
 %changelog
+* Wed Jul 30 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
+- New version (31.0).
+
 * Mon May 12 2014 Alexey Gladkov <legion@altlinux.ru> 24.5.0-alt1
 - New version (24.5.0).
 
