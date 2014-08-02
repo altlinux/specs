@@ -1,7 +1,10 @@
 %define oname numexpr
+
+%def_with python3
+
 Name:           python-module-%oname
 Version:        2.3
-Release:        alt1.hg20140104
+Release:        alt2.hg20140104
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -11,8 +14,13 @@ URL:            http://code.google.com/p/numexpr/
 Source:         %oname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: python-devel gcc-c++
+BuildPreReq: python-devel gcc-c++
 BuildPreReq: libnumpy-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+BuildPreReq: libnumpy-py3-devel python3-module-setuptools
+%endif
 
 Requires: %name-tests = %epoch:%version-%release
 
@@ -29,6 +37,46 @@ integrated in Intel MKL (Math Kernel Library) --, allowing nice
 speed-ups when computing transcendental functions (like trigonometrical,
 exponentials...) on top of Intel-compatible platforms. This support also
 allows to use multiple cores in your computations.
+
+%package -n python3-module-%oname
+Summary: Fast numerical array expression evaluator for Python and NumPy
+Group: Development/Python3
+Requires: python3-module-%oname-tests = %epoch:%version-%release
+
+%description -n python3-module-%oname
+The numexpr package evaluates multiple-operator array expressions many
+times faster than NumPy can. It accepts the expression as a string,
+analyzes it, rewrites it more efficiently, and compiles it to faster
+Python code on the fly. It's the next best thing to writing the
+expression in C and compiling it with a specialized just-in-time (JIT)
+compiler, i.e. it does not require a compiler at runtime.
+
+Also, numexpr has support for the Intel VML (Vector Math Library) --
+integrated in Intel MKL (Math Kernel Library) --, allowing nice
+speed-ups when computing transcendental functions (like trigonometrical,
+exponentials...) on top of Intel-compatible platforms. This support also
+allows to use multiple cores in your computations.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for numexpr
+Group: Development/Python3
+Requires: python3-module-%oname = %epoch:%version-%release
+
+%description -n python3-module-%oname-tests
+The numexpr package evaluates multiple-operator array expressions many
+times faster than NumPy can. It accepts the expression as a string,
+analyzes it, rewrites it more efficiently, and compiles it to faster
+Python code on the fly. It's the next best thing to writing the
+expression in C and compiling it with a specialized just-in-time (JIT)
+compiler, i.e. it does not require a compiler at runtime.
+
+Also, numexpr has support for the Intel VML (Vector Math Library) --
+integrated in Intel MKL (Math Kernel Library) --, allowing nice
+speed-ups when computing transcendental functions (like trigonometrical,
+exponentials...) on top of Intel-compatible platforms. This support also
+allows to use multiple cores in your computations.
+
+This package contains tests for numexpr.
 
 %package tests
 Summary: Tests for numexpr
@@ -54,12 +102,28 @@ This package contains tests for numexpr.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc *.txt LICENSES
@@ -69,7 +133,20 @@ This package contains tests for numexpr.
 %files tests
 %python_sitelibdir/%oname/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt LICENSES
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests
+%endif
+
 %changelog
+* Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3-alt2.hg20140104
+- Added module for Python 3
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3-alt1.hg20140104
 - New snapshot
 
