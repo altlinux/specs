@@ -11,8 +11,8 @@ BuildRequires: jpackage-compat
 %global short_name commons-%{base_name}
 
 Name:          apache-%{short_name}
-Version:       1.6
-Release:       alt2_5jpp7
+Version:       1.8
+Release:       alt1_1jpp7
 Summary:       Implementations of common encoders and decoders
 Group:         Development/Java
 License:       ASL 2.0
@@ -24,10 +24,10 @@ Source0:       http://archive.apache.org/dist/commons/%{base_name}/source/%{shor
 BuildArch:     noarch
 
 BuildRequires: jpackage-utils
+BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
-BuildRequires: maven-idea-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -38,11 +38,14 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 Requires:      jpackage-utils
 
-Provides:      jakarta-%{short_name} = %{version}-%{release}
-Obsoletes:     jakarta-%{short_name} < %{version}-%{release}
-# It looks like there are packages in F-13 that BR/R the short name
+# It looks like there are packages in F-18 that BR/R the short name
 Provides:      %{short_name} = %{version}-%{release}
 Obsoletes:     %{short_name} < %{version}-%{release}
+# Provide and obsolete jakarta-commons-codec to support installing this
+# package on RHEL 6, which still uses the old jakarta-commons-* package
+# naming scheme.
+Provides:      jakarta-%{short_name} = %{version}-%{release}
+Obsoletes:     jakarta-%{short_name} < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -54,6 +57,7 @@ Phonetic and URLs.
 Summary:       API documentation for %{name}
 Group:         Development/Java
 Requires:      jpackage-utils
+Provides:      jakarta-%{short_name}-javadoc = %{version}-%{release}
 Obsoletes:     jakarta-%{short_name}-javadoc < %{version}-%{release}
 BuildArch: noarch
 
@@ -66,7 +70,7 @@ BuildArch: noarch
 sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
@@ -99,6 +103,9 @@ ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_1jpp7
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_5jpp7
 - new version
 

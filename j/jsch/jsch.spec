@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -36,8 +37,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           jsch
-Version:        0.1.48
-Release:        alt1_2jpp7
+Version:        0.1.50
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Java
@@ -55,6 +56,7 @@ Source0:        http://download.sourceforge.net/sourceforge/jsch/jsch-%{version}
 # unix2dos MANIFEST.MF
 Source1:        MANIFEST.MF
 Source2:        plugin.properties
+Source3:        http://repo1.maven.org/maven2/com/jcraft/%{name}/%{version}/%{name}-%{version}.pom
 
 BuildRequires:  jpackage-utils >= 0:1.5
 BuildRequires:  jzlib >= 0:1.0.5
@@ -94,7 +96,7 @@ Group:          Development/Java
 
 %build
 export CLASSPATH=$(build-classpath jzlib)
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist javadoc 
+ant dist javadoc 
 
 # inject the OSGi Manifest
 mkdir META-INF
@@ -117,9 +119,16 @@ install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
+# POM and depmap
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
+
 %files
 %{_javadir}/*.jar
 %doc LICENSE.txt
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc %{_javadocdir}/%{name}*
@@ -131,6 +140,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.1.50-alt1_1jpp7
+- new version
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.1.48-alt1_2jpp7
 - update to new release by jppimport
 
