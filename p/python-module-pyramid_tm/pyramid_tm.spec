@@ -1,7 +1,10 @@
 %define oname pyramid_tm
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.7
-Release: alt1
+Release: alt2
 Summary: A package which allows Pyramid requests to join the active transaction
 License: BSD
 Group: Development/Python
@@ -11,13 +14,37 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %py_requires pyramid transaction
 
 %description
 pyramid_tm is a package which allows Pyramid requests to join the active
 transaction as provided by the transaction package.
+
+%package -n python3-module-%oname
+Summary: A package which allows Pyramid requests to join the active transaction
+Group: Development/Python3
+%py3_requires pyramid transaction
+
+%description -n python3-module-%oname
+pyramid_tm is a package which allows Pyramid requests to join the active
+transaction as provided by the transaction package.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for pyramid_tm
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+pyramid_tm is a package which allows Pyramid requests to join the active
+transaction as provided by the transaction package.
+
+This package contains tests for pyramid_tm.
 
 %package tests
 Summary: Tests for pyramid_tm
@@ -33,11 +60,27 @@ This package contains tests for pyramid_tm.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc *.txt *.rst docs/*.rst
@@ -47,7 +90,22 @@ This package contains tests for pyramid_tm.
 %files tests
 %python_sitelibdir/*/tests.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt *.rst docs/*.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests.*
+%exclude %python3_sitelibdir/*/*/tests.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests.*
+%python3_sitelibdir/*/*/tests.*
+%endif
+
 %changelog
+* Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt2
+- Added module for Python 3
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Version 0.7
 
