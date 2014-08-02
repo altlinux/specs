@@ -1,11 +1,14 @@
-BuildRequires: maven-antrun-plugin apache-jar-resource-bundle
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 %define oldname XmlSchema
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-XmlSchema
 Version:        1.4.7
-Release:        alt3_2jpp7
+Release:        alt3_5jpp7
 Summary:        Lightweight schema object model
 Group:          Development/Java
 License:        ASL 2.0
@@ -21,9 +24,10 @@ Patch1:         %{oldname}-no-site-plugin.patch
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
+BuildRequires: maven-shared
 BuildRequires: maven-remote-resources-plugin
-BuildRequires: apache-resource-bundles
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires: bcel
 BuildRequires: xalan-j2
 BuildRequires: xmlunit
@@ -78,6 +82,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oldname}
 
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.7-alt3_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.7-alt3_2jpp7
 - NMU rebuild to move poms and fragments
 
