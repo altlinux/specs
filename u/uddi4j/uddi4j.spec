@@ -1,12 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		uddi4j
 Version:	2.0.5
-Release:	alt2_5jpp7
+Release:	alt2_6jpp7
 Summary:	Universal Description, Discovery and Integration registry API for Java
 Group:		Development/Java
 License:	IBM
@@ -96,6 +97,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_6jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
