@@ -1,28 +1,26 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global prerel pre1
-
 Name:    c3p0
-Version: 0.9.2
-Release: alt2_0.9.pre1jpp7
+Version: 0.9.2.1
+Release: alt1_2jpp7
 Summary: JDBC DataSources/Resource Pools
-License: LGPLv2
-URL:     http://sourceforge.net/projects/c3p0
+License: LGPLv2 or EPL
+URL:     https://github.com/swaldman/c3p0
 Group:   Development/Java
 
 BuildRequires: java-javadoc >= 1:1.6.0
 BuildRequires: jpackage-utils
 BuildRequires: ant
-BuildRequires: mchange-commons
+BuildRequires: mchange-commons >= 0.2.3.4
 
-Requires: mchange-commons
+Requires: mchange-commons >= 0.2.3.4
 Requires: jpackage-utils
 
-Source0: http://download.sourceforge.net/c3p0/%{name}-%{version}-%{prerel}.src.tgz
-
-# POM based on the one found at http://mvnrepository.com/artifact/c3p0/c3p0
-Source1: c3p0.pom
+Source0: https://github.com/swaldman/%{name}/archive/%{name}-%{version}-final.tar.gz
 
 # Patch to build on java 1.6
 Patch0: %{name}-build-on-1.6.patch
@@ -43,36 +41,38 @@ extension.
 Summary:  API documentation for %{name}
 Group:    Development/Java
 Requires: jpackage-utils
-Requires: java-javadoc
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}-%{prerel}.src
+%setup -q -n %{name}-%{name}-%{version}-final
 
-%patch0 -p0 -b .java6
-%patch1 -p0 -b .java7
+%patch0 -p1 -b .java6
+%patch1 -p1 -b .java7
 
 # remove all binary bits
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 # remove manifest classpath
-sed -i.bak -e "s/<attribute\ name=\"Class-Path\"\ value=\"\${mchange-commons\.jar\.file\.name}\"\ \/>//" build.xml
+sed -i.bak -e "s/<attribute\ name=\"Class-Path\"\ value=\"\${mchange-commons-java\.jar\.file\.name}\"\ \/>//" build.xml
 
 %build
 ant \
   -Dbuild.sysclasspath=first \
-  -Dmchange-commons.jar.file.dir=/usr/share/java \
-  -Dmchange-commons.jar.file.name=mchange-commons.jar \
-  jar javadocs
+  -Dmchange-commons-java.jar.file=`build-classpath mchange-commons-java` \
+  jar javadoc
+
+sed -i -e "s|@c3p0.version.maven@|%{version}|g" \
+  -e "s|@mchange-commons-java.version.maven@|0.2.3.4|g" \
+  src/maven/pom.xml
 
 %install
 # jar
 install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/%{name}-%{version}-%{prerel}.jar \
+install -p -m 644 build/%{name}-%{version}.jar \
   %{buildroot}%{_javadir}/%{name}.jar
 
 # javadocs
@@ -81,25 +81,28 @@ cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 %{SOURCE1} \
+install -p -m 644 src/maven/pom.xml \
   %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a c3p0:c3p0
 
 %files
 %doc src/dist-static/CHANGELOG
-%doc src/dist-static/LICENSE
+%doc src/dist-static/LICENSE*
 %doc src/dist-static/RELEASE*
 %doc src/doc/index.html
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-*
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc src/dist-static/LICENSE
+%doc src/dist-static/LICENSE*
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2.1-alt1_2jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2-alt2_0.9.pre1jpp7
 - new fc release
 
