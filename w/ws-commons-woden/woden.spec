@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 %define oldname woden
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -5,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-commons-woden
 Version:        1.0
-Release:        alt2_0.2.M9jpp7
+Release:        alt2_0.5.M9jpp7
 Summary:        Web Service Description Language (WSDL) validating parser
 
 Group:          Development/Java
@@ -19,7 +23,8 @@ Patch0:         %{oldname}-disable-modules.patch
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
+BuildRequires: maven-shared
 BuildRequires: ws-commons-XmlSchema
 BuildRequires: apache-commons-logging
 BuildRequires: log4j
@@ -95,6 +100,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oldname}
 
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.5.M9jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.2.M9jpp7
 - NMU rebuild to move poms and fragments
 
