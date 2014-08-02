@@ -1,10 +1,10 @@
 %define oname 9ML
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: A tool for reading, writing and generally working with 9ML files
 License: BSD
@@ -23,7 +23,7 @@ BuildPreReq: python-module-sphinxcontrib-spelling
 BuildPreReq: libenchant-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -106,7 +106,7 @@ manipulating NineML models.
 %package -n python3-module-%oname-tests
 Summary: Tests for NineML
 Group: Development/Python3
-Requires: python3-module-%oname= %EVR
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 NineML (http://nineml.incf.org) is a simulator independent language
@@ -125,9 +125,13 @@ This package contains tests for NineML.
 rm -rf ../python3
 cp -a . ../python3
 pushd ../python3
-#find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
-#find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
+find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '._*' -exec rm -f '{}' +
 find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#for i in $(find ./ -type f -name '*.py'); do
+#	2to3 -w -n $i
+#done
 %endif
 
 %build
@@ -186,6 +190,9 @@ cp -fR doc/python_nineml_api/build/pickle \
 %endif
 
 %changelog
+* Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt3
+- Added module for Python 3
+
 * Sun Dec 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2
 - Extracted examples as separate package
 
