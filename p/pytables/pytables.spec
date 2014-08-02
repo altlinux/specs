@@ -1,11 +1,11 @@
 %define hdf5dir %_libdir/hdf5-seq
 %define oname tables
 
-%def_without python3
+%def_with python3
 
 Name: py%oname
 Version: 3.1.1
-Release: alt2.git20140325
+Release: alt3.git20140325
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -30,11 +30,13 @@ BuildPreReq: xsltproc inkscape fop
 BuildPreReq: java-devel-default docbook-tldp-xsl docbook-dtds
 BuildPreReq: w3c-markup-validator-libs python-module-Cython
 BuildPreReq: python-module-numexpr python-module-setuptools
-BuildPreReq: texlive-latex-recommended libblosc-devel
+#BuildPreReq: texlive-latex-recommended libblosc-devel
+BuildPreReq: libblosc-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
 BuildPreReq: python3-module-distribute python3-module-Cython
+BuildPreReq: python3-module-numexpr-tests
 %endif
 
 %description
@@ -76,7 +78,7 @@ relational or object oriented databases.
 %package -n python3-module-%oname
 Summary: Managing hierarchical datasets (Python 3)
 Group: Development/Python3
-%add_python3_req_skip numarray
+%add_python3_req_skip numarray Scientific
 
 %description -n python3-module-%oname
 PyTables is a package for managing hierarchical datasets and designed
@@ -238,6 +240,11 @@ This package contains benchmarks for PyTables.
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+find ../python3 -type f -name '*.py' -exec \
+	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+find ../python3 -type f -name '*.py' -exec \
+	sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' '{}' +
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -245,9 +252,6 @@ cp -a . ../python3
 %python_build_debug --hdf5=%hdf5dir
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
 %python3_build_debug --hdf5=%hdf5dir
 popd
 %endif
@@ -265,7 +269,7 @@ cp -fR bench contrib %buildroot%python3_sitelibdir/%oname/
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
-	mv $i py3_$i
+	mv $i $i.py3
 done
 popd
 %endif
@@ -286,7 +290,7 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %files
 %_bindir/*
 %if_with python3
-%exclude %_bindir/py_*
+%exclude %_bindir/*.py3
 %endif
 
 %files -n python-module-%oname
@@ -306,7 +310,7 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files py3
-%_bindir/py_*
+%_bindir/*.py3
 
 %files -n python3-module-%oname
 %python3_sitelibdir/*
@@ -320,14 +324,17 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/*/tests
 
-%files -n python3-module-%oname-bench
-%python3_sitelibdir/%oname/bench
+#files -n python3-module-%oname-bench
+#python3_sitelibdir/%oname/bench
 %endif
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.1.1-alt3.git20140325
+- Added module for Python 3
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.1-alt2.git20140325
 - NMU: corrected java deps
 
