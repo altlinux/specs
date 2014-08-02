@@ -1,9 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 %define oldname axiom
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-axiom
 Version:        1.2.12
-Release:        alt2_3jpp7
+Release:        alt2_5jpp7
 Epoch:          0
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -21,7 +25,7 @@ Patch0:         axiom-build-fixes.patch
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  apache-rat-plugin
 BuildRequires:  bea-stax-api
 BuildRequires:  javamail
@@ -58,7 +62,7 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 %patch0 -p1
 rm -rf modules/axiom-jaxen-testsuite/src/main/
 
@@ -103,6 +107,9 @@ cp -rp target/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{oldname}
 %{_javadocdir}/%{oldname}
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt2_5jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
