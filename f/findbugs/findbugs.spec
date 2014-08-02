@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs
 Version:        1.3.9
-Release:        alt2_12jpp7
+Release:        alt2_15jpp7
 Summary:        Find bugs in Java code
 
 Group:          Development/Java
@@ -67,6 +67,7 @@ BuildRequires:  junit4
 BuildRequires:  objectweb-asm >= %{asm_version}
 BuildRequires:  perl
 BuildRequires: /usr/bin/latex texlive-latex-recommended
+BuildRequires:  texlive-publishers
 Requires:       findbugs-bcel
 Requires:       apache-commons-lang
 Requires:       jaxen
@@ -230,6 +231,9 @@ cp annotations.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-annotations.pom
 %{_javadir}/findbugs-tools*
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt2_15jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt2_12jpp7
 - converted from JPackage by jppimport script
 
