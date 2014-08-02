@@ -1,5 +1,5 @@
 Name: xournal
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: Xournal - application for notetaking, sketching, keeping a journal using a stylus
@@ -55,6 +55,9 @@ install -pDm644 %SOURCE2 %buildroot%_man1dir/%name.1
 %_datadir/mimelnk/application/x-xoj.desktop
 
 %changelog
+* Sat Aug 02 2014 Michael Shigorin <mike@altlinux.org> 0.4.8-alt1
+- 0.4.8
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 0.4.7-alt1
 - added watch file and manpage from debian
 - new version (watch file uupdate)
