@@ -1,7 +1,10 @@
-BuildRequires: maven-clean-plugin maven-antrun-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-dmr
 %define version 1.1.1
 %global namedreltag .Final
@@ -9,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-dmr
 Version:          1.1.1
-Release:          alt2_6jpp7
+Release:          alt2_9jpp7
 Summary:          JBoss DMR
 Group:            Development/Java
 License:          LGPLv2+
@@ -22,7 +25,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -61,11 +64,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{namedversion}
 
 %build
-export MAVEN_OPTS="-XX:-UseSplitVerifier"
-
-# Skipped tests because of one failure - testFromJSONString
-# Tests run: 201, Failures: 1, Errors: 1, Skipped: 0 
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # JAR
@@ -92,6 +91,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_9jpp7
+- new release
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
 - fixed build
 
