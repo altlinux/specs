@@ -1,7 +1,7 @@
 %define oname ccnet
 Name: libccnet
 Version: 1.4.2 
-Release: alt2
+Release: alt5
 
 Summary: Networking library for Seafile
 
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: libevent-devel libsearpc-devel libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
+BuildRequires: libevent-devel libsearpc-devel >= 1.2.0 libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
 BuildRequires: vala
 %description
 Ccnet is a framework for writing networked applications in C
@@ -56,6 +56,18 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 22 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt5
+- 1.4.2-alt4
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt4
+- new tag
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt3
+- new version
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt2
+- chabge alt3 for multibuild
+
 * Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt2
 - 1.4.2-alt1
 - + vala
