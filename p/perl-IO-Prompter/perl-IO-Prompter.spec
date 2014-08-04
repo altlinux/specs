@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Contextual/Return.pm) perl(ExtUtils/MakeMaker.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/More.pm) perl(diagnostics.pm)
 # END SourceDeps(oneline)
-%define module_version 0.004010
+%define module_version 0.004011
 %define module_name IO-Prompter
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.004010
-Release: alt2
+Version: 0.004011
+Release: alt1
 Summary: Prompt for input, read it, clean it, return it.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/D/DC/DCONWAY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/IO-Prompter-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -83,6 +83,9 @@ designed to be a drop-in replacement for `readline' or `<>'.
 %perl_vendor_privlib/I*
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.004011-alt1
+- automated CPAN update
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.004010-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
