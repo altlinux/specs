@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           buildnumber-maven-plugin
 Version:        1.2
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Build Number Maven Plugin
 
 Group:          Development/Java
@@ -44,7 +44,7 @@ BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-utils
 BuildRequires: jna
 BuildRequires: mojo-parent
-BuildRequires: maven-project
+#BuildRequires: maven-project
 BuildRequires: maven-scm
 
 
@@ -57,6 +57,7 @@ Requires: mojo-parent
 Requires: plexus-containers-container-default
 Requires: plexus-utils
 Source44: import.info
+Patch33: buildnumber-maven-plugin-1.2-alt-no-maven2.patch
 
 %description
 This mojo is designed to get a unique build number for each time you build
@@ -92,6 +93,8 @@ cp -p %{SOURCE2} .
 
 %pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
 %pom_remove_dep org.tmatesoft.svnkit:svnkit
+
+%patch33 -p1
 
 %build
 
@@ -131,6 +134,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
+- patched out dependency on maven2 (patch33)
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
 - new version
 
