@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Ngram
 Name: perl-%dist
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 
 Summary: Ngram analysis of text
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AM/AMBS/Text/Text-Ngram-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Unicode/CaseFold.pm)
 
 %description
 n-Gram analysis is a field in textual analysis which uses sliding window
@@ -35,6 +36,9 @@ prediction networks, and perform spelling correction.
 %perl_vendor_autolib/Text
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt2
 - built for perl 5.18
 
