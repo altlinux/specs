@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-Role-WithOverloading
 Name: perl-%dist
-Version: 0.13
-Release: alt2
+Version: 0.14
+Release: alt1
 
 Summary: Roles which support overloading
 License: GPL or Artistic
@@ -11,7 +12,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Role-WithOverloading-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-MooseX-Types perl-aliased perl-devel perl-namespace-autoclean perl(Test/CheckDeps.pm) perl(Test/NoWarnings.pm)
+BuildRequires: perl-MooseX-Types perl-aliased perl-devel perl-namespace-autoclean perl(Test/CheckDeps.pm) perl(Test/NoWarnings.pm) perl(Test/Warnings.pm)
 
 %description
 MooseX::Role::WithOverloading allows you to write a "Moose::Role" which
@@ -34,6 +35,9 @@ composed into the classes/roles/instances it's compiled to, while plain
 %perl_vendor_autolib/MooseX
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt2
 - built for perl 5.18
 
