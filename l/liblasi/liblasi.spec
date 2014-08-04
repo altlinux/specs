@@ -1,8 +1,8 @@
 %define origname libLASi
 
 Name: liblasi
-Version: 1.1.1
-Release: alt5
+Version: 1.1.2
+Release: alt1
 
 Summary: C++ stream output interface for creating Unicode PostScript documents
 License: LGPL
@@ -11,7 +11,6 @@ Group: System/Libraries
 Url: http://www.unifont.org/lasi
 Source: %origname-%version.tar.gz
 Source100: %name.watch
-Patch: libLASi-1.1.1-freetype-2.5.1.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 28 2014
@@ -59,6 +58,7 @@ This is the development environment to compile libLASi apps.
 Summary: Documentation for libLASi
 License: GPL
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 libLASi is a library that provides a C++ stream output interface
@@ -68,7 +68,6 @@ This is user and developer documentation for libLASi.
 
 %prep
 %setup -n %origname-%version
-%patch -p0
 
 %build
 cmake \
@@ -80,14 +79,13 @@ cmake \
 %makeinstall_std
 chrpath -d %buildroot%_libdir/*.so.*
 mkdir -p %buildroot%pkgdocdir
-cp -a AUTHORS ChangeLog NEWS README %buildroot%pkgdocdir/
+cp -a AUTHORS NEWS README %buildroot%pkgdocdir/
 mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 
 %files
 %_libdir/*.so.*
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
-%pkgdocdir/ChangeLog
 %pkgdocdir/NEWS
 %pkgdocdir/README
 
@@ -101,6 +99,10 @@ mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 %doc doc/*
 
 %changelog
+* Mon Aug 04 2014 Michael Shigorin <mike@altlinux.org> 1.1.2-alt1
+- new version (watch file uupdate)
+- dropped patch (merged upstream)
+
 * Mon Apr 28 2014 Michael Shigorin <mike@altlinux.org> 1.1.1-alt5
 - replaced the patch with official commit to test it
 - added documentation subpackage
