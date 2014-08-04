@@ -4,7 +4,7 @@
 
 Name: python-module-cffi
 Version: 0.8.6
-Release: alt1
+Release: alt2
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -20,6 +20,8 @@ Patch: cffi-0.8.6-alt-link.patch
 %setup_python_module %modulename
 
 BuildRequires: python-devel libffi-devel python-module-setuptools
+Requires: python-module-pycparser
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -31,6 +33,8 @@ Foreign Function Interface for Python calling C code.
 %package -n python3-module-cffi
 Summary: Foreign Function Interface for Python calling C code
 Group: Development/Python3
+
+Requires: python3-module-pycparser
 
 %description -n python3-module-cffi
 Foreign Function Interface for Python calling C code.
@@ -72,6 +76,11 @@ popd
 %endif
 
 %changelog
+* Mon Aug 04 2014 Lenar Shakirov <snejok@altlinux.ru> 0.8.6-alt2
+- python{3,}-module-pycparser added to Requires
+- Because find-requires script /usr/lib/rpm/python3.req.py says:
+  * cffi/cparser.py: line=2 possible relative import from ., UNIMPLEMENTED
+
 * Fri Jul 11 2014 Vitaly Lipatov <lav@altlinux.ru> 0.8.6-alt1
 - new version 0.8.6 (with rpmrb script) (ALT bug #30174)
 
