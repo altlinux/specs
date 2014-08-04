@@ -2,7 +2,7 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.9.13
+Version: 0.9.14
 Release: alt1
 Epoch: 20121107
 
@@ -97,6 +97,9 @@ rm -rf %buildroot/usr/share/doc/check/
 %endif
 
 %changelog
+* Mon Aug 04 2014 Michael Shigorin <mike@altlinux.org> 20121107:0.9.14-alt1
+- new version (watch file uupdate)
+
 * Sat May 31 2014 Michael Shigorin <mike@altlinux.org> 20121107:0.9.13-alt1
 - new version (watch file uupdate)
 
