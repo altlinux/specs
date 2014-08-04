@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Mail-GnuPG
 
 Name: perl-%module
-Version: 0.19
-Release: alt2
+Version: 0.20
+Release: alt1
 
 Summary: Process email with GPG
 License: Perl
@@ -32,6 +33,9 @@ Use GnuPG::Interface to process or create PGP signed or encrypted email.
 %perl_vendor_privlib/Mail
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Wed Apr 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
 - fixed build
 
