@@ -1,24 +1,28 @@
-BuildRequires: /proc
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: /proc maven-surefire-provider-junit4
 BuildRequires: jpackage-compat
+%global project felix
 %global bundle org.apache.felix.shell
-Name:           felix-shell
-Version:        1.4.2
-Release:        alt3_7jpp7
+
+Name:           %{project}-shell
+Version:        1.4.3
+Release:        alt1_1jpp7
 Summary:        Apache Felix Shell Service
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://felix.apache.org
-Source0:        http://www.picvi.com/external/apache/felix/org.apache.felix.shell-1.4.2-project.tar.gz
-#Fixed org.osgi.core and org.osgi.compendium's groupId
-Patch0:        felix-shell-pom.patch
+Source0:        http://archive.apache.org/dist/%{project}/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: felix-osgi-core
 BuildRequires: felix-osgi-compendium
+BuildRequires: maven-clean-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: felix-parent
 
@@ -43,20 +47,22 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
-%patch0 -p0
+
+%pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
 
 %build
-mvn-rpmbuild -e -Dmaven.test.skip=true install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jar
-install -d -m 755 %{buildroot}%{_javadir}/felix
-install -Dpm 644 target/%{bundle}-%{version}.jar   %{buildroot}%{_javadir}/felix/%{name}.jar
+install -d -m 755 %{buildroot}%{_javadir}/%{project}
+install -Dpm 644 target/%{bundle}-%{version}.jar \
+        %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.felix-%{name}.pom
-%add_maven_depmap JPP.felix-%{name}.pom felix/%{name}.jar
+install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
+%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -68,8 +74,8 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc LICENSE NOTICE
-%{_javadir}/felix/*
-%{_mavenpomdir}/JPP.felix-%{name}.pom
+%{_javadir}/%{project}/*
+%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -77,6 +83,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_1jpp7
+- new version
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt3_7jpp7
 - NMU rebuild to move poms and fragments
 
