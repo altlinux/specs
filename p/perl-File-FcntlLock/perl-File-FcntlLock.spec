@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-FcntlLock
 Name: perl-%dist
-Version: 0.20
+Version: 0.22
 Release: alt1
 
 Summary: File locking with fcntl(2)
@@ -34,6 +35,9 @@ on which Perls flock() function is based.
 %perl_vendor_autolib/File
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
