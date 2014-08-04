@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
@@ -6,52 +9,39 @@ BuildRequires: jpackage-compat
 %global project felix
 %global bundle org.apache.felix.main
 %global groupId org.apache.felix
-%global artifactId %{bundle}
 
 Name:    %{project}-main
-Version: 2.0.5
-Release: alt3_8jpp7
+Version: 4.2.0
+Release: alt1_1jpp7
 Summary: Apache Felix Main
 
 Group:   Development/Java
 License: ASL 2.0
 URL:     http://felix.apache.org
-Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
-
-# TODO check availability and use original artifacts:
-# - org.apache.felix.shell https://bugzilla.redhat.com/show_bug.cgi?id=615869
-Patch0: %{bundle}-%{version}~pom.xml.patch
+Source0: http://www.apache.org/dist/%{project}/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: felix-parent
+BuildRequires: felix-bundlerepository
+BuildRequires: felix-gogo-command
+BuildRequires: felix-gogo-runtime
+BuildRequires: felix-gogo-shell
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
-BuildRequires: felix-framework
-BuildRequires: maven2
-BuildRequires:    maven-antrun-plugin
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-invoker-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-# TODO check availability and use new names
-#BuildRequires:    maven-bundle-plugin
-# instead of
-BuildRequires:    maven-plugin-bundle
+BuildRequires: felix-framework >= 4.2.0
+BuildRequires: maven-local
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-surefire-provider-junit4
 
+Requires: felix-bundlerepository
+Requires: felix-gogo-command
+Requires: felix-gogo-runtime
+Requires: felix-gogo-shell
 Requires: felix-osgi-compendium
 Requires: felix-osgi-core
-Requires: felix-framework
-
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
+Requires: felix-framework >= 4.2.0
+Requires: jpackage-utils
 Source44: import.info
 Obsoletes: felix < 2
 
@@ -67,50 +57,42 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
-%global POM %{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-
 %prep
 %setup -q -n %{bundle}-%{version}
-%patch0 -p1 -b .sav
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-%__mkdir_p $MAVEN_REPO_LOCAL
-mvn-jpp -e \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
+install -d -m 755 %{buildroot}%{_javadir}/%{project}
 install -m 644 target/%{bundle}-%{version}.jar \
         %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
 
-%add_to_maven_depmap %{groupId} %{artifactId} %{version} JPP/%{project} %{bundle}
-
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{POM}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
+
+%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE NOTICE
 %{_javadir}/%{project}/*
-%{POM}
-%config(noreplace) %{_mavendepmapfragdir}/%{name}
-%doc LICENSE
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
-%doc LICENSE
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_1jpp7
+- new version
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt3_8jpp7
 - new release
 
