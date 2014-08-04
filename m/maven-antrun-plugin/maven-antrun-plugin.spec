@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-antrun-plugin
 Version:        1.7
-Release:        alt2_5jpp7
+Release:        alt3_5jpp7
 Summary:        Maven AntRun Plugin
 
 Group:          Development/Java
@@ -35,6 +35,8 @@ Requires: jpackage-utils
 Obsoletes: maven2-plugin-antrun <= 0:2.0.8
 Provides: maven2-plugin-antrun = 1:%{version}-%{release}
 Source44: import.info
+Patch33: maven-antrun-plugin-1.7-alt-build-with-maven-3.0.4.patch
+
 
 %description
 Runs Ant scripts embedded in the POM
@@ -52,6 +54,7 @@ API documentation for %{name}.
 %setup -q 
 %patch0
 #%patch1
+%patch33 -p1
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -82,6 +85,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_5jpp7
+- dropped maven2 dependencies
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_5jpp7
 - new release
 
