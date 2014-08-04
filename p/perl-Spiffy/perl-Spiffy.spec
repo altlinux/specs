@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Spiffy
 Name: perl-%dist
-Version: 0.35
+Version: 0.37
 Release: alt1
 
 Summary: Spiffy Perl Interface Framework For You
@@ -37,6 +37,9 @@ clean, straightforward and (perhaps someday) standard way.
 %perl_vendor_privlib/Spiffy*
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
