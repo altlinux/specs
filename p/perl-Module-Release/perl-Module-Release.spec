@@ -1,0 +1,54 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm)
+# END SourceDeps(oneline)
+%define module_version 2.08
+%define module_name Module-Release
+%define _unpackaged_files_terminate_build 1
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+Name: perl-%module_name
+Version: 2.08
+Release: alt2
+Summary: Automate Perl distribution releases
+Group: Development/Perl
+License: perl
+Url: %CPAN %module_name
+
+Source0: http://cpan.org.ua/authors/id/B/BD/BDFOY/%module_name-%module_version.tar.gz
+BuildArch: noarch
+
+%description
+%summary
+
+%package scripts
+Summary: %module_name scripts
+Group: Development/Perl
+Requires: %name = %{?epoch:%epoch:}%version-%release
+
+%description scripts
+scripts for %module_name
+
+%prep
+%setup -n %module_name-%module_version
+
+%build
+%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+
+%install
+%perl_vendor_install
+
+%files
+%doc Changes README examples
+%perl_vendor_privlib/M*
+
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+%changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.08-alt2
+- moved to Sysiphus as dependency
+
+* Tue Mar 11 2014 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
+- initial import by package builder
+
