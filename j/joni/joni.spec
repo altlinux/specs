@@ -1,26 +1,32 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global  git_commit bb99ccb
-%global cluster jruby
-
 Name:             joni
-Version:          1.1.3
-Release:          alt1_7jpp7
+Version:          1.1.9
+Release:          alt1_1jpp7
 Summary:          Java port of Oniguruma regexp library 
 Group:            Development/Java
 License:          MIT
-URL:              http://github.com/%{cluster}/%{name}
-Source0:          %{url}/tarball/%{version}/%{cluster}-%{name}-%{git_commit}.tar.gz
-Patch0:           add_build_lib_deps.patch
+URL:              http://github.com/jruby/%{name}
+Source0:          https://github.com/jruby/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0:           joni-add-build-lib-deps.patch
+Patch1:           joni-remove-useless-wagon-dependency.patch
 
-BuildRequires:    ant
 BuildRequires:    jcodings
 BuildRequires:    jpackage-utils
-BuildRequires:    objectweb-asm
-Requires:         jpackage-utils
-Requires:         objectweb-asm
+BuildRequires:    junit
+BuildRequires:    maven-local
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-surefire-plugin
+BuildRequires:    objectweb-asm4
+
 Requires:         jcodings
+Requires:         jpackage-utils
+Requires:         objectweb-asm4
 
 BuildArch:      noarch
 Source44: import.info
@@ -31,38 +37,42 @@ joni is a port of Oniguruma, a regular expressions library,
 to java. It is used by jruby.
 
 %prep
-%setup -q -n jruby-%{name}-bb99ccb
+%setup -q
 %patch0 -p0
+%patch1 -p0
 
-find ./ -name '*.jar' -exec rm -f '{}' \; 
-find ./ -name '*.class' -exec rm -f '{}' \; 
+find ./ -name '*.jar' -delete
+find ./ -name '*.class' -delete
 
 mkdir build_lib
-build-jar-repository -s -p build_lib objectweb-asm/asm jcodings
+build-jar-repository -s -p build_lib objectweb-asm4/asm jcodings
 
 %build
-ant build
+mvn-rpmbuild install javadoc:aggregate
 
 %install
-
 install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 target/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # fixes rpmlint warning about wrong-file-end-of-line-encoding
 sed -i -e 's|\r||' test/org/joni/test/TestC.java
 sed -i -e 's|\r||' test/org/joni/test/TestU.java
 sed -i -e 's|\r||' test/org/joni/test/TestA.java
 
-
 %files
+%doc MANIFEST.MF
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-
-%doc build.xml
-%doc test
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.9-alt1_1jpp7
+- new version
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_7jpp7
 - new fc release
 
