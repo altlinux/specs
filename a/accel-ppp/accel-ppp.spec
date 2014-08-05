@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Aug 05 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt2
+- update upstream to git:2cdd67782c6d11af141992dba2943e03134593b5
+
 * Fri May 09 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
