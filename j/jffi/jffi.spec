@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:    jffi
 Version: 1.2.6
-Release: alt1_1jpp7
+Release: alt2_1jpp7
 Summary: An optimized Java interface to libffi 
 
 Group:   System/Libraries
@@ -73,6 +73,9 @@ install -pm 644 pom.xml  \
         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
+# hack for maven 304 to find jar
+mkdir -p %{buildroot}%{_javadir}/
+ln -s %_jnidir/jffi.jar %{buildroot}%{_javadir}/jffi.jar
 
 %check
 # don't fail on unused parameters... (TODO: send patch upstream)
@@ -84,8 +87,12 @@ ant -Duse.system.libffi=1 test
 %{_jnidir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%_javadir/jffi.jar
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_1jpp7
+- added symlink in javadir
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_1jpp7
 - new version
 
