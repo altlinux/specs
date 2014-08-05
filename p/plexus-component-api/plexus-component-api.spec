@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt2_0.10.alpha15jpp7
+Release:        alt3_0.10.alpha15jpp7
 Summary:        Plexus Component API
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ Source0:        plexus-component-api-1.0-alpha-15.tar.gz
 BuildArch: noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -74,6 +74,10 @@ install -pm 644 pom.xml \
 install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}
 
+# compat
+install -d -m 0755 %{buildroot}%{_javadir}/%{name}
+ln -s ../plexus/%{name}.jar %{buildroot}%{_javadir}/%{name}/plexus-component-api.jar
+
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
@@ -87,6 +91,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.10.alpha15jpp7
+- added compat symlink
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.10.alpha15jpp7
 - NMU rebuild to move poms and fragments
 
