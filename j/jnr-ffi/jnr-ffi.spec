@@ -1,38 +1,45 @@
-%add_optflags -Wno-error
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global git_commit 103ea1a
-%global cluster jnr
+%global commit_hash f28dc0a
+%global tag_hash 929dd3c
 
 Name:     jnr-ffi
-Version:  0.5.10
-Release:  alt3_3jpp7
+Version:  0.7.10
+Release:  alt1_2jpp7
 Summary:  Java Abstracted Foreign Function Layer
 Group:    System/Libraries
-License:  ASL 2.0 or LGPLv3+
-URL:      http://github.com/%{cluster}/%{name}
-Source0:  https://download.github.com/%{cluster}-%{name}-%{version}-0-g%{git_commit}.tar.gz
-Patch0:   jaffl_fix_jar_dependencies.patch
+License:  ASL 2.0
+URL:      http://github.com/jnr/%{name}/
+Source0:  https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
 
-# invokedynamic is a Java 7 feature and the method
-# which needs it is only defined and not used
-Patch1:   jaffl_remove_invokedynamic.patch
+Patch1:   %{name}-remove-dependency-versions-not-understood-by-fedora-maven.patch
 
 BuildRequires: jpackage-utils
-BuildRequires: ant
 BuildRequires: jffi
 BuildRequires: jnr-x86asm
-BuildRequires: objectweb-asm
+BuildRequires: junit
+BuildRequires: objectweb-asm4
+
+BuildRequires:  maven-local
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
 
 Requires:      jpackage-utils
 Requires:      jffi
 Requires:      jnr-x86asm
-Requires:      objectweb-asm
-BuildArch:     noarch
+Requires:      objectweb-asm4
 
-Obsoletes: jaffl < %{version}-%{release}
-Provides:  jaffl = %{version}-%{release}
+BuildArch:     noarch
 Source44: import.info
+
+# don't obsolete/provide jaffl, gradle is using both jaffl and jnr-ffi...
 
 %description
 An abstracted interface to invoking native functions from java
@@ -40,7 +47,6 @@ An abstracted interface to invoking native functions from java
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -48,54 +54,45 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{cluster}-%{name}-%{git_commit}
-%patch0 -p0
+%setup -q -n jnr-%{name}-%{tag_hash}
 %patch1 -p0
 
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
-# remove tests/junit dependency
-rm -rf test/
-
-mkdir build_lib
-build-jar-repository -s -p build_lib jffi jnr-x86asm objectweb-asm/asm \
-                                     objectweb-asm/analysis objectweb-asm/commons \
-                                     objectweb-asm/tree objectweb-asm/util objectweb-asm/xml
-sed -i -e 's,-mimpure-text,,g' `find . -name GNUmakefile`
-sed -i -e s,-Werror,, libtest/GNUmakefile
-
 %build
-ant
+# don't fail on unused parameters... (TODO: send patch upstream)
+sed -i 's|-Werror||' libtest/GNUmakefile
+# TODO: tests still fail, investigate
+mvn-rpmbuild install javadoc:aggregate -DskipTests
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-cp dist/jaffl-0.5.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{_javadir}/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/jaffl.jar
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml  \
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-cp -rp dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-%add_to_maven_depmap org.jruby.extras %{name} %{version} JPP %{name}
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-cp pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jnr-ffi.pom
-
-#%add_maven_depmap JPP-jnr-ffi.pom jnr-ffi.jar
-
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
-%{_javadir}/jaffl.jar
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/*
 %doc LICENSE
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.10-alt1_2jpp7
+- new version
+
 * Tue Jun 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.10-alt3_3jpp7
 - fixed build
 
