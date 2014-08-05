@@ -1,19 +1,17 @@
 %def_disable static
 
 Name: libEMF
-Version: 1.0.4
-Release: alt2
+Version: 1.0.7
+Release: alt1
 
 Summary: A library for generating Enhanced Metafiles
 License: LGPLv2+ and GPLv2+
 Group: System/Libraries
 
 Url: http://libemf.sourceforge.net
-Source: http://downloads.sourceforge.net/pstoedit/%name-%version.tar.gz
-Patch: %name-amd64.patch
-Patch1: %name-axp.patch
-Patch3: %name-s390.patch
-Patch4: %name-arm.patch
+Source0: http://downloads.sourceforge.net/libemf/%name-%version.tar.gz
+Source1: libEMF.watch
+Patch: libEMF-aarch64.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -68,10 +66,7 @@ libEMF static files.
 
 %prep
 %setup
-%patch0 -p1 -b .amd64
-%patch1 -p1 -b .axp
-%patch3 -p1 -b .s390
-%patch4 -p1 -b .arm
+%patch -p1 -b .aarch64
 
 %build
 %autoreconf
@@ -103,6 +98,12 @@ make check
 %endif
 
 %changelog
+* Tue Aug 05 2014 Michael Shigorin <mike@altlinux.org> 1.0.7-alt1
+- added watch file
+- new version (watch file uupdate)
+  + dropped patches
+  + added fedora aarch64 patch while at that
+
 * Wed Feb 27 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.4-alt2
 - fixed build on arm
 
