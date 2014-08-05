@@ -57,6 +57,7 @@
 %def_enable libssh2
 %def_enable vhdx
 %def_enable quorum
+%def_enable numa
 %def_enable rdma
 %def_enable lzo
 %def_enable snappy
@@ -114,7 +115,7 @@
 
 %if_with ppc
 %global target_list_system %target_list_system ppc-softmmu ppcemb-softmmu ppc64-softmmu
-%global target_list_user %target_list_user ppc-linux-user ppc64-linux-user ppc64abi32-linux-user
+%global target_list_user %target_list_user ppc-linux-user ppc64-linux-user ppc64le-linux-user ppc64abi32-linux-user
 %endif
 
 %if_with sh4
@@ -153,8 +154,8 @@
 # }}}
 
 Name: qemu
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -201,7 +202,7 @@ BuildRequires: iasl
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
-%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.7.0}
+%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.0}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
@@ -210,6 +211,7 @@ BuildRequires: iasl
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
 %{?_enable_quorum:BuildRequires: libgnutls-devel >= 2.10.0}
+%{?_enable_numa:BuildRequires: libnuma-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_snappy:BuildRequires: libsnappy-devel}
 %{?_enable_xen:BuildRequires: xen-devel}
@@ -381,6 +383,9 @@ export CFLAGS="%optflags"
 	--disable-libiscsi \
 	--disable-libnfs \
 	--disable-libssh2 \
+	--disable-quorum \
+	--disable-lzo \
+	--disable-numa \
 	--disable-gtk
 
 # Please do not touch this
@@ -446,6 +451,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
 	%{subst_enable quorum} \
+	%{subst_enable numa} \
 	%{subst_enable lzo} \
 	%{subst_enable snappy} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
@@ -647,6 +653,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Mon Aug 04 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt2
 - fixed migration from older versions (ALT#30033)
 - fixed build on arm

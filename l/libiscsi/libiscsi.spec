@@ -1,5 +1,5 @@
 Name: libiscsi
-Version: 1.10.0
+Version: 1.12.0
 Release: alt1
 
 Summary: iSCSI client library
@@ -41,7 +41,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 %patch -p1
 
 %build
-./autogen.sh
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -55,6 +55,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 %files utils
 %_bindir/*
 %_man1dir/*
+%exclude %_bindir/ld_iscsi*
 
 %files devel
 %_includedir/*
@@ -62,6 +63,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
+- 1.12.0
+
 * Tue Dec 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 
