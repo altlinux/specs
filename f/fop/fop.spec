@@ -2,25 +2,34 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Summary:	XSL-driven print formatter
 Name:		fop
-Version:	1.0
-Release:	alt3_20jpp7
+Version:	1.1
+Release:	alt1_1jpp7
 License:	ASL 2.0
 Group:		Text tools
 URL:		http://xmlgraphics.apache.org/fop
-Source0:	http://www.apache.org/dist/xmlgraphics/fop/source/%{name}-%{version}-src.tar.gz
+# wget http://www.apache.org/dist/xmlgraphics/fop/source/%{name}-%{version}-src.tar.gz
+# tar xzvf fop-%{version}-src.tar.gz
+# find ./fop-%{version}/src/java/org/apache/fop/pdf/ -name "*.icm*" -delete
+# find ./fop-%{version}/ -name "*.jar" -delete
+# find ./fop-%{version}/ -name "*.pdf" -delete
+# we don't run tests, we don't need test data
+# find ./fop-%{version}/ -name "*.ser" -delete
+# tar czvf fop-%{version}-src.tar.gz fop-%{version}
+Source0:	%{name}-%{version}-src.tar.gz
 Source1:	%{name}.script
 Source2:	batik-pdf-MANIFEST.MF
 Source3:	http://mirrors.ibiblio.org/pub/mirrors/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
-Patch0:		%{name}-manifest.patch
-Patch1:		%{name}-main.patch
+Patch0:		%{name}-main.patch
+Patch1:		%{name}-Use-sRGB.icc-color-profile-from-icc-profiles-openicc.patch
 BuildArch:  noarch
-Requires:	xmlgraphics-commons >= 1.2
+Requires:	xmlgraphics-commons >= 1.5
 Requires:	avalon-framework >= 4.1.4
 Requires:	batik >= 1.7
 Requires:	xalan-j2 >= 2.7.0
@@ -28,6 +37,7 @@ Requires:	xml-commons-apis >= 1.3.04
 Requires:	jakarta-commons-httpclient
 Requires:	apache-commons-io >= 1.2
 Requires:	apache-commons-logging >= 1.0.4
+Requires:	icc-profiles-openicc
 Requires:   jpackage-utils
 
 Requires(post): jpackage-utils
@@ -39,7 +49,7 @@ BuildRequires:	jpackage-utils
 BuildRequires:	apache-commons-logging
 BuildRequires:	apache-commons-io
 BuildRequires:	avalon-framework
-BuildRequires:	xmlgraphics-commons
+BuildRequires:	xmlgraphics-commons >= 1.5
 BuildRequires:	batik
 BuildRequires:	servlet
 BuildRequires:	qdox
@@ -71,8 +81,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p0
+%patch0 -p0
+%patch1 -p1
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -145,6 +155,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_1jpp7
+- new version
+
 * Sun Mar 31 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_20jpp7
 - fc update
 
