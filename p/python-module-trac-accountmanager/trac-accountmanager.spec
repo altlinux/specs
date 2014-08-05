@@ -1,7 +1,7 @@
 Summary: User account management plugin for Trac
 Name: python-module-trac-accountmanager
 Version: 0.5
-Release: alt1.r12976
+Release: alt2.r12976
 Url: http://trac-hacks.org/wiki/AccountManagerPlugin
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -32,9 +32,12 @@ The AccountManager offers several features for managing user accounts:
 %files
 %doc README README.hashes README.update COPYING
 %python_sitelibdir/acct_mgr/
-%python_sitelibdir/TracAccountManager-0.5dev-py2.7.egg-info/
+%python_sitelibdir/TracAccountManager-0.5dev_r0-py2.7.egg-info/
 
 %changelog
+* Tue Aug 05 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1:0.5-alt2.r12976
+- Fixed build
+
 * Thu Apr 18 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 1:0.5-alt1.r12976
 - New version
 
