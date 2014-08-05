@@ -1,5 +1,5 @@
 Name: vlc
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: VLC media player
@@ -1309,6 +1309,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Aug 05 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.5-alt1
+- 2.1.5 released
+
 * Mon May 12 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.4-alt1
 - 2.1.4 released
 
