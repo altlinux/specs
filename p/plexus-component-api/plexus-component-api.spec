@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt3_0.10.alpha15jpp7
+Release:        alt4_0.10.alpha15jpp7
 Summary:        Plexus Component API
 
 Group:          Development/Java
@@ -84,6 +84,8 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %{_javadir}/plexus/*
+%{_javadir}/%{name}/*
+
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
@@ -91,6 +93,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.10.alpha15jpp7
+- BR: maven-local
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.10.alpha15jpp7
 - added compat symlink
 
