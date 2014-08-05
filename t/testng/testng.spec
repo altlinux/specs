@@ -8,29 +8,27 @@ BuildRequires: jpackage-compat
 %global group_id  org.testng
 
 Name:             testng
-Version:          6.0.1
-Release:          alt3_4jpp7
+Version:          6.8
+Release:          alt1_1jpp7
 Summary:          Java-based testing framework
-License:          ASL 2.0
+# org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
+License:          ASL 2.0 and CPL
 Group:            Development/Java
 URL:              http://testng.org/
-# git clone git://github.com/cbeust/testng.git
-# cd testng
-# git archive --prefix="testng-6.0.1/" --format=tar testng-6.0.1 | xz > testng-6.0.1.tar.xz
-Source0:          %{name}-%{version}.tar.xz
-
-Patch0:           %{name}-test-fails-workaround.patch
+Source0:          https://github.com/cbeust/testng/archive/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
-BuildRequires:    beust-jcommander
+BuildRequires:    maven-local
+BuildRequires:    beust-jcommander >= 1.27
 BuildRequires:    snakeyaml
+BuildRequires:    google-guice
 
-Requires:         beust-jcommander
-Requires:         snakeyaml
 Requires:         jpackage-utils
+Requires:         beust-jcommander >= 1.27
+Requires:         snakeyaml
+Requires:         google-guice
 Source44: import.info
 
 %description
@@ -49,43 +47,30 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 
-%patch0 -p1
+# build fix for new guice
+sed -i "s|com.google.inject.internal|com.google.common.collect|" \
+  src/main/java/org/testng/xml/XmlDependencies.java \
+  src/main/java/org/testng/xml/XmlGroups.java \
+  src/main/java/org/testng/xml/dom/TestNGTagFactory.java \
+  src/test/java/test/dependent/InstanceSkipSampleTest.java \
+  src/test/java/test/mustache/MustacheTest.java \
+  src/test/java/test/thread/B.java
 
 # remove bundled stuff
 rm -rf spring
 rm -rf 3rdparty
-rm -rf doc
 rm -rf lib-supplied
 rm -rf gigaspaces
-rm -rf sandbox
-rm -rf examples
 rm -f *.jar
 
-
-# fix the ant group_id ... ant -> org.apache.ant
-sed -i 's/<groupId>ant/<groupId>org.apache.ant/g' pom.xml
-
-# replace CR+LF with LF
-sed -i 's/\r//g' README
-
-# convert to UTF8
-
-#$ enca CHANGES.txt
-#Unrecognized encoding
-#$ enca ANNOUNCEMENT.txt
-#Unrecognized encoding
-
-#$ chardet-file ANNOUNCEMENT.txt
-#{'confidence': 0.8484260688832136, 'encoding': 'ISO-8859-2'}
-#$ chardet-file CHANGES.txt
-#{'confidence': 0.7833420201466339, 'encoding': 'ISO-8859-2'}
+# convert to UTF-8
+native2ascii -encoding UTF-8 src/main/java/org/testng/internal/Version.java \
+  src/main/java/org/testng/internal/Version.java
 
 iconv --from-code=ISO-8859-2 --to-code=UTF-8 ANNOUNCEMENT.txt > ANNOUNCEMENT.txt.utf8
 mv -f ANNOUNCEMENT.txt.utf8 ANNOUNCEMENT.txt
-iconv --from-code=ISO-8859-2 --to-code=UTF-8 CHANGES.txt > CHANGES.txt.utf8
-mv -f CHANGES.txt.utf8 CHANGES.txt
 
 %build
 mvn-rpmbuild -Dmaven.local.debug=true -Dgpg.skip=true install javadoc:aggregate
@@ -98,7 +83,7 @@ install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -112,9 +97,12 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files javadoc
 %doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.8-alt1_1jpp7
+- new version
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.0.1-alt3_4jpp7
 - fixed deps
 
