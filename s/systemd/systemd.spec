@@ -40,7 +40,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 214
-Release: alt10
+Release: alt11
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -49,9 +49,9 @@ License: LGPLv2.1+
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source:%name-%version.tar
-Source7: altlinux-update_chrooted.service
+Source6: altlinux-libresolv.path
+Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
-# Source14: systemd-vconsole-setup@.service
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
@@ -571,10 +571,10 @@ intltoolize --force --automake
 # Make sure these directories are properly owned
 mkdir -p %buildroot%_unitdir/{basic,default,dbus,graphical,poweroff,rescue,reboot}.target.wants
 
-
 ln -s rc-local.service %buildroot%_unitdir/local.service
-install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-update_chrooted.service
-ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wants
+install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
+ln -s ../altlinux-libresolv.path %buildroot%_unitdir/basic.target.wants
+install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
@@ -623,11 +623,6 @@ rm -rf %buildroot%_docdir/systemd
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
 ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
 ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
-
-# add workaround for localize ttyX
-#install -m644 %SOURCE14 %buildroot%_unitdir/systemd-vconsole-setup@.service
-#mkdir -p %buildroot%_unitdir/getty@.service.requires
-#ln -r -s %buildroot%_unitdir/systemd-vconsole-setup@.service %buildroot%_unitdir/getty@.service.requires/systemd-vconsole-setup@.service
 
 # create drop-in to prevent tty1 to be cleared
 mkdir -p %buildroot%_unitdir/getty@tty1.service.d
@@ -682,11 +677,13 @@ mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
 # Make sure directories in /var exist
 mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
 mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
+mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
+mkdir -p %buildroot%_localstatedir/lib/systemd/rfkill
 mkdir -p %buildroot%_localstatedir/log/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
 touch %buildroot%_localstatedir/lib/systemd/random-seed
-mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
+touch %buildroot%_localstatedir/lib/systemd/clock
 
 # Add completion for bash3
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
@@ -1045,7 +1042,8 @@ update_chrooted all
 %dir %_localstatedir/lib/systemd/catalog
 %ghost %_localstatedir/lib/systemd/catalog/database
 %ghost %_localstatedir/lib/systemd/random-seed
-%dir %_localstatedir/lib/systemd/coredump
+%ghost %_localstatedir/lib/systemd/clock
+
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
 %_localstatedir/log/README
@@ -1060,9 +1058,12 @@ update_chrooted all
 %exclude %_datadir/systemd/gatewayd
 %endif
 %if_enabled coredump
-%exclude %_bindir/systemd-coredumpctl
+%exclude %_bindir/*coredumpctl
 %exclude /lib/systemd/systemd-coredump
-%exclude %_man1dir/systemd-coredumpctl.*
+%exclude %_man1dir/*coredumpctl.*
+#%exclude %_man5dir/coredump.conf.*
+#%exclude %_man8dir/systemd-coredump.*
+#%exclude %_sysconfdir/systemd/coredump.conf
 %endif
 
 # systemd-utils
@@ -1193,10 +1194,14 @@ update_chrooted all
 
 %if_enabled coredump
 %files coredump
+#%config(noreplace) %_sysconfdir/systemd/coredump.conf
 /lib/systemd/systemd-coredump
-%_bindir/systemd-coredumpctl
+%_bindir/*coredumpctl
 /lib/sysctl.d/50-coredump.conf
-%_man1dir/systemd-coredumpctl.*
+%_man1dir/*coredumpctl.*
+#%_man5dir/coredump.conf.*
+#%_man8dir/systemd-coredump.*
+%dir %_localstatedir/lib/systemd/coredump
 %endif
 
 %files -n bash-completion-%name
@@ -1324,6 +1329,12 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt11
+- set default polling interval on removable devices as well
+- sysv: order initscripts which provide $network before network.target
+- sysv-generator: do not generate 'Wants' symlinks to generated service files that will be shadowed by a native unit
+- altlinux-update_chrooted.service -> altlinux-libresolv.path
+
 * Tue Jul 08 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt10
 - backport patches for generator from upstream master
 - fix preun journal-gateway
