@@ -1,52 +1,80 @@
-Name: beust-jcommander
-Version: 1.30
-Summary: Java framework for parsing command line parameters
-License: ASL 2.0
-Url: http://jcommander.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: java
-Requires: jpackage-utils
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+%global short_name   jcommander
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: beust-jcommander-1.30-2.fc18.2.cpio
+Name:             beust-%{short_name}
+Version:          1.30
+Release:          alt2_2.2jpp7
+Summary:          Java framework for parsing command line parameters
+License:          ASL 2.0
+Group:            Development/Java
+URL:              http://jcommander.org/
+Source0:          https://github.com/cbeust/%{short_name}/archive/%{short_name}-%{version}.tar.gz
+
+BuildArch:        noarch
+
+BuildRequires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: testng >= 6.1.1
+
+Requires: jpackage-utils
+Source44: import.info
 
 %description
 JCommander is a very small Java framework that makes it trivial to
 parse command line parameters (with annotations).
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:          API documentation for %{name}
+Group:            Development/Java
+Requires: jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{short_name}-%{version}
+chmod -x license.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+mvn-rpmbuild install javadoc:aggregate
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jars
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
+# pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files -f %name-list
+# javadoc
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+
+%files
+%doc license.txt notice.md README.markdown
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+
+%files javadoc
+%doc license.txt notice.md
+%{_javadocdir}/%{name}
 
 %changelog
-* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt0.1jpp
-- bootstrap pack of jars created with jppbootstrap script
-- temporary package to satisfy circular dependencies
-
-%changelog
-* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_5jpp7
-- new fc release
-
-* Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4jpp7
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_2.2jpp7
 - new version
 
-* Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt0.1jpp
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1_2.2jpp7
+- new version
+
+* Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.30-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
 
