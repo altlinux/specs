@@ -15,7 +15,7 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Fast HTTP server
@@ -34,6 +34,7 @@ Source8: ngx_ctpp2.tar
 Source9: %name.service
 Source10: nginx-rtmp-module.tar
 Source11: mime.types
+Source100: %name.watch
 
 Patch1: nginx-0.8-syslog.patch
 
@@ -270,6 +271,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Aug 06 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+- CVE-2014-3556
+
 * Tue Apr 29 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
