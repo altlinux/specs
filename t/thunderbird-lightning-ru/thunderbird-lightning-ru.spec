@@ -4,7 +4,7 @@
 
 Name:		thunderbird-%rname
 Version:	2.6.2
-Release:	alt4
+Release:	alt5
 Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
 Packager:	Radik Usupov <radik@altlinux.org>
@@ -35,6 +35,9 @@ patch -p2 < %PATCH0
 %ciddir
 
 %changelog
+* Wed Aug 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.6.2-alt5
+- Update maxVersion for Thunderbird 31.x
+
 * Tue May 13 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.6.2-alt4
 - Update maxVersion for Thunderbird 24.5.x and Seamonkey 2.26.x
 
