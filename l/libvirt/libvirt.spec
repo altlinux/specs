@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -577,7 +577,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap dommigrate
+for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter systemtap dommigrate domtop
 do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
@@ -921,6 +921,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.7-alt1
+- 1.2.7
+
 * Fri Jul 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.6-alt1
 - 1.2.6
 
