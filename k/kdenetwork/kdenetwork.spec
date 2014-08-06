@@ -20,7 +20,7 @@
 
 Name: kdenetwork
 Version: 3.5.13.2
-Release: alt4
+Release: alt4.1
 
 Group: Graphical desktop/KDE
 Summary: KDE - Network Applications
@@ -771,6 +771,9 @@ useradd -s /dev/null -r _kdelisa >/dev/null 2>&1 ||:
 %_K3includedir/*
 
 %changelog
+* Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 3.5.13.2-alt4.1
+- NMU: rebuild with new samba
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt4
 - ARTS support enable.
 

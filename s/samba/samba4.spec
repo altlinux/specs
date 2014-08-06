@@ -30,7 +30,7 @@
 %def_enable avahi
 
 Name: samba
-Version: 4.1.9
+Version: 4.1.11
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -641,7 +641,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/smbtar
 %_bindir/smbtree
 %{cups_serverbin}/backend/smb
-%_libdir/samba/libldb-cmdline.so
 %_man1dir/dbwrap_tool.1*
 %_man1dir/nmblookup.1*
 %_man1dir/oLschema2ldif.1*
@@ -700,6 +699,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/ldbmodify.1*
 %_man1dir/ldbrename.1*
 %_man1dir/ldbsearch.1*
+%_libdir/samba/libldb-cmdline.so
 %endif
 
 %files common -f net.lang
@@ -1082,6 +1082,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.11-alt1
+- 4.1.11
+- fixed unstrcpy macro length is invalid(CVE-2014-3560)
+
+* Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.10-alt1
+- 4.1.10
+
 * Tue Jun 24 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.9-alt1
 - 4.1.9
 - fixed nmbd denial of service(CVE-2014-0244)
