@@ -12,7 +12,7 @@
 
 Name: ModemManager
 Version: 1.2.0
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -149,10 +149,37 @@ make check
 install -Dm0755 %SOURCE1 %buildroot%_initdir/ModemManager
 
 %post
-%post_service %name
+# Don't restart service during upgrade:
+# the network can be via modem controlled
+# by ModemManager itself.
+#post_service %name
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+	"$SYSTEMCTL" daemon-reload ||:
+	if [ "$1" -eq 1 ]; then
+		"$SYSTEMCTL" -q preset %name.service||:
+	fi
+else
+	if [ "$1" -eq 1 ]; then
+		/sbin/chkconfig --add %name ||:
+	else
+		/sbin/chkconfig %name resetpriorities ||:
+	fi
+fi
 
 %preun
-%preun_service %name
+# Don't stop service:
+# the network can be via modem controlled
+# by ModemManager itself.
+#preun_service %name
+if [ "$1" -eq 0 ]; then
+	SYSTEMCTL=systemctl
+	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+		"$SYSTEMCTL" --no-reload -q disable %name.service ||:
+	else
+		chkconfig --del %name ||:
+	fi
+fi
 
 %files -f %name.lang
 %doc ChangeLog NEWS AUTHORS README
@@ -204,6 +231,10 @@ install -Dm0755 %SOURCE1 %buildroot%_initdir/ModemManager
 %endif
 
 %changelog
+* Wed Aug 06 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt3
+- Don't restart service during upgrade.
+- Rebuild with libmbim-glib-1.10.0.
+
 * Thu Apr 03 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
 - Use post_service/preun_service.
 - Add init script.

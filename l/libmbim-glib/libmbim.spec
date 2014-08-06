@@ -1,7 +1,7 @@
 %define _name libmbim
 
 Name: %_name-glib
-Version: 1.8.0
+Version: 1.10.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -96,6 +96,9 @@ make check
 
 
 %changelog
+* Tue Aug 05 2014 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
 * Tue Mar 11 2014 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
 - Updated to 1.8.0.
 
