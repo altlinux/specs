@@ -7,8 +7,8 @@
 %def_disable ruby
 
 Name: graphviz
-Version: 2.28.0
-Release: alt5
+Version: 2.38.0
+Release: alt1
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -26,14 +26,16 @@ Requires: lib%name = %version-%release
 Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
 
-# Automatically added by buildreq on Wed Oct 12 2011 (-bi)
-BuildRequires: flex gcc-c++ ghostscript-utils groff-base guile18-devel imake libXaw-devel libXpm-devel libexpat-devel libfreeglut-devel libgd2-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel libpng-devel librsvg-devel swig tk-devel xorg-cf-files
+# Automatically added by buildreq on Wed Apr 23 2014 (-bi)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config guile18 libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgtk+2-devel libltdl7-devel libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel libwayland-client libwayland-server perl-devel pkg-config python-base rpm-build-tcl tcl tcl-devel tk xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: flex gcc-c++ ghostscript-utils groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libfreeglut-devel libgd2-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel phonon-devel swig tk-devel xorg-cf-files
 
 %{?_enable_lua:BuildRequires: liblua5-devel}
 %{?_enable_guile:BuildRequires: guile18-devel}
 
-%define gvlibdir %_libdir/%name
 %define gvdatadir %_datadir/%name
+%define gvlibdir %_libdir/%name
+%define gvtcldir %_libexecdir/%name/tcl
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %gvdatadir/demo/*.pl
@@ -175,11 +177,13 @@ This package makes %name functionality accessible from Tcl
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+
 # avoid %%doc, install by hand
 mkdir -p %buildroot%_defaultdocdir
 mv %buildroot%gvdatadir/doc %buildroot%_defaultdocdir/%name-%version
 cp -a AUTHORS COPYING cpl1.0.txt ChangeLog NEWS %buildroot%_defaultdocdir/%name-%version
+
 mkdir -p %buildroot%_tcldatadir/{%name,gd,tkspline}
 cat <<EOF > %buildroot%_tcldatadir/gd/pkgIndex.tcl
 package ifneeded Gdtclft %version "load [file join \$dir .. .. .. lib tcl libgdtclft.so.0] Gdtclft"
@@ -193,7 +197,14 @@ package ifneeded Tkspline %version "
 	package require Tk 8.3
         load [file join \$dir .. .. .. lib tcl libtkspline.so.0] Tkspline"
 EOF
-# created by %_bindir/dot -c
+
+# argh, #21967
+if [ ! -d %buildroot%gvtcldir ]; then
+	mkdir -p "$(dirname %buildroot%gvtcldir)"
+	mv %buildroot{%_libdir/%name/tcl,%gvtcldir}
+fi
+
+# created by %%_bindir/dot -c
 touch %buildroot%gvlibdir/config
 
 rm -f %buildroot%gvlibdir/*/lib*.la
@@ -205,6 +216,8 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %files
 %_bindir/*
 %dir %gvdatadir/
+%gvdatadir/gvedit
+%gvdatadir/gvpr
 %gvdatadir/lefty
 %gvdatadir/smyrna
 %ghost %gvlibdir/config
@@ -275,14 +288,14 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 %endif
 
 %files tcl
-%dir %gvlibdir/tcl/
-%gvlibdir/tcl/libgdtclft.so*
-%gvlibdir/tcl/libgv_tcl.so
-%gvlibdir/tcl/libtcldot.so*
-%gvlibdir/tcl/libtcldot_builtin.so*
-%gvlibdir/tcl/libtclplan.so*
-%gvlibdir/tcl/libtkspline.so*
-%gvlibdir/tcl/pkgIndex.tcl
+%dir %gvtcldir/
+%gvtcldir/libgdtclft.so*
+%gvtcldir/libgv_tcl.so
+%gvtcldir/libtcldot.so*
+%gvtcldir/libtcldot_builtin.so*
+%gvtcldir/libtclplan.so*
+%gvtcldir/libtkspline.so*
+%gvtcldir/pkgIndex.tcl
 %_libdir/tcl*/*
 %_tcldatadir/%name
 %_tcldatadir/gd/pkgIndex.tcl
@@ -301,6 +314,16 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 2.38.0-alt1
+- 2.38.0
+- moved tcl bindings into arch-independent prefix (closes: #21967)
+
+* Sat Dec 07 2013 Michael Shigorin <mike@altlinux.org> 2.34.0-alt1
+- 2.34.0
+  + added %gvdatadir/gvpr/ scripts
+- NB: there was 2.30.1-alt1 build but it wasn't pushed to sisyphus
+  back then due to being potentially disruptive to p7/branch formation
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.28.0-alt5
 - built for perl 5.18
 

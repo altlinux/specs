@@ -2,7 +2,7 @@
 
 Name: libflowcanvas
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: A canvas widget for graph-like interfaces
 License: %gpl2plus
@@ -15,7 +15,7 @@ Patch0: changeset_r2170.diff
 
 BuildPreReq: rpm-build-licenses
 # Automatically added by buildreq on Mon Aug 03 2009
-BuildRequires: boost-devel doxygen gcc-c++ libgnomecanvasmm-devel libgraphviz-devel
+BuildRequires: boost-devel doxygen gcc-c++ libgnomecanvasmm-devel
 
 %description
 FlowCanvas is an interactive Gtkmm/Gnomecanvasmm widget for "boxes and lines"
@@ -75,6 +75,9 @@ Documentation for %name
 %doc doc/html/*
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.5.1-alt3
+- NMU: rebuilt without graphviz support (cgraph migration in 2.30)
+
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 0.5.1-alt2
 - NMU: rebuilt with current graphviz
 

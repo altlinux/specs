@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-DocGenerator
 Version: 0.1
-Release: alt3.git20140227
+Release: alt4.git20140227
 Summary: Etoile Doc Generator
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -85,6 +85,9 @@ install -m755 objcrewriter.io %buildroot%_bindir/
 %_libdir/GNUstep
 
 %changelog
+* Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt4.git20140227
+- NMU: rebuilt against current libgraphviz
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20140227
 - No more assertion when build documentation
 
