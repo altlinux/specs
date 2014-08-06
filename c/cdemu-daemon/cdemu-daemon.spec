@@ -1,6 +1,6 @@
 Name: cdemu-daemon
-Version: 3.0.0
-Release: alt3
+Version: 3.0.1
+Release: alt1
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -15,7 +15,7 @@ Source2: vhba.service
 
 BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 3.0.0
+BuildRequires: libmirage-devel >= 3.0.1
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -71,9 +71,20 @@ popd
 %dir %_datadir/dbus-1/services
 %_datadir/dbus-1/services/*.service
 %_initdir/vhba
+%dir /lib/systemd
+%dir %_unitdir
 %_unitdir/vhba.service
 
 %changelog
+* Wed Aug 06 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
+- Version 3.0.1
+
+* Sun Jul 20 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt2.M70P.1
+- Build for branch p7
+
+* Sat Jul 19 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt2.M70T.1
+- Build for branch t7
+
 * Wed Jul 16 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt3
 - Add vhba service file for systemd
 
