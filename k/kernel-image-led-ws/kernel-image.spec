@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.8
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1906,6 +1906,20 @@ done)
 
 
 %changelog
+* Wed Aug 06 2014 Led <led@altlinux.ru> 3.15.8-alt3
+- updated:
+  + fix-drivers-iommu--intel-iommu
+  + fix-drivers-usb-core
+  + fix-fs
+  + fix-fs-xfs
+- added:
+  + fix-drivers-usb-storage--uas
+  + fix-fs-nfs--nfsv3
+
+* Mon Aug 04 2014 Led <led@altlinux.ru> 3.15.8-alt2
+- updated:
+  + feat-fs-aufs
+
 * Fri Aug 01 2014 Led <led@altlinux.ru> 3.15.8-alt1
 - 3.15.8
 - removed:
