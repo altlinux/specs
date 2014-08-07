@@ -1,7 +1,7 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 4.9.21
+%define version 4.9.22
 %define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -20,6 +20,8 @@ URL:		http://www.downloadhelper.net/
 BuildArch:      noarch
 
 Source0:	%rname.xpi
+Patch:		video_downloadhelper-set-maxver.patch
+
 Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 
 BuildRequires(pre):	rpm-build-firefox rpm-build-licenses
@@ -37,6 +39,7 @@ sites.
 
 %prep
 %setup -c
+%patch -p2
 
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
@@ -55,6 +58,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 4.9.22-alt1
+- New version 4.9.22
+- Support Firefox 31.x and Seamonkey 2.30.x
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 4.9.21-alt1
 - New version 4.9.21
 
