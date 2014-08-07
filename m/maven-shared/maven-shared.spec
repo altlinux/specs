@@ -64,7 +64,7 @@ Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
 Version:        15
-Release:        alt9_28jpp7
+Release:        alt10_28jpp7
 License:        ASL 2.0
 Group:          Development/Java
 
@@ -82,7 +82,7 @@ BuildRequires:  dom4j
 BuildRequires:  easymock2
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-artifact-manager
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-doxia
@@ -513,6 +513,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:15-alt10_28jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:15-alt9_28jpp7
 - update
 
