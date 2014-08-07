@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           slf4j
 Version:        1.7.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
@@ -49,7 +49,7 @@ BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit >= 0:1.6.5
 BuildRequires:  javassist >= 0:3.4
 BuildRequires:  junit >= 0:3.8.2
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -232,6 +232,9 @@ cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt2_4jpp7
+- rebuild with maven-local
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt1_4jpp7
 - update
 
