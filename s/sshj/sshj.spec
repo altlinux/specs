@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          sshj
 Version:       0.8.1
-Release:       alt2_1jpp7
+Release:       alt3_1jpp7
 Summary:       SSHv2 library for Java
 Group:         Development/Java
 License:       ASL 2.0
@@ -25,7 +25,7 @@ BuildRequires: junit
 BuildRequires: logback
 BuildRequires: mockito
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-javadoc-plugin
@@ -87,6 +87,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_1jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
