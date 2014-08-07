@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             joda-time
 Version:          1.6.2
-Release:          alt3_8.tzdata2011fjpp7
+Release:          alt4_8.tzdata2011fjpp7
 Summary:          Java date and time API
 
 Group:            Development/Java
@@ -19,7 +19,7 @@ Patch0:           joda-time-remove-toolchains-from-pom.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 Requires:         jpackage-utils
 Source44: import.info
@@ -92,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt4_8.tzdata2011fjpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt3_8.tzdata2011fjpp7
 - NMU rebuild to move poms and fragments
 
