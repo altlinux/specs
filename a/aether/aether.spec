@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           aether
 Version:        1.13.1
-Release:        alt3_4jpp7
+Release:        alt4_4jpp7
 Summary:        Sonatype library to resolve, install and deploy artifacts the Maven way
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ Source0:        %{name}-%{version}.tar.bz2
 
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -106,6 +106,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt4_4jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt3_4jpp7
 - fixed build
 
