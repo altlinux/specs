@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             shrinkwrap-resolver
 Version:          1.0.0
-Release:          alt2_0.2.beta7jpp7
+Release:          alt3_0.2.beta7jpp7
 Summary:          ShrinkWrap Resolver
 Group:            Development/Java
 License:          ASL 2.0
@@ -28,7 +28,7 @@ Patch1:           0002-Use-correct-content-type-for-enhanced-repository-man.patc
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -107,6 +107,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_0.2.beta7jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_0.2.beta7jpp7
 - fixed build
 
