@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           sonatype-forge-parent
 Version:        12
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Sonatype Forge Parent POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -12,7 +12,7 @@ License:        ASL 2.0
 URL:            https://github.com/sonatype/oss-parents
 Source:         https://github.com/sonatype/oss-parents/tarball/forge-parent-%{version}#/%{name}-%{version}.tar.gz
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 
 Requires:       maven
@@ -41,6 +41,9 @@ install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 12-alt2_1jpp7
+- rebuild with maven-local
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 12-alt1_1jpp7
 - new version
 
