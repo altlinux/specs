@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.0.11
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          Development/Java
@@ -21,7 +21,7 @@ Patch1:         apache-commons-daemon-JAVA_OS.patch
 Patch2:         apache-commons-daemon-s390x.patch
 Patch3:         apache-commons-daemon-ppc64.patch
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
@@ -142,6 +142,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.11-alt2_1jpp7
+- rebuild with maven-local
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.11-alt1_1jpp7
 - fc update
 
