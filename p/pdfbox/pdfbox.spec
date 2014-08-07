@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 18
 Name:           pdfbox
 Version:        1.7.0
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Java library for working with PDF documents
 
 Group:          Development/Java
@@ -22,7 +22,7 @@ Patch2:         %{name}-lucene.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-compiler-plugin
@@ -239,6 +239,9 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt3_4jpp7
+- rebuild with maven-local
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt2_4jpp7
 - new fc release
 
