@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        1.2
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Plexus Components POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -17,7 +17,7 @@ Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -44,6 +44,9 @@ install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_2jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp7
 - update
 
