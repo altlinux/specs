@@ -1,19 +1,27 @@
+%define  snapshot bbe6842
+
 Name:    yagf
-Version: 0.9.2
-Release: alt1
+Version: 0.9.4
+Release: alt1.git%snapshot
 
 Summary: YAGF is a graphical front-end for cuneiform and tesseract OCR tools
-Summary(ru_RU.UTF-8): Оболочка YAGF предоставляет графический интерфейс для консольных программ распознавания тектов cuneiform и tesseract
+Summary(ru_RU.UTF-8): Оболочка YAGF предоставляет графический интерфейс для систем распознавания текста Cuneiform и Tesseract
 License: GPLv3+
 Group:   Office
 URL:     http://symmetrica.net/cuneiform-linux/yagf-ru.html
+# VCS URL: https://code.google.com/p/yagf/
 
-Source:  http://symmetrica.net/cuneiform-linux/yagf-%{version}-Source.tar.gz
-Source1: YAGF.desktop
+Source:  %{name}-%{version}.tar
+Patch:	 %{name}-%{version}.patch
 
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libqt4-devel
-BuildRequires: cmake libaspell-devel aspell
-Requires:      cuneiform libaspell aspell-en
+BuildRequires: libaspell-devel aspell
+
+Requires: cuneiform
+Requires: libaspell
+Requires: aspell-en
+Requires: ImageMagick-tools
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -38,27 +46,42 @@ the online help for more details).
 
 %prep
 %setup -q
-cp -f %SOURCE1 .
+%patch -p1
 subst "s,/usr/local,%buildroot/usr/,g" ./CMakeLists.txt
 
 %build
-cmake ./
-%make
+%cmake
+%cmake_build
 
 %install
-make install DESTDIR=%buildroot
+%cmakeinstall_std
 
 %files 
 %doc README COPYING DESCRIPTION AUTHORS ChangeLog
 %_bindir/%name
-%dir %_libdir/%name
 %_libdir/%name/*.so*
 %_datadir/%name
-%_datadir/pixmaps/yagf.png
-%_datadir/icons/hicolor/96x96/apps/%name.png
-%_datadir/applications/YAGF.desktop
+%_pixmapsdir/yagf.png
+%_iconsdir/hicolor/96x96/apps/%name.png
+%_desktopdir/YAGF.desktop
 
 %changelog
+* Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.gitbbe6842
+- New version
+
+* Thu Apr 03 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.3.2-alt1.gita131416
+- New version
+- Multipage TIFF support
+- Fix Russian translation
+- Move settings to single dialog
+
+* Wed Feb 26 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt2.gitc12786e
+- Build from upstream git
+- Fix recognize TIFF images
+
+* Thu Feb 20 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1
+- New version
+
 * Thu Sep 06 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
 - Version 0.9.2
   - Workspace may now be saved as a project
