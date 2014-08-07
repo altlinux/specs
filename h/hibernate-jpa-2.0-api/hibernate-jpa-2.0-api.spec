@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt2_7jpp7
+Release:          alt3_7jpp7
 Summary:          Java Persistence 2.0 (JSR 317) API
 
 Group:            Development/Java
@@ -28,7 +28,7 @@ BuildArch:        noarch
 Requires:         jpackage-utils
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-compiler-plugin
@@ -91,6 +91,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 %doc license.txt
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_7jpp7
+- rebuild with maven-local
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7jpp7
 - added OSGi info
 
