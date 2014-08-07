@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          alt2_0.3.svn1071189jpp7
+Release:          alt3_0.3.svn1071189jpp7
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Java
@@ -17,7 +17,7 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
@@ -78,6 +78,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.3.svn1071189jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.3.svn1071189jpp7
 - NMU rebuild to move poms and fragments
 
