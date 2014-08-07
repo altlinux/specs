@@ -11,20 +11,21 @@
 %define licensepath	%_docdir
 
 Name: zarafa
-Version: 7.1.1
-Release: alt5
+Version: 7.1.10
+Release: alt1
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
-Packager: Radik Usupov <radik@altlinux.org>
+Packager: Ablaev Alexandr <bassmaster@altlinux.org>
 Url: http://www.zarafa.com/
 
 Source: %name-%version.tar.gz
 Source1: php-zarafa.params
 Patch: zarafa-7.1.0beta1-alt-makefile.patch
-Patch1: zarafa-7.1.1-alt-ossbuild.patch
-Patch2: zarafa-7.0rc1-alt-php-ext-makefile.patch
-Patch3: zarafa-7.0.1-alt-fix-userscript-path.patch
+Patch1: zarafa-7.1.8-alt-ossbuild.patch
+Patch2: zarafa-7.1.6-alt-php-ext-makefile.patch
+Patch3: zarafa-7.1.8-alt-fix-userscript-path.patch
+Patch4: zarafa-7.1.8-alt-configure.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires(pre): rpm-build-apache2
@@ -256,6 +257,7 @@ modern web browser.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %add_optflags -fPIC -L%_libdir
@@ -683,6 +685,57 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Tue Jul 06 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.10-alt1
+- Update for new version (7.1.10-44973)
+- Deleted Patch5: zarafa-7.1.8-doc-makefile.patch
+
+* Tue Jul 06 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.9-alt1
+- Update for new version (7.1.9-44333)
+
+* Tue Jul 06 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.8-alt2
+- Update for version (7.1.8-44004)
+- Add new patch: zarafa-7.1.8-doc-makefile.patch
+
+* Tue Jul 06 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.8-alt1
+- Update for new version (7.1.8-43801)
+- Add patches:
+    zarafa-7.1.8-alt-configure.patch
+    zarafa-7.1.8-alt-fix-userscript-path.patch
+    zarafa-7.1.8-alt-ossbuild.patch
+    
+- Replace:
+    zarafa-7.1.1-alt-ossbuild.patch on zarafa-7.1.8-alt-ossbuild.patch
+    zarafa-7.0.1-alt-fix-userscript-path.patch on zarafa-7.1.8-alt-fix-userscript-path.patch
+
+- New patch:
+    Patch4: zarafa-7.1.8-alt-fix-userscript-path.patch
+
+- Deleted patches:
+    zarafa-7.1.1-alt-ossbuild.patch
+    zarafa-7.0.1-alt-fix-userscript-path.patch
+    zarafa-7.0.2-alt-fix-sslscript.patch (Old. Not use)
+    zarafa-7.0rc1-alt-php-ext-makefile.patch (Old. Not use)
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.7-alt1
+- Update for new version (7.1.7-42779)
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.6-alt1
+- Update for new version (7.1.6-42710). 
+- Replace patch: zarafa-7.0rc1-alt-php-ext-makefile.patch on zarafa-7.1.6-alt-php-ext-makefile.patch.
+- Add patches/zarafa-7.1.6-alt-php-ext-makefile.patch.
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.5-alt1
+- Update for new version (7.1.5-42059)
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.4-alt1
+- Update for new version (7.1.4-41394)
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.3-alt1
+- Update for new version (7.1.3-40304)
+
+* Tue Jul 05 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.2-alt1
+- Update for new version (7.1.2-39121)
+
 * Wed Jun 18 2014 Anton Farygin <rider@altlinux.ru> 7.1.1-alt5
 - rebuild with php 5.5.13
 
