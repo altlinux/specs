@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-doap-plugin
 Version:        1.1
-Release:        alt3_2jpp7
+Release:        alt4_2jpp7
 Summary:        Plugins which generate a DOAP file from information in a POM
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Patch1: maven-doap-plugin-1.1-alt-no-cvs.patch
 BuildArch: noarch
 
 BuildRequires: plexus-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
@@ -95,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_2jpp7
 - fixed build
 
