@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven-local
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:      jacoco
 Version:   0.6.0
-Release:   alt1_3jpp7
+Release:   alt2_3jpp7
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
@@ -158,6 +158,9 @@ cp -rf target/site/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_3jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_3jpp7
 - update
 
