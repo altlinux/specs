@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-digest
 Version:        1.1
-Release:        alt1_9jpp7
+Release:        alt2_9jpp7
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -52,7 +52,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -120,6 +120,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_9jpp7
+- rebuild with maven-local
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_9jpp7
 - new fc release
 
