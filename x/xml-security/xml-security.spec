@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-security
 Version:        1.5.5
-Release:        alt2_1jpp7
+Release:        alt3_1jpp7
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
@@ -56,7 +56,7 @@ Requires:       xml-commons-apis
 Requires:       bouncycastle
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -141,6 +141,9 @@ cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt3_1jpp7
+- rebuild with maven-local
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_1jpp7
 - fixed build
 
