@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cxf-build-utils
 Version:          2.4.1
-Release:          alt4_4jpp7
+Release:          alt5_4jpp7
 Summary:          Apache CXF Build Utils
 Group:            Development/Java
 License:          ASL 2.0
@@ -18,7 +18,7 @@ Source0:          %{name}-%{version}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -85,6 +85,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5_4jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt4_4jpp7
 - fixed build
 
