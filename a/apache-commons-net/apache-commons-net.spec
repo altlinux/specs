@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 Group:          Development/Java
@@ -22,7 +22,7 @@ Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_n
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-surefire-provider-junit4
@@ -97,6 +97,9 @@ ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_1jpp7
+- rebuild with maven-local
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt1_1jpp7
 - fc update
 
