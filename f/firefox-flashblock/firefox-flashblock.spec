@@ -2,7 +2,7 @@
 
 %define rname	flashblock
 %define version 1.5.17
-%define release alt1
+%define release alt1.1
 %define cid 	\{3d7eb24f-2740-49df-8937-200b1cc08f8a\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -19,6 +19,7 @@ URL:		http://flashblock.mozdev.org/
 BuildArch:	noarch
 
 Source0:	%rname-%version.xpi
+Patch:		flashblock-set-maxversion.patch
 
 Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
 
@@ -40,6 +41,7 @@ FlashBlock - расширение для браузеров семейства M
 
 %prep
 %setup -c
+%patch -p2
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -54,6 +56,9 @@ fi
 %ciddir
 
 %changelog
+* Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt1.1
+- Support Firefox 31.x
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.17-alt1
 - New version 1.5.17
 
