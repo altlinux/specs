@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-plugin-testing
 Version:        2.0
-Release:        alt2_4.alpha1jpp7
+Release:        alt3_4.alpha1jpp7
 Summary:        Maven Plugin Testing
 
 Group:          Development/Java
@@ -21,7 +21,7 @@ Patch0:         %{name}-maven3-missing-methods.patch
 BuildArch: noarch
 
 BuildRequires: junit
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-resources-plugin
@@ -145,6 +145,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/%{name}-maven-test-tools
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_4.alpha1jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_4.alpha1jpp7
 - fixed build
 
