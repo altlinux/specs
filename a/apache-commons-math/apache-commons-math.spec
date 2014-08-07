@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-commons-math
 Version:          3.2
-Release:          alt1_1jpp7
+Release:          alt2_1jpp7
 Summary:          Java library of lightweight mathematics and statistics components
 
 Group:            Development/Java
@@ -19,7 +19,7 @@ URL:              http://commons.apache.org/%{base_name}/
 Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 Requires:         jpackage-utils
 BuildArch:        noarch
@@ -74,6 +74,9 @@ cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_1jpp7
+- rebuild with maven-local
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt1_1jpp7
 - new version
 
