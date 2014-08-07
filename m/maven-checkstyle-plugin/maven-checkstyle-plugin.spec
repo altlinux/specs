@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-checkstyle-plugin
 Version:          2.9.1
-Release:          alt3_2jpp7
+Release:          alt4_2jpp7
 Summary:          Plugin that generates a report regarding the code style used by the developers
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,7 +19,7 @@ Patch0:           %{name}-maven-core-dep.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-plugin-plugin >= 2.5.1
 BuildRequires:    plexus-containers-component-metadata >= 1.5.1
 BuildRequires:    maven-javadoc-plugin
@@ -105,6 +105,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt4_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt3_2jpp7
 - fixed build
 
