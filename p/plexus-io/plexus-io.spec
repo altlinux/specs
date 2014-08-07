@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-io
 Version:        2.0.4
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Plexus IO Components
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ BuildRequires:  jpackage-utils
 
 BuildRequires: plexus-utils
 BuildRequires: plexus-container-default
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
@@ -79,6 +79,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt3_2jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
