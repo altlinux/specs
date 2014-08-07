@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:       plexus-compiler
 Version:    1.9.2
-Release:    alt1_1jpp7.qa1
+Release:    alt2_1jpp7.qa1
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 License:    MIT
@@ -51,7 +51,7 @@ Source0:    https://github.com/sonatype/%{name}/tarball/%{name}-%{version}#/%{na
 Patch0:     plexus-compiler-ignoreOptionalProblems.patch
 
 BuildArch:      noarch
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  junit
 BuildRequires:  classworlds
@@ -181,6 +181,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt2_1jpp7.qa1
+- rebuild with maven-local
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0:1.9.2-alt1_1jpp7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
