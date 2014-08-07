@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-juddi
 Version:          3.1.4
-Release:          alt1_1jpp7
+Release:          alt2_1jpp7
 Summary:          Client API for UDDI
 Group:            Development/Java
 License:          ASL 2.0
@@ -22,7 +22,7 @@ Patch3:           0003-Disable-ReadWSDLTest.readFromJar.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
@@ -96,6 +96,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt2_1jpp7
+- rebuild with maven-local
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_1jpp7
 - fc update
 
