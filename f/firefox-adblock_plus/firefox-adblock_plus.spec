@@ -1,5 +1,5 @@
 %define rname	adblock_plus
-%define version 2.4
+%define version 2.6.4
 %define release alt1
 %define cid 	\{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -13,7 +13,7 @@ Summary:	Adblock Plus - Firefox Extension
 
 License:	GPL
 Group:		Networking/WWW
-URL:		http://adblockplus.mozdev.org/
+URL:		https://adblockplus.org
 
 Source0:	%{rname}-%{version}.tar
 
@@ -44,6 +44,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
+- New version
+- Set actual project URL
+
 * Fri Nov 01 2013 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
 - New version
 
