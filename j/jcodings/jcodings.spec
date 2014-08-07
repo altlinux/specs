@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Java
@@ -23,7 +23,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-dependency-plugin
@@ -67,6 +67,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc README.txt
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_1jpp7
+- rebuild with maven-local
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1jpp7
 - new version
 
