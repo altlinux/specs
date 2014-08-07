@@ -1,5 +1,5 @@
 Name: libexttextcat
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 
 Summary: Text categorisation library
@@ -65,6 +65,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Thu Aug 07 2014 Alexey Shabalin <shaba@altlinux.ru> 3.4.4-alt1
+- 3.4.4
+
 * Wed Aug 14 2013 Alexey Shabalin <shaba@altlinux.ru> 3.4.3-alt1
 - 3.4.3
 - rename package from libtextcat to libexttextcat
