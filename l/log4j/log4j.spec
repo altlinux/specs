@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ maven
+BuildRequires: gcc-c++ maven-local
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           log4j
 Version:        1.2.17
-Release:        alt3_3jpp7
+Release:        alt4_3jpp7
 Epoch:          0
 Summary:        Java logging package
 BuildArch:      noarch
@@ -216,6 +216,9 @@ fi
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt4_3jpp7
+- rebuild with maven-local
+
 * Tue Jul 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt3_3jpp7
 - osgi fix
 
