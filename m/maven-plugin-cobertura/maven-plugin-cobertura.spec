@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       maven-plugin-cobertura
 Version:    2.5.1
-Release:    alt5_3jpp7
+Release:    alt6_3jpp7
 Summary:    Plugin providing the features of Cobertura within Maven
 
 Group:      Development/Java
@@ -15,7 +15,7 @@ URL:        http://mojo.codehaus.org/cobertura-maven-plugin/
 Source0:    http://repo2.maven.org/maven2/org/codehaus/mojo/cobertura-maven-plugin/%{version}/cobertura-maven-plugin-%{version}-source-release.zip
 BuildArch:  noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-compiler-plugin
@@ -90,6 +90,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt6_3jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt5_3jpp7
 - fixed build
 
