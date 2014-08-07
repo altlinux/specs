@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sisu
 Version:        2.2.3
-Release:        alt2_6jpp7
+Release:        alt3_6jpp7
 Summary:        Sonatype dependency injection framework
 
 
@@ -19,7 +19,7 @@ Source1:        %{name}-depmap.xml
 BuildArch:      noarch
 
 BuildRequires:  google-guice
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-invoker-plugin
@@ -176,6 +176,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt3_6jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt2_6jpp7
 - NMU rebuild to move poms and fragments
 
