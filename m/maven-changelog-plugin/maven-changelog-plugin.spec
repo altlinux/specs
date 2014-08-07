@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changelog-plugin
 Version:        2.2
-Release:        alt3_10jpp7
+Release:        alt4_10jpp7
 Summary:        Produce SCM changelog reports
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ Patch1:		ChangeLog.java.patch
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -100,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt4_10jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_10jpp7
 - fixed build
 
