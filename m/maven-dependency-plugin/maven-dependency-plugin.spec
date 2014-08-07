@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-dependency-plugin
 Version:        2.4
-Release:        alt3_2jpp7
+Release:        alt4_2jpp7
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 
 Group:          Development/Java
@@ -30,7 +30,7 @@ BuildRequires: plexus-utils
 BuildRequires: ant
 BuildRequires: asm2
 BuildRequires: apache-commons-io
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
@@ -115,6 +115,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt4_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt3_2jpp7
 - fixed build
 
