@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{short_name}-project
 Version:          1.6
-Release:          alt2_3jpp7
+Release:          alt3_3jpp7
 Summary:          Main project POM files and resources
 License:          ASL 2.0
 Group:            Development/Java
@@ -17,7 +17,7 @@ Source0:          http://repo1.maven.org/maven2/org/apache/james/james-parent/%{
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
@@ -73,6 +73,9 @@ install -pm 644 project/server/%{server_ver}/pom.xml %{buildroot}%{_mavenpomdir}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_3jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
