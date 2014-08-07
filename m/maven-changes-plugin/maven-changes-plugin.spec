@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
 Version:        2.7.1
-Release:        alt3_2jpp7
+Release:        alt4_2jpp7
 Summary:        Plugin to support reporting of changes between releases
 
 Group:          Development/Java
@@ -26,7 +26,7 @@ BuildRequires: jakarta-commons-httpclient
 BuildRequires: apache-commons-io
 BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-logging
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-project
 BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-install-plugin
@@ -139,6 +139,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt4_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt3_2jpp7
 - fixed build
 
