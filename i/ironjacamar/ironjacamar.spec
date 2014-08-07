@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             ironjacamar
 Version:          1.0.9
-Release:          alt2_4jpp7
+Release:          alt3_4jpp7
 Summary:          Java Connector Architecture 1.6 implementation
 Group:            Development/Java
 License:          LGPLv2+
@@ -70,7 +70,7 @@ BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    jboss-transaction-spi
 BuildRequires:    jdepend
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    picketbox
 
 Requires:         geronimo-validation
@@ -163,6 +163,9 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt3_4jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
