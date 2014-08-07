@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-filtering
 Version:          1.0
-Release:          alt2_9jpp7
+Release:          alt3_9jpp7
 Summary:          Shared component providing resource filtering
 Group:            Development/Java
 License:          ASL 2.0
@@ -20,7 +20,7 @@ Patch0:           %{name}-plexus.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    plexus-build-api
 BuildRequires:    plexus-containers-component-metadata
 BuildRequires:    sisu
@@ -81,6 +81,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_9jpp7
+- rebuild with maven-local
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
 - new release
 
