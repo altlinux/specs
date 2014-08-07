@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
 Version:       1.1
-Release:       alt2_3jpp7
+Release:       alt3_3jpp7
 Summary:       Java Authentication SPI for Containers
 License:       ASL 2.0 and W3C
 Group:         Development/Java
@@ -13,7 +13,7 @@ Source0:       http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{pkg_nam
 
 BuildArch:     noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 BuildRequires: geronimo-osgi-support
 BuildRequires: geronimo-parent-poms
@@ -79,6 +79,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_3jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
