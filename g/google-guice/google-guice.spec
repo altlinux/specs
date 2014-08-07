@@ -20,7 +20,7 @@ BuildRequires: jpackage-compat
 
 Name:           google-%{short_name}
 Version:        3.1.2
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Lightweight dependency injection framework for Java 5 and above
 Group:          Development/Java
 License:        ASL 2.0
@@ -30,7 +30,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  javapackages-tools >= 0.7.0
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 BuildRequires:  aopalliance
@@ -324,6 +324,9 @@ install -p -m 644 extensions/throwingproviders/pom.xml %{buildroot}%{_mavenpomdi
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt2_6jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.2-alt1_6jpp7
 - non-bootstrap build
 
