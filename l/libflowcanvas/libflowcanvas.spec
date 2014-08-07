@@ -1,25 +1,26 @@
-%def_disable static
-
 Name: libflowcanvas
-Version: 0.5.1
-Release: alt3
+Version: 0.7.1
+Release: alt1
 
 Summary: A canvas widget for graph-like interfaces
 License: %gpl2plus
 Group: System/Libraries
+
 Url: http://drobilla.net/software/flowcanvas/
+Source: %name-%version.tar.bz2
+Patch: graphviz23.patch
 Packager: Timur Batyrshin <erthad@altlinux.org>
 
-Source0: %name-%version.tar.bz2
-Patch0: changeset_r2170.diff
-
 BuildPreReq: rpm-build-licenses
-# Automatically added by buildreq on Mon Aug 03 2009
-BuildRequires: boost-devel doxygen gcc-c++ libgnomecanvasmm-devel
+# Automatically added by buildreq on Thu Aug 07 2014
+# optimized out: fontconfig fontconfig-devel glib2-devel libart_lgpl-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgnomecanvas-devel libgtk+2-devel libgtkmm2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel pkg-config python-base python-modules python-modules-compiler python-modules-ctypes python-modules-encodings python-modules-logging
+BuildRequires: boost-devel-headers gcc-c++ libgnomecanvasmm-devel libgraphviz-devel
 
 %description
 FlowCanvas is an interactive Gtkmm/Gnomecanvasmm widget for "boxes and lines"
 environments (ie modular synths or interactive finite state automata diagrams).
+
+    Note: FlowCanvas is dead, long live Ganv!
 
 %package devel
 Summary: Headers for %name
@@ -29,33 +30,16 @@ Requires: %name = %version-%release
 %description devel
 Headers for building software that uses %name
 
-%if_enabled static
-%package devel-static
-Summary: Static libraries for %name
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-Static libs for building statically linked software that uses %name
-%endif
-
-%package doc
-Summary: Documentation for %name
-Group: Development/Documentation
-
-%description doc
-Documentation for %name
-
 %prep
 %setup
-%patch0 -p3
+%patch -p1
 
 %build
-%configure %{subst_enable static}
-%make_build
+./waf configure --prefix %_prefix --libdir %_libdir
+./waf build
 
 %install
-%makeinstall
+./waf install --destdir %buildroot
 
 %files
 %_libdir/*.so.*
@@ -66,15 +50,14 @@ Documentation for %name
 %_includedir/flowcanvas
 %_pkgconfigdir/*.pc
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%endif
-
-%files doc
-%doc doc/html/*
-
 %changelog
+* Thu Aug 07 2014 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
+- NMU: 0.7.1 (NB: deprecated upstream)
+- re-enabled graphviz-2.30+ support (thanks debian for libcgraph patch)
+- dropped doc subpackage (argh, that waf is yet another NIH crap)
+- dropped static subpackage (waf crap again, and was disabled anyways)
+- buildreq
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.5.1-alt3
 - NMU: rebuilt without graphviz support (cgraph migration in 2.30)
 
