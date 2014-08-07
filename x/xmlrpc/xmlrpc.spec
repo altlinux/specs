@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       xmlrpc
 Version:    3.1.3
-Release:    alt6_2jpp7
+Release:    alt7_2jpp7
 Epoch:      1
 Summary:    Java XML-RPC implementation
 License:    ASL 2.0
@@ -18,7 +18,7 @@ Patch0:     %{name}-client-addosgimanifest.patch
 Patch1:     %{name}-common-addosgimanifest.patch
 Patch2:     %{name}-javax-methods.patch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-surefire-plugin
@@ -168,6 +168,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}3-server.jar
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_2jpp7
+- rebuild with maven-local
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt6_2jpp7
 - fixed deps
 
