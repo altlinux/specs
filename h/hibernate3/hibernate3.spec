@@ -15,7 +15,7 @@ BuildRequires: jpackage-compat
 
 Name: hibernate3
 Version: 3.6.10
-Release: alt2_7jpp7
+Release: alt3_7jpp7
 Summary: Relational persistence and query service
 
 Group: Development/Java
@@ -37,7 +37,7 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: javapackages-tools >= 0.7.2
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -318,6 +318,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}-testing
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt3_7jpp7
+- rebuild with maven-local
+
 * Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt2_7jpp7
 - new release
 
