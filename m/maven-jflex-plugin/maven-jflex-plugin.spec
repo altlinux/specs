@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-jflex-plugin
 Version:        1.4.3
-Release:        alt2_8jpp7
+Release:        alt3_8jpp7
 Summary:        Maven JFlex Plugin
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ BuildArch: noarch
 
 BuildRequires: jflex
 BuildRequires: apache-commons-io
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
@@ -84,6 +84,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_8jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt2_8jpp7
 - fixed build
 
