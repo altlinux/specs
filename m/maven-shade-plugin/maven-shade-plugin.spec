@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-shade-plugin
 Version:        2.0
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires: jpackage-utils
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-wagon
 BuildRequires: plexus-container-default
 BuildRequires: plexus-containers-component-metadata
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_1jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_1jpp7
 - new version
 
