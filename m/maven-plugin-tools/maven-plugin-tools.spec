@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-tools
 Version:        3.1
-Release:        alt3_5jpp7
+Release:        alt4_5jpp7
 Epoch:          0
 Summary:        Maven Plugin Tools
 
@@ -17,7 +17,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugin-tools/%{na
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  ant
 BuildRequires:  bsh
 BuildRequires:  jtidy
@@ -423,6 +423,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt4_5jpp7
+- rebuild with maven-local
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt3_5jpp7
 - update
 
