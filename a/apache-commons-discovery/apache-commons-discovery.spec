@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -18,7 +18,7 @@ Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_n
 Patch0:         %{name}-addosgimanifest.patch
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  apache-commons-logging >= 1.1.1
 Requires:       apache-commons-logging >= 1.1.1
@@ -79,6 +79,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt2_4jpp7
+- rebuild with maven-local
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt1_4jpp7
 - fc update
 
