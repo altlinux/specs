@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 
 Name:           async-http-client
 Version:        1.6.1
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Asynchronous Http Client for Java
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ Patch0:         0001-Remove-test-dependencies.patch
 
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-shade-plugin
 BuildRequires:  maven-install-plugin
@@ -91,6 +91,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt3_4jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
