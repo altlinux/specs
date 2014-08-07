@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-doxia-tools
 Version:	1.4
-Release:	alt2_5jpp7
+Release:	alt3_5jpp7
 Summary:	Maven Doxia Integration Tools
 
 Group:		Development/Java
@@ -20,7 +20,7 @@ BuildRequires:	plexus-utils
 BuildRequires:	plexus-interpolation
 BuildRequires:	plexus-container-default
 BuildRequires:	plexus-i18n
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-shared
 BuildRequires:	maven-doxia
 BuildRequires:	maven-doxia-sitetools
@@ -94,6 +94,9 @@ install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_5jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_5jpp7
 - NMU rebuild to move poms and fragments
 
