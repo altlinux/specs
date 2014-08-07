@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           istack-commons
 Version:        2.6.1
-Release:        alt3_5jpp7
+Release:        alt4_5jpp7
 Summary:        Common code for some Glassfish projects
 Group:          Development/Java
 License:        CDDL and GPLv2
@@ -25,7 +25,7 @@ BuildRequires:  dom4j
 BuildRequires:  jpackage-utils
 BuildRequires:  jvnet-parent
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
@@ -149,6 +149,9 @@ cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-maven-%{name}-plugin.
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt4_5jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt3_5jpp7
 - fixed build
 
