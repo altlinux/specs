@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:          gradle
 Version:       1.0
-Release:       alt1_13jpp7
+Release:       alt2_13jpp7
 Summary:       Groovy based build system
 Group:         Development/Java
 License:       ASL 2.0
@@ -179,7 +179,7 @@ BuildRequires: jpackage-utils
 BuildRequires: jsch
 BuildRequires: junit
 BuildRequires: logback >= 1.0.1
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: objectweb-asm
 BuildRequires: plexus-classworlds
 BuildRequires: plexus-component-api
@@ -589,6 +589,9 @@ desktop-file-install --vendor="" \
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13jpp7
+- rebuild with maven-local
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_13jpp7
 - new release
 
