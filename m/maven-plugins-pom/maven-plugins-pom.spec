@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        23
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Maven Plugins POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -18,7 +18,7 @@ URL:            http://maven.apache.org/plugins/
 Source:         http://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{short_name}/%{version}/%{short_name}-%{version}-source-release.zip
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
 
 Requires:       jpackage-utils
@@ -45,6 +45,9 @@ install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt3_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt2_2jpp7
 - fixed build
 
