@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -10,7 +10,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-swtbot
 Version:        2.1.0
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        UI and functional testing tool for SWT and Eclipse based applications
 
 License:        EPL
@@ -66,6 +66,9 @@ popd
 %doc org.eclipse.swtbot/license.html
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt2_1jpp7
+- rebuild with maven-local
+
 * Tue Jul 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_1jpp7
 - update
 
