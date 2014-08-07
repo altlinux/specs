@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          activemq
 Version:       5.6.0
-Release:       alt1_5jpp7
+Release:       alt2_5jpp7
 Summary:       Open source messaging and Integration Patterns server
 Group:         Development/Java
 License:       ASL 2.0
@@ -206,6 +206,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavenpomdir}/JPP.%{name}-kahadb.pom
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_5jpp7
+- rebuild with maven-local
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt1_5jpp7
 - new release
 
