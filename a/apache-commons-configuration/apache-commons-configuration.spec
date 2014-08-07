@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.9
-Release:        alt2_1jpp7
+Release:        alt3_1jpp7
 Summary:        Commons Configuration Package
 
 Group:          Development/Java
@@ -18,7 +18,7 @@ Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{sho
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -125,6 +125,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_1jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt2_1jpp7
 - NMU rebuild to move poms and fragments
 
