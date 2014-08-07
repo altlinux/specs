@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt4_0.9.a7jpp7
+Release:        alt5_0.9.a7jpp7
 Summary:        Plexus Resource Manager
 License:        MIT
 Group:          Development/Java
@@ -54,7 +54,7 @@ Requires:       plexus-utils
 Requires:       jpackage-utils >= 0:1.7.3
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -126,6 +126,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.9.a7jpp7
+- rebuild with maven-local
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.9.a7jpp7
 - new fc release
 
