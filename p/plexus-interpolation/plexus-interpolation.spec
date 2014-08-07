@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-interpolation
 Version:        1.15
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Plexus Interpolation API
 
 Group:          Development/Java
@@ -15,7 +15,7 @@ Source0:        sonatype-plexus-interpolation-plexus-interpolation-1.15-0-g9690e
 BuildArch: noarch
 
 BuildRequires: junit
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
@@ -74,6 +74,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_2jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
