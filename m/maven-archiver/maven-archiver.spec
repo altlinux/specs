@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-archiver
 Version:        2.5
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -49,7 +49,7 @@ Patch0:         %{name}-maven-core-dep.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -125,6 +125,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt2_3jpp7
+- rebuild with maven-local
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_3jpp7
 - new fc release
 
