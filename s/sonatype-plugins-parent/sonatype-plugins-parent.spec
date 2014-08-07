@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -12,7 +12,7 @@ License:        ASL 2.0
 URL:            https://github.com/sonatype/oss-parents
 Source:         https://github.com/sonatype/oss-parents/tarball/plugins-parent-%{version}#/%{name}-%{version}.tar.gz
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  sonatype-forge-parent
 
@@ -43,6 +43,9 @@ mvn-rpmbuild verify
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_1jpp7
+- rebuild with maven-local
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_1jpp7
 - new version
 
