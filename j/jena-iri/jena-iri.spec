@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:		%{parent}-%{subname}
 Version:	0.8
-Release:	alt1_7jpp7
+Release:	alt2_7jpp7
 BuildArch:	noarch
 Summary:	The Jena IRI Library
 
@@ -20,7 +20,7 @@ Source0:	%{name}-%{version}.tar.xz
 Patch0:		%{name}-fixed-assembly-id.patch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-shared
 BuildRequires:	maven-shared-file-management
 BuildRequires:	maven-assembly-plugin
@@ -84,6 +84,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_7jpp7
+- rebuild with maven-local
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_7jpp7
 - new fc release
 
