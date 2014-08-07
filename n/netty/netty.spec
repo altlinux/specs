@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           netty
 Version:        3.5.11
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
 Group:          Development/Java
@@ -15,7 +15,7 @@ Source0:        https://github.com/downloads/%{name}/%{name}/%{name}-%{version}.
 
 BuildArch:      noarch
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -109,6 +109,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.5.11-alt2_1jpp7
+- rebuild with maven-local
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 3.5.11-alt1_1jpp7
 - fc update
 
