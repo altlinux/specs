@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-i18n
 Version:        1.0
-Release:        alt4_0.b10.2.5jpp7
+Release:        alt5_0.b10.2.5jpp7
 Summary:        Plexus I18N Component
 License:        ASL 2.0
 Group:          Development/Java
@@ -51,7 +51,7 @@ Patch1:         %{name}-plexus-container-default-missing.patch
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -121,6 +121,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.b10.2.5jpp7
+- rebuild with maven-local
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.b10.2.5jpp7
 - new fc release
 
