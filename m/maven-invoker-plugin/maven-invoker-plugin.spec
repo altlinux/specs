@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-invoker-plugin
 Version:        1.6
-Release:        alt2_1jpp7
+Release:        alt3_1jpp7
 Summary:        Maven Invoker Plugin
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ BuildArch: noarch
 # Basic stuff
 BuildRequires: jpackage-utils
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
@@ -101,6 +101,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_1jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_1jpp7
 - fixed build
 
