@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt10_0.12.a14jpp7
+Release:        alt11_0.12.a14jpp7
 Epoch:          0
 Summary:        Plexus Component Descriptor Creator
 License:        MIT
@@ -59,7 +59,7 @@ Patch0:     %{name}-qdox-1.9.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-install-plugin
 BuildRequires:	maven-jar-plugin
@@ -130,6 +130,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.12.a14jpp7
+- rebuild with maven-local
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_0.12.a14jpp7
 - converted from JPackage by jppimport script
 
