@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-reporting-exec
 Version:        1.0.2
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -18,7 +18,7 @@ Source1:        maven-model-depmap.xml
 Patch0:         %{name}-disabling-enforcer.patch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  plexus-containers-component-metadata
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit4
@@ -87,6 +87,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_2jpp7
+- rebuild with maven-local
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2jpp7
 - new release
 
