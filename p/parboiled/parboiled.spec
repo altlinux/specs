@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          parboiled
 Version:       1.0.2
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Java/Scala library providing parsing of input text based on PEGs
 Group:         Development/Java
 License:       ASL 2.0
@@ -32,7 +32,7 @@ BuildRequires: objectweb-asm
 #BuildRequires: mvn(org.scalatest:scalatest_2.10.0-RC1)
 #BuildRequires: testng
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -108,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_3jpp7
+- rebuild with maven-local
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp7
 - fc update
 
