@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-doxia
 Version:        1.2
-Release:        alt3_4jpp7
+Release:        alt4_4jpp7
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -69,7 +69,7 @@ BuildRequires:  jpackage-utils
 BuildRequires:  ant ant-nodeps
 BuildRequires:  itext
 BuildRequires:  plexus-cli
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -224,6 +224,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt4_4jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_4jpp7
 - fixed build
 
