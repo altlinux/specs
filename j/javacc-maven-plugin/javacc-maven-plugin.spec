@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt2_10jpp7
+Release:        alt3_10jpp7
 Summary:        JavaCC Maven Plugin
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ Patch0:         javacc-maven-plugin-pom.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: javacc >= 5.0
 BuildRequires: plexus-utils
 BuildRequires: maven-doxia
@@ -90,6 +90,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_10jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt2_10jpp7
 - fixed build
 
