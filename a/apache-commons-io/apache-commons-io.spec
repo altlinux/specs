@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          2.4
-Release:          alt2_2jpp7
+Release:          alt3_2jpp7
 Epoch:            1
 Summary:          Utilities to assist with developing IO functionality
 License:          ASL 2.0
@@ -18,7 +18,7 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
@@ -80,6 +80,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt3_2jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
