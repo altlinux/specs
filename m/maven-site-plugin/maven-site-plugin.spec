@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-site-plugin
 Version:        3.1
-Release:        alt3_2jpp7
+Release:        alt4_2jpp7
 Summary:        Maven Site Plugin
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Patch1:         0002-Port-to-jetty-8.x.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-artifact-manager
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-assembly-plugin
@@ -119,6 +119,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt4_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3_2jpp7
 - fixed build
 
