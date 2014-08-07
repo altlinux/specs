@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-compiler-plugin
 Version:        2.5.1
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Maven Compiler Plugin
 
 Group:          Development/Java
@@ -16,7 +16,7 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
@@ -87,6 +87,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt3_2jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt2_2jpp7
 - fixed build
 
