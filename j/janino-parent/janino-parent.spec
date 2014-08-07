@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           janino-parent
 Version:        2.6.1
-Release:        alt2_3jpp7
+Release:        alt3_3jpp7
 Summary:        Parent POM for Janino
 
 License:        BSD
@@ -17,7 +17,7 @@ Source1:        http://dist.codehaus.org/janino/new_bsd_license.txt
 Patch0:         %{name}-remove-modules.patch
 
 BuildRequires:  codehaus-parent
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  jpackage-utils
 
@@ -52,6 +52,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt3_3jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
