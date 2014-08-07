@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt4_0.8.a7jpp7
+Release:        alt5_0.8.a7jpp7
 Epoch:          0
 Summary:        Plexus Bsh component factory
 License:        MIT
@@ -55,7 +55,7 @@ Patch1:         %{name}-encodingfix.patch
 BuildArch:      noarch
 
 BuildRequires:     jpackage-utils
-BuildRequires:     maven
+BuildRequires:     maven-local
 BuildRequires:     maven-compiler-plugin
 BuildRequires:     maven-install-plugin
 BuildRequires:     maven-jar-plugin
@@ -131,6 +131,9 @@ cp -pr target/site/apidocs/* \
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.8.a7jpp7
+- rebuild with maven-local
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.8.a7jpp7
 - fc update
 
