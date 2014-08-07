@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: maven unzip
+BuildRequires: maven-local unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,7 +9,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-moreunit
 Version:        3.0.2
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        An Eclipse plugin that assists with writing more unit tests
 
 Group:          Development/Java
@@ -73,6 +73,9 @@ popd
 %doc org.moreunit.plugin/help/documentation.html
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_1jpp7
+- rebuild with maven-local
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_1jpp7
 - new version
 
