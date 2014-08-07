@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven
 Version:        3.0.4
-Release:        alt6_21.3jpp7
+Release:        alt7_21.3jpp7
 Summary:        Java project management and project comprehension tool
 
 Group:          Development/Java
@@ -60,7 +60,7 @@ BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  cglib
 BuildRequires:  google-guice >= 3.0
 BuildRequires:  hamcrest
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven2-common-poms
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -396,6 +396,9 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt7_21.3jpp7
+- rebuild with maven-local
+
 * Sat Jul 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt6_21.3jpp7
 - update
 
