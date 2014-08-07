@@ -15,7 +15,7 @@ BuildRequires: jpackage-compat
 
 Name:           tycho
 Version:        0.16.0
-Release:        alt1_19jpp7
+Release:        alt2_19jpp7
 Summary:        Plugins and extensions for building Eclipse plugins and OSGI bundles with Maven
 
 Group:          Development/Java
@@ -58,7 +58,7 @@ Patch8:         %{name}-361204.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-dependency-plugin
@@ -267,6 +267,9 @@ install -m 644 $osgiJarPath $RPM_BUILD_ROOT%{_javadir}/%{name}/osgi.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt2_19jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_19jpp7
 - update
 
