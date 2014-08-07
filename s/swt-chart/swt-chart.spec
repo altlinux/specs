@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven eclipse-jdt
+BuildRequires: maven-local eclipse-jdt
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           swt-chart
 Version:        0.8.0
-Release:        alt2_5jpp7
+Release:        alt3_5jpp7
 Summary:        SWTChart Feature
 
 Group:          Development/Java
@@ -74,6 +74,9 @@ cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt3_5jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2_5jpp7
 - fixed build
 
