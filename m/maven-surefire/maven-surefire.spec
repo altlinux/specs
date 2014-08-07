@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-surefire
 Version:        2.12.4
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0
@@ -32,7 +32,7 @@ BuildRequires:  plexus-utils
 BuildRequires:  junit4
 BuildRequires:  testng
 
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-help-plugin
 BuildRequires:  maven-install-plugin
@@ -381,6 +381,9 @@ ln -s %{_javadir}/maven-surefire/report-maven-plugin.jar \
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.12.4-alt2_2jpp7
+- rebuild with maven-local
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.12.4-alt1_2jpp7
 - update
 
