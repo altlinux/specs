@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          maven-dependency-tree
 Version:       2.0
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       Maven dependency tree artifact
 Group:         Development/Java
 License:       ASL 2.0
@@ -16,7 +16,7 @@ Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{v
 
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-artifact
 BuildRequires: maven-project
 BuildRequires: maven-compiler-plugin
@@ -88,6 +88,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_1jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_1jpp7
 - update
 
