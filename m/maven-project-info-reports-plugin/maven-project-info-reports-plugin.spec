@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: maven-local unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
 Version:        2.4
-Release:        alt4_7jpp7
+Release:        alt5_7jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
@@ -107,6 +107,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt5_7jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt4_7jpp7
 - fixed build
 
