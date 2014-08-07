@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           modello
 Version:        1.5
-Release:        alt4_3jpp7
+Release:        alt5_3jpp7
 Epoch:          0
 Summary:        Modello Data Model toolkit
 License:        MIT
@@ -51,7 +51,7 @@ BuildArch:      noarch
 
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -175,6 +175,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt5_3jpp7
+- rebuild with maven-local
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt4_3jpp7
 - fixed build
 
