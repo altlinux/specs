@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ldap-users
-Version: 0.8
-Release: alt8
+Version: 0.8.1
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -42,6 +42,10 @@ Alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Thu Aug 07 2014 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Setup UID filter at start.
+- Fix min_uid for regular users.
+
 * Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt8
 - Fix button look by use standard definition
 
