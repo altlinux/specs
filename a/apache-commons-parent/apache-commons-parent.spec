@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          22
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Apache Commons Parent Pom
 Group:            Development/Java
 License:          ASL 2.0
@@ -22,7 +22,7 @@ Patch1:           %{name}-remove-build-plugin.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    buildnumber-maven-plugin
 
 Requires:         jpackage-utils
@@ -63,6 +63,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:22-alt2_4jpp7
+- rebuild with maven-local
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_4jpp7
 - new version
 
