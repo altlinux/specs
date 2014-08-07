@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-toolchains-plugin
 Version:	1.0
-Release:	alt3_4jpp7
+Release:	alt4_4jpp7
 Summary:	Maven plugin for sharing configuration across projects
 
 Group:		Development/Java
@@ -19,7 +19,7 @@ Patch0:		%{name}-plexus.patch
 
 BuildArch:	noarch
 
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	jpackage-utils
 BuildRequires:	plexus-container-default
 BuildRequires:	maven-surefire-provider-junit4
@@ -76,6 +76,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_4jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4jpp7
 - fixed build
 
