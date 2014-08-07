@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-exec
 Version:        1.2.1
-Release:        alt3_3jpp7
+Release:        alt4_3jpp7
 Summary:        Exec Maven Plugin
 
 Group:          Development/Java
@@ -16,7 +16,7 @@ Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugi
 Patch0:         add_compat.patch
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: plexus-utils
 BuildRequires: plexus-container-default
 BuildRequires: maven-shared-plugin-testing-harness
@@ -92,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_3jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt3_3jpp7
 - fixed build
 
