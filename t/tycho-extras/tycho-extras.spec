@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           tycho-extras
 Version:        0.16.0
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Additional plugins for Tycho
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt2_3jpp7
+- rebuild with maven-local
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3jpp7
 - update
 
