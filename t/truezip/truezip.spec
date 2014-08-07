@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		truezip
 Version:	7.6.6
-Release:	alt1_1jpp7
+Release:	alt2_1jpp7
 Summary:	Java based VFS for treating archive files as virtual directories
 
 Group:		Development/Java
@@ -27,7 +27,7 @@ BuildRequires:	findbugs
 BuildRequires:	jemmy
 BuildRequires:	jsr-305
 BuildRequires:	junit
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	schlichtherle-oss-parent
 
 BuildRequires:	maven-antrun-plugin
@@ -439,6 +439,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 7.6.6-alt2_1jpp7
+- rebuild with maven-local
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 7.6.6-alt1_1jpp7
 - fc update
 
