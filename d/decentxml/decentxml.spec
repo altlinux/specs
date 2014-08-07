@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             decentxml
 Version:          1.4
-Release:          alt2_2jpp7
+Release:          alt3_2jpp7
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 Group:            Development/Java
@@ -16,7 +16,7 @@ Source1:          http://www.w3.org/XML/Test/xmlts20031210.zip
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
@@ -80,6 +80,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_2jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_2jpp7
 - NMU rebuild to move poms and fragments
 
