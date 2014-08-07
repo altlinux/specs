@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             snakeyaml18
 Version:          1.8
-Release:          alt2_6jpp7
+Release:          alt3_6jpp7
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 Group:            Development/Java
@@ -27,7 +27,7 @@ Patch3:           %{oldname}-add-osgi-metadata.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    joda-time
@@ -108,6 +108,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt3_6jpp7
+- rebuild with maven-local
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_6jpp7
 - fixed deps
 
