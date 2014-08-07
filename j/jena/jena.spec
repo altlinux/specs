@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		    jena
 Version:	    2.6.4
-Release:	    alt2_5jpp7
+Release:	    alt3_5jpp7
 BuildArch:	    noarch
 Summary:	    Java framework for building Semantic Web applications
 
@@ -25,7 +25,7 @@ Patch1:		    %{name}-test-fail.patch
 BuildRequires:	jpackage-utils
 BuildRequires:	icu4j
 BuildRequires:	jena-iri
-BuildRequires:	maven
+BuildRequires:	maven-local
 BuildRequires:	maven-dependency-plugin
 BuildRequires:  maven-surefire-provider-junit4
 
@@ -95,6 +95,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt3_5jpp7
+- rebuild with maven-local
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt2_5jpp7
 - new fc release
 
