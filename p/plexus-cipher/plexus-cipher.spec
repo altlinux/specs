@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-cipher
 Version:        1.5
-Release:        alt2_11jpp7
+Release:        alt3_11jpp7
 Summary:        Plexus Cipher: encryption/decryption Component
 
 Group:          Development/Java
@@ -21,7 +21,7 @@ Patch1:         0001-Improve-randomness-of-PBECipher-salt.patch
 
 BuildArch: noarch
 
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -93,6 +93,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt3_11jpp7
+- rebuild with maven-local
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_11jpp7
 - fixed maven1 dependency
 
