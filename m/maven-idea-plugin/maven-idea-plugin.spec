@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-idea-plugin
 Version:        2.2
-Release:        alt2_8jpp7
+Release:        alt3_8jpp7
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Java
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-wagon
 BuildRequires: plexus-container-default
 BuildRequires: maven-install-plugin
@@ -87,6 +87,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_8jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8jpp7
 - fixed build
 
