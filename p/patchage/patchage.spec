@@ -1,6 +1,6 @@
 Name: patchage
 Version: 0.4.2
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: A modular patch bay for JACK and LASH audio systems
 License: %gpl2plus
@@ -46,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/*
 
 %changelog
+* Thu Aug 07 2014 Michael Shigorin <mike@altlinux.org> 0.4.2-alt3.qa2
+- NMU: rebuilt against current libflowcanvam
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.2-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
