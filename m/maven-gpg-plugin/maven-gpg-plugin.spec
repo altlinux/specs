@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-gpg-plugin
 Version:        1.4
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Maven GPG Plugin
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant-nodeps
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
@@ -81,6 +81,9 @@ install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_4jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_4jpp7
 - fixed build
 
