@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           checkstyle
 Version:        5.5
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -59,7 +59,7 @@ BuildRequires:  apache-commons-cli
 BuildRequires:  apache-commons-logging
 BuildRequires:  guava
 BuildRequires:  junit
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-enforcer-plugin
@@ -197,6 +197,9 @@ fi
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt3_4jpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt2_4jpp7
 - NMU rebuild to move poms and fragments
 
