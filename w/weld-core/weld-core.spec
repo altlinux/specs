@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name: weld-core
 Version: 1.1.5
-Release: alt2_4.AS71.Finaljpp7
+Release: alt3_4.AS71.Finaljpp7
 Summary: Reference Implementation for JSR-299: Contexts and Dependency Injection (CDI)
 Group: Development/Java
 License: ASL 2.0 and LGPLv2+ and (CDDL or GPLv2 with exceptions)
@@ -39,7 +39,7 @@ BuildRequires: jboss-interceptor
 BuildRequires: jboss-jsf-2.1-api
 BuildRequires: jboss-jsp-2.2-api
 BuildRequires: jboss-servlet-3.0-api
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
@@ -118,6 +118,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt3_4.AS71.Finaljpp7
+- rebuild with maven-local
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.5-alt2_4.AS71.Finaljpp7
 - NMU rebuild to move poms and fragments
 
