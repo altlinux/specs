@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6.5
-Release:        alt4_0jpp6
+Release:        alt5_0jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -46,7 +46,7 @@ Source2:        %{name}-jpp-depmap.xml
 
 
 BuildRequires: jpackage-utils
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-provider-junit4
 #BuildRequires: mojo-maven2-plugin-emma
@@ -130,6 +130,9 @@ mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javad
 %{_javadocdir}/%{name} 
 
 %changelog
+* Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt5_0jpp6
+- rebuild with maven-local
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt4_0jpp6
 - depmap cleanup
 
