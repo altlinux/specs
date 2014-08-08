@@ -7,7 +7,7 @@
 
 Name: protobuf
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -97,7 +97,7 @@ Python bindings for protocol buffers
 Summary: Java Protocol Buffers runtime library
 Group:   Development/Java
 BuildRequires:    jpackage-core
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -210,6 +210,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %endif
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2
+- NMU: added BuildReq: maven-local
+
 * Fri Sep 06 2013 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
