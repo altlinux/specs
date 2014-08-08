@@ -32,7 +32,7 @@ Epoch: 1
 Summary:        Eclipse C/C++ Development Tools (CDT) plugin
 Name:           eclipse-cdt
 Version:        %{majmin}.%{micro}
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 License:        EPL and CPL
 Group:          Development/Java
 URL:            http://www.eclipse.org/cdt
@@ -62,7 +62,7 @@ BuildRequires: tycho
 BuildRequires: tycho-extras
 BuildRequires: eclipse-pde >= 1:3.8.0
 BuildRequires: eclipse-rse >= 3.3
-BuildRequires: maven >= 3.0.3
+BuildRequires: maven-local maven >= 3.0.3
 BuildRequires: lpg-java-compat
 BuildRequires: eclipse-platform >= 1:3.8.0
 
@@ -271,6 +271,9 @@ rm -rf $installDir/eclipse/binary
 %doc %{cdt_snapshot}/releng/org.eclipse.cdt.releng/notice.html
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:8.1.2-alt2_1jpp7
+- rebuild with maven-local
+
 * Tue Jul 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:8.1.2-alt1_1jpp7
 - update
 
