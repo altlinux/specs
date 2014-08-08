@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-archetype
 Version:        2.1
-Release:        alt4_7jpp7
+Release:        alt5_7jpp7
 Summary:        Maven project templating toolkit
 
 Group:          Development/Java
@@ -29,7 +29,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 # we added test dep skipping there
-BuildRequires:  maven > 3.0.3-13
+BuildRequires:  maven-local maven > 3.0.3-13
 BuildRequires:  maven-war-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-plugin-bundle
@@ -299,6 +299,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %{_javadir}/%{name}/plugin.jar
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt5_7jpp7
+- rebuild with maven-local
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt4_7jpp7
 - fixed build
 
