@@ -4,7 +4,7 @@ Name: open-%bname
 %define module_name %name
 Version: 2.0.871
 License: %gpl2plus
-Release: alt6.1
+Release: alt7
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -79,6 +79,9 @@ fi
 %_usrsrc/kernel/sources/*.tar.bz2
 
 %changelog
+* Fri Aug 08 2014 Lenar Shakirov <snejok@altlinux.ru> 2.0.871-alt7
+- iscsi-gen-initiatorname.sh fixed: http://en.wikipedia.org/wiki/ISCSI
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.871-alt6.1
 - Fixed build with new glibc
 
