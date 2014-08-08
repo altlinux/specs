@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name: metainf-services
 Version: 1.4
-Release: alt3_0jpp6
+Release: alt4_0jpp6
 Summary: A Java META-INF/services generator
 
 Group: Development/Java
@@ -16,9 +16,9 @@ Source0: %name-%version.tar
 Patch0: fix-extra-deps.patch
 
 BuildRequires: jpackage-utils >= 0:5.0.0
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
-BuildRequires: junit4
+BuildRequires: junit
 
 Requires: jpackage-utils 
 
@@ -81,6 +81,9 @@ mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javad
 %_javadocdir/%name
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_0jpp6
+- NMU: BR: maven-local
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_0jpp6
 - migrated to mvn-rpmbuild
 
