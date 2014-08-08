@@ -1,7 +1,7 @@
 Name: lsmount
 Summary: List all hotplug storage devices
 Version: 1.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 BuildArch: noarch
@@ -12,6 +12,8 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Fri Aug 08 2014 (-bb)
 # optimized out: perl-Term-ANSIColor perl-Text-Aligner python-base
 BuildRequires: perl-Text-Table
+
+Requires: lsblk
 
 %description
 %summary
@@ -26,5 +28,8 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Aug 08 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt2
+- add requires to lsblk (#30222)
+
 * Fri Aug 08 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt1
 - first build
