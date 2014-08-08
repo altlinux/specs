@@ -1,6 +1,6 @@
 Name: jgoodies-looks
 Version: 2.5.2
-Release: alt1
+Release: alt2
 
 License: BSD style
 Group: Development/Java
@@ -20,7 +20,7 @@ BuildRequires: java-devel-default
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
 BuildRequires:  jgoodies-common >= 1.4.0
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-surefire-provider-junit4
@@ -93,6 +93,9 @@ cp -a target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}/
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt2
+- NMU: BR: maven-local
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1
 - update to 2.5.2
 
