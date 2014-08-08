@@ -11,6 +11,7 @@
 %define src_centos56_version 1.60
 %define src_centos_ovz_version 1.60
 %define src_centos60_version 1.63
+%define src_centos70_version 2.01
 %define src_2_6_16_version 1.50
 %define src_2_6_23_version 1.50
 %define src_2_6_24_version 1.52
@@ -45,9 +46,10 @@
 %define src_3_13_version 2.02
 %define src_3_14_version 2.02
 %define src_3_15_version 2.02
+%define src_3_16_version 2.03
 
 Name: etercifs
-Version: 5.4.9
+Version: 5.4.10
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -102,7 +104,9 @@ Source52: %src_package_name-3.12-%src_3_12_version.tar.bz2
 Source53: %src_package_name-3.13-%src_3_13_version.tar.bz2
 Source54: %src_package_name-3.14-%src_3_14_version.tar.bz2
 Source55: %src_package_name-3.15-%src_3_15_version.tar.bz2
+Source56: %src_package_name-3.16-%src_3_16_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
+Source70: %src_package_name-centos70-%src_centos70_version.tar.bz2
 
 Conflicts: linux-cifs
 
@@ -138,6 +142,7 @@ Provides: %src_package_name-3.12 = %version-%release
 Provides: %src_package_name-3.13 = %version-%release
 Provides: %src_package_name-3.14 = %version-%release
 Provides: %src_package_name-3.15 = %version-%release
+Provides: %src_package_name-3.16 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -278,9 +283,13 @@ cp %SOURCE52 %buildroot/%etercifs_src/
 cp %SOURCE53 %buildroot/%etercifs_src/
 cp %SOURCE54 %buildroot/%etercifs_src/
 cp %SOURCE55 %buildroot/%etercifs_src/
+cp %SOURCE56 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
+
+# CentOS 7.x
+cp %SOURCE70 %buildroot/%etercifs_src/
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s %src_package_name-3.0-%src_3_0_version.tar.bz2 %buildroot/%etercifs_src/%src_package_name-2.6.40-%src_3_0_version.tar.bz2
@@ -356,6 +365,8 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.14-%src_3_14_version.tar.bz2
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.14-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.15-%src_3_15_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.15-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.16-%src_3_16_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.16-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -385,6 +396,18 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Fri Aug 08 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.10-alt1
+- Detect CentOS 7.0 during build
+- Add sources for CentOS 7.0
+- Add sources for 3.16 (v3.16)
+- Update 3.15 sources from stable (v3.15.9)
+- Update 3.14 sources from stable (v3.14.16)
+- Fix missed share_access setting for 3.13
+- Update 3.12 sources from stable (v3.12.52)
+- Update 3.10 sources from stable (v3.10.52)
+- Update 3.4 sources from stable (v3.4.102)
+- Fix build for ROSA
+
 * Wed May 28 2014 Pavel Shilovsky <piastry@altlinux.org> 5.4.9-alt1
 - Add sources for 3.15 (v3.15-rc7)
 - Add sources for 3.14 (v3.14.4)
