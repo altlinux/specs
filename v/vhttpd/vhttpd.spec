@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -87,6 +87,9 @@ guile bindings for %name
 %_libdir/libguile-*
 
 %changelog
+* Fri Aug 08 2014 Mikhail Efremov <sem@altlinux.org> 0.7.5-alt1
+- Fix work without IPv6.
+
 * Tue Dec 25 2012 Mikhail Efremov <sem@altlinux.org> 0.7.4-alt1
 - Fix data recieving in case of SSL connection.
 
