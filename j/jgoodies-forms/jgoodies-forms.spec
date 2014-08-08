@@ -1,6 +1,6 @@
 Name: jgoodies-forms
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 License: BSD style
 Group: Development/Java
@@ -20,7 +20,7 @@ BuildRequires: java-devel-default
 # Fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu fontconfig
 BuildRequires:  jgoodies-common >= 1.4.0
-BuildRequires:  maven
+BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-surefire-provider-junit4
 
@@ -95,6 +95,9 @@ cp -a target/site/apidocs/* %buildroot%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}/
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2
+- NMU: BR: maven-local
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1
 - update to 1.6.0
 
