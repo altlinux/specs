@@ -18,7 +18,7 @@ BuildRequires: rpm-build-java-osgi
 Name: eclipse-rse
 Summary: Eclipse Remote System Explorer
 Version: 3.5
-Release: alt1_0.4.rc3jpp7
+Release: alt2_0.4.rc3jpp7
 License: EPL
 URL: http://www.eclipse.org/dsdp/tm/
 
@@ -61,7 +61,7 @@ BuildArch: noarch
 
 BuildRequires: tycho
 BuildRequires: tycho-extras
-BuildRequires: maven >= 3.0.3
+BuildRequires: maven-local maven >= 3.0.3
 BuildRequires: junit
 
 BuildRequires: eclipse-pde >= 1:3.8.0-0.21
@@ -168,6 +168,9 @@ popd
 %doc epl-v10.html
 
 %changelog
+* Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.5-alt2_0.4.rc3jpp7
+- rebuild with maven-local
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_0.4.rc3jpp7
 - new version
 
