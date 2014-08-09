@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
 Summary: A tool for reading, writing and generally working with 9ML files
 License: BSD
@@ -184,12 +184,16 @@ cp -fR doc/python_nineml_api/build/pickle \
 %doc AUTHORS README
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/*/testing_utils
+%exclude %python3_sitelibdir/*/examples
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/*/testing_utils
 %endif
 
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4
+- Excluded examples from python3-module-%oname
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt3
 - Added module for Python 3
 
