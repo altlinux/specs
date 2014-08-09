@@ -1,9 +1,6 @@
-#
-# This is 2012.2 folsom-3 milestone
-#
 Name:		openstack-keystone
-Version:	2012.2.0.6
-Release:	alt4
+Version:	2014.1.1
+Release:	alt1
 Summary:	OpenStack Identity Service
 
 Group:		System/Servers
@@ -14,19 +11,21 @@ Source1:	%{name}.logrotate
 Source2:	%{name}.service
 Source3:	%{name}.init
 Source5:	%{name}-sample-data
+Source20:	keystone-dist.conf
 
 #
-# patches_base=folsom-3
+# patches_base=2014.1.1
 #
-Patch0001:	%{name}-allow-middleware-configuration-from-app-config.patch
-Patch0002:	%{name}-match-egg-and-spec-requires.patch
-Patch0003:	%{name}-check-for-expected-cfg-impl-bug-1043479.patch
-Patch0004:	%{name}-require-authz-to-update-user-s-tenant-bug-1040626.patch
+Patch0001: 0001-remove-runtime-dep-on-python-pbr.patch
+Patch0002: 0002-sync-parameter-values-with-keystone-dist.conf.patch
+Patch0003: 0003-Refactor-service-readiness-notification.patch
 
 BuildArch:	noarch
 BuildRequires:	python-devel
 BuildRequires:	python-module-sphinx >= 1.0
-BuildRequires:	python-module-iniparse
+BuildRequires:	python-module-oslo-sphinx
+BuildRequires:	python-module-pbr
+BuildRequires:	python-module-d2to1
 
 Requires:	python-module-keystone = %{version}-%{release}
 Requires:	python-module-keystoneclient
@@ -43,8 +42,6 @@ This package contains the Keystone daemon.
 Summary:	Keystone Python libraries
 Group:		Development/Python
 
-Requires:	python-module-keystone-auth-token = %{version}-%{release}
-
 Requires:	python-module-eventlet
 Requires:	python-module-ldap
 Requires:	python-module-lxml
@@ -57,27 +54,25 @@ Requires:	python-module-webob
 Requires:	python-module-passlib
 Requires:	python-module-MySQLdb
 Requires:	python-module-PAM
-Requires:	python-module-swift
+Requires:	python-module-iso8601
+Requires:	python-module-oslo-config >= 1.2.0
+Requires:	openssl
+Requires:       python-module-netaddr
+Requires:       python-module-six >= 1.4.1
+Requires:       python-module-babel
+Requires:       python-module-oauthlib
+Requires:       python-module-dogpile-cache >= 0.5.0
+Requires:       python-module-jsonschema
+Requires:       python-module-oslo-messaging
+Requires:       python-module-pycadf
+
+
 
 %description -n python-module-keystone
 Keystone is a Python implementation of the OpenStack
 (http://www.openstack.org) identity service API.
 
 This package contains the Keystone Python library.
-
-%package -n python-module-keystone-auth-token
-Summary:	Keystone Authentication Middleware.
-Group:		Development/Python
-
-Requires:	python-module-iso8601
-Requires:	python-module-memcached
-Requires:	python-module-webob
-
-%description -n python-module-keystone-auth-token
-Keystone is a Python implementation of the OpenStack
-(http://www.openstack.org) identity service API.
-
-This package contains the Keystone Authentication Middleware.
 
 %package doc
 Summary:	Documentation for OpenStack Identity Service
@@ -90,30 +85,38 @@ Keystone is a Python implementation of the OpenStack
 This package contains documentation for Keystone.
 
 %prep
-%setup -q
+%setup
 
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 find keystone -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
+# Remove bundled egg-info
+rm -rf keystone.egg-info
 
+# Remove dependency on pbr and set version as per rpm
+sed -i s/REDHATKEYSTONEVERSION/%{version}/ bin/keystone-all keystone/cli.py
+
+# make doc build compatible with python-oslo-sphinx RPM
+sed -i 's/oslosphinx/oslo.sphinx/' doc/source/conf.py
 
 %build
 cp etc/keystone.conf.sample etc/keystone.conf
+# distribution defaults are located in keystone-dist.conf
 %python_build
 
 %install
 %python_install
 
 # Delete tests
-rm -fr %{buildroot}%{python_sitelibdir}/tests
-rm -fr %{buildroot}%{python_sitelibdir}/run_tests.*
+rm -fr %{buildroot}%{python_sitelibdir}}/keystone/tests
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/keystone
 install -p -D -m 640 etc/keystone.conf %{buildroot}%{_sysconfdir}/keystone/keystone.conf
+install -p -D -m 644 etc/keystone-paste.ini %{buildroot}%{_datadir}/keystone/keystone-dist-paste.ini
+install -p -D -m 644 %{SOURCE20} %{buildroot}%{_datadir}/keystone/keystone-dist.conf
 install -p -D -m 640 etc/logging.conf.sample %{buildroot}%{_sysconfdir}/keystone/logging.conf
 install -p -D -m 640 etc/default_catalog.templates %{buildroot}%{_sysconfdir}/keystone/default_catalog.templates
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/keystone/policy.json
@@ -121,8 +124,11 @@ install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 install -p -D -m 755 %{SOURCE3} %{buildroot}%{_initdir}/%{name}
 # Install sample data script.
-install -p -D -m 755 tools/sample_data.sh %{buildroot}%{_datadir}/%{name}/sample_data.sh
+install -p -D -m 755 tools/sample_data.sh %{buildroot}%{_datadir}/keystone/sample_data.sh
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/openstack-keystone-sample-data
+# Install sample HTTPD integration files
+install -p -D -m 644 httpd/keystone.py  %{buildroot}%{_datadir}/keystone/keystone.wsgi
+install -p -D -m 644 httpd/wsgi-keystone.conf  %{buildroot}%{_datadir}/keystone/
 
 install -d -m 755 %{buildroot}%{_sharedstatedir}/keystone
 install -d -m 755 %{buildroot}%{_logdir}/keystone
@@ -144,7 +150,6 @@ popd
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 
 %pre
-# FIXME:
 # 163:163 for keystone (openstack-keystone) - rhbz#752842
 getent group keystone >/dev/null || groupadd -r --gid 163 keystone
 getent passwd keystone >/dev/null || \
@@ -154,23 +159,6 @@ exit 0
 
 %post
 %post_service %{name}
-
-%post -n python-module-keystone-auth-token
-# workaround for rhbz 824034#c14
-if [ ! -e %{python_sitelibdir}/keystone/__init__.py ]; then
-    > %{python_sitelibdir}/keystone/__init__.py
-fi
-if [ ! -e %{python_sitelibdir}/keystone/middleware/__init__.py ]; then
-    > %{python_sitelibdir}/keystone/middleware/__init__.py
-fi
-
-%triggerpostun -n python-module-keystone-auth-token -- python-module-keystone
-# edge case: removing python-module-keystone with overlapping files
-if [ $2 -eq 0 ] ; then
-    # Package removal, not upgrade
-    > %{python_sitelibdir}/keystone/__init__.py
-    > %{python_sitelibdir}/keystone/middleware/__init__.py
-fi
 
 %preun
 %preun_service %{name}
@@ -182,36 +170,35 @@ fi
 %{_bindir}/keystone-all
 %{_bindir}/keystone-manage
 %{_bindir}/%{name}-sample-data
-%{_datadir}/%{name}
+%dir %{_datadir}/keystone
+%attr(0644, root, keystone) %{_datadir}/keystone/keystone-dist.conf
+%attr(0644, root, keystone) %{_datadir}/keystone/keystone-dist-paste.ini
+%attr(0755, root, root) %{_datadir}/keystone/sample_data.sh
+%attr(0644, root, keystone) %{_datadir}/keystone/keystone.wsgi
+%attr(0644, root, keystone) %{_datadir}/keystone/wsgi-keystone.conf
 %{_unitdir}/%{name}.service
 %{_initdir}/%{name}
-%dir %{_sysconfdir}/keystone
-%config(noreplace) %attr(-, root, keystone) %{_sysconfdir}/keystone/keystone.conf
-%config(noreplace) %attr(-, root, keystone) %{_sysconfdir}/keystone/logging.conf
-%config(noreplace) %attr(-, root, keystone) %{_sysconfdir}/keystone/default_catalog.templates
-%config(noreplace) %attr(-, keystone, keystone) %{_sysconfdir}/keystone/policy.json
+%dir %attr(0750, root, keystone) %{_sysconfdir}/keystone
+%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/keystone.conf
+%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/logging.conf
+%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/default_catalog.templates
+%config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %dir %attr(-, keystone, keystone) %{_sharedstatedir}/keystone
-%dir %attr(-, keystone, keystone) %{_logdir}/keystone
+%dir %attr(0750, keystone, keystone) %{_logdir}/keystone
 
 %files -n python-module-keystone
 %doc LICENSE
 %{python_sitelibdir}/keystone
-%exclude %{python_sitelibdir}/keystone/middleware/auth_token.py*
-%{python_sitelibdir}/keystone-*.egg-info
-
-%files -n python-module-keystone-auth-token
-%doc LICENSE
-%dir %{python_sitelibdir}/keystone
-%ghost %{python_sitelibdir}/keystone/__init__.py
-%dir %{python_sitelibdir}/keystone/middleware
-%ghost %{python_sitelibdir}/keystone/middleware/__init__.py
-%{python_sitelibdir}/keystone/middleware/auth_token.py*
+%{python_sitelibdir}/keystone-%{version}-*.egg-info
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Jul 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
+- New version - icehouse (based on Fedora)
+
 * Mon Aug 26 2013 Vitaly Lipatov <lav@altlinux.ru> 2012.2.0.6-alt4
 - cleanup spec
 
