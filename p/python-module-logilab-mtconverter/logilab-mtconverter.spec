@@ -1,10 +1,10 @@
 %define oname logilab-mtconverter
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.8.4
-Release: alt1.hg20130321
+Release: alt2.hg20130321
 Summary: A library to convert from a MIME type to another
 
 Group: Development/Python
@@ -84,6 +84,7 @@ This package contains tests for logilab mtconverter.
 %prep
 %setup
 touch test/__init__.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -92,6 +93,7 @@ touch ../python3/test/__init__.py
 
 %build
 %python_build
+
 %if_with python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
@@ -108,6 +110,7 @@ popd
 %install
 %python_install
 rm -f %buildroot%python_sitelibdir/logilab/__init__.py*
+
 %if_with python3
 pushd ../python3
 %python3_install
@@ -139,6 +142,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt2.hg20130321
+- Added module for Python 3
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1.hg20130321
 - Version 0.8.4
 
