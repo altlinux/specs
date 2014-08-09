@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.8
-Release: alt3
+Version: 3.15.9
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 8
+%define kernel_stable_version 9
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1906,6 +1906,20 @@ done)
 
 
 %changelog
+* Sat Aug 09 2014 Led <led@altlinux.ru> 3.15.9-alt1
+- 3.15.9
+- removed:
+  + fix-net-l2tp--l2tp_ppp
+  + feat-arch-x86--espfix
+- updated:
+  + fix-arch-x86
+  + fix-fs
+  + fix-mm
+- added:
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-drivers-usb-serial--symbolserial
+  + fix-security--apparmor
+
 * Wed Aug 06 2014 Led <led@altlinux.ru> 3.15.8-alt3
 - updated:
   + fix-drivers-iommu--intel-iommu
