@@ -1,11 +1,11 @@
 %define mname hachoir
 %define oname %mname-core
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
-Version: 1.3.3
-Release: alt2.hg20140628
+Version: 1.3.4
+Release: alt1.hg20140628
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -135,6 +135,7 @@ hexadecimal data and Hachoir reprensentation.
 %package -n python3-module-%oname
 Summary: Core of Hachoir framework: parse and edit binary files (Python 3)
 Group: Development/Python3
+%add_python3_req_skip hotshot
 
 %description -n python3-module-%oname
 Hachoir is a Python library that allows to view and edit a binary stream
@@ -219,6 +220,7 @@ any binary stream.
 %package -n python3-module-%mname-urwid
 Summary: Binary file explorer using Hachoir and urwid libraries (Python 3)
 Group: Development/Python3
+%add_findreq_skiplist %python3_sitelibdir/hachoir_urwid/urwid_ui.py
 
 %description -n python3-module-%mname-urwid
 hachoir-urwid is a binary file explorer based on Hachoir library to
@@ -227,6 +229,17 @@ each bit/byte of your files. With direction keys, you can navigate in
 the field tree. The key 'h' will disable 'human display' and switch to
 'raw display'. It's sometime useful when you would like to compare
 hexadecimal data and Hachoir reprensentation.
+
+%package -n %mname-metadata-gtk-py3
+Summary: PyGTK interface of hachoir-metadata
+Group: File tools
+Requires: python3-module-%mname-metadata = %epoch:%version-%release
+
+%description -n %mname-metadata-gtk-py3
+hachoir-metadata extracts metadata from multimedia files: music,
+picture, video, but also archives. It supports most common file formats.
+
+This package contains PyGTK interface of hachoir-metadata.
 %endif
 
 %prep
@@ -234,10 +247,15 @@ hexadecimal data and Hachoir reprensentation.
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
+. setupenv.sh
+
+pushd hachoir-core
 %python_build --setuptools
+popd
 
 pushd hachoir-metadata
 %python_build --setuptools
@@ -265,10 +283,10 @@ popd
 
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+
+pushd hachoir-core
 %python3_build --setuptools
+popd
 
 pushd hachoir-metadata
 %python3_build --setuptools
@@ -303,9 +321,14 @@ rst2html.py internals.rst >internals.html
 popd
 
 %install
+. setupenv.sh
+
 %if_with python3
 pushd ../python3
+
+pushd hachoir-core
 %python3_install
+popd
 
 pushd hachoir-metadata
 %python3_install
@@ -331,12 +354,15 @@ popd
 
 pushd %buildroot%_bindir
 for i in $(ls); do
+	2to3 -w -n $i
 	mv $i ${i}3
 done
 popd
 %endif
 
+pushd hachoir-core
 %python_install
+popd
 
 pushd hachoir-metadata
 %python_install
@@ -359,7 +385,8 @@ pushd hachoir-urwid
 popd
 
 %files
-%doc AUTHORS COPYING ChangeLog README doc
+%doc %mname-core/AUTHORS %mname-core/COPYING %mname-core/ChangeLog
+%doc %mname-core/README %mname-core/doc
 %python_sitelibdir/hachoir_core*
 
 %files -n python-module-%mname-metadata
@@ -429,13 +456,19 @@ popd
 %_bindir/%mname-subfile3
 %python3_sitelibdir/hachoir_subfile*
 
-#files -n python3-module-%mname-urwid
-#doc %mname-urwid/AUTHORS %mname-urwid/COPYING %mname-urwid/README
-#_bindir/%mname-urwid3
-#python3_sitelibdir/hachoir_urwid
+%files -n python3-module-%mname-urwid
+%doc %mname-urwid/AUTHORS %mname-urwid/COPYING %mname-urwid/README
+%_bindir/%mname-urwid3
+%python3_sitelibdir/hachoir_urwid*
+
+#files -n %mname-metadata-gtk-py3
+#_bindir/%mname-metadata-gtk3
 %endif
 
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.4-alt1.hg20140628
+- Added module for Python 3
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt2.hg20140628
 - New snapshot
 
