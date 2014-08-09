@@ -1,10 +1,10 @@
 %define oname la
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Label the rows, columns, any dimension, of your NumPy arrays
 License: BSD
@@ -18,10 +18,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-sphinx-devel
+BuildPreReq: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 python3-module-Cython
 %endif
 
 %description
@@ -97,6 +98,7 @@ pushd ../python3
 #find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
 #find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+rm -f ../python3/la/src/*.c
 %endif
 
 %prepare_sphinx doc
@@ -148,13 +150,18 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
 %endif
 
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt2
+- Added module for Python 3
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus
 
