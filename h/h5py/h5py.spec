@@ -1,7 +1,10 @@
 %define hdf5dir %_libdir/hdf5-seq
+
+%def_with python3
+
 Name: h5py
 Version: 2.4.0
-Release: alt1.a0.git20140625
+Release: alt1.a0.git20140805
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -12,10 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel libnumpy-devel libhdf5-devel strace
+BuildPreReq: python-devel libnumpy-devel libhdf5-devel
 BuildPreReq: libsz2-devel python-module-Cython python-module-Pyrex
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: texlive-latex-recommended
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-setuptools
+BuildPreReq: python3-module-Cython
+%endif
 
 %description
 HDF5 for Python (h5py) is a general-purpose Python interface to the
@@ -43,6 +51,29 @@ Group: Development/Python
 %py_requires multiprocessing
 
 %description -n python-module-%name
+HDF5 for Python (h5py) is a general-purpose Python interface to the
+Hierarchical Data Format library, version 5. HDF5 is a versatile, mature
+scientific software library designed for the fast, flexible storage of
+enormous amounts of data.
+
+From a Python programmer's perspective, HDF5 provides a robust way to
+store data, organized by name in a tree-like fashion. You can create
+datasets (arrays on disk) hundreds of gigabytes in size, and perform
+random-access I/O on desired sections. Datasets are organized in a
+filesystem-like hierarchy using containers called "groups", and accessed
+using the tradional POSIX /path/to/resource syntax.
+
+H5py provides a simple, robust read/write interface to HDF5 data from
+Python. Existing Python and Numpy concepts are used for the interface;
+for example, datasets on disk are represented by a proxy class that
+supports slicing, and has dtype and shape attributes. HDF5 groups are
+presented using a dictionary metaphor, indexed by name.
+
+%package -n python3-module-%name
+Summary: Python interface to the Hierarchical Data Format library, version 5
+Group: Development/Python3
+
+%description -n python3-module-%name
 HDF5 for Python (h5py) is a general-purpose Python interface to the
 Hierarchical Data Format library, version 5. HDF5 is a versatile, mature
 scientific software library designed for the fast, flexible storage of
@@ -138,8 +169,38 @@ presented using a dictionary metaphor, indexed by name.
 
 This package contains tests for H5PY.
 
+%package -n python3-module-%name-tests
+Summary: Tests for Python interface to the HDF5
+Group: Development/Python3
+Requires: python3-module-%name = %version-%release
+
+%description -n python3-module-%name-tests
+HDF5 for Python (h5py) is a general-purpose Python interface to the
+Hierarchical Data Format library, version 5. HDF5 is a versatile, mature
+scientific software library designed for the fast, flexible storage of
+enormous amounts of data.
+
+From a Python programmer's perspective, HDF5 provides a robust way to
+store data, organized by name in a tree-like fashion. You can create
+datasets (arrays on disk) hundreds of gigabytes in size, and perform
+random-access I/O on desired sections. Datasets are organized in a
+filesystem-like hierarchy using containers called "groups", and accessed
+using the tradional POSIX /path/to/resource syntax.
+
+H5py provides a simple, robust read/write interface to HDF5 data from
+Python. Existing Python and Numpy concepts are used for the interface;
+for example, datasets on disk are represented by a proxy class that
+supports slicing, and has dtype and shape attributes. HDF5 groups are
+presented using a dictionary metaphor, indexed by name.
+
+This package contains tests for H5PY.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 sed -i 's|@PYVER@|%_python_version|g' docs/Makefile
 
@@ -148,14 +209,28 @@ ln -s ../objects.inv docs/
 ln -s ../objects.inv docs_api/
 
 %build
+%add_optflags -fno-strict-aliasing
 #python setup.py cython
 python setup.py configure --hdf5=%hdf5dir
 python api_gen.py
-%add_optflags -fno-strict-aliasing
 %python_build_debug
+
+%if_with python3
+pushd ../python3
+python3 setup.py configure --hdf5=%hdf5dir
+python3 api_gen.py
+%python3_build_debug
+popd
+%endif
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
@@ -196,7 +271,21 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%name/
 %dir %python_sitelibdir/%name
 %python_sitelibdir/%name/pickle
 
+%if_with python3
+%files -n python3-module-%name
+%doc licenses *.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%name-tests
+%python3_sitelibdir/*/tests
+%endif
+
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.a0.git20140805
+- New snapshot
+- Added module for Python 3
+
 * Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.a0.git20140625
 - Version 2.4.0a0
 
