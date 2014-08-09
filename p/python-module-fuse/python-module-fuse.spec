@@ -1,13 +1,13 @@
 %define oname fuse
 %define version 0.2.1
 #define cvsdate 20091102
-%define release alt2
+%define release alt2.git20120527
 %setup_python_module %oname
 
 Summary: This is a Python interface to FUSE
 Name: python-module-%oname
 Version: %version
-Release: %release.1
+Release: %release
 Url: http://sourceforge.net/projects/fuse/
 Source0: python-%modulename.tar.bz2
 License: LGPL
@@ -34,9 +34,12 @@ create and mount their own filesystem implementations.
 %python_install --optimize=2 --record=INSTALLED_FILES
 
 %files -f INSTALLED_FILES
-%doc AUTHORS COPYING FAQ README.* example Changelog
+%doc AUTHORS COPYING FAQ README.* example
 
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt2.git20120527
+- Snapshot from git
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.1-alt2.1
 - Rebuild with Python-2.7
 
