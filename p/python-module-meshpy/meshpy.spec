@@ -1,7 +1,10 @@
 %define oname meshpy
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 2014.1
-Release: alt1.git20140706
+Release: alt2.git20140706
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -16,12 +19,40 @@ Source1: bpl-subset.tar
 BuildPreReq: boost-python-devel gcc-c++ python-module-setuptools
 BuildPreReq: libnumpy-devel python-module-epydoc
 BuildPreReq: doxygen graphviz
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: boost-python3-devel python3-module-setuptools
+BuildPreReq: libnumpy-py3-devel
+%endif
 
 %description
 MeshPy offers quality triangular and tetrahedral mesh generation for
 Python. Meshes of this type are chiefly used in finite-element
 simulation codes, but also have many other applications ranging from
 computer graphics to robotics.
+
+%package -n python3-module-%oname
+Summary: Triangular and Tetrahedral Mesh Generator in Python
+Group: Development/Python3
+
+%description -n python3-module-%oname
+MeshPy offers quality triangular and tetrahedral mesh generation for
+Python. Meshes of this type are chiefly used in finite-element
+simulation codes, but also have many other applications ranging from
+computer graphics to robotics.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for MeshPy
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+MeshPy offers quality triangular and tetrahedral mesh generation for
+Python. Meshes of this type are chiefly used in finite-element
+simulation codes, but also have many other applications ranging from
+computer graphics to robotics.
+
+This package contains tests for MeshPy.
 
 %package tests
 Summary: Tests for MeshPy
@@ -55,10 +86,22 @@ This package contains documentation for MeshPy.
 rm -fR bpl-subset
 tar -xf %SOURCE1
 
+%if_with python3
+cp -fR . ../python3
+sed -i 's|boost_python|boost_python3|' ../python3/setup.py
+%endif
+
 %build
+./configure.py
 %python_build_debug
 
+%if_with python3
+pushd ../python3
 ./configure.py
+%python3_build_debug
+popd
+%endif
+
 export PYTHONPATH=$PWD
 %make doc
 
@@ -68,6 +111,15 @@ export PYTHONPATH=$PWD
 touch test/__init__.py
 rm -f test/clean.sh
 cp -fR test %buildroot%python_sitelibdir/%oname/
+
+%if_with python3
+pushd ../python3
+%python3_install
+touch test/__init__.py
+rm -f test/clean.sh
+cp -fR test %buildroot%python3_sitelibdir/%oname/
+popd
+%endif
 
 %files
 %doc LICENSE README
@@ -80,7 +132,20 @@ cp -fR test %buildroot%python_sitelibdir/%oname/
 %files docs
 %doc doc/html/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc LICENSE README
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/test
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/test
+%endif
+
 %changelog
+* Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt2.git20140706
+- Added module for Python 3
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt1.git20140706
 - Version 2014.1
 
