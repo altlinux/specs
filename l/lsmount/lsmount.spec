@@ -1,10 +1,11 @@
 Name: lsmount
 Summary: List all hotplug storage devices
 Version: 1.0
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 BuildArch: noarch
+Url: https://github.com/mithraen/lsmount
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
@@ -28,8 +29,11 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Aug 09 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt3
+- add Url tag
+
 * Fri Aug 08 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt2
-- add requires to lsblk (#30222)
+- add requires to lsblk (ALT #30222)
 
 * Fri Aug 08 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt1
 - first build
