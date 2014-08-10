@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.3.2
-Release: alt2
+Release: alt3
 
 Summary: Hardware Health Monitoring Tools
 License: GPL
@@ -12,6 +12,8 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 
 Source: %name-%version.tar
 Source1: lm_sensors.init
+Source2: lm_sensors.service
+Source3: fancontrol.service
 
 Patch1: lm_sensors3-3.1.0-alt-set_limit.patch
 Patch2: lm_sensors3-3.1.0-makefile-norpath.patch
@@ -112,6 +114,8 @@ user space applications for general SMBus access and hardware monitoring.
       install
 
 install -pD -m755 %SOURCE1 %buildroot%_initrddir/lm_sensors
+install -pD -m644 %SOURCE2 %buildroot/lib/systemd/system/lm_sensors.service
+install -pD -m644 %SOURCE3 %buildroot/lib/systemd/system/fancontrol.service
 
 install -pD -m755 prog/init/sensord.init %buildroot%_datadir/%name/sensord.init
 install -pD -m755 prog/init/fancontrol.init %buildroot%_datadir/%name/fancontrol.init
@@ -147,6 +151,7 @@ fi
 %config(noreplace) %_sysconfdir/sensors3.conf
 %dir %_sysconfdir/sensors.d
 %config %_initdir/lm_sensors
+/lib/systemd/system/lm_sensors.service
 %_bindir/sensors
 %_bindir/sensors-conf-convert
 %_sbindir/sensors-detect
@@ -160,6 +165,7 @@ fi
 %files utils
 %_sbindir/sensord
 %_sbindir/fancontrol
+/lib/systemd/system/fancontrol.service
 %ifnarch %arm
 %_sbindir/isadump
 %_sbindir/isaset
@@ -191,6 +197,10 @@ fi
 %endif #static
 
 %changelog
+* Thu Aug 07 2014 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt3
+- add systemd unit (#30221)
+- add fancontrol.service (#30186)
+
 * Thu Feb 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.2-alt2
 - rebuilt with LFS
 
