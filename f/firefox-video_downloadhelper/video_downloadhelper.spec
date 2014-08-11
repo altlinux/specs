@@ -1,7 +1,7 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 4.9.22
+%define version 4.9.23
 %define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -58,6 +58,9 @@ fi
 %ciddir
 
 %changelog
+* Mon Aug 11 2014 Andrey Cherepanov <cas@altlinux.org> 4.9.23-alt1
+- Nrw version 4.9.23
+
 * Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 4.9.22-alt1
 - New version 4.9.22
 - Support Firefox 31.x and Seamonkey 2.30.x
