@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.5
-Release:        alt4_6jpp7.qa1
+Release:        alt5_6jpp7.qa1
 Summary:        Java Webserver and Servlet Container
 
 Group:          Networking/WWW
@@ -81,7 +81,7 @@ BuildRequires:  glassfish-jsp-api
 BuildRequires:  jakarta-taglibs-standard
 BuildRequires:  jpackage-utils
 BuildRequires:  jvnet-parent
-BuildRequires:  maven
+BuildRequires:  maven-local maven
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-war-plugin
@@ -1036,6 +1036,9 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 11 2014 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt5_6jpp7.qa1
+- rebuild with maven-local
+
 * Wed Apr 24 2013 Repocop Q. A. Robot <repocop@altlinux.org> 8.1.5-alt4_6jpp7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
