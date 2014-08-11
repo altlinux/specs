@@ -1,6 +1,6 @@
 
 Name: sssd
-Version: 1.11.6
+Version: 1.12.0
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -12,9 +12,6 @@ Source3: system-auth-sss.pam
 Source4: system-auth-use_first_pass-sss.pam
 
 Patch: %name-%version-%release.patch
-
-### Patches ###
-# Patch0602: 0602-FEDORA-Add-CIFS-idmap-plugin.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
@@ -67,16 +64,14 @@ BuildRequires: glib2-devel
 BuildRequires: diffstat
 BuildRequires: findutils
 BuildRequires: samba-devel
-BuildRequires: systemd-devel
+BuildRequires: libsmbclient-devel
+BuildRequires: systemd-devel libsystemd-devel
 BuildRequires: selinux-policy-targeted
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libaugeas-devel
 BuildRequires: libcmocka-devel
 BuildRequires: nscd
-
-#%%ifarch %ix86 x86_64 %arm
-#BuildRequires: libcmocka-devel
-#%%endif
 
 %description
 Provides a set of daemons to manage access to remote directories and
@@ -325,6 +320,7 @@ be used by Python applications.
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
     --enable-ldb-version-check \
+    --with-syslog=journald \
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
     --enable-pac-responder \
@@ -403,6 +399,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_bindir/sss_ssh_authorizedkeys
 %_bindir/sss_ssh_knownhostsproxy
 %_sbindir/sss_cache
+%_libexecdir/%name/sss_signal
 
 %dir %sssdstatedir
 %dir %_localstatedir/cache/krb5rcache
@@ -416,6 +413,8 @@ unset CK_TIMEOUT_MULTIPLIER
 %attr(750,root,root) %dir %_var/log/%name
 %attr(700,root,root) %dir %_sysconfdir/sssd
 %ghost %attr(0600,root,root) %config(noreplace) %_sysconfdir/sssd/sssd.conf
+%dir %_sysconfdir/systemd/system/sssd.service.d
+%config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
 %dir %_datadir/sssd
 %_datadir/%name/sssd.api.conf
@@ -459,6 +458,8 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %files ad
 %_libdir/%name/libsss_ad.so
+%_libdir/%name/libsss_ad_common.so
+%_libexecdir/%name/gpo_child
 %_man5dir/sssd-ad*
 %_datadir/%name/sssd.api.d/sssd-ad.conf
 
@@ -473,7 +474,7 @@ unset CK_TIMEOUT_MULTIPLIER
 /%_lib/security/pam_sss.so
 %_libdir/krb5/plugins/libkrb5/sssd_krb5_locator_plugin.so
 %_libdir/krb5/plugins/authdata/sssd_pac_plugin.so
-# %_libdir/cifs-utils/cifs_idmap_sss.so
+%_libdir/cifs-utils/cifs_idmap_sss.so
 %_man8dir/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
 
@@ -524,21 +525,25 @@ unset CK_TIMEOUT_MULTIPLIER
 %_man5dir/sssd-ifp.5*
 # InfoPipe DBus plumbing
 %_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
+%_datadir/dbus-1/system-services/org.freedesktop.sssd.infopipe.service
+%_libdir/%name/libsss_config.so
 
-# %files -n libsss_simpleifp
-# %_libdir/libsss_simpleifp.so.*
+%files -n libsss_simpleifp
+%_libdir/libsss_simpleifp.so.*
 
-# %files -n libsss_simpleifp-devel
-# %doc sss_simpleifp_doc/html
-# %_includedir/sss_sifp.h
-# %_includedir/sss_sifp_dbus.h
-# %_libdir/libsss_simpleifp.so
-# %_pkgconfigdir/sss_simpleifp.pc
+%files -n libsss_simpleifp-devel
+%_includedir/sss_sifp.h
+%_includedir/sss_sifp_dbus.h
+%_libdir/libsss_simpleifp.so
+%_pkgconfigdir/sss_simpleifp.pc
 
 %files -n python-module-sss_nss_idmap
 %python_sitelibdir/pysss_nss_idmap.so
 
 %changelog
+* Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
+- 1.12.0
+
 * Wed Jun 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.6-alt1
 - 1.11.6
 

@@ -1,5 +1,5 @@
 Name: cifs-utils
-Version: 6.3
+Version: 6.4
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -51,7 +51,7 @@ provide these credentials to the kernel automatically at login.
 %build
 %autoreconf
 %configure \
-	--with-pam-module-dir=/%_lib/security \
+	--with-pamdir=/%_lib/security \
 	--with-idmap-plugin=%_libdir/%name/idmap-plugin
 %make_build
 
@@ -69,7 +69,7 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 
 %files
 /sbin/mount.cifs
-/sbin/cifs.upcall
+%_sbindir/cifs.upcall
 %_sbindir/cifs.idmap
 %_bindir/cifscreds
 %_bindir/getcifsacl
@@ -96,6 +96,10 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man8dir/pam_cifscreds.*
 
 %changelog
+* Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 6.4-alt1
+- 6.4
+- revert "move cifs.upcall to /sbin"
+
 * Mon Feb 03 2014 Alexey Shabalin <shaba@altlinux.ru> 6.3-alt1
 - 6.3
 - add pam_cifscreds package

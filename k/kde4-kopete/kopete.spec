@@ -22,7 +22,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 4.13.3
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -318,6 +318,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 4.13.3-alt1.1
+- NMU: rebuild with new samba
+
 * Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 
