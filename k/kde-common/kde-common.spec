@@ -1,6 +1,6 @@
 
 %define major 4
-%define minor 13
+%define minor 14
 %define bugfix 0
 
 Name: kde-common
@@ -227,6 +227,9 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Thu Apr 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
