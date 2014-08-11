@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -40,6 +40,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
+- Added is_ipv6_enabled() function.
+
 * Fri Dec 14 2012 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - refdns: Replace valid_ipv4() with valid_ipv4addr().
 - Added valid_ipv4addr() function.
