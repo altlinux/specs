@@ -1,7 +1,7 @@
 %define soversion 1
 
 Name: protobuf-c
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Google's Protocol Buffers implementation in C
 
@@ -75,6 +75,9 @@ This package contains development files required for packaging
 %doc TODO ChangeLog README.md LICENSE
 
 %changelog
+* Mon Aug 11 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Thu Jul 31 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
