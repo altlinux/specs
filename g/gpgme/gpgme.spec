@@ -1,5 +1,5 @@
 Name: gpgme
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 %define min_gnupg_version 1.9.6
@@ -129,6 +129,13 @@ export PATH=$PWD/tmp_bin:$PATH
 %endif
 
 %changelog
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.4-alt1
+- new version
+- security fixes: CVE-2014-3564
+
+* Thu Jun 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt0.M70P.1
+- built for M70P
+
 * Thu May 22 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.3-alt1
 - new version
 
