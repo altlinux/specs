@@ -1,5 +1,5 @@
 Name:		openstack-keystone
-Version:	2014.1.1
+Version:	2014.1.2.1
 Release:	alt1
 Summary:	OpenStack Identity Service
 
@@ -9,12 +9,13 @@ URL:		http://keystone.openstack.org/
 Source0:	%{name}-%{version}.tar
 Source1:	%{name}.logrotate
 Source2:	%{name}.service
-Source3:	%{name}.init
+Source3:	openstack-keystone.sysctl
 Source5:	%{name}-sample-data
 Source20:	keystone-dist.conf
+Source100:	%{name}.init
 
 #
-# patches_base=2014.1.1
+# patches_base=2014.1.2.1
 #
 Patch0001: 0001-remove-runtime-dep-on-python-pbr.patch
 Patch0002: 0002-sync-parameter-values-with-keystone-dist.conf.patch
@@ -28,7 +29,7 @@ BuildRequires:	python-module-pbr
 BuildRequires:	python-module-d2to1
 
 Requires:	python-module-keystone = %{version}-%{release}
-Requires:	python-module-keystoneclient
+Requires:	python-module-keystoneclient >= 0.6.0
 
 Requires(pre):	shadow-utils
 
@@ -120,9 +121,11 @@ install -p -D -m 644 %{SOURCE20} %{buildroot}%{_datadir}/keystone/keystone-dist.
 install -p -D -m 640 etc/logging.conf.sample %{buildroot}%{_sysconfdir}/keystone/logging.conf
 install -p -D -m 640 etc/default_catalog.templates %{buildroot}%{_sysconfdir}/keystone/default_catalog.templates
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/keystone/policy.json
-install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
-install -p -D -m 755 %{SOURCE3} %{buildroot}%{_initdir}/%{name}
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-keystone
+install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-keystone.service
+install -d -m 755 %{buildroot}%{_prefix}/lib/sysctl.d
+install -p -D -m 644 %{SOURCE3} %{buildroot}%{_prefix}/lib/sysctl.d/openstack-keystone.conf
+install -p -D -m 755 %{SOURCE100} %{buildroot}%{_initdir}/%{name}
 # Install sample data script.
 install -p -D -m 755 tools/sample_data.sh %{buildroot}%{_datadir}/keystone/sample_data.sh
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/openstack-keystone-sample-data
@@ -169,23 +172,24 @@ exit 0
 %{_mandir}/man1/keystone*.1.gz
 %{_bindir}/keystone-all
 %{_bindir}/keystone-manage
-%{_bindir}/%{name}-sample-data
+%{_bindir}/openstack-keystone-sample-data
 %dir %{_datadir}/keystone
 %attr(0644, root, keystone) %{_datadir}/keystone/keystone-dist.conf
 %attr(0644, root, keystone) %{_datadir}/keystone/keystone-dist-paste.ini
 %attr(0755, root, root) %{_datadir}/keystone/sample_data.sh
 %attr(0644, root, keystone) %{_datadir}/keystone/keystone.wsgi
 %attr(0644, root, keystone) %{_datadir}/keystone/wsgi-keystone.conf
-%{_unitdir}/%{name}.service
+%{_unitdir}/openstack-keystone.service
 %{_initdir}/%{name}
 %dir %attr(0750, root, keystone) %{_sysconfdir}/keystone
 %config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/keystone.conf
 %config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/logging.conf
 %config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/default_catalog.templates
 %config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/policy.json
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-keystone
 %dir %attr(-, keystone, keystone) %{_sharedstatedir}/keystone
 %dir %attr(0750, keystone, keystone) %{_logdir}/keystone
+%{_prefix}/lib/sysctl.d/openstack-keystone.conf
 
 %files -n python-module-keystone
 %doc LICENSE
@@ -196,6 +200,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2.1-alt1
+- 2014.1.2.1
+
 * Fri Jul 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
 - New version - icehouse (based on Fedora)
 

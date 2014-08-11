@@ -1,6 +1,6 @@
 Name:             openstack-cinder
-Version:          2014.1
-Release:          alt3
+Version:          2014.1.1
+Release:          alt1
 Summary:          OpenStack Volume service
 
 Group:            System/Servers
@@ -19,12 +19,11 @@ Source13:         openstack-cinder-backup.service
 Source20:         cinder-sudoers
 
 #
-# patches_base=2014.1
+# patches_base=2014.1.1
 #
 Patch0001: 0001-Ensure-we-don-t-access-the-net-when-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr-python-d2to1.patch
 Patch0003: 0003-Revert-Switch-over-to-oslosphinx.patch
-Patch0004: 0004-GlusterFS-Delete-active-snapshot-file-on-volume-dele.patch
 Patch0005: 0005-notify-calling-process-we-are-ready-to-serve.patch
 Patch0006: 0006-Move-notification-point-to-a-better-place.patch
 
@@ -139,7 +138,6 @@ This package contains documentation files for cinder.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
-%patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
 
@@ -302,6 +300,9 @@ fi
 %doc doc/build/html
 
 %changelog
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
+- 2014.1.1
+
 * Sat Aug 09 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1-alt3
 - sysfsutils added to Requires: warning about systool
 
