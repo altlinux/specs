@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.1
-Release:	alt2
+Release:	alt3
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -39,6 +39,7 @@ Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
 Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
 Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
 Patch0007: 0007-remove-token-from-notifier-middleware.patch
+Patch0101: 0101-fix-neutron-configuration.patch
 
 BuildArch:	noarch
 
@@ -339,9 +340,6 @@ networks using One Convergence NVSD
 Summary:	Neutron openvswitch plugin
 Group:          Development/Python
 
-Provides:	openstack-quantum-openvswitch = %{version}-%{release}
-Obsoletes:	openstack-quantum-openvswitch < 2013.2-0.4.b3
-
 Requires:	openstack-neutron = %{version}-%{release}
 Requires:	openvswitch
 
@@ -465,6 +463,7 @@ IPSec.
 %patch0005 -p1
 %patch0006 -p1
 %patch0007 -p1
+%patch0101 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1005,6 +1004,9 @@ fi
 
 
 %changelog
+* Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt3
+- openvswitch-agent takes plugins.ml2 by default: most usable configuration
+
 * Tue Aug 05 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt2
 - user neutron added to wheel group, for neutron-rootwrap
 
