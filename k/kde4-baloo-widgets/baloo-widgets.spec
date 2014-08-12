@@ -2,7 +2,7 @@
 
 %define rname baloo-widgets
 Name: kde4-baloo-widgets
-Version: 4.13.3
+Version: 4.14.0
 Release: alt1
 
 Group: System/Libraries
@@ -52,6 +52,9 @@ Summary: %name library
 %_K4link/lib*.so
 
 %changelog
+* Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

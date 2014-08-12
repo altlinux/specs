@@ -2,7 +2,7 @@
 
 %define rname baloo
 Name: kde4-baloo
-Version: 4.13.3
+Version: 4.14.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -69,6 +69,13 @@ Requires: %name-common = %EVR
 %description -n libbalooxapian4
 %name library
 
+%package -n libbalooqueryparser4
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %EVR
+%description -n libbalooqueryparser4
+%name library
+
 
 %prep
 %setup -qn %rname-%version
@@ -130,8 +137,13 @@ Requires: %name-common = %EVR
 %_K4libdir/libbaloopim.so.*
 %files -n libbalooxapian4
 %_K4libdir/libbalooxapian.so.*
+%files -n libbalooqueryparser4
+%_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 
