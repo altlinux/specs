@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19.1
+Version: 4.19.2
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -16,6 +16,7 @@ BuildArch: noarch
 Requires: alterator >= 4.17-alt2 iptables etcnet
 
 Requires: alterator-sh-functions >= 0.10-alt1
+Requires: alterator-net-functions >= 1.3.1-alt1
 Requires: alterator-net-common >= 0.4-alt1
 Conflicts: alterator-fbi < 5.23-alt1
 
@@ -57,6 +58,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Don't show IPv6 in the list if IPv6 is disabled.
+
 * Mon Jun 03 2013 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
 - index.scm: Update ifaces and services lists on IP version change.
 

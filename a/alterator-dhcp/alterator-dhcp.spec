@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-dhcp
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: alterator module for dhcp conf file editing
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: alterator >= 4.10-alt1 alterator-sh-functions alterator-net-functions >= 1.0-alt3
+Requires: alterator >= 4.10-alt1 alterator-sh-functions alterator-net-functions >= 1.3.1-alt1
 Requires: alterator-l10n >= 2.1-alt11
 Requires: dhcp-server
 Requires: alterator-services
@@ -49,6 +49,9 @@ DHCP configuration alterator module
 %_libexecdir/alterator/hooks/dhcp.d
 
 %changelog
+* Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1
+- Don't show IPv6 in the list if IPv6 is disabled.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
 - Use alterator-service-functions.
 
