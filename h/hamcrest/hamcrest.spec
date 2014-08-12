@@ -65,34 +65,41 @@ BuildRequires: jpackage-compat
 %endif
 
 Name:           hamcrest
-Version:        1.1
-Release:        alt4_21jpp7
+Version:        1.3
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
 URL:            http://code.google.com/p/hamcrest/
 Group:          Development/Java
-Source0:        http://hamcrest.googlecode.com/files/hamcrest-1.1.tgz
-Source1:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-parent/1.1/hamcrest-parent-1.1.pom
-Source2:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-library/1.1/hamcrest-library-1.1.pom
-Source3:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-integration/1.1/hamcrest-integration-1.1.pom
-Source4:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-generator/1.1/hamcrest-generator-1.1.pom
-Source5:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.pom
-Source6:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-all/1.1/hamcrest-all-1.1.pom
-Source7:        hamcrest-text-1.1.pom
+Source0:        http://%{name}.googlecode.com/files/%{name}-1.3.tgz
+Source1:        http://repo1.maven.org/maven2/org/%{name}/%{name}-parent/%{version}/%{name}-parent-%{version}.pom
+Source2:        http://repo1.maven.org/maven2/org/%{name}/%{name}-library/%{version}/%{name}-library-%{version}.pom
+Source3:        http://repo1.maven.org/maven2/org/%{name}/%{name}-integration/%{version}/%{name}-integration-%{version}.pom
+Source4:        http://repo1.maven.org/maven2/org/%{name}/%{name}-generator/%{version}/%{name}-generator-%{version}.pom
+Source5:        http://repo1.maven.org/maven2/org/%{name}/%{name}-core/%{version}/%{name}-core-%{version}.pom
+Source6:        http://repo1.maven.org/maven2/org/%{name}/%{name}-all/%{version}/%{name}-all-%{version}.pom
+# This file was added by the maintainer for compatibility with maven dep
+# solving system
+Source7:        %{name}-text-%{version}.pom
+
 Source8:        hamcrest-core-MANIFEST.MF
 Source9:        hamcrest-library-MANIFEST.MF
 Source10:       hamcrest-text-MANIFEST.MF
 Source11:       hamcrest-integration-MANIFEST.MF
 Source12:       hamcrest-generator-MANIFEST.MF
-Patch0:         hamcrest-1.1-build.patch
-Patch1:         hamcrest-1.1-no-jarjar.patch
-Patch2:         hamcrest-1.1-no-integration.patch
+
+Patch0:         %{name}-%{version}-build.patch
+Patch1:         %{name}-%{version}-no-jarjar.patch
+Patch2:         %{name}-%{version}-no-integration.patch
+Patch3:         %{name}-%{version}-javadoc.patch
+
+Requires:       qdox
 %if %with integration
 Requires:       easymock2
 #Requires:       jmock
 %endif
-Requires:       qdox
+
 BuildRequires:  jpackage-utils >= 0:1.7.4
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit
@@ -122,7 +129,7 @@ Summary:        Javadoc for %{name}
 BuildArch:      noarch
 
 %description javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
 
 %package demo
 Group:          Development/Java
@@ -134,7 +141,7 @@ Requires:       testng
 %endif
 
 %description demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 %prep
 %setup -q
@@ -156,26 +163,27 @@ ln -sf $(build-classpath easymock2) lib/integration/
 %if %with integration
 ln -sf $(build-classpath jmock) lib/integration/
 %endif
-# BUILD/hamcrest-1.1/lib/integration/junit-3.8.1.jar.no
-ln -sf $(build-classpath junit) lib/integration/
 # BUILD/hamcrest-1.1/lib/integration/testng-4.6-jdk15.jar.no
 %if %with tests
 ln -sf $(build-classpath testng-jdk15) lib/integration/
 %endif
-%patch0 -p0
+%patch0 -p1
 %if %without jarjar
 %patch1 -p1
 %endif
 %if %without integration
-#%patch2 -p1
+%patch2 -p1
 %endif
+%patch3 -p1
 
 perl -pi -e 's/\r$//g' LICENSE.txt
 
 %build
 export CLASSPATH=$(build-classpath qdox)
 export OPT_JAR_LIST="junit ant/ant-junit"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first clean core generator library text bigjar javadoc
+# The unit-test goal is switched off as some tests fail with JDK 7
+# see https://github.com/hamcrest/JavaHamcrest/issues/30
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
 
 # inject OSGi manifests
 mkdir -p META-INF
@@ -246,7 +254,7 @@ install -m 644 build/%{name}-unit-test-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/temp/hamcrest-all-1.3-javadoc.jar.contents/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # demo
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -276,6 +284,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Aug 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_1jpp7
+- new version
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt4_21jpp7
 - source and target to 1.5
 

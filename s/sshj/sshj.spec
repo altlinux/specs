@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          sshj
 Version:       0.8.1
-Release:       alt3_1jpp7
+Release:       alt3_4jpp7
 Summary:       SSHv2 library for Java
 Group:         Development/Java
 License:       ASL 2.0
@@ -60,6 +63,9 @@ This package contains javadoc for %{name}.
 %setup -q
 %patch0 -p0
 
+# Some classes moved from JUnit to hamcrest
+sed -i -e 's/org.junit.internal.matchers/org.hamcrest.core/' src/test/java/net/schmizz/sshj/transport/verification/OpenSSHKnownHostsTest.java
+
 %build
 
 mvn-rpmbuild -D_javadir=%{_javadir} install javadoc:aggregate
@@ -87,6 +93,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Aug 12 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_4jpp7
+- fixed build with new junit
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_1jpp7
 - rebuild with maven-local
 

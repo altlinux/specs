@@ -1,8 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: perl(Module/Release.pm)
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Digest/MD5.pm)
-# END SourceDeps(oneline)
 %define oldname junit
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,8 +38,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           junit4
-Version:        4.10
-Release:        alt5_6jpp7
+Version:        4.11
+Release:        alt1_1jpp7
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -46,19 +47,19 @@ URL:            http://www.junit.org/
 Group:          Development/Java
 BuildArch:      noarch
 
-# git clone --bare git://github.com/KentBeck/junit.git junit.git 
-# mkdir junit-4.10
-# git --git-dir=junit.git --work-tree=junit-4.10 checkout r4.10
-# tar cjf junit-4.10.tar.xz junit-4.10/
-Source0:        %{oldname}-%{version}.tar.xz
-Source1:        http://search.maven.org/remotecontent?filepath=%{oldname}/%{oldname}/%{version}/%{oldname}-%{version}.pom
+Source0:        https://github.com/%{oldname}-team/%{oldname}/archive/r%{version}.tar.gz
 Source2:        junit-OSGi-MANIFEST.MF
-Patch0:         %{oldname}-removed-test.patch
+# Removing hamcrest source jar references (not available and/or necessary)
+Patch0:         %{oldname}-no-hamcrest-src.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-contrib
+BuildRequires:  apache-commons-net
 BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  jakarta-oro
 BuildRequires:  hamcrest
+BuildRequires:  maven-ant-tasks
+BuildRequires:  perl(Digest/MD5.pm)
 
 Requires:       hamcrest
 
@@ -68,8 +69,17 @@ Source44: import.info
 JUnit is a regression testing framework written by Erich Gamma and Kent Beck. 
 It is used by the developer who implements unit tests in Java. JUnit is Open
 Source Software, released under the Common Public License Version 1.0 and 
-JUnit is Open Source Software, released under the IBM Public License and
-hosted on SourceForge.
+hosted on GitHub.
+
+%package manual
+Group:          Development/Java
+Summary:        Manual for %{oldname}
+Provides:       junit4-manual = %{epoch}:%{version}-%{release}
+Obsoletes:      junit4-manual < %{epoch}:%{version}-%{release}
+BuildArch: noarch
+
+%description manual
+Documentation for %{oldname}.
 
 %package -n junit-junit4
 Group:          Development/Java
@@ -78,23 +88,18 @@ BuildArch: noarch
 Requires: %name = %epoch:%{version}-%{release}
 Provides: junit = 0:%{version}
 Provides: junit = %{epoch}:%{version}-%{release}
-Provides: %_javadir/junit.jar
+#Provides: %_javadir/junit.jar
 
 %description -n junit-junit4
 Virtual junit package based on %{name}.
 
-%package manual
-Group:          Development/Java
-Summary:        Manual for %{oldname}
-BuildArch: noarch
-
-%description manual
-Documentation for %{oldname}.
 
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{oldname}
 Requires:       jpackage-utils
+Provides:       junit4-javadoc = %{epoch}:%{version}-%{release}
+Obsoletes:      junit4-javadoc < %{epoch}:%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -103,17 +108,19 @@ Javadoc for %{oldname}.
 %package demo
 Group:          Development/Java
 Summary:        Demos for %{oldname}
-Requires:       junit4 = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+Provides:       junit4-demo = %{epoch}:%{version}-%{release}
+Obsoletes:      junit4-demo < %{epoch}:%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{oldname}.
 
 %prep
-%setup -q -n %{oldname}-%{version} 
+%setup -q -n %{oldname}-r%{version}
 %patch0 -p1
-cp %{SOURCE1} pom.xml
+cp build/maven/junit-pom-template.xml pom.xml
 find -iname '*.class' -o -iname '*.jar' -delete
-ln -s $(build-classpath hamcrest/core) lib/hamcrest-core-1.1.jar
+ln -s $(build-classpath hamcrest/core) lib/hamcrest-core-1.3.jar
 
 %build
 ant dist
@@ -122,12 +129,12 @@ ant dist
 mkdir -p META-INF
 cp -p %{SOURCE2} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{oldname}%{version}/%{oldname}-%{version}.jar META-INF/MANIFEST.MF
+zip -u %{oldname}%{version}-SNAPSHOT/%{oldname}-%{version}-SNAPSHOT.jar META-INF/MANIFEST.MF
 
 %install
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 %{oldname}%{version}/%{oldname}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -m 644 %{oldname}%{version}-SNAPSHOT/%{oldname}-%{version}-SNAPSHOT.jar %{buildroot}%{_javadir}/%{name}.jar
 # Many packages still use the junit4.jar directly
 ln -s %{_javadir}/%{name}.jar %{buildroot}%{_javadir}/%{oldname}.jar
 
@@ -138,42 +145,45 @@ install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr %{oldname}%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+cp -pr %{oldname}%{version}-SNAPSHOT/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 # demo
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo/%{name} 
 
-cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{name}
-
+cp -pr %{oldname}%{version}-SNAPSHOT/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{name}
 
 mkdir -p %buildroot%_altdir
 cat >>%buildroot%_altdir/%{name}<<EOF
-%{_javadir}/junit.jar	%{_javadir}/%{name}.jar	4100
+%{_javadir}/junit.jar	%{_javadir}/%{name}.jar	4110
 EOF
 
+
 %files
-%doc cpl-v10.html README.html
-#%{_javadir}/%{oldname}.jar
+%doc LICENSE README CODING_STYLE
 %{_javadir}/%{name}.jar
+%{_javadir}/%{oldname}.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files demo
-%doc cpl-v10.html
+%doc LICENSE
 %{_datadir}/%{name}
 
 %files javadoc
-%doc cpl-v10.html
+%doc LICENSE
 %doc %{_javadocdir}/%{name}
 
 %files manual
-%doc cpl-v10.html
-%doc junit%{version}/doc/*
+%doc LICENSE README CODING_STYLE
+%doc junit%{version}-SNAPSHOT/doc/*
 
 %files -n junit-junit4
 %_altdir/%{name}
 
 %changelog
+* Tue Aug 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_1jpp7
+- new version
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.10-alt5_6jpp7
 - bumped epoch for junit-junit4
 
