@@ -4,14 +4,15 @@
 
 Name: dcd
 Version: 1.1.1
-Release: alt6.qa2
+Release: alt7
 Summary: DConnect Daemon - Hub D****ct Connect for Linux
 License: %gpl2only
 Group: Networking/File transfer
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: ftp://pollux.ds.pg.gda.pl/pub/Linux/DConnect/sources/stable/%name-%version.tar.bz2
+Source: ftp://pollux.ds.pg.gda.pl/pub/Linux/DConnect/sources/stable/%name-%version.tar
 Source1: %name.logrotate
+Source2: %name.service
 Url: http://www.dc.ds.pg.gda.pl/
 
 # Automatically added by buildreq on Tue Jul 17 2007
@@ -59,6 +60,8 @@ install contrib/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 sed -i 's|\+0|-10|g;s|^SERVICE|#SERVICE|g' %buildroot%_sysconfdir/sysconfig/%name
 
 install %SOURCE1 %buildroot%_sysconfdir/logrotate.d/%name
+
+install -pDm 644 %SOURCE2 %buildroot%_unitdir/%name.service
 
 sed -i 's|@LOG_DIR@|%_logdir/%name|g' %buildroot%_sysconfdir/%name/*
 
@@ -109,6 +112,7 @@ echo "Upgrading from version < 0.5.5"
 sed -i 's/listen_interface/bind_address/' %_sysconfdir/%name/%name.conf
 
 %files
+%_unitdir/%name.service
 %defattr(644,root,root,755)
 %attr(750,%user,root) %dir %_sysconfdir/%name
 %attr(460,%user,%user) %config(noreplace) %_sysconfdir/%name/console.allow
@@ -133,6 +137,9 @@ sed -i 's/listen_interface/bind_address/' %_sysconfdir/%name/%name.conf
 %doc AUTHORS BUGS FAQ NEWS README TODO USERCOMMANDS SYSLOG
 
 %changelog
+* Wed Aug 13 2014 Terechkov Evgenii <evg@altlinux.org> 1.1.1-alt7
+- Systemd unit file added
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt6.qa2
 - Fixed build
 
