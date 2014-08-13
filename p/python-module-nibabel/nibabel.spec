@@ -1,12 +1,13 @@
 %define oname nibabel
 
 %def_enable docs
+%def_with python3
 
 Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 1.3.0
-Release: alt3.git20120903
+Release: alt4.git20120903
 License: MIT
 Group: Development/Python
 
@@ -20,6 +21,10 @@ BuildRequires: python-devel swig libniftilib-devel zlib-devel
 BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
 BuildPreReq: python-module-pydicom
 %setup_python_module %oname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel
+%endif
 
 %description
 NiBabel aims to provide easy access to NIfTI images from within Python.
@@ -30,6 +35,33 @@ image data.
 While NiBabel is not yet complete (i.e. doesn't support everything the
 C library can do), it already provides access to the most important
 features of the NIfTI-1 data format and libniftiio capabilities.
+
+%package -n python3-module-%oname
+Summary: Easy access to NIfTI images from within Python
+Group: Development/Python3
+
+%description -n python3-module-%oname
+NiBabel aims to provide easy access to NIfTI images from within Python.
+It uses SWIG-generated wrappers for the NIfTI reference library and
+provides the nifti.image.NiftiImage class for Python-style access to the
+image data.
+
+While NiBabel is not yet complete (i.e. doesn't support everything the
+C library can do), it already provides access to the most important
+features of the NIfTI-1 data format and libniftiio capabilities.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for NiBabel
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+NiBabel aims to provide easy access to NIfTI images from within Python.
+It uses SWIG-generated wrappers for the NIfTI reference library and
+provides the nifti.image.NiftiImage class for Python-style access to the
+image data.
+
+This package contains tests for NiBabel.
 
 %package tests
 Summary: Tests for NiBabel
@@ -76,15 +108,38 @@ This package contains pickles for NiBabel.
 %prep
 %setup
 
+%if_with python3
+cp -R . ../python3
+%endif
+
 %if_enabled docs
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
-%prepare_sphinx .
+%prepare_sphinx doc
+ln -s ../objects.inv doc/source/
 %endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	2to3 -w -n $i
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 
 %if_enabled docs
@@ -106,6 +161,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %files
 %doc AUTHOR Changelog COPYING
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %if_enabled docs
 %exclude %python_sitelibdir/%oname/pickle
@@ -113,6 +171,7 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %exclude %python_sitelibdir/%oname/testing
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/%oname/*/test*
+%exclude %python_sitelibdir/%oname/*/*/test*
 
 %if_enabled docs
 %files doc
@@ -127,8 +186,29 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %python_sitelibdir/%oname/testing
 %python_sitelibdir/*/test*
 %python_sitelibdir/%oname/*/test*
+%python_sitelibdir/%oname/*/*/test*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHOR Changelog COPYING
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/test*
+%endif
 
 %changelog
+* Wed Aug 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.git20120903
+- Added module for Python 3
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.git20120903
 - New snapshot
 
