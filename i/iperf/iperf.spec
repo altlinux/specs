@@ -4,7 +4,7 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt2
+Release: alt3
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: GPL
@@ -16,6 +16,8 @@ Source0: %name-%version-source.tar
 Source1: iperf-tcp.init
 Source2: iperf-udp.init
 Source3: iperf.sysconfig
+Source4: iperf-tcp.service
+Source5: iperf-udp.service
 
 Patch0: high-latency.patch
 Patch1: 006-bidirectional-tcp-server.patch
@@ -56,6 +58,9 @@ install -pdm1770 %buildroot/%_localstatedir/%name
 install -pDm0755 %SOURCE1 %buildroot/%_initdir/iperf-tcp
 install -pDm0755 %SOURCE2 %buildroot/%_initdir/iperf-udp
 
+install -pDm0644 %SOURCE4 %buildroot/%_unitdir/iperf-tcp.service
+install -pDm0644 %SOURCE5 %buildroot/%_unitdir/iperf-udp.service
+
 install -pDm0644 %SOURCE3 %buildroot/%_sysconfdir/sysconfig/%name
 
 rm -f doc/Makefile*
@@ -74,14 +79,18 @@ rm -f doc/Makefile*
 %preun_service %name-udp
 
 %files
-%_bindir/*
-%_initdir/*
-%_man1dir/*
-%config(noreplace) %_sysconfdir/sysconfig/*
+%_bindir/%name
+%_initdir/%{name}-*
+%_unitdir/%{name}-*.service
+%_man1dir/%name.1.*
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %dir %attr(1770,root,%iperf_group) %_localstatedir/%name
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Wed Aug 13 2014 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt3
+- Systemd unit files added
+
 * Mon Feb 24 2014 Evgenii Terechkov <evg@altlinux.org> 2.0.5-alt2
 - sync patches with Debian Wheezy
 
