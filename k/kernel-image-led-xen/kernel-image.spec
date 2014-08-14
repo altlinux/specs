@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.9
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -163,7 +163,7 @@ Release: alt1
 %Extra_modules fglrx 14.10.1006.1001
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.8
-%Extra_modules ipt_NETFLOW 1.8.3
+%Extra_modules ipt_NETFLOW 2.0
 #Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
 
@@ -1906,6 +1906,19 @@ done)
 
 
 %changelog
+* Thu Aug 14 2014 Led <led@altlinux.ru> 3.15.9-alt3
+- updated:
+  + fix-drivers-rtc--rtc-efi
+- ipt_NETFLOW 2.0
+
+* Wed Aug 13 2014 Led <led@altlinux.ru> 3.15.9-alt2
+- updated:
+  + fix-drivers-infiniband-hw--cxgb4
+  + fix-drivers-usb-host--xhci-hcd
+  + feat-fs-aufs
+- added:
+  + fix-drivers-scsi--qla2xxx
+
 * Sat Aug 09 2014 Led <led@altlinux.ru> 3.15.9-alt1
 - 3.15.9
 - removed:
