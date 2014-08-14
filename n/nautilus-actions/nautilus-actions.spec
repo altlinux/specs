@@ -6,8 +6,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: nautilus-actions
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 
 Summary: Nautilus extension for customizing the context menu
 Group: Graphical desktop/GNOME
@@ -15,7 +15,7 @@ License: GPLv2+
 Url: http://www.grumz.net/node/8
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-
+Source1:  %name.watch
 Requires: %name-data = %version-%release
 
 BuildPreReq: gnome-common intltool
@@ -106,6 +106,9 @@ make DESTDIR=%buildroot install
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Aug 14 2014 Andrey Cherepanov <cas@altlinux.org> 3.2.4-alt1
+- New version
+
 * Tue Jun 10 2014 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt3
 - Rebuild with new version of libgtop
 
