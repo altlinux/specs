@@ -1,0 +1,57 @@
+# Created by pyp2rpm-1.0.1
+%global pypi_name singledispatch
+
+Name:           python-module-%{pypi_name}
+Version:        3.4.0.2
+Release:        alt1
+Summary:        This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3
+Group:          Development/Python
+
+License:        MIT
+URL:            http://docs.python.org/3/library/functools.html#functools.singledispatch
+Source0:        %{name}-%{version}.tar
+BuildArch:      noarch
+
+BuildRequires:  python-devel
+BuildRequires:  python-module-setuptools
+BuildRequires:  python-module-six
+
+Requires:       python-module-six
+Requires:       python-module-ordereddict
+BuildRequires:  python-module-ordereddict
+
+%description
+PEP 443 proposed to expose a mechanism in the functools standard library
+module in Python 3.4 that provides a simple form of generic programming 
+known as single-dispatch generic functions.
+
+This library is a backport of this functionality to Python 2.6 - 3.3.
+
+%prep
+%setup
+# Remove bundled egg-info
+rm -rf %{pypi_name}.egg-info
+
+# remove /usr/bin/env python from scripts
+sed -i '1d' singledispatch.py
+sed -i '1d' singledispatch_helpers.py
+
+%build
+%python_build
+
+%install
+%python_install
+
+# %check
+# %{__python} setup.py test
+
+%files
+%doc README.rst
+%{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%{python_sitelibdir}/%{pypi_name}.py*
+%{python_sitelibdir}/%{pypi_name}_helpers.py*
+
+%changelog
+* Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 3.4.0.2-alt1
+- First build for ALT (based on Fedora 3.4.0.2-3.fc21.src)
+

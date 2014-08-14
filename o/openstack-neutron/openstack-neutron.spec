@@ -1,8 +1,8 @@
 %global release_name icehouse
 
 Name:		openstack-neutron
-Version:	2014.1.1
-Release:	alt3
+Version:	2014.1.2
+Release:	alt1
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -30,15 +30,13 @@ Source22:	neutron-metering-agent.service
 
 Source30:	neutron-dist.conf
 #
-# patches_base=2014.1.1+1
+# patches_base=2014.1.2
 #
 Patch0001: 0001-remove-runtime-dependency-on-pbr.patch
 Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
-Patch0005: 0005-Ensure-routing-key-is-specified-in-the-address-for-a.patch
-Patch0006: 0006-Notify-systemd-when-starting-Neutron-server.patch
-Patch0007: 0007-remove-token-from-notifier-middleware.patch
+Patch0005: 0005-Notify-systemd-when-starting-Neutron-server.patch
 Patch0101: 0101-fix-neutron-configuration.patch
 
 BuildArch:	noarch
@@ -461,8 +459,6 @@ IPSec.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
 %patch0101 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
@@ -826,16 +822,6 @@ fi
 %doc %{_sysconfdir}/neutron/plugins/bigswitch/README
 
 
-%files ibm
-%doc LICENSE
-%{_bindir}/neutron-ibm-agent
-%{_bindir}/quantum-ibm-agent
-%doc neutron/plugins/ibm/README
-%{python_sitelibdir}/neutron/plugins/ibm
-%dir %{_sysconfdir}/neutron/plugins/ibm
-%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
-
-
 %files brocade
 %doc LICENSE
 %doc neutron/plugins/brocade/README.md
@@ -863,6 +849,16 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/hyperv/*.ini
 
 
+%files ibm
+%doc LICENSE
+%{_bindir}/neutron-ibm-agent
+%{_bindir}/quantum-ibm-agent
+%doc neutron/plugins/ibm/README
+%{python_sitelibdir}/neutron/plugins/ibm
+%dir %{_sysconfdir}/neutron/plugins/ibm
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/ibm/*.ini
+
+
 %files linuxbridge
 %doc LICENSE
 %doc neutron/plugins/linuxbridge/README
@@ -884,6 +880,7 @@ fi
 
 
 %files ml2
+%doc LICENSE
 %doc neutron/plugins/ml2/README
 %{python_sitelibdir}/neutron/plugins/ml2
 %dir %{_sysconfdir}/neutron/plugins/ml2
@@ -891,6 +888,7 @@ fi
 
 
 %files mellanox
+%doc LICENSE
 %doc neutron/plugins/mlnx/README
 %{_bindir}/neutron-mlnx-agent
 %{_bindir}/quantum-mlnx-agent
@@ -906,6 +904,7 @@ fi
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/plugins/nuage/*.ini
 
 %files ofagent
+%doc LICENSE
 %doc neutron/plugins/ofagent/README
 %{_bindir}/neutron-ofagent-agent
 %{python_sitelibdir}/neutron/plugins/ofagent
@@ -1004,6 +1003,9 @@ fi
 
 
 %changelog
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
+- 2014.1.2
+
 * Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt3
 - openvswitch-agent takes plugins.ml2 by default: most usable configuration
 

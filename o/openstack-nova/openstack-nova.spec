@@ -1,6 +1,6 @@
 Name:		openstack-nova
-Version:	2014.1.1
-Release:	alt3
+Version:	2014.1.2
+Release:	alt1
 Summary:	OpenStack Compute (nova)
 
 Group:		System/Servers
@@ -45,13 +45,14 @@ Source24:	nova-sudoers
 Source30:	openstack-nova-novncproxy.sysconfig
 
 #
-# patches_base=2014.1.1
+# patches_base=2014.1.2
 #
 Patch0001:	0001-Ensure-we-don-t-access-the-net-when-building-docs.patch
 Patch0002:	0002-remove-runtime-dep-on-python-pbr.patch
 Patch0003:	0003-Revert-Replace-oslo.sphinx-with-oslosphinx.patch
 Patch0004:	0004-notify-calling-process-we-are-ready-to-serve.patch
 Patch0005:	0005-Move-notification-point-to-a-better-place.patch
+Patch0006:	0006-Fixes-rbd-backend-image-size.patch
 
 BuildArch:	noarch
 BuildRequires:	intltool
@@ -118,7 +119,7 @@ Group:		System/Servers
 
 Requires:	openstack-nova-common = %{version}-%{release}
 Requires:	curl
-Requires:	iscsitarget-utils
+Requires:	open-iscsi
 Requires:	iptables iptables-ipv6
 Requires:	ipmitool
 Requires:	python-module-libguestfs
@@ -404,6 +405,7 @@ This package contains documentation files for nova.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
+%patch0006 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -658,11 +660,7 @@ exit 0
 %{_bindir}/nova-manage
 %{_bindir}/nova-rootwrap
 
-%dir %{_datadir}/nova
-%dir %{_datadir}/nova/rootwrap
-%{_datadir}/nova/interfaces.template
-%{_datadir}/nova/client.ovpn.template
-%{_datadir}/nova/init-functions.sh
+%{_datadir}/nova
 
 %{_mandir}/man1/nova*.1.gz
 
@@ -758,6 +756,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
+- 2014.1.2
+
 * Sat Aug 09 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt3
 - sysfsutils added to Requires: warning about systool
 

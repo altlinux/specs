@@ -2,7 +2,7 @@
 
 Name:       python-module-django-horizon
 Version:    2014.1.1
-Release:    alt1
+Release:    alt3
 Summary:    Django application for talking to Openstack
 
 Group:      System/Servers
@@ -35,6 +35,7 @@ Patch0009: 0009-fix-flake8-issues.patch
 Patch0010: 0010-remove-runtime-dep-to-python-pbr.patch
 Patch0011: 0011-Add-Change-password-link-to-the-RCUE-theme.patch
 Patch0012: 0012-Re-enable-offline-compression.patch
+Patch0101: 0101-Add-ru-locale-horizon.patch
 
 
 BuildArch:  noarch
@@ -178,7 +179,8 @@ git am ../../SOURCES/0001-Don-t-access-the-net-while-building-docs.patch \
 ../../SOURCES/0009-fix-flake8-issues.patch \
 ../../SOURCES/0010-remove-runtime-dep-to-python-pbr.patch \
 ../../SOURCES/0011-Add-Change-password-link-to-the-RCUE-theme.patch \
-../../SOURCES/0012-Re-enable-offline-compression.patch
+../../SOURCES/0012-Re-enable-offline-compression.patch \
+../../SOURCES/0101-Add-ru-locale-horizon.patch
 
 # remove unnecessary .po files
 find . -name "django*.po" -exec rm -f '{}' \;
@@ -341,6 +343,12 @@ sed -i 's:^SECRET_KEY =.*:SECRET_KEY = "badcafe":' openstack_dashboard/local/loc
 %{_datadir}/openstack-dashboard/openstack_dashboard_theme
 
 %changelog
+* Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt3
+- 0101-Add-ru-locale-horizon.patch added
+
+* Wed Aug 06 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt2
+- openstack-dashboard.conf: allow /usr/share/openstack-dashboard/static
+
 * Fri Aug 01 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
 - New version (based on Fedora 2014.1.1-1.fc20.src)
 

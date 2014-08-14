@@ -1,5 +1,5 @@
 Name:		openstack-glance
-Version:	2014.1
+Version:	2014.1.1
 Release:	alt1
 Summary:	OpenStack Image Service
 
@@ -7,10 +7,10 @@ Group:		System/Servers
 License:	ASL 2.0
 URL:		http://glance.openstack.org
 Source0:	%name-%version.tar
-Source1:	%name-api.service
-Source2:	%name-registry.service
-Source3:	%name-scrubber.service
-Source4:	%name.logrotate
+Source1:	openstack-glance-api.service
+Source2:	openstack-glance-registry.service
+Source3:	openstack-glance-scrubber.service
+Source4:	openstack-glance.logrotate
 
 Source5:          glance-api-dist.conf
 Source6:          glance-registry-dist.conf
@@ -21,11 +21,12 @@ Source40:	%name-api.init
 Source50:	%name-registry.init
 
 #
-# patches_base=2014.1
+# patches_base=2014.1.1
 #
 Patch0001: 0001-Don-t-access-the-net-while-building-docs.patch
 Patch0002: 0002-Remove-runtime-dep-on-python-pbr.patch
 Patch0003: 0003-avoid-unsupported-storage-drivers.patch
+Patch0004: 0004-notify-calling-process-we-are-ready-to-serve.patch
 
 BuildArch:	noarch
 BuildRequires:	python-devel
@@ -36,9 +37,8 @@ BuildRequires:	intltool
 Requires(pre):	shadow-utils
 Requires:	python-module-glance = %{version}-%{release}
 Requires:	python-module-glanceclient
-#FIXME
-#Requires:	openstack-utils
 
+Requires:	openstack-utils
 
 %description
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -115,6 +115,7 @@ This package contains documentation files for glance.
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0004 -p1
 
 # Remove bundled egg-info
 rm -rf glance.egg-info
@@ -306,6 +307,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
+- 2014.1.1
+
 * Fri Jul 11 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1-alt1
 - New version - icehouse (based on Fedora)
 
