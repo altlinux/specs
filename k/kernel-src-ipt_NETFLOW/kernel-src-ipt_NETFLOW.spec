@@ -1,14 +1,14 @@
 %define mname ipt_NETFLOW
 Name: kernel-src-%mname
-Version: 1.8.3
-Release: alt3
+Version: 2.0
+Release: alt1
 Summary: Netflow iptables module for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
 License: GPLv3+
 URL: http://http://sourceforge.net/projects/ipt-netflow
 Source: ipt-netflow-%version.tar
-Patch: ipt-netflow-%version-%release.patch
+#Patch: ipt-netflow-%version-%release.patch
 Provides: kernel-source-%mname = %version-%release
 
 BuildRequires: rpm-build-kernel
@@ -21,7 +21,7 @@ This is netfilter/iptables module adding support for NETFLOW target.
 
 %prep
 %setup -q -n ipt-netflow-%version
-%patch -p1
+#patch -p1
 
 
 %build
@@ -44,6 +44,12 @@ tar -chJf %buildroot%kernel_src/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Thu Aug 14 2014 Led <led@altlinux.ru> 2.0-alt1
+- 2.0
+
+* Thu Jul 10 2014 Led <led@altlinux.ru> 1.8.3-alt4
+- upstream updates and fixes
+
 * Sun Jun 15 2014 Led <led@altlinux.ru> 1.8.3-alt3
 - upstream updates and fixes
 
