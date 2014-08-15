@@ -2,14 +2,14 @@
 %def_with splash
 
 Name: propagator
-Version: 20140423
+Version: 20140815
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
 License: GPL
 Group: System/Kernel and hardware
 
-Url: http://www.altlinux.org/propagator
+Url: http://altlinux.org/propagator
 Source: %name-%version-%release.tar
 
 BuildRequires: libnewt-devel-static libslang2-devel-static
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Fri Aug 15 2014 Michael Shigorin <mike@altlinux.org> 20140815-alt1
+- drop /proc/sys/kernel/hotplug check (OBSOLETE)
+
 * Wed Apr 23 2014 Michael Shigorin <mike@altlinux.org> 20140423-alt1
 - digest check refactoring (ldv@)
 
