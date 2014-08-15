@@ -26,7 +26,7 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -40,16 +40,13 @@ License: LGPL
 Requires: libcap gzip-utils
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
-BuildRequires: rpm-build-python3
+BuildRequires: rpm-macros-alternatives
 
 # Needed to disable auto requirements from distro templates
 %add_findreq_skiplist %_datadir/%name/*
 
 Requires: openssl rsync
 BuildRequires: libcap libcap-devel docbook2X graphviz
-
-Requires: python3
-BuildRequires: python3-devel
 
 BuildRequires: systemd-devel
 
@@ -68,6 +65,15 @@ Summary:	Shared library files for %{name}
 Group:		System/Configuration/Other
 %description	libs
 The %{name}-libs package contains libraries for running %{name} applications.
+
+%package	python3
+Summary:	Python 3 bindings to %{name}
+Group:		System/Configuration/Other
+Requires: python3
+BuildRequires: python3-devel
+BuildRequires: rpm-build-python3
+%description	python3
+The %{name}-python package contains %{name} bindings for Python 3.
 
 %package devel
 Summary: development library for %name
@@ -88,9 +94,9 @@ CFLAGS+=-I%_includedir/linux-default/include/
     --localstatedir=%_var \
     --with-config-path=%_var/lib/lxc \
     --enable-python \
+    --disable-lua \
     --with-init-script=%{init_script}
 
-#TODO    --enable-python
 %make_build
 
 %install
@@ -100,10 +106,27 @@ mkdir -p %buildroot%_cachedir/%name
 
 #find %buildroot -type f -name '*.la' -exec rm -f {} ';'
 
+# rename python version of lxc-ls and install legacy one
+%__mv %buildroot%{_bindir}/lxc-ls %buildroot%{_bindir}/lxc-ls.py
+%__install -m 0755 src/lxc/legacy/lxc-ls %buildroot%{_bindir}/lxc-ls.sh
+
+# add alternatives
+install -d %buildroot//etc/alternatives/packages.d
+cat >%buildroot%_altdir/%name-legacy <<__EOF__
+%{_bindir}/lxc-ls	%{_bindir}/lxc-ls.sh	100
+__EOF__
+
+cat >%buildroot%_altdir/%name <<__EOF__
+%{_bindir}/lxc-ls	%{_bindir}/lxc-ls.py	1000
+__EOF__
+
 #post
 
 %files
 %defattr(-,root,root)
+%exclude %{_bindir}/lxc-ls.py
+%exclude %{_bindir}/lxc-start-ephemeral
+%exclude %{_bindir}/lxc-device
 %{_bindir}/*
 %{_mandir}/man1/lxc*
 %{_mandir}/man5/lxc*
@@ -113,9 +136,10 @@ mkdir -p %buildroot%_cachedir/%name
 %{_mandir}/ja/man7/lxc*
 %{_datadir}/doc/*
 %{_datadir}/lxc/*
-%{_sysconfdir}/bash_completion.d
+%{_sysconfdir}/bash_completion.d/*
 %config(noreplace) %{_sysconfdir}/lxc/*
 %{_unitdir}/lxc.service
+%config %_altdir/%name-legacy
 
 %files libs
 %defattr(-,root,root)
@@ -131,8 +155,14 @@ mkdir -p %buildroot%_cachedir/%name
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-autostart-helper
 %endif
 
+%files python3
+%defattr(-,root,root)
+%{_bindir}/lxc-ls.py
+%{_bindir}/lxc-start-ephemeral
+%{_bindir}/lxc-device
 %{python3_sitelibdir}/_lxc*
 %{python3_sitelibdir}/lxc/*
+%config %_altdir/%name
 
 %files devel
 %defattr(-,root,root)
@@ -142,6 +172,20 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Fri Aug 15 2014 Denis Pynkin <dans@altlinux.org> 1.0.5-alt1
+- New version
+
+* Fri Aug 15 2014 Denis Pynkin <dans@altlinux.org> 1.0.4-alt2
+- Fixed: #30154 #30119
+- New subpackage lxc-python3
+- Build both lxc-ls -- legacy and python.
+  Correct version is selected via alternatives
+- Fixed: #30158 #30159
+- Updated template for ALTLinux
+- Now used default list of packages in case
+  if /etc/lxc/profiles/default is absent
+
+
 * Sat Jun 14 2014 Denis Pynkin <dans@altlinux.org> 1.0.4-alt1
 - New version
 
