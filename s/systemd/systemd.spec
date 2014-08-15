@@ -17,6 +17,7 @@
 %def_enable polkit
 %def_enable efi
 %def_enable networkd
+%def_enable timesyncd
 %def_enable resolved
 %def_disable kdbus
 %def_with python
@@ -40,7 +41,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 214
-Release: alt11
+Release: alt14
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -49,6 +50,8 @@ License: LGPLv2.1+
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source:%name-%version.tar
+Source4: altlinux-openresolv.path
+Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
@@ -70,6 +73,8 @@ Source33: udev.filetrigger
 Source34: 85-display-manager.preset
 Source35: 90-default.preset
 Source36: 99-default-disable.preset
+Source37: 85-networkd.preset
+Source38: 85-timesyncd.preset
 
 # udev rule generator
 Source41: rule_generator.functions
@@ -260,6 +265,30 @@ Conflicts: %name < %version-%release
 
 %description utils
 This package contains utils (systemd-binfmt,systemd-modules-load,systemd-sysctl,systemd-tmpfiles) from systemd.
+
+%package networkd
+Group: System/Base
+Summary: System service that manages networks
+Conflicts: %name < 1:214-alt13
+Requires: %name = %epoch:%version-%release
+Requires: iproute2
+Provides: network-config-subsystem
+
+%description networkd
+systemd-networkd is a system service that manages networks.
+It detects and configures network devices as they appear,
+as well as creating virtual network devices.
+
+%package timesyncd
+Group: System/Configuration/Other
+Summary: Network Time Synchronization
+Conflicts: %name < 1:214-alt13
+Requires: %name = %epoch:%version-%release
+Provides: ntp-client
+
+%description timesyncd
+systemd-timesyncd is a system service that may be used
+to synchronize the local system clock with a Network Time Protocol Server.
 
 %package analyze
 Group: System/Configuration/Boot and Init
@@ -552,6 +581,7 @@ intltoolize --force --automake
 	%{subst_enable efi} \
 	%{subst_enable networkd} \
 	%{subst_enable resolved} \
+	%{subst_enable timesyncd} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
@@ -572,9 +602,12 @@ intltoolize --force --automake
 mkdir -p %buildroot%_unitdir/{basic,default,dbus,graphical,poweroff,rescue,reboot}.target.wants
 
 ln -s rc-local.service %buildroot%_unitdir/local.service
+install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
+install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-openresolv.service
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
-ln -s ../altlinux-libresolv.path %buildroot%_unitdir/basic.target.wants
+ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
+ln -s ../altlinux-libresolv.service %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
@@ -732,6 +765,8 @@ mkdir -p %buildroot/usr/lib/systemd/user-preset
 install -m 0644 %SOURCE34 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE35 %buildroot/lib/systemd/system-preset/
 install -m 0644 %SOURCE36 %buildroot/lib/systemd/system-preset/
+install -m 0644 %SOURCE37 %buildroot/lib/systemd/system-preset/
+install -m 0644 %SOURCE38 %buildroot/lib/systemd/system-preset/
 
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
@@ -830,21 +865,11 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 %pre
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 
-%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
-    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
-
-%_sbindir/groupadd -r -f systemd-network >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-network -c 'systemd Network Management' \
-    -d /var/empty -s /dev/null -r -l -M systemd-network >/dev/null 2>&1 ||:
-
-%_sbindir/groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-resolve -c 'systemd Resolver' \
-    -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
 
 %_sbindir/groupadd -r -f systemd-bus-proxy >/dev/null 2>&1 ||:
 %_sbindir/useradd -g systemd-bus-proxy -c 'systemd Bus Proxy' \
     -d /var/empty -s /dev/null -r -l -M systemd-bus-proxy >/dev/null 2>&1 ||:
+
 
 %post
 /sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
@@ -883,10 +908,6 @@ if [ $1 -eq 1 ] ; then
                 debug-shell.service \
                 systemd-readahead-replay.service \
                 systemd-readahead-collect.service \
-                systemd-timesyncd.service \
-                systemd-networkd.service \
-                systemd-networkd-wait-online.service \
-                systemd-resolved.service \
                  >/dev/null 2>&1 || :
 fi
 
@@ -906,15 +927,64 @@ if [ $1 -eq 0 ] ; then
                 debug-shell.service \
                 systemd-readahead-replay.service \
                 systemd-readahead-collect.service \
-                systemd-networkd.service \
-                systemd-timesyncd.service \
-                systemd-networkd.service \
-                systemd-networkd-wait-online.service \
-                systemd-resolved.service \
                  >/dev/null 2>&1 || :
 
         rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
+
+%if_enabled networkd
+%pre networkd
+%_sbindir/groupadd -r -f systemd-network >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-network -c 'systemd Network Management' \
+    -d /var/empty -s /dev/null -r -l -M systemd-network >/dev/null 2>&1 ||:
+
+%_sbindir/groupadd -r -f systemd-resolve >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-resolve -c 'systemd Resolver' \
+    -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
+
+%post networkd
+if [ $1 -eq 1 ] ; then
+        # Enable the services we install by default
+        /sbin/systemctl preset \
+                systemd-networkd.service \
+                systemd-networkd-wait-online.service \
+                systemd-resolved.service \
+                altlinux-openresolv.service \
+                 >/dev/null 2>&1 || :
+fi
+
+%preun networkd
+if [ $1 -eq 0 ] ; then
+        /sbin/systemctl disable \
+                systemd-networkd.service \
+                systemd-networkd-wait-online.service \
+                systemd-resolved.service \
+                altlinux-openresolv.service \
+                 >/dev/null 2>&1 || :
+fi
+%endif
+
+%if_enabled timesyncd
+%pre timesyncd
+%_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-timesync -c 'systemd Time Synchronization' \
+    -d /var/empty -s /dev/null -r -l -M systemd-timesync >/dev/null 2>&1 ||:
+
+%post timesyncd
+if [ $1 -eq 1 ] ; then
+        # Enable the services we install by default
+        /sbin/systemctl preset \
+                systemd-timesyncd.service \
+                 >/dev/null 2>&1 || :
+fi
+
+%preun timesyncd
+if [ $1 -eq 0 ] ; then
+        /sbin/systemctl disable \
+                systemd-timesyncd.service \
+                 >/dev/null 2>&1 || :
+fi
+%endif
 
 %post -n libnss-myhostname
 if [ "$1" = "1" ]; then
@@ -964,7 +1034,6 @@ update_chrooted all
 %dir %_sysconfdir/systemd
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
-%dir %_sysconfdir/systemd/ntp-units.d
 
 %_sysconfdir/profile.d/systemd.sh
 
@@ -999,6 +1068,10 @@ update_chrooted all
 
 %dir /lib/systemd
 /lib/systemd/*
+%exclude /lib/systemd/network
+%exclude /lib/systemd/system-preset/85-networkd.preset
+%exclude /lib/systemd/system-preset/85-timesyncd.preset
+
 %dir /usr/lib/systemd
 /usr/lib/systemd/*
 %_bindir/*
@@ -1027,10 +1100,6 @@ update_chrooted all
 %if_enabled myhostname
 %exclude %_man8dir/nss-myhostname.*
 %endif
-%if_enabled microhttpd
-%exclude %_man8dir/systemd-journal-gatewayd.*
-%exclude %_man8dir/systemd-journal-remote.*
-%endif
 %_datadir/systemd
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
@@ -1056,6 +1125,29 @@ update_chrooted all
 %exclude /lib/systemd/systemd-journal-remote
 %exclude %_unitdir/systemd-journal-gatewayd.*
 %exclude %_datadir/systemd/gatewayd
+%exclude %_man8dir/systemd-journal-gatewayd.*
+%exclude %_man8dir/systemd-journal-remote.*
+%endif
+%if_enabled networkd
+%exclude %_sysconfdir/systemd/resolved.conf
+%exclude /lib/systemd/systemd-networkd
+%exclude /lib/systemd/systemd-networkd-wait-online
+%exclude /lib/systemd/systemd-resolved
+%exclude %_unitdir/systemd-networkd.service
+%exclude %_unitdir/systemd-networkd-wait-online.service
+%exclude %_unitdir/systemd-resolved.service
+%exclude %_man5dir/systemd.network.*
+%exclude %_man8dir/systemd-networkd*.*
+%exclude %_man5dir/resolved.conf.*
+%exclude %_man8dir/systemd-resolved.*
+%endif
+%exclude %_unitdir/altlinux-openresolv.*
+%if_enabled timesyncd
+%exclude %_sysconfdir/systemd/timesyncd.conf
+%exclude /lib/systemd/systemd-timesyncd
+%exclude %_unitdir/systemd-timesyncd.service
+%exclude %_man8dir/systemd-timesyncd.*
+%exclude /lib/systemd/ntp-units.d
 %endif
 %if_enabled coredump
 %exclude %_bindir/*coredumpctl
@@ -1179,6 +1271,37 @@ update_chrooted all
 %_man8dir/systemd-backlight*
 %ghost %dir %_localstatedir/lib/systemd/backlight
 
+%if_enabled networkd
+%files networkd
+%config(noreplace) %_sysconfdir/systemd/resolved.conf
+/lib/systemd/system-preset/85-networkd.preset
+/lib/systemd/systemd-networkd
+/lib/systemd/systemd-networkd-wait-online
+/lib/systemd/systemd-resolved
+%_unitdir/systemd-networkd.service
+%_unitdir/systemd-networkd-wait-online.service
+%_unitdir/systemd-resolved.service
+%_unitdir/altlinux-openresolv.*
+/lib/systemd/network/*.network
+%_man5dir/systemd.network.*
+%_man8dir/systemd-networkd-*.*
+%_man5dir/resolved.conf.*
+%_man8dir/systemd-resolved.*
+%endif
+
+%if_enabled timesyncd
+%files timesyncd
+%config(noreplace) %_sysconfdir/systemd/timesyncd.conf
+/lib/systemd/system-preset/85-timesyncd.preset
+%dir /lib/systemd/ntp-units.d
+%dir %_sysconfdir/systemd/ntp-units.d
+/lib/systemd/systemd-timesyncd
+%_unitdir/systemd-timesyncd.service
+%_man8dir/systemd-timesyncd.8.gz
+%_man8dir/systemd-timesyncd.service.8.gz
+/lib/systemd/ntp-units.d/90-systemd.list
+%endif
+
 %files analyze
 %_bindir/systemd-analyze
 
@@ -1272,6 +1395,8 @@ update_chrooted all
 %dir %firmwaredir/updates
 %dir /lib/udev
 %dir /lib/udev/devices
+%dir /lib/systemd/network
+/lib/systemd/network/*.link
 /lib/udev/udevd
 /lib/udev/ata_id
 /lib/udev/cdrom_id
@@ -1329,6 +1454,15 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Aug 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt14
+- add altlinux-openresolv unit to networkd package
+
+* Fri Aug 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt13
+- fixed networkd and timesyncd preset
+
+* Thu Aug 14 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt12
+- split networkd and timesyncd into a separate packages
+
 * Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt11
 - set default polling interval on removable devices as well
 - sysv: order initscripts which provide $network before network.target
