@@ -1,6 +1,6 @@
 Name: privoxy
-Version: 3.0.16
-Release: alt2
+Version: 3.0.21
+Release: alt1
 
 Summary: Privoxy - privacy enhancing proxy
 License: GPLv2+
@@ -16,6 +16,7 @@ Source4: %name.chroot.all
 Source5: %name.init
 Source6: %name.log
 Source7: %name.default.action
+Source8: %name.service
 
 Patch1: %name-3.0.10-alt-config.patch
 
@@ -75,6 +76,7 @@ install -pD -m750 %name.chroot.lib %buildroot%_sysconfdir/chroot.d/%name.lib
 install -pD -m750 %name.chroot.conf %buildroot%_sysconfdir/chroot.d/%name.conf
 install -pD -m750 %name.chroot.log %buildroot%_sysconfdir/chroot.d/%name.log
 install -pD -m750 %name.chroot.all %buildroot%_sysconfdir/chroot.d/%name.all
+install -pD -m644 %SOURCE8 %buildroot%_unitdir/%name.service
 
 touch %buildroot%ROOT{/var/log/{%name,jarfile},%_sysconfdir/{hosts,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
 
@@ -137,7 +139,13 @@ fi
 %ghost %attr(660,root,%name) %ROOT/var/log/jarfile
 %ghost %attr(660,root,%name) %ROOT/var/log/%name
 
+%_unitdir/%name.service
+
 %changelog
+* Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 3.0.21-alt1
+- 3.0.21
+- add systemd unit
+
 * Thu Jan 12 2012 Vitaly Lipatov <lav@altlinux.ru> 3.0.16-alt2
 - add trigger for change actionsfile in config to new name (ALT bug #23489)
 - privoxy.init: fix pidfile create (needed for monit)
