@@ -7,8 +7,8 @@ BuildRequires: gcc-c++
 
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 License: GPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://hatari.tuxfamily.org/
@@ -151,6 +151,9 @@ install -p -m 644 gpl.txt %buildroot%_pkgdocdir
 %exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Fri Aug 15 2014 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Wed Aug 06 2014 Ilya Mashkin <oddity@altlinux.ru> 1.7.0-alt2
 - build for Sisyphus
 
