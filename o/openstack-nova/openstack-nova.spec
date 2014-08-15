@@ -1,6 +1,6 @@
 Name:		openstack-nova
 Version:	2014.1.2
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Compute (nova)
 
 Group:		System/Servers
@@ -53,6 +53,7 @@ Patch0003:	0003-Revert-Replace-oslo.sphinx-with-oslosphinx.patch
 Patch0004:	0004-notify-calling-process-we-are-ready-to-serve.patch
 Patch0005:	0005-Move-notification-point-to-a-better-place.patch
 Patch0006:	0006-Fixes-rbd-backend-image-size.patch
+Patch0100:	0100-libvirt-convert-cpu-features-attribute-from-list-to-a-set.patch
 
 BuildArch:	noarch
 BuildRequires:	intltool
@@ -406,6 +407,7 @@ This package contains documentation files for nova.
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
+%patch0100 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -756,6 +758,10 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Aug 15 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt2
+- Patch added for live migration:
+  * 0100-libvirt-convert-cpu-features-attribute-from-list-to-a-set.patch
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
 - 2014.1.2
 
