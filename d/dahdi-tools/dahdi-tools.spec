@@ -1,6 +1,10 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.7.0
+Version: 2.10.0
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -19,6 +23,7 @@ Patch2: dahdi.perl.fix.patch
 Patch3: dahdi.build.patch
 Patch4: %name-%version-%release.patch
 Source: dahdi-tools.tar
+Source2: %name.watch
 
 %package -n dahdi
 Summary: DAHDI support virtual package
@@ -163,6 +168,8 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %files
 %dir %attr(0770,_asterisk,pbxadmin) %_sysconfdir/dahdi
 %attr(0664,root,pbxadmin) %config(noreplace) %_sysconfdir/dahdi/system.conf
+%attr(0664,root,pbxadmin) %config(noreplace) %_sysconfdir/dahdi/assigned-spans.conf.sample
+%attr(0664,root,pbxadmin) %config(noreplace) %_sysconfdir/dahdi/span-types.conf.sample
 %astattr %_sbindir/fxotune
 %_man8dir/fxotune.8.*
 %astattr %_sbindir/dahdi_cfg
@@ -180,6 +187,23 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %astattr %_sbindir/dahdi_pcap
 %astattr %_sbindir/fxstest
 %_man8dir/fxstest.8.*
+%astattr %_sbindir/dahdi_span_assignments
+%_man8dir/dahdi_span_assignments.8.*
+%astattr %_sbindir/dahdi_span_types
+%_man8dir/dahdi_span_types.8.*
+%astattr %_sbindir/dahdi_waitfor_span_assignments
+%_man8dir/dahdi_waitfor_span_assignments.8.*
+%dir %_datadir/dahdi
+%dir %_datadir/dahdi/span_config.d
+%dir %_datadir/dahdi/handle_device.d
+%_datadir/dahdi/dahdi_auto_assign_compat
+%_datadir/dahdi/dahdi_handle_device
+%_datadir/dahdi/dahdi_span_config
+%_datadir/dahdi/handle_device.d/10-span-types
+%_datadir/dahdi/handle_device.d/20-span-assignments
+%_datadir/dahdi/span_config.d/10-dahdi-cfg
+%_datadir/dahdi/span_config.d/20-fxotune
+%_datadir/dahdi/span_config.d/50-asterisk
 
 %files -n dahdi
 %dir %attr(0770,_asterisk,pbxadmin) %_sysconfdir/dahdi
@@ -209,6 +233,7 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_man8dir/astribank_is_starting.8.gz
 %_sbindir/twinstar
 %_man8dir/twinstar.8.gz
+/etc/udev/rules.d/xpp.rules
 
 %files -n dahdi_diag
 %astattr %_sbindir/dahdi_diag
@@ -252,6 +277,12 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_libdir/pppd/*/*.so
 
 %changelog
+* Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0-alt1
+- new version 2.10.0
+
+* Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 2.9.2-alt1
+- new version 2.9.2
+
 * Sun Jun 30 2013 Denis Smirnov <mithraen@altlinux.ru> 2.7.0-alt1
 - new version 2.7.0
 
