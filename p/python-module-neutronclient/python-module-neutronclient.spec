@@ -1,12 +1,15 @@
 Name:       python-module-neutronclient
 Version:    2.3.4
-Release:    alt1
+Release:    alt2
 Summary:    Python API and CLI for OpenStack Neutron
 Group:      Development/Python
 
 License:    ASL 2.0
 URL:        http://launchpad.net/python-neutronclient/
 Source0:    %{name}-%{version}.tar
+
+Provides: python-module-quantumclient
+Obsoletes: python-module-quantumclient
 
 #
 # patches_base=2.3.4
@@ -56,5 +59,8 @@ rm -rf %{buildroot}%{python_sitelibdir}/neutronclient/tests
 %{_sysconfdir}/bash_completion.d
 
 %changelog
+* Fri Aug 15 2014 Lenar Shakirov <snejok@altlinux.ru> 2.3.4-alt2
+- Provides/Obsoletes: python-module-quantumclient added
+
 * Mon Jul 14 2014 Lenar Shakirov <snejok@altlinux.ru> 2.3.4-alt1
 - First build for ALT (based on Fedora 2.3.4-1.fc21.src)
