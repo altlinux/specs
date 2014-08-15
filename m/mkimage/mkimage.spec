@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Fri Aug 15 2014 Michael Shigorin <mike@altlinux.org> 0.2.16-alt1
+- mki-sh-functions: cope with umask 007 (thanks mithraen@)
+
 * Mon Jun 02 2014 Michael Shigorin <mike@altlinux.org> 0.2.15-alt1
 - added /proc support for mksquashfs 4.3
 
