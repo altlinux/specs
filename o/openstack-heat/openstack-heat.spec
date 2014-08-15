@@ -1,9 +1,7 @@
-%define _unitdir /usr/lib/systemd/system
-
 Name:		openstack-heat
 Summary:	OpenStack Orchestration (heat)
 Version:	2014.1.2
-Release:	alt1
+Release:	alt2
 License:	ASL 2.0
 Group:		System/Servers
 URL:		http://www.openstack.org
@@ -22,6 +20,7 @@ Source20:   heat-dist.conf
 Patch0001: 0001-Switch-to-using-M2Crypto.patch
 Patch0002: 0002-remove-pbr-runtime-dependency.patch
 Patch0003: 0003-Add-heat-keystone-setup-domain-script.patch
+Patch0100: 0100-migration-to-work-w-MySQL-5.6.patch
 
 BuildArch: noarch
 BuildRequires: git
@@ -72,6 +71,7 @@ Requires: %{name}-api-cloudwatch = %{version}-%{release}
 %patch0001 -p1
 %patch0002 -p1
 %patch0003 -p1
+%patch0100 -p1
 
 sed -i s/REDHATHEATVERSION/%{version}/ heat/version.py
 sed -i s/REDHATHEATRELEASE/%{release}/ heat/version.py
@@ -331,6 +331,9 @@ AWS CloudWatch-compatible API to the Heat Engine
 %preun_service %{name}-api-cfn
 
 %changelog
+* Fri Aug 15 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt2
+- Patch added: 0100-migration-to-work-w-MySQL-5.6.patch
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
 - First build for ALT (based on Fedora 2014.1.2-0.4.fc21.src)
 
