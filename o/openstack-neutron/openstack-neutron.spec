@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron
 Version:	2014.1.2
-Release:	alt1
+Release:	alt2
 Provides:	openstack-quantum = %{version}-%{release}
 Obsoletes:	openstack-quantum < 2013.2-0.4.b3
 Summary:	OpenStack Networking Service
@@ -37,7 +37,6 @@ Patch0002: 0002-Sync-service-and-systemd-modules-from-oslo-incubator.patch
 Patch0003: 0003-Removed-signing_dir-from-neutron.conf.patch
 Patch0004: 0004-Remove-kernel-version-check-for-OVS-VXLAN.patch
 Patch0005: 0005-Notify-systemd-when-starting-Neutron-server.patch
-Patch0101: 0101-fix-neutron-configuration.patch
 
 BuildArch:	noarch
 
@@ -459,7 +458,6 @@ IPSec.
 %patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
-%patch0101 -p1
 
 find neutron -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -1003,6 +1001,9 @@ fi
 
 
 %changelog
+* Fri Aug 15 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt2
+- openvswitch-agent takes plugins.ml2 directly
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2-alt1
 - 2014.1.2
 
