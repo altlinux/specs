@@ -1,53 +1,68 @@
-Name:		python-module-swiftclient
-Version:	1.2.0
-Release:	alt1
-Summary:	Python API and CLI for OpenStack Swift
-
-License:	ASL 2.0
-URL:		https://github.com/openstack/python-swiftclient
-BuildArch:	noarch
-Group:		Development/Python
-Source0:	%{name}-%{version}.tar.gz
+Name:       python-module-swiftclient
+Version:    2.1.0
+Release:    alt1
+Summary:    Client Library for OpenStack Object Storage API
+License:    ASL 2.0
+URL:        http://pypi.python.org/pypi/%{name}
+Source0:    %{name}-%{version}.tar
+Group:      Development/Python
 
 #
-# patches_base=1.2.0
+# patches_base=2.1.0
 #
+Patch0001: 0001-Remove-builtin-requirements-handling.patch
 
-Requires:	python-module-simplejson
+BuildArch:  noarch
+Requires:   python-module-keystoneclient
+Requires:   python-module-requests
+# /usr/bin/swift collision with older swift-im rhbz#857900
+Conflicts:  swift < 2.0-0.3
 
-BuildRequires:	python-devel
-BuildRequires:	python-module-distribute
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-d2to1
+BuildRequires: python-module-pbr
+BuildRequires: python-module-requests
+BuildRequires: python-module-six
 
 %description
 Client library and command line utility for interacting with Openstack
-Swift's API.
+Object Storage API.
 
 %package doc
-Summary:	Documentation for OpenStack Swift API Client
-Group:		Documentation
+Summary:    Documentation for OpenStack Object Storage API Client
+Group:      Documentation
 
-BuildRequires:	python-module-sphinx
+BuildRequires: python-module-sphinx
 
 %description doc
 Documentation for the client library for interacting with Openstack
-Swift's API.
+Object Storage API.
 
 %prep
-%setup -q
+%setup
+
+%patch0001 -p1
+
+# Let RPM handle the dependencies
+rm -f test-requirements.txt requirements.txt
+
+# Remove bundled egg-info
+rm -rf python_swiftclient.egg-info
 
 %build
-%{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
-
-# Delete tests
-rm -fr %{buildroot}%{python_sitelibdir}/tests
+%python_install
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
 make html
 popd
+
+install -p -D -m 644 doc/manpages/swift.1 %{buildroot}%{_mandir}/man1/swift.1
+
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 
@@ -56,10 +71,14 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %{_bindir}/swift
 %{python_sitelibdir}/swiftclient
 %{python_sitelibdir}/*.egg-info
+%{_mandir}/man1/swift.1*
 
 %files doc
 %doc LICENSE doc/build/html
 
 %changelog
-* Mon Sep 17 2012 Pavel Shilovsky <piastry@altlinux.org> 1.2.0-alt1
+* Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2.1.0-alt1
+- New version (based on Fedora 2.1.0-1.fc21.src)
+
+* Thu Nov 08 2012 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt1
 - Initial release for Sisyphus (based on Fedora)
