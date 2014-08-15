@@ -3,7 +3,7 @@
 
 Name:             openstack-swift
 Version:          1.13.1
-Release:          alt1
+Release:          alt2
 Summary:          OpenStack Object Storage (Swift)
 
 Group:            System/Servers
@@ -233,7 +233,7 @@ install -d -m 755 %{buildroot}%{_runtimedir}/swift/proxy-server
 mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
 install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 # Install recon directory
-install -d -m 755 %{buildroot}%{_localstatedir}/cache/swift
+install -d -m 755 %{buildroot}%{_cachedir}/swift
 # Install home directory
 install -d -m 755 %{buildroot}%{_sharedstatedir}/swift
 # man pages
@@ -313,7 +313,7 @@ exit 0
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(640, root, swift) %{_sysconfdir}/swift/swift.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift
-%dir %attr(0755, swift, root) %{_localstatedir}/cache/swift
+%dir %attr(0755, swift, root) %{_cachedir}/swift
 %dir %attr(0755, swift, root) %{_sharedstatedir}/swift
 %dir %{python_sitelibdir}/swift
 %{_bindir}/swift-account-audit
@@ -420,6 +420,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Aug 15 2014 Lenar Shakirov <snejok@altlinux.ru> 1.13.1-alt2
+- _cachedir packaging fixed
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 1.13.1-alt1
 - 1.13.1 (based on Fedora 1.13.1-5.fc21.src)
 
