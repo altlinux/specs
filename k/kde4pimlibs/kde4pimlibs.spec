@@ -1,12 +1,12 @@
 %define _kde_alternate_placement 1
 %define ical_req 0.33
-%define akonadi_req 1.12.1
+%define akonadi_req 1.12.90
 
 %add_findpackage_path %_kde4_bindir
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.13.3
+Version: 4.14.0
 Release: alt1
 
 Group: System/Libraries
@@ -25,8 +25,8 @@ Source: %rname-%version.tar
 # upstream
 # FC
 # ALT
-Patch10: kdepimlibs-4.3.95-alt-test-akonadi-resources.patch
-Patch11: kdepimlibs-4.4.92-alt-no-report-akonadi-old-log.patch
+Patch10: kdepimlibs-4.14.0-alt-test-akonadi-resources.patch
+Patch11: kdepimlibs-4.14.0-alt-warn-akonadi-old-log.patch
 Patch12: kdepimlibs-4.4.2-alt-nepomuk-only-warn.patch
 
 BuildRequires(pre): akonadi-devel kde4libs-devel
@@ -321,7 +321,7 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 
 %files
 %_kde4_bindir/akonadi*
-%_K4datadir/apps/akonadi-kde/
+%_K4apps/akonadi-kde/
 %_K4lib/*.so
 %dir %_K4libdir/gpgmepp/
 %_K4apps/kabc/
@@ -331,7 +331,7 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4srvtyp/*
 %_K4apps/libkholidays/
 %_K4apps/akonadi/
-#%_K4apps/akonadi_knut_resource/
+%_K4apps/akonadi_knut_resource/
 %_K4xdg_mime/kdepimlibs-mime.xml
 %_K4xdg_mime/x-vnd.akonadi.socialfeeditem.xml
 %_datadir/akonadi/
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

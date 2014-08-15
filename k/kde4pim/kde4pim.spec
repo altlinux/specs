@@ -15,8 +15,8 @@
 
 %define rname kdepim
 %define major 4
-%define minor 13
-%define bugfix 3
+%define minor 14
+%define bugfix 0
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -74,7 +74,7 @@ BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel qjson-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel
 #BuildRequires: dblatex
-BuildRequires: kde4-pim-runtime-devel
+BuildRequires: kde4-pim-runtime-devel libkgapi-devel >= 2.2
 BuildRequires: kde4-baloo-devel kde4-baloo-widgets-devel
 #BuildRequires: libindicate-qt-devel
 BuildRequires: liblink-grammar-devel
@@ -1105,6 +1105,13 @@ Requires: %name-common = %version-%release
 %description -n libnoteshared4
 %name library
 
+%package  -n libfollowupreminder4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libfollowupreminder4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1703,6 +1710,8 @@ based on kdepim.
 %_K4libdir/libknotesprivate.so.*
 %files -n libnoteshared4
 %_K4libdir/libnoteshared.so.*
+%files -n libfollowupreminder4
+%_K4libdir/libfollowupreminder.so.*
 
 %files devel
 %_K4link/*.so
@@ -1713,6 +1722,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 
 Name: akonadi
-Version: 1.12.1
-Release: alt2
+Version: 1.12.91
+Release: alt1
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -145,6 +145,7 @@ Development files for %name
 #export PATH=%_libdir/kde4bin:$PATH
 export CMAKE_LIBRARY_PATH=%_libdir
 %Kcmake \
+    -DQT5_BUILD=OFF \
     -DAKONADI_BUILD_TESTS=OFF \
     -DBIN_INSTALL_DIR2=%_kde4_bindir \
     -DCONFIG_INSTALL_DIR=%_sysconfdir \
@@ -198,6 +199,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 1.12.91-alt1
+- new version
+
 * Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 1.12.1-alt2
 - update from 1.12 branch
 

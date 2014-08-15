@@ -21,7 +21,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -936,6 +936,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.11-alt2
+- update from 4.11 branch
+
 * Mon Jul 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.11-alt1
 - new version
 

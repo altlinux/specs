@@ -9,7 +9,7 @@
 
 %define rname libkgapi
 Name: libkgapi
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Group: System/Libraries
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Jul 10 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-webkit libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4pimlibs-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 python-module-distribute qjson-devel qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires: gcc-c++ kde4pimlibs-devel qjson-devel
+BuildRequires: gcc-c++ kde4pimlibs-devel >= 4.14 qjson-devel
 
 %description
 LibKGAPI (previously called LibKGoogle) is a C++ library that implements APIs for
@@ -94,6 +94,12 @@ Development files for %name
 
 
 %changelog
+* Mon Aug 11 2014 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
+- new version
+
+* Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt0.M70P.1
+- built for M70P
+
 * Thu May 29 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
