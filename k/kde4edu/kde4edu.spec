@@ -1,5 +1,6 @@
 
 %def_disable kpercentage
+%def_disable artikulate
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/parley/plugins/*.py
@@ -7,8 +8,8 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 13
-%define bugfix 3
+%define minor 14
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -25,7 +26,9 @@ Url: http://edu.kde.org
 #Obsoletes: kdeedu < %version-%release
 %endif
 
+%if_enabled artikulate
 Requires: %name-artikulate = %version-%release
+%endif
 Requires: %name-kqtquickcharts = %version-%release
 Requires: %name-blinken = %version-%release
 Requires: %name-cantor = %version-%release
@@ -60,7 +63,10 @@ Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
 BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 eigen3 facile gcc-c++ libindi-devel
 BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
-BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel qt-gstreamer-devel
+BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
+%if_enabled artikulate
+BuildRequires: qt-gstreamer-devel
+%endif
 BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data) shared-mime-info
@@ -633,27 +639,10 @@ KDE 4 library
 %patch1 -p1
 %patch2 -p1
 
-%if 0
-echo "cmake_minimum_required(VERSION 2.8)" > CMakeLists.txt
-ls -d1 lib* | \
-while read d
-do
-    [ -d "$d" ] || continue
-    echo "add_subdirectory($d)" >> CMakeLists.txt
-done
-ls -d1 * | \
-while read d
-do
-    [ "$d" == "${d#lib}" ] || continue
-    [ -d "$d" ] || continue
-    echo "add_subdirectory($d)" >> CMakeLists.txt
-done
-#find ./ -type f -name CMakeLists.txt | \
-#while read f
-#do
-#    sed -i 's|^ADD_DEFINITIONS.*QT_DEFINITIONS.*$|ADD_DEFINITIONS(${QT_DEFINITIONS})\nADD_DEFINITIONS(-fexceptions -UQT_NO_EXCEPTIONS)|' $f
-#done
+%if_disabled artikulate
+rm -rf artikulate
 %endif
+
 
 %build
 export CFLAGS="${optflags} -DOCAMLIB=%_libdir/ocaml"
@@ -700,13 +689,14 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
+%files -n libastro4
+%_K4libdir/libastro.so.*
+
+%if_enabled artikulate
 %files -n libartikulatecore4
 %_K4libdir/libartikulatecore.so.*
 %files -n libartikulatelearnerprofile4
 %_K4libdir/libartikulatelearnerprofile.so.*
-%files -n libastro4
-%_K4libdir/libastro.so.*
-
 %files artikulate
 %ifdef _kde_alternate_placement
 %_kde4_bindir/artikulate
@@ -721,7 +711,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4cfg/artikulate.kcfg
 %_K4iconsdir/hicolor/*/apps/artikulate.*
 %_K4doc/en/artikulate/
-
+%endif
 
 %files kqtquickcharts
 %_K4lib/imports/org/kde/charts/
@@ -761,6 +751,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4iconsdir/hicolor/*/apps/sagebackend.*
 %_K4iconsdir/hicolor/*/apps/qalculatebackend.*
 %_K4iconsdir/hicolor/*/apps/scilabbackend.*
+%_K4iconsdir/hicolor/*/apps/luabackend.*
 %_K4lib/cantor_*.so
 %_K4lib/concentrationCalculator.so
 %_K4lib/gasCalculator.so
@@ -802,6 +793,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 #%_K4apps/kalgebra
 %_K4apps/kalgebramobile/
 %_K4apps/katepart/syntax/kalgebra.xml
+%_K4cfg/kalgebrabackend.kcfg
 #%_K4srv/kalgebraplasmoid.desktop
 %_K4srv/kalgebra*.desktop
 %_K4srv/graphsplasmoid.desktop
@@ -882,6 +874,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %endif
 %_K4iconsdir/hicolor/*/apps/khangman*.*
 %_K4apps/khangman
+%_K4apps/plasma/packages/org.kde.kanagram/
 %_K4cfg/khangman.kcfg
 %_K4conf/khangman.knsrc
 %_K4doc/*/khangman
@@ -1089,6 +1082,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %dir %_qt4dir/imports/org/kde/edu
 %_qt4dir/imports/org/kde/edu/marble/
 %_K4lib/libmarble_part.*
+%_K4lib/marblethumbnail.so
 %_K4lib/plugins/marble
 %_K4lib/plasma_applet_worldclock.so
 %_K4lib/plasma_runner_marble.so
@@ -1097,6 +1091,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 #%_K4apps/marble_part
 %_K4cfg/marble.kcfg
 %_K4srv/marble_part*.desktop
+%_K4srv/marble_thumbnail_*.desktop
 %_K4srv/plasma-applet-kworldclock.desktop
 %_K4srv/plasma-runner-marble.desktop
 %_K4doc/*/marble
@@ -1127,14 +1122,14 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/librocscore.so.*
 %files -n librocsvisualeditor4
 %_K4libdir/librocsvisualeditor.so.*
-%files -n libkanagramengine4
-%_K4libdir/libkanagramengine.so.*
+#%files -n libkanagramengine4
+#%_K4libdir/libkanagramengine.so.*
 %files -n libkhangmanengine4
 %_K4libdir/libkhangmanengine.so.*
 
 %files devel
 %_includedir/khangman/
-%_includedir/kanagram/
+#%_includedir/kanagram/
 #%_includedir/libkiten/
 #%_includedir/marble/
 #%_includedir/rocs/
@@ -1147,6 +1142,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4lib/plugins/designer/*.so
 
 %changelog
+* Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

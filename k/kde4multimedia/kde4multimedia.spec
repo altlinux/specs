@@ -4,8 +4,8 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 13
-%define bugfix 3
+%define minor 14
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -36,9 +36,8 @@ BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: gcc-c++ libcdparanoia-devel
 BuildRequires: libmusicbrainz3-devel libtunepimp-devel libflac-devel
 BuildRequires: libmad-devel libvorbis-devel libtheora-devel libspeex-devel
-BuildRequires: libxine-devel >= 1.1.9
 BuildRequires: libsamplerate-devel libtag-devel libfreebob-devel
-BuildRequires: libjpeg-devel bzlib-devel libpulseaudio-devel glib2-devel libxine-devel
+BuildRequires: libjpeg-devel bzlib-devel libpulseaudio-devel glib2-devel
 #BuildRequires: libcdda-devel
 BuildRequires: libalsa-devel
 BuildRequires: libcanberra-devel
@@ -50,7 +49,6 @@ BuildRequires: libkcompactdisc4-devel libkcddb4-devel desktop-file-utils
 %description
 * kmix: the audio mixer as a standalone program and Kicker applet
 * kscd: A CD player with an interface to the internet CDDB database
-* phonon-xine: A Phonon-Backend based on Xine
 * kfile-plugins: provide meta information about sound files
 * libkcddb: a library for retrieving and sending cddb information
 
@@ -278,6 +276,9 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

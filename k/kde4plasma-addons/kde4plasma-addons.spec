@@ -10,7 +10,7 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 13
+%define minor 14
 %define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -1322,6 +1322,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Wed Apr 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 

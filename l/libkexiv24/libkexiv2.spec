@@ -2,7 +2,7 @@
 
 %define rname libkexiv2
 Name: libkexiv24
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 
 Group: System/Libraries
@@ -56,6 +56,9 @@ Development files for %name
 %_libdir/cmake/%rname-*
 
 %changelog
+* Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
