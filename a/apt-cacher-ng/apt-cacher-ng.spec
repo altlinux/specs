@@ -1,5 +1,5 @@
 Name: apt-cacher-ng
-Version: 0.7.25
+Version: 0.7.27
 Release: alt1
 
 Summary: Caching HTTP download proxy for software packages
@@ -9,8 +9,10 @@ Group: Networking/Other
 Url: http://www.unix-ag.uni-kl.de/~bloch/acng/
 
 Source: http://ftp.debian.org/debian/pool/main/a/apt-cacher-ng/%{name}_%version.orig.tar
+Source1: acng.service
 Patch0: acng-conf.patch
 Patch1: acng-init.patch
+Patch2: acng-alt-vfilepattern.patch
 
 # Automatically added by buildreq on Wed May 30 2012
 # optimized out: cmake cmake-modules libstdc++-devel pkg-config
@@ -28,6 +30,7 @@ resource usage.
 %setup
 %patch0 -p 1
 %patch1 -p 1
+%patch2 -p 1
 echo "-llzma" >> link.flags
 
 %build
@@ -45,9 +48,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 cp -a conf/* %buildroot%_sysconfdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d
-cat <<'_EOF'_ > %buildroot%_sysconfdir/apt/apt.conf.d/%name
-# Uncomment next line to enable %name in apt
-# Acquire::http { Proxy "http://localhost:3142"; };
+cat <<'_EOF'_ > %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
+// Uncomment next line to enable %name in apt
+// Acquire::http { Proxy "http://localhost:3142"; };
 _EOF_
 
 mkdir -p %buildroot%_initdir
@@ -59,12 +62,15 @@ install -m644 doc/man/*.8 %buildroot%_man8dir
 mkdir -p %buildroot%_logdir/%name/
 mkdir -p %buildroot%_cachedir/%name/
 
+install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
+
 %files
+%_unitdir/acng.service
 %_sbindir/apt-cacher-ng
 %_sbindir/in.acng
 %_libdir/%name/
 %config %_sysconfdir/%name/
-%config %_sysconfdir/apt/apt.conf.d/%name
+%config %_sysconfdir/apt/apt.conf.d/%name.conf
 %_initdir/acng
 %_man8dir/*
 %doc COPYING README TODO
@@ -80,6 +86,14 @@ mkdir -p %buildroot%_cachedir/%name/
 %preun_service acng
 
 %changelog
+* Fri Aug 15 2014 Terechkov Evgenii <evg@altlinux.org> 0.7.27-alt1
+- 0.7.27 (includes fix for CVE-2014-4510)
+
+* Fri Aug 15 2014 Terechkov Evgenii <evg@altlinux.org> 0.7.25-alt2
+- Rename/rewrite apt.conf.d/apt-cacher-ng (ALT bug #30212)
+- Patch2 added with alt-specific volatile file patterns
+- Systemd unit file added
+
 * Tue May 06 2014 Vitaly Lipatov <lav@altlinux.ru> 0.7.25-alt1
 - new version 0.7.25 (with rpmrb script)
 
