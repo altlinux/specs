@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1906,6 +1906,10 @@ done)
 
 
 %changelog
+* Sat Aug 16 2014 Led <led@altlinux.ru> 3.15.10-alt2
+- updated:
+  + fix-firmware--radeon
+
 * Sat Aug 16 2014 Led <led@altlinux.ru> 3.15.10-alt1
 - 3.15.10
 - removed:
