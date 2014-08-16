@@ -1,10 +1,10 @@
 %define oname pymbolic
 
-%def_without python3
+%def_with python3
 
 Name: python-module-%oname
 Version: 2014.2
-Release: alt1
+Release: alt2
 Summary: A package for symbolic computation
 License: MIT
 Group: Development/Python
@@ -142,6 +142,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.2-alt2
+- Added module for Python 3
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.2-alt1
 - Version 2014.2
 
