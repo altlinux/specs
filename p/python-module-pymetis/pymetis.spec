@@ -1,7 +1,10 @@
 %define oname pymetis
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 2011.1.1
-Release: alt4.git20120417
+Release: alt5.git20120417
 Summary: Python wrapper for the Metis graph partititioning software
 License: MIT
 Group: Development/Python
@@ -12,8 +15,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar
 
 BuildPreReq: python-module-setuptools gcc-c++ boost-python-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools boost-python3-devel
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
+PyMetis is a Python wrapper for the Metis graph partititioning software
+by George Karypis, Vipin Kumar and others. It includes version 5.0pre2
+of Metis and wraps it using the Boost Python wrapper generator library.
+So far, it only wraps the most basic graph partitioning functionality,
+but extending it in case you need more should be quite straightforward.
+Using PyMetis to partition your meshes is really easy--essentially all
+you need to pass into PyMetis is an adjacency list for the graph and the
+number of parts you would like.
+
+%package -n python3-module-%oname
+Summary: Python wrapper for the Metis graph partititioning software
+Group: Development/Python3
+
+%description -n python3-module-%oname
 PyMetis is a Python wrapper for the Metis graph partititioning software
 by George Karypis, Vipin Kumar and others. It includes version 5.0pre2
 of Metis and wraps it using the Boost Python wrapper generator library.
@@ -26,17 +48,44 @@ number of parts you would like.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+sed -i 's|boost_python|boost_python3|' ../python3/setup.py
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc LICENSE
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc LICENSE
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1.1-alt5.git20120417
+- Added module for Python 3
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1.1-alt4.git20120417
 - Rebuilt with Boost 1.52.0
 
