@@ -2,7 +2,7 @@
 %define rev 44302
 
 Name:       lazarus
-Version:    1.2.0
+Version:    1.2.4
 Release:    alt1
 Epoch:      1
 
@@ -25,10 +25,10 @@ Patch3:     %name-fix-install-path-in-Makefile.patch
 Patch4:     %name-1.0.8-fix-fpc-search.patch
 Patch5:     %name-1.2.0-fix-trailing-comma.patch
 
-BuildRequires: fpc >= 2.6.0 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
+BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 
-Requires:   fpc fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
+Requires:   fpc >= 2.6.4 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
 Requires:   glibc-devel glib-devel libGLU-devel libode-devel
 Requires:   fonts-bitmap-terminus
 Requires:   libdbus-devel
@@ -182,6 +182,12 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Wed Aug 13 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt1
+- New version
+
+* Wed Aug 13 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.2-alt1
+- New version
+
 * Fri Mar 07 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.0-alt1
 - New version
 
