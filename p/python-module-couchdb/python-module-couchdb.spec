@@ -1,8 +1,11 @@
 %define sname couchdb
+
+%def_with python3
+
 Summary: Python library for working with CouchDB. 
 Name: python-module-%sname
 Version: 0.10
-Release: alt1.hg20140707
+Release: alt2.hg20140707
 # hg clone https://code.google.com/p/couchdb-python/
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/C/CouchDB/CouchDB-%{version}.tar.gz
@@ -15,26 +18,79 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
+
 %add_findreq_skiplist %python_sitelibdir/%sname/util3.py
 
 %description
-A Python library for CouchDB. It provides a convenient high level interface for the CouchDB server.
+A Python library for CouchDB. It provides a convenient high level
+interface for the CouchDB server.
+
+%package -n python3-module-%sname
+Summary: Python library for working with CouchDB
+Group: Development/Python3
+%add_findreq_skiplist %python3_sitelibdir/%sname/util2.py
+
+%description -n python3-module-%sname
+A Python library for CouchDB. It provides a convenient high level
+interface for the CouchDB server.
 
 %prep
-%setup -q
+%setup
+
+%if_with python3
+cp -fR . ../python3
+for i in $(find ../python3 -type f -name '*.py'); do
+	2to3 -w -n $i ||:
+done
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 
 %files
 %doc README.txt ChangeLog.txt COPYING doc/*
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%sname
+%doc README.txt ChangeLog.txt COPYING doc/*
+%_bindir/*.py3
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt2.hg20140707
+- Added module for Python 3
+
 * Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.hg20140707
 - New snapshot
 
