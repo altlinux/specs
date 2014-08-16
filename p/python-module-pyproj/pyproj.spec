@@ -1,10 +1,13 @@
 %define oname pyproj
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 1.9.4
-Release: alt1.svn20131105
+Release: alt2.svn20131105
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
-Group: Graphics
+Group: Development/Python
 Url: http://code.google.com/p/pyproj/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -14,6 +17,10 @@ Source: %oname-%version.tar.gz
 BuildRequires(pre): rpm-build-python
 BuildPreReq: libproj-devel python-devel
 %setup_python_module %oname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python-tools-2to3
+%endif
 
 %description
 Pyrex generated python interface to PROJ.4 library
@@ -36,6 +43,44 @@ Input coordinates can be given as python arrays, lists/tuples, scalars
 or numpy/Numeric/numarray arrays. Optimized for objects that support the
 Python buffer protocol (regular python and numpy array objects).
 
+%package -n python3-module-%oname
+Summary: Pyrex generated python interface to PROJ.4 library
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Pyrex generated python interface to PROJ.4 library
+
+Performs cartographic transformations and geodetic computations.
+
+The Proj class can convert from geographic (longitude,latitude) to
+native map projection (x,y) coordinates and vice versa, or from one map
+projection coordinate system directly to another.
+
+The Geod class can perform forward and inverse geodetic, or Great
+Circle, computations. The forward computation involves determining
+latitude, longitude and back azimuth of a terminus point given the
+latitude and longitude of an initial point, plus azimuth and distance.
+The inverse computation involves determining the forward and back
+azimuths and distance given the latitudes and longitudes of an initial
+and terminus point.
+
+Input coordinates can be given as python arrays, lists/tuples, scalars
+or numpy/Numeric/numarray arrays. Optimized for objects that support the
+Python buffer protocol (regular python and numpy array objects).
+
+%package -n python3-module-%oname-tests
+Summary: Tests for pyrex generated python interface to PROJ.4 library
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+Pyrex generated python interface to PROJ.4 library
+
+Performs cartographic transformations and geodetic computations.
+
+This package contains tests for pyrex generated python interface to
+PROJ.4 library.
+
 %package tests
 Summary: Tests for pyrex generated python interface to PROJ.4 library
 Group: Development/Python
@@ -52,17 +97,35 @@ PROJ.4 library.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %add_optflags -fno-strict-aliasing
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install
-
 install -d %buildroot%python_sitelibdir/%oname/test
 install -p -m644 test/* %buildroot%python_sitelibdir/%oname/test
-
 chmod +x %buildroot%python_sitelibdir/%oname/data/test*
+
+%if_with python3
+pushd ../python3
+%python3_install
+install -d %buildroot%python3_sitelibdir/%oname/test
+install -p -m644 test/* %buildroot%python3_sitelibdir/%oname/test
+chmod +x %buildroot%python3_sitelibdir/%oname/data/test*
+popd
+%endif
 
 %files
 %doc Changelog LICENSE_proj4 README
@@ -74,7 +137,22 @@ chmod +x %buildroot%python_sitelibdir/%oname/data/test*
 %python_sitelibdir/*/test
 %python_sitelibdir/%oname/data/test*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc Changelog LICENSE_proj4 README
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test
+%exclude %python3_sitelibdir/%oname/data/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test
+%python3_sitelibdir/%oname/data/test*
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt2.svn20131105
+- Added module for Python 3
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.svn20131105
 - New snapshot
 
