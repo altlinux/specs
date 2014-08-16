@@ -26,13 +26,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.15.9
-Release: alt3
+Version: 3.15.10
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.15
-%define kernel_stable_version 9
+%define kernel_stable_version 10
 %define kernel_extra_version .%kernel_stable_version
 
 %define krelease %release
@@ -1906,6 +1906,15 @@ done)
 
 
 %changelog
+* Sat Aug 16 2014 Led <led@altlinux.ru> 3.15.10-alt1
+- 3.15.10
+- removed:
+  + fix-net-sctp--sctp
+- updated:
+  + fix-fs-btrfs
+- added:
+  + fix-kernel-power--snapshot
+
 * Thu Aug 14 2014 Led <led@altlinux.ru> 3.15.9-alt3
 - updated:
   + fix-drivers-rtc--rtc-efi
