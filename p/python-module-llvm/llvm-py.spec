@@ -1,11 +1,11 @@
 %define oname llvm
 
-%def_without python3
+%def_with python3
 %def_with clang
 
 Name: python-module-%oname
-Version: 0.12.4
-Release: alt1
+Version: 0.12.7
+Release: alt1.git20140805
 Summary: Python Bindings for LLVM
 License: BSD
 Group: Development/Python
@@ -53,6 +53,8 @@ utilities" like Boost.Python, swig etc.
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+rm -f ../python3/tools/intrs_for_doc.py
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 #sed -i 's|.*numpy\-py3.*||' llvm/_core.c
@@ -66,10 +68,7 @@ CXX=clang++; export CXX;
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
-%python3_build_debug -fno-strict-aliasing
+%python3_build_debug
 popd
 %endif
 
@@ -93,9 +92,14 @@ popd
 %files -n python3-module-%oname
 %doc CHANGELOG README.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.7-alt1.git20140805
+- Version 0.12.7
+- Added module for Python 3
+
 * Mon Apr 07 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.4-alt1
 - New version.
 - Rebuilt with LLVM/Clang 3.4.
