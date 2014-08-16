@@ -1,7 +1,10 @@
 %define oname ore.xapian
+
+%def_without python3
+
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.1
+Release: alt2
 Summary: A Xapian Content Indexing/Searching Framework for Zope3
 License: GPL
 Group: Development/Python
@@ -10,7 +13,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %py_provides %oname
 %py_requires ore
@@ -28,6 +36,39 @@ features:
   * easy to customize indexing behavior via adaptation.
   * transaction aware modifications, aggregates operations for content
     within a transaaction scope.
+
+%package -n python3-module-%oname
+Summary: A Xapian Content Indexing/Searching Framework for Zope3
+Group: Development/Python3
+%py3_provides %oname
+%py3_requires ore
+
+%description -n python3-module-%oname
+The package provides a content indexing framework for a multi-threaded
+python application. It utilizes xapian for its indexing library, and the
+zope component architecture for flexibility. It operates primarily as a
+framework wrapper for xapian core search facilities.
+
+features:
+
+  * processes all indexing operations asynchronously.
+  * mechanisms for indexing/resolving content from multiple data stores.
+  * easy to customize indexing behavior via adaptation.
+  * transaction aware modifications, aggregates operations for content
+    within a transaaction scope.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for ore.xapian
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+The package provides a content indexing framework for a multi-threaded
+python application. It utilizes xapian for its indexing library, and the
+zope component architecture for flexibility. It operates primarily as a
+framework wrapper for xapian core search facilities.
+
+This package contains tests for ore.xapian.
 
 %package tests
 Summary: Tests for ore.xapian
@@ -50,24 +91,57 @@ Group: Development/Python
 %description -n python-module-ore
 Core package of ore.
 
+%package -n python3-module-ore
+Summary: Core package of ore
+Group: Development/Python3
+%py3_provides ore
+
+%description -n python3-module-ore
+Core package of ore.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
-
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
-
 install -p -m644 src/ore/__init__.py \
 	%buildroot%python_sitelibdir/ore/
+
+%if_with python3
+pushd ../python3
+%python3_install
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+install -p -m644 src/ore/__init__.py \
+	%buildroot%python3_sitelibdir/ore/
+popd
+%else
+install -d %buildroot%python3_sitelibdir/ore
+install -p -m644 src/ore/__init__.py \
+	%buildroot%python3_sitelibdir/ore/
+%endif
 
 %files
 %doc *.txt
@@ -82,7 +156,28 @@ install -p -m644 src/ore/__init__.py \
 %dir %python_sitelibdir/ore
 %python_sitelibdir/ore/__init__.*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/*/tests.*
+%exclude %python3_sitelibdir/ore/__init__.py
+%exclude %python3_sitelibdir/ore/__pycache__/__init__.*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/*/tests.*
+%endif
+
+%files -n python3-module-ore
+%python3_sitelibdir/ore/__init__.py
+%python3_sitelibdir/ore/__pycache__/__init__.*
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2
+- Added python3-module-ore
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.0-alt1.1
 - Rebuild with Python-2.7
 
