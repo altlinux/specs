@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
 Version: 0.5.10
-Release: alt1
+Release: alt2
 
 Group: System/Base
 License: GPLv2
@@ -9,6 +9,7 @@ Url: http://inotify.aiken.cz
 Source0: http://inotify.aiken.cz/download/incron/%name-%version.tar
 Source1: incrond.init
 Source2: incrontab.control
+Source3: incrond.service
 Patch0: %name-%version-%release.patch
 Patch1: incron-0.5.9-alt-glibc-2.16.patch
 
@@ -39,6 +40,7 @@ install -d %buildroot%_sysconfdir/%name.d
 install -D -p %SOURCE1 %buildroot%_initdir/incrond
 install -D -p %SOURCE2 %buildroot%_controldir/incrontab
 install -D -p -m 0644 incron.conf.example %buildroot%_sysconfdir/%name.conf
+install -D -m644 %SOURCE3 %buildroot%_unitdir/incrond.service
 
 # install manpages
 make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
@@ -67,8 +69,12 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %_mandir/man8/incrond.8.gz
 %attr(3730,root,incrontab) %dir %_var/spool/%name
 %attr(700,root,root) %dir %_sysconfdir/%name.d
+%_unitdir/incrond.service
 
 %changelog
+* Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 0.5.10-alt2
+- add systemd unit
+
 * Wed Oct 09 2013 Anton Farygin <rider@altlinux.ru> 0.5.10-alt1
 - new version
 
