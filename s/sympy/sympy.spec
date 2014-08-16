@@ -1,9 +1,9 @@
-%def_without python3
+%def_with python3
 
 Name: sympy
 Version: 0.7.5
 Epoch: 1
-Release: alt1.git20140710
+Release: alt1.git20140814
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
@@ -156,14 +156,14 @@ echo '  email = real@altlinux.org' >>.gitconfig
 echo '  name = Eugeny A. Rostovtsev (REAL)' >>.gitconfig
 popd
 pushd ../python3
-rm -fR .gear
-git init-db
-git add .
-git commit -a -m "auto"
-bin/use2to3
-pushd py3k-%name
+#rm -fR .gear
+#git init-db
+#git add .
+#git commit -a -m "auto"
+#bin/use2to3
+#pushd py3k-%name
 %python3_build
-popd
+#popd
 popd
 %endif
 
@@ -180,7 +180,8 @@ cp -fR doc/_build/doctrees ./
 
 %install
 %if_with python3
-pushd ../python3/py3k-%name
+#pushd ../python3/py3k-%name
+pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
@@ -248,14 +249,20 @@ cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 %exclude %python3_sitelibdir/*/*test*
 %exclude %python3_sitelibdir/*/*/*test*
 %exclude %python3_sitelibdir/*/*/*/*test*
+%exclude %python3_sitelibdir/*/*/*/*/*test*
 
 %files -n python3-module-%name-tests
 %python3_sitelibdir/*/*test*
 %python3_sitelibdir/*/*/*test*
 %python3_sitelibdir/*/*/*/*test*
+%python3_sitelibdir/*/*/*/*/*test*
 %endif
 
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.5-alt1.git20140814
+- New snapshot
+- Added module for Python 3
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.5-alt1.git20140710
 - New snapshot
 
