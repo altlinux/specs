@@ -10,7 +10,7 @@
 
 %define rname kdenetwork
 %define major 4
-%define minor 13
+%define minor 14
 %define bugfix 0
 Name: kde4network
 Version: %major.%minor.%bugfix
@@ -376,6 +376,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 

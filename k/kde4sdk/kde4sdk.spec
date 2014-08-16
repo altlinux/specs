@@ -3,13 +3,12 @@
 %add_findreq_skiplist %_K4apps/lokalize/scripts/*.py
 %add_findreq_skiplist %_K4bindir/kdedoc
 %add_findreq_skiplist %_K4bindir/package_crystalsvg
-%def_disable antlr
 
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
-%define minor 13
-%define bugfix 3
+%define minor 14
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -43,9 +42,7 @@ Patch1: kdesdk-4.0.2-alt-find-libsvn.patch
 BuildRequires(pre): kde4libs-devel
 BuildRequires: libsubversion-devel perl-XML-DOM perl-Switch libldap-devel libltdl-devel gcc-c++
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
-%if_enabled antlr
-BuildRequires: antlr gcj-antlr antlr-native antlr-native-devel /proc
-%endif
+BuildRequires: gettext-tools
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
 BuildRequires: kde4libs-devel >= %version kde4base-devel
 BuildRequires: kde4pimlibs-devel >= %version
@@ -286,18 +283,22 @@ Requires: %name-common = %version-%release
 
 
 %build
+export PATH=%_kde4_bindir:$PATH
 ls -d1 * | \
 while read d
 do
     [ -f "$d"/CMakeLists.txt ] || continue
     pushd $d
     %K4build \
+	-DKDE4_BUILD_TESTS=OFF \
 	-DHUNSPELL_INCLUDE_DIR=%_includedir \
 	-DHUNSPELL_LIBRARIES=%_libdir/libhunspell.so
     popd
 done
 
 %install
+export PATH=%_kde4_bindir:$PATH
+
 ls -d1 * | \
 while read d
 do
@@ -486,10 +487,8 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4libdir/strigi/strigi*
 
 %files po2xml
-%if_enabled antlr
 %_K4bindir/po2xml
 %_K4bindir/swappo
-%endif
 %_K4bindir/split2po
 %_K4bindir/xml2pot
 
@@ -578,6 +577,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Tue Jul 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.3-alt1
 - new version
 

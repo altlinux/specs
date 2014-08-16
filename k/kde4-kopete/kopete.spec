@@ -8,7 +8,6 @@
 %endif
 
 %def_enable kopete_irc
-%def_enable kopete_googletalk
 
 %ifdef _kde_alternate_placement
 %add_findreq_skiplist %_kde4_bindir/kopete_*.sh
@@ -21,8 +20,8 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 4.13.3
-Release: alt1.1
+Version: 4.14.0
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -32,9 +31,7 @@ Provides: kde4network-kopete = %EVR
 Obsoletes: kde4network-kopete < %EVR
 
 Requires: qca2-ossl
-%if_enabled kopete_googletalk
 Requires: libmediastreamer-ilbc
-%endif
 
 Source: %rname-%version.tar
 Patch1: kopete-4.8.3-alt-mobile.patch
@@ -49,7 +46,7 @@ BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
 BuildRequires: libmeanwhile-devel libmediastreamer-devel libmediastreamer-ilbc libmsn-devel libotr5-devel libalsa-devel
 BuildRequires: libqca2-devel libqimageblitz-devel libsqlite3-devel 
-BuildRequires: libsrtp libv4l-devel libxslt-devel python-devel
+BuildRequires: libsrtp libortp-devel libv4l-devel libxslt-devel python-devel
 BuildRequires: kde-common-devel rpm-macros-browser-plugins
 
 %description
@@ -217,7 +214,6 @@ based on %name.
     -DWITH_irc:BOOL=%{?_enable_kopete_irc:ON}%{!?_enable_kopete_irc:OFF} \
     -DWITH_msn:BOOL=ON \
     -DMOZPLUGIN_INSTALL_DIR:PATH=%browser_plugins_path \
-    -DWITH_GOOGLETALK:BOOL=%{?_enable_kopete_googletalk:ON}%{!?_enable_kopete_googletalk:OFF} \
     #
 
 %install
@@ -232,9 +228,7 @@ based on %name.
 #%files core
 
 %files
-%if_enabled kopete_googletalk
-%_K4bindir/googletalk-call
-%endif
+%_K4bindir/libjingle-call
 %_K4bindir/kopete
 %_K4bindir/kopete_latexconvert.sh
 %_K4bindir/winpopup-install
@@ -318,6 +312,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 4.13.3-alt1.1
 - NMU: rebuild with new samba
 
