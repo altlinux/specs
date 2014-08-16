@@ -1,6 +1,6 @@
 Name: mf2b
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Fail2Ban Replacement with Embedded Systems in Mind
 License: GPLv3
@@ -11,6 +11,7 @@ Source0: %name-%version.tar
 Source1: %name.sysconfig
 Source2: %name.init
 Source3: README.ALT
+Source4: %name.service
 
 Patch0:%name-%version-alt.patch
 
@@ -34,6 +35,7 @@ logrotate.
 install -Dp -m 644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
 install -Dp -m 755 %SOURCE2 %buildroot%_initdir/%name
 install -p -m 644 %SOURCE3 .
+install -Dp -m 644 %SOURCE4 %buildroot%_unitdir/%name.service
 
 %post
 %post_service %name
@@ -42,6 +44,7 @@ install -p -m 644 %SOURCE3 .
 %preun_service %name
 
 %files
+%_unitdir/%name.service
 %_initdir/%name
 %_sbindir/%name
 %config(noreplace) %_sysconfdir/%{name}.conf
@@ -51,6 +54,9 @@ install -p -m 644 %SOURCE3 .
 %doc README TODO README.ALT
 
 %changelog
+* Sat Aug 16 2014 Terechkov Evgenii <evg@altlinux.org> 1.1-alt2
+- Systemd unit file added
+
 * Sat Jan 18 2014 Terechkov Evgenii <evg@altlinux.org> 1.1-alt1
 - 1.1
 
