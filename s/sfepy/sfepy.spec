@@ -1,6 +1,8 @@
+%def_without python3
+
 Name: sfepy
 Version: 2014.2
-Release: alt1.git20140708
+Release: alt1.git20140807
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -20,9 +22,35 @@ BuildPreReq: libtetgen-devel libnetgen-devel libnumpy-devel
 BuildPreReq: doxygen graphviz texlive-latex-extra dvipng
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: python-module-tables-tests python-module-Pyrex xvfb-run
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python-tools-2to3 libnumpy-py3-devel
+BuildPreReq: python3-module-scipy python3-module-matplotlib
+BuildPreReq: python3-module-tables-tests python3-module-Cython
+%endif
 
 %description
 A finite element analysis software based primarily on NumPy and SciPy.
+
+%package py3
+Summary: Simple finite elements in Python (SfePy)
+Group: Sciences/Mathematics
+Requires: python3-module-%name = %version-%release
+
+%description py3
+A finite element analysis software based primarily on NumPy and SciPy.
+
+%package -n python3-module-%name
+Summary: Python module of Simple finite elements (SfePy)
+Group: Development/Python3
+Requires: tetgen gmsh netgen
+%py3_requires matplotlib.backends.backend_wxagg
+%py3_requires pyparsing scikits.umfpack tables IPython
+
+%description -n python3-module-%name
+A finite element analysis software based primarily on NumPy and SciPy.
+
+This package contains python module of SfePy.
 
 %package -n python-module-%name
 Summary: Python module of Simple finite elements (SfePy)
@@ -70,6 +98,16 @@ A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains pickles for SfePy.
 
+%package -n python3-module-%name-tests
+Summary: Tests for Simple finite elements in Python (SfePy)
+Group: Development/Python3
+Requires: python3-module-%name = %version-%release
+
+%description  -n python3-module-%name-tests
+A finite element analysis software based primarily on NumPy and SciPy.
+
+This package contains tests for SfePy.
+
 %package -n python-module-%name-tests
 Summary: Tests for Simple finite elements in Python (SfePy)
 Group: Development/Python
@@ -79,6 +117,16 @@ Requires: python-module-%name = %version-%release
 A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains tests for SfePy.
+
+%package -n python3-module-%name-examples
+Summary: Examples for Simple finite elements in Python (SfePy)
+Group: Development/Python3
+Requires: python3-module-%name = %version-%release
+
+%description  -n python3-module-%name-examples
+A finite element analysis software based primarily on NumPy and SciPy.
+
+This package contains examples for SfePy.
 
 %package -n python-module-%name-examples
 Summary: Examples for Simple finite elements in Python (SfePy)
@@ -93,6 +141,14 @@ This package contains examples for SfePy.
 %prep
 %setup
 ln -s types.h sfepy/discrete/fem/extmods/types_s.h
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec \
+	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 install -m644 %SOURCE1 .
 
 cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc ~/.matplotlibrc
@@ -103,6 +159,7 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 
 %build
 export PYTHONPATH=$PWD:$PWD/script
+export CFLAGS="%optflags"
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py build
 #python_build_debug build_ext
@@ -111,15 +168,36 @@ xvfb-run --server-args="-screen 0 1024x768x24" \
 #python_build_debug build_ext
 #popd
 
+%if_with python3
+export CFLAGS="%optflags $(pkg-config python3 --cflags)"
+pushd ../python3
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	python3 setup.py build
+popd
+%endif
+
 %install
 export PYTHONPATH=$PWD:$PWD/script
+
+%if_with python3
+pushd ../python3
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	python3 setup.py install --root=%buildroot
+popd
+touch %buildroot%python3_sitelibdir/%name/script/__init__.py
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i ${i}3
+done
+popd
+%endif
+
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py install --root=%buildroot
 #python_install
 #pushd sfepy/terms
 #python_install
 #popd
-
 touch %buildroot%python_sitelibdir/%name/script/__init__.py
 
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -143,6 +221,9 @@ cp -fR doc/doc/html %buildroot%_docdir/%name/
 %files
 %doc AUTHORS LICENSE README doc/txt/*.txt
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 
 %files -n python-module-%name
 %python_sitelibdir/*
@@ -167,7 +248,31 @@ cp -fR doc/doc/html %buildroot%_docdir/%name/
 %files -n python-module-%name-examples
 %python_sitelibdir/%name/examples
 
+%if_with python3
+%files py3
+%doc AUTHORS LICENSE README doc/txt/*.txt
+%_bindir/*.py3
+
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%name/tests
+%exclude %python3_sitelibdir/%name/base/testing.py
+%exclude %python3_sitelibdir/%name/base/__pycache__/testing.*
+%exclude %python3_sitelibdir/%name/examples
+
+%files -n python3-module-%name-tests
+%python3_sitelibdir/%name/tests
+%python3_sitelibdir/%name/base/testing.py
+%python3_sitelibdir/%name/base/__pycache__/testing.*
+
+%files -n python3-module-%name-examples
+%python3_sitelibdir/%name/examples
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.2-alt1.git20140807
+- New snapshot
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.2-alt1.git20140708
 - Version 2014.2
 
