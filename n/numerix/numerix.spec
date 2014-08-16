@@ -10,7 +10,7 @@ License: GPL
 Group: System/Libraries
 Summary: Numerix "big integer"
 Version: 0.22
-Release: alt7.3
+Release: alt7.4
 Url: http://pauillac.inria.fr/~quercia/
 Source: http://pauillac.inria.fr/~quercia/cdrom/bibs/%name.tar.gz
 Patch: %name-install.patch
@@ -124,6 +124,9 @@ cp -a exemples/* %buildroot%_datadir/examples/%name/
 %_datadir/examples/%name/*
 
 %changelog
+* Sat Aug 16 2014 Andrey Cherepanov <cas@altlinux.org> 0.22-alt7.4
+- Rebuild with new fpc
+
 * Mon Mar 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.22-alt7.3
 - Rebuild with new fpc
 

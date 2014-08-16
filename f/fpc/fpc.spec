@@ -1,15 +1,21 @@
-Name: fpc
-Epoch: 2
-Version: 2.6.2
-Release: alt2
+%def_disable boostrap
+%def_with    sources
+%def_with    doc
+%def_without win32
+%def_with    tests
 
-Summary: Free Pascal Compiler -- Meta Package
-License: GPL
-Group: Development/Other
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Name: 	  fpc
+Epoch:    2
+Version:  2.6.4
+Release:  alt1
 
-Url: http://www.freepascal.org
-Source: fpcbuild-%version.tar
+Summary:  Free Pascal Compiler -- Meta Package
+License:  GPL
+Group:    Development/Other
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+Url: 	 http://www.freepascal.org
+Source:  fpcbuild-%version.tar
 Source1: fp.desktop
 Source2: fp.sh
 Source3: fp.cfg
@@ -17,23 +23,57 @@ Source4: fp16x16.xpm
 Source5: fp48x48.xpm
 Source6: ppc386_bootstrap
 Source7: ppcx64_bootstrap
+Source8: fpc.watch
 
-#Patch: %name-%version-alt-changes.patch
-Patch1: fpc-gdb.patch
-Patch2: fpc-link.patch
+# Support gdb 7.5.0
+Patch0:  fpc-gdb.patch
 
-%define makedoc 0
-%define makesrc 1
-%define maketests 1
-%define makewin32 1
+# Patches from Mageia
+# Fix http://bugs.freepascal.org/view.php?id=23682
+Patch1: fpc-fpkeys.patch
+# Fix http://bugs.freepascal.org/view.php?id=23683
+Patch2: fpc-process-window-info.patch
+# Don't show message on mouse click
+Patch3: fpc-mouse-click.patch
+# Fix http://bugs.freepascal.org/view.php?id=25230
+Patch4: fpc-fix-incorrect-hints.patch
+# Fix http://bugs.freepascal.org/view.php?id=25239
+Patch5: fpc-help-buttons.patch
+# Fix http://bugs.freepascal.org/view.php?id=25280
+Patch6: fpc-fix-min-size.patch
 
-ExclusiveOS: Linux
+# Patches from Debian
+Patch10: fpc-add-a-new-directive-CFGDIR.patch
+Patch11: fpc-change-path-of-localization-files.patch
+Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
+Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
+Patch14: fpc-fix-spell-errors.patch
+
 ExclusiveArch: %ix86 amd64 x86_64
-Requires: fpc-units-rtl fpc-compiler fpc-units-base fpc-ide fpc-units-fcl fpc-units-fv fpc-units-gtk fpc-units-gtk2 fpc-units-gnome1 fpc-units-db fpc-units-gfx fpc-units-net fpc-units-math fpc-units-misc fpc-units-multimedia
 
-# Automatically added by buildreq on Thu Oct 01 2009
-BuildRequires: fpc-compiler fpc-utils libexpat-devel libgdb-devel libncurses-devel libreadline-devel-static rpm-build-fpc python-devel zlib-devel liblzma-devel
-%if %makedoc
+Requires: fpc-units-rtl
+Requires: fpc-compiler
+Requires: fpc-units-base
+Requires: fpc-ide
+Requires: fpc-units-fcl
+Requires: fpc-units-fv
+Requires: fpc-units-gtk
+Requires: fpc-units-gtk2
+Requires: fpc-units-gnome1
+Requires: fpc-units-db
+Requires: fpc-units-gfx
+Requires: fpc-units-net
+Requires: fpc-units-math
+Requires: fpc-units-misc
+Requires: fpc-units-multimedia
+
+BuildRequires(pre): rpm-build-fpc fpc-compiler
+BuildRequires: fpc-utils
+BuildRequires: libexpat-devel libgdb-devel libncurses-devel libreadline-devel-static python-devel zlib-devel liblzma-devel
+BuildRequires: mysql-devel postgresql-devel libunixODBC-devel libsqlite3-devel
+BuildRequires: libGL-devel libgtk+2-devel libjpeg-devel
+BuildRequires: unzip
+%if_with doc
 BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-units-fcl
 %endif
 
@@ -46,124 +86,172 @@ BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-
 %define ppcname %(basename `fpc -PB`)
 
 %description
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
+The Free Pascal Compiler is an object pascal compiler supporting both
+Delphi and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.  It
+provides a completely portable RunTime Library (RTL) available on many
+platforms and compatible with Turbo Pascal, but also a platfrom
+independent class based Free Component Library (FCL) adding many Delphi
+extensions and interfacing many popular open source libraries.
 
-Some extensions are added to the language, like function overloading. Shared
-libraries can be linked and created. Delphi language extentions like classes,
-exceptions, ansi strings and open arrays are also supported.
+Some extensions are added to the language, like function overloading.
+Shared libraries can be linked and created. Delphi language extentions
+like classes, exceptions, ansi strings and open arrays are also
+supported.
 
 This package contains dependency on all FPC packages provided on your
-architecture. Experienced users may want to install only packages they need,
-and can skip installing this metapackage.
+architecture. Experienced users may want to install only packages they
+need, and can skip installing this metapackage.
 
 %prep
-%setup -q -n fpcbuild-%version
-%patch1 -p1
-%patch2 -p1
+%setup -n fpcbuild-%version
+%patch -p1
+pushd fpcsrc
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+%patch4 -p0
+%patch5 -p0
+%patch6 -p0
+popd
+%patch10 -p1
+#%%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
-sed -i "s|/usr/local/lib|%_libdir|g" fpcsrc/packages/gdbint/src/gdbint.pp
-sed -i "/LINKLIB/s/python/python2.7/" fpcsrc/packages/gdbint/src/gdbint.pp
-sed -i "/LINKLIB ncurses/a {\$LINKLIB z}" fpcsrc/packages/gdbint/src/gdbint.pp
+%if_with sources
+cp -a fpcsrc{,.orig}
+%endif
 
-sed -i '/fp/s/\/bin/\/usr\/bin/g' fpcsrc/compiler/utils/samplecfg
+pushd fpcsrc
+sed -i "s|/usr/local/lib|%_libdir|g"      packages/gdbint/src/gdbint.pp
+sed -i "/LINKLIB/s/python/python2.7/"     packages/gdbint/src/gdbint.pp
+sed -i "/LINKLIB ncurses/a {\$LINKLIB z}" packages/gdbint/src/gdbint.pp
+sed -i "/LINKLIB ncurses/a {\$LINKLIB lzma}" packages/gdbint/src/gdbint.pp
+sed -i '/fp/s/\/bin/\/usr\/bin/g'         compiler/utils/samplecfg
 
 %build
-# install src
-rm -rf ../fpcsrc
-mkdir -p ../fpcsrc
-cp -fR  fpcsrc/* ../fpcsrc/
-rm -rf ../fpcsrc/{ide,installer,tests,utils}
-
 export OPT="-vwn "
 export GDBLIBDIR=%_libdir
 export LIBGDBFILE=%_libdir/libgdb.a
 
+%if_enabled bootstrap
 # bootstrap fpc
 %ifarch %ix86
 cp %SOURCE6 .
-make -C fpcsrc/compiler cycle RELEASE=1 FPC=$PWD/ppc386_bootstrap
+make -C compiler cycle RELEASE=1 FPC=$PWD/ppc386_bootstrap
 %else
 cp %SOURCE7 .
-make -C fpcsrc/compiler cycle RELEASE=1 FPC=$PWD/ppcx64_bootstrap
+make -C compiler cycle RELEASE=1 FPC=$PWD/ppcx64_bootstrap
 %endif
-cp -pv fpcsrc/compiler/%ppcname %ppcname
+cp -pv compiler/%ppcname %ppcname
+export PATH=:$PATH
+%endif
 
-# bootstrap fpcmake
-%fpc_build FPC=$PWD/%ppcname FPCDIR=$PWD -C fpcsrc/rtl
-%fpc_build FPC=$PWD/%ppcname FPCDIR=$PWD -C fpcsrc/compiler
-%fpc_build FPC=$PWD/%ppcname FPCDIR=$PWD -C fpcsrc/packages fcl_smart
-%fpc_build FPC=$PWD/%ppcname FPCDIR=$PWD -C fpcsrc/utils
-cp -pv fpcsrc/utils/fpcm/fpcmake fpcmake
+pushd fpcsrc
+export PATH=$PWD:$PATH
+
+# Make new compiler
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C rtl
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C compiler
+cp -fv compiler/%ppcname $PWD
+
+# Make new fpcmake
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C packages fcl_smart
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C utils
+cp -pv utils/fpcm/fpcmake fpcmake
 
 #Fix path
 %ifarch x86_64
-sed -i "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" fpcsrc/utils/tply/Makefile.fpc
+sed -i "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" utils/tply/Makefile.fpc
 %endif
 
-# Begin make all use new fpcmake
-./fpcmake -r -Tall
+# Begin make target use new fpcmake
+fpcmake -r
 
-%fpc_build FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/rtl
-%fpc_build FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/compiler
-%fpc_build FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/packages fcl_smart
-%fpc_build FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/ide gdb
-%fpc_build FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/utils
-
+# Make IDE:
+%fpc_build FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD -C ide gdb
 
 %ifnarch %ix86
-%fpc_make  FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD CROSSINSTALL=1 PPC_TARGET=i386 -C fpcsrc/compiler
-cp -pv fpcsrc/compiler/ppc386 ppc386
+%fpc_make  FPC=%ppcname FPCMAKE=fpcmake FPCDIR=$PWD CROSSINSTALL=1 PPC_TARGET=i386 -C compiler
+cp -pv compiler/ppc386 ppc386
 %endif
 
 %ifarch %makewin32
 #Build for win32
-%fpc_build_win32 FPC=$PWD/ppc386 FPCMAKE=$PWD/fpcmake FPCDIR=$PWD -C fpcsrc/rtl
+%fpc_build_win32 FPC=ppc386 FPCMAKE=fpcmake FPCDIR=$PWD -C rtl
 %endif
 
-%if %makedoc
-make -C fpcdocs html pdf
+# Make tests
+%if_with tests
+make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C tests digest
 %endif
+popd
 
-%if %maketests
-make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C fpcsrc/tests digest
+# Make documentation
+# TODO PDF generation does not work
+%if_with doc
+make -C fpcdocs html #pdf
 %endif
 
 %install
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C fpcsrc/compiler
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C fpcsrc/rtl
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C fpcsrc/packages
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C fpcsrc/ide
-%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C fpcsrc/utils
-
-
-%if %makedoc
-make INSTALL_DOCDIR=%buildroot%_docdir/%name-%version DESTDIR=%buildroot -C fpcdocs htmlinstall pdfinstall
-%endif
+pushd fpcsrc
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C compiler
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C rtl
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C packages
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version -C ide
+%fpc_install FPC=$PWD/%ppcname FPCMAKE=$PWD/fpcmake FPCDIR=$PWD INSTALL_DOCDIR=%buildroot%_docdir/%name-%version INSTALL_PREFIX=%buildroot%_usr -C utils
 
 # this symbolic link must be absolute (so that fpcmake can detect FPCDIR)
 ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
 
+%if_with win32
+#Install for win32
+%fpc_install_win32 FPC=$PWD/ppc386 FPCMAKE=$PWD/fpcmake -C rtl
+%endif
+
+# Install fp.cfg and create fpc.cfg
+install -Dpm 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
+chmod 755 compiler/utils/samplecfg
+compiler/utils/samplecfg "%fpc_dir" %buildroot%_sysconfdir
+iconv -f CP866 -t UTF8 %buildroot%fpc_dir/msg/errorr.msg > %buildroot%fpc_dir/msg/errorru.msg
+
+# Fix for depend
+%ifarch x86_64
+install -p -m 644 utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
+sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/fp.cfg
+%else
+install -p -m 644 utils/fppkg/units/i386-linux/*.{o,ppu} %buildroot%fpc_dir/units/i386-linux/fppkg/
+sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/fp.cfg
+%endif
+sed -i "s|errorn.msg|errorn.msg\n-Fr%fpc_dir/msg/errorru.msg|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpcversion|fpc|g" %buildroot%_sysconfdir/%name.cfg
+
+popd
+
+# Install icons and desktop file
+mkdir -p %buildroot%_datadir/pixmaps
+mkdir -p %buildroot%_miconsdir
+mkdir -p %buildroot%_liconsdir
+mkdir -p %buildroot%_niconsdir
+mkdir -p %buildroot%_datadir/applications
+install -p -m 644 %SOURCE1 %buildroot%_datadir/applications
+mv %buildroot%_bindir/fp %buildroot%_bindir/fp-bin
+install -p -m 755 %SOURCE2 %buildroot%_bindir/fp
+install -p -m 644 install/unix/fp32x32.xpm %buildroot%_datadir/pixmaps/fp.xpm
+install -p -m 644 install/unix/fp32x32.xpm %buildroot%_niconsdir/fp.xpm
+install -p -m 644 %SOURCE4 %buildroot%_miconsdir/fp.xpm
+install -p -m 644 %SOURCE5 %buildroot%_liconsdir/fp.xpm
+
+
 #Install src
-%if %makesrc
+%if_with sources
 mkdir -p %buildroot%_datadir/fpcsrc
-cp -fR ../fpcsrc %buildroot%_datadir/
+cp -fR fpcsrc.orig/* %buildroot%_datadir/fpcsrc
 %add_verify_elf_skiplist */fpcsrc/*
 %add_findreq_skiplist */fpcsrc/*
-%endif
-
-%ifnarch %ix86
-install -pD -m755 ppc386 %buildroot%fpc_dir/ppc386
-ln -s %fpc_dir/ppc386 %buildroot%_bindir/ppc386
-%endif
-
-%if %makewin32
-#Install for win32
-%fpc_install_win32 FPC=$PWD/ppc386 FPCMAKE=$PWD/fpcmake -C fpcsrc/rtl
 %endif
 
 #Install man
@@ -173,38 +261,12 @@ make INSTALL_PREFIX=%buildroot%_datadir -C install/man installman
 mkdir -p %buildroot%_defaultdocdir/%name-%version
 install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name-%version
 
-# Create fpc.cfg
-chmod 755 fpcsrc/compiler/utils/samplecfg
-fpcsrc/compiler/utils/samplecfg "%fpc_dir" %buildroot%_sysconfdir
-iconv -f CP866 -t UTF8 %buildroot%fpc_dir/msg/errorr.msg > %buildroot%fpc_dir/msg/errorru.msg
-sed -i "s|errorn.msg|errorn.msg\n-Fr%fpc_dir/msg/errorru.msg|g" %buildroot%_sysconfdir/%name.cfg
-
-mkdir -p %buildroot%_datadir/pixmaps
-mkdir -p %buildroot%_miconsdir
-mkdir -p %buildroot%_liconsdir
-mkdir -p %buildroot%_niconsdir
-mkdir -p %buildroot%_datadir/applications
-install -p -m 644 %SOURCE1 %buildroot%_datadir/applications
-mv %buildroot%_bindir/fp %buildroot%_bindir/fp-bin
-install -p -m 755 %SOURCE2 %buildroot%_bindir/fp
-install -p -m 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
-install -p -m 644 install/unix/fp32x32.xpm %buildroot%_datadir/pixmaps/fp.xpm
-install -p -m 644 install/unix/fp32x32.xpm %buildroot%_niconsdir/fp.xpm
-install -p -m 644 %SOURCE4 %buildroot%_miconsdir/fp.xpm
-install -p -m 644 %SOURCE5 %buildroot%_liconsdir/fp.xpm
-
-#Fix for depend
-%ifarch x86_64
-install -p -m 644 fpcsrc/utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
-sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
-sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/fp.cfg
-sed -i "s|/usr/lib|%_libdir|g" %buildroot%_sysconfdir/fp.cfg
-%else
-install -p -m 644 fpcsrc/utils/fppkg/units/i386-linux/*.{o,ppu} %buildroot%fpc_dir/units/i386-linux/fppkg/
-sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/%name.cfg
-sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/fp.cfg
+%if_with doc
+make INSTALL_DOCDIR=%buildroot%_docdir/%name-%version DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
 %endif
-sed -i "s|\$fpcversion|fpc|g" %buildroot%_sysconfdir/%name.cfg
+
+# TODO: where is package unit libvlc?
+rm -rf %buildroot%fpc_dir/units/%ppctarget/libvlc
 
 %files
 
@@ -213,12 +275,12 @@ Summary: Free Pascal -- Common files and dirs
 Group: Development/Other
 
 %description common
-The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible 32/64-bit
-Pascal Compiler. It comes with a fully compatible TP 7.0 runtime library.
-Some extensions are added to the language, like function overloading. Shared
-libraries can be linked and created. Basic Delphi support is already
-implemented (classes, exceptions, ansistrings). This package contains the
-common files and dirs.
+The Free Pascal Compiler is a Turbo Pascal 7.0 and Delphi compatible
+32/64-bit Pascal Compiler. It comes with a fully compatible TP 7.0
+runtime library.  Some extensions are added to the language, like
+function overloading. Shared libraries can be linked and created. Basic
+Delphi support is already implemented (classes, exceptions,
+ansistrings). This package contains the common files and dirs.
 
 %files common
 %dir %fpc_dir
@@ -232,16 +294,17 @@ Requires: binutils
 Obsoletes: fpc <= 2.1-alt3
 
 %description compiler
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
+The Free Pascal Compiler is an object pascal compiler supporting both
+Delphi and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.  It
+provides a completely portable RunTime Library (RTL) available on many
+platforms and compatible with Turbo Pascal, but also a platfrom
+independent class based Free Component Library (FCL) adding many Delphi
+extensions and interfacing many popular open source libraries.
 
-Some extensions are added to the language, like function overloading. Shared
-libraries can be linked and created. Delphi language extentions like classes,
-exceptions, ansi strings and open arrays are also supported.
+Some extensions are added to the language, like function overloading.
+Shared libraries can be linked and created. Delphi language extentions
+like classes, exceptions, ansi strings and open arrays are also
+supported.
 
 This package contains the command line compiler.
 
@@ -261,7 +324,6 @@ This package contains the command line compiler.
 %fpc_dir/ppc*
 %fpc_dir/msg
 
-#%doc /usr/share/doc/fp-compiler
 %_man1dir/fpc.*
 %_man1dir/fpcmkcfg.*
 %_man1dir/fpcsubst.*
@@ -273,17 +335,9 @@ This package contains the command line compiler.
 %package utils
 Summary: Free Pascal -- Utils
 Group: Development/Other
-#Requires: %name = %version-%release
 Obsoletes: fpcmake data2inc
 
 %description utils
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains some handy utils for usage with the Free Pascal
 Compiler:
   - ppumove     Place multiple units in a shared library
@@ -291,12 +345,15 @@ Compiler:
   - ppudump     Dump the information stored in a .ppu (unit) file
   - fpcmake     Create Makefile from Makefile.fpc
   - h2pas       Convert .h files to pascal units
-  - ppdep       Create a dependency file which can be used with Makefiles
+  - ppdep       Create a dependency file which can be used with
+                Makefiles
   - ptop        Source beautifier
   - data2inc    Convert binary/text data to include files
   - plex/pyacc  Pascal Lex/Yacc implementation
 
 %files utils
+%_bindir/pas2fpm
+%_bindir/pas2ut
 %_bindir/ppufiles
 %_bindir/ppudump
 %_bindir/ppumove
@@ -362,14 +419,8 @@ Group: Development/Other
 Requires: %name-compiler = %{?epoch:%epoch:}%version-%release
 
 %description units-rtl
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package contains the Runtime Libraries for the Free Pascal Compiler.
+This package contains the Runtime Libraries for the Free Pascal
+Compiler.
 
 %files units-rtl
 %dir %fpc_dir/units
@@ -380,25 +431,16 @@ This package contains the Runtime Libraries for the Free Pascal Compiler.
 %package units-base
 Summary: Free Pascal -- base units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-base
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package contains Free Pascal units for common libraries.  Some of these
-units are also required by the Free Component Library:
+This package contains Free Pascal units for common libraries. Some of
+these units are also required by the Free Component Library:
  - X11 (Xlib, Xutil)
  - NCurses
  - ZLib
 
 %files units-base
-#%doc /usr/share/doc/fp-units-base
-
+#%%doc /usr/share/doc/fp-units-base
 %fpc_dir/units/%ppctarget/paszlib
 %fpc_dir/units/%ppctarget/pasjpeg
 %fpc_dir/units/%ppctarget/ncurses
@@ -413,17 +455,10 @@ units are also required by the Free Component Library:
 %package units-fcl
 Summary: Free Pascal -- Free Component Library
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-fcl
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package contains the Free Component Library for the Free Pascal Compiler.
+This package contains the Free Component Library for the Free Pascal
+Compiler.
 
 %files units-fcl
 #%doc /usr/share/doc/fp-units-fcl
@@ -448,17 +483,10 @@ This package contains the Free Component Library for the Free Pascal Compiler.
 %package units-fv
 Summary: Free Pascal -- Free Vision units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-fv
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package contains the Free Vision units for the Free Pascal Compiler.
+This package contains the Free Vision units for the Free Pascal
+Compiler.
 
 %files units-fv
 #%doc /usr/share/doc/fp-units-fv
@@ -468,16 +496,8 @@ This package contains the Free Vision units for the Free Pascal Compiler.
 %package units-gtk
 Summary: Free Pascal -- GTK+ 1.2 units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-gtk
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units and examples to create
 programs with GTK+ 1.2.
 
@@ -490,16 +510,8 @@ programs with GTK+ 1.2.
 %package units-gtk2
 Summary: Free Pascal -- GTK+ 2.x units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-gtk2
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units and examples to create
 programs with GTK+ 2.x.
 
@@ -511,16 +523,8 @@ programs with GTK+ 2.x.
 %package units-gnome1
 Summary: Free Pascal -- GNOME 1 units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-gnome1
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units and examples to create
 programs for GNOME 1.
 
@@ -533,16 +537,8 @@ programs for GNOME 1.
 %package units-db
 Summary: Free Pascal -- database libraries units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-db
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units with bindings for:
  - MySQL
  - Interbase
@@ -569,22 +565,14 @@ This package contains Free Pascal units with bindings for:
 %package units-gfx
 Summary: Free Pascal -- graphics libraries units
 Group: Development/Other
-#Requires: %name = %version-%release
 Requires: libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel svgalib-devel
 
 %description units-gfx
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units with bindings for:
- - opengl :OpenGL
- - forms : Forms 0.88
- - svgalib : Svgalib
- - ggi : General Graphical Interface
+ - opengl: OpenGL
+ - forms: Forms 0.88
+ - svgalib: Svgalib
+ - ggi: General Graphical Interface
  - libgd
  - libpng
  - graph
@@ -619,23 +607,16 @@ Group: Development/Other
 #Requires: %name = %version-%release
 
 %description units-net
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal units for creating network tools:
- - netdb : NetDB unit for TCP/IP handling
- - libasync : LibAsync unit for easy Asynchronous IO
+ - netdb: NetDB unit for TCP/IP handling
+ - libasync: LibAsync unit for easy Asynchronous IO
  - libcurl
  - dbus: D-Bus
  - httpd-1.3
  - httpd-2.0
  - httpd-2.2
  - ldap
- - openssl : Open SSL
+ - openssl: Open SSL
  - pcap
 
 %files units-net
@@ -651,21 +632,13 @@ This package contains Free Pascal units for creating network tools:
 %package units-math
 Summary: Free Pascal - math units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-math
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal math interfacing units for:
- - gmp : Interface for the GNU Multiple Precision Arithmetic Library
- - proj4 : Compute projections
- - numlib : numerical computing
- - symbolic : symbolic computing
+ - gmp: Interface for the GNU Multiple Precision Arithmetic Library
+ - proj4: Compute projections
+ - numlib: numerical computing
+ - symbolic: symbolic computing
 
 %files units-math
 #%doc /usr/share/doc/fp-units-math
@@ -678,18 +651,10 @@ This package contains Free Pascal math interfacing units for:
 %package units-misc
 Summary: Free Pascal -- miscellaneous units
 Group: Development/Other
-#Requires: %name = %version-%release
 
 %description units-misc
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal miscellaneous units for:
- - fppkg : support of FPC packaging system
+ - fppkg: support of FPC packaging system
  - Utmp
  - PasZLib (Pascal-only zlib implementation)
 
@@ -724,20 +689,12 @@ This package contains Free Pascal miscellaneous units for:
 
 # packages/media
 %package units-multimedia
-Summary: Free Pascal -- graphics libraries units
+Summary: Free Pascal -- multimedia libraries units
 Group: Development/Other
 Obsoletes: fpc-units-media <= 2.2.0
 Provides: fpc-units-media
-#Requires: %name = %version-%release
 
 %description units-multimedia
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
 This package contains Free Pascal multimedia interfacing units for:
  - oggvorbis
  - a52
@@ -760,19 +717,8 @@ Group: Development/Other
 Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 %description ide
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-Some extensions are added to the language, like function overloading. Shared
-libraries can be linked and created. Delphi language extentions like classes,
-exceptions, ansi strings and open arrays are also supported.
-
-This package contains the Integrated Development Environment (IDE). The IDE
-has an internal compiler.
+This package contains the Integrated Development Environment (IDE) for
+Free Pascal. The IDE has an internal compiler.
 
 %files ide
 #%doc /usr/share/doc/fp-ide
@@ -789,7 +735,7 @@ has an internal compiler.
 %_datadir/applications/*
 
 # src
-%if %makesrc
+%if_with sources
 %package src
 Summary: Source of Free Pascal
 Group: Development/Other
@@ -797,37 +743,21 @@ BuildArch: noarch
 #Requires: %name = %version-%release
 
 %description src
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package contains Free Pascal's own source code. It is meant to be used by
-the Lazarus IDE.
+This package contains Free Pascal's own source code. It is meant to be
+used by the Lazarus IDE.
 
 %files src
 %_datadir/fpcsrc
 %endif
 
-%if %makedoc
+%if_with doc
 %package docs
 Group: Documentation
 Summary: Free Pascal Compiler - Documentation
-BuildArch: noarch
-Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 %description docs
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
-
-This package provides documentation for the Free Pascal Compiler in HTML and 
-PDF format.
+This package provides documentation for the Free Pascal Compiler in HTML
+and PDF format.
 
 %files docs
 %_datadir/doc/%name-%version/*
@@ -836,10 +766,9 @@ PDF format.
 %exclude %_defaultdocdir/%name-%version/whatsnew.txt
 %exclude %_defaultdocdir/%name-%version/readme.txt
 %exclude %_defaultdocdir/%name-%version/faq.txt
-
 %endif
 
-%if %makewin32
+%if_with win32
 # win32
 %package win32
 Summary: Free Pascal runtime library units cross-compiled for win32
@@ -848,12 +777,7 @@ Requires: %name = %{?epoch:%epoch:}%version-%release
 #Requires: i386-mingw32msvc-binutils
 
 %description win32
-The Free Pascal Compiler is an object pascal compiler supporting both Delphi
-and Turbo Pascal 7.0 dialects as well as Mac pascal dialects.
-It provides a completely portable RunTime Library (RTL) available on many
-platforms and compatible with Turbo Pascal, but also a platfrom independent
-class based Free Component Library (FCL) adding many Delphi extensions and
-interfacing many popular open source libraries.
+Free Pascal runtime library units cross-compiled for win32.
 
 %files win32
 %ifnarch %ix86
@@ -861,10 +785,16 @@ interfacing many popular open source libraries.
 %fpc_dir/ppc386
 %endif
 %fpc_files *-win32 rtl
-
 %endif
 
 %changelog
+* Wed Aug 13 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt1
+- New version
+- Apply patches from Debian and Mageia
+- Shorten Russian translation of GenericName
+- Add watch file for upstream tracking
+- Move sources from separate branch to subdirectory
+
 * Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 2:2.6.2-alt2
 - Remove excess optimization on Pentium CPU that causes compile problem
   on AMD CPU (ALT #29635)
