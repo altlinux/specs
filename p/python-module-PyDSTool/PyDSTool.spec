@@ -1,7 +1,10 @@
 %define oname PyDSTool
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 0.88.121202
-Release: alt2.bzr20130716
+Release: alt3.bzr20130716
 Summary: Integrated simulation, modeling and analysis package for dynamical systems
 License: BSD
 Group: Development/Python
@@ -19,9 +22,23 @@ Source1: %oname.pth
 #Requires: python-module-openopt
 #Requires: gnuplot
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python-tools-2to3
+%endif
+
 %add_python_req_skip matplotlib scipy pylab
 
 %description
+PyDSTool is an integrated simulation, modeling and analysis package for
+dynamical systems, written in Python.
+
+%package -n python3-module-%oname
+Summary: Integrated simulation, modeling and analysis package for dynamical systems
+Group: Development/Python3
+%add_python3_req_skip matplotlib scipy pylab
+
+%description -n python3-module-%oname
 PyDSTool is an integrated simulation, modeling and analysis package for
 dynamical systems, written in Python.
 
@@ -33,6 +50,16 @@ rm -fR .gear
 install -p -m644 %SOURCE1 .
 popd
 
+%if_with python3
+install -d %buildroot%python3_sitelibdir
+pushd %buildroot%python3_sitelibdir
+tar -xzf %SOURCE0
+rm -fR .gear
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+install -p -m644 %SOURCE1 .
+popd
+%endif
+
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
 # Such files are generally useless in packages and were usually accidentally 
@@ -42,7 +69,15 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %files
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.88.121202-alt3.bzr20130716
+- Added module for Python 3
+
 * Sun Dec 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.88.121202-alt2.bzr20130716
 - Applied repocop patch
 
