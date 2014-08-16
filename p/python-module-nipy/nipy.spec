@@ -1,10 +1,11 @@
 %define oname nipy
 
-%def_disable docs
+%def_enable docs
+%def_with python3
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2.git20140617
+Release: alt3.git20140617
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -26,12 +27,41 @@ BuildPreReq: graphviz ghostscript-utils
 BuildPreReq: %py_dependencies pl
 BuildPreReq: xvfb-run python-module-pygobject3 python-module-pycairo
 %setup_python_module %oname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-nibabel libnumpy-py3-devel
+BuildPreReq: python3-module-scipy python3-module-sympy
+%endif
 
 %description
 The neuroimaging in python (NIPY) project is an environment for the
 analysis of structural and functional neuroimaging data. It currently
 has a full system for general linear modeling of functional magnetic
 resonance imaging (fMRI).
+
+%package -n python3-module-%oname
+Summary: The neuroimaging in python (NIPY) project
+Group: Development/Python3
+Requires: %oname-data
+
+%description -n python3-module-%oname
+The neuroimaging in python (NIPY) project is an environment for the
+analysis of structural and functional neuroimaging data. It currently
+has a full system for general linear modeling of functional magnetic
+resonance imaging (fMRI).
+
+%package -n python3-module-%oname-tests
+Summary: Tests for neuroimaging in python (NIPY) project
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+The neuroimaging in python (NIPY) project is an environment for the
+analysis of structural and functional neuroimaging data. It currently
+has a full system for general linear modeling of functional magnetic
+resonance imaging (fMRI).
+
+This package contains tests for NIPY.
 
 %package examples
 Summary: Examples for neuroimaging in python (NIPY) project
@@ -91,6 +121,10 @@ This package contains pickles for NIPY.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %if_enabled docs
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %prepare_sphinx .
@@ -101,8 +135,26 @@ rm -f doc/labs/image_registration.rst
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
+
 export PYTHONPATH=%buildroot%python_sitelibdir
 
 mkdir -p ~/.matplotlib
@@ -133,6 +185,9 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 %files
 %doc AUTHOR Changelog LICENSE README* THANKS
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %if_enabled docs
 %exclude %python_sitelibdir/%oname/pickle
@@ -168,7 +223,28 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 %python_sitelibdir/*/*/*/*/tests
 #python_sitelibdir/*/*/*/*/*/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHOR Changelog LICENSE README* THANKS
+%_bindir/*.py3
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/test*
+%exclude %python3_sitelibdir/*/*/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/*/*/*/test*
+%python3_sitelibdir/*/*/*/*/tests
+%endif
+
 %changelog
+* Sat Aug 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3.git20140617
+- Enabled docs
+- Added module for Python 3
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20140617
 - New snapshot
 
