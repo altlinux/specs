@@ -5,7 +5,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
 Version: 2.10.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
@@ -158,6 +158,8 @@ install -m755 -D dahdi.init %buildroot%_initdir//dahdi
 install -m664 -D init.conf.sample %buildroot%_sysconfdir/dahdi/init.conf
 install -m644 -D xpp/genconf_parameters %buildroot%_sysconfdir/dahdi/genconf_parameters
 install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %preun -n dahdi
 %preun_service dahdi
@@ -233,7 +235,7 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_man8dir/astribank_is_starting.8.gz
 %_sbindir/twinstar
 %_man8dir/twinstar.8.gz
-/etc/udev/rules.d/xpp.rules
+%_udevrulesdir/xpp.rules
 
 %files -n dahdi_diag
 %astattr %_sbindir/dahdi_diag
@@ -277,6 +279,9 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_libdir/pppd/*/*.so
 
 %changelog
+* Sun Aug 17 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0-alt2
+- repocop fix for udev-files-in-etc
+
 * Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0-alt1
 - new version 2.10.0
 
