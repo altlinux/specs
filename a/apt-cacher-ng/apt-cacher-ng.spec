@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 0.7.27
-Release: alt1
+Release: alt2
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -69,8 +69,8 @@ install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
 %_sbindir/apt-cacher-ng
 %_sbindir/in.acng
 %_libdir/%name/
-%config %_sysconfdir/%name/
-%config %_sysconfdir/apt/apt.conf.d/%name.conf
+%config(noreplace) %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/apt/apt.conf.d/%name.conf
 %_initdir/acng
 %_man8dir/*
 %doc COPYING README TODO
@@ -86,6 +86,9 @@ install -pDm 644 %SOURCE1 %buildroot%_unitdir/acng.service
 %preun_service acng
 
 %changelog
+* Sun Aug 17 2014 Terechkov Evgenii <evg@altlinux.org> 0.7.27-alt2
+- Set (noreplace) on config files
+
 * Fri Aug 15 2014 Terechkov Evgenii <evg@altlinux.org> 0.7.27-alt1
 - 0.7.27 (includes fix for CVE-2014-4510)
 
