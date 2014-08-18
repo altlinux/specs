@@ -1,5 +1,5 @@
 Name: xbmc
-Version: 13.1
+Version: 13.2
 Release: alt1
 
 Summary: XBMC Media Center
@@ -29,7 +29,7 @@ BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
 BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
 BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel
 BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
-BuildRequires: java-1.7.0-openjdk-devel /proc
+BuildRequires: java-1.7.0-openjdk-devel /proc zlib-devel
 
 %ifarch %ix86 x86_64
 BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libglew-devel
@@ -55,6 +55,7 @@ This package contains all architecture-independent data requried for XBMC.
 %prep
 %setup -a1 -a2
 touch xvdr/{NEWS,AUTHORS,ChangeLog}
+sed -i s,build_addons_with_dependencies=no,build_addons_with_dependencies=yes, pvr-addons/configure.ac
 
 %build
 [ ! -x bootstrap ] || sh bootstrap
@@ -162,6 +163,9 @@ E_O_F
 %_datadir/xbmc/userdata
 
 %changelog
+* Mon Aug 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.2-alt1
+- 13.2 Gotham released
+
 * Mon Jun 09 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.1-alt1
 - 13.1 Gotham released
 
