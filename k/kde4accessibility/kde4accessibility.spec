@@ -4,8 +4,8 @@
 %define rname kdeaccessibility
 Name: kde4accessibility
 %define major 4
-%define minor 12
-%define bugfix 3
+%define minor 14
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -150,9 +150,9 @@ done
 %files common
 
 %files core
-%_kde4_iconsdir/hicolor/*/actions/followmouse.*
-%_kde4_iconsdir/hicolor/*/actions/hidemouse.*
-%_kde4_iconsdir/hicolor/*/actions/window.*
+#%_kde4_iconsdir/hicolor/*/actions/followmouse.*
+#%_kde4_iconsdir/hicolor/*/actions/hidemouse.*
+#%_kde4_iconsdir/hicolor/*/actions/window.*
 %_kde4_iconsdir/hicolor/*/actions/speak.*
 %_kde4_iconsdir/hicolor/*/actions/nospeak.*
 %_kde4_iconsdir/hicolor/*/actions/female.png
@@ -211,6 +211,12 @@ done
 #%_K4link/*.so
 
 %changelog
+* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
+* Thu Mar 13 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.12.3-alt1
 - new version
 
