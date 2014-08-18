@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 13
-%define bugfix 2
+%define minor 14
+%define bugfix 0
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -41,7 +41,7 @@ Source05: kfloppy-%version.tar
 Source06: kgpg-%version.tar
 Source07: kremotecontrol-%version.tar
 Source08: ktimer-%version.tar
-Source09: kwallet-%version.tar
+Source09: kwalletmanager-%version.tar
 Source10: superkaramba-%version.tar
 Source11: sweeper-%version.tar
 Patch2: kdeutils-4.2.2-alt-autostart.patch
@@ -194,18 +194,18 @@ Requires: %name-common = %version-%release
 Execute programs after some time
 
 %package kwallet
-Summary: %name kwallet
+Summary: KDE Wallet Manager
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 %description kwallet
-%name kwallet.
+KDE Wallet Manager
 
 %package superkaramba
 Summary: %name superkaramba
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 %description superkaramba
-%name superkaramba.
+%name superkaramba
 
 %package ark
 Summary: KDE archivers frontend
@@ -498,6 +498,9 @@ done
 
 
 %changelog
+* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
 * Wed Jun 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.2-alt1
 - new version
 
