@@ -1,6 +1,6 @@
 Name: bridge-utils
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: Utilities for configuring the linux ethernet bridge
 License: GPLv2+
@@ -33,12 +33,8 @@ autoconf
 
 %install
 %makeinstall_std
-install -Dpm755 bridge.init %buildroot%_initrddir/bridge
-install -Dpm644 bridge.sysconfig %buildroot%_sysconfdir/sysconfig/bridge
 
 %files
-%config(noreplace) %_sysconfdir/sysconfig/*
-%config(noreplace) %_initdir/*
 %_sbindir/*
 %_man8dir/*
 %doc AUTHORS ChangeLog README THANKS TODO doc/[A-LN-Z]* tests
@@ -50,6 +46,9 @@ install -Dpm644 bridge.sysconfig %buildroot%_sysconfdir/sysconfig/bridge
 %preun_service bridge
 
 %changelog
+* Sun Aug 17 2014 Denis Smirnov <mithraen@altlinux.ru> 1.5-alt3
+- remove initscript (ALT#25236)
+
 * Thu Apr 11 2013 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt2
 - Updated to v1.5-11-g97d6888.
 
