@@ -3,7 +3,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        0.0.18
-Release:        alt1
+Release:        alt2
 Summary:        A repository of test results
 Group:          Development/Python
 
@@ -15,12 +15,12 @@ BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-module-setuptools
 BuildRequires:  python-module-fixtures
-buildRequires:  python-module-subunit
+buildRequires:  python-module-python-subunit
 BuildRequires:  python-module-testtools
 BuildRequires:  python-module-extras
 
 Requires:       python-module-fixtures
-Requires:       python-module-subunit
+Requires:       python-module-python-subunit
 Requires:       python-module-testtools
 Requires:       python-module-extras
 
@@ -50,6 +50,9 @@ rm -rf %{pypi_name}.egg-info
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %changelog
+* Mon Aug 18 2014 Lenar Shakirov <snejok@altlinux.ru> 0.0.18-alt2
+- BuildReq: python-module-subunit -> python-module-python-subunit
+
 * Sat Aug 16 2014 Lenar Shakirov <snejok@altlinux.ru> 0.0.18-alt1
 - First build for ALT (based on Fedora 0.0.18-1.fc21.src)
 
