@@ -2,11 +2,12 @@
 %def_without python-qt3
 %def_without qt3
 %def_with python3
+%def_with python3qt5
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.8.3
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -30,6 +31,9 @@ BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-PyQt4-devel
 %endif
 BuildRequires: chrpath qt5-base-devel python-module-PyQt5-devel
+%if_with python3qt5
+BuildRequires: python3-module-PyQt5-devel
+%endif
 
 %description
 Qscintilla is a free source code editing component. It comes with complete
@@ -202,6 +206,23 @@ BuildArch: noarch
 
 %description -n python3-module-%name-qt4-devel
 Devel files for Python bindings for %name
+
+%package -n python3-module-%name-qt5
+Requires: %libname-qt5 = %version-%release
+Summary: Python 3 bindings for %name (Qt5)
+Group: Development/KDE and QT
+
+%description -n python3-module-%name-qt5
+Python bindings for %name
+
+%package -n python3-module-%name-qt5-devel
+Requires: python3-module-%name-qt5 = %version-%release
+Summary: Python 3 bindings for %name (Qt5)
+Group: Development/KDE and QT
+BuildArch: noarch
+
+%description -n python3-module-%name-qt5-devel
+Devel files for Python bindings for %name
 %endif
 
 %if_with python-qt3
@@ -250,6 +271,9 @@ sed -i "s|@Q5CFLAGS@|$Q5CFLAGS|g" Python-qt5/configure.py
 sed -i "s|\(lqscintilla2\)|\1-qt5|g" Python-qt5/configure.py
 %if_with python3
 cp -fR Python-qt4 ../python3
+%endif
+%if_with python3qt5
+cp -fR Python-qt5 ../python3qt5
 %endif
 %if_with python-qt3
 mv Python Python-qt3
@@ -352,6 +376,24 @@ popd
 export PATH=$OLDPATH
 %endif
 
+%if_with python3qt5
+OLDPATH=$PATH
+export PATH=$PATH:%_qt5_bindir
+pushd ../python3qt5
+python3 configure.py --debug -n ../Qt5 -o ../Qt5 \
+	--apidir=%_datadir/qt5/qsci3 \
+	--qmake=%_qt5_bindir/qmake \
+	--sip=%_bindir/sip3 \
+	--pyqt-sipdir=%_datadir/sip3/PyQt5 \
+	--pyqt=PyQt5
+sed -i \
+	's|-lpython%_python3_version|-lpython%{_python3_version}m|g' \
+	Makefile
+%make_build
+popd
+export PATH=$OLDPATH
+%endif
+
 %endif
 
 %install
@@ -378,10 +420,17 @@ popd
 pushd Python-qt5
 %makeinstall_std INSTALL_ROOT=%buildroot
 popd
+%if_with python3qt5
+pushd ../python3qt5
+mkdir -p %buildroot%python3_sitelibdir/PyQt5
+%makeinstall_std INSTALL_ROOT=%buildroot
+popd
+%endif
 %endif
 
 mkdir -p %buildroot%python_sitelibdir/PyQt4
 mkdir -p %buildroot%python_sitelibdir/PyQt5
+mkdir -p %buildroot%python3_sitelibdir/PyQt5
 mkdir -p %buildroot%python3_sitelibdir/PyQt4
 mkdir -p %buildroot%_includedir/qt4/Qsci
 mkdir -p %buildroot%_includedir/qt5/Qsci
@@ -539,6 +588,15 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python3-module-%name-qt4-devel
 %_datadir/sip3/PyQt4/Qsci
+
+%if_with python3qt5
+%files -n python3-module-%name-qt5
+%python3_sitelibdir/PyQt5/Qsci.so
+%_datadir/qt5/qsci3/api/python/*.api
+
+%files -n python3-module-%name-qt5-devel
+%_datadir/sip3/PyQt5/Qsci
+%endif
 %endif
 
 %endif
@@ -547,6 +605,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt3
+- Added module for Python 3 for Qt5
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt2
 - Added module for Python 3 for Qt4
 
