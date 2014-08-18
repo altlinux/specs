@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 1.9.1
-Release: alt1.1
+Release: alt2
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -59,6 +59,7 @@ in newly created environment by invoking /your/dir/bin/python
 %package -n python3-module-%modulename
 Summary: Virtual Python 3 Environment builder
 Group: Development/Python3
+%py3_provides %modulename
 
 %description -n python3-module-%modulename
 Tool to create isolated Python environments.
@@ -123,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt2
+- Added provides '%modulename' for Python 3
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.1
 - Fixed build
 
