@@ -1,8 +1,10 @@
 %define oname PyQt5
 
+%def_with python3
+
 Name: python-module-%oname
 Version: 5.3.1
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -24,8 +26,31 @@ BuildPreReq: qt5-declarative-devel qt5-svg-devel qt5-webkit-devel
 BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
 BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
 BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-sip-devel python3-devel
+BuildPreReq: python3-module-dbus
+%endif
 
 %description
+Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
+code generator for Qt Designer.
+
+%package -n python3-module-%oname
+Summary: Python bindings for Qt.
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
+code generator for Qt Designer.
+
+%package -n python3-module-%oname-devel
+Summary:  Sip files for python3-module-%oname
+Group: Development/Python3
+BuildArch: noarch
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-devel
 Python bindings for the Qt C++ class library.  Also includes a PyQt5 backend
 code generator for Qt Designer.
 
@@ -72,8 +97,11 @@ QMAKE_CXXFLAGS += %optflags %optflags_shared
 E_O_F
 done
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
-#export QT4DIR=%_qt5dir
 %add_optflags -I$PWD/qpy/QtGui
 export PATH=$PATH:%_qt5_bindir
 
@@ -91,7 +119,41 @@ for i in $(find ./ -name Makefile); do
 done
 %make_build
 
+%if_with python3
+pushd ../python3
+echo 'yes' | python3 configure.py \
+	--debug \
+	--verbose \
+	--assume-shared \
+	-q %_qt5_bindir/qmake \
+	-d %python3_sitelibdir \
+	-a --confirm-license \
+	--qsci-api \
+	--sip=%_bindir/sip3 \
+	--sip-incdir=%python3_includedir%_python3_abiflags \
+	--sipdir=%_datadir/sip3/PyQt5 \
+	--qsci-api-destdir=%_qt5_datadir/qsci3 \
+	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
+for i in $(find ./ -name Makefile); do
+	sed -i 's|-Wl,-rpath,|-I|g' $i
+done
+%make_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%makeinstall_std INSTALL_ROOT=%buildroot
+rm -rf %buildroot%python3_sitelibdir/%oname/uic/port_v2
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
@@ -101,6 +163,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
 %files
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 %_qt5_plugindir/*
 
@@ -117,7 +182,21 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %files examples
 %doc examples
 
+%if_with python3
+%files -n python3-module-%oname
+%_bindir/*.py3
+%python3_sitelibdir/*
+
+%files -n python3-module-%oname-devel
+%_datadir/sip3
+%dir %_qt5_datadir
+%_qt5_datadir/qsci3
+%endif
+
 %changelog
+* Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.1-alt2
+- Added module for Python 3
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.1-alt1
 - Version 5.3.1
 
