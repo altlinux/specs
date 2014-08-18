@@ -9,8 +9,8 @@
 
 %define rname kdeartwork
 %define major 4
-%define minor 11
-%define bugfix 2
+%define minor 14
+%define bugfix 0
 Name: kde4artwork
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -54,8 +54,8 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 
 
 BuildRequires(pre): kde4base-workspace-devel
-BuildRequires: gcc-c++ eigen2 icon-naming-utils
-BuildRequires: kde4base-workspace-devel >= %version kde4libs-devel >= %version kde4graphics-devel
+BuildRequires: gcc-c++ eigen2 eigen3 icon-naming-utils
+BuildRequires: kde4base-workspace-devel kde4libs-devel >= %version kde4graphics-devel
 
 %description
 Additional artwork (themes, sound themes, icons,etc...) for KDE.
@@ -397,8 +397,8 @@ done
 %endif
 
 %files sounds
-%_K4snd/KDE_Logout_new.wav
-%_K4snd/KDE_Startup_new.wav
+#%_K4snd/KDE_Logout_new.wav
+#%_K4snd/KDE_Startup_new.wav
 
 %files color-schemes
 %_K4apps/color-schemes/
@@ -420,6 +420,12 @@ done
 %endif
 
 %changelog
+* Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 
