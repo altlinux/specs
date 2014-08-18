@@ -1,7 +1,7 @@
 %define component designateclient
 Name:           python-module-%{component}
 Version:        1.0.2
-Release:        alt1
+Release:        alt2
 Summary:        Openstack DNS (Designate) API Client
 License:        Apache-2.0
 Group:          Development/Python
@@ -16,7 +16,7 @@ BuildRequires:  python-module-sphinx >= 1.1.2
 BuildRequires:  python-module-discover
 
 BuildRequires:  python-module-mox >= 0.5.3
-BuildRequires:  python-module-subunit
+BuildRequires:  python-module-python-subunit
 BuildRequires:  python-module-testrepository >= 0.0.17
 Requires:       python-module-cliff >= 1.4.3
 Requires:       python-module-jsonschema
@@ -63,6 +63,9 @@ testr init && testr run --parallel
 %doc doc/build/html
 
 %changelog
+* Mon Aug 18 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.2-alt2
+- BuildReq: python-module-subunit -> python-module-python-subunit
+
 * Sat Aug 16 2014 Lenar Shakirov <snejok@altlinux.ru> 1.0.2-alt1
 - First build for ALT (based on OpenSuSe 1.0.2-1.1.src)
 
