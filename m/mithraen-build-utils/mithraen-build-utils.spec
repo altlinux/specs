@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Mon Aug 18 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.23-alt1
+- gear-rel: push only build tag
+
 * Sat Aug 09 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.22-alt1
 - fix task-add and subtask-add when git.alt is 'alt', not 'origin' remote
 
