@@ -1,8 +1,8 @@
-BuildRequires: perl(Module/Build/Tiny.pm)
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm)
 %define dist MooseX-Declare
 Name: perl-%dist
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: Declarative syntax for Moose
@@ -35,6 +35,9 @@ system for Perl 5.  When used, it sets up the "class" and "role" keywords.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - automated CPAN update
 
