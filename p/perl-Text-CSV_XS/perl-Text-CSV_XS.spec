@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-CSV_XS
 Name: perl-%dist
-Version: 1.09
+Version: 1.11
 Release: alt1
 
 Summary: Comma-separated values manipulation routines
@@ -12,7 +12,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-%{version}.tgz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(charnames.pm)
 
 %description
 Text::CSV_XS provides facilities for the composition and decomposition of
@@ -34,6 +34,9 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_autolib/Text
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
