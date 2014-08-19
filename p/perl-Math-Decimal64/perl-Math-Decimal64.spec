@@ -1,20 +1,20 @@
-%define module_version 0.05
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.06
 %define module_name Math-Decimal64
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/LongDouble.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: (alpha) perl interface to C's _Decimal64 operations.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/S/SI/SISYPHUS/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Math-Decimal64-%{version}.tar.gz
 
 %description
 Note that this module is alpha software. It seems to work ok
@@ -67,6 +67,9 @@ Note that this module is alpha software. It seems to work ok
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
