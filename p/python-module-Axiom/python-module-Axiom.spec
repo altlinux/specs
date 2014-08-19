@@ -1,10 +1,10 @@
-%define version 0.6.0
+%define version 0.7.1
 %define release alt1
 %setup_python_module Axiom
 
 Name: %packagename
 Version:%version
-Release: %release.1
+Release: %release
 BuildArch: noarch
 
 
@@ -12,7 +12,7 @@ Summary: An in-process object-relational database
 License: MIT
 Group: Development/Python
 Packager: Alexey Shabalin <shaba@altlinux.ru>
-Url: http://divmod.org/trac/wiki/DivmodAxiom
+Url: https://pypi.python.org/pypi/Axiom/
 
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
 
@@ -53,6 +53,9 @@ also support other databases in the future.
 #%%exclude %_bindir/*
 
 %changelog
+* Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
+- Version 0.7.1
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt1.1
 - Rebuild with Python-2.7
 
