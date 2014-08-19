@@ -1,5 +1,5 @@
 Name: lcdf-typetools
-Version: 2.100
+Version: 2.104
 Release: alt1
 Summary: Tools for manipulating OpenType fonts
 Group: Publishing
@@ -46,6 +46,9 @@ formerly distributed as part of a different package (mminstance)
 %_datadir/lcdf-typetools
 
 %changelog
+* Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 2.104-alt1
+- Autobuild version bump to 2.104
+
 * Wed Jan 15 2014 Fr. Br. George <george@altlinux.ru> 2.100-alt1
 - Autobuild version bump to 2.100
 
