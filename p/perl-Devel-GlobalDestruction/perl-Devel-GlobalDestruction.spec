@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-GlobalDestruction
 Name: perl-%dist
 Serial: 1
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Expose the flag which marks global destruction
@@ -44,6 +45,9 @@ destruction is in effect.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.13-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.12-alt1
 - automated CPAN update
 
