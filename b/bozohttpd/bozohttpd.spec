@@ -1,5 +1,5 @@
 Name: bozohttpd
-Version: 20140201
+Version: 20140708
 Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
@@ -110,6 +110,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 20140708-alt1
+- Autobuild version bump to 20140708
+
 * Tue Feb 18 2014 Fr. Br. George <george@altlinux.ru> 20140201-alt1
 - Autobuild version bump to 20140201
 
