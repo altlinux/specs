@@ -71,7 +71,7 @@
 # }}}
 
 Name: libav
-Version: 10.3
+Version: 10.4
 Release: alt1
 Epoch: 1
 
@@ -571,6 +571,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Tue Aug 19 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.4-alt1
+- 10.4 released
+
 * Tue Aug 05 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:10.3-alt1
 - 10.3 released
 
