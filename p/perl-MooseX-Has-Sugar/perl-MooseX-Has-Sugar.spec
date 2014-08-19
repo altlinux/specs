@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Has-Sugar
 Name: perl-%dist
-Version: 1.000002
+Version: 1.000004
 Release: alt1
 
 Summary: Sugar Syntax for moose 'has' fields
@@ -34,6 +34,9 @@ with the constant typing of string quotes for things.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.000004-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.000002-alt1
 - automated CPAN update
 
