@@ -15,7 +15,7 @@
 #define _disable_test 1
 
 Name: perl-Package
-Version: 0.20
+Version: 0.26
 Release: alt1
 
 Summary: Parameterizable packages
@@ -53,6 +53,9 @@ not care about what kind of package it builds.
 %perl_vendor_privlib/Package*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
