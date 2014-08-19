@@ -1,42 +1,101 @@
+%define oname cups
 
-Name:          python-module-cups
-Version:       1.9.62
+%def_with python3
+
+Name:          python-module-%oname
+Version:       1.9.67
 Release:       alt1
-%setup_python_module cups
+%setup_python_module %oname
 
 Group:         Development/Python
 Summary:       Python bindings for the CUPS API
 Url:           http://cyberelk.net/tim/software/pycups/
 License:       %gpl2plus
 
+# git://git.fedorahosted.org/git/pycups.git
 Source0:       pycups-%{version}.tar
 
 Packager:      Yury Yurevich <anarresti@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses libcups-devel
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-epydoc
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %description
 Python bindings for the CUPS API. This module allows
 use the CUPS API (managing printers, jobs, etc) in Python.
 
+%package -n python3-module-%oname
+Summary: Python bindings for the CUPS API
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Python bindings for the CUPS API. This module allows
+use the CUPS API (managing printers, jobs, etc) in Python.
+
+%package docs
+Summary: Documentation for Python bindings for the CUPS API
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Python bindings for the CUPS API. This module allows
+use the CUPS API (managing printers, jobs, etc) in Python.
+
+This package contains documentation for Python bindings for the CUPS
+API.
 
 #--------------------------------------------------------------------
 
 %prep
 %setup -n pycups-%version
 
+%if_with python3
+cp -fR . ../python3
+sed -i 's|python|python3|g' ../python3/Makefile
+%endif
+
 %build
 %make
 
+%if_with python3
+pushd ../python3
+%make
+popd
+%endif
+
+%make doc
+
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
+
+%if_with python3
+pushd ../python3
+%makeinstall_std
+popd
+%endif
 
 %files
 %doc NEWS README TODO ChangeLog test.py examples
 %python_sitelibdir/*
 
+%files docs
+%doc html/*
+
+%if_with python3
+%files -n python3-module-%oname
+%doc NEWS README TODO ChangeLog test.py examples
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.67-alt1
+- Version 1.9.67
+- Added module for Python 3
+
 * Tue Oct 09 2012 Sergey V Turchin <zerg@altlinux.org> 1.9.62-alt1
 - new version
 
