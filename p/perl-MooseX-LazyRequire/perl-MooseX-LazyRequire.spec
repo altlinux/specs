@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MooseX-LazyRequire
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Required attributes which fail only when trying to use them
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-LazyRequire-%{version}.
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-MooseX-Types perl-Test-Exception perl-aliased perl-namespace-autoclean perl(Test/Fatal.pm) perl(Test/CheckDeps.pm)
+BuildRequires: perl-MooseX-Types perl-Test-Exception perl-aliased perl-namespace-autoclean perl(Test/Fatal.pm) perl(Test/CheckDeps.pm) perl(Module/Build.pm)
 
 %description
 This module adds a lazy_required option to Moose attribute declarations.
@@ -32,6 +33,9 @@ This module adds a lazy_required option to Moose attribute declarations.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
