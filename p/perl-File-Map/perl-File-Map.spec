@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(IPC/Open3.pm) perl(open.pm) perl(subs.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Map
-Version:        0.61
-Release:        alt2_2
+Version:        0.62
+Release:        alt1
 Summary:        Memory mapping made simple and safe
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/File-Map/
-Source0:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/L/LE/LEONT/File-Map-%{version}.tar.gz
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 # Run-time
@@ -70,6 +71,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.61-alt2_2
 - update to new release by fcimport
 
