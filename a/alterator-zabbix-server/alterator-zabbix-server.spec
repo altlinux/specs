@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-zabbix-server
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Summary: Alterator module for Zabbix server setup
@@ -20,6 +20,8 @@ Requires: zabbix-server-mysql zabbix-phpfrontend-engine
 Requires: php5-fpm-fcgi
 Requires: nginx
 Requires: alterator-service-functions >= 2.0.0
+Requires: php5-sockets php5-gd2 php5-mysqli php5-mbstring
+Requires: nginx-webapps
 Conflicts: alterator-lookout < 1.6-alt3
 BuildArch: noarch
 BuildRequires: alterator
@@ -42,9 +44,14 @@ Alterator module for Zabbix server setup
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
 %_alterator_backend3dir/*
-%_sysconfdir/nginx/sites-available.d/alterator-zabbix-server.conf
+%_sysconfdir/nginx/webapps-available.d/alterator-zabbix-server.conf
 
 %changelog
+* Mon Aug 18 2014 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1
+- Don't expose password in the UI.
+- Use nginx-webapps.
+- Require some php5 modules.
+
 * Wed Jul 02 2014 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt1
 - Initial build
 
