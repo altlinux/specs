@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Devel/FindPerl.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 0.13
+%define module_version 0.14
 %define module_name Module-Path
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.13
+Version: 0.14
 Release: alt1
 Summary: get the full path to a locally installed module
 Group: Development/Perl
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Mon Feb 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
