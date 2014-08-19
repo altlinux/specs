@@ -1,13 +1,13 @@
-%define module_version 0.21
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.23
 %define module_name Math-Prime-Util-GMP
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Devel/CheckLib.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Math/Primality.pm) perl(Math/Prime/Util.pm) perl(Math/Prime/Util/ECAffinePoint.pm) perl(Test/More.pm) perl(Test/Perl/Critic.pm) perl(Text/ParseWords.pm) perl(Time/HiRes.pm) perl(XSLoader.pm) perl(base.pm) perl(threads.pm) perl(threads/shared.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.21
+Version: 0.23
 Release: alt1
 Summary: Utilities related to prime numbers, using GMP
 Group: Development/Perl
@@ -57,6 +57,9 @@ test, rather than any number.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
