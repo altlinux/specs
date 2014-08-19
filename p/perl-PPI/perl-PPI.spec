@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.215
-Release: alt2
+Version: 1.218
+Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MITHALDU/PPI-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -16,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */PPI/XSAccessor.pm
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Class-Inspector perl-Clone perl-File-Remove perl-IO-String perl-List-MoreUtils perl-Params-Util perl-Pod-Escapes perl-Task-Weaken perl-Test-NoWarnings perl-Test-Object perl-Test-SubCalls
+BuildRequires: perl-Class-Inspector perl-Clone perl-File-Remove perl-IO-String perl-List-MoreUtils perl-Params-Util perl-Pod-Escapes perl-Task-Weaken perl-Test-NoWarnings perl-Test-Object perl-Test-SubCalls perl(Encode.pm)
 
 %description
 PPI is an acronym for the longer original module name
@@ -38,6 +39,9 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.218-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.215-alt2
 - disabled build dependency on perl-Module-Install
 
