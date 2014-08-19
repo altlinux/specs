@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
-Version:        1.000004
+Version:        1.000005
 Release:        alt1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1
+- automated CPAN update
+
 * Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.000004-alt1
 - automated CPAN update
 
