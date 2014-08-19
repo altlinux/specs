@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build/Tiny.pm)
+BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm) perl(Module/Build.pm)
 %define dist MooseX-Getopt
 Name: perl-%dist
-Version: 0.63
+Version: 0.64
 Release: alt1
 
 Summary: A Moose role for processing command line options
@@ -35,6 +35,9 @@ objects using parameters passed in from the command line.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
+- automated CPAN update
+
 * Sat Mar 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - automated CPAN update
 
