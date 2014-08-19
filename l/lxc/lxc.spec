@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 1.0.5
-Release: alt1
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -172,6 +172,11 @@ __EOF__
 
 
 %changelog
+* Tue Aug 19 2014 Denis Pynkin <dans@altlinux.org> 1.0.5-alt2
+- Fixed reopened #30158
+  Added check of services in container before start or stop.
+  Added check of syslog config existence prior changing.
+
 * Fri Aug 15 2014 Denis Pynkin <dans@altlinux.org> 1.0.5-alt1
 - New version
 
