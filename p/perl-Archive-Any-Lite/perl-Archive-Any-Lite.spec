@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Archive-Any-Lite
-Version:	0.09
-Release:	alt1_2
+Version:	0.10
+Release:	alt1
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Archive-Any-Lite
-Source0:	http://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
 Patch0:		Archive-Any-Lite-0.08-EU:MM.patch
 BuildArch:	noarch
 # Build
@@ -68,6 +69,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
 - update to new release by fcimport
 
