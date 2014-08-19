@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.83
+Version: 0.84
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -140,6 +140,12 @@ find %buildroot -type f -name "*.la" -exec rm -f {} ';'
 find %buildroot -type f -name "*.a" -exec rm -f {} ';'
 install -D src/init-ceph %buildroot%_initdir/ceph
 install -D ceph-radosgw.init %buildroot%_initdir/ceph-radosgw
+
+install -dm0755 %buildroot%_unitdir
+install -pDm0644 systemd/ceph-mds@.service %buildroot%_unitdir/ceph-mds@.service
+install -pDm0644 systemd/ceph-mon@.service %buildroot%_unitdir/ceph-mon@.service
+install -pDm0644 systemd/ceph-osd@.service %buildroot%_unitdir/ceph-osd@.service
+
 ln -sf ../../etc/init.d/ceph %buildroot%_sbindir/rcceph
 ln -sf ../../etc/init.d/ceph-radosgw %buildroot%_sbindir/rcceph-radosgw
 install -m 0644 -D src/logrotate.conf %buildroot%_sysconfdir/logrotate.d/ceph
@@ -228,6 +234,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_localstatedir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
+%_unitdir/ceph-*
 
 %files fuse
 %_bindir/ceph-fuse
@@ -273,6 +280,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Aug 19 2014 Alexei Takaseev <taf@altlinux.org> 0.84-alt1
+- 0.84
+
 * Wed Jul 30 2014 Alexei Takaseev <taf@altlinux.org> 0.83-alt1
 - 0.83
 
