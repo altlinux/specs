@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-C3
 Name: perl-%dist
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: A pragma to use the C3 method resolution order algortihm
@@ -30,10 +31,13 @@ more sophisticated C3 method resolution order.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %perl_vendor_privlib/Class
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Wed Mar 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
