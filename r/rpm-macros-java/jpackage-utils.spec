@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt35
+Release:        alt36
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -59,6 +59,7 @@ Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
 Patch6: javapackages-0.12.3-macros.fjava-alt-nopython.patch
 Patch7: javapackages-0.6.0-alt-macros-rpm404.patch
+Patch8: javapackages-0.15.0-alt-fix-install.patch
 
 # macros.jpacage patches
 Patch10: jpackage-utils-enable-gcj-support.patch
@@ -210,6 +211,7 @@ This package provides macros and scripts to support packaging Maven artifacts.
 %patch5 -p2
 %patch6
 %patch7 -p1
+%patch8 -p1
 %if_enabled gcj_support
 %patch10 -p0
 %endif
@@ -520,6 +522,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt36
+- maven.prov and xmvn fixes
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt35
 - support for versioned mvn(g:a:v) triplet provides
 
