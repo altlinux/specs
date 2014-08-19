@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20140708
+Version: 20140810
 Release: alt2
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
@@ -92,7 +92,7 @@ This package contains documentation for urllib3.
 
 rm -rf urllib3/packages/
 
-%patch0 -p1
+#patch0 -p1
 
 %if_with python3
 cp -fR . ../python3
@@ -153,6 +153,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140810-alt2
+- New snapshot
+
 * Tue Jul 22 2014 Lenar Shakirov <snejok@altlinux.ru> 20140708-alt2
 - Unbundle ssl_match_hostname, ordereddict and six package
 - Use system python-module-{six,backports.ssl_match_hostname,ordereddict}
