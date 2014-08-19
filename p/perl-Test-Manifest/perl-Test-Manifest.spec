@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define module		Test-Manifest
 %define m_distro	Test-Manifest
 %define m_name		Test::Manifest
 %define m_author_id	BDFOY
 Name: perl-%module
-Version: 1.23
+Version: 2.01
 Release: alt1
 
 Summary: Interact with a t/test_manifest file
@@ -11,7 +12,7 @@ Group: Development/Perl
 License: Artistic
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Test-Manifest-1.23.tar.gz
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Test-Manifest-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +39,9 @@ right value for MakeMaker to do the right thing.
 %doc Changes
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Fri Jul 16 2010 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
 - automated CPAN update
 
