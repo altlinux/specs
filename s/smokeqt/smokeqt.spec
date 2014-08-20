@@ -1,8 +1,10 @@
 %add_findpackage_path %_kde4_bindir
 
+%def_enable qwt
+
 Name: smokeqt
 Version: 4.14.0
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -18,6 +20,9 @@ Source: %name-%version.tar
 #BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 phonon-devel smokegen-devel
 BuildRequires: cmake gcc-c++ libqimageblitz-devel libqscintilla2-qt4-devel libqt4-devel phonon-devel smokegen-devel
 BuildRequires: kde-common-devel libsoprano-devel kde4libs-devel
+%if_enabled qwt
+BuildRequires: libqwt-devel
+%endif
 
 %description
 This package includes Bindings for Qt libraries.
@@ -295,6 +300,12 @@ Group: System/Libraries
 %description -n libsmokeqtdeclarative4
 Qt generic bindings library.
 
+%package -n libsmokeqwt4
+Summary: Qt generic bindings library
+Group: System/Libraries
+%description -n libsmokeqwt4
+Qt generic bindings library.
+
 %prep
 %setup
 
@@ -352,9 +363,16 @@ Qt generic bindings library.
 %_libdir/libsmokeqtxmlpatterns.so.*
 %files -n libsmokeqtxml4
 %_libdir/libsmokeqtxml.so.*
+%if_enabled qwt
+%files -n libsmokeqwt4
+%_libdir/libsmokeqwt.so.*
+%endif
 
 
 %changelog
+* Wed Aug 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- build with qwt
+
 * Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
