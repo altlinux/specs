@@ -1,4 +1,4 @@
-%define module_version 1.9
+%define module_version 2.09
 %define module_name FindBin-libs
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Cwd.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Symbol.pm) perl(Test/More.pm) perl(lib.pm) perl(strict.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Carp.pm) perl(Cwd.pm) perl(File/Spec.pm) perl(File/Spec/Func
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.9
+Version: 2.09
 Release: alt1
 Summary: FindBin::libs - locate and a 'use lib' or export 
 Group: Development/Perl
@@ -30,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc CHANGES README example
+%doc Changes README example
 %perl_vendor_privlib/F*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Mon May 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1
 - automated CPAN update
 
