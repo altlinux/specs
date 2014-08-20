@@ -6,7 +6,7 @@
 
 %define teuver 10
 Name: dakota
-Version: 5.4
+Version: 6.0
 %define somver 0
 %define sover %somver.0.0
 Release: alt1
@@ -90,8 +90,8 @@ This package contains development files of DAKOTA.
 %prep
 %setup
 
-cp packages/pecos/packages/LHS/mods/Cparam.f90 \
-	packages/pecos/packages/LHS/mods/cparam.mod
+cp packages/LHS/mods/Cparam.f90 \
+	packages/LHS/mods/cparam.mod
 cp packages/OPTPP/include/Constraint.h \
 	packages/OPTPP/include/DConstraint.h
 rm -fR methods/OPTPP/newmat11 \
@@ -99,9 +99,9 @@ rm -fR methods/OPTPP/newmat11 \
 	packages/pecos/packages/fftw packages/OPTPP/newmat11
 
 sed -i 's|@SOVERSION@|%somver|g' src/CMakeLists.txt \
-	packages/pecos/packages/VPISparseGrid/src/CMakeLists.txt
+	packages/VPISparseGrid/src/CMakeLists.txt
 sed -i 's|@VERSION@|%sover|g' src/CMakeLists.txt \
-	packages/pecos/packages/VPISparseGrid/src/CMakeLists.txt
+	packages/VPISparseGrid/src/CMakeLists.txt
 
 %ifarch x86_64
 LIB64=64
@@ -362,8 +362,12 @@ install -m644 \
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/cmake
+%_libdir/*.a
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:6.0-alt1
+- Version 6.0
+
 * Thu Feb 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.4-alt1
 - Version 5.4
 
