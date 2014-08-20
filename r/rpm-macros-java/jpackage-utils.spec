@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define javapackagestoolsver 0.14.1
+%define javapackagestoolsver 0.15.0
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt36
+Release:        alt37
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -522,6 +522,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %{_datadir}/xmvn/configuration*.xml
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt37
+- javapackages tools 0.15.0
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt36
 - maven.prov and xmvn fixes
 
