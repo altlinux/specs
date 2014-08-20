@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Lint
-Version: 1.47
+Version: 1.48
 Release: alt1
 
 Summary: Perl extension for checking validity of MARC records
@@ -46,8 +46,8 @@ all 952 tags have a certain call number in them, you can write a function that
 checks for that, and still get all the benefits of the MARC::Lint framework.
 
 %prep
-#setup -q -n %m_distro-%version
-%setup -q -n marc-lint_1_47
+%setup -q -n %{m_distro}_%version
+#%setup -q -n marc-lint_1_48
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -60,6 +60,9 @@ checks for that, and still get all the benefits of the MARC::Lint framework.
 %_man1dir/*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1
 - automated CPAN update
 
