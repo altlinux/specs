@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist YAML
 Name: perl-%dist
-Version: 0.98
+Version: 1.08
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -15,7 +15,7 @@ Patch: YAML-0.77-alt-fixes.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-Filter perl-Pod-Escapes perl-URI perl-devel
+BuildRequires: perl-Filter perl-Pod-Escapes perl-URI perl-devel perl(Test/YAML.pm) perl(Test/Base.pm) perl(Test/Base.pm)
 
 %description
 The YAML.pm module implements a YAML Loader and Dumper based on the
@@ -38,10 +38,12 @@ data structures of most modern programming languages (including Perl).
 
 %files
 %doc Changes README
-%perl_vendor_privlib/Test
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
 - automated CPAN update
 
