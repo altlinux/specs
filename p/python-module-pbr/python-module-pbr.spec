@@ -3,8 +3,8 @@
 %def_with python3
 
 Name:		python-module-%{pypi_name}
-Version:	0.5.23
-Release:	alt1.1
+Version:	0.10.0
+Release:	alt1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
 
@@ -101,6 +101,9 @@ rm -rf %{buildroot}%{python3_sitelibdir}/%{pypi_name}/test*
 %endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1
+- Version 0.10.0 (ALT #30192)
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.23-alt1.1
 - Added module for Python 3
 
