@@ -1,10 +1,12 @@
 %define version 0.0.0
-%define release alt2.svn1916.1
+%define release alt2.svn1916.2
 %setup_python_module django-pantheon
+
+%def_with python3
 
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 
 Summary: Pantheon django modules
 
@@ -17,22 +19,59 @@ Packager: Denis Klimov <zver@altlinux.org>
 Source: %modulename-%version.tar
 
 BuildRequires: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
+Pantheon django modules
+
+%package -n python3-module-%modulename
+Summary: Pantheon django modules
+Group: Development/Python3
+
+%description -n python3-module-%modulename
 Pantheon django modules
 
 %prep
 %setup -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
-%__python setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%__python setup.py install --root %buildroot --optimize=2 --record=INSTALLED_FILES
+%python_install --record=INSTALLED_FILES
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files -f INSTALLED_FILES
 
+%if_with python3
+%files -n python3-module-%modulename
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.0-alt2.svn1916.2
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.0-alt2.svn1916.1.1
 - Rebuild with Python-2.7
 
