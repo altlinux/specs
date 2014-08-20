@@ -1,9 +1,11 @@
 %add_findpackage_path %_kde4_bindir
 
+%def_disable okular
+
 %define rname smokekde
 Name: kde4-smoke
 Version: 4.11.1
-Release: alt2
+Release: alt3
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -14,13 +16,17 @@ License: LGPLv2+
 
 Source: %rname-%version.tar
 Source2: FindAkonadi.cmake
+Source3: FindOkular.cmake
 Patch1: smokekde-4.7.1-alt-find-okular.patch
 
 BuildRequires: cmake gcc-c++ phonon-devel smokegen-devel smokeqt-devel kde4base-workspace-devel
 BuildRequires: kde4pimlibs-devel kde4-kate-devel akonadi-devel libqimageblitz-devel attica-devel
 BuildRequires: libsoprano-devel soprano soprano-backend-redland
-BuildRequires: libqscintilla2-qt4-devel shared-desktop-ontologies-devel kde4-nepomuk-core-devel
-BuildRequires: kde-common-devel kde4-okular-devel
+BuildRequires: libqscintilla2-qt4-devel shared-desktop-ontologies-devel
+BuildRequires: kde-common-devel
+%if_enabled okular
+BuildRequires: kde4-okular-devel
+%endif
 #BuildRequires: kde4sdk-devel
 
 
@@ -313,6 +319,9 @@ Qt generic bindings library.
 %patch1 -p1
 mkdir -p cmake/modules/
 cp -ar %SOURCE2 cmake/modules/
+%if_enabled okular
+cp -ar %SOURCE3 cmake/modules/
+%endif
 
 
 %build
@@ -377,6 +386,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Wed Aug 20 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
+- rebuild
+
 * Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
 - rebuild
 
