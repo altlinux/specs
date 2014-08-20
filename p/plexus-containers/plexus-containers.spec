@@ -16,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt7_6jpp7
+Release:        alt8_6jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -212,6 +212,8 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/%{name}-container-default
 %{_mavenpomdir}/JPP.%{parent}-%{subname}-container-default.pom
 %{_javadir}/%{parent}/containers-container-default.jar
+%{_javadir}/plexus-containers/plexus-container-default.jar
+
 
 %files component-metadata
 %{_mavendepmapfragdir}/%{name}-component-metadata
@@ -227,6 +229,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt8_6jpp7
+- more symlinks
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt7_6jpp7
 - added another compat symlink
 
