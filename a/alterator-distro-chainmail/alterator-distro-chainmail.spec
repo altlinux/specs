@@ -1,5 +1,5 @@
 Name: alterator-distro-chainmail
-Version: 2.96.0
+Version: 2.97.0
 Release: alt1
 
 Source: %name-%version.tar
@@ -18,6 +18,9 @@ Requires: alterator-l10n >= 2.4-alt2
 
 Conflicts: alterator-net-eth < 4.3-alt5
 Conflicts: alterator-fbi < 5.25-alt6
+
+# We setup MySQL by our own hook
+Conflicts: installed-db-office-server
 
 BuildPreReq: alterator >= 4.12-alt1
 
@@ -39,9 +42,13 @@ special alterator modules for IVK Chainmail:
 %files
 %config(noreplace) %_sysconfdir/alterator/logs/.order
 %_datadir/alterator/ui/*
+%_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
 
 %changelog
+* Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 2.97.0-alt1
+- Add hook for setup MySQL password.
+
 * Fri Jun 20 2014 Mikhail Efremov <sem@altlinux.org> 2.96.0-alt1
 - Drop hook and helper for setting MySQL password.
 - Update description.
