@@ -1,7 +1,9 @@
+%add_findreq_skiplist %_bindir/cpancover
+%add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.14
+Version: 1.16
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -25,7 +27,7 @@ can be considered as an indirect measure of quality.
 %setup -q -n %dist-%version
 
 # fix expected output for test suite
-sed -i 's@!/bin/perl@!/usr/bin/perl@' test_output/cover/inc_sub.*
+#sed -i 's@!/bin/perl@!/usr/bin/perl@' test_output/cover/inc_sub.*
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -47,6 +49,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
