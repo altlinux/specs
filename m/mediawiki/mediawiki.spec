@@ -2,7 +2,7 @@
 %define major 1.23
 
 Name: mediawiki
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
@@ -307,6 +307,9 @@ exit 0
 
 
 %changelog
+* Wed Aug 20 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.2-alt1
+- new version 1.23.2 (with rpmrb script)
+
 * Sat Jul 26 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.1-alt1
 - new version 1.23.1 (with rpmrb script)
 
