@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: python-module-cssselect
-Version: 0.8
-Release: alt1.1
+Version: 0.9.1
+Release: alt1
 
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
 Group: Development/Python
@@ -77,6 +77,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 cssselect/tests.py
 %endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1
+- Version 0.9.1 (ALT #30204)
+
 * Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.1
 - Added module for Python 3
 
