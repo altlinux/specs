@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt2.1
 epoch:1 
 %define kernel_base_version	3.12
 %define kernel_sublevel	.26
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Aug 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt2.1
+- UKSM off by default
+
 * Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt2
 - UKSM patch added and enabled
 
