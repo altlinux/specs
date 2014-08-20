@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DBD-CSV
 Name: perl-%dist
-Version: 0.41
+Version: 0.44
 Release: alt1
 
 Summary: DBI driver for CSV files
@@ -34,8 +35,14 @@ MS Access and MS Excel data.
 %files
 %doc ChangeLog README
 %perl_vendor_privlib/DBD
+%perl_vendor_privlib/Bundle/*
+%exclude %perl_vendor_privlib/DBI/Test/DBD/CSV/*
+%exclude %perl_vendor_privlib/DBI/Test/Case/DBD/*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.41-alt1
 - 0.36 -> 0.41
 
