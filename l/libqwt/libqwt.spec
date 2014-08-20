@@ -1,5 +1,5 @@
 Name: libqwt
-Version: 5.2.2
+Version: 5.2.3
 Release: alt1
 Epoch: 1
 
@@ -12,7 +12,7 @@ Url: http://sourceforge.net/projects/qwt
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/qwt/qwt-%version.tar
-Patch: %name-5.2.0.patch
+Patch: %name-5.2.3.patch
 
 Conflicts: libqwt5_3 = 5.3.0-alt1.svn20090920
 Obsoletes: libqwt5_3 = 5.3.0-alt1.svn20090920
@@ -47,7 +47,7 @@ subst "s|/lib|/%_lib|g" qwtconfig.pri
 %build
 export QTDIR=%_qt4dir
 export PATH=$QTDIR/bin:$PATH
-qmake qwt.pro
+%qmake_qt4 CONFIG+=QwtSVGItem qwt.pro
 
 # incompatible with SMP build
 %make
@@ -75,6 +75,10 @@ rm -rf %buildroot/usr/doc
 %_man3dir/*
 
 %changelog
+* Wed Aug 20 2014 Sergey V Turchin <zerg@altlinux.org> 1:5.2.3-alt1
+- new version (ALT#30238)
+- built with SVG support
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.2-alt1
 - new version 5.2.2 (with rpmrb script)
 
