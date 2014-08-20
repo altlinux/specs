@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl-devel perl-podlators perl(File/ShareDir/Install.pm) perl(File/ShareDir/Install.pm)
 # END SourceDeps(oneline)
 Name:           perl-Module-Manifest-Skip
-Version:        0.20
+Version:        0.23
 Release:        alt1
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
@@ -61,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
