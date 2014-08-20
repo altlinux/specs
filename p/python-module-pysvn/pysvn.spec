@@ -1,5 +1,9 @@
-Name: python-module-pysvn
-Version: 1.7.6
+%define oname pysvn
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 1.7.8
 Release: alt1
 Summary: Subversion support for python
 License: Apache License
@@ -14,37 +18,81 @@ Patch1:  02-fix-ld-shared.patch
 BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel python-devel python-modules-compiler python-modules-xml subversion
 BuildRequires: libaprutil1-devel
 BuildRequires: subversion-server-common
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python-tools-2to3
+%endif
 
 %description
-The pysvn project's goal is to enable Tools to be written in Python that use Subversion.
+The pysvn project's goal is to enable Tools to be written in Python that
+use Subversion.
 
+%package -n python3-module-%oname
+Summary: Subversion support for python
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The pysvn project's goal is to enable Tools to be written in Python that
+use Subversion.
 
 %prep
 %setup -n pysvn-%version
 %patch0 -p2
-%patch1 -p1
+#patch1 -p1
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
-cd Source
+pushd Source
 python setup.py configure \
     --apr-inc-dir=/usr/include/apr-1 \
     --apu-inc-dir=/usr/include/apu-1 \
     --norpath
 
 %make_build
+popd
+
+%if_with python3
+pushd ../python3
+pushd Source
+python3 setup.py configure \
+    --apr-inc-dir=/usr/include/apr-1 \
+    --apu-inc-dir=/usr/include/apu-1 \
+    --norpath
+
+%make_build
+popd
+%endif
 
 %install
 mkdir -p %buildroot%python_sitelibdir 
 cp -r Source/pysvn %buildroot%python_sitelibdir
 
+%if_with python3
+pushd ../python3
+mkdir -p %buildroot%python3_sitelibdir 
+cp -r Source/pysvn %buildroot%python3_sitelibdir
+popd
+%endif
 
 %files
 %dir %python_sitelibdir/pysvn
 %python_sitelibdir/pysvn/*
 
+%if_with python3
+%files -n python3-module-%oname
+%dir %python_sitelibdir/pysvn
+%python3_sitelibdir/pysvn/*
+%endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.8-alt1
+- Version 1.7.8
+- Added module for Python 3
+
 * Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
 - New version 1.7.6
 - Remove obsoleted patches
