@@ -1,5 +1,5 @@
 Name: installer-distro-chainmail
-Version: 2.96.1
+Version: 2.97.0
 Release: alt1
 
 Summary: Installer files for IVK chainmail
@@ -41,7 +41,7 @@ Provides: installer-chainmail-stage3 = %version-%release
 Requires: installer-common-stage3
 #modules
 Requires: alterator-grub
-Requires: alterator-distro-chainmail >= 2.1-alt1
+Requires: alterator-distro-chainmail >= 2.96.1-alt1
 Requires: alterator-net-eth
 Requires: installer-feature-vm-ofs-stage3
 Requires: alterator-auth
@@ -65,11 +65,29 @@ cp -a * %buildroot%install2dir/
 %install2dir/postinstall.d/01-remove-installer-office-server-pkgs.sh
 
 %files stage3
+%install2dir/preinstall.d/*.sh
 %install2dir/postinstall.d/20-alterator-defaults.sh
 %install2dir/postinstall.d/30-ahttpd.sh
+%install2dir/postinstall.d/50-dovecot-no-ipv6.sh
+%install2dir/postinstall.d/80-BASE-enable.sh
 %install2dir/postinstall.d/90-vsftpd.sh
 
 %changelog
+* Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 2.97.0-alt1
+- Add 80-BASE-enable.sh postinstall hook.
+- Enable zabbix_mysql by default.
+- Add 50-dovecot-no-ipv6.sh postinstall hook.
+- Disable bacula-* services by default.
+- Enable anacron by default.
+- Disable plymouth.
+- services-on: Replace httpd2 with nginx.
+- Add 50-blacklist-ipv6.sh preinstall hook.
+- Disable drweb services by default.
+- Disable sc service by default.
+- alterator menu: Hide alterator-grub.
+- remove-* postinstall hook: Drop alterator-lilo.
+- Add init-mysqld preinstall hook.
+
 * Tue Jul 01 2014 Mikhail Efremov <sem@altlinux.org> 2.96.1-alt1
 - Drop 20-openldap.sh postinstall hook.
 - alterator menu: Don't hide net-domain.
