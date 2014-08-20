@@ -1,92 +1,43 @@
-BuildRequires: maven-plugin-plugin
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-compiler-plugin
-Version:        2.5.1
-Release:        alt3_2jpp7
-Summary:        Maven Compiler Plugin
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-compiler-plugin
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Name: maven-compiler-plugin
+Version: 3.0
+Summary: Maven Compiler Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-compiler-plugin
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven2-plugin-compiler
+Requires: java
+Requires: maven-shared-incremental maven-shared-utils plexus-compiler
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-toolchain
-BuildRequires: plexus-utils
-BuildRequires: plexus-compiler
-
-Requires:      maven
-Requires:      maven-toolchain
-Requires:      plexus-utils
-Requires:      plexus-compiler
-Requires:      jpackage-utils
-
-Provides:       maven2-plugin-compiler = %{version}-%{release}
-Obsoletes:      maven2-plugin-compiler <= 0:2.0.8
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-compiler-plugin-3.0-2.fc19.cpio
 
 %description
 The Compiler Plugin is used to compile the sources of your project.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate -Dmaven.test.failure.ignore
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt3_2jpp7
 - rebuild with maven-local
 

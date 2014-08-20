@@ -38,8 +38,8 @@ BuildRequires: jpackage-compat
 %global dirhash 56a0f9b
 
 Name:       plexus-compiler
-Version:    1.9.2
-Release:    alt2_1jpp7.qa1
+Version:    2.2
+Release:    alt1_0jpp7
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 License:    MIT
@@ -49,13 +49,14 @@ URL:        http://plexus.codehaus.org/
 Source0:    https://github.com/sonatype/%{name}/tarball/%{name}-%{version}#/%{name}-%{version}.tar.gz
 
 Patch0:     plexus-compiler-ignoreOptionalProblems.patch
+Patch1:		plexus-compiler-eclipse-pom-alt.patch
 
 BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  junit
 BuildRequires:  classworlds
-BuildRequires:  eclipse-ecj
+#BuildRequires:  eclipse-ecj
 BuildRequires:  plexus-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  plexus-containers-component-metadata
@@ -67,6 +68,7 @@ Requires:       plexus-container-default
 Requires:       plexus-utils
 Requires:       junit4
 Source44: import.info
+#Source1: ecj3-depmap
 
 %description
 Plexus Compiler adds support for using various compilers from a
@@ -77,7 +79,7 @@ additional compilers see %%{name}-extras package.
 Summary:        Extra compiler support for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
-Requires:       eclipse-ecj
+#Requires:       eclipse-ecj
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description extras
@@ -93,8 +95,9 @@ BuildArch: noarch
 API documentation for %%{name}.
 
 %prep
-%setup -q -n sonatype-plexus-compiler-%{dirhash}
-%patch0 -p1
+%setup -q -n plexus-compiler-%{name}-%version
+#patch0 -p1
+%patch1 -p1
 
 %pom_disable_module plexus-compiler-aspectj plexus-compilers/pom.xml
 
@@ -105,7 +108,6 @@ API documentation for %%{name}.
 mvn-rpmbuild -e \
         -Dmaven.test.skip=true \
         install javadoc:aggregate
-
 
 %install
 # jars
@@ -181,6 +183,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_0jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt2_1jpp7.qa1
 - rebuild with maven-local
 
