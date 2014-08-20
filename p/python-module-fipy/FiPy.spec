@@ -1,7 +1,10 @@
 %define oname fipy
+
+%def_with python3
+
 Name: python-module-%oname
 Version: 3.1
-Release: alt1
+Release: alt2
 Summary: Partial differential equation (PDE) solver
 License: Public
 Group: Development/Python
@@ -16,6 +19,12 @@ BuildArch: noarch
 BuildPreReq: python-devel libnumpy-devel python-module-pysparse
 BuildPreReq: python-module-setuptools-tests
 %setup_python_module %oname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel libnumpy-py3-devel python3-module-scipy
+BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python-tools-2to3
+%endif
 
 Requires: python-module-gnuplot
 %py_requires gist
@@ -33,6 +42,37 @@ specific problems.  Our approach, combining the FV method and Python_,
 provides a tool that is extensible, powerful and freely available. A
 significant advantage to Python_ is the existing suite of tools for
 array calculations, sparse matrices and data rendering.
+
+%package -n python3-module-%oname
+Summary: Partial differential equation (PDE) solver
+Group: Development/Python3
+%py3_requires gist
+%add_python3_req_skip pysparse
+
+%description -n python3-module-%oname
+FiPy is an object oriented, partial differential equation (PDE) solver,
+written in Python, based on a standard finite volume (FV) approach
+
+The solution of coupled sets of PDEs is ubiquitous to the numerical
+simulation of science problems.  Numerous PDE solvers exist, using a
+variety of languages and numerical approaches. Many are proprietary,
+expensive and difficult to customize.  As a result, scientists spend
+considerable resources repeatedly developing limited tools for
+specific problems.  Our approach, combining the FV method and Python_,
+provides a tool that is extensible, powerful and freely available. A
+significant advantage to Python_ is the existing suite of tools for
+array calculations, sparse matrices and data rendering.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for FiPy
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+FiPy is an object oriented, partial differential equation (PDE) solver,
+written in Python, based on a standard finite volume (FV) approach
+
+This package contains tests for FiPy.
 
 %package tests
 Summary: Tests for FiPy
@@ -72,10 +112,21 @@ This package contains documentation for FiPy.
 #sed -i 's|with|with_|' \
 #	fipy/viewers/gnuplotViewer/gnuplot1DViewer.py
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 install -p -m644 %SOURCE1 .
 
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
@@ -84,6 +135,12 @@ install -p -m644 %SOURCE1 .
 #install -p -m644 utils/* \
 #	%buildroot%python_sitelibdir/%oname/utils
 cp -fR examples %buildroot%python_sitelibdir/%oname/
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 install -d %buildroot%_docdir/%name
 cp -fR documentation/* %buildroot%_docdir/%name/
@@ -103,7 +160,19 @@ cp -fR documentation/* %buildroot%_docdir/%name/
 %doc DISCLAIMER.txt LICENSE.txt README.txt *.pdf
 %_docdir/%name
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%endif
+
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2
+- Added module for Python 3
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1
 - Version 3.1
 
