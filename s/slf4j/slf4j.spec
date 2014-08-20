@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           slf4j
 Version:        1.7.2
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
@@ -216,6 +216,10 @@ install -d -m 0755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 rm -f target/site/.htaccess
 cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
 
+# compat symlinks
+for i in api nop; do
+ln -s $i.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/slf4j-$i.jar
+done
 
 %files -f .mfiles
 %doc LICENSE.txt APACHE-LICENSE
@@ -232,6 +236,9 @@ cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt3_4jpp7
+- added compat symlinks
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt2_4jpp7
 - rebuild with maven-local
 
