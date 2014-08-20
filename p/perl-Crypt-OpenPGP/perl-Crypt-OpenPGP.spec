@@ -1,15 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Crypt-OpenPGP
 Name: perl-%dist
-Version: 1.06
-Release: alt2
+Version: 1.07
+Release: alt1
 
 Summary: Pure-Perl OpenPGP-compatible PGP implementation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: 0001-fix-hash-randomisation-bug-RT-81442.patch
+Source: http://www.cpan.org/authors/id/S/SR/SROMANOV/Crypt-OpenPGP-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,6 @@ the standard and those that preceded it.
 
 %prep
 %setup -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -37,6 +36,9 @@ the standard and those that preceded it.
 %perl_vendor_privlib/Crypt
 
 %changelog
+* Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Wed Dec 18 2013 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt2
 - fixed build (RT#81442)
 
