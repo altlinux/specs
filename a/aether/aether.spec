@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           aether
 Version:        1.13.1
-Release:        alt4_4jpp7
+Release:        alt5_4jpp7
 Summary:        Sonatype library to resolve, install and deploy artifacts the Maven way
 
 Group:          Development/Java
@@ -96,6 +96,8 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent.pom
 %add_maven_depmap JPP.%{name}-parent.pom
 
+ln -s api.jar $RPM_BUILD_ROOT%{_javadir}/aether/aether-api.jar
+
 %files
 %doc README.md
 %{_javadir}/%{name}
@@ -106,6 +108,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt5_4jpp7
+- added compat symlink
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt4_4jpp7
 - rebuild with maven-local
 
