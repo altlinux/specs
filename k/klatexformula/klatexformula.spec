@@ -1,5 +1,5 @@
 Name: klatexformula
-Version: 3.2.9
+Version: 3.2.11
 Release: alt1
 License: GPLv2
 Group: Publishing
@@ -32,18 +32,22 @@ sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/C
 %patch -p1
 
 %build
-%cmake -D QT_QMAKE_EXECUTABLE_FINDQT:path=/usr/bin/qmake-qt4 -D QT_QMAKE_EXECUTABLE:path=/usr/bin/qmake-qt4 ..
+%cmake -D QT_QMAKE_EXECUTABLE_FINDQT:path=/usr/bin/qmake-qt4 \
+       -D QT_QMAKE_EXECUTABLE:path=/usr/bin/qmake-qt4 \
+       -D KLF_LIBKLFBACKEND_STATIC=False \
+       -D KLF_LIBKLFTOOLS_STATIC=False \
+       -D KLF_LIBKLFAPP_STATIC=False \
+       ..
 # -D KLF_DEBUG=True ..
-( cd BUILD; %make_build all doc )
+%cmake_build all doc
 
 %install
-( cd BUILD; make install DESTDIR=%buildroot )
+%cmakeinstall_std
 
 %files
 %_bindir/*
 %_libdir/kde4/*
 %_libdir/lib*.so.*
-%_libdir/qt4/plugins/designer/*
 %_iconsdir/hicolor/*/apps/*.png
 %_pixmapsdir/*.png
 %_desktopdir/*
@@ -57,6 +61,10 @@ sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/C
 %_libdir/lib*.so
 
 %changelog
+* Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 3.2.11-alt1
+- Autobuild version bump to 3.2.11
+- Fix build and patch
+
 * Tue May 13 2014 Fr. Br. George <george@altlinux.ru> 3.2.9-alt1
 - Autobuild version bump to 3.2.9
 - Devel now uses shared libraries
