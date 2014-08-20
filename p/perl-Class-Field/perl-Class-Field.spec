@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(Filter/Util/Call.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(PerlIO.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Class-Field
-Version:        0.15
-Release:        alt2_9
+Version:        0.22
+Release:        alt1
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Class-Field/
-Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(inc/Module/Install.pm)
@@ -28,8 +28,6 @@ used to declare fields and constants in your class.
 
 %prep
 %setup -q -n Class-Field-%{version}
-rm -r inc
-sed -i -e '/^inc\// d' MANIFEST
 find -type f -exec chmod -x {} +
 
 
@@ -53,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_9
 - update to new release by fcimport
 
