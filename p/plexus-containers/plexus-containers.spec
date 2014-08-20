@@ -16,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt6_6jpp7
+Release:        alt7_6jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -191,7 +191,7 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # compat
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus-containers
 ln -s ../plexus/containers-component-annotations.jar $RPM_BUILD_ROOT%{_javadir}/plexus-containers/plexus-component-annotations.jar
-
+ln -s ../%{parent}/%{subname}-container-default.jar $RPM_BUILD_ROOT%{_javadir}/plexus-containers/plexus-container-default.jar
 
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
@@ -227,6 +227,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt7_6jpp7
+- added another compat symlink
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt6_6jpp7
 - added compat symlink
 
