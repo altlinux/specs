@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-invoker
 Version:        2.1.1
-Release:        alt1_6jpp7
+Release:        alt2_0jpp7
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
@@ -27,7 +27,8 @@ Requires:       maven-shared
 Requires:       plexus-containers-component-annotations
 Requires:       plexus-utils
 
-Obsoletes:      maven-shared-invoker < %{version}-%{release}
+#Obsoletes:      maven-shared-invoker < %{version}-%{release}
+#Obsoletes:      maven-shared-invoker < 0:2.1
 Provides:       maven-shared-invoker = %{version}-%{release}
 Source44: import.info
 
@@ -87,6 +88,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_0jpp7
+- hold obsoletes
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_6jpp7
 - new version
 
