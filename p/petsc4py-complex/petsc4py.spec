@@ -16,9 +16,9 @@
 %define oname petsc4py
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 3.4
+Version: 3.5
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.git20140702
+Release: alt1.git20140818
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -218,6 +218,9 @@ done
 %endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.git20140818
+- Version 3.5
+
 * Thu Jul 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140702
 - New snapshot
 
@@ -340,4 +343,3 @@ done
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
-
