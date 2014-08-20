@@ -3,10 +3,13 @@ BuildRequires(pre): rpm-build-python
 %define oname gist
 %define gistpath %python_sitelibdir/%oname/g
 
+%def_with python3
+%define gistpath3 %python3_sitelibdir/%oname/g
+
 Name: python-module-%oname
 Version: 2.2.0
 %define cflags %optflags %optflags_shared -I%_builddir/%name-%version/src/gist
-Release: alt1.git20130422
+Release: alt2.git20130422
 Summary: Scientific graphics (plotting) library
 License: Free for non-commercial using
 Group: Development/Python
@@ -22,6 +25,12 @@ BuildPreReq: python-devel libX11-devel libreadline-devel
 BuildPreReq: libnumpy-devel liblapack-devel
 BuildPreReq: python-module-arrayfns
 %setup_python_module %oname
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+BuildPreReq: libnumpy-py3-devel
+%endif
+
 %py_requires numpy
 
 %description
@@ -31,9 +40,37 @@ quadrilateral mesh plots with contours, filled contours, vector fields,
 or pseudocolor maps on such meshes. Some 3-D plot capabilities are also
 available.
 
+%package -n python3-module-%oname
+Summary: Scientific graphics (plotting) library
+Group: Development/Python3
+%py3_requires numpy
+%add_python3_req_skip arrayfns
+
+%description -n python3-module-%oname
+Gist is a scientific graphics library written by David H. Munro of
+Lawrence Livermore National Laboratory. It produces x-vs-y plots, 2-D
+quadrilateral mesh plots with contours, filled contours, vector fields,
+or pseudocolor maps on such meshes. Some 3-D plot capabilities are also
+available.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for Gist
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+Gist is a scientific graphics library written by David H. Munro of
+Lawrence Livermore National Laboratory. It produces x-vs-y plots, 2-D
+quadrilateral mesh plots with contours, filled contours, vector fields,
+or pseudocolor maps on such meshes. Some 3-D plot capabilities are also
+available.
+
+This package contains tests and demos for Gist.
+
 %package tests
 Summary: Tests for Gist
 Group: Development/Python
+Requires: %name = %EVR
 
 %description tests
 Gist is a scientific graphics library written by David H. Munro of
@@ -60,6 +97,22 @@ This package contains documentation for Gist.
 
 %prep
 %setup
+install -m644 %SOURCE2 src/gist
+
+%if_with python3
+cp -fR . ../python3
+pushd ../python3
+sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|g' \
+	src/Makepyg setup.py
+sed -i 's|@GISTPATH@|%gistpath3|g' \
+	src/gist/Makefile \
+	src/Makefile.gist \
+	src/gist/gread.c \
+	setup.py
+sed -i 's|@BUILDROOT@|%buildroot|' setup.py
+popd
+%endif
+
 sed -i 's|@PYVER@|%_python_version|g' src/Makepyg setup.py
 sed -i 's|@GISTPATH@|%gistpath|g' \
 	src/gist/Makefile \
@@ -68,8 +121,6 @@ sed -i 's|@GISTPATH@|%gistpath|g' \
 	setup.py
 sed -i 's|@BUILDROOT@|%buildroot|' setup.py
 
-#cp src/play/unix/config.h src/play/unix/gist_config.h
-install -m644 %SOURCE2 src/gist
 
 %build
 ln VERSION src
@@ -78,37 +129,69 @@ python setup.py config
 %add_optflags %cflags -DFPU_GCC_I86
 %python_build_debug
 
-LGIST=$(find $PWD -name 'gistC.so')
-sed -i "s|@LGIST@|$LGIST|g" src/gist/Makefile src/Makefile.gist
 pushd src
 export CFLAGS="%cflags -DFPU_GCC_I86"
 export CPPFLAGS=$CFLAGS
-%make_build Y_SITE=%buildroot%prefix ysite
+%make_build Y_SITE=%buildroot%gistpath ysite
 %make_build config
 %make_build
 popd
 
+%if_with python3
+pushd ../python3
+ln VERSION src
+
+python3 setup.py config
+%python3_build_debug
+
+pushd src
+export CFLAGS="%cflags -DFPU_GCC_I86"
+export CPPFLAGS=$CFLAGS
+%make_build Y_SITE=%buildroot%gistpath3 ysite
+%make_build config
+%make_build
+popd
+popd
+%endif
+
 %install
 export CFLAGS="%cflags"
+
+%if_with python3
+pushd ../python3
+%python3_install
+pushd src
+%makeinstall_std
+popd
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 pushd src
 %makeinstall_std
 popd
 
-install -p -m644 gist/shapetest.py %buildroot%python_sitelibdir/
-
-install -d %buildroot%gistpath
-mv %buildroot%prefix/g/* %buildroot%gistpath/
-
 install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
-mv %buildroot%_includedir/config.h \
-	%buildroot%_includedir/gist_config.h
+
+pushd %buildroot%python_sitelibdir/gist/g/include
+mv config.h gist_config.h
+install -d  %buildroot%_includedir
+for i in $(ls); do
+	mv $i %buildroot%_includedir/
+	ln -s %_includedir/$i ./
+done
+popd
 
 %files
 %doc ChangeLog HISTORY NOTES.developer README RELEASE release.msg
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%oname/*test*
+#exclude %python_sitelibdir/%oname/*test*
 %_bindir/%oname
 %_includedir/*
 
@@ -118,7 +201,18 @@ mv %buildroot%_includedir/config.h \
 %files doc
 %_docdir/%name
 
+%if_with python3
+%files -n python3-module-%oname
+%doc ChangeLog HISTORY NOTES.developer README RELEASE release.msg
+%python3_sitelibdir/*
+#exclude %python3_sitelibdir/%oname/*test*
+%_bindir/%oname.py3
+%endif
+
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20130422
+- Added module for Python 3
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20130422
 - New snapshot
 
