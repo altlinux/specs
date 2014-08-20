@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Role-Parameterized
 Name: perl-%dist
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: Roles with composition parameters
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-Role-Parameterized-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Role-Parameterized-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ Parameterized roles offer a solution to these (and other) kinds of problems.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
 - automated CPAN update
 
