@@ -1,10 +1,12 @@
-%define version 0.6.0
+%define version 0.7.0
 %define release alt1
 %setup_python_module Epsilon
 
+%def_with python3
+
 Name: %packagename
 Version:%version
-Release: %release.1
+Release: %release
 BuildArch: noarch
 
 Summary: A set of utility modules used by Divmod projects
@@ -14,10 +16,19 @@ Packager: Alexey Shabalin <shaba@altlinux.ru>
 Url: http://divmod.org/trac/wiki/DivmodEpsilon
 
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
+Patch: Epsilon-0.7.0-alt-python3.patch
 
 BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-setuptools python-module-twisted python-module-OpenSSL python-modules-email
+BuildRequires: python-devel python-module-setuptools
+BuildPreReq: python-module-twisted python-module-OpenSSL
+BuildPreReq: python-modules-email
 BuildPreReq: python-module-zope.interface
+%if_with python3
+BuildPreReq: rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-OpenSSL
+BuildPreReq: python3-module-zope.interface python-tools-2to3
+%endif
 
 %description
 A small utility package that depends on tools too recent for Twisted
@@ -36,15 +47,54 @@ Currently included:
     * A featureful Version class.
     * A formal system for application of monkey-patches. 
 
+%package -n python3-module-%modulename
+Summary: A set of utility modules used by Divmod projects
+Group: Development/Python3
+
+%description -n python3-module-%modulename
+A small utility package that depends on tools too recent for Twisted
+(like datetime in python2.4) but performs generic enough functions that
+it can be used in projects that don't want to share Divmod's other
+projects' large footprint.
+
+Currently included:
+
+    * A powerful date/time formatting and import/export class
+    (ExtimeDotTime), for exchanging date and time information between
+    all Python's various ways to interpret objects as times or time
+    deltas.
+    * Tools for managing concurrent asynchronous processes within Twisted.
+    * A metaclass which helps you define classes with explicit states.
+    * A featureful Version class.
+    * A formal system for application of monkey-patches. 
 
 %prep
 %setup -n %modulename-%version
 
+%patch -p2
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %python_sitelibdir/Epsilon-*.egg-info
@@ -53,11 +103,18 @@ Currently included:
 
 %exclude %_bindir/benchmark
 
-# remove dependencies on combinator
-%exclude %python_sitelibdir/epsilon/release.*
-%exclude %python_sitelibdir/epsilon/test/test_release.*
+%if_with python3
+%files -n python3-module-%modulename
+%python3_sitelibdir/Epsilon-*.egg-info
+%python3_sitelibdir/epsilon
+%doc *.txt LICENSE README
+%endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
+- Version 0.7.0
+- Added module for Python 3
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt1.1
 - Rebuild with Python-2.7
 
