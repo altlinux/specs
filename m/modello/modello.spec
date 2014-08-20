@@ -1,6 +1,7 @@
+%filter_from_requires /^.usr.bin.run/d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: unzip maven-shared-utils maven-shared-incremental plexus-compiler
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,8 +36,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           modello
-Version:        1.5
-Release:        alt5_3jpp7
+Version:        1.7
+Release:        alt1_0jpp7
 Epoch:          0
 Summary:        Modello Data Model toolkit
 License:        MIT
@@ -89,8 +90,6 @@ Requires:       guava
 Requires:       xbean
 
 Requires:          jpackage-utils
-Requires(post):    jpackage-utils
-Requires(postun):  jpackage-utils
 
 Provides:       modello-maven-plugin = %{epoch}:%{version}-%{release}
 Obsoletes:      modello-maven-plugin < 0:1.0-0.a8.3jpp
@@ -175,6 +174,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_0jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt5_3jpp7
 - rebuild with maven-local
 
