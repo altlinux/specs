@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.18
-Release: alt2
+Release: alt3
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: python3-module-testtools python-tools-2to3
 %endif
 
 Provides: python-module-python-%oname = %EVR
+Obsoletes: python-module-python-%oname < %EVR
 
 %description
 Subunit is a streaming protocol for test results. The protocol is human
@@ -39,6 +40,7 @@ write for other languages.
 Summary: Python 3 implementation of subunit test streaming protocol
 Group: Development/Python3
 Provides: python3-module-python-%oname = %EVR
+Obsoletes: python3-module-python-%oname < %EVR
 %add_python3_req_skip gtk pynotify
 
 %description -n python3-module-%oname
@@ -56,6 +58,7 @@ Summary: Tests for python-subunit (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
 Provides: python3-module-python-%oname-tests = %EVR
+Obsoletes: python3-module-python-%oname-tests < %EVR
 
 %description -n python3-module-%oname-tests
 Subunit is a streaming protocol for test results. The protocol is human
@@ -75,6 +78,7 @@ Summary: Tests for python-subunit
 Group: Development/Python
 Requires: %name = %version-%release
 Provides: python-module-python-%oname-tests = %EVR
+Obsoletes: python-module-python-%oname-tests < %EVR
 
 %description tests
 Subunit is a streaming protocol for test results. The protocol is human
@@ -142,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.18-alt3
+- Added necessary obsoletes
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.18-alt2
 - Renamed python-module-python-subunit -> python-module-subunit
 
