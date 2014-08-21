@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt2_8jpp7
+Release:        alt3_8jpp7
 Summary:        Java persistence API implementation
 
 Group:          Development/Java
@@ -104,6 +104,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_8jpp7
+- added maven-local BR:
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_8jpp7
 - NMU rebuild to move poms and fragments
 
