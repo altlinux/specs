@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1906,6 +1906,22 @@ done)
 
 
 %changelog
+* Thu Aug 21 2014 Led <led@altlinux.ru> 3.15.10-alt4
+- updated:
+  + fix-arch-s390
+  + fix-drivers-iommu--amd_iommu
+  + fix-drivers-iommu--intel-iommu
+  + fix-fs (CVE-2014-5206, CVE-2014-5207)
+  + fix-fs-btrfs
+- added:
+  + fix-drivers-iommu--iommu
+  + fix-drivers-md--raid456
+  + fix-fs-autofs4
+
+* Sun Aug 17 2014 Led <led@altlinux.ru> 3.15.10-alt3
+- updated:
+  + feat-fs-aufs
+
 * Sat Aug 16 2014 Led <led@altlinux.ru> 3.15.10-alt2
 - updated:
   + fix-firmware--radeon
