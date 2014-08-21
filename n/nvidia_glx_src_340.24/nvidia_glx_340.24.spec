@@ -15,13 +15,13 @@
 %define nv_version 340
 %define nv_release 24
 %define nv_minor %nil
-%define pkg_rel alt131
+%define pkg_rel alt132
 %ifarch x86_64
 %def_enable egl
 %else
 %def_enable egl
 %endif
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -342,6 +342,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 21 2014 Sergey V Turchin <zerg@altlinux.org> 340.24-alt132
+- don't package kernel module sources
+
 * Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 340.24-alt131
 - new version
 
