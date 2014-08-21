@@ -1,7 +1,10 @@
 %define oname ftputil
+
+%def_with python3
+
 Name: python-module-%oname
-Version: 2.2.3
-Release: alt2.1.1
+Version: 3.1
+Release: alt1
 
 Summary: high-level interface to the ftplib module
 
@@ -19,32 +22,65 @@ BuildArch: noarch
 # Automatically added by buildreq on Wed Oct 24 2007
 BuildRequires: python-devel python-modules-compiler
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
+
 %description
 The ftputil Python library is a high-level interface to the ftplib
 module. The FTPHost objects generated with ftputil allow many operations
 similar to those of os  and os.path
 
+%package -n python3-module-%oname
+Summary: high-level interface to the ftplib module
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The ftputil Python library is a high-level interface to the ftplib
+module. The FTPHost objects generated with ftputil allow many operations
+similar to those of os  and os.path
+
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
-%__python setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
-pushd %buildroot%python_sitelibdir/%oname
-TXTS=$(ls README.html 2>/dev/null|wc -l)
-if [ "$TXTS" = "0" ]; then
-mv %buildroot%_libdir/python%__python_version/site-packages/%oname/*.html \
-	%buildroot%_libdir/python%__python_version/site-packages/%oname/*.txt ./
-fi
+%if_with python3
+pushd ../python3
+%python3_install
 popd
+%endif
 
 %files
+%doc doc/*
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc doc/*
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1
+- Version 3.1
+- Added module for Python 3
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2.3-alt2.1.1
 - Rebuild with Python-2.7
 
