@@ -11,8 +11,8 @@
 %def_enable docs
 
 Name: %oname-%scalar_type
-Version: 3.4
-Release: alt1.git20140627
+Version: 3.5
+Release: alt1.git20140818
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -160,11 +160,16 @@ cp -fR docs/source/_build/pickle %buildroot%ldir/python/%oname/
 chrpath -r %mpidir/lib:%ldir/lib \
 	%buildroot%ldir/python/%oname/lib/SLEPc.so
 
+install -d %buildroot%_man1dir
+install -m644 docs/*.1 %buildroot%_man1dir/
+install -d %buildroot%_infodir
+install -m644 docs/*.info %buildroot%_infodir
+
 %pre
 rm -f %ldir/python/%oname/lib/SLEPc.so
 
 %files
-%doc HISTORY.txt LICENSE.txt
+%doc *.rst
 
 %files -n python-module-%name
 %dir %ldir/python
@@ -188,6 +193,8 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %doc %_docdir/%oname-%version/usrman
 %doc %_docdir/%oname-%version/html
 %doc %_docdir/%oname-%version/*.pdf
+%_man1dir/*
+%_infodir/*
 %endif
 
 %files -n %oname-examples
@@ -196,6 +203,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.git20140818
+- Version 3.5
+
 * Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20140627
 - New snapshot
 
