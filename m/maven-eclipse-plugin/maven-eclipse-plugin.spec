@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt4_2jpp7
+Release:        alt5_2jpp7
 Summary:        Maven Eclipse Plugin
 
 Group:          Development/Java
@@ -135,6 +135,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_2jpp7
+- added maven-local BR:
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt4_2jpp7
 - fixed build
 
