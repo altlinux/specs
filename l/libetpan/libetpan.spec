@@ -1,14 +1,16 @@
 Name: libetpan
-Version: 1.1
-Release: alt1.1
+Version: 1.5
+Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access.
 License: %bsdstyle
 Group: Development/C
 
-Url: http://%name.sourceforge.net/
+Url: http://www.etpan.org/libetpan.html
 
+# git://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %def_with gnutls
 %def_without openssl
@@ -44,8 +46,11 @@ program which use lib%name.
 
 %prep
 %setup
+%patch -p1
+ln -s README.md README
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	%{subst_with openssl} \
@@ -68,6 +73,10 @@ program which use lib%name.
 %_libdir/%name.so
 
 %changelog
+* Thu Aug 21 2014 Mikhail Efremov <sem@altlinux.org> 1.5-alt1
+- Update Url.
+- Updated to 1.5.
+
 * Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.1-alt1.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
