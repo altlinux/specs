@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt4_8jpp7
+Release:        alt5_8jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -126,6 +126,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt5_8jpp7
+- added maven-local BR:
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt4_8jpp7
 - new release
 
