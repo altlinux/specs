@@ -9,8 +9,8 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.8
-Release: alt3
+Version: %ver_major.10
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -174,6 +174,9 @@ you'll want to install this package.
 
 
 %changelog
+* Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.10-alt1
+- 2.2.10
+
 * Mon Jun 9 2014 Vladimir Didenko <cow@altlinux.org> 2.2.8-alt3
 - rebuild with new colord
 

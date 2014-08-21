@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 2.2.14
+Version: 2.2.16
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -231,6 +231,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Thu Aug 21 2014 Vladimir Didenko <cow@altlinux.org> 2.2.16-alt1
+- 2.2.16
+
 * Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.14-alt1
 - 2.2.14
 
