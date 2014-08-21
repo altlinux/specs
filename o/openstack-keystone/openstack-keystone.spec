@@ -1,6 +1,6 @@
 Name:		openstack-keystone
 Version:	2014.1.2.1
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Identity Service
 
 Group:		System/Servers
@@ -163,6 +163,9 @@ exit 0
 %post
 %post_service %{name}
 
+#Generate ssl certs for pki token support
+su -l -s /bin/sh -c 'exec keystone-manage pki_setup' keystone
+
 %preun
 %preun_service %{name}
 
@@ -181,10 +184,10 @@ exit 0
 %attr(0644, root, keystone) %{_datadir}/keystone/wsgi-keystone.conf
 %{_unitdir}/openstack-keystone.service
 %{_initdir}/%{name}
-%dir %attr(0750, root, keystone) %{_sysconfdir}/keystone
-%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/keystone.conf
-%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/logging.conf
-%config(noreplace) %attr(0640, root, keystone) %{_sysconfdir}/keystone/default_catalog.templates
+%dir %attr(0700, keystone, keystone) %{_sysconfdir}/keystone
+%config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/keystone.conf
+%config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/logging.conf
+%config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/default_catalog.templates
 %config(noreplace) %attr(0640, keystone, keystone) %{_sysconfdir}/keystone/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-keystone
 %dir %attr(-, keystone, keystone) %{_sharedstatedir}/keystone
@@ -200,6 +203,11 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Aug 21 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2.1-alt2
+- Fix permission for /etc/keystone to (0700, keystone, keystone):
+  * needs for "keystone-manage pki_setup" to generate certs
+    in /etc/keystone/ssl, that runs in POSTIN script
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.2.1-alt1
 - 2014.1.2.1
 
