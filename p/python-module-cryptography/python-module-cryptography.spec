@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -85,5 +85,8 @@ popd
 %endif
 
 %changelog
+* Thu Aug 21 2014 Vladimir Didenko <cow@altlinux.ru> 0.5.4-alt1
+- 0.5.4
+
 * Tue Jul 29 2014 Vladimir Didenko <cow@altlinux.ru> 0.5.2-alt1
 - initial build for Sisyphus
