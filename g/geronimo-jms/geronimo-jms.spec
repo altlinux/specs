@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:		geronimo-jms
 Version:	1.1.1
-Release:	alt2_13jpp7
+Release:	alt3_13jpp7
 Summary:	J2EE JMS v1.1 API
 
 Group:		Development/Java
@@ -112,6 +112,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_13jpp7
+- added maven-local BR:
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_13jpp7
 - NMU rebuild to move poms and fragments
 
