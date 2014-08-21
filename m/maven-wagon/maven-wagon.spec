@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-%{bname}
 Version:        1.0
-Release:        alt9_6jpp7
+Release:        alt10_6jpp7
 Epoch:          0
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
@@ -282,6 +282,9 @@ install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_6jpp7
+- added maven-local BR:
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_6jpp7
 - new fc release
 
