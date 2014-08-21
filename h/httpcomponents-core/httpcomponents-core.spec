@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
 Version:           4.2.2
-Release:           alt1_1jpp7
+Release:           alt2_1jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -123,6 +123,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt2_1jpp7
+- added maven-local BR:
+
 * Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1_1jpp7
 - new release
 
