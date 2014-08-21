@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	340.24
+%define module_version	340.32
 %define module_release	alt1
 %define flavour		led-vs
 
@@ -189,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Aug 21 2014 Led <led@altlinux.ru> 340.32-alt1
+- new release (340.32)
 
 * Thu Jul 24 2014 Led <led@altlinux.ru> 340.24-alt1
 - new releases (330.24, 304.123)
