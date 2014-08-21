@@ -3,8 +3,9 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.0
-Release: alt1.b3
+Epoch: 1
+Version: 0.999
+Release: alt1
 
 Summary: Library for working with HTML5 documents
 
@@ -34,7 +35,7 @@ desktop web browsers.
 %package tests
 Summary: Tests for html5lib
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 A ruby/python based HTML parser/tokenizer based on the WHATWG
@@ -78,7 +79,7 @@ desktop web browsers.
 %package -n python3-module-%module_name-tests
 Summary: Tests for html5lib (Python 3)
 Group: Development/Python3
-Requires: python3-module-%module_name = %version-%release
+Requires: python3-module-%module_name = %EVR
 
 %description -n python3-module-%module_name-tests
 A ruby/python based HTML parser/tokenizer based on the WHATWG
@@ -144,6 +145,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.999-alt1
+- Version 0.999
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b3
 - Version 1.0b3
 
