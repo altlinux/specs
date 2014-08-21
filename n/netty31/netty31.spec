@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           netty31
 Version:        3.1.5
-Release:        alt2_5jpp7
+Release:        alt3_5jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
 Group:          Development/Java
@@ -125,6 +125,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt3_5jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt2_5jpp7
 - new release
 
