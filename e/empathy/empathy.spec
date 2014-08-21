@@ -14,7 +14,7 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -186,6 +186,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.5-alt1
+- 3.12.5
+
 * Fri Jun 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
 - 3.12.4
 
