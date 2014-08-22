@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Color daemon
@@ -23,8 +23,8 @@ Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.x
 
 %define colord_group %name
 %define colord_user %name
-%define glib_ver 2.31
-%define lcms_ver 2.2
+%define glib_ver 2.36
+%define lcms_ver 2.6
 %define bash_completion_ver 2.0
 
 Requires: lib%name = %version-%release
@@ -279,6 +279,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
