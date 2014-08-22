@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven jmock byteman
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             xnio
 Version:          3.0.3
-Release:          alt2_6jpp7
+Release:          alt3_6jpp7
 Summary:          JBoss XNIO
 Group:            Development/Java
 License:          LGPLv2+
@@ -109,6 +109,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc COPYING.txt
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt3_6jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt2_6jpp7
 - new release
 
