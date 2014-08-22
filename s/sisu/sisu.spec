@@ -1,9 +1,9 @@
 Epoch: 0
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat animal-sniffer
 Name:           sisu
 Version:        2.2.3
-Release:        alt3_6jpp7
+Release:        alt4_6jpp7
 Summary:        Sonatype dependency injection framework
 
 
@@ -176,6 +176,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt4_6jpp7
+- added BR: for xmvn
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt3_6jpp7
 - rebuild with maven-local
 
