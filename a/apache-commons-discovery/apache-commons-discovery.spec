@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -79,6 +79,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_4jpp7
+- added BR: for xmvn
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt2_4jpp7
 - rebuild with maven-local
 
