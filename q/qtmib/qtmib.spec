@@ -1,0 +1,43 @@
+Name: qtmib
+Version: 1.0
+Release: alt2
+License: GPLv2
+Group: Networking/Other
+Summary: SNMP MIB Browser for Linux platforms 
+Url: http://sourceforge.net/projects/qtmib
+Source0: %name-%version.tar
+
+BuildRequires: libqt4-devel gcc-c++
+
+%description
+qtmib is an easy-to-use SNMP MIB Browser based on QT4 library. It is
+build as a front-end for net-snmp tools, and it allows the user to
+query any SNMP enabled device. It supports SNMPv1 and SNMPv2c. qtmib
+is released under GPL v2 license.
+
+%prep
+%setup
+
+%build
+export QTDIR=%_qt4dir
+export PATH=%_qt4dir/bin:$PATH
+%configure
+make
+
+%install
+%makeinstall_std PREFIX=%buildroot%_prefix
+
+%files
+%_bindir/%{name}*
+%_desktopdir/%name.desktop
+%_pixmapsdir/%name.png
+%_man1dir/%{name}*
+%doc README RELNOTES
+
+%changelog
+* Sat Aug 23 2014 Terechkov Evgenii <evg@altlinux.org> 1.0-alt2
+- Fix build in git.alt
+
+* Fri Aug 22 2014 Terechkov Evgenii <evg@altlinux.org> 1.0-alt1
+- Initial build for ALT Linux sisyphus
+
