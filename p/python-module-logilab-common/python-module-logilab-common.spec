@@ -3,8 +3,8 @@
 
 %define oname logilab-common
 Name: python-module-%oname
-Version: 0.61.0
-Release: alt1.hg20140211
+Version: 0.62.0
+Release: alt1.hg20140716
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -122,6 +122,9 @@ rm -f build/lib/logilab/__init__.py
 %endif
 
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.62.0-alt1.hg20140716
+- Version 0.62.0
+
 * Wed Mar 19 2014 Timur Aitov <timonbl4@altlinux.org> 0.61.0-alt1.hg20140211
 - Version 0.61.0
 
