@@ -1,13 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: maven unzip mockito
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-enforcer
 Version:        1.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Maven Enforcer
 
 Group:          Development/Java
@@ -155,6 +155,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_4jpp7
+- added BR: for xmvn
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_4jpp7
 - new version
 
