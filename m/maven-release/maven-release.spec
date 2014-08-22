@@ -1,13 +1,13 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: maven unzip jmock maven-scm-test mockito
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt3_7jpp7
+Release:        alt4_7jpp7
 Summary:        Release a project updating the POM and tagging in the SCM
 
 Group:          Development/Java
@@ -98,6 +98,7 @@ repetitive, manual work. Releasing a project is made in two steps:
 prepare and perform.
 EOT
 
+%pom_remove_dep jmock:jmock-cglib maven-release-manager
 
 %build
 # Skip tests because we don't have dependencies (jmock)
@@ -146,6 +147,9 @@ install -pm 644 %{name}-plugin/pom.xml  \
 
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt4_7jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt3_7jpp7
 - new release
 
