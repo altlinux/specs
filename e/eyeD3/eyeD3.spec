@@ -1,6 +1,8 @@
+%def_with python3
+
 Name: eyeD3
-Version: 0.6.17
-Release: alt1.1
+Version: 0.7.4
+Release: alt1
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
 License: GPLv2+
@@ -8,21 +10,46 @@ Group: Sound
 URL: http://eyed3.nicfit.net
 BuildArch: noarch
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
-
 Source0: %name-%version.tar.gz
 
 Patch0: %name-long-tyer.patch
 
-Requires: python-module-%name = %version
+Requires: python-module-%name = %EVR
 
 BuildPreReq: python-devel
+BuildPreReq: python-module-Paver python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python-tools-2to3
+BuildPreReq: python3-module-Paver python3-module-setuptools
+%endif
 
 %description
 eyeD3 manipulates ID3 tags in mp3 files and is able to read/write and
 convert between ID3 v1.0, v1.1, v2.3 and v2.4 tags. High-level access
 is provided to most frames, including APIC (i.e., images) frames.
 
+%package py3
+Summary: Console tool that displays and manipulates id3-tags on mp3 files
+Group: Sound
+Requires: python3-module-%name = %EVR
+
+%description py3
+eyeD3 manipulates ID3 tags in mp3 files and is able to read/write and
+convert between ID3 v1.0, v1.1, v2.3 and v2.4 tags. High-level access
+is provided to most frames, including APIC (i.e., images) frames.
+
+%package -n python3-module-%name
+Summary: A python module for processing mp3 files
+Group: Development/Python3
+
+%description -n python3-module-%name
+eyeD3 is a Python module and program for processing ID3 tags.
+Information about mp3 files (i.e bit rate, sample frequency,
+play time, etc.) is also provided.  The formats supported are ID3
+v1.0/v1.1 and v2.3/v2.4.
+
+This module is built for python %_python_version
 
 %package -n python-module-%name
 Summary: A python module for processing mp3 files
@@ -39,29 +66,63 @@ This module is built for python %_python_version
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
-%configure
-%python_build
+export CFLAGS="%optflags"
+
+paver build
+
+%if_with python3
+pushd ../python3
+paver.py3 build
+popd
+%endif
 
 %install
-%python_install
+export CFLAGS="%optflags"
+
+%if_with python3
+pushd ../python3
+paver.py3 install --root=%buildroot
+sed -i 's|python|python3|' bin/%name
+install -p -m755 bin/%name %buildroot%_bindir/%name.py3
+popd
+%endif
+
+paver install --root=%buildroot
 mkdir -p %buildroot{%_bindir,%_man1dir}
 install -p -m755 bin/%name %buildroot%_bindir/
-install -p -m755 doc/%name.1 %buildroot%_man1dir/
 
 %files
 %_bindir/*
-%_man1dir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 
 %files -n python-module-%name
-%python_sitelibdir/%name/
-%python_sitelibdir/*.egg-info
-%doc AUTHORS NEWS README README.html THANKS TODO
+%python_sitelibdir/*
+%doc AUTHORS ChangeLog *.rst
 
+%if_with python3
+%files py3
+%_bindir/*.py3
+
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%doc AUTHORS ChangeLog *.rst
+%endif
 
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1
+- Version 0.7.4
+- Added module for Python 3
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.17-alt1.1
 - Rebuild with Python-2.7
 
