@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
 Version:          1.6
-Release:          alt1_4jpp7
+Release:          alt2_4jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
@@ -20,6 +20,7 @@ Patch0:           0001-Fix-shading-and-remove-unneeded-modules.patch
 Patch1:           0002-Fix-xbean-compatibility.patch
 Patch2:           0003-Remove-plexus-maven-plugin-dependency.patch
 Patch3:           0004-Remove-eclipse-plugin.patch
+Patch4:	hawtjni-1.6-alt-automake.patch
 
 BuildArch:        noarch
 
@@ -82,6 +83,7 @@ This package allows to use HawtJNI from a maven plugin.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -127,6 +129,9 @@ install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-
 %{_javadir}/maven-%{name}-plugin.jar
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp7
+- configure.ac template fixes for jansi-native
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp7
 - new version
 
