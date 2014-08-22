@@ -1,6 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             jansi-native
 Version:          1.4
-Release:          alt1_1jpp7
+Release:          alt1_5jpp7
 Summary:          Jansi Native implements the JNI Libraries used by the Jansi project
 Group:            Development/Java
 License:          ASL 2.0
@@ -26,7 +26,7 @@ Source0:          jansi-native-%{version}.tar.xz
 Patch0:           0001-Fixing-archiver-requires-AM_PROG_AR-in-configure.ac-.patch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-surefire-plugin
@@ -74,9 +74,9 @@ mvn-rpmbuild install javadoc:aggregate
 %install
 # JAR
 mkdir -p $RPM_BUILD_ROOT%{_jnidir}
-mkdir -p $RPM_BUILD_ROOT%{_javajnidir}
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javajnidir}/%{name}.jar
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 cp -p target/%{name}-%{version}-linux%{bits}.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}-linux.jar
 
 # JAVADOC
@@ -95,7 +95,7 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_jnidir}/*
-%{_javajnidir}/*
+%{_javadir}/*
 %doc readme.md license.txt changelog.md
 
 %files javadoc
@@ -103,6 +103,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc license.txt
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_5jpp7
+- new release
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
 - new version
 
