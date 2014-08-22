@@ -1,7 +1,7 @@
 %define modulename mutagen
 
 Name: python-module-%modulename
-Version: 1.22
+Version: 1.24
 Release: alt1
 
 Summary: Python module to handle audio metadata
@@ -64,7 +64,7 @@ export LC_ALL=en_US.UTF-8
 python setup.py test
 
 %files
-%doc NEWS README TODO
+%doc NEWS *.rst
 %python_sitelibdir/*
 
 %files -n %modulename
@@ -75,6 +75,9 @@ python setup.py test
 %doc docs/_build/*
 
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.24-alt1
+- Version 1.24
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.22-alt1
 - Version 1.22
 
