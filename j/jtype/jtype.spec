@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven jmock
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jtype
 Version:        0.1.2
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        A small library for working with the Java 5 type system
 
 Group:          Development/Java
@@ -78,6 +78,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2_5jpp7
+- added BR: for xmvn
+
 * Sun Jul 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_5jpp7
 - new release
 
