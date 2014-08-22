@@ -1,8 +1,10 @@
 %define modulename python-memcached
 
+%def_with python3
+
 Name: python-module-memcached
 Version: 1.53
-Release: alt1
+Release: alt2
 
 Summary: A Python module for memcached daemon
 Group: Development/Python
@@ -19,26 +21,64 @@ BuildArch: noarch
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
 
 BuildPreReq: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
 
 %description
-%modulename is a Python module that interfaces to the memcached - 
+%modulename is a Python module that interfaces to the memcached -
+distributed memory object caching system.
+
+%package -n python3-module-memcached
+Summary: A Python module for memcached daemon
+Group: Development/Python3
+
+%description -n python3-module-memcached
+%modulename is a Python module that interfaces to the memcached -
 distributed memory object caching system.
 
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
+
 %build
-export CFLAGS="%optflags"
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %python_sitelibdir/*
 %doc README* PKG-INFO ChangeLog *.html
 
+%if_with python3
+%files -n python3-module-memcached
+%python3_sitelibdir/*
+%doc README* PKG-INFO ChangeLog *.html
+%endif
+
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt2
+- Added module for Python 3
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt1
 - Version 1.53
 
