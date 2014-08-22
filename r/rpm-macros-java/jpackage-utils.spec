@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt37
+Release:        alt38
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -66,6 +66,7 @@ Patch10: jpackage-utils-enable-gcj-support.patch
 Patch11: jpackage-utils-1.7.5-alt-remove-duplication-of-sys-macros.patch
 Patch12: jpackage-utils-1.7.5-alt-update_maven_depmap-is-obsolete.patch
 Patch13: jpackage-utils-1.7.5-alt-add_add_to_maven_depmap_in_macros.patch
+Patch14: jpackage-utils-1.7.5-alt-jpackage-script-no-dep.patch
 
 # fedora modified to be old jpackage dirs
 Patch21: jpackage-utils-own-mavendirs.patch
@@ -158,12 +159,15 @@ BuildArch:      noarch
 %description -n rpm-build-java-osgi
 RPM build helpers for Java packages with OSGi dependencies
 
-%package -n rpm-build-maven-local
+%package -n maven-local
 Summary:        Macros and scripts for Maven packaging support
 Group: Development/Java
+#Version:	%javapackagestoolsver
 BuildArch:	noarch
 
-Provides:	maven-local = %javapackagestoolsver
+Conflicts:	maven < 3.0.5
+Conflicts:	rpm-build-maven-local < 5.0.0-alt38
+Obsoletes:	rpm-build-maven-local < 5.0.0-alt38
 Requires:       rpm-build-java = %{?epoch:%{epoch}}%{version}-%{release}
 Requires:       maven
 Requires:       xmvn
@@ -197,7 +201,10 @@ Requires:       maven-surefire-provider-junit
 # testng is quite common as well
 Requires:       maven-surefire-provider-testng
 
-%description -n rpm-build-maven-local
+# for safe migration -- comment later
+Requires: maven-plugin-testing-tools maven-invoker-plugin easymock3
+
+%description -n maven-local
 This package provides macros and scripts to support packaging Maven artifacts.
 
 %prep
@@ -218,6 +225,7 @@ This package provides macros and scripts to support packaging Maven artifacts.
 %patch11 -p0
 %patch12 -p2
 %patch13 -p0
+%patch14 -p2
 
 %patch21 -p1
 %patch22 -p1
@@ -464,12 +472,20 @@ install -p -m 644 configs/configuration*.xml $RPM_BUILD_ROOT%{_datadir}/xmvn
 ln -sf %{_datadir}/xmvn/configuration-19.xml $RPM_BUILD_ROOT%{_datadir}/xmvn/configuration.xml
 popd
 
-%define fedora 18
+%define fedora 19
 # On Fedora 18 we don't want to install mvn-local and mvn-rpmbuild
 # scripts as they are already provided by maven package.
 %if 0%{?fedora} == 18
 rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %endif
+
+### TODO drop maven remnants
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/maven-{poms,fragments} $RPM_BUILD_ROOT%{_datadir}/java/maven
+install -pm 644 rpm-build-java/maven-remnants/JPP.maven-empty-dep.pom ${RPM_BUILD_ROOT}%{_datadir}/maven-poms/
+install -pm 644 rpm-build-java/maven-remnants/empty-dep ${RPM_BUILD_ROOT}%{_datadir}/maven-fragments/empty-dep-hacks
+install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_datadir}/java/maven/
+### END TODO drop maven remnants
+
 
 %post -n jpackage-utils
 %{_sbindir}/update-maven-depmap
@@ -509,19 +525,29 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
 
-%files -n rpm-build-maven-local
+%files -n maven-local
 %{_sysconfdir}/maven/metadata-*.xml
-#%{_bindir}/mvn-*
-%_bindir/mvn-alias
-%_bindir/mvn-build
-%_bindir/mvn-config
-%_bindir/mvn-file
-%_bindir/mvn-package
+%{_bindir}/mvn-*
+#%_bindir/mvn-alias
+#%_bindir/mvn-build
+#%_bindir/mvn-config
+#%_bindir/mvn-file
+#%_bindir/mvn-package
 %dir %{_datadir}/maven-effective-poms
 %{_datadir}/java-utils/xmvn_config_editor.sh
 %{_datadir}/xmvn/configuration*.xml
+### TODO drop maven remnants
+%{_datadir}/maven-poms/JPP.maven-empty-dep.pom
+%{_datadir}/maven-fragments/empty-dep-hacks
+%{_datadir}/java/maven/empty-dep.jar
+### END TODO drop maven remnants
+
+
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt38
+- migration to xmvn
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt37
 - javapackages tools 0.15.0
 
