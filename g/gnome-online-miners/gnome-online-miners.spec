@@ -4,7 +4,7 @@
 
 Name: gnome-online-miners
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A set of miners for online content
 Group: Graphical desktop/GNOME
@@ -67,6 +67,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
+- rebuilt against libgdata.so.19
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
