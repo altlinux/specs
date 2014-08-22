@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 3.1.1
-Release: alt1.git20130330
+Version: 3.3.5
+Release: alt1.git20140418
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -21,6 +21,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 BuildPreReq: libxslt-devel python-module-distribute zlib-devel
 # see doc/build.txt
 BuildPreReq: python-module-Cython >= 0.18
+BuildPreReq: python-modules-wsgiref python-module-cssselect
 
 %setup_python_module lxml
 
@@ -29,6 +30,7 @@ BuildRequires(pre): rpm-build-python3
 # see doc/build.txt
 BuildPreReq: python3-module-Cython >= 0.18
 BuildPreReq: python3-devel python3-module-distribute
+BuildPreReq: python3-module-cssselect
 
 %add_python3_req_skip etree
 %endif
@@ -101,6 +103,8 @@ popd
 %endif
 
 %check
+export LC_ALL=en_US.UTF-8
+
 # see Makefile
 CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
@@ -130,6 +134,9 @@ popd
 %doc doc samples
 
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.5-alt1.git20140418
+- Version 3.3.5
+
 * Sat Mar 30 2013 Aleksey Avdeev <solo@altlinux.ru> 3.1.1-alt1.git20130330
 - Version 3.1.1 (d7ea8fd4bb60e8e0799b1cb4a3ef0f79da8f3530)
 
