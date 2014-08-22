@@ -5,7 +5,7 @@
 
 Name: gnome-documents
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -126,6 +126,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
+- rebuilt against libgdata.so.19
+
 * Fri May 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 

@@ -1,9 +1,9 @@
-%define ver_major 0.14
+%define ver_major 0.15
 %def_enable gnome
 %def_enable goa
 
 Name: libgdata
-Version: %ver_major.3
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -17,7 +17,9 @@ Source: ftp://ftp//ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%versi
 %define goa_ver 3.7.90
 
 BuildRequires: gnome-common gtk-doc intltool
-BuildRequires: libgdk-pixbuf-devel libgtk+3-devel liboauth-devel gobject-introspection-devel
+BuildRequires: libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
+BuildRequires: libjson-glib-devel libuhttpmock-devel
+BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libuhttpmock-gir-devel
 %{?_enable_gnome:BuildRequires: gcr-libs-devel libxml2-devel libsoup-gnome-devel >= %soup_ver libsoup-gnome-gir-devel}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libgnome-online-accounts-gir-devel}
 
@@ -92,6 +94,9 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Wed May 28 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
 - 0.14.3
 

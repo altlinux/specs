@@ -17,7 +17,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Evolution Data Server
@@ -39,7 +39,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define sqlite_ver 3.5
 %define gweather_ver 3.8.0
 %define ical_ver 0.43
-%define gdata_ver 0.10
+%define gdata_ver 0.15.1
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
 
@@ -267,6 +267,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %endif
 
 %changelog
+* Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.5-alt1
+- 3.12.5
+
 * Mon Jul 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
 - 3.12.4 release
 
