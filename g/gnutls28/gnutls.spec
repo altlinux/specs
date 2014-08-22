@@ -1,24 +1,24 @@
-Name: gnutls26
-Version: 2.12.23
-Release: alt3
+Name: gnutls28
+Version: 3.2.16
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
 License: LGPLv2.1+ and GPLv3+
-Group: System/Legacy libraries
+Group: System/Libraries
 Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
-Patch1: gnutls-2.12.14-rh-tests.patch
-Patch2: gnutls-2.12.21-alt-linkage.patch
-Patch3: gnutls-2.12.23-up-fixes.patch
 
+%define libcxx libgnutlsxx28
+%define libssl libgnutls27-openssl
 %def_disable guile
 %def_with lzo
-%set_automake_version 1.11
+#set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
+BuildRequires: libnettle-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
@@ -48,6 +48,103 @@ group.
 
 This package contains the GnuTLS runtime library.
 
+%package -n libgnutls-devel
+Summary: Development files for lib%name
+Group: Development/C
+Requires: lib%name = %version-%release
+Provides: libgnutls-devel = %version
+Obsoletes: libgnutls-new-devel < %version
+
+%description -n libgnutls-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build GnuTLS-based software.
+
+%package -n %libcxx
+Summary: Transport Layer Security C++ library
+Group: System/Libraries
+License: GPLv3+
+Requires: lib%name = %version-%release
+Provides: libgnutlsxx = %version
+Obsoletes: libgnutlsxx < %version
+Obsoletes: libgnutls-newxx < %version
+
+%description -n %libcxx
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS C++ runtime library.
+
+%package -n libgnutlsxx-devel
+Summary: Development files for libgnutlsxx
+Group: Development/C++
+Requires: %libcxx = %version-%release
+Requires: libgnutls-devel = %version-%release
+Obsoletes: libgnutls-newxx-devel < %version
+
+%description -n libgnutlsxx-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build GnuTLS-based software using C++.
+
+%package -n %libssl
+Summary: OpenSSL compatibility layer for the GnuTLS library
+Group: System/Libraries
+Requires: lib%name = %version-%release
+Provides: libgnutls-openssl = %version
+Obsoletes: libgnutls-openssl < %version
+Obsoletes: libgnutls-new-openssl < %version
+
+%description -n %libssl
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS runtime OpenSSL compatibility library.
+
+%package -n libgnutls-openssl-devel
+Summary: Development files for %libssl
+Group: Development/C
+Requires: %libssl = %version-%release
+Requires: libgnutls-devel = %version-%release
+Obsoletes: libgnutls-new-openssl-devel < %version
+
+%description -n libgnutls-openssl-devel
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains headers and other development files required to
+build applications using the GnuTLS compatibility OpenSSL library.
+
+%package utils
+Summary: TLS protocol utilities
+Group: Security/Networking
+Provides: gnutls-utils = %version
+Obsoletes: gnutls-utils < %version
+Obsoletes: gnutls-utils26 < %version
+
+%description utils
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains command line TLS client and server, and
+certificate manipulation tools.
+
 %package -n libgnutls-guile
 Summary: GnuTLS Guile bindings
 Group: Development/Other
@@ -62,11 +159,25 @@ group.
 
 This package contains Guile bindings for the library.
 
+%package devel-doc
+Summary: Development documentation for GnuTLS
+Group: Development/C
+Conflicts: libgnutls-devel < %version
+Provides: gnutls-devel-doc = %version
+Obsoletes: gnutls-devel-doc < %version
+Obsoletes: gnutls-new-devel-doc < %version
+BuildArch: noarch
+
+%description devel-doc
+GnuTLS is a project that aims to develop a library which provides a
+secure  layer, over a reliable transport layer.  Currently the GnuTLS
+library implements the proposed standards by the IETF's TLS working
+group.
+
+This package contains the GnuTLS API Reference Manual.
+
 %prep
 %setup -n gnutls-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -83,42 +194,74 @@ sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-
 	--disable-silent-rules \
 	--with-libgcrypt \
 	%{subst_enable guile} \
-	%{subst_with lzo} \
-	--disable-gtk-doc \
-	--disable-cxx \
-	--disable-openssl-compatibility
+	%{subst_with lzo}
 %make_build LTLIBTASN1=-ltasn1 MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std LTLIBTASN1=-ltasn1
 find %buildroot%_infodir/ -name '*.png' -delete -print
 %define docdir %_docdir/gnutls-%version
-mkdir -p %buildroot%docdir/
+mkdir -p %buildroot%docdir/{examples,reference}
 install -p -m644 AUTHORS NEWS README THANKS %buildroot%docdir/
+install -p -m644 doc/*.{cfg,css,html,png} %buildroot%docdir/
+install -pm644 doc/examples/*.[hc]* %buildroot%docdir/examples/
+install -pm644 doc/reference/html/* %buildroot%docdir/reference/
 ln -s %_licensedir/GPL-2 %buildroot%docdir/COPYING
 ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 
-%find_lang libgnutls
+%find_lang gnutls
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
 %check
 %make_build -k check
 
-%files -n lib%name -f libgnutls.lang
+%files -n lib%name -f gnutls.lang
 %dir %docdir
 %docdir/[ACNRT]*
 %_libdir/libgnutls.so.*
+%exclude %_libdir/libgnutls-xssl.*
 
-%exclude %_includedir/*
-%exclude %_libdir/libgnutls*.so
-%exclude %_libdir/libgnutls-extra.so.*
-%exclude %_pkgconfigdir/gnutls*.pc
-%exclude %_man3dir/*
-%exclude %_infodir/*
+%files -n %libcxx
+%_libdir/libgnutlsxx.so.*
 
-%exclude %_bindir/*
-%exclude %_man1dir/*
+%files -n %libssl
+%_libdir/libgnutls-openssl.so.*
+
+%files -n libgnutls-devel
+%_includedir/gnutls/
+%exclude %_includedir/gnutls/gnutlsxx.h
+%exclude %_includedir/gnutls/openssl.h
+%exclude %_includedir/gnutls/xssl.h
+%_libdir/libgnutls.so
+%_pkgconfigdir/gnutls.pc
+
+%files -n libgnutlsxx-devel
+%dir %_includedir/gnutls/
+%_includedir/gnutls/gnutlsxx.h
+%_libdir/libgnutlsxx.so
+
+
+%files -n libgnutls-openssl-devel
+%dir %_includedir/gnutls/
+%_includedir/gnutls/openssl.h
+%_libdir/libgnutls-openssl.so
+
+%files devel-doc
+%dir %docdir
+%docdir/*.css
+%docdir/*.html
+%docdir/*.png
+%docdir/examples/
+%docdir/reference/
+%_man3dir/*
+%_infodir/*
+
+%files utils
+%_bindir/*
+%_man1dir/*
+%dir %docdir
+%docdir/*.cfg
 
 %if_enabled guile
 # %%_datadir/guile belongs to guile package
@@ -132,11 +275,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
-* Thu Aug 21 2014 Mikhail Efremov <sem@altlinux.org> 2.12.23-alt3
-- Drop libgnutls26-extra and libgnutlsxx27 subpackages.
-- Drop libgnutls27-openssl subpackage.
-- Change group to  System/Legacy libraries.
-- Drop *-devel, devel-doc and utils subpackages.
+* Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 3.2.16-alt1
+- Drop obsoleted patches.
+- Drop libgnutls-extra.
+- Updated to 3.2.16.
 
 * Wed Mar 05 2014 Dmitry V. Levin <ldv@altlinux.org> 2.12.23-alt2
 - Applied upstream fixes for CVE-2013-2116, CVE-2014-1959, and CVE-2014-0092.
