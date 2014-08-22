@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-assembly-plugin
 Version:        2.4
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Maven Assembly Plugin
 
 Group:          Development/Java
@@ -124,6 +124,9 @@ rm -rf target/site/api*
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_5jpp7
+- added BR: for xmvn
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_5jpp7
 - new version
 
