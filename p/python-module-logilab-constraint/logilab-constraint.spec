@@ -4,13 +4,13 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt2.hg20120329
+Release: alt2.hg20130911
 Summary: A constraint satisfaction problem solver written in 100%% pure Python
 
 Group: Development/Python
 License: GPL
 URL: http://www.logilab.org/852/
-# hg clone http://hg.logilab.org/logilab/constraint
+# hg clone http://hg.logilab.org/review/logilab/constraint
 Source: constraint-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -125,6 +125,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.hg20130911
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.hg20120329
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
