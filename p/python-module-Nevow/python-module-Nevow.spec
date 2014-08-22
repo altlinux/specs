@@ -1,10 +1,12 @@
-%define version 0.10.0
-%define release alt1.2
+%define version 0.11.1
+%define release alt1
 %setup_python_module Nevow
+
+%def_without python3
 
 Name: %packagename
 Version:%version
-Release: %release.1
+Release: %release
 BuildArch: noarch
 
 Summary: Web Application Construction Kit
@@ -15,11 +17,22 @@ Url: http://divmod.org/trac/wiki/Divmod%{modulename}
 
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
 Patch1: Nevow-0.10.0-fix-twisted.plugins.patch
+Patch2: Nevow-0.11.1-alt-python3.patch
 
 BuildPreReq: rpm-build-python
-BuildRequires: python-module-Cython python-module-twisted python-module-twisted-core-gui python-module-twisted-core-test
+BuildRequires: python-module-Cython python-module-twisted
+BuildRequires: python-module-twisted-core-gui
+BuildRequires: python-module-twisted-core-test
 BuildRequires: python-devel python-module-setuptools
 BuildPreReq: python-module-zope.interface
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-twisted-core-gui
+BuildRequires: python3-module-twisted-core-test
+BuildRequires: python3-devel python3-module-setuptools
+BuildPreReq: python3-module-zope.interface python-tools-2to3
+%endif
 
 Requires: python-module-twisted-web python-module-twisted-core-gui
 
@@ -42,30 +55,92 @@ communication, session security, and browser-specific bugs behind a simple
 remote-method-call interface, where individual widgets or fragments can call
 remote methods on their client or server peer with one method: "callRemote".
 
+%package -n python3-module-%modulename
+Summary: Web Application Construction Kit
+Group: Development/Python3
+Requires: python3-module-twisted-web python3-module-twisted-core-gui
+
+%description -n python3-module-%modulename
+Divmod Nevow is a web application construction kit written in Python. It is
+designed to allow the programmer to express as much of the view logic as
+desired in Python, and includes a pure Python XML expression syntax named stan
+to facilitate this. However it also provides rich support for designer-edited
+templates, using a very small XML attribute language to provide bi-directional
+template manipulation capability.
+
+Nevow also includes Divmod Athena, a "two way web" or "`COMET`_"
+implementation, providing a two-way bridge between Python code on the server
+and JavaScript code on the client.  Modular portions of a page, known as
+"athena fragments" in the server python and "athena widgets" in the client
+javascript, can be individually developed and placed on any Nevow-rendered page
+with a small template renderer.  Athena abstracts the intricacies of HTTP
+communication, session security, and browser-specific bugs behind a simple
+remote-method-call interface, where individual widgets or fragments can call
+remote methods on their client or server peer with one method: "callRemote".
+
 %prep
-%setup -q -n %modulename-%version
-%patch1 -p1
+%setup -n %modulename-%version
+#patch1 -p1
+%patch2 -p2
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 install -D -p -m 0644 doc/man/nevow-xmlgettext.1 %buildroot%_man1dir/nevow-xmlgettext.1
 
 %files
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/Nevow-*.egg-info
 %python_sitelibdir/nevow/
 %python_sitelibdir/formless/
 %python_sitelibdir/twisted/plugins/*.py*
-%doc README LICENSE doc
+%doc ChangeLog LICENSE doc
 %_man1dir/*
 %exclude %_prefix/doc
 
 #%%exclude %_bindir/*
 
+%if_with python3
+%files -n python3-module-%modulename
+%_bindir/*.py3
+%python3_sitelibdir/Nevow-*.egg-info
+%python3_sitelibdir/nevow/
+%python3_sitelibdir/formless/
+%python3_sitelibdir/twisted/plugins/*.py*
+%doc ChangeLog LICENSE doc
+%endif
+
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt1
+- Version 0.11.1
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.10.0-alt1.2.1
 - Rebuild with Python-2.7
 
