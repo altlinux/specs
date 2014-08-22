@@ -1,3 +1,4 @@
+BuildRequires: xmlunit springframework
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java
 Version:       2.5.3
-Release:       alt1_4jpp7
+Release:       alt2_4jpp7
 Summary:       Java OpenSAML library
 License:       ASL 2.0
 Group:         Development/Java
@@ -118,6 +119,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_4jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_4jpp7
 - new release
 
