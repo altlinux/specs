@@ -1,5 +1,4 @@
 %set_verify_elf_method textrel=relaxed
-#%%define v8_ver 3.26
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +11,8 @@
 %endif
 
 Name:           chromium
-Version:        36.0.1985.125
-Release:        alt2
+Version:        36.0.1985.143
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -28,7 +27,7 @@ Source31:       default_bookmarks.html
 Source99:       chrome-wrapper
 Source100:      %name.sh
 Source101:      chromium.desktop
-Source102:      chromium-browser.xml
+Source102:      chromium.xml
 Source200:      %name.default
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
@@ -82,9 +81,6 @@ Patch92:	chromium-third-party-cookies-off-by-default.patch
 Patch93:	chromium-ps-print.patch
 Patch94:	chromium-linker-flags.patch
 
-# Patches from upstream
-Patch100:	chromium-fix-small-fonts.patch
-
 # Patches from ALT Linux
 Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
@@ -135,7 +131,6 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-#BuildRequires:  libv8-devel = %%v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
@@ -252,12 +247,6 @@ tar xf %SOURCE10 -C src
 %patch96 -p0
 %patch97 -p1
 %patch98 -p0
-%patch100 -p1 -d src
-
-# Replace anywhere v8 to system package
-#subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
-#sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
-#grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -478,7 +467,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_libdir/chromium/*.pak
 %_man1dir/chrom*
 %_desktopdir/%name.desktop
-%_datadir/gnome-control-center/default-apps/chromium-browser.xml
+%_datadir/gnome-control-center/default-apps/chromium.xml
 %_iconsdir/hicolor/*/apps/chromium.*
 %_altdir/%name
 %_altdir/%name-generic
@@ -492,6 +481,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Mon Aug 18 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.143-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-3165: Use-after-free in web sockets.
+  - High CVE-2014-3166: Information disclosure in SPDY.
+
 * Fri Jul 25 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.125-alt2
 - Fix small user interface fonts (see https://code.google.com/p/chromium/issues/detail?id=375824)
 
