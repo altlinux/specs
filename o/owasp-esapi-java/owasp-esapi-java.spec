@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             owasp-esapi-java
 Version:          2.0.1
-Release:          alt2_7jpp7
+Release:          alt3_7jpp7
 Summary:          OWASP Enterprise Security API
 Group:            Development/Java
 License:          BSD
@@ -106,6 +106,7 @@ sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/
 
 %build
 mvn-rpmbuild \
+	-Dmaven.test.skip=true \
     -Dproject.build.sourceEncoding=UTF-8 \
     package javadoc:aggregate
 
@@ -138,6 +139,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc documentation/*
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt3_7jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_7jpp7
 - new release
 
