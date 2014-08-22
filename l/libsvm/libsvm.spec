@@ -1,8 +1,10 @@
 %define sover 2
 
+%def_with python3
+
 Name: libsvm
 Version: 3.18
-Release: alt1
+Release: alt2
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
 License: BSD
@@ -11,6 +13,10 @@ Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: python-devel gcc-c++
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
 
 %description
 LIBSVM is an integrated software for support vector classification,
@@ -54,6 +60,19 @@ estimation (one-class SVM). It supports multi-class classification.
 
 This package contains Python interface for LIBSVM.
 
+%package -n python3-module-svm
+Summary: Python interface for LIBSVM
+Group: Development/Python3
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n python3-module-svm
+LIBSVM is an integrated software for support vector classification,
+(C-SVC, nu-SVC), regression (epsilon-SVR, nu-SVR) and distribution
+estimation (one-class SVM). It supports multi-class classification.
+
+This package contains Python interface for LIBSVM.
+
 %prep
 %setup
 
@@ -81,6 +100,11 @@ done
 install -d %buildroot%python_sitelibdir_noarch
 install -m644 python/*.py %buildroot%python_sitelibdir_noarch
 
+%if_with python3
+install -d %buildroot%python3_sitelibdir_noarch
+install -m644 python/*.py %buildroot%python3_sitelibdir_noarch
+%endif
+
 %files
 %doc COPYRIGHT README *.html
 %_libdir/*.so.*
@@ -97,7 +121,16 @@ install -m644 python/*.py %buildroot%python_sitelibdir_noarch
 %doc python/README
 %python_sitelibdir_noarch/*
 
+%if_with python3
+%files -n python3-module-svm
+%doc python/README
+%python3_sitelibdir_noarch/*
+%endif
+
 %changelog
+* Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18-alt2
+- Added module for Python 3
+
 * Thu Jun 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18-alt1
 - Version 3.18
 
