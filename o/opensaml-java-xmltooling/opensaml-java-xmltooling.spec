@@ -1,3 +1,4 @@
+BuildRequires: xmlunit springframework
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: maven
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java-xmltooling
 Version:       1.3.4
-Release:       alt1_5jpp7
+Release:       alt2_5jpp7
 Summary:       Java XMLTooling library
 License:       ASL 2.0 and W3C
 Group:         Development/Java
@@ -116,6 +117,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_5jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt1_5jpp7
 - new release
 
