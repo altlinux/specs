@@ -1,6 +1,6 @@
 Name: libsearpc
-Version: 1.1.0
-Release: alt1
+Version: 1.2.0
+Release: alt3
 
 Summary: RPC library for Seafile
 
@@ -8,7 +8,7 @@ Group: Networking/File transfer
 License: GPLv3
 Url: https://github.com/haiwen/libsearpc
 
-Packager: Denis Baranov <baraka@altlinux.ru>
+Packager: Konstantin Artyushkin <akv@altlinux.org> 
 
 # Source-url: https://seafile.googlecode.com/files/seafile-latest.tar.gz
 Source: %name-%version.tar
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
 BuildRequires: libgio-devel python-module-mwlib python-module-paste python-module-peak
+BuildRequires: libjansson-devel
 
 %description
 Searpc is a simple C language RPC framework based on GObject system.
@@ -55,6 +56,12 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 03 2014 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt3
+- plus libjansson
+
+* Sun Aug 03 2014 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt2
+ update to 1.2.2
+
 * Fri Sep 06 2013 Denis Baranov <baraka@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Linux Sisyphus
 

@@ -1,13 +1,13 @@
 %define oname seafile
 Name: libseafile
-Version: 2.0.4
-Release: alt2
+Version: 3.1.0
+Release: alt5
 Summary: Seafile client libriary
 
 Group: Networking/File transfer
 License: GPLv3
 Url: https://github.com/haiwen/libsearpc
-Packager: Denis Baranov <baraka@altlinux.ru>
+Packager: Konstantin Artyushkin <akv@altlinux.org> 
 
 #Source: http://seafile.com.cn/downloads/seafile-latest.tar.gz
 Source: %name-%version.tar
@@ -19,6 +19,8 @@ Requires: python-module-simplejson
 # Automatically added by buildreq on Sun Nov 10 2013
 # optimized out: glib2-devel gnu-config libevent-devel libgio-devel libsearpc-devel mariadb-client mariadb-common pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
 BuildRequires: libsqlite3-devel intltool libccnet-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
+BuildRequires: zlib-devel libfuse-devel vala libjansson-devel libjson-glib-devel 
+BuildRequires: libccnet-devel >= 1.4.2 libsearpc-devel >= 1.2.0
 
 %description
 Seafile is a full-fledged document collaboration platform
@@ -53,11 +55,11 @@ developing applications that use %name.
 %_libdir/*.a
 %_libdir/python2.7/site-packages/seaserv/
 %_bindir/*
-%_desktopdir/*
-%_iconsdir/hicolor/*/apps/*
-%_pixmapsdir/*
+#_desktopdir/*
+#_iconsdir/hicolor/*/apps/*
+#_pixmapsdir/*
 %_man1dir/*.1.gz
-%_datadir/%oname/*.png
+#_datadir/%oname/*.png
 %python_sitelibdir/%oname/*
 
 %files devel
@@ -66,6 +68,18 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Aug 22 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt5
+-  update buildrequires
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt4
+- + libjansson-devel
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt3
+ update to 3.1.0 
+
+* Mon Aug 04 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt2
+ update source 
+
 * Sun Nov 10 2013 Denis Baranov <baraka@altlinux.ru> 2.0.4-alt2
 - Fix some error in repository
 
