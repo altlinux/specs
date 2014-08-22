@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 Summary:        Enterprise Job Scheduler for Java
 Name:           quartz
 Version:        2.1.2
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.quartz-scheduler.org/
@@ -18,7 +18,7 @@ Source0:        %{name}-%{version}.tar.xz
 Patch0:         %{name}-%{version}-dep-fixes.patch
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  geronimo-parent-poms
-BuildRequires:  maven-local
+BuildRequires:  maven-local derby
 BuildRequires:  maven-shared
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-clean-plugin
@@ -123,6 +123,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt3_7jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_7jpp7
 - new release
 
