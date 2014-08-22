@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: maven jmock
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox
 Version:        1.12.1
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Epoch:          1
 License:        ASL 2.0
 URL:            http://qdox.codehaus.org/
@@ -166,6 +166,9 @@ cp -pr target/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt2_5jpp7
+- added BR: for xmvn
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_5jpp7
 - new release
 
