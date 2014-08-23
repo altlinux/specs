@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: unzip maven-shared-incremental maven-shared-utils
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-compiler-plugin
 Version:        3.0
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Maven Compiler Plugin
 
 Group:          Development/Java
@@ -55,6 +55,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt2_2jpp7
+- rebuild with maven.req
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2jpp7
 - new release
 
