@@ -7,14 +7,15 @@ BuildRequires: jpackage-compat
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.2.2
-Release:           alt2_1jpp7
+Version:           4.2.4
+Release:           alt1_3jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
 BuildArch:         noarch
 
+BuildRequires:     maven-local
 BuildRequires:     httpcomponents-project
 BuildRequires:     jpackage-utils
 BuildRequires:     maven-surefire-provider-junit4
@@ -23,10 +24,6 @@ BuildRequires:     junit
 %if 0%{?rhel} <= 0
 BuildRequires:     mockito
 %endif
-
-Requires:          jpackage-utils
-Requires:          apache-commons-logging
-Requires:          junit
 Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
@@ -48,7 +45,6 @@ HTTP connections in a resource efficient manner.
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -63,6 +59,10 @@ BuildArch: noarch
 %pom_remove_plugin :maven-notice-plugin
 %pom_remove_plugin :docbkx-maven-plugin
 
+# we don't need these artifacts right now
+%pom_disable_module httpcore-osgi
+%pom_disable_module httpcore-ab
+
 # OSGify modules
 for module in httpcore httpcore-nio; do
     %pom_xpath_remove "pom:project/pom:packaging" $module
@@ -75,54 +75,39 @@ for module in httpcore httpcore-nio; do
           <configuration>
             <instructions>
               <Export-Package>*</Export-Package>
+              <Private-Package></Private-Package>
+              <_nouses>true</_nouses>
             </instructions>
           </configuration>
         </plugin>" $module
 done
 
+# install JARs to httpcomponents/ for compatibility reasons
+# several other packages expect to find the JARs there
+%mvn_file ":{*}" httpcomponents/@1
+
 %build
-mvn-rpmbuild \
+%mvn_build \
 %if 0%{?rhel}
-    -Dmaven.test.skip=true \
+    -f
 %endif
-    install javadoc:aggregate
+
 
 %install
-install -dm 755 %{buildroot}/%{_mavenpomdir}
-install -dm 755 %{buildroot}/%{_javadir}/%{base_name}
+%mvn_install
 
-for m in httpcore httpcore-nio; do
-    # poms
-    install -pm 644 $m/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-$m.pom
-
-    # jars - osgi doesn't have one
-    if [ -f $m/target/$m-%{version}.jar ];then
-        install -m 644 $m/target/$m-%{version}.jar %{buildroot}%{_javadir}/%{base_name}/$m.jar
-    fi
-
-    %add_maven_depmap JPP.%{base_name}-$m.pom %{base_name}/$m.jar
-done
-
-# parent
-install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-%{name}.pom
-%add_maven_depmap JPP.%{base_name}-%{name}.pom
-
-# javadocs
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
+%dir %{_javadir}/httpcomponents
 %doc LICENSE.txt NOTICE.txt
 %doc README.txt RELEASE_NOTES.txt
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP.%{base_name}*.pom
-%{_javadir}/%{base_name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1_3jpp7
+- new version
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt2_1jpp7
 - added maven-local BR:
 
