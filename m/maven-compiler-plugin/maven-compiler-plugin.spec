@@ -1,39 +1,63 @@
-Name: maven-compiler-plugin
-Version: 3.0
-Summary: Maven Compiler Plugin
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-compiler-plugin
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven2-plugin-compiler
-Requires: java
-Requires: maven-shared-incremental maven-shared-utils plexus-compiler
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           maven-compiler-plugin
+Version:        3.0
+Release:        alt1_2jpp7
+Summary:        Maven Compiler Plugin
+
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-compiler-plugin
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-compiler-plugin-3.0-2.fc19.cpio
+
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-shared-incremental
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  maven-toolchain
+BuildRequires:  plexus-compiler >= 2.0
+
+Provides:       maven2-plugin-compiler = %{version}-%{release}
+Obsoletes:      maven2-plugin-compiler <= 0:2.0.8
+Source44: import.info
 
 %description
 The Compiler Plugin is used to compile the sources of your project.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q 
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2jpp7
+- new release
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
