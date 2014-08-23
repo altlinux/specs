@@ -1,89 +1,66 @@
 Epoch: 0
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat maven-surefire-provider-junit4                  
 %global base_name       compress
 %global short_name      commons-%{base_name}
 
-Name:             apache-%{short_name}
-Version:          1.4.1
-Release:          alt3_2jpp7
-Summary:          Java API for working with tar, zip and bzip2 files
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:        noarch
+Name:           apache-%{short_name}
+Version:        1.5
+Release:        alt1_1jpp7
+Summary:        Java API for working with compressed files and archivers
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}/
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+BuildArch:      noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
-BuildRequires:    junit4
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    xz-java
-Requires:         jpackage-utils
-Requires:         xz-java
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  javapackages-tools >= 0.10.0
+BuildRequires:  apache-commons-parent
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  xz-java
 
-# Upstream name change
-Provides:         jakarta-%{short_name} = %{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 1.0-2
+Provides:       jakarta-%{short_name} = %{version}-%{release}
+Obsoletes:      jakarta-%{short_name} < 1.0-2
 Source44: import.info
 
 %description
-The code in this component came from Avalon's Excalibur, but originally
-from Ant, as far as life in Apache goes. The tar package is originally
-Tim Endres' public domain package. The bzip2 package is based on the
-work done by Keiron Liddle. It has migrated via:
-Ant -> Avalon-Excalibur -> Commons-IO -> Commons-Compress. 
+The Apache Commons Compress library defines an API for working with
+ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
 
 
 %package javadoc
-Summary:        Javadocs for %{name}
+Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
-
-# Upstream name change
-Provides:         jakarta-%{short_name}-javadoc = %{version}-%{release}
-Obsoletes:        jakarta-%{short_name}-javadoc < 1.0-2
+Provides:       jakarta-%{short_name}-javadoc = %{version}-%{release}
+Obsoletes:      jakarta-%{short_name}-javadoc < 1.0-2
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package provides %{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file  : %{short_name} %{name}
+%mvn_alias : commons:
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{short_name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_install
 
-# poms
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_to_maven_depmap org.apache.commons %{short_name} %{version} JPP %{short_name}
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp7
+- new version
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt3_2jpp7
 - added maven-local BR:
 
