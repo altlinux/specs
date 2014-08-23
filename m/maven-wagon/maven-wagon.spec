@@ -10,8 +10,12 @@ Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: maven-wagon-2.4-1.fc19.cpio
+Provides: mvn(org.apache.maven.wagon:wagon-file)
+Provides: mvn(org.apache.maven.wagon:wagon-http)
+Provides: mvn(org.apache.maven.wagon:wagon-provider-api)
+
 
 %description
 Maven Wagon is a transport abstraction that is used in Maven's
@@ -42,6 +46,9 @@ done
 %files -f %name-list
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt0.2jpp
+- rebuild to add provides
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
