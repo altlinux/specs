@@ -1,11 +1,12 @@
 Name: qtmib
 Version: 1.0
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: Networking/Other
 Summary: SNMP MIB Browser for Linux platforms 
 Url: http://sourceforge.net/projects/qtmib
 Source0: %name-%version.tar
+Patch0: qtmib-1.0-dont_strip.patch
 
 BuildRequires: libqt4-devel gcc-c++
 
@@ -17,6 +18,7 @@ is released under GPL v2 license.
 
 %prep
 %setup
+%patch0 -p0
 
 %build
 export QTDIR=%_qt4dir
@@ -35,6 +37,9 @@ make
 %doc README RELNOTES
 
 %changelog
+* Sat Aug 23 2014 Terechkov Evgenii <evg@altlinux.org> 1.0-alt3
+- Build with debuginfo
+
 * Sat Aug 23 2014 Terechkov Evgenii <evg@altlinux.org> 1.0-alt2
 - Fix build in git.alt
 
