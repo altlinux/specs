@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:		geronimo-jta
 Version:	1.1.1
-Release:	alt3_10jpp7
+Release:	alt3_14jpp7
 Summary:	J2EE JTA v1.1 API
 
 Group:		Development/Java
@@ -16,6 +16,7 @@ Source0:	%{spec_name}-%{version}.tar.bz
 BuildArch:	noarch
 
 # This pulls in almost all of the required java and maven stuff
+BuildRequires:  maven-local
 BuildRequires:	geronimo-parent-poms
 BuildRequires:	maven-resources-plugin
 
@@ -39,7 +40,6 @@ applications.
 %package javadoc
 Summary:	API documentation for %{name}
 Group:		Development/Java
-Requires:	jpackage-utils >= 0:1.7.5
 BuildArch:	noarch
 
 %description javadoc
@@ -50,30 +50,13 @@ BuildArch:	noarch
 
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true \
-	         install javadoc:javadoc
-
+%mvn_file  : %{name} %{spec_name} jta
+%mvn_alias : javax.transaction:jta
+%mvn_alias : org.eclipse.jetty.orbit:javax.transaction
+%mvn_build -f
 
 %install
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-
-install -m 644 target/%{spec_name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# Also provide compat symlinks
-pushd $RPM_BUILD_ROOT%{_javadir}
-ln -sf %{name}.jar %{spec_name}.jar
-ln -sf %{name}.jar jta.jar
-popd
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "javax.transaction:jta"
+%mvn_install
 
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jta_geronimo-jta<<EOF
 %{_javadir}/jta.jar	%{_javadir}/geronimo-jta.jar	10200
@@ -90,25 +73,23 @@ EOF
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{spec_name}.jar
-%{_javadir}/jta.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
 #%_altdir/jta_1_1_api_geronimo-jta
 #%_altdir/jta_api_geronimo-jta
 %_altdir/jta_geronimo-jta
+%exclude %{_javadir}*/jta.jar
 
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_14jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_10jpp7
 - added maven-local BR:
 
