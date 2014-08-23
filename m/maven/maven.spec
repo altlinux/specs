@@ -12,8 +12,9 @@ Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: maven-3.0.5-3.fc19.cpio
+BuildRequires: rpm-build-java
 
 %description
 Maven is a software project management and comprehension tool. Based on the
@@ -39,6 +40,9 @@ touch %buildroot/etc/mavenrc
 /etc/mavenrc
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.5-alt0.2jpp
+- rebuild to add provides
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
