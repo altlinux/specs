@@ -9,8 +9,10 @@ Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: maven-shared-incremental-1.0-2.fc19.cpio
+#BuildRequires: rpm-build-java
+Provides: mvn(org.apache.maven.shared:maven-shared-incremental)
 
 %description
 Various utility classes and plexus components for supporting
@@ -34,6 +36,9 @@ done
 %files -f %name-list
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.2jpp
+- rebuild to add provides
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
