@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
 Version:       1.1
-Release:       alt3_3jpp7
+Release:       alt3_7jpp7
 Summary:       Java Authentication SPI for Containers
 License:       ASL 2.0 and W3C
 Group:         Development/Java
@@ -18,8 +18,6 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: geronimo-osgi-support
 BuildRequires: geronimo-parent-poms
 BuildRequires: jpackage-utils
-
-Requires:      jpackage-utils
 Source44: import.info
 
 %description
@@ -52,33 +50,23 @@ done
     </parent>"
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file  : %{name}
+%mvn_alias : org.eclipse.jetty.orbit:javax.security.auth.message
+%mvn_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{pkg_name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_7jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_3jpp7
 - rebuild with maven-local
 
