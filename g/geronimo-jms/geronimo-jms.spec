@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:		geronimo-jms
 Version:	1.1.1
-Release:	alt3_13jpp7
+Release:	alt3_16jpp7
 Summary:	J2EE JMS v1.1 API
 
 Group:		Development/Java
@@ -18,6 +18,7 @@ Patch0:		geronimo-jms-1.1-api-remove-mockobjects.patch
 BuildArch:	noarch
 
 # This pulls in almost all of the required java and maven stuff
+BuildRequires:  maven-local
 BuildRequires:	geronimo-parent-poms
 BuildRequires:	maven-resources-plugin
 
@@ -53,29 +54,13 @@ BuildArch:	noarch
 
 
 %build
-mvn-rpmbuild \
-	-Dmaven.test.skip=true \
-	install javadoc:javadoc
+%mvn_file  : %{name} %{spec_name} jms
+%mvn_alias : javax.jms:jms
+%mvn_build -f
 
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-
-install -m 644 target/%{spec_name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# Also provide compat symlinks
-pushd $RPM_BUILD_ROOT%{_javadir}
-ln -sf %{name}.jar %{spec_name}.jar
-ln -sf %{name}.jar jms.jar
-popd
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "javax.jms:jms"
+%mvn_install
 
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jms_geronimo-jms<<EOF
 %{_javadir}/jms.jar	%{_javadir}/geronimo-jms.jar	10200
@@ -88,17 +73,13 @@ EOF
 #EOF
 
 
+
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{spec_name}.jar
-%{_javadir}/jms.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
 #%_altdir/jms_1_1_api_geronimo-jms
 #%_altdir/jms_api_geronimo-jms
@@ -106,12 +87,14 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %exclude %{_javadir}*/jms.jar
 
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_16jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_13jpp7
 - added maven-local BR:
 
