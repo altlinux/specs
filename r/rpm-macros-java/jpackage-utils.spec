@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt38
+Release:        alt39
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -421,6 +421,8 @@ EOF
 
 mkdir -p ${RPM_BUILD_ROOT}/usr/lib/rpm/
 install -pm 755 rpm-build-java/maven.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
+install -pm 755 rpm-build-java/maven.prov.files ${RPM_BUILD_ROOT}/usr/lib/rpm/maven.req.files
+install -pm 755 rpm-build-java/maven.req ${RPM_BUILD_ROOT}/usr/lib/rpm/
 install -pm 755 rpm-build-java/osgi.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
 pushd ${RPM_BUILD_ROOT}/usr/lib/rpm/
 # un/comment ln's below to enable/disable osgi.req
@@ -545,6 +547,9 @@ install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_
 
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt39
+- maven.req
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt38
 - migration to xmvn
 
