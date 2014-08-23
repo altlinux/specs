@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 4.6.1
+Version: 4.6.3
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -92,6 +92,9 @@ read and rather useful for a first time user.
 %exclude %_datadir/application-registry/%name.applications
 
 %changelog
+* Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
 - 4.6.1
 
