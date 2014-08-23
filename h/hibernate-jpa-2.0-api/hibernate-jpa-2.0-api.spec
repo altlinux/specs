@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-jpa-2.0-api
 %define version 1.0.1
 %global namedreltag .Final
@@ -10,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_7jpp7
+Release:          alt3_11jpp7
 Summary:          Java Persistence 2.0 (JSR 317) API
 
 Group:            Development/Java
@@ -57,6 +60,8 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 
+%pom_xpath_remove pom:build/pom:extensions
+
 %build
 mvn-rpmbuild install javadoc:aggregate
 
@@ -73,7 +78,7 @@ cp -rp  target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "javax.persistence:persistence-api"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # compat symlink for eclipselink-2.3.2-alt1_1jpp7, jasperreports-4.0.2-alt1_3jpp7
 mkdir -p $RPM_BUILD_ROOT%{_javadir}/hibernate
@@ -91,6 +96,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 %doc license.txt
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_11jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_7jpp7
 - rebuild with maven-local
 
