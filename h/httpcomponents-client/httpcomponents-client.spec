@@ -1,27 +1,26 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name httpcomponents
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.2.1
-Release:           alt3_3jpp7
+Version:           4.2.5
+Release:           alt1_1jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
-Source0:           http://www.apache.org/dist/httpcomponents/httpclient/source/httpcomponents-client-%{version}-src.tar.gz
+Source0:           http://archive.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
 
 BuildArch:         noarch
 
+BuildRequires:     maven-local
 BuildRequires:     httpcomponents-project
 BuildRequires:     httpcomponents-core
 BuildRequires:     apache-mime4j
 BuildRequires:     apache-commons-codec
-
-Requires:          jpackage-utils
-Requires:          httpcomponents-core
-Requires:          apache-mime4j
-Requires:          apache-commons-codec
 Source44: import.info
 
 Obsoletes: hc-httpclient < 4.1.1
@@ -38,7 +37,6 @@ encouraged to upgrade.
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -51,6 +49,7 @@ BuildArch: noarch
 # Remove optional build deps not available in Fedora
 %pom_disable_module httpclient-cache
 %pom_disable_module httpclient-osgi
+%pom_disable_module fluent-hc
 %pom_remove_dep :mockito-core httpclient
 %pom_remove_plugin :maven-notice-plugin
 %pom_remove_plugin :docbkx-maven-plugin
@@ -102,48 +101,26 @@ done
     </plugin>" httpclient
 
 
+
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_file ":{*}" httpcomponents/@1
+%mvn_build -f
 
 %install
-# jars
-install -dm 755 %{buildroot}%{_javadir}/%{base_name}
-install -m 644 httpclient/target/httpclient-%{version}.jar %{buildroot}%{_javadir}/%{base_name}/httpclient.jar
-install -m 644 httpmime/target/httpmime-%{version}.jar %{buildroot}%{_javadir}/%{base_name}/httpmime.jar
-
-# main pom
-install -dm 755 %{buildroot}/%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-httpcomponents-client.pom
-%add_maven_depmap JPP.%{base_name}-httpcomponents-client.pom
-
-# pom
-install -pm 644 httpclient/pom.xml \
-    %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-httpclient.pom
-%add_maven_depmap JPP.%{base_name}-httpclient.pom %{base_name}/httpclient.jar
-
-install -pm 644 httpmime/pom.xml \
-    %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-httpmime.pom
-%add_maven_depmap JPP.%{base_name}-httpmime.pom %{base_name}/httpmime.jar
+%mvn_install
 
 
-# javadocs
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
 %doc README.txt RELEASE_NOTES.txt
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP.%{base_name}*.pom
-%{_javadir}/%{base_name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt1_1jpp7
+- new version
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt3_3jpp7
 - added maven-local BR:
 
