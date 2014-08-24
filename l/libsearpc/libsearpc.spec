@@ -1,6 +1,6 @@
 Name: libsearpc
-Version: 1.2.0
-Release: alt3
+Version: 3.0.4
+Release: alt1
 
 Summary: RPC library for Seafile
 
@@ -10,13 +10,14 @@ Url: https://github.com/haiwen/libsearpc
 
 Packager: Konstantin Artyushkin <akv@altlinux.org> 
 
-# Source-url: https://seafile.googlecode.com/files/seafile-latest.tar.gz
+# Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Sep 06 2013
-# optimized out: glib2-devel gnu-config pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: libgio-devel python-module-mwlib python-module-paste python-module-peak
-BuildRequires: libjansson-devel
+# Automatically added by buildreq on Sun Aug 24 2014
+# optimized out: libcloog-isl4 pkg-config python-base python-devel python-module-distribute python-module-zope python-modules python3-base
+BuildRequires: glib2-devel glibc-devel libjansson-devel python-module-cmd2 python-module-mwlib python-module-protobuf
+
+BuildRequires: libgio-devel
 
 %description
 Searpc is a simple C language RPC framework based on GObject system.
@@ -33,7 +34,7 @@ developing applications that use %name.
 
 %prep
 %setup
-%__subst /\(DESTDIR\)/d libsearpc.pc.in
+%__subst 's/(DESTDIR)//' libsearpc.pc.in
 
 %build
 %autoreconf
@@ -42,7 +43,6 @@ developing applications that use %name.
 
 %install
 %makeinstall_std
-#find %buildroot -name '*.la' -exec rm -f {} ';'
 
 %files
 %doc AUTHORS README.markdown
@@ -56,19 +56,25 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 24 2014 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
+- new version (3.0.4) with rpmgs script
+- cleanup spec, drop extraneous files
+
 * Sun Aug 03 2014 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt3
 - plus libjansson
 
 * Sun Aug 03 2014 Konstantin Artyushkin <akv@altlinux.org> 1.2.0-alt2
- update to 1.2.2
+- update to 1.2.2
 
 * Fri Sep 06 2013 Denis Baranov <baraka@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Linux Sisyphus
 
 * Tue Jun 18 2013 Stefan Lohmaier <stefan.lohmaier@stefanlohmaier.de> - 1.1.0-2
 - updated for seafile 1.7.0
+
 * Thu May 30 2013 Stefan Lohmaier <stefan.lohmaier@stefanlohmaier.de> - 1.1.0-1
 - added description from github
 - moved to 1.1.0 from seafile 1.6.1
+
 * Mon Jan 28 2013 Robin Lee <cheeselee@fedoraproject.org> - 1.0.1-1
 - Initial package
