@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой OpenGL
@@ -24,6 +24,7 @@ BuildArch: noarch
 %setup_python_module OpenGL
 
 #add_python_req_skip WGL__init__
+%py_requires OpenGL_accelerate
 
 BuildPreReq: python-module-setuptools python-devel
 %if_with python3
@@ -39,6 +40,7 @@ GLU, WGL, GLUT, GLE, and Tk
 %package -n python3-module-%oname
 Summary: A Python module for interfacing with the OpenGL library
 Group: Development/Python3
+%py3_requires OpenGL_accelerate
 
 %description -n python3-module-%oname
 OpenGL bindings for Python including support for GL extensions,
@@ -131,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt2
+- Added requirement on 'OpenGL_accelerate'
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1
 - Version 3.1.0
 - Added module for Python 3
