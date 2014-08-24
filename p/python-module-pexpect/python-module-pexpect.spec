@@ -1,8 +1,12 @@
-Name: python-module-pexpect
-Version: 3.0
+%define oname pexpect
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 3.3
 Release: alt1
 
-%setup_python_module pexpect
+%setup_python_module %oname
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
 
@@ -14,17 +18,30 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://pexpect.sourceforge.net/%modulename-%version.tar.gz
 
-BuildArchitectures: noarch
+BuildArch: noarch
 
-Obsoletes: pexpect < 0.999-alt6
-Provides: pexpect
+Obsoletes: %oname < 0.999-alt6
+Provides: %oname
 
-# Automatically added by buildreq on Mon Dec 29 2008
-BuildRequires: python-devel
+BuildPreReq: python-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
 
 BuildPreReq: python-module-sphinx-devel
 
 %description
+Pexpect is a pure Python module for spawning child applications; controlling
+them; and responding to expected patterns in their output. Pexpect works like
+Don Libes' Expect. Pexpect allows your script to spawn a child application and
+control it as if a human were typing commands.
+
+%package -n python3-module-%oname
+Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
+Group: Development/Python3
+
+%description -n python3-module-%oname
 Pexpect is a pure Python module for spawning child applications; controlling
 them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
@@ -45,29 +62,56 @@ This package contains pickles for Pexpect.
 %prep
 %setup -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %prepare_sphinx .
 ln -s ../objects.inv doc/
 
 %build
 %python_build
 
-%make -C doc pickle
-%make -C doc html
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pexpect/
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C doc pickle
+%make -C doc html
+
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc DEVELOPERS LICENSE README.rst doc/_build/html examples
+%doc DEVELOPERS* LICENSE README.rst doc/_build/html examples
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
 %files pickles
 %python_sitelibdir/*/pickle
 
+%if_with python3
+%files -n python3-module-%oname
+%doc DEVELOPERS* LICENSE README.rst doc/_build/html examples
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
+- Version 3.3
+- Added module for Python 3
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Version 3.0
 
