@@ -1,13 +1,13 @@
 %define oname psycopg2
 %def_with python3
 
-Version: 2.5.1
-Release: alt2
+Version: 2.6
+Release: alt1.dev0.git20140731
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
 Name: %packagename
-# git://dndg.it/public/psycopg2.git
+# https://github.com/psycopg/psycopg2.git
 Source0: psycopg2.tar
 License: GPL
 Group: Development/Python
@@ -101,6 +101,9 @@ sed -i 's|_psycopg|%oname._psycopg|' \
 %endif
 
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1.dev0.git20140731
+- Version 2.6.dev0
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt2
 - Changed URL (ALT #29766)
 - Added Requires: python-modules-json (ALT #29767)
