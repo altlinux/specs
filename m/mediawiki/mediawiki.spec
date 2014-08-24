@@ -3,9 +3,9 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt1
+Release: alt2
 
-Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
+Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
 License: %gpl2plus
 Group: Networking/WWW
@@ -47,9 +47,9 @@ This package supports wiki farms. Configure it through the web
 interface. Remember to secure the config dir after completing the
 configuration.
 
-This is a typical %name installation (with Apache2, MySQL and
-TeX support). Also, optional dependences will be installed:
-php5-eaccelerator and ImageMagick.
+This is a typical %name installation (with Apache2 and MySQL support).
+Also, optional dependency will be installed:
+ImageMagick.
 
 If you wish pure %name, install only %name-common package.
 
@@ -96,6 +96,10 @@ Provides: mediawiki-extensions-SimpleAntiSpam
 Provides: mediawiki-extensions-PostEdit
 Provides: mediawiki-extensions-Vector
 
+# since 1.23
+Provides: mediawiki-extensions-ExpandTemplates
+Provides: mediawiki-extensions-AssertEdit
+
 %description -n %name-common
 %summary
 
@@ -131,15 +135,6 @@ Requires: php5-pgsql postgresql-server >= 8.1
 %description -n %name-postgresql
 Install this package, if you wish to run %name with PostgreSQL database
 
-%package -n %name-tex
-Summary: Package with TeX support for %name
-Group: Networking/WWW
-Requires: %name-common = %version-%release
-Requires: texvc
-
-%description -n %name-tex
-%summary
-
 %package -n %name-hiphop
 Summary: Package with hihop support for %name
 Group: Networking/WWW
@@ -171,7 +166,7 @@ rm -rf %buildroot%_mediawikidir/resources/lib/oojs-ui/update-oojs-ui.sh
 # packed as docs
 rm -rf %buildroot%_mediawikidir/docs/
 
-# do not use follow bundled extension:
+# do not pack that bundled extension:
 rm -rf %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/
 
 mkdir -p %buildroot%_mediawikidir/config/
@@ -183,15 +178,12 @@ install -m 755 %SOURCE3 ./
 install -m 644 %SOURCE4 ./
 install -m 644 %SOURCE5 ./
 
-# remove undeeded parts
+# remove unneeded parts
 rm -fr %buildroot%_mediawikidir/includes/zhtable
 find %buildroot%_mediawikidir/ \
   \( -name .htaccess -or -name \*.cmi \) \
   -print0 \
   | xargs -r0 rm
-
-find %buildroot -name .svnignore -print0 | xargs -r0 rm
-find %buildroot -name \*.commoncode -print0 | xargs -r0 rm
 
 # fix permissions
 #chmod +x %buildroot%_mediawikidir/bin/*
@@ -202,6 +194,7 @@ mkdir -p %buildroot%webappdir
 cd %buildroot%_mediawikidir
 mv cache images %buildroot%webappdir/
 ln -sf %webappdir/{cache,images} .
+
 mkdir config/LocalSettings.d/
 install -m 644 %SOURCE7 config/LocalSettings.d/
 ln -sf %webappdir/config/LocalSettings.php config/
@@ -217,15 +210,6 @@ pushd %buildroot%apache2_confdir
 tar xvSf %SOURCE1
 find -name \*.conf |xargs sed -i "s|WEBAPPDIR|%webappdir|"
 popd
-
-
-# config for -tex package
-cat > %buildroot%_mediawiki_settings_dir/10-%name-tex.php << EOF
-<?php
-\$wgUseTeX = true;
-\$wgTexvc  = "%_bindir/texvc";
-?>
-EOF
 
 # config for enable bundled ParserFunctions
 cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
@@ -273,7 +257,6 @@ exit 0
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
 %_mediawikidir/
-%exclude %_mediawiki_settings_dir/10-%name-tex.php
 %exclude %_datadir/%name/maintenance/hiphop/
 %attr(2750,root,%webserver_group) %dir %webappdir/
 %attr(2770,root,%webserver_group) %dir %webappdir/config/
@@ -298,15 +281,14 @@ exit 0
 
 %files -n %name-postgresql
 
-%files -n %name-tex
-%_mediawiki_settings_dir/10-%name-tex.php
-
-# have no hiphop in the repo
 #%files -n %name-hiphop
 #%_datadir/%name/maintenance/hiphop/
 
 
 %changelog
+* Sun Aug 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.2-alt2
+- cleanup spec, drop -tex subpackage (use mediawiki-extensions-Math package)
+
 * Wed Aug 20 2014 Vitaly Lipatov <lav@altlinux.ru> 1.23.2-alt1
 - new version 1.23.2 (with rpmrb script)
 
