@@ -1,6 +1,8 @@
 %define version 1.2.0
-%define release alt1
+%define release alt2
 %setup_python_module postmarkup
+
+%def_with python3
 
 Name: %packagename
 Version: %version
@@ -12,27 +14,61 @@ License: BSD
 Group: Development/Python
 BuildArch: noarch
 Url: http://code.google.com/p/postmarkup
-Packager: Denis Klimov <zver@altlinux.org>
 
 Source: %modulename-%version.tar
 
 BuildPreReq: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
+Generates XHTML snippets from BBCode.
+
+%package -n python3-module-%modulename
+Summary: Generates XHTML snippets from BBCode
+Group: Development/Python3
+
+%description -n python3-module-%modulename
 Generates XHTML snippets from BBCode.
 
 %prep
 %setup -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
-%__python setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%__python setup.py install --root %buildroot --optimize=2 --record=INSTALLED_FILES
+%python_install --record=INSTALLED_FILES
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files -f INSTALLED_FILES
 
+%if_with python3
+%files -n python3-module-%modulename
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2
+- Added module for Python 3
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
 - Version 1.2.0
 
