@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 1.2.1
-Release: alt1.git20130317.1
+Version: 1.3.3
+Release: alt1.git20140506
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -20,11 +20,12 @@ BuildArch: noarch
 %setup_python_module %oname
 
 Source: %name-%version.tar
-Patch1: nose-1.1.2-alt-syntax-error-patch_py.patch
 
 BuildRequires: python-module-setuptools python-module-coverage
 %if_with python3
+BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools-tests
+BuildRequires: python3-devel python3-module-coverage
 %endif
 
 %description
@@ -36,8 +37,6 @@ as is reasonably possible without resorting to too much magic.
 %package -n python3-module-%oname
 Summary: A unittest-based testing framework for python3 that makes writing and running tests easier
 Group: Development/Python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-coverage
 
 %description -n python3-module-%oname
 nose provides an alternate test discovery and running process for
@@ -47,9 +46,8 @@ as is reasonably possible without resorting to too much magic.
 
 %prep
 %setup
-%patch1 -p2
-
 sed -i "s|man/man1|share/man/man1|g" setup.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -72,9 +70,9 @@ popd
 %endif
 
 rm -f %buildroot%_bindir/nosetests
-ln -s nosetests-%__python_version %buildroot%_bindir/nosetests
+ln -s nosetests-%_python_version %buildroot%_bindir/nosetests
 %if_with python3
-ln -s nosetests-%__python3_version %buildroot%_bindir/nosetests3
+ln -s nosetests-%_python3_version %buildroot%_bindir/nosetests3
 %endif
 
 %check
@@ -89,7 +87,7 @@ popd
 %files
 %doc AUTHORS CHANGELOG NEWS README.txt examples/
 %_bindir/nosetests
-%_bindir/nosetests-%__python_version
+%_bindir/nosetests-%_python_version
 %python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 %_man1dir/*
@@ -97,12 +95,15 @@ popd
 %if_with python3
 %files -n python3-module-%oname
 %_bindir/nosetests3
-%_bindir/nosetests-%__python3_version
+%_bindir/nosetests-%_python3_version
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt1.git20140506
+- Version 1.3.3
+
 * Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.1-alt1.git20130317.1
 - Fixed build
 
