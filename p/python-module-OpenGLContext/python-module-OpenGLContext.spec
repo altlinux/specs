@@ -1,7 +1,11 @@
-%define pre a2
-Name: python-module-OpenGLContext
-Version: 2.2.0
-Release: alt1.a3
+%define pre b1
+%define oname OpenGLContext
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 2.3.0
+Release: alt1.b1
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -11,21 +15,22 @@ Url: http://pyopengl.sourceforge.net/context
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/pyopengl/OpenGLContext-%version%pre.tar.gz
+Source: http://prdownloads.sourceforge.net/pyopengl/%oname-%version%pre.tar.gz
 
 BuildArch: noarch
 
-%setup_python_module OpenGLContext
-#%define python_includedir %_includedir/python%__python_version
+%setup_python_module %oname
 
-# FIXME:
-%add_python_req_skip FXPy win32ui win32con vrml
+%add_python_req_skip win32con win32ui FXPy
 
-BuildPreReq: rpm-build-compat >= 1.2
-
-BuildRequires: python-module-setuptools python-devel
+BuildPreReq: python-module-setuptools python-devel
 BuildPreReq: python-modules-compiler python-modules-encodings
 BuildPreReq: libnumpy-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-module-setuptools python3-devel
+BuildPreReq: libnumpy-py3-devel python-tools-2to3
+%endif
 
 %description
 Demonstration and Testing Contexts for PyOpenGL
@@ -36,6 +41,39 @@ Tkinter.  It also includes support for rendering TrueType fonts,
 and a significant subset of VRML97.  It provides fairly extensive
 VRML97 scenegraph model.  It also includes the bulk of the tests
 used to maintain and extend PyOpenGL.
+
+%package -n python3-module-%oname
+Summary: Demonstration and testing contexts for PyOpenGL
+Group: Development/Python3
+%add_python3_req_skip pygame win32con win32ui wx FXPy fontTools
+%add_python3_req_skip ttfquery
+
+%description -n python3-module-%oname
+Demonstration and Testing Contexts for PyOpenGL
+
+OpenGLContext includes rendering contexts (including navigation)
+for wxPython, PyGame and GLUT, as well as a partial context for
+Tkinter.  It also includes support for rendering TrueType fonts,
+and a significant subset of VRML97.  It provides fairly extensive
+VRML97 scenegraph model.  It also includes the bulk of the tests
+used to maintain and extend PyOpenGL.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %name
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+Demonstration and Testing Contexts for PyOpenGL
+
+OpenGLContext includes rendering contexts (including navigation)
+for wxPython, PyGame and GLUT, as well as a partial context for
+Tkinter.  It also includes support for rendering TrueType fonts,
+and a significant subset of VRML97.  It provides fairly extensive
+VRML97 scenegraph model.  It also includes the bulk of the tests
+used to maintain and extend PyOpenGL.
+
+This package contains tests for %name.
 
 %package tests
 Summary: Tests for %name
@@ -55,13 +93,30 @@ used to maintain and extend PyOpenGL.
 This package contains tests for %name.
 
 %prep
-%setup -q -n OpenGLContext-%version%pre
+%setup -n %oname-%version%pre
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 #_bindir/vrml_view
@@ -74,7 +129,17 @@ This package contains tests for %name.
 #files tests
 #python_sitelibdir/%modulename/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/*egg-info/
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.b1
+- Version 2.3.0b1
+- Added module for Python 3
+
 * Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.a3
 - Version 2.2.0a3
 
