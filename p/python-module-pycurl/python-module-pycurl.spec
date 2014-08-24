@@ -1,5 +1,9 @@
-Name: python-module-pycurl
-Version: 7.19.3.1
+%define oname pycurl
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 7.19.5
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -10,7 +14,7 @@ Url: http://pycurl.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%setup_python_module pycurl
+%setup_python_module %oname
 
 #Source: http://dl.sf.net/%modulename/%modulename-%version.tar.bz2
 Source: http://pycurl.sourceforge.net/download/pycurl-%version.tar.bz2
@@ -18,24 +22,62 @@ Source: http://pycurl.sourceforge.net/download/pycurl-%version.tar.bz2
 BuildRequires: libcurl-devel libssh2-devel python-devel
 
 BuildPreReq: libssl-devel libidn-devel zlib-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
 
 %description
+This module provides the Python bindings to libcurl.
+
+%package -n python3-module-%oname
+Summary: Python bindings to libcurl
+Group: Development/Python3
+
+%description -n python3-module-%oname
 This module provides the Python bindings to libcurl.
 
 %prep
 %setup -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
+%add_optflags -fno-strict-aliasing
+
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %python_install
 
 %files
 %python_sitelibdir/*
 %_docdir/%modulename/
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.19.5-alt1
+- Version 7.19.5
+- Added module for Python 3
+
 * Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 7.19.3.1-alt1
 - new version 7.19.3.1 (with rpmrb script)
 
