@@ -1,5 +1,5 @@
 Name: mcabber
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: console Jabber client
@@ -10,6 +10,7 @@ Url: http://www.lilotux.net/~mikael/mcabber/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
+Source2: %name.watch
 
 # Automatically added by buildreq on Thu Sep 30 2010
 BuildRequires: libenchant-devel libgpgme-devel libloudmouth-devel libncursesw-devel libotr-devel
@@ -32,8 +33,6 @@ for more information.
 
 %prep
 %setup
-# not yet
-cp macros/missing/libotr.m4 macros
 
 %build
 %autoreconf
@@ -55,6 +54,9 @@ cp macros/missing/libotr.m4 macros
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 24 2014 Denis Smirnov <mithraen@altlinux.ru> 0.10.3-alt1
+- new version 0.10.3
+
 * Tue Feb 05 2013 Denis Smirnov <mithraen@altlinux.ru> 0.10.2-alt1
 - 0.10.2
 
