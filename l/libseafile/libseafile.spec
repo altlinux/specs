@@ -1,7 +1,7 @@
 %define oname seafile
 Name: libseafile
 Version: 3.1.0
-Release: alt5
+Release: alt6
 Summary: Seafile client libriary
 
 Group: Networking/File transfer
@@ -36,7 +36,8 @@ developing applications that use %name.
 
 %prep
 %setup
-#%__subst /\(DESTDIR\)/d libseafile.pc.in
+#Repocop found prefix=/usr/src/tmp/libseafile-buildroot/usr pc file 
+%__subst /\(DESTDIR\)/d lib/libseafile.pc.in
 
 %build
 %autoreconf
@@ -68,6 +69,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 24 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt6
+- fix pc file
+
 * Fri Aug 22 2014 Konstantin Artyushkin <akv@altlinux.org> 3.1.0-alt5
 -  update buildrequires
 
