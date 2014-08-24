@@ -1,9 +1,10 @@
 %define _name appstream-glib
 %define api_ver 1.0
 %def_disable rpm
+%def_enable installed_tests
 
 Name: lib%_name
-Version: 0.2.3
+Version: 0.2.5
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -101,6 +102,16 @@ Requires: libappstream-builder-devel = %version-%release
 %description -n libappstream-builder-gir-devel
 GObject introspection devel data for the AppStream builder library.
 
+%package tests
+Summary: Tests for the %_name package
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %_name library.
+
+
 %prep
 %setup -n %_name-%version
 
@@ -108,7 +119,8 @@ GObject introspection devel data for the AppStream builder library.
 %autoreconf
 %configure \
         --enable-gtk-doc \
-        --disable-static
+        --disable-static \
+        %{subst_enable installed_tests}
 
 %make_build
 
@@ -160,11 +172,19 @@ GObject introspection devel data for the AppStream builder library.
 %files -n libappstream-builder-gir-devel
 %_girdir/AppStreamBuilder-%api_ver.gir
 
+%if_enabled installed_tests
+%files tests
+%_datadir/installed-tests/%_name/
+%endif
+
 #%files -n libappstream-builder-devel-doc
 #%_datadir/gtk-doc/html/appstream-builder/
 
 
 %changelog
+* Sun Aug 24 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
+- 0.2.5
+
 * Mon Jul 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
