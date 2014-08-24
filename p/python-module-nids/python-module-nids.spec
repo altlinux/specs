@@ -2,8 +2,8 @@
 
 Summary: Python wrapper for libnids (Network Intrusion Detection System)
 Name: %packagename
-Version: 0.5
-Release: alt1.1.1.1
+Version: 0.6.1
+Release: alt1
 Source0: pynids-%version.tar.gz
 Patch: pynids.alt.patch
 License: GPL
@@ -14,6 +14,7 @@ Packager: Mikhail Pokidko <pma@altlinux.org>
 
 Requires: libnids libnet2 libpcap0.8
 BuildRequires: libnids-devel python-module-setuptools
+BuildPreReq: glib2-devel
 
 %description
 pynids is a python wrapper for libnids, a Network Intrusion Detection System
@@ -22,18 +23,21 @@ port scan detection. Let your own python routines examine (or kill) network
 conversations.
 
 %prep
-%setup  -q -n pynids-%version
-%patch -p1
+%setup -n pynids-%version
+%patch -p2
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root=%buildroot --optimize=2 --record=INSTALLED_FILES
+%python_install --record=INSTALLED_FILES
 
 %files -f INSTALLED_FILES
 
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
+- Version 0.6.1
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5-alt1.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
