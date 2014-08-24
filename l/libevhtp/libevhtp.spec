@@ -1,14 +1,17 @@
+# TODO: fix lib soname
 Name: libevhtp
-Version: 1.2.1
+Version: 1.2.9
 Release: alt1
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
-License: bsd
+License: BSD
 Group: System/Libraries
 
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 Url: https://github.com/ellzey/libevhtp
+
+# Source-git: https://github.com/ellzey/libevhtp.git
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Mar 16 2013 (-bi)
@@ -25,6 +28,15 @@ libevent http API was designed almost as an example of
 what you can do with libevent. It's not Apache in a box,
 but more and more developers are attempting to use it as so.
 
+%package devel
+Summary: Development files for %name
+Requires: %name = %version-%release
+Group: Development/C
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
 %prep
 %setup
 %__subst "s| lib)| \${LIB_DESTINATION})|g" CMakeLists.txt
@@ -36,10 +48,16 @@ but more and more developers are attempting to use it as so.
 %makeinstall_std
 
 %files
-%_includedir/*.h
 %_libdir/libevhtp.so
 
+%files devel
+%_includedir/*.h
+
 %changelog
+* Sun Aug 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt1
+- new version 1.2.9 (with rpmrb script)
+- add devel package
+
 * Sat Mar 16 2013 Denis Baranov <baraka@altlinux.ru> 1.2.1-alt1
 - Initial build for ALTLinux
 
