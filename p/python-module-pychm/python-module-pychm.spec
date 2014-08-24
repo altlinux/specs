@@ -1,6 +1,10 @@
-Name: python-module-pychm
-Version: 0.8.4
-Release: alt1.1.2.1.1
+%define oname pychm
+
+%def_without python3
+
+Name: python-module-%oname
+Version: 0.8.4.1
+Release: alt1
 
 Summary: Python package to handle CHM files
 
@@ -10,14 +14,20 @@ Url: http://gnochm.sourceforge.net
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/gnochm/pychm-%version.tar.bz2
+Source: http://dl.sf.net/gnochm/%oname-%version.tar.bz2
 
-Provides: pychm
+Provides: %oname
 %setup_python_module chm
 
 # manually removed: eric
 # Automatically added by buildreq on Mon Nov 29 2004
 BuildRequires: libchm-devel python-devel python-modules-encodings
+
+BuildPreReq: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 The chm package provides three modules, chm, chmlib and extra,
@@ -26,21 +36,61 @@ chmlib and some additional classes and functions.
 They are used to access MS-ITSS encoded files -
 Compressed Html Help files (.chm).
 
+%package -n python3-module-%oname
+Summary: Python package to handle CHM files
+Group: Development/Python3
+Provides: %oname-py3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+The chm package provides three modules, chm, chmlib and extra,
+which provide access to the API implemented by the C library
+chmlib and some additional classes and functions.
+They are used to access MS-ITSS encoded files -
+Compressed Html Help files (.chm).
+
 %prep
-%setup -n pychm-%version
+%setup -n %oname-%version
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build_debug
 
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_build_install
 
+%if_with python3
+pushd ../python3
+%python3_build_install
+popd
+%endif
+
 %files
-%doc README NEWS ChangeLog
+%doc AUTHORS HACKING NEWS README
 %python_sitelibdir/%modulename
 %python_sitelibdir/*.egg-info
 
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS HACKING NEWS README
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/*.egg-info
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4.1-alt1
+- Version 0.8.4.1
+- Added module for Python 3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.4-alt1.1.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
