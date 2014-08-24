@@ -1,8 +1,11 @@
 %define oname PyDispatcher
+%define sname pydispatcher
 
-Name: python-module-pydispatcher
-Version: 2.0.1
-Release: alt2.1.1
+%def_with python3
+
+Name: python-module-%sname
+Version: 2.0.3
+Release: alt1.bzr20130112
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -12,37 +15,94 @@ Url: http://pydispatcher.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/pydispatcher/%oname-%version.tar.bz2
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 %setup_python_module %oname
 
-BuildPreReq: rpm-build-compat >= 1.2
-
-# Automatically added by buildreq on Mon Dec 01 2008
-BuildRequires: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 The dispatcher provides loosely-coupled message passing between
 Python objects (signal senders and receivers). It began as one of the
 highest-rated recipes on the Python Cookbook website.
 
+%package docs
+Summary: Documentation for %oname
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+The dispatcher provides loosely-coupled message passing between
+Python objects (signal senders and receivers). It began as one of the
+highest-rated recipes on the Python Cookbook website.
+
+This package contains documentation for %oname.
+
+%package -n python3-module-%sname
+Summary: Multi-producer-multi-consumer signal dispatching mechanism
+Group: Development/Python3
+
+%description -n python3-module-%sname
+The dispatcher provides loosely-coupled message passing between
+Python objects (signal senders and receivers). It began as one of the
+highest-rated recipes on the Python Cookbook website.
+
 %prep
-%setup -n %oname-%version
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+pushd docs/pydoc
+./builddocs.py
+popd
 
 %files
 %doc license.txt
 %python_sitelibdir/pydispatch/
 %python_sitelibdir/*egg-info
 
+%files docs
+%doc docs/*
+
+%if_with python3
+%files -n python3-module-%sname
+%doc license.txt
+%python3_sitelibdir/pydispatch/
+%python3_sitelibdir/*egg-info
+%endif
+
 %changelog
+* Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1.bzr20130112
+- Version 2.0.3
+- Added module for Python 3
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.1-alt2.1.1
 - Rebuild with Python-2.7
 
