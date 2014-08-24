@@ -1,7 +1,7 @@
 %define oname ccnet
 Name: libccnet
 Version: 1.4.2 
-Release: alt5
+Release: alt6
 
 Summary: Networking library for Seafile
 
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
 BuildRequires: libevent-devel libsearpc-devel >= 1.2.0 libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
-BuildRequires: vala
+BuildRequires: vala libzdb-devel
 %description
 Ccnet is a framework for writing networked applications in C
 
@@ -30,13 +30,22 @@ Group: Networking/File transfer
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package server
+Summary: ccnet server
+Requires: %name = %version-%release
+Group: Networking/File transfer
+
+%description server
+ccnet server files
+
 %prep
 %setup
-%__subst /\(DESTDIR\)/d libccnet.pc.in
+%__subst s/\(DESTDIR\)// libccnet.pc.in
 
 %build
 %autoreconf
-%configure --disable-static --disable-compile-demo
+%configure --disable-static --disable-compile-demo \
+	   --enable-server
 #%make_build не работает
 %make
 
@@ -50,12 +59,19 @@ developing applications that use %name.
 %_bindir/%{oname}*
 %python_sitelibdir/%oname/
 
+%files server
+%_bindir/%oname-server
+%_bindir/%oname-servtool
+
 %files devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 24 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt6
+- +++ ccnet servre 
+
 * Fri Aug 22 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt5
 - 1.4.2-alt4
 
