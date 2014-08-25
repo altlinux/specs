@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changelog-plugin
 Version:        2.2
-Release:        alt4_10jpp7
+Release:        alt4_16jpp7
 Summary:        Produce SCM changelog reports
 
 Group:          Development/Java
@@ -14,8 +14,9 @@ URL:            http://maven.apache.org/plugins/maven-changelog-plugin/
 #svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-changelog-plugin-2.2/
 #tar jcf maven-changelog-plugin-2.2.tar.bz2 maven-changelog-plugin-2.2/
 Source0:        %{name}-%{version}.tar.bz2
-Patch0:		pom.patch
-Patch1:		ChangeLog.java.patch
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:         pom.patch
+Patch1:         ChangeLog.java.patch
 
 BuildArch: noarch
 
@@ -29,22 +30,17 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-site-plugin
-BuildRequires: maven-shared
-BuildRequires: maven-doxia
+BuildRequires: maven-doxia-sink-api
 BuildRequires: maven-scm
 BuildRequires: plexus-utils
 BuildRequires: junit
 BuildRequires: maven-plugin-testing-harness
-BuildRequires: plexus-container-default
-#BuildRequires: netbeans-cvsclient
+BuildRequires: plexus-containers-container-default
 
 Requires:       maven
 Requires:       jpackage-utils
 Requires:       plexus-utils
-Requires:       plexus-container-default
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
+Requires:       plexus-containers-container-default
 
 Obsoletes: maven2-plugin-changelog <= 0:2.0.8
 Provides: maven2-plugin-changelog = 1:%{version}-%{release}
@@ -69,6 +65,7 @@ API documentation for %{name}.
 %setup -q 
 %patch0 -p0
 %patch1 -p2
+cp -p %{SOURCE1} .
 
 %build
 mvn-rpmbuild \
@@ -80,26 +77,32 @@ mvn-rpmbuild \
 install -d -m 0755 %{buildroot}%{_javadir}
 install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap org.apache.maven.plugins %{name} %{version} JPP %{name}
 
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
     %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
+%doc LICENSE-2.0.txt
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt4_16jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt4_10jpp7
 - rebuild with maven-local
 
