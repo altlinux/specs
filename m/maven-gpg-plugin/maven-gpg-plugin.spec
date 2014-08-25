@@ -1,4 +1,3 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -7,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-gpg-plugin
 Version:        1.4
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Summary:        Maven GPG Plugin
 
 Group:          Development/Java
@@ -29,9 +28,6 @@ BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
-Requires: maven
-Requires: jpackage-utils
-Requires: gnupg2
 
 Obsoletes: maven2-plugin-gpg <= 0:2.0.8
 Provides: maven2-plugin-gpg = 1:%{version}-%{release}
@@ -45,7 +41,6 @@ GnuPG. It adds goals gpg:sign and gpg:sign-and-deploy-file.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -59,28 +54,22 @@ API documentation for %{name}.
 sed -i 's/${mavenVersion}/3.0.4/' pom.xml
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_7jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_4jpp7
 - rebuild with maven-local
 
