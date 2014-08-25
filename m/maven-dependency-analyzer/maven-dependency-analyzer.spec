@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-dependency-analyzer
 Version:        1.3
-Release:        alt1_0jpp7
+Release:        alt1_7jpp7
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
@@ -21,7 +21,7 @@ BuildRequires:  maven-plugin-testing-tools
 
 # This is a replacement package for maven-shared-dependency-analyzer
 Provides:       maven-shared-dependency-analyzer = %{version}-%{release}
-#Obsoletes:      maven-shared-dependency-analyzer < %{version}-%{release}
+Obsoletes:      maven-shared-dependency-analyzer < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -61,6 +61,9 @@ BuildArch: noarch
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_7jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_0jpp7
 - new release
 
