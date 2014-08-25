@@ -1,18 +1,19 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-invoker-plugin
-Version:        1.6
-Release:        alt3_1jpp7
+Version:        1.8
+Release:        alt1_5jpp7
 Summary:        Maven Invoker Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Patch0:         pom-xml.patch
 
 BuildArch: noarch
 
@@ -22,18 +23,11 @@ BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-script-interpreter
-BuildRequires: maven-shared-invoker
+BuildRequires: maven-invoker
+BuildRequires: mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires: mvn(org.apache.maven.doxia:doxia-site-renderer)
 
 # Others
 BuildRequires: groovy
@@ -41,10 +35,12 @@ BuildRequires: groovy
 Requires: maven
 Requires: groovy
 Requires: jpackage-utils
-Requires: maven-shared-invoker
+Requires: maven-invoker
 Requires: maven-shared-reporting-api
 Requires: maven-shared-reporting-impl
 Requires: maven-script-interpreter
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
 
 Provides:       maven2-plugin-invoker = 1:%{version}-%{release}
 Obsoletes:      maven2-plugin-invoker <= 0:2.0.8
@@ -67,9 +63,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-
-%pom_add_dep org.apache.maven:maven-core
-%pom_add_dep org.apache.maven:maven-compat
+%patch0
 
 %build
 mvn-rpmbuild \
@@ -93,14 +87,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
+%doc LICENSE NOTICE
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_5jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_1jpp7
 - rebuild with maven-local
 
