@@ -1,13 +1,13 @@
 %define oname pyparsing
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Python 3 parsing module
 
 License: MIT License
-Group: Development/Python
+Group: Development/Python3
 URL: http://pyparsing.sourceforge.net/
 Packager: Python Development Team <python at packages.altlinux.org>
 
@@ -39,6 +39,9 @@ that client code uses to construct the grammar directly in Python code.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Tue Feb 19 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.0-alt1
 - Version 2.0.0
 - Renamed package to python3-module-%%oname
