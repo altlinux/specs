@@ -1,12 +1,11 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-source-plugin
-Version:        2.1.2
-Release:        alt3_8jpp7
+Version:        2.2.1
+Release:        alt1_5jpp7
 Summary:        Plugin creating source jar
 
 Group:          Development/Java
@@ -16,10 +15,9 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 
 BuildArch: noarch
 
+BuildRequires: maven-local
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: maven-local
-BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
@@ -27,12 +25,7 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
-BuildRequires: jpackage-utils
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
+BuildRequires: mvn(org.apache.maven.surefire:surefire-junit4)
 
 Obsoletes: maven2-plugin-source < 0:%{version}-%{release}
 Provides: maven2-plugin-source = 0:%{version}-%{release}
@@ -45,7 +38,6 @@ source files of the current project.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,35 +49,23 @@ API documentation for %{name}.
 sed -i -e "s|plexus-container-default|plexus-container|g" pom.xml
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:aggregate
+%mvn_file  : %{name}
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins maven-source-plugin %{version} JPP maven-source-plugin
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_5jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt3_8jpp7
 - rebuild with maven-local
 
