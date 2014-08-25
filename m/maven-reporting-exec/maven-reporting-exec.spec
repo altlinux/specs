@@ -1,12 +1,12 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-reporting-exec
-Version:        1.0.2
-Release:        alt2_2jpp7
+Version:        1.1
+Release:        alt1_1jpp7
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -15,19 +15,15 @@ URL:            http://maven.apache.org/shared/maven-reporting-exec/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        maven-model-depmap.xml
 
-Patch0:         %{name}-disabling-enforcer.patch
-
+BuildRequires:  aether
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  maven-invoker-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       maven
-Requires:       slf4j
-Requires:       maven-wagon
-Requires:       jpackage-utils
+BuildRequires:  plexus-containers-component-metadata
 Source44: import.info
+
 
 %description
 Classes to manage report plugin executions with Maven 3. Contains classes for
@@ -49,44 +45,31 @@ The API documentation of %{name}.
 # convert CR+LF to LF
 sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
 
-%patch0 -p1
+# We have different sonatype groupId and java package name
+find -iname '*.java' -exec sed -i 's/org.eclipse.aether/org.sonatype.aether/g' '{}' ';'
 
+%pom_xpath_set "pom:groupId[text()='org.eclipse.aether']" org.sonatype.aether
+%pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %build
-# Test.failure.ignore=true is here because a test of MavenReportExecutor
-# fails with PlexusContainerException
-mvn-rpmbuild install javadoc:aggregate -Dmaven.local.depmap.file=%{SOURCE1} \
- -Dmaven.test.failure.ignore=true 
-
-
+# Test are skipped because there are errors with PlexusLogger
+# More info possibly here:
+# https://docs.sonatype.org/display/AETHER/Using+Aether+in+Maven+Plugins?focusedCommentId=10485782#comment-10485782
+%mvn_build -f
 
 %install
-# JAR
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# JavaDoc
-install -Ddm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE DEPENDENCIES
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
-
-
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_2jpp7
 - rebuild with maven-local
 
