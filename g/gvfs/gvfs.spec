@@ -21,8 +21,8 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -456,6 +456,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Aug 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
+- 1.20.3
+
 * Fri Jun 20 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.2-alt2
 - rebuilt against libplist.so.2
 
