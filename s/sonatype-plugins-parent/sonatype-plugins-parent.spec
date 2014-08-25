@@ -4,21 +4,17 @@ BuildRequires: jpackage-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_1jpp7
+Release:        alt2_5jpp7
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
 Group:          Development/Java
 License:        ASL 2.0
 URL:            https://github.com/sonatype/oss-parents
 Source:         https://github.com/sonatype/oss-parents/tarball/plugins-parent-%{version}#/%{name}-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
-BuildRequires:  sonatype-forge-parent
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       sonatype-forge-parent
+BuildRequires:  forge-parent
 Source44: import.info
 
 %description
@@ -27,22 +23,23 @@ packages.
 
 %prep
 %setup -q -n sonatype-oss-parents-%{tag}
+cp -p %{SOURCE1} LICENSE
+
+%build
+cd ./plugins-parent
+%mvn_build
 
 %install
 cd ./plugins-parent
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
+%mvn_install
 
-%check
-cd ./plugins-parent
-mvn-rpmbuild verify
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f plugins-parent/.mfiles
+%doc LICENSE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_5jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_1jpp7
 - rebuild with maven-local
 
