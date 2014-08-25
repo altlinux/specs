@@ -1,4 +1,3 @@
-BuildRequires: maven-plugin-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -6,18 +5,14 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
-Version:        2.7.1
-Release:        alt4_2jpp7
+Version:        2.8
+Release:        alt1_4jpp7
 Summary:        Plugin to support reporting of changes between releases
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        %{name}.depmap
-
-Patch0:         0001-Fix-Maven-3-compatibility.patch
-Patch1:         0002-Remove-geronimo-dependency-supplied-by-JVM.patch
 
 BuildArch:      noarch
 
@@ -48,35 +43,12 @@ BuildRequires: plexus-i18n
 BuildRequires: plexus-interpolation
 BuildRequires: plexus-utils
 BuildRequires: plexus-velocity
-BuildRequires: xmlrpc-client
-BuildRequires: xmlrpc-common
+BuildRequires: xmlrpc3-client
+BuildRequires: xmlrpc3-common
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: velocity
-
-Requires: jpackage-utils
-Requires: apache-commons-collections
-Requires: jakarta-commons-httpclient
-Requires: apache-commons-io
-Requires: apache-commons-lang
-Requires: apache-commons-logging
-Requires: maven
-Requires: maven-project
-Requires: maven-doxia-sitetools
-Requires: maven-shared-filtering
-Requires: maven-shared-reporting-api
-Requires: maven-shared-reporting-impl
-Requires: plexus-containers-container-default
-Requires: plexus-i18n
-Requires: plexus-interpolation
-Requires: plexus-mail-sender
-Requires: plexus-utils
-Requires: plexus-velocity
-Requires: xmlrpc-client
-Requires: xmlrpc-common
-Requires: xerces-j2
-Requires: xml-commons-apis
-Requires: velocity
+BuildRequires: velocity-tools
 
 Obsoletes: maven2-plugin-changes <= 0:2.0.8
 Provides: maven2-plugin-changes = 1:%{version}-%{release}
@@ -94,7 +66,6 @@ via email to your users.
 %package javadoc
 Group:    Development/Java
 Summary:  Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -103,42 +74,38 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+
+# Javamail is provided by JDK
+%pom_remove_dep :geronimo-javamail_1.4_mail
+%pom_remove_dep :geronimo-javamail_1.4_provider
+%pom_remove_dep :geronimo-javamail_1.4_spec
+
+# Fix Maven 3 compatibility
+%pom_add_dep org.apache.maven:maven-compat
+
+# Disable github module as we don't have dependencies
+rm -rf src/main/java/org/apache/maven/plugin/github
+%pom_remove_dep org.apache.httpcomponents:
+%pom_remove_dep org.eclipse.mylyn.github:
 
 %build
-mvn-rpmbuild -e \
-        -Dmaven.local.depmap.file=%{SOURCE1} \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%add_maven_depmap
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt4_2jpp7
 - rebuild with maven-local
 
