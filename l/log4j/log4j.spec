@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ maven-local
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           log4j
 Version:        1.2.17
-Release:        alt4_3jpp7
+Release:        alt4_10jpp7
 Epoch:          0
 Summary:        Java logging package
 BuildArch:      noarch
@@ -20,14 +20,16 @@ Group:          Development/Java
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/%{name}-%{version}.tar.gz
 # Converted from src/java/org/apache/log4j/lf5/viewer/images/lf5_small_icon.gif
-Source1:        %{name}-logfactor5.png
-Source2:        %{name}-logfactor5.sh
-Source3:        %{name}-logfactor5.desktop
+Source101:      %{name}-logfactor5.png
+Source102:      %{name}-logfactor5.sh
+Source103:      %{name}-logfactor5.desktop
+Source104:      %{name}-logfactor5.1
 # Converted from docs/images/logo.jpg
-Source4:        %{name}-chainsaw.png
-Source5:        %{name}-chainsaw.sh
-Source6:        %{name}-chainsaw.desktop
-Source7:        %{name}.catalog
+Source111:      %{name}-chainsaw.png
+Source112:      %{name}-chainsaw.sh
+Source113:      %{name}-chainsaw.desktop
+Source114:      %{name}-chainsaw.1
+Source200:      %{name}.catalog
 Patch0:         0001-logfactor5-changed-userdir.patch
 Patch1:         0006-Remove-mvn-clirr-plugin.patch
 Patch2:         0009-Remove-ant-run-of-tests.patch
@@ -35,6 +37,7 @@ Patch3:         0010-Fix-javadoc-link.patch
 Patch4:         0011-Remove-openejb.patch
 Patch5:         0012-Add-proper-bundle-symbolicname.patch
 
+BuildRequires:  maven-local
 BuildRequires:  %{__perl}
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  javamail
@@ -45,23 +48,18 @@ BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-ant-plugin
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-changes-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-idea-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-skins
 BuildRequires:  ant-junit
 BuildRequires:  ant-contrib
-
-Requires:       jpackage-utils >= 0:1.6
 Source44: import.info
+
 
 %description
 Log4j is a tool to help the programmer output log statements to a
@@ -79,7 +77,6 @@ BuildArch: noarch
 %package        javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -94,6 +91,7 @@ BuildArch: noarch
 %patch3 -p1 -b .xlink-javadoc
 %patch4 -p1 -b .openejb
 %patch5 -p1 -b .bundlename
+%pom_remove_plugin :maven-site-plugin
 
 sed -i "s|groupId>ant<|groupId>org.apache.ant<|g" pom.xml
 
@@ -107,55 +105,43 @@ for i in contribs/JimMoore/mail*;do
 done
 
 # remove all the stuff we'll build ourselves
-find . \( -name "*.jar" -o -name "*.class" \) -exec %__rm -f {} \;
-%__rm -rf docs/api
-
+find -name "*.jar" -o -name "*.class" -delete
+rm -rf docs/api
 
 
 %build
-# we don't need javadoc:javadoc because build system is broken and
-# builds javadoc when install-ing
-# also note that maven.test.skip doesn't really work and we had to
-# patch ant run of tests out of pom
-mvn-rpmbuild verify
+%mvn_file : %{name}
+%mvn_build -f
 
 %install
-# jars
-#install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pD -T -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
 # scripts
-install -pD -T -m 755 %{SOURCE2} %{buildroot}%{_bindir}/logfactor5
-install -pD -T -m 755 %{SOURCE5} %{buildroot}%{_bindir}/chainsaw
+install -pD -T -m 755 %{SOURCE102} %{buildroot}%{_bindir}/logfactor5
+install -pD -T -m 755 %{SOURCE112} %{buildroot}%{_bindir}/chainsaw
 
 # freedesktop.org menu entries and icons
-install -pD -T -m 644 %{SOURCE1} \
+install -pD -T -m 644 %{SOURCE101} \
         %{buildroot}%{_datadir}/pixmaps/logfactor5.png
 desktop-file-install \
      --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
-     %{SOURCE3}
+     %{SOURCE103}
 
-install -pD -T -m 644 %{SOURCE4} \
+install -pD -T -m 644 %{SOURCE111} \
         %{buildroot}%{_datadir}/pixmaps/chainsaw.png
 desktop-file-install \
      --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
-     %{SOURCE6}
+     %{SOURCE113}
 
+# Manual pages
+install -d -m 755 ${RPM_BUILD_ROOT}%{_mandir}/man1
+install -p -m 644 %{SOURCE104} ${RPM_BUILD_ROOT}%{_mandir}/man1/logfactor5.1
+install -p -m 644 %{SOURCE114} ${RPM_BUILD_ROOT}%{_mandir}/man1/chainsaw.1
 
 # DTD and the SGML catalog (XML catalog handled in scriptlets)
 install -pD -T -m 644 src/main/javadoc/org/apache/log4j/xml/doc-files/log4j.dtd \
   %{buildroot}%{_datadir}/sgml/%{name}/log4j.dtd
-install -pD -T -m 644 %{SOURCE7} \
+install -pD -T -m 644 %{SOURCE200} \
   %{buildroot}%{_datadir}/sgml/%{name}/catalog
 
 # fix perl location
@@ -195,12 +181,10 @@ if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
     %{_datadir}/sgml/%{name}/catalog > /dev/null || :
 fi
 
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
 %{_bindir}/*
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/*
+%{_mandir}/*/*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/sgml/%{name}
@@ -216,6 +200,9 @@ fi
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt4_10jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt4_3jpp7
 - rebuild with maven-local
 
