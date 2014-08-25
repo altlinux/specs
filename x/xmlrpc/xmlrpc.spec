@@ -5,14 +5,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       xmlrpc
 Version:    3.1.3
-Release:    alt7_2jpp7
+Release:    alt7_5jpp7
 Epoch:      1
 Summary:    Java XML-RPC implementation
 License:    ASL 2.0
 Group:      Development/Java
 URL:        http://ws.apache.org/xmlrpc/
 Source0:    http://www.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
-Source1:    %{name}-jpp-depmap.xml
 # Add OSGi MANIFEST information
 Patch0:     %{name}-client-addosgimanifest.patch
 Patch1:     %{name}-common-addosgimanifest.patch
@@ -28,7 +27,6 @@ BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-site-plugin
-BuildRequires:  ws-jaxme
 BuildRequires:  ws-commons-util
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  tomcat-servlet-3.0-api
@@ -61,7 +59,6 @@ Group:      Development/Java
 Obsoletes:  %{name} < 3.1.3
 Obsoletes:  %{name}3-common < 3.1.3-13
 Provides:   %{name}3-common = 3.1.3-13
-Requires:   ws-jaxme
 Requires:   ws-commons-util
 Requires:   jpackage-utils >= 0:1.6
 Requires:   apache-commons-logging
@@ -104,11 +101,12 @@ popd
 
 sed -i 's/\r//' LICENSE.txt
 
+%pom_remove_dep jaxme:jaxmeapi 
+
 %build
 # ignore test failure because server part needs network
 mvn-rpmbuild \
   -e \
-  -Dmaven.local.depmap.file=%{SOURCE1} \
   -Dmaven.test.failure.ignore=true \
   install javadoc:aggregate
 
@@ -168,6 +166,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}3-server.jar
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_5jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_2jpp7
 - rebuild with maven-local
 
