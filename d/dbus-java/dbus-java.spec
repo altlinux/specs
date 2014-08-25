@@ -1,9 +1,16 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# the package is arch-dependent because scripts contain arch dependent paths
+# the debuginfo package will be empty if produced
+%define debug_package %{nil}
+
 Name:       dbus-java
 Version:    2.7
-Release:    alt1_9jpp7
+Release:    alt1_12jpp7
 Summary:    Java implementation of the DBus protocol
 Group:      Development/Java
 License:    AFL or LGPLv2
@@ -22,17 +29,26 @@ Patch2:     parallel.patch
 Patch3:     utf-8-encoding.patch
 
 BuildRequires:  jpackage-utils
+BuildRequires:  texlive-base
+BuildRequires:  texlive-latex-base
+BuildRequires:  texlive-base
+BuildRequires:  texlive-latex-base
+BuildRequires:  texlive-fonts-extra
 BuildRequires:  texlive-latex-recommended
+BuildRequires:  texlive-latex-base
+BuildRequires:  texlive-base-bin
+BuildRequires:  texlive-base-bin
+BuildRequires:  texlive-generic-recommended
 BuildRequires:  tex4ht
+BuildRequires:  texlive-base-bin
 BuildRequires:  docbook-utils
 BuildRequires:  gettext
 BuildRequires:  libmatthew-java
 BuildRequires:  docbook2X
+BuildRequires:  texlive-latex-recommended
 
 Requires:   jpackage-utils
 Requires:   libmatthew-java
-
-BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -132,6 +148,9 @@ make install \
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_12jpp7
+- new release
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_9jpp7
 - update to new release by jppimport
 
