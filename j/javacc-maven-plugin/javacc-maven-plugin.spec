@@ -1,4 +1,3 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -7,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt3_10jpp7
+Release:        alt3_14jpp7
 Summary:        JavaCC Maven Plugin
 
 Group:          Development/Java
@@ -16,6 +15,7 @@ URL:            http://mojo.codehaus.org/javacc-maven-plugin/
 #svn export http://svn.codehaus.org/mojo/tags/javacc-maven-plugin-2.6
 #tar cjf javacc-maven-plugin-2.6.tar.bz2 javacc-maven-plugin-2.6
 Source0:        javacc-maven-plugin-2.6.tar.bz2
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Patch0:         javacc-maven-plugin-pom.patch
 
 BuildArch: noarch
@@ -23,7 +23,7 @@ BuildArch: noarch
 BuildRequires: maven-local
 BuildRequires: javacc >= 5.0
 BuildRequires: plexus-utils
-BuildRequires: maven-doxia
+BuildRequires: maven-doxia-sink-api
 BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-invoker-plugin
@@ -60,9 +60,10 @@ API documentation for %{name}.
 %prep
 %setup -q 
 %patch0 -b .sav
+cp -p %{SOURCE1} .
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  package javadoc:javadoc
+mvn-rpmbuild package javadoc:javadoc
 
 %install
 # jars
@@ -84,12 +85,16 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadir}/%{name}*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%doc src/main/resources/NOTICE
+%doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_14jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_10jpp7
 - rebuild with maven-local
 
