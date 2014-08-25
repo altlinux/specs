@@ -1,10 +1,10 @@
-%define fedora 20
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 Name:           maven-reporting-impl
 Version:        2.2
-Release:        alt1_0jpp7
+Release:        alt1_5jpp7
 Summary:        Abstract classes to manage report generation
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-reporting-impl
@@ -19,7 +19,7 @@ BuildRequires:  maven-local
 BuildRequires:  maven-shared
 %{?fedora:BuildRequires: junit-addons}
 
-#Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
+Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
 Provides:       maven-shared-reporting-impl = %{version}-%{release}
 Source44: import.info
 
@@ -56,6 +56,9 @@ cp -p %{SOURCE1} LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_0jpp7
 - new version
 
