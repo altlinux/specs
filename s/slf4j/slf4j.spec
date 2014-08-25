@@ -34,8 +34,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           slf4j
-Version:        1.7.2
-Release:        alt4_4jpp7
+Version:        1.7.4
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
@@ -44,6 +44,8 @@ License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
 Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+BuildArch:      noarch
+
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit >= 0:1.6.5
@@ -65,9 +67,6 @@ BuildRequires:  maven-plugin-build-helper
 BuildRequires:  log4j
 BuildRequires:  apache-commons-logging
 BuildRequires:  cal10n
-Requires:       jpackage-utils
-Requires:       cal10n
-BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -84,22 +83,19 @@ API implementation, e.g. Log4jLoggerAdapter or JDK14LoggerAdapter..
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildRequires:  java-javadoc
-Requires:       java-javadoc
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package provides %{summary}.
 
 %package manual
 Group:          Development/Java
-Summary:        Documents for %{name}
+Summary:        Manual for %{name}
 BuildArch: noarch
 
 %description manual
-Manual for %{name}.
+This package provides documentation for %{name}.
 
 %prep
 %setup -q
@@ -131,113 +127,38 @@ cp -p %{SOURCE1} APACHE-LICENSE
 # The API bundle requires impl package, so to avoid cyclic dependencies
 # during build time, it is necessary to mark the imported package as an
 # optional one.
+# Reported upstream: http://bugzilla.slf4j.org/show_bug.cgi?id=283
 sed -i "/Import-Package/s/.$/;resolution:=optional&/" slf4j-api/src/main/resources/META-INF/MANIFEST.MF
 
 %build
-mvn-rpmbuild \
-        -P skipTests \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+%mvn_install
 
-install -m 644 jcl-over-slf4j/target/jcl-over-slf4j-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/jcl-over-slf4j.jar
-install -m 644 jul-to-slf4j/target/jul-to-slf4j-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/jul-to-slf4j.jar
-install -m 644 log4j-over-slf4j/target/log4j-over-slf4j-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/log4j-over-slf4j.jar
-install -m 644 slf4j-api/target/%{name}-api-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/api.jar
-install -m 644 slf4j-ext/target/%{name}-ext-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/ext.jar
-install -m 644 slf4j-jcl/target/%{name}-jcl-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/jcl.jar
-install -m 644 slf4j-jdk14/target/%{name}-jdk14-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/jdk14.jar
-install -m 644 slf4j-log4j12/target/%{name}-log4j12-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/log4j12.jar
-install -m 644 slf4j-migrator/target/%{name}-migrator-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/migrator.jar
-install -m 644 slf4j-nop/target/%{name}-nop-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/nop.jar
-install -m 644 slf4j-simple/target/%{name}-simple-%{version}.jar \
-   $RPM_BUILD_ROOT%{_javadir}/%{name}/simple.jar
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
-install -pm 644 jcl-over-slf4j/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jcl-over-slf4j.pom
-install -pm 644 jul-to-slf4j/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jul-to-slf4j.pom
-install -pm 644 log4j-over-slf4j/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-log4j-over-slf4j.pom
-install -pm 644 slf4j-api/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-api.pom
-install -pm 644 slf4j-ext/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ext.pom
-install -pm 644 slf4j-jcl/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jcl.pom
-install -pm 644 slf4j-jdk14/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jdk14.pom
-install -pm 644 slf4j-log4j12/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-log4j12.pom
-install -pm 644 slf4j-migrator/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-migrator.pom
-install -pm 644 slf4j-nop/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-nop.pom
-install -pm 644 slf4j-simple/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-simple.pom
-
-%add_maven_depmap JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-jcl-over-slf4j.pom %{name}/jcl-over-slf4j.jar
-%add_maven_depmap JPP.%{name}-jul-to-slf4j.pom %{name}/jul-to-slf4j.jar
-%add_maven_depmap JPP.%{name}-log4j-over-slf4j.pom %{name}/log4j-over-slf4j.jar
-%add_maven_depmap JPP.%{name}-api.pom %{name}/api.jar
-%add_maven_depmap JPP.%{name}-ext.pom %{name}/ext.jar
-%add_maven_depmap JPP.%{name}-jcl.pom %{name}/jcl.jar
-%add_maven_depmap JPP.%{name}-jdk14.pom %{name}/jdk14.jar
-%add_maven_depmap JPP.%{name}-log4j12.pom %{name}/log4j12.jar
-%add_maven_depmap JPP.%{name}-migrator.pom %{name}/migrator.jar
-%add_maven_depmap JPP.%{name}-nop.pom %{name}/nop.jar
-%add_maven_depmap JPP.%{name}-simple.pom %{name}/simple.jar
-
-# javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-rm -rf target/site/api*
+# Compat symlinks
+(cd $RPM_BUILD_ROOT/%{_javadir}/%{name}; for jar in %{name}-*; do
+    ln -s $jar ${jar/%{name}-/}; done)
 
 # manual
-install -d -m 0755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-rm -f target/site/.htaccess
-cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-
-# compat symlinks
-for i in api nop; do
-ln -s $i.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/slf4j-$i.jar
-done
+install -d -m 0755 $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual-%{version}
+rm -rf target/site/{.htaccess,apidocs}
+cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual-%{version}
 
 %files -f .mfiles
 %doc LICENSE.txt APACHE-LICENSE
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/slf4j-api.jar
-%{_javadir}/%{name}/slf4j-nop.jar
+%{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt APACHE-LICENSE
-%{_javadocdir}/%{name}
 
 %files manual
 %doc LICENSE.txt APACHE-LICENSE
-#%{_docdir}/%{name}-%{version}/site
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.4-alt1_1jpp7
+- update
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt4_4jpp7
 - more symlinks
 
