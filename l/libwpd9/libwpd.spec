@@ -1,5 +1,5 @@
 Name: libwpd9
-Version: 0.9.9
+Version: 0.10.0
 Release: alt1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
@@ -12,7 +12,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: libwpd-%version.tar.xz
 
-BuildRequires: doxygen gcc-c++ libgsf-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libgsf-devel zlib-devel librevenge-devel
 
 %description
 Library that handles Word Perfect documents
@@ -61,6 +61,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 0.10.0-alt1
+- Autobuild version bump to 0.10.0
+- Fix buildreq
+
 * Tue Mar 18 2014 Fr. Br. George <george@altlinux.ru> 0.9.9-alt1
 - Autobuild version bump to 0.9.9
 
