@@ -1,20 +1,19 @@
 Name: tong
-Version: 1.0
-Release: alt3.qa1
+Version: 1.3
+Release: alt1
 
 Summary: Tetris meets Pong
 Summary(ru_RU.KOI8-R): Тетрис, скрещённый с Понгом
 
-License: %gpl2plus
+License: %gpl3plus
 Group: Games/Arcade
-URL: http://www.nongnu.org/tong/
-Packager: Alexey Rusakov <ktirf@altlinux.ru>
+Url: http://www.nongnu.org/tong/
 
 Requires: %name-data = %version-%release
 
-Source: %url/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 Source1: %name.desktop
-Patch1: %name-1.0-fix-link-as-needed.patch
+Patch1: %name-1.3-fix-link-as-needed.patch
 
 BuildRequires: rpm-build-licenses
 BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_mixer-devel
@@ -41,9 +40,10 @@ this package explicitly - it will be installed along with the main package
 as a dependency.
 
 %prep
-%setup -q
+%setup
 %patch1
 subst "s|media/|%_gamesdatadir/%name/media/|" *.cpp option.h
+rm -rf media/gp2x media/wii
 
 %build
 %make_build
@@ -66,6 +66,10 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/media
 
 %changelog
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1.3-alt1
+- Autobuild version bump to 1.3
+- Fix build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
