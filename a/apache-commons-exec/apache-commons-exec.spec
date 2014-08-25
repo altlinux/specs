@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /bin/ping
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-exec
 Version:        1.1
-Release:        alt1_6jpp7
+Release:        alt1_8jpp7
 Summary:        Java library to reliably execute external processes from within the JVM
 
 Group:          Development/Java
@@ -16,17 +19,8 @@ URL:            http://commons.apache.org/exec/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:  iputils
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-idea-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-release-plugin
+BuildRequires:  jpackage-utils
+BuildRequires:  maven-local
 Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
@@ -39,7 +33,6 @@ environment management in Java.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -56,7 +49,7 @@ chmod a+x src/test/scripts/*.sh
 
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 
 %install
@@ -80,10 +73,14 @@ cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_8jpp7
+- new version
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_6jpp7
 - new version
 
