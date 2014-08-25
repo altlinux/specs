@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-reporting-api
 Version:        3.0
-Release:        alt1_0jpp7
+Release:        alt1_3jpp7
 # Maven-shared defines maven-reporting-api version as 3.0
 Epoch:          1
 Summary:        API to manage report generation
@@ -21,7 +21,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 
-#Obsoletes:      maven-shared-reporting-api < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-shared-reporting-api < %{epoch}:%{version}-%{release}
 Provides:       maven-shared-reporting-api = %{epoch}:%{version}-%{release}
 Source44: import.info
 
@@ -61,6 +61,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt1_3jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt1_0jpp7
 - new version
 
