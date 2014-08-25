@@ -1,5 +1,5 @@
 Name: powdertoy
-Version: 89.2.283
+Version: 90.1.320
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
@@ -22,7 +22,7 @@ heat!
 %prep
 %setup -n The-Powder-Toy-%version
 # Hack out version update messge
-sed -i 's/gameModel->AddNotification.*\("A new.*available.*update"\).*;/fprintf(stderr, "%s\\n", \1);/g' src/gui/game/GameController.cpp
+sed -i 's/gameModel->AddNotification.*\("A new.*available.*update"\).*;/fprintf(stderr, "%%s\\n", \1);/g' src/gui/game/GameController.cpp
 
 cat > %name.sh <<@@@
 #!/bin/sh
@@ -58,7 +58,7 @@ scons -j %__nprocs --lin
 
 %install
 # TODO MIME (it can install mime locally!)
-install -D build/powder*-legacy %buildroot%_gamesbindir/%name.bin
+install -D build/powder* %buildroot%_gamesbindir/%name.bin
 install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 for N in powder-*.png; do
@@ -72,6 +72,10 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1:90.1.320-alt1
+- Autobuild version bump to 90.1.320
+- Fix build
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 1:89.2.283-alt1
 - Autobuild version bump to 89.2.283
 
