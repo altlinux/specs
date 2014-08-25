@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.1
+Version: 4.1.2
 Release: alt1
 
 Summary: RDFLib is a Python library for working with RDF
@@ -19,7 +19,7 @@ Source: %oname-%version.tar
 
 BuildArch: noarch
 
-%add_python_req_skip FOPLRelationalModel RDF
+#add_python_req_skip FOPLRelationalModel RDF
 
 # Automatically added by buildreq on Tue Sep 18 2007
 BuildRequires: pybliographic python-module-MySQLdb python-module-PyXML python-module-Pyrex python-module-setuptools python-module-zope.interface python-modules-email
@@ -40,7 +40,7 @@ SQLite, Sleepycat, ZODB and SQLObject.
 %package -n python3-module-%oname
 Summary: RDFLib is a Python 3 library for working with RDF
 Group: Development/Python3
-%add_python3_req_skip FOPLRelationalModel RDF
+#add_python3_req_skip FOPLRelationalModel RDF
 
 %description -n python3-module-%oname
 RDFLib is a Python library for working with RDF, a simple yet powerful
@@ -72,19 +72,32 @@ popd
 pushd ../python3
 %python3_install
 popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
 %endif
 
 %python_install
 
 %files
+%_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
+%_bindir/*.py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
+- Version 4.1.2
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
 - new version 4.0.1 (with rpmrb script)
 
