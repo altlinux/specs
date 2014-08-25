@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-osgi
 Version:        0.2.0
-Release:        alt1_0jpp7
+Release:        alt1_4jpp7
 # Maven-shared defines maven-osgi version as 0.3.0
 Epoch:          1
 Summary:        Library for Maven-OSGi integration
@@ -30,7 +30,7 @@ Requires:       jpackage-utils
 Requires:       maven-project
 Requires:       maven-shared
 
-#Obsoletes:      maven-shared-osgi < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-shared-osgi < %{epoch}:%{version}-%{release}
 Provides:       maven-shared-osgi = %{epoch}:%{version}-%{release}
 Source44: import.info
 
@@ -94,6 +94,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_4jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.2.0-alt1_0jpp7
 - new release
 
