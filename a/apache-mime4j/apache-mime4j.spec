@@ -1,47 +1,42 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_3jpp7
+Release:        alt3_7jpp7
 Summary:        Apache JAMES Mime4j
-
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://james.apache.org/mime4j
 Source0:        http://apache.online.bg//james/mime4j/apache-mime4j-project-%{version}-source-release.zip
-BuildArch: noarch
+BuildArch:      noarch
 
-BuildRequires: apache-commons-logging
-BuildRequires: log4j
-BuildRequires: junit
-BuildRequires: apache-commons-io
-BuildRequires: apache-james-project
-BuildRequires: javacc-maven-plugin
-BuildRequires: maven-remote-resources-plugin
-BuildRequires: apache-rat-plugin
+BuildRequires:  maven-local
+BuildRequires:  apache-commons-logging
+BuildRequires:  log4j
+BuildRequires:  junit
+BuildRequires:  apache-commons-io
+BuildRequires:  apache-james-project
+BuildRequires:  javacc-maven-plugin
+BuildRequires:  maven-remote-resources-plugin
+BuildRequires:  apache-rat-plugin
 BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-Requires: apache-commons-logging
-Requires: log4j
-Requires: apache-commons-io
+BuildRequires:  maven-surefire-provider-junit
 Source44: import.info
 
 %description
-Java stream based MIME message parser
+Java stream based MIME message parser.
 
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
-
 
 %prep
 %setup -q -n %{name}-project-%{version}
@@ -49,48 +44,27 @@ rm -fr stage
 # prevents rat plugin from failing the build
 rm -fr DEPENDENCIES
 
-%build
-mvn-rpmbuild install javadoc:aggregate
-
-%install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}-project.pom
-
-%add_maven_depmap JPP-%{name}-project.pom
-
-for sub in core dom storage; do
-    # install jar
-    install -Dpm 644 ${sub}/target/%{name}-${sub}-%{version}.jar \
-            $RPM_BUILD_ROOT/%{_javadir}/%{name}/${sub}.jar;
-
-    # intall pom
-    install -Dpm 644 ${sub}/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-${sub}.pom
-
-    # maven depmap
-    %add_maven_depmap JPP.%{name}-${sub}.pom %{name}/${sub}.jar
+# Compat symlinks for jboss-as
+for p in core dom storage; do
+  %mvn_file :*$p %{name}/%{name}-$p %{name}/$p
 done
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-rm -rf target/site/api*
+%build
+%mvn_build
 
-%files
+%install
+%mvn_install
+
+%files -f .mfiles
 %doc LICENSE NOTICE RELEASE_NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_7jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_3jpp7
 - rebuild with maven-local
 
