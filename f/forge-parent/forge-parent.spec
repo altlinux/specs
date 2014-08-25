@@ -1,28 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           forge-parent
-Version:        5
-Release:        alt1_8jpp7
+Version:        31
+Release:        alt1_1jpp7
 Summary:        Sonatype Forge Parent Pom
-
-Group:          Development/Java
-#Note: The license is confirmed at:
-#http://nexus.sonatype.org/mailing-list-dev-archives.html#nabble-ts28522017
 License:        ASL 2.0
-#svn export http://svn.sonatype.org/forge/tags/forge-parent-5 forge-parent
-URL:            http://svn.sonatype.org/forge/tags/forge-parent-5
-
-# tar czf forge-parent-5.tgz forge-parent
-Source0:        forge-parent-5.tgz
-
-BuildArch: noarch
-
-BuildRequires: jpackage-utils
-
-Requires: jpackage-utils
+URL:            https://docs.sonatype.org/display/FORGE/Index
+Source0:        http://repo1.maven.org/maven2/org/sonatype/forge/%{name}/%{version}/%{name}-%{version}.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+BuildArch:      noarch
+BuildRequires:  maven-local
 Source44: import.info
 
 %description
@@ -30,27 +18,25 @@ Sonatype Forge is an open-source community dedicated to the creation of the
 next-generation of development tools and technologies.
 
 %prep
-%setup -q -n %{name}
+%setup -qcT
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} LICENSE
+# We don't have nexus-staging-maven-plugin in Fedora
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 %build
-#nothing to do for the pom
+%mvn_build
 
 %install
-rm -rf %{buildroot}/
+%mvn_install
 
-%add_to_maven_depmap org.sonatype.forge forge-parent %{version} JPP forge-parent
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%files
-
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 31-alt1_1jpp7
+- new version
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 5-alt1_8jpp7
 - fc update
 
