@@ -4,7 +4,7 @@
 #============================================================================
 Name: libsodium
 Summary: %name
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 License: ISC license
 Group: System/Libraries
@@ -28,11 +28,11 @@ Requires: %name-devel
 %description devel-static
 %summary
 
-%package -n libsodium10
+%package -n libsodium13
 Summary: %summary
 Group: System/Libraries
 
-%description -n libsodium10
+%description -n libsodium13
 %summary
 
 %description
@@ -59,10 +59,13 @@ Group: System/Libraries
 %files devel-static
 %_libdir/libsodium.a
 
-%files -n libsodium10
-%_libdir/libsodium.so.10*
+%files -n libsodium13
+%_libdir/libsodium.so.13*
 
 %changelog
+* Mon Aug 25 2014 Denis Smirnov <mithraen@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0
+
 * Sat Jul 26 2014 Denis Smirnov <mithraen@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1
 
