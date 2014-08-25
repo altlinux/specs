@@ -1,7 +1,7 @@
 %define oname pyparsing
 
 Name: python-module-%oname
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Python parsing module
@@ -37,6 +37,9 @@ that client code uses to construct the grammar directly in Python code.
 %python_sitelibdir/*
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
 - Version 2.0.1
 
