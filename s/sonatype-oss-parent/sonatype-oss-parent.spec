@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_2jpp7
+Release:        alt1_5jpp7
 Summary:        Sonatype OSS Parent
 
 Group:          Development/Java
@@ -18,11 +15,10 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch: noarch
 
+BuildRequires:  maven-local
 BuildRequires:  jpackage-utils >= 0:1.7.2
-
-Requires:       jpackage-utils
-Requires:       maven-release-plugin
 Source44: import.info
+
 
 %description
 Sonatype OSS parent pom used by other sonatype packages
@@ -33,22 +29,18 @@ cp -p %{SOURCE1} LICENSE
 %pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %build
-#nothing to do for the pom
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 7-alt1_5jpp7
+- update
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 7-alt1_2jpp7
 - fc update
 
