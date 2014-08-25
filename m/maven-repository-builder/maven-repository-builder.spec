@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:           maven-repository-builder
 Version:        1.0
 # See http://fedoraproject.org/wiki/Packaging:NamingGuidelines#Package_Versioning
-Release:        alt1_0.0.alpha2jpp7
+Release:        alt1_0.3.alpha2jpp7
 # Maven-shared defines maven-repository-builder version as 1.0
 Epoch:          1
 Summary:        Maven repository builder
@@ -29,7 +29,7 @@ BuildRequires:  maven-test-tools
 BuildRequires:  maven-wagon
 BuildRequires:  maven-shared
 
-#Obsoletes:      maven-shared-repository-builder < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-shared-repository-builder < %{epoch}:%{version}-%{release}
 Provides:       maven-shared-repository-builder = %{epoch}:%{version}-%{release}
 Source44: import.info
 
@@ -76,6 +76,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_0.3.alpha2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_0.0.alpha2jpp7
 - new release
 
