@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jvnet-parent
-Version:        3
-Release:        alt3_6jpp7
+Version:        4
+Release:        alt1_1jpp7
 Summary:        Java.net parent POM file
 
 Group:          Development/Java
@@ -19,9 +16,8 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-enforcer-plugin
-
-Requires:       jpackage-utils
 Source44: import.info
+
 
 %description
 Java.net parent POM file used by most Java.net subprojects such as
@@ -34,23 +30,18 @@ cp -p %{SOURCE1} LICENSE
 %pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom
-
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_1jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3-alt3_6jpp7
 - rebuild with maven-local
 
