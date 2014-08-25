@@ -1,7 +1,5 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -12,14 +10,13 @@ BuildRequires: jpackage-compat
 
 # this needs to be exact version of maven-javadoc-plugin for
 # integration tests
-%global javadoc_plugin_version 2.8.1
+%global javadoc_plugin_version 2.9.1
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt8_6jpp7
+Release:        alt8_11jpp7
 Summary:        Containers for Plexus
-License:        ASL 2.0 and Plexus
-Group:          Development/Java
+License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
 # svn export \
 #  http://svn.codehaus.org/plexus/plexus-containers/tags/plexus-containers-1.5.5
@@ -30,26 +27,15 @@ Source2:        plexus-component-annotations-build.xml
 Source3:        plexus-containers-settings.xml
 
 Patch0:         0001-Fix-test-oom.patch
-Patch1:         0002-Fix-maven3-compatibility.patch
-Patch2:         0003-Fix-OpenJDK7-compatibility.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
 BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-javadoc-plugin = %{javadoc_plugin_version}
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-shared-invoker
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven2-common-poms >= 1.0
 BuildRequires:  maven-release
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  plexus-classworlds
@@ -74,35 +60,29 @@ velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
 %package component-metadata
+Group: Development/Java
 Summary:        Component metadata from %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       plexus-cli
 
 %description component-metadata
 %{summary}.
 
 %package component-javadoc
+Group: Development/Java
 Summary:        Javadoc component from %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description component-javadoc
 %{summary}.
 
-
 %package component-annotations
+Group: Development/Java
 Summary:        Component API from %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description component-annotations
 %{summary}.
 
 %package container-default
+Group: Development/Java
 Summary:        Default Container from %{name}
-Group:          Development/Java
-Requires:       %{name}-component-annotations = %{?epoch:%epoch:}%{version}-%{release}
 Provides:       plexus-containers-component-api = %{version}-%{release}
 
 %description container-default
@@ -111,7 +91,6 @@ Provides:       plexus-containers-component-api = %{version}-%{release}
 %package javadoc
 Summary:        API documentation for all plexus-containers packages
 Group:          Development/Java
-Requires:       jpackage-utils
 Provides:       %{name}-component-annotations-javadoc = %{version}-%{release}
 Obsoletes:      %{name}-component-annotations-javadoc < %{version}-%{release}
 Provides:       %{name}-component-javadoc-javadoc = %{version}-%{release}
@@ -132,8 +111,16 @@ cp %{SOURCE1} plexus-container-default/build.xml
 cp %{SOURCE2} plexus-component-annotations/build.xml
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+
+# For Maven 3 compat
+%pom_add_dep org.apache.maven:maven-core plexus-component-metadata
+
+# OpenJDK7 compatibility
+%pom_xpath_replace "pom:profile[pom:id[text()='default-tools.jar']]/pom:activation" "
+ <activation>
+    <activeByDefault>true</activeByDefault>
+ </activation>
+" plexus-component-javadoc
 
 # to prevent ant from failing
 mkdir -p plexus-component-annotations/src/test/java
@@ -141,94 +128,37 @@ mkdir -p plexus-component-annotations/src/test/java
 # integration tests fix
 sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|" plexus-component-javadoc/src/it/basic/pom.xml
 
+# plexus-component-api has been merged into plexus-container-default
+%mvn_alias ":plexus-container-default" "org.codehaus.plexus:containers-component-api"
+
+# keep compat symlink for maven's sake
+%mvn_file ":plexus-component-annotations" %{name}/plexus-component-annotations plexus/containers-component-annotations
+
 %build
-
-mvn-rpmbuild -Dmaven.test.skip=true install
-
-# for integration tests ran during javadoc:javadoc
-for file in $MAVEN_REPO_LOCAL/org/apache/maven/plugins/maven-javadoc-plugin/%{javadoc_plugin_version}/*;do
-    sha1sum $file | awk '{print $1}' > $ile.sha1
-done
-
-mvn-rpmbuild javadoc:aggregate
+%mvn_build -f -s
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 plexus-component-annotations/target/*.jar \
- $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}-component-annotations.jar
-install -pm 644 plexus-container-default/target/*.jar \
- $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}-container-default.jar
-install -pm 644 plexus-component-metadata/target/*.jar \
- $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}-component-metadata.jar
-install -pm 644 plexus-component-annotations/target/*.jar \
- $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}-component-javadoc.jar
+%mvn_install
+# multiple -f flags in %files: merging -f .mfiles-plexus-containers into -f .mfiles
+cat .mfiles-plexus-containers >> .mfiles
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
+mkdir -p %buildroot%_javadir/plexus
+ln -s ../plexus-containers/plexus-container-default.jar %buildroot%_javadir/plexus/containers-container-default.jar
 
-install -pm 644 plexus-component-annotations/pom.xml \
-         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-annotations.pom
-install -pm 644 plexus-container-default/pom.xml \
-         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}-container-default.pom
-install -pm 644 plexus-component-metadata/pom.xml \
-         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-metadata.pom
-install -pm 644 plexus-component-javadoc/pom.xml \
-         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-javadoc.pom
+# plexus-containers pom goes into main package
+%files -f .mfiles 
+%files component-annotations -f .mfiles-plexus-component-annotations
+%files container-default -f .mfiles-plexus-container-default
+%_javadir/plexus/containers-container-default.jar
+%files component-metadata -f .mfiles-plexus-component-metadata
+%files component-javadoc -f .mfiles-plexus-component-javadoc
 
-%add_maven_depmap JPP.%{parent}-%{subname}.pom
-%add_maven_depmap JPP.%{parent}-%{subname}-component-annotations.pom %{parent}/%{subname}-component-annotations.jar -f component-annotations
-# component-api is now folded into container-default
-%add_maven_depmap JPP.%{parent}-%{subname}-container-default.pom %{parent}/%{subname}-container-default.jar -a "org.codehaus.plexus:containers-component-api" -f container-default
-%add_maven_depmap JPP.%{parent}-%{subname}-component-metadata.pom %{parent}/%{subname}-component-metadata.jar -f component-metadata
-%add_maven_depmap JPP.%{parent}-%{subname}-component-javadoc.pom %{parent}/%{subname}-component-javadoc.jar -f component-javadoc
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# compat
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus-containers
-ln -s ../plexus/containers-component-annotations.jar $RPM_BUILD_ROOT%{_javadir}/plexus-containers/plexus-component-annotations.jar
-ln -s ../%{parent}/%{subname}-container-default.jar $RPM_BUILD_ROOT%{_javadir}/plexus-containers/plexus-container-default.jar
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
-%files
-%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files component-annotations
-%{_mavendepmapfragdir}/%{name}-component-annotations
-%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-annotations.pom
-%{_javadir}/%{parent}/containers-component-annotations.jar
-%{_javadir}/plexus-containers/plexus-component-annotations.jar
-
-%files container-default
-%{_mavendepmapfragdir}/%{name}-container-default
-%{_mavenpomdir}/JPP.%{parent}-%{subname}-container-default.pom
-%{_javadir}/%{parent}/containers-container-default.jar
-%{_javadir}/plexus-containers/plexus-container-default.jar
-
-
-%files component-metadata
-%{_mavendepmapfragdir}/%{name}-component-metadata
-%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-metadata.pom
-%{_javadir}/%{parent}/containers-component-metadata.jar
-
-%files component-javadoc
-%{_mavendepmapfragdir}/%{name}-component-javadoc
-%{_mavenpomdir}/JPP.%{parent}-%{subname}-component-javadoc.pom
-%{_javadir}/%{parent}/containers-component-javadoc.jar
-
-%files javadoc
-%doc %{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt8_11jpp7
+- new release
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt8_6jpp7
 - more symlinks
 
