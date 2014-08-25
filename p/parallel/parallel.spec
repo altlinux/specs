@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20140722
+Version: 20140822
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -32,8 +32,11 @@ of hosts, a list of users, a list of URLs, or a list of tables.
 %make
 
 %install
-%makeinstall
+%makeinstall_std
 rm -r %buildroot%_defaultdocdir/%name/
+
+# *sigh*
+ln -sf parallel %buildroot%_bindir/sem
 
 %files
 %doc README NEWS src/*.html
@@ -41,6 +44,9 @@ rm -r %buildroot%_defaultdocdir/%name/
 %_man1dir/*
 
 %changelog
+* Mon Aug 25 2014 Michael Shigorin <mike@altlinux.org> 20140822-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 22 2014 Michael Shigorin <mike@altlinux.org> 20140722-alt1
 - new version (watch file uupdate)
 
