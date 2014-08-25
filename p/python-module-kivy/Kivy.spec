@@ -1,17 +1,17 @@
 Name: python-module-kivy
-Version: 1.7.2
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Group: Development/Python
 Url: http://kivy.org
 Source: Kivy-%version.tar.gz
-Patch: Kivy-1.7.2-colorpicker_doc.patch
 
 %setup_python_module kivy
 %add_python_req_skip AppKit
 %add_python_req_skip freenect
 %add_python_req_skip jnius
+%add_python_req_skip android
 
 # Automatically added by buildreq on Wed Jan 29 2014
 # optimized out: libEGL-devel python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-html5lib python-module-jinja2 python-module-markupsafe python-module-numpy python-module-numpy-testing python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
@@ -32,20 +32,33 @@ Example files, documentation and packaging tool for Kivy, %summary
 %prep
 %setup -n Kivy-%version
 rm -rf kivy/tools/packaging/osx
-%patch -p0
+
+for f in `grep -rl '#!/usr/bin/kivy' examples`; do
+	sed -i 's|#!/usr/bin/kivy|#!/usr/bin/env python|' $f
+done
+
+# XXX Python3
+sed -i 's/from xmlrpc.client/from xmlrpclib/' kivy/tools/report.py
+sed -i 's/from configparser/from ConfigParser/' kivy/config.py
+sed -i 's/from configparser/from ConfigParser/' kivy/tools/pep8checker/pep8.py
+sed -i 's/from configparser/from ConfigParser/' kivy/tools/report.py
+
+# XXX
 sleep 1
 find . -name \*.pyx | xargs touch
 
 %build
 %add_optflags -fno-strict-aliasing
 %python_build
+
+# XXX
+ln doc/sources/.static/logo-kivy.png doc/sources/logo-kivy.png
+
 cd doc &&
-export PYTHONPATH=`ls -d ../build/lib*` &&
-python autobuild.py &&
-export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
-# XXX no file found?
-ln sources/.static/logo-kivy.png .
-make html
+  export PYTHONPATH=`ls -d ../build/lib*` &&
+  python autobuild.py &&
+  export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
+  make html
 
 %install
 %python_install
@@ -57,9 +70,14 @@ make html
 %files devel
 %doc doc/build/html
 %_datadir/kivy-examples
-%_bindir/*
+## XXX garden binary is moved to separate module
 
 %changelog
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
+- Autobuild version bump to 1.8.0
+- The garden binary is gone
+- Hack out some unexpected python3 and android stuff
+
 * Wed Jan 29 2014 Fr. Br. George <george@altlinux.ru> 1.7.2-alt2
 - Fix build and dependencies
 
