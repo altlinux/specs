@@ -1,32 +1,75 @@
+%def_with python3
+
 Summary: SNMP v1/v2c/v3 engine
 Name: python-module-pysnmp4
-Version: 4.2.4
+Version: 4.2.5
 Release: alt1
 %setup_python_module pysnmp
 Url: http://pysnmp.sourceforge.net/
 Source0: %modulename-%version.tar
 License: BSD
 Group: Development/Python
-Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
 Conflicts: python-module-pysnmp
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
+
 %description
+This is an alpha-quality revision of pure-Python, open source and free
+implementation of v1/v2c/v3 SNMP engine.
+
+%package -n python3-module-pysnmp4
+Summary: SNMP v1/v2c/v3 engine
+Group: Development/Python3
+
+%description -n python3-module-pysnmp4
 This is an alpha-quality revision of pure-Python, open source and free
 implementation of v1/v2c/v3 SNMP engine.
 
 %prep
 %setup -n %modulename-%version
 
+%if_with python3
+cp -fR . ../python3
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+	../python3/tools/libsmi2pysnmp
+%endif
+
 %build
-env CFLAGS="%optflags" python setup.py build
+%python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python_install --record=INSTALLED_FILES
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files -f INSTALLED_FILES
+%doc CHANGES README THANKS TODO docs/*
+
+%if_with python3
+%files -n python3-module-pysnmp4
+%doc CHANGES README THANKS TODO docs/*
+%python3_sitelibdir/*
+%endif
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.5-alt1
+- Version 4.2.5
+- Added module for Python 3
+
 * Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 4.2.4-alt1
 - 4.2.4
 
