@@ -1,5 +1,5 @@
 %define version 0.5a1.dev
-%define release alt3.r2506.2.1
+%define release alt3.r2717
 %setup_python_module RuleDispatch
 
 Name: %packagename
@@ -11,11 +11,10 @@ Summary: Rule-based Dispatching and Generic Functions
 License: MIT/X11
 Group: Development/Python
 Url: http://peak.telecommunity.com
-Packager: Denis Klimov <zver@altlinux.org>
 
 Source: %modulename-%version.tar
 
-BuildPreReq: python-module-distribute
+BuildPreReq: python-module-setuptools
 
 Provides: python-module-ruledispatch = %version-%release
 Obsoletes: python-module-ruledispatch <= 0.5a0-alt0.1.1
@@ -33,10 +32,15 @@ Rule-based Dispatching and Generic Functions.
 %python_install
 
 %files
+%doc *.txt
 %python_sitelibdir/dispatch
 %python_sitelibdir/%modulename-*.egg-info
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5a1.dev-alt3.r2717
+- Version 0.5a1.dev-r2717
+- Added module for Python 3
+
 * Fri Oct 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5a1.dev-alt3.r2506.2.1
 - Rebuild with Python-2.7
 
