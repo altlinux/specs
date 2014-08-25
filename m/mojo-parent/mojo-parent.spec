@@ -1,32 +1,23 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-parent
-Version:        30
-Release:        alt4_2jpp7
+Version:        32
+Release:        alt1_2jpp7
 Summary:        Codehaus MOJO parent project pom file
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://mojo.codehaus.org/
 Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  codehaus-parent
 BuildRequires:  maven-local
+BuildRequires:  codehaus-parent
 BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-plugin-cobertura
-
-Requires:       plexus-containers-component-javadoc
-Requires:       maven-plugin-plugin
-Requires:       junit
-Requires:       codehaus-parent
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -34,25 +25,24 @@ Codehaus MOJO parent project pom file
 
 %prep
 %setup -q
-# hack for proper compliation of maven plugins
-sed -i -e 's,<mojo.java.target>1.4</mojo.java.target>,<mojo.java.target>${maven.compiler.target}</mojo.java.target>,' pom.xml
+# Cobertura plugin is executed only during clean Maven phase.
+%pom_remove_plugin :cobertura-maven-plugin
+# wagon-webdav-jackrabbit is not available in Fedora
+%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
 
 %build
-mvn-rpmbuild install
+%mvn_alias : org.codehaus.mojo:mojo
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom -a org.codehaus.mojo:mojo
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:32-alt1_2jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:30-alt4_2jpp7
 - rebuild with maven-local
 
