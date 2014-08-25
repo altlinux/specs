@@ -1,6 +1,6 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define version 2.7
-%define release alt1.svn20131120
+%define release alt1.svn20140804
 %define source_version 2.7
 %define source_name pyserial
 %define oname serial
@@ -195,6 +195,9 @@ subst '/win32/d' INSTALLED_FILES
 %endif
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.svn20140804
+- New snapshot
+
 * Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.svn20131120
 - Version 2.7
 
