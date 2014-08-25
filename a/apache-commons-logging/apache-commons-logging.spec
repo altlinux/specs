@@ -11,26 +11,23 @@ BuildRequires: jpackage-compat
 %global short_name commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.1.1
-Release:        alt8_20jpp7
+Version:        1.1.2
+Release:        alt1_2jpp7
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Source1:        %{short_name}.depmap
 Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
-# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
-Patch0:         %{short_name}-avalon-update.patch
 
-Patch1:         %{short_name}-eclipse-manifest.patch
-Patch33:	commons-logging-alt-avalon-logkit.patch
 BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  avalon-framework >= 4.3
 BuildRequires:  avalon-logkit
 BuildRequires:  apache-commons-parent
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-failsafe-plugin
 BuildRequires:  maven-plugin-build-helper
 BuildRequires:  maven-release-plugin
 BuildRequires:  maven-site-plugin
@@ -70,25 +67,29 @@ BuildArch: noarch
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
-%patch0 -p1
-%patch1
-%patch33 -p1
+# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
+%pom_remove_dep :avalon-framework
+%pom_add_dep avalon-framework:avalon-framework-api:4.3
+%pom_add_dep avalon-framework:avalon-framework-impl:4.3:test
 
-sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
 
-# -----------------------------------------------------------------------------
+# Upstream is changing Maven groupID and OSGi Bundle-SymbolicName back
+# and forth, even between minor releases (such as 1.1.1 and 1.1.2).
+# In case of Maven we can provide an alias, so that's not a big
+# problem.  But there is no alias mechanism for OSGi bundle names.
+#
+# I'll use Bundle-SymbolicName equal to "org.apache.commons.logging"
+# because that's what upstream decided to use in future and because
+# that's what most of Eclipse plugin are already using.  See also
+# rhbz#949842 and LOGGING-151.  mizdebsk, 9 Apr 2013
+%pom_xpath_set pom:commons.osgi.symbolicName org.apache.commons.logging
+
+sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 
 %build
-# fails with recent surefire for some reason
-rm src/test/org/apache/commons/logging/logkit/StandardTestCase.java
-rm src/test/org/apache/commons/logging/servlet/BasicServletTestCase.java
-
-# These files have names suggesting they are test cases but they are not.
-# They should probably be renamed/excluded from surefire run properly
-rm src/test/org/apache/commons/logging/log4j/log4j12/*StandardTestCase.java
-
-mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" \
-    install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 # -----------------------------------------------------------------------------
 
@@ -126,7 +127,8 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc PROPOSAL.html STATUS.html LICENSE.txt RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
+%doc PROPOSAL.html RELEASE-NOTES.txt
 %{_javadir}/*
 %{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavenpomdir}/JPP-%{short_name}-api.pom
@@ -134,12 +136,15 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_2jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt8_20jpp7
 - rebuild with maven-local
 
