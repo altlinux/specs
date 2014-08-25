@@ -1,32 +1,51 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name byteman
+%define version 2.0.4
+%global apphomedir %{_datadir}/%{name}
+%global bindir %{apphomedir}/bin
+
 Name:             byteman
-Version:          1.5.2
-Release:          alt1_5jpp7
+Version:          2.0.4
+Release:          alt1_3jpp7
 Summary:          Java agent-based bytecode injection tool
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
-# wget http://downloads.jboss.org/%{name}/%{version}/%{name}-%{version}-full-clean.zip
-# unzip -q %{name}-%{version}-full-clean.zip -d %{name}-%{version}-full
-# rm -rf %{name}-%{version}-full/ext/*
-# tar -zcvf %{name}-%{version}-full-clean.tar.gz %{name}-%{version}-full
-Source0:          %{name}-%{version}-full-clean.tar.gz
-Patch0:           %{name}-%{version}-buildxml.patch
+
+# git clone git://github.com/bytemanproject/byteman.git
+# cd byteman/ && git archive --format=tar --prefix=byteman-2.0.4/ 2.0.4 | xz > byteman-2.0.4.tar.xz
+Source0:          byteman-%{version}.tar.xz
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    ant
+BuildRequires:    javapackages-tools
+BuildRequires:    maven-local
+BuildRequires:    maven-shade-plugin
+BuildRequires:    maven-failsafe-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-surefire-plugin
+BuildRequires:    maven-surefire-provider-testng
+BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-verifier-plugin
 BuildRequires:    java_cup
 BuildRequires:    jarjar
 BuildRequires:    objectweb-asm
 BuildRequires:    junit4
 BuildRequires:    testng
 
-Requires:         java_cup
-Requires:         objectweb-asm
 Requires:         jpackage-utils
+
+# Bundling
+#BuildRequires:    java_cup = 1:0.11a-12
+#BuildRequires:    objectweb-asm = 0:3.3.1-7
+Provides:         bundled(java_cup) = 1:0.11a-12
+Provides:         bundled(objectweb-asm) = 0:3.3.1-7
 Source44: import.info
 
 %description
@@ -50,50 +69,83 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}-full
-%patch0 -p1
+%setup -q
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+# Fix the gid:aid for java_cup
+sed -i "s|net.sf.squirrel-sql.thirdparty-non-maven|java_cup|" agent/pom.xml
+sed -i "s|java-cup|java_cup|" agent/pom.xml
 
 %build
-OPT_JAR_LIST="jarjar junit4 testng objectweb-asm java_cup" ant install htdocs
-ant -f build-release-pkgs.xml init mvn-repository
+%mvn_build
 
 %install
-# JAR
+install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-
-install -pm 644 build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
-install -pm 644 build/lib/%{name}-install.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-install.jar
-install -pm 644 build/lib/%{name}-submit.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-submit.jar
-install -pm 644 sample/build/lib/%{name}-sample.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-sample.jar
-install -pm 644 contrib/bmunit/build/lib/%{name}-bmunit.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-bmunit.jar
-install -pm 644 contrib/dtest/build/lib/%{name}-dtest.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-dtest.jar
-
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-for m in bmunit dtest install sample submit; do
-  # POM
-  install -pm 644 workdir/pom-%{name}-${m}.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}
+install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/lib
+install -d -m 755 $RPM_BUILD_ROOT%{bindir}
 
+install -m 755 bin/bmsubmit.sh $RPM_BUILD_ROOT%{bindir}/bmsubmit
+install -m 755 bin/bminstall.sh  $RPM_BUILD_ROOT%{bindir}/bminstall
+install -m 755 bin/bmjava.sh  $RPM_BUILD_ROOT%{bindir}/bmjava
+install -m 755 bin/bmcheck.sh  $RPM_BUILD_ROOT%{bindir}/bmcheck
+
+for f in bmsubmit bmjava bminstall bmcheck; do
+cat > $RPM_BUILD_ROOT%{_bindir}/${f} << EOF
+#!/bin/sh
+
+export BYTEMAN_HOME=/usr/share/byteman
+export JAVA_HOME=/usr/lib/jvm/java
+
+\$BYTEMAN_HOME/bin/${f} \$*
+EOF
+done
+
+chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
+
+for m in install sample submit; do
+  # JAR
+  install -pm 644 ${m}/target/%{name}-${m}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${m}.jar
+  # POM
+  install -pm 644 ${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
   # DEPMAP
   %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
 done
 
-# POM
-install -pm 644 workdir/pom-%{name}.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
+# Contrib
+for m in bmunit dtest; do
+  # JAR
+  install -pm 644 contrib/${m}/target/%{name}-${m}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${m}.jar
+  # POM
+  install -pm 644 contrib/${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
+  # DEPMAP
+  %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
+done
 
+# JAR
+install -pm 644 agent/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
+# POM
+install -pm 644 agent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 # DEPMAP
 %add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar
 
 # APIDOCS
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp htdocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+for m in bmunit dtest install sample submit; do
+  ln -s %{_javadir}/byteman/byteman-${m}.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman-${m}.jar
+done
+
+ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.jar
 
 %files
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%{apphomedir}/*
+%{_bindir}/*
 %{_javadir}/*
 %doc README docs/ProgrammersGuide.pdf docs/copyright.txt
 
@@ -102,6 +154,9 @@ cp -rp htdocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc docs/copyright.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_3jpp7
+- new version
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_5jpp7
 - new fc release
 
