@@ -1,7 +1,4 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 Provides: osgi(org.apache.commons.net) = 2.0.0
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -13,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2
-Release:        alt2_1jpp7
+Release:        alt2_4jpp7
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 Group:          Development/Java
@@ -21,15 +18,13 @@ URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
+BuildRequires:  jpackage-utils
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven-plugin-build-helper
 BuildRequires:  apache-commons-parent
-
-Requires:       jpackage-utils
 
 Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} < 0:2.0-3
@@ -48,11 +43,12 @@ Summary:    API documentation for %{name}
 Group:      Development/Java
 Requires:   jpackage-utils
 
+Provides:   jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
 Obsoletes:  jakarta-%{short_name}-javadoc < 0:2.0-3
 BuildArch: noarch
 
 %description javadoc
-%%{summary}.
+%{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
@@ -60,43 +56,30 @@ sed -i 's/\r//' NOTICE.txt LICENSE.txt
 
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
+%mvn_file  : %{short_name} %{name}
+%mvn_alias : org.apache.commons:%{short_name}
 # test.failure.ignore added because package would not build on koji
 # with TimeTCPClientTest failing
-mvn-rpmbuild -Dmaven.test.failure.ignore=true \
-    install javadoc:aggregate
+%mvn_build -f
+
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{short_name}.jar
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 # jakarta compat
 ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
 
 
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_4jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_1jpp7
 - rebuild with maven-local
 
