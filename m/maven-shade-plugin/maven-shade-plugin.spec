@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -7,41 +8,32 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-shade-plugin
 Version:        2.0
-Release:        alt2_1jpp7
+Release:        alt2_4jpp7
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
 
-BuildArch: noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(asm:asm-commons)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.jdom:jdom)
+BuildRequires:  mvn(org.vafer:jdependency)
 
-BuildRequires: jpackage-utils
-BuildRequires: plexus-utils
-BuildRequires: ant
-BuildRequires: maven-local
-BuildRequires: maven-wagon
-BuildRequires: plexus-container-default
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: jdependency >= 0.6
-BuildRequires: xmlunit
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
-Requires: jdependency >= 0.6
-
-Obsoletes: maven2-plugin-shade <= 0:2.0.8
-Provides: maven2-plugin-shade = 1:%{version}-%{release}
+Obsoletes:      maven2-plugin-shade <= 0:2.0.8
+Provides:       maven2-plugin-shade = 1:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -51,9 +43,8 @@ packages of some of the dependencies.
 
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -61,39 +52,27 @@ BuildArch: noarch
 
 %prep
 %setup -q
-
 rm src/test/jars/plexus-utils-1.4.1.jar
 ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
 %build
 # A class from aopalliance is not found. Simply adding BR does not solve it
-mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip
+%mvn_build -f
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_4jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_1jpp7
 - rebuild with maven-local
 
