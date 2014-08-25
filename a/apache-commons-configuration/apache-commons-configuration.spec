@@ -1,5 +1,4 @@
 Epoch: 0
-#BuildRequires: jakarta-poi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -8,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.9
-Release:        alt3_1jpp7
+Release:        alt3_4jpp7
 Summary:        Commons Configuration Package
 
 Group:          Development/Java
@@ -17,8 +16,8 @@ URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
+BuildRequires:  jpackage-utils
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
@@ -45,18 +44,6 @@ BuildRequires:  apache-commons-vfs
 BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  xml-commons-resolver
 
-Requires:       jpackage-utils
-Requires:       apache-commons-beanutils
-Requires:       apache-commons-codec
-Requires:       apache-commons-collections
-Requires:       apache-commons-digester
-Requires:       apache-commons-jexl
-Requires:       apache-commons-jxpath
-Requires:       apache-commons-lang
-Requires:       apache-commons-logging
-Requires:       apache-commons-vfs
-Requires:       tomcat-servlet-3.0-api
-Requires:       xml-commons-resolver
 
 Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} < 0:%{version}-%{release}
@@ -94,37 +81,25 @@ BuildArch: noarch
 %{__sed} -i 's/\r//' LICENSE.txt NOTICE.txt
 
 %build
+%mvn_file   : %{short_name} %{name}
+%mvn_alias  : org.apache.commons:%{short_name}
 # We skip tests because we don't have test deps (dbunit in particular).
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
-install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
-install -p -m 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a org.apache.commons:%{short_name}
-
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_javadir}/jakarta-%{short_name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_4jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_1jpp7
 - rebuild with maven-local
 
