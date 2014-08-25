@@ -1,4 +1,3 @@
-BuildRequires:  maven-plugin-cobertura maven-enforcer-plugin maven-surefire-provider-junit4
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -9,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt5_7jpp7
+Release:          alt5_10jpp7
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Java
@@ -24,14 +23,12 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
+BuildRequires:    maven-surefire-provider-junit4
 
 Requires:         jpackage-utils
 Requires:         maven
 Requires:         plexus-utils
 Requires:         apache-commons-lang
-
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
@@ -83,6 +80,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_10jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_7jpp7
 - rebuild with maven-local
 
