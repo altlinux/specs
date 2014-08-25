@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-commons-jci
 Version:       1.0
-Release:       alt4_5jpp7
+Release:       alt4_7jpp7
 Summary:       Commons Java Compiler Interface
 Group:         Development/Java
 License:       ASL 2.0
@@ -38,7 +38,6 @@ Patch3:        %{name}-%{namedversion}-examples-pom.patch
 Patch4:        %{name}-%{namedversion}-janino26.patch
 
 Patch5:        %{name}-%{namedversion}-ecj4.patch
-Patch6:	apache-commons-jci-1.0-alt-pom.patch
 
 BuildRequires: jpackage-utils
 
@@ -164,7 +163,6 @@ find . -name "*.jar" -delete
 %patch3 -p0
 %patch4 -p1
 %patch5 -p0
-%patch6 -p1
 
 # require old version of jdependency
 %pom_disable_module compilers/javac
@@ -248,6 +246,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}-rhino
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt4_7jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt4_5jpp7
 - rebuild with maven-local
 
