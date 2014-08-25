@@ -1,7 +1,4 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -9,8 +6,8 @@ BuildRequires: jpackage-compat
 %global short_name  commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.0.11
-Release:        alt2_1jpp7
+Version:        1.0.13
+Release:        alt1_1jpp7
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          Development/Java
@@ -20,16 +17,13 @@ Patch0:         0001-execve-path-warning.patch
 Patch1:         apache-commons-daemon-JAVA_OS.patch
 Patch2:         apache-commons-daemon-s390x.patch
 Patch3:         apache-commons-daemon-ppc64.patch
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
+BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
 
-Requires:         jpackage-utils
 
-
-# This should go away with F-17
 Provides:       jakarta-%{short_name} = 1:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} <= 1:1.0.1
 Source44: import.info
@@ -60,6 +54,7 @@ Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch:      noarch
 
+Provides:       jakarta-%{short_name}-javadoc = 1:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-javadoc <= 1:1.0.1
 
 %description    javadoc
@@ -92,56 +87,38 @@ make %{?_smp_mflags}
 popd
 
 # build jars
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:javadoc
-
+%mvn_file  : %{short_name} %{name}
+%mvn_alias : org.apache.commons:%{short_name}
+%mvn_build
 
 
 %install
-
 # install native jsvc
 install -Dpm 755 src/native/unix/jsvc $RPM_BUILD_ROOT%{_bindir}/jsvc
 install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
-# jars
-install -Dpm 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_install
 
 
-# pom
-install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
-
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt PROPOSAL.html NOTICE.txt RELEASE-NOTES.txt src/samples
 %doc src/docs/*
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 
 %files jsvc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_bindir}/jsvc
 %{_mandir}/man1/jsvc.1*
 
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
-%doc LICENSE.txt
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.13-alt1_1jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.11-alt2_1jpp7
 - rebuild with maven-local
 
