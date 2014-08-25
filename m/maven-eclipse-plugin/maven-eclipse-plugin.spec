@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: unzip mvn(org.apache.maven.plugin-testing:maven-test-tools)
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt5_2jpp7
+Release:        alt5_5jpp7
 Summary:        Maven Eclipse Plugin
 
 Group:          Development/Java
@@ -27,16 +27,13 @@ BuildArch: noarch
 BuildRequires: jpackage-utils
 
 # Maven and its dependencies
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-jar-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
@@ -92,8 +89,6 @@ API documentation for %{name}.
 %patch2 -p1
 
 sed -i -e "s|3.3.0-v20070604|3.7.100.v20110510-0712|g" pom.xml
-sed -i -e '/<version>0.0.145<.version>/d' pom.xml
-
 
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
@@ -135,6 +130,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_5jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_2jpp7
 - added maven-local BR:
 
