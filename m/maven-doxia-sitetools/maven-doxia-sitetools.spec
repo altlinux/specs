@@ -1,6 +1,5 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -39,8 +38,8 @@ BuildRequires: jpackage-compat
 %global subproj sitetools
 
 Name:           %{parent}-%{subproj}
-Version:        1.2
-Release:        alt3_5jpp7
+Version:        1.4
+Release:        alt1_1jpp7
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 Group:          Development/Java
@@ -48,59 +47,27 @@ URL:            http://maven.apache.org/doxia/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
 
-# Point it at the correct plexus-container-default
-Source1:        maven-doxia-depmap.xml
 
-Patch0:         0001-Remove-clirr-dependency.patch
-Patch1:         0002-Remove-htmlunit-dependency.patch
-Patch2:         0003-Migration-to-component-metadata.patch
+Patch1:         0001-Remove-dependency-on-velocity-tools.patch
 
-BuildRequires:  itext
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-shared-reporting-impl
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  modello-maven-plugin
-BuildRequires:  classworlds
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-configuration
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-validator
-BuildRequires:  junit
-BuildRequires:  jakarta-oro
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-containers-component-javadoc
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-i18n
-BuildRequires:  plexus-utils
-BuildRequires:  plexus-velocity
-BuildRequires:  velocity
-BuildRequires:  %{_javadir}/javamail/mail.jar
-
-Requires:       classworlds
-Requires:       apache-commons-collections
-Requires:       apache-commons-configuration
-Requires:       apache-commons-logging
-Requires:       apache-commons-validator
-Requires:       junit
-Requires:       maven-doxia
-Requires:       jakarta-oro
-Requires:       plexus-containers-container-default
-Requires:       plexus-i18n
-Requires:       plexus-utils
-Requires:       plexus-velocity
-Requires:       velocity
-Requires:       %{_javadir}/javamail/mail.jar
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-apt)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fo)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven:maven-parent)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(xalan:xalan)
+BuildRequires:  mvn(xml-apis:xml-apis)
 
 BuildArch:      noarch
 Source44: import.info
@@ -115,73 +82,55 @@ wikis and content management systems.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 %prep
 %setup -q -n doxia-%{subproj}-%{version}
 
-%patch0 -p1
-
-# Disable tests that need htmlunit, until we get it in Fedora
+# upstream added support for velocity toolmanager, but it also means new
+# dependency on velocity-tools. we don't want to depend on this package
+# (it depends on struts 1) so this patch reverts upstream changes
 %patch1 -p1
+%pom_remove_dep :velocity-tools doxia-site-renderer
 
-%patch2 -p1
+%pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
+%pom_remove_dep net.sourceforge.htmlunit:htmlunit doxia-site-renderer/pom.xml
 
+
+%pom_xpath_inject "pom:plugin[pom:artifactId[text()='modello-maven-plugin']]/pom:configuration" \
+    "<useJava5>true</useJava5>" doxia-decoration-model
+
+# There are two backends for generating PDFs: one based on iText and
+# one using FOP.  iText module is broken and only brings additional
+# dependencies.  Besides that upstream admits that iText support will
+# likely removed in future versions of Doxia.  In Fedora we remove
+# iText backend sooner in order to fix dependency problems.
+#
+# See also: http://maven.apache.org/doxia/faq.html#How_to_export_in_PDF
+# http://lists.fedoraproject.org/pipermail/java-devel/2013-April/004742.html
+rm -rf $(find -type d -name itext)
+%pom_remove_dep :itext doxia-doc-renderer
+%pom_remove_dep :doxia-module-itext doxia-doc-renderer
 
 %build
-
 # tests can't run because of missing deps
-mvn-rpmbuild \
-      -e \
-      -Dmaven.local.depmap.file=%{SOURCE1} \
-      -Dmaven.test.skip=true \
-      install javadoc:aggregate
+%mvn_build -f
 
 %install
-
-# jars/poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-
-install -m 644 -p pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-sitetools.pom
-install -m 644 -p doxia-decoration-model/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-decoration-model.pom
-install -m 644 -p doxia-site-renderer/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-site-renderer.pom
-install -m 644 -p doxia-doc-renderer/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-doc-renderer.pom
-
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{parent}
-
-install -m 644 -p doxia-decoration-model/target/doxia-decoration-model-%{version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{parent}/decoration-model.jar
-install -m 644 -p doxia-site-renderer/target/doxia-site-renderer-%{version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{parent}/site-renderer.jar
-install -m 644 -p doxia-doc-renderer/target/doxia-doc-renderer-%{version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{parent}/doc-renderer.jar
-
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP.%{parent}-sitetools.pom
-%add_maven_depmap JPP.%{parent}-decoration-model.pom %{parent}/decoration-model.jar
-%add_maven_depmap JPP.%{parent}-site-renderer.pom %{parent}/site-renderer.jar
-%add_maven_depmap JPP.%{parent}-doc-renderer.pom %{parent}/doc-renderer.jar
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+%mvn_install
 
 
-%files
-%{_javadir}/%{parent}/*.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_5jpp7
 - rebuild with maven-local
 
