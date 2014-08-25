@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             decentxml
 Version:          1.4
-Release:          alt3_2jpp7
+Release:          alt3_5jpp7
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 Group:            Development/Java
@@ -19,14 +19,12 @@ BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 XML parser optimized for round-tripping and code reuse with main
 features being:
- * Allows 100%% round-tripping, even for weird whitespace between
+ * Allows 100% round-tripping, even for weird whitespace between
    attributes in the start tag or in the end tag
  * Suitable for building editors and filters which want/need to
    preserve the original file layout as much as possible
@@ -37,7 +35,6 @@ features being:
 %package javadoc
 Summary:          API documentation for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 
@@ -53,33 +50,22 @@ ln -sf %{name}-%{version}/xmlconf ../xmlconf
 sed -i -e "s|junit-dep|junit|g" pom.xml
 
 %build
-mvn-rpmbuild install
+%mvn_file  : %{name}
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap de.pdark %{name} %{version} JPP %{name}
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE README
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_5jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_2jpp7
 - rebuild with maven-local
 
