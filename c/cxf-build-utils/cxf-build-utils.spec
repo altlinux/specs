@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cxf-build-utils
 Version:          2.4.1
-Release:          alt5_4jpp7
+Release:          alt5_6jpp7
 Summary:          Apache CXF Build Utils
 Group:            Development/Java
 License:          ASL 2.0
@@ -49,8 +49,6 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-sed -i -e '/<version>2.0.7<.version>/d' buildtools/pom.xml
-
 %build
 mvn-rpmbuild \
   -Dproject.build.sourceEncoding=UTF-8 \
@@ -85,6 +83,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5_6jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5_4jpp7
 - rebuild with maven-local
 
