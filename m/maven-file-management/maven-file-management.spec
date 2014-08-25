@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-%{pkgname}
 Version:        1.2.1
-Release:        alt1_0jpp7
+Release:        alt1_6jpp7
 # Maven-shared defines file-management version as 1.2.2
 Epoch:          1
 Summary:        Maven File Management API
@@ -23,7 +23,7 @@ BuildRequires:  maven-local
 BuildRequires:  maven-shared
 BuildRequires:  modello
 
-#Obsoletes:      maven-shared-%{pkgname} < %{epoch}:%{version}-%{release}
+Obsoletes:      maven-shared-%{pkgname} < %{epoch}:%{version}-%{release}
 Provides:       maven-shared-%{pkgname} = %{epoch}:%{version}-%{release}
 Source44: import.info
 
@@ -66,6 +66,9 @@ sed -i /testDeleteDanglingSymlink/,/assert/s/False/True/ `find -name FileSetUtil
 %doc LICENSE.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt1_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt1_0jpp7
 - new release
 
