@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-doxia-tools
 Version:	1.4
-Release:	alt3_5jpp7
+Release:	alt3_11jpp7
 Summary:	Maven Doxia Integration Tools
 
 Group:		Development/Java
@@ -18,11 +19,10 @@ BuildRequires:	apache-commons-io >= 1.4
 BuildRequires:	apache-commons-logging
 BuildRequires:	plexus-utils
 BuildRequires:	plexus-interpolation
-BuildRequires:	plexus-container-default
+BuildRequires:	plexus-containers-container-default
 BuildRequires:	plexus-i18n
 BuildRequires:	maven-local
-BuildRequires:	maven-shared
-BuildRequires:	maven-doxia
+BuildRequires:  maven-doxia-logging-api
 BuildRequires:	maven-doxia-sitetools
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-install-plugin
@@ -39,10 +39,9 @@ BuildArch:	noarch
 Requires:	apache-commons-io >= 1.4
 Requires:	plexus-utils
 Requires:	plexus-interpolation
-Requires:	plexus-container-default
+Requires:	plexus-containers-container-default
 Requires:	plexus-i18n
-Requires:	maven-shared
-Requires:	maven-doxia
+Requires:       maven-doxia-logging-api
 Requires:	maven-doxia-sitetools
 
 Requires:	jpackage-utils
@@ -63,7 +62,7 @@ API documentation for %{name}.
 %prep
 %setup -q
 %patch0 -b .sav
-
+%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
 
 %build
 mvn-rpmbuild \
@@ -81,7 +80,7 @@ cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 # poms
 install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.apache.maven.doxia:doxia-integration-tools
 
 %files
 %{_javadir}/*
@@ -94,6 +93,9 @@ install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_11jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_5jpp7
 - rebuild with maven-local
 
