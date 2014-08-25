@@ -1,8 +1,8 @@
 %define modulename scgi
 
 Name: python-module-%modulename
-Version: 1.13
-Release: alt2.2
+Version: 1.14
+Release: alt1
 
 Summary: Python implementation of the server side of the SCGI protocol
 License: CNRI OPEN SOURCE LICENSE
@@ -103,6 +103,9 @@ touch %buildroot%apache2_mods_enabled/scgi.load
 %doc apache2/README.txt
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt1
+- Version 1.14
+
 * Sat Feb 09 2013 Aleksey Avdeev <solo@altlinux.ru> 1.13-alt2.2
 - Rebuild with apache2-2.2.22-alt16 (fix unmets)
 - Add %%apache2_mods_available/scgi.conf file for configure apache2
