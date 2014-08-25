@@ -1,22 +1,25 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logging-tools
-%define version 1.0.0
+%define version 1.0.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging-tools
-Version:          1.0.0
-Release:          alt3_3jpp7
+Version:          1.0.2
+Release:          alt1_1jpp7
 Summary:          JBoss Logging I18n Annotation Processor
 Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logging-tools
 
 # git clone git://github.com/jboss-logging/jboss-logging-tools.git
-# cd jboss-logging-tools && git archive --format=tar --prefix=jboss-logging-tools-1.0.0.Final/ 1.0.0.Final | xz > jboss-logging-tools-1.0.0.Final.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
+# cd jboss-logging-tools && git archive --format=tar --prefix=jboss-logging-tools-1.0.2.Final/ 1.0.2.Final | xz > jboss-logging-tools-1.0.2.Final.tar.xz
+Source0:          jboss-logging-tools-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
@@ -35,10 +38,11 @@ BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
 BuildRequires:    maven-eclipse-plugin
 BuildRequires:    maven-surefire-plugin
+BuildRequires:    maven-surefire-provider-testng
+BuildRequires:    testng
 BuildRequires:    jboss-parent
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    junit4
 BuildRequires:    jboss-logging
+BuildRequires:    jboss-logmanager
 
 Requires:         jboss-logging
 Requires:         jpackage-utils
@@ -57,7 +61,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-logging-tools-%{namedversion}
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -87,6 +91,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_3jpp7
 - rebuild with maven-local
 
