@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 2013.9
+Version: 2014.4
 Release: alt1
 
 %setup_python_module %oname
@@ -115,11 +115,14 @@ popd
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
-#files -n python3-module-%oname-tests
-#python3_sitelibdir/%oname/tests
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/%oname/tests
 %endif
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.4-alt1
+- Version 2014.4
+
 * Thu Jan 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2013.9-alt1
 - Version 2013.9
 
