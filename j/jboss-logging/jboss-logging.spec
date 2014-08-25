@@ -1,22 +1,22 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logging
-%define version 3.1.0
+%define version 3.1.2
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging
-Version:          3.1.0
-Release:          alt3_4jpp7
+Version:          3.1.2
+Release:          alt1_1jpp7
 Summary:          The JBoss Logging Framework
 Group:            Development/Java
-License:          LGPLv2+
+License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logging
 
 # git clone git://github.com/jboss-logging/jboss-logging.git
-# cd jboss-logging/ && git archive --format=tar --prefix=jboss-logging-3.1.0.GA/ 3.1.0.GA | xz > jboss-logging-3.1.0.GA.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
+# cd jboss-logging/ && git archive --format=tar --prefix=jboss-logging-3.1.2.GA/ 3.1.2.GA | xz > jboss-logging-3.1.2.GA.tar.xz
+Source0:          jboss-logging-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
@@ -57,36 +57,24 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-logging-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build -f
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%doc src/main/resources/META-INF/LICENSE.txt
 
-#POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_1jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt3_4jpp7
 - rebuild with maven-local
 
