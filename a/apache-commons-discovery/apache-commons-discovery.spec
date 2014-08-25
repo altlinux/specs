@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name  discovery
@@ -8,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_4jpp7
+Release:        alt3_7jpp7
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -17,13 +14,12 @@ URL:            http://commons.apache.org/%{base_name}
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch0:         %{name}-addosgimanifest.patch
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
+
 BuildRequires:  maven-local
+BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  apache-commons-logging >= 1.1.1
-Requires:       apache-commons-logging >= 1.1.1
 
-# This should go away with F-17
 Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} <= 1:0.4
 Source44: import.info
@@ -41,6 +37,7 @@ Group:          Development/Java
 Summary:        API documentation for %{name}
 Requires:       jpackage-utils
 
+Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-javadoc <= 1:0.4
 BuildArch: noarch
 
@@ -52,33 +49,23 @@ BuildArch: noarch
 %patch0
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
+%mvn_file  : %{short_name} %{name}
+%mvn_build
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
+
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_7jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_4jpp7
 - added BR: for xmvn
 
