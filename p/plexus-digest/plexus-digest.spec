@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-digest
 Version:        1.1
-Release:        alt2_9jpp7
+Release:        alt2_12jpp7
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -60,10 +60,7 @@ BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
 BuildRequires:  qdox >= 1.5
-
 BuildRequires:  plexus-containers-component-metadata
 BuildRequires:  plexus-cdc
 Source44: import.info
@@ -80,7 +77,6 @@ is like a J2EE application server, without all the baggage.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -92,34 +88,20 @@ Javadoc for %{name}.
 %patch1 -p1
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_file  : %{parent}/%{subname}
+%mvn_build
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 target/*.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}.jar
+%mvn_install
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
- $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
+%files -f .mfiles
 
-%add_maven_depmap JPP.%{parent}-%{subname}.pom %{parent}/%{subname}.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/%{parent}/%{subname}.jar
-%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_12jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_9jpp7
 - rebuild with maven-local
 

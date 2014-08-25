@@ -2,33 +2,32 @@ Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-io
-Version:        2.0.4
-Release:        alt3_2jpp7
+Version:        2.0.5
+Release:        alt1_6jpp7
 Summary:        Plexus IO Components
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://plexus.codehaus.org/plexus-components/plexus-io
-# fetched from https://github.com/sonatype/plexus-io/tarball/plexus-io-2.0.4
-Source0:        sonatype-plexus-io-plexus-io-2.0.4-0-g2767dfe.tar.gz
+Source0:        https://github.com/sonatype/plexus-io/tarball/plexus-io-%{version}#/%{name}-%{version}.tar.gz
 BuildArch: noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires: jpackage-utils
 
 BuildRequires: plexus-utils
-BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-container-default
+BuildRequires: plexus-components-pom
 BuildRequires: maven-local
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
+BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-doxia-sitetools
-Requires:  jpackage-utils
-Requires: plexus-utils
-Requires: plexus-container-default
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 Source44: import.info
 
 %description
@@ -38,7 +37,6 @@ in I/O operations.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -46,39 +44,26 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q -n sonatype-plexus-io-fd7f1a8
+%setup -q -n sonatype-plexus-io-1a0010b
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+export XMVN_COMPILER_SOURCE="1.5"
+%mvn_file  : plexus/io
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/plexus
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/plexus/io.jar
+%mvn_install
 
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}.pom
-
-%add_maven_depmap JPP.%{name}.pom plexus/io.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-
-%files
+%files -f .mfiles
 %doc NOTICE.txt
-%{_javadir}/plexus/io.jar
-%{_mavenpomdir}/JPP.%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt1_6jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt3_2jpp7
 - rebuild with maven-local
 

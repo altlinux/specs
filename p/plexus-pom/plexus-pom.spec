@@ -1,70 +1,50 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          plexus-pom
-Version:       3.0.1
-Release:       alt3_3jpp7
-Summary:       Root Plexus Projects pom
+Version:       3.3.1
+Release:       alt1_4jpp7
+Summary:       Root Plexus Projects POM
 Group:         Development/Java
 License:       ASL 2.0
 URL:           https://github.com/sonatype/%{name}/
-# git clone git://github.com/sonatype/plexus-pom.git
-# cd plexus-pom
-# git archive --format=tar --prefix=plexus-pom-3.0.1/ plexus-3.0.1 | xz >plexus-pom-3.0.1.tar.xz
-Source0:       plexus-pom-%{version}.tar.xz
+Source0:       https://github.com/sonatype/plexus-pom/archive/plexus-%{version}.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
-
-# remove
-# org.codehaus.mojo taglist-maven-plugin 2.4
-# org.apache.maven.wagon wagon-webdav-jackrabbit 1.0
-Patch0:        plexus-pom-3.0.1-pom.patch
-# remove
-# maven-site-plugin which require org.codehaus.plexus:plexus-stylus-skin 1.0
-Patch1:        plexus-pom-3.0.1-no-site-plugin.patch
-
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: spice-parent
+BuildArch:     noarch
 
 BuildRequires: maven-local
-BuildRequires: maven-install-plugin
-BuildRequires: modello
-BuildRequires: plexus-containers-component-metadata
-
-Requires:      maven
-Requires:      spice-parent
-
-Requires:      jpackage-utils >= 0:1.7.5
-BuildArch:     noarch
+BuildRequires: spice-parent
 Source44: import.info
 
 %description
 The Plexus project provides a full software stack for creating and
-executing software projects.
+executing software projects.  This package provides parent POM for
+Plexus packages.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p0
+%setup -q -n plexus-pom-plexus-%{version}
+# require: maven-site-plugin *
+%pom_xpath_remove "pom:profile[pom:id='maven-3']"
+# * require: org.codehaus.plexus plexus-stylus-skin 1.0
+# org.apache.maven.wagon wagon-webdav-jackrabbit 1.0
+%pom_remove_plugin org.apache.maven.plugins:maven-site-plugin
+
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
 cp -p %{SOURCE1} LICENSE
 
 %build
-
-mvn-rpmbuild install
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.plexus-plexus.pom
-%add_maven_depmap JPP.plexus-plexus.pom
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP.plexus-plexus.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_4jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt3_3jpp7
 - rebuild with maven-local
 

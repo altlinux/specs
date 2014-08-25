@@ -1,7 +1,4 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -40,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.9.a7jpp7
+Release:        alt5_0.13.a7jpp7
 Summary:        Plexus Resource Manager
 License:        MIT
 Group:          Development/Java
@@ -48,10 +45,7 @@ URL:            http://plexus.codehaus.org/
 # svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-resources-1.0-alpha-7/
 # tar caf plexus-resources-1.0-alpha-7-src.tar.xz plexus-resources-1.0-alpha-7
 Source0:        %{name}-%{version}-alpha-7-src.tar.xz
-Requires:       classworlds >= 0:1.1
-Requires:       plexus-container-default
-Requires:       plexus-utils
-Requires:       jpackage-utils >= 0:1.7.3
+
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  maven-local
@@ -63,9 +57,7 @@ BuildRequires:  maven-release-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  plexus-container-default
+BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-utils
 
 BuildArch:      noarch
@@ -83,7 +75,6 @@ is like a J2EE application server, without all the baggage.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -97,35 +88,20 @@ cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
 
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_file  : %{parent}/%{subname}
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 target/%{name}-%{namedversion}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/plexus/%{subname}.jar
-%add_to_maven_depmap org.codehaus.plexus %{name} %{namedversion} JPP/%{parent} %{subname}
+%mvn_install
 
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
+%files -f .mfiles
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{parent}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.13.a7jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.9.a7jpp7
 - rebuild with maven-local
 
