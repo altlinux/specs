@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-juddi
 Version:          3.1.4
-Release:          alt2_1jpp7
+Release:          alt2_4jpp7
 Summary:          Client API for UDDI
 Group:            Development/Java
 License:          ASL 2.0
@@ -21,18 +18,10 @@ Patch3:           0003-Disable-ReadWSDLTest.readFromJar.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    jboss-jaxws-2.2-api
 BuildRequires:    wsdl4j
-
-Requires:         jpackage-utils
-Requires:         jboss-jaxws-2.2-api
-Requires:         wsdl4j
 Source44: import.info
 
 %description
@@ -48,54 +37,30 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-for m in uddi-ws juddi-client; do
-  # JAR
-  install -pm 644 ${m}/target/${m}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/${m}.jar
-
-  # POM
-  install -pm 644 ${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-${m}.pom
-
-  # DEPMAP
-  %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
-
-#DEPMAP
-%add_maven_depmap JPP.%{name}-parent.pom
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc RELEASE_NOTES.html LICENSE NOTICE
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt2_4jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt2_1jpp7
 - rebuild with maven-local
 
