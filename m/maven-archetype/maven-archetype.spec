@@ -1,26 +1,19 @@
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-antrun-plugin
-BuildRequires: xpp3-minimal
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: unzip maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-archetype
-Version:        2.1
-Release:        alt5_7jpp7
+Version:        2.2
+Release:        alt1_1jpp7
 Summary:        Maven project templating toolkit
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            https://maven.apache.org/archetype/
-Source0:        http://search.maven.org/remotecontent?filepath=org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-# custom depmap needed to resolve ant-antlr which doesn't have pom/depmap
-Source1:        %{name}.depmap
-
-Patch0:         0001-Use-component-metadata-instead-of-maven-plugin.patch
 Patch1:         0002-Use-generics.patch
 Patch2:         0003-Add-Maven-3-compatibility.patch
 Patch3:         %{name}-fix-jetty-namespace.patch
@@ -29,15 +22,13 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 # we added test dep skipping there
-BuildRequires:  maven-local maven > 3.0.3-13
 BuildRequires:  maven-war-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-script-interpreter
 BuildRequires:  jchardet
 BuildRequires:  plexus-containers-component-metadata
-
-Requires:       jpackage-utils
-Requires:       maven
+BuildRequires:  xmvn
 Source44: import.info
 Provides: maven-archetype2 = %version
 Obsoletes: maven-archetype2 < %version
@@ -79,7 +70,6 @@ within your organization.
 %package javadoc
 Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -88,9 +78,6 @@ BuildArch: noarch
 %package catalog
 Summary:        Maven Archetype Catalog model
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 
 %description catalog
 %{summary}.
@@ -98,9 +85,6 @@ Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 %package descriptor
 Summary:        Maven Archetype Descriptor model
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 
 %description descriptor
 %{summary}.
@@ -108,9 +92,6 @@ Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 %package registry
 Summary:        Maven Archetype Registry model
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 
 %description registry
 %{summary}.
@@ -118,19 +99,6 @@ Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 %package common
 Summary:        Maven Archetype common classes
 Group:          Development/Java
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-catalog = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-descriptor = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-registry = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       jchardet
-Requires:       dom4j
-Requires:       jdom
-Requires:       maven-project
-Requires:       plexus-containers-container-default
-Requires:       apache-commons-io
-Requires:       plexus-velocity
 
 %description common
 %{summary}.
@@ -138,8 +106,6 @@ Requires:       plexus-velocity
 %package packaging
 Summary:        Maven Archetype packaging configuration for archetypes
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 
 %description packaging
 %{summary}.
@@ -147,20 +113,13 @@ Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
 %package -n %{name}-plugin
 Summary:        Maven Plugin for using archetypes
 Group:          Development/Java
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       apache-commons-collections
-Requires:       maven-archetype = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-catalog = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-descriptor = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       %{name}-registry = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n %{name}-plugin
 %{summary}.
 
 %prep
 %setup -q
-%patch0 -p1
+
 %patch1 -p1
 %patch2 -p1
 %patch3
@@ -200,105 +159,44 @@ pushd archetype-models/archetype-descriptor
 popd
 
 
+# groovy is not really needed
+%pom_remove_dep org.codehaus.groovy:groovy maven-archetype-plugin/pom.xml
+
+%pom_disable_module archetype-testing
+%pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common/pom.xml
+
+
 %build
+%mvn_package :archetype-models maven-archetype
 # we don't have cargo so skip tests for now
-mvn-rpmbuild -X -Dmaven.test.skip=true \
-             -Dmaven.local.depmap.file=%{SOURCE1} \
-             install javadoc:aggregate
+%mvn_build -s -f
 
 %install
-# parent pom
-install -Dpm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom
-
-for module in common packaging; do
-    pushd archetype-$module
-    install -Dpm 644 target/archetype-$module-%{version}.jar \
-                     %{buildroot}%{_javadir}/%{name}/$module.jar
-    install -Dpm 644 pom.xml \
-            %{buildroot}%{_mavenpomdir}/JPP.%{name}-$module.pom
-
-    %add_maven_depmap JPP.%{name}-$module.pom %{name}/$module.jar -f $module
-    popd
-done
-
-pushd archetype-models
-     install -Dpm 644 pom.xml \
-                     %{buildroot}%{_mavenpomdir}/JPP-%{name}-models.pom
-
-     %add_maven_depmap JPP-%{name}-models.pom
-
-     for module in catalog descriptor registry;do
-         pushd archetype-$module
-         install -Dpm 644 target/archetype-$module-%{version}.jar \
-                      %{buildroot}%{_javadir}/%{name}/$module.jar
-         install -Dpm 644 pom.xml \
-                      %{buildroot}%{_mavenpomdir}/JPP.%{name}-$module.pom
-
-         %add_maven_depmap JPP.%{name}-$module.pom %{name}/$module.jar -f $module
-         popd
-     done
-popd
-
-pushd %{name}-plugin
-install -Dpm 644 target/%{name}-plugin-%{version}.jar \
-                 %{buildroot}%{_javadir}/%{name}/plugin.jar
-install -Dpm 644 pom.xml \
-        %{buildroot}%{_mavenpomdir}/JPP.%{name}-plugin.pom
-%add_maven_depmap JPP.%{name}-plugin.pom %{name}/plugin.jar -f plugin
-popd
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
+%mvn_install
 
 
-
-%files
+%files -f .mfiles-maven-archetype
 %doc LICENSE NOTICE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-models.pom
-%{_mavendepmapfragdir}/%{name}
-%dir %{_javadir}/%{name}
 
-%files javadoc
+%files catalog -f .mfiles-archetype-catalog
+
+%files descriptor -f .mfiles-archetype-descriptor
+
+%files registry -f .mfiles-archetype-registry
+
+%files common -f .mfiles-archetype-common
+
+%files packaging -f .mfiles-archetype-packaging
+
+%files -n %{name}-plugin -f .mfiles-maven-archetype-plugin
+
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
-%exclude %{_javadocdir}/%{name}/javadoc.sh
-
-%files catalog
-%{_mavendepmapfragdir}/%{name}-catalog
-%{_mavenpomdir}/JPP.%{name}-catalog.pom
-%{_javadir}/%{name}/catalog.jar
-
-%files descriptor
-%{_mavendepmapfragdir}/%{name}-descriptor
-%{_mavenpomdir}/JPP.%{name}-descriptor.pom
-%{_javadir}/%{name}/descriptor.jar
-
-%files registry
-%{_mavendepmapfragdir}/%{name}-registry
-%{_mavenpomdir}/JPP.%{name}-registry.pom
-%{_javadir}/%{name}/registry.jar
-
-%files common
-%{_mavendepmapfragdir}/%{name}-common
-%{_mavenpomdir}/JPP.%{name}-common.pom
-%{_javadir}/%{name}/common.jar
-
-%files packaging
-%{_mavendepmapfragdir}/%{name}-packaging
-%{_mavenpomdir}/JPP.%{name}-packaging.pom
-%{_javadir}/%{name}/packaging.jar
-
-%files -n %{name}-plugin
-%{_mavendepmapfragdir}/%{name}-plugin
-%{_mavenpomdir}/JPP.%{name}-plugin.pom
-%{_javadir}/%{name}/plugin.jar
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1jpp7
+- new release
+
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt5_7jpp7
 - rebuild with maven-local
 
