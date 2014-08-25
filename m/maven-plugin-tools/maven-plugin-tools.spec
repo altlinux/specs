@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: unzip fest-assert xmlunit
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-tools
 Version:        3.1
-Release:        alt4_5jpp7
+Release:        alt4_10jpp7
 Epoch:          0
 Summary:        Maven Plugin Tools
 
@@ -16,13 +16,17 @@ URL:            http://maven.apache.org/plugin-tools/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugin-tools/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
+# Fix NullPointerException in MojoClassVisitor.visit()
+# See: rhbz#920042, http://jira.codehaus.org/browse/MPLUGIN-242
+Patch0:         %{name}-rhbz-920042.patch
+
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  ant
 BuildRequires:  bsh
 BuildRequires:  jtidy
 BuildRequires:  maven-artifact-manager
-BuildRequires:  maven-doxia
+BuildRequires:  maven-doxia-sink-api
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-plugin-annotations
@@ -46,13 +50,19 @@ BuildRequires:  plexus-utils
 BuildRequires:  plexus-velocity
 BuildRequires:  qdox
 BuildRequires:  velocity
+# This is parent POM of the plexus-ant-factory. It is not pulled in
+# as a dependency of plexus-ant-factory, but we need it, because
+# maven-script-ant subpackage fails to build without it.
+BuildRequires:  plexus-component-factories-pom
 # Test dependencies:
+%if 0
 BuildRequires:  easymock
 BuildRequires:  fest-assert
 BuildRequires:  junit
 BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  plexus-compiler
 BuildRequires:  xmlunit
+%endif
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -80,7 +90,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       jpackage-utils
 Requires:       maven
 Requires:       maven-artifact-manager
-Requires:       maven-doxia
+Requires:       maven-doxia-sink-api
 Requires:       maven-doxia-sitetools
 Requires:       maven-plugin-descriptor
 Requires:       maven-plugin-registry
@@ -269,6 +279,7 @@ Requires:       maven-project
 Requires:       plexus-ant-factory
 Requires:       plexus-archiver
 Requires:       plexus-containers-container-default
+Requires:       plexus-component-factories-pom
 
 %description -n maven-script-ant
 This package provides %{summary}, which write Maven plugins with
@@ -301,6 +312,8 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+
 # For easier installation
 ln -s maven-script/maven-script-{ant,beanshell} .
 
@@ -309,7 +322,7 @@ ln -s maven-script/maven-script-{ant,beanshell} .
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>"
 
 %build
-mvn-rpmbuild package javadoc:aggregate -Dmaven.test.failure.ignore=true
+mvn-rpmbuild package javadoc:aggregate -Dmaven.test.skip=true
 
 %install
 install -d -m 755 %{buildroot}%{_javadir}/%{name}
@@ -423,6 +436,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt4_10jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt4_5jpp7
 - rebuild with maven-local
 
