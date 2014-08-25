@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.2
-Release: alt2.svn20120328
+Version: 1.3
+Release: alt1.git20140720
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140720
+- Version 1.3
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.svn20120328
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
