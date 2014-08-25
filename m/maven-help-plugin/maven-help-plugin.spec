@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt5_8jpp7
+Release:        alt5_11jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
-BuildRequires: maven
+BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
@@ -94,6 +94,9 @@ sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUt
     </arguments>
   </configuration>"
 
+# Remove test dependencies because tests are skipped anyways.
+%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+
 %build
 # no junit-addons, skip test
 mvn-rpmbuild \
@@ -126,6 +129,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt5_11jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt5_8jpp7
 - added maven-local BR:
 
