@@ -1,41 +1,61 @@
-Name: maven-shared-incremental
-Version: 1.0
-Summary: Maven Incremental Build support utilities
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-shared-incremental/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: java
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           maven-shared-incremental
+Version:        1.0
+Release:        alt1_2jpp7
+Summary:        Maven Incremental Build support utilities
+License:        ASL 2.0
+Group:          Development/Java
+URL:            http://maven.apache.org/shared/maven-shared-incremental/
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.2jpp
-Source: maven-shared-incremental-1.0-2.fc19.cpio
-#BuildRequires: rpm-build-java
-Provides: mvn(org.apache.maven.shared:maven-shared-incremental)
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
+Source44: import.info
 
 %description
 Various utility classes and plexus components for supporting
 incremental build functionality in maven plugins.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:          API documentation for %{name}
+Group:            Development/Java
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
+%dir %{_javadir}/%{name}
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.2jpp
 - rebuild to add provides
 
