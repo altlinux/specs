@@ -2,18 +2,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 Name:           async-http-client
-Version:        1.6.1
-Release:        alt3_4jpp7
+Version:        1.7.14
+Release:        alt1_1jpp7
 Summary:        Asynchronous Http Client for Java
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            https://github.com/AsyncHttpClient/%{name}
-# git clone https://github.com/AsyncHttpClient/async-http-client.git
-# git archive --prefix="async-http-client-1.6.1/" --format=tar async-http-client-1.6.1 | bzip2 > async-http-client-1.6.1.tar.bz2
-Source0:        %{name}-%{version}.tar.bz2
-
-Patch0:         0001-Remove-test-dependencies.patch
+Source0:        https://github.com/AsyncHttpClient/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -31,10 +27,6 @@ BuildRequires:  maven-release-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  sonatype-oss-parent
 BuildRequires:  netty
-
-Requires:       netty
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 
@@ -47,50 +39,42 @@ responses. The Async HTTP Client library is simple to use.
 %package javadoc
 Summary:   API documentation for %{name}
 Group:     Development/Java
-Requires:  jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 
-%patch0 -p1
+# Remove things for which we are missing dependencies
+%pom_remove_plugin :clirr-maven-plugin
+%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-gitsite']]"
+%pom_xpath_remove "pom:profiles/pom:profile[pom:id[text()='grizzly']]"
+
+# Animal sniffer is causing more trouble than good
+%pom_remove_plugin :animal-sniffer-maven-plugin
+
 
 %build
 # we don't have all test dependencies available so disable tests
-mvn-rpmbuild -e \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
-
+%mvn_build -f
 
 %install
-
-install -d -m 755 %{buildroot}%{_javadir}/
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap com.ning %{name} %{version} JPP %{name}
-
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 
-%files
-%doc README LICENSE-2.0.txt
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%doc README.md LICENSE-2.0.txt
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
-%{_javadocdir}/%{name}
-
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.14-alt1_1jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt3_4jpp7
 - rebuild with maven-local
 
