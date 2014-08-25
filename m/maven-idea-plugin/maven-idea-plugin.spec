@@ -1,9 +1,11 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-idea-plugin
 Version:        2.2
-Release:        alt3_8jpp7
+Release:        alt3_12jpp7
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Java
@@ -12,6 +14,7 @@ URL:            http://maven.apache.org/plugins/%{name}
 # svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-idea-plugin-2.2
 # tar caf maven-idea-plugin-2.2.tar.xz maven-idea-plugin-2.2
 Source0:        %{name}-%{version}.tar.xz
+Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 Patch0:         add_compat.patch
 
 BuildArch: noarch
@@ -31,9 +34,6 @@ BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: dom4j
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
 
 Obsoletes: maven2-plugin-idea <= 0:2.0.8
 Provides: maven2-plugin-idea = 1:%{version}-%{release}
@@ -47,7 +47,6 @@ project so you can work on it using the IDE, IntelliJ IDEA.
 %package javadoc
 Group:          Development/Java
 Summary:        API documentation for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,35 +57,27 @@ BuildArch: noarch
 %setup -q 
 %patch0
 
+cp %{SOURCE1} .
+
 %build
 # we skip test because even with binary mvn release these fail for
 # various reasons.
-mvn-rpmbuild -e \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE-2.0.txt
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_8jpp7
 - rebuild with maven-local
 
