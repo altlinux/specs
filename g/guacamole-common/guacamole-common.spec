@@ -1,33 +1,20 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             guacamole-common
 Version:          0.8.0
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          The core Java library used by the Guacamole web application
 License:          MPLv1.1 or GPLv2+ or LGPLv2+
 URL:              http://guac-dev.org/
 Source0:          http://guac-dev.org/pub/dist/source/%{name}-%{version}.tar.gz
 BuildArch:        noarch
 
-# Generic Buildrequires:
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-local
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-Requires:         jpackage-utils
 BuildRequires:    servlet3
-Requires:         slf4j >= 1.6.1
 Source44: import.info
 
 %description
@@ -45,7 +32,6 @@ reading configuration from a standard location (guacamole.properties).
 %package javadoc
 Summary:          API documentation for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,33 +41,22 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{version}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/guacamole
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/guacamole/%{name}.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.guacamole-%{name}.pom
-
-%add_maven_depmap JPP.guacamole-%{name}.pom guacamole/%{name}.jar
-
-
-%files
+%files -f .mfiles
+%{_javadir}/%{name}
 %doc LICENSE README
-%{_mavenpomdir}/JPP.guacamole-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/guacamole
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
-
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_4jpp7
+- update
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_3jpp7
 - new version
 
