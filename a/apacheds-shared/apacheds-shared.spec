@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          apacheds-shared
 Version:       0.9.19
-Release:       alt3_1jpp7
+Release:       alt3_3jpp7
 Summary:       Shared APIs of Apache Directory Project
 Group:         Development/Java
 License:       ASL 2.0
@@ -140,6 +143,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt3_3jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt3_1jpp7
 - rebuild with maven-local
 
