@@ -1,34 +1,38 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local unzip
+BuildRequires: unzip jsoup
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
-Version:        2.4
-Release:        alt5_7jpp7
+Version:        2.6
+Release:        alt1_5jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-project-info-reports-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-# removed cvsjava provider since we don't support it anymore
-Patch0:        %{name}-pom.patch
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: apache-commons-parent
+BuildRequires: maven-local
+BuildRequires: maven-dependency-tree
+BuildRequires: maven-plugin-annotations
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-shared-reporting-api
 BuildRequires: maven-shared-reporting-impl
-BuildRequires: maven-shared-dependency-tree
 BuildRequires: maven-doxia-tools
 BuildRequires: maven-shared-jar
 BuildRequires: maven-wagon
 BuildRequires: maven-scm
-BuildRequires: maven-doxia
-BuildRequires: plexus-container-default
+BuildRequires: maven-doxia-sink-api
+BuildRequires: maven-doxia-logging-api
+BuildRequires: maven-doxia-core
+BuildRequires: maven-doxia-module-xhtml
+BuildRequires: maven-doxia-sitetools
+BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-component-api
 BuildRequires: plexus-i18n
 BuildRequires: plexus-utils
@@ -36,20 +40,25 @@ BuildRequires: apache-commons-validator
 BuildRequires: httpunit
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: servlet3
-#BuildRequires: netbeans-cvsclient
 BuildRequires: maven-jarsigner-plugin
 BuildRequires: keytool-maven-plugin
 BuildRequires: joda-time
 
 Requires:       maven
 Requires:       jpackage-utils
-Requires:       plexus-container-default
+Requires:       plexus-containers-container-default
 Requires:       plexus-component-api
 Requires:       plexus-i18n
 Requires:       plexus-utils
 Requires:       apache-commons-validator
 Requires:       httpunit
 Requires:       servlet3
+Requires:       maven-dependency-tree
+Requires:       maven-doxia-sink-api
+Requires:       maven-doxia-logging-api
+Requires:       maven-doxia-core
+Requires:       maven-doxia-module-xhtml
+Requires:       maven-doxia-sitetools
 Requires:       maven-shared-jar
 Requires:       maven-scm
 Requires:       joda-time
@@ -75,7 +84,11 @@ API documentation for %{name}.
 
 %prep
 %setup -q -c
-%patch0 -p1 -b .sav
+pushd %{name}-%{version}
+# removed cvsjava provider since we don't support it anymore
+%pom_remove_dep :maven-scm-provider-cvsjava
+%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+popd
 
 %build
 pushd %{name}-%{version}
@@ -107,6 +120,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_5jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt5_7jpp7
 - rebuild with maven-local
 
