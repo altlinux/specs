@@ -1,4 +1,5 @@
 Epoch: 0
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -32,8 +33,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           checkstyle
-Version:        5.5
-Release:        alt3_4jpp7
+Version:        5.6
+Release:        alt1_5jpp7
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -73,13 +74,6 @@ BuildRequires:  maven-site-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit4
 
-Requires:       jpackage-utils
-Requires:       antlr-tool
-Requires:       apache-commons-beanutils
-Requires:       apache-commons-cli
-Requires:       apache-commons-logging
-Requires:       guava
-
 BuildArch:      noarch
 
 Obsoletes:      %{name}-optional < %{version}-%{release}
@@ -102,7 +96,6 @@ Demonstrations and samples for %{name}.
 %package        javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -120,20 +113,16 @@ sed -i 's/\r//' LICENSE LICENSE.apache20 README RIGHTS.antlr \
          contrib/hooks/*.pl src/site/resources/css/*css \
          java.header
 
+# The following test needs network access, so it would fail on Koji
+rm -f src/tests/com/puppycrawl/tools/checkstyle/filters/SuppressionsLoaderTest.java
+
 %build
-mvn-rpmbuild -e install javadoc:aggregate
+%mvn_file  : %{name}
+%mvn_build
 
 
 %install
-# jar
-install -dm 755 %{buildroot}%{_javadir}
-cp -pa target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-checkstyle.pom
-%add_maven_depmap JPP-checkstyle.pom %{name}.jar
-
+%mvn_install
 
 # script
 %jpackage_script com.puppycrawl.tools.checkstyle.Main "" "" checkstyle:antlr:apache-commons-beanutils:apache-commons-cli:apache-commons-logging:guava checkstyle true
@@ -160,10 +149,6 @@ EOF
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/checkstyle.conf`
 touch $RPM_BUILD_ROOT/etc/java/checkstyle.conf
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 %post
 if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
   %{_bindir}/install-catalog --add \
@@ -178,12 +163,9 @@ if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
     %{_datadir}/xml/%{name}/catalog > /dev/null || :
 fi
 
-%files
-%doc LICENSE LICENSE.apache20 README RIGHTS.antlr
+%files -f .mfiles
+%doc LICENSE README
 %doc checkstyle_checks.xml java.header sun_checks.xml suppressions.xml
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
 %{_datadir}/xml/%{name}
 %{_bindir}/%{name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
@@ -192,11 +174,14 @@ fi
 %files demo
 %{_datadir}/%{name}
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt1_5jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt3_4jpp7
 - rebuild with maven-local
 
