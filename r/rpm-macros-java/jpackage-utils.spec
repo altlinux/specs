@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt39
+Release:        alt40
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -58,7 +58,7 @@ Patch3: jpackage-utils-1.7.5-alt-rpmscript-safe-mode.patch
 Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
 Patch6: javapackages-0.12.3-macros.fjava-alt-nopython.patch
-Patch7: javapackages-0.6.0-alt-macros-rpm404.patch
+Patch7: javapackages-0.15.0-alt-macros-rpm404.patch
 Patch8: javapackages-0.15.0-alt-fix-install.patch
 
 # macros.jpacage patches
@@ -441,19 +441,6 @@ install -pm 644 jpackage-utils-safe/java-functions-safe ${RPM_BUILD_ROOT}${_java
 #install -pm 755 jpackage-utils-safe/safe-*build-jar-repository ${RPM_BUILD_ROOT}%_bindir/
 # ------------- end safe jpackage utils ----------------
 
-# -------- update-maven-depmap.filetrigger ---------------
-install -Dm 755 rpm-build-java/update-maven-depmap.sh %buildroot%{_sbindir}/update-maven-depmap
-mkdir -p %buildroot/%_rpmlibdir/
-cat <<__TRIGGER__ >%buildroot/%_rpmlibdir/update-maven-depmap.filetrigger
-#!/bin/sh -e
-egrep -qs -e '^(%{_datadir}/maven-fragments|%{_sysconfdir}/maven/fragments)' || exit 0
-%{_sbindir}/update-maven-depmap
-__TRIGGER__
-chmod 755 %buildroot/%_rpmlibdir/update-maven-depmap.filetrigger
-echo '%%attr(755,root,root) %_rpmlibdir/update-maven-depmap.filetrigger' >> jpackage-utils-%{version}.files
-echo '%%attr(755,root,root) %_sbindir/update-maven-depmap' >> jpackage-utils-%{version}.files
-# -------- end update-maven-depmap.filetrigger ---------------
-
 install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage-eclipse
 ## TMP hack for maven1 dep on /usr/lib/java - remove
 ##if ! %_libdir = /usr/lib
@@ -490,7 +477,7 @@ install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_
 
 
 %post -n jpackage-utils
-%{_sbindir}/update-maven-depmap
+rm -f /etc/maven/maven2-depmap.xml
 
 %files -n jpackage-utils -f jpackage-utils-%{version}.files
 %_bindir/build-classpath
@@ -504,7 +491,6 @@ install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_
 %_bindir/jvmjar
 %_bindir/rebuild-jar-repository
 %_bindir/rebuild-security-providers
-%_sbindir/update-maven-depmap
 %_mandir/man?/*
 %doc LICENSE.txt HEADER.JPP doc/* etc/httpd-javadoc.conf
 %doc jpackage-utils-safe/README.ALT
@@ -547,6 +533,10 @@ install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_
 
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt40
+- dropped filetrigger for jpackage maven
+- backported some xpath macros for rpm 4.0.4
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt39
 - maven.req
 
