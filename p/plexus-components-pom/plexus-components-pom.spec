@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global short_name plexus-components
 
 Name:           %{short_name}-pom
 Version:        1.2
-Release:        alt2_2jpp7
+Release:        alt2_6jpp7
 Summary:        Plexus Components POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -16,10 +13,8 @@ URL:            http://plexus.codehaus.org/%{short_name}
 Source0:        http://repo.maven.apache.org/maven2/org/codehaus/plexus/%{short_name}/%{version}/%{short_name}-%{version}.pom
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-
-Requires:       jpackage-utils
+BuildRequires:  plexus-pom
 Source44: import.info
 
 %description
@@ -30,20 +25,19 @@ Plexus packages.
 cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE1} LICENSE
 
-%check
-mvn-rpmbuild verify
+%build
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
+%mvn_install
 
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_2jpp7
 - rebuild with maven-local
 

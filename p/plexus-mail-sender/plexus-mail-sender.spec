@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -37,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-mail-sender
 Version:        1.0
-Release:        alt7_0.a2.22jpp7
+Release:        alt7_0.a2.24jpp7
 Epoch:          0
 Summary:        Plexus Mail Sender
 License:        MIT and ASL 1.1
@@ -48,8 +45,6 @@ URL:            http://plexus.codehaus.org/
 # mv PLEXUS_MAIL_SENDER_1_0_ALPHA_2/ plexus-mail-sender-1.0-a2
 # tar czf plexus-mail-sender-1.0-a2-src.tar.gz plexus-mail-sender-1.0-a2
 Source0:        plexus-mail-sender-%{version}-a2-src.tar.gz
-
-Source2:        %{name}-jpp-depmap.xml
 
 # http://jira.codehaus.org/browse/PLX-417
 # http://fisheye.codehaus.org/rdiff/plexus?csid=8336&u&N
@@ -68,7 +63,6 @@ BuildRequires:  maven-doxia-sitetools
 BuildRequires:  saxon
 BuildRequires:  saxon-scripts
 
-Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -86,11 +80,11 @@ Plexus component provides SMTP transport.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %%{name}.
+Javadoc for %{name}.
+
 
 %prep
 %setup -q -n %{name}-%{version}-a2
@@ -100,7 +94,7 @@ mv release-pom.xml pom.xml
 
 pushd plexus-mail-senders
 mv release-pom.xml pom.xml
-sed -i -e 's,<module>plexus-mail-sender-test</module>,<!--module>plexus-mail-sender-test</module-->,' pom.xml
+%pom_disable_module plexus-mail-sender-test
 for mod in javamail simple test;do
     pushd %{name}-$mod
     mv release-pom.xml pom.xml
@@ -114,49 +108,21 @@ find . -iname 'pom.xml' -exec sed -i \
 
 
 %build
-mvn-rpmbuild \
-        -Dmaven.local.depmap.file="%{SOURCE2}" \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
+%mvn_package ":*senders" __noinstall
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-pushd plexus-mail-senders
-for mod in javamail simple;do
-    pushd %{name}-$mod
-    install -pm 644 target/%{name}-$mod-%{namedversion}*.jar \
-            $RPM_BUILD_ROOT%{_javadir}/plexus/mail-sender-$mod.jar
-    install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.plexus-mail-sender-$mod.pom
-    %add_maven_depmap JPP.%{name}-$mod.pom plexus/mail-sender-$mod.jar -a "org.codehaus.plexus:plexus-mail-sender-$mod"
-    popd
-done
-popd
+%mvn_install
 
-install -pm 644 \
-  %{name}-api/target/%{name}-api-%{namedversion}*.jar \
-  $RPM_BUILD_ROOT%{_javadir}/plexus/mail-sender-api.jar
-install -pm 644 %{name}-api/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.plexus-mail-sender-api.pom
-%add_maven_depmap JPP.%{name}-api.pom plexus/mail-sender-api.jar -a "org.codehaus.plexus:plexus-mail-sender-api"
+%files -f .mfiles
 
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.plexus-mail-sender.pom
-%add_maven_depmap JPP.%{name}.pom -a "org.codehaus.plexus:plexus-mail-sender"
+%files javadoc -f .mfiles-javadoc
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/*pom
-%{_javadir}/plexus/*jar
-
-%files javadoc
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.a2.24jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.a2.22jpp7
 - rebuild with maven-local
 

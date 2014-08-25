@@ -3,14 +3,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-interpolation
 Version:        1.15
-Release:        alt3_2jpp7
+Release:        alt3_6jpp7
 Summary:        Plexus Interpolation API
 
 Group:          Development/Java
 License:        ASL 2.0 and ASL 1.1 and MIT
 URL:            http://plexus.codehaus.org/plexus-components/plexus-interpolation
-#fetched from https://github.com/sonatype/plexus-interpolation/tarball/plexus-interpolation-1.15
-Source0:        sonatype-plexus-interpolation-plexus-interpolation-1.15-0-g9690e65.tar.gz
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,44 +35,29 @@ related projects.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
 %prep
-%setup -q -n sonatype-plexus-interpolation-cf017ec
+%setup -q -n %{name}-%{name}-%{version}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_file  : plexus/interpolation
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/plexus
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/plexus/interpolation.jar
+%mvn_install
 
+%files -f .mfiles
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}.pom
-
-%add_maven_depmap JPP.%{name}.pom plexus/interpolation.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/plexus/interpolation.jar
-%{_mavenpomdir}/JPP.%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_6jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_2jpp7
 - rebuild with maven-local
 

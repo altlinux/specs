@@ -1,11 +1,5 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name plexus-cdc
-%define version 1.0
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -40,45 +34,38 @@ BuildRequires: jpackage-compat
 
 %global subname cdc
 
-%global maven_settings_file %{_builddir}/%{name}/settings.xml
-
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt11_0.12.a14jpp7
+Release:        alt11_0.18.a14jpp7
 Epoch:          0
 Summary:        Plexus Component Descriptor Creator
-License:        MIT
+# Almost whole gleaner subpackage is ASL 2.0
+License:        MIT and ASL 2.0
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
 # svn export -r 7728 http://svn.codehaus.org/plexus/archive/plexus-tools/tags/plexus-tools-1.0.11/plexus-cdc plexus-cdc
 # tar czf plexus-cdc-1.0-alpha-14.tar.gz plexus-cdc/
 Source0:        %{name}-1.0-alpha-14.tar.gz
-Source1:	%{name}-jpp-depmap.xml
-Patch0:     %{name}-qdox-1.9.patch
+Source1:        %{name}-jpp-depmap.xml
+Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Patch0:         %{name}-qdox-1.9.patch
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:	maven-local
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-surefire-plugin
-BuildRequires:	jdom
-BuildRequires:	plexus-container-default
-BuildRequires:	plexus-utils
+BuildRequires:  maven-local
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  jdom
+BuildRequires:  plexus-utils
 BuildRequires:  maven-doxia-sitetools
-BuildRequires:	qdox
-Requires:		jdom
-Requires:		plexus-container-default
-Requires:		plexus-utils
-Requires:		qdox
-
-Requires(post):    jpackage-utils >= 0:1.7.2
-Requires(postun):  jpackage-utils >= 0:1.7.2
+BuildRequires:  qdox
 Source44: import.info
+
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -90,7 +77,7 @@ is like a J2EE application server, without all the baggage.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -98,38 +85,27 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}
+cp -p %{SOURCE2} .
 
 %patch0 -p1
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install javadoc:javadoc
+%mvn_file  : %{parent}/%{subname}
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 target/*.jar \
-	  $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}.jar
-%add_to_maven_depmap org.codehaus.plexus %{name} 1.0-alpha-14 JPP/%{parent} %{subname}
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/plexus
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc %{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.18.a14jpp7
+- update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.12.a14jpp7
 - rebuild with maven-local
 
