@@ -1,6 +1,7 @@
 %define oname ccnet
+
 Name: libccnet
-Version: 1.4.2 
+Version: 3.1.4
 Release: alt6
 
 Summary: Networking library for Seafile
@@ -11,15 +12,16 @@ Url: https://github.com/haiwen/ccnet
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
 
-# Source-url: https://seafile.googlecode.com/files/seafile-latest.tar.gz
+# Source-url: https://github.com/haiwen/ccnet/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
 BuildRequires: libevent-devel libsearpc-devel >= 1.2.0 libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
 BuildRequires: vala libzdb-devel
+
 %description
-Ccnet is a framework for writing networked applications in C
+Ccnet is a framework for writing networked applications in C.
 
 %package devel
 Summary: Development files for %name
@@ -31,16 +33,17 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %package server
-Summary: ccnet server
+Summary: Ccnet server
 Requires: %name = %version-%release
 Group: Networking/File transfer
 
 %description server
-ccnet server files
+Ccnet server part.
+Ccnet is a framework for writing networked applications in C.
 
 %prep
 %setup
-%__subst s/\(DESTDIR\)// libccnet.pc.in
+%__subst 's/(DESTDIR)//' libccnet.pc.in
 
 %build
 %autoreconf
@@ -55,8 +58,10 @@ ccnet server files
 
 %files
 #%doc AUTHORS README.markdown
+%_bindir/ccnet
+%_bindir/ccnet-init
+%_bindir/ccnet-tool
 %_libdir/*.so.*
-%_bindir/%{oname}*
 %python_sitelibdir/%oname/
 
 %files server
@@ -69,6 +74,10 @@ ccnet server files
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Aug 25 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.4-alt6
+- new version (3.1.4) with rpmgs script
+- cleanup spec, drop extraneous files
+
 * Sun Aug 24 2014 Konstantin Artyushkin <akv@altlinux.org> 1.4.2-alt6
 - +++ ccnet servre 
 
