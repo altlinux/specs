@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name ironjacamar
 %define version 1.0.9
 %global namedreltag .Final
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             ironjacamar
 Version:          1.0.9
-Release:          alt3_4jpp7
+Release:          alt3_6jpp7
 Summary:          Java Connector Architecture 1.6 implementation
 Group:            Development/Java
 License:          LGPLv2+
@@ -112,9 +115,9 @@ This package contains the API documentation for %{name}.
 %patch2 -p1
 
 # Yes, a bit ugly because we copy also the source code
-cp %{S:1} %{S:2} %{S:3} %{S:4} %{S:5} %{S:6} %{S:7} %{S:8} %{S:9} %{S:10} %{S:11} %{S:12} %{S:13} .
+cp %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} %{SOURCE7} %{SOURCE8} %{SOURCE9} %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} .
 # Let's remove it
-#rm -rf %{name}-%{namedversion}-CLEAN.tar.xz
+rm -rf %{name}-%{namedversion}-CLEAN.tar.xz
 
 # Fixing JDK7 ASCII issues
 files='
@@ -130,7 +133,6 @@ done
 cp -r doc/licenses/lgpl-2.1.txt LICENSE.txt
 
 %build
-export OPT_JAR_LIST="ant apache-ivy"
 ant -Dbrew nexus clean docs
 
 %install
@@ -163,6 +165,9 @@ cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt3_6jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt3_4jpp7
 - rebuild with maven-local
 
