@@ -7,7 +7,7 @@
 %def_disable installed_tests
 
 Name: telepathy-glib
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Summary: Telepathy framework - GLib connection manager library
@@ -161,6 +161,9 @@ the functionality of the installed %name library package.
 %endif
 
 %changelog
+* Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt1
+- 0.24.1
+
 * Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 

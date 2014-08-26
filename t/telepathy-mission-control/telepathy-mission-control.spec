@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: telepathy-mission-control
-Version: 5.16.2
+Version: 5.16.3
 Release: alt1
 
 Summary: Telepathy mission control plugin library
@@ -94,6 +94,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.3-alt1
+- 5.16.3
+
 * Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.2-alt1
 - 5.16.2
 
