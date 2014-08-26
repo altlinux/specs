@@ -1,36 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jasypt
 Version:       1.9.0
-Release:       alt2_4jpp7
+Release:       alt2_6jpp7
 Summary:       Java Simplified Encryption
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://www.jasypt.org/
 # svn export https://jasypt.svn.sourceforge.net/svnroot/jasypt/tags/jasypt/jasypt-1.9.0 jasypt-1.9.0
 # tar czf jasypt-1.9.0-src-svn.tar.gz jasypt-1.9.0
 Source0:       %{name}-%{version}-src-svn.tar.gz
-# force tomcat-servlet-3.0-api use
-Source1:       %{name}-%{version}-depmap
-# remove maven-gpg-plugin
-# fix encoding (changed US-ASCII in UTF-8)
-# fix bouncycastle: artifactId version
-# add commons-logging for test
-# add icu4j systemPath
-# fix compiler plugin target/source 1.5 
-Patch0:        %{name}-%{version}-pom.patch
 # remove internal commons-codec 1.3
-Patch1:        %{name}-%{version}-use-system-commons-codec.patch
+Patch0:        %{name}-%{version}-use-system-commons-codec.patch
 # tks to jhernand
 # system commons-codec 1.4 support
-Patch2:        %{name}-%{version}-StandardStringDigester.patch
-Patch3:        %{name}-%{version}-StandardPBEStringEncryptor.patch
+Patch1:        %{name}-%{version}-StandardStringDigester.patch
+Patch2:        %{name}-%{version}-StandardPBEStringEncryptor.patch
 
-BuildRequires: jpackage-utils
 
 # test deps
 BuildRequires: apache-commons-lang
@@ -44,20 +30,9 @@ BuildRequires: tomcat-servlet-3.0-api
 
 BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      apache-commons-codec
-Requires:      icu4j
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -66,9 +41,8 @@ Java library which enables encryption
 in java apps with minimum effort.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -76,38 +50,50 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p1
+%patch0 -p1
+%patch1 -p0
 %patch2 -p0
-%patch3 -p0
+
+%pom_remove_plugin :maven-gpg-plugin
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-resources-plugin']/pom:configuration"
+%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-resources-plugin']" "
+<configuration>
+  <encoding>UTF-8</encoding>
+</configuration>"
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration"
+%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']" "
+<configuration>
+  <source>1.5</source>
+  <target>1.5</target>
+  <encoding>UTF-8</encoding>
+</configuration>"
+
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId='org.bouncycastle']/pom:artifactId" bcprov-jdk16
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId='org.bouncycastle']/pom:version" 1.46
+%pom_add_dep commons-logging:commons-logging::test
+
+# force tomcat-servlet-3.0-api use
+%pom_remove_dep javax.servlet:servlet-api
+%pom_add_dep org.apache.tomcat:tomcat-servlet-api::provided
 
 %build
-
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE1} -D_javadir=%{_javadir} install javadoc:aggregate
+%mvn_file :%{name} %{name}
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api/jasypt/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc *.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2_4jpp7
 - new release
 
