@@ -1,7 +1,7 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 3.1
+Version: 3.1.1
 Release: alt1
 
 Group: Sound
@@ -165,6 +165,9 @@ Requires: %rname-common = %EVR
 %_libdir/libkid3-gui.so.*
 
 %changelog
+* Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 3.1.1-alt1
+- new version
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 3.1-alt1
 - new version
 
