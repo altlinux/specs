@@ -6,13 +6,16 @@
 %else
 %def_enable desktop
 %endif
+%def_disable ruby
 %define x11confdir %_sysconfdir/X11
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_kde4_bindir/krdb
 %add_findreq_skiplist %_kde4_bindir/startkde
 %add_findreq_skiplist %_bindir/startkde4
+%if_disabled ruby
 %add_findreq_skiplist %_K4apps/plasma_scriptengine_ruby/*.rb
+%endif
 
 
 %define major 4
@@ -21,7 +24,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -136,6 +139,9 @@ BuildRequires: python-module-sip python-devel libselinux-devel
 BuildRequires: libsystemd-login-devel libsystemd-journal-devel libsystemd-id128-devel libsystemd-daemon-devel systemd-devel
 #BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: kde4libs-devel >= %version
+%if_enabled ruby
+BuildRequires: rpm-build-ruby
+%endif
 
 %description
 The KDE Workspace consists of what is the desktop of the
@@ -936,6 +942,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.11-alt3
+- update from 4.11 branch
+- rebuild with new xcb
+
 * Tue Aug 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.11-alt2
 - update from 4.11 branch
 

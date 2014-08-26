@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.914
-Release: alt1
+Release: alt1.1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -56,6 +56,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Tue Aug 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.914-alt1.1
+- rebuild with libxcb-1.11
+
 * Wed Jul 23 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.914-alt1
 - snapshot 2.99.914
 
