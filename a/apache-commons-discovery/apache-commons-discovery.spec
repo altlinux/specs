@@ -1,3 +1,4 @@
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name  discovery
@@ -5,18 +6,17 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_7jpp7
+Release:        alt3_9jpp7
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 Patch0:         %{name}-addosgimanifest.patch
+Patch1:         %{name}-remove-unreliable-test.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  apache-commons-logging >= 1.1.1
 
@@ -33,9 +33,8 @@ instantiating classes, and for lifecycle management of singleton (factory)
 classes.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
-Requires:       jpackage-utils
 
 Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-javadoc <= 1:0.4
@@ -47,10 +46,11 @@ BuildArch: noarch
 %prep
 %setup -q -n %{short_name}-%{version}-src
 %patch0
+%patch1 -p1
 
 %build
 %mvn_file  : %{short_name} %{name}
-%mvn_build
+%mvn_build -X
 
 %install
 %mvn_install
@@ -63,6 +63,9 @@ BuildArch: noarch
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_9jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_7jpp7
 - new release
 
