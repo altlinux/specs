@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat maven-shared-utils maven-shared-incremental plexus-compiler maven-surefire-provider-junit4
 Name:           xmvn
 Version:        0.5.0
-Release:        alt3_4jpp7
+Release:        alt4_4jpp7
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            http://mizdebsk.fedorapeople.org/xmvn
@@ -139,6 +139,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt4_4jpp7
+- rebuild to update symlinks
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt3_4jpp7
 - fixed bin
 - nobootstrap build
