@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_7jpp7
+Release:          alt1_9jpp7
 Summary:          SLF4j Gossip Provider
 Group:            Development/Java
 License:          ASL 2.0
@@ -25,17 +24,10 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-license-plugin
 BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-release-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    junit4
 BuildRequires:    slf4j
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    animal-sniffer
 BuildRequires:    modello
 BuildRequires:    jansi
 BuildRequires:    fusesource-pom
@@ -59,6 +51,8 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{shortname}-%{version}
 %patch0 -p1
+
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -98,6 +92,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc header.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_7jpp7
 - new release
 
