@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 %define oldname axiom
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-axiom
 Version:        1.2.12
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Epoch:          0
 Summary:        Axis Object Model
 License:        ASL 2.0
@@ -22,10 +21,11 @@ Source0:        %{oldname}-%{version}.tar.xz
 # 3) Remove maven plugins not present in Fedora, which do not impact the build process
 # 4) Remove modules which require additional dependencies not yet in Fedora
 Patch0:         axiom-build-fixes.patch
-BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  junit
 BuildRequires:  maven-local
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-plugin-build-helper
 BuildRequires:  apache-rat-plugin
 BuildRequires:  bea-stax-api
 BuildRequires:  javamail
@@ -43,7 +43,6 @@ Requires:       apache-commons-logging
 Requires:       jaxen
 Requires:       woodstox-core
 Requires:       xerces-j2
-Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
@@ -67,11 +66,13 @@ BuildArch: noarch
 rm -rf modules/axiom-jaxen-testsuite/src/main/
 
 # fix eol
-%{__perl} -pi -e 's/\r$//g' README.txt NOTICE.txt RELEASE-NOTE.txt
+%{__perl} -pi -e 's/\r$//g' README.txt NOTICE RELEASE-NOTE.txt
+
+%pom_remove_dep :axiom-testutils modules/axiom-api
 
 %build
 # Skipping tests for now due to many extra deps
-mvn-rpmbuild -Dmaven.test.skip install
+%mvn_build -f
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/axiom
@@ -99,14 +100,19 @@ cp -rp target/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{oldname}
 
 %files
 %doc *.txt
+%doc NOTICE
 %{_javadir}/axiom/*.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc NOTICE
 %{_javadocdir}/%{oldname}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt2_7jpp7
+- new release
+
 * Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.12-alt2_5jpp7
 - new release
 
