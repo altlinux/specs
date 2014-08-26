@@ -1,64 +1,103 @@
-%add_optflags %optflags_shared
-#global gitdate  20120917
+%def_enable x11
 
-Name:           libxkbcommon
-Version:        0.3.1
-Release:        alt1_1
-Summary:        X.Org X11 XKB parsing library
-License:        MIT
-Group:          System/Libraries
-URL:            http://www.x.org
+Name: libxkbcommon
+Version: 0.4.3
+Release: alt1
 
-%if 0%{?gitdate}
-Source0:       %{name}-%{gitdate}.tar.bz2
-%else
-Source0:        http://xkbcommon.org/download/%{name}-%{version}.tar.xz
-%endif
-Source1:        make-git-snapshot.sh
+Summary: X.Org X11 XKB parsing library
+Group: System/Libraries
+License: MIT
+Url: http://www.x.org
 
-BuildRequires:  autoconf automake libtool
-BuildRequires:  xorg-util-macros bison flex bison
-BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel libX11-devel
-BuildRequires:  xkeyboard-config-devel
+Source0: http://xkbcommon.org/download/%name-%version.tar.xz
+Source1: make-git-snapshot.sh
 Source44: import.info
 
+BuildRequires: xorg-util-macros bison flex bison
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel
+BuildRequires: xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel
+BuildRequires: xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel
+BuildRequires: xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel
+BuildRequires: xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel
+BuildRequires: xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel
+BuildRequires: xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
+BuildRequires: xorg-xproto-devel libX11-devel
+BuildRequires: xkeyboard-config-devel
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xcb-xkb) >= 1.10
+
 %description
-%{name} is the X.Org library for compiling XKB maps into formats usable by
+%name is the X.Org library for compiling XKB maps into formats usable by
 the X Server or other display servers.
 
 %package devel
-Summary:        X.Org X11 XKB parsing development package
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Summary: X.Org X11 XKB parsing development package
+Group: Development/C
+Requires: %name = %version-%release
 
 %description devel
 X.Org X11 XKB parsing development package
 
+%package x11
+Summary: X.Org X11 XKB keymap creation library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description x11
+%name-x11 is the X.Org library for creating keymaps by querying the X
+server.
+
+%package x11-devel
+Summary: X.Org X11 XKB keymap creation library
+Group: System/Libraries
+Requires: %name-x11 = %version-%release
+
+%description x11-devel
+X.Org X11 XKB keymap creation library development package
+
 %prep
-%setup -q -n %{name}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
+%setup
 
 %build
-autoreconf -v --install || exit 1
-%configure --disable-static
+%autoreconf
+%configure \
+  --disable-silent-rules \
+  --disable-static \
+  %{subst_enable x11}
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%makeinstall_std
 
 %files
 %doc COPYING
-%{_libdir}/libxkbcommon.so.0.0.0
-%{_libdir}/libxkbcommon.so.0
+%_libdir/libxkbcommon.so.*
 
 %files devel
-%{_libdir}/libxkbcommon.so
-%{_includedir}/xkbcommon/xkbcommon*.h
-%{_libdir}/pkgconfig/xkbcommon.pc
+%_libdir/libxkbcommon.so
+%dir %_includedir/xkbcommon/
+%_includedir/xkbcommon/xkbcommon.h
+%_includedir/xkbcommon/xkbcommon-compat.h
+%_includedir/xkbcommon/xkbcommon-keysyms.h
+%_includedir/xkbcommon/xkbcommon-names.h
+%_pkgconfigdir/xkbcommon.pc
+
+%if_enabled x11
+%files x11
+%_libdir/libxkbcommon-x11.so.*
+
+%files x11-devel
+%_libdir/libxkbcommon-x11.so
+%_includedir/xkbcommon/xkbcommon-x11.h
+%_pkgconfigdir/xkbcommon-x11.pc
+%endif
 
 %changelog
+* Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_1
 - update to new release by fcimport
 
