@@ -1,20 +1,21 @@
 Name: renpy
-Version: 6.17.6
+Version: 6.18.0
 Release: alt1
 Summary: A visual novel engine
 Group: Games/Adventure
 License: LGPL
 Source: %name-%version-source.tar.bz2
 Url: http://www.renpy.org/
+Patch: renpy-old-avformat.patch
 
 %setup_python_module %name
 
 %define gamedir %_gamesdatadir/%name
 
 Requires: %packagename = %version
-# Automatically added by buildreq on Mon Mar 03 2014
-# optimized out: fontconfig libGL-devel libGLU-devel libavcodec-devel libavutil-devel libcloog-isl4 python-base python-devel python-module-numpy python-module-pygame python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml zlib-devel
-BuildRequires: ImageMagick-tools libSDL-devel libavformat-devel libfreetype-devel libfribidi-devel libglew-devel libpng-devel libswscale-devel python-module-Cython python-module-pygame-devel time
+# Automatically added by buildreq on Wed Aug 27 2014
+# optimized out: fontconfig libGL-devel libGLU-devel libavcodec-devel libavutil-devel libcloog-isl4 pkg-config python-base python-devel python-module-numpy python-module-pygame python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml zlib-devel
+BuildRequires: ImageMagick-tools libSDL-devel libavformat-devel libavresample-devel libfreetype-devel libfribidi-devel libglew-devel libpng-devel libswscale-devel python-module-Cython python-module-pygame-devel time
 
 BuildRequires: rpm-build-fonts
 
@@ -52,6 +53,7 @@ Example game for %name, %summary
 
 %prep
 %setup
+%patch -p2
 
 touch $(find . -name \*.pyx)
 
@@ -150,6 +152,10 @@ cd module
 %_iconsdir/hicolor/*/apps/%name-the_question.*
 
 %changelog
+* Tue Aug 26 2014 Fr. Br. George <george@altlinux.ru> 6.18.0-alt1
+- Autobuild version bump to 6.18.0
+- Fix build with old avformat-based pygame code
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 6.17.6-alt1
 - Autobuild version bump to 6.17.6
 
