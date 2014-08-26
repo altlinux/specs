@@ -1,97 +1,76 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 0
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global tzversion tzdata2011f
+%global tzversion tzdata2013c
 
 Name:             joda-time
-Version:          1.6.2
-Release:          alt4_8.tzdata2011fjpp7
+Version:          2.2
+Release:          alt1_1.tzdata2013cjpp7
 Summary:          Java date and time API
 
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://joda-time.sourceforge.net
-Source0:          http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.tar.gz
-Source1:          ftp://elsie.nci.nih.gov/pub/%{tzversion}.tar.gz
-# Remove maven toolchanins from pom.xml (not present in fedora yet)
-Patch0:           joda-time-remove-toolchains-from-pom.patch
+Source0:          http://downloads.sourceforge.net/%{name}/%{name}-%{version}-dist.tar.gz
+Source1:          ftp://ftp.iana.org/tz/releases/%{tzversion}.tar.gz
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
-Requires:         jpackage-utils
+BuildRequires:    joda-convert
+BuildRequires:    exec-maven-plugin
 Source44: import.info
+
 
 %description
 Joda-Time provides a quality replacement for the Java date and time classes. The
 design allows for multiple calendar systems, while still providing a simple API.
-The 'default' calendar is the ISO8601 standard which is used by XML. The 
-Gregorian, Julian, Buddhist, Coptic, Ethiopic and Islamic systems are also 
-included, and we welcome further additions. Supporting classes include time 
-zone, duration, format and parsing. 
+The 'default' calendar is the ISO8601 standard which is used by XML. The
+Gregorian, Julian, Buddhist, Coptic, Ethiopic and Islamic systems are also
+included, and we welcome further additions. Supporting classes include time
+zone, duration, format and parsing.
 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup -q -n %{name}-%{version}
 sed -i 's/\r//' LICENSE.txt
+sed -i 's/\r//' NOTICE.txt
 sed -i 's/\r//' RELEASE-NOTES.txt
-sed -i 's/\r//' ToDo.txt
-%patch0 -p0
 
 # all java binaries must be removed from the sources
 find . -name '*.jar' -exec rm -f '{}' \;
-find . -name '*.class' -exec rm -f '{}' \;
 
 # replace internal tzdata
 rm -f src/main/java/org/joda/time/tz/src/*
 tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 
+# compat filename
+%mvn_file : %{name}
 
 %build
-mvn-rpmbuild \
-        -e \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
-
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%files -f .mfiles
+%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%doc LICENSE.txt RELEASE-NOTES.txt ToDo.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1.tzdata2013cjpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt4_8.tzdata2011fjpp7
 - rebuild with maven-local
 
