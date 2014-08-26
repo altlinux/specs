@@ -4,20 +4,19 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-cipher
-Version:        1.5
-Release:        alt3_11jpp7
+Version:        1.7
+Release:        alt1_2jpp7
 Summary:        Plexus Cipher: encryption/decryption Component
 
 Group:          Development/Java
 License:        ASL 2.0
-URL:            http://spice.sonatype.org
-#svn export http://svn.sonatype.org/spice/tags/plexus-cipher-1.5
-#tar zcf plexus-cipher-1.5.tar.gz plexus-cipher-1.5
+# project moved to GitHub and it looks like there is no official website anymore
+URL:            https://github.com/sonatype/plexus-cipher
+# git clone https://github.com/sonatype/plexus-cipher.git
+# cd plexus-cipher/
+# note this is version 1.7 + our patches which were incorporated by upstream maintainer
+# git archive --format tar --prefix=plexus-cipher-1.7/ 0cff29e6b2e | gzip -9 > plexus-cipher-1.7.tar.gz
 Source0:        %{name}-%{version}.tar.gz
-Source1:        http://apache.org/licenses/LICENSE-2.0.txt
-
-Patch0:         %{name}-migration-to-component-metadata.patch
-Patch1:         0001-Improve-randomness-of-PBECipher-salt.patch
 
 BuildArch: noarch
 
@@ -31,15 +30,15 @@ BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-doxia-sitetools
-BuildRequires: plexus-container-default
 BuildRequires: forge-parent
 BuildRequires: spice-parent
 BuildRequires: plexus-containers-component-metadata
 BuildRequires: junit
 BuildRequires: maven-shared-reporting-impl
 BuildRequires: plexus-digest
+BuildRequires: sisu-maven-plugin
+BuildRequires: sisu-inject-bean
 
-Requires: plexus-containers
 Requires: jpackage-utils
 Source44: import.info
 
@@ -54,16 +53,14 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %%{name}.
+API documentation for %{name}.
 
 
 %prep
 %setup -q
 
-%patch0 -p1
-%patch1 -p1
-
-cp %{SOURCE1} .
+# replace %{version}-SNAPSHOT with %{version}
+%pom_xpath_replace pom:project/pom:version "<version>%{version}</version>"
 
 %build
 mvn-rpmbuild -Dmaven.test.failure.ignore=true \
@@ -83,16 +80,19 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
 
 %files
-%doc LICENSE-2.0.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadir}/plexus/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc LICENSE-2.0.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt3_11jpp7
 - rebuild with maven-local
 
