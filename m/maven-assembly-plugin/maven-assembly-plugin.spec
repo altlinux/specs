@@ -1,129 +1,78 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-assembly-plugin
 Version:        2.4
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        Maven Assembly Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
 
-BuildArch: noarch
-
-Obsoletes: maven2-plugin-assembly <= 0:2.0.8
-Provides:  maven2-plugin-assembly = 1:%{version}-%{release}
-
-BuildRequires: jpackage-utils >= 0:1.7.2
-BuildRequires:  ant
 BuildRequires:  maven-local
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-doxia
-BuildRequires:  maven-doxia-sitetools
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-repository-builder)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-utils
-BuildRequires: plexus-active-collections
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: plexus-io
-BuildRequires: plexus-interpolation
-BuildRequires: plexus-archiver
-
-BuildRequires: maven-shared-file-management
-BuildRequires: maven-shared-repository-builder
-BuildRequires: maven-shared-filtering
-BuildRequires: maven-shared-file-management
-BuildRequires: maven-shared-io
-
-BuildRequires: easymock
-BuildRequires: jdom
-BuildRequires: jaxen
-BuildRequires: saxpath
-BuildRequires: junit
-BuildRequires: modello
-
-Requires: easymock
-Requires: jdom
-Requires: jaxen
-Requires: saxpath
-Requires: plexus-containers-container-default
-Requires: plexus-utils
-Requires: plexus-active-collections
-Requires: plexus-containers-component-metadata
-Requires: plexus-io
-Requires: plexus-interpolation
-Requires: plexus-archiver
-Requires: maven-shared-repository-builder
-Requires: maven-shared-filtering
-Requires: maven-shared-file-management
-Requires: maven-shared-io
-Requires: jpackage-utils >= 0:1.7.2
+Provides:       maven2-plugin-assembly = 1:%{version}-%{release}
+Obsoletes:      maven2-plugin-assembly <= 0:2.0.8
 Source44: import.info
 
 %description
-A Maven 2 plugin to create archives of your project's sources, classes, 
+A Maven plugin to create archives of your project's sources, classes,
 dependencies etc. from flexible assembly descriptors.
 
 %package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils >= 0:1.7.2
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
-
+This package provides %{summary}.
 
 %prep
 %setup -q
 
-
 %build
-# seems koji don't have easymockclassextension
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
+# Tests need easymockclassextension version 2.x, which is incompatible
+# with easymockclassextension version 3.x we have in Fedora.
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-rm -rf target/site/api*
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_7jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_5jpp7
 - added BR: for xmvn
 
