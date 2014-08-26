@@ -1,8 +1,8 @@
 %define soname 4
 
 Name: libfm
-Version: 1.2.0
-Release: alt5
+Version: 1.2.2.1
+Release: alt1
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -106,6 +106,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 1.2.2.1-alt1
+- 1.2.2.1
+
 * Thu May 22 2014 Michael Shigorin <mike@altlinux.org> 1.2.0-alt5
 - moved lxshortcut desktop file and manpage to appropriate subpackage
 

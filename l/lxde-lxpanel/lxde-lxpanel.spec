@@ -1,22 +1,17 @@
 %define _unpackaged_files_terminate_build 1
+%define origname lxpanel
 
-%define upstreamname lxpanel
-Name: lxde-%upstreamname
-Version: 0.5.12
-Release: alt3.g3fd2186
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
+Name: lxde-%origname
+Version: 0.7.0
+Release: alt1
 
-Summary: LXPanel is a lightweight X11 desktop panel.
+Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
 
-Source: %upstreamname-%version.tar
-Patch: lxpanel-resize.patch
-Patch1: lxpanel-taskbar-no-crash.patch
-Patch2: lxpanel-xvt-default-terminal.patch
-Patch3: lxpanel-0.5.8-alt-a-f2-fix.patch
-Patch4: lxpanel-0.5.10-alt-fix-build.patch
+Url: http://lxde.org
+Source: %origname-%version.tar
+Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Requires: lxde-freedesktop-menu
 Requires: menu-cache
@@ -25,7 +20,8 @@ Requires: menu-cache
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libmenu-cache libpango-devel libsystemd-daemon libwayland-client libwayland-server pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel xz
 BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc
 
-BuildRequires: libwnck-devel libwireless-devel docbook-dtds docbook-style-xsl
+BuildRequires: libfm-devel libxml2-devel
+BuildPreReq: rpm-build-xdg
 
 %description
 lxpanel is a program that provides a panel for desktop, usually LXDE.
@@ -42,12 +38,7 @@ This package provides files required to build plugins
 for %name
 
 %prep
-%setup -n %upstreamname-%version
-%patch -p0
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+%setup -n %origname-%version
 
 %build
 %autoreconf
@@ -60,13 +51,14 @@ for %name
 
 %install
 %makeinstall_std
-%find_lang %upstreamname
+%find_lang %origname
 
-%files -f %upstreamname.lang
-%doc ChangeLog INSTALL README
+%files -f %origname.lang
+%doc AUTHORS ChangeLog README
 %_bindir/*
-%_datadir/%upstreamname
-%_libdir/%upstreamname
+%_xdgconfigdir/%origname
+%_datadir/%origname
+%_libdir/%origname
 %_man1dir/*
 
 %files devel
@@ -74,6 +66,11 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- 0.7.0
+- reorganized gear repo like lxqt-*
+- minor spec cleanup
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.5.12-alt3.g3fd2186
 - NMU: rebuilt against current libmenu-cache
 
