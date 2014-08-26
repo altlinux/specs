@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat jsoup
 %global project_version 1.0-alpha-2
 Name:           maven-stage-plugin
 Version:        1.0
-Release:        alt3_0.8.alpha2jpp7
+Release:        alt3_0.9.alpha2jpp7
 Summary:        Plugin to copy artifacts from one repository to another
 
 Group:          Development/Java
@@ -90,6 +89,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.9.alpha2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.8.alpha2jpp7
 - new release
 
