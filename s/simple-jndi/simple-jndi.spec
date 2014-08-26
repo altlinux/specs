@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -6,9 +7,8 @@ BuildRequires: jpackage-compat
 
 Name:          simple-jndi
 Version:       0.11.4.1
-Release:       alt2_2jpp7
+Release:       alt2_6jpp7
 Summary:       A JNDI implementation
-Group:         Development/Java
 License:       BSD
 Url:           http://code.google.com/p/osjava/
 Source0:       http://osjava.googlecode.com/svn/dist/releases/official/simple-jndi/simple-jndi-0.11.4.1-src.tar.gz
@@ -51,9 +51,8 @@ sits upon Java .properties files, XML files or Windows-style
 The files may be either on the file system or in the classpath.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -70,7 +69,7 @@ rm -r src/test/org/osjava/sj/memory/SharedMemoryTest.java
 
 %build
 
-%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
+%ant \
   -Dlibdir=lib \
   -Dcommons-pool.jar=file://$(build-classpath commons-pool) \
   -Dcommons-dbcp.jar=file://$(build-classpath commons-dbcp) \
@@ -88,10 +87,7 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}/
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt
 
 %files javadoc
@@ -99,6 +95,9 @@ cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_6jpp7
+- new release
+
 * Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_2jpp7
 - fc update
 
