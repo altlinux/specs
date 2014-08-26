@@ -1,52 +1,30 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name: spring-ldap
-Version: 1.3.1
-Release: alt2_5jpp7
-Summary: Java library for simplifying LDAP operations
-
-Group: Development/Java
-License: ASL 2.0
-URL: http://www.springframework.org/ldap
-
+Name:          spring-ldap
+Version:       1.3.1
+Release:       alt2_7jpp7
+Summary:       Java library for simplifying LDAP operations
+License:       ASL 2.0
+URL:           http://www.springframework.org/ldap
 # svn export https://src.springframework.org/svn/spring-ldap/tags/spring-ldap-1.3.1.RELEASE spring-ldap-1.3.1
 # tar cfJ spring-ldap-1.3.1.tar.xz spring-ldap-1.3.1
-Source0: %{name}-%{version}.tar.xz
-
-# Build the core only:
-Patch0: %{name}-build-core-only.patch
-
-# Disable the AWS extension:
-Patch1: %{name}-disable-aws-extension.patch
-
+Source0:       %{name}-%{version}.tar.xz
 # Don't use ldapbp.jar, as I couldn't find the source and I doubt it has a valid
 # open source license:
-Patch2: %{name}-remove-ldapbp.patch
-
+Patch0:        %{name}-remove-ldapbp.patch
 # Use Java 5 to build the core as the JavaCC generated source code uses Java 5
 # features like generics and annotations:
-Patch3: %{name}-use-java-5-to-build-core.patch
-
+Patch1:        %{name}-use-java-5-to-build-core.patch
 # Remove the dependency on spring-orm:
-Patch4: %{name}-remove-spring-orm.patch
+Patch2:        %{name}-remove-spring-orm.patch
 
-BuildArch: noarch
+BuildArch:     noarch
 
 BuildRequires: dos2unix
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-release-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-shade-plugin
 BuildRequires: maven-plugin-cobertura
 BuildRequires: javacc-maven-plugin
@@ -55,15 +33,7 @@ BuildRequires: springframework-beans
 BuildRequires: springframework-context
 BuildRequires: springframework-tx
 BuildRequires: springframework-jdbc
-
-Requires: jpackage-utils
-Requires: springframework
-Requires: springframework-beans
-Requires: springframework-context
-Requires: springframework-tx
-Requires: springframework-jdbc
 Source44: import.info
-
 
 %description
 Spring LDAP is a Java library for simplifying LDAP operations, based on the
@@ -81,26 +51,28 @@ transaction support, a pooling library, exception translation from
 NamingExceptions to a mirrored unchecked Exception hierarchy, as well as
 several utilities for working with filters, LDAP paths and Attributes.
 
-
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
-
 %prep
 
 # Unpack and patch the source:
 %setup -q
+# Build the core only
+%pom_disable_module test-support
+%pom_disable_module test
+%pom_disable_module ldif
+%pom_disable_module odm
+# Disable the AWS extension
+%pom_xpath_remove "pom:build/pom:extensions" parent
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # Remove binary files:
 find . -name '*.jar' -print -delete
@@ -110,59 +82,28 @@ dos2unix notice.txt
 dos2unix license.txt
 dos2unix readme.txt
 
-
 %build
 
 # Skip the tests for now, as they bring dependencies that are not available in
 # the distribution right now:
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate 
-
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-# Jar files:
-mkdir -p %{buildroot}%{_javadir}/%{name}
-cp -p core/target/%{name}-core-%{version}.RELEASE.jar %{buildroot}%{_javadir}/%{name}/%{name}-core.jar
-cp -p core-tiger/target/%{name}-core-tiger-%{version}.RELEASE.jar %{buildroot}%{_javadir}/%{name}/%{name}-core-tiger.jar
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-install -pm 644 parent/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-install -pm 644 core/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
-install -pm 644 core-tiger/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-core-tiger.pom
-
-# Dependency map:
-%add_maven_depmap JPP.%{name}-%{name}.pom
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-core.pom %{name}/%{name}-core.jar
-%add_maven_depmap JPP.%{name}-%{name}-core-tiger.pom %{name}/%{name}-core-tiger.jar
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/%{name}
+%files -f .mfiles
 %doc license.txt
 %doc notice.txt
 %doc readme.txt
 
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 %doc notice.txt
 
-
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt2_5jpp7
 - new release
 
