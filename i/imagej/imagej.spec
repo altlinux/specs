@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           imagej
-Version:        1.46
-Release:        alt1_2.djpp7
+Version:        1.48
+Release:        alt1_1.ejpp7
 Summary:        Image Processing and Analysis in Java
 
 Group:          Engineering
 License:        Public Domain
 URL:            http://rsbweb.nih.gov/ij/index.html
-Source0:        http://rsbweb.nih.gov/ij/download/src/ij146d-src.zip
+Source0:        http://rsbweb.nih.gov/ij/download/src/ij148e-src.zip
 Source1:        %{name}.desktop
 Source2:        http://rsbweb.nih.gov/ij/macros/macros.zip
 Source3:        http://rsb.info.nih.gov/ij/download/linux/unix-script.txt
@@ -128,6 +129,9 @@ desktop-file-install --vendor=""                     \
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1_1.ejpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1_2.djpp7
 - new version
 
