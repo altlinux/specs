@@ -1,12 +1,13 @@
 %define packagename python-module-mox
 %define origname mox
 
-%def_without python3
+%def_with python3
 
 Summary: mock object framework for Python
 Name: %packagename
 Version: 0.5.3
-Release: alt1.svn20121116
+Release: alt2.git20140721
+# https://github.com/freyes/pymox.git
 Source0: %origname-%version.tar
 License: Apache License 2.0
 Group: Development/Python
@@ -22,6 +23,8 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python-tools-2to3
 %endif
 
+%py_requires six
+
 %description
 Mox is a mock object framework for Python. Mox is based on EasyMock, a
 Java mock object framework.
@@ -34,6 +37,7 @@ language (DSL), which makes it easy to use, understand, and refactor!
 %package -n python3-module-%origname
 Summary: mock object framework for Python
 Group: Development/Python3
+%py3_requires six
 
 %description -n python3-module-%origname
 Mox is a mock object framework for Python. Mox is based on EasyMock, a
@@ -81,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt2.git20140721
+- New snapshot
+
 * Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.svn20121116
 - New snapshot
 
