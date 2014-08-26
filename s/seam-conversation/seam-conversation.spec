@@ -1,19 +1,15 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name seam-conversation
 %define version 3.1.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 Name:          seam-conversation
 Version:       3.1.0
-Release:       alt1_4jpp7
+Release:       alt1_6jpp7
 Summary:       Conversation management logic
-Group:         Development/Java
 License:       LGPLv2+
 URL:           http://www.seamframework.org/
 # git clone git://github.com/seam/conversation seam-conversation-3.1.0.Final
@@ -25,7 +21,6 @@ Source1:       %{name}-%{namedversion}-depmap
 BuildRequires: geronimo-parent-poms
 BuildRequires: httpcomponents-project
 
-BuildRequires: jpackage-utils
 #BuildRequires: seam-parent
 BuildRequires: weld-parent
 
@@ -52,21 +47,8 @@ BuildRequires: mvn(org.jboss.weld.servlet:weld-servlet-test-base)
 %endif
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
-Requires:      cdi-api
-Requires:      jboss-jsf-2.1-api
-Requires:      jboss-servlet-3.0-api
-Requires:      tomcat-lib
-Requires:      weld-api
-Requires:      weld-core
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -75,9 +57,8 @@ This is where different CDI impls should abstract its
 conversation management logic until that is part of the CDI spec.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -161,43 +142,24 @@ sed -i "s|<artifactId>catalina|<artifactId>tomcat-catalina|" pom.xml
 </dependency>" weld
 
 %build
+%mvn_file :%{name}-spi %{name}-spi
+%mvn_file :%{name}-weld %{name}-weld
 # unavailable test deps
 # org.jboss.weld.servlet weld-servlet-test-base
-mvn-rpmbuild \
-  -Dmaven.local.depmap.file="%{SOURCE1}" \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  -Dmaven.test.skip=true \
-  package javadoc:aggregate
+%mvn_build -f -- -Dmaven.local.depmap.file="%{SOURCE1}" -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-mkdir -p %{buildroot}%{_javadir}
-# candi
-# owb
-for m in spi \
-      weld; do
-    install -m 644 ${m}/target/%{name}-${m}.jar %{buildroot}%{_javadir}/%{name}-${m}.jar
-    install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-${m}.pom
-%add_maven_depmap JPP-%{name}-${m}.pom %{name}-${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}-*.jar
-%{_mavenpomdir}/JPP-%{name}*.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc README
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_6jpp7
+- new release
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_4jpp7
 - new release
 
