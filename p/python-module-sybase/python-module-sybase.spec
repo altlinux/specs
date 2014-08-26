@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 Name: python-module-sybase
 Version: 0.40
-Release: alt0.2.1
+Release: alt1.svn20120611
 Epoch: 1
 License: BSD
-Packager: Alexey Morsov <swi@altlinux.ru>
 Group: Databases
 Summary: Python interface for Sybase DB
 Summary(ru_RU.UTF-8): Интерфейс к БД Sybase для Python
@@ -58,6 +57,9 @@ export SYBASE=/usr
 %python_sitelibdir/*
 
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.40-alt1.svn20120611
+- Shapshot from svn
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:0.40-alt0.2.1
 - Rebuild with Python-2.7
 
