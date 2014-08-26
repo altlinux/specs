@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             apt-maven-plugin
 Version:          1.0
-Release:          alt3_0.6.alpha5jpp7
+Release:          alt3_0.8.alpha5jpp7
 Summary:          Apt Maven Plugin
 Group:            Development/Java
 License:          MIT
@@ -40,11 +39,7 @@ BuildRequires:    maven-checkstyle-plugin
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-docck-plugin
 BuildRequires:    objectweb-asm
-
-Requires:         objectweb-asm
-Requires:         maven
-Requires:         maven-invoker-plugin
-Requires:         jpackage-utils
+BuildRequires:    maven-verifier
 Source44: import.info
 
 %description
@@ -54,7 +49,6 @@ against project sources.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -66,36 +60,22 @@ This package contains the API documentation for %{name}.
 %build
 # Some deps missing to build integration tests which are required
 # to build unit tests
-mvn-rpmbuild -Dskip-it -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f -- -Dskip-it
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/%{name}-%{version}-alpha-5.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.8.alpha5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.6.alpha5jpp7
 - new release
 
