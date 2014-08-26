@@ -6,7 +6,7 @@
 Summary: Template engine and code-generator
 Name: %packagename
 Version: 2.4.4
-Release: alt2
+Release: alt2.git20121217
 Source0: %origname-%version.tar.gz
 License: MIT
 Group: Development/Python
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt2.git20121217
+- Snapshot from git
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
