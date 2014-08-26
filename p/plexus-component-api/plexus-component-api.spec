@@ -5,14 +5,14 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt4_0.13.alpha15jpp7
+Release:        alt4_0.15.alpha15jpp7
 Summary:        Plexus Component API
 
 License:        ASL 2.0
 URL:            http://svn.codehaus.org/plexus/plexus-containers/tags/plexus-containers-1.0-alpha-15/plexus-component-api/
 #svn export http://svn.codehaus.org/plexus/plexus-containers/tags/plexus-containers-1.0-alpha-15/plexus-component-api/ plexus-component-api-1.0-alpha-15
 #tar zcf plexus-component-api-1.0-alpha-15.tar.gz plexus-component-api-1.0-alpha-15/
-Source0:        plexus-component-api-1.0-alpha-15.tar.gz
+Source0:        %{name}-%{project_version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,6 +22,8 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  plexus-classworlds
+# requires as parent pom
+BuildRequires:  plexus-containers
 Source44: import.info
 
 %description
@@ -53,6 +55,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.15.alpha15jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.13.alpha15jpp7
 - update
 
