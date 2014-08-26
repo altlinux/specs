@@ -1,5 +1,5 @@
 Name:    qt5-gstreamer1
-Version: 1.1.90
+Version: 1.2.0
 Release: alt1
 
 Summary: C++ bindings for GStreamer with a Qt-style API
@@ -85,5 +85,11 @@ for %name.
 
 
 %changelog
+* Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
+- new version
+
+* Mon Jun 30 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.90-alt0.M70P.1
+- built for M70P
+
 * Thu Jun 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.90-alt1
 - initial build
