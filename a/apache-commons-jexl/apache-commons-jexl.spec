@@ -1,37 +1,25 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global jarname commons-jexl
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_5jpp7
+Release:        alt2_8jpp7
 Summary:        Java Expression Language (JEXL)
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/jexl
 Source0:        http://www.apache.org/dist/commons/jexl/source/%{jarname}-%{version}-src.tar.gz
-# Java 1.6 contains bsf 3.0, so we don't need the dependency in the pom.xml file
-Patch0:         %{name}-bsf.patch
+# Patch to fix test failure with junit 4.11
+Patch0:         001-Fix-tests.patch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  apache-commons-parent
 BuildRequires:  maven-local
-BuildRequires:  apache-rat-plugin
-BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  javacc-maven-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-surefire-provider-junit4
 
 BuildArch:      noarch
 
-Requires:       jpackage-utils
 Provides:       %{jarname} = %{version}-%{release}
 Source44: import.info
 
@@ -63,43 +51,34 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{jarname}-%{version}-src
-%patch0 -p1 -b .bsf
-find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' +
+%patch0 -p1 -b .test
+# Java 1.6 contains bsf 3.0, so we don't need the dependency in the pom.xml file
+%pom_remove_dep org.apache.bsf:bsf-api
+find \( -name '*.jar' -o -name '*.class' \) -delete
 # Fix line endings
 find -name '*.txt' -exec sed -i 's/\r//' '{}' +
 
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
+
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp target/%{jarname}-%{version}.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{jarname}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -rp target/site/apidocs \
-$RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-mkdir -p $RPM_BUILD_ROOT/%{_mavenpomdir}
-cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a 'commons-jexl:commons-jexl'
+%mvn_install
 
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-%{_javadir}/%{jarname}.jar
 
-%files javadoc
-%doc LICENSE.txt
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_5jpp7
 - new release
 
