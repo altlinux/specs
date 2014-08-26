@@ -1,13 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip logback
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jackrabbit
 Version:       2.4.2
-Release:       alt2_6jpp7
+Release:       alt2_7jpp7
 Summary:       Implementation of the Content Repository for Java Technology API
 Group:         Development/Java
 License:       ASL 2.0
@@ -123,6 +123,9 @@ touch -r %{name}-webdav/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-webdav.p
 %doc NOTICE.txt LICENSE.txt
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt2_6jpp7
 - new release
 
