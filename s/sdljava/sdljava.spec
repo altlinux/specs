@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt1_21jpp7
+Release:        alt1_23jpp7
 Summary:        Java binding to the SDL API
 Group:          System/Libraries
 License:        LGPLv2+
@@ -202,6 +202,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_23jpp7
+- updated release
+
 * Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_21jpp7
 - fixed build - use pre-generated sources
 
