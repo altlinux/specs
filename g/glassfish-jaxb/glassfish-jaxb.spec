@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat dom4j
 Name: glassfish-jaxb
 Version: 2.2.5
-Release: alt2_3jpp7
+Release: alt2_4jpp7
 Summary: JAXB Reference Implementation
 
 Group: Development/Java
@@ -159,14 +162,12 @@ cp %{SOURCE3} build-javadoc.xml
 
 # Build the binaries:
 ant \
-  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
   -Dbuild.sysclasspath=last \
   -Dbuild.number=1 \
   dist
 
 # Build the javadoc for the runtime and the compiler:
 ant \
-  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
   -Dbuild.sysclasspath=last \
   -f build-javadoc.xml
 
@@ -179,9 +180,6 @@ install -m 644 dist/lib/jaxb-impl.jar %{buildroot}%{_javadir}/%{name}/jaxb-impl.
 install -m 644 dist/lib/jaxb-xjc.jar %{buildroot}%{_javadir}/%{name}/jaxb-xjc.jar
 install -m 644 tools/pretty-printer/build/pretty-printer.jar %{buildroot}%{_javadir}/%{name}/pretty-printer.jar
 install -m 644 tools/xmllint/build/xmllint.jar %{buildroot}%{_javadir}/%{name}/xmllint.jar
-
-# compat symkink till jbossas
-ln -s ../jaxb-api.jar %{buildroot}%{_javadir}/%{name}/jaxb-api.jar
 
 # POM files:
 install -d -m 755 %{buildroot}%{_mavenpomdir}
@@ -212,6 +210,9 @@ cp -rp apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt2_4jpp7
+- new release
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt2_3jpp7
 - NMU rebuild to move poms and fragments
 
