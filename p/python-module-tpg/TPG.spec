@@ -1,7 +1,9 @@
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 %setup_python_module tpg
+
+%def_with python3
 
 Summary: Toy Parser Generator is syntax analyzer under Python
 Summary(ru_RU.UTF-8): Простой, но мощный синтаксический анализатор Toy Parser Generator
@@ -17,12 +19,17 @@ Buildarch: noarch
 # optimized out: ImageMagick-tools fontconfig ghostscript-classic ghostscript-common python-base python-modules python-modules-compiler python-modules-email tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex texmf-tex4ht
 BuildRequires: python-devel tex4ht texlive-latex-recommended
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
+
 %description
 Toy Parser Generator is a lexical and syntactic parser generator for Python.
 This generator was born from a simple statement: YACC is to complex to use in
 simple cases (calculators, configuration files, small programming languages, ...).
 
-This module is built for python %__python_version
+This module is built for python %_python_version
 
 %description -l ru_RU.UTF-8
 Toy Parser Generator -- это лексический и синтаксический анализатор,
@@ -30,29 +37,76 @@ Toy Parser Generator -- это лексический и синтаксичес�
 (калькуляторы, анализаторы конфигурационных файлов, встроенные языки
 программирования) заменить YACC более простым и высокоуровневым инструментом.
 
-Этот модуль собран для Python версии %__python_version
+Этот модуль собран для Python версии %_python_version
+
+%package -n python3-module-%modulename
+Summary: Toy Parser Generator is syntax analyzer under Python
+Group: Development/Python3
+
+%description -n python3-module-%modulename
+Toy Parser Generator is a lexical and syntactic parser generator for Python.
+This generator was born from a simple statement: YACC is to complex to use in
+simple cases (calculators, configuration files, small programming languages, ...).
+
+This module is built for python %_python_version
 
 %prep
 %setup -n %nameUC-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
-python setup.py build
+%python_build
 (
 	cd doc
 	pdflatex tpg
 	htlatex tpg
 )
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
-python setup.py install --root=%buildroot
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
+%python_install
 
 %files
 %doc doc/*.{png,pdf,html,css}
 %doc examples
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/tpg*
 
+%if_with python3
+%files -n python3-module-%modulename
+%doc doc/*.{png,pdf,html,css}
+%doc examples
+%_bindir/*.py3
+%python3_sitelibdir/tpg*
+%endif
+
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt1
+- Version 3.2.2
+- Added module for Python 3
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 3.2.1-alt1
 - Autobuild version bump to 3.2.1
 
