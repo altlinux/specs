@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_7jpp7.qa1
+Release:        alt3_8jpp7
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -62,7 +62,7 @@ and control package dependencies.
 %package javadoc
 Summary:    Javadoc for %{name}
 Group:      Development/Java
-Requires:   %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -71,7 +71,7 @@ Javadoc for %{name}.
 %package demo
 Summary:    Demos for %{name}
 Group:      Development/Java
-Requires:   %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -84,7 +84,7 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -type d -exec chmod 755 {} \;
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 %install
 # jars
@@ -118,6 +118,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_8jpp7
+- new release
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0:2.9.1-alt3_7jpp7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
