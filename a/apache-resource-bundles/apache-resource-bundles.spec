@@ -1,9 +1,5 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-Provides: apache-jar-resource-bundle
-BuildRequires: /proc
+BuildRequires: /proc maven-local
 BuildRequires: jpackage-compat
 %global jar_version 1.4
 %global lh_version 1.1
@@ -11,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:		apache-resource-bundles
 Version:	2
-Release:	alt2_8jpp7
+Release:	alt2_9jpp7
 Summary:	Apache Resource Bundles
 
 Group:		Development/Java
@@ -25,7 +21,9 @@ Source4:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource
 Source5:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
 Source6:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
 
-BuildRequires:	maven-local
+Provides: apache-jar-resource-bundle = %version
+
+BuildRequires:	xmvn >= 0.2.3
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-install-plugin
 BuildRequires:	maven-jar-plugin
@@ -33,12 +31,6 @@ BuildRequires:	maven-remote-resources-plugin
 BuildRequires:	maven-resources-plugin
 BuildRequires:	maven-surefire-plugin
 BuildRequires:  maven-site-plugin
-
-# Requirements from the POMs
-Requires:	maven-remote-resources-plugin
-
-Requires(post):	jpackage-utils
-Requires(postun): jpackage-utils
 
 BuildArch:	noarch
 Source44: import.info
@@ -80,50 +72,20 @@ popd
 
 
 %build
-mvn-rpmbuild install
+%mvn_file :apache-jar-resource-bundle apache-resource-bundles/jar
+%mvn_file :apache-license-header-resource-bundle apache-resource-bundles/license-header
+%mvn_file :apache-incubator-disclaimer-resource-bundle apache-resource-bundles/incubator-disclaimer
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-# jar
-# 
-pushd apache-jar-resource-bundle
-install -m 644 \
-	target/apache-jar-resource-bundle-%{jar_version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{name}/jar.jar
-cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jar.pom
-%add_to_maven_depmap org.apache apache-jar-resource-bundle %{jar_version} JPP/%{name} jar
-popd
-
-# license-header
-pushd apache-license-header-resource-bundle
-install -m 644 \
-	target/apache-license-header-resource-bundle-%{lh_version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{name}/license-header.jar
-cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-license-header.pom
-%add_to_maven_depmap org.apache apache-license-header-resource-bundle %{lh_version} JPP/%{name} license-header
-popd
-
-# incubator-disclaimer
-pushd apache-incubator-disclaimer-resource-bundle
-install -m 644 \
-	target/apache-incubator-disclaimer-resource-bundle-%{id_version}.jar \
-	$RPM_BUILD_ROOT%{_javadir}/%{name}/incubator-disclaimer.jar
-cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-incubator-disclaimer.pom
-%add_to_maven_depmap org.apache apache-incubator-disclaimer-resource-bundle %{id_version} JPP/%{name} incubator-disclaimer
-popd
-
-# Add parent to depmap too
-cp pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.apache %{name} %{version} JPP %{name}
-
-%files
-%{_javadir}/%{name}
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*.pom
+%files -f .mfiles
 
 %changelog
+* Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt2_9jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt2_8jpp7
 - rebuild with maven-local
 
