@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jinput
 Version:        2.0.6
-Release:        alt1_2.20110801svnjpp7
+Release:        alt1_6.20130309svnjpp7
 Summary:        Java Game Controller API
 
 Group:          Development/Java
@@ -15,7 +15,7 @@ URL:            http://java.net/projects/jinput
 # Also, some (non-Linux) plugin code is non-free.  As long as we are deleting
 # non-free plugins, we also delete plugins for non-Linux operating systems.
 # Create the source tarball as follows:
-# svn export -r 247 https://svn.java.net/svn/jinput~svn/trunk jinput-2.0.6
+# svn export -r 251 https://svn.java.net/svn/jinput~svn/trunk jinput-2.0.6
 # rm -rf jinput-2.0.6/plugins/{OSX,windows,wintab}
 # tar cJf jinput-2.0.6.tar.xz jinput-2.0.6
 Source0:        %{name}-%{version}.tar.xz
@@ -59,7 +59,7 @@ Requires:       jutils-javadoc
 BuildArch:      noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
@@ -99,12 +99,12 @@ javadoc -d javadoc -classpath lib/jutils.jar:dist/jinput.jar -package \
 
 %install
 # jar
-install -Dp -m 644 dist/%{name}.jar \
-    $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}.jar
+install -Dp -m 644 dist/%{name}.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}.jar
 
 # jni
 install -Dp -m 755 dist/libjinput* \
     $RPM_BUILD_ROOT%{_libdir}/%{name}/libjinput.so
+ln -s ../../..%{_jnidir}/%{name}.jar $RPM_BUILD_ROOT%{_libdir}/%{name}/
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
@@ -116,10 +116,7 @@ install -pm 644 jinput-platform.pom  \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-platform.pom
 install -pm 644 jinput.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-# added by hand
-mkdir -p %buildroot%_javadir/
-ln -s $(relative %_libdir/%{name}/%{name}.jar %_javadir/) %buildroot%_javadir/%{name}.jar
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 %add_maven_depmap JPP-%{name}-platform.pom 
 
 %check
@@ -127,15 +124,19 @@ ant versiontest
 
 %files
 %doc README.txt 
+%{_jnidir}/%{name}.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_libdir}/%{name}
-%_javadir/%{name}.jar
+%_jnidir/%{name}.jar
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_6.20130309svnjpp7
+- new release
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_2.20110801svnjpp7
 - initial build
 
