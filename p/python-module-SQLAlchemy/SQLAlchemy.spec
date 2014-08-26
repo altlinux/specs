@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.3
-Release: alt2
+Version: 0.9.7
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -35,7 +35,6 @@ simple and Pythonic domain language.
 %package -n python3-module-%oname
 Summary: Python 3 SQL toolkit and Object Relational Mapper
 Group: Development/Python3
-BuildArch: noarch
 %py3_provides SQLAlchemy
 
 %description -n python3-module-%oname
@@ -49,7 +48,6 @@ simple and Pythonic domain language.
 %package -n python3-module-%oname-tests
 Summary: Tests for SQLAlchemy (Python 3)
 Group: Development/Python3
-BuildArch: noarch
 Requires: python3-module-%oname = %version-%release
 
 %description -n python3-module-%oname-tests
@@ -114,14 +112,17 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir_noarch/*
-%exclude %python3_sitelibdir_noarch/*/testing
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/testing
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir_noarch/*/testing
+%python3_sitelibdir/*/testing
 %endif
 
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt1
+- Version 0.9.7
+
 * Thu Dec 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt2
 - Extracted tests into separated packages
 
