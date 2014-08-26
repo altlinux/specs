@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # vim: set ts=4 sw=4 sts=4 et:
 Name:           ws-xmlschema
 Version:        2.0.2
-Release:        alt2_7jpp7
+Release:        alt2_9jpp7
 Summary:        Apache XMLSchema
 Group:          Development/Java
 License:        ASL 2.0
@@ -18,8 +17,6 @@ URL:            http://ws.apache.org/commons/xmlschema20/
 # rm -r xmlschema-2.0.2/w3c-testcases
 # tar cafJ ws-xmlschema-2.0.2.tar.xz xmlschema-2.0.2
 Source0:        %{name}-%{version}.tar.xz
-
-Patch0:         xmlschema-2.0.2-no-w3c-testcase-module.patch
 
 BuildArch:      noarch
 
@@ -36,8 +33,6 @@ BuildRequires:  maven-shade-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  xmlunit
 BuildRequires:  maven-shared
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -49,7 +44,6 @@ dependencies and can be easily integrated into an existing project.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,44 +51,29 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n xmlschema-%{version}
-%patch0 -p1
+
+%pom_disable_module xmlschema-bundle-test
+%pom_disable_module w3c-testcases
 
 %build
 # fastinstall profile avoids some build dependencies
 # tests require unavailable dependencies
-mvn-rpmbuild \
-    -Pfastinstall \
-    -Dmaven.test.skip=true \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    package javadoc:aggregate
+%mvn_build -f -- -Pfastinstall
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-
-install -pm 644 xmlschema-core/target/xmlschema-core-%{version}.jar %{buildroot}%{_javadir}/xmlschema-core.jar
-install -pm 644 xmlschema-core/pom.xml %{buildroot}%{_mavenpomdir}/JPP-xmlschema-core.pom
-%add_maven_depmap JPP-xmlschema-core.pom xmlschema-core.jar
-
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE README.txt RELEASE-NOTE.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_7jpp7
 - new release
 
