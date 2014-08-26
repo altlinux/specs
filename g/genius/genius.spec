@@ -3,15 +3,15 @@
 
 Name: genius
 Version: %ver_major.18
-Release: alt0.1
+Release: alt1
 
 Summary: Genius Calculator
 License: LGPLv3+
-Group: Graphical desktop/GNOME
+Group: Sciences/Mathematics
 
 URL: http://www.jirka.org/genius.html
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: scrollkeeper
 
@@ -90,6 +90,9 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.18-alt1
+- 1.0.18 release
+
 * Mon Nov 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.18-alt0.1
 - 1.0.18 snapshot (1d2cb260)
 
