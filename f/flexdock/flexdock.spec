@@ -1,11 +1,12 @@
+Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		    flexdock
-Version:	    1.2.4
-Release:	    alt1
+Version:	    1.2.3
+Release:	    alt1_1jpp7
 Summary:	    Docking framework for Java Swing GUI apps
 
 Group:		    Development/Java
@@ -74,6 +75,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.3-alt1_1jpp7
+- new release
+
 * Mon Apr 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.2.4-alt1
 - New version
 
