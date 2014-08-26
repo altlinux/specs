@@ -1,44 +1,64 @@
-Name: maven-verifier
-Version: 1.4
-Summary: Maven verifier
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-verifier
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared-verifier
-Provides: mvn(org.apache.maven.shared:maven-verifier)
-Requires: java
-Requires: jpackage-utils
-Requires: mvn(junit:junit)
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-verifier-1.4-3.fc19.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           maven-verifier
+Version:        1.4
+Release:        alt1_5jpp7
+Summary:        Maven verifier
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-verifier
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+# Forwarded upstream, see MSHARED-284
+Patch1:         0001-Update-to-maven-shared-utils-0.3.patch
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-shared-utils
+
+Obsoletes:      maven-shared-verifier < %{version}-%{release}
+Provides:       maven-shared-verifier = %{version}-%{release}
+Source44: import.info
 
 %description
 Provides a test harness for Maven integration tests.
 
 This is a replacement package for maven-shared-verifier
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch1 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_5jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
