@@ -1,17 +1,19 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global site_name maven-bundle-plugin
 
 Name:           maven-plugin-bundle
 Version:        2.3.7
-Release:        alt3_4jpp7
+Release:        alt3_10jpp7
 Summary:        Maven Bundle Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://felix.apache.org
-Source0:        http://apache.tradebit.com/pub/felix/%{site_name}-%{version}-source-release.tar.gz
+Source0:        http://archive.apache.org/dist/felix/%{site_name}-%{version}-source-release.tar.gz
 
 Patch0:         %{site_name}-dependency.patch
 Patch1:         %{site_name}-unreported-exception.patch
@@ -19,8 +21,8 @@ Patch1:         %{site_name}-unreported-exception.patch
 BuildRequires: aqute-bndlib >= 1.50.0
 BuildRequires: plexus-utils >= 1.4.5
 BuildRequires: felix-osgi-obr
-BuildRequires: kxml2
-BuildRequires: maven
+BuildRequires: kxml
+BuildRequires: maven-local
 BuildRequires: maven-shared-dependency-tree >= 1.1-3
 BuildRequires: maven-wagon >= 1.0-0.2.b2
 BuildRequires: maven-compiler-plugin
@@ -34,6 +36,8 @@ BuildRequires: maven-surefire-provider-junit4 >= 2.3
 BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-shared-osgi
 BuildRequires: maven-archiver
+BuildRequires: maven-plugin-testing-harness
+BuildRequires: mockito
 BuildRequires: plexus-archiver
 BuildRequires: plexus-containers-container-default
 BuildRequires: felix-parent
@@ -42,7 +46,7 @@ BuildRequires: felix-bundlerepository
 Requires: aqute-bndlib >= 1.50.0
 Requires: plexus-utils >= 1.4.5
 Requires: felix-osgi-obr
-Requires: kxml2
+Requires: kxml
 Requires: maven
 Requires: maven-archiver
 Requires: maven-shared-dependency-tree
@@ -81,8 +85,7 @@ API documentation for %{name}.
 #rm -rf src/main/java/org/apache/maven
 
 %build
-# tests can't be built (seems like a MavenProjectStub incompatibility with MavenProject)
-mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
+mvn-rpmbuild install javadoc:aggregate
 
 %install
 # jars
@@ -111,6 +114,9 @@ rm -rf target/site/api*
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt3_10jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt3_4jpp7
 - fixed build
 
