@@ -1,63 +1,40 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           htmlunit
 Version:        2.9
-Release:        alt3_5jpp7
+Release:        alt3_7jpp7
 Summary:        A headless web browser for automated testing
-
-Group:          Development/Java
 License:        ASL 2.0 
 URL:            http://htmlunit.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-2.9-src.zip
-Patch0:         %{name}-%{version}-dep-fixes.patch
-Patch1:         %{name}-%{version}-no-jfreechart.patch
-Patch2:         %{name}-%{version}-old-nekohtml.patch
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.zip
+Patch0:         %{name}-%{version}-old-nekohtml.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  apache-commons-codec
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-fileupload
-BuildRequires:  cssparser
-BuildRequires:  nekohtml
-BuildRequires:  jakarta-commons-httpclient
-BuildRequires:  htmlunit-core-js
-BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  xalan-j2
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(net.sourceforge.cssparser:cssparser)
+BuildRequires:  mvn(net.sourceforge.htmlunit:htmlunit-core-js)
+BuildRequires:  mvn(net.sourceforge.nekohtml:nekohtml)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.httpcomponents:httpmime)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent)
+BuildRequires:  mvn(xalan:xalan)
+#BuildRequires:  mvn(xalan:xsltc)
+BuildRequires:  mvn(xerces:xercesImpl)
+# https://bugzilla.redhat.com/show_bug.cgi?id=998594
 BuildRequires:  xalan-j2-xsltc
 
-Requires:       jpackage-utils
-Requires:       xalan-j2
-Requires:       xalan-j2-xsltc
-Requires:       apache-commons-codec
-Requires:       apache-commons-collections
-Requires:       apache-commons-io
-Requires:       apache-commons-lang
-Requires:       apache-commons-logging
-Requires:       apache-commons-io
-Requires:       apache-commons-fileupload
-Requires:       cssparser
-Requires:       nekohtml
-Requires:       jakarta-commons-httpclient
-Requires:       htmlunit-core-js
+BuildRequires:  maven-local
+BuildRequires:  maven-enforcer-plugin
 Source44: import.info
 
 %description
@@ -66,9 +43,8 @@ documents and provides an API for automated testing of
 web applications. 
 
 %package javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -76,40 +52,49 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
+find -name '*.jar' -print -delete 
+find -name '*.class' -print -delete
+
 %patch0 -p 0
-%patch1 -p 0
-%patch2 -p 0
+
+%pom_add_dep xalan:xsltc:2.7.1
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId = 'nekohtml']/pom:version" 1.9.14
+# Unavailable test deps
+%pom_remove_dep :gsbase
+%pom_remove_dep :selenium-htmlunit-driver
+%pom_remove_dep :selenium-ie-driver
+%pom_remove_dep :selenium-firefox-driver
+%pom_remove_dep org.mortbay.jetty:jetty
+# maybe should be change only gId
+%pom_remove_dep jfree:jfreechart
+
+# org.apache.httpcomponents:httpclient:4.1.2:test-jar
+%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:scope = 'test']"
+# unwanted plugin
+%pom_remove_plugin :maven-antrun-plugin
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-eclipse-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
 # enabling tests would require packaging some selenium plugins
-mvn-rpmbuild -Dmaven.test.skip=true package javadoc:aggregate
+%mvn_file : %{name}
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt3_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt3_5jpp7
 - new release
 
