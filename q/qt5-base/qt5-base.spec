@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -98,7 +98,7 @@ Common package for Qt%major
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
-Requires: pkgconfig(gl)
+Requires: pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname = %EVR
 %description devel
 %summary.
@@ -706,6 +706,12 @@ done
 
 
 %changelog
+* Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt6
+- rebuild with new xcb
+
+* Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt4.M70P.1
+- built for M70P
+
 * Thu Jul 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt5
 - fix install_qt5 macro
 

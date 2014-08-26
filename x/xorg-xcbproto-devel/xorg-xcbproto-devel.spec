@@ -1,5 +1,5 @@
 Name: xorg-xcbproto-devel
-Version: 1.9
+Version: 1.11
 Release: alt1
 
 Summary: XML-XCB protocol descriptions
@@ -38,6 +38,12 @@ XML-XCB protocol descriptions.
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.11-alt1
+- 1.11
+
+* Mon Dec 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.10-alt1
+- 1.10
+
 * Wed Nov 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.9-alt1
 - 1.9
 
