@@ -1,83 +1,56 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Collection of useful tools for Velocity template engine
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
 Source0:       http://www.apache.org/dist/velocity/tools/%{version}/%{name}-%{version}-src.tar.gz
-# force tomcat 7.x apis
-Source1:       velocity-tools-2.0-depmap
 Patch0:        %{name}-%{version}-junit4.patch
-# add org.apache.tomcat tomcat-jsp-api 7.0.27
-Patch1:        %{name}-%{version}-pom.patch
-Patch2:        %{name}-%{version}-dont_copy_test_lib.patch
+Patch1:        %{name}-%{version}-dont_copy_test_lib.patch
 # servlet 3.0 support thanks to mizdebsk
-Patch3:        %{name}-%{version}-servlet.patch
+Patch2:        %{name}-%{version}-servlet.patch
 
-BuildRequires: jpackage-utils
 
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-chain
-BuildRequires: apache-commons-collections
-BuildRequires: apache-commons-digester
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-validator
-BuildRequires: jakarta-oro
-BuildRequires: dom4j
-BuildRequires: sslext
-#  core taglib tiles
-BuildRequires: struts
-BuildRequires: tomcat-jsp-2.2-api
-BuildRequires: tomcat-servlet-3.0-api
-BuildRequires: velocity
-
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-chain:commons-chain)
+BuildRequires: mvn(commons-collections:commons-collections)
+BuildRequires: mvn(commons-digester:commons-digester)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(commons-validator:commons-validator)
+BuildRequires: mvn(dom4j:dom4j)
+BuildRequires: mvn(org.apache.struts:struts-core)
+BuildRequires: mvn(org.apache.struts:struts-taglib)
+BuildRequires: mvn(org.apache.struts:struts-tiles)
+BuildRequires: mvn(org.apache.tomcat:tomcat-jsp-api)
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires: mvn(org.apache.velocity:velocity)
+BuildRequires: mvn(oro:oro)
+BuildRequires: mvn(sslext:sslext)
+# required by tomcat-jsp-api
+BuildRequires: mvn(org.apache.tomcat:tomcat-el-api)
 
 # test deps
-# httpunit httpunit 1.6.1
-# org.mortbay.jetty jetty-embedded 6.0.1
-# nekohtml nekohtml 0.9.5
-# rhino js 1.6R5
-# xerces xercesImpl 2.8.1
-# xerces xmlParserAPIs 2.6.2
-BuildRequires: junit
+%if 0
+BuildRequires: mvn(httpunit:httpunit) = 1.6.1
+BuildRequires: mvn(nekohtml:nekohtml) = 0.9.5
+BuildRequires: mvn(org.mortbay.jetty:jetty-embedded) = 6.0.1
+BuildRequires: mvn(rhino:js) = 1.6R5
+BuildRequires: mvn(xerces:xercesImpl) = 2.8.1
+BuildRequires: mvn(xerces:xmlParserAPIs) = 2.6.2
+%endif
+BuildRequires: mvn(junit:junit)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-
 # required by resources-plugin
-BuildRequires: maven-filtering
+BuildRequires: mvn(org.apache.maven.shared:maven-filtering)
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
-Requires:      apache-commons-beanutils
-Requires:      apache-commons-chain
-Requires:      apache-commons-collections
-Requires:      apache-commons-digester
-Requires:      apache-commons-lang
-Requires:      apache-commons-logging
-Requires:      apache-commons-validator
-Requires:      jakarta-oro
-Requires:      dom4j
-Requires:      sslext
-Requires:      struts
-Requires:      tomcat-jsp-2.2-api
-Requires:      tomcat-servlet-3.0-api
-Requires:      velocity
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -91,9 +64,8 @@ web applications (via the VelocityViewTag and
 VelocityViewServlet) and integration with Struts 1.x applications.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -104,38 +76,44 @@ This package contains javadoc for %{name}.
 find . -name "*.jar" -delete
 find . -name "*.class" -delete
 %patch0 -p1
-%patch1 -p0
-%patch2 -p1
-%patch3 -p0
+%patch1 -p1
+%patch2 -p0
+
 sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 
+# force tomcat 7.x apis
+%pom_remove_dep javax.servlet:servlet-api
+%pom_add_dep org.apache.tomcat:tomcat-servlet-api::provided
+%pom_add_dep org.apache.tomcat:tomcat-jsp-api::provided
+# remove non standard build structure
+%pom_xpath_remove "pom:project/pom:build/pom:outputDirectory"
+%pom_xpath_remove "pom:project/pom:build/pom:directory"
+
+%mvn_file :%{name} %{name}
+%mvn_alias :%{name} %{name}:%{name}
+%mvn_alias :%{name} org.apache.velocity:%{name}-generic
+%mvn_alias :%{name} %{name}:%{name}-generic
+%mvn_alias :%{name} %{name}:%{name}-view
+%mvn_alias :%{name} org.apache.velocity:%{name}-view
+
 %build
+
 # tests skipped. cause: missing dependencies
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.local.depmap.file="%{SOURCE1}" -Dmaven.test.skip=true  install javadoc:aggregate
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name},org.apache.velocity:%{name}-generic,%{name}:%{name}-generic,%{name}:%{name}-view,org.apache.velocity:%{name}-view"
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr dist/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc CONTRIBUTORS LICENSE NOTICE README.txt STATUS WHY_THREE_JARS.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_5jpp7
 - new release
 
