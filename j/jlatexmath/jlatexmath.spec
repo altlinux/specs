@@ -1,3 +1,4 @@
+Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -5,8 +6,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jlatexmath
-Version:        1.0.3
-Release:        alt1
+Version:        1.0.2
+Release:        alt1_1jpp7
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Java
@@ -37,7 +38,7 @@ BuildRequires:  ant
 BuildRequires:  fop
 
 Requires:       jpackage-utils
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?serial:%serial:}%{version}-%{release}
 Requires:       fop
 
 
@@ -48,7 +49,7 @@ This package contains the FOP plug-in for %{name}.
 Summary:        API Documentation for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?serial:%serial:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -92,6 +93,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_1jpp7
+- new release
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - new version
 
