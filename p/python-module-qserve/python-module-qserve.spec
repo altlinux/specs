@@ -1,8 +1,10 @@
 %define modulename qserve
 
+%def_with python3
+
 Name: python-module-qserve
-Version: 0.1.1
-Release: alt1.1
+Version: 0.2.8
+Release: alt1
 
 Summary: job queue server used in mwlib
 
@@ -14,6 +16,10 @@ Url: https://github.com/pediapress/qserve
 Source: %name-%version.tar
 
 BuildPreReq: rpm-build-python
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python-tools-2to3
+%endif
 
 BuildArch: noarch
 
@@ -22,19 +28,52 @@ BuildArch: noarch
 %description
 job queue server used in mwlib
 
+%package -n python3-module-%modulename
+Summary: job queue server used in mwlib
+Group: Development/Python3
+
+%description -n python3-module-%modulename
+job queue server used in mwlib
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %python_sitelibdir/qs*
 
+%if_with python3
+%files -n python3-module-%modulename
+%python3_sitelibdir/qs*
+%endif
+
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt1
+- Version 0.2.8
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.1-alt1.1
 - Rebuild with Python-2.7
 
