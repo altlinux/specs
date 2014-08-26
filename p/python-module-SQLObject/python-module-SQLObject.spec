@@ -8,8 +8,8 @@
 %endif
 
 Name: python-module-SQLObject
-Version: 1.3.2
-Release: alt1.1
+Version: 2.0.0
+Release: alt1.a1dev.20140817
 
 Summary: Object-Relational Manager, aka database wrapper for Python
 
@@ -32,12 +32,6 @@ BuildPreReq: python3-module-distribute
 %endif
 
 %setup_python_module sqlobject
-
-%add_python_req_skip py
-
-%if_with python3
-%add_python3_req_skip new
-%endif
 
 %description
 SQLObject is a popular *Object Relational Manager* for providing an
@@ -111,8 +105,8 @@ pushd %buildroot%_bindir
 for f in `ls`
 do
 	2to3 -wn $f
-	mv $f $f-%__python3_version
-	ln -s $f-%__python3_version ${f}3
+	mv $f $f-%_python3_version
+	ln -s $f-%_python3_version ${f}3
 done
 popd
 popd
@@ -132,9 +126,9 @@ popd
 %if_with python3
 %files -n %py3name
 %doc README.txt
-%_bindir/sqlobject-admin-%__python3_version
+%_bindir/sqlobject-admin-%_python3_version
 %_bindir/sqlobject-admin3
-%_bindir/sqlobject-convertOldURI-%__python3_version
+%_bindir/sqlobject-convertOldURI-%_python3_version
 %_bindir/sqlobject-convertOldURI3
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%oname-*.egg-info
@@ -144,6 +138,9 @@ popd
 %doc docs/*
 
 %changelog
+* Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1dev.20140817
+- Version 2.0.0a1dev-20140817
+
 * Wed Apr 17 2013 Fr. Br. George <george@altlinux.ru> 1.3.2-alt1.1
 - Fix build with 2to3
 
