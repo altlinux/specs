@@ -1,31 +1,62 @@
-%define scim_api 1.4.0
-
 Name: scim
-Version: 1.4.9
-Release: alt2
+Version: 1.4.14
+Release: alt1
 Summary: Smart Common Input Method platform
-
-License: LGPL
+Packager: Ilya Mashkin <oddity@altlinux.ru>
+License: LGPLv2+
 Group: System/Configuration/Other
 Url: http://www.scim-im.org/
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Source0: http://dl.sourceforge.net/sourceforge/scim/%name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: xinput-scim
-Source2: SCIM.txt
+Source2: scim-icons-0.7.tar.gz
+Source3: scim-system-config
+Source4: scim-system-global
 
+BuildRequires: gtk2-devel, libXt-devel, libgtk+3-devel
+# for autoreconf
+BuildRequires: autoconf automake gettext libtool intltool
+# for system ltdl
+BuildRequires: libltdl-devel gcc-c++
+# for autogen.sh
+BuildRequires: gnome-common
+Requires: %name-libs = %version-%release
+Requires: imsettings, im-chooser
+Obsoletes: iiimf-gtk <= 1:12.2, iiimf-gnome-im-switcher <= 1:12.2, iiimf-server <= 1:12.2, iiimf-x <= 1:12.2
+Obsoletes: iiimf-libs-devel <= 1:12.2
+Obsoletes: iiimf-docs <= 1:12.2
+Obsoletes: iiimf-libs <= 1:12.2, iiimf-csconv <= 1:12.2
+Obsoletes: scim-lang-assamese
+Obsoletes: scim-lang-bengali
+Obsoletes: scim-lang-chinese
+Obsoletes: scim-lang-dhivehi
+Obsoletes: scim-lang-farsi
+Obsoletes: scim-lang-gujarati
+Obsoletes: scim-lang-hindi
+Obsoletes: scim-lang-japanese
+Obsoletes: scim-lang-kannada
+Obsoletes: scim-lang-korean
+Obsoletes: scim-lang-latin
+Obsoletes: scim-lang-malayalam
+Obsoletes: scim-lang-marathi
+Obsoletes: scim-lang-nepali
+Obsoletes: scim-lang-oriya
+Obsoletes: scim-lang-punjabi
+Obsoletes: scim-lang-sinhalese
+Obsoletes: scim-lang-tamil
+Obsoletes: scim-lang-telugu
+Obsoletes: scim-lang-thai
+Obsoletes: scim-lang-tibetan
+Obsoletes: scim-python
+Obsoletes: scim-python-chinese
+Obsoletes: scim-python-english
+Obsoletes: scim-python-pinyin
+Obsoletes: scim-python-xingma
+Obsoletes: scim-python-xingma-cangjie
+Obsoletes: scim-python-xingma-erbi
+Obsoletes: scim-python-xingma-wubi
+Obsoletes: scim-python-xingma-zhengma
 Patch1: scim-add-restart.patch
-Patch2: gtkimm-clear-preedit-on-reset-174143.patch
-Patch3: rawcode-unicode-maxlength.patch
-Patch4: scim.pc-versioned-moduledir-179706.patch
-Patch5: scim-panjabi-punjabi.patch
-Patch31: scim-1.4.7-syslibltdl.patch
-Patch32: scim-1.4.8-fix-dlopen.patch
-
-# Automatically added by buildreq on Thu Sep 27 2007
-BuildRequires: gcc4.3-c++ imake libXt-devel libgtk+2-devel xorg-cf-files xsltproc
-
-#BuildRequires: doxygen fontconfig gcc-c++ glibc-devel-static graphviz imake libgtk+2-devel libXt-devel xorg-cf-files xsltproc
-#BuildRequires: gcc-c++ glibc-devel-static graphviz imake libICE-devel libX11-devel libXt-devel libstdc++-devel linux-libc-headers pkg-config xorg-cf-files xorg-x11-proto-devel xsltproc libltdl libltdl-devel
+Patch7: scim_panel_gtk-emacs-cc-style.patch
 
 %description
 SCIM is a user friendly and full featured input method user interface and
@@ -34,70 +65,109 @@ also a development platform to make life easier for Input Method developers.
 %package devel
 Summary: Smart Common Input Method platform
 Group: Development/Other
+Requires: %name-libs = %version-%release
+Requires: gtk2-devel
+Requires: pkgconfig
+Obsoletes: iiimf-libs-devel <= 1:12.2
 
 %description devel
 The scim-devel package includes the header files for the scim package.
 Install scim-devel if you want to develop programs which will use scim.
 
-%package doc
-Summary: Smart Common Input Method platform documentation
-Group: Documentation
+%package gtk
+Summary: Smart Common Input Method Gtk IM module
+Group: System/Libraries
+# for %_libdir/gtk-2.0/immodules
+Requires: gtk2 >= 2.11.6-7.fc8
+# for update-gtk-immodules
+Requires(post): gtk2 >= 2.9.1-2
+Requires(postun): gtk2 >= 2.9.1-2
 
-%description doc
-SCIM development documentation files generated from the sourcecode.
+%description gtk
+This package provides a GTK input method module for SCIM.
 
 %package libs
 Summary: Smart Common Input Method libraries
 Group: System/Libraries
+Obsoletes: iiimf-libs <= 1:12.2, iiimf-csconv <= 1:12.2
 
 %description libs
-This package provides the libraries and GTK input method module for SCIM.
+This package provides the libraries for SCIM.
+
+%package rawcode
+Summary: SCIM Unicode Input Method Engine
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description rawcode
+This package provides an Input Method Engine for inputting unicode characters
+but their unicode codepoints.
+
+%define scim_api 1.4.0
+
+%define _xinputconf %_sysconfdir/X11/xinit/xinput.d/scim.conf
 
 %prep
-%setup -q
-#patch31 -p1 -b .31-sysltdl
-#patch32 -E -p1 -b .fix-dlopen
+%setup -a2
+
+cp -p scim-icons/icons/*.png data/icons
+cp -p scim-icons/pixmaps/*.png data/pixmaps
+
+# use our system config & global file
+mv configs/config{,.orig}
+cp -p %SOURCE3 configs/config
+mv configs/global{,.orig}
+cp -p %SOURCE4 configs/global
+
+%patch7 -p1 -b .7-emacs-ccmode~
+
+# patch17 touches configure.ac and Makefile.am
+./bootstrap
 
 %build
-export CC=gcc-4.3 CXX=g++-4.3
-%configure
-make
+%configure --disable-static --enable-ld-version-script --with-gtk-version=2
+make %{?_smp_mflags}
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%__install -p"
 
-mkdir -pm 755 $RPM_BUILD_ROOT/%_libdir/scim-1.0/{Config,FrontEnd,IMEngine,SetupUI,Helper}
-
+# remove .la files
 find $RPM_BUILD_ROOT -name '*.la' | xargs rm
 
+# remove scim-setup.desktop file since it is confusing with im-chooser
+rm $RPM_BUILD_ROOT/%_datadir/applications/scim-setup.desktop
+# remove capplet
+rm $RPM_BUILD_ROOT/%_datadir/control-center-2.0/capplets/scim-setup.desktop
+
+# don't need this
+rm -f docs/html/FreeSans.ttf
+
+# install xinput config file
 mkdir -pm 755 $RPM_BUILD_ROOT/%_sysconfdir/X11/xinit/xinput.d
-install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_sysconfdir/X11/xinit/xinput.d/scim
+install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 
 %find_lang %name
 
-%clean
-%define cjk_langs ja_JP ko_KR zh_CN zh_TW
-%define indic_langs bn_IN gu_IN hi_IN kn_IN ml_IN pa_IN ta_IN te_IN
-%define supported_langs %cjk_langs %indic_langs ne_NE th_TH
-
-%post libs
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
-#%_bindir/update-gtk-immodules %_target_platform
-
-%postun libs
-[ "$1" = 0 ] && \
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
-#%_bindir/update-gtk-immodules %_target_platform
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README ChangeLog TODO
+%doc AUTHORS COPYING README ChangeLog TODO
 %dir %_sysconfdir/scim
 %config(noreplace) %_sysconfdir/scim/*
-%_sysconfdir/X11/xinit/xinput.d
 %_bindir/*
-%_libdir/scim-1.0
-%exclude %_libdir/scim-1.0/%scim_api
+%dir %_libdir/scim-1.0
+%_libdir/scim-1.0/scim-helper-launcher
+%_libdir/scim-1.0/scim-helper-manager
+%_libdir/scim-1.0/scim-launcher
+%_libdir/scim-1.0/scim-panel-gtk
+%dir %_libdir/scim-1.0/%scim_api
+%_libdir/scim-1.0/%scim_api/Filter
+%_libdir/scim-1.0/%scim_api/FrontEnd
+%_libdir/scim-1.0/%scim_api/Helper
+%dir %_libdir/scim-1.0/%scim_api/IMEngine
+%_libdir/scim-1.0/%scim_api/SetupUI
 %_datadir/scim
+%_datadir/pixmaps/*
+%config(noreplace) %_xinputconf
 
 %files devel
 %doc docs/developers
@@ -105,15 +175,26 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_sysconfdir/X11/xinit/xinput.d/scim
 %_libdir/libscim*.so
 %_libdir/pkgconfig/*.pc
 
-%files doc
-%doc docs/html
+%files gtk
+%_libdir/gtk-2.0/*/immodules/im-scim.so
+%_libdir/gtk-3.0/*/immodules/im-scim.so
 
 %files libs
 %_libdir/libscim-*.so.*
-%_libdir/gtk-2.0/immodules
-%_libdir/scim-1.0/%scim_api
+%dir %_libdir/scim-1.0
+%dir %_libdir/scim-1.0/%scim_api
+%_libdir/scim-1.0/%scim_api/Config
+%dir %_libdir/scim-1.0/%scim_api/IMEngine
+%_libdir/scim-1.0/%scim_api/IMEngine/socket.so
+
+%files rawcode
+%_libdir/scim-1.0/%scim_api/IMEngine/rawcode.so
 
 %changelog
+* Tue Aug 26 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt1
+- 1.4.14
+- sync spec with FC
+
 * Mon Feb 07 2011 Ilya Mashkin <oddity@altlinux.ru> 1.4.9-alt2
 - rebuild for set-versions
 
@@ -133,3 +214,4 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_sysconfdir/X11/xinit/xinput.d/scim
 
 * Wed May 10 2006 Dmitri Kuzishchin <dim@altlinux.ru> 1.4.4-alt1
 - first ALT release of SCIM.
+
