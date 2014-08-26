@@ -1,13 +1,11 @@
 Name: libmm-qt
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt-only wrapper for ModemManager DBus API
 Url: https://projects.kde.org/projects/extragear/libs/libmm-qt
 License: LGPLv2+
-
-Requires: ModemManager >= 1.0.0
 
 Source: %name-%version.tar
 
@@ -44,5 +42,11 @@ Qt libraries and header files for developing applications that use ModemManager
 %_libdir/libModemManagerQt.so
 
 %changelog
+* Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt2
+- don't require ModemManager
+
+* Thu Apr 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt0.M70P.1
+- built for M70P
+
 * Tue Feb 18 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
 - initial build
