@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jericho-html
 Version:        3.2
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        Java library allowing analysis and manipulation of parts of an HTML document
 
 Group:          Development/Java
@@ -73,7 +74,7 @@ ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -rp docs/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # Install link for web app
-ln -s %{_javadir}/%{name}-%{version}.jar samples/webapps/JerichoHTML/WEB-INF/lib
+#ln -s %{_javadir}/%{name}-%{version}.jar samples/webapps/JerichoHTML/WEB-INF/lib
 
 
 %check
@@ -87,7 +88,7 @@ java -classpath $CLASSPATH:test/classes -Djava.util.logging.config.file=test/log
 %files
 %doc licence-epl-1.0.html licence-lgpl-2.1.txt licence.txt
 %doc project-description.txt release.txt
-#doc samples
+%doc --no-dereference samples
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
 
@@ -97,6 +98,9 @@ java -classpath $CLASSPATH:test/classes -Djava.util.logging.config.file=test/log
 
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_6jpp7
+- new release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_4jpp7
 - new version
 
