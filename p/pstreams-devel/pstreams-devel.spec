@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 %define packagename pstreams
 
 Name:           pstreams-devel
-Version:        0.7.0
-Release:        alt1_7
+Version:        0.8.1
+Release:        alt1_1
 Summary:        POSIX Process Control in C++
 
 Group:          Development/C
@@ -40,6 +40,9 @@ make install  DESTDIR=$RPM_BUILD_ROOT prefix=/usr
 %{_includedir}/pstreams
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_7
 - update to new release by fcimport
 
