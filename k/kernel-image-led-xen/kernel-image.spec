@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1906,6 +1906,10 @@ done)
 
 
 %changelog
+* Wed Aug 27 2014 Led <led@altlinux.ru> 3.15.10-alt6
+- added:
+  + fix-drivers-pci-hotplug--rpaphp
+
 * Tue Aug 26 2014 Led <led@altlinux.ru> 3.15.10-alt5
 - updated:
   + fix-drivers-gpu-drm--ast
