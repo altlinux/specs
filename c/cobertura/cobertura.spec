@@ -1,25 +1,31 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Prevent brp-java-repack-jars from being run
-%global __jar_repack %{nil}
-
 Name:           cobertura
 Version:        1.9.4.1
-Release:        alt2_3jpp7
+Release:        alt2_9jpp7
 Summary:        Java tool that calculates the percentage of code accessed by tests
 
-Group:          Development/Java
-License:        ASL 1.1 and GPLv2+ and MPL
+# ASL 2.0: src/net/sourceforge/cobertura/webapp/web.xml
+# GPL+: src/net/sourceforge/cobertura/reporting/html/files/sortabletable.js
+#       src/net/sourceforge/cobertura/reporting/html/files/stringbuilder.js
+# MPL 1.1, GPLv2+, LGPLv2+: some files in src/net/sourceforge/cobertura/javancss/ccl/
+# rest is mix of GPLv2+ and ASL 1.1
+License:        ASL 1.1 and GPLv2+ and MPL and ASL 2.0 and GPL+
 URL:            http://cobertura.sourceforge.net/
 
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.tar.bz2
+# ./create-tarball.sh %%{version}
+Source0:        %{name}-%{version}-clean.tar.gz
 # POMs based from those available from the Maven repository
-Source1:        %{name}-%{version}.pom
-Source2:        %{name}-runtime-%{version}.pom
+Source1:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Source2:        http://repo1.maven.org/maven2/net/sourceforge/%{name}/%{name}-runtime/%{version}/%{name}-runtime-%{version}.pom
+Source3:        http://www.apache.org/licenses/LICENSE-1.1.txt
+Source4:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source5:        create-tarball.sh
 
 Patch0:         %{name}-unmappable-characters.patch
 
@@ -27,22 +33,19 @@ BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  antlr
 BuildRequires:  apache-commons-cli
-BuildRequires:  dos2unix
 BuildRequires:  groovy
-BuildRequires:  jpackage-utils
 BuildRequires:  jakarta-oro
 BuildRequires:  jaxen
 BuildRequires:  jdom
 BuildRequires:  junit4
 BuildRequires:  log4j
 BuildRequires:  objectweb-asm
-BuildRequires:  tomcat6-servlet-2.5-api
+BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  xml-commons-jaxp-1.3-apis
 
 Requires:       ant
-Requires:       jpackage-utils
 Requires:       jakarta-oro
 Requires:       junit4
 Requires:       log4j
@@ -57,10 +60,8 @@ accessed by tests. It can be used to identify which parts of your
 Java program are lacking test coverage.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -70,30 +71,31 @@ This package contains the API documentation for %{name}.
 %setup -q
 %patch0 -p1
 
-find . -type f -name '*.jar' -delete
+cp %{SOURCE3} LICENSE-ASL-1.1
+cp %{SOURCE4} LICENSE-ASL-2.0
 
 sed -i 's/\r//' ChangeLog COPYING COPYRIGHT README
 
 %build
 export LANG=en_US.ISO8859-1
 pushd lib
-  %__ln_s $(build-classpath jaxen) .
-  %__ln_s $(build-classpath jdom) .
-  %__ln_s $(build-classpath junit4) .
-  %__ln_s $(build-classpath log4j) .
-  %__ln_s $(build-classpath objectweb-asm/asm-all) .
-  %__ln_s $(build-classpath oro) .
-  %__ln_s $(build-classpath xalan-j2) .
-  %__ln_s $(build-classpath tomcat6-servlet-2.5-api) servlet-api.jar
-  %__ln_s $(build-classpath apache-commons-cli) commons-cli.jar
+  ln -s $(build-classpath jaxen) .
+  ln -s $(build-classpath jdom) .
+  ln -s $(build-classpath junit4) .
+  ln -s $(build-classpath log4j) .
+  ln -s $(build-classpath objectweb-asm/asm-all) .
+  ln -s $(build-classpath oro) .
+  ln -s $(build-classpath xalan-j2) .
+  ln -s $(build-classpath tomcat-servlet-3.0-api) servlet-api.jar
+  ln -s $(build-classpath apache-commons-cli) commons-cli.jar
   pushd xerces
-    %__ln_s $(build-classpath xalan-j2) .
-    %__ln_s $(build-classpath xml-commons-jaxp-1.3-apis) .
+    ln -s $(build-classpath xalan-j2) .
+    ln -s $(build-classpath xml-commons-jaxp-1.3-apis) .
   popd
 popd
 
 pushd antLibrary/common
-  %__ln_s $(build-classpath groovy) .
+  ln -s $(build-classpath groovy) .
 popd
 
 export CLASSPATH=$(build-classpath objectweb-asm/asm-all commons-cli antlr junit4)
@@ -101,28 +103,28 @@ export CLASSPATH=$(build-classpath objectweb-asm/asm-all commons-cli antlr junit
 
 %install
 # jars
-%__mkdir_p %{buildroot}%{_javadir}
-%__cp -a %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 (cd %{buildroot}%{_javadir} && ln -s %{name}.jar %{name}-runtime.jar)
 
 # pom
-%__mkdir_p %{buildroot}%{_mavenpomdir}
-%__cp -a %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%__cp -a %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-runtime.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-runtime.pom
 
 # depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}" 
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
 %add_maven_depmap JPP-%{name}-runtime.pom %{name}-runtime.jar -a "%{name}:%{name}-runtime"
 
 # ant config
-%__mkdir_p  %{buildroot}%{_sysconfdir}/ant.d
-%__cat > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
+install -d -m 755  %{buildroot}%{_sysconfdir}/ant.d
+cat > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
 ant cobertura junit4 log4j oro xerces-j2
 EOF
 
 # javadoc
-%__mkdir_p %{buildroot}%{_javadocdir}/%{name}
-%__cp -a build/api/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/cobertura-check.conf`
 touch $RPM_BUILD_ROOT/etc/cobertura-check.conf
@@ -137,9 +139,10 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/cobertura-report.conf`
 touch $RPM_BUILD_ROOT/etc/cobertura-report.conf
 
 %files
-%doc ChangeLog COPYING COPYRIGHT README
-%{_javadir}/*.jar
-%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%doc ChangeLog COPYING COPYRIGHT README LICENSE-ASL-1.1 LICENSE-ASL-2.0
+%{_javadir}/%{name}.jar
+%{_javadir}/%{name}-runtime.jar
+%config %{_sysconfdir}/ant.d/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}-runtime.pom
 %{_mavendepmapfragdir}/*
@@ -149,10 +152,13 @@ touch $RPM_BUILD_ROOT/etc/cobertura-report.conf
 %config(noreplace,missingok) /etc/cobertura-report.conf
 
 %files javadoc
-%doc ChangeLog COPYING COPYRIGHT README
+%doc COPYING COPYRIGHT LICENSE-ASL-1.1 LICENSE-ASL-2.0
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4.1-alt2_9jpp7
+- new release
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4.1-alt2_3jpp7
 - fc update
 
