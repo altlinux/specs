@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel swig
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_10
+Release:	alt2_12
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -168,6 +168,14 @@ desktop-file-install --vendor "" --delete-original \
   $RPM_BUILD_ROOT%{_datadir}/applications/piqsl.desktop
 
 
+%post
+/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+  /bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+fi
+
 %files
 %doc AUTHORS COPYING README
 %{_bindir}/eqsl
@@ -224,6 +232,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_10
 - update to new release by fcimport
 
