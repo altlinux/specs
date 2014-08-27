@@ -2,12 +2,17 @@
 BuildRequires: /usr/bin/doxygen libncurses-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name libnjb
+%define version 2.2.7
 # SPEC file for libnjb, primary target is the Fedora Extras
 # RPM repository.
 
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_5
+Release:	alt3_9
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -55,7 +60,7 @@ library for Creative Nomad/Zen/Jukebox and Dell DJ line of MP3 players.
 make %{?_smp_mflags}
 
 %install
-%makeinstall
+make install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{_pkgdocdir}
 # Remove libtool archive remnant
 rm -f $RPM_BUILD_ROOT%{_libdir}/libnjb.la
 # Install udev rules file.
@@ -63,10 +68,10 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
 install -p -m 644 libnjb.rules $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/60-libnjb.rules
 # Copy documentation to a good place
 install -p -m 644 AUTHORS ChangeLog ChangeLog-old FAQ \
-INSTALL LICENSE HACKING $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+INSTALL LICENSE HACKING $RPM_BUILD_ROOT%{_pkgdocdir}
 # Touch generated files to make them always have the same time stamp.
 touch -r configure.ac \
-      $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/html/* \
+      $RPM_BUILD_ROOT%{_pkgdocdir}/html/* \
       $RPM_BUILD_ROOT%{_includedir}/*.h \
       $RPM_BUILD_ROOT%{_libdir}/pkgconfig/*.pc
 # Remove the Doxygen HTML documentation, this get different
@@ -84,15 +89,16 @@ touch -r configure.ac \
 
 %files devel
 %{_libdir}/*.so
-%dir %{_docdir}/%{name}-%{version}
-%{_docdir}/%{name}-%{version}/*
+%dir %{_pkgdocdir}
+%{_pkgdocdir}/*
 %{_includedir}/*.h
 %{_libdir}/pkgconfig/*.pc
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_5
 - update to new release by fcimport
 
