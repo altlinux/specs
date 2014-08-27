@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define oldname net6
 Name:           libnet6
 Version:        1.3.14
-Release:        alt1_6
+Release:        alt1_7
 Summary:        A TCP protocol abstraction for library C++
 
 Group:          Development/C
@@ -66,6 +66,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_7
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_6
 - update to new release by fcimport
 
