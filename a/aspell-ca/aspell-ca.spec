@@ -4,7 +4,7 @@ Summary: Catalan dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 2.1.5
-Release: alt2_8
+Release: alt2_9
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -36,6 +36,9 @@ make install DESTDIR="$RPM_BUILD_ROOT"
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_8
 - update to new release by fcimport
 
