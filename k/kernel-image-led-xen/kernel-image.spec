@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1906,6 +1906,16 @@ done)
 
 
 %changelog
+* Tue Aug 26 2014 Led <led@altlinux.ru> 3.15.10-alt5
+- updated:
+  + fix-drivers-gpu-drm--ast
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--mgag200
+  + fix-fs-btrfs
+  + feat-fs-aufs
+- added:
+  + fix-fs-isofs
+
 * Thu Aug 21 2014 Led <led@altlinux.ru> 3.15.10-alt4
 - updated:
   + fix-arch-s390
