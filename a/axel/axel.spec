@@ -1,6 +1,6 @@
 Name:		axel		
 Version:	2.4
-Release:	alt2_10
+Release:	alt2_11
 Summary:	Accelerated download client
 
 Group:		Networking/WWW
@@ -44,6 +44,9 @@ install -m 755 -p %{name} %{buildroot}%{_bindir}
 %{_mandir}/zh_CN/man1/axel.1*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_10
 - update to new release by fcimport
 
