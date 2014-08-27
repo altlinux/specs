@@ -1,5 +1,5 @@
 Name: catfish
-Version: 1.0.2
+Version: 1.2.0
 Release: alt1
 Summary: A handy file search tool
 
@@ -66,6 +66,9 @@ mkdir -p %buildroot/%symicons && ln -s %_iconsdir/gnome %buildroot/%symicons/hic
 
 #files engines
 %changelog
+* Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Wed Apr 16 2014 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Autobuild version bump to 1.0.2
 
