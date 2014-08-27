@@ -9,7 +9,7 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt2_7
+Release:       alt2_8
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -154,6 +154,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_7
 - update to new release by fcimport
 
