@@ -5,7 +5,7 @@ Group: Other
 %add_optflags %optflags_shared
 Name:           libsigrok
 Version:        0.2.2
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Basic hardware access drivers for logic analyzers
 # Combined GPLv3+ and GPLv2+ and BSD
 License:        GPLv3+
@@ -97,6 +97,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_3
 - update to new release by fcimport
 
