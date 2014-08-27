@@ -1,6 +1,6 @@
 Name: scim
 Version: 1.4.14
-Release: alt2
+Release: alt3
 Summary: Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: LGPLv2+
@@ -157,6 +157,24 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 
 %find_lang %name
 
+%post gtk
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+
+%postun gtk
+[ "$1" = 0 ] && \
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+
+
+%post libs
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+
+%postun libs
+[ "$1" = 0 ] && \
+%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
+
+
+
+
 %files -f %name.lang
 %doc AUTHORS COPYING README ChangeLog TODO
 %dir %_sysconfdir/scim
@@ -202,6 +220,9 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %_libdir/qt4/plugins/
 
 %changelog
+* Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt3
+- add post/postun sections
+
 * Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt2
 - add scim-qt4 package
 
