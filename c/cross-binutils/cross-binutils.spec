@@ -53,7 +53,7 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 Summary: A GNU collection of cross-compilation binary utilities
 Name: %{cross}-binutils
 Version: 2.24
-Release: alt1_5
+Release: alt1_6
 License: GPLv3+
 Group: Development/Tools
 URL: http://sources.redhat.com/binutils
@@ -681,6 +681,9 @@ sed -i -e /sys-root/d files.ppc64-linux-gnu
 %do_files xtensa-linux-gnu	%{build_xtensa}
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_6
+- update to new release by fcimport
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.24-alt1_5
 - new version
 
