@@ -3,15 +3,13 @@ BuildRequires: libexpat-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.8
-Release:        alt1_3
+Version:        0.9
+Release:        alt1_2
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
-# Required for glibc >= 2.19.90
-Patch0:         %{name}-0.8-Use-_DEFAULT_SOURCE-where-_BSD_SOURCE-macro-presents.patch
 BuildRequires:  libxml2-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgcrypt-devel
@@ -40,7 +38,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .bsd_source
 
 %build
 %configure --disable-static \
@@ -70,6 +67,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3
 - update to new release by fcimport
 
