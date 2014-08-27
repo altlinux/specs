@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ perl(Shell.pm)
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_12
+Release:  alt2_13
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -85,6 +85,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_12
 - update to new release by fcimport
 
