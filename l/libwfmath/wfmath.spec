@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6)
 %define oldname wfmath
 Name:           libwfmath
 Version:        1.0.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        WorldForge client math libraries
 
 Group:          Development/C++
@@ -90,6 +90,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2
 - update to new release by fcimport
 
