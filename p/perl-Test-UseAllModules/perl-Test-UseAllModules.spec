@@ -1,22 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(ExtUtils/MakeMaker/CPANfile.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-UseAllModules
 Version:        0.15
-Release:        alt1
+Release:        alt1_1
 Summary:        Do use_ok() for all the MANIFESTed modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-UseAllModules/
-Source:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Test-UseAllModules-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker/CPANfile.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
-# perl(Test::Builder) needed for lib/Test/UseAllModules.pm:55:
-# Test::More->builder->{Have_Plan};
+# perl(Test::Builder) needed for lib/Test/UseAllModules.pm:52:
+# Test::More->builder->has_plan;
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/More.pm)
 # Tests only:
@@ -46,13 +49,12 @@ for F in Changes README; do
 done
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -63,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
