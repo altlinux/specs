@@ -7,7 +7,7 @@ Group: System/Libraries
 %define oldname cal3d
 Name:           libcal3d
 Version:        0.11.0
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Skeletal based 3-D character animation library
 License:        LGPLv2+
 URL:            http://gna.org/projects/cal3d
@@ -78,6 +78,9 @@ rm -f %{buildroot}%{_libdir}/*.a
 # upstream forgot this for 0.11.0: docs/modeling
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt2_17
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt2_16
 - update to new release by fcimport
 
