@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/
 # END SourceDeps(oneline)
 Name:           perl-Lexical-Var
 Version:        0.009
-Release:        alt2_2
+Release:        alt2_3
 Summary:        Static variables without name space pollution
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_2
 - update to new release by fcimport
 
