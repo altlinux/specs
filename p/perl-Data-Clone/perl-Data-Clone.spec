@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Clone.pm) perl(Config.pm) perl(Devel/Peek.pm) perl(Errno.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(Storable.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(if.pm) perl-devel perl-podlators
+BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Clone.pm) perl(Config.pm) perl(Devel/Peek.pm) perl(Errno.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(Storable.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(if.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-Clone
 Version:        0.004
-Release:        alt1
+Release:        alt1_2
 Summary:        Polymorphic data cloning
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Data-Clone/
-Source:        http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/PPPort.pm)
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1_2
+- update to new release by fcimport
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 0.004-alt1
 - automated CPAN update
 
