@@ -1,14 +1,14 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.12
-Release: alt2
+Version: %ver_major.13
+Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Grilo
 
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: gtk-doc yelp-tools
@@ -33,6 +33,7 @@ BuildRequires: libjson-glib-devel
 BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart-devel
 BuildRequires: librest-devel
+BuildRequires: libarchive-devel
 
 Requires: grilo-tools
 Requires: tracker
@@ -61,8 +62,8 @@ This package contains plugins to get information from theses sources:
 %setup
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure		\
+%autoreconf
+%configure \
 	--disable-static
 
 %make_build
@@ -81,6 +82,10 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Wed Aug 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
+- 0.2.13
+- libarchive support enabled
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt2
 - rebuilt against libgdata.so.19
 
