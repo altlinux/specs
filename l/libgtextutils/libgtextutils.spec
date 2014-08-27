@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_11
+Release:	alt1_12
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -55,6 +55,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_11
 - update to new release by fcimport
 
