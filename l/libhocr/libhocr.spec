@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_17
+Release:	alt2_18
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -174,6 +174,9 @@ done
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_18
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_17
 - update to new release by fcimport
 
