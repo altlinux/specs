@@ -1,7 +1,7 @@
 Summary:	A text-mode maze game
 Name:		lsnipes
 Version:	0.9.4
-Release:	alt2_12
+Release:	alt2_13
 License:	GPLv2+
 Group:		Games/Other
 Source:		http://www.ugcs.caltech.edu/~boultonj/snipes/%{name}-%{version}.tgz
@@ -45,6 +45,9 @@ sed -i -e 's,${LIBS} ${OBJS},${OBJS} ${LIBS},' Makefile
 %{_mandir}/man6/snipes.6*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_12
 - update to new release by fcimport
 
