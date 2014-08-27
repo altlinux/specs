@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libapogee
 Version: 2.2
-Release: alt2_13
+Release: alt2_14
 Summary: Library for Apogee CCD Cameras
 
 %define majorver 2
@@ -66,6 +66,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_14
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_13
 - update to new release by fcimport
 
