@@ -5,7 +5,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_11
+Release:        alt3_12
 Summary:        A library for parsing the XNM format
 
 License:        GPLv2+
@@ -52,6 +52,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_11
 - update to new release by fcimport
 
