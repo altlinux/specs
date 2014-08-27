@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_8
+Release:        alt3_10
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -59,6 +59,9 @@ CFLAGS="%{optflags}" make %{?_smp_mflags}
 mkdir -p %{buildroot}/usr/bin %{buildroot}/usr/share/cave9
 install -m 755 -p cave9 $RPM_BUILD_ROOT/usr/bin 
 cp -p data/wall.jpg data/icon.png data/thrust.wav data/crash.wav data/hit.wav $RPM_BUILD_ROOT/usr/share/cave9
+
+mkdir -p %{buildroot}/usr/share/pixmaps
+cp -p data/icon.png $RPM_BUILD_ROOT/usr/share/pixmaps/cave9.png
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p data/*.ttf %{buildroot}%{_fontdir}/mutante.ttf
@@ -114,9 +117,13 @@ fi
 %doc AUTHORS.txt README.txt COPYING.txt data_README.txt
 %{_bindir}/cave9
 %{_datadir}/cave9
+%{_datadir}/pixmaps/cave9.png
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_8
 - update to new release by fcimport
 
