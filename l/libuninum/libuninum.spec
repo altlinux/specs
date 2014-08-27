@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ swig
 Summary:       Library for converting unicode strings to numbers
 Name:          libuninum
 Version:       2.7
-Release:       alt3_14.1
+Release:       alt3_15.1
 # numconv is GPLv2, lib is LGPLv2
 License:       GPLv2 and LGPLv2
 Group:         Development/C
@@ -65,6 +65,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %{_libdir}/libuninum.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_15.1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt3_14.1
 - update to new release by fcimport
 
