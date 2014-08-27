@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ libggi-devel libgpm-devel libncurses-devel libpth-devel
 Name: zhcon
 Summary: A Fast Console CJK System Using FrameBuffer
 Version: 0.2.6
-Release: alt1_25
+Release: alt1_26
 Group: File tools
 License: GPLv2+
 URL:   http://zhcon.sourceforge.net/
@@ -90,6 +90,9 @@ make DESTDIR=${RPM_BUILD_ROOT} INSTALL="install -c -p" install
 %{_datadir}/%{name}/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_26
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_25
 - update to new release by fcimport
 
