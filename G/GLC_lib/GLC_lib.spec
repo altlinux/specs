@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libqt4-devel unzip
 # END SourceDeps(oneline)
 Name:           GLC_lib
 Version:        2.2.0
-Release:        alt2_9
+Release:        alt2_10
 Summary:        C++ class library for OpenGL application based on Qt 4
 
 Group:          System/Libraries
@@ -72,6 +72,9 @@ make install INSTALL_ROOT=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_9
 - update to new release by fcimport
 
