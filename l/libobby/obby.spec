@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(net6-1.3) pkgconfig(sigc++-2.0)
 %define oldname obby
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_7
+Release:        alt1_8
 Summary:        A library which provides synced document buffers
 
 Group:          Development/C
@@ -60,6 +60,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_7
 - update to new release by fcimport
 
