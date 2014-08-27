@@ -1,19 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Data/Dumper.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(overload.pm) perl-devel perl-podlators perl(File/ShareDir/Install.pm) perl(File/ShareDir/Install.pm)
+BuildRequires: perl(Test/Pod.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Module-Manifest-Skip
 Version:        0.23
-Release:        alt1
+Release:        alt1_1
 Summary:        MANIFEST.SKIP Manangement for Modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Module-Manifest-Skip/
-Source:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Module-Manifest-Skip-%{version}.tar.gz
 BuildArch:      noarch
-# Bundled Module::Install does not more than EU::MM and few perl-only modules
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/ShareDir/Install.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time:
 BuildRequires:  perl(File/ShareDir.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -22,10 +24,17 @@ BuildRequires:  perl(Moo.pm)
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(File/ShareDir.pm)
 Requires:       perl(File/Spec.pm)
+Requires:       perl(Moo.pm) >= 0.091.013
+Requires:       perl(warnings.pm)
+
+# Remove under-speficied dependencies
+
 Source44: import.info
+%filter_from_requires /^perl\\(Moo.pm\\)$/d
 
 %description
 CPAN module authors use a MANIFEST.SKIP file to exclude certain well known
@@ -40,27 +49,27 @@ possible.
 
 %prep
 %setup -q -n Module-Manifest-Skip-%{version}
-# XXX: Do not unbundle build-time modules to break dependency cycle on
-# Module::Package and because upstream uses old 'name' attribute.
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes CONTRIBUTING LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
+- update to new release by fcimport
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - automated CPAN update
 
