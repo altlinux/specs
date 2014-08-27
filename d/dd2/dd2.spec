@@ -4,7 +4,7 @@ BuildRequires: libSDL-devel
 %define fedora 21
 Name:           dd2
 Version:        0.2.2
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Dodgin' Diamond 2 - Shoot'em up arcade game
 Group:          Games/Other
 License:        GPLv2+
@@ -72,6 +72,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_12
 - update to new release by fcimport
 
