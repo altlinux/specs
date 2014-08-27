@@ -6,7 +6,7 @@
 
 Name:           libunshield
 Version:        1.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
@@ -62,6 +62,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2
 - update to new release by fcimport
 
