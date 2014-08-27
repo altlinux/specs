@@ -1,13 +1,13 @@
 
 Name: instead
-Version: 2.0.3
+Version: 2.1.1
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
 Summary: STEAD text adventures/visual novels engine
 Summary(ru_RU.UTF-8): Интерпретатор текстовых приключение и визуальных новелл STEAD
 Url: http://instead.syscall.ru
-Source: %name-%version.tar.gz
+Source: %version.tar.gz
 Patch: %name-1.7.0-Rules.make.system.patch
 
 # Automatically added by buildreq on Mon Apr 14 2014
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
+- Autobuild version bump to 2.1.1
+
 * Mon Apr 14 2014 Fr. Br. George <george@altlinux.ru> 2.0.3-alt1
 - Autobuild version bump to 2.0.3
 - Fix build (switch to cmake)
