@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 %define fedora 21
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -71,6 +71,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_4
 - update to new release by fcimport
 
