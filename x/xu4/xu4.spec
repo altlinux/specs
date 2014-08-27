@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.21.%{svndate}svn%{svnrev}
+Release:        alt2_0.22.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -88,6 +88,9 @@ mv %{buildroot}/%{_datadir}/pixmaps/u4.png \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.22.20120106svn2999
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.21.20120106svn2999
 - update to new release by fcimport
 
