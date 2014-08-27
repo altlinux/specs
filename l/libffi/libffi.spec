@@ -2,7 +2,7 @@
 
 Name: libffi
 Version: 3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -98,6 +98,10 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Wed Aug 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.1-alt2
+- Fix pkgconfig.
+- Apply patch libffi-3.1-fix-exec-stack from fedora.
+
 * Fri Aug 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.1-alt1
 - New version.
 
