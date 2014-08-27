@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libomxil-bellagio-devel
 %add_optflags %optflags_shared
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_9
+Release:        alt1_10
 Summary:        OpenMAX Integration Layer
 
 Group:          System/Libraries
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_9
 - update to new release by fcimport
 
