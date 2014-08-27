@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libncurses-devel
 # END SourceDeps(oneline)
 Name:		robotfindskitten
 Version:	1.7320508.406
-Release:	alt2_9
+Release:	alt2_10
 Summary:	A game/zen simulation. You are robot. Your job is to find kitten.
 
 Group:		Games/Other
@@ -53,6 +53,9 @@ rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.7320508.406-alt2_9
 - update to new release by fcimport
 
