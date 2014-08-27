@@ -3,7 +3,7 @@ BuildRequires: cppunit-devel gcc-c++ libICE-devel libSDL-devel libSM-devel libX1
 # END SourceDeps(oneline)
 Name:           pinball
 Version:        0.3.1
-Release:        alt2_23
+Release:        alt2_25
 Summary:        Emilia arcade game
 Group:          Games/Other
 License:        GPL+
@@ -19,6 +19,7 @@ Patch4:		pinball-0.3.1-cstddef.patch
 BuildRequires:  libXt-devel libfreeglut-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires:  libpng-devel libvorbis-devel libltdl7-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  autoconf automake libtool
 Requires:       icon-theme-hicolor opengl-games-utils
 Source44: import.info
 
@@ -33,20 +34,15 @@ There is only one level to play with but it is however very addictive.
 %patch0 -p1 -z .sys-ltdl
 %patch1 -p1 -z .hiscore
 %patch2 -p0
-%patch3 -p0
+%patch3 -p1
 %patch4 -p0
-rm -fr libltdl
-# sigh stop autoxxx from rerunning because of our patches above.
-touch aclocal.m4
-touch configure
-touch `find -name Makefile.in`
-touch pinconfig.h.in
+autoreconf -fiv
 # cleanup a bit
 chmod -x ChangeLog */*.h */*.cpp data/*/Module*.cpp
 
 
 %build
-%configure
+%configure --without-included-ltdl
 make CXXFLAGS="$RPM_OPT_FLAGS"
 
 
@@ -83,6 +79,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_25
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_23
 - update to new release by fcimport
 
