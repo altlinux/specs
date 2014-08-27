@@ -1,6 +1,6 @@
 Name: scim-chewing
-Version: 0.3.3
-Release: alt1.qa1
+Version: 0.3.5
+Release: alt1
 Summary: Chewing Chinese input method for SCIM
 
 License: GPLv2+
@@ -8,8 +8,8 @@ Url: http://chewing.csie.net/
 Group: System/Libraries
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: http://chewing.csie.net/download/scim/%name-%version.tar.bz2
-
-BuildRequires: scim-devel, libchewing-devel >= 0.3.2, gettext, intltool >= 0.34, gcc-c++
+Patch0:         scim-chewing-0.3.5-libchewing04.patch
+BuildRequires: scim-devel, libchewing-devel >= 0.3.4, gettext, intltool >= 0.34, gcc-c++
 Requires: scim
 Obsoletes: iiimf-le-xcin <= 0.1.10
 
@@ -18,8 +18,13 @@ This package provides Chewing Chinese input method for SCIM.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+autoreconf -ivf
+intltoolize --force
+autoreconf
+
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -38,6 +43,10 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/*/*.la
 %_datadir/scim/icons/scim-chewing-swap-colors.png
 
 %changelog
+
+* Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.3.5-alt1
+- 0.3.5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
