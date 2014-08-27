@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
 Name: docbook5-style-xsl
 Version: 1.78.1
-Release: alt1_3
+Release: alt1_5
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -29,6 +29,17 @@ DocBook 5 document to other formats, such as HTML, manpages, FO,
 XHMTL and other formats. They are highly customizable. For more
 information see W3C page about XSL.
 
+%package extensions
+Group: Text tools
+Summary: Norman Walsh's XSL stylesheets extensions for DocBook 5.X
+# Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
+# some .js files under ./slides/browser/ are licensed MPLv1.1
+License: MIT and ASL 2.0
+Requires: docbook-xsl-ns = %{version}
+
+%description extensions
+This package contains Java extensions for XSL namespace aware stylesheets.
+
 %prep
 %setup -q -n docbook-xsl-ns-%{version}
 #remove .gitignore files
@@ -48,8 +59,6 @@ $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION
 ln -s xsl-ns-stylesheets-%{version} \
  $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
 
-# Don't ship the extensions.
-rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/extensions
 # Don't ship install shell script.
 rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 
@@ -60,6 +69,11 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 %doc RELEASE-NOTES.*
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}
 %{_datadir}/sgml/docbook/xsl-ns-stylesheets
+%exclude %{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
+
+%files extensions
+%doc extensions/README.txt extensions/LICENSE.txt
+%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%{version}/extensions
 
 %post
 CATALOG=%{_sysconfdir}/xml/catalog
@@ -85,6 +99,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.78.1-alt1_3
 - update to new release by fcimport
 
