@@ -1,7 +1,7 @@
 %define oname python-xlib
 Name: python-module-xlib
 Version: 0.15
-Release: alt1.rc1.1
+Release: alt1.rc1.svn20131015
 
 Summary: Python X Library
 
@@ -11,7 +11,7 @@ Url: http://python-xlib.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/%oname/%oname-%version.tar.bz2
+Source: %oname-%version.tar
 
 #%%setup_python_module Xlib
 #%add_python_req_skip audio image video misc
@@ -61,6 +61,9 @@ test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 %doc examples doc/html/*.html
 
 %changelog
+* Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15-alt1.rc1.svn20131015
+- Snapshot from svn
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.15-alt1.rc1.1
 - Rebuild with Python-2.7
 
