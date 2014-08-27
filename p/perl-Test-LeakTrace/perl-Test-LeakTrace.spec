@@ -17,7 +17,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Class/Struct.pm) perl(Data/
 Name:		perl-Test-LeakTrace
 Summary:	Trace memory leaks
 Version:	0.14
-Release:	alt3_9
+Release:	alt3_10
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-LeakTrace/
@@ -100,6 +100,9 @@ mv ./JA.pod lib/Test/LeakTrace/
 %{perl_vendor_archlib}/Test/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3_9
 - update to new release by fcimport
 
