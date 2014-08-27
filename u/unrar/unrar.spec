@@ -1,6 +1,6 @@
 Name: unrar
-Version: 5.1.5
-Release: alt3
+Version: 5.1.7
+Release: alt1
 
 Summary: RAR unarchiver
 License: Freely distributable
@@ -60,6 +60,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Tue Aug 19 2014 Fr. Br. George <george@altlinux.ru> 5.1.7-alt1
+- Autobuild version bump to 5.1.7
+
 * Mon May 19 2014 Fr. Br. George <george@altlinux.ru> 5.1.5-alt3
 - Fix queer _UNIX define in devel package
 
