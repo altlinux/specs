@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtd
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	1.16
-Release:	alt1_2
+Release:	alt1_4
 Group:		System/Libraries
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
@@ -99,6 +99,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_2
 - update to new release by fcimport
 
