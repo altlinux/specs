@@ -1,7 +1,7 @@
 
 Name:           freehep-io
 Version:        2.2.2
-Release:        alt1
+Release:        alt2
 Summary:        The FreeHEP IO package extends the Java IO package with a number of input and output streams
 
 Group:          Development/Java
@@ -9,7 +9,7 @@ License:        Apache 2 and LGPL 2
 URL:            http://freehep.github.io/freehep-io/
 Source0:        %name-%version.tar
 
-BuildRequires(pre): rpm-build-maven-local
+BuildRequires(pre): maven-local
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  /proc
 BuildRequires:  maven
@@ -68,5 +68,8 @@ cp -pr target/site/api*/* %buildroot%_javadocdir/%name/
 %doc %_javadocdir/%name
 
 %changelog
+* Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt2
+- Rebuild with maven-local
+
 * Wed Apr 16 2014 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt1
 - Initial build for ALT Linux
