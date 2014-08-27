@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/doxygen
 %define fedora 21
 Name:           libsombok
 Version:        2.3.1
-Release:        alt2_2
+Release:        alt2_3
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
@@ -74,6 +74,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_3
+- update to new release by fcimport
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_2
 - update to new release by fcimport
 
