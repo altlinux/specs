@@ -1,34 +1,22 @@
 Name: libchewing
-Version: 0.3.2
-Release: alt1.1
+Version: 0.4.0
+Release: alt1
 Summary: Intelligent phonetic input method library for Traditional Chinese
 
 Group: System/Libraries
 License: LGPLv2+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://chewing.csie.net/
-Source: http://chewing.csie.net/download/libchewing/%name-%version.tar.bz2
-#Patch0: libchewing-0.3.0-3.bz199353.patch
-#Patch1: libchewing-0.3.0-4.bz206232.patch
-#Patch2: libchewing-0.3.0-5.bz216581a.patch
-#Patch3: libchewing-0.3.0-5.bz216581b.patch
-#Patch4: libchewing-0.3.0-6.bz231568.patch
-#Patch5: libchewing-0.3.0-7.bz237233.patch
-#Patch6: libchewing-0.3.0-8.bz237916.patch
-#Patch7: libchewing-0.3.0-9.bz200694.patch
-#Patch8: libchewing-0.3.0-11.bz195416.patch
-Patch9: libchewing-0.3.2.bz477690.patch
-Patch10: libchewing-0.3.2.phraseChoiceRearward.2.patch
-Patch11: libchewing-0.3.2.chewing_zuin.patch
-Patch12: libchewing-0.3.2.hsu.patch
-Patch13: libchewing-0.3.2.hsu.2.patch
-# Rhbz#625980
-Patch14: libchewing-0.3.2.align.patch
+Source: http://chewing.csie.net/download/libchewing/%name-%version.tar.gz
+Source1:         https://raw.githubusercontent.com/chewing/%{name}/v%{version}/contrib/python/chewing.py
+
 
 %{!?python_sitearch: %define python_sitearch %(%__python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %define libchewing_python_dir %python_sitearch/%name
 
-BuildRequires: autoconf automake libtool pkgconfig
+BuildRequires: autoconf automake libtool pkgconfig 
+BuildRequires:  libsqlite3-devel
+Requires: libsqlite3
 
 %description
 libchewing is an intelligent phonetic input method library for Chinese.
@@ -61,21 +49,9 @@ Python binding of libchewing.
 
 %prep
 %setup -q
-#%patch0 -p1 -b .1-bz199353
-#%patch1 -p1 -b .2-bz206232
-#%patch2 -p1 -b .3-bz216581a
-#%patch3 -p1 -b .4-bz216581b
-#%patch4 -p1 -b .5-bz231568
-#%patch5 -p1 -b .6-bz237233
-#%patch6 -p1 -b .7-bz237916
-#%patch7 -p1 -b .8-bz200694
-#%patch8 -p1 -b .9-bz195416
-%patch9 -p0 -b .bz477690
-%patch10 -p0 -b .phraseChoiceRearward
-%patch11 -p0 -b .chewing_zuin
-%patch12 -p0 -b .hsu
-%patch13 -p0 -b .hsu.2
-%patch14 -p0 -b .align
+mkdir -p contrib/python
+cp -p %SOURCE1 contrib/python
+
 
 %build
 export CFLAGS=-DLIBINSTDIR='\"%_libdir\" -g'
@@ -88,16 +64,16 @@ autoreconf -ivf
 %__make DESTDIR=%buildroot install
 %__rm $RPM_BUILD_ROOT%_libdir/libchewing.la
 %__mkdir -p $RPM_BUILD_ROOT%libchewing_python_dir
-%__cp python/chewing.py $RPM_BUILD_ROOT%libchewing_python_dir
+%__cp contrib/python/chewing.py $RPM_BUILD_ROOT%libchewing_python_dir
 %__mkdir -p $RPM_BUILD_ROOT%_libdir/chewing
-%__cp data/fonetree.dat $RPM_BUILD_ROOT%_libdir/chewing
+#__cp data/fonetree.dat $RPM_BUILD_ROOT%_libdir/chewing
 touch $RPM_BUILD_ROOT%libchewing_python_dir/__init__.py
 
 
 %files
-%doc README AUTHORS COPYING
-%dir %_datadir/chewing
-%_datadir/chewing/*
+%doc AUTHORS COPYING
+%dir %_datadir/libchewing
+%_datadir/libchewing/*
 %_libdir/*.so.*
 %_libdir/chewing
 
@@ -111,6 +87,9 @@ touch $RPM_BUILD_ROOT%libchewing_python_dir/__init__.py
 %libchewing_python_dir
 
 %changelog
+* Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2-alt1.1
 - Rebuild with Python-2.7
 
