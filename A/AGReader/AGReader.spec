@@ -1,6 +1,6 @@
 Name:           AGReader
 Version:        1.2
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Console reader for viewing AmigaGuide files
 Group:          Text tools
 License:        GPL+
@@ -37,6 +37,9 @@ install -m0755 Sources/agr %{buildroot}%{_bindir}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_12
 - update to new release by fcimport
 
