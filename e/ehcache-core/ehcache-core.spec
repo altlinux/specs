@@ -1,39 +1,25 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          ehcache-core
-Version:       2.6.0
-Release:       alt2_5jpp7
+Version:       2.6.7
+Release:       alt1_3jpp7
 Summary:       Easy Hibernate Cache
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://ehcache.org/
-# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.0
-# find ehcache-core-2.6.0 -name '*.jar' -delete
-# ehcache-core-2.6.0/tools/maven-ant-tasks-2.0.7.jar
-# find ehcache-core-2.6.0 -name '*.class' -delete
-# tar czf ehcache-core-2.6.0-clean-src-svn.tar.gz ehcache-core-2.6.0
+# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.7
+# find ehcache-core-2.6.7 -name '*.jar' -delete
+# ehcache-core-2.6.7/tools/maven-ant-tasks-2.0.7.jar
+# ehcache-core-2.6.7/src/test/resources/resourceclassloader/private-classpath.jar
+# find ehcache-core-2.6.7 -name '*.class' -delete
+# tar czf ehcache-core-2.6.7-clean-src-svn.tar.gz ehcache-core-2.6.7
 Source0:       %{name}-%{version}-clean-src-svn.tar.gz
-# force use tomcat 7.x apis
-Source1:       %{name}-%{version}-depmap
-# remove gmaven-plugin maven-checkstyle-plugin
-# fix java.vendor
-# add servlet-api version
-Patch0:        %{name}-%{version}-pom.patch
-# Don't use buildnumber-plugin, because jna is required (and currently broken)
-Patch1:        %{name}-%{version}-disable-buildnumber-plugin.patch
-# circular deps
-# org.hibernate hibernate-ehcache 3.3.2.GA
-# unavailable deps
-# net.sf.hibernate hibernate
-Patch2:        %{name}-%{version}-remove-unavailable-test-deps.patch
 
 BuildRequires: ehcache-parent
-BuildRequires: jpackage-utils
 
 BuildRequires: geronimo-jta
 BuildRequires: hibernate3 >= 3.6.10-7
@@ -41,29 +27,24 @@ BuildRequires: ehcache-sizeof-agent
 BuildRequires: slf4j
 BuildRequires: tomcat-servlet-3.0-api
 
-# TODO test
-#BuildRequires: apache-commons-logging
-#BuildRequires: mvn(org.hibernate:hibernate-ehcache)
-#BuildRequires: bsh
-#BuildRequires: btm
-#BuildRequires: derby
-#BuildRequires: dom4j
-#BuildRequires: hamcrest12
-#BuildRequires: javassist
-#BuildRequires: junit4
-#BuildRequires: mockito
-#BuildRequires: xsom
+# test
+%if 0
+BuildRequires: apache-commons-logging
+BuildRequires: mvn(net.sf.hibernate:hibernate) >= 2.1.8
+BuildRequires: mvn(org.hibernate:hibernate-ehcache)
+BuildRequires: bsh
+BuildRequires: btm
+BuildRequires: derby
+BuildRequires: dom4j
+BuildRequires: hamcrest12
+BuildRequires: javassist
+BuildRequires: junit
+BuildRequires: mockito
+BuildRequires: xsom
+%endif
 
 BuildRequires: maven-local
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: rmic-maven-plugin
 BuildRequires: xml-maven-plugin
 BuildRequires: plexus-resources
@@ -74,7 +55,6 @@ Requires:      hibernate3 >= 3.6.10-7
 Requires:      slf4j
 Requires:      tomcat-servlet-3.0-api
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -82,9 +62,8 @@ Source44: import.info
 Ehcache is a pure Java, in-process cache.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -92,41 +71,50 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
+
+%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin
+%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
+%pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
+
+# don't generate source archive
+%pom_remove_plugin org.apache.maven.plugins:maven-assembly-plugin
 
 # Make sure we require version '3' of Hibernate
 %pom_xpath_remove "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']/pom:version"
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']" "<version>3</version>"
+
+# Don't use buildnumber-plugin, because jna is required (and currently broken)
+%pom_xpath_remove "pom:profiles/pom:profile[pom:id = 'buildnumber-git']"
+
+# circular deps
+# org.hibernate hibernate-ehcache 3.3.2.GA
+# unavailable deps
+%pom_remove_dep net.sf.hibernate:hibernate
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope = 'test']"
+
+# disable embedded ehcache-sizeof-agent.jar copy
+%pom_remove_plugin :maven-dependency-plugin
+
 %build
 
+%mvn_file :%{name} %{name}
+%mvn_alias :%{name} net.sf.ehcache:ehcache
 # tests skipped. cause: missing dependencies
-mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f -- -Dmaven.local.depmap.file="%{_mavendepmapfragdir}/tomcat-tomcat-servlet-api"
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.7-alt1_3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_5jpp7
 - new release
 
