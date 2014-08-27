@@ -4,7 +4,7 @@
 Summary: Latin dictionaries for Aspell
 Name: aspell-%{lang}
 Version: 20020503
-Release: alt1_2
+Release: alt1_3
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net
@@ -34,6 +34,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 20020503-alt1_3
+- update to new release by fcimport
+
 * Fri Jun 27 2014 Igor Vlasenko <viy@altlinux.ru> 20020503-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
