@@ -5,7 +5,7 @@ BuildRequires: pkgconfig(lwp)
 %define oldname rpc2
 Name:           librpc2
 Version:        2.10
-Release:        alt1_10
+Release:        alt1_11
 Summary:        C library for remote procedure calls over UDP
 Group:          System/Libraries
 License:        LGPLv2
@@ -61,6 +61,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_10
 - update to new release by fcimport
 
