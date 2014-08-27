@@ -9,7 +9,7 @@
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt1_%{rpmrel}.1
+Release:	alt1_%{rpmrel}.2
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
@@ -60,6 +60,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_1.2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_1.1
 - update to new release by fcimport
 
