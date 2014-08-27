@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           atasm
 Version:        1.07d
-Release:        alt2_8
+Release:        alt2_9
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -57,6 +57,9 @@ popd
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_8
 - update to new release by fcimport
 
