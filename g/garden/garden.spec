@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/update-desktop-database
 # END SourceDeps(oneline)
 Name:           garden
 Version:        1.0.8
-Release:        alt2_11
+Release:        alt2_12
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
 Group:          Games/Other
@@ -55,6 +55,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_11
 - update to new release by fcimport
 
