@@ -1,6 +1,6 @@
 Name:           worminator
 Version:        3.0R2.1
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Sidescrolling platform and shoot'em up action-game
 Group:          Games/Other
 License:        GPLv2+
@@ -53,6 +53,9 @@ desktop-file-install                           \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.0R2.1-alt2_20
 - update to new release by fcimport
 
