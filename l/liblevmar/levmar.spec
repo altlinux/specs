@@ -10,7 +10,7 @@ BuildRequires: libblas-devel
 
 Name:		liblevmar
 Version:	2.5
-Release:	alt1_10
+Release:	alt1_11
 Summary:	Levenberg-Marquardt nonlinear least squares algorithm
 URL:		http://www.ics.forth.gr/~lourakis/levmar/
 
@@ -77,6 +77,9 @@ ln -s liblevmar.so.%{major}.%{minor} %{buildroot}%{_libdir}/liblevmar.so
 %{_bindir}/lmdemo
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_10
 - update to new release by fcimport
 
