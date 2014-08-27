@@ -1,17 +1,16 @@
-%set_automake_version 1.11
+#%%set_automake_version 1.11
 
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Grilo
 
-Source: %name-%version.tar
-# Patch1: %name-%version-%release.patch
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: glib2-devel >= 2.34 libgio-devel
@@ -87,7 +86,6 @@ Tools for the %name library
 
 %prep
 %setup
-# %patch1 -p1
 
 %build
 %autoreconf
@@ -114,6 +112,7 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %files tools
 %doc AUTHORS COPYING NEWS README TODO
 %_bindir/grl-inspect*
+%_bindir/grl-launch-*
 %_bindir/grilo-test-ui*
 %_man1dir/*
 
@@ -138,6 +137,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Wed Aug 27 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.11-alt1
+- 0.2.11
+
 * Wed Mar 19 2014 Alexey Shabalin <shaba@altlinux.ru> 0.2.10-alt1
 - 0.2.10
 
