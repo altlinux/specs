@@ -4,7 +4,7 @@
 
 Name:           aspell-gu
 Version:        0.03
-Release:        alt2_10
+Release:        alt2_11
 Summary:        GNU Aspell Gujarati Dictionary Package
 
 Group:          Text tools
@@ -51,6 +51,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_10
 - update to new release by fcimport
 
