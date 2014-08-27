@@ -3,13 +3,13 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lv2
-%define version 1.8.0
+%define version 1.10.0
 %global debug_package %{nil}
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.8.0
+Version:        1.10.0
 Release:        alt1_2
 Summary:        Audio Plugin Standard
 Group:          System/Libraries
@@ -20,6 +20,7 @@ URL:            http://lv2plug.in
 Source:         http://lv2plug.in/spec/lv2-%{version}.tar.bz2
 
 BuildRequires:  doxygen graphviz python-module-rdflib
+BuildRequires:  libsndfile-devel
 # TODO: it complains about missing this, 
 # (Error importing pygments, syntax highlighting disabled)
 # but the syntax-highlighting in the generated docs looks strange
@@ -122,6 +123,9 @@ done
 %{_pkgdocdir}/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
 - update to new release by fcimport
 
