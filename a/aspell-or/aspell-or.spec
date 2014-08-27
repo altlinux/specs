@@ -5,7 +5,7 @@ Group: Text tools
 
 Name:           aspell-or
 Version:        0.03
-Release:        alt2_12
+Release:        alt2_13
 Summary:        GNU Aspell Odia Dictionary Package
 License:        GPLv2+
 URL:            http://aspell.net/
@@ -48,6 +48,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_12
 - update to new release by fcimport
 
