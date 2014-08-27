@@ -5,7 +5,7 @@ BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.11.7
+Version: 3.13.1
 Release: alt1_3
 
 License: LGPLv2+
@@ -13,8 +13,13 @@ Group: Development/C
 URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
-Patch0:  libdap-3.10.2-offline.patch
+Patch0:  libdap-offline.patch
+# Fix test hangs on ppc and arm
+# https://bugzilla.redhat.com/show_bug.cgi?id=1118776
+Patch1:  libdap-getopt.patch
 
+# For autoreconf
+BuildRequires: libtool
 BuildRequires: cppunit-devel
 BuildRequires: curl-devel
 BuildRequires: doxygen
@@ -62,12 +67,15 @@ Documentation of the libdap library.
 %prep
 %setup -q
 %patch0 -p1 -b .offline
+%patch1 -p1 -b .getopt
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
 
 
 %build
+# To fix rpath
+autoreconf -f -i
 %configure --disable-static --disable-dependency-tracking
 make %{?_smp_mflags}
 
@@ -76,6 +84,7 @@ make docs
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
+rm $RPM_BUILD_ROOT%{_libdir}/libtest-types.a
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
@@ -117,6 +126,9 @@ done
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.13.1-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 3.11.7-alt1_3
 - update to new release by fcimport
 
