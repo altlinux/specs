@@ -1,6 +1,6 @@
 Name: gforth
 %define Name GNU Forth
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 License: %gpl3plus
 Group: Development/Other
@@ -338,7 +338,6 @@ cd doc
 cp -a *.ps *.txt *.doc *.pdf gforth vmgen %buildroot%docdir
 cd %buildroot%_datadir/%name/%version
 
-
 %files
 %doc %docdir/[ABCINRT]*
 %_bindir/*
@@ -353,7 +352,7 @@ cd %buildroot%_datadir/%name/%version
 %_liconsdir/*
 %_miconsdir/*
 %_desktopdir/*
-%_includedir/gforth/0.7.2
+%_includedir/gforth/%version
 
 %files info
 %_infodir/*
@@ -379,6 +378,11 @@ cd %buildroot%_datadir/%name/%version
 %_emacslispdir/*.el
 
 %changelog
+* Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 0.7.3-alt1
+- Autobuild version bump to 0.7.3
+- Fix patch
+- Fix spec typo
+
 * Thu Apr 04 2013 Fr. Br. George <george@altlinux.ru> 0.7.2-alt1
 - Autobuild version bump to 0.7.2
 - Siplify build
