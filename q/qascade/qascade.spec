@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           qascade
 Version:        0.1
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -56,6 +56,9 @@ install -D -p -m 644 blue.png \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_19
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_18
 - update to new release by fcimport
 
