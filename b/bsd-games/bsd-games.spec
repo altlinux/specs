@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_44
+Release: alt2_46
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
@@ -40,6 +40,7 @@ Patch16: bsd-games-2.17-backgammonsize.patch
 Patch17: bsd-games-2.17-adventurecrc.patch
 Patch18: bsd-games-2.17-wtfrpm.patch
 Patch19: bsd-games-2.17-adventureinit.patch
+Patch20: bsd-games-2.17-backgammonrecursion.patch
 BuildRequires: ncurses-devel words flex flex bison
 Requires(pre): shadow-utils
 Source44: import.info
@@ -74,6 +75,7 @@ install -p -m 755 %{SOURCE1} .
 %patch17 -p0 -b .adventurecrc
 %patch18 -p1 -b .wtfrpm
 %patch19 -p0 -b .adventureinit
+%patch20 -p1 -b .backgammonrecursion
 
 %build
 # We include a templatized configuration settings file to set
@@ -194,6 +196,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_46
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_44
 - update to new release by fcimport
 
