@@ -1,5 +1,5 @@
 Name: profanity
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
@@ -18,7 +18,7 @@ BuildRequires: libXScrnSaver-devel libcurl-devel libgnutls-devel libncursesw-dev
 %prep
 %setup
 touch NEWS README AUTHORS ChangeLog
-cp %SOURCE1 profrc
+cp %SOURCE1 profrc.exmaple2
 
 %build
 %autoreconf
@@ -30,12 +30,16 @@ cp %SOURCE1 profrc
 %makeinstall
 
 %files
-%doc README.md themes profrc
+%doc themes profrc.example*
 %_bindir/*
 %_man1dir/*
 %_datadir/%name
 
 %changelog
+* Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 0.4.3-alt1
+- Autobuild version bump to 0.4.3
+- Fix build
+
 * Wed May 28 2014 Fr. Br. George <george@altlinux.ru> 0.4.2-alt1
 - Autobuild version bump to 0.4.2
 - Fix buildreq and rc obtaining spec cmdline
