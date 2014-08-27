@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt1_8
+Release:	alt1_9
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -59,6 +59,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %doc %{_pkgdocdir}
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_8
 - update to new release by fcimport
 
