@@ -5,7 +5,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_11
+Release:          alt2_12
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -81,6 +81,9 @@ touch -r icon.xbm $RPM_BUILD_ROOT%{_datadir}/pixmaps/xskat.xpm
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_11
 - update to new release by fcimport
 
