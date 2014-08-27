@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.
 
 Name:          fvkbd
 Version:       0.2.2
-Release:       alt3_9
+Release:       alt3_10
 Summary:       Free Virtual Keyboard
 
 Group:         System/Libraries
@@ -85,6 +85,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libfvkbd-gtk-0.2.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_10
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_9
 - update to new release by fcimport
 
