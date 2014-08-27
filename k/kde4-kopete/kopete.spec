@@ -21,7 +21,7 @@
 %define rname kopete
 Name: kde4-kopete
 Version: 4.14.0
-Release: alt1
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -34,7 +34,8 @@ Requires: qca2-ossl
 Requires: libmediastreamer-ilbc
 
 Source: %rname-%version.tar
-Patch1: kopete-4.8.3-alt-mobile.patch
+Patch1: alt-mobile.patch
+Patch2: alt-xmpp-service-reg-form-layout.patch
 
 # Automatically added by buildreq on Thu Sep 26 2013 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgcrypt-devel libgif-devel libgpg-error libgpg-error-devel libopencore-amrnb0 libopencore-amrwb0 libortp-devel libp11-kit libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel libxml2-devel phonon-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xproto-devel xsltproc zlib-devel
@@ -207,6 +208,7 @@ based on %name.
 %if_disabled desktop
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 %K4build \
@@ -312,6 +314,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 27 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- fix xmpp service register form layout (ALT#30254)
+
 * Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
