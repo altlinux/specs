@@ -5,13 +5,13 @@ BuildRequires: gcc-c++ waf
 %define oldname sord
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sord
-%define version 0.12.0
+%define version 0.12.2
 %global maj 0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:       libsord
-Version:    0.12.0
-Release:    alt1_6
+Version:    0.12.2
+Release:    alt1_1
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -86,6 +86,9 @@ install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_6
 - update to new release by fcimport
 
