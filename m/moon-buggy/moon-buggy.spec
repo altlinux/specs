@@ -4,7 +4,7 @@
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_12
+Release:         alt2_13
 License:         GPL+
 Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
@@ -87,6 +87,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_var}/games/%{name}/mbscore
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_12
 - update to new release by fcimport
 
