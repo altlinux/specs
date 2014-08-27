@@ -1,6 +1,6 @@
 Name:      arc
 Version:   5.21p
-Release:   alt1_3
+Release:   alt1_4
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
@@ -45,6 +45,9 @@ install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_3
 - update to new release by fcimport
 
