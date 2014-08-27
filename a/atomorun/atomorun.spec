@@ -6,7 +6,7 @@ BuildRequires: libGL-devel libGLU-devel libSDL-devel
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.18.%{prever}
+Release:        alt5_0.19.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
@@ -61,6 +61,9 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.19.pre2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.18.pre2
 - update to new release by fcimport
 
