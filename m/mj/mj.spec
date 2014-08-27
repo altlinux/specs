@@ -1,7 +1,7 @@
 BuildRequires: libkmahjongg4-common
 Name:        mj
-Version:     1.13
-Release:     alt1_2
+Version:     1.14
+Release:     alt1_1
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -18,8 +18,6 @@ Source0:     %name-GPL-%version-src.tar.bz2
 # and run the command:
 # ./remove-non-GPL.sh %version
 Source1:     remove-non-GPL.sh
-# Submittet upstreams via email.
-Patch:	     mj-1.13-format-security.patch
 
 BuildRequires: perl
 BuildRequires: gtk2-devel
@@ -56,7 +54,6 @@ kombination av de två.
 
 %prep
 %setup -q -n %name-%version-src
-%patch
 # Convert the kdegames tiles to the format of the bundled ones.
 mkdir tiles-kdegames
 cd tiles-kdegames
@@ -130,6 +127,9 @@ fi
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_2
 - update to new release by fcimport
 
