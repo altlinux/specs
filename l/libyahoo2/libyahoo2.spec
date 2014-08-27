@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ glib-devel
 Summary:       Library for the Yahoo! Messenger Protocol
 Name:          libyahoo2  
 Version:       1.0.1
-Release:       alt3_7
+Release:       alt3_8
 Group:         System/Libraries
 License:       GPLv2
 Url:           http://libyahoo2.sourceforge.net/
@@ -56,6 +56,9 @@ sed -i -e 's,-@RELEASE@,,' %buildroot%_pkgconfigdir/%name.pc
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_7
 - update to new release by fcimport
 
