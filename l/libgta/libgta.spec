@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/valgrind gcc-c++
 %add_optflags %optflags_shared
 Name:      libgta
 Version:   1.0.4
-Release:   alt1_4
+Release:   alt1_5
 Summary:   Library that implements the Generic Tagged Arrays file format
 Group:     System/Libraries
 License:   LGPLv2+
@@ -80,6 +80,9 @@ make check V=1
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_4
 - update to new release by fcimport
 
