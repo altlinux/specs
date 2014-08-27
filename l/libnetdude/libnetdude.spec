@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdoc-mkdb /usr/sbin/tcpdump gcc-c++ libmagic-devel lib
 %add_optflags %optflags_shared
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_8
+Release:        alt1_11
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -12,6 +12,8 @@ License:        MIT with advertising
 URL:            http://netdude.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/netdude/libnetdude-%{version}.tar.gz
 Source1:        libnetdude-lndtool-wrapper.sh
+# -Werror=format-security
+Patch0:         libnetdude-0.11-format-security.patch
 
 BuildRequires:  glib-devel libpcapnav-devel gtk-doc >= 0.6 tcpdump /bin/sed
 BuildRequires:  libpcap-devel
@@ -35,6 +37,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # Rewrite our wrapperscript to have a versioned directory
 sed -e 's,###loc###,%{name}/%{version},' %{SOURCE1} > libnetdude-lndtool-wrapper.sh
@@ -62,6 +65,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 mv %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/* %{buildroot}%{_datadir}/gtk-doc/html/%{name}/
 rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 
+
 %files
 %doc README COPYING
 %{_libdir}/*.so.*
@@ -76,6 +80,9 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
 - update to new release by fcimport
 
