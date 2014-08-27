@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libfli
 Version: 1.7
-Release: alt2_12
+Release: alt2_13
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
@@ -56,6 +56,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_12
 - update to new release by fcimport
 
