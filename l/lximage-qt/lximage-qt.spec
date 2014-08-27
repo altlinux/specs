@@ -1,6 +1,6 @@
 Name: lximage-qt
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Image viewer and screenshot tool
 License: LGPL
@@ -36,6 +36,9 @@ BuildRequires: libXdmcp-devel libexif-devel glib2-devel
 %doc AUTHORS
 
 %changelog
+* Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 0.2.0-alt2
+- rebuilt against libfm-qt 0.8.0
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.2.0-alt1
 - initial release
 

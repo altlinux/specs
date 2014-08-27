@@ -1,5 +1,5 @@
 Name:    pcmanfm-qt
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -63,6 +63,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_pkgconfigdir/libfm-qt.pc
 
 %changelog
+* Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
