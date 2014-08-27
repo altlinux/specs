@@ -31,7 +31,7 @@
 
 Name: samba
 Version: 4.1.11
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1082,6 +1082,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/winbind_krb5_locator.7*
 
 %changelog
+* Wed Aug 27 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.11-alt2
+- update init scripts for ALTLinux
+
 * Tue Aug 05 2014 Alexey Shabalin <shaba@altlinux.ru> 4.1.11-alt1
 - 4.1.11
 - fixed unstrcpy macro length is invalid(CVE-2014-3560)
