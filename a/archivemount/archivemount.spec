@@ -1,6 +1,6 @@
 Name:          archivemount
 Version:       0.8.3
-Release:       alt1_2
+Release:       alt1_3
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -37,6 +37,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_2
 - update to new release by fcimport
 
