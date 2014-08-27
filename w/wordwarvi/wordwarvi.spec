@@ -1,6 +1,6 @@
 Name:           wordwarvi
 Version:        0.25
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
 Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
@@ -55,6 +55,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2_11
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2_10
 - update to new release by fcimport
 
