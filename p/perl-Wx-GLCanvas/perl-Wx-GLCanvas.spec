@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ perl(Class/Accessor/Fast.pm) perl(ExtUtils/MY_Metafile.pm
 BuildRequires: libGL-devel libGLU-devel
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Wx-GLCanvas/
@@ -69,6 +69,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_5
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_4
 - update to new release by fcimport
 
