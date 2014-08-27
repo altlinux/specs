@@ -5,7 +5,7 @@ Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
 %define fedora 21
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_7
+Release:	alt2_8
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -169,6 +169,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_7
 - update to new release by fcimport
 
