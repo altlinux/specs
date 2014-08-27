@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/ldd /usr/bin/swig gcc-c++ 
 Name:           adonthell
 Summary:        A 2D graphical RPG game
 Version:        0.3.5
-Release:        alt4_2
+Release:        alt4_3
 License:        GPLv2+
 URL:            http://adonthell.nongnu.org/
 Source0:        http://savannah.nongnu.org/download/%{name}/%{name}-src-%{version}.tar.gz
@@ -91,6 +91,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt4_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt4_2
 - update to new release by fcimport
 
