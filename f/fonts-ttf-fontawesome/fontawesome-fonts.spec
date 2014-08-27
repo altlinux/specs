@@ -7,12 +7,12 @@ BuildRequires: unzip
 %global fontconf 60-%{fontname}.conf
 
 Name:		fonts-ttf-fontawesome
-Version:	4.0.3
-Release:	alt1_2
+Version:	4.1.0
+Release:	alt1_1
 Summary:	Iconic font set
 License:	OFL
 URL:		http://fontawesome.io/
-Source0:	http://fontawesome.io/assets/font-awesome-4.0.3.zip
+Source0:	http://fontawesome.io/assets/font-awesome-%{version}.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	README-Trademarks.txt
 BuildArch:	noarch
@@ -33,7 +33,7 @@ Requires:	fonts-ttf-fontawesome = %{version}-%{release}
 Summary:	Web files for fontawesome
 
 %description web
-Web files for fontawesome.
+Web files for Font Awesome.
 
 %prep
 %setup -q -n font-awesome-%{version}
@@ -55,8 +55,8 @@ install -m 0644 -p %{SOURCE1} \
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
 		%{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-mkdir -p %{buildroot}%{_datadir}/font-awesome-%{version}/
-cp -a css less scss %{buildroot}%{_datadir}/font-awesome-%{version}/
+mkdir -p %{buildroot}%{_datadir}/font-awesome-web/
+cp -a css less scss %{buildroot}%{_datadir}/font-awesome-web/
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -101,9 +101,12 @@ fi
 %doc README-Trademarks.txt
 
 %files web
-%{_datadir}/font-awesome-%{version}/
+%{_datadir}/font-awesome-web/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
+- update to new release by fcimport
+
 * Sat Jun 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
