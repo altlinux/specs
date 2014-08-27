@@ -4,7 +4,7 @@ Summary: French dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.50
-Release: alt2_20
+Release: alt2_21
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -34,6 +34,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_20
 - update to new release by fcimport
 
