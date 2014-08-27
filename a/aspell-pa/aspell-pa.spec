@@ -4,7 +4,7 @@
 
 Name:           aspell-pa
 Version:        0.01
-Release:        alt2_11
+Release:        alt2_12
 Summary:        GNU Aspell Punjabi Dictionary Package
 
 Group:          Text tools
@@ -50,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_11
 - update to new release by fcimport
 
