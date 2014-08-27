@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 Summary:	A powerful C++ class library for working with MIME/Internet messages
 Name:		libvmime07
 Version:	0.7.1
-Release:	alt2_11
+Release:	alt2_12
 License:	GPLv2+
 Group:		System/Libraries
 URL:		http://www.zarafa.com/wiki/index.php/Libvmime_patches
@@ -145,6 +145,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc
 %{_libdir}/pkgconfig/vmime07.pc
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_11
 - update to new release by fcimport
 
