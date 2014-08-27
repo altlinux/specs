@@ -7,7 +7,7 @@ Group: Development/C
 Name:		libinstpatch
 Summary:	MIDI instrument patch library
 Version:	1.0.0
-Release:	alt3_8.20110806svn386
+Release:	alt3_9.20110806svn386
 URL:		http://www.swamiproject.org/
 License:	LGPLv2+
 # Fetch source via
@@ -73,6 +73,9 @@ make install DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_9.20110806svn386
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_8.20110806svn386
 - update to new release by fcimport
 
