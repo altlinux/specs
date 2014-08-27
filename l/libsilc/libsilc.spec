@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-deve
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt3_12
+Release: alt3_13
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -115,6 +115,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_13
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_12
 - update to new release by fcimport
 
