@@ -3,7 +3,7 @@ BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
 # END SourceDeps(oneline)
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -102,6 +102,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_20
 - update to new release by fcimport
 
