@@ -1,18 +1,16 @@
 Name: bitlbee
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 Group: Networking/IRC
 License: GPLv2
 Url: http://www.bitlbee.org
 Summary: IRC gateway to IM chat networks
-Patch5: bitlbee-3.2-libotr4.patch
-Patch6: bitlbee-IPv6.patch
 Source: %name-%version.tar.gz
 Source1: %name.xinetd
 
 # Automatically added by buildreq on Tue Mar 04 2014
 # optimized out: asciidoc docbook-dtds docbook-style-xsl libcom_err-devel libgcrypt-devel libgpg-error libgpg-error-devel libkrb5-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml xml-common xml-utils xsltproc
-BuildRequires: asciidoc-a2x glib2-devel libotr-devel libssl-devel time
+BuildRequires: asciidoc-a2x glib2-devel libotr5-devel libssl-devel time
 
 %description
 BitlBee brings IM (instant messaging) to IRC clients. It's a great
@@ -44,8 +42,6 @@ Summary: Off-the-record (OTR) plugin for %name
 
 %prep
 %setup
-#patch5 -p1
-%patch6 -p1
 # Hack BITLBEE_VERSION into pkgconfig
 sed -i 's/\Version: $BITLBEE_VERSION/Version: %version/' configure
 # Hack out root check from systemd files installer
@@ -116,6 +112,10 @@ install -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 3.2.2-alt1
+- Autobuild version bump to 3.2.2
+- Build with libotr 4.0+
+
 * Tue Mar 04 2014 Fr. Br. George <george@altlinux.ru> 3.2.1-alt1
 - Autobuild version bump to 3.2.1
 - Fix build
