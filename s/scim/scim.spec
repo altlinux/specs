@@ -1,6 +1,6 @@
 Name: scim
 Version: 1.4.14
-Release: alt1
+Release: alt2
 Summary: Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: LGPLv2+
@@ -16,7 +16,7 @@ BuildRequires: gtk2-devel, libXt-devel, libgtk+3-devel
 # for autoreconf
 BuildRequires: autoconf automake gettext libtool intltool
 # for system ltdl
-BuildRequires: libltdl-devel gcc-c++
+BuildRequires: libltdl-devel gcc-c++ libqt4-devel
 # for autogen.sh
 BuildRequires: gnome-common
 Requires: %name-libs = %version-%release
@@ -103,6 +103,15 @@ Requires: %name = %version-%release
 This package provides an Input Method Engine for inputting unicode characters
 but their unicode codepoints.
 
+%package qt4
+Summary: SCIM im module for qt4
+Group: System/Libraries
+Requires: %name = %version
+BuildRequires: libqt4-devel
+
+%description qt4
+This package contains SCIM im module for qt4
+
 %define scim_api 1.4.0
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/scim.conf
@@ -125,7 +134,7 @@ cp -p %SOURCE4 configs/global
 ./bootstrap
 
 %build
-%configure --disable-static --enable-ld-version-script --with-gtk-version=2
+%configure --disable-static --enable-ld-version-script --with-gtk-version=2 --enable-qt4-immodule
 make %{?_smp_mflags}
 
 %install
@@ -147,7 +156,6 @@ mkdir -pm 755 $RPM_BUILD_ROOT/%_sysconfdir/X11/xinit/xinput.d
 install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 
 %find_lang %name
-
 
 %files -f %name.lang
 %doc AUTHORS COPYING README ChangeLog TODO
@@ -190,7 +198,13 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %files rawcode
 %_libdir/scim-1.0/%scim_api/IMEngine/rawcode.so
 
+%files qt4
+%_libdir/qt4/plugins/
+
 %changelog
+* Wed Aug 27 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt2
+- add scim-qt4 package
+
 * Tue Aug 26 2014 Ilya Mashkin <oddity@altlinux.ru> 1.4.14-alt1
 - 1.4.14
 - sync spec with FC
