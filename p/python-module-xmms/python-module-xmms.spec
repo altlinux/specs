@@ -1,8 +1,8 @@
 # $Id: python-module-SAMPLE.spec 138 2004-03-26 23:17:36Z cray $
 # vim: termencoding=koi8-r
 # vim: encoding=utf-8
-%define	version	2.06
-%define release alt4
+%define	version	2.07
+%define release alt1
 
 %setup_python_module xmms
 
@@ -10,7 +10,7 @@ Summary: XMMS control bindings for Python
 Summary(ru_RU.UTF-8): Управление XMMS из Python
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 License: BSD
 Group: Development/Python
 Prefix: %_prefix
@@ -32,7 +32,7 @@ PyXMMS consists of two components as of version 2.00:
 In other words, PyXMMS can be used to control XMMS or manage its main
 configuration file from a Python program. 
 
-This module is built for python %__python_version
+This module is built for python %_python_version
 
 %description -l ru_RU.UTF-8
 С помощью этого модуля можно управлять XMMS, музыкальным проигрывателем для X.
@@ -40,10 +40,10 @@ This module is built for python %__python_version
   * Обёртки дл функций xmms_remote* из libxmms
   * Функции разбора файла настроек XMMS
 
-Этот модуль собран для Python версии %__python_version
+Этот модуль собран для Python версии %_python_version
 
 %prep
-%setup -q -n py%modulename-%version
+%setup -n py%modulename-%version
 %patch
 
 %build
@@ -70,6 +70,10 @@ unset RPM_PYTHON
 %doc doc/*
 
 %changelog
+* Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.07-alt1
+- Version 2.07
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.06-alt4.1
 - Rebuild with Python-2.7
 
