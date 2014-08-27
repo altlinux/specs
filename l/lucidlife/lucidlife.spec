@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_15
+Release:        alt3_16
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -66,6 +66,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_16
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_15
 - update to new release by fcimport
 
