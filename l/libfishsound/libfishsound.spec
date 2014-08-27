@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_8
+Release:        alt3_9
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -107,6 +107,9 @@ mv src/examples .
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_9
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_8
 - update to new release by fcimport
 
