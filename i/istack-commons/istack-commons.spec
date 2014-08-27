@@ -1,24 +1,26 @@
-BuildRequires: maven-plugin-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           istack-commons
-Version:        2.6.1
-Release:        alt4_5jpp7
+Version:        2.17
+Release:        alt1_2jpp7
 Summary:        Common code for some Glassfish projects
 Group:          Development/Java
-License:        CDDL and GPLv2
+License:        CDDL and GPLv2 with exceptions
 URL:            http://istack-commons.java.net
 
-# svn export https://svn.java.net/svn/istack-commons~svn/tags/istack-commons-2.6.1/ istack-commons-2.6.1
-# find istack-commons-2.6.1/ -name '*.class' -delete
-# find istack-commons-2.6.1/ -name '*.jar' -delete
-# tar -zcvf istack-commons-2.6.1.tar.gz istack-commons-2.6.1
+# svn export https://svn.java.net/svn/istack-commons~svn/tags/istack-commons-2.17/ istack-commons-2.17
+# find istack-commons-2.17/ -name '*.class' -delete
+# find istack-commons-2.17/ -name '*.jar' -delete
+# tar -zcvf istack-commons-2.17.tar.gz istack-commons-2.17
 Source0:        %{name}-%{version}.tar.gz
-Patch0:         %{name}-%{version}-activation.patch
 BuildArch:      noarch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
+BuildRequires:  args4j
 BuildRequires:  bea-stax-api
 BuildRequires:  codemodel >= 2.6-4
 BuildRequires:  dom4j
@@ -27,17 +29,17 @@ BuildRequires:  jvnet-parent
 BuildRequires:  junit
 BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-plugin-build-helper
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-release-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-shared-file-management
-BuildRequires:  maven-surefire-plugin
 BuildRequires:  plexus-archiver
 BuildRequires:  plexus-io
+BuildRequires:  testng
 
 Requires:       jpackage-utils
 Requires:       jvnet-parent
@@ -75,9 +77,11 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-rm -rf test/lib/*.zip
+rm -rf test/lib/*.zip runtime/lib/*.zip
 
+%pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 
 %build
 
@@ -103,7 +107,8 @@ cp -p runtime/target/istack-commons-runtime-%{version}.jar %{buildroot}%{_javadi
 cp -p tools/target/istack-commons-tools-%{version}.jar %{buildroot}%{_javadir}/%{name}-tools.jar
 cp -p test/target/istack-commons-test-%{version}.jar %{buildroot}%{_javadir}/%{name}-test.jar
 cp -p buildtools/target/%{name}-buildtools-%{version}.jar %{buildroot}%{_javadir}/%{name}-buildtools.jar
-cp -p maven-plugin/target/maven-%{name}-plugin-%{version}.jar %{buildroot}%{_javadir}/maven-%{name}-plugin.jar
+cp -p maven-plugin/target/%{name}-maven-plugin-%{version}.jar %{buildroot}%{_javadir}/%{name}-maven-plugin.jar
+cp -p soimp/target/%{name}-soimp-%{version}.jar %{buildroot}%{_javadir}/%{name}-soimp.jar
 
 # JAVADOC
 cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
@@ -114,7 +119,8 @@ cp -p runtime/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-runtime.pom
 cp -p tools/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-tools.pom
 cp -p test/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-test.pom
 cp -p buildtools/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-buildtools.pom
-cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-maven-%{name}-plugin.pom
+cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-maven-plugin.pom
+cp -p soimp/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-soimp.pom
 
 # DEPMAP
 %add_maven_depmap JPP-%{name}.pom
@@ -122,7 +128,8 @@ cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-maven-%{name}-plugin.
 %add_maven_depmap JPP-%{name}-tools.pom %{name}-tools.jar
 %add_maven_depmap JPP-%{name}-test.pom %{name}-test.jar
 %add_maven_depmap JPP-%{name}-buildtools.pom %{name}-buildtools.jar
-%add_maven_depmap JPP-maven-%{name}-plugin.pom maven-%{name}-plugin.jar -f maven-plugin
+%add_maven_depmap JPP-%{name}-maven-plugin.pom %{name}-maven-plugin.jar -f maven-plugin
+%add_maven_depmap JPP-%{name}-soimp.pom %{name}-soimp.jar
 
 %files
 %{_mavenpomdir}/JPP-%{name}-runtime.pom
@@ -130,16 +137,18 @@ cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-maven-%{name}-plugin.
 %{_mavenpomdir}/JPP-%{name}-tools.pom
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}-buildtools.pom
+%{_mavenpomdir}/JPP-%{name}-soimp.pom
 %{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}-buildtools.jar
 %{_javadir}/%{name}-runtime.jar
+%{_javadir}/%{name}-soimp.jar
 %{_javadir}/%{name}-test.jar
 %{_javadir}/%{name}-tools.jar
 %doc Licence.txt
 
 %files -n maven-istack-commons-plugin
-%{_javadir}/maven-%{name}-plugin.jar
-%{_mavenpomdir}/JPP-maven-%{name}-plugin.pom
+%{_javadir}/%{name}-maven-plugin.jar
+%{_mavenpomdir}/JPP-%{name}-maven-plugin.pom
 %{_mavendepmapfragdir}/%{name}-maven-plugin
 %doc Licence.txt
 
@@ -149,6 +158,9 @@ cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-maven-%{name}-plugin.
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_2jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt4_5jpp7
 - rebuild with maven-local
 
