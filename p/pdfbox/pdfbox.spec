@@ -1,13 +1,14 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+%define fedora 21
 Name:           pdfbox
-Version:        1.7.0
-Release:        alt3_4jpp7
+Version:        1.8.2
+Release:        alt1_2jpp7
 Summary:        Java library for working with PDF documents
 
 Group:          Development/Java
@@ -18,32 +19,20 @@ Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-
 Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
 Patch1:         %{name}-1.2.0-bitstream.patch
-Patch2:         %{name}-lucene.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-deploy-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven-war-plugin
 BuildRequires:  apache-commons-logging
 BuildRequires:  apache-rat-plugin
 BuildRequires:  fonts-ttf-vera
 BuildRequires:  bouncycastle-mail
+BuildRequires:  cobertura-maven-plugin
 BuildRequires:  fontconfig
 BuildRequires:  icu4j
+BuildRequires:  javacc-maven-plugin
 BuildRequires:  junit4
 %if 0%{?fedora} >= 18
 BuildRequires:  lucene
@@ -129,6 +118,30 @@ JempBox is an open source Java library that implements Adobe's XMP(TM)
 specification. JempBox is a subproject of Apache PDFBox.
 
 
+%package -n preflight
+Summary:        Apache Preflight
+Group:          Development/Java
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       xmpbox = %{?epoch:%epoch:}%{version}-%{release}
+
+%description -n preflight
+The Apache Preflight library is an open source Java tool that implements 
+a parser compliant with the ISO-19005 (PDF/A) specification. Preflight is a 
+subproject of Apache PDFBox.
+
+
+%package -n xmpbox
+Summary:        Apache XmpBox
+Group:          Development/Java
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description -n xmpbox
+The Apache XmpBox library is an open source Java tool that implements Adobe's
+XMP(TM) specification.  It can be used to parse, validate and create xmp
+contents.  It is mainly used by subproject preflight of Apache PDFBox. 
+XmpBox is a subproject of Apache PDFBox.
+
+
 # Not compatible with lucene 3.6
 %if 0%{?fedora} < 18
 %package lucene
@@ -150,7 +163,8 @@ Requires:       lucene-demo >= 2.4.1
 %setup -q
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
-%patch2 -p1 -b .lucene
+#Disable lucene, not compatible with lucene 3
+%pom_disable_module lucene
 #Use jdk16 version of bcprov
 sed -i -e s/jdk15/jdk16/g */pom.xml
 # Don't build app (it's just a bundle of everything)
@@ -229,6 +243,16 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 %{_javadir}/jempbox.jar
 %{_mavenpomdir}/JPP-jempbox.pom
 
+%files -n preflight
+%doc LICENSE.txt
+%{_javadir}/preflight.jar
+%{_mavenpomdir}/JPP-preflight.pom
+
+%files -n xmpbox
+%doc LICENSE.txt
+%{_javadir}/xmpbox.jar
+%{_mavenpomdir}/JPP-xmpbox.pom
+
 # Not compatible with lucene 3.6
 %if 0%{?fedora} < 18
 %files lucene
@@ -239,6 +263,9 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.2-alt1_2jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt3_4jpp7
 - rebuild with maven-local
 
