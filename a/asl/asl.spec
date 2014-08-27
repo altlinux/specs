@@ -12,7 +12,7 @@
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.20.%{patchlevel}
+Release:        alt2_0.21.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -87,6 +87,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.21.bld92
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.20.bld92
 - update to new release by fcimport
 
