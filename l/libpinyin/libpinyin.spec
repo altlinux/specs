@@ -7,7 +7,7 @@ Group: Other
 
 Name:           libpinyin
 Version:        1.0.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Library to deal with pinyin
 
 License:        GPLv2+
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_mandir}/man1/*.1.*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2
 - update to new release by fcimport
 
