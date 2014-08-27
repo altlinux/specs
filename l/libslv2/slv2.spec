@@ -11,7 +11,7 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_15
+Release:		alt4_16
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -105,6 +105,9 @@ install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_pkgdocdir}
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_16
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_15
 - update to new release by fcimport
 
