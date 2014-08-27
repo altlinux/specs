@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt10
+Release:	alt12
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,13 @@ fi
 %files full
 
 %changelog
+* Tue Aug 26 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt12
+- update systemd unit
+- install to multi-user.target too
+
+* Thu Jul 10 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt11
+- update systemd unit: add After=sysinit.target for wait rename interface
+
 * Wed Jul 02 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt10
 - add systemd unit file
 
