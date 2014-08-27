@@ -4,7 +4,7 @@
 
 Name:           aspell-ta
 Version:        20040424
-Release:        alt2_11
+Release:        alt2_12
 Summary:        GNU Aspell Tamil Dictionary Package
 
 Group:          Text tools
@@ -50,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_12
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_11
 - update to new release by fcimport
 
