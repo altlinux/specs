@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libvtemm
 Version:        0.25.0
-Release:        alt4_7
+Release:        alt4_8
 
 Summary:        C++ interface for VTE (a GTK2 terminal emulator widget)
 
@@ -78,6 +78,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc %{_datadir}/devhelp/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_8
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_7
 - update to new release by fcimport
 
