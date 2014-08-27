@@ -8,13 +8,13 @@ BuildRequires: gcc-c++
 %define oldname lilv
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name lilv
-%define version 0.18.0
+%define version 0.20.0
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
-Version:    0.18.0
-Release:    alt1_3
+Version:    0.20.0
+Release:    alt1_2
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -43,7 +43,7 @@ faster and have minimal dependencies.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   liblilv = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 Provides: lilv-devel = %{version}-%{release}
 
 %description devel
@@ -55,7 +55,7 @@ This package contains the headers and development libraries for %{oldname}.
 %package -n python-module-lilv
 Summary:    Python bindings for %{oldname}
 Group:      Development/Python
-Requires:   liblilv = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
 
 %description -n python-module-lilv 
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -111,6 +111,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt1_3
 - update to new release by fcimport
 
