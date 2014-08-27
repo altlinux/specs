@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define oldname varconf
 Name:           libvarconf
 Version:        1.0.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Configuration library used by WorldForge clients
 
 Group:          Development/C++
@@ -67,6 +67,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3
 - update to new release by fcimport
 
