@@ -11,7 +11,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_20
+Release: alt2_21
 License: LGPLv2+
 Group: System/Libraries
 URL: http://projects.gnome.org/gtkglext/
@@ -89,6 +89,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_21
+- update to new release by fcimport
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_20
 - update to new release by fcimport
 
