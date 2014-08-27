@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.3.10
+Version: 0.3.11
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -17,6 +17,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel python-devel libgio-devel
 
+Requires: gobject-introspection
 Requires: python-module-slip-dbus iptables ebtables iptables-ipv6
 
 %description
@@ -28,6 +29,8 @@ Summary: Firewall panel applet
 Group: System/Configuration/Networking
 Requires: %name = %version-%release
 Requires: python-module-pygtk-libglade
+Requires: NetworkManager-glib-gir
+Requires: libnotify-gir
 
 %description -n firewall-applet
 The firewall panel applet provides a status information of firewalld and
@@ -91,6 +94,13 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_datadir/firewalld/
 
 %changelog
+* Wed Aug 27 2014 Mikhail Efremov <sem@altlinux.org> 0.3.11-alt1
+- Fixes from upstream git:
+  + Fixed rename of zones, services and icmptypes not to create new
+    entry (RBHZ#1131064);
+  + Fixed Python specific D-Bus exception (RHBZ#1132441).
+- Updated to 0.3.11.
+
 * Fri Jun 06 2014 Mikhail Efremov <sem@altlinux.org> 0.3.10-alt1
 - Updated to 0.3.10.
 
