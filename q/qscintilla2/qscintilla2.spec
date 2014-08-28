@@ -7,7 +7,7 @@
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.8.3
-Release: alt3
+Release: alt4
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -264,6 +264,7 @@ ln -s Qt4Qt5 Qt4
 cp -fR Qt4Qt5 Qt5
 cp -a Python Python-qt4
 sed -i "s|@Q5CFLAGS@||g" Python-qt4/configure.py
+sed -i "s|-lQt5PrintSupport -lQt5Widgets||g" Python-qt4/configure.py
 cp -a Python Python-qt5
 Q5CFLAGS="$(pkg-config --cflags Qt5Widgets)"
 Q5CFLAGS="$Q5CFLAGS $(pkg-config --cflags Qt5PrintSupport)"
@@ -605,6 +606,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt4
+- Avoid linking python-module-qscintilla2-qt4 with qt5 (ALT #30257)
+
 * Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.3-alt3
 - Added module for Python 3 for Qt5
 
