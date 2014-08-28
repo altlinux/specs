@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.20
-Release: alt3
+Release: alt4
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -26,6 +26,8 @@ BuildRequires: openconnect openvpn vpnc xl2tpd
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel libselinux-devel
 BuildRequires: systemd-devel
+
+Provides: network-config-subsystem
 
 %description
 The Connection Manager (ConnMan) project provides a daemon for
@@ -145,6 +147,9 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %_libdir/%name/scripts/*.so
 
 %changelog
+* Thu Aug 28 2014 Michael Shigorin <mike@altlinux.org> 1.20-alt4
+- Provides: network-config-subsystem (closes: #30263)
+
 * Tue Jul 01 2014 Michael Shigorin <mike@altlinux.org> 1.20-alt3
 - symlink connman.service as connmand.service (closes: #30147)
 
