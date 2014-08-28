@@ -1,7 +1,8 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
+%def_disable zart
 
 Name: gmic
-Version: 1.5.7.2
+Version: 1.6.0.0
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -11,14 +12,13 @@ Url: http://gmic.sourceforge.net/
 
 
 Source: http://downloads.sourceforge.net/gmic/gmic_%version.tar.gz
-Patch1: gmic-1.4.8.1-bashcompletion.patch
-Patch2: gmic-1.5.7.2-alt-makefile.patch
+Patch1: gmic-1.6.0.0-alt-makefile.patch
 
 Requires: lib%name = %version-%release
 
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
-BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel
+BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel libgomp-devel
 # for zart
 BuildRequires: libqt4-devel
 
@@ -74,12 +74,12 @@ multi-spectral image datasets.
 %prep
 %setup -n gmic-%version
 %patch1 -p1
-%patch2 -p1
-subst 's|\$(USR)/lib/|$(USR)/%_lib/|' src/Makefile
+subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
 
 %build
 pushd src
 %make_build
+%{?_enable_zart:%make_build zart}
 popd
 
 %install
@@ -87,10 +87,15 @@ pushd src
 %makeinstall_std
 popd
 
+%if_enabled zart
+pushd zart
+%makeinstall_std
+popd
+%endif
+
 %find_lang --with-man %name
 
 %files -f %name.lang
-%config /etc/bash_completion.d/*
 %_bindir/%name
 %_man1dir/%name.1.*
 %doc README COPYING
@@ -102,15 +107,20 @@ popd
 %_includedir/gmic.h
 %_libdir/lib%name.so
 
+%if_enabled zart
 %files zart
 %_bindir/zart
 %_datadir/zart/
 %doc zart/README
+%endif
 
 %files -n gimp-plugin-gmic
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Aug 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0.0-alt1
+- 1.6.0.0
+
 * Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.7.2-alt1
 - 1.5.7.2
 
