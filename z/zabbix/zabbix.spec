@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.2.5
+Version: 2.2.6
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -461,6 +461,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Aug 28 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.6-alt1
+- 2.2.6
+
 * Fri Jul 18 2014 Alexei Takaseev <taf@altlinux.org> 1:2.2.5-alt1
 - 2.2.5
 - Removed executable permission bits on *.service (ALT#30177)
