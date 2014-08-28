@@ -1,17 +1,18 @@
 %def_enable openvz
 %def_enable unicode
 %def_enable taskstats
+%def_enable oom
 
 Name: htop
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
 Group: Monitoring
 
-Url: http://htop.sourceforge.net
-Source0: http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
+Url: http://hisham.hm/htop/
+Source0: %name-%version.tar.gz
 Source1: %name.ru.1
 Source100: %name.watch
 Patch: htop-0.8.3-alt-desktop.patch
@@ -25,7 +26,7 @@ BuildPreReq: libncursesw-devel
 
 %define rman1dir %_mandir/ru/man1
 
-Summary(ru_RU.KOI8-R): Интерактивный просмотр списка запущенных процессов
+Summary(ru_RU.UTF-8): п≤п╫я┌п╣я─п╟п╨я┌п╦п╡п╫я▀п╧ п©я─п╬я│п╪п╬я┌я─ я│п©п╦я│п╨п╟ п╥п╟п©я┐я┴п╣п╫п╫я▀я┘ п©я─п╬я├п╣я│я│п╬п╡
 
 %description
 %name is similar to top, but allows to scroll the list vertically
@@ -34,19 +35,19 @@ and horizontally to see all processes and their full command lines.
 Tasks related to processes (killing,  renicing)
 can be done without entering their PIDs.
 
-%description -l ru_RU.KOI8-R
-%name служит для просмотра списка запущенных процессов.
-По сравнению с классическим top он усовершенствован следующим образом:
+%description -l ru_RU.UTF-8
+%name я│п╩я┐п╤п╦я┌ п╢п╩я▐ п©я─п╬я│п╪п╬я┌я─п╟ я│п©п╦я│п╨п╟ п╥п╟п©я┐я┴п╣п╫п╫я▀я┘ п©я─п╬я├п╣я│я│п╬п╡.
+п÷п╬ я│я─п╟п╡п╫п╣п╫п╦я▌ я│ п╨п╩п╟я│я│п╦я┤п╣я│п╨п╦п╪ top п╬п╫ я┐я│п╬п╡п╣я─я┬п╣п╫я│я┌п╡п╬п╡п╟п╫ я│п╩п╣п╢я┐я▌я┴п╦п╪ п╬п╠я─п╟п╥п╬п╪:
 
-  * если список процессов не влезает в экран по высоте,
-    его можно пролистывать вверх/вниз,
-  * если информация о процессе не влезает в экран по ширине,
-    её можно прокручивать вправо/влево,
-  * действия над процессами (смена приоритета, удаление)
-    не требуют вручную вводить идентификатор процесса (PID),
-  * возможны действия над группами процессов.
+  * п╣я│п╩п╦ я│п©п╦я│п╬п╨ п©я─п╬я├п╣я│я│п╬п╡ п╫п╣ п╡п╩п╣п╥п╟п╣я┌ п╡ я█п╨я─п╟п╫ п©п╬ п╡я▀я│п╬я┌п╣,
+    п╣пЁп╬ п╪п╬п╤п╫п╬ п©я─п╬п╩п╦я│я┌я▀п╡п╟я┌я▄ п╡п╡п╣я─я┘/п╡п╫п╦п╥,
+  * п╣я│п╩п╦ п╦п╫я└п╬я─п╪п╟я├п╦я▐ п╬ п©я─п╬я├п╣я│я│п╣ п╫п╣ п╡п╩п╣п╥п╟п╣я┌ п╡ я█п╨я─п╟п╫ п©п╬ я┬п╦я─п╦п╫п╣,
+    п╣я▒ п╪п╬п╤п╫п╬ п©я─п╬п╨я─я┐я┤п╦п╡п╟я┌я▄ п╡п©я─п╟п╡п╬/п╡п╩п╣п╡п╬,
+  * п╢п╣п╧я│я┌п╡п╦я▐ п╫п╟п╢ п©я─п╬я├п╣я│я│п╟п╪п╦ (я│п╪п╣п╫п╟ п©я─п╦п╬я─п╦я┌п╣я┌п╟, я┐п╢п╟п╩п╣п╫п╦п╣)
+    п╫п╣ я┌я─п╣п╠я┐я▌я┌ п╡я─я┐я┤п╫я┐я▌ п╡п╡п╬п╢п╦я┌я▄ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─ п©я─п╬я├п╣я│я│п╟ (PID),
+  * п╡п╬п╥п╪п╬п╤п╫я▀ п╢п╣п╧я│я┌п╡п╦я▐ п╫п╟п╢ пЁя─я┐п©п©п╟п╪п╦ п©я─п╬я├п╣я│я│п╬п╡.
 
-htop использует для работы с экраном библиотеку ncurses.
+htop п╦я│п©п╬п╩я▄п╥я┐п╣я┌ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я█п╨я─п╟п╫п╬п╪ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ ncurses.
 
 %prep
 %setup
@@ -56,7 +57,8 @@ htop использует для работы с экраном библиотеку ncurses.
 %configure -C \
 	%{subst_enable openvz} \
 	%{subst_enable unicode} \
-	%{subst_enable taskstats}
+	%{subst_enable taskstats} \
+	%{subst_enable oom}
 %make_build
 
 %install
@@ -74,6 +76,11 @@ rm -r %buildroot%_pixmapsdir/
 %_niconsdir/%name.*
 
 %changelog
+* Thu Aug 28 2014 Michael Shigorin <mike@altlinux.org> 1.0.3-alt1
+- new version (watch file uupdate)
+- enabled OOM score support (closes: #30245)
+- converted spec to UTF-8
+
 * Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1
 - new version (watch file uupdate)
 
@@ -179,7 +186,7 @@ rm -r %buildroot%_pixmapsdir/
 * Thu Jul  1 2004 Ilya G. Evseev <evseev@altlinux.ru> 0.3.3-alt3
 - multiple specfile fixes for compatibility with ALTLinux SpecFile conventions:
 - fixed build numbering
-- russian texts in KOI8-r are moved beyound first 256-bytes block
+- russian texts in UTF-8 are moved beyound first 256-bytes block
 - more small things...
 
 * Wed Jun 30 2004 Ilya G. Evseev <evseev@altlinux.ru> 0.3.3-2alt
