@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: ipython
-Version: 0.13.1
+Version: 2.2.0
 Release: alt1
 
 %setup_python_module IPython
@@ -15,15 +15,20 @@ BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
 Source0: %name-%version.tar
+# https://github.com/ipython/ipython-components.git
+Source1: components.tar
 Patch0: %name-0.10-alt-bindings-fix.patch
 
-BuildPreReq: python3-module-tornado
+BuildPreReq: python3-module-tornado python-module-setuptools
+BuildPreReq: python-module-sphinx-devel python-module-zmq
+BuildPreReq: python-module-tornado python-modules-sqlite3
+BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
-%add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2
+%add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2 System builtins clr
 %add_python3_req_skip __main__
 
 
@@ -53,6 +58,7 @@ Summary: An enhanced interactive Python 3 shell
 Group: Development/Python3
 %add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
 %add_python3_req_skip msvcrt wx gtk compiler OpenGL oct2py rpy2
+%add_python3_req_skip System clr
 
 %description -n %{name}3
 IPython provides a replacement for the interactive Python interpreter with
@@ -103,10 +109,18 @@ This package contains examples for IPython.
 #patch0 -p1
 rm -f IPython/Extensions/{PhysicalQInteractive.py,scitedirector.py,ipy_render.py,ipy_synchronize_with.py,ipy_traits_completer.py,ipy_winpdb.py,win32clip.py}
 
+pushd IPython/html/static
+rm -fR components
+tar -xf %SOURCE1
+popd
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
+
+%prepare_sphinx docs
+ln -s ../objects.inv docs/source/
 
 %build
 %python_build
@@ -118,11 +132,6 @@ popd
 %endif
 
 %install
-%python_install
-rm -rf %buildroot%python_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kernel/core/tests}
-rm -f %buildroot%_bindir/iptest
-cp docs/source/*.txt %buildroot%_docdir/%name/
-
 %if_with python3
 pushd ../python3
 export LANG="en_US.UTF-8"
@@ -130,7 +139,23 @@ export LANG="en_US.UTF-8"
 rm -rf %buildroot%python3_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kernel/core/tests}
 rm -f %buildroot%_bindir/iptest3
 popd
+pushd %buildroot%_bindir
+for i in ipcluster ipcontroller ipengine ipython
+do
+	mv $i ${i}3
+done
+popd
 %endif
+
+%python_install
+rm -rf %buildroot%python_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kernel/core/tests}
+rm -f %buildroot%_bindir/iptest
+install -d %buildroot%_docdir/%name
+cp docs/source/*.txt %buildroot%_docdir/%name/
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
+cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 
 %files
 %_bindir/*
@@ -139,19 +164,20 @@ popd
 %exclude %_bindir/%{name}3*
 %endif
 %_man1dir/*
-%dir %_docdir/%name/
+%dir %_docdir/%name
 %_docdir/%name/*.txt
 %python_sitelibdir/IPython/
 %python_sitelibdir/*.egg-info
 
 %files doc
-%dir %_docdir/%name/
-%_docdir/%name/extensions/
+%_docdir/%name
+%exclude %_docdir/%name/*.txt
+%exclude %_docdir/%name/examples
 #_docdir/%name/manual/
 
 %files examples
-%dir %_docdir/%name/
-%_docdir/%name/examples/
+%dir %_docdir/%name
+%_docdir/%name/examples
 
 %if_with python3
 %files -n %{name}3
@@ -162,6 +188,12 @@ popd
 
 
 %changelog
+* Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
+- Version 2.2.0
+
+* Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
 * Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 0.13.1-alt1
 - Version 0.13.1 (rel)
 
