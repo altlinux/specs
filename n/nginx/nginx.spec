@@ -8,7 +8,7 @@
 %def_without image_filter
 %def_without xslt
 %def_without debug
-%def_without geoip
+%def_with geoip
 %def_enable cache_purge
 %def_enable ctpp2
 # If you want to update rtmp module -- use rtmp-update.sh
@@ -16,7 +16,7 @@
 
 Name: nginx
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -271,6 +271,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Thu Aug 28 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.1-alt2
+- enable geopip module
+
 * Wed Aug 06 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 - CVE-2014-3556
