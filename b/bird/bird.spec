@@ -1,6 +1,6 @@
 Name: bird
 Version: 1.4.3
-Release: alt1
+Release: alt2
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -106,6 +106,9 @@ install %SOURCE1 %buildroot%_initdir/%name
 %_sbindir/%{name}cl6
 
 %changelog
+* Thu Aug 28 2014 Andriy Stepanov <stanv@altlinux.ru> 1.4.3-alt2
+- add status entry for init script
+
 * Tue Apr 22 2014 Vladimir Lettiev <crux@altlinux.ru> 1.4.3-alt1
 - New version 1.4.3
 
