@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name: coro-mock
 Version: 1.0
-Release: alt1_0.3.e55ca83gitjpp7
+Release: alt1_0.7.e55ca83gitjpp7
 Summary: A mock library for compiling JVM coroutine-using code on JVMs without coroutines
 Group: Development/Java
 License: Public Domain
@@ -65,11 +65,8 @@ install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE
@@ -77,6 +74,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.7.e55ca83gitjpp7
+- new release
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.3.e55ca83gitjpp7
 - new release
 
