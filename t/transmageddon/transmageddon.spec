@@ -1,6 +1,6 @@
 
 Name: transmageddon
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Video transcoder
@@ -16,19 +16,20 @@ BuildArch: noarch
 
 Requires: python3 python3-module-pygobject3
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-libav gst-plugins-bad1.0 gst-plugins-ugly1.0
+Requires: libgtk+3-gir >= 3.10.0
 Requires: typelib(GObject)
 Requires: typelib(GLib)
 Requires: typelib(Gio)
-Requires: typelib(Gtk)
-Requires: typelib(Gdk)
-Requires: typelib(GdkX11)
+Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gdk) = 3.0
+Requires: typelib(GdkX11) = 3.0
 Requires: typelib(GdkPixbuf)
-Requires: typelib(Gst)
-Requires: typelib(GstPbutils)
-Requires: typelib(GstTag)
+Requires: typelib(Gst) = 1.0
+Requires: typelib(GstPbutils) = 1.0
+Requires: typelib(GstTag) = 1.0
 Requires: typelib(GUdev)
 
-BuildRequires: intltool appdata-tools
+BuildRequires: intltool appdata-tools gobject-introspection-devel
 BuildRequires: gstreamer1.0-devel >= 1.2.0
 BuildRequires: python3 python3-module-pygobject3
 
@@ -59,6 +60,10 @@ tar -xf %SOURCE2 -C common
 %_man1dir/%name.*
 
 %changelog
+* Thu Aug 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3-alt1
+- 1.3
+- define strict requires (ALT#30250)
+
 * Fri Jul 04 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2-alt1
 - 1.2
 
