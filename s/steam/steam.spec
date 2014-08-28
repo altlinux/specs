@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.48
+Version: 1.0.0.49
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -55,6 +55,12 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/99-%name-controller-perms.rules
 
 %changelog 
+* Thu Aug 28 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.49-alt1
+- Version 1.0.0.49
+
+* Fri Jun 20 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.48-alt0.M70P.1
+- Build for branch p7
+
 * Thu Jun 19 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.48-alt1
 - Version 1.0.0.48
 
