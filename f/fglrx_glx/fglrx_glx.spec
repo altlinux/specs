@@ -1,4 +1,4 @@
-%define cat_ver 14.10.1006.1001
+%define cat_ver 14.20
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,7 +18,7 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 14.10.1006.1001
+Version: 14.20
 Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
@@ -279,6 +279,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Wed Aug 28 2014 barssc <barssc@altlinux.ru> 2:14.20-alt1
+- Catalyst 14.6 Beta
+
 * Fri Jun 06 2014 Led <led@altlinux.ru> 2:14.10.1006.1001-alt1
 - Catalyst 14.4 rev2
 
