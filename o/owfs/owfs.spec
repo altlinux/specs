@@ -1,15 +1,14 @@
 %def_disable static
 
 Name: owfs
-Version: 2.8p8
-Release: alt4
+Version: 2.9p5
+Release: alt1
 
 Summary: 1-Wire Virtual File System
 License: GPL
 Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/owfs
-Packager: Denis Klimov <zver@altlinux.org>
 Source: %name-%version.tar.gz
 
 BuildPreReq: chrpath
@@ -278,6 +277,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %_bindir/owpresent
 #_bindir/owside
 %_bindir/owget
+%_bindir/owexist
 
 %files man
 %_man1dir/*.1.*
@@ -294,6 +294,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %_initdir/owserver
 %config(noreplace) %_sysconfdir/sysconfig/owserver
 %_sbindir/owserver
+%_bindir/owexternal
 
 %files tap
 %_bindir/owtap
@@ -310,6 +311,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9p5-alt1
+- Version 2.9p5
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.8p8-alt4
 - built for perl 5.18
 
