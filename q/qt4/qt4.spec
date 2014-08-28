@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	6
 %define beta	%nil
-%define rlz alt1
+%define rlz alt2
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -132,6 +132,10 @@ Patch704: qfatal-noreturn.diff
 #
 Patch706: qt-never-strip.diff
 Patch707: rcc-stable-dirlisting.diff
+# fixes for LibreOffice-kde QTBUG 37380,34614,38585
+Patch800: glib-honor-ExcludeSocketNotifiers-flag.diff
+Patch801: l-qclipboard_delay.patch
+Patch802: l-qclipboard_fix_recursive.patch
 # Sergey A. Sukiyazov <sergey.sukiyazov NEAR gmail.com>
 Patch9100: 9100-qt-core-fix-iconvcodec.patch
 #
@@ -787,6 +791,10 @@ Install this package if you want to create RPM packages that use %name
 #
 %patch706 -p0
 %patch707 -p1
+
+%patch800 -p1
+%patch801 -p0
+%patch802 -p0
 
 %patch9100 -p1
 #
@@ -1548,6 +1556,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Thu Aug 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt2
+- add fixes for LibreOffice-kde from QTBUGs 37380,34614,38585
+
+* Mon May 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt0.M70P.1
+- built for M70P
+
 * Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt1
 - new version
 
