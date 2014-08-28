@@ -6,7 +6,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.83
+Version: 2.84
 Release: alt1
 
 Group: Networking/File transfer
@@ -269,6 +269,9 @@ fi
 %dir %_logdir/%dname
 
 %changelog
+* Thu Aug 28 2014 Anton Farygin <rider@altlinux.ru> 2.84-alt1
+- new version
+
 * Mon Jun 02 2014 Anton Farygin <rider@altlinux.ru> 2.83-alt1
 - new version
 
