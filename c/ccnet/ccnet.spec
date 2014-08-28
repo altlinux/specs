@@ -1,6 +1,6 @@
 Name: ccnet
-Version: 3.1.4
-Release: alt7
+Version: 3.1.5
+Release: alt1
 
 Summary: Framework for writing networked applications in C
 
@@ -15,8 +15,14 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: libevent-devel libsearpc-devel >= 1.2.0 libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
-BuildRequires: vala libzdb-devel
+BuildRequires: libevent-devel libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
+
+BuildRequires: libsearpc-devel >= 3.0.4
+
+BuildRequires: vala >= 0.8
+
+# server requirements
+BuildRequires: libzdb-devel >= 2.10.2
 
 Requires: lib%name = %version-%release
 
@@ -26,6 +32,8 @@ Ccnet is a framework for writing networked applications in C.
 %package -n lib%name
 Summary: Library of framework for writing networked applications in C
 Group: Networking/File transfer
+Requires: libsearpc >= 3.0.4
+
 
 %description -n lib%name
 Ccnet is a framework for writing networked applications in C.
@@ -93,6 +101,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Thu Aug 28 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
+- new version 3.1.5 (with rpmrb script)
+
 * Mon Aug 25 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.4-alt7
 - new build for ALT Linux Sisyphus (drop old source tree)
 - rename repository and subpackages
