@@ -1,7 +1,8 @@
 %define ver_major 1.0
 %define ver_api 1.0
 
-%add_verify_elf_skiplist %_bindir/tracker-needle
+# since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
+%set_verify_elf_method relaxed
 
 %def_enable introspection
 %def_disable hal
@@ -24,7 +25,7 @@
 %def_enable libflac
 %def_enable exempi
 %def_enable nautilus_extension
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable taglib
 %def_enable needle
 %def_enable libgif
@@ -48,17 +49,16 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
 Group: Office
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Url: http://wiki.gnome.org/Projects/Tracker
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: tracker-1.0.3-alt-build.patch
 
 Obsoletes: lib%name-client
 Requires: lib%name = %version-%release
@@ -232,11 +232,11 @@ Obsoletes: %name-nautilus
 Nautilus extension for managing tags
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure \
 	--disable-static \
 	%{subst_enable introspection} \
@@ -282,7 +282,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
@@ -298,7 +298,10 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_libdir/%name-%ver_api/extract-modules
 %_libdir/%name-%ver_api/writeback-modules
 
-%_libexecdir/*
+%_libexecdir/tracker-extract
+%_libexecdir/tracker-miner-fs
+%_libexecdir/tracker-store
+%_libexecdir/tracker-writeback
 
 %_datadir/dbus-1/services/*.service
 %_man1dir/tracker-miner-fs.*
@@ -377,6 +380,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Wed Aug 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
