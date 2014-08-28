@@ -1,5 +1,5 @@
 Name: bpython
-Version: 0.12
+Version: 0.13.1
 Release: alt1
 
 Summary: bpython is a fancy interface to the Python interpreter for Unix-like operating systems.
@@ -17,6 +17,7 @@ BuildRequires: python-module-babel python-module-mock python-module-sphinx pytho
 
 
 BuildRequires: python-module-setuptools python-module-setuptools-tests
+BuildPreReq: python-module-sphinx-devel
 
 %description
 bpython is a fancy interface to the Python interpreter for
@@ -52,8 +53,15 @@ Urwid front-end for bpython
 %setup -q
 %patch -p1
 
+%prepare_sphinx doc/sphinx
+ln -s ../objects.inv doc/sphinx/source/
+
 %build
 %python_build
+
+pushd doc/sphinx/source
+sphinx-build -b html -d build/doctrees . html
+popd
 
 %install
 %python_install
@@ -75,6 +83,7 @@ python setup.py test
 %_desktopdir/%name.desktop
 %_man1dir/*
 %_man5dir/*
+%doc doc/sphinx/source/html
 
 %files urwid
 %_bindir/%{name}-urwid
@@ -85,6 +94,9 @@ python setup.py test
 %python_sitelibdir/%name/gtk_.py
 
 %changelog
+* Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt1
+- Version 0.13.1
+
 * Fri Sep 13 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12-alt1
 - New version
 
