@@ -11,8 +11,8 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.2.0
-Release: alt3%git_date
+Version: 1.4.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgudev-devel >= %libgudev_version
+BuildRequires: libgio-devel
 %{?_with_qmi:BuildRequires: libqmi-glib-devel}
 %{?_with_mbim:BuildRequires: libmbim-glib-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -38,6 +39,7 @@ BuildRequires: gtk-doc
 
 # For tests
 BuildRequires: /dev/pts
+BuildRequires: dbus
 
 # Because of starting from the init script
 Conflicts: NetworkManager < 0.9.8.9
@@ -231,6 +233,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 27 2014 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Wed Aug 06 2014 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt3
 - Don't restart service during upgrade.
 - Rebuild with libmbim-glib-1.10.0.
