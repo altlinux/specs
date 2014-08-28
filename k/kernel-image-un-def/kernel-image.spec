@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.15
-%define kernel_sublevel	.10
+%define kernel_base_version	3.16
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -420,12 +420,7 @@ KbuildFiles="
 	scripts/kconfig/conf
 	scripts/mkcompile_h
 	scripts/makelst
-	scripts/Makefile.modpost
-	scripts/Makefile.modinst
-	scripts/Makefile.lib
-	scripts/Makefile.host
-	scripts/Makefile.clean
-	scripts/Makefile.build
+	scripts/Makefile.*
 	scripts/Makefile
 	scripts/Kbuild.include
 	scripts/kallsyms
@@ -441,7 +436,7 @@ KbuildFiles="
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
 	scripts/recordmcount.pl
-	scripts/gcc-x86_64-has-stack-protector.sh
+	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
 
@@ -547,6 +542,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Aug 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.1-alt1
+- 3.16.1
+
+* Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.0-alt1
+- 3.16.0
+
 * Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.15.10-alt1
 - 3.15.10
 
