@@ -1,6 +1,6 @@
 Name:           pymol
-Version:        1.2_b3
-Release:        alt2.svn20090726.4
+Version:        1.7.2.1
+Release:        alt1.svn20140819
 Summary:        Python-enhanced molecular graphics tool
 Group:          Sciences/Chemistry
 License:        CNRI Python License
@@ -13,8 +13,8 @@ Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: libGLU-devel python-module-OpenGL libpng-devel tk-devel gcc-c++
-BuildPreReq: python-module-numpy libfreetype-devel libfreeglut-devel
-BuildPreReq: python-devel
+BuildPreReq: libnumpy-devel libfreetype-devel libGLUT-devel
+BuildPreReq: python-devel libGLEW-devel
 
 %description
 PyMOL is a Python-enhanced molecular graphics tool. It excels at 3D
@@ -27,6 +27,7 @@ Group: System/Libraries
 Obsoletes: libpymol-devel
 Requires: python-module-%name = %version-%release
 %py_requires pymol
+%add_python_req_skip headering
 
 %description devel
 Development files for PyMOL.
@@ -37,6 +38,7 @@ Group: Development/Python
 Obsoletes: libpymol
 %setup_python_module pymol
 %py_provides pymol
+Requires: python-module-webpy
 
 %description -n python-module-%name
 PyMOL python module.
@@ -81,10 +83,10 @@ cp %SOURCE1 ./
 
 %install
 %python_install
-PYTHONPATH=%buildroot%python_sitelibdir %__python setup2.py install \
-	--skip-build --root=%buildroot
+#PYTHONPATH=%buildroot%python_sitelibdir %__python setup2.py install \
+#	--skip-build --root=%buildroot
 
-for i in contrib/champ contrib/modules contrib/pyopengl \
+for i in contrib/champ contrib/modules \
 	contrib/sglite contrib/uiuc/plugins/include \
 	contrib/uiuc/plugins/molfile_plugin/src layer0 layer1 \
 	layer2 layer3 layer4 layer5 ov/src
@@ -118,6 +120,8 @@ bzip2 ChangeLog
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/pmg_wx
 %python_sitelibdir/pymol
+%python_sitelibdir/pymol2
+%python_sitelibdir/web/pymolhttpd.py*
 %exclude %python_sitelibdir/pymol/pymol_path/test
 
 %files -n python-module-chempy
@@ -130,6 +134,9 @@ bzip2 ChangeLog
 %_docdir/PyMOL
 
 %changelog
+* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2.1-alt1.svn20140819
+- Version 1.7.2.1
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2_b3-alt2.svn20090726.4
 - Rebuilt with libpng15
 
