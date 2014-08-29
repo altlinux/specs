@@ -1,8 +1,10 @@
 %def_disable check
 
+%def_with python3
+
 Name: pylint
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python code static checker
 License: GPLv2+
@@ -13,8 +15,6 @@ BuildArch: noarch
 Url: http://www.logilab.org/project/name/pylint
 Source: %name-%version.tar
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
-
 %add_findreq_skiplist %python_sitelibdir/%name/gui.py
 
 %setup_python_module %name
@@ -23,7 +23,32 @@ Requires: python-module-astroid >= 1.0.1
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest %py_dependencies logilab.astng unittest2 }}
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
+
 %description
+Pylint is a Python source code analyzer which looks for programming
+errors, helps enforcing a coding standard and sniffs for some code
+smells (as defined in Martin Fowler's Refactoring book)
+
+Pylint can be seen as another PyChecker since nearly all tests you
+can do with PyChecker can also be done with Pylint. However, Pylint
+offers some more features, like checking length of lines of code,
+checking if variable names are well-formed according to your coding
+standard, or checking if declared interfaces are truly implemented,
+and much more.
+
+Additionally, it is possible to write plugins to add your own checks.
+
+%package py3
+Summary: Python code static checker
+Group: Development/Python3
+Requires: python3-module-astroid
+
+%description py3
 Pylint is a Python source code analyzer which looks for programming
 errors, helps enforcing a coding standard and sniffs for some code
 smells (as defined in Martin Fowler's Refactoring book)
@@ -40,10 +65,32 @@ Additionally, it is possible to write plugins to add your own checks.
 %prep
 %setup
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+rm -rf %buildroot%python3_sitelibdir/%name/test
+pushd %buildroot%_bindir
+for i in $(ls); do
+	mv $i $i.py3
+done
+popd
+%endif
+
 %python_install
 rm -rf %buildroot%python_sitelibdir/%name/test
 
@@ -52,11 +99,25 @@ PYTHONPATH=$(pwd)/build/lib/ pytest -t test
 
 %files
 %_bindir/*
+%if_with python3
+%exclude %_bindir/*.py3
+%endif
 %python_sitelibdir/%name
 %python_sitelibdir/*.egg-info
 %doc ChangeLog README doc/
 
+%if_with python3
+%files py3
+%_bindir/*.py3
+%python3_sitelibdir/%name
+%python3_sitelibdir/*.egg-info
+%doc ChangeLog README doc/
+%endif
+
 %changelog
+* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.1
+- Added module for Python 3
+
 * Wed Mar 19 2014 Timur Aitov <timonbl4@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
