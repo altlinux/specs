@@ -4,8 +4,9 @@
 
 Summary: Get the best JSON encoder/decoder available on this system
 Name: python-module-%sname
-Version: 0.3.1
-Release: alt1.1
+Version: 0.3.3
+Release: alt1.hg20120622
+# hg clone https://bitbucket.org/runeh/anyjson
 Source0: %name-%version.tar
 License: BSD
 Group: Development/Python
@@ -70,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.hg20120622
+- Version 0.3.3
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.1
 - Added module for Python 3
 
