@@ -17,7 +17,7 @@
 %def_enable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 Summary: Web browser engine
@@ -340,6 +340,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/{GtkLauncher,MiniBrowser}
 
 
 %changelog
+* Fri Aug 29 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
+- 2.4.5
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1
 - 2.4.4
 
