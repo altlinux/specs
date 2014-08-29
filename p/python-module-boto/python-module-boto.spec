@@ -1,15 +1,22 @@
 %define pkgname boto
+%def_with python3
 
 Summary: A simple lightweight interface to Amazon Web Services
-Name: python-module-boto
-Version: 2.5.2
+Name: python-module-%{pkgname}
+Version: 2.32.1
 Release: alt1
 License: MIT
 Group: Development/Python
 Url: https://github.com/boto/boto
 
 Source: %name-%version.tar
+Patch0: python-boto.vendored.six-remove.patch
+
 BuildRequires: python-devel
+BuildRequires: python-module-nose
+BuildRequires: python-module-mock
+BuildRequires: python-module-httpretty
+BuildRequires: python-module-requests
 BuildArch: noarch
 
 %description
@@ -19,24 +26,101 @@ the REST API's provided by those services and EC2 (Elastic Compute Cloud)
 via the Query API. The goal of boto is to provide a very simple, easy to
 use, lightweight wrapper around the Amazon services.
 
+
+%if_with python3
+%package -n python3-module-%{pkgname}
+Summary:        A simple lightweight interface to Amazon Web Services
+Group:		Development/Python
+BuildArch:      noarch
+BuildRequires:  rpm-build-python3
+BuildRequires:  python3-module-nose
+BuildRequires:  python3-module-mock
+BuildRequires:  python3-module-httpretty
+BuildRequires:  python3-module-requests
+BuildRequires:  python-tools-2to3
+
+%description -n python3-module-%{pkgname}
+Boto is a Python package that provides interfaces to Amazon Web Services.
+It supports S3 (Simple Storage Service), SQS (Simple Queue Service) via
+the REST API's provided by those services and EC2 (Elastic Compute Cloud)
+via the Query API. The goal of boto is to provide a very simple, easy to
+use, lightweight wrapper around the Amazon services.
+
+%endif
+
 %prep
 %setup
+%patch0 -p1
+
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+2to3 --write --nobackups .
+%python3_build
+popd
+%endif
+
 %install
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+rm -fv %buildroot/usr/bin/*
+
 %python_install
 
-# Remove all test scripts
-rm -rf %buildroot{%_bindir,%python_sitelibdir/tests}
+%check
+%{__python} tests/test.py default
+%if_with python3
+pushd ../python3
+%{__python3} tests/test.py default
+popd
+%endif
 
 %files
 %doc README.rst
-%python_sitelibdir/%pkgname
-%python_sitelibdir/*.egg-info
+%{_bindir}/asadmin
+%{_bindir}/bundle_image
+%{_bindir}/cfadmin
+%{_bindir}/cq
+%{_bindir}/cwutil
+%{_bindir}/dynamodb_dump
+%{_bindir}/dynamodb_load
+%{_bindir}/elbadmin
+%{_bindir}/fetch_file
+%{_bindir}/glacier
+%{_bindir}/instance_events
+%{_bindir}/kill_instance
+%{_bindir}/launch_instance
+%{_bindir}/list_instances
+%{_bindir}/lss3
+%{_bindir}/mturk
+%{_bindir}/pyami_sendmail
+%{_bindir}/route53
+%{_bindir}/s3put
+%{_bindir}/sdbadmin
+%{_bindir}/taskadmin
+%{python_sitelibdir}/boto*
+
+%if_with python3
+%files -n python3-module-boto
+%{python3_sitelibdir}/boto*
+%endif
 
 %changelog
+* Fri Aug 29 2014 Lenar Shakirov <snejok@altlinux.ru> 2.32.1-alt1
+- 2.32.1
+- Enable python3
+
 * Mon Jul 30 2012 Mykola Grechukh <gns@altlinux.ru> 2.5.2-alt1
 - 2.5.2
 
