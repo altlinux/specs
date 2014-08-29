@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.1
+Version: %major.2
 Release: alt2
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -190,6 +190,7 @@ This package provides Python API for %name
 %patch0 -p1
 
 %build
+sed -i 's,3.5git,%version,' configure.ac
 ./autogen.sh
 %configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/ \
 	    --enable-qemu-block \
@@ -350,6 +351,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Fri Aug 29 2014 Anton Farygin <rider@altlinux.ru> 3.5.2-alt2
+- new version
+
 * Mon Jul 07 2014 Anton Farygin <rider@altlinux.ru> 3.5.1-alt2
 - initscript: start glusterd before netfs
 
