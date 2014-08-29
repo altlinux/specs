@@ -2,14 +2,12 @@
 %add_findreq_skiplist /usr/include/google/protobuf/message.h
 %add_findprov_skiplist /usr/include/google/protobuf/message.h
 
-%def_with java
-%define soversion 9
+%def_without java
+%define soversion 8
 
-%def_with python3
-
-Name: protobuf
-Version: 2.6.0
-Release: alt1
+Name: protobuf%soversion
+Version: 2.5.0
+Release: alt3
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -24,19 +22,6 @@ Obsoletes: libprotobuf <= 2.0.0-alt1
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ python-devel libnumpy-devel zlib-devel
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-google-apputils
-BuildPreReq: python-module-mox python-module-mox python-module-dateutil
-BuildPreReq: python-module-pytz python-module-gflags
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel
-BuildPreReq: python3-module-setuptools-tests python-tools-2to3
-BuildPreReq: python3-module-google-apputils
-BuildPreReq: python3-module-mox python3-module-mox python3-module-dateutil
-BuildPreReq: python3-module-pytz python3-module-gflags
-%endif
-
 %description
 Protocol Buffers are a way of encoding structured data in
 an efficient yet extensible format. Google uses Protocol Buffers for
@@ -50,23 +35,23 @@ Requires: lib%{name}%{soversion} = %version-%release
 %description compiler
 Compiler for protocol buffer definition files 
 
-%package -n lib%{name}%{soversion}
+%package -n lib%{name}
 Summary: Protocol Buffer c++ library.
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Provides: libprotobuf = %version-%release
 
-%description -n lib%{name}%{soversion}
+%description -n lib%{name}
 Protocol Buffers are a way of encoding structured data in
 an efficient yet extensible format. Google uses Protocol Buffers for
 almost all of its internal RPC protocols and file formats.
 
-%package -n lib%{name}%{soversion}-lite
+%package -n lib%{name}-lite
 Summary: Protocol Buffers LITE_RUNTIME libraries
-Group: System/Libraries
+Group: System/Legacy libraries
 Provides: libprotobuf-lite = %version-%release
 
-%description -n lib%{name}%{soversion}-lite
+%description -n lib%{name}-lite
 Protocol Buffers built with optimize_for = LITE_RUNTIME.
 
 The "optimize_for = LITE_RUNTIME" option causes the compiler to generate code
@@ -100,18 +85,11 @@ lacks descriptors, reflection, and some other features.
 Summary: Python module files for %name
 Group: Development/Python
 Requires: lib%{name}%{soversion} = %version-%release
-%py_requires google.apputils
+BuildArch: noarch
+# ?
+%py_provides google
 
 %description -n python-module-%name
-Python bindings for protocol buffers
-
-%package -n python3-module-%name
-Summary: Python module files for %name
-Group: Development/Python3
-Requires: lib%{name}%{soversion} = %version-%release
-%py3_requires google.apputils
-
-%description -n python3-module-%name
 Python bindings for protocol buffers
 
 %if_with java
@@ -155,11 +133,6 @@ rm -rf java/src/test
 # without gtest
 rm -rf gtest
 
-%if_with python3
-cp -fR python python3
-find python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
-%endif
-
 %build
 iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
 mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
@@ -170,14 +143,8 @@ export PTHREAD_LIBS="-lpthread"
 %configure --disable-static
 %make_build
 pushd python
-%python_build --cpp_implementation
+%python_build
 popd
-
-%if_with python3
-pushd python3
-%python3_build --cpp_implementation
-popd
-%endif
 
 %if_with java
 pushd java
@@ -190,14 +157,8 @@ popd
 mkdir -p %buildroot%python_sitelibdir/google/
 
 pushd python
-%python_install --cpp_implementation --record=INSTALLED_FILES
+%python_install --optimize=2 --record=INSTALLED_FILES
 popd
-
-%if_with python3
-pushd python3
-%python3_install --cpp_implementation
-popd
-%endif
 
 %if_with java
 pushd java
@@ -212,49 +173,45 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 %endif
 
-%files compiler
-%_bindir/protoc
+#files compiler
+#_bindir/protoc
 
-%files -n lib%{name}%{soversion}
+%files -n lib%{name}
 %doc CONTRIBUTORS.txt README.txt examples/
 %_libdir/*.so.*
 %exclude %_libdir/libprotobuf-lite.so.*
 
-%files -n lib%{name}-devel
-%dir %_includedir/google/
-%_includedir/google/protobuf/
-%_pkgconfigdir/protobuf.pc
-%_libdir/*.so
-%exclude %_libdir/libprotobuf-lite.so
+#files -n lib%{name}-devel
+#dir %_includedir/google/
+#_includedir/google/protobuf/
+#_pkgconfigdir/protobuf.pc
+#_libdir/*.so
+#exclude %_libdir/libprotobuf-lite.so
 
-%files -n lib%{name}%{soversion}-lite
+%files -n lib%{name}-lite
 %_libdir/libprotobuf-lite.so.*
 
-%files -n lib%{name}-lite-devel
-%_libdir/libprotobuf-lite.so
-%_pkgconfigdir/protobuf-lite.pc
+#files -n lib%{name}-lite-devel
+#_libdir/libprotobuf-lite.so
+#_pkgconfigdir/protobuf-lite.pc
 
-%files -n python-module-%name -f python/INSTALLED_FILES
+#files -n python-module-%name -f python/INSTALLED_FILES
 #python_sitelibdir/google/
 
-%files -n python3-module-%name
-%python3_sitelibdir/*
+#if_with java
+#files java
+#{_mavenpomdir}/JPP-%{name}.pom
+#{_mavendepmapfragdir}/%{name}
+#{_javadir}/%{name}.jar
+#doc examples/AddPerson.java examples/ListPeople.java
 
-%if_with java
-%files java
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-%doc examples/AddPerson.java examples/ListPeople.java
-
-%files javadoc
-%{_javadocdir}/%{name}
-%endif
+#files javadoc
+#{_javadocdir}/%{name}
+#endif
 
 %changelog
-* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1
-- Version 2.6.0
-- Added module for Python 3
+* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt3
+- Moved this version into System/Legacy libraries
 
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2
 - NMU: added BuildReq: maven-local
