@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: Google Application Utilities for Python
 License: ASLv2.0
 Group: Development/Python
@@ -13,7 +13,6 @@ Url: https://pypi.python.org/pypi/google-apputils/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
@@ -74,12 +73,22 @@ popd
 
 %install
 %python_install
+%ifarch x86_64
+install -d %buildroot%python_sitelibdir
+mv %buildroot%python_sitelibdir_noarch/* \
+	%buildroot%python_sitelibdir/
+%endif
 install -p -m644 google/__init__.py \
 	%buildroot%python_sitelibdir/%gname/
 
 %if_with python3
 pushd ../python3
 %python3_install
+%ifarch x86_64
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
 install -p -m644 google/__init__.py \
 	%buildroot%python3_sitelibdir/%gname/
 popd
@@ -106,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2
+- Set as archdep
+
 * Thu Aug 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
 
