@@ -1,6 +1,6 @@
 Name: ant
-Version: 1.8.4
-Release: alt6
+Version: 1.9.2
+Release: alt1
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -60,8 +60,8 @@ Patch1:         apache-ant-bz163689.patch
 Patch3:         apache-ant-no-test-jar.patch
 Patch4:         apache-ant-class-path-in-manifest.patch
 
-Patch101:       ant-1.8.0-alt-script-cleanup.patch
-Patch102:	ant-1.8.3-alt-javadoc-maxmemory.patch
+Patch101:       ant-1.9.2-alt-script-cleanup.patch
+Patch102:	ant-1.9.2-alt-javadoc-maxmemory.patch
 
 BuildPreReq: rpm-build-java
 BuildRequires: /proc
@@ -473,8 +473,8 @@ find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 
 # script cleanup
 %patch101 -p2
-
-%patch102 -p1
+# javadoc maxmemory
+%patch102 -p2
 
 mv LICENSE LICENSE.orig
 mv KEYS KEYS.orig
@@ -1087,6 +1087,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1
+- new version
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt6
 - fixed build
 
