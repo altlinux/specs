@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        36.0.1985.143
+Version:        37.0.2062.94
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -86,8 +86,7 @@ Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
 # See https://code.google.com/p/chromium/issues/detail?id=393535
 Patch97:	chromium-fix-russian-translations.patch
-# Fix relocation of readonly section in ffmpeg on i586
-Patch98: 	chromium-fix-relocation-in-ffmpeg.patch
+Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -481,6 +480,21 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.94-alt1
+- New version
+- Security fixes:
+  - Critical CVE-2014-3176, CVE-2014-3177: A special reward to
+    lokihardt@asrt for a combination of bugs in V8, IPC, sync, and
+    extensions that can lead to remote code execution outside of the
+    sandbox.
+  - High CVE-2014-3168: Use-after-free in SVG.
+  - High CVE-2014-3169: Use-after-free in DOM.
+  - High CVE-2014-3170: Extension permission dialog spoofing.
+  - High CVE-2014-3171: Use-after-free in bindings.
+  - Medium CVE-2014-3172: Issue related to extension debugging.
+  - Medium CVE-2014-3173: Uninitialized memory read in WebGL.
+  - Medium CVE-2014-3174: Uninitialized memory read in Web Audio.
+
 * Mon Aug 18 2014 Andrey Cherepanov <cas@altlinux.org> 36.0.1985.143-alt1
 - New version
 - Security fixes:
