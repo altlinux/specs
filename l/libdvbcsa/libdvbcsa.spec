@@ -1,6 +1,6 @@
 Name: libdvbcsa
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: DVB Common Scrambling Algorithm with encryption and decryption capabilities
 License: GPLv2
@@ -50,7 +50,7 @@ developing applications that use %name.
 
 %build
 ./bootstrap
-%configure --enable-sse2
+%configure --enable-uint32
 %make
 
 %install
@@ -65,5 +65,8 @@ developing applications that use %name.
 %_libdir/libdvbcsa.so
 
 %changelog
+* Sat Aug 30 2014 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt2
+- Disable SSE
+
 * Tue Apr 29 2014 Alexei Takaseev <taf@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Linux Sisyphus.
