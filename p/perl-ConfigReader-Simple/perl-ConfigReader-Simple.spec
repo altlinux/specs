@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(UNIVERSAL.pm) perl(subs.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    ConfigReader-Simple
-%define upstream_version 1.28
+%define upstream_version 1.29
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_4
+Release:    alt1_1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -55,6 +55,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_1
+- update by mgaimport
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.28-alt2_4
 - moved to Sysiphus as dependency
 
