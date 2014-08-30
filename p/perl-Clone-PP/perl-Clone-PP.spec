@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name	 Clone-PP
-%define upstream_version 1.05
+%define upstream_version 1.06
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
@@ -46,11 +46,13 @@ variables and objects.
 %makeinstall_std
 
 %files
-%defattr(644,root,root,755)
 %doc Changes META.json META.yml  README
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_1
+- update by mgaimport
+
 * Mon Mar 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_1
 - update by mgaimport
 
