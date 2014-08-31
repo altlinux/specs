@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-Text-Table
-Version: 1.128
+Version: 1.130
 Release: alt1
 
 Summary: organize data in tables
@@ -12,7 +12,7 @@ License: The ISC license
 Group: Development/Perl
 
 %define real_name Text-Table
-URL: http://search.cpan.org/dist/%real_name/
+URL: http://search.cpan.org/dist/Text-Table/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -21,9 +21,9 @@ Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: perl-Devel-Symdump perl-Encode perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Term-ANSIColor perl-YAML-Tiny perl-devel perl-podlators
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Aligner
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-XSAccessor perl-Devel-Symdump perl-Encode perl-File-Find-Object perl-File-Find-Object-Rule perl-JSON-PP perl-Module-Metadata perl-Number-Compare perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Term-ANSIColor perl-Text-Glob perl-Tie-RefHash perl-autodie perl-devel perl-parent perl-podlators
+BuildRequires: perl-CPAN-Changes perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-TrailingSpace perl-Text-Aligner perl-unicore
 
 %description
 Organization  of data  in  table form is  a time-honored  and
@@ -63,6 +63,9 @@ Text::Table  позволяет  создавать  и  поддерживат�
 %perl_vendor_privlib/Text/Table*
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.130-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.128-alt1
 - New version
 
