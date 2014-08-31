@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Throwable
 
 Name: perl-Throwable
-Version: 0.200009
+Version: 0.200011
 Release: alt1
 
 Summary: Perl role for classes that are meant to be thrown as exceptions
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Aug 03 2013
-# optimized out: perl-Class-Load perl-Class-Method-Modifiers perl-Data-OptList perl-Devel-GlobalDestruction perl-IPC-Run3 perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Role-Tiny perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-devel perl-strictures
-BuildRequires: perl-Devel-StackTrace perl-Moo perl-MooX-Types-MooseLike perl-Test-Pod perl-Test-Script
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-CPAN-Meta-Requirements perl-Class-Method-Modifiers perl-Devel-GlobalDestruction perl-Import-Into perl-Module-Runtime perl-Parse-CPAN-Meta perl-Role-Tiny perl-Sub-Exporter-Progressive perl-strictures
+BuildRequires: perl-CPAN-Meta perl-Devel-StackTrace perl-Moo perl-Sub-Name perl-devel
 
 %description
 Perl module Throwable is a role for classes that are meant to be
@@ -45,6 +45,9 @@ calls die $self.
 %perl_vendor_privlib/StackTrace*
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.200011-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.200009-alt1
 - New version
 
