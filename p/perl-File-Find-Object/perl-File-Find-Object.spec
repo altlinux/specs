@@ -1,0 +1,54 @@
+## SPEC file for Perl module File::Find::Object
+
+Name: perl-File-Find-Object
+Version: 0.2.11
+Release: alt1
+
+Summary: an object oriented File::Find replacement
+
+License: %perl_license
+Group: Development/Perl
+
+%define real_name File-Find-Object
+URL: http://search.cpan.org/dist/File-Find-Object/
+
+Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+BuildArch: noarch
+
+Source: %real_name-%version.tar
+
+AutoReqProv: perl, yes
+BuildRequires(pre): perl-devel rpm-build-licenses
+
+
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-Symdump perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-parent perl-podlators
+BuildRequires: perl-CPAN-Changes perl-Class-XSAccessor perl-HTML-Parser perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-unicore
+
+%description
+Perl module File::Find::Object does the same job as File::Find
+but works like an object and with an iterator. As File::Find
+is not object oriented, one cannot perform multiple searches
+in the same application. The second problem of File::Find is
+its file processing: after starting its main loop, one cannot
+easily wait for another event and so get the next result.
+
+With File::Find::Object you can get the next file by calling
+the next() function, but setting a callback is still possible.
+
+%prep
+%setup -q -n %real_name-%version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc Changes README
+%perl_vendor_privlib/File/Find/Object*
+
+%changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.11-alt1
+- Initial build
