@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20140623
+Release: alt1.git20140820
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -15,6 +15,7 @@ Url: http://pypi.python.org/pypi/%oname
 %py_requires greenlet
 
 %add_findreq_skiplist %python_sitelibdir/gevent/_socket3.py
+%add_python_req_skip test
 
 # https://github.com/surfly/gevent.git
 Source: %oname-%version.tar
@@ -111,9 +112,13 @@ popd
 
 %install
 %python_install
+cp -fR greentest %buildroot%python_sitelibdir/
+
 %if_with python3
 pushd ../python3
 %python3_install
+rm -fR greentest/2.*
+cp -fR greentest %buildroot%python3_sitelibdir/
 find %buildroot%python3_sitelibdir -type f -name '*.py' -exec 2to3 -w -n '{}' +
 popd
 %endif
@@ -147,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20140820
+- New snapshot
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20140623
 - Version 1.1.0
 
