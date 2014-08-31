@@ -1,6 +1,6 @@
 Name: seafile-client
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: Seafile gui client on QT bassed
 
@@ -17,11 +17,12 @@ Requires: seafile >= 3.1.0
 
 # Automatically added by buildreq on Sun Nov 10 2013
 # optimized out: cmake cmake-modules fontconfig glib2-devel libevent-devel libgio-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libsearpc-devel libssl-devel libstdc++-devel mariadb-client mariadb-common pkg-config
-BuildRequires: ccmake gcc-c++ libccnet-devel libjansson-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite3-devel phonon-devel
+BuildRequires: ccmake gcc-c++ libjansson-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite3-devel phonon-devel
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: libseafile-devel >= 3.1.0
+BuildRequires: libccnet-devel >= 3.1.5
+BuildRequires: libseafile-devel >= 3.1.5-alt2
 
 Conflicts: libseafile <= 2.0.4
 
@@ -48,6 +49,9 @@ Seafile desktop gui client
 %_pixmapsdir/*
 
 %changelog
+* Sun Aug 31 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt2
+- rebuild with rebuilt libseafile
+
 * Thu Aug 28 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 
