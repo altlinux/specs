@@ -1,6 +1,6 @@
 Name: seafile
 Version: 3.1.5
-Release: alt1
+Release: alt2
 Summary: Full-fledged cloud storage platform
 
 Group: Networking/File transfer
@@ -12,9 +12,12 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 # Source-url: https://github.com/haiwen/seafile/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Requires: python-module-mako
-Requires: python-module-webpy
-Requires: python-module-simplejson
+Source1: README.ALT.utf8.txt
+Source2: nginx.conf.example
+
+#Requires: python-module-mako
+#Requires: python-module-webpy
+#Requires: python-module-simplejson
 
 Requires: lib%name = %version-%release
 
@@ -58,6 +61,27 @@ Seafile server.
 Seafile is a next-generation open source cloud storage system
 with advanced support for file syncing, privacy protection and teamwork.
 
+%package nginx
+Summary: Seafile nginx server config
+Group: Networking/File transfer
+Requires: nginx
+#Requires: %name-server = %version-%release
+
+%description nginx
+Seafile nginx server config.
+Seafile is a next-generation open source cloud storage system
+with advanced support for file syncing, privacy protection and teamwork.
+
+%package -n fuse-seafile
+Summary: Seafile FUSE access
+Group: Networking/File transfer
+Requires: lib%name = %version-%release
+
+%description -n fuse-seafile
+Seafile FUSE access.
+Seafile is a next-generation open source cloud storage system
+with advanced support for file syncing, privacy protection and teamwork.
+
 %package -n lib%name
 Summary: Seafile library files
 Group: Networking/File transfer
@@ -81,13 +105,16 @@ developing applications that use lib%name.
 
 %build
 %autoreconf
-%configure --enable-client --enable-server --disable-static
+%configure --enable-client --enable-server \
+	--enable-python --enable-fuse --disable-static
 # FIXME: breakes build
 #make_build
 %make
 
 %install
 %makeinstall_std
+cp %SOURCE1 .
+install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.conf.example
 
 %files
 %_bindir/seafile
@@ -96,10 +123,14 @@ developing applications that use lib%name.
 %_man1dir/seaf-cli.1.*
 %_man1dir/seaf-daemon*.1.*
 
+# man pages for other packages
+%_man1dir/ccnet*.1.*
+%_man1dir/seafile-applet*.1.*
+
 %files server
+%doc README.ALT.utf8.txt
 %_bindir/fileserver
 %_bindir/seaf-fsck
-%_bindir/seaf-fuse
 %_bindir/seaf-migrate
 %_bindir/seaf-server
 %_bindir/seaf-server-init
@@ -109,6 +140,12 @@ developing applications that use lib%name.
 %_bindir/seafserv-tool
 
 %python_sitelibdir/seaserv/
+
+%files -n fuse-seafile
+%_bindir/seaf-fuse
+
+%files nginx
+%_sysconfdir/nginx/sites-available.d/nginx.conf.example
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -120,6 +157,11 @@ developing applications that use lib%name.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sun Aug 31 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt2
+- separate seafile fuse client
+- add nginx server config
+- add man for ccnet and seafile-applet
+
 * Thu Aug 28 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.5-alt1
 - new version 3.1.5 (with rpmrb script)
 - add ccnet requires
