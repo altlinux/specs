@@ -1,7 +1,5 @@
-# Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
-
 Name: gear
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +56,13 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Sun Aug 31 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0.4-alt1
+- gear-update: added --strip-components option (by Alexey Gladkov).
+- gear-create-tag:
+  + added --quiet option (by Alexey Gladkov);
+  + unless in quiet mode, print messages about the tag being created
+    both before and after the action (by Alexey Gladkov; closes: #30266).
+
 * Wed May 22 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
 - gear-update-src-{cpio,gem,tar,zip}: set safe permissions
   of the unpacked directory tree.
