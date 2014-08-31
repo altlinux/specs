@@ -2,7 +2,7 @@
 ## Used in ikiwiki
 
 Name: perl-RPC-XML
-Version: 0.77
+Version: 0.78
 Release: alt1
 
 Summary: an implementation of XML-RPC
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Oct 14 2012
-# optimized out: perl-Class-Factory-Util perl-Class-Load perl-Class-Singleton perl-Compress-Raw-Zlib perl-Data-OptList perl-DateTime perl-DateTime-Format-Builder perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Symdump perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-LWP-MediaTypes perl-List-MoreUtils perl-Math-Round perl-Module-Implementation perl-Module-Runtime perl-Net-HTTP perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-Sub-Install perl-Try-Tiny perl-URI perl-XML-LibXML perl-XML-Parser perl-devel perl-libwww perl-parent perl-podlators
-BuildRequires: apache-mod_perl-base perl-CGI perl-DateTime-Format-ISO8601 perl-HTTP-Daemon perl-IO-Socket-INET6 perl-Net-Server perl-XML-LibXML perl-XML-Parser
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-B-Hooks-EndOfScope perl-Class-Factory-Util perl-Class-Load perl-Class-Singleton perl-Compress-Raw-Zlib perl-Data-OptList perl-DateTime perl-DateTime-Format-Builder perl-DateTime-Format-Strptime perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Symdump perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-LWP-MediaTypes perl-List-MoreUtils perl-Module-Implementation perl-Module-Runtime perl-Net-HTTP perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-Sub-Exporter-Progressive perl-Sub-Install perl-Try-Tiny perl-URI perl-XML-Parser perl-devel perl-libwww perl-namespace-clean perl-parent
+BuildRequires: apache-mod_perl-base perl-CGI perl-DateTime-Format-ISO8601 perl-HTTP-Daemon perl-IO-Socket-INET6 perl-Module-Load perl-Net-Server perl-Sub-Name perl-Variable-Magic perl-XML-LibXML perl-podlators
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -69,6 +69,9 @@ sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.78-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.77-alt1
 - New version
 
