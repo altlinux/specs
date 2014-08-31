@@ -2,7 +2,7 @@
 %define fname mozilla-fira
 
 Name: fonts-otf-%fname
-Version: 3.108
+Version: 3.111
 Release: alt1
 Serial: 1
 
@@ -33,6 +33,9 @@ cp -a %SOURCE1 .
 %doc LICENSE
 
 %changelog
+* Sun Aug 31 2014 Michael Shigorin <mike@altlinux.org> 1:3.111-alt1
+- 3.111 (wish upstream used tags though)
+
 * Thu Jun 05 2014 Michael Shigorin <mike@altlinux.org> 1:3.108-alt1
 - 3.108 built from upstream git
   + fixes https://github.com/mozilla/Fira/issues/39
