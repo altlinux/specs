@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-Text-Aligner
-Version: 0.08
+Version: 0.10
 Release: alt1
 
 Summary: align output with given style
@@ -12,7 +12,7 @@ License: %perl_license
 Group: Development/Perl
 
 %define real_name Text-Aligner
-URL: http://search.cpan.org/~anno/%real_name/
+URL: http://search.cpan.org/dist/Text-Aligner/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -23,8 +23,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
 
-# Automatically added by buildreq on Sun Nov 28 2010
-BuildRequires: perl-Term-ANSIColor
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Term-ANSIColor perl-devel perl-podlators
+BuildRequires: perl-HTML-Parser perl-Module-Build perl-unicore
 
 %description
 Perl module Text::Aligner is used to justify strings to various
@@ -48,6 +49,9 @@ alignment styles.
 %perl_vendor_privlib/Text/Aligner*
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
 - New version
 
