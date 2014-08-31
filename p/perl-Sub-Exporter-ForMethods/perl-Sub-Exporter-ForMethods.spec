@@ -2,7 +2,7 @@
 
 Name: perl-Sub-Exporter-ForMethods
 Version: 0.100051
-Release: alt1
+Release: alt2
 
 Summary: Perl module with helper routines for using Sub::Exporter
 
@@ -20,9 +20,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-B-Hooks-EndOfScope perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-List-MoreUtils perl-MRO-Compat perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Classify perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-Variable-Magic perl-namespace-clean perl-parent
-BuildRequires: perl-devel perl-namespace-autoclean
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-B-Hooks-EndOfScope perl-Data-OptList perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Try-Tiny perl-namespace-clean
+BuildRequires: perl-Sub-Exporter perl-Sub-Name perl-Variable-Magic perl-devel perl-namespace-autoclean
 
 %description
 Perl module Sub::Exporter::ForMethods provides a helper routines
@@ -43,6 +43,9 @@ for using Sub::Exporter to build methods.
 %perl_vendor_privlib/Sub/Exporter/ForMethods*
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.100051-alt2
+- Updating BuildRequires
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.100051-alt1
 - New version
 
