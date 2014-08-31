@@ -1,7 +1,9 @@
 %define modulename icu
 
+%def_with python3
+
 Name: python-module-%modulename
-Version: 1.4
+Version: 1.8
 Release: alt1
 
 %setup_python_module %modulename
@@ -18,25 +20,64 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 Source: %srcname.tar
 
 BuildRequires: gcc-c++ libicu-devel python-devel
+BuildPreReq: python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
+PyICU - Python extension wrapping the ICU C++ API.
+
+%package -n python3-module-%modulename
+Summary: Python extension wrapping the ICU C++ API
+Group: Development/Python3
+
+%description -n python3-module-%modulename
 PyICU - Python extension wrapping the ICU C++ API.
 
 %prep
 %setup -n %srcname
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
 %python_sitelibdir/*
 %python_sitelibdir/*.egg-info
-%doc README samples/
+%doc CREDITS README samples/
+
+%if_with python3
+%files -n python3-module-%modulename
+%python3_sitelibdir/*
+%python3_sitelibdir/*.egg-info
+%doc CREDITS README samples/
+%endif
 
 %changelog
+* Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1
+- Version 1.8
+- Added module for Python 3
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 
