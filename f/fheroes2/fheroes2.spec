@@ -1,6 +1,6 @@
-%define rev svn3194
+%define rev svn3225
 Name: fheroes2
-Version: 20130303
+Version: 20131009
 Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
@@ -55,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Sun Aug 31 2014 Andrew Clark <andyc@altlinux.org> 20131009-alt1.svn3225
+- version update 20131009-alt1.svn3225
+
 * Sun Apr 6 2014 Andrew Clark <andyc@altlinux.org> 20130303-alt1.svn3194
 - version update 20130303-alt1.svn3194
 
