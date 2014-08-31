@@ -3,7 +3,7 @@
 %def_with lpr
 
 Name: grace
-Version: 5.1.23
+Version: 5.1.24
 Release: alt1
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
@@ -30,8 +30,11 @@ Requires: url_handler >= 0.2.1
 
 BuildPreReq: libXext-devel
 
-# Automatically added by buildreq on Wed Jun 03 2009
-BuildRequires: imake libXbae-devel libXmu-devel libXp-devel libXpm-devel libfftw-devel libjpeg-devel libopenmotif-devel libpng-devel t1lib-devel xorg-cf-files libX11-devel libSM-devel
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: fontconfig gnu-config groff-base libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libcloog-isl4 libhdf5-8-seq libnetcdf7-seq libopenmotif-devel sgml-common t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex xorg-printproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: OpenSP imake libXbae-devel libXext-devel libXmu-devel libXp-devel libXpm-devel libfftw-devel libjpeg-devel libnetcdf-devel libpng-devel linuxdoc-tools lprng t1lib-devel xorg-cf-files
+
+BuildRequires: sgml-tools texlive-latex-recommended
 
 %{?_with_pdflib:BuildRequires: libpdflib-lite-devel}
 %{?_with_lpr:BuildRequires: /usr/bin/lpr}
@@ -78,7 +81,7 @@ A library for interfacing with Grace using pipes
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -100,8 +103,11 @@ cp -a %SOURCE7 set_default_enc
 # NB: it's _not_ %%makeinstall_std unfortunately
 %makeinstall DESTDIR=%buildroot
 
+mkdir -p %buildroot%_man1dir
+install -pm644 doc/*.1 %buildroot%_man1dir
+
 install -pm755 set_default_enc %buildroot%_datadir/grace/auxiliary/
-ln -s ../doc/%name-%version/doc %buildroot%_datadir/grace/doc
+ln -s ../../doc/%name-%version/doc %buildroot%_datadir/grace/doc
 # UTF-8.enc missing by 5.1.23
 #ln -s UTF-8.enc %buildroot%_datadir/grace/fonts/enc/Default.enc
 
@@ -138,6 +144,12 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Sun Aug 31 2014 Michael Shigorin <mike@altlinux.org> 5.1.24-alt1
+- new version 5.1.24
+- disabled patch3
+- fixed doc symlink
+- buildreq
+
 * Fri Jun 20 2014 Michael Shigorin <mike@altlinux.org> 5.1.23-alt1
 - new version 5.1.23
   + dropped patch7
