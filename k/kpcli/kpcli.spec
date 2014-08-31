@@ -1,7 +1,7 @@
 # SPEC file for kpcli package
 
 Name: kpcli
-Version: 2.4
+Version: 2.7
 Release: alt1
 
 Summary: command line interface to work with KeePass database files
@@ -17,9 +17,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun May 29 2011
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
-BuildRequires: perl-Pod-Parser
+# Automatically added by buildreq on Sun Aug 31 2014
+# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
+BuildRequires: perl-podlators
 
 BuildRequires: perl-Crypt-Rijndael perl-Sort-Naturally perl-Term-ReadKey
 BuildRequires: perl-File-KeePass perl-Term-ShellUI perl-Clone
@@ -50,6 +50,9 @@ install -m 0644 -- %name.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 
 %changelog
+* Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.7-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.4-alt1
 - New version
 
