@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-Random-Source
-Version: 0.08
+Version: 0.10
 Release: alt1
 
 Summary: Get weak or strong random data from pluggable sources
@@ -31,7 +31,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/Crypt-Random-Source-%{version}
 
 # Automatically added by buildreq on Mon May 02 2011 (-bi)
 # optimized out: perl-B-Hooks-EndOfScope perl-Data-OptList perl-Package-Stash perl-Params-Util perl-Sub-Exporter perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Variable-Magic perl-devel
-BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean perl(Sub/Exporter.pm) perl(Module/Build.pm) perl(Class/Load.pm) perl(Class/Load.pm)
+BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean perl(Sub/Exporter.pm) perl(Module/Build.pm) perl(Class/Load.pm) perl(Class/Load.pm) perl(namespace/autoclean.pm)
 
 %description
 None.
@@ -49,6 +49,9 @@ None.
 %perl_vendor_privlib/Crypt/Random/Source.pm
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
