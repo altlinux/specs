@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(File/Spec/Functions.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
-Version:        1.37
-Release:        alt1_2
+Version:        1.38
+Release:        alt1
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Perl-MinimumVersion/
-Source0:        http://search.cpan.org/CPAN/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/N/NE/NEILB/Perl-MinimumVersion-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -64,6 +64,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1_2
 - update to new release by fcimport
 
