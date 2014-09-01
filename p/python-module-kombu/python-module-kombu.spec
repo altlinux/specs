@@ -1,16 +1,24 @@
 %define module_name kombu
 
+%def_with python3
+
 Name: python-module-%module_name
-Version: 2.5.10
-Release: alt1
-Group: System/Base
+Version: 3.0.21
+Release: alt1.git20140707
+Group: Development/Python
 License: BSD License
 Summary: Kombu is an AMQP messaging framework for Python
-URL: http://github.com/ask/kombu/
-Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
+URL: https://github.com/celery/kombu/
 Source: %name-%version.tar
 
-BuildRequires: python-module-distribute
+BuildPreReq: python-module-setuptools python-module-sphinx-devel
+BuildPreReq: python-module-django python-module-amqp
+BuildPreReq: python-module-anyjson python-module-boto
+BuildPreReq: python-module-pylibrabbitmq python-module-pymongo
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
@@ -22,25 +30,132 @@ The aim of `Kombu` is to make messaging in Python as easy as possible by
 providing an idiomatic high-level interface for the AMQP protocol, and also
 provide proven and tested solutions to common messaging problems.
 
+%package tests
+Summary: Tests for %module_name
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+AMQP is the Advanced Message Queuing Protocol, an open standard protocol
+for message orientation, queuing, routing, reliability and security.
+
+One of the most popular implementations of AMQP is `RabbitMQ`_.
+
+The aim of `Kombu` is to make messaging in Python as easy as possible by
+providing an idiomatic high-level interface for the AMQP protocol, and also
+provide proven and tested solutions to common messaging problems.
+
+This package contain tests for %module_name.
+
+%package -n python3-module-%module_name
+Summary: Kombu is an AMQP messaging framework for Python
+Group: Development/Python3
+
+%description -n python3-module-%module_name
+AMQP is the Advanced Message Queuing Protocol, an open standard protocol
+for message orientation, queuing, routing, reliability and security.
+
+One of the most popular implementations of AMQP is `RabbitMQ`_.
+
+The aim of `Kombu` is to make messaging in Python as easy as possible by
+providing an idiomatic high-level interface for the AMQP protocol, and also
+provide proven and tested solutions to common messaging problems.
+
+%package -n python3-module-%module_name-tests
+Summary: Tests for %module_name
+Group: Development/Python3
+Requires: python3-module-%module_name = %EVR
+
+%description -n python3-module-%module_name-tests
+AMQP is the Advanced Message Queuing Protocol, an open standard protocol
+for message orientation, queuing, routing, reliability and security.
+
+One of the most popular implementations of AMQP is `RabbitMQ`_.
+
+The aim of `Kombu` is to make messaging in Python as easy as possible by
+providing an idiomatic high-level interface for the AMQP protocol, and also
+provide proven and tested solutions to common messaging problems.
+
+This package contain tests for %module_name.
+
+%package docs
+Summary: Documentation for %module_name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+AMQP is the Advanced Message Queuing Protocol, an open standard protocol
+for message orientation, queuing, routing, reliability and security.
+
+One of the most popular implementations of AMQP is `RabbitMQ`_.
+
+The aim of `Kombu` is to make messaging in Python as easy as possible by
+providing an idiomatic high-level interface for the AMQP protocol, and also
+provide proven and tested solutions to common messaging problems.
+
+This package contains documentation for %module_name.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %ifarch x86_64
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
 
 %files
 %doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
 %python_sitelibdir/kombu*
+%exclude %python_sitelibdir/kombu/tests
+
+%files tests
+%python_sitelibdir/kombu/tests
+
+%files docs
+%doc docs/.build/html/*
+
+%if_with python3
+%files -n python3-module-%module_name
+%doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
+%python3_sitelibdir/kombu*
+%exclude %python3_sitelibdir/kombu/tests
+
+%files -n python3-module-%module_name-tests
+%python3_sitelibdir/kombu/tests
+%endif
 
 %changelog
+* Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.21-alt1.git20140707
+- Version 3.0.21
+- Added module for Python 3
+
 * Sat Apr 13 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.5.10-alt1
 - new version (ALT #28838)
 
