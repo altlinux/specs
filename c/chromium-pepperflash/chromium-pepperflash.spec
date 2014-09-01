@@ -1,6 +1,6 @@
 Name: 	  chromium-pepperflash
 Version:  1.5
-Release:  alt2
+Release:  alt3
 
 Summary:  Pepper Flash Player - browser plugin for Chromium
 License:  GPLv3+
@@ -11,9 +11,9 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source1:  update-pepperflash
 
-BuildRequires: curl wget gzip xml-utils glibc-utils
+BuildRequires: curl wget gzip xml-utils
 Requires: chromium
-Requires: curl wget gzip xml-utils glibc-utils
+Requires: curl wget gzip xml-utils
 
 %description
 This package will download Chrome from Google, and unpack it to make the
@@ -41,6 +41,9 @@ exit 0
 %dir %_cachedir/pepperflash
 
 %changelog
+* Mon Sep 01 2014 Andrey Cherepanov <cas@altlinux.org> 1.5-alt3
+- Remove unnecessary require of glibc-utils
+
 * Fri Aug 29 2014 Andrey Cherepanov <cas@altlinux.org> 1.5-alt2
 - Mark plugin file as %%ghost file (ALT #30225)
 - Package cache directory
