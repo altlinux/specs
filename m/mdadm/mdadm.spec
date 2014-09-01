@@ -1,5 +1,5 @@
 Name: mdadm
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -66,6 +66,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Mon Sep 01 2014 Alexey Shabalin <shaba@altlinux.ru> 3.3.2-alt1
+- 3.3.2
+
 * Tue Jun 17 2014 Alexey Shabalin <shaba@altlinux.ru> 3.3.1-alt1
 - 3.3.1
 
