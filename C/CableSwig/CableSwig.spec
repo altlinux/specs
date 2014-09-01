@@ -1,5 +1,5 @@
 Name: CableSwig
-Version: 3.20.0
+Version: 4.0
 Release: alt1
 License: BSD
 Summary: CableSwig is used to create interfaces (i.e. "wrappers") to interpreted languages such as Tcl and Python
@@ -45,5 +45,8 @@ language bindings to the target language.
 
 
 %changelog
+* Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1
+- Version 4.0
+
 * Mon Apr 18 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 3.20.0-alt1
 - Build for ALT
