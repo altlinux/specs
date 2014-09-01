@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-Package-Variant
-Version: 1.002001
+Version: 1.002002
 Release: alt1
 
 Summary: Parameterizable packages
@@ -52,6 +52,9 @@ not care about what kind of package it builds.
 %perl_vendor_privlib/Package/*
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.002002-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.002001-alt1
 - automated CPAN update
 
