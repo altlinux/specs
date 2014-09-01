@@ -1,9 +1,9 @@
 
 %define oname iceB
-%define oversion 14_15
+%define oversion 15_0
 
 Name:    iceb
-Version: 14.15
+Version: 15.0
 Release: alt1
 
 Summary: Free financial accounting system (console)
@@ -19,6 +19,7 @@ Source1: %name
 Source3: %name.16.xpm
 Source4: %name.32.xpm
 Source5: %name.48.xpm
+Source6: %name.watch
 
 #Patch:   iceb-fix-overflow-buffer.patch
 Patch1:	 %name-12.11-remove-missing-automake-target.patch
@@ -73,6 +74,9 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %_datadir/%name
 
 %changelog
+* Mon Sep 01 2014 Andrey Cherepanov <cas@altlinux.org> 15.0-alt1
+- Nee version
+
 * Mon Jun 02 2014 Andrey Cherepanov <cas@altlinux.org> 14.15-alt1
 - New version
 
