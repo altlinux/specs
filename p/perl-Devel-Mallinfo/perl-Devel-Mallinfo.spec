@@ -1,14 +1,14 @@
 %define dist Devel-Mallinfo
 Name: perl-%dist
-Version: 12
-Release: alt2
+Version: 13
+Release: alt1
 
 Summary: Get mallinfo() malloc memory stats
 License: GPLv3
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KR/KRYDE/Devel-Mallinfo-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: perl-BSD-Resource perl-devel
@@ -34,6 +34,9 @@ any libraries are using from malloc().
 %perl_vendor_autolib/Devel
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 13-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 12-alt2
 - built for perl 5.18
 
