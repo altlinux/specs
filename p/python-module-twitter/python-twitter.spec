@@ -1,5 +1,9 @@
-Name: python-module-twitter
-Version: 0.8.2
+%define oname twitter
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 2.0
 Release: alt1
 Summary: Python Interface for Twitter API
 
@@ -11,27 +15,71 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-dev
+BuildRequires: python-devel python-module-setuptools
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python-tools-2to3
+%endif
+%py_requires rfc822 requests requests_oauthlib
 
 %description
 This library provides a pure python interface for the Twitter API.
 
+%package -n python3-module-%oname
+Summary: Python Interface for Twitter API
+Group: Development/Python3
+%py3_requires rfc822py3 requests requests_oauthlib
+
+%description -n python3-module-%oname
+This library provides a pure python interface for the Twitter API.
+
 %prep
-%setup -q
+%setup
+
+%if_with python3
+cp -fR . ../python3
+find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+find ../python3 -type f -name '*.py' -exec sed -i 's|rfc822|rfc822py3|g' '{}' +
+%endif
 
 %build
+export LC_ALL=en_US.UTF-8
+
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
-chmod a-x README
-%__python setup.py install --skip-build --root %buildroot
+export LC_ALL=en_US.UTF-8
+
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
-%doc PKG-INFO README CHANGES COPYING LICENSE doc/twitter.html examples/
-# For noarch packages: sitelib
+%doc *.rst CHANGES COPYING LICENSE NOTICE doc/twitter.html examples/
 %python_sitelibdir/*
 
+%if_with python3
+%files -n python3-module-%oname
+%doc *.rst CHANGES COPYING LICENSE NOTICE doc/twitter.html examples/
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
+- Version 2.0
+- Added module for Python 3
+
 * Tue Feb 07 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 
