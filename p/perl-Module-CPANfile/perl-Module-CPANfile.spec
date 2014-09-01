@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 1.0002
+%define module_version 1.1000
 %define module_name Module-CPANfile
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.0002
+Version: 1.1000
 Release: alt1
 Summary: Parse cpanfile
 Group: Development/Perl
 License: perl
 URL: https://github.com/miyagawa/cpanfile
 
-Source0: http://cpan.org.ua/authors/id/M/MI/MIYAGAWA/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/Module-CPANfile-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -47,6 +47,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.1000-alt1
+- automated CPAN update
+
 * Thu Oct 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.0002-alt1
 - initial import by package builder
 
