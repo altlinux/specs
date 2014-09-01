@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -160,7 +160,7 @@ Release: alt6
 %endif
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
-%Extra_modules fglrx 14.10.1006.1001
+%Extra_modules fglrx 14.20
 #Extra_modules knem 1.1.1
 #Extra_modules exfat 1.2.8
 %Extra_modules ipt_NETFLOW 2.0
@@ -1197,7 +1197,7 @@ config_enable \
 config_val bootparam_softlockup_panic_value 0
 %endif
 
-. gcc_version.inc
+. ./gcc_version.inc
 export CC="gcc-$GCC_VERSION"
 
 echo "Building kernel %kversion-%flavour-%krelease"
@@ -1906,6 +1906,54 @@ done)
 
 
 %changelog
+* Sat Aug 30 2014 Led <led@altlinux.ru> 3.15.10-alt7
+- updated:
+  + fix-arch-arm-mach-omap2
+  + fix-drivers-base--firmware_class
+  + fix-drivers-gpu-drm--omapdrm
+  + fix-drivers-misc-mei--mei
+  + fix-drivers-net-ethernet-broadcom--bnx2x
+  + fix-drivers-usb-host--ohci-hcd
+  + fix-fs-btrfs
+  + fix-fs-ext4
+  + fix-kernel-sched
+  + fix-mm
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+  + feat-tools--kvm
+- added:
+  + fix-drivers-char-tpm--tpm_i2c_stm_st33
+  + fix-drivers-crypto-ux500--cryp
+  + fix-Documentation--stable_kernel_rules
+  + fix-arch-arm
+  + fix-arch-arm-boot
+  + fix-arch-arm64
+  + fix-drivers-hid
+  + fix-drivers-hid--hid-logitech-dj
+  + fix-drivers-hwmon--ads1015
+  + fix-drivers-hwmon--amc6821
+  + fix-drivers-hwmon--dme1737
+  + fix-drivers-hwmon--gpio-fan
+  + fix-drivers-hwmon--lm78
+  + fix-drivers-hwmon--lm85
+  + fix-drivers-hwmon--lm92
+  + fix-drivers-hwmon--sis5595
+  + fix-drivers-i2c-busses--i2c-at91
+  + fix-drivers-mmc-host--mmci
+  + fix-drivers-tty-serial--serial_core
+  + fix-drivers-usb-host--ehci-pci
+  + fix-drivers-usb-serial--ftdi_sio
+  + fix-fs-debugfs
+  + fix-sound-pci-hda--snd-hda-codec-ca0132
+  + fix-sound-pci-hda--snd-hda-codec-idt
+  + fix-sound-pci-oxygen--snd_virtuoso
+  + fix-sound-usb--snd-usb-audio
+  + fix-virt-kvm--kvm
+  + fix-virt-kvm--kvm-hv
+- disabled:
+  + FW_LOADER_USER_HELPER_FALLBACK
+  + DELL_RBU
+- fglrx 14.20
+
 * Wed Aug 27 2014 Led <led@altlinux.ru> 3.15.10-alt6
 - added:
   + fix-drivers-pci-hotplug--rpaphp
