@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm)
 # END SourceDeps(oneline)
-%define module_version 2.08
+%define module_version 2.09
 %define module_name Module-Release
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.08
-Release: alt2
+Version: 2.09
+Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/B/BD/BDFOY/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Module-Release-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.08-alt2
 - moved to Sysiphus as dependency
 
