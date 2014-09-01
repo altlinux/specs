@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.44
+Version: 1.1.45
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Sep 01 2014 Michael Shigorin <mike@altlinux.org> 1.1.45-alt1
+- starterkits alpha
+
 * Mon Aug 18 2014 Michael Shigorin <mike@altlinux.org> 1.1.44-alt1
 - connman fixup
 
