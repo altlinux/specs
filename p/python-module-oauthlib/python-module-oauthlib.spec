@@ -1,9 +1,9 @@
 %global modname oauthlib
-%def_without python3
+%def_with python3
 
 Name:               python-module-oauthlib
 Version:            0.6.0
-Release:            alt1
+Release:            alt1.1
 Summary:            An implementation of the OAuth request-signing logic
 
 Group:              Development/Python
@@ -37,7 +37,7 @@ very little effort.
 %if_with python3
 %package -n python3-module-%{modname}
 Summary:        An implementation of the OAuth request-signing logic
-Group:		Development/Python
+Group:		Development/Python3
 BuildArch:      noarch
 BuildRequires:  rpm-build-python3
 BuildRequires:  python3-module-pytest
@@ -73,12 +73,27 @@ rm -rf %{modname}.egg-info
 awk 'NR==1{print "import __main__; __main__.__requires__ = __requires__ = [\"pycrypto>=2.6\"]; import pkg_resources"}1' setup.py > setup.py.tmp
 mv setup.py.tmp setup.py
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 # %check
 # %__python setup.py test
 
@@ -87,7 +102,17 @@ mv setup.py.tmp setup.py
 %{python_sitelibdir}/%{modname}/
 %{python_sitelibdir}/%{modname}-%{version}*
 
+%if_with python3
+%files -n python3-module-%modname
+%doc README.rst LICENSE
+%{python3_sitelibdir}/%{modname}/
+%{python3_sitelibdir}/%{modname}-%{version}*
+%endif
+
 %changelog
+* Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.1
+- Added module for Python 3
+
 * Fri Jul 18 2014 Lenar Shakirov <snejok@altlinux.ru> 0.6.0-alt1
 - First build for ALT (based on Fedora 0.6.0-6.fc21.src)
 
