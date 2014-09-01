@@ -1,6 +1,6 @@
 %define dist ExtUtils-LibBuilder
 Name: perl-%dist
-Version: 0.04
+Version: 0.06
 Release: alt1
 
 Summary: A tool to build C libraries
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AM/AMBS/ExtUtils-LibBuilder-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,5 +37,8 @@ This module main goal is to help in that task.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt1
 - initial revision
