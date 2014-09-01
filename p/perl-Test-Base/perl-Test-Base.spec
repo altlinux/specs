@@ -2,7 +2,7 @@
 %define module Test-Base
 
 Name: perl-%module
-Version: 0.86
+Version: 0.88
 Release: alt1
 
 Summary: Data driven testing framework for perl
@@ -38,6 +38,9 @@ trivial.
 %perl_vendor_privlib/Test/
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
 - automated CPAN update
 
