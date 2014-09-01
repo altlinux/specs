@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-Any
 Name: perl-%dist
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: Wrapper Class for the various JSON classes
@@ -36,6 +36,9 @@ installed.
 %perl_vendor_privlib/JSON
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
 - automated CPAN update
 
