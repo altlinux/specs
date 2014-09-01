@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(File/Temp.pm) perl(Symbol.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Without-Module
-Version:        0.17
-Release:        alt2_15
+Version:        0.18
+Release:        alt1
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Without-Module/
-Source0:        http://www.cpan.org/modules/by-module/Test/Test-Without-Module-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/C/CO/CORION/Test-Without-Module-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Tue Jul 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_15
 - update to new release by fcimport
 
