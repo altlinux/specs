@@ -1,5 +1,5 @@
 %define module_name	fglrx
-%define module_version	14.10.1006.1001
+%define module_version	14.20
 %define module_release alt1
 
 %define flavour std-def
@@ -66,14 +66,11 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Fri Jun 06 2014 Led <led@altlinux.ru> 2:14.10.1006.1001-alt1
-- 14.10.1006.1001 (Catalyst 14.4 rev2)
+* Tue Sep  2 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.20-alt1
+- 14.20
 
-* Fri May 09 2014 Led <led@altlinux.ru> 2:14.10.1006-alt2
-- fixed build module for kernel 3.14
-
-* Mon May 05 2014 Led <led@altlinux.ru> 2:14.10.1006-alt1
-- 14.10.1006 (Catalyst 14.4)
+* Wed Apr 30 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.10.1006-alt1
+- 14.10.1006
 
 * Fri Apr 25 2014 Led <led@altlinux.ru> 2:14.10-alt1
 - 14.10 (Catalyst 14.4 RC)
