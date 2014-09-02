@@ -3,8 +3,8 @@
 
 %define pre %nil
 Name: inkscape
-Version: 0.48.4
-Release: alt6
+Version: 0.48.5
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -23,11 +23,6 @@ Patch: %name.patch
 
 #fedora patches
 Patch10:         inkscape-0.48.2-types.patch
-Patch110:        inkscape-0.48.4-spuriouscomma.patch
-Patch111:        inkscape-0.48.4-freetype.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=1097945
-Patch112:        inkscape-0.48.4-poppler-0.26.patch
-Patch113:        inkscape-0.48.4-gc-7.4.patch
 Patch114:        0001-update-to-new-libwpg.patch
 
 # Typical environment for GTK program
@@ -80,10 +75,6 @@ inkview is standalone viewer for Inkscape files (SVG)
 
 # fedora patches
 %patch10 -p1 -b .types
-%patch110 -p0 -b .spuriouscomma
-%patch111 -p0 -b .freetype
-%patch112 -p1 -b .poppler
-%patch113 -p1 -b .gc
 %patch114 -p1 -b .libwpg
 
 #cat %%SOURCE1 >po/ru.po
@@ -135,6 +126,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.48.5-alt1
+- new version 0.48.5 (with rpmrb script)
+
 * Fri Jun 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.48.4-alt6
 - switch to librevenge
 - build without gnome-vfs support
