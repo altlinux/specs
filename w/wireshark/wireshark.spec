@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 1.10.8
+Version: 1.12.0
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -21,8 +21,9 @@ Source3: %name.watch
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Sun Dec 23 2007
-BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgtk+2-devel libgcrypt-devel zlib-devel
+BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5-devel perl-Pod-Parser perl-devel
+BuildRequires: libgtk+3-devel
 
 %package base
 Summary: Wireshark base package
@@ -127,9 +128,9 @@ export ac_cv_lib_lualib_luaL_openlib=no
    --disable-static \
    --enable-shared \
    --disable-warnings-as-errors \
-   \
+   --with-qt=no \
+   --with-gtk3=yes \
    --enable-wireshark \
-   --enable-gtk2 \
    --enable-tshark \
    --enable-editcap \
    --enable-capinfos \
@@ -187,6 +188,7 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %doc AUTHORS COPYING ChangeLog INSTALL NEWS README* doc/README.*
 %config %_controldir/%name-capture
 %_bindir/capinfos
+%_bindir/captype
 %_bindir/dftest
 %attr(700,root,root) %verify(not mode,group) %_bindir/dumpcap
 %_bindir/editcap
@@ -212,6 +214,7 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/%name/plugins/%version/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
+%_libdir/libfiletap.so.*
 
 %files gtk+
 %_bindir/wireshark
@@ -236,6 +239,9 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Sep 02 2014 Anton Farygin <rider@altlinux.ru> 1.12.0-alt1
+- new version
+
 * Mon Jun 16 2014 Anton Farygin <rider@altlinux.ru> 1.10.8-alt1
 - new version 1.10.8
 
