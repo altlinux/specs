@@ -5,10 +5,10 @@
 %define build_lang uk_UA.KOI8-U
 
 %define oname iceBw
-%define oversion 9_15
+%define oversion 10_0
 
 Name:    icebw
-Version: 9.15
+Version: 10.0
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -19,6 +19,7 @@ Url:     http://www.iceb.net.ua
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %url/download/%name-%oversion.tar.bz2
+Source1: %name.watch
 
 BuildRequires: gcc-c++ libMySQL-devel libgtk+3-devel
 
@@ -43,6 +44,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Tue Sep 02 2014 Andrey Cherepanov <cas@altlinux.org> 10.0-alt1
+- New version
+
 * Mon Jun 02 2014 Andrey Cherepanov <cas@altlinux.org> 9.15-alt1
 - New version
 
