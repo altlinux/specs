@@ -1,5 +1,5 @@
 Name: fmit
-Version: 0.99.2
+Version: 0.99.5
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -49,9 +49,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ChangeLog TODO
 %_bindir/%name
 %_datadir/%name/
+%_datadir/appdata/
+%_iconsdir/hicolor/*/apps/fmit.*
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.99.5-alt1
+- new version 0.99.5 (with rpmrb script)
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.99.2-alt1
 - new version 0.99.2 (with rpmrb script)
 
