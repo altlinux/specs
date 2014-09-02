@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.4.3
-Release: alt2
+Release: alt3
 Group: Development/Python
 License: BSD License
 Summary: Yolk is a Python tool for obtaining information about installed Python packages
@@ -42,6 +42,7 @@ and show you which have newer versions available by querying PyPI.
 %if_with python3
 cp -fR . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+sed -i 's|urllib2|urllib.request|g' ../python3/yolk/pypi.py
 %endif
 
 %build
@@ -87,6 +88,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt3
+- yolk.pypi: Fixed for Python 3
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt2
 - Added module for Python 3
 
