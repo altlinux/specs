@@ -1,9 +1,9 @@
 Name: gocr
-Version: 0.49
-Release: alt2
+Version: 0.50
+Release: alt1
 
 Summary: GOCR/JOCR is an optical character recognition program
-Summary(ru_RU.KOI8-R): GOCR/JOCR - программа распознавания символов (OCR)
+Summary(ru_RU.UTF-8): GOCR/JOCR - п©я─п╬пЁя─п╟п╪п╪п╟ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я│п╦п╪п╡п╬п╩п╬п╡ (OCR)
 
 License: GPL
 Group: Graphics
@@ -11,7 +11,7 @@ Url: http://jocr.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www-e.uni-magdeburg.de/jschulen/ocr/%name-%version.tar.bz2
+Source: http://www-e.uni-magdeburg.de/jschulen/ocr/%name-%version.tar
 Patch: %name.as-needed.patch
 
 BuildRequires: hostinfo, libnetpbm-devel, transfig, 
@@ -25,18 +25,18 @@ pnm.gz, pnm.bz2, png, jpg, tiff, gif, bmp and others.
 
 You can use XSane or Kooka as a graphical frontends for GOCR.
 
-%description -l ru_RU.KOI8-R
-GOCR/JOCR - это программа оптического распознавания символов,
-выпущенная под лицензией GNU General Public License.
-Она читает изображения во многих форматах (pnm, pbm, pgm, ppm,
-некоторые файлы pcx и tga (или PNM со стандартного ввода)
-и выводит текстовый файл;
-если уставлены pnm-tools, и программа запускается на Linux-системе,
-вы также можете использовать форматы 
-pnm.gz, pnm.bz2, png, jpg, tiff, gif, bmp и другие.
+%description -l ru_RU.UTF-8
+GOCR/JOCR - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╬п©я┌п╦я┤п╣я│п╨п╬пЁп╬ я─п╟я│п©п╬п╥п╫п╟п╡п╟п╫п╦я▐ я│п╦п╪п╡п╬п╩п╬п╡,
+п╡я▀п©я┐я┴п╣п╫п╫п╟я▐ п©п╬п╢ п╩п╦я├п╣п╫п╥п╦п╣п╧ GNU General Public License.
+п·п╫п╟ я┤п╦я┌п╟п╣я┌ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╡п╬ п╪п╫п╬пЁп╦я┘ я└п╬я─п╪п╟я┌п╟я┘ (pnm, pbm, pgm, ppm,
+п╫п╣п╨п╬я┌п╬я─я▀п╣ я└п╟п╧п╩я▀ pcx п╦ tga (п╦п╩п╦ PNM я│п╬ я│я┌п╟п╫п╢п╟я─я┌п╫п╬пЁп╬ п╡п╡п╬п╢п╟)
+п╦ п╡я▀п╡п╬п╢п╦я┌ я┌п╣п╨я│я┌п╬п╡я▀п╧ я└п╟п╧п╩;
+п╣я│п╩п╦ я┐я│я┌п╟п╡п╩п╣п╫я▀ pnm-tools, п╦ п©я─п╬пЁя─п╟п╪п╪п╟ п╥п╟п©я┐я│п╨п╟п╣я┌я│я▐ п╫п╟ Linux-я│п╦я│я┌п╣п╪п╣,
+п╡я▀ я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌п╣ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я└п╬я─п╪п╟я┌я▀ 
+pnm.gz, pnm.bz2, png, jpg, tiff, gif, bmp п╦ п╢я─я┐пЁп╦п╣.
 
-Вы можете использовать программы XSane или Kooka как графические
-оболочки для GOCR.
+п▓я▀ п╪п╬п╤п╣я┌п╣ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©я─п╬пЁя─п╟п╪п╪я▀ XSane п╦п╩п╦ Kooka п╨п╟п╨ пЁя─п╟я└п╦я┤п╣я│п╨п╦п╣
+п╬п╠п╬п╩п╬я┤п╨п╦ п╢п╩я▐ GOCR.
 
 %prep
 %setup -q
@@ -58,6 +58,9 @@ rm -f %buildroot%_bindir/%name.tcl
 %_man1dir/gocr.1*
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.50-alt1
+- new version (0.50) with rpmgs script
+
 * Wed Apr 27 2011 Andrey Cherepanov <cas@altlinux.org> 0.49-alt2
 - Merge with vitty@
 
