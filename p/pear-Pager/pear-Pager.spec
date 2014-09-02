@@ -1,7 +1,7 @@
 %define pear_name Pager
 
 Name: pear-Pager
-Version: 2.4.8
+Version: 2.4.9
 Release: alt1
 
 Summary: Data paging class
@@ -51,6 +51,9 @@ Two operating modes available: "Jumping" and "Sliding" window style.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
+- new version 2.4.9 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4.8-alt1
 - new version 2.4.8 (with rpmrb script)
 
