@@ -1,5 +1,5 @@
 %define branch 1.6
-%define version %branch.5
+%define version %branch.6
 %define release alt1
 %define origname Django
 %define oname django
@@ -376,6 +376,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
+- Version 1.6.6
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.5-alt1
 - Version 1.6.5
 
