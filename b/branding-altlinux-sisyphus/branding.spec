@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20140401
+Version: 20140902
 Release: alt1
 BuildArch: noarch
 
@@ -446,6 +446,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Tue Sep 02 2014 Michael Shigorin <mike@altlinux.org> 20140902-alt1
+- updated company address
+
 * Tue Apr 01 2014 Michael Shigorin <mike@altlinux.org> 20140401-alt1
 - enabled mediachk by default
 
