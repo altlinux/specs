@@ -1,10 +1,12 @@
-%def_with ocaml
+%def_enable ocaml
+%def_enable perl
+%def_enable python
 %def_disable ruby
 %def_disable static
 
 Name: hivex
-Version: 1.3.6
-Release: alt3
+Version: 1.3.10
+Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -17,15 +19,11 @@ Patch1: %name-%version-%release.patch
 
 BuildRequires: perl-Test-Pod
 BuildRequires: perl-Test-Pod-Coverage
-BuildRequires: perl-IO-stringy
 BuildRequires: perl-libintl
-%if_with ocaml
-BuildRequires: ocaml findlib ocamldoc ocamlbuild
-%endif
-%if_enabled ruby
-BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems
-%endif
-BuildRequires: python-devel
+%{?_enable_ocaml:BuildRequires: ocaml findlib ocamldoc ocamlbuild}
+%{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
+%{?_enable_perl:BuildRequires: perl(Test/More.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Stringy.pm)}
+%{?_enable_python:BuildRequires: python-devel}
 BuildRequires: libreadline-devel
 BuildRequires: libxml2-devel
 
@@ -77,7 +75,6 @@ Requires: %name = %version-%release
 %name-static contains the statically linked library
 for %name.
 
-%if_with ocaml
 %package -n ocaml-%name
 Summary: OCaml bindings for %name
 Group: Development/Other
@@ -97,7 +94,6 @@ Requires: ocaml-%name = %version-%release
 %description -n ocaml-%name-devel
 ocaml-%name-devel contains development libraries
 required to use the OCaml bindings for %name.
-%endif
 
 %package -n perl-%name
 Summary: Perl bindings for %name
@@ -137,17 +133,20 @@ ln -s gnulib-%name-%version .gnulib
 %configure \
 	%{subst_enable static} \
 	%{subst_enable ruby} \
-	--disable-rpath \
-	--disable-silent-rules
+	%{subst_enable ocaml} \
+	%{subst_enable perl} \
+	%{subst_enable python} \
+	--disable-rpath
+
 %make INSTALLDIRS=vendor
 
 %check
-make check
+%make check
 
 %install
 %make install INSTALLDIRS=vendor DESTDIR=%buildroot
 
-%if_without ocaml
+%if_disabled ocaml
 # Delete OCaml files, in case the user had OCaml installed and it was
 # picked up by the configure script.
 # XXX Add ./configure --disable-ocaml upstream.
@@ -192,7 +191,7 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %_libdir/libhivex.a
 %endif
 
-%if_with ocaml
+%if_enabled ocaml
 %files -n ocaml-%name
 %doc README
 %_libdir/ocaml/hivex
@@ -210,12 +209,16 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %_libdir/ocaml/hivex/*.mli
 %endif
 
+%if_enabled perl
 %files -n perl-%name
 %_bindir/hivexregedit
 %perl_vendor_archlib/*
+%endif
 
+%if_enabled python
 %files -n python-module-%name
 %python_sitelibdir/*
+%endif
 
 %if_enabled ruby
 %files -n ruby-%name
@@ -225,6 +228,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Tue Sep 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.10-alt1
+- 1.3.10
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.6-alt3
 - built for perl 5.18
 
