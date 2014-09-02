@@ -2,7 +2,7 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.5
+Version: 3.5.1
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -36,9 +36,10 @@ Patch8: audacious-plugins-ffmpeg-0.7.1.patch
 
 Requires: %oname = %version
 
-# Automatically added by buildreq on Sun Aug 05 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXrender-devel libalsa-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libsndfile-devel libstdc++-devel pkg-config termutils xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel
+# manually removed: i586-libxcb  python3 ruby ruby-stdlibs
+# Automatically added by buildreq on Tue Sep 02 2014
+# optimized out: glib2-devel gnu-config libGL-devel libX11-devel libXfixes-devel libXrender-devel libalsa-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libsndfile-devel libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules python-modules-xml python3-base termutils xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libavformat-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmodplug-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libsidplayfp-devel libvorbis-devel libwavpack-devel libxml2-devel python-module-PyXML python-module-cmd2 python-module-google python-module-mwlib
 
 BuildRequires: lib%oname-devel = %version
 
@@ -86,6 +87,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt1
+- new version 3.5.1 (with rpmrb script)
+
 * Tue May 06 2014 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
 - new version 3.5 (with rpmrb script)
 
