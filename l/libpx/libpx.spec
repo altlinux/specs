@@ -1,8 +1,8 @@
 # TODO: x86_64
 %define oname pxlib
 Name: libpx
-Version: 0.6.4
-Release: alt1.qa2
+Version: 0.6.5
+Release: alt1
 
 Summary: A library to read Paradox DB files
 
@@ -71,6 +71,9 @@ CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
 %_man3dir/*
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.6.5-alt1
+- new version 0.6.5 (with rpmrb script)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.4-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
