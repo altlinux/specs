@@ -1,7 +1,7 @@
 %define Name RepetierHost
 Name: repetierhost
 Version: 0.90D
-Release: alt2
+Release: alt3
 Summary: 3D printer control software
 License: ASL 2.0
 URL: http://www.repetier.com/
@@ -77,6 +77,9 @@ chmod +x %buildroot%_bindir/%name
 %_datadir/pixmaps/%{Name}.ico
 
 %changelog
+* Tue Sep 02 2014 Dmitry Derjavin <dd@altlinux.org> 0.90D-alt3
+- Categories list fixed in the .desktop file.
+
 * Tue Feb 18 2014 Dmitry Derjavin <dd@altlinux.org> 0.90D-alt2
 - Possible xbuild race workaround.
 
