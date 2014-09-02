@@ -1,6 +1,6 @@
 Name: kernel-source-omnibook
 Version: 20110911 
-Release: alt1
+Release: alt2
 
 Summary: Kernel module for some Toshiba and HP laptops
 License: GPL
@@ -28,6 +28,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Sep 02 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20110911-alt2
+- kernel 3.14 support added
+
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20110911-alt1
 - updated from git, kernel 3.10 support added
 
