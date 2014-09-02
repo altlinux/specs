@@ -1,8 +1,8 @@
-%define  snapshot bbe6842
+%define  snapshot %nil
 
 Name:    yagf
-Version: 0.9.4
-Release: alt1.git%snapshot
+Version: 0.9.4.3
+Release: alt1
 
 Summary: YAGF is a graphical front-end for cuneiform and tesseract OCR tools
 Summary(ru_RU.UTF-8): Оболочка YAGF предоставляет графический интерфейс для систем распознавания текста Cuneiform и Tesseract
@@ -66,6 +66,10 @@ subst "s,/usr/local,%buildroot/usr/,g" ./CMakeLists.txt
 %_desktopdir/YAGF.desktop
 
 %changelog
+* Tue Sep 02 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4.3-alt1
+- New version
+- Do not clean data to prevent program crash (ALT #30403)
+
 * Thu Aug 07 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.4-alt1.gitbbe6842
 - New version
 
