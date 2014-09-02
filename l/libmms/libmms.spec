@@ -1,5 +1,5 @@
 Name: libmms
-Version: 0.6.2
+Version: 0.6.4
 Release: alt1
 
 Summary: mms stream protocol library
@@ -47,6 +47,9 @@ to allow you to devel with libmms.
 %_pkgconfigdir/libmms.pc
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1
+- new version 0.6.4 (with rpmrb script)
+
 * Wed Mar 09 2011 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - new version 0.6.2 (with rpmrb script)
 
