@@ -1,6 +1,6 @@
 Name: asymptote
-Version: 2.28
-Release: alt1.1
+Version: 2.32
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
@@ -67,6 +67,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 2.32-alt1
+- new version 2.32 (with rpmrb script)
+
 * Sat Jul 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28-alt1.1
 - Rebuilt with new gsl
 
