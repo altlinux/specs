@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.2.16
+Version: 3.2.17
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -129,14 +129,13 @@ group.
 This package contains headers and other development files required to
 build applications using the GnuTLS compatibility OpenSSL library.
 
-%package utils
+%package -n gnutls-utils
 Summary: TLS protocol utilities
 Group: Security/Networking
-Provides: gnutls-utils = %version
-Obsoletes: gnutls-utils < %version
-Obsoletes: gnutls-utils26 < %version
+Obsoletes: gnutls-utils26 < %version-%release
+Obsoletes: gnutls-utils28 < %version-%release
 
-%description utils
+%description -n gnutls-utils
 GnuTLS is a project that aims to develop a library which provides a
 secure  layer, over a reliable transport layer.  Currently the GnuTLS
 library implements the proposed standards by the IETF's TLS working
@@ -257,7 +256,7 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %_man3dir/*
 %_infodir/*
 
-%files utils
+%files -n gnutls-utils
 %_bindir/*
 %_man1dir/*
 %dir %docdir
@@ -275,6 +274,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Tue Sep 02 2014 Mikhail Efremov <sem@altlinux.org> 3.2.17-alt1
+- Rename utils subpackage to gnutls-utils.
+- Updated to 3.2.17.
+
 * Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 3.2.16-alt1
 - Drop obsoleted patches.
 - Drop libgnutls-extra.
