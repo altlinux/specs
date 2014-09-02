@@ -1,5 +1,5 @@
 Name: log4net
-Version: 1.2.11
+Version: 1.2.13
 Release: alt1
 
 Summary: A .NET framework for logging
@@ -41,6 +41,9 @@ gacutil -f -package log4net -root %buildroot%_monodir/.. -i bin/mono/2.0/release
 %_pkgconfigdir/log4net.pc
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.13-alt1
+- new version 1.2.13 (with rpmrb script)
+
 * Wed Feb 15 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.11-alt1
 - 1.2.11
 - build over nant
