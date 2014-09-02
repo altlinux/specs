@@ -1,5 +1,5 @@
 Name: gputils
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
@@ -42,6 +42,9 @@ an up-to-date list of what gputils can do.
 %doc AUTHORS ChangeLog NEWS README doc/gputils.pdf doc/gputils.ps
 
 %changelog
+* Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 
