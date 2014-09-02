@@ -17,10 +17,10 @@
 Summary: Xen is a virtual machine monitor
 Name: xen
 Version: 4.4.1
-%define pre -rc1
+%define pre %nil
 # Hypervisor ABI
 %define hv_abi 4.4
-Release: alt0.2
+Release: alt1
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 %define qemu_ver %version%pre
@@ -356,11 +356,6 @@ export GIT=$(which true)
 %{?_enable_ocamltools:install -d -m 0755 %buildroot%_libdir/ocaml/stublibs}
 %{?_with_efi:install -d -m 0755 %buildroot/boot/efi/efi/altlinux}
 %make_install DESTDIR=%buildroot %{?_with_efi:LD_EFI=x86_64-pc-mingw32-ld}
-
-# FIXME
-%ifarch %arm aarch64
-cp -a %name/include/public/arch-arm %buildroot%_includedir/%name/
-%endif
 
 %{?_with_efi:mv %buildroot/boot/efi/efi %buildroot/boot/efi/EFI}
 
@@ -737,6 +732,28 @@ done
 
 
 %changelog
+* Tue Sep 02 2014 Led <led@altlinux.ru> 4.4.1-alt1
+- 4.4.1 release
+
+* Thu Aug 28 2014 Led <led@altlinux.ru> 4.4.1-alt0.7
+- upstream fixes:
+  + CVE-2014-4611
+
+* Sat Aug 16 2014 Led <led@altlinux.ru> 4.4.1-alt0.6
+- upstream updates and fixes:
+  + CVE-2014-5146
+  + CVE-2014-5147
+  + CVE-2014-5148
+
+* Sun Aug 10 2014 Led <led@altlinux.ru> 4.4.1-alt0.5
+- 4.4.1-rc2
+
+* Sun Aug 03 2014 Led <led@altlinux.ru> 4.4.1-alt0.4
+- upstream updates
+
+* Thu Jul 24 2014 Led <led@altlinux.ru> 4.4.1-alt0.3
+- upstream updates
+
 * Thu Jul 10 2014 Led <led@altlinux.ru> 4.4.1-alt0.2
 - upstream updates
 - libxen obsoletes xen-libs (ALT#30173)
