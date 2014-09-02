@@ -7,15 +7,13 @@
 %def_disable debug
 
 Name: %{_name}3
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: %lgpl2plus
 Group: System/Libraries
 URL: ftp://ftp.gnome.org
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -86,7 +84,7 @@ libraries and objects.
 %endif
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -100,7 +98,7 @@ libraries and objects.
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --output=%_name.lang %_name-%api_ver
 
@@ -132,6 +130,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Tue Sep 02 2014 Yuri N. Sedunov <aris@altlinux.org> 3.4.9-alt1
+- 3.4.9
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt1
 - 3.4.7
 
