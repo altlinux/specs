@@ -1,8 +1,8 @@
 %define tarname tracwysiwygplugin
 Name: python-module-trac-wysiwygplugin
-%define r_minor r7916
-Version: 0.2
-Release: alt1.%r_minor.1
+%define r_minor r13457
+Version: 0.12.0.5
+Release: alt1.%r_minor
 
 Summary: Wysiwyg editor embedded into textarea.wikitext
 
@@ -11,8 +11,7 @@ Group: Development/Python
 License: http://www.opensource.org/licenses/mit-license.php
 Url: http://trac-hacks.org/wiki/tracwysiwygplugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+# http://trac-hacks.org/svn/tracwysiwygplugin/0.12/
 Source: %{tarname}-%r_minor.zip
 
 BuildArch: noarch
@@ -23,13 +22,13 @@ BuildRequires: python-module-setuptools unzip
 Wysiwyg editor embedded into textarea.wikitext
 
 %prep
-%setup -q -n %tarname/0.11
+%setup -n %tarname
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 chmod -R a+r %buildroot%python_sitelibdir/tracwysiwyg
 
@@ -37,6 +36,9 @@ chmod -R a+r %buildroot%python_sitelibdir/tracwysiwyg
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0.5-alt1.r13457
+- Version 0.12.0.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2-alt1.r7916.1
 - Rebuild with Python-2.7
 
