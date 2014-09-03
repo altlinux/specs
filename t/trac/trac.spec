@@ -1,7 +1,7 @@
 Summary: Integrated scm, wiki, issue tracker and project environment
 Name: trac
 Version: 1.0
-Release: alt3
+Release: alt4
 Source: http://ftp.edgewall.com/pub/trac/%name-%version.tar
 Source1: trac-0.9-alt-apache2.conf
 Source3: trac-0.9.4-alt-nginx.cgi.conf
@@ -13,6 +13,7 @@ Source8: trac.init
 Source9: trac.sysconfig
 Source10: trac-restrict-env
 Source11: Alt-linux-team-bar-small.png
+Source12: trac.service
 
 #Patch: trac-0.11.6-tracd-drop-privileges.patch
 Patch1: trac-0.11.7-trac-admin-initenv-fixp-group-privileges.patch
@@ -93,11 +94,13 @@ cp %SOURCE6 cherokee-A.trac.fcgi.conf
 %__subst "s|site/your_project_logo.png|common/Alt-linux-team-bar-small.png|g" trac/web/chrome.py
 
 %build
-%__python setup.py build
+#__python setup.py build
+%python_build
 %__python setup.py compile_catalog -f
 
 %install
-%__python setup.py install --root=%buildroot --single-version-externally-managed --optimize=2
+#__python setup.py install --root=%buildroot --single-version-externally-managed --optimize=2
+%python_build_install --single-version-externally-managed --optimize=2
 
 mkdir -p %buildroot%apache2_addonconfdir
 sed  -e 's,@DATADIR@,%_datadir,g' \
@@ -110,12 +113,17 @@ touch %buildroot%_sysconfdir/%name/passwd
 mkdir -p %buildroot/%_bindir
 install -m 755 %SOURCE7 %buildroot/%_bindir
 install -m 755 %SOURCE10 %buildroot/%_bindir
-mkdir -p %buildroot/%_initdir
-install -m 755 %SOURCE8 %buildroot/%_initdir/%name
+
+#mkdir -p %buildroot/%_initdir
+install -pD -m 755 %SOURCE8 %buildroot/%_initdir/%name
+install -pD -m 644 %SOURCE12 %buildroot%_unitdir/%name.service
+
 mkdir -p %buildroot/%_sysconfdir/sysconfig
 install -m 644 %SOURCE9 %buildroot/%_sysconfdir/sysconfig/%name
 
 install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-team-bar-small.png
+
+rm -rf %buildroot%python_sitelibdir/{admin,db,mimeview,prefs,search,tests,ticket,timeline,util,web,wiki}
 
 %pre
 %_sbindir/groupadd -r -f tracadmin ||:
@@ -134,11 +142,11 @@ install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-tea
 %preun -n python-module-trac-fcgi
 %preun_service trac-spawn-fcgi
 
-%post mod_python
-/sbin/service httpd2 condreload ||:
+#post mod_python
+#/sbin/service httpd2 condreload ||:
 
-%postun mod_python
-/sbin/service httpd2 condreload ||:
+#postun mod_python
+#/sbin/service httpd2 condreload ||:
 
 %files
 %doc ChangeLog README RELEASE
@@ -151,6 +159,7 @@ install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-tea
 %python_sitelibdir/*
 %_bindir/*
 %_initdir/%name
+%_unitdir/%name.service
 %_sysconfdir/sysconfig/%name
 
 %exclude %python_sitelibdir/%name/web/modpython_frontend.*
@@ -172,6 +181,13 @@ install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-tea
 %doc cherokee-A.trac.cgi.conf cherokee-A.trac.fcgi.conf
 
 %changelog
+* Wed Sep 03 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0-alt4
+- #30277
+- Fixed rpm-filesystem-conflict-file-file
+- Fixed init-lsb
+- Fixed init-but-no-native-systemd
+- Fixed altlinux-policy-obsolete-httpd2-reload
+
 * Wed Apr 17 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0-alt3
 - 1.0 Fixed attachments folder permissions
 
