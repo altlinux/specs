@@ -1,12 +1,17 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: dahdi-linux
 Summary: DAHDI drivers for Digium hardware and Asterisk
-Version: 2.7.0.2
+Version: 2.9.2
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Source2: %name.watch
 Url: http://downloads.asterisk.org/pub/telephony/dahdi-linux/
 
 %package headers
@@ -76,6 +81,9 @@ tar cjf \
 %_usrsrc/kernel/sources/kernel-source-dahdi-%version.tar.bz2
 
 %changelog
+* Wed Sep 03 2014 Denis Smirnov <mithraen@altlinux.ru> 2.9.2-alt1
+- 2.9.2
+
 * Wed Dec 18 2013 Denis Smirnov <mithraen@altlinux.ru> 2.7.0.2-alt1
 - 2.7.0.2
 
