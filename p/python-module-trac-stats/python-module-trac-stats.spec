@@ -1,6 +1,6 @@
 Name: python-module-trac-stats
-Version: 0.2
-Release: alt1.1
+Version: 0.5
+Release: alt1.git20140527
 
 Summary: The TracStatsPlugin adds a Stats tab to the trac project.
 
@@ -8,8 +8,7 @@ Group: Development/Python
 License: http://www.opensource.org/licenses/mit-license.php
 Url: http://trac-hacks.org/wiki/TracStatsPlugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+# https://github.com/mrjbq7/tracstats.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -51,19 +50,22 @@ Some features include:
   * Latest tickets reported, changed
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 %files
 %doc README
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20140527
+- Version 0.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2-alt1.1
 - Rebuild with Python-2.7
 
