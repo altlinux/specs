@@ -56,8 +56,8 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.3.6
-Release: alt3
+Version: 4.3.14
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -697,6 +697,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Sep 02 2014 Michael Shigorin <mike@altlinux.org> 4.3.14-alt1
+- Update to new release
+
 * Tue Feb 04 2014 Fr. Br. George <george@altlinux.ru> 4.3.6-alt3
 - Rebuild with xorg-1.15
 
