@@ -1,6 +1,10 @@
-Name: python-module-zmq
+%define oname zmq
+
+%def_with python3
+
+Name: python-module-%oname
 Version: 14.3.1
-Release: alt1
+Release: alt1.1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -11,6 +15,11 @@ Url: http://www.zeromq.org/bindings:python
 Source: %name-%version.tar
 
 BuildRequires: gcc4.7-c++ python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-nose python3-module-Cython
+BuildPreReq: python3-module-numpy
+%endif
 
 %description
 The 0MQ lightweight messaging kernel is a library which extends the
@@ -52,21 +61,88 @@ multiple transport protocols and more.
 
 This package contains the headers for the python bindings.
 
+%package -n python3-module-%oname
+Summary: Software library for fast, message-based applications
+Group: Development/Python3
+
+%description -n python3-module-%oname
+The 0MQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialized messaging middle-ware products. 0MQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
+
+This package contains the python bindings.
+
+%package -n python3-module-%oname-tests
+Summary: Software library for fast, message-based applications
+Group: Development/Python3
+License: LGPLv3+
+
+%description -n python3-module-%oname-tests
+The 0MQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialized messaging middle-ware products. 0MQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
+
+This package contains the testsuite for the python bindings.
+
+%package -n python3-module-%oname-devel
+Summary: Software library for fast, message-based applications
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-devel
+The 0MQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialized messaging middle-ware products. 0MQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
+
+This package contains the headers for the python bindings.
+
 %prep
 %setup
 cp setup.cfg.template setup.cfg
 subst "s|/usr/local/lib|%_libdir|" setup.cfg
 subst "s|/usr/local/include|%_includedir|" setup.cfg
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %check
 rm zmq/__*
-PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
+PYTHONPATH=%buildroot%python_sitelibdir python setup.py test
+%if_with python3
+pushd ../python3
+rm zmq/__*
+PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
+popd
+%endif
 
 %files
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
@@ -81,7 +157,25 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 %files tests
 %python_sitelibdir/zmq/tests
 
+%if_with python3
+%files -n python3-module-%oname
+%doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/zmq
+%exclude %python3_sitelibdir/zmq/tests
+%exclude %python3_sitelibdir/zmq/*/*.h
+
+%files -n python3-module-%oname-devel
+%python3_sitelibdir/zmq/*/*.h
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/zmq/tests
+%endif
+
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.3.1-alt1.1
+- Added module for Python 3
+
 * Tue Jul 01 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 14.3.1-alt1
 - New version
 
