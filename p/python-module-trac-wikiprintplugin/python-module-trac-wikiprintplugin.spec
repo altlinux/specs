@@ -1,8 +1,8 @@
 %define tarname tracwikiprintplugin
 Name: python-module-trac-wikiprintplugin
-%define r_minor r7916
-Version: 1.8.2
-Release: alt1.%r_minor.1
+%define r_minor r13287
+Version: 1.9.3
+Release: alt1.%r_minor
 
 Summary: Make wiki pages easily printable, exporting to PDF (book or article format) or printable HTML format (page contents without trac headers/footers)
 
@@ -10,8 +10,7 @@ Group: Development/Python
 License: GPL
 Url: http://trac-hacks.org/wiki/tracwikiprintplugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+# http://trac-hacks.org/svn/tracwikiprintplugin/0.11/
 Source: %{tarname}-%r_minor.zip
 Patch: python-module-trac-wikiprintplugin-fix-error-in-html-output.patch
 
@@ -35,14 +34,14 @@ WikiPrint features:
 - The style of the resulting PDF or HTML can be fully customized using CSS files.
 
 %prep
-%setup -q -n %tarname/0.11
-%patch -p2
+%setup -n %tarname
+#patch -p2
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 chmod -R a+r %buildroot%python_sitelibdir/wikiprint
 
@@ -50,6 +49,9 @@ chmod -R a+r %buildroot%python_sitelibdir/wikiprint
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.3-alt1.r13287
+- Version 1.9.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.2-alt1.r7916.1
 - Rebuild with Python-2.7
 
