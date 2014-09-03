@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/3rdparty
 
 Name: owncloud-3rdparty
-Version: 6.0.3
+Version: 7.0.2 
 Release: alt1
 
 Summary: 3rdparty libs for owncloud
@@ -29,11 +29,15 @@ mkdir -p %buildroot%installdir
 
 cp -rp * %buildroot%installdir/
 rm -fr %buildroot%installdir/phpdocx/pdf/tcpdf/fonts/utils
+find %buildroot%installdir -name '*.sh' | xargs rm
 
 %files
 %installdir/*
 
 %changelog
+* Wed Sep 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.2-alt1
+- 7.0.2
+
 * Wed May 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.3-alt1
 - 6.0.3
 
