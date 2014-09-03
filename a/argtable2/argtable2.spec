@@ -1,6 +1,6 @@
 Name: argtable2
-Version: 10
-Release: alt2.qa1
+Version: 13
+Release: alt1
 
 Summary: An ANSI C library for parsing GNU style command line arguments
 License: LGPL
@@ -8,8 +8,6 @@ Group: System/Libraries
 
 Url: http://argtable.sf.net/
 Source: %name-%version.tar.gz
-
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 BuildPreReq: gcc-c++
 
@@ -76,6 +74,7 @@ Examples for developing programs based on %name.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 %make -C tests check
@@ -91,6 +90,7 @@ Examples for developing programs based on %name.
 %_includedir/*
 %_libdir/*.so
 %_man3dir/*
+%_pkgconfigdir/*
 
 %files doc-ps
 %_defaultdocdir/%name/*.ps
@@ -107,6 +107,9 @@ Examples for developing programs based on %name.
 
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13-alt1
+- Version 13
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 10-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
