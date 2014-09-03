@@ -1,14 +1,15 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-shapercontrol
-Version: 0.3
+Version: 0.4
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for shapercontrol administration
 Source: %name-%version.tar
 
-Requires: alterator alterator-sh-functions
+Requires: alterator alterator-sh-functions alterator-net-functions alterator-hw-functions
+Requires: alterator-net-iptables alterator-service-functions
 Requires: alterator-l10n
 Requires: shapercontrol
 
@@ -36,6 +37,15 @@ Alterator module for shapercontrol administration.
 %_libexecdir/%name/
 
 %changelog
+* Wed Sep 03 2014 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Use alterator-service-functions.
+- Add string to translation.
+- Setup new sc.conf.
+- Use iptables_helper for list external/internal interfaces.
+- Add Russian name for module.
+- Use netdev_read_mac() and read_iface_current_addr().
+- Create SQLite database.
+
 * Mon Jul 07 2014 Timur Aitov <timonbl4@altlinux.org> 0.3-alt1
 - Fix apply state button
 - Add Requires: shapercontrol
