@@ -1,13 +1,12 @@
 %define module_name sphinxcontrib-httpdomain
 
 Name: python-module-%module_name
-Version: 1.1.9
-Release: alt1.1
-Group: System/Base
+Version: 1.3.0
+Release: alt1
+Group: Development/Python
 License: BSD
 Summary: Sphinx domain for HTTP APIs
 URL: http://pypi.python.org/pypi/sphinxcontrib-httpdomain
-Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
 Source: %module_name-%version.tar.gz
 BuildArch: noarch
 
@@ -37,6 +36,9 @@ http://pythonhosted.org/sphinxcontrib-httpdomain/
 %python_sitelibdir_noarch/sphinxcontrib*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
+- Version 1.3.0
+
 * Sun Dec 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.1
 - Fixed conflict with python-module-sphinxcontrib
 
