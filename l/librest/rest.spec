@@ -5,7 +5,7 @@
 %def_disable tests
 
 Name: lib%_name
-Version: %ver_major.91
+Version: %ver_major.92
 Release: alt1
 
 Summary: A library for access to RESTful web services
@@ -107,6 +107,9 @@ This package contains development documentation for the %_name library.
 %_datadir/gtk-doc/html/%{_name}*%ver_major/
 
 %changelog
+* Wed Sep 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.92-alt1
+- 0.7.92
+
 * Mon Mar 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.91-alt1
 - 0.7.91
 
