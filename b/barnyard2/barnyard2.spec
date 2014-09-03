@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 2.1.13
-Release: alt2
+Release: alt3
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -78,6 +78,11 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Wed Sep 03 2014 Mikhail Efremov <sem@altlinux.org> 2.1.13-alt3
+- init script: Simplify print_all_ifaces() function.
+- init script: Create log directories if needed.
+- Fix init scripts priorities.
+
 * Wed Jun 04 2014 Timur Aitov <timonbl4@altlinux.org> 2.1.13-alt2
 - remove 'fix-create-pidfile' patch
 - mod init script
