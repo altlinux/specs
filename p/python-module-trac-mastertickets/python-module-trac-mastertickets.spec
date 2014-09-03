@@ -1,8 +1,8 @@
 %define tarname mastertickets
 Name: python-module-trac-mastertickets
-%define r_minor 6543
-Version: 3.0.1
-Release: alt1.%r_minor.1
+%define r_minor r13684
+Version: 3.0.5
+Release: alt1.%r_minor
 
 Summary: Adds basic ticket dependencies for Trac
 
@@ -10,9 +10,8 @@ Group: Development/Python
 License: BSD
 Url: http://trac-hacks.org/wiki/MasterTicketsPlugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
-Source: trac-%{tarname}-ffc%r_minor.tar.gz
+# http://trac-hacks.org/svn/masterticketsplugin/trunk/
+Source: trac-%{tarname}-%r_minor.tar.gz
 
 BuildArch: noarch
 
@@ -29,13 +28,13 @@ is viewable by clicking 'depgraph' in the context (in the upper right corner)
 menu when viewing a ticket that blocks or is blocked by another ticket.
 
 %prep
-%setup -q -n coderanger-trac-%tarname-ffc%r_minor
+%setup -n coderanger-trac-%tarname-%r_minor
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 #Fix rights
 #chmod -R a+r %buildroot%python_sitelibdir/tracrpc/htdocs
@@ -46,6 +45,9 @@ menu when viewing a ticket that blocks or is blocked by another ticket.
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.5-alt1.r13684
+- Version 3.0.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.1-alt1.6543.1
 - Rebuild with Python-2.7
 
