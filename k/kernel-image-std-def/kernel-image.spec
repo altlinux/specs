@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.12
-%define kernel_sublevel	.27
+%define kernel_base_version	3.14
+%define kernel_sublevel	.17
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -441,7 +441,7 @@ KbuildFiles="
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
 	scripts/recordmcount.pl
-	scripts/gcc-x86_64-has-stack-protector.sh
+	scripts/gcc-x86_*-has-stack-protector.sh
 	scripts/module-common.lds
 	scripts/depmod.sh
 
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Sep 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.17-alt1
+- 3.14.17
+
 * Thu Aug 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.27-alt1
 - 3.12.27
 
@@ -556,55 +559,72 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 * Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt2
 - UKSM patch added and enabled
 
-* Mon Aug 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.26-alt1
-- 3.12.26
+* Tue Jun 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.8-alt1
+- 3.14.7
 
-* Thu Jul 31 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.25-alt1
-- 3.12.25
+* Thu Jun 12 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.7-alt1
+- 3.14.7
 
-* Tue Jul 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.24-alt2
-- CVE-2014-4699 fixed
+* Sun Jun 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.6-alt1
+- 3.14.6
 
-* Mon Jul 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.24-alt1
-- 3.12.24
-
-* Thu Jun 26 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.23-alt1
-- 3.12.23
-- LEGACY_PTYS disabled on i586
-
-* Thu Jun 12 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.22-alt1
-- 3.12.22
-
-* Thu Jun 05 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.21-alt2
+* Thu Jun 05 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.5-alt2
 - Fixes CVE-2014-3153
 
-* Tue Jun 03 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.21-alt1
-- 3.12.21
+* Sun Jun 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.5-alt1
+- 3.14.5
 
-* Sat May 17 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.20-alt1
-- 3.12.20
+* Wed May 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.4-alt1
+- 3.14.4
 
-* Mon May 12 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.19-alt2
-- 3.12.19
+* Wed May 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.3-alt1
+- 3.14.3
 
-* Wed May 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.18-alt2
-- CVE-2014-0196 fixed
+* Mon Apr 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.2-alt1
+- 3.14.2
 
-* Thu Apr 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.18-alt1
-- 3.12.18
+* Wed Apr 23 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.11-alt1
+- 3.13.11
 
-* Tue Apr 08 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.17-alt1
-- 3.12.17
+* Tue Apr 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.1-alt1
+- 3.14.1
 
-* Fri Apr 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.16-alt1
-- 3.12.16
-- Revert "usb: ehci: fix deadlock when threadirqs option is used"
+* Mon Apr 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.0-alt1
+- 3.14
 
-* Fri Mar 28 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.15-alt1
-- 3.12.15
+* Fri Apr 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.9-alt1
+- 3.13.9
 
-* Mon Mar 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.34-alt1
-- 3.10.34
+* Tue Apr 01 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.8-alt1
+- 3.13.8
+- "usb: ehci: fix deadlock when threadirqs option is use" reverted
+
+* Mon Mar 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.7-alt1
+- 3.13.7
+
+* Thu Mar 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.6-alt2
+- CVE-2014-2523 fixed
+
+* Tue Mar 11 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.6-alt1
+- 3.13.6
+
+* Mon Feb 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.5-alt1
+- 3.13.5
+
+* Fri Feb 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.4-alt1
+- 3.13.4
+
+* Fri Feb 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.3-alt1
+- 3.13.3
+
+* Fri Feb 07 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.2-alt1
+- 3.13.2
+
+* Thu Jan 30 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.1-alt1
+- 3.13.1
+
+* Wed Jan 22 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.13.0-alt1
+- 3.13.0
 
 * Thu Jan 16 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.12.8-alt1
 - 3.12.8
