@@ -1,8 +1,8 @@
 %define tarname ticketimportplugin
 Name: python-module-trac-ticketimportplugin
-%define r_minor r9770
-Version: 0.8
-Release: alt1.%r_minor.1
+%define r_minor r14097
+Version: 0.8.3
+Release: alt1.%r_minor
 
 Summary: Import CSV and Excel files
 
@@ -10,8 +10,6 @@ Group: Development/Python
 # FIXME: unknown?
 License: BSD
 Url: http://trac-hacks.org/wiki/TicketImportPlugin
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source: %{tarname}-%r_minor.zip
 
@@ -31,20 +29,24 @@ tickets off-line, or to do massive changes to tickets. Based on the ticket id
 created or updated.
 
 %prep
-%setup -q -n %tarname/0.11
+%setup -n %tarname
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 chmod -R a+r %buildroot%python_sitelibdir/talm_importer
 
 %files
+%doc *.TXT
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.r14097
+- Version 0.8.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt1.r9770.1
 - Rebuild with Python-2.7
 
