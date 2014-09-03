@@ -1,17 +1,16 @@
 %define tarname worklogplugin
 Name: python-module-trac-worklogplugin
-%define r_minor r9436
-Version: 0.1
-Release: alt1.%r_minor.1
+%define r_minor r13835
+Version: 0.4
+Release: alt1.%r_minor
 
 Summary: Plugin to manage the which tickets users are currently working on
 
 Group: Development/Python
 License: http://www.opensource.org/licenses/mit-license.php
-Url: http://trac-hacks.org/wiki/
+Url: http://trac-hacks.org/wiki/WorkLogPlugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+# http://trac-hacks.org/svn/worklogplugin/trunk/
 Source: %{tarname}-%r_minor.zip
 
 BuildArch: noarch
@@ -25,13 +24,13 @@ javascript to add a button to the ticket page to allow you to start/stop working
 TimingAndEstimationPlugin is installed then when you clock off, the time spent on the ticket will be recorded.
 
 %prep
-%setup -q -n %tarname/0.11
+%setup -n %tarname
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 #Fix rights
 chmod -R a+r %buildroot%python_sitelibdir/worklog/htdocs
@@ -42,6 +41,9 @@ chmod -R a+r %buildroot%python_sitelibdir/worklog/templates
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.r13835
+- Version 0.4
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1-alt1.r9436.1
 - Rebuild with Python-2.7
 
