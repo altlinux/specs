@@ -1,6 +1,6 @@
 %define destname gear-uupdate
 Name: %destname
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -39,6 +39,12 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Sep 03 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- gear-update --exclude option support
+
+* Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- new version
+
 * Thu Jul 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - specgen support
 
