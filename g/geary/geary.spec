@@ -1,7 +1,7 @@
 %define ver_major 0.7
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Email client
@@ -31,6 +31,7 @@ BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkitgtk3-gir-devel libcanberra-vala
+BuildRequires: gcr-libs-devel gcr-libs-vala
 
 # TODO:
 # -- Unity indicate support: OFF
@@ -69,6 +70,9 @@ Geary's development.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Sep 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
