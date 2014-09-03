@@ -1,8 +1,8 @@
 %define tarname timingandestimationplugin_branches_trac0.12-Permissions
 Name: python-module-trac-timingandestimationplugin
-%define r_minor r9433
-Version: 1.0.6b
-Release: alt1.%r_minor.1
+%define r_minor r14061
+Version: 1.3.7b
+Release: alt1.%r_minor
 
 Summary: Plugin to make Trac support time estimation and tracking with permissions
 
@@ -10,8 +10,6 @@ Group: Development/Python
 # FIXME: unknown?
 License: http://www.opensource.org/licenses/mit-license.php
 Url: http://trac-hacks.org/wiki/TimingAndEstimationPlugin
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source: %{tarname}-%r_minor.zip
 
@@ -25,13 +23,13 @@ BuildRequires: python-module-MySQLdb python-module-ruledispatch python-module-se
 Plugin to make Trac support time estimation and tracking with permissions
 
 %prep
-%setup -q -n timingandestimationplugin/branches/trac0.12-Permissions
+%setup -n timingandestimationplugin
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 #Fix rights for template
 chmod -R a+r %buildroot%python_sitelibdir/timingandestimationplugin/htdocs
@@ -42,6 +40,9 @@ chmod -R a+r %buildroot%python_sitelibdir/timingandestimationplugin/templates
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7b-alt1.r14061
+- Version 1.3.7b
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.6b-alt1.r9433.1
 - Rebuild with Python-2.7
 
