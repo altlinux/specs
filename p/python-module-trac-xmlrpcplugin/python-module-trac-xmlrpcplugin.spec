@@ -1,8 +1,8 @@
 %define tarname xmlrpcplugin
 Name: python-module-trac-xmlrpcplugin
-%define r_minor r9436
-Version: 1.1.0
-Release: alt1.%r_minor.1
+%define r_minor r13776
+Version: 1.1.2
+Release: alt1.%r_minor
 
 Summary: Remote Procedure Call interface for Trac
 
@@ -10,8 +10,7 @@ Group: Development/Python
 License: BSD
 Url: http://trac-hacks.org/wiki/XmlRpcPlugin
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+# http://trac-hacks.org/svn/xmlrpcplugin/trunk/
 Source: %{tarname}-%r_minor.zip
 
 BuildArch: noarch
@@ -38,13 +37,13 @@ API support:
  * wiki
 
 %prep
-%setup -q -n %tarname/trunk
+%setup -n %tarname
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 #Fix rights
 chmod -R a+r %buildroot%python_sitelibdir/tracrpc/htdocs
@@ -55,6 +54,9 @@ chmod -R a+r %buildroot%python_sitelibdir/tracrpc/templates
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.r13776
+- Version 1.1.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.0-alt1.r9436.1
 - Rebuild with Python-2.7
 
