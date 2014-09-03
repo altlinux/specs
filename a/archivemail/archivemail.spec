@@ -1,8 +1,8 @@
-%def_disable check
+#def_disable check
 
 Name: archivemail
-Version: 0.8.0
-Release: alt1.1
+Version: 0.9.0
+Release: alt1
 
 Summary: Archive and compress old email
 License: GPLv2+
@@ -10,14 +10,13 @@ Group: File tools
 
 BuildArch: noarch
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
-
 Url: http://archivemail.sourceforge.net/
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: python-modules
+BuildPreReq: python-modules python-devel tidy xsltproc
+BuildPreReq: docbook-style-xsl
 
 %description 
 archivemail is a tool written in python(1) for archiving and compressing
@@ -37,10 +36,14 @@ with gzip(1).
 %check
 ./test_archivemail
 
+%build
+%make doc
+
 %install
-mkdir -p %buildroot{%_bindir,%_man1dir}
-install -p -m755 %name %buildroot%_bindir/%name
-install -p -m644 %name.1 %buildroot%_man1dir
+#mkdir -p %buildroot{%_bindir,%_man1dir}
+#install -p -m755 %name %buildroot%_bindir/%name
+#install -p -m644 %name.1 %buildroot%_man1dir
+%python_build_install
 
 %files
 %_bindir/*
@@ -48,6 +51,9 @@ install -p -m644 %name.1 %buildroot%_man1dir
 %doc CHANGELOG FAQ NEWS README TODO test_archivemail examples/
 
 %changelog
+* Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt1.1
 - Rebuild with Python-2.7
 
