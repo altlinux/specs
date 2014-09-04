@@ -1,6 +1,6 @@
 Name: arora
 Version: 0.11.0
-Release: alt2
+Release: alt2.git20140312
 
 Summary: Arora is a cross platform web browser built using Qt and WebKit.
 License: GPLv2
@@ -21,8 +21,8 @@ basic browser whose feature list includes things like "History" and
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+#patch0 -p1
+#patch1 -p1
 
 %build
 qmake-qt4 \
@@ -45,6 +45,9 @@ qmake-qt4 \
 %_pixmapsdir/%name.*
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt2.git20140312
+- New snapshot
+
 * Wed Mar 07 2012 Michael Shigorin <mike@altlinux.org> 0.11.0-alt2
 - reverted a commit breaking startpage (closes: #26937)
 - applied a fedora patch sanitizing SSL issuer string
