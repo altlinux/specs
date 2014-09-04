@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -199,6 +199,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Thu Sep 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.7-alt1
+- 1.36.7
+
 * Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.6-alt1
 - 1.36.6
 
