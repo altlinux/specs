@@ -4,8 +4,8 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 3.3.5
-Release: alt2
+Version: 3.3.8
+Release: alt1
 
 Summary: Open source Ticket Request System
 Group: Networking/WWW
@@ -35,10 +35,11 @@ Patch: patch0.patch
 %add_findreq_skiplist */scripts/*
 
 %description
-OTRS is an Open source Ticket Request System (also well known as trouble ticket system)
-with many features to manage customer telephone calls and e-mails.
-The system is built to allow your support, sales, pre-sales, billing,
-internal IT, helpdesk, etc. department to react quickly to inbound inquiries.
+OTRS is an Open source Ticket Request System (also well known as trouble
+ticket system) with many features to manage customer telephone calls and
+e-mails. The system is built to allow your support, sales, pre-sales,
+billing, internal IT, helpdesk, e.t.c. department to react quickly to
+inbound inquiries.
 
 %package apache2
 Summary: Apache 2.x web-server configuration for %name
@@ -173,6 +174,9 @@ rm -rf %_docdir/%name-%version/
 %endif
 
 %changelog
+* Tue Sep 02 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.8-alt1
+- New version
+
 * Tue Mar 18 2014 Sergey Y. Afonin <asy@altlinux.ru> 3.3.5-alt2
 - added to Requires: perl-Time-Piece
 
