@@ -1,30 +1,29 @@
 %def_enable static
-%define sover 1
 
-Name: audiofile
-Version: 0.3.6
-Release: alt1
+%define oname audiofile
+Name: audiofile0
+Version: 0.3.2
+Release: alt4
 
 Summary: Library to handle various audio file formats
 License: LGPL
 Group: System/Libraries
 Url: http://www.68k.org/~michael/%name
 
-Source: %url/%name-%version.tar.xz
+Source: %url/%oname-%version.tar.xz
 
-Requires: lib%name%sover = %version-%release
+Requires: lib%name = %version-%release
 
 BuildRequires: gcc-c++ glibc-devel-static libalsa-devel
-BuildPreReq: libflac-devel asciidoc-a2x
 
-%package -n lib%name%sover
+%package -n lib%oname
 Summary: Shared library for %name
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %package -n lib%name-devel
 Summary: Includes and other files to develop %name applications
 Group: Development/C
-Requires: lib%name%sover = %version-%release
+Requires: lib%name = %version-%release
 Provides: %name-devel = %version
 Obsoletes: %name-devel
 
@@ -61,7 +60,7 @@ The following compression formats are currently supported:
 * IMA ADPCM
 * Microsoft ADPCM
 
-%description -n lib%name%sover
+%description -n lib%oname
 This package contains the library needed to run programs dynamically
 linked with audiofile.
 
@@ -74,14 +73,13 @@ Static libraries you can use to develop
 %name applications.
 
 %prep
-%setup
+%setup -q
 
 sed -ri \
 	's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' \
 	ltmain.sh *.m4 configure
 
 %build
-%autoreconf
 %configure \
 	--enable-largefile \
 	%{subst_enable static}
@@ -90,29 +88,29 @@ sed -ri \
 %install
 %makeinstall
 
-%files
-%_bindir/sfconvert
-%_bindir/sfinfo
-%doc README ACKNOWLEDGEMENTS TODO NEWS NOTES
+#files
+#_bindir/sfconvert
+#_bindir/sfinfo
+#doc README ACKNOWLEDGEMENTS TODO NEWS NOTES
 
-%files -n lib%name%sover
+%files -n lib%oname
 %_libdir/*.so.*
-%_man1dir/*
+#_man1dir/*
 
-%files -n lib%name-devel
-%_libdir/*.so
-%_pkgconfigdir/*
-%_includedir/*
-%_man3dir/*
+#files -n lib%name-devel
+#_libdir/*.so
+#_pkgconfigdir/*
+#_includedir/*
+#_man3dir/*
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif
+#if_enabled static
+#files -n lib%name-devel-static
+#_libdir/*.a
+#endif
 
 %changelog
-* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1
-- Version 0.3.6
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt4
+- Moved this version into System/Legacy libraries
 
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt3.qa1
 - NMU: rebuilt for updated dependencies.
