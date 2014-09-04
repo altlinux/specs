@@ -10,8 +10,8 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.8
-Release: alt2
+Version: %ver_major.9
+Release: alt1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -71,7 +71,7 @@ This package contains Gnome chemistry Utils plugin for Gnumeric
 spreadsheet program.
 
 %prep
-%setup -q
+%setup
 %patch1 -b .mozplugindir
 
 [ ! -d m4 ] && mkdir m4
@@ -117,6 +117,7 @@ spreadsheet program.
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.plugins.arrows.gschema.xml
+%_datadir/appdata/*
 
 %if_enabled mozilla
 %files -n mozilla-plugin-%name
@@ -132,6 +133,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Thu Sep 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.9-alt1
+- 0.14.9
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.14.8-alt2
 - rebuilt for new gnumeric-1.12.17
 
