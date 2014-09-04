@@ -1,5 +1,5 @@
 Name: telegram-cli
-Version: 0.0.beta.1dad2e8993
+Version: 1.0.beta.469d2338a
 Release: alt1
 
 Summary: Private fast and open platform for instant messaging
@@ -14,13 +14,14 @@ Source: %name-%version.tar
 
 Requires: wget
 
+# manually removed: python3 ruby ruby-stdlibs 
+# Automatically added by buildreq on Thu Sep 04 2014
+# optimized out: libcloog-isl4 python3-base
+BuildRequires: libconfig-devel libevent-devel liblua5-devel libreadline-devel libssl-devel lua5 zlib-devel
+
 BuildRequires: wget
 
 # manually removd: python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Fri Feb 07 2014
-# optimized out: python3-base
-BuildRequires: libconfig-devel liblua5-devel libreadline-devel libssl-devel lua5 zlib-devel
-
 %description
 Telegram is an Open Source messaging platform for mobile, desktop focused on privacy.
 
@@ -32,15 +33,18 @@ Telegram is an Open Source messaging platform for mobile, desktop focused on pri
 %make_build
 
 %install
-install -D -m0755 telegram %buildroot%_bindir/telegram
-install -D -m0644 tg-server.pub %buildroot/%_sysconfdir/telegram/server.pub
+install -D -m0755 bin/telegram-cli %buildroot%_bindir/%name
+install -D -m0644 tg-server.pub %buildroot/%_sysconfdir/%name/server.pub
 
 %files
-%_bindir/telegram
-%dir %_sysconfdir/telegram/
-%_sysconfdir/telegram/server.pub
+%_bindir/%name
+%dir %_sysconfdir/%name/
+%_sysconfdir/%name/server.pub
 
 %changelog
+* Thu Sep 04 2014 Vitaly Lipatov <lav@altlinux.ru> 1.0.beta.469d2338a-alt1
+- new build 469d2338a
+
 * Sat Mar 29 2014 Vitaly Lipatov <lav@altlinux.ru> 0.0.beta.1dad2e8993-alt1
 - new build 1dad2e8993
 
