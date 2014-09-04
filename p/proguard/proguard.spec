@@ -1,7 +1,7 @@
 Name: proguard
 Summary: Java class file shrinker, optimizer, obfuscator, and preverifier
-Version: 4.11
-Release: alt2
+Version: 5.0
+Release: alt1
 License: GPL
 Group: Development/Java
 BuildArch: noarch
@@ -42,6 +42,9 @@ done
 %_bindir/retrace
 
 %changelog
+* Thu Sep 04 2014 Denis Smirnov <mithraen@altlinux.ru> 5.0-alt1
+- new version 5.0
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 4.11-alt2
 - chackstyle4 is dropped; use chackstyle5.
 
