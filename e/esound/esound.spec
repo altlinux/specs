@@ -6,7 +6,7 @@
 
 Name: esound
 Version: %ver_major.41
-Release: alt7
+Release: alt8
 
 Summary: The Enlightened Sound Daemon
 License: GPL
@@ -170,6 +170,9 @@ subst 's,/etc/esound,/etc,g' docs/esd.1
 %exclude %_datadir/doc/esound
 
 %changelog
+* Thu Sep 04 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt8
+- rebuilt against libaudiofile.so.1 (ALT #30284)
+
 * Mon May 21 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt7
 - linked esound programs against libm explicitly
 
