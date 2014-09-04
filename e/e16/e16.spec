@@ -4,7 +4,7 @@ BuildRequires: libGL-devel libICE-devel libX11-devel pkgconfig(dbus-1) pkgconfig
 # END SourceDeps(oneline)
 Name: e16
 Version: 1.0.11
-Release: alt3
+Release: alt3.1
 #Serial: 1
 
 Summary: The Enlightenment DR16 window manager
@@ -116,6 +116,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 %_datadir/doc/%name
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt3.1
+- Rebuilt with new audiofile
+
 * Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt3
 - dropped external winter theme (now included in upstream)
 
