@@ -1,6 +1,6 @@
 Name:    qt-gstreamer
 Version: 0.10.3
-Release: alt1
+Release: alt2
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -11,8 +11,7 @@ Requires: gst-plugins-base gst-plugins-good
 
 Source0: http://gstreamer.freedesktop.org/src/%{name}/%{name}-%{version}.tar.bz2
 
-# fix LIB_INSTALL_DIR
-Patch0:         qt-gstreamer-0.10.1-libdir.patch
+Patch1: alt-ext-glib.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -22,6 +21,7 @@ BuildRequires: boost-devel
 BuildRequires: gstreamer-devel >= 0.10.31
 BuildRequires: gst-plugins-devel
 BuildRequires: libqt4-devel libGL-devel libGLES-devel
+BuildRequires: qt4-glib-devel
 BuildRequires: doxygen kde-common-devel
 
 %description
@@ -33,6 +33,7 @@ in Qt applications.
 Summary:        Header files and development documentation for %name
 Group:          Development/C++
 Requires:       %name = %version-%release
+Requires:       qt4-glib-devel
 Requires:       boost-devel
 Requires:       gst-plugins-devel
 Requires:       libqt4-devel
@@ -42,10 +43,14 @@ for %name.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch1 -p1
+
+rm -rf src/QGlib
+ln -s /usr/include/QtGStreamer/QGlib src/QGlib
 
 %build
-%Kbuild
+%Kcmake
+%Kmake VERBOSE=1
 
 %install
 %Kinstall
@@ -53,7 +58,6 @@ for %name.
 %files
 %doc COPYING README
 %_libdir/gstreamer-0.10/libgst*.so
-%_libdir/libQtGLib-2.0.so.0*
 %_libdir/libQtGStreamer-0.10.so.0*
 %_libdir/libQtGStreamerUi-0.10.so.0*
 %_libdir/libQtGStreamerUtils-0.10.so.0*
@@ -63,15 +67,19 @@ for %name.
 %doc HACKING
 %_includedir/QtGStreamer
 %_libdir/cmake/QtGStreamer
-%_libdir/libQtGLib-2.0.so
 %_libdir/libQtGStreamer-0.10.so
 %_libdir/libQtGStreamerUi-0.10.so
 %_libdir/libQtGStreamerUtils-0.10.so
-%_libdir/pkgconfig/QtGLib-*.pc
 %_libdir/pkgconfig/QtGStreamer*.pc
 
 
 %changelog
+* Thu Sep 04 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt2
+- package QtGlib separately
+
+* Fri Mar 28 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt0.M70P.1
+- built for M70P
+
 * Tue Mar 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt1
 - new version
 
