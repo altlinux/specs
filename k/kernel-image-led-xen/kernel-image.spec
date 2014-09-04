@@ -27,7 +27,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.15.10
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -872,7 +872,7 @@ kernel-image-%flavour-%kversion-%krelease
 m="${M%%=*}"
 v="${M#*=}"
 for p in $(rpmquery --whatprovides kernel-src-$m 2>/dev/null); do
-	rpmquery --provides $p | grep -q "^kernel-src-$m = $v-"'*' && break || p=;
+	rpm -q --provides $p | grep -q "^kernel-src-$m = $v-"'*' && break || p=;
 done
 [ -n "$p" ] || p="kernel-src-$m-$v"
 License="$(rpmquery --qf '%%{LICENSE}\n' $p 2>/dev/null)"
@@ -900,7 +900,7 @@ done)
 
 
 %prep
-%setup -c -n kernel-image-%flavour-%kversion-%krelease
+%setup -q -c -n kernel-image-%flavour-%kversion-%krelease
 cd linux-%version
 #patch0000 -p1
 
@@ -1282,14 +1282,14 @@ sed -i 's|\(perfexecdir[[:blank:]]*=[[:blank:]]*\).*$|\1%_libexecdir/perf|' tool
 %install
 cd linux-%version
 
-. gcc_version.inc
+. ./gcc_version.inc
 export CC=gcc-$GCC_VERSION
 
 install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krelease
 install -Dp -m644 arch/%base_arch/boot/bzImage %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease
 install -Dp -m644 .config %buildroot/boot/config-%kversion-%flavour-%krelease
 
-%make_install \
+%__make INSTALL="%__install -p" \
 	INSTALL_MOD_PATH=%buildroot \
 	INSTALL_FW_PATH=%buildroot%firmware_dir \
 	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
@@ -1362,7 +1362,7 @@ do
 done
 
 # Provide kbuild directory with old name (without %%krelease)
-ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
+ln -sr %buildroot{%kbuild_dir,%old_kbuild_dir}
 
 # Provide kernel headers for userspace
 make -j%__nprocs headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
@@ -1906,6 +1906,23 @@ done)
 
 
 %changelog
+* Wed Sep 03 2014 Led <led@altlinux.ru> 3.15.10-alt8
+- updated:
+  + fix-arch-x86
+  + fix-arch-x86-mcheck--mce_intel
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-pci-hotplug--pciehp
+  + fix-drivers-scsi--be2iscsi
+  + fix-drivers-scsi--hpsa
+  + fix-fs-btrfs
+- added:
+  + fix-arch-x86-xen
+  + fix-arch-powerpc-platform-povernv
+  + fix-arch-powerpc-platform-pseries
+  + fix-drivers-gpu-drm--drm_kms_helper
+  + fix-drivers-pci
+  + fix-drivers-pci--pci-label
+
 * Sat Aug 30 2014 Led <led@altlinux.ru> 3.15.10-alt7
 - updated:
   + fix-arch-arm-mach-omap2
@@ -2295,7 +2312,7 @@ done)
   + fix-drivers-gpu-drm--msm
   + fix-fs-proc
 
-* Fri Jun 26 2014 Led <led@altlinux.ru> 3.15.2-alt1
+* Fri Jun 27 2014 Led <led@altlinux.ru> 3.15.2-alt1
 - 3.15.2
 - removed:
   + fix-drivers-net-ethernet--sfc
