@@ -7,7 +7,7 @@
 
 Name: arts
 Version: 1.5.10
-Release: alt5.1
+Release: alt5.2
 Serial: 1
 
 Source: %name-%version.tar
@@ -275,6 +275,9 @@ mv %buildroot/%_includedir/artsc %buildroot/%_K3includedir/
 %endif
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.10-alt5.2
+- Rebuilt with new audiofile
+
 * Mon Feb 24 2014 Roman Savochenko <rom_as@altlinux.ru> 1:1.5.10-alt5.1
 - Rebild without dependency to libqt3-devel-cxx
 
