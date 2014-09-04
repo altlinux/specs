@@ -1,11 +1,10 @@
 Name: procmail
 Version: 3.22
-Release: alt8.qa1
+Release: alt9
 
 Summary: The procmail mail processing program
 License: GPLv2+ or Artistic
 Group: Networking/Mail
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.procmail.org/pub/procmail/procmail-%version.tar.gz
 Source: procmail-%version.tar
@@ -17,6 +16,7 @@ Patch2: procmail-3.22-owl-alt-fixes.patch
 Patch3: procmail-3.22-owl-alt-config.patch
 Patch4: procmail-3.22-deb-alt-doc.patch
 Patch5: procmail-3.22-owl-truncate.patch
+Patch6: procmail-3.22-taviso-bound.patch
 
 Provides: MDA
 # This procmail requires useradd with mailspool support installed.
@@ -31,12 +31,13 @@ sort, or selectively forward e-mail messages.  Also, procmail is
 installed by default as the local delivery agent.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p0
 
 find -type f -name \*.orig -delete
 
@@ -56,8 +57,8 @@ bzip2 -9k HISTORY
 %build
 %make_build \
 	CC=%__cc \
-	CFLAGS0="%optflags -fno-strict-aliasing -Wno-comment -Wno-parentheses -Wno-unused `getconf LFS_CFLAGS`" \
-	LDFLAGS0= \
+	CFLAGS0="%optflags -fpie -fno-strict-aliasing -Wno-comment -Wno-parentheses -Wno-unused `getconf LFS_CFLAGS`" \
+	LDFLAGS0='-pie -Wl,-z,relro,-z,now' \
 	LOCKINGTEST=100 \
 	SEARCHLIBS=-lm \
 	#
@@ -76,6 +77,10 @@ install -pm644 %_sourcedir/mailstat.1 %buildroot%_man1dir/
 %doc Artistic FAQ FEATURES HISTORY.bz2 KNOWN_BUGS README README.Maildir examples
 
 %changelog
+* Wed Sep 03 2014 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt9
+- formail: applied the fix for potential heap overflow from Tavis Ormandy.
+- Hardened build with PIE and full RELRO.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.22-alt8.qa1
 - NMU: rebuilt for debuginfo.
 
