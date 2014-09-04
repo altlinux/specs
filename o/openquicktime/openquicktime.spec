@@ -9,7 +9,7 @@ BuildRequires: libaudiofile-devel libdv-devel libfaad-devel libjpeg-devel liblam
 Summary: Portable library for handling Apples QuickTime(tm) format
 Name: openquicktime
 Version: 2.0.0
-Release: alt6.%prerel
+Release: alt6.%prerel.1
 License: LGPL
 Group: Video
 URL: http://www.openquicktime.org/
@@ -101,6 +101,9 @@ done
 %{_libdir}/*.so
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.a1.1
+- Rebuilt with new audiofile
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt6.a1
 - BuildReq cleanup
 
