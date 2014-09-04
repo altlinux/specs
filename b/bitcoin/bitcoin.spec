@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 0.6.0
-Release: alt1.4.qa1
+Version: 0.9.3
+Release: alt1.rc1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -8,12 +8,13 @@ Group: Networking/Other
 
 Url: http://www.bitcoin.org/
 Source: %name-%version.tar
-Patch: bitcoin-0.6.0-alt-debuginfo.patch
 
-BuildRequires: zlib-devel boost-devel libssl-devel gcc-c++ libdb4-devel libdb4_cxx-devel
+BuildRequires: zlib-devel boost-devel libssl-devel gcc-c++ libdb4.8-devel libdb4.8_cxx-devel
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
-BuildRequires: libgtk+2-devel libwxGTK2.9-devel boost-asio-devel
-BuildRequires: libqt4-devel
+BuildRequires: libgtk+2-devel libwxGTK3.1-devel boost-asio-devel
+BuildRequires: libqt4-devel lcov ccache libminiupnpc-devel
+BuildPreReq: libprotobuf-devel protobuf-compiler gcc-objc clang-devel
+BuildPreReq: libqrencode-devel boost-signals-devel
 
 %description
 Q. What is Bitcoin?
@@ -32,25 +33,31 @@ Before each transaction the coin's validity will be checked.
 
 %prep
 %setup
-%patch -p1
 
 %build
-pushd src
-%make_build -f makefile.unix -e PIE=1
-popd
-qmake-qt4 "USE_UPNP=-"
-%make_build
+./autogen.sh
+export OBJC=clang
+export OBJCXX=clang++
+%configure \
+	--enable-upnp-default \
+	--with-gui=qt4
+%make_build V=1
 
 %install
-install -pDm0755 %name-qt %buildroot%_bindir/%name
-install -pDm0755 src/%{name}d %buildroot%_bindir/%{name}d
+%makeinstall_std
+ln -s %name-qt %buildroot%_bindir/%name
+
+%pre
+rm -f %_bindir/%name
 
 %files
-%_bindir/%name
-%_bindir/%{name}d
+%_bindir/%{name}*
 %doc doc/*
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.rc1
+- Version 0.9.3rc1
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt1.4.qa1
 - NMU: rebuilt for updated dependencies.
 
