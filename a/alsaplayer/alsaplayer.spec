@@ -56,7 +56,7 @@ Name: alsaplayer
 %define lname lib%name
 Version: 0.99.80
 %define prerel %nil
-Release: alt11.1
+Release: alt11.2
 Summary: Advanced Linux Sound Architecture (ALSA) player
 Summary(ru_RU.CP1251): Проигрыватель для ALSA
 Group: Sound
@@ -621,6 +621,7 @@ This package contains development documentation for %Name.
     --disable-audiofiletest \
     --disable-esdtest
 %endif
+exit 1
 
 %make_build
 %{?_with_docs:%{?_enable_pdf:make -C docs/reference/latex}}
@@ -847,6 +848,9 @@ subst '/^[^%%]/s|^.*/\([[:lower:]][[:lower:]]_[[:upper:]][[:upper:]]\)/.*$|%%lan
 
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99.80-alt11.2
+- Rebuilt with new audiofile
+
 * Tue Apr 19 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99.80-alt11.1
 - Fixed build
 
