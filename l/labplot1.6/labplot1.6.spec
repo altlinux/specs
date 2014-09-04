@@ -5,7 +5,7 @@
 %define pre %nil
 Name: labplot1.6
 Version: 1.6.0.2
-Release: alt2.qa8
+Release: alt2.qa9
 
 Summary: Function and Data Plotter
 Summary(ru_RU.KOI8-R): Построитель графиков по данным и функциям
@@ -96,6 +96,9 @@ done
 %_libdir/libLabPlotqwtplot3d.so.*
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0.2-alt2.qa9
+- Rebuilt with new audiofile
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0.2-alt2.qa8
 - Rebuilt with gsl90 instead of gsl
 
