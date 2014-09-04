@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit4
 Version:        4.11
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -88,6 +88,9 @@ BuildArch: noarch
 Requires: %name = %epoch:%{version}-%{release}
 Provides: junit = 0:%{version}
 Provides: junit = %{epoch}:%{version}-%{release}
+Conflicts: junit < 1:3.8.2-alt8
+Obsoletes: junit < 1:3.8.2-alt8
+
 #Provides: %_javadir/junit.jar
 
 %description -n junit-junit4
@@ -181,6 +184,9 @@ EOF
 %_altdir/%{name}
 
 %changelog
+* Thu Sep 04 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt2_1jpp7
+- bugfix (closes: #30279)
+
 * Tue Aug 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.11-alt1_1jpp7
 - new version
 
