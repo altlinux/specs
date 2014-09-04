@@ -17,7 +17,7 @@ Pascal Zoghbi of 29ArabicLetters.
 Name:    fonts-ttf-google-droid
 # No sane versionning upstream, use git clone timestamp
 Version: 20120715
-Release: alt2_7
+Release: alt3_7
 Summary: General-purpose fonts released by Google as part of Android
 
 Group:     System/Fonts/True type
@@ -47,6 +47,7 @@ Obsoletes: %{oldname}-common <= 20090906-5.fc12
 
 Provides: fonts-ttf-droid = %version
 Obsoletes: fonts-ttf-droid < 1.01
+Conflicts: fonts-ttf-droid < 1.01
 
 
 %description -n fonts-ttf-google-droid-sans
@@ -68,6 +69,7 @@ Summary:  A humanist monospace sans serif typeface
 
 Provides: fonts-ttf-droid = %version
 Obsoletes: fonts-ttf-droid < 1.01
+Conflicts: fonts-ttf-droid < 1.01
 
 
 %description -n fonts-ttf-google-droid-sans-mono
@@ -89,6 +91,7 @@ Provides: %{fontname}-naskh-fonts = %{version}-%{release}
 
 Provides: fonts-ttf-droid = %version
 Obsoletes: fonts-ttf-droid < 1.01
+Conflicts: fonts-ttf-droid < 1.01
 
 
 %description -n fonts-ttf-google-droid-serif
@@ -200,6 +203,9 @@ fi
 
 
 %changelog
+* Thu Sep 04 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt3_7
+- added conflict to fonts-ttf-droid
+
 * Fri Jun 27 2014 Igor Vlasenko <viy@altlinux.ru> 20120715-alt2_7
 - added obsoletes on fonts-ttf-droid
 
