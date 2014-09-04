@@ -1,5 +1,5 @@
 Name: asciiquarium
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Aquarium/sea animation in ASCII art
@@ -20,13 +20,16 @@ Asciiquarium is an aquarium/sea animation in ASCII art.
 %setup -n %{name}_%version
 
 %install
-%__mkdir_p %buildroot%_bindir
-%__install -p -m755 %name %buildroot%_bindir
+mkdir -p %buildroot%_bindir
+install -p -m755 %name %buildroot%_bindir
 
 %files
 %_bindir/*
 %doc CHANGES README
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
+- Version 1.1
+
 * Mon Sep 19 2005 Andrey Rahmatullin <wrar@altlinux.ru> 1.0-alt1
 - initial build
