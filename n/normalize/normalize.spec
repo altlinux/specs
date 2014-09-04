@@ -1,6 +1,6 @@
 Name: normalize
 Version: 0.7.7
-Release: alt2
+Release: alt2.1
 
 Summary: A tool for adjusting the volume of WAV files to a standard level
 License: GPL
@@ -54,6 +54,9 @@ ln -s normalize-mp3.1 %buildroot%_man1dir/normalize-ogg.1
 %_man1dir/*
 
 %changelog
+* Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7-alt2.1
+- Rebuilt with new audiofile
+
 * Tue Sep 20 2011 Vitaly Lipatov <lav@altlinux.ru> 0.7.7-alt2
 - update buildreqs
 - add compressed wav fix, flac write support fix (thanks, Mandriva!)
