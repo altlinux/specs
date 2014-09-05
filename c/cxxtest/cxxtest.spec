@@ -1,12 +1,12 @@
 Name: cxxtest
 Summary: CxxTest Testing Framework for C++
-Version: 4.0
-Release: alt1.svn.153.1
+Version: 4.4
+Release: alt1.git20140603
 License: LGPL
 Url: http://cxxtest.tigris.org/
 Group: Development/C++
-Packager: Egor Glukhov <kaman@altlinux.org>
 
+# https://github.com/CxxTest/cxxtest.git
 Source: %name-%version-%release.tar
 BuildArch: noarch
 BuildRequires: python-devel
@@ -43,6 +43,9 @@ cd python
 %python_sitelibdir/*
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4-alt1.git20140603
+- Version 4.4
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0-alt1.svn.153.1
 - Rebuild with Python-2.7
 
