@@ -1,12 +1,12 @@
 Name: cluster-glue
 Summary: Reusable cluster components
-Version: 1.0.11
-Release: alt2
+Version: 1.0.12
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: http://www.linux-ha.org/wiki/Cluster_Glue
 Group: System/Base
+# hg clone http://hg.linux-ha.org/glue
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 Obsoletes: heartbeat < 2.1.4
 Conflicts: heartbeat < 2.1.4
@@ -16,6 +16,9 @@ Requires: resource-agents
 # Automatically added by buildreq on Fri Mar 29 2013
 # optimized out: libgpg-error libnet-snmp30 libssl-devel libwrap-devel net-snmp-config perl-Encode perl-Locale-gettext perl-podlators pkg-config python-base python-modules xml-common
 BuildRequires: bzlib-devel docbook-dtds docbook-style-xsl glib2-devel help2man libcorosync2-devel libcurl-devel libltdl7-devel libnet-snmp-devel libnet-devel libopenipmi-devel libuuid-devel libxml2-devel python-devel xsltproc zlib-devel setproctitle-devel libaio-devel
+
+BuildPreReq: perl-podlators asciidoc libsocket-devel libesmtp-devel
+BuildPreReq: libucd-snmp-devel asciidoc-a2x
 
 %define gname haclient
 %define uname hacluster
@@ -73,10 +76,11 @@ such as Pacemaker.
 
 %prep
 %setup
-%patch -p1
 
 %autoreconf
 export docdir=%glue_docdir
+%add_optflags -DUCD_COMPATIBLE=1
+export CPPFLAGS="%optflags"
 %configure \
     --enable-fatal-warnings=no \
     --with-daemon-group=%gname \
@@ -170,6 +174,9 @@ exit 0
 %doc AUTHORS COPYING COPYING.LIB
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.12-alt1
+- Version 1.0.12
+
 * Wed Aug 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.11-alt2
 - Add patched %_datadir/%name/utillib.sh for cibsecret
 
