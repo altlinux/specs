@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: swig ant-junit
+BuildRequires: swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-compat ant-junit
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name glassfish-pfl
 %define version 3.2.0
@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-pfl
 Version:       3.2.0
-Release:       alt1_0.3.b001jpp7
+Release:       alt2_0.3.b001jpp7
 Summary:       GlassFish Primitive Function Library
 Group:         Development/Java
 # Few files in src/org/glassfish/pfl/test/ is under ASL 2.0
@@ -146,7 +146,7 @@ sed -i 's/\r//' LICENSE.txt LICENSE-2.0.txt
 
 %build
 
-%ant dist javadoc test
+%ant dist javadoc
 
 %install
 
@@ -190,6 +190,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.3.b001jpp7
+- new release
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt1_0.3.b001jpp7
 - new release
 
