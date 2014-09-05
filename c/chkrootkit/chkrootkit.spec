@@ -8,23 +8,20 @@ Name: chkrootkit-glibc
 %else
 Name: chkrootkit
 %endif
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: Check rootkits
-Summary(ru_RU.KOI8-R): Поиск троянских коней и закладок в программах
+Summary(ru_RU.UTF-8): п÷п╬п╦я│п╨ я┌я─п╬я▐п╫я│п╨п╦я┘ п╨п╬п╫п╣п╧ п╦ п╥п╟п╨п╩п╟п╢п╬п╨ п╡ п©я─п╬пЁя─п╟п╪п╪п╟я┘
 
 License: BSD
 Group: Monitoring
 Url: http://www.chkrootkit.org/
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 Source: ftp://ftp.pangeia.com.br/pub/seg/pac/%name-%version.tar.gz
-Patch0: chkrootkit-alt-libpath.patch
-Patch2: chkrootkit-0.45-alt-ifpromisc.patch
-Patch3: strings.c.patch
 
 Requires: binutils coreutils findutils sed gawk grep net-tools procps crontabs
+Requires: /usr/bin/ssh
 
 %if_with glibc
 BuildPreReq: glibc-devel-static
@@ -38,15 +35,12 @@ BuildPreReq: dietlibc
 %description
 Chkrootkit is a tool to locally check for signs of a rootkit.
 
-%description -l ru_RU.KOI8-R
-Chkrootkit является набором утилит для поиска троянских коней и закладок
-по набору сигнатур в программах на локальном компьютере.
+%description -l ru_RU.UTF-8
+Chkrootkit я▐п╡п╩я▐п╣я┌я│я▐ п╫п╟п╠п╬я─п╬п╪ я┐я┌п╦п╩п╦я┌ п╢п╩я▐ п©п╬п╦я│п╨п╟ я┌я─п╬я▐п╫я│п╨п╦я┘ п╨п╬п╫п╣п╧ п╦ п╥п╟п╨п╩п╟п╢п╬п╨
+п©п╬ п╫п╟п╠п╬я─я┐ я│п╦пЁп╫п╟я┌я┐я─ п╡ п©я─п╬пЁя─п╟п╪п╪п╟я┘ п╫п╟ п╩п╬п╨п╟п╩я▄п╫п╬п╪ п╨п╬п╪п©я▄я▌я┌п╣я─п╣.
 
 %prep
 %setup
-%patch0 -p2 -b .libpath
-%patch2 -p1
-%patch3
 
 sed -i 's|@CHKROOTKIT_DIR@|%_libdir/%name|' %name
 
@@ -70,12 +64,15 @@ cat > %buildroot%cron_daily/%name << __EOF__
 __EOF__
 
 %files
-%doc README* COPYRIGHT
+%doc README* COPYRIGHT ACKNOWLEDGMENTS
 %_sbindir/*
 %_libdir/%name
 %attr(700,root,root) %cron_daily/%name
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.50-alt1
+- Version 0.50
+
 * Sat Aug 08 2009 Slava Semushin <php-coder@altlinux.ru> 0.49-alt1
 - Updated to 0.49
 
@@ -104,7 +101,7 @@ __EOF__
 - omit error messages when chfn and chsh are not installed
 - add cron.daily record
 
-* Wed Jul 28 2004 Per ц≤yvind Karlsen <peroyvind@linux-mandrake.com> 0.43-1mdk
+* Wed Jul 28 2004 Per я├Б┴╓yvind Karlsen <peroyvind@linux-mandrake.com> 0.43-1mdk
 - 0.43
 - regenerate P0
 - drop useless prefix
