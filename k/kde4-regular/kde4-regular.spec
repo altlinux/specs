@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.12
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -62,7 +62,7 @@ Requires: kde4-krusader
 Requires: kde4-synaptiks
 Requires: kde4-soundkonverter
 Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
-Requires: kde4-kipi-plugins
+Requires: kde4-kipi-plugins-core
 Requires: kdenlive
 Requires: skanlite
 Requires: kde4plasma-addon-yawp
@@ -86,6 +86,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Fri Sep 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.12-alt2
+- update requires
+
 * Mon Apr 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.12-alt1
 - remove kde4-colord
 - add kde4-ksshaskpass
