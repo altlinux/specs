@@ -1,13 +1,12 @@
 Name: cfdg
-Version: 2.2
-Release: alt3.2
+Version: 3.0.8
+Release: alt1
 
 Summary: Context Free is a program that generates images from written instructions
 License: GPLv2
 Group: Graphics
 Url: http://www.contextfreeart.org
 
-Packager: Timur Batyrshin <erthad@altlinux.org>
 Source: %name-%version.tar.bz2
 Patch: cfdg-2.2-alt-DSO.patch
 Patch1: cfdg-2.2-alt-flex.patch
@@ -39,8 +38,8 @@ Features:
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
+#patch -p2
+#patch1 -p2
 
 %build
 %make_build
@@ -53,6 +52,9 @@ install -pD -m0755 cfdg %buildroot%_bindir/cfdg
 %_bindir/*
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt1
+- Version 3.0.8
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt3.2
 - Rebuilt with libpng15
 
