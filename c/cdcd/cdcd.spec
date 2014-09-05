@@ -1,18 +1,18 @@
-%set_automake_version 1.11
+#set_automake_version 1.11
 
 Name: cdcd
 Version: 0.6.6
-Release: alt5.qa3
+Release: alt6.git20140208
 Summary: Command Driven CD player
 License: %gpl2plus
 Group: Sound
 URL: http://libcdaudio.sourceforge.net/
+# git://git.code.sf.net/p/libcdaudio/cdcd
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: glib-devel libcdaudio-devel libreadline-devel
+BuildRequires: glib2-devel libcdaudio-devel libreadline-devel
+BuildPreReq: libsocket-devel
 
 %description
 %name takes a different approach from conventional console (or X) based
@@ -32,7 +32,6 @@ will be given the %name command prompt.
 
 %prep
 %setup
-%patch -p1
 
 
 %build
@@ -72,6 +71,9 @@ __MENU__
 
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt6.git20140208
+- Snapshot from git
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt5.qa3
 - Fixed build
 
