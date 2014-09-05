@@ -5,18 +5,16 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jline2
-Version:          2.5
-Release:          alt3_7jpp7
+Version:          2.10
+Release:          alt1_8jpp7
 Summary:          JLine is a Java library for handling console input
 Group:            Development/Java
 License:          BSD and ASL 2.0
 URL:              https://github.com/jline/jline2
 
 # git clone git://github.com/jline/jline2.git
-# cd jline2/ && git archive --format=tar --prefix=jline-2.5/ jline-2.5 | xz > jline-2.5.tar.xz
+# cd jline2/ && git archive --format=tar --prefix=jline-2.10/ jline-2.10 | xz > jline-2.10.tar.xz
 Source0:          jline-%{version}.tar.xz
-Patch0:           %{name}-%{version}-pom.patch
-Patch1:           %{name}-%{version}-protected-void-back.patch
 
 BuildArch:        noarch
 
@@ -49,15 +47,29 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jline-%{version}
-%patch0
-%patch1 -p1
+
+# Remove maven-shade-plugin usage
+%pom_remove_plugin "org.apache.maven.plugins:maven-shade-plugin"
+# Remove animal sniffer plugin in order to reduce deps
+%pom_remove_plugin "org.codehaus.mojo:animal-sniffer-maven-plugin"
+
+# Remove unavailable and unneeded deps
+%pom_xpath_remove "pom:build/pom:extensions"
+%pom_xpath_remove "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-site-plugin']"
+
+# Do not import non-existing internal package
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,!org.fusesource.jansi.internal</Import-Package>"
+
+# Let maven bundle plugin figure out the exports.
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package"
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.failure.ignore=true install javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -72,19 +84,25 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 # Uh, oh...
 # http://sourceforge.net/mailarchive/message.php?msg_id=27330388
 # https://github.com/jline/jline2/commit/7a4d27430999706f0fd30b4548d5879275a88de2#pom.xml
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jline:jline"
+%add_maven_depmap -v "" -a "jline:jline"
+
+# add_maven_depmap moves actual jar into its %{_javadir}/%{name}-%{version}.jar
+ln -s %{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 %files
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_javadir}/*
-%doc README.md LICENSE.txt
+%doc CHANGELOG.md README.md LICENSE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.10-alt1_8jpp7
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt3_7jpp7
 - rebuild with maven-local
 
