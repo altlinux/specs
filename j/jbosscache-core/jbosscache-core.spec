@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       jbosscache-core
 Version:    3.2.8
-Release:    alt1_7jpp7
+Release:    alt1_9jpp7
 Summary:    JBoss objects cache
 
 Group:      Development/Java
@@ -18,6 +17,7 @@ Source0:    %{name}-%{version}.tar.xz
 Patch0:     %{name}-jgroups212.patch
 
 BuildRequires:  maven-local
+BuildRequires:  maven-install-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-surefire
@@ -68,6 +68,13 @@ find . -name \*.jar -exec rm -f {} \;
 # Remove optional dependencies
 %pom_remove_dep com.sleepycat:je
 %pom_remove_dep net.noderunner:amazon-s3
+# Test dependencies
+%pom_remove_dep hsqldb:hsqldb
+%pom_remove_dep jboss.jbossts:jbossjta
+%pom_remove_dep jboss.jbossts:jbossjts
+%pom_remove_dep jboss.jbossts:jbossts-common
+%pom_remove_dep net.noderunner:http
+%pom_remove_dep org.jboss.logging:jboss-logging-spi
 
 # Remove code for amazon-s3 and berkleydb-je dependencies
 rm -rf src/main/java/org/jboss/cache/loader/{s3,bdbje}
@@ -112,6 +119,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_7jpp7
 - new release
 
