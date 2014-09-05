@@ -3,11 +3,11 @@
 %define ciddir	%tbird_noarch_extensionsdir/%cid
 
 Name:		thunderbird-%rname
-Version:	2.6.2
-Release:	alt5
+Version:	3.3
+Release:	alt1
 Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
-Packager:	Radik Usupov <radik@altlinux.org>
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
@@ -16,11 +16,11 @@ Group:		Networking/Mail
 URL:		http://www.mozilla.org/projects/calendar/lightning/
 
 Source0:	lightning-ru-%version.xpi
-Patch0:		max-versions.patch
+Patch0:		fix-metadata-for-languagepack-in-install.rdf.patch
 
 BuildRequires(pre):	rpm-build-thunderbird 
 BuildRequires:		unzip
-Requires:   thunderbird-lightning
+Requires:       thunderbird-lightning
 
 %description
 The Mozilla Lightning in Russian.
@@ -35,6 +35,10 @@ patch -p2 < %PATCH0
 %ciddir
 
 %changelog
+* Fri Sep 05 2014 Andrey Cherepanov <cas@altlinux.org> 1:3.3-alt1
+- New version (ALT #30255)
+- Change maintainer
+
 * Wed Aug 06 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.6.2-alt5
 - Update maxVersion for Thunderbird 31.x
 
