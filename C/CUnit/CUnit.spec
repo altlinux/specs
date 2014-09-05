@@ -1,6 +1,6 @@
 Name: CUnit
-Version: 2.1.2
-Release: alt1
+Version: 2.1.3
+Release: alt1.svn20140424
 Summary: A lightweight system for unit tests in C
 
 Group: System/Libraries
@@ -37,7 +37,7 @@ developing applications that use %name.
 sed -i '/^CURSES_OBJECT_FILES_SHARED/ s,$, -l\$\(CURSES_LIB\),' CUnit/Sources/Makefile.am
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure \
 	--enable-curses \
 	--disable-static
@@ -63,6 +63,9 @@ rm -rf docs/headers
 %_pkgconfigdir/*
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt1.svn20140424
+- Version 2.1-3
+
 * Mon Nov 14 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1.2-alt1
 - New version
 
