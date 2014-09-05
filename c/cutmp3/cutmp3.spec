@@ -2,14 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cutmp3
-Version: 2.0.2
-Release: alt1.qa1
+Version: 2.1.1
+Release: alt1
 
 Summary: small console editor mp3 files without quality loss
 License: GPLv2
 Group: Sound
 Url: http://www.puchalla-online.de/cutmp3.html
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 Source: http://www.puchalla-online.de/%name-%version.tar.bz2
 
@@ -17,6 +16,8 @@ Requires: mpg123
 
 # Automatically added by buildreq on Tue Apr 27 2004
 BuildRequires: libncurses-devel libreadline-devel
+
+BuildRequires(pre): rpm-macros-make
 
 %description
 This is a small program to edit mp3 files without quality loss.
@@ -27,12 +28,10 @@ segment with 'a' and 'b' and save the segment with 's'.
 %setup
 
 %build
-export CFLAGS="%optflags"
-%make_build
+%make_build_ext
 
 %install
-install -pD -m 755 %name %buildroot%_bindir/%name
-install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
+%make install PREFIX=%buildroot%prefix
 
 %files
 %doc BUGS README* Changelog TODO USAGE
@@ -40,6 +39,9 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1
+- Version 2.1.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
