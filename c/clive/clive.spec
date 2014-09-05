@@ -1,40 +1,41 @@
 Name: clive
-Version: 0.4.5
-Release: alt3.qa1
+Version: 0.4.10
+Release: alt1
 
 Summary: clive is a console client for LiveJournal.com
 License: BSD-like
 Group: Networking/Other
 Url: http://sourceforge.net/projects/ljclive
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 Source0: %name-%version.tar.gz
 
-Patch0: clive-0.4.5-alt-warning.patch
+BuildPreReq: libbsd-devel
 
 %description
 clive is a console client for LiveJournal.com.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
 %build
-%__autoreconf
+%autoreconf
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc AUTHORS BUGS ChangeLog
+%doc AUTHORS BUGS ChangeLog README
 %_bindir/clive
 %_man1dir/clive.*
 %dir %_datadir/clive
 %_datadir/clive/cliverc-example.conf
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.10-alt1
+- Version 0.4.10
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.5-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
