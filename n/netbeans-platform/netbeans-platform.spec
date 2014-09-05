@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %set_verify_elf_method fhs=relaxed
@@ -73,7 +74,7 @@ BuildRequires: jpackage-compat
 Name:         netbeans-platform
 Epoch:        1
 Version:      %{nb_ver}
-Release:      alt1_6jpp7
+Release:      alt1_9jpp7
 Summary:      NetBeans Platform
 Group:        Development/Java
 License:      GPLv2 with exceptions or CDDL
@@ -102,13 +103,16 @@ Patch6: jnilib-build-uniformly-across-archs.patch
 Patch7: do-not-name-sos-based-on-arch.patch
 # Do not build windows cleaners
 Patch8: no-windows-cleaners.patch
+# Compatiblity with newer jna
+Patch9: jna-structure-changes.patch
+# Compatiblity with ant 1.9
+Patch10: ant-1.9.patch
 
 BuildRequires: jpackage-utils
 
-BuildRequires: ant >= 1.7.0
-BuildRequires: ant-junit >= 1.7.0
-BuildRequires: ant-trax >= 1.7.0
-BuildRequires: antlr3
+BuildRequires: ant
+BuildRequires: ant-junit
+BuildRequires: antlr3-java
 BuildRequires: bindex >= 2.2
 BuildRequires: felix-osgi-core >= 1.4.0
 BuildRequires: felix-osgi-compendium >= 1.4.0
@@ -232,6 +236,8 @@ popd
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 %build
 
@@ -359,6 +365,9 @@ popd
 %doc nbbuild/licenses/CDDL-GPL-2-CP
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 1:7.0.1-alt1_9jpp7
+- new version
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1:7.0.1-alt1_6jpp7
 - new version
 
