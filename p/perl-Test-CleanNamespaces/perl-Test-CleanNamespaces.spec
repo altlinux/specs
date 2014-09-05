@@ -1,14 +1,14 @@
-%define module_version 0.13
+%define module_version 0.16
 %define module_name Test-CleanNamespaces
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Class/MOP/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find/Rule.pm) perl(File/Find/Rule/Perl.pm) perl(File/Spec/Functions.pm) perl(List/Util.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Moose/Exporter.pm) perl(Moose/Role.pm) perl(MooseX/Role/Parameterized.pm) perl(Mouse.pm) perl(Mouse/Role.pm) perl(Package/Stash.pm) perl(Role/Tiny.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Sub/Identify.pm) perl(Test/Builder.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Test/Tester.pm) perl(Test/Warnings.pm) perl(constant.pm) perl(if.pm) perl(lib.pm) perl(metaclass.pm) perl(namespace/clean.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(version.pm) perl(warnings.pm)
+BuildRequires: perl(Class/MOP/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find/Rule.pm) perl(File/Find/Rule/Perl.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Moose/Exporter.pm) perl(Moose/Role.pm) perl(MooseX/Role/Parameterized.pm) perl(Mouse.pm) perl(Mouse/Role.pm) perl(Package/Stash.pm) perl(Role/Tiny.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Sub/Identify.pm) perl(Test/Builder.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Test/Tester.pm) perl(Test/Warnings.pm) perl(constant.pm) perl(if.pm) perl(lib.pm) perl(metaclass.pm) perl(namespace/clean.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.13
-Release: alt2
+Version: 0.16
+Release: alt1
 Summary: Check for uncleaned imports
 Group: Development/Perl
 License: perl
@@ -30,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README.md Changes README LICENSE
+%doc Changes README LICENSE
 %perl_vendor_privlib/T*
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- regenerated from template by package builder
+
 * Wed Aug 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
 - moved to Sysiphus as dependency
 
