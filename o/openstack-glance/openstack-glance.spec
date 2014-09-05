@@ -1,6 +1,6 @@
 Name:		openstack-glance
 Version:	2014.1.1
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Image Service
 
 Group:		System/Servers
@@ -251,12 +251,12 @@ exit 0
 %post
 %post_service %name-api
 %post_service %name-registry
-%post_service %name-glance-scrubber
+%post_service %name-scrubber
 
 %preun
 %preun_service %name-api
 %preun_service %name-registry
-%preun_service %name-glance-scrubber
+%preun_service %name-scrubber
 
 %files
 %doc README.rst
@@ -307,6 +307,9 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Fri Sep 05 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt2
+- {post,preun}_service openstack-glance-scrubber fixed
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 2014.1.1-alt1
 - 2014.1.1
 
