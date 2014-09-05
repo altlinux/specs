@@ -1,6 +1,6 @@
 Name:    qt-gstreamer
 Version: 0.10.3
-Release: alt2
+Release: alt3
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -28,6 +28,14 @@ BuildRequires: doxygen kde-common-devel
 QtGStreamer provides C++ bindings for GStreamer with a Qt-style
 API, plus some helper classes for integrating GStreamer better
 in Qt applications.
+
+%package -n qt-gstreamer0-qml
+Group:   System/Libraries
+Summary: QML bindings for GStreamer with a Qt-style API
+Provides: qt-gstreamer-qml = %version-%release
+Conflicts: qt-gstreamer1-qml
+%description -n qt-gstreamer0-qml
+QML bindings for GStreamer with a Qt-style API
 
 %package devel
 Summary:        Header files and development documentation for %name
@@ -61,6 +69,8 @@ ln -s /usr/include/QtGStreamer/QGlib src/QGlib
 %_libdir/libQtGStreamer-0.10.so.0*
 %_libdir/libQtGStreamerUi-0.10.so.0*
 %_libdir/libQtGStreamerUtils-0.10.so.0*
+
+%files -n qt-gstreamer0-qml
 %_qt4dir/imports/QtGStreamer/
 
 %files devel
@@ -74,6 +84,9 @@ ln -s /usr/include/QtGStreamer/QGlib src/QGlib
 
 
 %changelog
+* Fri Sep 05 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt3
+- package QML module separately
+
 * Thu Sep 04 2014 Sergey V Turchin <zerg@altlinux.org> 0.10.3-alt2
 - package QtGlib separately
 
