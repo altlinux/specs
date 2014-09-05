@@ -1,6 +1,6 @@
 Name: cyrup
-Version: 2.2.3
-Release: alt3
+Version: 2.4.0
+Release: alt1
 
 Summary: Web interface for mail system based on Postfix MTA, Cyrus IMAP and MySQL/PostgreSQL
 License: GPL
@@ -11,11 +11,8 @@ Source0: %name-%version.tar.bz2
 Source1: %name.apache.conf
 Source2: %name.htaccess.conf
 Source3: README.ALT
-Patch0: %name-alt-config.patch
-Patch1: %name-alt-imaploginerror.patch
 
 BuildArch: noarch
-Packager: Timur Batyrshin <erthad@altlinux.org>
 
 BuildRequires: rpm-macros-webserver-common
 Requires: webserver-common, php-engine, php5-mysql
@@ -38,8 +35,6 @@ Requires: %name = %version-%release, apache
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
 
 %install
 mkdir -p %buildroot%_datadir/%name
@@ -81,6 +76,9 @@ service httpd condreload
 %_datadir/%name/.htaccess
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1
+- Version 2.4.0
+
 * Mon Mar 29 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 2.2.3-alt3
 - Updated README.ALT
 
