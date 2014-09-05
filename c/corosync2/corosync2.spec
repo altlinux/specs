@@ -1,19 +1,20 @@
 Name: corosync2
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 License: BSD
 Group: System/Base
 Url: http://ftp.corosync.org
 
+# https://github.com/corosync/corosync.git
 Source0:%name-%version.tar
 Source1: corosync-init
 Source2: corosync-notifyd-init
-Patch: %name-%version-alt.patch
 
 Conflicts: corosync
 
 BuildRequires: gcc-c++ doxygen nss-devel libqb-devel libstatgrab-devel libibverbs-devel librdmacm-devel libnet-snmp-devel libdbus-devel systemd-devel libxslt-devel libaugeas-devel
+BuildPreReq: augeas graphviz libsocket-devel
 
 %define _localstatedir %_var
 
@@ -56,7 +57,6 @@ the remaining acting as TTNs.
 
 %prep
 %setup
-%patch -p1
 
 echo %version > .version
 #if release version (= tarball)
@@ -123,7 +123,7 @@ rm -rf %buildroot%_docdir/*
 %preun_service corosync-notifyd
 
 %files
-%doc AUTHORS SECURITY README* TODO LICENSE
+%doc AUTHORS SECURITY README* LICENSE
 %_bindir/*
 %_sbindir/*
 %dir %_sysconfdir/corosync
@@ -159,6 +159,9 @@ rm -rf %buildroot%_docdir/*
 %_datadir/corosync/tests
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.4-alt1
+- Version 2.3.4
+
 * Mon Nov 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3.2-alt1
 - New version
 
