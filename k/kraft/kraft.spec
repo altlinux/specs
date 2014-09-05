@@ -1,7 +1,7 @@
 
 Name:           kraft
 Version:        0.55
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -51,6 +51,9 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 
 
 %changelog 
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.55-alt1.1
+- Rebuilt with new ctemplate
+
 * Fri Jul 18 2014 Andrey Cherepanov <cas@altlinux.org> 0.55-alt1
 - New version
 - Application strictly requires Akonadi for work
