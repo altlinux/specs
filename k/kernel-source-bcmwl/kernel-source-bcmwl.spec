@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	bcmwl
-%define module_version  6.30.223.141
-%define real_version	6.30.223.141
+%define module_version  6.30.223.248
+%define real_version	6.30.223.248
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt2
+Release: alt1
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -36,6 +36,9 @@ BuildArch: noarch
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Sep 05 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt1
+- 6.30.223.248
+
 * Tue Feb 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.141-alt2
 - lost sources updated
 
