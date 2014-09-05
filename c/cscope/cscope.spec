@@ -1,15 +1,13 @@
 # vim: set ft=spec: -*- mode: rpm-spec; -*-
 
 Name: cscope
-Version: 15.7a
-Release: alt1.qa2
+Version: 15.8a
+Release: alt1
 
 Summary: Cscope is a text screen based source browsing tool
 Group: Development/Other
 License: BSD
 Url: http://cscope.sourceforge.net/
-
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 # git://git.altlinux.org/people/raorn/packages/%name.git
 Source: %name-%version.tar
@@ -37,7 +35,7 @@ defined.
 %make_build all
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
@@ -53,6 +51,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_man1dir/*
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 15.8a-alt1
+- Version 15.8a
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 15.7a-alt1.qa2
 - NMU: rebuilt for updated dependencies.
 
