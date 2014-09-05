@@ -1,6 +1,6 @@
 Name: libICE
-Version: 1.0.8
-Release: alt2
+Version: 1.0.9
+Release: alt1
 Summary: X Inter Client Exchange Library
 License: MIT/X11
 Group: System/Libraries
@@ -51,6 +51,9 @@ develop programs which make use of %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.9-alt1
+- 1.0.9
+
 * Thu Apr 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.0.8-alt2
 - rebuild for abstract socket support
 

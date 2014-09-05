@@ -1,5 +1,5 @@
 Name: libXfont
-Version: 1.4.8
+Version: 1.5.0
 Release: alt1
 Summary: X.Org libXfont runtime library
 License: MIT/X11
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Fri May 16 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.4.8-alt1
 - 1.4.8
 
