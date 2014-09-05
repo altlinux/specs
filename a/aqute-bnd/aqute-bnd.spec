@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -35,10 +36,9 @@ BuildRequires: jpackage-compat
 
 Name:           aqute-bnd
 Version:        0.0.363
-Release:        alt2_8jpp7
+Release:        alt2_14jpp7
 Summary:        BND Tool
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://www.aQute.biz/Code/Bnd
 
 # NOTE : sources for 0.0.363 are no longer available
@@ -48,10 +48,19 @@ Source0:        http://www.aqute.biz/repo/biz/aQute/bnd/%{version}/bnd-%{version
 Source1:        http://www.aqute.biz/repo/biz/aQute/bnd/%{version}/bnd-%{version}.pom
 Source2:        aqute-service.tar.gz
 
+# from Debian, add source compatibility with ant 1.9
+Patch0:         %{name}-%{version}-ant19.patch
+# fixing base64 class ambiguity
+Patch1:         %{name}-%{version}-ambiguous-base64.patch
+
+
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
+BuildRequires:  felix-osgi-compendium
+BuildRequires:  felix-osgi-core
+BuildRequires:  junit
 Source44: import.info
 
 
@@ -69,9 +78,8 @@ The tool is capable of acting as:
 - Use of macros
 
 %package javadoc
-Requires:       jpackage-utils
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -97,15 +105,40 @@ rm -rf src/main/java/aQute/bnd/annotation/Test.java \
        aQute/bnd/classpath/messages.properties
 
 # remove bundled stuff
-for f in $(find aQute/ -type f -name "*.class"); do
-    rm -f $f
-done
+find aQute/ -type f -name "*.class" -delete
+
+%patch0 -p1 -b .ant19
+%patch1 -p1 -b .base64
 
 # Convert CR+LF to LF
 sed -i "s|\r||g" LICENSE
+mkdir temp
+(
+cd temp
+mkdir -p target/classes/
+mkdir -p src/main/
+%jar -xf ../aQute/bnd/test/aQute.runtime.jar
+mv OSGI-OPT/src src/main/java
+find aQute -type f -name "*.class" -delete
+)
+rm -rf aQute/bnd/test/aQute.runtime.jar
 
 %build
 export LANG=en_US.utf8
+
+
+(
+cd temp
+%{javac} -d target/classes -target 1.5 -source 1.5 -classpath $(build-classpath junit felix/org.osgi.core felix/org.osgi.compendium) $(find src/main/java -type f -name "*.java")
+for f in $(find aQute/ -type f -not -name "*.class"); do
+    cp -p $f target/classes/$f
+done
+  (
+   cd target/classes
+   %jar cmf ../../META-INF/MANIFEST.MF ../../../aQute/bnd/test/aQute.runtime.jar *
+  )
+)
+rm -r temp
 export OPT_JAR_LIST=:
 export CLASSPATH=$(build-classpath ant)
 
@@ -130,19 +163,19 @@ install -Dm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_8jpp7
 - new release
 
