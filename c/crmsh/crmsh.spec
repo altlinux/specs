@@ -3,8 +3,8 @@
 
 Name: crmsh
 Summary: Pacemaker command line interface
-Version: 1.2.6
-Release: alt1
+Version: 2.0
+Release: alt1.git20140904
 License: GPL-2.0+
 Url: http://savannah.nongnu.org/projects/crmsh
 Group: System/Configuration/Other
@@ -42,6 +42,7 @@ manager for Heartbeat and/or Corosync.
 
 %files
 %_datadir/crmsh
+%_sysconfdir/*
 %_sbindir/crm
 %python_sitelibdir/crmsh
 
@@ -52,6 +53,9 @@ manager for Heartbeat and/or Corosync.
 %exclude %_datadir/crmsh/tests
 
 %changelog
+* Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20140904
+- Version 2.0
+
 * Sat Oct 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.6-alt1
 - New version
 
