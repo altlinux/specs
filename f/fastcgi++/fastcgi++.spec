@@ -1,23 +1,20 @@
-%define tag beta
-%define stamp 6852ded9
 %define soversion 2
 
 Name: fastcgi++
-Version: 2.0
-Release: alt4.svn.%tag.%stamp.3.qa1
+Version: 3.0
+Release: alt1.alpha.git20130704
 Summary: A C++ FastCGI Library
 
 Group: System/Libraries
 License: LGPLv3
 Url: http://savannah.nongnu.org/projects/fastcgipp/
-Packager: Anatoly Lyutin <vostok@altlinux.org>
 
-Source: %name-%version%tag-%stamp.tar
-
-Patch: make_addlibs.patch
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Mon Dec 06 2010
 BuildRequires: boost-devel gcc-c++ libmysqlclient-devel
+
+BuildPreReq: doxygen
 
 %description
 fastcgi++ is a C++ library for developing Web applications in C++ with the
@@ -61,11 +58,12 @@ Requires: lib%name-devel = %version-%release
 A C++ FastCGI library
 
 %prep
-%setup -n %name-%version%tag-%stamp
-%patch0 -p0
+%setup -n %name-%version
 
 %build
+./bootstrap
 %autoreconf -I config
+%add_optflags -fno-strict-aliasing
 %configure
 %make_build
 
@@ -92,6 +90,9 @@ mv %buildroot%_datadir/%name/doc/html %buildroot%_docdir/%name
 %_libdir/*.so.*
 
 %changelog
+* Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.alpha.git20130704
+- Version 3.0alpha
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt4.svn.beta.6852ded9.3.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
