@@ -1,8 +1,7 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define Name DeskMenu
 Name: deskmenu
-Version: 1.4.2
-Release: alt1.1.qa1
+Version: 1.4.5
+Release: alt1
 Summary: Root menu program for Window Manager
 Summary(uk_UA.CP1251): Главное меню для віконного менеджера
 Summary(ru_RU.CP1251): Главное меню для оконного менеджера
@@ -30,17 +29,19 @@ by clicking the root window.
 
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 subst 's/\r//g' README
 
 
 %build
-%configure
+%autoreconf
+%configure \
+	--with-x
 %make_build
 
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 install -d -m 0755 %buildroot%_sysconfdir/menu-methods
 gzip -dc -- %SOURCE1 > %buildroot%_sysconfdir/menu-methods/%name
 chmod 755 %buildroot%_sysconfdir/menu-methods/%name
@@ -49,12 +50,16 @@ gzip --best --stdout > changelog.gz
 
 %files
 %doc AUTHORS README example_rc changelog.* debian/README.Debian
+%doc ChangeLog NEWS TODO
 %_bindir/%name
 %_man1dir/*
 %_sysconfdir/menu-methods/*
 
 
 %changelog
+* Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.5-alt1
+- Version 1.4.5
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.2-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
