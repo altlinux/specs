@@ -1,11 +1,10 @@
 Name: fgr
-Version: 4.5.0
-Release: alt2.qa1
+Version: 4.7.4
+Release: alt1
 
 Summary: File content search command
 License: GPL
 Group: File tools
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 Url: http://xffm.sourceforge.net/fgr.html
 
 Source: %name-%version.tar.gz
@@ -15,12 +14,15 @@ BuildPreReq: glib2-devel
 BuildRequires: gcc-c++ intltool perl-XML-Parser
 
 %description
-Fgr is a command find tool which combines the power of "find" with the versatility of "grep". 
-The Xffm-find GUI uses this simple program for seaching into the contents of files. 
-The ability to use fgr from either a GUI or the command line provides this application with great versatility. 
+Fgr is a command find tool which combines the power of "find" with the
+versatility of "grep".
+The Xffm-find GUI uses this simple program for seaching into the
+contents of files.
+The ability to use fgr from either a GUI or the command line provides
+this application with great versatility.
 
 %prep
-%setup -q
+%setup
 
 %build
 intltoolize --force
@@ -36,13 +38,14 @@ autoconf
 %find_lang %name
 
 %files -f %name.lang
+%doc AUTHORS ChangeLog NEWS README TODO
 %_bindir/*
 %_man1dir/*
-%dir %_datadir/xffm/fgr
-%_datadir/xffm/%name/*
-%exclude %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7.4-alt1
+- Version 4.7.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
