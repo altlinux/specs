@@ -1,21 +1,24 @@
 Name: dvdstyler
-Version: 2.6.1
-Release: alt1
+Version: 2.8
+Release: alt1.rc2
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
 Group: Video
 Url: http://www.dvdstyler.de
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%version.tar
 Source2: %name.desktop
 Source4: %name-16x16.png
 Source5: %name-32x32.png
 
-BuildRequires: gcc-c++ libwxGTK3.0-devel libmjpegtools-devel netpbm libnetpbm-devel libwxsvg-devel libexif-devel libjpeg-devel libudev-devel libgnomeui-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavfilter-devel libswscale-devel avconv
-BuildRequires: dvdauthor mjpegtools genisoimage dvd+rw-tools cdrecord-classic dvdrecord xmlto zip bison flex mpgtx
+BuildRequires: gcc-c++ libwxGTK3.1-devel libmjpegtools-devel netpbm
+BuildRequires: libnetpbm-devel libwxsvg-devel libexif-devel
+BuildRequires: libjpeg-devel libudev-devel libgnomeui-devel
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
+BuildRequires: libavfilter-devel libswscale-devel avconv
+BuildRequires: dvdauthor mjpegtools genisoimage dvd+rw-tools
+BuildRequires: cdrecord-classic dvdrecord xmlto zip bison flex mpgtx
 
 Requires: mjpegtools dvdauthor dvd+rw-tools genisoimage dvdisaster
 
@@ -47,9 +50,9 @@ The main %name features are:
     * и многое другое...
 
 %prep
-%setup -q -n DVDStyler-%version
+%setup -n DVDStyler-%version
 
-rm -f ./configure
+rm -f ./configure configure.in
 
 touch NEWS
 
@@ -89,6 +92,10 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1.rc2
+- Version 2.8rc2
+- Rebuilt with wxGTK3.1
+
 * Sun Dec 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.6.1-alt1
 - New release version
 - Rebuild with libwxGTK3.0
