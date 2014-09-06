@@ -1,6 +1,6 @@
 Name:    kde4-regular
-Version: 4.12
-Release: alt2
+Version: 4.14
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -18,10 +18,6 @@ Requires: fonts-ttf-google-droid-sans
 Requires: fonts-ttf-google-droid-sans-mono
 Requires: fonts-ttf-google-droid-serif
 
-Requires: soprano-backend-redland
-Requires: soprano-backend-virtuoso
-Requires: soprano
-
 Requires: appmenu-qt4
 
 Requires: kde4base-workspace-core kde4base-workspace-cursors kde4base-workspace-wallpapers
@@ -33,6 +29,7 @@ Requires: kde4edu
 Requires: kde4games
 Requires: kde4graphics
 Requires: kde4network
+Requires: kde4-kopete-antispam
 Requires: kde4pim
 Requires: kde4plasma-addons
 Requires: kde4toys
@@ -44,6 +41,7 @@ Requires: kde4-i18n-uk
 Requires: kde4-kio-mtp
 Requires: kde4-kio-upnp-ms
 Requires: kde4-k3b
+Requires: kde4-k9copy
 Requires: kde4-amarok
 Requires: kde4-kaffeine
 Requires: rekonq
@@ -52,11 +50,9 @@ Requires: kde4-smb4k
 Requires: choqok
 Requires: kde4-telepathy
 Requires: sflphone-client-kde4
-Requires: kde4-kopete-antispam
 Requires: kde4-ktorrent
 Requires: bluedevil
 Requires: kde4-webkitpart
-Requires: kde4-k9copy
 Requires: kde4-kid3
 Requires: kde4-krusader
 Requires: kde4-synaptiks
@@ -86,6 +82,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Sat Sep 06 2014 Sergey V Turchin <zerg@altlinux.org> 4.14-alt1
+- update requires
+
 * Fri Sep 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.12-alt2
 - update requires
 
