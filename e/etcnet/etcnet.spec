@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt12
+Release:	alt13
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,10 @@ fi
 %files full
 
 %changelog
+* Sat Sep 06 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt13
+- fixed use with recent ipset (closes: #30286)
+- added support for macvlan/macvtap iface types
+
 * Tue Aug 26 2014 Alexey Shabalin <shaba@altlinux.ru> 0.9.10-alt12
 - update systemd unit
 - install to multi-user.target too
