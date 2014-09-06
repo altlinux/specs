@@ -1,15 +1,14 @@
 Name: dzen2
 Version: 0.9.5
-Release: alt2.svn271
+Release: alt3.git20130923
 Summary: A general purpose messaging and notification program. 
 
 License: MIT/X
 Group: Graphical desktop/Other
 
 Url: http://gotmor.googlepages.com/dzen
-# http://dzen.googlecode.com/svn/trunk
+# https://github.com/robm/dzen.git
 Source: %name-%version.tar.bz2
-Packager: Timur Batyrshin <erthad@altlinux.org>
 
 Patch0: dzen2-alt-gcpubar.patch
 Patch1: dzen2-alt-slavemaxlines.patch
@@ -69,6 +68,9 @@ install -pD -m0755 gadgets/README.textwidth %buildroot%_docdir/%name/gadgets/REA
 %doc %_docdir/%name/
 
 %changelog
+* Sat Sep 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3.git20130923
+- New snapshot
+
 * Tue Dec 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2.svn271
 - Avoid strip binary files
 
