@@ -1,26 +1,19 @@
 %def_enable shared
 %def_enable static
 
-%define svnrev 243
 %define Name Flake
 Name: flake
 %define lname lib%name
 Version: 0.11.5
-Release: alt0.2.qa1
+Release: alt1.svn20090830
 Summary: FLAC audio encoder
 License: %lgpl2plus
 Group: Sound
 URL: http://%name-enc.sourceforge.net/
-%ifdef svnrev
-Source:  %name-svn-r%svnrev.tar
-%else
 Source: %name-%version.tar
-%endif
-Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: cmake subversion
+BuildRequires: cmake subversion libsndfile-devel
 
 %description
 The purpose of %Name is to be an alternative to the FLAC reference
@@ -71,8 +64,7 @@ This package includes static %Name library.
 
 
 %prep
-%setup %{?svnrev:-n %name-svn-r%svnrev}
-%patch -p1
+%setup
 
 
 %build
@@ -80,10 +72,14 @@ This package includes static %Name library.
 mkdir -p BUILD-%_target_platform
 pushd BUILD-%_target_platform
 cmake \
+%ifarch x86_64
+		-DLIB_SUFFIX=64 \
+%endif
     -DCMAKE_SKIP_RPATH=YES \
     -DCMAKE_C_FLAGS="%optflags" \
     -DCMAKE_INSTALL_PREFIX=%buildroot%_prefix \
     -DCMAKE_VERBOSE_MAKEFILE=TRUE \
+		-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 %if_enabled shared
     -DSHARED=ON \
 %else
@@ -103,11 +99,10 @@ popd
 pushd BUILD-%_target_platform
 %make_install install
 popd
-[ "%_libdir" = "%_prefix/lib" ] || mv %buildroot{%_prefix/lib,%_libdir}
 
 
 %files
-%doc README Changelog TODO
+%doc README Changelog TODO doc/*
 %_bindir/%name
 
 
@@ -129,6 +124,9 @@ popd
 
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.5-alt1.svn20090830
+- New snapshot
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.5-alt0.2.qa1
 - NMU: rebuilt for debuginfo.
 
