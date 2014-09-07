@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.23
+Version: 0.1.24
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -35,6 +35,9 @@ install -m644 share/* %buildroot%_datadir/%name
 %_bindir/*
 %_datadir/%name
 %changelog
+* Sun Sep 07 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.24-alt1
+- gear-clone: add git.alt:/srpms support
+
 * Mon Aug 18 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.23-alt1
 - gear-rel: push only build tag
 
