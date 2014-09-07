@@ -1,18 +1,19 @@
 Name: fish
-Version: 1.23.1
-Release: alt2.qa1
+Version: 2.1.1
+Release: alt1.git20140907
 
 Summary: A friendly interactive shell
 License: GPLv2+
 Group: Shells
 
-URL:                    http://www.fishshell.org
+URL: http://fishshell.com/
 
+# https://github.com/fish-shell/fish-shell.git
 Source: %name-%version.tar
 
 Requires: bc man
 
-BuildRequires: libncurses-devel doxygen
+BuildRequires: libncurses-devel doxygen gcc-c++
 BuildRequires: xorg-proto-devel libX11-devel libXt-devel libXext-devel
 
 %set_compress_topdir %_mandir
@@ -23,11 +24,12 @@ focused on user friendliness and discoverability. The language syntax
 is simple but incompatible with other shell languages.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
-%configure
+%configure \
+	--with-doxygen
 %make_build
 
 %install
@@ -44,33 +46,17 @@ if [ "$1" = 0 ]; then
 fi
 
 %files
-%_bindir/fish
-%_bindir/fish_indent
-%_bindir/fish_pager
-%_bindir/fishd
-%_bindir/mimedb
-%_bindir/set_color
-%_bindir/xsel
+%_bindir/*
 %dir %_sysconfdir/fish
 %config %_sysconfdir/fish/config.fish
-%dir %_datadir/fish
-%_datadir/fish/config.fish
-%dir %_datadir/fish/completions
-%_datadir/fish/completions/*.fish
-%dir %_datadir/fish/functions
-%_datadir/fish/functions/*.fish
-%dir %_datadir/fish/man
-%_datadir/fish/man/*.1
-%doc %_datadir/doc/%name
-%_mandir/man1/fish.1*
-%_mandir/man1/fish_pager.1*
-%_mandir/man1/fish_indent.1*
-%_mandir/man1/fishd.1*
-%_mandir/man1/mimedb.1*
-%_mandir/man1/set_color.1*
-%_mandir/man1/xsel.1x*
+%_datadir/fish
+%doc %_docdir/%name
+%_man1dir/*
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.git20140907
+- Version 2.1.1
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.23.1-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
