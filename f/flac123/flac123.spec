@@ -1,17 +1,13 @@
 Name: flac123
-Version: 0.0.11
-Release: alt2
+Version: 0.0.12
+Release: alt1
 
 Summary: flac123 is a command-line program for playing flac-encoded files
 License: GPL
 Group: Sound
 URL: http://flac-tools.sourceforge.net/
 
-Packager: Alexey Morsov <swi@altlinux.ru>
-
-Source0: %name-%version.tar.bz2
-
-Patch0: flac123-0.0.9-alt-fix-warning.patch
+Source0: %name-%version.tar
 
 # Automatically added by buildreq on Tue Mar 21 2006
 BuildRequires: libao-devel libflac-devel libpopt-devel
@@ -21,8 +17,7 @@ BuildRequires: libogg-devel
 flac123 is a command-line program for playing flac-encoded files.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
 %build
 %autoreconf
@@ -30,13 +25,16 @@ flac123 is a command-line program for playing flac-encoded files.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc AUTHORS BUGS ChangeLog INSTALL README README.remote
+%doc AUTHORS BUGS ChangeLog INSTALL NEWS README README.remote
 %_bindir/flac123
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.12-alt1
+- Version 0.0.12
+
 * Sat Apr 16 2011 Alexey Morsov <swi@altlinux.ru> 0.0.11-alt2
 - fix build
 
