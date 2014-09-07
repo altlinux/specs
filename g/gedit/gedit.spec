@@ -1,22 +1,21 @@
 %set_verify_elf_method unresolved=relaxed
-%set_automake_version 1.11
+%define _name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.10
+%define ver_major 3.12
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
 Group: Editors
 Url: ftp://ftp.gnome.org/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 # use python3
 AutoReqProv: nopython
@@ -30,27 +29,33 @@ AutoReqProv: nopython
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
+#Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.10.1-alt-settings.patch
 Patch1: %name-2.91.6-alt-link.patch
 
 # From configure.ac
 %define glib_ver 2.28.0
-%define gtk_ver 3.9.9
-%define gtksourceview_ver 3.9.91
+%define gtk_ver 3.12.0
+%define gtksourceview_ver 3.12.0
 %define peas_ver 1.7.0
 %define enchant_ver 1.2.0
 
 Requires: %name-data = %version-%release
 Requires: %name-gir = %version-%release
 Requires: libpeas-python3-loader
-Requires: dconf gnome-icon-theme
+Requires: dconf gnome-icon-theme gvfs zenity
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
 # From configure.ac
 BuildPreReq: intltool >= 0.40.0
+
+# Automatically added by buildreq on Sun Sep 07 2014
+# optimized out: at-spi2-atk dconf fontconfig glib-networking glib2-devel gobject-introspection gobject-introspection-devel gtk-doc libX11-devel libat-spi2-core libatk-devel libatk-gir-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+3-devel libgtk+3-gir-devel libpango-devel libpango-gir-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-distribute python-module-libxml2 python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml python3 python3-base ruby vala xml-utils xorg-xproto-devel xz
+BuildRequires: glibc-devel-static intltool itstool libGConf libenchant-devel libgtksourceview3-devel libgtksourceview3-gir-devel libpeas-devel libxml2-devel libzeitgeist2.0-devel perl-unicore python-module-PyXML python-module-google python-module-zope python3-module-distribute ruby-stdlibs time vala-tools
+
 BuildRequires: yelp-tools xmllint itstool
 BuildPreReq: gtk-doc >= 1.0
 BuildPreReq: libenchant-devel >= %enchant_ver
@@ -60,8 +65,8 @@ BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libpeas-devel >= %peas_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildRequires: desktop-file-utils
-BuildRequires: gnome-common libxml2-devel libsoup-devel libSM-devel libICE-devel gsettings-desktop-schemas-devel
+BuildRequires: vala-tools desktop-file-utils
+BuildRequires: gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
@@ -132,9 +137,10 @@ rm -f data/gedit.desktop.in
     %{subst_enable python} \
     --disable-schemas-compile \
     --disable-static \
+    --disable-updater \
+    --enable-gvfs-metadata \
     %{?_disable_introspection:--enable-introspection=no}
-
-%make_build
+%make V=1
 
 %install
 %makeinstall_std
@@ -178,20 +184,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files
 %_bindir/*
 %dir %pkglibdir
-%pkglibdir/lib%name-private.so
+%pkglibdir/lib%name.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
 %{?_enable_python:%python3_sitelibdir/gi/overrides/Gedit.py*}
-%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/Gedit.cpython-*.pyc}
+#%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/Gedit.cpython-*.py*}
 
 %exclude %_libexecdir/%name/gedit-bugreport.sh
 %exclude %gedit_pluginsdir/*.la
-%exclude %pkglibdir/lib%name-private.la
-
+%exclude %pkglibdir/lib%name.la
 
 %files data -f %name.lang
 %pkgdatadir/
-%_desktopdir/*
+%_desktopdir/%name.desktop
 %_datadir/dbus-1/services/org.gnome.gedit.service
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
@@ -204,6 +209,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files devel
 %_includedir/*
 %_pkgconfigdir/*
+%_vapidir/gedit.deps
+%_vapidir/gedit.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name
@@ -216,6 +223,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Wed May 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
+- 3.12.2
+
+* Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
+* Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Jan 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.10.4-alt1
 - 3.10.4
 
