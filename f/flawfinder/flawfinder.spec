@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: flawfinder
-Version: 1.27
-Release: alt1.2.1
+Version: 1.31
+Release: alt1
 
 Summary: Examines C/C++ source code for security flaws
 Summary(ru_RU.CP1251): Исследует исходный код на С/С++ на предмет ошибок в безопасности
@@ -11,16 +11,15 @@ Summary(ru_RU.CP1251): Исследует исходный код на С/С++ на предмет ошибок в безоп
 License: GPL
 Group: Development/Other
 Url: http://www.dwheeler.com/flawfinder/
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 BuildArch: noarch
 
 Source: http://www.dwheeler.com/%name/%name-%version.tar.gz
-Patch1: %name-alt-python.patch
-Patch2: %name-alt-makefile.patch
 
 # Automatically added by buildreq on Wed Nov 21 2007
 BuildRequires: python-modules
+
+BuildPreReq: flex
 
 %description
 Flawfinder scans through C/C++ source code, identifying lines ("hits")
@@ -36,25 +35,27 @@ Flawfinder сканирует исходный код на С/С++, указывая на строки, в
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+
+rm -f test-results.*
 
 %build
 %make_build
 %{?!_without_check:%{?!_disable_check:%make_build -k check ||:}}
 
 %install
-install -pD -m 755 %name %buildroot%_bindir/%name
-install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
+%makeinstall_std
 bzip2 -9fk ChangeLog
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.*
-%doc announcement README ChangeLog.bz2
+%doc announcement README ChangeLog.bz2 *.pdf
 %doc test.c test2.c test-results.*
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.31-alt1
+- Version 1.31
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.27-alt1.2.1
 - Rebuild with Python-2.7
 
