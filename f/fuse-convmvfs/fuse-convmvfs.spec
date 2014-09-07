@@ -1,6 +1,6 @@
 Name:           fuse-convmvfs
-Version:        0.2.4
-Release: 	alt1.qa1
+Version:        0.2.6
+Release: 	alt1
 Summary:        FUSE-Filesystem to convert filesystem encodings
 
 Group:          System/Kernel and hardware
@@ -12,6 +12,7 @@ Source0:        http://dl.sourceforge.net/sourceforge/fuse-convmvfs/%name-%versi
 BuildRequires: gcc-c++ libfuse-devel
 
 BuildRequires:  libfuse-devel >= 2.5.0
+BuildPreReq: libattr-devel
 
 %description
 This is a filesystem client use the FUSE(Filesystem in
@@ -23,18 +24,22 @@ to another. Inspired by convmv.
 
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/convmvfs
-%doc README* COPYING ChangeLog AUTHORS NEWS
+%doc README* COPYING ChangeLog AUTHORS NEWS THANKS
 
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1
+- Version 0.2.6
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
