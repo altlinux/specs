@@ -1,8 +1,9 @@
 Summary: Remote management framework
 Name: func
 Version: 0.30
-Release: alt1
+Release: alt1.git20131022
 Url: https://fedorahosted.org/func/
+# git://git.fedorahosted.org/func.git
 Source0: %name-%version.tar
 License: GPLv2+
 Group: System/Configuration/Other
@@ -15,16 +16,16 @@ BuildArch: noarch
 func is a remote api for mangement, configuration, and monitoring of systems.
 
 %prep
-%setup -q
+%setup
 
 echo "%version" > etc/version
 
 %build
 %make manpage
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --prefix=/usr --root=$RPM_BUILD_ROOT
+%python_install --prefix=/usr
 touch $RPM_BUILD_ROOT/var/log/func/func.log
 touch $RPM_BUILD_ROOT/var/log/func/audit.log
 
@@ -61,13 +62,14 @@ install -pD -m 755 init-scripts/funcd.alt  %buildroot%_initrddir/funcd
 
 %dir /var/lib/func
 
-#%attr(0644,root,root) %verify(not md5 size mtime) %ghost %config(missingok,noreplace) /var/log/prelink/prelink.log
-
-%doc AUTHORS README LICENSE CHANGES
+%doc AUTHORS README LICENSE CHANGES docs/*.txt
 %_mandir/man1/func*
 
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.30-alt1.git20131022
+- New snapshot
+
 * Mon Nov 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.30-alt1
 - New version
 
