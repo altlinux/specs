@@ -4,7 +4,7 @@
 #============================================================================
 Name: syskeeper
 Summary: %name
-Version: 0.10
+Version: 0.11
 Release: alt1
 License: GPL
 Group: System/Base
@@ -172,6 +172,9 @@ mkdir -p %buildroot%_initdir/
 %files ve
 
 %changelog
+* Sun Sep 07 2014 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt1
+- dump udevadm info about disk drives
+
 * Sun Mar 09 2014 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt1
 - add GPT backup
 - add mdadm config backup support
