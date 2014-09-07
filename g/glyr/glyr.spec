@@ -1,11 +1,11 @@
 Name: glyr
-Version: 0.9.8
-Release: alt1.qa1
+Version: 1.0.6
+Release: alt1.git20140714
 Summary: Music related metadata searchengine
 License: GPLv3
 Group: System/Libraries
 Url: https://github.com/sahib/glyr
-Packager: Egor Glukhov <kaman@altlinux.org>
+# https://github.com/sahib/glyr.git
 Source: %name-%version.tar
 
 BuildPreReq: cmake rpm-macros-cmake
@@ -53,13 +53,13 @@ Glyr development files.
 
 %build
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %makeinstall_std
 
 %files
-%doc AUTHORS CHANGELOG README.textile TODO
+%doc AUTHORS CHANGELOG README.textile
 %_bindir/glyrc
 
 %files -n lib%name
@@ -72,6 +72,9 @@ Glyr development files.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Sep 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.git20140714
+- Version 1.0.6
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
