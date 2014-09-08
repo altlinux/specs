@@ -1,26 +1,20 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jboss-ejb3-ext-api
-Version:          2.0.0
-Release:          alt3_5jpp7
+Version:          2.1.0
+Release:          alt1_3jpp7
 Summary:          JBoss EJB 3 Extension API
-Group:            Development/Java
 License:          LGPLv3+
 URL:              http://www.jboss.org/ejb3
-
-
-# git clone git://github.com/jbossejb3/jboss-ejb3-ext-api.git
-# cd jboss-ejb3-ext-api
-# git archive --format=tar --prefix=jboss-ejb3-ext-api-2.0.0/ 2.0.0 | xz > jboss-ejb3-ext-api-2.0.0.tar.xz
-Source0:          %{name}-%{version}.tar.xz
+Source0:          https://github.com/jbossejb3/jboss-ejb3-ext-api/archive/2.1.0.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires:    aether
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -30,17 +24,14 @@ BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    jboss-parent
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 JBoss EJB 3 API for Bean Providers
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -50,36 +41,23 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{version}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc README.md
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_5jpp7
 - new release
 
