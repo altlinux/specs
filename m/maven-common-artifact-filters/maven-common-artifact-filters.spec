@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          maven-common-artifact-filters
 Version:       1.4
-Release:       alt3_7jpp7
+Release:       alt3_11jpp7
 Summary:       Maven Common Artifact Filters
 License:       ASL 2.0
 Url:           http://maven.apache.org/shared/
@@ -14,13 +14,14 @@ Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{v
 BuildArch:     noarch
 
 BuildRequires: maven-local
-BuildRequires: easymock
+BuildRequires: easymock3
 
 BuildRequires: maven-shared
-BuildRequires: maven-plugin-testing-harness
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-test-tools
 BuildRequires: plexus-containers-container-default
+BuildRequires: maven-test-tools
+BuildRequires: maven-plugin-testing-harness
+
 
 Provides:      maven-shared-common-artifact-filters = %{version}-%{release}
 Obsoletes:     maven-shared-common-artifact-filters < %{version}-%{release}
@@ -51,8 +52,13 @@ This package contains javadoc for %{name}.
 %pom_add_dep aopalliance:aopalliance::test
 %pom_add_dep cglib:cglib::test
 
+# Migrate from easymock 1 to easymock 3
+%pom_remove_dep easymock:
+%pom_add_dep org.easymock:easymock:3.2:test
+
 %build
-%mvn_build
+# NoSuchMethodError: org.easymock.internal.ObjectMethodsFilter.<init>(Ljava/lang/reflect/InvocationHandler;)V
+%mvn_build -f
 
 %install
 %mvn_install
@@ -64,6 +70,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_11jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_7jpp7
 - new release
 
