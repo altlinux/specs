@@ -1,3 +1,7 @@
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spec_ver 3.0
@@ -5,10 +9,9 @@ BuildRequires: jpackage-compat
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt3_11jpp7
+Release:        alt3_13jpp7
 Summary:        Java persistence API implementation
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
 # Unfortunately no source release was created in
@@ -26,6 +29,7 @@ BuildRequires:  geronimo-parent-poms
 BuildRequires:  maven-resources-plugin
 
 Provides:       jpa_api = %{spec_ver}
+Provides:       javax.persistence = %{spec_ver}
 Source44: import.info
 
 #Provides:       jpa_3_0_api = %{version}-%{release}
@@ -40,8 +44,8 @@ one implementation of this specification.
 
 
 %package javadoc
+Group: Development/Java
 Summary:   API documentation for %{name}
-Group:     Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -58,6 +62,9 @@ BuildArch: noarch
 %install
 %mvn_install
 
+install -d -m 755 %{buildroot}%{_javadir}/javax.persistence/
+ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.persistence/
+
 #install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jpa_api_geronimo-jpa<<EOF
 #%{_javadir}/jpa_api.jar	%{_javadir}/geronimo-jpa.jar	30100
 #EOF
@@ -66,12 +73,9 @@ BuildArch: noarch
 #EOF
 
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
+%{_javadir}/javax.persistence/
 
 #%_altdir/jpa_3_0_api_geronimo-jpa
 #%_altdir/jpa_api_geronimo-jpa
@@ -82,6 +86,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_13jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_11jpp7
 - new release
 
