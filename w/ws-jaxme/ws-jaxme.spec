@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -40,17 +41,23 @@ BuildRequires: jpackage-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt4_8jpp7
+Release:        alt4_10jpp7
 Epoch:          0
 Summary:        Open source implementation of JAXB
-
-Group:          Development/Java
 License:        ASL 2.0
-URL:            http://ws.apache.org/jaxme/
+URL:            http://ws.apache.org/
 # svn export http://svn.apache.org/repos/asf/webservices/archive/jaxme/tags/R0_5_2/ ws-jaxme-0.5.2
 # tar czf ws-jaxme-0.5.2-src.tar.gz ws-jaxme-0.5.2
 Source0:        ws-jaxme-0.5.2-src.tar.gz
 Source1:        ws-jaxme-bind-MANIFEST.MF
+
+Source2:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxme2/%{version}/jaxme2-%{version}.pom
+Source3:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxme2-rt/%{version}/jaxme2-rt-%{version}.pom
+Source4:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxmeapi/%{version}/jaxmeapi-%{version}.pom
+Source5:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxmejs/%{version}/jaxmejs-%{version}.pom
+Source6:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxmepm/%{version}/jaxmepm-%{version}.pom
+Source7:        http://repo1.maven.org/maven2/org/apache/ws/jaxme/jaxmexs/%{version}/jaxmexs-%{version}.pom
+
 # generated docs with forrest-0.5.1
 Patch0:         ws-jaxme-docs_xml.patch
 Patch1:         ws-jaxme-catalog.patch
@@ -72,7 +79,7 @@ BuildRequires:  hsqldb
 BuildRequires:  log4j
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
-BuildRequires:	docbook-style-xsl
+BuildRequires:  docbook-style-xsl
 BuildRequires:  docbook-dtds
 BuildRequires:  zip
 Requires:       antlr
@@ -100,18 +107,16 @@ a set of Java classes:
   original XML document.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-Requires(postun): jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %package        manual
+Group: Development/Java
 Summary:        Documents for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    manual
@@ -119,9 +124,7 @@ BuildArch: noarch
 
 %prep
 %setup -q
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
+find . -name "*.jar" -print -delete
 
 %patch0 -p0
 %patch1 -p0
@@ -133,6 +136,8 @@ DOCBOOKX_DTD=`%{_bindir}/xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASI
 %patch5 -b .sav
 %patch6 -p1
 %patch7 -p1
+
+sed -i 's/\r//' NOTICE
 
 %build
 export CLASSPATH=$(build-classpath antlr hsqldb commons-codec junit log4j xerces-j2 xalan-j2 xalan-j2-serializer)
@@ -147,21 +152,17 @@ touch META-INF/MANIFEST.MF
 zip -u dist/jaxmeapi-%{version}.jar META-INF/MANIFEST.MF
 
 %install
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{base_name}
-for jar in dist/*.jar; do
-   install -m 644 ${jar} $RPM_BUILD_ROOT%{_javadir}/%{base_name}/
-done
-(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && 
-    for jar in *-%{version}*; 
-        do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; 
-    done
-)
 
-(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && 
-    for jar in *.jar; 
-        do ln -sf ${jar} ws-${jar}; 
-    done
-)
+install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{base_name} $RPM_BUILD_ROOT%{_mavenpomdir}
+for jar in jaxme2 jaxme2-rt jaxmeapi jaxmejs jaxmepm jaxmexs; do
+   install -m 644 dist/${jar}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{base_name}/${jar}.jar
+   install -pm 644 %{_sourcedir}/${jar}-%{version}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{base_name}-${jar}.pom
+   %add_maven_depmap JPP.%{base_name}-${jar}.pom %{base_name}/${jar}.jar
+  (
+    cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} &&
+    ln -sf ${jar}.jar ws-${jar}.jar
+  )
+done
 
 #javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -169,14 +170,11 @@ cp -pr build/docs/src/documentation/content/apidocs \
     $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf build/docs/src/documentation/content/apidocs
 
-#manual
-install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr build/docs/src/documentation/content/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
 %files
 %doc LICENSE NOTICE
 %{_javadir}/%{base_name}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %doc LICENSE NOTICE
@@ -184,9 +182,12 @@ install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 %files manual
 %doc LICENSE NOTICE
-%doc %{_docdir}/%{name}-%{version}
+%doc build/docs/src/documentation/content/manual
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_8jpp7
 - new release
 
