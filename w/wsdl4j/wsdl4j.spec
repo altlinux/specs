@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -39,9 +40,8 @@ BuildRequires: jpackage-compat
 Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Version:        1.6.3
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Epoch:          0
-Group:          Development/Java
 License:        CPL
 URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
@@ -52,6 +52,8 @@ Requires:       jpackage-utils
 BuildRequires:  ant ant-junit
 BuildRequires:  jpackage-utils
 BuildRequires:  zip
+
+Provides:       javax.wsdl
 Source44: import.info
 
 %description
@@ -61,9 +63,8 @@ services.  This code base will eventually serve as a reference implementation
 of the standard created by JSR110.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -97,17 +98,24 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-%files
+install -d -m 755 %{buildroot}%{_javadir}/javax.wsdl/
+ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.wsdl/
+ln -sf ../qname.jar %{buildroot}%{_javadir}/javax.wsdl/
+
+
+%files -f .mfiles
 %doc license.html
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_javadir}/javax.wsdl/
+%{_javadir}/qname.jar
 
 %files javadoc
 %doc license.html
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_1jpp7
 - new version
 
