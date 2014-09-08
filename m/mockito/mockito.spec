@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mockito
 Version:        1.9.0
-Release:        alt2_12jpp7
+Release:        alt2_13jpp7
 Summary:        A Java mocking framework
 
 License:        MIT
@@ -95,6 +95,9 @@ cp -rp target/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt2_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt2_12jpp7
 - new release
 
