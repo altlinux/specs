@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt3_14jpp7
+Release:        alt3_15jpp7
 Summary:        JavaCC Maven Plugin
 
 Group:          Development/Java
@@ -92,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_15jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_14jpp7
 - new release
 
