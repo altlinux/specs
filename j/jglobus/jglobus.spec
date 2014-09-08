@@ -1,20 +1,19 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jglobus
 Version:	2.0.6
-Release:	alt1_2jpp7
+Release:	alt1_3jpp7
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
 #		ssl-proxies/src/main/java/org/globus/tools/GridCertRequest.java
 License:	ASL 2.0 and MIT
 URL:		http://github.com/%{name}/
-Source0:	http://github.com/%{name}/JGlobus/archive/%{name}-%{version}.tar.gz
+Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-%{version}.tar.gz
 #		Fixes from Bartek Palak (see pull request in github)
 Patch0:		jglobus-final-static.patch
 Patch1:		jglobus-semi.patch
@@ -24,31 +23,32 @@ Patch4:		jglobus-impl-clonable.patch
 Patch5:		jglobus-dont-hide-super.patch
 #		Fix javadoc warnings
 Patch6:		jglobus-doc.patch
+#		Name parent parent
+Patch7:		jglobus-parent.patch
 
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils
 BuildRequires:	dos2unix
 BuildRequires:	maven-local
-BuildRequires:	maven-clean-plugin
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-dependency-plugin
-BuildRequires:	maven-enforcer-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-patch-plugin
-BuildRequires:	maven-release-plugin
-BuildRequires:	maven-resources-plugin
-
-BuildRequires:	apache-commons-codec
-BuildRequires:	apache-commons-io
-BuildRequires:	apache-commons-logging
-BuildRequires:	bouncycastle
-BuildRequires:	log4j
-BuildRequires:	tomcat-lib >= 7.0.28
-BuildRequires:	axis
-BuildRequires:	servlet
+BuildRequires:	mvn(axis:axis)
+BuildRequires:	mvn(axis:axis-jaxrpc)
+BuildRequires:	mvn(commons-codec:commons-codec)
+BuildRequires:	mvn(commons-httpclient:commons-httpclient)
+BuildRequires:	mvn(commons-io:commons-io)
+BuildRequires:	mvn(commons-logging:commons-logging)
+BuildRequires:	mvn(javax.servlet:servlet-api)
+BuildRequires:	mvn(junit:junit)
+BuildRequires:	mvn(log4j:log4j)
+BuildRequires:	mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-patch-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
+BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
+BuildRequires:	mvn(org.apache.tomcat:tomcat-coyote)
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk16)
+BuildRequires:	mvn(org.sonatype.oss:oss-parent)
 Source44: import.info
 
 %description
@@ -59,7 +59,6 @@ GRAM, GridFTP and MyProxy.
 Group: Development/Java
 Summary:	Globus Java - parent pom file
 License:	ASL 2.0
-Requires:	jpackage-utils
 
 %description parent
 Globus Java libraries parent maven pom file
@@ -68,13 +67,6 @@ Globus Java libraries parent maven pom file
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support
 License:	ASL 2.0 and MIT
-Requires:	jpackage-utils
-Requires:	%{name}-parent = %{version}-%{release}
-Requires:	apache-commons-codec
-Requires:	apache-commons-io
-Requires:	apache-commons-logging
-Requires:	bouncycastle
-Requires:	log4j
 
 %description ssl-proxies
 Globus Java library with SSL and proxy certificate support
@@ -83,7 +75,6 @@ Globus Java library with SSL and proxy certificate support
 Group: Development/Java
 Summary:	Globus Java - SSL support
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-ssl-proxies = %{version}-%{release}
 
 %description jsse
@@ -93,7 +84,6 @@ Globus Java library with SSL support
 Group: Development/Java
 Summary:	Globus Java - GSS-API implementation for SSL with proxies
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-jsse = %{version}-%{release}
 
 %description gss
@@ -103,7 +93,6 @@ Globus Java GSS-API implementation for SSL with proxies
 Group: Development/Java
 Summary:	Globus Java - Grid Resource Allocation and Management (GRAM)
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description gram
@@ -113,7 +102,6 @@ Globus Java library with GRAM support
 Group: Development/Java
 Summary:	Globus Java - GridFTP
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description gridftp
@@ -123,9 +111,7 @@ Globus Java library with GridFTP support
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support for Tomcat
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-jsse = %{version}-%{release}
-Requires:	tomcat-lib >= 7
 
 %description ssl-proxies-tomcat
 Globus Java library with SSL and proxy certificate support for Tomcat
@@ -134,7 +120,6 @@ Globus Java library with SSL and proxy certificate support for Tomcat
 Group: Development/Java
 Summary:	Globus Java - IO
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-gram = %{version}-%{release}
 Requires:	%{name}-gridftp = %{version}-%{release}
 
@@ -145,7 +130,6 @@ Globus Java library with IO utilities
 Group: Development/Java
 Summary:	Globus Java - MyProxy
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description myproxy
@@ -155,10 +139,7 @@ Globus Java library with MyProxy support
 Group: Development/Java
 Summary:	Globus Java - Apache AXIS support
 License:	ASL 2.0
-Requires:	jpackage-utils
 Requires:	%{name}-gss = %{version}-%{release}
-Requires:	axis
-Requires:	servlet
 
 %description axisg
 Globus Java library with Apache AXIS support
@@ -167,14 +148,13 @@ Globus Java library with Apache AXIS support
 Group: Development/Java
 Summary:	Javadocs for %{name}
 License:	ASL 2.0 and MIT
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n JGlobus-%{name}-%{version}
+%setup -q -n JGlobus-JGlobus-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -182,13 +162,10 @@ This package contains the API documentation for %{name}.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 dos2unix axis/src/main/java/org/globus/axis/example/README.txt
 chmod 644 axis/src/main/java/org/globus/axis/example/README.txt
-
-# Adjust Java version                                                   
-sed -e 's!<source>.*</source>!<source>1.5</source>!' \
-    -e 's!<target>.*</target>!<target>1.5</target>!' -i pom.xml
 
 # Move test classes to test directory
 mkdir -p gram/src/test/java/org/globus/gram/util
@@ -236,126 +213,46 @@ mv gridftp/src/test/java/org/globus/ftp/test/test.properties.in \
 mv myproxy/src/test/java/org/globus/myproxy/test/test.properties \
    myproxy/src/test/resources/org/globus/myproxy/test/test.properties
 
-
+# Do not package test classes
+%mvn_package org.jglobus:container-test-utils __noinstall
+%mvn_package org.jglobus:test-utils __noinstall
 
 %build
 # Many tests requires network connections and a valid proxy certificate
-mvn-rpmbuild -Ptomcat7 -Dproject.build.sourceEncoding=UTF-8 \
-	     -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f -s -- -Ptomcat7 -Dproject.build.sourceEncoding=UTF-8
 
 %install
-mkdir -p %{buildroot}%{_javadir}/%{name}
-install -p -m 644 ssl-proxies/target/ssl-proxies-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/ssl-proxies.jar
-install -p -m 644 jsse/target/jsse-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/jsse.jar
-install -p -m 644 gss/target/gss-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/gss.jar
-install -p -m 644 gram/target/gram-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/gram.jar
-install -p -m 644 gridftp/target/gridftp-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/gridftp.jar
-install -p -m 644 ssl-proxies-tomcat/target/ssl-proxies-tomcat-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/ssl-proxies-tomcat.jar
-install -p -m 644 io/target/io-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/io.jar
-install -p -m 644 myproxy/target/myproxy-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/myproxy.jar
-install -p -m 644 axis/target/axisg-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/axisg.jar
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadocdir}
-cp -pr target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
+%files parent -f .mfiles-parent 
+%doc LICENSE
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-install -p -m 644 ssl-proxies/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-ssl-proxies.pom
-install -p -m 644 jsse/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-jsse.pom
-install -p -m 644 gss/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gss.pom
-install -p -m 644 gram/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gram.pom
-install -p -m 644 gridftp/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gridftp.pom
-install -p -m 644 ssl-proxies-tomcat/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-ssl-proxies-tomcat.pom
-install -p -m 644 io/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-io.pom
-install -p -m 644 myproxy/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-myproxy.pom
-install -p -m 644 axis/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-axisg.pom
-
-%add_maven_depmap -f parent JPP.%{name}-parent.pom
-%add_maven_depmap -f ssl-proxies JPP.%{name}-ssl-proxies.pom %{name}/ssl-proxies.jar
-%add_maven_depmap -f jsse JPP.%{name}-jsse.pom %{name}/jsse.jar
-%add_maven_depmap -f gss JPP.%{name}-gss.pom %{name}/gss.jar
-%add_maven_depmap -f gram JPP.%{name}-gram.pom %{name}/gram.jar
-%add_maven_depmap -f gridftp JPP.%{name}-gridftp.pom %{name}/gridftp.jar
-%add_maven_depmap -f ssl-proxies-tomcat JPP.%{name}-ssl-proxies-tomcat.pom %{name}/ssl-proxies-tomcat.jar
-%add_maven_depmap -f io JPP.%{name}-io.pom %{name}/io.jar
-%add_maven_depmap -f myproxy JPP.%{name}-myproxy.pom %{name}/myproxy.jar
-%add_maven_depmap -f axisg JPP.%{name}-axisg.pom %{name}/axisg.jar
-
-%files parent
-%{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}-parent
+%files ssl-proxies -f .mfiles-ssl-proxies
+%dir %{_javadir}/%{name}
 %doc LICENSE README.textile
 
-%files ssl-proxies
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/ssl-proxies.jar
-%{_mavenpomdir}/JPP.%{name}-ssl-proxies.pom
-%{_mavendepmapfragdir}/%{name}-ssl-proxies
+%files jsse -f .mfiles-jsse
 
-%files jsse
-%{_javadir}/%{name}/jsse.jar
-%{_mavenpomdir}/JPP.%{name}-jsse.pom
-%{_mavendepmapfragdir}/%{name}-jsse
+%files gss -f .mfiles-gss
 
-%files gss
-%{_javadir}/%{name}/gss.jar
-%{_mavenpomdir}/JPP.%{name}-gss.pom
-%{_mavendepmapfragdir}/%{name}-gss
+%files gram -f .mfiles-gram
 
-%files gram
-%{_javadir}/%{name}/gram.jar
-%{_mavenpomdir}/JPP.%{name}-gram.pom
-%{_mavendepmapfragdir}/%{name}-gram
+%files gridftp -f .mfiles-gridftp
 
-%files gridftp
-%{_javadir}/%{name}/gridftp.jar
-%{_mavenpomdir}/JPP.%{name}-gridftp.pom
-%{_mavendepmapfragdir}/%{name}-gridftp
+%files ssl-proxies-tomcat -f .mfiles-ssl-proxies-tomcat
 
-%files ssl-proxies-tomcat
-%{_javadir}/%{name}/ssl-proxies-tomcat.jar
-%{_mavenpomdir}/JPP.%{name}-ssl-proxies-tomcat.pom
-%{_mavendepmapfragdir}/%{name}-ssl-proxies-tomcat
+%files io -f .mfiles-io
 
-%files io
-%{_javadir}/%{name}/io.jar
-%{_mavenpomdir}/JPP.%{name}-io.pom
-%{_mavendepmapfragdir}/%{name}-io
+%files myproxy -f .mfiles-myproxy
 
-%files myproxy
-%{_javadir}/%{name}/myproxy.jar
-%{_mavenpomdir}/JPP.%{name}-myproxy.pom
-%{_mavendepmapfragdir}/%{name}-myproxy
+%files axisg -f .mfiles-axisg
 
-%files axisg
-%{_javadir}/%{name}/axisg.jar
-%{_mavenpomdir}/JPP.%{name}-axisg.pom
-%{_mavendepmapfragdir}/%{name}-axisg
-%doc axis/src/main/java/org/globus/axis/example/README.txt
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_3jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_2jpp7
 - new version
 
