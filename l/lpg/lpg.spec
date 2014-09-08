@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_10jpp7
+Release:   alt1_11jpp7
 Summary:   LALR Parser Generator
 Group:     Development/Java
 # although the text of the licence isn't distributed with some of the source,
@@ -143,6 +143,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_javadir}/%{name}javaruntime*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_10jpp7
 - new release
 
