@@ -37,14 +37,14 @@ BuildRequires: jpackage-compat
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt1_10.beta.12.4jpp7
+Release:        alt1_12.beta.12.5jpp7
 Epoch:          0
 Summary:        XPath implementation using JDOM
-# Worth noting that this ASL 1.1 has slightly different wording.
-# It may be GPL compatible as a result.
-License:        ASL 1.1
-Source0:        %{dotname}-%{version}-beta-src.tar.gz
+License:        Saxpath
+Source0:        %{name}-%{version}.tar.xz
 Source1:        http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+# used to generate Source0, upstream has no tarball like this anymore
+Source2:        generate-tarball.sh
 Patch0:         %{name}-ElementNamespaceContext.patch
 Patch1:         %{name}-Partition.patch
 Patch2:         %{name}-ParentStep.patch
@@ -90,7 +90,7 @@ Javadoc for %{name}.
 # -----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{dotname}
+%setup -q
 %patch0 -b .sav
 %patch1 -b .sav
 %patch2 -b .sav
@@ -151,6 +151,9 @@ install -pm 644 %{name}-%{version}.pom \
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_12.beta.12.5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_10.beta.12.4jpp7
 - new release
 
