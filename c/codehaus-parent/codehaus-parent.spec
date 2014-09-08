@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           codehaus-parent
 Version:        4
-Release:        alt2_4jpp7
+Release:        alt2_5jpp7
 Summary:        Parent pom file for codehaus projects
 
 Group:          Development/Java
@@ -50,6 +50,9 @@ install -pm 644 codehaus-parent-%{version}.pom \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:4-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4-alt2_4jpp7
 - new release
 
