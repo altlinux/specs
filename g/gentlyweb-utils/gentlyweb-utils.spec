@@ -8,7 +8,7 @@ Name:          gentlyweb-utils
 # http://ftp.de.debian.org/debian/pool/main/g/gentlyweb-utils/gentlyweb-utils_1.5.orig.tar.gz
 # the version is changed only in the activemq package see activemq-5.6.0/pom.xml
 Version:       1.5
-Release:       alt1_3jpp7
+Release:       alt1_4jpp7
 Summary:       Java utility library used by JoSQL for I/O
 Group:         Development/Java
 License:       ASL 2.0
@@ -78,6 +78,9 @@ cp -pr apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3jpp7
 - new release
 
