@@ -1,8 +1,5 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       modeler
@@ -10,9 +7,8 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_11jpp7
+Release:          alt1_13jpp7
 Summary:          Model MBeans utility classes
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
 Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
@@ -26,17 +22,13 @@ BuildRequires:    apache-commons-beanutils
 BuildRequires:    apache-commons-digester
 BuildRequires:    apache-commons-logging
 BuildRequires:    maven-local
-
-Requires:         jpackage-utils
-Requires:         apache-commons-beanutils
-Requires:         apache-commons-digester
-Requires:         apache-commons-logging
 Source44: import.info
 
+
 %description
-Commons Modeler makes the process of setting up JMX (Java Management 
-Extensions) MBeans easier by configuring the required meta data using an XML 
-descriptor. In addition, Modeler provides a factory mechanism to create the 
+Commons Modeler makes the process of setting up JMX (Java Management
+Extensions) MBeans easier by configuring the required meta data using an XML
+descriptor. In addition, Modeler provides a factory mechanism to create the
 actual Model MBean instances.
 
 %package javadoc
@@ -64,35 +56,25 @@ cp -p %{SOURCE1} .
 %pom_remove_dep ant:ant
 %pom_add_dep org.apache.ant:ant:1.8
 
+%mvn_alias : org.apache.commons:%{short_name}
+%mvn_file : %{name} %{short_name}
+
 %build
-mvn-rpmbuild install javadoc:aggregate -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-(cd %{buildroot}%{_javadir} && for jar in *; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
+%mvn_install
 
-# pom
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a "org.apache.commons:%{short_name}" JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_11jpp7
 - new release
 
