@@ -2,7 +2,9 @@
 
 Name: perl-File-Find-Object
 Version: 0.2.11
-Release: alt1
+Serial: 1
+Release: alt3
+
 
 Summary: an object oriented File::Find replacement
 
@@ -50,5 +52,8 @@ the next() function, but setting a callback is still possible.
 %perl_vendor_privlib/File/Find/Object*
 
 %changelog
+* Mon Sep 08 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1:0.2.11-alt3
+- Rising serial/release to override package from Autoimports/Sisyphus repository
+
 * Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.11-alt1
 - Initial build
