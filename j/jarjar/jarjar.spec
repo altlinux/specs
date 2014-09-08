@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_1jpp7
+Release:        alt1_4jpp7
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -45,14 +45,13 @@ Group:          Development/Java
 Source0:        http://jarjar.googlecode.com/files/jarjar-src-1.4.zip
 Source1:        jarjar.pom
 Source2:        jarjar-util.pom
+Patch0:         fix-maven-plugin.patch
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  jpackage-utils
-BuildRequires:  junit
 BuildRequires:  objectweb-asm4
 BuildRequires:  maven-local
 Requires:       objectweb-asm4
-Requires:       jpackage-utils
 
 BuildArch:      noarch
 
@@ -83,7 +82,6 @@ Provides: %{name}-maven2-plugin = %{version}-%{release}
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -91,6 +89,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p0 -b .orig
+
 # remove all binary libs
 rm -f lib/*.jar
 
@@ -113,17 +113,7 @@ install -m 644 dist/%{name}-%{version}.jar \
 install -m 644 dist/%{name}-util-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-util.jar
 install -m 644 dist/%{name}-plugin-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-maven-plugin.jar
-
-%add_to_maven_depmap jarjar           %{name} %{version} JPP %{name}
-%add_to_maven_depmap tonic            %{name} %{version} JPP %{name}
-%add_to_maven_depmap com.tonicsystems %{name} %{version} JPP %{name}
-%add_to_maven_depmap jarjar           %{name}-util %{version} JPP %{name}-util
-%add_to_maven_depmap tonic            %{name}-util %{version} JPP %{name}-util
-%add_to_maven_depmap com.tonicsystems %{name}-util %{version} JPP %{name}-util
-%add_to_maven_depmap jarjar           %{name}-plugin %{version} JPP %{name}-plugin
-%add_to_maven_depmap tonic            %{name}-plugin %{version} JPP %{name}-plugin
-%add_to_maven_depmap com.tonicsystems %{name}-plugin %{version} JPP %{name}-plugin
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-plugin.jar
 
 sed -i -e s/@VERSION@/%{version}/g maven/pom.xml
 
@@ -135,12 +125,16 @@ install -pD -T -m 644 %{SOURCE2} \
 install -pD -T -m 644 maven/pom.xml \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-plugin.pom
 
+# depmaps
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jarjar:%{name},com.tonicsystems:%{name}"
+%add_maven_depmap JPP-%{name}-util.pom %{name}-util.jar -a "jarjar:%{name}-util,com.tonicsystems:%{name}-util"
+%add_maven_depmap JPP-%{name}-plugin.pom %{name}-plugin.jar -a "jarjar:%{name}-plugin,tonic:%{name}-plugin,com.tonicsystems:%{name}-plugin" -f "plugin"
+
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # compat for old groovy 1 jpp5
 %add_to_maven_depmap com.tonicsystems jarjar %{version} JPP %{name}
-
 
 %files
 %doc COPYING
@@ -148,18 +142,22 @@ cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}-util.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}-util.pom
-%{_mavendepmapfragdir}/*
+%{_mavendepmapfragdir}/%{name}
 
 %files maven-plugin
 %doc COPYING
+%{_javadir}/%{name}-plugin.jar
 %{_mavenpomdir}/JPP-%{name}-plugin.pom
-%{_javadir}/%{name}-maven-plugin.jar
+%{_mavendepmapfragdir}/%{name}-plugin
 
 %files javadoc
 %doc COPYING
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_4jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
 - new version
 
