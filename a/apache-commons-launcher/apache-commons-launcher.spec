@@ -1,20 +1,15 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name launcher
-%global short_name commons-%{base_name}
+%global short_name commons-launcher
 
 Name:          apache-%{short_name}
 Version:       1.1
-Release:       alt1_12.20100521svn936225jpp7
+Release:       alt1_14.20100521svn936225jpp7
 Summary:       A cross platform Java application launcher
 Group:         Development/Java
 License:       ASL 2.0
-URL:           http://commons.apache.org/%{base_name}/
+URL:           http://commons.apache.org/launcher/
 
 # The last release of this package was many years ago and in that time there
 # have only been two extremely minor changes to the source code, [1] and [2].
@@ -87,36 +82,26 @@ BuildArch: noarch
 sed -i 's/\r//' README.txt LICENSE.txt NOTICE.txt
 sed -i "s|\<groupId\>ant\<\/groupId\>|<groupId>org.apache.ant</groupId>|g" build.xml
 
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :commons-launcher %{short_name} %{name}
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-(cd %{buildroot}%{_javadir} && ln -sf %{name}.jar %{short_name}.jar)
+%mvn_install
 
-# javadocs
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name}"
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt README.txt
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
-%{_javadir}/*
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_14.20100521svn936225jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_12.20100521svn936225jpp7
 - new release
 
