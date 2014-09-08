@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -39,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-interactivity
 Version:        1.0
-Release:        alt4_0.10.alpha6jpp7
+Release:        alt4_0.11.alpha6jpp7
 Epoch:          0
 Summary:        Plexus Interactivity Handler Component
 License:        MIT
@@ -140,6 +139,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.11.alpha6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.10.alpha6jpp7
 - new release
 
