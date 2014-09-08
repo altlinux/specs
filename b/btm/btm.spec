@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -94,6 +94,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_3jpp7
 - new release
 
