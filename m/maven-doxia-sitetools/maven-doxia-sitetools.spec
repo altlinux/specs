@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.4
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 Group:          Development/Java
@@ -128,6 +128,9 @@ rm -rf $(find -type d -name itext)
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
 - update
 
