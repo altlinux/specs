@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       BareBonesBrowserLaunch
 Version:    3.1
-Release:    alt1_5jpp7
+Release:    alt1_6jpp7
 Summary:    Simple library to launch a browser window from Java
 Group:      Development/Java
 License:    Public Domain
@@ -63,6 +63,9 @@ cp -pR doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_5jpp7
 - new release
 
