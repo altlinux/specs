@@ -1,7 +1,6 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          jboss-jad-1.2-api
 Version:       1.0.1
-Release:       alt2_5jpp7
+Release:       alt2_6jpp7
 Summary:       JavaEE Application Deployment 1.2 API
 Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
@@ -92,6 +91,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc README LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_5jpp7
 - new release
 
