@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cglib
 Version:        2.2
-Release:        alt2_15jpp7
+Release:        alt2_17jpp7
 Summary:        Code Generation Library for Java
 License:        ASL 2.0 and BSD
 Group:          Development/Java
@@ -65,7 +65,6 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 mkdir -p %{buildroot}%{_mavenpomdir}
 cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap net.sf.cglib %{name} %{version} JPP %{name}
 # yes, this is really *.bar - aqute bnd created it
 install -p -m 644 dist/%{name}-%{version}.bar %{buildroot}%{_javadir}/%{name}.jar
 install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
@@ -95,6 +94,9 @@ cp -p %{SOURCE45} %{buildroot}%{_mavenpomdir}/JPP-%{name}-nodep.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_17jpp7
+- new release
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_15jpp7
 - fc update
 
