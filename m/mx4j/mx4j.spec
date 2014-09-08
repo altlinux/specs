@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt2_17jpp7
+Release:        alt2_18jpp7
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -218,6 +218,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_18jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_17jpp7
 - new release
 
