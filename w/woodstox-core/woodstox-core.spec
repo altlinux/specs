@@ -1,42 +1,30 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name woodstox
 %global core_name %{base_name}-core
 %global stax2_ver  3.1.1
 
-Name:             %{core_name}
-Version:          4.1.2
-Release:          alt2_5jpp7
-Summary:          High-performance XML processor
-License:          ASL 2.0 or LGPLv2+
-Group:            Development/Java
-URL:              http://%{base_name}.codehaus.org/
+Name:           %{core_name}
+Version:        4.2.0
+Release:        alt1_2jpp7
+Summary:        High-performance XML processor
+License:        ASL 2.0 or LGPLv2+ or BSD
+URL:            http://%{base_name}.codehaus.org/
+BuildArch:      noarch
 
-Source0:          http://%{base_name}.codehaus.org/%{version}/%{core_name}-src-%{version}.tar.gz
+Source0:        http://%{base_name}.codehaus.org/%{version}/%{core_name}-src-%{version}.tar.gz
+Patch0:         %{name}-stax2-api.patch
 
-Patch0:           %{name}-unbundling.patch
-Patch1:           %{name}-fsf-address.patch
-
-BuildArch:        noarch
-
-BuildRequires:    felix-osgi-core
-BuildRequires:    relaxngDatatype
-BuildRequires:    msv-xsdlib
-BuildRequires:    msv-msv
-BuildRequires:    stax2-api
-BuildRequires:    maven-local
-BuildRequires:    jpackage-utils
-
-Requires:         felix-osgi-core
-Requires:         relaxngDatatype
-Requires:         msv-xsdlib
-Requires:         msv-msv
-Requires:         stax2-api
-Requires:         jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.xml.stream:stax-api)
+BuildRequires:  mvn(net.java.dev.msv:msv-core)
+BuildRequires:  mvn(net.java.dev.msv:xsdlib)
+BuildRequires:  mvn(org.apache.felix:org.osgi.core)
+BuildRequires:  mvn(org.codehaus.woodstox:stax2-api)
+# Transitive devel dependencies needed because some packages don't
+# install effective POMs:
+BuildRequires:  mvn(net.java:jvnet-parent)
 Source44: import.info
 
 %description
@@ -47,9 +35,8 @@ and output (== writing, serialization)), as well as supporting tasks
 such as validation.
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,17 +44,13 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{base_name}-%{version}
+%patch0
 
-cp src/maven/%{name}-asl.pom pom.xml
-cp src/maven/%{name}-lgpl.pom pom-lgpl.xml
+# Create POM from template
+sed s/@VERSION@/%{version}/\;s/@REQ_STAX2_VERSION@/%{stax2_ver}/ \
+    src/maven/%{name}-asl.pom >pom.xml
 
-%patch0 -p1
-%patch1 -p1
-
-sed -i "s/@VERSION@/%{version}/g" pom.xml pom-lgpl.xml
-sed -i "s/@REQ_STAX2_VERSION@/%{stax2_ver}/g" pom.xml pom-lgpl.xml
-
-# removing bundled stuff
+# Remove bundled libraries.
 rm -rf lib
 rm -rf src/maven
 rm -rf src/resources
@@ -76,48 +59,39 @@ rm -rf src/java/org
 rm -rf src/test/org
 rm -rf src/test/stax2
 
-# fixing incomplete source directory structure
-mkdir src/main
-mv -f src/java src/main/
-mkdir src/test/java
-mv -f src/test/wstxtest src/test/java/
+# Bundled libraries were removed, so dependencies on them need to be
+# added.
+%pom_add_dep net.java.dev.msv:msv-core
+%pom_add_dep org.apache.felix:org.osgi.core
+%pom_add_dep net.java.dev.msv:xsdlib
+
+# Upstream uses non-standard directory structure.
+%pom_xpath_inject pom:project "
+    <build>
+      <sourceDirectory>src/java</sourceDirectory>
+      <testSourceDirectory>src/test</testSourceDirectory>
+    </build>"
+
+%mvn_alias ":{woodstox-core}-asl" @1-lgpl
+%mvn_file : %{name}{,-asl,-lgpl}
 
 %build
 # stax2 missing -> cannot compile tests -> tests skipped
-mvn-rpmbuild -Dmaven.test.skip=true \
-             install javadoc:aggregate
+%mvn_build -f
 
 %install
-# jars
-install -Dpm 644 target/%{name}-asl-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/%{name}-asl.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/%{name}-lgpl.jar
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-asl.pom
-install -Dpm 644 pom-lgpl.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-lgpl.pom
+%files -f .mfiles
+%doc release-notes
 
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}-asl.pom %{name}-asl.jar
-%add_maven_depmap JPP-%{name}-lgpl.pom %{name}-lgpl.jar
-
-%files
-%doc release-notes/asl/ASL2.0 release-notes/lgpl/LGPL2.1 release-notes/asl/NOTICE
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-asl.jar
-%{_javadir}/%{name}-lgpl.jar
-%{_mavenpomdir}/JPP-%{name}-asl.pom
-%{_mavenpomdir}/JPP-%{name}-lgpl.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc release-notes/asl/ASL2.0 release-notes/lgpl/LGPL2.1
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc release-notes/asl release-notes/lgpl release-notes/bsd
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_5jpp7
 - new release
 
