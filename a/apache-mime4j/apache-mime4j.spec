@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_7jpp7
+Release:        alt3_8jpp7
 Summary:        Apache JAMES Mime4j
 Group:          Development/Java
 License:        ASL 2.0
@@ -23,7 +23,7 @@ BuildRequires:  apache-james-project
 BuildRequires:  javacc-maven-plugin
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  apache-rat-plugin
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
+BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-surefire-provider-junit
 Source44: import.info
 
@@ -62,6 +62,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_8jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_7jpp7
 - new release
 
