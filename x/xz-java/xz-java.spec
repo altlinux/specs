@@ -5,7 +5,7 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xz-java
-Version:        1.3
+Version:        1.4
 Release:        alt1_1jpp7
 Summary:        Java implementation of XZ data compression
 Group:          Development/Java
@@ -72,6 +72,9 @@ install -pm 644 build/maven/xz-%{version}.pom %{buildroot}/%{_mavenpomdir}/JPP-%
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1jpp7
 - new version
 
