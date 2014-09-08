@@ -3,7 +3,7 @@
 
 Name: golang-github-gorilla-context
 Version: 0
-Release: alt2
+Release: alt2.git20140604
 Summary: A golang registry for global request variables
 License: BSD
 Group: Development/Other
@@ -54,6 +54,9 @@ cp -av *.go %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/*.go
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0-alt2.git20140604
+- New snapshot
+
 * Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
 - Update spec
 
