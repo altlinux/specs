@@ -1,37 +1,37 @@
-%define sover 0.11
+%define oname hiredis
 
-Name: hiredis
-Version: 0.11.0
-Release: alt1.git20140529
+Name: hiredis0.10
+Version: 0.10.1
+Release: alt2.1
 Summary: The official C client for Redis
 
-Group: System/Libraries
+Group: System/Legacy libraries
 License: BSD
-Url: https://github.com/redis/hiredis
+Url: https://github.com/antirez/hiredis
+Packager: Anatoly Lyutin <vostok@altlinux.org>
 
-# https://github.com/redis/hiredis.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libevent-devel libev-devel
+BuildRequires: gcc-c++ 
 
 %description
 Hiredis is a minimalistic C client library for the Redis database.
 
-%package -n lib%name%sover
+%package -n lib%oname
 Summary: The official C client for Redis
 License: BSD
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Provides: hiredis = %version-%release
 Obsoletes: hiredis
 
-%description -n lib%name%sover
+%description -n lib%oname
 Hiredis is a minimalistic C client library for the Redis database.
 
 %package -n lib%name-devel
 Summary: Header files and libraries for hiredis C development
 Group: Development/C
-Requires: lib%name%sover = %version-%release
+Requires: lib%oname = %version-%release
 
 Provides: hiredis-devel = %version-%release
 Obsoletes: hiredis-devel
@@ -45,34 +45,28 @@ ibraries to develop applications using a Redis database.
 
 %build
 %make_build
-%make examples
-%make hiredis-test
 
 %install
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%make install PREFIX=%buildroot%_prefix  LIBRARY_PATH=%_lib \
-	LIB_SUFFIX=$LIB_SUFFIX
+%make install PREFIX=%buildroot%_prefix  LIBRARY_PATH=%_lib
 
 mkdir -p %buildroot%_bindir/
-cp examples/hiredis-example* %buildroot%_bindir/
+cp hiredis-example %buildroot%_bindir/
 cp hiredis-test %buildroot%_bindir/
 
-%files -n lib%name%sover
-%doc COPYING CHANGELOG.md
-%_bindir/hiredis-example*
-%_bindir/hiredis-test
-%_libdir/*.so.*
+%files -n lib%oname
+#doc COPYING CHANGELOG.md
+#_bindir/hiredis-example
+#_bindir/hiredis-test
+%_libdir/*.so.0.10
 
-%files -n lib%name-devel
-%doc README.md
-%_includedir/%name
-%_libdir/*.so
+#files -n lib%name-devel
+#doc README.md
+#_includedir/%name
+#_libdir/*.so
 
 %changelog
-* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt1.git20140529
-- Version 0.11.0
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt2.1
+- Moved this version into System/Legacy libraries
 
 * Fri May 18 2012 Anatoly Lyutin <vostok@altlinux.org> 0.10.1-alt2
 - rename to libhiredis (closes: #27301)
