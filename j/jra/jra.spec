@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.5.alpha4jpp7
+Release:       alt2_0.6.alpha4jpp7
 Summary:       Java REST Annotations
 License:       ASL 2.0
 Group:         Development/Java
@@ -93,6 +92,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.6.alpha4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.5.alpha4jpp7
 - new release
 
