@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           glazedlists
 Version:        1.9.0
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        A toolkit for transformations in Java
 License:        (LGPLv2+ or MPLv1.1+) and ASL 2.0
 Group:          Development/Java
@@ -92,6 +92,9 @@ cp -r target/docs/api ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_2jpp7
+- new release
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_1jpp7
 - new release
 
