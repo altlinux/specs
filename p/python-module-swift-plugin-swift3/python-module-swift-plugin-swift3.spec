@@ -1,6 +1,6 @@
 Name:		python-module-swift-plugin-swift3
 Version:	1.7
-Release:	alt1
+Release:	alt2
 Summary:	The swift3 plugin for Openstack Swift
 Group:		Development/Python
 
@@ -17,8 +17,6 @@ Source0:	%{name}-%{version}.tar
 BuildArch:	noarch
 BuildRequires:	python-devel
 BuildRequires:	python-module-setuptools
-
-Requires:	openstack-swift >= 1.5.0
 
 %description
 The swift3 plugin permits accessing Openstack Swift via the
@@ -40,6 +38,9 @@ sed -i 's/\r//' LICENSE
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Mon Sep 08 2014 Lenar Shakirov <snejok@altlinux.ru> 1.7-alt2
+- Requires: openstack-swift>=1.5.0 removed, AutoReq works fine
+
 * Tue Aug 12 2014 Lenar Shakirov <snejok@altlinux.ru> 1.7-alt1
 - New version
 
