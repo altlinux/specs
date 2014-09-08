@@ -3,7 +3,7 @@
 
 Name: golang-github-syndtr-gocapability
 Version: 0
-Release: alt1
+Release: alt1.git20140517
 Summary: POSIX capability library for the Go programming language
 License: BSD
 Group: Development/Other
@@ -46,5 +46,8 @@ GOPATH=%buildroot/%gopath go test %import_path/capability
 %gopath/src/%import_path/capability/*.go
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0-alt1.git20140517
+- New snapshot
+
 * Sat Dec 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt1
 - Build for ALT
