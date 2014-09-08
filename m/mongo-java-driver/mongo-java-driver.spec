@@ -4,25 +4,24 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		mongo-java-driver
-Version:	2.7.3
-Release:	alt2_3jpp7
+Version:	2.11.3
+Release:	alt1_1jpp7
 Summary:	A Java driver for MongoDB
 
 Group:		Development/Java
 BuildArch:	noarch
 License:	ASL 2.0
 URL:		http://www.mongodb.org/display/DOCS/Java+Language+Center
-Source0:	https://github.com/mongodb/mongo-java-driver/tarball/r2.7.3
+Source0:	https://github.com/mongodb/%{name}/archive/r%{version}.tar.gz
 
 BuildRequires:	jpackage-utils
 
 BuildRequires:	ant
+BuildRequires:	ant-contrib
 BuildRequires:	testng
 BuildRequires:	git
 
 Requires:	jpackage-utils
-
-Requires:	%{name}-bson
 Source44: import.info
 
 %description
@@ -60,22 +59,22 @@ Requires:	jpackage-utils
 This package contains the API documentation for %{name}-bson.
 
 %prep
-%setup -q -n mongodb-mongo-java-driver-a5fae2c
+%setup -qn %{name}-r%{version}
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 %build
 (
-  build-jar-repository -s -p lib testng
-  ant -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar javadocs
+  ln -s $(build-classpath testng) lib/testng-6.3.1.jar
+  ant -Dfile.encoding=UTF-8 -Denv.JAVA_HOME=/usr/lib/jvm/java -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar javadocs
 )
 sed -i -e "s|\$VERSION|%{version}|g" maven/maven-bson.xml maven/maven-mongo-java-driver.xml
 
 %install
 # Jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p *.jar $RPM_BUILD_ROOT%{_javadir}/
+mkdir -p %{buildroot}%{_javadir}
+cp -p *.jar %{buildroot}%{_javadir}/
 
 # poms
 install -Dpm 644 maven/maven-mongo-java-driver.xml %{buildroot}%{_mavenpomdir}/JPP-mongo.pom
@@ -84,10 +83,9 @@ install -Dpm 644 maven/maven-bson.xml %{buildroot}%{_mavenpomdir}/JPP-bson.pom
 %add_maven_depmap JPP-bson.pom bson.jar
 
 # Java-docs
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-bson
-cp -rp docs/mongo-java-driver/2.7.2 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{version}
-cp -rp docs/bson/2.7.2 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-bson/%{version}
+mkdir -p %{buildroot}%{_javadocdir}
+cp -rp docs/mongo-java-driver %{buildroot}%{_javadocdir}/${name}
+cp -rp docs/bson %{buildroot}%{_javadocdir}/%{name}-bson
 
 %files
 %{_javadir}/mongo.jar
@@ -110,6 +108,9 @@ cp -rp docs/bson/2.7.2 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-bson/%{version}
 %doc README.md LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.11.3-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.3-alt2_3jpp7
 - new release
 
