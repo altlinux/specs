@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -33,25 +34,13 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# We want to build without maven
-%define _without_maven 1
-
-# If you don't want to build with maven,
-# give rpmbuild option '--without maven'
-
-%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
-%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
-
-%define classworlds_version   1.1
-
 Name:           classworlds
-Version:        %{classworlds_version}
-Release:        alt3_9jpp7
+Version:        1.1
+Release:        alt3_11jpp7
 Epoch:          0
 Summary:        Classworlds Classloader Framework
 
-Group:          Development/Java
-License:        BSD
+License:        Plexus
 URL:            http://classworlds.codehaus.org/
 # svn export svn://svn.classworlds.codehaus.org/classworlds/tags/CLASSWORLDS_1_1
 # cd CLASSWORLDS_1_1
@@ -62,24 +51,11 @@ Source0:        %{name}-%{version}-CLASSWORLDS_1_1-src.tar.bz2
 Source1:        %{name}-%{version}-build.xml
 Source2:        http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 
-%if %{with_maven}
-Patch0:         %{name}-%{version}-project_xml.patch
-Patch1:         %{name}-%{version}-project_properties.patch
-%endif
-
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  ant >= 0:1.6
-%if %{with_maven}
-BuildRequires:  maven >= 0:1.1
-BuildRequires:  saxon
-BuildRequires:  saxon-scripts
-%endif
-BuildRequires:  junit
+BuildRequires:  ant
 BuildRequires:  xerces-j2
 BuildRequires:  xml-commons-apis
-Requires:  jpackage-utils
 Requires:  xerces-j2
 Requires:  xml-commons-apis
 Source44: import.info
@@ -94,69 +70,34 @@ loading of components or otherwise represent a 'container'
 can benefit from the classloading control provided by 
 classworlds. 
 
-%if %{with_maven}
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
-%package        manual
-Summary:        Docs for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description    manual
-%{summary}.
-%endif
 
 %prep
-# If you don''t want to build with maven,
-# give rpmbuild option '--without maven'
 %setup -q -n %{name}
-for j in $(find ./lib -name "*.jar"); do
-  rm $j
-done
+find ./ -name "*.jar" -delete
 cp %{SOURCE1} build.xml
 
-%if %{with_maven}
-%patch0 -b .sav
-%patch1 -b .sav
-%endif
-
 %build
-%if %{with_maven}
-pushd lib
-ln -sf $(build-classpath xml-commons-apis) xmlApis-2.0.2.jar
-ln -sf $(build-classpath ant) jakarta-ant-1.5.jar
-ln -sf $(build-classpath maven) maven.jar
-popd
-maven \
-         -Dmaven.repo.remote=file:/usr/share/maven/repository \
-         -Dmaven.home.local=$(pwd)/.maven jar javadoc xdoc:transform
-%else
-export CLASSPATH=target/classes
-ant -Dbuild.sysclasspath=only
-%endif
+# dist=jar+javadoc
+ant dist -Dbuild.sysclasspath=only
 
 %install
+# jar
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -Dpm 644 target/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%if %{with_maven}
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-rm -rf target/docs/apidocs
-%endif
-
-%if %{with_maven}
-install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%endif
+# javadoc
+install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # POM and depmap
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
@@ -169,15 +110,14 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
-%if %{with_maven}
 %files javadoc
-%doc %{_javadocdir}/*
-
-%files manual
-%doc %{_docdir}/%{name}-%{version}
-%endif
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_9jpp7
 - new release
 
