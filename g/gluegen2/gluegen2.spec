@@ -7,13 +7,13 @@ BuildRequires: jpackage-compat
 # baserelease defines which build revision of this version we're building.
 # The magical name baserelease is matched by the rpmdev-bumpspec tool, which
 # you should use.
-%global baserelease 8
+%global baserelease 1
 
 %global pkg_name gluegen
-%global pkg_version 2.0
-%global pkg_rc rc11
+%global pkg_version 2.0.2
+#%global pkg_rc rc12
 
-%if 0%{?pkg_rc:1}
+%if 0%{?pkg_rc:0}
 %global pkg_release 0.%{baserelease}.%{pkg_rc}
 %global src_name %{pkg_name}-v%{pkg_version}-%{pkg_rc}
 %else
@@ -23,7 +23,7 @@ BuildRequires: jpackage-compat
 
 Name:           gluegen2
 Version:        %{pkg_version}
-Release:        alt3_8jpp7
+Release:        alt1_1jpp7
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
 Group:          Development/Java
@@ -35,6 +35,7 @@ Patch1:         %{name}-0001-renamed-library.patch
 #                Applied with %%{_libdir} and %%{name} resolved
 Patch2:         %{name}-0002-use-fedora-jni.patch
 Patch3:         %{name}-0003-disable-executable-tmp-tests.patch
+Patch4:         %{name}-0004-add-antlr-jar-to-all-targets.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires: p7zip-standalone p7zip
@@ -97,13 +98,16 @@ cd ..
 tar -xf %{src_name}.tar
 rm %{src_name}.tar
 cd %{src_name}
-chmod -Rf a+rX,u+w,g-w,o-w .
 
 %patch1 -p1
 sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
     >use-fedora-jni.patch
 /usr/bin/patch -s -p1 --fuzz=0 <use-fedora-jni.patch
 %patch3 -p1
+%patch4 -p1
+
+# Remove any JNI files
+rm -fr make/stub_includes/jni
 
 # Fix wrong-script-end-of-line-encoding
 rm make/scripts/*.bat
@@ -114,13 +118,13 @@ chmod -x doc/manual/index.html
 chmod -x make/stub_includes/*/*
 chmod -x src/native/*/*
 find src/java/ -type f -exec chmod -x {} +
-find make/ -type f -exec chmod -x {} +
+find make/scripts -type f -not -name "*.sh" -exec chmod -x {} +
 
 # Fix non-executable-script
-chmod +x make/scripts/*.sh
+find make/scripts -type f -name "*.sh" -exec chmod +x {} +
 
 # Fix script-without-shebang
-sed -i -e '1i#!/bin/sh' make/scripts/*.sh
+find make/scripts -type f -name "*.sh" -exec sed -i -e '1i#!/bin/sh' {} +
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -141,20 +145,26 @@ sed -i 's/executable="mvn"/executable="true"/' make/build.xml
 
 %build
 cd make
-ant -Djavacdebug=true \
-    -Djavacdebuglevel=lines,vars,source \
-    -Dc.compiler.debug=true \
-    \
-    -Dantlr.jar=%{_javadir}/antlr.jar \
-    -Djunit.jar=%{_javadir}/junit.jar \
-    -Dant.jar=%{_javadir}/ant.jar \
-    -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
-    \
-    -Djavadoc.link=%{_javadocdir}/java \
-    \
-    all \
-    javadoc \
-    maven.install
+xargs -t ant <<EOF
+ -Dc.compiler.debug=true
+ -Djavacdebug=false
+%ifarch x86_64
+ -Djavac.memorymax=1024m
+%else
+ -Djavac.memorymax=256m
+%endif
+
+ -Dantlr.jar=%{_javadir}/antlr.jar
+ -Djunit.jar=%{_javadir}/junit.jar
+ -Dant.jar=%{_javadir}/ant.jar
+ -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
+
+ -Djavadoc.link=%{_javadocdir}/java
+
+ all
+ javadoc
+ maven.install
+EOF
 
 %install
 mkdir -p %{buildroot}%{_javadir}/%{name} \
@@ -190,21 +200,23 @@ cp -rdf doc/manual/* %{buildroot}%{_docdir}/%{name}
 
 %check
 cd make
-_JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" ant -Djavacdebug=true \
-    -Dc.compiler.debug=true \
-    -Djavacdebug=true \
-    -Djavacdebuglevel=lines,vars,source \
-    -Dcommon.gluegen.build.done=true \
-    \
-    -Dantlr.jar=%{_javadir}/antlr.jar \
-    -Djunit.jar=%{_javadir}/junit.jar \
-    -Dant.jar=%{_javadir}/ant.jar \
-    -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
-    -Dgluegen.jar=%{buildroot}%{_javadir}/%{name}.jar \
-    -Dgluegen-rt.jar=%{buildroot}%{_libdir}/%{name}/%{name}-rt.jar \
-    -Dswt.jar=%{_libdir}/eclipse/swt.jar \
-    \
-    junit.run
+_JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" xargs -t ant <<EOF
+ -Djavacdebug=true
+ -Dc.compiler.debug=true
+ -Djavacdebug=true
+ -Djavacdebuglevel=lines,vars,source
+ -Dcommon.gluegen.build.done=true
+
+ -Dantlr.jar=%{_javadir}/antlr.jar
+ -Djunit.jar=%{_javadir}/junit.jar
+ -Dant.jar=%{_javadir}/ant.jar
+ -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
+ -Dgluegen.jar=%{buildroot}%{_javadir}/%{name}.jar
+ -Dgluegen-rt.jar=%{buildroot}%{_libdir}/%{name}/%{name}-rt.jar
+ -Dswt.jar=%{_libdir}/eclipse/swt.jar
+
+ junit.run
+EOF
 
 %files
 %doc LICENSE.txt
@@ -228,6 +240,9 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
 %{_docdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_1jpp7
+- new release
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_8jpp7
 - build with ant-junit
 
