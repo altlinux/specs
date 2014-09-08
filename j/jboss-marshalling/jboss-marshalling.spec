@@ -1,70 +1,59 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 21
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-marshalling
-%define version 1.3.13
-%global namedreltag .GA
+%define version 1.4.1
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-marshalling
-Version:          1.3.13
-Release:          alt2_7jpp7
+Version:          1.4.1
+Release:          alt1_1jpp7
 Summary:          JBoss Marshalling
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossmarshalling
-
-# git clone git://github.com/jboss-remoting/jboss-marshalling.git
-# cd jboss-marshalling/ && git archive --format=tar --prefix=jboss-marshalling-1.3.13.GA/ 1.3.13.GA | xz > jboss-marshalling-1.3.13.GA.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
-Patch0:           %{name}-%{namedversion}-pom.patch
-
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+Source0:          https://github.com/jboss-remoting/jboss-marshalling/archive/%{namedversion}.tar.gz
+
 BuildRequires:    maven-local
 BuildRequires:    jboss-parent
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-enforcer-plugin
 BuildRequires:    jboss-modules
-BuildRequires:    qdox
-BuildRequires:    jdepend
-BuildRequires:    graphviz
+BuildRequires:    maven-injection-plugin
 %if 0%{?fedora}
 BuildRequires:    apiviz
 %endif
-
-Requires:         jboss-modules
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
-This package contains JBoss Marshalling
+JBoss Marshalling is an alternative serialization API that fixes many
+of the problems found in the JDK serialization API while remaining
+fully compatible with java.io.Serializable and its relatives, and adds
+several new tunable parameters and additional features, all of which
+are pluggable via factory configuration (externalizers, class/instance
+lookup tables, class resolution, and object replacement, to name a
+few).
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains %{summary}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
-%patch0 -p1
+
+%pom_remove_plugin :maven-shade-plugin
+%pom_disable_module tests
+%pom_disable_module osgi
+
+# Compat symlinks.  TODO: remove once jboss-as is rebuilt to use the
+# new JAR names.
+%mvn_file :{*} %{name}/@1 @1
 
 # Conditionally remove dependency on apiviz
 if [ %{?rhel} ]; then
@@ -72,46 +61,21 @@ if [ %{?rhel} ]; then
 fi
 
 %build
-# Caused by: java.lang.ClassNotFoundException: com.thoughtworks.qdox.model.AbstractInheritableJavaEntity
-# But the clss exists in qdox WTF?
-mvn-rpmbuild install -Dmaven.test.skip=true javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-for m in river serial; do
-  cp -p ${m}/target/%{name}-${m}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-${m}.pom
-  %add_maven_depmap JPP-%{name}-${m}.pom %{name}-${m}.jar
-done
-
-# JARS
-cp -p api/target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POMS
-install -pm 644 api/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-parent.pom
-
-# JAVADOC
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc COPYING.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc COPYING.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.13-alt2_7jpp7
 - new release
 
