@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-idea-plugin
 Version:        2.2
-Release:        alt3_12jpp7
+Release:        alt3_14jpp7
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Java
@@ -15,49 +15,44 @@ URL:            http://maven.apache.org/plugins/%{name}
 # tar caf maven-idea-plugin-2.2.tar.xz maven-idea-plugin-2.2
 Source0:        %{name}-%{version}.tar.xz
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
-Patch0:         add_compat.patch
 
 BuildArch: noarch
 
-BuildRequires: plexus-utils
-BuildRequires: ant
-BuildRequires: maven-local
-BuildRequires: maven-wagon
-BuildRequires: plexus-container-default
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: dom4j
+BuildRequires:  maven-local
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
-Obsoletes: maven2-plugin-idea <= 0:2.0.8
-Provides: maven2-plugin-idea = 1:%{version}-%{release}
+Obsoletes:      maven2-plugin-idea <= 0:2.0.8
+Provides:       maven2-plugin-idea = 1:%{version}-%{release}
 Source44: import.info
 
 %description
 The IDEA Plugin is used to generate files (ipr, iml, and iws) for a
 project so you can work on it using the IDE, IntelliJ IDEA.
 
-
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
-
 %prep
 %setup -q 
-%patch0
-
 cp %{SOURCE1} .
+%pom_add_dep org.apache.maven:maven-compat
 
 %build
 # we skip test because even with binary mvn release these fail for
@@ -75,6 +70,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_14jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12jpp7
 - new release
 
