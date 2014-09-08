@@ -6,23 +6,18 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global tag 201210061924
+%global tag 201302030002
 
 Name:      jacoco
-Version:   0.6.0
-Release:   alt2_3jpp7
+Version:   0.6.2
+Release:   alt1_1jpp7
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
 URL:       http://www.eclemma.org/jacoco/
-#https://github.com/jacoco/jacoco/archive/v0.6.0.tar.gz
-Source0:   https://github.com/jacoco/jacoco/archive/jacoco-0.6.0.tar.gz
-Patch0:    removeGroovyScripting.patch
+Source0:   https://github.com/jacoco/jacoco/archive/v%{version}.tar.gz
 
-#jacoco can't be build with maven 3. https://github.com/jacoco/jacoco/issues/21
-# probably due to 
-# http://maven.apache.org/plugins/maven-site-plugin/maven-3.html#New_Configuration_Maven_3_only_no_reports_configuration_inheritance
-Patch1:    jacoco-remove-reporting.patch
+Patch0:    removeGroovyScripting.patch
 
 BuildArch:        noarch
 
@@ -71,11 +66,14 @@ A Jacoco plugin for maven.
 
 %prep
 %setup -q 
-%patch0 -p3
-%patch1
+%patch0
 
-sed -i -e "s|0.13.0|0.16.0|g" org.jacoco.build/pom.xml
-sed -i -e "s|4.1.0|5.0.0|g" org.jacoco.core/META-INF/MANIFEST.MF org.jacoco.report/META-INF/MANIFEST.MF
+%pom_disable_module ../org.jacoco.examples org.jacoco.build
+%pom_disable_module ../org.jacoco.doc org.jacoco.build
+%pom_disable_module ../org.jacoco.tests org.jacoco.build
+%pom_disable_module ../jacoco org.jacoco.build
+
+#%pom_remove_plugin org.apache.maven.plugins:maven-shade-plugin org.jacoco.agent.rt/pom.xml 
 
 # make sure upstream hasn't sneaked in any jars we don't know about
 JARS=""
@@ -92,7 +90,7 @@ fi
 %build
 # Note: Tests must be disabled because they introduce circular dependency
 # right now.
-OPTIONS="-DrandomNumber=${RANDOM} -DskipTychoVersionCheck clean package javadoc:aggregate" 
+OPTIONS="-DrandomNumber=${RANDOM} -DskipTychoVersionCheck package javadoc:aggregate" 
 
 mvn-rpmbuild $OPTIONS
 
@@ -158,6 +156,9 @@ cp -rf target/site/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1jpp7
+- fc update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_3jpp7
 - rebuild with maven-local
 
