@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           buildnumber-maven-plugin
 Version:        1.2
-Release:        alt2_3jpp7
+Release:        alt2_6jpp7
 Summary:        Build Number Maven Plugin
 
 Group:          Development/Java
@@ -16,7 +15,6 @@ URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.2
 # svn export http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.2 buildnumber-maven-plugin
 # tar caf buildnumber-maven-plugin-1.2.tar.xz buildnumber-maven-plugin
 Source0:        buildnumber-maven-plugin-1.2.tar.xz
-Source1:	%{name}-depmap.xml
 Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch: 	noarch
@@ -26,9 +24,7 @@ BuildRequires: jpackage-utils
 
 # Maven and its dependencies
 BuildRequires: maven-local
-BuildRequires: maven2-common-poms
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-idea-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -44,7 +40,7 @@ BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-utils
 BuildRequires: jna
 BuildRequires: mojo-parent
-#BuildRequires: maven-project
+BuildRequires: maven-project
 BuildRequires: maven-scm
 
 
@@ -57,7 +53,6 @@ Requires: mojo-parent
 Requires: plexus-containers-container-default
 Requires: plexus-utils
 Source44: import.info
-Patch33: buildnumber-maven-plugin-1.2-alt-no-maven2.patch
 
 %description
 This mojo is designed to get a unique build number for each time you build
@@ -93,8 +88,6 @@ cp -p %{SOURCE2} .
 
 %pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
 %pom_remove_dep org.tmatesoft.svnkit:svnkit
-
-%patch33 -p1
 
 %build
 
@@ -134,6 +127,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_3jpp7
 - patched out dependency on maven2 (patch33)
 
