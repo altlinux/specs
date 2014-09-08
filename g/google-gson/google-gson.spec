@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -10,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             google-%{short_name}
 Version:          2.2.4
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          Java lib for conversion of Java objects into JSON representation
 License:          ASL 2.0
 Group:            Development/Java
@@ -27,6 +26,7 @@ BuildRequires:    maven-local
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-enforcer-plugin
+BuildRequires:    maven-install-plugin
 
 Requires:         jpackage-utils
 Source44: import.info
@@ -81,6 +81,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_1jpp7
 - new version
 
