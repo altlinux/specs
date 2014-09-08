@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-wagon-ahc
 Version:	1.2.1
-Release:	alt2_7jpp7
+Release:	alt2_9jpp7
 Summary:	A wagon provider for HTTP transfers
 
 Group:		Development/Java
@@ -22,7 +21,7 @@ Source2:	http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:	noarch
 
 BuildRequires:	async-http-client
-BuildRequires:	easymock2
+BuildRequires:	easymock3
 BuildRequires:	forge-parent
 BuildRequires:	jpackage-utils
 BuildRequires:	junit
@@ -97,6 +96,9 @@ install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_7jpp7
 - new release
 
