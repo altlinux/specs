@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             rmic-maven-plugin
 Version:          1.2.1
-Release:          alt1_4jpp7
+Release:          alt1_6jpp7
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 Group:            Development/Java
@@ -22,8 +21,6 @@ BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-invoker-plugin
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    maven-checkstyle-plugin
-
-Requires:         maven
 Source44: import.info
 
 %description
@@ -44,34 +41,25 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 
 %patch0 -p0
 
+%mvn_file :rmic-maven-plugin rmic-maven-plugin
+
 %build
-mvn-rpmbuild  -Dmaven.test.failure.ignore=true install javadoc:aggregate
+# Unit tests pass, but for some reason the integrations fail in mock
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc License.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc License.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_6jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp7
 - new version
 
