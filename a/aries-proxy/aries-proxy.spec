@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          aries-proxy
 Version:       0.3
-Release:       alt2_4jpp7
+Release:       alt2_6jpp7
 Summary:       Apache Aries Class Proxy
 License:       ASL 2.0
 Group:         Development/Java
@@ -20,6 +19,8 @@ Patch0:        %{name}-%{version}-xml.patch
 
 BuildArch:     noarch
 
+Epoch:         1
+
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
@@ -30,14 +31,14 @@ BuildRequires: maven-release-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: aries-util
-BuildRequires: asm2
+BuildRequires: objectweb-asm
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: slf4j
 
 Requires:      jpackage-utils
 Requires:      aries-util
-Requires:      asm2
+Requires:      objectweb-asm
 Requires:      felix-osgi-compendium
 Requires:      felix-osgi-core
 Requires:      slf4j
@@ -103,6 +104,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.3-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_4jpp7
 - new release
 
