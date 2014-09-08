@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:          jmock
 Version:       2.5.1
-Release:       alt1_2jpp7
+Release:       alt1_3jpp7
 Summary:       Java library for testing code with mock objects
 Group:         Development/Java
 License:       BSD
@@ -151,6 +151,9 @@ cp -pr build/%{name}-%{namedversion}/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.1-alt1_3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.1-alt1_2jpp7
 - new release
 
