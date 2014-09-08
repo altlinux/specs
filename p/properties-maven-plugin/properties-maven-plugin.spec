@@ -1,7 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,38 +8,30 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          properties-maven-plugin
 Version:       1.0
-Release:       alt3_0.4.alpha2jpp7
+Release:       alt3_0.6.alpha2jpp7
 Summary:       Properties Maven Plugin
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://mojo.codehaus.org/properties-maven-plugin/
 # svn export http://svn.codehaus.org/mojo/tags/properties-maven-plugin-1.0-alpha-2/
 # tar czf properties-maven-plugin-1.0-alpha-2-src-svn.tar.gz properties-maven-plugin-1.0-alpha-2
 Source0:       %{name}-%{namedversion}-src-svn.tar.gz
+Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires: jpackage-utils
-BuildRequires: mojo-parent
+BuildRequires: mvn(org.codehaus.mojo:mojo-parent)
 
-BuildRequires: maven-local
-BuildRequires: plexus-utils
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 
 # test deps (no test to run)
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
-BuildRequires: maven-compiler-plugin
+BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
-Requires:      maven
-Requires:      plexus-utils
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -51,9 +40,8 @@ The Properties Maven Plugin is here to make life a little easier when dealing
 with properties. It provides goals to read and write properties from files.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -65,32 +53,28 @@ This package contains javadoc for %{name}.
 # use maven 3.x apis
 sed -i "s|maven-project|maven-core|" pom.xml
 
+cp -p %{SOURCE1} .
+sed -i 's/\r//' LICENSE-2.0.txt
+
+%mvn_file :%{name} %{name}
+
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{namedversion}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.6.alpha2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.4.alpha2jpp7
 - new release
 
