@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmlgraphics-commons
 Version:        1.5
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        XML Graphics Commons
 
@@ -83,6 +83,9 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_2jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp7
 - new version
 
