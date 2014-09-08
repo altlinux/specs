@@ -1,15 +1,13 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-timestamp-plugin
 Version:        1.1
-Release:        alt3_7jpp7
+Release:        alt3_9jpp7
 Summary:        Provides formatted timestamps for maven builds
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://code.google.com/p/maven-timestamp-plugin
 ### upstream only provides binaries or source without build scripts
@@ -19,21 +17,10 @@ URL:            http://code.google.com/p/maven-timestamp-plugin
 Source0:        maven-timestamp-plugin-1.1.tar.xz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven:maven-project)
 Source44: import.info
 
 %description
@@ -43,60 +30,35 @@ as simple as 1-2-3 to create a timestamp at your disposal.
 Also, it enables you to use the syntax of SimpleDateFormat to form custom 
 formatted dates. 
 
-
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
 %setup -q -n %{name}
-cat > README << EOT
-%{name}-%{version}
-
-%{description}
-EOT
-
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_install
 
-# jar
-install -Dp -m 644 target/%{name}-%{version}-SNAPSHOT.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc README
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc readme.txt
 %doc license.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_7jpp7
 - new release
 
