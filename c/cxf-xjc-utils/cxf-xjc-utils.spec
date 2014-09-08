@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cxf-xjc-utils
 Version:          2.6.0
-Release:          alt3_5jpp7
+Release:          alt3_6jpp7
 Summary:          Apache CXF XJC-Utils
 Group:            Development/Java
 License:          ASL 2.0
@@ -109,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt3_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt3_5jpp7
 - new release
 
