@@ -1,33 +1,27 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
-Version:          1.6
-Release:          alt2_4jpp7
+Version:          1.9
+Release:          alt1_1jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
 URL:              http://hawtjni.fusesource.org/
 
-# git clone git://github.com/fusesource/hawtjni.git
-# cd hawtjni && git archive --format=tar --prefix=hawtjni-1.6/ hawtjni-project-1.6 | xz > hawtjni-1.6.tar.xz
-Source0:          %{name}-%{version}.tar.xz
+Source0:          https://github.com/fusesource/hawtjni/archive/hawtjni-project-%{version}.tar.gz
 Patch0:           0001-Fix-shading-and-remove-unneeded-modules.patch
 Patch1:           0002-Fix-xbean-compatibility.patch
 Patch2:           0003-Remove-plexus-maven-plugin-dependency.patch
 Patch3:           0004-Remove-eclipse-plugin.patch
-Patch4:	hawtjni-1.6-alt-automake.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-idea-plugin
 BuildRequires:    maven-plugin-plugin
 BuildRequires:    maven-surefire-report-plugin
 BuildRequires:    maven-project-info-reports-plugin
@@ -41,11 +35,6 @@ BuildRequires:    log4j
 BuildRequires:    junit4
 BuildRequires:    fusesource-pom
 BuildRequires:    xbean
-
-Requires:         jpackage-utils
-Requires:         xbean
-Requires:         apache-commons-cli
-Requires:         objectweb-asm
 Source44: import.info
 
 %description
@@ -57,78 +46,55 @@ JNI code which powers the eclipse platform.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-%package -n maven-%{name}-plugin
+%package -n maven-hawtjni-plugin
 Summary:          Use HawtJNI from a maven plugin
 Group:            Development/Java
-Requires:         maven
-Requires:         plexus-utils
-Requires:         plexus-interpolation
-Requires:         maven-archiver
-Requires:         plexus-archiver
-Requires:         plexus-io
 Requires:         hawtjni = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n maven-%{name}-plugin
 This package allows to use HawtJNI from a maven plugin.
 
 %prep
-%setup -q
+%setup -q -n hawtjni-hawtjni-project-%{version}
+
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+
+# Ready to replace patch0
+# %pom_disable_module hawtjni-example
+# %pom_disable_module hawtjni-website
+# %pom_add_dep "org.apache.maven:maven-compat:3.0.3" maven-hawtjni-plugin/pom.xml
+# %pom_remove_plugin ":maven-shade-plugin" hawtjni-generator/pom.xml
+
+%mvn_package ":maven-hawtjni-plugin" maven-plugin
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}-generator/target/%{name}-generator-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-generator.jar
-cp -p %{name}-runtime/target/%{name}-runtime-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-runtime.jar
-cp -p maven-%{name}-plugin/target/maven-%{name}-plugin-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/maven-%{name}-plugin.jar
+%mvn_install
 
-# JAVADOC
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-pom.pom
-install -pm 644 %{name}-generator/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-generator.pom
-install -pm 644 %{name}-runtime/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-runtime.pom
-install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-maven-%{name}-plugin.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}-pom.pom
-%add_maven_depmap JPP-%{name}-generator.pom %{name}-generator.jar
-%add_maven_depmap JPP-%{name}-runtime.pom %{name}-runtime.jar
-%add_maven_depmap JPP-maven-%{name}-plugin.pom maven-%{name}-plugin.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc readme.md license.txt changelog.md
-%exclude %{_mavenpomdir}/JPP-maven-%{name}-plugin.pom
-%exclude %{_javadir}/maven-%{name}-plugin.jar
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
-%files -n maven-%{name}-plugin
-%{_mavenpomdir}/JPP-maven-%{name}-plugin.pom
-%{_javadir}/maven-%{name}-plugin.jar
+%files -n maven-hawtjni-plugin -f .mfiles-maven-plugin
+%doc license.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_1jpp7
+- new release
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp7
 - configure.ac template fixes for jansi-native
 
