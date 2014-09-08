@@ -45,7 +45,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-1.2.0.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-1.0.1.pom
 Name:           bea-stax
 Version:        %{mainver}
-Release:        alt3_7jpp7
+Release:        alt3_8jpp7
 License:        ASL 1.1 and ASL 2.0
 Group:          Development/Java
 BuildArch:      noarch
@@ -126,6 +126,9 @@ install -Dpm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-api.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt3_7jpp7
 - new release
 
