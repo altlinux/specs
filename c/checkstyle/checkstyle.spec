@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           checkstyle
 Version:        5.6
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        Java source code checker
 URL:            http://checkstyle.sourceforge.net/
 # src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
@@ -67,8 +67,6 @@ BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-cobertura
-BuildRequires:  maven-plugin-exec
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-surefire-plugin
@@ -106,6 +104,10 @@ API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+# these are only needed for upstream QA
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :exec-maven-plugin
 
 # fix encoding issues in docs
 sed -i 's/\r//' LICENSE LICENSE.apache20 README RIGHTS.antlr \
@@ -179,6 +181,9 @@ fi
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt1_7jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt1_5jpp7
 - new release
 
