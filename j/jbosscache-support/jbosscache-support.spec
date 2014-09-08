@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    jbosscache-support
 Version: 1.6
-Release: alt4_5jpp7
+Release: alt4_7jpp7
 Summary: JBossCache support package
 
 Group:   Development/Java
@@ -19,6 +18,7 @@ Source0: %{name}-%{version}.tar.xz
 
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-release-plugin
@@ -96,6 +96,9 @@ install -m 644 xslt/pom.xml \
 %{_mavenpomdir}/JPP-%{name}-xslt.pom
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt4_5jpp7
 - new release
 
