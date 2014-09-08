@@ -1,33 +1,27 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 19
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name seam-solder
 %define version 3.1.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 Name:          seam-solder
 Version:       3.1.1
-Release:       alt1_4jpp7
+Release:       alt1_6jpp7
 Summary:       A portable CDI extensions library
-Group:         Development/Java
 License:       ASL 2.0 and LGPLv2+
 URL:           http://seamframework.org/Seam3/Solder
 # git clone git://github.com/seam/solder seam-solder-3.1.1.Final
 # (cd seam-solder-3.1.1.Final/ && git archive --format=tar --prefix=seam-solder-3.1.1.Final/ 3.1.1.Final | xz > ../seam-solder-3.1.1.Final.tar.xz)
 Source0:       %{name}-%{namedversion}.tar.xz
 
-BuildRequires: jpackage-utils
 BuildRequires: seam-parent
 BuildRequires: weld-parent
-
-%if %{?fedora} > 18
 BuildRequires: geronimo-parent-poms
-%endif
 
 BuildRequires: cdi-api
 BuildRequires: javassist
@@ -53,23 +47,8 @@ BuildRequires: junit
 BuildRequires: mockito
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      cdi-api
-Requires:      javassist
-Requires:      jboss-el-2.2-api
-Requires:      jboss-logging
-Requires:      jboss-logging-tools
-Requires:      jboss-servlet-3.0-api
-Requires:      log4j
-Requires:      slf4j
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -78,9 +57,8 @@ A portable CDI extensions library for developing CDI applications,
 frameworks or other extensions.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -105,6 +83,10 @@ sed -i "s|org.jboss.solder.logging.internal|org.jboss.logging|" $(find api -name
 
 # unavailable pom
 %pom_remove_dep org.jboss.seam:seam-bom
+
+# TODO require jboss-logging-tools <= 1.0.3
+%pom_disable_module tooling
+%pom_remove_dep :solder-tooling impl
 
 %pom_remove_dep org.jboss.logging:jboss-logging-generator tooling
 %pom_add_dep org.jboss.logging:jboss-logging-processor tooling
@@ -131,41 +113,22 @@ sed -i 's/\r//' license.txt notice.txt
 
 %build
 
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}/%{name}
-install -m 644 api/target/solder-api.jar %{buildroot}%{_javadir}/%{name}/solder-api.jar
-install -m 644 impl/target/solder-impl.jar %{buildroot}%{_javadir}/%{name}/solder-impl.jar
-install -m 644 tooling/target/solder-tooling-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/solder-tooling.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-install -pm 644 api/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-solder-api.pom
-install -pm 644 impl/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-solder-impl.pom
-install -pm 644 tooling/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-solder-tooling.pom
-
-%add_maven_depmap JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-solder-api.pom %{name}/solder-api.jar
-%add_maven_depmap JPP.%{name}-solder-impl.pom %{name}/solder-impl.jar
-%add_maven_depmap JPP.%{name}-solder-tooling.pom %{name}/solder-tooling.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/solder-*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
 %doc license.txt notice.txt readme.md
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt notice.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_6jpp7
+- new release
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt1_4jpp7
 - new release
 
