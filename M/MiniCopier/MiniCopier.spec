@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		MiniCopier
 Version:	0.5
-Release:	alt1_6jpp7
+Release:	alt1_7jpp7
 Summary:	Graphical copy manager
 Group:		File tools
 License:	GPLv2+
@@ -106,6 +106,9 @@ desktop-file-install					\
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_6jpp7
 - new release
 
