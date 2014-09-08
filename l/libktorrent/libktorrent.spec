@@ -4,7 +4,7 @@
 
 Name: libktorrent
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: BitTorrent library for KDE
@@ -13,6 +13,7 @@ License: GPLv2
 
 # svn checkout svn://svn.berlios.de/libssh/trunk libssh
 Source: http://www.libssh.org/files/%name-%version.tar.gz
+Patch1: 0001-Fix-bug-causing-authenticated-peers-not-to-get-accep.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 #BuildRequires: boost-devel-headers doxygen gcc-c++ glib2-devel graphviz kde4libs-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgcrypt-devel libgmp-devel libqca2-devel libqt3-devel libxkbfile-devel qt4-designer rpm-build-ruby zlib-devel-static
@@ -49,6 +50,7 @@ This package contains the development files for %name.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %K4cmake
@@ -70,6 +72,12 @@ This package contains the development files for %name.
 %_K4link/lib*.so
 
 %changelog
+* Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
+- add upstream fix against "authenticated peers not to get accepted"
+
+* Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt0.M60P.1
+- built for M60P
+
 * Mon Jan 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
 - new version
 
