@@ -8,9 +8,12 @@ BuildRequires: jpackage-compat
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
 Version:           4.2.4
-Release:           alt1_3jpp7
+Release:           alt1_5jpp7
 Group:             Development/Java
-License:           ASL 2.0
+# The project is licensed under ASL 2.0, but it contains annotations
+# in the package org.apache.http.annotation which are derived
+# from JCIP-ANNOTATIONS project (CC-BY licensed)
+License:           ASL 2.0 and CC-BY
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
 BuildArch:         noarch
@@ -105,6 +108,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1_5jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1_3jpp7
 - new version
 
