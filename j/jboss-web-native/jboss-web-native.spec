@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-web-native
 Version:          2.0.10
-Release:          alt1_4jpp7
+Release:          alt1_5jpp7
 Summary:          JBoss Web Native
 Group:            Development/Java
 License:          LGPLv2+ and ASL 2.0
@@ -77,6 +77,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/pkgconfig/jbnative-1.pc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_4jpp7
 - new release
 
