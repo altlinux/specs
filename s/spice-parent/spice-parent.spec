@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           spice-parent
 Version:        15
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Summary:        Sonatype Spice Components
 
 Group:          Development/Java
@@ -56,6 +56,9 @@ mvn-rpmbuild verify
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 15-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 15-alt1_9jpp7
 - new release
 
