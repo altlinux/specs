@@ -1,4 +1,5 @@
 Epoch: 0
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -12,8 +13,7 @@ BuildRequires: jpackage-compat
 Summary:          Bouncy Castle Crypto Package for Java
 Name:             bouncycastle
 Version:          %{ver}
-Release:          alt3_7jpp7
-Group:            System/Libraries
+Release:          alt3_11jpp7
 License:          MIT
 URL:              http://www.%{name}.org/
 # Use original sources from here on out.
@@ -24,7 +24,7 @@ Requires:         jpackage-utils >= 1.5
 Requires(post):   jpackage-utils >= 1.7
 Requires(postun): jpackage-utils >= 1.7
 BuildArch:        noarch
-BuildRequires:    junit4
+BuildRequires:    junit
 
 Provides:         bcprov = %{version}-%{release}
 Source44: import.info
@@ -36,11 +36,10 @@ suitable for use in any environment (including the newly released J2ME) with
 the additional infrastructure to conform the algorithms to the JCE framework.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-BuildArch:      noarch
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
+BuildArch: noarch
 
 %description javadoc
 API documentation for the %{name} package.
@@ -57,9 +56,9 @@ unzip -qq src.zip -d src/
 
 %build
 pushd src
-  export CLASSPATH=$(build-classpath junit4)
+  export CLASSPATH=$(build-classpath junit)
   %javac -g -source 1.6 -target 1.6 -encoding UTF-8 $(find . -type f -name "*.java")
-  jarfile="../bcprov-%{version}.jar"
+  jarfile="../bcprov.jar"
   # Exclude all */test/* files except org.bouncycastle.util.test, cf. upstream
   files="$(find . -type f \( -name '*.class' -o -name '*.properties' \) -not -path '*/test/*')"
   files="$files $(find . -type f -path '*/org/bouncycastle/util/test/*.class')"
@@ -77,15 +76,13 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d/2000-%{classname}
 
 # install bouncy castle provider
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 bcprov-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/bcprov-%{version}.jar
-pushd $RPM_BUILD_ROOT%{_javadir}
-  ln -sf bcprov-%{version}.jar bcprov.jar
+install -pm 644 bcprov.jar \
+  $RPM_BUILD_ROOT%{_javadir}/
+
+install -dm 755 $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
+pushd $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
+  ln -sf ../bcprov.jar bcprov.jar
 popd
-  install -dm 755 $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
-  pushd $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
-    ln -sf ../bcprov-%{version}.jar bcprov-%{version}.jar
-  popd
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -94,11 +91,11 @@ cp -pr docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # maven pom
 install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-bcprov.pom
-%add_to_maven_depmap org.bouncycastle bcprov-jdk16 %{version} JPP bcprov
+%add_maven_depmap JPP-bcprov.pom bcprov.jar
 
 %check
 pushd src
-  export CLASSPATH=$PWD:$(build-classpath junit4)
+  export CLASSPATH=$PWD:$(build-classpath junit)
   for test in $(find . -name AllTests.class) ; do
     test=${test#./} ; test=${test%.class} ; test=${test//\//.}
     # TODO: failures; get them fixed and remove || :
@@ -129,7 +126,6 @@ popd
   done
 } || :
 
-: 
 %postun
 if [ $1 -eq 0 ] ; then
 
@@ -155,12 +151,11 @@ if [ $1 -eq 0 ] ; then
   } || :
 
 fi
-: 
+
 %files
 %doc *.html
 %{_javadir}/bcprov.jar
-%{_javadir}/bcprov-%{version}.jar
-  %{_javadir}/gcj-endorsed/bcprov-%{version}.jar
+%{_javadir}/gcj-endorsed/bcprov.jar
 %{_sysconfdir}/java/security/security.d/2000-%{classname}
 %{_mavenpomdir}/JPP-bcprov.pom
 %{_mavendepmapfragdir}/%{name}
@@ -169,6 +164,9 @@ fi
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt3_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.46-alt3_7jpp7
 - new release
 
