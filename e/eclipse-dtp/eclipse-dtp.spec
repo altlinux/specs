@@ -5,29 +5,15 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name eclipse-dtp
-%define version 1.10.2
 %global eclipse_base     %{_libdir}/eclipse
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
-%global tag DTP_1_10_2_Release_201302061842
-# Match the context qualifier with the upstream p2 repo
-# 
-# eclipse -consolelog -nosplash -application org.eclipse.equinox.p2.director \
-#  -repository http://download.eclipse.org/datatools/updates -list | \
-#  grep org.eclipse.datatools.sdk.feature.feature.group | grep %%{version} | \
-#  sed "s/org.eclipse.datatools.sdk.feature.feature.group=//" | \
-#  sed "s/%%{version}.//" | \
-#  sed "s/-.*//"
+%global tag DTP_1_11_1_Release_201309060500
 
-# For 1.10 M6, use this zip
-# http://www.eclipse.org/downloads/download.php?file=/datatools/downloads/drops/N_DTP_1.10/dtp-p2repo-1.10.0M6-201203160500.zip
-# and get the IU list as above
-%global qualifier v201302061842
+%global qualifier v201309060500
 
 Name:      eclipse-dtp
-Version:   1.10.2
+Version:   1.11.1
 Release:   alt1_1jpp7
 Summary:   Eclipse Data Tools Platform
 Group:     System/Libraries
@@ -197,6 +183,9 @@ popd
 %doc org.eclipse.datatools.build-%{tag}/features/org.eclipse.datatools.sdk-all.feature/rootfiles/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.11.1-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1jpp7
 - new version
 
