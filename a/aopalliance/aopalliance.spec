@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -5,12 +6,12 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           aopalliance
 Version:        1.0
-Release:        alt3_5jpp7
+Release:        alt3_7jpp7
 Epoch:          0
 Summary:        Java/J2EE AOP standards
-Group:          Development/Java
 License:        Public Domain
 URL:            http://aopalliance.sourceforge.net/
+BuildArch:      noarch
 # cvs -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance login
 # password empty
 # cvs -z3 -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance export -r HEAD aopalliance
@@ -18,61 +19,57 @@ Source0:        aopalliance-src.tar.gz
 Source1:        http://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.pom
 Source2:        %{name}-MANIFEST.MF
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  zip
-BuildArch:      noarch
+BuildRequires:  ant
 Source44: import.info
 
 %description
-Java/J2EE AOP standards
+Aspect-Oriented Programming (AOP) offers a better solution to many
+problems than do existing technologies, such as EJB.  AOP Alliance
+intends to facilitate and standardize the use of AOP to enhance
+existing middleware environments (such as J2EE), or development
+environements (e.g. Eclipse).  The AOP Alliance also aims to ensure
+interoperability between Java/J2EE AOP implementations to build a
+larger AOP community.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        API documentation for %{summary}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{summary}.
+%{summary}.
 
 %prep
-%setup -q -n aopalliance
+%setup -q -n %{name}
 
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
 %{ant} -Dbuild.sysclasspath=only jar javadoc
 
+# Inject OSGi manifest required by Eclipse.
+jar umf %{SOURCE2} build/%{name}.jar
+
 %install
-# inject OSGi manifest
-mkdir -p META-INF
-cp -p %{SOURCE2} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u build/%{name}.jar META-INF/MANIFEST.MF
-
-
-install -dm 755 %{buildroot}%{_javadir}
-
-install -pm 644 build/aopalliance.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-install -dm 755 %{buildroot}%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}/
 install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 # javadoc
 install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}*/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp7
 - new release
 
