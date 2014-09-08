@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.916
-Release: alt1
+Release: alt2
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -39,6 +39,7 @@ and 24 for the 830M and later
 %configure \
 	--libexecdir=%_prefix/libexec \
 	--with-xorg-module-dir=%_x11modulesdir \
+	--disable-dri3 \
 	--disable-static
 
 %make_build
@@ -56,6 +57,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Mon Sep 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt2
+- disabled dri3
+
 * Mon Sep 08 2014 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.916-alt1
 - snapshot 2.99.916
 
