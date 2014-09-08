@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_3jpp7
+Release:          alt2_4jpp7
 Summary:          JSR-67 implementation
 Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
@@ -83,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc license.html
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_3jpp7
 - new release
 
