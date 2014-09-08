@@ -1,34 +1,33 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
 %global group_id  org.testng
 
 Name:             testng
-Version:          6.8
+Version:          6.8.7
 Release:          alt1_1jpp7
 Summary:          Java-based testing framework
 # org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
 License:          ASL 2.0 and CPL
-Group:            Development/Java
 URL:              http://testng.org/
 Source0:          https://github.com/cbeust/testng/archive/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    beust-jcommander >= 1.27
-BuildRequires:    snakeyaml
-BuildRequires:    google-guice
 
-Requires:         jpackage-utils
-Requires:         beust-jcommander >= 1.27
-Requires:         snakeyaml
-Requires:         google-guice
+BuildRequires:    mvn(com.beust:jcommander) >= 1.27
+BuildRequires:    mvn(com.google.guava:guava)
+BuildRequires:    mvn(com.google.inject:guice)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.ant:ant)
+BuildRequires:    mvn(org.beanshell:bsh)
+BuildRequires:    mvn(org.sonatype.oss:oss-parent)
+BuildRequires:    mvn(org.yaml:snakeyaml)
+
+BuildRequires:    maven-local
+BuildRequires:    maven-plugin-bundle
 Source44: import.info
 
 %description
@@ -38,9 +37,8 @@ distributed test running.  It is designed to cover unit tests as well as
 functional, end-to-end, integration, etc.
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -50,6 +48,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{name}-%{version}
 
 # build fix for new guice
+%pom_add_dep com.google.guava:guava::provided
 sed -i "s|com.google.inject.internal|com.google.common.collect|" \
   src/main/java/org/testng/xml/XmlDependencies.java \
   src/main/java/org/testng/xml/XmlGroups.java \
@@ -58,6 +57,9 @@ sed -i "s|com.google.inject.internal|com.google.common.collect|" \
   src/test/java/test/mustache/MustacheTest.java \
   src/test/java/test/thread/B.java
 
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
+  
 # remove bundled stuff
 rm -rf spring
 rm -rf 3rdparty
@@ -72,34 +74,26 @@ native2ascii -encoding UTF-8 src/main/java/org/testng/internal/Version.java \
 iconv --from-code=ISO-8859-2 --to-code=UTF-8 ANNOUNCEMENT.txt > ANNOUNCEMENT.txt.utf8
 mv -f ANNOUNCEMENT.txt.utf8 ANNOUNCEMENT.txt
 
+%mvn_file : %{name}
+# jdk15 classifier is used by some other packages
+%mvn_alias : :::jdk15:
+
 %build
-mvn-rpmbuild -Dmaven.local.debug=true -Dgpg.skip=true install javadoc:aggregate
+%mvn_build -- -Dmaven.local.debug=true
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt ANNOUNCEMENT.txt CHANGES.txt README
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.8.7-alt1_1jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.8-alt1_1jpp7
 - new version
 
