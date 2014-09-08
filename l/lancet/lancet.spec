@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        1.0.1
-Release:        alt2_6jpp7
+Release:        alt2_8jpp7
 Summary:        A build tool like Ant or Rake
 
 Group:          Development/Java
@@ -35,8 +35,7 @@ Requires(post):   jpackage-utils
 Requires(postun): jpackage-utils
 %endif
 
-Requires:       ant >= 1.7.1
-Requires:       ant-nodeps >= 1.7.1
+Requires:       ant >= 1.8.2
 Source44: import.info
 
 %description
@@ -77,6 +76,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadir}/%{name}.jar
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_6jpp7
 - new release
 
