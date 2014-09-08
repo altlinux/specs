@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-jaxb-2.2-api
 Version: 1.0.4
-Release: alt2_5jpp7
+Release: alt2_6jpp7
 Summary: Java Architecture for XML Binding 2.2
 Group: Development/Java
 License: CDDL or GPLv2 with exceptions
@@ -92,6 +91,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2_5jpp7
 - new release
 
