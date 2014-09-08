@@ -1,15 +1,11 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          serp
 Version:       1.14.2
-Release:       alt2_0.4.20120406cvsjpp7
+Release:       alt2_0.6.20120406cvsjpp7
 Summary:       Bytecode manipulation framework
-Group:         Development/Java
 License:       BSD
 Url:           http://serp.sourceforge.net/
 # cvs -d:pserver:anonymous@serp.cvs.sourceforge.net:/cvsroot/serp login
@@ -21,22 +17,12 @@ Source0:       serp-1.14.2-20120406-src-cvs.tar.gz
 #  org.codehaus.mojo surefire-report-maven-plugin in org.apache.maven.plugins >maven-surefire-report-plugin
 Patch0:        serp-1.13.1-pom_xml.patch
 
-BuildRequires: jpackage-utils
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
-Requires:      junit
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -53,9 +39,8 @@ set is necessary, the framework makes it as easy as possible
 to enter the world of bytecode development.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -69,33 +54,26 @@ find . -name "*.jar" -delete
 %patch0 -p0
 sed -i "s|pom.version|project.version|" pom.xml
 
+%mvn_file :%{name} %{name}
+%mvn_alias :%{name} %{name}:%{name}
+
 %build
 
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.6.20120406cvsjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.4.20120406cvsjpp7
 - new release
 
