@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:     nailgun
 Version:  0.7.1
-Release:  alt1_7jpp7
+Release:  alt1_9jpp7
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 Group:    Development/Java
 License:  ASL 2.0
@@ -18,7 +18,6 @@ Patch0:   remove-tools-jar-dependencies.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires: ant
-BuildRequires: ant-trax
 BuildRequires: ant-junit
 Requires:  jpackage-utils
 Source44: import.info
@@ -32,8 +31,6 @@ server (which is implemented in Java), and are triggered by the client
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
 BuildArch:      noarch
 
 %description javadoc
@@ -53,8 +50,7 @@ ant
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 
-cp dist/nailgun-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/nailgun-%{version}.jar
-ln -s %{_javadir}/nailgun-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/nailgun.jar
+cp dist/nailgun-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 cp ng $RPM_BUILD_ROOT%{_bindir}/ng
 
@@ -62,15 +58,18 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%{_javadir}/nailgun-%{version}.jar
 %{_javadir}/nailgun.jar
 %{_bindir}/ng
 %doc LICENSE.txt README.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_7jpp7
 - new release
 
