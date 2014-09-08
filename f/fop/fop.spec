@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -7,28 +8,26 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Summary:	XSL-driven print formatter
 Name:		fop
+Summary:	XSL-driven print formatter
 Version:	1.1
-Release:	alt1_1jpp7
-License:	ASL 2.0
-Group:		Text tools
+Release:	alt1_5jpp7
+# ASL 1.1:
+# several files in src/java/org/apache/fop/render/awt/viewer/resources/
+# rest is ASL 2.0
+License:	ASL 2.0 and ASL 1.1
 URL:		http://xmlgraphics.apache.org/fop
-# wget http://www.apache.org/dist/xmlgraphics/fop/source/%{name}-%{version}-src.tar.gz
-# tar xzvf fop-%{version}-src.tar.gz
-# find ./fop-%{version}/src/java/org/apache/fop/pdf/ -name "*.icm*" -delete
-# find ./fop-%{version}/ -name "*.jar" -delete
-# find ./fop-%{version}/ -name "*.pdf" -delete
-# we don't run tests, we don't need test data
-# find ./fop-%{version}/ -name "*.ser" -delete
-# tar czvf fop-%{version}-src.tar.gz fop-%{version}
-Source0:	%{name}-%{version}-src.tar.gz
+# ./clean-tarball %%{version}
+Source0:	%{name}-%{version}-clean.tar.gz
 Source1:	%{name}.script
 Source2:	batik-pdf-MANIFEST.MF
 Source3:	http://mirrors.ibiblio.org/pub/mirrors/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
+Source4:	http://www.apache.org/licenses/LICENSE-1.1.txt
 Patch0:		%{name}-main.patch
 Patch1:		%{name}-Use-sRGB.icc-color-profile-from-icc-profiles-openicc.patch
-BuildArch:  noarch
+
+BuildArch:	noarch
+
 Requires:	xmlgraphics-commons >= 1.5
 Requires:	avalon-framework >= 4.1.4
 Requires:	batik >= 1.7
@@ -38,14 +37,8 @@ Requires:	jakarta-commons-httpclient
 Requires:	apache-commons-io >= 1.2
 Requires:	apache-commons-logging >= 1.0.4
 Requires:	icc-profiles-openicc
-Requires:   jpackage-utils
-
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 BuildRequires:	ant
-BuildRequires:	java-javadoc >= 1:1.6.0
-BuildRequires:	jpackage-utils
 BuildRequires:	apache-commons-logging
 BuildRequires:	apache-commons-io
 BuildRequires:	avalon-framework
@@ -71,9 +64,8 @@ Xalan) or can be passed in memory as a DOM Document or (in the case of
 XT) SAX events.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadoc for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -84,8 +76,7 @@ Javadoc for %{name}.
 %patch0 -p0
 %patch1 -p1
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+cp %{SOURCE4} LICENSE-1.1
 
 sed -i -e "s|1.4|1.5|g" build.xml
 
@@ -99,31 +90,31 @@ ant jar-main transcoder-pkg javadocs
 
 %install
 # inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE2} META-INF/MANIFEST.MF
+install -d -m 755 META-INF
+install -p -m 644 %{SOURCE2} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/%{name}.jar META-INF/MANIFEST.MF
 
 # jars
-mkdir -p %{buildroot}%{_javadir}
-cp -a build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-cp -a build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -p -m 644 build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
 
 # script
-mkdir -p %{buildroot}%{_bindir}
-cp -a %{SOURCE1} %{buildroot}%{_bindir}/fop
+install -d -m 755 %{buildroot}%{_bindir}
+install -p -m 755 %{SOURCE1} %{buildroot}%{_bindir}/fop
 
 # data
-mkdir -p %{buildroot}%{_datadir}/%{name}
-cp -a conf %{buildroot}%{_datadir}/%{name}
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf
+cp -rp conf/* %{buildroot}%{_datadir}/%{name}/conf
 
 # javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
 
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.xmlgraphics %{name} %{version} JPP %{name} %{version}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/fop.conf`
 touch $RPM_BUILD_ROOT/etc/fop.conf
@@ -132,18 +123,15 @@ touch $RPM_BUILD_ROOT/etc/fop.conf
 ln -s fop.jar %buildroot%_javadir/xmlgraphics-fop.jar
 ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
-%doc LICENSE README NOTICE
+%doc LICENSE LICENSE-1.1 README NOTICE
 %{_javadir}/%{name}.jar
 %{_datadir}/%{name}
 %{_javadir}/pdf-transcoder.jar
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*pom
-%attr(0755,root,root) %{_bindir}/fop
+%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_bindir}/fop
 %config(noreplace,missingok) /etc/fop.conf
 # compat symlinks
 %_javadir/xmlgraphics-fop.jar
@@ -151,10 +139,13 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files javadoc
 %doc %{_javadocdir}/%{name}
-%doc LICENSE
+%doc LICENSE LICENSE-1.1
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_5jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_1jpp7
 - new version
 
