@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jilter
 Version:        1.2
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Summary:        Sendmail milter protocol for Java
 
 Group:          Development/Java
@@ -70,6 +70,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_6jpp7
 - new release
 
