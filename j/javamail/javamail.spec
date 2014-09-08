@@ -1,67 +1,36 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name:		javamail
-Version:	1.4.3
-Release:	alt1_16jpp7
-Summary:	Java Mail API
+Name:           javamail
+Version:        1.5.0
+Release:        alt1_6jpp7
+Summary:        Java Mail API
+License:        CDDL or GPLv2 with exceptions
+URL:            http://www.oracle.com/technetwork/java/javamail
+BuildArch:      noarch
 
-Group:		Development/Java
-License:	CDDL or GPLv2 with exceptions
-URL:		http://www.oracle.com/technetwork/java/javamail
+# hg clone http://kenai.com/hg/javamail~mercurial
+# (cd ./javamail~mercurial && hg archive -r JAVAMAIL-%(sed s/\\./_/g <<<"%{version}") ../%{name}-%{version})
+# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
+Source:         %{name}-%{version}.tar.xz
 
-# Parent POM
-Source0:	http://download.java.net/maven/2/com/sun/mail/all/%{version}/all-%{version}.pom
+BuildRequires:  maven-local
+BuildRequires:  jvnet-parent
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-plugin-build-helper
 
-# POMs and source files for things that get built
-Source1:	http://download.java.net/maven/2/javax/mail/mail/%{version}/mail-%{version}-sources.jar
-Source2:	http://download.java.net/maven/2/javax/mail/mail/%{version}/mail-%{version}.pom
-Source3:	http://download.java.net/maven/2/com/sun/mail/dsn/%{version}/dsn-%{version}-sources.jar
-Source4:	http://download.java.net/maven/2/com/sun/mail/dsn/%{version}/dsn-%{version}.pom
+# Adapted from the classpathx-mail (and JPackage glassfish-javamail) Provides.
+Provides:       javamail-monolithic = %{version}-%{release}
 
-# Additional POMs for things that are provided by the monolithic mail.jar
-Source5:	http://download.java.net/maven/2/javax/mail/mailapi/%{version}/mailapi-%{version}.pom
-Source6:	http://download.java.net/maven/2/com/sun/mail/imap/%{version}/imap-%{version}.pom
-Source7:	http://download.java.net/maven/2/com/sun/mail/pop3/%{version}/pop3-%{version}.pom
-Source8:	http://download.java.net/maven/2/com/sun/mail/smtp/%{version}/smtp-%{version}.pom
-
-# http://kenai.com/projects/javamail/sources/mercurial/content/parent-distrib/pom.xml?raw=true
-Source9:	%{name}-parent-distrib.pom
-
-# Add additional OSGi information to manifest of mail.jar
-Patch0:		%{name}-add-osgi-info.patch
-
-# Remove Maven plugins we don't have yet
-# Remove unavailable-on-Fedora dependencies from pom.xml
-Patch1:		%{name}-cleanup-poms.patch
-
-BuildRequires:	jpackage-utils
-BuildRequires:	maven-local
-BuildRequires:	maven-assembly-plugin
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-dependency-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-site-plugin
-BuildRequires:	maven-plugin-bundle
-BuildRequires:	maven-surefire-plugin
-BuildRequires:	maven-surefire-provider-junit4
-BuildRequires:	tomcat6-jsp-2.1-api
-
-
-Requires:	jpackage-utils
-
-# Adapted from the classpathx-mail (and JPackage glassfish-javamail) Provides
-Provides:	javamail-monolithic = 0:%{version}
-
-BuildArch:	noarch
+Provides:       javax.mail
 Source44: import.info
 
 %description
@@ -70,9 +39,8 @@ framework to build mail and messaging applications.
 
 
 %package javadoc
-Summary:	Javadoc for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils >= 0:1.7.5
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -80,88 +48,56 @@ BuildArch: noarch
 
 
 %prep
-%setup -c -T
-mkdir -p mail dsn
+%setup -q
 
-(cd mail && jar xvf %SOURCE1 && cp %SOURCE2 ./pom.xml)
-(cd dsn && jar xvf %SOURCE3 && cp %SOURCE4 ./pom.xml)
+add_dep() {
+    %pom_xpath_inject pom:project "<dependencies/>" ${2}
+    %pom_add_dep com.sun.mail:${1}:%{version}:provided ${2}
+}
 
-%patch0 -p1
+add_dep smtp mailapi
+add_dep javax.mail smtp
+add_dep javax.mail pop3
+add_dep javax.mail imap
+add_dep javax.mail mailapijar
 
-for sub in *; do
-	pushd $sub
-	mkdir -p src/main/java src/main/resources
-	mv META-INF src/main/resources
-	[ -e com ] && mv com src/main/java
-	[ -e javax ] && mv javax src/main/java
-	popd
-done
+# Remove profiles containing demos and other stuff that is not
+# supposed to be deployable.
+%pom_xpath_remove /pom:project/pom:profiles
 
-cp %SOURCE0 ./pom.xml
-mkdir poms
-cp %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 %SOURCE9 poms
+# osgiversion-maven-plugin is used to set ${mail.osgiversion} property
+# based on ${project.version}. We don't have osgiversion plugin in
+# Fedora so we'll set ${mail.osgiversion} explicitly.
+%pom_remove_plugin org.glassfish.hk2:osgiversion-maven-plugin
+%pom_xpath_inject /pom:project/pom:properties "<mail.osgiversion>%{version}</mail.osgiversion>"
 
-%patch1 -p1
-
-# Convert license file to UTF-8
-for file in mail/src/main/resources/META-INF/*.txt; do
-	iconv -f ISO-8859-1 -t UTF-8 -o $file.new $file && \
-	touch -r $file $file.new && \
-	mv $file.new $file
-done
-
+# Alternative names for super JAR containing API and implementation.
+%mvn_alias com.sun.mail:mailapi javax.mail:mailapi
+%mvn_alias com.sun.mail:javax.mail javax.mail:mail \
+           org.eclipse.jetty.orbit:javax.mail.glassfish
+%mvn_file "com.sun.mail:{javax.mail}" %{name}/@1 %{name}/mail
 
 %build
-mvn-rpmbuild \
-    -Dproject.build.sourceEncoding=UTF-8 \
-	-P deploy \
-	package javadoc:aggregate
-
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-all.pom
-%add_maven_depmap JPP.%{name}-all.pom
+install -d -m 755 %{buildroot}%{_javadir}/javax.mail/
+ln -sf ../%{name}/javax.mail.jar %{buildroot}%{_javadir}/javax.mail/
 
-# Install everything
-for sub in mail dsn; do
-    install -m 644 $sub/target/$sub.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$sub.jar
-done
+%files -f .mfiles
+%doc mail/src/main/java/overview.html
+%doc mail/src/main/resources/META-INF/LICENSE.txt
+%{_javadir}/javax.mail/
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-install -m 644 mail/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-mail.pom
-install -m 644 dsn/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-dsn.pom
-
-# Install the remaining POMs
-for sub in mailapi imap pop3 smtp; do
- install -m 644 poms/$sub-%{version}.pom \
-	 $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-$sub.pom
-done
-
-# Add maven dependency information
-%add_maven_depmap JPP.%{name}-mail.pom %{name}/mail.jar -a "javax.mail:mailapi,com.sun.mail:imap,com.sun.mail:pop3,com.sun.mail:smtp,org.eclipse.jetty.orbit:javax.mail.glassfish"
-%add_maven_depmap JPP.%{name}-dsn.pom %{name}/dsn.jar
-
-install -m 644 poms/%{name}-parent-distrib.pom \
-	$RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent-distrib.pom
-%add_maven_depmap JPP.%{name}-parent-distrib.pom
-
-
-%files
-%doc mail/src/main/resources/META-INF/LICENSE.txt mail/overview.html
-%{_javadir}/%{name}
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*.pom
-
-%files javadoc
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
+%doc mail/src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_16jpp7
 - new release
 
