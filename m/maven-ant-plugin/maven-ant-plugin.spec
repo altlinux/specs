@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ant-plugin
 Version:        2.3
-Release:        alt2_12jpp7
+Release:        alt2_13jpp7
 Summary:        Maven Ant Plugin
 
 Group:          Development/Java
@@ -93,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_12jpp7
 - new release
 
