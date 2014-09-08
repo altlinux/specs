@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt3_12jpp7
+Release:        alt3_13jpp7
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Java
@@ -78,6 +78,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_13jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_12jpp7
 - new release
 
