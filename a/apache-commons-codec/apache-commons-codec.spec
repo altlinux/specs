@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -12,13 +11,16 @@ BuildRequires: jpackage-compat
 
 Name:          apache-%{short_name}
 Version:       1.8
-Release:       alt1_1jpp7
+Release:       alt1_5jpp7
 Summary:       Implementations of common encoders and decoders
 Group:         Development/Java
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
 
 Source0:       http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+# Data in DoubleMetaphoneTest.java originally has an inadmissible license.
+# The author gives MIT in e-mail communication.
+Source1:       aspell-mail.txt
 
 
 BuildArch:     noarch
@@ -66,7 +68,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-
+cp %{SOURCE1} aspell-mail.txt
 sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
 
 %build
@@ -93,16 +95,19 @@ ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
 
 
 %files
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES*
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES* aspell-mail.txt
 %{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*
 %{_javadir}/*
 
 %files javadoc
-%doc LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt aspell-mail.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_5jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_1jpp7
 - new version
 
