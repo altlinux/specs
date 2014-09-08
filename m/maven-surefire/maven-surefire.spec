@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -5,45 +6,52 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-surefire
-Version:        2.14
-Release:        alt1_2jpp7
+Version:        2.16
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
-Group:          Development/Java
 URL:            http://maven.apache.org/surefire/
-
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/surefire/surefire/%{version}/surefire-%{version}-source-release.zip
 Source2:        http://junit.sourceforge.net/cpl-v10.html
-
 BuildArch:      noarch
-BuildRequires:  apache-commons-lang3
-BuildRequires:  classworlds
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  junit >= 3.8.2
-BuildRequires:  plexus-utils
-BuildRequires:  junit4
-BuildRequires:  testng
-BuildRequires:  mockito
 
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-help-plugin
-BuildRequires:  maven-install-plugin
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-parent)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-descriptor)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-toolchain)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.testng:testng)
+
 BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-plugin-annotations
 BuildRequires:  maven-plugin-plugin
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-shade-plugin
 BuildRequires:  maven-shared-utils
 BuildRequires:  maven-shared-verifier
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-failsafe-plugin
 BuildRequires:  maven-surefire-plugin >= 0:2.12-1
-BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-toolchain
 BuildRequires:  maven-project
 BuildRequires:  maven-shared-common-artifact-filters
@@ -51,9 +59,6 @@ BuildRequires:  modello
 BuildRequires:  plexus-containers-component-api >= 1.0-0.a34
 BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  javacc-maven-plugin
-BuildRequires:  maven-doxia-sink-api
-BuildRequires:  maven-doxia-core
-BuildRequires:  maven-doxia-sitetools
 
 Obsoletes:      maven-surefire-booter <= 0:1.5.3
 Provides:       maven-surefire-booter = %{epoch}:%{version}-%{release}
@@ -132,8 +137,8 @@ integration-test phase thus enabling the post-integration-test phase
 to execute.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -145,13 +150,17 @@ cp -p %{SOURCE2} .
 %pom_add_dep org.apache.maven:maven-compat maven-surefire-common
 %pom_disable_module surefire-shadefire
 
-for module in . maven-failsafe-plugin maven-surefire-common \
+for module in maven-failsafe-plugin maven-surefire-common \
         maven-surefire-plugin surefire-api surefire-booter \
         surefire-grouper surefire-providers \
         surefire-setup-integration-tests \
         surefire-report-parser; do
     %pom_remove_dep org.apache.maven.surefire:surefire-shadefire $module
 done
+
+# Help plugin is needed only to evaluate effective Maven settings.
+# For building RPM package default settings will suffice.
+%pom_remove_plugin :maven-help-plugin surefire-setup-integration-tests
 
 %build
 %mvn_package ":*{surefire-plugin,report-plugin}*" @1
@@ -180,6 +189,9 @@ done
 %doc LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.16-alt1_1jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.14-alt1_2jpp7
 - new version
 
