@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: txw2
 Version: 20110809
-Release: alt2_7jpp7
+Release: alt2_8jpp7
 Summary: Typed XML writer for Java
 Group: Development/Java
 License: CDDL and GPLv2 with exceptions
@@ -114,6 +113,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_7jpp7
 - new release
 
