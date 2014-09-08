@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jaxb-intros
 Version:          1.0.2
-Release:          alt2_4jpp7
+Release:          alt2_5jpp7
 Summary:          JBoss JAXB Intros
 Group:            Development/Java
 License:          LGPLv2+
@@ -88,6 +87,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_4jpp7
 - new release
 
