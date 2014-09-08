@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_16jpp7
+Release:        alt1_17jpp7
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -118,6 +118,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_17jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_16jpp7
 - new release
 
