@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    c3p0
 Version: 0.9.2.1
-Release: alt1_2jpp7
+Release: alt1_4jpp7
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2 or EPL
 URL:     https://github.com/swaldman/c3p0
@@ -84,7 +84,7 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 src/maven/pom.xml \
   %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a c3p0:c3p0
+%add_maven_depmap -a "c3p0:c3p0" JPP-%{name}.pom %{name}.jar
 
 %files
 %doc src/dist-static/CHANGELOG
@@ -100,6 +100,9 @@ install -p -m 644 src/maven/pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2.1-alt1_4jpp7
+- new release
+
 * Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2.1-alt1_2jpp7
 - new release
 
