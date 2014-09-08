@@ -6,17 +6,16 @@ BuildRequires: jpackage-compat
 %global short_name  commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.0.13
-Release:        alt1_1jpp7
+Version:        1.0.15
+Release:        alt1_4jpp7
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Patch0:         0001-execve-path-warning.patch
 Patch1:         apache-commons-daemon-JAVA_OS.patch
-Patch2:         apache-commons-daemon-s390x.patch
-Patch3:         apache-commons-daemon-ppc64.patch
+# backport from https://fisheye6.atlassian.com/changelog/commons?cs=1458896
+Patch2:         apache-commons-daemon-secondary.patch
 BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-parent
@@ -63,10 +62,8 @@ Obsoletes:      jakarta-%{short_name}-javadoc <= 1:1.0.1
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -p1 -b .execve
 %patch1 -p1 -b .java_os
-%patch2 -p1 -b .s390x
-%patch3 -p1 -b .ppc64
+%patch2 -p1 -b .secondary
 
 # remove java binaries from sources
 rm -rf src/samples/build/
@@ -116,6 +113,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_4jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.13-alt1_1jpp7
 - new version
 
