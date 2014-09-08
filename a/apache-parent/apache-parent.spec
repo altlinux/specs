@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           apache-parent
 Version:        10
-Release:        alt2_10jpp7
+Release:        alt2_13jpp7
 Summary:        Parent pom file for Apache projects
 Group:          Development/Java
 License:        ASL 2.0
@@ -16,12 +13,10 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
+BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-remote-resources-plugin
 
-Requires:       jpackage-utils
-Requires: apache-resource-bundles apache-jar-resource-bundle
-Requires:       maven-remote-resources-plugin
+Requires:       apache-resource-bundles
 Source44: import.info
 
 %description
@@ -39,24 +34,18 @@ sed -i 's:<target>1.4</target>:<target>1.5</target>:' pom.xml
 cp %{SOURCE1} LICENSE
 
 %build
-
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom
-
-%check
-mvn-rpmbuild verify
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 10-alt2_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 10-alt2_10jpp7
 - new release
 
