@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -11,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-skins
 Version:        5
-Release:        alt2_8jpp7
+Release:        alt2_9jpp7
 Summary:        Maven Skins
 
 Group:          Development/Java
@@ -80,6 +79,9 @@ install -pm 644 maven-stylus-skin/pom.xml \
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5-alt2_8jpp7
 - new release
 
