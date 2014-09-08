@@ -1,24 +1,17 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name       email
-%global short_name      commons-%{base_name}
+%global short_name      commons-email
 
 Name:             apache-%{short_name}
-Version:          1.2
-Release:          alt2_5jpp7
+Version:          1.3.1
+Release:          alt1_1jpp7
 Summary:          Apache Commons Email Package
 Group:            Development/Java
 License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:              http://commons.apache.org/proper/%{short_name}/
+Source0:          http://archive.apache.org/dist/commons/email/source/%{short_name}-%{version}-src.tar.gz
 
-# Depmap needed to remove test deps and fix javax:activation (part of JDK 5+)
-Source1:          %{short_name}.depmap
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
@@ -45,41 +38,34 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
+# Activation is now provided by the JRE
+%pom_remove_dep "javax.activation:activation"
+
+# Some test deps are not in fedora
+%pom_remove_dep "org.subethamail:subethasmtp"
+%pom_remove_dep "org.powermock:"
+
+# Compatibility links
+%mvn_alias "org.apache.commons:commons-email" "commons-email:commons-email"
+%mvn_file :commons-email %{short_name} %{name}
+
 %build
-#Skip tests due to missing deps: net.sf.retrotranslator:retrotranslator-runtime
-#                                org.subethamail:subethasmtp-smtp
-#                                org.subethamail:subethasmtp-wiser
-mvn-rpmbuild \
-             -Dmaven.test.skip=true \
-             -Dmaven.local.depmap.file="%{SOURCE1}" \
-              install javadoc:aggregate
+# Skip tests due to some missing deps
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{short_name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_install
 
-# poms
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name}"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_5jpp7
 - new release
 
