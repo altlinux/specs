@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -8,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt5_10jpp7
+Release:          alt5_12jpp7
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Java
@@ -53,33 +50,21 @@ mv LICENSE.txt LICENSE-MIT
 cp %{SOURCE1} LICENSE-ASL
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE-MIT LICENSE-ASL
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-MIT LICENSE-ASL
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_12jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_10jpp7
 - new release
 
