@@ -1,15 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt3_6jpp7
+Release:        alt3_8jpp7
 Summary:        Jetty toolchain artifact for distribution remote resources
 
-Group:          Development/Java
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
 Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
@@ -33,25 +29,18 @@ Jetty toolchain artifact for distribution remote distribution resources
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc src/main/resources/LICENSE*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_6jpp7
 - new release
 
