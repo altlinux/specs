@@ -1,8 +1,7 @@
 Name: iplike
-Version: 2.0.2
+Version: 2.0.6
 Release: alt1
 License: GPL
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: Databases
 Summary: PostgreSQL complex IP Address text field query
 Source: %name-%version.tar.gz
@@ -31,10 +30,10 @@ on a text field.
 %build
 %autoreconf
 %configure --libdir=%_libdir/pgsql --libexecdir=%_libdir/pgsql
-%__make libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql
+%make libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql
 
 %install
-%__make DESTDIR=%buildroot libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql install
+%makeinstall_std libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql
 
 
 %files -n lib%name
@@ -42,6 +41,9 @@ on a text field.
 #_sbindir/install_iplike.sh
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1
+- Version 2.0.6
+
 * Fri May 13 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
