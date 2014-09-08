@@ -1,46 +1,33 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsr-305
 Version:        0
-Release:        alt2_0.13.20090319svnjpp7
+Release:        alt2_0.16.20130910svnjpp7
 Summary:        Correctness annotations for Java code
 
-Group:          Development/Java
 # The majority of code is BSD-licensed, but some Java sources
 # are licensed under CC-BY license, see: $ grep -r Creative .
 License:        BSD and CC-BY
 URL:            http://jsr-305.googlecode.com/
-# There has been no official release yet.  This is a snapshot of the Subversion
-# repository as of 19 Mar 2009.  Use the following commands to generate the
-# tarball:
-#   svn export -r 49 http://jsr-305.googlecode.com/svn/trunk jsr-305
-#   tar -cvf jsr-305-0.4.20090319.tar jsr-305
-#   xz jsr-305-0.4.20090319.tar
-Source0:        jsr-305-0.4.20090319.tar.xz
-
-BuildRequires:  jpackage-utils maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-Requires:       jpackage-utils
-
 BuildArch:      noarch
+
+# There has been no official release yet.  This is a snapshot of the Subversion
+# repository as of 10 Sep 2013.  Use the following commands to generate the
+# tarball:
+#   svn export -r 51 http://jsr-305.googlecode.com/svn/trunk jsr-305
+#   tar -czvf jsr-305-20130910svn.tgz jsr-305
+Source0:        jsr-305-20130910svn.tgz
+# File containing URL to CC-BY license text
+Source1:        NOTICE-CC-BY.txt
+
+BuildRequires:  maven-local
 Source44: import.info
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description
@@ -53,48 +40,31 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-sed -i 's/\r//' sampleUses/pom.xml
+cp %{SOURCE1} NOTICE-CC-BY
+
+%mvn_file :ri %{name}
+%mvn_alias :ri com.google.code.findbugs:jsr305
+%mvn_package ":{proposedAnnotations,tcl}" __noinstall
 
 # do not build sampleUses module - it causes Javadoc generation to fail
-sed -i '/<module>sampleUses<\/module>/d' pom.xml
+%pom_disable_module sampleUses
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-# JAR files
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p ri/target/ri-0.1-SNAPSHOT.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc ri/LICENSE NOTICE-CC-BY sampleUses
 
-# Javadocs
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-# pom
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 ri/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a 'com.google.code.findbugs:jsr305'
-
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-parent.pom
-
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
-%doc ri/LICENSE sampleUses
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-parent.pom
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc ri/LICENSE NOTICE-CC-BY
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt2_0.16.20130910svnjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt2_0.13.20090319svnjpp7
 - new release
 
