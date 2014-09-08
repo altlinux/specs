@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           hamcrest12
 Version:        1.2
-Release:        alt2_6jpp7
+Release:        alt2_7jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -23,15 +23,14 @@ Patch0:         hamcrest-1.1-build.patch
 Patch1:         hamcrest-1.1-no-jarjar.patch
 Patch2:         hamcrest-1.1-no-integration.patch
 Patch3:         hamcrest1.2-build.patch
-Requires:       easymock2
+Requires:       easymock3
 Requires:       qdox
 BuildRequires:  jpackage-utils >= 0:1.7.4
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit
 BuildRequires:  zip
-BuildRequires:  easymock2
+BuildRequires:  easymock3
 BuildRequires:  junit
-BuildRequires:  junit4
 BuildRequires:  qdox
 
 BuildArch:      noarch
@@ -116,6 +115,9 @@ cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_6jpp7
 - new release
 
