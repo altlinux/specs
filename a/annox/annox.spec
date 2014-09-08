@@ -1,15 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
 Name:          annox
 Version:       0.5.0
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Java annotations in XML resources
-Group:         Development/Java
 License:       BSD
 Url:           http://java.net/projects/annox
 # svn export https://svn.java.net/svn/annox~svn/tags/0.5.0 annox-0.5.0
@@ -20,15 +15,7 @@ Source0:       annox-0.5.0-src-svn.tar.gz
 # but annox developers allowed us to redistribute their
 # work only if we include this notice. So we HAVE TO include these notices.
 Source1:       annox-LICENSE
-# remove
-#    org.hibernate hibernate-search 3.0.0.GA
-# change
-#    groupId ant in org.apache.ant
-#    artifactId ant-optional in ant
-#    version 1.5.3-1 in 1.8.2
-Patch0:        annox-0.5.0-fixbuild.patch
 
-BuildRequires: jpackage-utils
 BuildRequires: sonatype-oss-parent
 
 BuildRequires: ant
@@ -37,18 +24,8 @@ BuildRequires: glassfish-jaxb
 BuildRequires: junit
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
-Requires:      apache-commons-lang
-Requires:      glassfish-jaxb
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -61,53 +38,52 @@ Java/XML mappings in XML resources (instead of
 annotations).
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n annox-%{version}
+%setup -q
 find \( -name '*.jar' -o -name '*.class' -o -name '*.bat' \) -exec rm -f '{}' \;
-%patch0 -p1
+
+%pom_disable_module samples
+
+%pom_xpath_remove "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies/pom:dependency[pom:artifactId='ant-optional']"
+%pom_xpath_inject "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-antrun-plugin']/pom:dependencies" "
+<dependency>
+  <groupId>org.apache.ant</groupId>
+  <artifactId>ant</artifactId>
+  <version>1.8.2</version>
+</dependency>"
+
+%pom_remove_dep org.hibernate:hibernate-search
+%pom_remove_dep org.hibernate:hibernate-search core
+
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
-sed -i "s|<module>samples</module>|<!--module>samples</module-->|" pom.xml
 
 %build
+
+%mvn_file :%{name} %{name}
 # unavailable deps for run test: org.hibernate hibernate-search 3.0.0.GA
-mvn-rpmbuild -e \
-  -Dmaven.test.skip=true \
-  install javadoc:aggregate
-
+%mvn_build -f
+  
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 core/target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-project.pom
-%add_maven_depmap JPP-%{name}-project.pom
-install -pm 644 core/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}*.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_5jpp7
 - new release
 
