@@ -3,11 +3,12 @@
 
 Name: golang-googlecode-net
 Version: 0
-Release: alt2
+Release: alt2.hg20140811
 Summary: Supplementary Go networking libraries
 License: BSD
 Group: Development/Other
 Url: http://%import_path
+# hg clone https://code.google.com/p/go.net/
 Source0: %name-%version.tar
 BuildArch: noarch
 
@@ -22,6 +23,7 @@ Provides: golang(%import_path) = %version-%release
 Provides: golang(%import_path/dict) = %version-%release
 Provides: golang(%import_path/html) = %version-%release
 Provides: golang(%import_path/html/atom) = %version-%release
+Provides: golang(%import_path/html/charset) = %version-%release
 Provides: golang(%import_path/idna) = %version-%release
 Provides: golang(%import_path/ipv4) = %version-%release
 Provides: golang(%import_path/ipv6) = %version-%release
@@ -71,6 +73,7 @@ done
 %gopath/src/%import_path/dict/*.go
 %gopath/src/%import_path/html/*.go
 %gopath/src/%import_path/html/atom/*.go
+%gopath/src/%import_path/html/charset
 %gopath/src/%import_path/html/testdata/*.html
 %gopath/src/%import_path/html/testdata/webkit/*.dat
 %gopath/src/%import_path/html/testdata/webkit/README
@@ -84,6 +87,9 @@ done
 %gopath/src/%import_path/websocket/*.go
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0-alt2.hg20140811
+- New snapshot
+
 * Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
 - Update spec
 
