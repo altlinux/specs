@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jaxws-jboss-httpserver-httpspi
 Version:          1.0.1
-Release:          alt1_4jpp7
+Release:          alt1_5jpp7
 Summary:          JBoss httpserver to JAXWS 2.2 HTTP SPI bridge
 Group:            Development/Java
 License:          LGPLv2+
@@ -93,6 +92,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4jpp7
 - new release
 
