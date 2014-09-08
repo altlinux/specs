@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Summary:    Java bindings for the augeas library
 Name:       java-augeas
 Version:    0.0.2
-Release:    alt1_5jpp7
+Release:    alt1_6jpp7
 License:    LGPLv2+
 BuildArch:  noarch
 Group:      Development/Java
@@ -67,6 +67,9 @@ cp -r -p target/javadoc %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_5jpp7
 - new release
 
