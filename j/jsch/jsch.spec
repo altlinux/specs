@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jsch
 Version:        0.1.50
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Java
@@ -140,6 +140,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.1.50-alt1_2jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.1.50-alt1_1jpp7
 - new version
 
