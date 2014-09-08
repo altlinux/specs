@@ -11,9 +11,12 @@ BuildRequires: jpackage-compat
 # javaver nil: build for 1.5.0 and 1.6.0
 # javaver something else: build only for that
 
-%if 0%{?fedora} > 16
+%if 0%{?fedora}
 # Java >= 1.7.0 stuff can't coexist in jar with older versions
 %global javaver 1.7.0
+%if %{?fedora} > 39
+%global headless -headless
+%endif
 %endif
 
 %if 0%{?el6}
@@ -27,7 +30,7 @@ BuildRequires: jpackage-compat
 
 Name:           javasqlite
 Version:        20130214
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -41,13 +44,10 @@ BuildRequires:  libsqlite3-devel >= 3.4
 %if 0%{?javaver:1}
 BuildRequires:  java-%{javaver}-devel
 BuildRequires:  java-%{javaver}-javadoc
-Requires:       jre-%{javaver}
+Requires:       jre-%{javaver}%{?headless}
 %else
 BuildRequires:  java-1.6.0-javadoc
-Requires:       jre >= 1.5.0
-%endif
-%ifarch aarch64 #925605
-BuildRequires:  libtool
+Requires:       jre%{?headless} >= 1.5.0
 %endif
 Source44: import.info
 
@@ -57,8 +57,8 @@ SQLite database engine. It is designed using JNI to interface to the
 SQLite API.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch:      noarch
 Requires:       java-javadoc
 
@@ -71,9 +71,6 @@ API documentation for %{name}.
 sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH0} | patch -p1 --fuzz=0
 sed -i -e 's/\r//g' doc/ajhowto.txt
 f=ChangeLog ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
-%ifarch aarch64 #925605
-autoreconf -if
-%endif
 
 
 %build
@@ -148,6 +145,9 @@ done
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20130214-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 20130214-alt1_1jpp7
 - new version
 
