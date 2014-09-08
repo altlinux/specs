@@ -1,7 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip jmock mockito
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,58 +36,36 @@ BuildRequires: jpackage-compat
 #
 
 Name:           maven-scm
-Version:        1.7
-Release:        alt4_6jpp7
+Version:        1.8.1
+Release:        alt1_2jpp7
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 Group:          Development/Java
 URL:            http://maven.apache.org/scm
 
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        %{name}-jpp-depmap.xml
-Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
-# fix modello configuration in vss provider pom and the cast as above
-Patch0:         005_maven-scm_fix-vss-provider-pom.patch
-# replace plexus-maven-plugin for plexus-component-metadata
-Patch1:         007_maven-scm_migration-to-component-metadata.patch
-# plexus-maven-plugin -> plexus-component-metadata
-Patch5:         012-plexus-component-metadata.patch
+# Patch to migrate to new plexus default container
+# This has been sent upstream: http://jira.codehaus.org/browse/SCM-731
+Patch6:         0001-port-maven-scm-to-latest-version-of-plexus-default-c.patch
+# Workaround upstream's workaround for a modello bug, see: http://jira.codehaus.org/browse/SCM-518
+Patch7:         vss-modello-config.patch
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  maven2-common-poms >= 0:1.0-21
-BuildRequires:  modello >= 1.1
+BuildRequires:  modello
 BuildRequires:  plexus-utils >= 1.5.6
 BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  plexus-interpolation
 BuildRequires:  bzr
 BuildRequires:  subversion
 BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-classworlds
 
-Requires:       junit >= 3.8.2
-Requires:       apache-commons-collections >= 3.1
-Requires:       modello >= 1.0-0.a8
-Requires:       jakarta-oro >= 2.0.8
-Requires:       plexus-utils >= 1.2
+Requires:       modello
 Requires:       velocity >= 1.4
-Requires:       maven
 Source44: import.info
 
 %description
@@ -105,7 +83,6 @@ Tests for %{name}.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -113,16 +90,13 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch5 -p1
+%patch6 -p1 -b .orig
+%patch7 -p0 -b .orig
 
-cp -p %{SOURCE2} LICENSE
-
+# Remove unnecessary animal sniffer
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin maven-scm-plugin
 
-# remove providers-integrity from build (we don't have mks-api)
+# Remove providers-integrity from build (we don't have mks-api)
 %pom_remove_dep org.apache.maven.scm:maven-scm-provider-integrity maven-scm-providers/maven-scm-providers-standard
 %pom_disable_module maven-scm-provider-integrity maven-scm-providers
 
@@ -131,72 +105,41 @@ cp -p %{SOURCE2} LICENSE
 %pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-client
 %pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-standard
 %pom_disable_module maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-cvs
+sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META-INF/plexus/components.xml
 
+# Tests are skipped anyways, so remove dependency on mockito.
+%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-jazz
+%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-accurev
+
+# Put TCK tests into a separate sub-package
+%mvn_package :%{name}-provider-cvstest test
+%mvn_package :%{name}-provider-gittest test
+%mvn_package :%{name}-provider-svntest test
+%mvn_package :%{name}-test test
 
 %build
-# we don't have all test dependencies to run full testsuite anyway
-mvn-rpmbuild -Dproject.build.sourceEncoding=ISO-8859-1 \
-        -Dmaven.test.skip=true \
-        -Dmaven.local.depmap.file=%{SOURCE1} \
-        install javadoc:aggregate
+# Don't build and unit run tests because
+# * accurev tests need porting to a newer hamcrest
+# * vss tests fail with the version of junit in fedora
+%mvn_build -f
 
 %install
-# jars/poms
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
+%mvn_install
 
-for jar in `find . -type f -name "*.jar" | grep -E "target/.*.jar$"`; do
-        newname=`basename $jar`
-        newname=${newname/maven-scm-/}
-        versionless_jar=${newname/-%{version}/}
-        install -pm 644 $jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$versionless_jar
-done
-
-#remove maven-scm CLI jar-with-dependencies created by maven-assembly-plugin
-rm $RPM_BUILD_ROOT%{_javadir}/%{name}/client-jar-with-dependencies.jar
-
-#poms (exclude the svn/cvs test poms. They are unnecessary)
-# ignore
-#  1) poms in target/ (they are either copies, or temps)
-#  2) poms in src/test/ (they are poms needed for tests only)
-for i in `find . -name pom.xml | grep -v \\\./pom.xml | \
-   grep -v target | grep -v src/test`; do
-        artifactname=`basename \`dirname $i\``
-        jarname=`echo $artifactname | sed -e s:^maven-scm-::g`
-        cp -p $i $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.$artifactname.pom
-        %add_to_maven_depmap org.apache.maven.scm $artifactname %{version} JPP/%{name} $jarname
-done
-cp -p pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.maven-scm-scm.pom
-%add_to_maven_depmap org.apache.maven.scm maven-scm %{version} JPP/maven-scm scm
-
-%add_to_maven_depmap org.apache.maven.plugins maven-scm-plugin %{version} JPP/maven-scm plugin
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE
+%files -f .mfiles
+%doc LICENSE NOTICE
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/api*
-%{_javadir}/%{name}/client*
-%{_javadir}/%{name}/manager-plexus*
-%{_javadir}/%{name}/plugin*
-%{_javadir}/%{name}/provider-*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files test
-%doc LICENSE
-%{_javadir}/%{name}/provider-cvstest*
-%{_javadir}/%{name}/provider-svntest*
-%{_javadir}/%{name}/test*
+%files test -f .mfiles-test
+%doc LICENSE NOTICE
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.1-alt1_2jpp7
+- new release
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt4_6jpp7
 - added BR: for xmvn
 
