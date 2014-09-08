@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Graphics
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -9,11 +10,10 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           batik
 Version:        1.8
-Release:        alt1_0.7.svn1230816jpp7
+Release:        alt1_0.10.svn1230816jpp7
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
-Group:          Graphics
 #Source0:        http://apache.crihan.fr/dist/xmlgraphics/batik/batik-src-%%{version}.zip
 Source0:        %{name}-repack-%{version}.zip
 Source1:        %{name}.squiggle.script
@@ -43,18 +43,16 @@ Patch1:         %{name}-policy.patch
 # remove dependency on bundled rhino from pom
 Patch2:		%{name}-script-remove-js.patch
 # SMIL in Fedora has been merged into xml-commons-apis-ext like it has
-# been upstream.  It's easier to take the OSGi manifests from Orbit 
+# been upstream.  It's easier to take the OSGi manifests from Orbit
 # directly and patch this one.
 #
 # FIXME:  move to 1.7 manifest from Eclipse Orbit project
 Patch3:         %{name}-1.6-nosmilInDOMSVGManifest.patch
-Requires:       rhino >= 1.5
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  ant
-BuildRequires:  ant-nodeps
 BuildRequires:  subversion
 BuildRequires:  zip
 
@@ -93,7 +91,7 @@ purposes, such as viewing, generation or manipulation.
 Summary:        Batik SVG browser
 Group:          Graphics
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
+Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-squiggle = 0:%version-%release
 Obsoletes: xmlgraphics-batik-squiggle < 0:%version
@@ -111,7 +109,7 @@ in the content and select text items in the image and much more.
 Summary:        Batik SVG pretty printer
 Group:          Graphics
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
+Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-svgpp = 0:%version-%release
 Obsoletes: xmlgraphics-batik-svgpp < 0:%version
@@ -130,7 +128,6 @@ also be used to modify the DOCTYPE declaration on SVG files.
 Summary:        Batik SVG font converter
 Group:          Graphics
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils >= 1.5
 #19119
 Provides: xmlgraphics-batik-ttf2svg = 0:%version-%release
 Obsoletes: xmlgraphics-batik-ttf2svg < 0:%version
@@ -150,7 +147,7 @@ rendered exactly the same on all systems.
 Summary:        Batik SVG rasterizer
 Group:          Graphics
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
+Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
 Obsoletes: xmlgraphics-batik-rasterizer < 0:%version
@@ -171,7 +168,7 @@ to be added easily.
 Summary:        Batik SVG slideshow
 Group:          Graphics
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
+Requires:       xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-slideshow = 0:%version-%release
 Obsoletes: xmlgraphics-batik-slideshow < 0:%version
@@ -185,17 +182,16 @@ Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 Batik SVG slideshow.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 Javadoc for %{name}.
 
 %package        demo
+Group: Development/Java
 Summary:        Demo for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
@@ -317,10 +313,7 @@ cp -p %{name}-%{inner_version}/batik-rasterizer.jar \
 install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
 for module in rasterizer slideshow squiggle svgpp ttf2svg; do
       install -pm 644 %{name}-$module.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-$module.pom
-      %add_to_maven_depmap org.apache.xmlgraphics %{name}-$module %{version} JPP %{name}-$module
-      # compatibility depmap
-      %add_to_maven_depmap batik %{name}-$module %{version} JPP %{name}-$module
-      mv $RPM_BUILD_ROOT%{_mavendepmapfragdir}/%{name} $RPM_BUILD_ROOT%{_mavendepmapfragdir}/%{name}-$module
+      %add_maven_depmap JPP-%{name}-$module.pom %{name}-$module.jar -a "%{name}:%{name}-$module" -f $module
 done
 
 # main pom files and maven depmaps
@@ -328,9 +321,7 @@ for module in anim awt-util bridge codec css dom ext extension gui-util \
               gvt parser script svg-dom svggen swing transcoder util xml; do
 
       install -pm 644 %{name}-$module.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-$module.pom
-      %add_to_maven_depmap org.apache.xmlgraphics %{name}-$module %{version} JPP/%{name} %{name}-$module
-      # compatibility depmap
-      %add_to_maven_depmap batik %{name}-$module %{version} JPP/%{name} %{name}-$module
+      %add_maven_depmap JPP.%{name}-%{name}-$module.pom %{name}/%{name}-$module.jar -a "%{name}:%{name}-$module"
 done
 
 
@@ -404,13 +395,11 @@ popd
 [ -d /usr/share/java/batik ] && rm -rf /usr/share/java/batik ||:
 
 
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
 %doc KEYS MAINTAIN README
-%{_mavenpomdir}/JPP.%{name}-*pom
-%{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}-all.jar
-%{_javadir}/batik
+%dir %{_javadir}/batik
 %_javadir/xmlgraphics-batik/batik-anim.jar
 %_javadir/xmlgraphics-batik/batik-awt-util.jar
 %_javadir/xmlgraphics-batik/batik-bridge.jar
@@ -432,39 +421,24 @@ popd
 %_javadir/batik
 %dir %_javadir/xmlgraphics-batik
 
-%files squiggle
-%{_javadir}/%{name}-squiggle.jar
-%{_mavendepmapfragdir}/%{name}-squiggle
-%{_mavenpomdir}/JPP-%{name}-squiggle.pom
+%files squiggle -f .mfiles-squiggle
 %attr(0755,root,root) %{_bindir}/squiggle
 %config(noreplace,missingok) /etc/squiggle.conf
 
-%files svgpp
-%{_javadir}/%{name}-svgpp.jar
-%{_mavendepmapfragdir}/%{name}-svgpp
-%{_mavenpomdir}/JPP-%{name}-svgpp.pom
+%files svgpp -f .mfiles-svgpp
 %attr(0755,root,root) %{_bindir}/svgpp
 %config(noreplace,missingok) /etc/svgpp.conf
 
-%files ttf2svg
-%{_javadir}/%{name}-ttf2svg.jar
-%{_mavendepmapfragdir}/%{name}-ttf2svg
-%{_mavenpomdir}/JPP-%{name}-ttf2svg.pom
+%files ttf2svg -f .mfiles-ttf2svg
 %attr(0755,root,root) %{_bindir}/ttf2svg
 %config(noreplace,missingok) /etc/ttf2svg.conf
 
-%files rasterizer
-%{_javadir}/%{name}-rasterizer.jar
-%{_mavendepmapfragdir}/%{name}-rasterizer
-%{_mavenpomdir}/JPP-%{name}-rasterizer.pom
+%files rasterizer -f .mfiles-rasterizer
 %attr(0755,root,root) %{_bindir}/rasterizer
 %config(noreplace,missingok) /etc/rasterizer.conf
 %_javadir/xmlgraphics-batik/rasterizer.jar
 
-%files slideshow
-%{_javadir}/%{name}-slideshow.jar
-%{_mavendepmapfragdir}/%{name}-slideshow
-%{_mavenpomdir}/JPP-%{name}-slideshow.pom
+%files slideshow -f .mfiles-slideshow
 %attr(0755,root,root) %{_bindir}/slideshow
 %config(noreplace,missingok) /etc/slideshow.conf
 
@@ -477,6 +451,9 @@ popd
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.10.svn1230816jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.7.svn1230816jpp7
 - new release
 
