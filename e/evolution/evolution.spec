@@ -14,7 +14,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -291,6 +291,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Mon Sep 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.6-alt1
+- 3.12.6
+
 * Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.5-alt1
 - 3.12.5
 
