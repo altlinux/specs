@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
 Version:	1.15
-Release:	alt1_6jpp7
+Release:	alt1_7jpp7
 Epoch:		0
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
@@ -56,7 +56,7 @@ Java now!
 
 %prep
 %setup -q -n %{name}%{version}
-
+chmod -c -x src/* docs/*
 sed -i -e 's|-arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4||g' src/Makefile
 
 %build
@@ -76,16 +76,15 @@ mkdir -p %{buildroot}%{_bindir}
 cp -p src/yacc.linux \
   %{buildroot}%{_bindir}/%{name}
 
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-cp -p docs/* %{buildroot}%{_docdir}/%{name}-%{version}
-cp -p src/README %{buildroot}%{_docdir}/%{name}-%{version}
-
 %files
-%doc %{_docdir}/%{name}-%{version}
+%doc docs/* src/README
 %{_mandir}/man1/yacc.cat*
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_6jpp7
 - new release
 
