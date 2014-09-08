@@ -7,8 +7,8 @@ BuildRequires:  maven2-plugin-deploy
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-shade-plugin
-Version:        2.0
-Release:        alt2_4jpp7
+Version:        2.1
+Release:        alt1_1jpp7
 Summary:        This plugin provides the capability to package the artifact in an uber-jar
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
@@ -70,6 +70,9 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_4jpp7
 - new release
 
