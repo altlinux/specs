@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jspeex
 Version:        0.9.7
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Java Implementation of Speex
 
 Group:          Development/Java
@@ -66,6 +66,9 @@ cp -rp doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_4jpp7
 - new release
 
