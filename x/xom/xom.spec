@@ -42,7 +42,7 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xom
 Version:        1.0
-Release:        alt1_12jpp7
+Release:        alt1_14jpp7
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -70,8 +70,7 @@ BuildRequires:  dom4j
 BuildRequires:  xml-commons-apis
 
 BuildRequires:  tagsoup
-# Use JAXP implementation in libgcj
-BuildRequires:  libgcj
+# Use JAXP implementation in JDK
 BuildRequires:  xml-commons-resolver
 BuildRequires:  servlet
 
@@ -199,6 +198,9 @@ install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}-%{version}/xom-samples.jar
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_12jpp7
 - new release
 
