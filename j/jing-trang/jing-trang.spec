@@ -1,3 +1,4 @@
+%filter_from_requires /^.usr.bin.run/d
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -5,14 +6,19 @@ BuildRequires(pre): rpm-build-java
 %filter_from_requires /.etc.java.jing-trang.conf/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 # TODO:
 # - Install dtdinst's schemas, XSL etc as non-doc and to system catalogs?
 # - Drop isorelax and xerces license texts and references to them because
 #   our package does not actually contain them?
 
+%if 0%{?fedora} >= 29
+%global headless -headless
+%endif
+
 Name:           jing-trang
 Version:        20091111
-Release:        alt3_12jpp7
+Release:        alt3_15jpp7
 Summary:        Schema validation and conversion based on RELAX NG
 
 Group:          Text tools
@@ -33,7 +39,11 @@ Patch2:         %{name}-20091111-datatype-sample.patch
 Patch3:         %{name}-20091111-saxon93-716177.patch
 BuildArch:      noarch
 
+%if 0%{?rhel}
 BuildRequires:  ant-trax
+%else
+BuildRequires:  ant >= 1.8.2
+%endif
 BuildRequires:  bsh
 BuildRequires:  isorelax
 BuildRequires:  java-devel-openjdk >= 1.6.0
@@ -57,6 +67,7 @@ Source44: import.info
 Summary:        RELAX NG validator in Java
 Group:          Text tools
 Requires:       jpackage-utils
+Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
 Requires:       xml-commons-resolver
@@ -82,6 +93,7 @@ Javadoc API documentation for Jing.
 Summary:        Multi-format schema converter based on RELAX NG
 Group:          Text tools
 Requires:       jpackage-utils
+Requires:       java%{?headless} >= 1.5.0
 Requires:       relaxngDatatype
 Requires:       xerces-j2
 Requires:       xml-commons-resolver
@@ -98,6 +110,7 @@ for output only, not for input.
 Summary:        XML DTD to XML instance format converter
 Group:          Text tools
 Requires:       jpackage-utils
+Requires:       java%{?headless} >= 1.5.0
 
 %description -n dtdinst
 DTDinst is a program for converting XML DTDs into an XML instance
@@ -161,6 +174,9 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_15jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_12jpp7
 - new release
 
