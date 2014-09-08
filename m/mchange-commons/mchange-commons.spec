@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    mchange-commons
 Version: 0.2.3.4
-Release: alt1_2jpp7
+Release: alt1_3jpp7
 Summary: A collection of general purpose utilities for c3p0
 License: LGPLv2 or EPL
 URL:     https://github.com/swaldman/mchange-commons-java
@@ -91,6 +91,9 @@ install -p -m 644 src/maven/pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3.4-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3.4-alt1_2jpp7
 - new version
 
