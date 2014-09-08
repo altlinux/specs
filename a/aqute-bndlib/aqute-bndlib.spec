@@ -1,29 +1,20 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
 Name:           aqute-bndlib
 Version:        1.50.0
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        BND Library
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://www.aQute.biz/Code/Bnd
-
 Source0:        http://repo1.maven.org/maven2/biz/aQute/bndlib/1.50.0/bndlib-1.50.0.jar
 Source1:        http://repo1.maven.org/maven2/biz/aQute/bndlib/1.50.0/bndlib-1.50.0.pom
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -40,9 +31,8 @@ The tool is capable of acting as:
 - Use of macros
 
 %package javadoc
-BuildRequires:  jpackage-utils
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -74,32 +64,22 @@ sed -i "s|\r||g" LICENSE
 
 %build
 export LC_ALL=en_US.UTF-8
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file :bndlib %{name}
+%mvn_build
 
 %install
-# jars
-install -Dpm 644 target/bndlib-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_5jpp7
 - new release
 
