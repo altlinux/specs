@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -39,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.10.a2.1jpp7
+Release:        alt5_0.13.a2.1jpp7
 Epoch:          0
 Summary:        Plexus Ant component factory
 # Email from copyright holder confirms license.
@@ -54,16 +53,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
-BuildRequires:  xmvn
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven2-common-poms >= 1.0-2
+BuildRequires:  maven-local
 
 BuildRequires:  ant
 BuildRequires:  classworlds
@@ -110,6 +100,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.13.a2.1jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.10.a2.1jpp7
 - new release
 
