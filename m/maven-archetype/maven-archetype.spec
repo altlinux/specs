@@ -1,12 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip maven-local
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-archetype
 Version:        2.2
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Summary:        Maven project templating toolkit
 
 Group:          Development/Java
@@ -28,7 +28,7 @@ BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-script-interpreter
 BuildRequires:  jchardet
 BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  xmvn
+BuildRequires:  maven-local
 Source44: import.info
 Provides: maven-archetype2 = %version
 Obsoletes: maven-archetype2 < %version
@@ -194,6 +194,9 @@ popd
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_3jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1jpp7
 - new release
 
