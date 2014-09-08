@@ -1,8 +1,5 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,48 +11,36 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt8_0.4.20120509SNAPSHOTjpp7
+Release:       alt8_0.6.20120509SNAPSHOTjpp7
 Summary:       Commons Javaflow
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://commons.apache.org/sandbox/javaflow/
 # svn export http://svn.apache.org/repos/asf/commons/sandbox/javaflow/trunk/  commons-javaflow-1.0-SNAPSHOT
 # tar czf commons-javaflow-1.0-SNAPSHOT-src-svn.tar.gz commons-javaflow-1.0-SNAPSHOT
 Source0:       %{short_name}-%{namedversion}-src-svn.tar.gz
-Patch0:        %{name}-%{namedversion}-remove-sandbox-parent.patch
 
-BuildRequires: jpackage-utils
 
-BuildRequires: ant
-BuildRequires: apache-commons-io
-BuildRequires: apache-commons-jci-core
-BuildRequires: apache-commons-logging
-BuildRequires: bcel
-BuildRequires: objectweb-asm
+BuildRequires: mvn(asm:asm)
+BuildRequires: mvn(asm:asm-analysis)
+BuildRequires: mvn(asm:asm-commons)
+BuildRequires: mvn(asm:asm-tree)
+BuildRequires: mvn(asm:asm-util)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.bcel:bcel)
+BuildRequires: mvn(org.apache.commons:commons-jci-core)
 
 # test deps
-BuildRequires: junit
-BuildRequires: junit-addons
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(junit-addons:junit-addons)
 
 BuildRequires: maven-local
 #BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 #BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
 #BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      apache-commons-io
-Requires:      apache-commons-jci-core
-Requires:      apache-commons-logging
-Requires:      bcel
-Requires:      objectweb-asm
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 Obsoletes:       jakarta-%{short_name} < 0:%{version}-%{release}
@@ -79,8 +64,8 @@ languages, like Scheme, but they are becoming popular in other
 languages as well.
 
 %package ant
+Group: Development/Java
 Summary:       Development files for Commons Javaflow
-Group:         Development/Java
 Requires:      ant
 Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
@@ -88,9 +73,8 @@ Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 This package enables support for the Commons Javaflow ant tasks.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -100,45 +84,37 @@ This package contains javadoc for %{name}.
 %setup -q -n %{short_name}-%{namedversion}
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
+
+%pom_remove_parent
 #sed -i "s|commons-sandbox-parent|commons-parent|" pom.xml
-%patch0 -p0
+%pom_xpath_inject "pom:project" "<groupId>org.apache.commons</groupId>"
 
 %build
 
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 install javadoc:aggregate
+%mvn_file :%{short_name} %{name}
+%mvn_file :%{short_name} %{short_name}
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{short_name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
-( cd %{buildroot}%{_javadir} && ln -sf %{name}.jar %{short_name}.jar )
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
 echo "ant %{short_name}" > %{short_name}
 install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc CREDITS.txt LICENSE.txt NOTICE.txt TODO.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %files ant
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.6.20120509SNAPSHOTjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.4.20120509SNAPSHOTjpp7
 - new release
 
