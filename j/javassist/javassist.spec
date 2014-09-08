@@ -1,13 +1,13 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javassist
 Version:        3.16.1
-Release:        alt2_5jpp7
+Release:        alt2_6jpp7
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 Group:          Development/Java
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
@@ -94,6 +94,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.16.1-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.16.1-alt2_5jpp7
 - new release
 
