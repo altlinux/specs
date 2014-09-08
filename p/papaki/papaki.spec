@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           papaki
 Version:        1.0.0
-Release:        alt1_0.3.Beta3jpp7
+Release:        alt1_0.4.Beta3jpp7
 Summary:        An annotation scanner and repository
 
 License:        LGPLv2+
@@ -116,6 +116,9 @@ cp -rp target/docs/indexer/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/%{name}-index
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.4.Beta3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.3.Beta3jpp7
 - new release
 
