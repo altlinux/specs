@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-common-core
 Version:          2.2.18
-Release:          alt2_9jpp7
+Release:          alt2_10jpp7
 Summary:          JBoss Common Classes
 Group:            Development/Java
 License:          LGPLv2+ and ASL 1.1
@@ -101,6 +100,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt2_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.18-alt2_9jpp7
 - new release
 
