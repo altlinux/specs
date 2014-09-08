@@ -1,6 +1,6 @@
 Name: isync
-Version: 1.0.4
-Release: alt1.1.qa1
+Version: 1.1.2
+Release: alt1.git20140712
 
 Summary: Utility to synchronize IMAP mailboxes with local maildir folders
 License: GPLv2+
@@ -10,9 +10,8 @@ Url: http://isync.sourceforge.net/
 Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
-BuildPreReq: libdb4-devel libssl-devel
+BuildPreReq: libdb4.8-devel libssl-devel libsocket-devel
 
 %add_findreq_skiplist %_bindir/get-cert
 
@@ -25,7 +24,7 @@ non-permanent internet collection (dIMAP).
 
 %prep
 %setup
-%patch -p1
+touch ChangeLog
 %autoreconf
 
 %build
@@ -41,6 +40,9 @@ non-permanent internet collection (dIMAP).
 %doc AUTHORS NEWS README TODO src/mbsyncrc.sample src/compat/isyncrc.sample
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20140712
+- Version 1.1.2
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
