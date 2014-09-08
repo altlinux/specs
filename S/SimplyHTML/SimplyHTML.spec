@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:	SimplyHTML		
 Version:	0.16.7
-Release:	alt1_1jpp7
+Release:	alt1_2jpp7
 Summary:	Application and a java component for rich text processing
 
 Group:		Development/Java
@@ -103,6 +103,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_2jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_1jpp7
 - new version
 
