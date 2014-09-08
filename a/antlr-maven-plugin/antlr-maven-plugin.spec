@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:			antlr-maven-plugin
 Version:		2.2
-Release:		alt3_9jpp7
+Release:		alt3_12jpp7
 Summary:		Maven plugin that generates files based on grammar file(s)
 License:		ASL 2.0
 URL:			http://mojo.codehaus.org/antlr-maven-plugin/
@@ -18,36 +17,18 @@ Source0:		http://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{n
 Patch0:			maven-antlr-plugin-2.2-modello-issue.patch
 # siteRenderer.createSink doesn't exist anymore
 Patch2:			maven-antlr-plugin-2.1-sinkfix.patch
+# Fix grammar processing bug (bz 1020312)
+Patch3:			0001-MANTLR-34-Fix-NPE-when-building-Jenkins.patch
 
 BuildArch:		noarch
 
 BuildRequires:		jpackage-utils
 BuildRequires:		antlr
 BuildRequires:		maven-local
-BuildRequires:		maven-enforcer-plugin
-BuildRequires:		maven-compiler-plugin
-BuildRequires:		maven-install-plugin
-BuildRequires:		maven-jar-plugin
-BuildRequires:		maven-javadoc-plugin
-BuildRequires:		maven-resources-plugin
-BuildRequires:		maven-surefire-plugin
-BuildRequires:		maven-antrun-plugin
-BuildRequires:		maven-clean-plugin
-BuildRequires:		maven-invoker-plugin
-BuildRequires:		maven-plugin-plugin
-BuildRequires:		maven-release-plugin
-BuildRequires:		maven-site-plugin
-BuildRequires:		maven-source-plugin
 BuildRequires:		maven-plugin-bundle
 BuildRequires:		maven-plugin-cobertura
 BuildRequires:		apache-commons-exec
-BuildRequires:		maven2-common-poms
 BuildRequires:		modello
-
-Requires:		antlr
-Requires:       maven
-Requires:		jpackage-utils
-Requires:		apache-commons-exec
 
 Provides:		maven2-plugin-antlr = %{version}-%{release}
 Obsoletes:		maven2-plugin-antlr <= 2.0.8
@@ -66,7 +47,6 @@ The Antlr Plugin has two goals:
 %package javadoc
 Summary:		Javadocs for %{name}
 Group:			Development/Java
-Requires:		jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -76,6 +56,7 @@ This package contains the API documentation for %{name}.
 %setup -q
 %patch0 -p1 -b .modello
 %patch2 -p1 -b .sink
+%patch3 -p1 -b .fixnpe
 
 # reporting eventually pulls in another antlr and we'd break with weird errors
 %pom_xpath_inject "pom:dependency[pom:artifactId[text()='maven-reporting-impl']]/pom:exclusions" "
@@ -88,32 +69,22 @@ This package contains the API documentation for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
+%mvn_file : %{name}
+
 %build
-mvn-rpmbuild -Dmaven.test.skip=true \
-install javadoc:aggregate
+%mvn_build -- -Dmaven.test.skip=true
 
 %install
-mkdir -p %{buildroot}%{_javadir}
+%mvn_install
 
-cp -p target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/ %{buildroot}%{_javadocdir}/%{name}
-
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_9jpp7
 - new release
 
