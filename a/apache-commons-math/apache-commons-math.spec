@@ -2,25 +2,21 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: maven-antrun-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name math
-%global short_name commons-%{base_name}3
+%global short_name commons-math3
 
 Name:             apache-commons-math
 Version:          3.2
-Release:          alt2_1jpp7
+Release:          alt2_3jpp7
 Summary:          Java library of lightweight mathematics and statistics components
-
 Group:            Development/Java
 License:          ASL 1.1 and ASL 2.0 and BSD
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:              http://commons.apache.org/math/
+Source0:          http://www.apache.org/dist/commons/math/source/%{short_name}-%{version}-src.tar.gz
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
 Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
@@ -30,50 +26,37 @@ Commons Math is a library of lightweight, self-contained mathematics and
 statistics components addressing the most common problems not available in the
 Java programming language or Commons Lang.
 
-
 %package javadoc
 Summary:          Javadoc for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
+# Compatibility links
+%mvn_alias "org.apache.commons:%{short_name}" "%{short_name}:%{short_name}"
+%mvn_file :%{short_name} %{short_name} %{name}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
-
+%mvn_build
 
 %install
-install -Dpm 0644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{short_name}.jar
+%mvn_install
 
-install -dm 0755 $RPM_BUILD_ROOT%{_mavenpomdir}/
-install -pm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-install -dm 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_3jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_1jpp7
 - rebuild with maven-local
 
