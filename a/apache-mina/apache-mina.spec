@@ -1,39 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: apache-mina
-Version: 2.0.4
-Release: alt3_6jpp7
+Version: 2.0.7
+Release: alt1_1jpp7
 Summary: Apache MINA
-
 Group: Development/Java
 License: ASL 2.0
 URL: http://mina.apache.org
-
 Source0: http://mina.apache.org/dyn/closer.cgi/mina/%{version}/%{name}-%{version}-src.tar.gz
-
-# Build only the core:
-Patch0: %{name}-build-core-only.patch
-
 BuildArch: noarch
 
-Requires: jpackage-utils
-
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: pmd
 
+BuildRequires: apache-commons-lang
+BuildRequires: easymock
 BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-release-plugin
 BuildRequires: maven-resources-plugin
+BuildRequires: maven-shared
+BuildRequires: maven-site-plugin
 BuildRequires: maven-surefire-plugin
-BuildRequires: maven-shade-plugin
 Source44: import.info
 
 
@@ -45,70 +35,75 @@ and UDP/IP via Java NIO.
 
 
 %package javadoc
-Summary: Javadocs for %{name}
+Summary: API documentation for %{name}
 Group: Development/Java
-Requires: jpackage-utils
 BuildArch: noarch
 
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package provides %{name}.
 
 
 %prep
+
+# Extract the source:
 %setup -q
-%patch0 -p1
+
+# In the tarball distributed by Apache the source code is inside the src
+# directory, but our build tools expect the POM files in the current directory,
+# so in order to simplify things we move everything to the top level before
+# starting the build:
+mv src/* .
+
+# The modules use "bundle" packaging which doesn't work correctly with xmvn
+# automatic dependency generation, in order to avoid that we change that to
+# "jar":
+sed -i \
+    -e 's|<packaging>bundle</packaging>|<packaging>jar</packaging>|g' \
+    -e 's|<type>bundle</type>|<type>jar</type>|g' \
+    $(find . -name pom.xml)
+
+# Disable the plugins that we don't need:
+%pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-bundle-plugin
+
+# Disable the modules that we can't currently build:
+%pom_disable_module mina-legal
+%pom_disable_module mina-transport-apr
+%pom_disable_module mina-integration-beans
+%pom_disable_module mina-integration-xbean
+%pom_disable_module mina-integration-ognl
+%pom_disable_module mina-integration-jmx
+%pom_disable_module mina-example
 
 
 %build
 
-# In the tarball distributed by Apache the source code is inside the src
-# directory:
-cd src
-
-# Skip the tests for now:
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate 
+# The tests are disabled because they require EasyMock version 2 and we only
+# have version 3:
+%mvn_build -f
 
 
 %install
-
-# Jar files:
-mkdir -p %{buildroot}%{_javadir}/%{name}
-cp -p src/mina-core/target/mina-core-%{version}.jar %{buildroot}%{_javadir}/%{name}/mina-core.jar
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 src/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-mina-parent.pom
-install -pm 644 src/mina-core/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-mina-core.pom
-
-# Dependency map:
-%add_maven_depmap JPP.%{name}-mina-parent.pom
-%add_maven_depmap JPP.%{name}-mina-core.pom %{name}/mina-core.jar
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
+%mvn_install
 
 
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/%{name}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 %doc NOTICE.txt
 
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 %doc NOTICE.txt
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1_1jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt3_6jpp7
 - added BR: for xmvn
 
