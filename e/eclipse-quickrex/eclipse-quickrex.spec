@@ -14,7 +14,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-quickrex
 Version:        3.5.0
-Release:        alt1_18jpp7
+Release:        alt1_19jpp7
 Summary:        %{upstream_name} is a regular-expression test Eclipse Plug-In
 
 Group:          Development/Java
@@ -86,6 +86,9 @@ popd
 %{install_loc}/quickrex
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_19jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_18jpp7
 - new release
 
