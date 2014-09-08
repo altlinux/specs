@@ -1,13 +1,11 @@
-BuildRequires: xmlunit springframework
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java-xmltooling
 Version:       1.3.4
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Java XMLTooling library
 License:       ASL 2.0 and W3C
 Group:         Development/Java
@@ -42,18 +40,7 @@ BuildRequires: xerces-j2
 BuildRequires: xalan-j2
 BuildRequires: xml-commons-apis
 BuildRequires: opensaml-java-parent
-
-Requires:      jpackage-utils
-Requires:      jcip-annotations
-Requires:      slf4j
-Requires:      bouncycastle
-Requires:      xml-security
-Requires:      not-yet-commons-ssl
-Requires:      apache-commons-codec
-Requires:      joda-time
-Requires:      xerces-j2
-Requires:      xalan-j2
-Requires:      xml-commons-apis
+BuildRequires: xmlunit
 Source44: import.info
 
 %description
@@ -63,7 +50,6 @@ that allow developers to work with XML in a Java beans manner.
 %package javadoc
 Summary:       Javadocs for %{name}
 Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -83,40 +69,22 @@ sed -i "s|bcprov-jdk15|bcprov-jdk16|" pom.xml
 
 %build
 # Certificate related tests fail: Tests run: 803, Failures: 24, Errors: 0, Skipped: 0
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  -Dmaven.test.skip=true \
-  package javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-# jar
-install -pm 644 target/xmltooling-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc doc
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%dir %{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc doc
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_7jpp7
+- new release
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_5jpp7
 - added BR: for xmvn
 
