@@ -1,39 +1,26 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cal10n
 Version:        0.7.7
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Summary:        Compiler assisted localization library (CAL10N)
-
-Group:          Development/Java
 License:        MIT
 URL:            http://cal10n.qos.ch
-Source0:        http://cal10n.qos.ch/dist/cal10n-%{version}.tar.gz
-Patch0:         %{name}-fix-maven.patch
+Source0:        http://cal10n.qos.ch/dist/%{name}-%{version}.tar.gz
+BuildArch:      noarch
 
-BuildArch: noarch
-
-BuildRequires: junit4
-BuildRequires: maven-local
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 Source44: import.info
-
 
 %description
 Compiler Assisted Localization, abbreviated as CAL10N (pronounced as "calion") 
@@ -48,78 +35,48 @@ Features:
 
 
 %package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+%{summary}.
 
-%package -n maven-cal10n-plugin
-Summary:    CAL10N maven plugin
-Group:      Development/Java
-Requires:   maven
-Requires:   %{name} = %{?epoch:%epoch:}%{version}-%{release}
+%package -n maven-%{name}-plugin
+Group: Development/Java
+Summary:        CAL10N maven plugin
 
-%description -n maven-cal10n-plugin
+%description -n maven-%{name}-plugin
 Maven plugin verifying that the codes defined in
 an enum type match those in the corresponding resource bundles. 
 
 %prep
 %setup -q 
-find . -name "*.jar" | xargs rm
-%patch0
+find . -name \*.jar -delete
+%pom_add_dep org.apache.maven:maven-artifact maven-%{name}-plugin
+%pom_disable_module %{name}-site
+%pom_disable_module maven-%{name}-plugin-smoke
+%mvn_package :*-{plugin} @1
 
 %build
-mvn-rpmbuild -Dproject.build.sourceEncoding=ISO-8859-1 install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=ISO-8859-1
 
 %install
+%mvn_install
 
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{name}
-install -m 644 cal10n-api/target/cal10n-api-%{version}.jar \
-        %{buildroot}%{_javadir}/%{name}/cal10n-api.jar
-install -m 644 maven-cal10n-plugin/target/maven-cal10n-plugin-%{version}.jar \
-        %{buildroot}%{_javadir}/%{name}/maven-cal10n-plugin.jar
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-install -pm 644 cal10n-api/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-api.pom
-install -pm 644 maven-cal10n-plugin/pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.%{name}-maven-cal10n-plugin.pom
-
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-api.pom %{name}/cal10n-api.jar
-%add_maven_depmap JPP.%{name}-maven-cal10n-plugin.pom %{name}/maven-cal10n-plugin.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-
-
-%files
+%files -f .mfiles
 %dir %{_javadir}/%{name}
 %doc LICENSE.txt
-%{_javadir}/%{name}/%{name}*.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-parent*
-%{_mavenpomdir}/JPP.%{name}-%{name}-api*
-%{_mavendepmapfragdir}/%{name}
 
-%files -n maven-cal10n-plugin
-%doc LICENSE.txt
-%{_javadir}/%{name}/maven*.jar
-%{_mavenpomdir}/JPP.%{name}-maven*
+%files -n maven-%{name}-plugin -f .mfiles-plugin
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_1jpp7
 - new version
 
