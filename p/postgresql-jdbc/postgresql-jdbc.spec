@@ -34,17 +34,13 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%global _gcj_support 0
-
-%global gcj_support %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
-
 %global section		devel
 %global upstreamver	9.2-1002
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
 Version:	9.2.1002
-Release:	alt1_2jpp7
+Release:	alt1_4jpp7
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
 Group:		Databases
@@ -52,32 +48,30 @@ URL:		http://jdbc.postgresql.org/
 
 Source0:	http://jdbc.postgresql.org/download/%{name}-%{upstreamver}.src.tar.gz
 # originally http://repo2.maven.org/maven2/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.pom:
-Source1:	postgresql-jdbc.pom
+Source1:	%{name}.pom
 
-%if ! %{gcj_support}
 BuildArch:	noarch
-%endif
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
 BuildRequires:	ant-junit
 BuildRequires:	junit
-BuildRequires:	findutils
 # gettext is only needed if we try to update translations
 #BuildRequires:	gettext
-%if %{gcj_support}
-BuildRequires:    java-gcj-compat-devel >= 1.0.31
-Requires(post):   java-gcj-compat >= 1.0.31
-Requires(postun): java-gcj-compat >= 1.0.31
-%endif
-Requires(post):	jpackage-utils
-Requires(postun): jpackage-utils
+Requires:	jpackage-utils
 Source44: import.info
-
 
 %description
 PostgreSQL is an advanced Object-Relational database management
 system. The postgresql-jdbc package includes the .jar files needed for
 Java programs to access a PostgreSQL database.
+
+%package javadoc
+Summary:        API docs for %{name}
+Group:          Development/Java
+BuildArch: noarch
+
+%description javadoc
+This package contains the API Documentation for %{name}.
 
 %prep
 %setup -c -q
@@ -98,18 +92,15 @@ export CLASSPATH=
 # different platforms don't build in the same minute.  For now, rely on
 # upstream to have updated the translations files before packaging.
 
-ant
+ant jar publicapi
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
-
 install -d $RPM_BUILD_ROOT%{_javadir}
 # Per jpp conventions, jars have version-numbered names and we add
 # versionless symlinks.
-install -m 644 jars/postgresql.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+install -m 644 jars/postgresql.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 pushd $RPM_BUILD_ROOT%{_javadir}
-ln -s %{name}-%{version}.jar %{name}.jar
 # Also, for backwards compatibility with our old postgresql-jdbc packages,
 # add these symlinks.  (Probably only the jdbc3 symlink really makes sense?)
 ln -s postgresql-jdbc.jar postgresql-jdbc2.jar
@@ -117,26 +108,30 @@ ln -s postgresql-jdbc.jar postgresql-jdbc2ee.jar
 ln -s postgresql-jdbc.jar postgresql-jdbc3.jar
 popd
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
 # Install the pom after inserting the correct version number
-sed 's/UPSTREAM_VERSION/%{upstreamver}/g' %{SOURCE1} >JPP-postgresql-jdbc.pom
+sed 's/UPSTREAM_VERSION/%{upstreamver}/g' %{SOURCE1} >JPP-%{name}.pom
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}/
-install -m 644 JPP-postgresql-jdbc.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-postgresql-jdbc.pom
-%add_to_maven_depmap postgresql postgresql %{version} JPP postgresql-jdbc
+install -m 644 JPP-%{name}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
-%files
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
+cp -ra build/publicapi $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d build/publicapi docs/%{name}
+
+%files -f .mfiles
 %doc LICENSE README doc/*
-%{_javadir}/*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}
-%endif
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
+%{_javadir}/%{name}2.jar
+%{_javadir}/%{name}2ee.jar
+%{_javadir}/%{name}3.jar
+
+%files javadoc
+%doc LICENSE
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_2jpp7
 - new release
 
