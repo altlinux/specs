@@ -1,11 +1,11 @@
 Name: btrfs-progs
-Version: 3.14.2
+Version: 3.16
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
-Url: btrfs.wiki.kernel.org/
+Url: http://btrfs.wiki.kernel.org/
 
 Source: %name-%version-%release.tar
 
@@ -61,6 +61,7 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %files
 /sbin/*
 %_man8dir/*
+%_man5dir/*
 
 %files -n libbtrfs
 /%_lib/*.so.*
@@ -70,6 +71,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Mon Sep 08 2014 Anton Farygin <rider@altlinux.ru> 3.16-alt1
+- new version
+
 * Thu Jun 05 2014 Anton Farygin <rider@altlinux.ru> 3.14.2-alt1
 - new version
 
