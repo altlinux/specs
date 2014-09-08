@@ -5,32 +5,29 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
-Version:        2.1.1
-Release:        alt5_11jpp7
+Version:        2.2
+Release:        alt1_2jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-help-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         add-compat.patch
+Patch0:         maven3-api-fixes.patch
 Patch1:         reduce-exception.patch
-Patch2:         %{name}-migration-to-component-metadata.patch
 BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
+BuildRequires: junit-addons
 BuildRequires: maven-local
 BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-exec
 BuildRequires: xstream
 BuildRequires: jpackage-utils
 BuildRequires: plexus-containers-component-metadata
@@ -47,7 +44,7 @@ Source44: import.info
 
 %description
 The Maven Help Plugin is used to get relative information about a project
- or the system. It can be used to get a description of a particular plugin,
+or the system. It can be used to get a description of a particular plugin,
 including the plugin's mojos with their parameters and component requirements,
 the effective POM and effective settings of the current build,
 and the profiles applied to the current project being built.
@@ -64,9 +61,15 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0
-%patch1
-%patch2 -p1
+%patch0 -b .maven3-api-fixes
+%patch1 -b .reduce-exception
+
+# Use compatibility API
+%pom_remove_dep org.apache.maven:maven-plugin-parameter-documenter
+%pom_add_dep org.apache.maven:maven-compat
+
+# Add missing test deps
+%pom_add_dep net.sf.cglib:cglib:any:test
 
 # In newer versions of maven-plugin-tools the PluginUtils.toText()
 # static method was moved to GeneratorUtils class.
@@ -74,33 +77,9 @@ API documentation for %{name}.
 sed -i "s|PluginUtils.toText|org.apache.maven.tools.plugin.generator.GeneratorUtils.toText|" \
     src/main/java/org/apache/maven/plugins/help/DescribeMojo.java
 
-# Generated HelpMojo.java is missing package declaration.  Use exec
-# plugin to inject package declaration during process-sources phase.
-%pom_add_plugin org.codehaus.mojo:exec-maven-plugin . "
-  <executions>
-    <execution>
-      <phase>process-sources</phase>
-      <goals>
-        <goal>exec</goal>
-      </goals>
-    </execution>
-  </executions>
-  <configuration>
-    <executable>sed</executable>
-    <arguments>
-      <argument>-i</argument>
-      <argument>1ipackage org.apache.maven.plugins.help;</argument>
-      <argument>target/generated-sources/plugin/org/apache/maven/plugins/help/HelpMojo.java</argument>
-    </arguments>
-  </configuration>"
-
-# Remove test dependencies because tests are skipped anyways.
-%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
-
 %build
-# no junit-addons, skip test
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
+# Skip tests, there is some kind of dependency injection failure in one of them
+mvn-rpmbuild -DskipTests=true \
         install javadoc:javadoc
 
 %install
@@ -129,6 +108,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt5_11jpp7
 - new release
 
