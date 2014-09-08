@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ swig
+BuildRequires: gcc-c++ perl(DBI.pm) swig
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -16,35 +16,32 @@ BuildRequires: jpackage-compat
 %bcond_with webapp
 
 Name:           opengrok
-Version:        0.9
-Release:        alt1_5jpp7
+Version:        0.11.1
+Release:        alt1_1jpp7
 Summary:        Source browser and indexer
 
 Group:          Development/Java
 License:        CDDL
-URL:            http://hub.opensolaris.org/bin/view/Project+opengrok/
-Source0:        http://hub.opensolaris.org/bin/download/Project+opengrok/files/%{name}-%{version}-src.tar.gz
+URL:            http://opengrok.github.io/OpenGrok/
+Source0:        https://java.net/downloads/opengrok/%{name}-%{version}-src.tar.gz
 Source1:        opengrok
 Source2:        configuration.xml
 Source3:        opengrok-README.Fedora.webapp
 Source4:        opengrok-README.Fedora.nowebapp
-Patch0:         opengrok-0.5-jrcs-import.patch
-Patch1:         opengrok-0.9-nocplib.patch
-Patch3:         opengrok-0.8.1-manifest-classpath.patch
-Patch4:         opengrok-0.6-nooverview.patch
-Patch6:         opengrok-0.9-jflex.patch
+Patch1:         opengrok-0.11.1-nocplib.patch
+Patch3:         opengrok-0.11.1-manifest-classpath.patch
+Patch6:         opengrok-0.11.1-jflex.patch
+Patch7:         opengrok-0.11.1-lucene35.patch
+
 BuildArch:      noarch
 
-%define common_reqs jakarta-oro ant bcel servlet lucene > 2 lucene-contrib > 2 swing-layout jpackage-utils javacc
+%define common_reqs jakarta-oro ant bcel servlet lucene > 3.5 lucene-contrib > 3.5 swing-layout jpackage-utils javacc
 Requires:       %{common_reqs}
 Requires:       ctags
 BuildRequires:  %{common_reqs}
 BuildRequires:  jflex >= 1.4
 BuildRequires:  java_cup
-BuildRequires:  ant-nodeps
-# FIXME: As of 0.6-hg275 this should build with java-1.5 again.
-# This is just to prevent GCJ from attempting to build this.
-# ant scripts from both jrcs and opengrok need to be fixed somehow
+BuildRequires:  ant
 BuildRequires:  unzip
 BuildRequires:  junit4
 BuildRequires:  ant-junit
@@ -82,22 +79,14 @@ OpenGrok web application
 
 %prep
 %setup -q -n %{name}-%{version}-src
-%{__unzip} -q ext/jrcs.zip
-%patch0 -p1 -b .jrcs-import
 %patch1 -p1 -b .nocplib
 %patch3 -p1 -b .manifest-classpath
-%patch4 -p1 -b .nooverview
 %patch6 -p1 -b .jflex
+%patch7 -p1 -b .lucene35
 
 # This is not strictly needed, but to nuke prebuilt stuff
 # makes us feel warmer while building
-find -name '*.jar' -o -name '*.class' -o -name '*.war' -delete
-
-# jrcs' javacc directory
-sed '
-        s,\(property name="javacc.lib.dir" value="\)[^"]*,\1%{_javadir},;
-        s,\(javacchome="\)[^"]*,\1${javacc.lib.dir},;
-' -i jrcs/build.xml
+find \( -name '*.jar' -o -name '*.class' -o -name '*.war' \) -delete
 
 # Default war configuration
 sed 's,/var/opengrok/etc/configuration.xml,%{_sysconfdir}/%{name}/configuration.xml,' \
@@ -112,17 +101,13 @@ cp %{SOURCE4} README.Fedora
 
 
 %build
-pushd jrcs
-CLASSPATH=$(build-classpath oro) %{ant} -v all
-
-popd
-CLASSPATH=$(build-classpath jflex java_cup) %{ant} -v jar javadoc                               \
+CLASSPATH=$(build-classpath jflex java_cup junit4) %{ant} -v jar javadoc                               \
         -Dfile.reference.org.apache.commons.jrcs.diff.jar=jrcs/lib/org.apache.commons.jrcs.diff.jar \
         -Dfile.reference.org.apache.commons.jrcs.rcs.jar=jrcs/lib/org.apache.commons.jrcs.rcs.jar \
-        -Dfile.reference.lucene-core-2.2.0.jar=$(build-classpath lucene)                        \
-        -Dfile.reference.lucene-spellchecker-2.2.0.jar=$(build-classpath lucene-contrib/lucene-spellchecker) \
+        -Dfile.reference.lucene-core-3.0.2.jar=$(build-classpath lucene)                        \
+        -Dfile.reference.lucene-spellchecker-3.0.2.jar=$(build-classpath lucene-contrib/lucene-spellchecker) \
         -Dfile.reference.ant.jar=$(build-classpath ant)                                         \
-        -Dfile.reference.bcel-5.1.jar=$(build-classpath bcel)                                   \
+        -Dfile.reference.bcel-5.2.jar=$(build-classpath bcel)                                   \
         -Dfile.reference.jakarta-oro-2.0.8.jar=$(build-classpath jakarta-oro)                   \
         -Dfile.reference.servlet-api.jar=$(build-classpath servlet)                             \
         -Dfile.reference.swing-layout-0.9.jar=$(build-classpath swing-layout)
@@ -135,74 +120,56 @@ sed '
 ' dist/opengrok.1 |db2x_docbook2man -
 
 
-%check
-pushd jrcs
-CLASSPATH=$(build-classpath junit4) %{ant} test
-
-popd
-#CLASSPATH=$(build-classpath jflex junit4) %{ant} test
-
-
 %install
-
 # directories
 
 %if %with webapp
 %define webappdir %{_var}/lib/tomcat5/webapps/source
-install -d $RPM_BUILD_ROOT%{webappdir}/WEB-INF/lib
+install -d %{buildroot}%{webappdir}/WEB-INF/lib
 %endif
 
-install -d $RPM_BUILD_ROOT%{_javadir}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-jrcs
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_mandir}/man1
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-install -d $RPM_BUILD_ROOT%{_var}/lib/%{name}/data
-install -d $RPM_BUILD_ROOT%{_var}/lib/%{name}/src
-install -d $RPM_BUILD_ROOT%{_datadir}/pixmaps
+install -d %{buildroot}%{_javadir}
+install -d %{buildroot}%{_javadocdir}/%{name}
+install -d %{buildroot}%{_javadocdir}/%{name}-jrcs
+install -d %{buildroot}%{_bindir}
+install -d %{buildroot}%{_mandir}/man1
+install -d %{buildroot}%{_sysconfdir}/%{name}
+install -d %{buildroot}%{_var}/lib/%{name}/data
+install -d %{buildroot}%{_var}/lib/%{name}/src
+install -d %{buildroot}%{_datadir}/pixmaps
 
 # jar
-install -p -m 644 dist/opengrok.jar $RPM_BUILD_ROOT%{_javadir}/opengrok-%{version}.jar
-ln -sf opengrok-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/opengrok.jar
+install -p -m 644 dist/opengrok.jar %{buildroot}%{_javadir}/opengrok-%{version}.jar
+ln -sf opengrok-%{version}.jar %{buildroot}%{_javadir}/opengrok.jar
 
 # jrcs
-install -d $RPM_BUILD_ROOT%{_javadir}/opengrok-jrcs
-
-install -p -m 644 jrcs/lib/org.apache.commons.jrcs.rcs.jar \
-        $RPM_BUILD_ROOT%{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.rcs-%{version}.jar
-ln -sf org.apache.commons.jrcs.rcs-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.rcs.jar
-
-install -p -m 644 jrcs/lib/org.apache.commons.jrcs.diff.jar \
-        $RPM_BUILD_ROOT%{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.diff-%{version}.jar
-ln -sf org.apache.commons.jrcs.diff-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.diff.jar
+install -p -m 644 lib/jrcs.jar \
+        %{buildroot}%{_javadir}/opengrok-jrcs-%{version}.jar
+ln -sf opengrok-jrcs-%{version}.jar \
+        %{buildroot}%{_javadir}/opengrok-jrcs.jar
 
 # bin
-install -p -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}
+install -p -m 755 %{SOURCE1} %{buildroot}%{_bindir}
 
 # man
-install -p -m 644 opengrok.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install -p -m 644 opengrok.1 %{buildroot}%{_mandir}/man1
 
 # javadoc
-cp -pR dist/javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pR jrcs/doc/api/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}-jrcs
+cp -pR dist/javadoc/. %{buildroot}%{_javadocdir}/%{name}
 
 # Configuration file configuration.xml
-install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+install -p -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/%{name}
 
 %if %with webapp
 # Make love, not war!
-unzip -q dist/source.war -d $RPM_BUILD_ROOT%{webappdir}
+unzip -q dist/source.war -d %{buildroot}%{webappdir}
 (IFS=:; for file in $(build-classpath                   \
         bcel jakarta-oro swing-layout                   \
         lucene lucene-contrib/lucene-spellchecker)      \
         %{_javadir}/opengrok.jar                        \
-        %{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.diff.jar \
-        %{_javadir}/opengrok-jrcs/org.apache.commons.jrcs.rcs.jar
+        %{_javadir}/opengrok-jrcs.jar
 do
-        ln -sf $file $RPM_BUILD_ROOT%{webappdir}/WEB-INF/lib
+        ln -sf $file %{buildroot}%{webappdir}/WEB-INF/lib
 done)
 %endif
 
@@ -234,6 +201,9 @@ touch $RPM_BUILD_ROOT/etc/opengrok.conf
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_5jpp7
 - new release
 
