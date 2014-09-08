@@ -1,7 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -35,45 +32,24 @@ BuildRequires: jpackage-compat
 #
 
 Name:           plexus-archiver
-Version:        2.3
-Release:        alt1_1jpp7
+Version:        2.4.2
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Plexus Archiver Component
-License:        MIT and ASL 2.0
-Group:          Development/Java
+License:        ASL 2.0
 URL:            http://plexus.codehaus.org/plexus-components/plexus-archiver/
 Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        http://apache.org/licenses/LICENSE-2.0.txt
-
-Patch0:         %{name}-CVE-2012-2098.patch
 
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  apache-commons-compress >= 1.4.1
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  classworlds >= 0:1.1
+
+BuildRequires:  maven-local
 BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-utils
 BuildRequires:  plexus-io
-BuildRequires: maven-local
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-shared-reporting-impl
-BuildRequires: maven-doxia-sitetools
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  apache-commons-compress >= 1.4.1
-Requires:       classworlds >= 0:1.1
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
-Requires:       jpackage-utils
-Requires:       plexus-io
+BuildRequires:  plexus-utils
+BuildRequires:  apache-commons-compress
 Source44: import.info
+
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -85,9 +61,8 @@ is like a J2EE application server, without all the baggage.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -96,36 +71,24 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-cp %{SOURCE1} .
-%patch0 -p1
+%mvn_file :%{name} plexus/archiver
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/plexus/archiver.jar
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
-
-%add_maven_depmap JPP.%{name}.pom plexus/archiver.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc LICENSE
 
-%files javadoc
-%doc LICENSE-2.0.txt
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.2-alt1_3jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_1jpp7
 - new version
 
