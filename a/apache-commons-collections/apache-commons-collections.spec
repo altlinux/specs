@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -10,12 +9,13 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.1
-Release:        alt8_16jpp7
+Release:        alt8_19jpp7
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source1:        commons-collections-testframework.pom
 
 Patch0:         jakarta-%{short_name}-javadoc-nonet.patch
 Patch4:         commons-collections-3.2-build_xml.patch
@@ -24,18 +24,6 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-idea-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
 BuildRequires: ant
 BuildRequires: apache-commons-parent
 Requires:      jpackage-utils
@@ -75,8 +63,6 @@ Obsoletes:      jakarta-%{short_name}-testframework < %{version}-%{release}
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
 Provides:       jakarta-%{short_name}-javadoc = %{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-javadoc < %{version}-%{release}
 BuildArch: noarch
@@ -87,7 +73,6 @@ BuildArch: noarch
 %package testframework-javadoc
 Summary:        Javadoc for %{name}-testframework
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Provides:       jakarta-%{short_name}-testframework-javadoc = %{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-testframework-javadoc < %{version}-%{release}
 
@@ -95,10 +80,11 @@ Obsoletes:      jakarta-%{short_name}-testframework-javadoc < %{version}-%{relea
 %{summary}.
 
 %prep
-
 %setup -q -n %{short_name}-%{version}-src
+
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
 
 %patch0 -p1
 %patch4 -b .sav
@@ -110,9 +96,12 @@ find . -name "*.jar" -exec rm -f {} \;
 %{__sed} -i 's/\r//' README.txt
 %{__sed} -i 's/\r//' NOTICE.txt
 
-%build
+# Substitute version into testframework pom
+cp -p %{SOURCE1} pom-testframework.xml
+sed -i 's/@VERSION@/%{version}/' pom-testframework.xml
 
-mvn-rpmbuild install javadoc:aggregate
+%build
+%mvn_build
 
 ant tf.javadoc
 
@@ -126,12 +115,12 @@ install -Dm 644 target/%{short_name}-testframework-%{version}.jar $RPM_BUILD_ROO
 
 # poms
 install -Dpm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}.pom
+install -Dpm 644 pom-testframework.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}-testframework.pom
 
 
 # fragments
-%add_maven_depmap -a "org.apache.commons:%{short_name}" JPP-%{short_name}.pom %{short_name}.jar
-%add_to_maven_depmap org.apache.commons %{short_name}-testframework %{version} JPP %{short_name}-testframework
-%add_to_maven_depmap %{short_name} %{short_name}-testframework %{version} JPP %{short_name}-testframework
+%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name}"
+%add_maven_depmap JPP-%{short_name}-testframework.pom %{short_name}-testframework.jar -f "testframework" -a "org.apache.commons:%{short_name}-testframework"
 
 
 # javadoc
@@ -155,19 +144,26 @@ ln -s %{name}-testframework-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-tes
 %{_javadir}/%{short_name}.jar
 
 %files testframework
+%{_mavenpomdir}/JPP-%{short_name}-testframework.pom
+%{_mavendepmapfragdir}/%{name}-testframework
 %{_javadir}/%{name}-testframework.jar
 %{_javadir}/%{short_name}-testframework.jar
 
 %files javadoc
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %files testframework-javadoc
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}-testframework-%{version}
 %{_javadocdir}/%{name}-testframework
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt8_19jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt8_16jpp7
 - new release
 
