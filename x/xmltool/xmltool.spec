@@ -1,13 +1,9 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt3_8jpp7
+Release:        alt3_10jpp7
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Java
@@ -24,9 +20,7 @@ BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin
 BuildRequires:  maven-surefire-provider-testng
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-
-Requires:       jpackage-utils
+BuildRequires:  apache-resource-bundles
 Source44: import.info
 
 %description
@@ -38,7 +32,6 @@ together, using the Fluent Interface pattern to facilitate XML manipulations.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -50,6 +43,7 @@ This package contains the API documentation for %{name}.
 # Fix end-of-line encoding
 sed -i 's/\r//' LICENSE.txt
 
+%mvn_file : %{name}
 
 %build
 # Remove dep on maven-wagon and maven-license plugins
@@ -57,36 +51,21 @@ sed -i 's/\r//' LICENSE.txt
 %pom_remove_plugin com.google.code.maven-license-plugin:maven-license-plugin
 
 # Disable tests because they require an internet connection to run!
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  install javadoc:javadoc
-
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -Dp -m 644 target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
-
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_8jpp7
 - new release
 
