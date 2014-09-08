@@ -1,6 +1,6 @@
 %define module_name	bcmwl
-%define module_version	6.30.223.141
-%define module_release alt2
+%define module_version	6.30.223.248
+%define module_release alt1
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -23,7 +23,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 Url: http://www.broadcom.com/support/802.11/linux_sta.php
-Patch1: bcmwl-build-kernel3.10.patch
+Patch1: bcmwl-build-kernel3.15.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -86,6 +86,12 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Sep  8 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.248-alt3
+- new version
+
+* Tue Jun 24 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt3
+- add support for kernel 3.15
 
 * Tue Feb 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt2
 - fixed version
