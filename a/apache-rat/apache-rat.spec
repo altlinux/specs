@@ -1,27 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global snapdate 20100827
-#svn 990212.
-
 Name:           apache-rat
-Version:        0.8
-Release:        alt3_10jpp7
+Version:        0.10
+Release:        alt1_1jpp7
 Summary:        Apache Release Audit Tool (RAT)
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://creadur.apache.org/rat/
-#svn had a number of needed bugfixes
-#svn export -r 990212 http://svn.apache.org/repos/asf/incubator/rat/main/trunk apache-rat-0.8-20100707
-#Source0:        %{name}-%{version}-%{snapdate}.tar.bz2
-Source0:        http://www.apache.org/dist/incubator/rat/sources/apache-rat-incubating-%{version}-src.tar.bz2
-Patch0:         apache-rat-0.8-doxia-1.1.patch
-Patch1:         apache-rat-compat.patch
+Source0:        http://www.apache.org/dist/creadur/%{name}-%{version}/%{name}-%{version}-src.tar.bz2
 Patch2:         apache-rat-0.8-test.patch
 BuildArch:      noarch
 
@@ -109,8 +100,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .doxia-1.1
-%patch1 -p1 -b .compat
 %patch2 -p1 -b .test
 
 
@@ -155,7 +144,7 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %files
-%doc DISCLAIMER.txt LICENSE NOTICE README.txt RELEASE_NOTES.txt
+%doc LICENSE NOTICE README.txt RELEASE_NOTES.txt
 %{_mavenpomdir}/JPP.%{name}-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %dir %{_javadir}/%{name}
@@ -187,6 +176,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp7
+- new release
+
 * Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_10jpp7
 - new release
 
