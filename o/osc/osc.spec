@@ -18,7 +18,7 @@
 %define altlinux 1
 
 Name:           osc
-Version:        0.139.1
+Version:        0.147.0
 Release:        alt1
 License:        GPLv2+
 Summary:        openSUSE Build Service Commander
@@ -91,6 +91,8 @@ BuildRequires: python-module-elementtree
 BuildRequires: python-module-urlgrabber
 BuildRequires: python-module-rpm
 BuildRequires: rpm-build-python
+
+%add_findreq_skiplist %_datadir/%name/complete
 %endif
 
 %{!?python_sitelib: %define python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
@@ -150,6 +152,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Mon Sep 08 2014 Denis Pynkin <dans@altlinux.org> 0.147.0-alt1
+- New version
+
 * Thu Mar 28 2013 Denis Pynkin <dans@altlinux.org> 0.139.1-alt1
 - New version
 
