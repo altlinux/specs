@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		vldocking
 Version:	2.1.5
-Release:	alt1_5jpp7
+Release:	alt1_6jpp7
 Summary:	A Java a.. docking system for JFC Swing applications
 Group:		Development/Java
 License:	CeCILL
@@ -73,6 +73,9 @@ cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_5jpp7
 - new release
 
