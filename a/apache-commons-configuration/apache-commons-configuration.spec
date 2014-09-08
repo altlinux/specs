@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.9
-Release:        alt3_4jpp7
+Release:        alt3_6jpp7
 Summary:        Commons Configuration Package
 
 Group:          Development/Java
@@ -22,7 +22,6 @@ BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-idea-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  javacc-maven-plugin
@@ -97,6 +96,9 @@ BuildArch: noarch
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_4jpp7
 - new release
 
