@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,10 +9,9 @@ BuildRequires: jpackage-compat
 
 Name:             maven-jarsigner-plugin
 Version:          1.2
-Release:          alt2_6jpp7
+Release:          alt2_8jpp7
 Summary:          Signs or verifies a project artifact and attachments using jarsigner
 License:          ASL 2.0
-Group:            Development/Java
 URL:              http://maven.apache.org/plugins/%{name}/
 # http://search.maven.org/remotecontent?filepath=org/apache/maven/plugins/maven-jarsigner-plugin/1.2/maven-jarsigner-plugin-1.2-source-release.zip
 Source0:          http://search.maven.org/remotecontent?filepath=org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -20,11 +19,7 @@ Source0:          http://search.maven.org/remotecontent?filepath=org/apache/mave
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-
-Requires:         maven
-Requires:         plexus-utils
 Source44: import.info
-
 
 %description
 This plugin provides the capability to sign or verify
@@ -39,11 +34,9 @@ and all attached artifacts, just configure the verify goal
 appropriately in your pom.xml for the verification to occur
 automatically during the verify phase.
 
-
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -53,33 +46,23 @@ This package contains the API documentation for %{name}.
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+
+%mvn_file :%{name} %{name}
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE DEPENDENCIES
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
 - new release
 
