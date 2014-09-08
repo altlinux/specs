@@ -1,42 +1,47 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       parent
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
-Version:          22
-Release:          alt2_4jpp7
+Version:          26
+Release:          alt1_5jpp7
 Summary:          Apache Commons Parent Pom
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-22
-# tar caf commons-parent-22.tar.xz commons-parent-22
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-26
+# tar caf commons-parent-26.tar.xz commons-parent-26
 Source0:          %{short_name}-%{version}.tar.xz
 
 #common-build-plugin not in fedora yet
 Patch1:           %{name}-remove-build-plugin.patch
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    buildnumber-maven-plugin
 
-Requires:         jpackage-utils
-Requires:         maven
-Requires:         buildnumber-maven-plugin
-Requires:         maven-antrun-plugin
-Requires:         maven-compiler-plugin
-Requires:         maven-idea-plugin
-Requires:         maven-install-plugin
-Requires:         maven-jar-plugin
-Requires:         maven-javadoc-plugin
-Requires:         maven-plugin-bundle
-Requires:         maven-resources-plugin
-Requires:         maven-surefire-plugin
+BuildRequires:    mvn(org.apache:apache)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-surefire-plugin)
+BuildRequires:    mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+
+Requires:         mvn(org.apache:apache)
+Requires:         mvn(org.apache.felix:maven-bundle-plugin)
+Requires:         mvn(org.apache.maven.plugins:maven-antrun-plugin)
+Requires:         mvn(org.apache.maven.plugins:maven-compiler-plugin)
+Requires:         mvn(org.apache.maven.plugins:maven-jar-plugin)
+Requires:         mvn(org.apache.maven.plugins:maven-surefire-plugin)
+Requires:         mvn(org.apache.rat:apache-rat-plugin)
+Requires:         mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
 
 
@@ -63,6 +68,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:26-alt1_5jpp7
+- fc update
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0:22-alt2_4jpp7
 - rebuild with maven-local
 
