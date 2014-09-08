@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt1_7jpp7
+Release:        alt1_9jpp7
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -45,7 +46,6 @@ Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{versi
 Patch0:         0001-Remove-avalon-logkit.patch
 Patch2:         0003-Use-system-jars.patch
 Patch3:         0004-JDBC-41-compat.patch
-Group:          Development/Java
 Requires:       apache-commons-collections
 Requires:       apache-commons-logging
 Requires:       apache-commons-lang
@@ -72,7 +72,6 @@ BuildRequires:  jakarta-oro
 BuildRequires:  jdom
 BuildRequires:  bcel
 BuildRequires:  log4j
-BuildRequires:  jpackage-utils
 
 # It fails one of the arithmetic test cases with gcj
 BuildArch:      noarch
@@ -100,25 +99,24 @@ Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
 %package        manual
+Group: Development/Java
 Summary:        Manual for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    manual
 Documentation for %{name}.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 Javadoc for %{name}.
 
 %package        demo
+Group: Development/Java
 Summary:        Demo for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
@@ -139,6 +137,9 @@ rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
 
 # need porting to new servlet API. We would just add a lot of empty functions
 rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
+
+# This test doesn't work with new hsqldb
+rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
 
 cp %{SOURCE1} ./pom.xml
 
@@ -216,6 +217,9 @@ install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_7jpp7
 - new release
 
