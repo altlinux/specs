@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jazzy
 Version:        0.5.2
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Summary:        Java-based spell checker
 
 Group:          Text tools
@@ -82,6 +82,9 @@ cp -a javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_6jpp7
 - new release
 
