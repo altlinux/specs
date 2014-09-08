@@ -1,35 +1,30 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-script-interpreter
-Version:        1.0
-Release:        alt2_3jpp7
+Version:        1.1
+Release:        alt1_2jpp7
 Summary:        Maven Script Interpreter
-Group:          Development/Java
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/%{name}
+URL:            http://maven.apache.org/shared/maven-script-interpreter/
 Source0:        http://central.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-# Plexus-maven-plugin no longer used
-Patch0:         %{name}-plexus.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  groovy
 BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  plexus-containers-component-metadata
-
-Requires:       jpackage-utils
-Requires:       bsh
-Requires:       groovy
-Requires:       maven
-Requires:       plexus-utils
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.groovy:groovy)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
+
 
 %description
 This component provides some utilities to interpret/execute some scripts for
@@ -37,9 +32,8 @@ various implementations: Groovy or BeanShell.
 
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
     
 %description javadoc
@@ -48,36 +42,24 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-mvn-rpmbuild install javadoc:aggregate -Dproject.build.sourceEncoding=UTF-8
+%mvn_build
 
 %install
-# JAR
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# JavaDoc
-install -Ddm 755 %{buildroot}/%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc DEPENDENCIES LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_3jpp7
 - new release
 
