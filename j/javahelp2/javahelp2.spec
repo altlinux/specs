@@ -39,22 +39,23 @@ BuildRequires: jpackage-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_13jpp7
+Release:	alt3_15jpp7
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.dev.java.net/
 Group:		Development/Java
-# 
-#
 Source0:	https://javahelp.dev.java.net/files/documents/5985/59373/%{name}-src-%{version}.zip
 Source1:	%{name}-jhindexer.sh
 Source2:	%{name}-jhsearch.sh
 BuildArch:	noarch
-Requires:	jpackage-utils >= 0:1.5.32
+
 BuildRequires:	jpackage-utils >= 0:1.5.32
-BuildRequires:  jsp >= 0:2.0
-BuildRequires:	ant ant-nodeps
-BuildRequires:	servlet6
+
+BuildRequires:	ant
+BuildRequires:	tomcat-servlet-3.0-api
+BuildRequires:	tomcat-jsp-2.2-api
+
+Requires:	jpackage-utils >= 0:1.5.32
 Source44: import.info
 
 %description
@@ -88,27 +89,24 @@ for file in `find . -type f -name .bat`; do rm -f $file; done
 rm jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicNativeContentViewerUI.java
 
 mkdir javahelp_nbproject/lib
-ln -s %{_javadir}/jsp.jar javahelp_nbproject/lib/jsp-api.jar
-ln -s %{_javadir}/servlet.jar javahelp_nbproject/lib/servlet-api.jar
+ln -s %{_javadir}/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
+ln -s %{_javadir}/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
-export CLASSPATH=$(build-classpath ant/ant-nodeps)
 ant -f javahelp_nbproject/build.xml -Djdic-jar-present=true -Djdic-zip-present=true -Dservlet-jar-present=true -Dtomcat-zip-present=true release javadoc
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/jh2indexer
 install -m 755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/jh2search
 
-install -m 644 javahelp_nbproject/dist/lib/jhall.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+install -m 644 javahelp_nbproject/dist/lib/jhall.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 #cp -pr jhMaster/JavaHelp/doc/public-spec/dtd $RPM_BUILD_ROOT%{_datadir}/%{name}
 #cp -pr jhMaster/JavaHelp/demos $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr javahelp_nbproject/dist/lib/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-# create unversioned symlinks
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
+cp -pr javahelp_nbproject/dist/lib/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jhindexer.conf`
 touch $RPM_BUILD_ROOT/etc/jhindexer.conf
@@ -118,16 +116,18 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 
 %files
 %attr(0755,root,root) %{_bindir}/*
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %dir %{_datadir}/%{name}
 %config(noreplace,missingok) /etc/jhindexer.conf
 %config(noreplace,missingok) /etc/jhsearch.conf
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_15jpp7
+- new release
+
 * Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_13jpp7
 - new release
 
