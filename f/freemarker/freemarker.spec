@@ -15,7 +15,7 @@ echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
 
 Name:           freemarker
 Version:        %{fm_ver}
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        A template engine
 
 Group:          Development/Java
@@ -44,7 +44,6 @@ Patch7:         %{name}-%{version}-javacc.patch
 BuildArch:      noarch
 
 BuildRequires: ant >= 1.6
-BuildRequires: ant-nodeps >= 1.6
 BuildRequires: apache-commons-logging
 BuildRequires: avalon-logkit >= 1.2
 BuildRequires: dom4j >= 1.6.1
@@ -59,9 +58,10 @@ BuildRequires: jython >= 2.2.1
 BuildRequires: log4j >= 1.2
 BuildRequires: rhino >= 1.6
 BuildRequires: slf4j
-BuildRequires: tomcat6-el-2.1-api
-BuildRequires: tomcat6-lib >= 6.0.16
-BuildRequires: tomcat6-servlet-2.5-api >= 6.0
+BuildRequires: tomcat-el-2.2-api
+BuildRequires: tomcat-lib >= 6.0.16
+BuildRequires: tomcat-jsp-2.2-api
+BuildRequires: tomcat-servlet-3.0-api >= 6.0
 BuildRequires: xalan-j2 >= 2.7.0
 
 Requires: jpackage-utils
@@ -121,9 +121,9 @@ find -type f \( -iname '*.jar' -o -iname '*.class' \)  -exec rm -f '{}' \;
 # The JavaServer Pages 1.2 technology isn't provided in Fedora 10
 #%{__ln_s} -f %{_javadir}/jsp-api-1.2.jar   lib/jsp-api-1.2.jar
 
-%{__ln_s} -f %{_javadir}/tomcat5-jsp-2.0-api.jar  lib/jsp-api-2.0.jar
+%{__ln_s} -f %{_javadir}/tomcat-jsp-api.jar  lib/jsp-api-2.0.jar
 
-%{__ln_s} -f %{_javadir}/tomcat6-jsp-2.1-api.jar  lib/jsp-api-2.1.jar
+%{__ln_s} -f %{_javadir}/tomcat-jsp-api.jar  lib/jsp-api-2.1.jar
 
 %{__ln_s} -f %{_javadir}/junit.jar         lib/junit.jar
 %{__ln_s} -f %{_javadir}/jython.jar        lib/jython.jar
@@ -134,14 +134,14 @@ find -type f \( -iname '*.jar' -o -iname '*.class' \)  -exec rm -f '{}' \;
 # It doesn't required due to OpenJDK 6 is used
 #%{__ln_s} -f %{_javadir}/rt122.jar         lib/rt122.jar
 
-# SAXPath has been merged into the Jaxen codebase and is 
+# SAXPath has been merged into the Jaxen codebase and is
 # no longer being maintained separately. See jaxen-1.1.jar
 #%{__ln_s} -f %{_javadir}/saxpath.jar       lib/saxpath.jar
 
 # The package javax.el isn't included in:
-%{__ln_s} -f %{_javadir}/tomcat6-servlet-2.5-api.jar lib/servlet.jar
+%{__ln_s} -f %{_javadir}/tomcat-servlet-api.jar lib/servlet.jar
 # so, el-api.jar is additionally used.
-%{__ln_s} -f %{_javadir}/tomcat6-el-2.1-api.jar lib/el-api.jar
+%{__ln_s} -f %{_javadir}/tomcat-el-api.jar lib/el-api.jar
 
 %{__ln_s} -f %{_javadir}/struts.jar        lib/struts.jar
 %{__ln_s} -f %{_javadir}/xalan-j2.jar      lib/xalan.jar
@@ -181,6 +181,9 @@ dos2unix -k docs/docs/api/package-list
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.19-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.19-alt2_5jpp7
 - new release
 
