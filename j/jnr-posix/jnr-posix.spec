@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jnr-posix
 Version:        2.4.0
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Java Posix layer
 Group:          Development/Java
 License:        CPL or GPLv2+ or LGPLv2+
@@ -86,6 +86,9 @@ install -pm 644 pom.xml  \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_1jpp7
 - new version
 
