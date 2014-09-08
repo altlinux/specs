@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jcip-annotations
 Version:        1
-Release:        alt1_7.20060626jpp7
+Release:        alt1_8.20060626jpp7
 Summary:        Java annotations for multithreaded software
 
 Group:          Development/Java
@@ -85,6 +85,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1-alt1_8.20060626jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1-alt1_7.20060626jpp7
 - new release
 
