@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        0.3.0
-Release:        alt2_4jpp7
+Release:        alt2_5jpp7
 Summary:        Clojure interface to Lucene
 
 License:        EPL
@@ -80,6 +80,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2_4jpp7
 - new release
 
