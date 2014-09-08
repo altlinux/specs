@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        1.2
-Release:        alt2_6jpp7
+Release:        alt2_7jpp7
 Summary:        Plexus Components POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -35,6 +35,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_7jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
 - update
 
