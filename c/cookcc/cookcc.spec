@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cookcc
 Version:          0.3.3
-Release:          alt2_7jpp7
+Release:          alt2_8jpp7
 Summary:          Lexer and Parser Generator
 Group:            Development/Java
 License:          BSD
@@ -83,6 +83,9 @@ cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE_cookcc.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_7jpp7
 - new release
 
