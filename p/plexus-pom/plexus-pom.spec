@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          plexus-pom
 Version:       3.3.1
-Release:       alt1_4jpp7
+Release:       alt1_5jpp7
 Summary:       Root Plexus Projects POM
 Group:         Development/Java
 License:       ASL 2.0
@@ -42,6 +42,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_5jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.3.1-alt1_4jpp7
 - update
 
