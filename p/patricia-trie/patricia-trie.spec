@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           patricia-trie
 Version:        0.2
-Release:        alt1_5.20091116svnjpp7
+Release:        alt1_6.20091116svnjpp7
 Summary:        Java prefix tree library
 
 Group:          Development/Java
@@ -70,6 +70,9 @@ cp -a dist/%{name}-%{version}/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_6.20091116svnjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_5.20091116svnjpp7
 - new release
 
