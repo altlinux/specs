@@ -1,41 +1,32 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jtds
-Version:       1.2.6
-Release:       alt1_2jpp7
+Version:       1.3.1
+Release:       alt1_1jpp7
 Summary:       SQL Server and Sybase JDBC driver
-Group:         Development/Java
 License:       MIT and LGPLv2+
 URL:           http://jtds.sourceforge.net/
-# wget http://sourceforge.net/projects/jtds/files/jtds/1.2.6/jtds-1.2.6-src.zip
-# cleanup
-# rm -rf lib doc html *.bat
-# Files without proper copyright notices and unused
-# rm -vrf src/SSO
-# rm -vrf src/XA
-# rm -vf src/test/net/sourceforge/jtds/test/{AsTest.java,CSUnitTest.java,DatabaseTestCase.java,JDBC3Test.java,NtlmAuthTest.java,SAfeTest.java,SanityTest.java,Tds5Test.java,TestBase.java,TimestampTest.java,UpdateTest.java}
-# rm -vf src/tools/net/sourceforge/jtds/tools/{PacketLogger.java,SQLProxy.java,SqlForwarder.java}
-# find . -name '*.jar' -o -name '*.class' -o -name '*.bat' -delete
-# tar czf jtds-1.2.6-clean-src.tar.gz jtds-1.2.6
-Source0:       %{name}-%{version}-clean-src.tar.gz
-# remove org.codehaus.mojo truezip-maven-plugin 1.0-beta-2
-Patch0:        %{name}-1.2.5-pom.patch
+# sh jtds-create-tarball.sh < VERSION >
+Source0:       %{name}-%{version}-clean.tar.xz
+Source1:       %{name}-create-tarball.sh
 # fix libraries path
 # disable test unavailable deps
 # fix javac/javadoc source/target/encoding parameters
 # remove classpath from manifest
-Patch1:        %{name}-%{version}-build.patch
-
-Patch2:        %{name}-%{version}-update-fsf-address.patch
+Patch0:        %{name}-1.3.1-build.patch
 
 BuildRequires: jpackage-utils
 
 BuildRequires: ant
 BuildRequires: jcifs
 BuildRequires: jdbc-stdext
+# test deps
+#BuildRequires: ant-junit
+#BuildRequires: junit
 
 Requires:      jcifs
 
@@ -54,9 +45,8 @@ independent) Statements and implementing all the DatabaseMetaData and
 ResultSetMetaData methods. 
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -71,11 +61,10 @@ for d in CHANGELOG LICENSE README* ; do
 done
 
 %patch0 -p0
-%patch1 -p0
-%patch2 -p1
 
 # fix non ASCII chars
-for s in src/main/net/sourceforge/jtds/jdbc/JtdsDatabaseMetaData.java;do
+for s in src/main/net/sourceforge/jtds/jdbc/JtdsDatabaseMetaData.java \
+  src/test/net/sourceforge/jtds/jdbc/CSUnitTest.java;do
   native2ascii -encoding UTF8 ${s} ${s}
 done
 
@@ -90,7 +79,7 @@ install -m 644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
@@ -106,6 +95,9 @@ cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt1_2jpp7
 - new release
 
