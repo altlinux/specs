@@ -1,16 +1,16 @@
 Name: intercal
-Version: 0.24
-Release: alt1.qa1
+Version: 0.29
+Release: alt1.git20140828
 
 Summary: The language that kills the weak and drives mad the strong
 License: GPL, except for ick-wrap.c
 Group: Development/Other
 Url: http://www.catb.org/~esr/intercal/
 
+# git://gitorious.org/intercal/intercal.git
 Source: %url/%name-%version.tar.gz
-Patch0: %name-0.24-debian-fixes.patch
 
-BuildPreReq: flex groff-base groff-ps
+BuildPreReq: flex groff-base groff-ps tidy
 
 Requires: gcc
 
@@ -23,10 +23,10 @@ Now supports i18n and l14n (to Ancient Roman locale only)
 Now with fix patch by Donald Knuth.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
 %build
+%autoreconf
 %configure
 %make_build
 pushd doc
@@ -35,24 +35,24 @@ pushd doc
 popd
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_libdir,%_man1dir,{%_includedir,%_datadir}/%name}
-%__install ick %buildroot%_bindir/
-%__install -m644 libick.a %buildroot%_libdir/
-%__install -m644 {abcess,fiddle,lose}.h %buildroot%_includedir/%name/
-%__cp -a ick-wrap.c pit/lib/ %buildroot%_datadir/%name/
-%__cp -a pit examples
-%__rm -fr examples/{lib,Makefile}
-%__install -m644 ick.1 %buildroot%_man1dir
+%makeinstall_std
+
+cp -a pit examples
+rm -fr examples/{lib,Makefile}
 
 %files
 %_bindir/*
 %_libdir/*.a
-%_includedir/%name
-%_datadir/%name
+%_includedir/*
+%_datadir/ick*
+%_infodir/*
 %_mandir/man?/*
-%doc BUGS NEWS README doc/ examples/ %name.el
+%doc BUGS NEWS README HISTORY doc/ examples/ etc/%name.el
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29-alt1.git20140828
+- Version 0.29
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.24-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
