@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.12.20100217cvsjpp7
+Release:	alt1_0.13.20100217cvsjpp7
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
 Group:		System/Libraries
@@ -105,6 +105,9 @@ cp -av build/linux-i586/javadocs/docs-jcp/* $RPM_BUILD_ROOT%{_javadocdir}/%{name
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.13.20100217cvsjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.12.20100217cvsjpp7
 - new release
 
