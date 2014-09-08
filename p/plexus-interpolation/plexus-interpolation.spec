@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-interpolation
 Version:        1.15
-Release:        alt3_6jpp7
+Release:        alt3_7jpp7
 Summary:        Plexus Interpolation API
 
 Group:          Development/Java
@@ -55,6 +55,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_7jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_6jpp7
 - update
 
