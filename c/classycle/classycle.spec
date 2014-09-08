@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          classycle
 Version:       1.4
-Release:       alt2_3jpp7
+Release:       alt2_4jpp7
 Summary:       Analysing Tools for Java Class and Package Dependencies
 Group:         Development/Java
 License:       BSD
@@ -78,6 +78,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_3jpp7
 - new release
 
