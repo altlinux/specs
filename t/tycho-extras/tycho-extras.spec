@@ -1,99 +1,84 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           tycho-extras
-Version:        0.16.0
-Release:        alt2_3jpp7
-Summary:        Additional plugins for Tycho
+Name: tycho-extras
+Version: 0.18.0
+Summary: Additional plugins for Tycho
+License: EPL
+Url: http://eclipse.org/tycho/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.eclipse.tycho.extras:target-platform-validation-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-buildtimestamp-jgit)
+Provides: mvn(org.eclipse.tycho.extras:tycho-custom-bundle-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-eclipserun-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-extras)
+Provides: mvn(org.eclipse.tycho.extras:tycho-p2-extras-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-pack200)
+Provides: mvn(org.eclipse.tycho.extras:tycho-pack200-impl)
+Provides: mvn(org.eclipse.tycho.extras:tycho-pack200a-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-pack200b-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-source-feature-plugin)
+Provides: mvn(org.eclipse.tycho.extras:tycho-sourceref-jgit)
+Provides: mvn(org.eclipse.tycho.extras:tycho-version-bump-plugin)
+Provides: mvn(org.eclipse.tycho:pack200)
+Provides: mvn(org.eclipse.tycho:target-platform-validation-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-buildtimestamp-jgit)
+Provides: mvn(org.eclipse.tycho:tycho-custom-bundle-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-eclipserun-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-extras)
+Provides: mvn(org.eclipse.tycho:tycho-p2-extras-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-pack200-impl)
+Provides: mvn(org.eclipse.tycho:tycho-pack200a-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-pack200b-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-source-feature-plugin)
+Provides: mvn(org.eclipse.tycho:tycho-sourceref-jgit)
+Provides: mvn(org.eclipse.tycho:tycho-version-bump-plugin)
+Provides: mvn(org.sonatype.tycho:pack200)
+Provides: mvn(org.sonatype.tycho:target-platform-validation-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-buildtimestamp-jgit)
+Provides: mvn(org.sonatype.tycho:tycho-custom-bundle-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-eclipserun-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-extras)
+Provides: mvn(org.sonatype.tycho:tycho-p2-extras-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-pack200-impl)
+Provides: mvn(org.sonatype.tycho:tycho-pack200a-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-pack200b-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-source-feature-plugin)
+Provides: mvn(org.sonatype.tycho:tycho-sourceref-jgit)
+Provides: mvn(org.sonatype.tycho:tycho-version-bump-plugin)
+Requires: java
+Requires: jgit
+Requires: jpackage-utils
+Requires: tycho
 
-Group:          Development/Java
-License:        EPL
-URL:            http://eclipse.org/tycho/
-Source0:        http://git.eclipse.org/c/tycho/org.eclipse.tycho.extras.git/snapshot/tycho-extras-0.16.x.tar.bz2
-# maven-properties-plugin is only needed for tests
-Patch0:         %{name}-no-maven-properties-plugin.patch
-Patch1:         %{name}-remove-core.patch
-Patch2:         %{name}-393686.patch
-
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  jgit
-BuildRequires:  tycho
-
-Requires:       jpackage-utils
-Requires:       jgit
-Requires:       tycho
-Source44: import.info
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: tycho-extras-0.18.0-1.fc19.cpio
 
 %description
 A small set of plugins that work with Tycho to provide additional functionality
 when building projects of an OSGi nature.
 
-
-%package javadoc
-Summary:        Java docs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n tycho-extras-0.16.x
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# To run tests, we need :
-# maven-properties-plugin (unclear licensing)
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-main.pom
-%add_maven_depmap JPP.%{name}-main.pom -a "org.eclipse.tycho:tycho-extras,org.sonatype.tycho:tycho-extras"
-
-for mod in tycho-{custom-bundle,eclipserun,source-feature,version-bump}-plugin \
-           tycho-{buildtimestamp,sourceref}-jgit tycho-p2-extras-plugin \
-           pack200/tycho-pack200{{a,b}-plugin,-impl} \
-           target-platform-validation-plugin ; do
-   echo $mod
-   aid=`basename $mod`
-   install -pm 644 $mod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   install -m 644 $mod/target/$aid-%{version}.jar %{buildroot}%{_javadir}/%{name}/$aid.jar
-   %add_maven_depmap JPP.%{name}-$aid.pom %{name}/$aid.jar -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
 
-for pommod in pack200; do
-   echo $pommod
-   aid=`basename $pommod`
-   install -pm 644 $pommod/pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-$aid.pom
-   %add_maven_depmap JPP.%{name}-$aid.pom -a "org.eclipse.tycho:$aid,org.sonatype.tycho:$aid"
-done
 
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt2_3jpp7
 - rebuild with maven-local
 
