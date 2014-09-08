@@ -1,11 +1,11 @@
 Name: jack_mixer
-Version: 9
-Release: alt1.1.qa1
+Version: 10
+Release: alt1.git20140427
 Summary: Jack Audio Mixer
 License: GPLv2+
 Group: Sound
 Url: http://home.gna.org/jackmixer/
-Packager: Egor Glukhov <kaman@altlinux.org>
+# git://repo.or.cz/jack_mixer.git
 Source0: %name-%version.tar
 Requires: python-module-pygnome-gconf
 BuildPreReq: libGConf-devel
@@ -42,6 +42,9 @@ unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
 %_datadir/%name
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10-alt1.git20140427
+- Version 10
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 9-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
