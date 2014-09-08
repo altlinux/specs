@@ -1,42 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          pax-logging
 Version:       1.6.9
-Release:       alt1_5jpp7
+Release:       alt1_7jpp7
 Summary:       OSGi Logging framework implementation
-Group:         Development/Java
 License:       ASL 2.0 and BSD and MIT
 URL:           http://team.ops4j.org/wiki//display/paxlogging/Pax+Logging
-# git clone git://github.com/ops4j/org.ops4j.pax.logging.git pax-logging-1.6.9
-# cd pax-logging-1.6.9 && git archive --format=tar --prefix=pax-logging-1.6.9/ logging-1.6.9  | xz > pax-logging-1.6.9-src-git.tar.xz
-Source0:       %{name}-%{version}-src-git.tar.xz
+Source0:       https://github.com/ops4j/org.ops4j.pax.logging/archive/logging-%{version}.tar.gz
 
-BuildRequires: jpackage-utils
 
-BuildRequires: avalon-framework
-BuildRequires: felix-osgi-compendium
-BuildRequires: felix-osgi-core
-BuildRequires: log4j
+BuildRequires: mvn(avalon-framework:avalon-framework-api)
+BuildRequires: mvn(log4j:log4j)
+BuildRequires: mvn(org.osgi:org.osgi.compendium)
+BuildRequires: mvn(org.osgi:org.osgi.core)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
 
-Requires:      avalon-framework
-Requires:      felix-osgi-compendium
-Requires:      felix-osgi-core
-Requires:      log4j
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -45,16 +27,15 @@ The OSGi Logging framework implementation. Supports SLF4J,
 LOG4J,Jakarta Commons Logging etc.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n org.ops4j.pax.logging-logging-%{version}
 %pom_remove_parent
 %pom_disable_module pax-logging-it
 %pom_disable_module pax-logging-samples
@@ -88,41 +69,29 @@ sed -i "s|<_include>-osgi.bnd</_include>|<!--_include>-osgi.bnd</_include-->|" p
 %pom_remove_plugin org.apache.maven.plugins:maven-shade-plugin pax-logging-service
 %pom_remove_plugin org.apache.maven.plugins:maven-dependency-plugin pax-logging-service
 
+%mvn_file :%{name}-api %{name}-api
+%mvn_file :%{name}-service %{name}-service
+
 %build
 
 # test skip unavailable test deps*
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip=true install javadoc:aggregate
-
-%install
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-mkdir -p %{buildroot}%{_javadir}
-for m in %{name}-api \
-         %{name}-service; do
-    install -m 644 ${m}/target/${m}-%{version}.jar %{buildroot}%{_javadir}/${m}.jar
-    install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-${m}.pom
-%add_maven_depmap JPP-${m}.pom ${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 cp -rp pax-logging-api/NOTICE.txt .
 
-%files
-%{_javadir}/%{name}-*.jar
-%{_mavenpomdir}/JPP-%{name}*.pom
-%{_mavendepmapfragdir}/%{name}
+%install
+%mvn_install
+
+%files -f .mfiles
 %doc CONTRIBUTORS.txt LICENSE.txt NOTICE.txt RELEASE-NOTES.html
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_5jpp7
 - new release
 
