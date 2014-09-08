@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -11,40 +11,29 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          native2ascii-maven-plugin
 Version:       1.0
-Release:       alt3_0.5.beta1jpp7
+Release:       alt3_0.7.beta1jpp7
 Summary:       Native2Ascii Maven Plugin
-Group:         Development/Java
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
-BuildRequires: jpackage-utils
-BuildRequires: mojo-parent
+
+BuildRequires: mvn(org.codehaus.mojo:mojo-parent)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-project)
 
 BuildRequires: junit
+
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
 BuildRequires: maven-invoker-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
-
-BuildRequires: maven-project
 
 # requires by javadoc-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
-Requires:      maven
-Requires:      maven-project
-Requires:      mojo-parent
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -54,9 +43,8 @@ supported character encoding to
 one with ASCII and/or Unicode escapes.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -68,32 +56,22 @@ This package contains javadoc for %{name}.
 
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file :%{name} %{name}
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{namedversion}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.7.beta1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.5.beta1jpp7
 - new release
 
