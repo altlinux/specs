@@ -1,19 +1,16 @@
 Name: kccmp
-Version: 0.2
-Release: alt2.qa1
+Version: 0.3
+Release: alt1
 
 Summary: Kernel configuration comparison
 License: GPL
 Group: Development/Kernel
 Url: http://stoopidsimple.com/kccmp
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
 Source: http://stoopidsimple.com/files/%name-%version.tar.gz
-Patch0: %name-0.2-alt-compile-fix.patch
 
 BuildPreReq: gcc-c++
-BuildRequires(pre): libqt3-devel
+BuildRequires(pre): libqt4-devel
 
 %description
 kccmp is a simple tool for comparing two linux kernel ".config" files.
@@ -25,11 +22,10 @@ only one of the compared files.
 
 %prep
 %setup
-%patch0 -p1
-%__subst 's|^LIBS.*|#\0|' %name.pro
+subst 's|^LIBS.*|#\0|' %name.pro
 
 %build
-export PATH=$PATH:%_qt3dir/bin
+export PATH=$PATH:%_qt4dir/bin
 qmake
 %make_build CXXFLAGS="%optflags"
 
@@ -42,6 +38,9 @@ install -p %name %buildroot%_bindir/
 %doc README
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
+- Version 0.3
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
