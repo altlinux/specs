@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global commit_hash d50ee0e
@@ -11,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt2_1jpp7
+Release:        alt2_5jpp7
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Java
@@ -21,19 +18,7 @@ Source0:        https://github.com/jruby/jcodings/tarball/%{version}/jruby-%{nam
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-
 BuildRequires:  maven-local
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -46,27 +31,24 @@ Java-based codings helper classes for Joni and JRuby.
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
+%mvn_file : %{name}
+
 %build
 echo "See %{url} for more info about the %{name} project." > README.txt
 
-mvn-rpmbuild install javadoc:aggregate
+%pom_xpath_remove "pom:build/pom:extensions"
+%mvn_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}
+%mvn_install
 
-cp -p target/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc README.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_5jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_1jpp7
 - rebuild with maven-local
 
