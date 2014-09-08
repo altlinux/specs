@@ -1,41 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global api_version 2.0
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Java Portlet Specification V2.0
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://portals.apache.org/
 # svn export http://svn.apache.org/repos/asf/portals/portlet-spec/tags/portlet-api_2.0_spec-1.0 portlet-2.0-api-1.0
 # tar czf portlet-2.0-api-1.0-src-svn.tar.gz portlet-2.0-api-1.0
-Source0:       portlet-2.0-api-1.0-src-svn.tar.gz
-# force servlet-3.0-api use
-Source1:       portlet-2.0-api-1.0-depmap
+Source0:       %{name}-%{version}-src-svn.tar.gz
 
-BuildRequires: jpackage-utils
-BuildRequires: portals-pom
-
-BuildRequires: tomcat-servlet-3.0-api
-
+BuildRequires: mvn(org.apache.portals:portals-pom)
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-
-Requires:      portals-pom
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
+Requires:      mvn(org.apache.portals:portals-pom)
 BuildArch:     noarch
 Source44: import.info
 
@@ -44,9 +26,8 @@ The Java Portlet API version 2.0 developed by the
 Java Community Process JSR-286 Expert Group.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -66,33 +47,30 @@ done
 # change apis version
 sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" pom.xml
 
+# Force tomcat apis
+%pom_remove_dep javax.servlet:servlet-api
+%pom_add_dep org.apache.tomcat:tomcat-servlet-api::provided
+
+%mvn_file :%{pkg_name} %{name}
+%mvn_alias :%{pkg_name} javax.portlet:portlet-api
+
 %build
 
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.local.depmap.file="%{SOURCE1}" install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{pkg_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "javax.portlet:portlet-api"
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5jpp7
 - new release
 
