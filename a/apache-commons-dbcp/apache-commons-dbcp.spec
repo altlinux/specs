@@ -1,8 +1,4 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       dbcp
@@ -10,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_12jpp7
+Release:          alt2_14jpp7
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -30,9 +26,6 @@ BuildRequires:    geronimo-parent-poms
 BuildRequires:    jta
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-local
-
-Requires:         jpackage-utils
-Requires:         apache-commons-pool
 
 # This should go away with F-17
 Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
@@ -55,11 +48,8 @@ is the only time that a database connection is required. The application itself
 logs into the DBMS, and handles any user account issues internally.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-# This should go away with F-17
-Obsoletes:        jakarta-%{short_name}-javadoc < 0:1.4-1
 BuildArch: noarch
 
 %description javadoc
@@ -71,45 +61,26 @@ iconv -f iso8859-1 -t utf-8 RELEASE-NOTES.txt > RELEASE-NOTES.txt.conv && mv -f 
 
 %patch0
 
+%mvn_alias : org.apache.commons:%{short_name}
+%mvn_file : %{name} %{short_name}
+
 %build
 # Skip tests, tomcat:naming-java and tomcat:naming-common not available
-mvn-rpmbuild \
-        -Dmaven.local.depmap.file="%{SOURCE1}" \
-        -Dmaven.test.skip=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_12jpp7
 - new release
 
