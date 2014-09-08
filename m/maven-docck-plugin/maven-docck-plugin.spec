@@ -1,90 +1,58 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-docck-plugin
 Version:        1.0
-Release:        alt2_11jpp7
+Release:        alt2_14jpp7
 Summary:        Maven Documentation Checker Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-docck-plugin/
 #svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-docck-plugin-1.0/
 #tar jcf maven-docck-plugin-1.0.tar.bz2 maven-docck-plugin-1.0/
 Source0:        %{name}-%{version}.tar.bz2
-
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: jakarta-commons-httpclient
-BuildRequires: maven-plugin-tools
-BuildRequires: maven-plugin-descriptor
-BuildRequires: plexus-utils
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       apache-commons-logging
-Requires:       maven-plugin-tools
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
-
-Obsoletes: maven2-plugin-docck <= 0:2.0.8
-Provides: maven2-plugin-docck = 1:%{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-httpclient:commons-httpclient)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-descriptor)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
 Checks for violations of the Plugin Documentation Standard.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
 %setup -q 
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins %{name} %{version} JPP %{name}
+%files -f .mfiles
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp7
 - new release
 
