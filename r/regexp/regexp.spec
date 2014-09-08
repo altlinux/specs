@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           regexp
 Version:        1.5
-Release:        alt1_10jpp7
+Release:        alt1_13jpp7
 Epoch:          0
 Summary:        Simple regular expressions API
 License:        ASL 2.0
@@ -99,6 +99,9 @@ install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap -a regexp:regexp
 
+%check
+ant -Djakarta-site2.dir=. test
+
 %files
 %doc LICENSE
 %{_javadir}/%{name}.jar
@@ -111,6 +114,9 @@ install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_10jpp7
 - new release
 
