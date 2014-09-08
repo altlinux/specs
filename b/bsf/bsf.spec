@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_16jpp7
+Release:        alt3_17jpp7
 Epoch:          1
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
@@ -135,6 +135,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_17jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_16jpp7
 - new release
 
