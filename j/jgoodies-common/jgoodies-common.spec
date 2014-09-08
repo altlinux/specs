@@ -1,5 +1,4 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -7,8 +6,8 @@ BuildRequires: jpackage-compat
 %global shortname common
 
 Name:           jgoodies-common
-Version:        1.4.0
-Release:        alt3_1jpp7
+Version:        1.6.0
+Release:        alt1_3jpp7
 Summary:        Common library shared by JGoodies libraries and applications
 
 Group:          Development/Java
@@ -23,7 +22,6 @@ BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-provider-junit4
 Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
@@ -40,7 +38,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 
 %prep
@@ -65,34 +63,28 @@ for file in LICENSE.txt RELEASE-NOTES.txt; do
   mv $file.new $file
 done
 
+%mvn_file :%{name} %{name} %{name}
+
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 
 %install
-install -Dpm 0644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-install -Dpm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-cp -a target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
 
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt README.html RELEASE-NOTES.txt
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
 
-%files javadoc
-%{_javadocdir}/%{name}/
+%files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3jpp7
+- new release
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_1jpp7
 - rebuild with maven-local
 
