@@ -1,14 +1,10 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ezmorph
 Version:        1.0.6
-Release:        alt1_7jpp7
+Release:        alt1_9jpp7
 Summary:        Object transformation library for Java
 License:        ASL 2.0
 URL:            http://ezmorph.sourceforge.net/
@@ -19,18 +15,13 @@ URL:            http://ezmorph.sourceforge.net/
 # cvs -z3 -d:pserver:anonymous@ezmorph.cvs.sourceforge.net:/cvsroot/ezmorph co -r REL_1_0_6 -d ezmorph-1.0.6 -P ezmorph
 # tar czf ezmorph-1.0.6.tar.gz --exclude CVS ezmorph-1.0.6
 Source0:        %{name}-%{version}.tar.gz
+# License is not in tarball, but has since been added to upstream's source control:
+Source1:        http://ezmorph.cvs.sourceforge.net/viewvc/ezmorph/ezmorph/LICENSE.txt
 Patch0:         ezmorph-1.0.6-maven.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  jakarta-oro
-BuildRequires:  junit
 BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
@@ -42,7 +33,6 @@ multidimensional arrays.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires:       %{name} = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -52,33 +42,26 @@ API documentation for %{name}.
 %setup -q
 %patch0 -p1 -b .maven
 
+cp -p %{SOURCE1} .
+
+%mvn_file : %{name}
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# Code
-install -d $RPM_BUILD_ROOT%{_javadir}
-# Bad version number, likely a typo
-install -m644 target/%{name}-1.0.5.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# Documentation
-install -d $RPM_BUILD_ROOT%{_javadocdir}
-cp -ap target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%doc LICENSE.txt
 
-# Maven
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_javadir}/*
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_7jpp7
 - new release
 
