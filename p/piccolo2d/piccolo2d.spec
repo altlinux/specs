@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           piccolo2d
 Version:        1.3.1
-Release:        alt2_2jpp7
+Release:        alt2_3jpp7
 Summary:        Structured 2D graphics toolkit
 
 Group:          Development/Java
@@ -99,6 +98,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc license-piccolo.txt 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2_2jpp7
 - new release
 
