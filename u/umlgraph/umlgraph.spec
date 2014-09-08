@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           umlgraph
 Version:        5.6
-Release:        alt2_4jpp7
+Release:        alt2_5jpp7
 Summary:        Automated Drawing of UML Diagrams
 
 Group:          Development/Java
@@ -74,6 +74,9 @@ cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt2_4jpp7
 - new release
 
