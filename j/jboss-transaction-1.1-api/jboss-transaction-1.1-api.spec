@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-transaction-1.1-api
 Version:          1.0.1
-Release:          alt2_4jpp7
+Release:          alt2_6jpp7
 Summary:          Transaction 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -30,7 +29,6 @@ BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
@@ -87,6 +85,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_4jpp7
 - new release
 
