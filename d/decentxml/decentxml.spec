@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             decentxml
 Version:          1.4
-Release:          alt3_5jpp7
+Release:          alt3_6jpp7
 Summary:          XML parser optimized for round-tripping and code reuse
 License:          BSD
 Group:            Development/Java
@@ -63,6 +63,9 @@ sed -i -e "s|junit-dep|junit|g" pom.xml
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_5jpp7
 - update
 
