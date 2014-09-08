@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jcharts
 Version:	0.7.5
-Release:	alt3_10jpp7
+Release:	alt3_11jpp7
 Summary:	A java based charts library
 
 Group:		Publishing
@@ -79,6 +79,9 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_10jpp7
 - new release
 
