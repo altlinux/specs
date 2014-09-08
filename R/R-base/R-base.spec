@@ -1,10 +1,11 @@
 Name: R-base
-Version: 3.0.1
+Version: 3.1.1
 Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPL
 Group: Sciences/Mathematics
+Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 URL: http://www.r-project.org
 Source: R-%version.tar
@@ -118,7 +119,7 @@ make check
 %endif
 
 %files
-	%doc NEWS README
+	%doc doc/NEWS README
 	%_bindir/R
 	%_bindir/Rscript
 	%_man1dir/R.*
@@ -321,6 +322,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Mon Sep 08 2014 Kirill Maslinsky <kirill@altlinux.org> 3.1.1-alt1
+- Version 3.1.1
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1
 - Version 3.0.1
 
