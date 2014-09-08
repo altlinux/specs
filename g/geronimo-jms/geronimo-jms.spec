@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:		geronimo-jms
 Version:	1.1.1
-Release:	alt3_16jpp7
+Release:	alt3_17jpp7
 Summary:	J2EE JMS v1.1 API
 
 Group:		Development/Java
@@ -92,6 +92,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_17jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_16jpp7
 - new release
 
