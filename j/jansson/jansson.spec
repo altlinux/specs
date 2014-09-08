@@ -1,12 +1,11 @@
 Name: jansson
-Version: 2.4
-Release: alt1
+Version: 2.6
+Release: alt1.git20140827
 License: MIT
 Url: http://www.digip.org/jansson/
 Source: %name-%version.tar
 Group: System/Libraries
 Summary: C library for encoding, decoding and manipulating JSON data
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires: python-module-sphinx
 #gcc-c++ 
@@ -73,6 +72,9 @@ Jansson is a C library for encoding, decoding and manipulating JSON data. It fea
 
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1.git20140827
+- Version 2.6
+
 * Sat Dec 15 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.4-alt1
 - Buld for ALT
 
