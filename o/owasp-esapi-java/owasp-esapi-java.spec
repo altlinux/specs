@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             owasp-esapi-java
 Version:          2.0.1
-Release:          alt3_7jpp7
+Release:          alt3_9jpp7
 Summary:          OWASP Enterprise Security API
 Group:            Development/Java
 License:          BSD
@@ -40,6 +39,7 @@ BuildRequires:    maven-eclipse-plugin
 BuildRequires:    sonatype-oss-parent
 BuildRequires:    tomcat-servlet-3.0-api
 BuildRequires:    tomcat-jsp-2.2-api
+BuildRequires:    tomcat-el-2.2-api
 BuildRequires:    bsh
 BuildRequires:    junit
 BuildRequires:    apache-commons-io
@@ -49,16 +49,6 @@ BuildRequires:    log4j
 BuildRequires:    xom
 BuildRequires:    ecj
 BuildRequires:    maven-shared
-
-Requires:         jpackage-utils
-Requires:         tomcat-servlet-3.0-api
-Requires:         tomcat-jsp-2.2-api
-Requires:         apache-commons-collections
-Requires:         apache-commons-fileupload
-Requires:         log4j
-Requires:         bsh
-Requires:         xom
-Requires:         ecj
 Source44: import.info
 
 %description
@@ -71,7 +61,6 @@ ESAPI for Java also serves as a solid foundation for new development.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -105,40 +94,23 @@ This package contains the documentation for %{name}.
 sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/java/org/owasp/esapi/reference/HTTPUtilitiesTest.java
 
 %build
-mvn-rpmbuild \
-	-Dmaven.test.skip=true \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    package javadoc:aggregate
+%mvn_build -f
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/esapi-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %files doc
 %doc documentation/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt3_9jpp7
+- new release
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt3_7jpp7
 - added BR: for xmvn
 
