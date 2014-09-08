@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 Name:      eclipse-epic
 Version:   0.6.44
-Release:   alt1_3jpp7
+Release:   alt1_5jpp7
 Summary:   Perl Eclipse plug-in
 Group:     Development/Java
 License:   CPL
@@ -112,6 +112,9 @@ popd
 %{_datadir}/eclipse/dropins/epic
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.44-alt1_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.44-alt1_3jpp7
 - new release
 
