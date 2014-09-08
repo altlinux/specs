@@ -6,7 +6,7 @@
 
 Name: kde4-%rname
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -16,12 +16,14 @@ URL:       http://ktorrent.org
 Conflicts: ktorrent <= 2.2.8-alt2
 Requires: kde4-kross-python
 
-Source:   http://ktorrent.org/downloads/%version/%rname-%version.tar.gz
+Source:   http://ktorrent.org/downloads/%version/%rname-%version.tar
+Patch1: alt-remove-magnet-protocol.patch
 
 # Automatically added by buildreq on Tue Jun 01 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4base-workspace-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libktorrent-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby
 BuildRequires(pre): libktorrent-devel kde4base-runtime-devel kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: gcc-c++ glib2-devel glibc-devel libtag-devel
+BuildRequires: libGeoIP-devel desktop-file-utils
 
 %description
 ktorrent - KDE BitTorrent client. It comes with many useful plugins.
@@ -29,14 +31,21 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 
 %build
 %K4build \
- -DKDE4_BUILD_TESTS:BOOL=OFF
+ -DKDE4_BUILD_TESTS:BOOL=OFF \
+ -DWITH_SYSTEM_GEOIP:BOOL=ON \
+ #
 
 
 %install
 %K4install
+desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
+	--add-mime-type=x-scheme-handler/magnet \
+	%buildroot/%_K4xdg_apps/%rname.desktop
+
 %K4find_lang --with-kde %rname
 
 
@@ -50,12 +59,17 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 %_K4lib/*kt*.so
 #%_K4lib/kio_magnet.so
 %_K4srv/*.desktop
-%_K4srv/magnet.protocol
 %_K4srvtyp/ktorrentplugin.desktop
 #%_K4cfg/magnetsettings.kcfg
 
 
 %changelog
+* Mon Sep 08 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt2
+- fix magnet urls handling
+
+* Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt0.M60P.1
+- built for M60P
+
 * Mon Jan 21 2013 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt1
 - new version
 
