@@ -6,16 +6,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: librepository
 Version: 1.1.3
-Release: alt1_7jpp7
+Release: alt1_9jpp7
 Summary: Hierarchical repository abstraction layer
 License: LGPLv2
 Group: System/Libraries
-#Original source: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.zip
+#Original source: http://downloads.sourceforge.net/jfreereport/%%name}-%%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib ant-nodeps jpackage-utils libbase >= 1.1.3
+BuildRequires: ant ant-contrib jpackage-utils libbase >= 1.1.3
 Requires: jpackage-utils libbase >= 1.1.3
 BuildArch: noarch
 Patch0: librepository-1.1.2.build.patch
@@ -27,7 +27,7 @@ is organized in a hierarchical layer.
 
 %package javadoc
 Summary: Javadoc for %{name}
-Group: Development/Documentation
+Group: Development/Java
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -52,7 +52,6 @@ for file in README.txt licence-LGPL.txt ChangeLog.txt; do
 done
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p ./dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 pushd $RPM_BUILD_ROOT%{_javadir}
@@ -71,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_7jpp7
 - new release
 
