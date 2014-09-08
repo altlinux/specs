@@ -1,47 +1,40 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mvel
+%define version 2.1.6
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
 Name:          mvel
-Version:       2.0.19
-Release:       alt2_4jpp7
+Version:       2.1.6
+Release:       alt1_1jpp7
 Summary:       MVFLEX Expression Language
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://mvel.codehaus.org/
-# git clone git://github.com/mikebrock/mvel.git mvel2-2.0.18
-# cd mvel-2.0.19/ && git archive --format=tar --prefix=mvel2-2.0.19/ mvel2-2.0.19 | xz > ../mvel2-2.0.19.tar.xz
-Source0:       %{name}-%{version}.tar.xz
-Source1:       mvel-script
-Patch0:        mvel-2.0.19-use-system-asm.patch
+Source0:       https://github.com/mvel/mvel/archive/%{name}2-%{namedversion}.tar.gz
+
+Source1:       %{name}-script
+Patch0:        %{name}-2.1.6.Final-use-system-asm.patch
 # remove tests which require internal objectweb-asm libraries
-Patch1:        mvel-2.0.19-tests.patch
-BuildRequires: jpackage-utils
+Patch1:        %{name}-2.1.6.Final-tests.patch
 
-BuildRequires: objectweb-asm
 
+BuildRequires: mvn(asm:asm)
+BuildRequires: mvn(asm:asm-util)
 # test deps 
-BuildRequires: junit
-BuildRequires: xstream
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(com.thoughtworks.xstream:xstream)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 BuildRequires: maven-surefire-report-plugin
 
-Requires:      objectweb-asm
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -51,21 +44,25 @@ provides a plethora of features and is suited for everything from the
 smallest property binding and extraction, to full blown scripts.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}2-%{namedversion}
 find . -name "*.jar" -delete
 find . -name "*.class" -delete
 rm ASM-LICENSE.txt
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
+
+# Uwanted
+%pom_remove_plugin :maven-source-plugin
+# Remove org.apache.maven.wagon:wagon-webdav:1.0-beta-2
+%pom_xpath_remove "pom:project/pom:build/pom:extensions"
 
 sed -i 's/\r//' LICENSE.txt
 
@@ -73,40 +70,35 @@ sed -i 's/\r//' LICENSE.txt
 native2ascii -encoding UTF8 src/main/java/org/mvel2/sh/ShellSession.java src/main/java/org/mvel2/sh/ShellSession.java
 
 %build
+
+%mvn_file :%{name}2 %{name}
 # some test at random fails
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.failure.ignore=true install javadoc:aggregate
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{name}2-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 mkdir -p %{buildroot}%{_bindir}
 install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 
+install -m 644 target/%{name}2-%{namedversion}-tests.jar %{buildroot}%{_javadir}/%{name}-tests.jar
+
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mvel.conf`
 touch $RPM_BUILD_ROOT/etc/mvel.conf
 
-%files
+%files -f .mfiles
 %{_bindir}/%{name}
-%{_javadir}/%{name}*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%{_javadir}/%{name}-tests.jar
 %doc LICENSE.txt
 %config(noreplace,missingok) /etc/mvel.conf
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_1jpp7
+- new release
+
 * Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.19-alt2_4jpp7
 - new release
 
