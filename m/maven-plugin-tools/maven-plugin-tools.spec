@@ -1,16 +1,16 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip fest-assert xmlunit
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-tools
 Version:        3.1
-Release:        alt4_10jpp7
+Release:        alt4_14jpp7
 Epoch:          0
 Summary:        Maven Plugin Tools
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugin-tools/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugin-tools/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -20,51 +20,37 @@ BuildArch:      noarch
 # See: rhbz#920042, http://jira.codehaus.org/browse/MPLUGIN-242
 Patch0:         %{name}-rhbz-920042.patch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  ant
-BuildRequires:  bsh
-BuildRequires:  jtidy
-BuildRequires:  maven-artifact-manager
-BuildRequires:  maven-doxia-sink-api
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-plugin-annotations
-BuildRequires:  maven-plugin-descriptor
-BuildRequires:  maven-plugin-registry
-BuildRequires:  maven-plugin-tools-annotations
-BuildRequires:  maven-plugin-tools-api
-BuildRequires:  maven-plugin-tools-generators
-BuildRequires:  maven-plugin-tools-java
-BuildRequires:  maven-plugin-tools-model
-BuildRequires:  maven-project
-BuildRequires:  maven-shared-reporting-api
-BuildRequires:  maven-shared-reporting-impl
-BuildRequires:  objectweb-asm
-BuildRequires:  plexus-ant-factory
-BuildRequires:  plexus-archiver
-BuildRequires:  plexus-bsh-factory
-BuildRequires:  plexus-containers-component-annotations
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-utils
-BuildRequires:  plexus-velocity
-BuildRequires:  qdox
-BuildRequires:  velocity
-# This is parent POM of the plexus-ant-factory. It is not pulled in
-# as a dependency of plexus-ant-factory, but we need it, because
-# maven-script-ant subpackage fails to build without it.
-BuildRequires:  plexus-component-factories-pom
-# Test dependencies:
-%if 0
-BuildRequires:  easymock
-BuildRequires:  fest-assert
-BuildRequires:  junit
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  plexus-compiler
-BuildRequires:  xmlunit
-%endif
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(asm:asm-commons)
+BuildRequires:  mvn(bsh:bsh)
+BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
+BuildRequires:  mvn(net.sf.jtidy:jtidy)
+BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-launcher)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-parent)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-descriptor)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-registry)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-ant-factory)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-bsh-factory)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
 Source44: import.info
 
 
@@ -76,8 +62,6 @@ Plugins in a variety of languages.
 Group: Development/Java
 Summary:        Maven Plugin Java 5 Annotations
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
 Obsoletes:      maven-plugin-annotations < 0:%{version}-%{release}
 
 %description -n maven-plugin-annotations
@@ -87,25 +71,6 @@ This package contains Java 5 annotations to use in Mojos.
 Group: Development/Java
 Summary:        Maven Plugin Plugin
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       maven-artifact-manager
-Requires:       maven-doxia-sink-api
-Requires:       maven-doxia-sitetools
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-registry
-Requires:       maven-plugin-tools-annotations
-Requires:       maven-plugin-tools-api
-Requires:       maven-plugin-tools-beanshell
-Requires:       maven-plugin-tools-generators
-Requires:       maven-plugin-tools-java
-Requires:       maven-plugin-tools-model
-Requires:       maven-project
-Requires:       maven-shared-reporting-api
-Requires:       maven-shared-reporting-impl
-Requires:       plexus-utils
-Requires:       plexus-velocity
-Requires:       velocity
 Obsoletes:      maven2-plugin-plugin < 0:%{version}-%{release}
 Provides:       maven2-plugin-plugin = 0:%{version}-%{release}
 
@@ -119,18 +84,6 @@ artifact metadata and a generic help goal.
 Group: Development/Java
 Summary:        Maven Plugin Tool for Annotations
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       maven-plugin-annotations
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-tools-api
-Requires:       maven-project
-Requires:       objectweb-asm
-Requires:       plexus-archiver
-Requires:       plexus-containers-component-annotations
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
-Requires:       qdox
 
 %description annotations
 This package provides Java 5 annotation tools for use with Apache Maven.
@@ -139,14 +92,6 @@ This package provides Java 5 annotation tools for use with Apache Maven.
 Group: Development/Java
 Summary:        Maven Plugin Tool for Ant
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-tools-api
-Requires:       maven-plugin-tools-model
-Requires:       maven-project
-Requires:       plexus-containers-component-annotations
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
 Obsoletes:      maven-shared-plugin-tools-ant < 0:%{version}-%{release}
 Provides:       maven-shared-plugin-tools-ant = 0:%{version}-%{release}
 
@@ -157,12 +102,6 @@ Descriptor extractor for plugins written in Ant.
 Group: Development/Java
 Summary:        Maven Plugin Tools APIs
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       maven-plugin-descriptor
-Requires:       maven-project
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
 Obsoletes:      maven-shared-plugin-tools-api < 0:%{version}-%{release}
 Provides:       maven-shared-plugin-tools-api = 0:%{version}-%{release}
 
@@ -174,11 +113,6 @@ and generate documentation for Maven Plugins.
 Group: Development/Java
 Summary:        Maven Plugin Tool for Beanshell
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       bsh
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-tools-api
-Requires:       plexus-containers-component-annotations
 Obsoletes:      maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
 Provides:       maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
 
@@ -189,18 +123,6 @@ Descriptor extractor for plugins written in Beanshell.
 Group: Development/Java
 Summary:        Maven Plugin Tools Generators
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       jtidy
-Requires:       maven
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-tools-api
-Requires:       maven-project
-Requires:       maven-shared-reporting-api
-Requires:       objectweb-asm
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
-Requires:       plexus-velocity
-Requires:       velocity
 
 %description generators
 The Maven Plugin Tools Generators provides content generation
@@ -210,15 +132,6 @@ The Maven Plugin Tools Generators provides content generation
 Group: Development/Java
 Summary:        Maven Plugin Tool for Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       maven-plugin-descriptor
-Requires:       maven-plugin-tools-api
-Requires:       maven-project
-Requires:       plexus-containers-component-annotations
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
-Requires:       qdox
 Obsoletes:      maven-shared-plugin-tools-java < 0:%{version}-%{release}
 Provides:       maven-shared-plugin-tools-java = 0:%{version}-%{release}
 
@@ -231,8 +144,6 @@ Descriptor extractor for plugins written in Java.
 Group: Development/Java
 Summary:        Maven Plugin Tools Javadoc
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven-plugin-tools-java
 BuildArch: noarch
 
 %description javadoc
@@ -246,10 +157,6 @@ Java API documentation for %{name} is contained in
 Group: Development/Java
 Summary:        Maven Plugin Metadata Model
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven-plugin-descriptor
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
 Obsoletes:      maven-shared-plugin-tools-model < 0:%{version}-%{release}
 Provides:       maven-shared-plugin-tools-model = 0:%{version}-%{release}
 
@@ -261,7 +168,6 @@ model.
 Group: Development/Java
 Summary:        Maven Script Mojo Support
 Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
 
 %description -n maven-script
 Maven Script Mojo Support lets developer write Maven plugins/goals
@@ -271,15 +177,6 @@ with scripting languages instead of compiled Java.
 Group: Development/Java
 Summary:        Maven Ant Mojo Support
 Requires:       maven-script = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       ant
-Requires:       maven
-Requires:       maven-plugin-descriptor
-Requires:       maven-project
-Requires:       plexus-ant-factory
-Requires:       plexus-archiver
-Requires:       plexus-containers-container-default
-Requires:       plexus-component-factories-pom
 
 %description -n maven-script-ant
 This package provides %{summary}, which write Maven plugins with
@@ -289,9 +186,6 @@ Ant scripts.
 Group: Development/Java
 Summary:        Maven Beanshell Mojo Support
 Requires:       maven-script = %{epoch}:%{version}-%{release}
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       plexus-bsh-factory
 
 %description -n maven-script-beanshell
 This package provides %{summary}, which write Maven plugins with
@@ -302,9 +196,8 @@ Beanshell scripts.
 # consensus that current naming scheme should be kept, even if it doesn't
 # conform to the guidelines.  mizdebsk, September 2012
 %package javadocs
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 
 %description javadocs
 API documentation for %{name}.
@@ -321,121 +214,54 @@ ln -s maven-script/maven-script-{ant,beanshell} .
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>"
 
+# Disable resolution of test artifacts (tests are skipped anyways).
+%mvn_config buildSettings/skipTests true
+
 %build
-mvn-rpmbuild package javadoc:aggregate -Dmaven.test.skip=true
+%mvn_build -s -f
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-
-# pom artifacts
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%add_maven_depmap JPP.%{name}-%{name}.pom
-install -pm 644 maven-script/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-maven-script.pom
-%add_maven_depmap -f maven-script JPP.%{name}-maven-script.pom
-mv %{buildroot}%{_mavendepmapfragdir}/%{name}-maven-script %{buildroot}%{_mavendepmapfragdir}/maven-script
-
-# jar or plugin artifacts
-for module in                      \
-    maven-plugin-annotations       \
-    maven-plugin-plugin            \
-    maven-plugin-tools-annotations \
-    maven-plugin-tools-ant         \
-    maven-plugin-tools-api         \
-    maven-plugin-tools-beanshell   \
-    maven-plugin-tools-generators  \
-    maven-plugin-tools-java        \
-    maven-plugin-tools-javadoc     \
-    maven-plugin-tools-model       \
-    maven-script-ant               \
-    maven-script-beanshell
-do
-    install -p -m 644 ${module}/target/${module}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${module}.jar
-    install -p -m 644 ${module}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${module}.pom
-    %add_maven_depmap -f ${module} JPP.%{name}-${module}.pom %{name}/${module}.jar
-    mv %{buildroot}%{_mavendepmapfragdir}/%{name}-${module} %{buildroot}%{_mavendepmapfragdir}/${module}
-done
-
-# javadoc
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 
-%files
+%files -f .mfiles-maven-plugin-tools
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
-%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files -n maven-plugin-annotations
-%{_javadir}/%{name}/maven-plugin-annotations.jar
-%{_mavenpomdir}/JPP.%{name}-maven-plugin-annotations.pom
-%{_mavendepmapfragdir}/maven-plugin-annotations
+%files -n maven-plugin-annotations -f .mfiles-maven-plugin-annotations
 
-%files -n maven-plugin-plugin
-%{_javadir}/%{name}/maven-plugin-plugin.jar
-%{_mavenpomdir}/JPP.%{name}-maven-plugin-plugin.pom
-%{_mavendepmapfragdir}/maven-plugin-plugin
+%files -n maven-plugin-plugin -f .mfiles-maven-plugin-plugin
 
-%files annotations
-%{_javadir}/%{name}/%{name}-annotations.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-annotations.pom
-%{_mavendepmapfragdir}/%{name}-annotations
+%files annotations -f .mfiles-maven-plugin-tools-annotations
 
-%files ant
-%{_javadir}/%{name}/%{name}-ant.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-ant.pom
-%{_mavendepmapfragdir}/%{name}-ant
+%files ant -f .mfiles-maven-plugin-tools-ant
 
-%files api
-%{_javadir}/%{name}/%{name}-api.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-api.pom
-%{_mavendepmapfragdir}/%{name}-api
+%files api -f .mfiles-maven-plugin-tools-api
 
-%files beanshell
-%{_javadir}/%{name}/%{name}-beanshell.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-beanshell.pom
-%{_mavendepmapfragdir}/%{name}-beanshell
+%files beanshell -f .mfiles-maven-plugin-tools-beanshell
 
-%files generators
-%{_javadir}/%{name}/%{name}-generators.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-generators.pom
-%{_mavendepmapfragdir}/%{name}-generators
+%files generators -f .mfiles-maven-plugin-tools-generators
 
-%files java
-%{_javadir}/%{name}/%{name}-java.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-java.pom
-%{_mavendepmapfragdir}/%{name}-java
+%files java -f .mfiles-maven-plugin-tools-java
 
-%files javadoc
-%{_javadir}/%{name}/%{name}-javadoc.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-javadoc.pom
-%{_mavendepmapfragdir}/%{name}-javadoc
+%files javadoc -f .mfiles-maven-plugin-tools-javadoc
 
-%files model
-%{_javadir}/%{name}/%{name}-model.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-model.pom
-%{_mavendepmapfragdir}/%{name}-model
+%files model -f .mfiles-maven-plugin-tools-model
 
-%files -n maven-script
-%{_mavenpomdir}/JPP.%{name}-maven-script.pom
-%{_mavendepmapfragdir}/maven-script
+%files -n maven-script -f .mfiles-maven-script
 
-%files -n maven-script-ant
-%{_javadir}/%{name}/maven-script-ant.jar
-%{_mavenpomdir}/JPP.%{name}-maven-script-ant.pom
-%{_mavendepmapfragdir}/maven-script-ant
+%files -n maven-script-ant -f .mfiles-maven-script-ant
 
-%files -n maven-script-beanshell
-%{_javadir}/%{name}/maven-script-beanshell.jar
-%{_mavenpomdir}/JPP.%{name}-maven-script-beanshell.pom
-%{_mavendepmapfragdir}/maven-script-beanshell
+%files -n maven-script-beanshell -f .mfiles-maven-script-beanshell
 
-%files javadocs
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
+%files javadocs -f .mfiles-javadoc
+ %doc LICENSE NOTICE
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt4_14jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt4_10jpp7
 - new release
 
