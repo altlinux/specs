@@ -1,28 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
 Name:          portals-pom
 Version:       1.3
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Apache Portals parent pom
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://portals.apache.org/
 # svn export http://svn.apache.org/repos/asf/portals/portals-pom/tags/portals-pom-1.3
 # tar czf portals-pom-1.3-src-svn.tar.gz portals-pom-1.3
-Source0:       portals-pom-1.3-src-svn.tar.gz
-# remove org.codehaus.mojo ianal-maven-plugin
-Patch0:        portals-pom-1.3-pom.patch
-BuildRequires: jpackage-utils
-
+Source0:       %{name}-%{version}-src-svn.tar.gz
 BuildRequires: maven-local
 BuildRequires: maven-install-plugin
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -36,8 +25,9 @@ company-affiliated experts), who use the Internet to communicate, plan,
 and develop Portal software and related documentation.
 
 %prep
-%setup -q -n portals-pom-%{version}
-%patch0 -p0
+%setup -q
+
+%pom_remove_plugin :ianal-maven-plugin
 
 for d in LICENSE NOTICE ; do
   iconv -f iso8859-1 -t utf-8 $d > $d.conv && mv -f $d.conv $d
@@ -46,20 +36,18 @@ done
 
 %build
 
-mvn-rpmbuild install
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_5jpp7
 - new release
 
