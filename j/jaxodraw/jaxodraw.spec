@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_12jpp7
+Release:	alt1_13jpp7
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -121,6 +121,9 @@ install -D -p -m 644 axodraw4j.sty %{buildroot}%{_datadir}/texmf/tex/latex/axodr
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_12jpp7
 - new release
 
