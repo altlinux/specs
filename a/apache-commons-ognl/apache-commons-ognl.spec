@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global oversion 4.0-incubating-SNAPSHOT
+%global short_name commons-ognl
 
-Name:           apache-commons-ognl
+Name:           apache-%{short_name}
 Version:        3.0.2
-Release:        alt2_4.20120313svn1102435jpp7
+Release:        alt2_6.20120313svn1102435jpp7
 Summary:        Object Graph Navigation Library
 
 Group:          Development/Java
@@ -21,13 +17,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: javassist
-BuildRequires: junit
 BuildRequires: jna
-Requires:      javassist
-Requires:      jpackage-utils
 Source44: import.info
 
 %description
@@ -38,41 +29,32 @@ and lambda expressions.
 %package javadoc
 Summary:      API documentation for %{name}
 Group:        Development/Java
-Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
+
+%mvn_file :%{short_name} %{short_name} %{name}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 target/commons-ognl-%{oversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-install -d -m 755 %{buildroot}%{_javadocdir}
-cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_6.20120313svn1102435jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_4.20120313svn1102435jpp7
 - new release
 
