@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt8_11jpp7
+Release:        alt8_13jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
@@ -122,6 +122,25 @@ cp %{SOURCE2} plexus-component-annotations/build.xml
  </activation>
 " plexus-component-javadoc
 
+# Generate OSGI info
+%pom_xpath_inject "pom:project" "
+    <packaging>bundle</packaging>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <_nouses>true</_nouses>
+              <Export-Package>org.codehaus.plexus.component.annotations.*</Export-Package>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>" plexus-component-annotations
+
 # to prevent ant from failing
 mkdir -p plexus-component-annotations/src/test/java
 
@@ -142,20 +161,20 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 # multiple -f flags in %files: merging -f .mfiles-plexus-containers into -f .mfiles
 cat .mfiles-plexus-containers >> .mfiles
 
-mkdir -p %buildroot%_javadir/plexus
-ln -s ../plexus-containers/plexus-container-default.jar %buildroot%_javadir/plexus/containers-container-default.jar
 
 # plexus-containers pom goes into main package
 %files -f .mfiles 
 %files component-annotations -f .mfiles-plexus-component-annotations
 %files container-default -f .mfiles-plexus-container-default
-%_javadir/plexus/containers-container-default.jar
 %files component-metadata -f .mfiles-plexus-component-metadata
 %files component-javadoc -f .mfiles-plexus-component-javadoc
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt8_13jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt8_11jpp7
 - new release
 
