@@ -14,13 +14,12 @@ BuildRequires: jpackage-compat
 %{expand: %%define pyver %(python -c 'import sys;print(sys.version[0:3])')}
 
 %global cpython_version    %{pyver}
-%global pyxml_version      0.8.3
 %global svn_tag            Release_2_2_1
 %global _python_bytecompile_errors_terminate_build 0
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt7_12jpp7
+Release:                   alt7_14jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -46,7 +45,6 @@ BuildRequires:             ant
 BuildRequires:             libreadline-java >= 0.8.0-16
 BuildRequires:             mysql-connector-java
 BuildRequires:             jakarta-oro
-BuildRequires:             python-module-PyXML >= %{pyxml_version}
 BuildRequires:             servlet
 BuildRequires:             jpackage-utils
 Group:                     Development/Java
@@ -118,8 +116,6 @@ ant \
   -Dht2html.dir=%{_datadir}/ht2html \
   -Dpython.lib=./CPythonLib \
   -Dpython.exe=%{_bindir}/python \
-  -DPyXmlHome=%{_libdir}/python%pyver \
-  -Dtargetver=1.3 \
   copy-dist
 
 
@@ -173,8 +169,6 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 cat > $RPM_BUILD_ROOT%{_bindir}/%{name} << EOF
 #!/bin/sh
 #
-# %{name} script
-# JPackage Project (http://jpackage.sourceforge.net)
 
 # Source functions library
 . %{_datadir}/java-utils/java-functions
@@ -220,8 +214,6 @@ EOF
 cat > $RPM_BUILD_ROOT%{_bindir}/%{name}c << EOF
 #!/bin/sh
 #
-# %{name}c script
-# JPackage Project (http://jpackage.sourceforge.net)
 
 %{_bindir}/%{name} %{_datadir}/%{name}/Tools/%{name}c/%{name}c.py "\$@"
 EOF
@@ -301,6 +293,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_14jpp7
+- new release
+
 * Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_12jpp7
 - new release
 
