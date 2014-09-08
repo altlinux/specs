@@ -2,7 +2,7 @@
 
 Name: perl-File-Find-Object-Rule
 Version: 0.0305
-Release: alt1
+Release: alt3
 
 Summary: alternative interface to File::Find::Object
 
@@ -45,5 +45,8 @@ specify the desired files and directories.
 %_bindir/findorule
 
 %changelog
+* Mon Sep 08 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.0305-alt3
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.0305-alt1
 - Initial build
