@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		sigar
 Version:	1.6.5
-Release:	alt1_0.8.git58097d9jpp7
+Release:	alt1_0.9.git58097d9jpp7
 Summary:	System Information Gatherer And Reporter
 
 %global sigar_suffix  0-g4b67f57
@@ -94,6 +94,9 @@ popd
 %doc LICENSE NOTICE AUTHORS
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_0.9.git58097d9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt1_0.8.git58097d9jpp7
 - new release
 
