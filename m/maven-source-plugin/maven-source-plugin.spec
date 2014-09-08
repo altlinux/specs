@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-source-plugin
 Version:        2.2.1
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Plugin creating source jar
 
 Group:          Development/Java
@@ -63,6 +63,9 @@ sed -i -e "s|plexus-container-default|plexus-container|g" pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_5jpp7
 - new version
 
