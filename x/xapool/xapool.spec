@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xapool
 Version:       1.5.0
-Release:       alt4_3jpp7
+Release:       alt4_4jpp7
 Summary:       Open source XA JDBC Pool
 Group:         Development/Java
 License:       LGPLv2+
@@ -95,6 +95,9 @@ cp -pr output/dist/jdoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_3jpp7
 - new release
 
