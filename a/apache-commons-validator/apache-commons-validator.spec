@@ -1,21 +1,16 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name       validator
-%global short_name      commons-%{base_name}
+%global short_name      commons-validator
 
 Name:             apache-%{short_name}
 Version:          1.4.0
-Release:          alt1_4jpp7
+Release:          alt1_6jpp7
 Summary:          Apache Commons Validator
 Group:            Development/Java
 License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:              http://commons.apache.org/validator/
+Source0:          http://www.apache.org/dist/commons/validator/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
@@ -23,13 +18,8 @@ BuildRequires:    apache-commons-beanutils
 BuildRequires:    apache-commons-digester
 BuildRequires:    apache-commons-logging
 BuildRequires:    maven-local
-BuildRequires:    junit
-Requires:         apache-commons-beanutils
-Requires:         apache-commons-digester
-Requires:         apache-commons-logging
 Requires:         jpackage-utils
 Source44: import.info
-
 
 %description
 A common issue when receiving data either electronically or from user input is
@@ -45,7 +35,6 @@ Group:            Development/Java
 Requires:         jpackage-utils
 BuildArch: noarch
 
-
 %description javadoc
 This package contains the API documentation for %{name}.
 
@@ -55,37 +44,26 @@ sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' RELEASE-NOTES.txt
 sed -i 's/\r//' NOTICE.txt
 
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :commons-validator %{short_name} %{name}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
-
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name}"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
-
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_6jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_4jpp7
 - new version
 
