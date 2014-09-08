@@ -1,14 +1,12 @@
-BuildRequires: maven-plugin-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             paranamer
 Version:          2.4.1
-Release:          alt2_5jpp7
+Release:          alt2_6jpp7
 Summary:          Library for accessing non-private method parameter names at run-time
 Group:            Development/Java
 License:          BSD
@@ -108,6 +106,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_6jpp7
+- new release
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_5jpp7
 - fixed build
 
