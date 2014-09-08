@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
@@ -11,12 +12,11 @@ BuildRequires: jpackage-compat
 
 Name:           log4j
 Version:        1.2.17
-Release:        alt4_10jpp7
+Release:        alt4_14jpp7
 Epoch:          0
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://logging.apache.org/%{name}
 Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/%{name}-%{version}.tar.gz
 # Converted from src/java/org/apache/log4j/lf5/viewer/images/lf5_small_icon.gif
@@ -32,42 +32,29 @@ Source114:      %{name}-chainsaw.1
 Source200:      %{name}.catalog
 Patch0:         0001-logfactor5-changed-userdir.patch
 Patch1:         0006-Remove-mvn-clirr-plugin.patch
-Patch2:         0009-Remove-ant-run-of-tests.patch
+Patch2:         0009-Fix-tests.patch
 Patch3:         0010-Fix-javadoc-link.patch
 Patch4:         0011-Remove-openejb.patch
 Patch5:         0012-Add-proper-bundle-symbolicname.patch
 
-BuildRequires:  maven-local
 BuildRequires:  %{__perl}
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  javamail
-BuildRequires:  geronimo-jms
-BuildRequires:  geronimo-parent-poms
 BuildRequires:  desktop-file-utils
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-idea-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  ant-junit
+BuildRequires:  maven-local
+BuildRequires:  javamail
+BuildRequires:  junit
+BuildRequires:  geronimo-jms
+BuildRequires:  jakarta-oro
 BuildRequires:  ant-contrib
+BuildRequires:  ant-junit
 Source44: import.info
-
 
 %description
 Log4j is a tool to help the programmer output log statements to a
 variety of output targets.
 
 %package        manual
+Group: Development/Java
 Summary:        Developer manual for %{name}
-Group:          Development/Java
 Requires:       %{name}-javadoc = %{version}-%{release}
 BuildArch: noarch
 
@@ -75,8 +62,8 @@ BuildArch: noarch
 %{summary}.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -87,7 +74,7 @@ BuildArch: noarch
 # see patch files themselves for reasons for applying
 %patch0 -p1 -b .logfactor-home
 %patch1 -p1 -b .remove-mvn-clirr
-%patch2 -p1 -b .remove-tests
+%patch2 -p1 -b .fix-tests
 %patch3 -p1 -b .xlink-javadoc
 %patch4 -p1 -b .openejb
 %patch5 -p1 -b .bundlename
@@ -108,10 +95,18 @@ done
 find -name "*.jar" -o -name "*.class" -delete
 rm -rf docs/api
 
+# Needed by tests
+mkdir -p tests/lib/
+(cd tests/lib/
+  ln -s `build-classpath jakarta-oro`
+  ln -s `build-classpath javamail/mail`
+  ln -s `build-classpath junit`
+)
+
 
 %build
 %mvn_file : %{name}
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -159,6 +154,9 @@ if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
     %{_datadir}/sgml/%{name}/catalog > /dev/null || :
 fi
 if [ -x %{_bindir}/xmlcatalog -a -w %{_sysconfdir}/xml/catalog ]; then
+  %{_bindir}/xmlcatalog --noout --add public "-//APACHE//DTD LOG4J 1.2//EN" \
+    file://%{_datadir}/sgml/%{name}/log4j.dtd %{_sysconfdir}/xml/catalog \
+    > /dev/null
   %{_bindir}/xmlcatalog --noout --add system log4j.dtd \
     file://%{_datadir}/sgml/%{name}/log4j.dtd %{_sysconfdir}/xml/catalog \
     > /dev/null || :
@@ -168,7 +166,8 @@ fi
 %preun
 if [ $1 -eq 0 ]; then
   if [ -x %{_bindir}/xmlcatalog -a -w %{_sysconfdir}/xml/catalog ]; then
-    %{_bindir}/xmlcatalog --noout --del log4j.dtd \
+    %{_bindir}/xmlcatalog --noout --del \
+      file://%{_datadir}/sgml/%{name}/log4j.dtd \
       %{_sysconfdir}/xml/catalog > /dev/null || :
   fi
 fi
@@ -200,6 +199,9 @@ fi
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt4_14jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.17-alt4_10jpp7
 - new release
 
