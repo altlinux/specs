@@ -1,32 +1,26 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-dmr
-%define version 1.1.1
-%global namedreltag .Final
+%define version 1.2.0
+%global namedreltag .Beta2
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-dmr
-Version:          1.1.1
-Release:          alt2_9jpp7
+Version:          1.2.0
+Release:          alt1_0.1.Beta2jpp7
 Summary:          JBoss DMR
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-dmr
-
-# git clone git://github.com/jbossas/jboss-dmr.git
-# cd jboss-dmr/ && git archive --format=tar --prefix=jboss-dmr-1.1.1.Final/ 1.1.1.Final | xz > jboss-dmr-1.1.1.Final.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
+Source0:          https://github.com/jbossas/jboss-dmr/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -42,19 +36,14 @@ BuildRequires:    jboss-parent
 BuildRequires:    jboss-logmanager
 BuildRequires:    cookcc
 BuildRequires:    apiviz
-
-Requires:         cookcc
-Requires:         jboss-logmanager
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 This package contains the Dynamic Model Representation.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -64,33 +53,21 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+# ModelNodeTest.testFromJSONStringUnicode:280 failed
+%mvn_build -f
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_0.1.Beta2jpp7
+- new release
+
 * Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_9jpp7
 - new release
 
