@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:    bindex
 Version: 2.2
-Release: alt3_7.svn96jpp7
+Release: alt3_8.svn96jpp7
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Java
@@ -71,6 +71,9 @@ java -jar $(build-classpath aqute-bnd.jar) \
 %{_javadir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_8.svn96jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_7.svn96jpp7
 - new release
 
