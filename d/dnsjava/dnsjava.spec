@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_4jpp7
+Release:       alt1_5jpp7
 Summary:       Java DNS implementation
 Group:         System/Libraries
 License:       BSD and MIT
@@ -111,6 +111,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_4jpp7
 - new release
 
