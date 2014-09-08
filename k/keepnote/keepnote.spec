@@ -1,6 +1,6 @@
 Name: keepnote
 Version: 0.7.8
-Release: alt1
+Release: alt2
 
 Summary: KeepNote is a note taking application
 License: GPLv2
@@ -15,6 +15,8 @@ BuildRequires: python-module-pygtk python-module-pygtk-libglade
 BuildRequires: libgtk+2-devel python-modules-sqlite3
 # optional
 BuildRequires: python-module-pygnome-extras-devel
+
+Requires: python-modules-sqlite3 python-module-pygtk-libglade
 
 %description
 KeepNote is a note taking application. With KeepNote, you can store your
@@ -41,6 +43,9 @@ later reference.
 
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt2
+- Added necessary requirements
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt1
 - Version 0.7.8
 
