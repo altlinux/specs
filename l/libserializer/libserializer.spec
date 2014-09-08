@@ -6,16 +6,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: libserializer
 Version: 1.1.2
-Release: alt1_8jpp7
+Release: alt1_10jpp7
 Summary: JFreeReport General Serialization Framework
 License: LGPLv2+
 Group: System/Libraries
-#Original source: http://downloads.sourceforge.net/jfreereport/libserializer-%{version}.zip
+#Original source: http://downloads.sourceforge.net/jfreereport/libserializer-%%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
 Source: libserializer-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org
-BuildRequires: ant ant-contrib ant-nodeps jpackage-utils libbase >= 1.1.2
+BuildRequires: ant ant-contrib jpackage-utils libbase >= 1.1.2
 Requires: jpackage-utils libbase >= 1.1.2
 BuildArch: noarch
 Patch0: libserializer-1.1.2.build.patch
@@ -27,7 +27,7 @@ task of writing custom java serialization handlers.
 
 %package javadoc
 Summary: Javadoc for %{name}
-Group: Development/Documentation
+Group: Development/Java
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -48,7 +48,6 @@ ln -s %{_javadir}/ant ant-contrib
 ant jar javadoc
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p dist/libserializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 pushd $RPM_BUILD_ROOT%{_javadir}
@@ -67,6 +66,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_8jpp7
 - new release
 
