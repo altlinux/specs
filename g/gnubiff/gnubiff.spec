@@ -3,8 +3,8 @@
 %def_with password
 
 Name: %_name
-Version: 2.2.11
-Release: alt3.1.qa1
+Version: 2.2.15
+Release: alt1
 
 Summary: gnubiff is a mail notifier that displays headers when new mail has arrived.
 License: %gpl3plus w/exception for OpenSSL
@@ -13,21 +13,18 @@ Url: http://gnubiff.sourceforge.net
 
 Source: http://downloads.sourceforge.net/%_name/%_name-%version.tar.gz
 Source2: %name.desktop
-Patch: %_name-2.2.9-alt-tls-support.patch
-#Patch1: %_name-2.2.9-fix-build.patch
-Patch3: %_name-2.2.11-fix-building.patch
-Patch4: gnubiff-2.2.11-alt-DSO.patch
 
 BuildPreReq: rpm-build-licenses
 
 # From configure.ac
 BuildPreReq: libgamin-devel >= 0.1.0
-BuildPreReq: libgtk+2-devel >= 2.6
+BuildPreReq: libgtk+3-devel
 BuildPreReq: glib2-devel >= 2.4
 BuildPreReq: libglade2-devel >= 2.3
 BuildPreReq: libpopt-devel
 
-BuildRequires: gcc-c++ libxml2-devel perl-XML-Parser
+BuildRequires: gcc-c++ libxml2-devel perl-XML-Parser intltool
+BuildPreReq: libssl-devel
 
 %description
 gnubiff is a mail notification program that checks for mail and displays
@@ -52,18 +49,16 @@ gnubiff features include:
     * Small memory usage
 
 %prep
-%setup -q -n %_name-%version
-%patch -p1 -b .alt-tls-support
-#patch1 -p0 -b .fix-build
-%patch3 -p0 -b .fix-building
-%patch4 -p2
+%setup -n %_name-%version
 
 %build
+%autoreconf
 %configure \
     %{subst_with password} \
     %{?_with_password:--with-password-string="andthentherewere3"} \
     --enable-expert \
-    --disable-gnome
+    --disable-gnome \
+		--disable-rpath
 
 %make_build
 
@@ -84,6 +79,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %doc README ChangeLog COPYING THANKS TODO NEWS AUTHORS
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.15-alt1
+- Version 2.2.15
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.11-alt3.1.qa1
 - NMU: rebuilt for updated dependencies.
 
