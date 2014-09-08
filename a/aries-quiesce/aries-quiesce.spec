@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          aries-quiesce
 Version:       0.3
-Release:       alt2_4jpp7
+Release:       alt2_5jpp7
 Summary:       Apache Aries Quiesce
 License:       ASL 2.0
 Group:         Development/Java
@@ -104,6 +103,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_4jpp7
 - new release
 
