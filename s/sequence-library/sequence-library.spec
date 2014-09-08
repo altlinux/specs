@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sequence-library
 Version:        1.0.2
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -88,6 +88,9 @@ cp -rp docs/api/ %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp7
+- new release
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp7
 - replaced by fc package
 
