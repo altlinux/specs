@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-rmi-1.0-api
 Version: 1.0.4
-Release: alt1_7jpp7
+Release: alt1_8jpp7
 Summary: Java Remote Method Invocation 1.0 API
 Group: Development/Java
 License: GPLv2 with exceptions
@@ -102,6 +101,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_7jpp7
 - new release
 
