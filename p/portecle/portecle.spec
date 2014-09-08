@@ -9,11 +9,11 @@ BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name portecle
 %define version 1.7
-%global docdir  %{_docdir}/%{name}-%{version}/doc
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           portecle
 Version:        1.7
-Release:        alt2_8jpp7
+Release:        alt2_9jpp7
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
@@ -50,7 +50,7 @@ cp -p src/main/net/sf/portecle/images/splash.png doc/images/
 
 
 %build
-%ant -Djar.classpath= -Dhelpbaseurl=file://%{docdir}/ \
+%ant -Djar.classpath= -Dhelpbaseurl=file://%{_pkgdocdir}/doc/ \
     -Dbcprov.jar=$(build-classpath bcprov) jar
 
 
@@ -71,7 +71,7 @@ desktop-file-install \
 # Enable experimental features in non-EL builds by default
 install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 exp="%{?rhel:false}%{!?rhel:true}"
-sed -e "s|@DOCDIR@|%{docdir}|" -e "s|@EXPERIMENTAL@|$exp|" %{SOURCE1} \
+sed -e "s|@DOCDIR@|%{_pkgdocdir}/doc|" -e "s|@EXPERIMENTAL@|$exp|" %{SOURCE1} \
     > $RPM_BUILD_ROOT%{_bindir}/portecle
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/portecle
 
@@ -89,6 +89,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_8jpp7
 - new release
 
