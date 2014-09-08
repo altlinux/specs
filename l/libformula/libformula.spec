@@ -6,16 +6,16 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: libformula
 Version: 1.1.3
-Release: alt1_8jpp7
+Release: alt1_10jpp7
 Summary: Formula Parser
 License: LGPLv2
 Group: System/Libraries
-#Original source: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.zip
+#Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
 #unzip, find . -name "*.jar" -exec rm {} \;
 #to simplify the licensing
 Source: %{name}-%{version}-jarsdeleted.zip
 URL: http://reporting.pentaho.org/
-BuildRequires: ant ant-contrib ant-nodeps jpackage-utils libbase >= 1.1.3
+BuildRequires: ant ant-contrib jpackage-utils libbase >= 1.1.3
 Requires: jpackage-utils apache-commons-logging libbase >= 1.1.3
 BuildArch: noarch
 Patch0: libformula-1.1.2.build.patch
@@ -28,7 +28,7 @@ compute formulas.
 
 %package javadoc
 Summary: Javadoc for %{name}
-Group: Development/Documentation
+Group: Development/Java
 Requires: %{name} = %{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
@@ -49,7 +49,6 @@ ln -s %{_javadir}/ant ant-contrib
 ant jar javadoc
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p ./dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 pushd $RPM_BUILD_ROOT%{_javadir}
@@ -68,6 +67,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_8jpp7
 - new release
 
