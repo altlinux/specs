@@ -1,7 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -15,9 +12,8 @@ BuildRequires: jpackage-compat
 
 Name:             %{?scl_prefix}%{project}-%{pkgname}
 Version:          0.6.0
-Release:          alt2_6jpp7
+Release:          alt2_8jpp7
 Summary:          Parent package for Felix Gogo
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://felix.apache.org/site/apache-felix-gogo.html
 
@@ -25,11 +21,13 @@ Source0:          http://apache.mirror.rbftpnetworks.com//felix/gogo-parent-0.6.
 
 BuildArch:        noarch
 
-BuildRequires:    maven-local
-BuildRequires:    jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:felix-parent)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.mockito:mockito-all)
 
-BuildRequires:    maven-local
-Requires:         jpackage-utils
 %{?scl:Requires: %scl_runtime}
 Source44: import.info
 
@@ -46,21 +44,18 @@ dynamic service deployment framework that is amenable to remote management.
 %setup -q -n gogo-parent-%{version}
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 %install
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{pkg_name}.pom
-%add_maven_depmap JPP-%{pkg_name}.pom 
+%mvn_install
 
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{_mavenpomdir}/JPP-%{pkg_name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_6jpp7
 - new release
 
