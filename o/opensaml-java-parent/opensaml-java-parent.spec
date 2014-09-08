@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             opensaml-java-parent
 Version:          4
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          OpenSAML Java Parent
 Group:            Development/Java
 License:          ASL 2.0
@@ -52,6 +51,9 @@ install -pm 644 %{SOURCE0} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_3jpp7
 - new release
 
