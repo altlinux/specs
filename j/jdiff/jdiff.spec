@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_4jpp7
+Release:       alt2_5jpp7
 Summary:       An HTML Report of API Differences
 Group:         Development/Java
 License:       GPL+ and LGPLv2+
@@ -109,6 +109,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_4jpp7
 - new release
 
