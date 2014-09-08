@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -39,9 +40,8 @@ BuildRequires: jpackage-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_10jpp7
+Release:        alt2_12jpp7
 Epoch:          0
-Group:          Development/Java
 License:        CPL
 URL:            http://emma.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/emma/%{name}-%{version}-src.zip
@@ -70,8 +70,8 @@ BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  jpackage-utils >= 0:1.7.5-1jpp.3
 # For the timestamp hack (see above)
 BuildRequires:  bc
-Requires(post):    jpackage-utils >= 0:1.7.5-1jpp.3
-Requires(postun):  jpackage-utils >= 0:1.7.5-1jpp.3
+Requires:       jpackage-utils >= 0:1.7.5-1jpp.3
+
 
 BuildArch:      noarch
 Source44: import.info
@@ -84,9 +84,8 @@ enterprise software development while keeping individual developer's
 work fast and iterative.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -112,14 +111,12 @@ rm lib/internal/stamptool.jar
 ant -Dbuild.compiler=modern build javadoc
 
 %install
+
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 dist/%{name}.jar \
                $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -m 644 dist/%{name}_ant.jar \
                $RPM_BUILD_ROOT%{_javadir}/%{name}_ant.jar
-%add_to_maven_depmap emma emma %{version} JPP %{name}
-%add_to_maven_depmap emma emma_ant %{version} JPP %{name}_ant
-
 
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
@@ -127,6 +124,8 @@ install -pm 644 %{SOURCE1} \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -pm 644 %{SOURCE2} \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}_ant.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP-%{name}_ant.pom %{name}_ant.jar
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -143,6 +142,9 @@ cp -pr out/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_10jpp7
 - new release
 
