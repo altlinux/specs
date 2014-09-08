@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          tuscany-parent
 Version:       2
-Release:       alt1_6jpp7
+Release:       alt1_7jpp7
 Summary:       Apache Tuscany Project Parent
 Group:         Development/Java
 License:       ASL 2.0
@@ -60,6 +59,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2-alt1_6jpp7
 - new release
 
