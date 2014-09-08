@@ -1,26 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
-%define datrie_version 0.2.6
-
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.19
-Release: alt1_2
+Version: 0.1.21
+Release: alt1_1
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
-Source1: ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-%{datrie_version}.tar.xz
-Patch: libthai-libdatrie-static-build.patch
-Patch1: libthai-0.1.9-multilib.patch
+Patch: libthai-0.1.9-multilib.patch
 URL: http://linux.thai.net
 
+BuildRequires: pkgconfig(datrie-0.2)
 BuildRequires: doxygen
-# we edit the Makefile.am's
-BuildRequires: automake
-BuildRequires: autoconf
-BuildRequires: libtool
 Source44: import.info
 
 %description
@@ -42,40 +34,10 @@ Install libthai-devel if you want to develop programs which will use
 libthai.
 
 %prep
-%setup -q -n %{name}-%{version} -a 1
-mv libdatrie-%{datrie_version} libdatrie
-%patch -p1 -b .static-build
-%patch1 -p1 -b .multilib
+%setup -q
+%patch -p1 -b .multilib
 
 %build
-
-# libthai depends on this library called libdatrie.  libdatrie is a
-# data-structure implementaiton that the author of libthai ripped out of it.
-# However, since libthai is the only user of that code, there's no reason to
-# 1) package it separately, 2) use it as a shared library.
-# So, we compile it as a libtool convenience library and include in libthai.so,
-# and use symbol hiding to hide them (and other internal symbols).
-#
-# The patch takes care of making datrie into a convenience lib and making sure
-# libthai will include it (and hide its symbols), and the exports make sure
-# libthai finds the uninstalled libdatrie.  We need to call automake, since
-# the patch modifies a few Makefile.am's.
-
-{
-  pushd libdatrie
-  mkdir m4
-  autoreconf -i -f
-  %configure
-  make
-  popd
-}
-
-export DATRIE_CFLAGS="-I$PWD/libdatrie"
-export DATRIE_LIBS="$PWD/libdatrie/datrie/libdatrie.la"
-export PATH="$PWD/libdatrie/tools:$PATH"
-
-autoreconf -i -f
-
 %configure --disable-static
 make
 
@@ -85,9 +47,9 @@ make
 
 # move installed doc files back to build directory to package them
 # in the right place
-mkdir installed-docs
-mv $RPM_BUILD_ROOT%{_docdir}/libthai/* installed-docs
-rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
+#mkdir installed-docs
+#mv $RPM_BUILD_ROOT%{_docdir}/libthai/* installed-docs
+#rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
 
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -97,12 +59,15 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/libthai
 
 %files devel
-%doc installed-docs/*
+#%doc installed-docs/*
 %{_includedir}/thai
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.21-alt1_1
+- new version (closes: #30252)
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_2
 - update to new release by fcimport
 
