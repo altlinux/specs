@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jorbis
 Version:        0.0.17
-Release:        alt1_8jpp7
+Release:        alt1_10jpp7
 Summary:        Pure Java Ogg Vorbis Decoder
 URL:            http://www.jcraft.com/jorbis/
 License:        LGPLv2+
@@ -33,7 +33,6 @@ JOrbis is a pure Java Ogg Vorbis decoder.
 %package javadoc
 Summary:        Java docs for jorbis
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -49,7 +48,7 @@ Requires:       %{name} = %{version}-%{release}
 %description player
 This package contains JOrbisPlayer a simple java applet for playing
 ogg-vorbis files from a browser.
-See %{_docdir}/%{name}-player-%{version}/JOrbisPlayer.html for
+See %{_docdir}/%{name}-player/JOrbisPlayer.html for
 an example how to embed and use the applet.
 
 
@@ -79,7 +78,8 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/jorbis.jar
 
 %files javadoc
-%doc %{_javadocdir}/%{name}
+%doc COPYING.LIB
+%{_javadocdir}/%{name}
 
 %files player
 %doc player/JOrbisPlayer.html
@@ -87,6 +87,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_8jpp7
 - new release
 
