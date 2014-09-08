@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -12,6 +13,9 @@ BuildRequires: jpackage-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name xmlbeans
+%define version 2.6.0
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -44,12 +48,12 @@ BuildRequires: jpackage-compat
 
 #def_with bootstrap
 %bcond_with bootstrap
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_3jpp7
+Release:        alt1_6jpp7
 Summary:        XML-Java binding tool
-Group:          Development/Java
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
 # Pom file is not available from maven repository for the
@@ -69,7 +73,6 @@ BuildRequires:  xmlbeans
 %endif
 BuildRequires:  jpackage-utils >= 0:1.5
 BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
-BuildRequires:  ant >= 0:1.6 ant-junit junit
 BuildRequires:  xml-commons-resolver >= 0:1.1
 BuildRequires:  bea-stax-api
 BuildRequires:  saxon >= 8
@@ -98,10 +101,8 @@ Object model.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -109,8 +110,8 @@ BuildArch: noarch
 
 
 %package manual
+Group: Development/Java
 Summary:        Documents for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description manual
@@ -118,8 +119,8 @@ BuildArch: noarch
 
 
 %package scripts
+Group: Development/Java
 Summary:        Scripts for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description scripts
@@ -152,21 +153,17 @@ ln -sf $(build-classpath saxon) external/lib/saxon9.jar
 ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
 
 # Fix CRLF
-sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css
+sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css docs/guide/tools.html
 
 # Build
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Djavac.source=1.5 -Djavac.target=1.5 default docs
 
 %install
-
 # jar
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -p -m 0644 build/lib/xmlpublic.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic-%{version}.jar
-install -p -m 0644 build/lib/xbean_xpath.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath-%{version}.jar
-install -p -m 0644 build/lib/xbean.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean-%{version}.jar
-ln -s xmlpublic-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic.jar
-ln -s xbean_xpath-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath.jar
-ln -s xbean-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean.jar
+install -p -m 0644 build/lib/xmlpublic.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic.jar
+install -p -m 0644 build/lib/xbean_xpath.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath.jar
+install -p -m 0644 build/lib/xbean.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xbean.pom
@@ -197,33 +194,33 @@ cp -pr build/docs/reference/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf build/docs/reference
 
 # manual
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr build/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-# fix line endings
-cat $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/guide/tools.html | tr -d \\r > tmp
-mv tmp $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/guide/tools.html
+install -d -m 755 $RPM_BUILD_ROOT%{_pkgdocdir}
+cp -pr build/docs/* LICENSE.txt NOTICE.txt README.txt $RPM_BUILD_ROOT%{_pkgdocdir}
 
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE.txt NOTICE.txt  README.txt
-
+%files -f .mfiles
+%dir %{_pkgdocdir}
+%doc %{_pkgdocdir}/LICENSE.txt
+%doc %{_pkgdocdir}/NOTICE.txt
+%doc %{_pkgdocdir}/README.txt
 
 %files javadoc
+%dir %{_pkgdocdir}
+%doc %{_pkgdocdir}/LICENSE.txt
+%doc %{_pkgdocdir}/NOTICE.txt
+%doc %{_pkgdocdir}/README.txt
 %doc %{_javadocdir}/%{name}
 
-
 %files manual
-%{_docdir}/%{name}-%{version}
-
+%{_pkgdocdir}
 
 %files scripts
 %attr(0755,root,root) %{_bindir}/*
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_3jpp7
 - new release
 
