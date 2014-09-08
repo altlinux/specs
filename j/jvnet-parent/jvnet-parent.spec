@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jvnet-parent
 Version:        4
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Java.net parent POM file
 
 Group:          Development/Java
@@ -39,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_1jpp7
 - new version
 
