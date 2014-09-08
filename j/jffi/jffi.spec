@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:    jffi
 Version: 1.2.6
-Release: alt2_1jpp7
+Release: alt2_3jpp7
 Summary: An optimized Java interface to libffi 
 
 Group:   System/Libraries
@@ -25,7 +25,6 @@ BuildRequires: jpackage-utils
 BuildRequires: libffi-devel
 
 BuildRequires: ant
-BuildRequires: ant-nodeps
 BuildRequires: ant-junit
 BuildRequires: junit4
 
@@ -90,6 +89,9 @@ ant -Duse.system.libffi=1 test
 %_javadir/jffi.jar
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_3jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_1jpp7
 - added symlink in javadir
 
