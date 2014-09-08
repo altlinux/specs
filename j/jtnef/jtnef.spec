@@ -5,16 +5,16 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jtnef
-Version:        1.6.0
-Release:        alt1_8jpp7
+Version:        1.8.0
+Release:        alt1_2jpp7
 Summary:        Java TNEF package
 
 Group:          Development/Java
 License:        GPLv2+
 URL:            http://www.freeutils.net/source/jtnef/
-Source0:        http://www.freeutils.net/source/jtnef/jtnef-1_6_0.zip
+Source0:        http://www.freeutils.net/source/jtnef/jtnef-1_8_0.zip
+Source1:        jtnef.pom
 BuildArch:      noarch
-ExcludeArch:    ppc64
 
 BuildRequires:  jpackage-utils
 BuildRequires:  javamail
@@ -44,14 +44,14 @@ mail client, is useless, and makes access to the original message attachments
 impossible.
 
 
-%package javadoc                                                                                 
-Summary:        Javadocs for %{name}                                                             
+%package javadoc
+Summary:        Javadocs for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
-                                                                                                 
-%description javadoc                                                                             
-This package contains the API documentation for %{name}.                                         
+
+%description javadoc
+This package contains the API documentation for %{name}.
 
 
 %prep
@@ -63,6 +63,7 @@ mkdir classes
 
 %build
 export CLASSPATH=$(build-classpath javamail poi)
+export LANG=en_US.UTF-8
 javac -d classes `find src -name *.java`
 jar -cf %{name}.jar -C classes .
 
@@ -73,14 +74,16 @@ javadoc -quiet -windowtitle "Java TNEF package %version" -use -d javadoc -source
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p %{name}.jar   \
   $RPM_BUILD_ROOT%{_javadir}/
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+sed -e s/@VERSION@/%{version}/ < %SOURCE1 > $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -rp javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
-%files
+%files -f .mfiles
 %doc CHANGES.txt LICENSE.txt README.txt
-%{_javadir}/%{name}.jar
 
 %files javadoc
 %doc LICENSE.txt
@@ -88,6 +91,9 @@ cp -rp javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_8jpp7
 - new release
 
