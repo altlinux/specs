@@ -1,6 +1,6 @@
 Name: keepnote
-Version: 0.7
-Release: alt0.1.1
+Version: 0.7.8
+Release: alt1
 
 Summary: KeepNote is a note taking application
 License: GPLv2
@@ -8,11 +8,11 @@ Group: Office
 
 Url: http://keepnote.org
 Source: %name-%version.tar
-Packager: Alexey Morsov <swi@altlinux.ru>
 
 BuildArch: noarch
 
-BuildRequires: python-module-pygtk python-module-pygtk-libglade libgtk+2-devel python-modules-sqlite3
+BuildRequires: python-module-pygtk python-module-pygtk-libglade
+BuildRequires: libgtk+2-devel python-modules-sqlite3
 # optional
 BuildRequires: python-module-pygnome-extras-devel
 
@@ -41,6 +41,9 @@ later reference.
 
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt1
+- Version 0.7.8
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7-alt0.1.1
 - Rebuild with Python-2.7
 
