@@ -1,19 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt5_7jpp7
+Release:       alt5_9jpp7
 Summary:       Maven XML Plugin
 Group:         Development/Java
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/xml-maven-plugin/
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/xml-maven-plugin/1.0/xml-maven-plugin-1.0-source-release.zip
-Patch0:        remove-failing-it.patch	       
-BuildRequires: jpackage-utils
+
 BuildRequires: mojo-parent
 
 BuildRequires: apache-rat-plugin
@@ -35,12 +34,10 @@ BuildRequires: plexus-io
 BuildRequires: plexus-resources
 BuildRequires: plexus-utils
 BuildRequires: saxon
-BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: xml-commons-resolver
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -48,9 +45,8 @@ Source44: import.info
 A plugin for various XML related tasks like validation and transformation.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadocs for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,47 +54,38 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0 
+
 for d in LICENSE NOTICE ; do
   iconv -f iso8859-1 -t utf-8 $d.txt > $d.txt.conv && mv -f $d.txt.conv $d.txt
   sed -i 's/\r//' $d.txt
 done
-rm -rf src/it/it8
+
 rm -rf src/it/mojo-1438-validate
+
+# Add the version
+sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.xsl
 
 # In maven 3, the functionality we need has been moved to maven-core
 %pom_remove_dep org.apache.maven:maven-project
 %pom_add_dep org.apache.maven:maven-core
 
 %build
-mvn-rpmbuild -Dmojo.java.target=1.5 -Dmaven.test.skip=true -DskipITs \
-  install javadoc:aggregate
+%mvn_build -f -- install
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/xml-maven-plugin-%{version}.jar \
-  %{buildroot}%{_javadir}/xml-maven-plugin.jar
-  
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-xml-maven-plugin.pom
-%add_maven_depmap JPP-xml-maven-plugin.pom xml-maven-plugin.jar
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadocdir}/xml-maven-plugin
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/xml-maven-plugin
-
-
-
-%files
-%{_javadir}/xml-maven-plugin.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
-%files javadoc
-%{_javadocdir}/xml-maven-plugin
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_7jpp7
 - new release
 
