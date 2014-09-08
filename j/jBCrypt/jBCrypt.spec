@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jBCrypt
 Version:        0.3
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Strong password hashing for Java
 
 Group:          Development/Java
@@ -52,6 +52,9 @@ java -cp %{_javadir}/junit.jar:jBCrypt.jar:jBCrypt-test.jar TestBCrypt
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_8jpp7
 - new release
 
