@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{groupId}-%{artifactId}
 Version:        1.2.0
-Release:        alt2_4jpp7
+Release:        alt2_5jpp7
 Summary:        Extension mechanism for Clojure functions
 
 # upstream asked to include license text:
@@ -88,6 +88,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_4jpp7
 - new release
 
