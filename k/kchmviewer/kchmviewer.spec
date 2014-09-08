@@ -1,20 +1,17 @@
 Name: kchmviewer
-Version: 5.2
-Release: alt1.qa1
+Version: 7.0
+Release: alt1.beta1.svn20140803
 
 Summary: A chm (MS HTML help file format) viewer (with KDE4 support)
 License: %gpl3plus
 Group: Office
 Url: http://kchmviewer.net
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
 Source: %name-%version.tar
-Patch0: %name-5.2-alt-remove-update-check.patch
-Patch1: %name-5.2-alt-fix-cmake-build.patch
 
-BuildRequires(pre): rpm-build-licenses kde-common-devel
-BuildPreReq: gcc-c++ kde4libs-devel libchm-devel
+BuildRequires(pre): rpm-build-licenses kde-common-devel rpm-macros-make
+BuildPreReq: gcc-c++ kde4libs-devel libchm-devel libzip-devel
+BuildPreReq: libXxf86misc-devel
 
 Conflicts: kde4graphics-okular < 4.2.3-alt1
 Obsoletes: kchmviewer4 <= 4.0-alt3
@@ -53,21 +50,26 @@ This version is built without KDE4 support and uses Qt Webkit engine.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
 
 %build
-%K4cmake -DKDE4_ENABLE_FINAL:BOOL=1
-%K4make
+%add_optflags -I%_includedir/libzip -I%_libdir/libzip/include
+%K4cmake -DKDE4_ENABLE_FINAL:BOOL=1 \
+	-DLIBZIP_INCLUDE_DIR:PATH=%_includedir/libzip \
+	-DKDE4_ENABLE_HTMLHANDBOOK:BOOL=ON
+%K4make VERBOSE=1
 %K4make
 
 mkdir build-nokde
 pushd build-nokde
-qmake-qt4 ../kchmviewer.pro %{!?_enable_debug:-after "CONFIG -= debug"}
+ln -s $(find ~ -name libebook.a) ../lib/libebook/
+qmake-qt4 \
+	QMAKE_CXX_FLAGS="%optflags" \
+	../kchmviewer.pro %{!?_enable_debug:-after "CONFIG -= debug"}
 %make lib/Makefile src/Makefile
-%make -C lib libchmfile/Makefile
-sed -i 's|-pipe |%optflags |g' lib/libchmfile/Makefile src/Makefile
-%make_build
+%make -C lib libebook/Makefile
+sed -i 's|-pipe |%optflags |g' src/Makefile lib/libebook/Makefile
+%make_build -C lib/libebook
+%make_build_ext
 
 %install
 %K4install VERBOSE=1
@@ -79,11 +81,11 @@ install -pD -m644 packages/kchmviewer.png %buildroot%_K4datadir/icons/hicolor/12
 
 %files -f %name.lang
 %doc ChangeLog DBUS-bindings FAQ README
-%__kde4_bindir/*
-%_K4lib/*.so
+%_kde4_bindir/*
+#_K4lib/*.so
 %_K4datadir/icons/hicolor/*/apps/*.png
 %_K4datadir/applications/kde4/*.desktop
-%_K4srv/*.protocol
+#_K4srv/*.protocol
 
 
 %files nokde
@@ -92,6 +94,9 @@ install -pD -m644 packages/kchmviewer.png %buildroot%_K4datadir/icons/hicolor/12
 
 
 %changelog
+* Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt1.beta1.svn20140803
+- Version 7.0beta1
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.2-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
