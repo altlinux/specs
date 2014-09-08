@@ -3,22 +3,19 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global svnrel 1169
+%global svnrel 1171
 
 Name:           jspecview
 Version:        2
-Release:        alt1_4.1169svnjpp7
+Release:        alt1_5.1171svnjpp7
 Summary:        JAVA applets for the display of JCAMP-DX and AnIML/CML spectral files
 
 Group:        	System/Base
 License:        LGPLv2
 URL:            http://jspecview.sourceforge.net/
-# Upstream does not release stable source tarballs.
-# Tarball created with
-# svn checkout -r %{svnrel} http://svn.code.sf.net/p/jspecview/svn/dev2 jspecview
-# rm -rf jspecview/.svn
-# tar jcf jspecview-%{svnrel}svn.tar.bz2 jspecview
-Source0:        jspecview-%{svnrel}svn.tar.bz2
+# Upstream does not release stable source tarballs. Tarball created with attached script.
+Source0:        jspecview-%{svnrel}svn.tar.xz
+Source1:        generate-sources.sh
 # Include missing resources in jar
 Patch0:	  	jspecview-resources.patch
 # Use system libraries
@@ -101,6 +98,9 @@ cp -rp JSpecView/doc/ %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2-alt1_5.1171svnjpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2-alt1_4.1169svnjpp7
 - new version
 
