@@ -1,5 +1,5 @@
 Name: lzip
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: LZMA file compressor
@@ -7,7 +7,7 @@ License: GPL v3+
 Group: Archiving/Compression
 
 Url: http://savannah.nongnu.org/projects/lzip/
-Source: http://download.savannah.gnu.org/releases/lzip/%name-%version.tar.gz
+Source0: http://download.savannah.gnu.org/releases/lzip/%name-%version.tar.gz
 Source100: lzip.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -38,7 +38,7 @@ kontekstów w zależności od wykorzystania bitów.
 
 %prep
 %setup
-sed -i 's,@dircategory Data Compression,@dircategory File utilities,' doc/lzip.texinfo
+sed -i 's,@dircategory Data Compression,@dircategory File utilities,' doc/lzip.texi
 
 
 %build
@@ -55,6 +55,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Tue Sep 09 2014 Michael Shigorin <mike@altlinux.org> 1.16-alt1
+- new version (watch file uupdate)
+
 * Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - new version (watch file uupdate)
 - converted patch to subst
