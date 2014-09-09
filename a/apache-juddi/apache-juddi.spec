@@ -1,19 +1,17 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-juddi
-Version:          3.1.4
-Release:          alt2_4jpp7
+Version:          3.1.5
+Release:          alt1_2jpp7
 Summary:          Client API for UDDI
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://juddi.apache.org/
 
-# svn export http://svn.apache.org/repos/asf/juddi/tags/juddi-3.1.4/ apache-juddi
-# tar cafJ apache-juddi-3.1.4.tar.xz apache-juddi
+# svn export http://svn.apache.org/repos/asf/juddi/tags/juddi-3.1.5/ apache-juddi
+# tar cafJ apache-juddi-3.1.5.tar.xz apache-juddi
 Source0:          %{name}-%{version}.tar.xz
 
-Patch1:           0001-Build-only-client-module.patch
-Patch2:           0002-Change-jaxws-api-dependency.patch
 Patch3:           0003-Disable-ReadWSDLTest.readFromJar.patch
 
 BuildArch:        noarch
@@ -41,9 +39,18 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch1 -p1
-%patch2 -p1
 %patch3 -p1
+
+%pom_disable_module uddi-tck-base
+%pom_disable_module juddi-core
+%pom_disable_module juddi-core-openjpa
+%pom_disable_module juddiv3-war
+%pom_disable_module juddi-examples
+%pom_disable_module juddi-tomcat
+%pom_disable_module uddi-tck
+
+%pom_xpath_set "pom:groupId[text()='org.apache.geronimo.specs']" "org.jboss.spec.javax.xml.ws" uddi-ws
+%pom_xpath_set "pom:artifactId[text()='geronimo-jaxws_2.2_spec']" "jboss-jaxws-api_2.2_spec" uddi-ws
 
 %build
 %mvn_build
@@ -58,6 +65,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt2_4jpp7
 - new release
 
