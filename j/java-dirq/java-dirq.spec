@@ -5,8 +5,8 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global srcname dirq
 Name:		java-dirq
-Version:	1.3
-Release:	alt1_3jpp7
+Version:	1.4
+Release:	alt1_2jpp7
 Summary:	Directory based queue
 
 Group:		Development/Java
@@ -15,6 +15,9 @@ URL:		https://github.com/cern-mig/%{name}
 Source0:	https://github.com/cern-mig/%{name}/archive/%{srcname}-%{version}.tar.gz
 
 BuildArch:	noarch
+%if 0%{?rhel} > 1
+ExcludeArch:	ppc ppc64
+%endif
 
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
@@ -66,7 +69,10 @@ build-jar-repository -s -p lib junit4
 %if 0%{?rhel} == 5
 sed -i "s/compile,test/compile/" maven-build.xml
 %endif
-ant -Dmaven.mode.offline=true -Djunit.custom.dependencies=lib
+%if 0%{?rhel} > 1
+find src/test -name "*java" -exec rm -f {} \;
+%endif
+ant -Dmaven.mode.offline=true -Djunit.custom.dependencies=lib -Djunit.skipped=true
 ant javadoc
 
 %install
@@ -81,10 +87,12 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{srcname}
 %{_javadir}/%{srcname}*.jar
 
 %files javadoc
-%dir %{_javadocdir}/%{srcname}
-%{_javadocdir}/%{srcname}
+%{_javadocdir}/%{srcname}/
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp7
+- new release
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp7
 - new release
 
