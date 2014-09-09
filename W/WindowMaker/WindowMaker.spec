@@ -2,17 +2,17 @@
 %define gnustepdir %_libdir/GNUstep
 %define wmdatadir /usr/share/WindowMaker
 
-%define WINGs_SOVER 2
-%define WUtil_SOVER 3
-%define wraster_SOVER 3
+%define WINGs_SOVER 3
+%define WUtil_SOVER 5
+%define wraster_SOVER 5
 
 %def_disable debug
 
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.5
-Release: alt2
+Version: 0.95.6
+Release: alt1
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -246,6 +246,7 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmaker
 %_bindir/wmaker.inst
 %_bindir/wmgenmenu
+%_bindir/wmiv
 %_bindir/wmmenugen
 %_bindir/wxcopy
 %_bindir/wxpaste
@@ -282,6 +283,7 @@ rm -rf %buildroot%_mandir/cs
 %_libdir/libWINGs.so
 %_libdir/libWUtil.so
 %_libdir/pkgconfig/WINGs.pc
+%_libdir/pkgconfig/WUtil.pc
 
 %files -n libwraster
 %_libdir/libwraster.so.%wraster_SOVER
@@ -304,6 +306,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Tue Sep 09 2014 Michael Shigorin <mike@altlinux.org> 0.95.6-alt1
+- 0.95.6
+
 * Wed Jul 16 2014 Andrey Bergman <vkni@altlinux.org> 0.95.5-alt2
 - Removed dependency on bitmap fonts.
 
