@@ -1,50 +1,43 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-scout
 Version:          1.2.6
-Release:          alt2_6jpp7
+Release:          alt2_8jpp7
 Summary:          JSR 93 (JAXR) implementation
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://juddi.apache.org/scout
-
 # svn export http://svn.apache.org/repos/asf/juddi/scout/tags/scout-1.2.6/ apache-scout
 # tar cafJ apache-scout-1.2.6.tar.xz apache-scout
 Source0:          %{name}-%{version}.tar.xz
 
-Patch0:           0001-Change-guid-aid-of-deps.patch
-
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    axis
-BuildRequires:    apache-juddi
-BuildRequires:    geronimo-jaxrpc
-BuildRequires:    jboss-jaxr-1.0-api
-BuildRequires:    jboss-jaxb-2.2-api
-BuildRequires:    axis
-BuildRequires:    aspectjweaver
-BuildRequires:    wsdl4j
-BuildRequires:    geronimo-parent-poms
 
-Requires:         axis
-Requires:         apache-juddi
-Requires:         jpackage-utils
-Requires:         geronimo-jaxrpc
-Requires:         jboss-jaxr-1.0-api
-Requires:         jboss-jaxb-2.2-api
-Requires:         aspectjweaver
-Requires:         wsdl4j
+BuildRequires:    axis
+BuildRequires:    mvn(axis:axis)
+BuildRequires:    mvn(org.apache.geronimo.specs:geronimo-jaxrpc_1.1_spec)
+BuildRequires:    mvn(org.apache.juddi:juddi-client)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.xml.registry:jboss-jaxr-api_1.0_spec)
+BuildRequires:    geronimo-parent-poms
+BuildRequires:    mvn(org.aspectj:aspectjweaver)
+BuildRequires:    wsdl4j
+
+
+%if 0
+# test deps
+BuildRequires:    mvn(axis:axis-jaxrpc)
+BuildRequires:    mvn(axis:axis-saaj)
+BuildRequires:    mvn(commons-discovery:commons-discovery)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(log4j:log4j)
+BuildRequires:    mvn(org.apache.derby:derby)
+BuildRequires:    mvn(org.apache.juddi:juddi:2.0.1)
+BuildRequires:    mvn(org.aspectj:aspectjrt)
+BuildRequires:    mvn(org.aspectj:aspectjweaver)
+%endif
 Source44: import.info
 
 %description
@@ -53,9 +46,8 @@ Apache Scout is an implementation of the JSR 93 Java API For XML Registries
 Apache jUDDI) in a standard way.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -64,40 +56,43 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 
-%patch0 -p1
+%pom_remove_dep :geronimo-activation_1.1_spec
+%pom_remove_dep :geronimo-jaxb_2.1_spec
+%pom_add_dep org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec:1.0.4.Final
+%pom_remove_dep :geronimo-jaxr_1.0_spec
+%pom_add_dep org.jboss.spec.javax.xml.registry:jboss-jaxr-api_1.0_spec:1.0.2.Final
+%pom_remove_dep :geronimo-stax-api_1.0_spec
+%pom_add_dep org.codehaus.woodstox:stax2-api:3.1.1
+
+# fedora aspectjweaver package provides aspectjrt
+%pom_remove_dep org.aspectj:aspectjrt
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId = 'aspectjweaver' ]/pom:groupId" org.aspectj
+
+sed -i 's/\r//' README
+
+# build fix for apache juddi 3.1.5
+sed -i "s|UDDIClerkManager|UDDIClient|" \
+ src/main/java/org/apache/ws/scout/registry/ConnectionImpl.java
 
 %build
+
+%mvn_file :scout %{name}
 # Skipped because of many test resources not packaged
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip=true package javadoc:aggregate
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/scout-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc LICENSE NOTICE README
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%doc LICENSE README NOTICE
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_6jpp7
 - new release
 
