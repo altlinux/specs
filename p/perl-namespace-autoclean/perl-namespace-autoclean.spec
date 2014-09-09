@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build/Tiny.pm) perl(Sub/Identify.pm) perl(Test/Requires.pm)
+BuildRequires: perl(Module/Build/Tiny.pm) perl(Sub/Identify.pm) perl(Test/Requires.pm) perl(Module/Build.pm)
 %define dist namespace-autoclean
 Name: perl-%dist
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: Keep imports out of your namespace
@@ -40,6 +40,9 @@ class or instances.
 %perl_vendor_privlib/namespace
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
