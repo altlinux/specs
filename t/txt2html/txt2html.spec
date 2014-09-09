@@ -4,8 +4,8 @@
 %define _disable_test 1
 
 Name: txt2html
-Version: 2.51
-Release: alt1.1
+Version: 2.5201
+Release: alt1
 
 Summary: Convert raw text to something with a little HTML formatting
 
@@ -16,7 +16,7 @@ Url: http://txt2html.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/R/RU/RUBYKAT/txt2html-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: perl-Getopt-ArgvFile perl-Module-Build perl-YAML-Syck
@@ -46,6 +46,9 @@ better ways of doing that.
 %_man1dir/*
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.5201-alt1
+- automated CPAN update
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 2.51-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
