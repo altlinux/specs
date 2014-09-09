@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-SQL-Translator
-Version: 0.11018
+Version: 0.11020
 Release: alt1
 
 Summary: Manipulate structured data definitions (SQL and more)
@@ -8,7 +8,7 @@ License: GPLv2
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Translator/
-Source: http://www.cpan.org/authors/id/F/FR/FREW/SQL-Translator-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILMARI/SQL-Translator-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -44,6 +44,9 @@ delimited text files.
 %perl_vendor_privlib/auto/share/dist/SQL-Translator
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.11020-alt1
+- automated CPAN update
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.11018-alt1
 - automated CPAN update
 
