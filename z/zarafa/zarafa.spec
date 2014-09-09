@@ -11,7 +11,7 @@
 %define licensepath	%_docdir
 
 Name: zarafa
-Version: 7.1.10
+Version: 7.1.11
 Release: alt1
 License: AGPLv3
 Group: Networking/Mail
@@ -685,6 +685,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Mon Sep 08 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.11-alt1
+- Update for new version (7.1.11-46050)
+
 * Tue Jul 06 2014 Ablaev Alexandr <bassmaster@altlinux.org> 7.1.10-alt1
 - Update for new version (7.1.10-44973)
 - Deleted Patch5: zarafa-7.1.8-doc-makefile.patch
