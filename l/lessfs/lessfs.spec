@@ -1,13 +1,15 @@
 Summary: Lessfs is an inline data deduplicating filesystem
 Name: lessfs
-Version: 1.5.13
+Version: 1.7.0
 Release: alt1
 License: GPLv3+
 Group: System/Base
 Url: http://www.lessfs.com
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 
-BuildRequires: libtokyocabinet-devel libdb4.8-devel libssl-devel libmhash-devel libfuse-devel liblzo2-devel
+BuildRequires: libtokyocabinet-devel libdb4.8-devel libssl-devel
+BuildRequires: libmhash-devel libfuse-devel liblzo2-devel
+BuildPreReq: libsnappy-devel
 
 %description
 Lessfs is an inline data deduplicating filesystem.
@@ -20,7 +22,11 @@ subst "s|ENCRYPT_DATA=on|ENCRYPT_DATA=off|g" etc/lessfs.cfg-bdb
 
 %build
 %autoreconf
-%configure --with-crypto --with-berkeleydb --with-lzo
+%configure \
+	--with-crypto \
+	--with-berkeleydb \
+	--with-lzo \
+	--with-snappy
 %make_build
 
 %install
@@ -60,6 +66,9 @@ EOF
 %dir %_localstatedir/%name/mta
 
 %changelog
+* Tue Sep 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1
+- Version 1.7.0
+
 * Sat May 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.5.13-alt1
 - New version
 
