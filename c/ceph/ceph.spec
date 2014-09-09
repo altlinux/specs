@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.84
+Version: 0.85
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -17,7 +17,7 @@ BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
 BuildRequires: libleveldb-devel libsnappy-devel libs3-devel libblkid-devel
-BuildRequires: libxfs-devel yasm libudev-devel
+BuildRequires: libxfs-devel yasm libudev-devel boost-intrusive-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -121,6 +121,9 @@ ln -s gf-complete_sub src/erasure-code/jerasure/gf-complete
 
 rm -rf src/erasure-code/jerasure/jerasure
 ln -s jerasure_sub src/erasure-code/jerasure/jerasure
+
+rm -rf src/rocksdb
+ln -s rocksdb_sub src/rocksdb
 
 %build
 ./autogen.sh
@@ -235,6 +238,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
 %_unitdir/ceph-*
+%_libexecdir/ceph/ceph-osd-prestart.sh
 
 %files fuse
 %_bindir/ceph-fuse
@@ -280,8 +284,12 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Sep 09 2014 Alexei Takaseev <taf@altlinux.org> 0.85-alt1
+- 0.85
+
 * Tue Aug 19 2014 Alexei Takaseev <taf@altlinux.org> 0.84-alt1
 - 0.84
+- add BuildReq: boost-intrusive-devel
 
 * Wed Jul 30 2014 Alexei Takaseev <taf@altlinux.org> 0.83-alt1
 - 0.83
