@@ -1,6 +1,8 @@
+%define _localstatedir %_var
+
 Name: bird
-Version: 1.4.3
-Release: alt2
+Version: 1.4.4
+Release: alt1
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -10,6 +12,10 @@ URL: http://bird.network.cz
 # Cloned from git://git.nic.cz/bird.git
 Source: %name-%version.tar
 Source1: %name.init
+Source2: %name.service
+Source3: %{name}6.init
+Source4: %{name}6.service
+
 Patch: %name-%version-%release.patch
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -55,16 +61,20 @@ Requires: %name = %version-%release
 
 %build
 autoconf
-./configure --prefix=%_usr --sysconfdir=%_sysconfdir --localstatedir=%_var \
-	--enable-ipv6 --with-protocols=all
+%define _configure_script ../configure
+
+mkdir build-bird6
+pushd build-bird6
+%configure --enable-ipv6 --with-protocols=all
 %make_build
-mv bird bird6
-mv birdc birdc6
-mv birdcl birdcl6
-%make clean
-./configure --prefix=%_usr --sysconfdir=%_sysconfdir --localstatedir=%_var \
-	--with-protocols=all
+popd
+
+mkdir build-bird4
+pushd build-bird4
+%configure --with-protocols=all
 %make_build
+popd
+
 pushd doc
     make prog.sgml
     ./sgml2html prog.sgml
@@ -72,19 +82,13 @@ pushd doc
 popd
 
 %install
-%make_install install \
-	prefix=%buildroot%_prefix \
-	sysconfdir=%buildroot%_sysconfdir \
-	sbindir=%buildroot%_sbindir \
-	localstatedir=%buildroot%_var
+%makeinstall -C build-bird6
+%makeinstall -C build-bird4
 
-install -d %buildroot%_sbindir
-install bird6 %buildroot%_sbindir
-install birdc6 %buildroot%_sbindir
-install birdcl6 %buildroot%_sbindir
-
-install -d %buildroot%_initdir
-install %SOURCE1 %buildroot%_initdir/%name
+install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
+install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD -m755 %SOURCE3 %buildroot%_initdir/%{name}6
+install -pD -m644 %SOURCE4 %buildroot%_unitdir/%{name}6.service
 
 %post
 %post_service bird
@@ -92,8 +96,15 @@ install %SOURCE1 %buildroot%_initdir/%name
 %preun
 %preun_service bird
 
+%post -n bird6
+%post_service bird6
+
+%preun -n bird6
+%preun_service bird6
+
 %files
 %_initdir/%name
+%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name.conf
 %_sbindir/%name
 %_sbindir/%{name}c
@@ -101,11 +112,19 @@ install %SOURCE1 %buildroot%_initdir/%name
 %doc NEWS README TODO doc/*.html
 
 %files -n bird6
+%_initdir/%{name}6
+%_unitdir/%{name}6.service
+%config(noreplace) %_sysconfdir/%{name}6.conf
 %_sbindir/%{name}6
 %_sbindir/%{name}c6
 %_sbindir/%{name}cl6
 
 %changelog
+* Tue Sep 09 2014 Alexey Shabalin <shaba@altlinux.ru> 1.4.4-alt1
+- 1.4.4
+- add separate bird6 service
+- add systemd unit files
+
 * Thu Aug 28 2014 Andriy Stepanov <stanv@altlinux.ru> 1.4.3-alt2
 - add status entry for init script
 
