@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.25
+Version: 0.5.26
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -58,6 +58,7 @@ done
 
 mkdir -p %buildroot%_sysconfdir/rc.d/rc{0,1,2,3,4,5,6}.d
 mkdir -p %buildroot%_sysconfdir/sysconfig/limits.d
+mkdir -p %buildroot/usr/libexec/service/legacy-actions
 
 # Generate shell functions provides list.
 (
@@ -87,11 +88,17 @@ fi
 %_sysconfdir/rc?.d
 %defattr(644,root,root,755)
 %_sysconfdir/sysconfig/limits.d
+/usr/libexec/service/
 %config %_sysconfdir/rc.d
 %config(noreplace) %_sysconfdir/initlog.conf
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Tue Sep 09 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.26-alt1
+- preun_service: added chkconfig call in systemd case (closes: #30165).
+- service: added legacy-actions support (closes: #29925).
+- sd_booted: synced systemd check with libsystemd.
+
 * Mon May 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.25-alt1
 - service: use is-active as a closer systemd equivalent of
   sysvinit status (closes: #30034).
