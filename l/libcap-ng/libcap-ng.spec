@@ -1,6 +1,8 @@
+%def_with python3
+
 Name: libcap-ng
 Summary: An alternate posix capabilities library
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -9,6 +11,10 @@ Url: http://people.redhat.com/sgrubb/libcap-ng
 Source: http://people.redhat.com/sgrubb/libcap-ng/%name-%version.tar.gz
 
 BuildRequires: kernel-headers >= 2.6.11 libattr-devel python-devel swig
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
+%endif
 
 %description
 Libcap-ng is a library that makes using posix capabilities easier
@@ -34,6 +40,16 @@ Requires: %name = %version-%release
 The libcap-ng-python package contains the bindings so that libcap-ng
 and can be used by python applications.
 
+%package -n python3-module-%name
+Summary: Python bindings for libcap-ng library
+License: LGPLv2+
+Group: Development/Python3
+Requires: %name = %version-%release
+
+%description -n python3-module-%name
+The libcap-ng-python package contains the bindings so that libcap-ng
+and can be used by python applications.
+
 %package utils
 Summary: Utilities for analysing and setting file capabilities
 License: GPLv2+
@@ -45,13 +61,35 @@ posix capabilities of all the program running on a system. It also
 lets you set the file system based capabilities.
 
 %prep
-%setup -q
-sed -i "/LIBS/s/libcap-ng.la/libcap-ng.la -lpython%__python_version/g" bindings/python/Makefile.am
+%setup
+
+%if_with python3
+cp -fR . ../python3
+sed -i "/LIBS/s/libcap-ng.la/libcap-ng.la -lpython%_python3_version%_python3_abiflags/g" \
+	../python3/bindings/python/Makefile.am
+sed -i 's|swig -o|swig -py3 -o|' \
+	../python3/bindings/python/Makefile.am
+sed -i 's|\(\/Python.h\)|%_python3_abiflags\1|' \
+	../python3/configure.ac
+%endif
+
+sed -i "/LIBS/s/libcap-ng.la/libcap-ng.la -lpython%_python_version/g" \
+	bindings/python/Makefile.am
 
 %build
 %autoreconf
 %configure --libdir=/%_lib
 %make_build
+
+%if_with python3
+pushd ../python3
+export PYTHON=python3
+%autoreconf
+#add_optflags -I%python3_includedir%_python3_abiflags
+%configure --libdir=/%_lib
+%make_build PYLIBVER=python%_python3_version%_python3_abiflags
+popd
+%endif
 
 %install
 %makeinstall_std
@@ -69,6 +107,15 @@ mv %buildroot/%_lib/pkgconfig %buildroot%_libdir
 # Remove a couple things so they don't get picked up
 rm -f %buildroot/%_lib/*.{a,la}
 rm -f %buildroot%python_sitelibdir/*.{a,la}
+
+%if_with python3
+pushd ../python3
+%make install DESTDIR=$PWD/buildroot
+install -d %buildroot%python3_sitelibdir
+mv buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir/
+rm -f %buildroot%python3_sitelibdir/*.{a,la}
+popd
+%endif
 
 %files
 %doc COPYING.LIB
@@ -89,7 +136,16 @@ rm -f %buildroot%python_sitelibdir/*.{a,la}
 %_bindir/*
 %_man8dir/*
 
+%if_with python3
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%endif
+
 %changelog
+* Tue Sep 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1
+- Version 0.7.4
+- Added module for Python 3
+
 * Thu Feb 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.3-alt1
 - New version
 
