@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.29
+Version: 5.30
 Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
@@ -131,6 +131,10 @@ fi ||:
 
 
 %changelog
+* Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 5.30-alt1
+- Replace %%H in any place of X-Alterator-URI for support different port
+  in URI (ALT #30298)
+
 * Wed May 08 2013 Paul Wolneykien <manowar@altlinux.org> 5.29-alt1
 - Fix: do not use "submit" typed buttons as controls in the "acl"
   module (closes: 28551).
