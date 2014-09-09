@@ -1,31 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             weld-parent
-Version:          17
-Release:          alt2_7jpp7
+Version:          26
+Release:          alt1_1jpp7
 Summary:          Parent POM for Weld
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://seamframework.org/Weld
 
 Source0:          http://repo1.maven.org/maven2/org/jboss/weld/%{name}/%{version}/%{name}-%{version}.pom
-
-# Removed accessing remote repos
-Patch0:           weld-parent-%{version}-pom.patch
+Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-shared
 BuildRequires:    maven-enforcer-plugin
-
-Requires:         jpackage-utils
-Requires:         maven
+BuildRequires:    maven-plugin-build-helper
+BuildRequires:    maven-install-plugin
 Source44: import.info
 
 %description
@@ -33,26 +25,23 @@ Parent POM for Weld
 
 %prep
 cp %{SOURCE0} pom.xml
+cp %{SOURCE1} LICENSE
 
-%patch0 -p0
+%pom_remove_plugin ":maven-remote-resources-plugin"
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 26-alt1_1jpp7
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 17-alt2_7jpp7
 - new release
 
