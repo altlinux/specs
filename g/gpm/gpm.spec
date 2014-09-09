@@ -1,6 +1,6 @@
 Name: gpm
 Version: 1.20.1
-Release: alt13
+Release: alt14
 
 Summary: A mouse server for the Linux console
 License: GPLv2+
@@ -9,6 +9,7 @@ Group: System/Servers
 # ftp://arcana.linux.it/pub/gpm/gpm-%version.tar.bz2
 Source: gpm-%version.tar
 Source1: gpm.init
+Source2: gpm.service
 
 Patch1: gpm-1.20.1-alt-texinfo.patch
 Patch2: gpm-1.20.1-owl-gpm-root.patch
@@ -127,6 +128,7 @@ install -p -m644 doc/gpm-root.1 %buildroot%_man1dir/
 install -p -m644 conf/gpm-root.conf %buildroot%_sysconfdir/
 
 install -pD -m755 %_sourcedir/gpm.init %buildroot%_initdir/gpm
+install -pD -m644 %_sourcedir/gpm.service %buildroot%_unitdir/gpm.service
 
 mksock %buildroot/dev/gpmctl
 
@@ -152,7 +154,8 @@ bzip2 -9 Changelog ||:
 %_libdir/*.a
 
 %files
-%config(noreplace) %_initdir/gpm
+%_initdir/gpm
+%_unitdir/gpm.service
 %ghost %attr(600,root,root) %verify(not user) /dev/gpmctl
 %_bindir/*
 %_sbindir/gpm
@@ -169,6 +172,9 @@ bzip2 -9 Changelog ||:
 %_man1dir/gpm-root.1*
 
 %changelog
+* Tue Sep 09 2014 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt14
+- NMU: add systemd support
+
 * Thu Jul 07 2011 Dmitry V. Levin <ldv@altlinux.org> 1.20.1-alt13
 - libgpm-devel-static: added requirement on libtinfo-devel-static,
   reported by Andrew Borodin.
