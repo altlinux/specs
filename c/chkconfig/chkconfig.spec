@@ -1,6 +1,6 @@
 Name: chkconfig
 Version: 1.3.59
-Release: alt3
+Release: alt4
 
 Summary: A system tool for maintaining the /etc/rc*.d hierarchy
 License: GPLv2
@@ -33,6 +33,9 @@ install -pDm644 chkconfig.8 %buildroot%_man8dir/chkconfig.8
 %_man8dir/chkconfig.*
 
 %changelog
+* Tue Sep 09 2014 Dmitry V. Levin <ldv@altlinux.org> 1.3.59-alt4
+- chkconfig: Synced systemd check with libsystemd.
+
 * Fri May 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.59-alt3
 - chkconfig: Fixed systemd .service symlinks support.
 
