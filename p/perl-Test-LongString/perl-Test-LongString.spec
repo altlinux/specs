@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Test-LongString
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Test-LongString - tests strings for equality, with more helpful failures
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RG/RGARCIA/Test-LongString-0.15.tar.gz
+Source: http://www.cpan.org/authors/id/R/RG/RGARCIA/Test-LongString-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 11 2006
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -51,6 +51,9 @@ specific items in binary data, this is the module for you.
 %perl_vendor_privlib/Test/*
 
 %changelog
+* Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
