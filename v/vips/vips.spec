@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: vips
-Version: 7.40.6
+Version: 7.40.7
 Release: alt1
 
 Summary: Large image processing library
@@ -113,6 +113,9 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Tue Sep 09 2014 Michael Shigorin <mike@altlinux.org> 7.40.7-alt1
+- new version (watch file uupdate)
+
 * Mon Aug 25 2014 Michael Shigorin <mike@altlinux.org> 7.40.6-alt1
 - new version (watch file uupdate)
 
