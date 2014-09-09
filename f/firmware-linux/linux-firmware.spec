@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20140521
+Version: 20140828
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -43,6 +43,9 @@ rm rt73.bin rt2561.bin rt2561s.bin rt2661.bin
 # Remove source files we don't need to install
 rm -f usbdux/*dux */*.asm *spec
 
+# Fallback symlink in case kernel driver lags behind
+ln -s fw_sst_0f28.bin-48kHz_i2s_master intel/fw_sst_0f28.bin-i2s_master
+
 %install
 mkdir -p %buildroot/lib/firmware
 cp -a * %buildroot/lib/firmware
@@ -55,6 +58,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Sat Aug 30 2014 Michael Shigorin <mike@altlinux.org> 20140828-alt1
+- updated from git
+
 * Wed May 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20140521-alt1
 - updated from git
 
