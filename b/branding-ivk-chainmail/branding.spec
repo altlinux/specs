@@ -10,7 +10,7 @@
 
 Name: branding-%brand-%theme
 Version: 2.99
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -341,6 +341,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt5
+- [alterator] Make links in error messages more visible
+
 * Fri Aug 22 2014 Andrey Cherepanov <cas@altlinux.org> 2.99-alt4
 - Fix file name appearance for input[type="file"]
 
