@@ -2,7 +2,7 @@ Name:          modem-manager-gui
 Summary:       Graphical interface for ModemManager
 Summary(de):   Grafische Oberfläche für ModemManager
 Summary(ru):   Графический интерфейс для ModemManager
-Version:       0.0.16
+Version:       0.0.17.1
 Release:       alt1
 
 Group:	       System/Configuration/Networking	
@@ -13,14 +13,7 @@ Packager:      Andrey Cherepanov <cas@altlinux.org>
 
 # The original download link is a PHP script which points to this file:
 Source0:       http://download.tuxfamily.org/gsf/source/%{name}-%{version}.tar.gz
-# The German translation has been submitted upstream:
-# https://www.transifex.com/projects/p/modem-manager-gui/language/de/
-Source1:       %{name}-de.po
-Source2:       %{name}-de.1
-Source3:       %{name}-ru.1
-Source4:       %{name}.ui
-
-Patch1:	       %{name}-fix-bad_elf_symbols.patch
+Source1:       %name.watch
 
 BuildRequires: pkgconfig
 BuildRequires: libgtk+3-devel
@@ -29,6 +22,10 @@ BuildRequires: gdbm-devel
 BuildRequires: libnotify-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext-tools
+BuildRequires: po4a
+BuildRequires: itstool
+# TODO: need to package ofono
+#BuildRequires: ofono-devel
 
 Requires: ModemManager
 Requires: NetworkManager
@@ -71,9 +68,6 @@ Funktionen:
 
 %prep
 %setup -q
-%patch1 -p2
-cp %SOURCE1 ./po/de.po
-cp %SOURCE4 src/
 
 %build
 %configure
@@ -82,10 +76,13 @@ cp %SOURCE4 src/
 %install
 %makeinstall INSTALLPREFIX=%buildroot
 
-install -pD %SOURCE2 %buildroot/%_mandir/de/man1/%{name}.1
-install -pD %SOURCE3 %buildroot/%_mandir/ru/man1/%{name}.1
+# TODO: man russian in ALT Linux should be in koi8-r
+pushd %buildroot%_mandir/ru/man1
+gunzip -c %name.1.gz | iconv -f utf-8 -t koi8-r > %name.1
+rm -f %name.1.gz
+popd
 
-%find_lang --with-man %name
+%find_lang --with-man --with-gnome %name
 
 %files -f %name.lang
 %doc LICENSE AUTHORS Changelog
@@ -95,8 +92,15 @@ install -pD %SOURCE3 %buildroot/%_mandir/ru/man1/%{name}.1
 %_desktopdir/%name.desktop
 %_libdir/%name/
 %doc %_man1dir/%name.1.*
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 0.0.17.1-alt1
+- New version
+- Drop obsoleted patches and localization
+- Fix charset of Russian man page
+- Add watch file
+
 * Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.0.16-alt1
 - Build for Sisyphus (thanks Fedora for spec) (ALT #29225)
 
