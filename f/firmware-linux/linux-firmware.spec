@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20140828
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -20,6 +20,8 @@ Obsoletes: firmware-iwl6000 firmware-iwl6050
 Requires: firmware-ipw2200 firmware-ipw2100 firmware-ipw3945
 Provides:  firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
 Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
+Provides: firmware-amd-ucode
+Obsoletes: firmware-amd-ucode <= 2.0
 
 Requires: udev
 
@@ -58,6 +60,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 20140828-alt2
+- add P:/O: firmware-amd-ucode
+
 * Sat Aug 30 2014 Michael Shigorin <mike@altlinux.org> 20140828-alt1
 - updated from git
 
