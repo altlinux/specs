@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		xjparse
 Version:	1.0
-Release:	alt1_9jpp7
+Release:	alt1_10jpp7
 Summary:	Wrapper for the Xerces XML Schema validator
 Group:		Text tools
 License:	ASL 2.0
@@ -51,6 +51,9 @@ install -pm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/xjparse
 %{_bindir}/xjparse
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9jpp7
 - new release
 
