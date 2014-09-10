@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_5jpp7
+Release:        alt2_6jpp7
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -37,6 +37,9 @@ cd ./plugins-parent
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_5jpp7
 - update
 
