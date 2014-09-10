@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,9 +12,8 @@ BuildRequires: jpackage-compat
 
 Name:             staxmapper
 Version:          1.1.0
-Release:          alt2_6jpp7
+Release:          alt2_8jpp7
 Summary:          StAX Mapper
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jbossas/staxmapper
 
@@ -24,9 +23,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-source-plugin
 BuildRequires:    maven-enforcer-plugin
@@ -36,18 +33,16 @@ BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
 BuildRequires:    maven-eclipse-plugin
 BuildRequires:    maven-ejb-plugin
+BuildRequires:    maven-install-plugin
 BuildRequires:    jboss-parent
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 This package contains the StAX Mapper.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,33 +52,20 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_6jpp7
 - new release
 
