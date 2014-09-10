@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,34 +11,23 @@ BuildRequires: jpackage-compat
 
 Name:          tuscany-sdo-java
 Version:       1.1.1
-Release:       alt2_6jpp7
+Release:       alt2_8jpp7
 Summary:       Service Data Objects 2.1 Java API spec
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/sdo-java.html
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/tuscany/java/sdo/%{version}/apache-tuscany-sdo-%{version}-src.tar.gz
-# disable some modules
-Patch0:        tuscany-sdo-java-%{version}-pom.patch
 
-BuildRequires: jpackage-utils
 
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
 BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
 # required by plugin-bundle
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -66,9 +53,8 @@ This package contains only a Java API of SDO 2.1 spec.
 EclipseLink is a implementation of this spec.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadocs for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -76,9 +62,22 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n tuscany-sdo-%{version}-src
-%patch0 -p0
+
+%pom_disable_module lib
+%pom_disable_module impl
+%pom_disable_module tools
+%pom_disable_module plugin
+%pom_disable_module sample
+%pom_disable_module distribution
+%pom_disable_module java5tools
 
 sed -i 's|<artifactId>tuscany-sdo-api-r${specVersion}</artifactId>|<artifactId>%{api_name}</artifactId>|' $( find . -iname "pom.xml")
+
+sed -i 's|pom.name|project.name|' sdo-api/pom.xml
+sed -i 's|pom.description|project.description|' sdo-api/pom.xml
+sed -i 's|pom.organization.name|project.organization.name|' sdo-api/pom.xml
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId='tuscany-sdo-api-r2.1']/pom:version" '
+${project.version}'
 
 sed -i 's/\r//' LICENSE NOTICE README RELEASE_NOTES
 
@@ -88,34 +87,23 @@ sed -i 's#<target>1.4</target>#<target>1.5</target>#' pom.xml sdo-api/pom.xml
 
 %build
 
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 install javadoc:aggregate
+%mvn_file :%{api_name} %{name}
+%mvn_file :%{api_name} tuscany-sdo-api
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 sdo-api/target/%{api_name}-%{namedversion}.jar %{buildroot}%{_javadir}/tuscany-sdo-api.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-tuscany-sdo.pom
-install -pm 644 sdo-api/pom.xml %{buildroot}%{_mavenpomdir}/JPP-tuscany-sdo-api.pom
-
-%add_maven_depmap JPP-tuscany-sdo.pom
-%add_maven_depmap JPP-tuscany-sdo-api.pom tuscany-sdo-api.jar
-
-%files
-%{_javadir}/tuscany-sdo-api.jar
-%{_mavenpomdir}/JPP-*.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE NOTICE README RELEASE_NOTES
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_8jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
 - new release
 
