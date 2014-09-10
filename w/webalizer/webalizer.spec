@@ -1,31 +1,29 @@
-%define majver 2.01
-%define minver 10
-%define suff	RB23
+%define majver 2.23
+%define minver 08
+%define suff RB30
 
 Name: webalizer
 Version: %majver.%minver.%suff
-Release: alt2
+Release: alt1
 
 Summary: Web/ftp/proxy server log analyser
 License: GPL
 Group: Monitoring
 
 Url: http://www.patrickfrei.ch/webalizer/%name
-Source0: %name-%majver-%minver-%suff-src.tar.bz2
+Source0: %name-%majver-%minver-%suff-src.tar
 Source1: %name.conf
 Source2: README.ALT-webalizer
-
-Patch1:  %name-alt-configure.patch
 
 %define apache_group apache
 %define apache_log %_logdir/httpd/access_log
 %define vsftpd_log %_logdir/vsftpd.log
-%define dns_cache  /var/lib/%name/dns_cache.db
+%define dns_cache  %_localstatedir/%name/dns_cache.db
 %define webalizer_user webalizer
 %define webalizer_group webalizer
 %define webalizer_home %_localstatedir/%name
 %define webalizer_html %_var/www/html/%name
-%define geoip_data /usr/share/GeoIP/GeoIP.dat
+%define geoip_data %_datadir/GeoIP/GeoIP.dat
 
 Summary(ru_RU.UTF-8): Анализатор логов web/ftp/proxy-серверов
 
@@ -34,38 +32,38 @@ BuildRequires: rpm-macros-apache rpm-macros-apache2 bzlib-devel libGeoIP-devel l
 
 BuildRequires: zlib-devel bzlib-devel
 
-Requires: db4.7-utils
+Requires: db4-utils
 
 %description
 The Webalizer is a web server log file analysis program which produces
 usage statistics in HTML format for viewing with a browser.  The results
 are presented in both columnar and graphical format, which facilitates
 interpretation.  Yearly, monthly, daily and hourly usage statistics are
-presented, along with the ability to display usage by site, URL, referrer,
+presented, along with the ability to display usage by site, URL, referer,
 user agent (browser) and country (user agent and referrer are only
 available if your web server produces combined log format files).
-Webalizer Xtended is especially useful for all those users who would like 
-to have detailed HTML-404-statistics (i.e. about broken links and visitors 
-trying to look-up folders and files containing potentionally vulnerable 
-software). As further features, all colors of the statistics can be 
-defined by the user and the country resp. traffic statistics are more 
-reliable due to the implementation of Geolizer resp. 
+Webalizer Xtended is especially useful for all those users who would like
+to have detailed HTML-404-statistics (i.e. about broken links and visitors
+trying to look-up folders and files containing potentionally vulnerable
+software). As further features, all colors of the statistics can be
+defined by the user and the country resp. traffic statistics are more
+reliable due to the implementation of Geolizer resp.
 
 
 %description -l ru_RU.UTF-8
 The Webalizer -- программа для анализа лог-файлов web-сервера Apache и
 некоторых других, представляющая результаты в виде HTML (таблицы и диаграммы).
 Собирается годичная, помесячная, ежедневная и почасовая статистика с
-возможностью просмотра по сайтам, URL, реферрерам, браузерам, странам. В этой версии
-также собирается детальная статистика ошибок 404 (неправильные линки)
-Webalizer Xtended полезен тем, кому необходима детальная статистика по 404-ошибкам
-(неправильные ссылки, попытки пользователей просмотреть каталоги и файлы, содержащие
-потенциально опасные приложения). Дополнительно есть возможность определить цветовые 
-гаммы статистики и включена поддержка Geolizer.
+возможностью просмотра по сайтам, URL, реферрерам, браузерам, странам.
+
+В этой версии также собирается детальная статистика ошибок 404 (неправильные
+линки) Webalizer Xtended полезен тем, кому необходима детальная статистика по
+404-ошибкам (неправильные ссылки, попытки пользователей просмотреть каталоги
+и файлы, содержащие потенциально опасные приложения). Дополнительно есть
+возможность определить цветовые гаммы статистики и включена поддержка Geolizer.
 
 %prep
 %setup -n %name-%majver-%minver-%suff
-%patch1 -p1
 
 %build
 CFLAGS="%optflags -fsigned-char"
@@ -76,7 +74,6 @@ CFLAGS="%optflags -fsigned-char"
 	--enable-geoip \
 	--with-bzlib \
 	--with-bz-inc
-
 
 # patch the template; keep common data in HOME, distinct in DATA
 sed -e "s,__HTML__,%webalizer_html,g" \
@@ -183,6 +180,10 @@ done
 # - bak-around userdel -r in early packages?
 
 %changelog
+* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 2.23.08.RB30-alt1
+- 2.23-08 based RB30
+- minor spec fixups
+
 * Fri Nov 25 2011 Michael Shigorin <mike@altlinux.org> 2.01.10.RB23-alt2
 - upgraded db_upgrade to rm -f (closes: #26620)
 
