@@ -1,31 +1,25 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname neethi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-neethi
 Version:        3.0.1
-Release:        alt2_4jpp7
+Release:        alt2_6jpp7
 Summary:        Web Services Policy framework
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://ws.apache.org/neethi/
-# svn export https://svn.apache.org/repos/asf/webservices/commons/tags/neethi/neethi-3.0.1/ neethi-3.0.1
-# tar cJf neethi-3.0.1.tar.xz neethi-3.0.1
-Source0:        %{oldname}-%{version}.tar.xz
-Patch0:         %{oldname}-disable-rat.patch
+Source0:        http://archive.apache.org/dist/ws/neethi/%{version}/neethi-%{version}-source-release.zip
 BuildArch:      noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: wsdl4j
 BuildRequires: ws-commons-axiom
-Requires:      jpackage-utils
-Requires:      wsdl4j
 Requires:      ws-commons-axiom
 Source44: import.info
 Provides: neethi = %version
@@ -40,7 +34,6 @@ a way of expressing it's requirements and capabilities.
 %package javadoc
 Summary:      API documentation for %{oldname}
 Group:        Development/Java
-Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -48,34 +41,29 @@ API documentation for %{oldname}.
 
 %prep
 %setup -q -n %{oldname}-%{version}
-%patch0 -p1
+
+# This check always fails
+%pom_remove_plugin org.apache.rat:apache-rat-plugin
+
+%mvn_file : %{oldname}
 
 %build
 # skip tests due to requirement for old wstx
-mvn-rpmbuild -D maven.test.skip=true install javadoc:javadoc
+%mvn_build -- -Dmaven.test.skip=true
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 target/%{oldname}-%{version}.jar %{buildroot}%{_javadir}/%{oldname}.jar
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{oldname}.pom
-%add_maven_depmap JPP-%{oldname}.pom %{oldname}.jar
+%files -f .mfiles
+%doc NOTICE LICENSE README.txt RELEASE-NOTE.txt
 
-install -d -m 755 %{buildroot}%{_javadocdir}/%{oldname}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oldname}
-
-%files
-%doc README.txt RELEASE-NOTE.txt
-%{_javadir}/%{oldname}.jar
-%{_mavenpomdir}/JPP-%{oldname}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{oldname}
-
+%files javadoc -f .mfiles-javadoc
+%doc NOTICE LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt2_6jpp7
+- new release
+
 * Sat Aug 02 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt2_4jpp7
 - new release
 
