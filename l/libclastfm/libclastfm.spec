@@ -1,21 +1,20 @@
 Name:		libclastfm
 Version:	0.5
-Release:	alt1.git.968af0ab.qa1
+Release:	alt2.git20130316
 Summary:	Unofficial C-API for the Last.fm web service
 
 Group:		System/Libraries
 License:	GPLv2+
 URL:		http://liblastfm.sourceforge.net
 Source0:	%name-%version.tar
-Packager:	Egor Glukhov <kaman@altlinux.org>
 
 BuildRequires: libcurl-devel
 
 %description
-%name is an unofficial C-API for the Last.fm web service 
-written with libcurl. libclastfm supports much more than 
-basic scrobble submission. You can send shouts, fetch album covers 
-and much more. 
+%name is an unofficial C-API for the Last.fm web service
+written with libcurl. libclastfm supports much more than
+basic scrobble submission. You can send shouts, fetch album covers
+and much more.
 
 %package devel
 Summary: Development files for %{name}
@@ -37,7 +36,7 @@ This package contains the development files for %{name}.
 %makeinstall_std
 
 %files
-%doc AUTHORS README
+%doc AUTHORS README ChangeLog NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -46,6 +45,9 @@ This package contains the development files for %{name}.
 %_pkgconfigdir/libclastfm.pc
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20130316
+- New snapshot
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.git.968af0ab.qa1
 - NMU: rebuilt for updated dependencies.
 
