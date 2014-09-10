@@ -1,16 +1,14 @@
 Name: libGLw
-Version: 1.0.0
-Release: alt1
+Version: 8.0.0
+Release: alt1.git20130123
 Epoch: 5
 License: MIT
 Summary: Mesa OpenGL widget library
 Group: System/Libraries
 Url: http://www.mesa3d.org
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
+# git://anongit.freedesktop.org/mesa/glw
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildRequires: libGL-devel libX11-devel libXext-devel libXt-devel libopenmotif-devel
 
@@ -26,8 +24,7 @@ Requires: libGL-devel libGLw = %epoch:%version-%release
 Mesa OpenGL widget development package
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -38,7 +35,7 @@ Mesa OpenGL widget development package
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -50,6 +47,9 @@ Mesa OpenGL widget development package
 
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5:8.0.0-alt1.git20130123
+- Version 8.0.0
+
 * Tue Feb 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 5:1.0.0-alt1
 - 1.0.0
 
