@@ -1,41 +1,26 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
 %global base_name       lang
 %global short_name      commons-%{base_name}3
 
 Name:           apache-%{short_name}
 Version:        3.1
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven-site-plugin
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-parent
-BuildRequires:  apache-commons-io
-BuildRequires:  junit4
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.commons:commons-parent)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 %if 0%{?rhel} <= 0
-BuildRequires:  easymock3
+BuildRequires:  mvn(org.easymock:easymock)
 %endif
-
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       jpackage-utils >= 0:1.6
 Source44: import.info
-
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -55,9 +40,8 @@ the new version, while apache-commons-lang is the compatibility
 package.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -65,42 +49,24 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
+%mvn_file : %{name} %{short_name}
 
 %build
-mvn-rpmbuild \
-%if 0%{?rhel}
-    -Dmaven.test.skip=true \
-%endif
-    install javadoc:aggregate
+%mvn_build %{?rhel:-f}
 
 %install
+%mvn_install
 
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_5jpp7
 - new release
 
