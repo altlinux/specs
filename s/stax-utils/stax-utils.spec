@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           stax-utils
 Version:        0
-Release:        alt1_0.4.20110309svn238jpp7
+Release:        alt1_0.5.20110309svn238jpp7
 Summary:        StAX utility classes
 Group:          Development/Java
 License:        BSD
@@ -82,6 +82,9 @@ cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.5.20110309svn238jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.4.20110309svn238jpp7
 - new release
 
