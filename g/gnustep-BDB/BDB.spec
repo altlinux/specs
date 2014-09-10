@@ -2,7 +2,7 @@
 
 Name: gnustep-BDB
 Version: 0.2.1
-Release: alt3
+Release: alt4
 Summary:  Berkeley DB Wrapper (BDB)
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
 BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildPreReq: libxslt-devel libffi-devel libicu-devel zlib-devel
-BuildPreReq: gnustep-Encore-devel libdb4.8-devel
+BuildPreReq: gnustep-Encore-devel libdb6.1-devel
 
 Requires: lib%name = %EVR
 Requires: gnustep-Encore
@@ -119,6 +119,9 @@ install -d %buildroot%_localstatedir/GNUstep
 %_libdir/GNUstep/Frameworks/BDB.framework/Headers
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt4
+- Built with libdb6.1 instead of libdb4.8
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt3
 - Built with clang
 
