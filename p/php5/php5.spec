@@ -3,18 +3,20 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.13
+Version: 5.5.16
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20140626
+%define _php5_snapshot 20140821
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
 License: PHP
 Group:	 Development/Other
+Url: http://www.php.net/
+#Git: http://git.php.net/repository/php-src.git
 
 Source0: php5-source.tar
 Source1: phpver.rpm.macros.standalone
@@ -335,7 +337,7 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %_man1dir/php-%_php5_version.1*
 %_man1dir/php.1*
-%_man1dir/phar.1*
+%_man1dir/phar*.1*
 %php5_servicedir/cli
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
 %doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
@@ -366,6 +368,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Tue Sep 09 2014 Anton Farygin <rider@altlinux.ru> 5.5.16-alt1
+- new version
+
 * Tue Jun 17 2014 Anton Farygin <rider@altlinux.ru> 5.5.13-alt1
 - new version
 
