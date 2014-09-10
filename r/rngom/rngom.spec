@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: rngom
 Version: 201103
-Release: alt2_0.7.20120119svnjpp7
+Release: alt2_0.8.20120119svnjpp7
 Summary: Java library for parsing RELAX NG grammars
 Group: Development/Java
 License: MIT
@@ -113,6 +112,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.8.20120119svnjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.7.20120119svnjpp7
 - new release
 
