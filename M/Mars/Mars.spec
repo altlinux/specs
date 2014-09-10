@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           Mars
 Version:        4.3
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
@@ -56,6 +56,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_2jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_1jpp7
 - new version
 
