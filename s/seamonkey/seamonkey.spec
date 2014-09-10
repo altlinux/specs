@@ -14,7 +14,7 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.26.1
+Version: 2.29
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -156,7 +156,7 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %endif
 %patch6 -p2
 %patch7 -p2
-%patch8 -p2
+#%%patch8 -p2
 %patch9 -p2
 
 ### Copying .mozconfig to build directory
@@ -388,6 +388,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.29-alt1
+- New version
+
 * Wed Jul 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.26.1-alt1
 - New version
 - Security fixes:
