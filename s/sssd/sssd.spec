@@ -1,6 +1,6 @@
 
 Name: sssd
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -26,6 +26,7 @@ Patch: %name-%version-%release.patch
 %define pipepath %sssdstatedir/pipes
 %define mcpath %sssdstatedir/mc
 %define pubconfpath %sssdstatedir/pubconf
+%define gpocachepath %sssdstatedir/gpo_cache
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
@@ -69,6 +70,7 @@ BuildRequires: systemd-devel libsystemd-devel
 BuildRequires: selinux-policy-targeted
 BuildRequires: cifs-utils-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libnfsidmap-devel
 BuildRequires: libaugeas-devel
 BuildRequires: libcmocka-devel
 BuildRequires: nscd
@@ -302,6 +304,22 @@ Requires: %name = %version-%release
 The python-module-sss contains the bindings so that sss can
 be used by Python applications.
 
+%package -n libwbclient-%name
+Summary: The SSSD libwbclient implementation
+Group: System/Libraries
+License: GPLv3+ and LGPLv3+
+
+%description -n libwbclient-%name
+The SSSD libwbclient implementation.
+
+%package -n libwbclient-%name-devel
+Summary: Development libraries for the SSSD libwbclient implementation
+Group: Development/C
+License: GPLv3+ and LGPLv3+
+
+%description -n libwbclient-%name-devel
+Development libraries for the SSSD libwbclient implementation.
+
 %prep
 %setup
 %patch -p1
@@ -313,6 +331,7 @@ be used by Python applications.
     --with-pipe-path=%pipepath \
     --with-pubconf-path=%pubconfpath \
     --with-mcache-path=%mcpath \
+    --with-gpo-cache-path=%gpocachepath \
     --with-init-dir=%_initdir \
     --with-initscript=systemd \
     --with-systemdunitdir=%_unitdir \
@@ -320,6 +339,7 @@ be used by Python applications.
     --enable-nsslibdir=/%_lib \
     --enable-pammoddir=/%_lib/security \
     --enable-ldb-version-check \
+    --enable-nfsidmaplibdir=/%_lib/libnfsidmap \
     --with-syslog=journald \
     --with-test-dir=/dev/shm \
     --enable-krb5-locator-plugin \
@@ -394,6 +414,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %dir %_libdir/%name/modules
 %_libdir/%name/modules/libsss_autofs.so
 %_libdir/libsss_sudo.so
+/%_lib/libnfsidmap/sss.so
 
 %ldb_modulesdir/memberof.so
 %_bindir/sss_ssh_authorizedkeys
@@ -404,11 +425,13 @@ unset CK_TIMEOUT_MULTIPLIER
 %dir %sssdstatedir
 %dir %_localstatedir/cache/krb5rcache
 %attr(700,root,root) %dir %dbpath
-%attr(755,root,root) %dir %mcpath
+%dir %mcpath
 %ghost %attr(0644,root,root) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,root,root) %verify(not md5 size mtime) %mcpath/group
-%attr(755,root,root) %dir %pipepath
-%attr(755,root,root) %dir %pubconfpath
+%dir %pipepath
+%dir %pubconfpath
+%dir %pubconfpath/krb5.include.d
+%dir %gpocachepath
 %attr(700,root,root) %dir %pipepath/private
 %attr(750,root,root) %dir %_var/log/%name
 %attr(700,root,root) %dir %_sysconfdir/sssd
@@ -425,6 +448,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_man5dir/sssd.conf.5*
 %_man5dir/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
+%_man5dir/sss_rpcidmapd.5*
 %_man8dir/sssd.8*
 %_man8dir/sss_cache.8*
 
@@ -451,7 +475,6 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libexecdir/%name/sssd_pac
 
 %files ipa
-%dir %pubconfpath/krb5.include.d
 %_libdir/%name/libsss_ipa.so
 %_man5dir/sssd-ipa*
 %_datadir/%name/sssd.api.d/sssd-ipa.conf
@@ -475,6 +498,7 @@ unset CK_TIMEOUT_MULTIPLIER
 %_libdir/krb5/plugins/libkrb5/sssd_krb5_locator_plugin.so
 %_libdir/krb5/plugins/authdata/sssd_pac_plugin.so
 %_libdir/cifs-utils/cifs_idmap_sss.so
+%_libdir/%name/modules/sssd_krb5_localauth_plugin.so
 %_man8dir/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
 
@@ -540,7 +564,19 @@ unset CK_TIMEOUT_MULTIPLIER
 %files -n python-module-sss_nss_idmap
 %python_sitelibdir/pysss_nss_idmap.so
 
+%files -n libwbclient-%name
+%_libdir/%name/modules/libwbclient.so.*
+
+%files -n libwbclient-%name-devel
+%_includedir/wbclient_sssd.h
+%_libdir/%name/modules/libwbclient.so
+%_pkgconfigdir/wbclient_sssd.pc
+
 %changelog
+* Wed Sep 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+- add libwbclient package
+
 * Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
