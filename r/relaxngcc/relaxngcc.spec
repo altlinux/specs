@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: relaxngcc
 Version: 1.12
-Release: alt2_5jpp7
+Release: alt2_6jpp7
 Summary: RELAX NG Compiler Compiler
 Group: Development/Java
 
@@ -103,7 +103,7 @@ popd
 cp %{SOURCE1} build.xml
 
 # Run the ant build:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+ant jar javadoc
 
 
 %install
@@ -128,6 +128,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_6jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_5jpp7
 - new release
 
