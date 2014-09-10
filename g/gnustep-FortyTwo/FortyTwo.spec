@@ -2,7 +2,7 @@
 
 Name: gnustep-FortyTwo
 Version: 0.2.0
-Release: alt3
+Release: alt4
 Summary: Generic, native graph management system for GNUstep and Cocoa
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -138,6 +138,9 @@ install -d %buildroot%_localstatedir/GNUstep
 %doc documentation/*
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt4
+- Built with libdb6.1 instead of libdb4.8
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt3
 - Built with clang
 
