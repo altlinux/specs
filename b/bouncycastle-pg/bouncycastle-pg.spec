@@ -9,10 +9,11 @@ BuildRequires: jpackage-compat
 %global archivever  jdk16-%(echo %{ver}|sed 's|\\\.||')
 Name:          bouncycastle-pg
 Version:       1.46
-Release:       alt3_9jpp7
+Release:       alt3_10jpp7
 Summary:       Bouncy Castle OpenPGP API
 Group:         Development/Java
-License:       MIT
+# modified BZIP2 library org/bouncycastle/apache/bzip2 ASL 2.0
+License:       ASL 2.0 and MIT
 URL:           http://www.bouncycastle.org/
 Source0:       http://www.bouncycastle.org/download/bcpg-%{archivever}.tar.gz
 Source1:       http://repo2.maven.org/maven2/org/bouncycastle/bcpg-jdk16/%{version}/bcpg-jdk16-%{version}.pom
@@ -41,9 +42,8 @@ conjunction with a JCE/JCA provider such as the one provided with the
 Bouncy Castle Cryptography APIs.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -91,10 +91,7 @@ mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-bcpg.pom
 %add_maven_depmap JPP-bcpg.pom bcpg.jar
 
-%files
-%{_javadir}/bcpg.jar
-%{_mavenpomdir}/JPP-bcpg.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc *.html
 
 %files javadoc
@@ -102,6 +99,9 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-bcpg.pom
 %doc LICENSE.html
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt3_10jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt3_9jpp7
 - new release
 
