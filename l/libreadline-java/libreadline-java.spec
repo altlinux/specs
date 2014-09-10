@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -7,23 +8,22 @@ BuildRequires: jpackage-compat
 %global editline_ver    2.9
 %global src_dirs        org test
 
-Name:    libreadline-java
-Version: 0.8.0
-Release: alt2_31jpp7
-Summary: Java wrapper for the EditLine library
-Group:   Development/Java
-
-License: LGPLv2+
-URL:     http://java-readline.sf.net/
-Source0: http://download.sf.net/java-readline/%{name}-%{version}-src.tar.gz
-Patch0:  %{name}-ncurses.patch
-Patch1:  %{name}-libdir.patch
+Name:          libreadline-java
+Version:       0.8.0
+Release:       alt2_33jpp7
+Summary:       Java wrapper for the EditLine library
+License:       LGPLv2+
+URL:           http://java-readline.sf.net/
+Source0:       http://download.sf.net/java-readline/%{name}-%{version}-src.tar.gz
+Source1:       %{name}-%{version}-pom.xml
+Patch0:        %{name}-ncurses.patch
+Patch1:        %{name}-libdir.patch
 
 BuildRequires: jpackage-utils >= 1.5
 BuildRequires: libedit-devel >= %{editline_ver}
 BuildRequires: ncurses-devel
 
-Requires:         libedit >= %{editline_ver}
+Requires:      libedit >= %{editline_ver}
 Source44: import.info
 
 %description
@@ -31,9 +31,8 @@ libreadline-java provides Java bindings for libedit though a JNI
 wrapper.
 
 %package javadoc
-Summary: Javadoc for %{name}
-Group:   Development/Java
-Requires: jpackage-utils
+Group: Development/Java
+Summary:   Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -63,26 +62,41 @@ done
 
 # install jar file and JNI library under %{_libdir}/%{name}
 # FIXME: fix jpackage-utils to handle multilib correctly
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}
-install -m 644 %{name}.jar \
-  $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}.jar
-install -m 755 libJavaEditline.so $RPM_BUILD_ROOT%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_libdir}/%{name}
+install -m 755 libJavaEditline.so %{buildroot}%{_libdir}/%{name}
+
+mkdir -p %{buildroot}%{_jnidir}
+install -pm 644 %{name}.jar %{buildroot}%{_jnidir}/%{name}.jar
+ln -sf ../java/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
+
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -a api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -a api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %doc ChangeLog NEWS README README.1st VERSION COPYING.LIB
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
+%{_jnidir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
+%doc COPYING.LIB
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_33jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_31jpp7
 - new release
 
