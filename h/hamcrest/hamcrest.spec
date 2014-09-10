@@ -66,7 +66,7 @@ BuildRequires: jpackage-compat
 
 Name:           hamcrest
 Version:        1.3
-Release:        alt1_1jpp7
+Release:        alt1_5jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -96,7 +96,7 @@ Patch3:         %{name}-%{version}-javadoc.patch
 
 Requires:       qdox
 %if %with integration
-Requires:       easymock2
+Requires:       easymock3
 #Requires:       jmock
 %endif
 
@@ -104,7 +104,9 @@ BuildRequires:  jpackage-utils >= 0:1.7.4
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  ant-junit
 BuildRequires:  zip
-BuildRequires:  easymock2
+%if %with integration
+BuildRequires:  easymock3
+%endif
 %if %with jarjar
 BuildRequires:  jarjar
 %endif
@@ -157,10 +159,9 @@ ln -sf $(build-classpath jarjar) lib/generator/
 ln -sf $(build-classpath qdox) lib/generator/
 # BUILD/hamcrest-1.1/lib/integration/easymock-2.2.jar.no
 %if %with integration
-ln -sf $(build-classpath easymock2) lib/integration/
-%endif
+# easymock2 is now compat package
+ln -sf $(build-classpath easymock3) lib/integration/
 # BUILD/hamcrest-1.1/lib/integration/jmock-1.10RC1.jar.no
-%if %with integration
 ln -sf $(build-classpath jmock) lib/integration/
 %endif
 # BUILD/hamcrest-1.1/lib/integration/testng-4.6-jdk15.jar.no
@@ -284,6 +285,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_5jpp7
+- new release
+
 * Tue Aug 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_1jpp7
 - new version
 
