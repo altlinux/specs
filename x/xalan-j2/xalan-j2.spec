@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           xalan-j2
 Version:        2.7.1
-Release:        alt2_18jpp7
+Release:        alt2_21jpp7
 Epoch:          0
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
@@ -210,7 +210,7 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-serializ
 install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-xsltc.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 %add_maven_depmap JPP-%{name}-serializer.pom %{name}-serializer.jar
-%add_maven_depmap JPP-xsltc.pom xsltc.jar
+%add_maven_depmap -f xsltc JPP-xsltc.pom xsltc.jar
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -251,21 +251,14 @@ EOF
 
 
 
-%files
+%files -f .mfiles
 %{_javadir}/serializer.jar
 %{_javadir}/xalan.jar
 %_altdir/jaxp_transform_impl_xalan-j2
 %doc KEYS LICENSE.txt NOTICE.txt readme.html
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-serializer.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}-serializer.pom
 
-%files xsltc
+%files xsltc -f .mfiles-xsltc
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/xsltc.jar
-%{_mavenpomdir}/JPP-xsltc.pom
 %_altdir/jaxp_transform_impl_%{name}-xsltc
 
 %files manual
@@ -280,6 +273,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_21jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.7.1-alt2_18jpp7
 - new release
 
