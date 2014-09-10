@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.11.b3_xalan2.svn313293jpp7
+Release:       alt2_0.14.b3_xalan2.svn313293jpp7
 Summary:       Apache XML Stylebook
 Group:         Development/Java
 License:       ASL 1.1
@@ -29,11 +29,11 @@ BuildRequires: java-javadoc
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: xml-commons-apis
-BuildRequires: jaxp_parser_impl
+BuildRequires: xerces-j2
 BuildRequires: fonts-ttf-dejavu
 Requires:      jpackage-utils
 Requires:      xml-commons-apis
-Requires:      jaxp_parser_impl
+Requires:      xerces-j2
 Source44: import.info
 Provides: stylebook = %{version}
 Obsoletes: stylebook < 1.0-alt1
@@ -92,17 +92,13 @@ java -classpath "$(build-classpath xml-commons-apis):$(build-classpath jaxp_pars
 popd
 
 %install
-
 # jars
 install -pD -T bin/stylebook-%{version}-b3_xalan-2.jar \
-  %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do \
-  ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+  %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-install -d %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-(cd %{buildroot}%{_javadocdir} && ln -sf %{name}-%{version} %{name}) 
+install -d %{buildroot}%{_javadocdir}/%{name}
+cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 # examples
 install -d %{buildroot}%{_datadir}/%{name}
@@ -117,13 +113,16 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_javadir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 %files demo
 %{_datadir}/%{name} 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.14.b3_xalan2.svn313293jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.11.b3_xalan2.svn313293jpp7
 - new release
 
