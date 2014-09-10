@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: maven-local
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,7 +8,7 @@ BuildRequires: jpackage-compat
 %global with_gmaven 0
 Name:          codenarc
 Version:       0.17
-Release:       alt1_3jpp7
+Release:       alt1_4jpp7
 Summary:       Groovy library that provides static analysis features for Groovy code
 Group:         Development/Java
 License:       ASL 2.0
@@ -145,6 +146,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_3jpp7
 - new release
 
