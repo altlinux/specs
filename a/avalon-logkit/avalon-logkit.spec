@@ -39,13 +39,13 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     2.1
-Release:     alt2_12jpp7
+Release:     alt2_13jpp7
 Epoch:       0
 Summary:     Java logging toolkit
 License:     ASL 2.0
 Group:       Development/Java
 URL:         http://avalon.apache.org/%{short_name}/
-Source0:     http://www.apache.org/dist/excalibur/%{name}/source/%{name}-%{version}-src.zip
+Source0:     http://archive.apache.org/dist/excalibur/%{name}/source/%{name}-%{version}-src.zip
 Source1:     http://repo1.maven.org/maven2/avalon-logkit/avalon-logkit/%{version}/%{name}-%{version}.pom
 Patch0:      fix-java6-compile.patch
 Patch1:      avalon-logkit-pom-deps.patch
@@ -126,6 +126,9 @@ cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_13jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_12jpp7
 - new release
 
