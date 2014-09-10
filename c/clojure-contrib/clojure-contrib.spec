@@ -1,7 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{artifactId}
 Version:        1.2.0
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        User contributions library for Clojure
 
 License:        EPL
@@ -98,6 +97,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_5jpp7
+- new release
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_4jpp7
 - update
 
