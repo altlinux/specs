@@ -1,16 +1,15 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global master_version 4
 Name:          struts
 Version:       1.3.10
-Release:       alt4_7jpp7
+Release:       alt4_9jpp7
 Summary:       Web application framework
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://struts.apache.org/
 # wget http://www.apache.org/dist/struts/source/struts-1.3.10-src.zip
@@ -37,51 +36,26 @@ Patch0:        %{name}-%{version}-parent-pom.patch
 #  build for junit servlet-3.0-api
 Patch1:        %{name}-%{version}-jboss.patch
 
-BuildRequires: jpackage-utils
 
-BuildRequires: antlr
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-chain
-BuildRequires: apache-commons-digester
-BuildRequires: apache-commons-fileupload
-BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-validator
-BuildRequires: bsf
-BuildRequires: jakarta-oro
-BuildRequires: jboss-el-2.2-api
-BuildRequires: jboss-jsf-2.1-api
-BuildRequires: jboss-jsp-2.2-api
-BuildRequires: jboss-jstl-1.2-api
-BuildRequires: jboss-servlet-3.0-api
-# not only a test dep
-BuildRequires: junit
+BuildRequires: mvn(antlr:antlr)
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-chain:commons-chain)
+BuildRequires: mvn(commons-digester:commons-digester)
+BuildRequires: mvn(commons-fileupload:commons-fileupload)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(commons-validator:commons-validator)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.bsf:bsf)
+BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires: mvn(oro:oro)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      antlr
-Requires:      apache-commons-beanutils
-Requires:      apache-commons-chain
-Requires:      apache-commons-digester
-Requires:      apache-commons-fileupload
-Requires:      apache-commons-logging
-Requires:      apache-commons-validator
-Requires:      bsf
-Requires:      jakarta-oro
-Requires:      jboss-el-2.2-api
-Requires:      jboss-jsf-2.1-api
-Requires:      jboss-jsp-2.2-api
-Requires:      jboss-jstl-1.2-api
-Requires:      jboss-servlet-3.0-api
-Requires:      junit
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Obsoletes:     %{name}-manual < %{version}
 Obsoletes:     %{name}-webapps-tomcat5 < %{version}
@@ -105,9 +79,8 @@ JavaBeans properties based on the Java reflection APIs, and
 internationalization of prompts and messages.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -129,51 +102,45 @@ done
 
 cp -p %{SOURCE1} pom.xml
 
+cd src
+%mvn_file :%{name}-core %{name}/core
+%mvn_file :%{name}-el %{name}/el
+%mvn_file :%{name}-extras %{name}/extras
+%mvn_file :%{name}-faces %{name}/faces
+%mvn_file :%{name}-mailreader-dao %{name}/mailreader-dao
+%mvn_file :%{name}-scripting %{name}/scripting
+%mvn_file :%{name}-taglib %{name}/taglib
+%mvn_file :%{name}-tiles %{name}/tiles
+
 %build
 
 cd src
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
+(
+cd src
+%mvn_install
+)
+
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
 %add_maven_depmap JPP.%{name}-master.pom
-
-install -pm 644 src/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-for m in core \
- el \
- extras \
- faces \
- mailreader-dao \
- scripting \
- taglib \
- tiles; do
-  install -pm 644 src/${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-  install -pm 644 src/${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-  %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 
-%files
-%{_javadir}/%{name}/*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
+%files -f src/.mfiles
+%dir %{_javadir}/%{name}
+%{_mavenpomdir}/JPP.%{name}-master.pom
 %{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f src/.mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_7jpp7
 - new release
 
