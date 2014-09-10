@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     4.3
-Release:     alt2_8jpp7
+Release:     alt2_9jpp7
 Epoch:       0
 Summary:     Java components interfaces
 License:     ASL 2.0
@@ -165,6 +165,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.3-alt2_8jpp7
 - new release
 
