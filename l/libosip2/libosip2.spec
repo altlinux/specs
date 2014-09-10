@@ -1,12 +1,12 @@
 Name: libosip2
 Summary: The GNU oSIP library
-Version: 3.5.0
-Release: alt1.qa1
+Version: 4.1.0
+Release: alt1
 License: LGPL
 Group: System/Libraries
 Url: http://www.gnu.org/software/osip/osip.html
-Packager: Egor Glukhov <kaman@altlinux.org>
 
+# git://git.savannah.gnu.org/osip.git
 Source0: %name-%version.tar
 BuildRequires: OpenSP docbook-dtds docbook-to-man
 
@@ -41,11 +41,15 @@ Static version of the GNU oSIP library.
 ./autogen.sh
 %configure \
 	--enable-pthread \
-	%{subst_enable static}
+	%{subst_enable static} \
+	--enable-debug \
+	--enable-semaphore \
+	--enable-sysv \
+	--enable-test
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS BUGS NEWS README TODO
@@ -63,6 +67,9 @@ Static version of the GNU oSIP library.
 %endif
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.0-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
