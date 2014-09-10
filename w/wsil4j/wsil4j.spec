@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_6jpp7
+Release:	alt2_7jpp7
 Summary:	Web Services Inspection Language for Java API
 
 Group:		Development/Java
@@ -91,6 +91,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_6jpp7
 - new release
 
