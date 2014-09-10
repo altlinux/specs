@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sablecc
 Version:        3.2
-Release:        alt3_4jpp7
+Release:        alt3_5jpp7
 Summary:        A parser generator written in Java
 Group:          Development/Java
 License:        LGPLv2+
@@ -61,6 +61,9 @@ install -m 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 %doc doc/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_4jpp7
 - new release
 
