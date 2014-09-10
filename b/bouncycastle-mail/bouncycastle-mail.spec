@@ -1,3 +1,4 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -10,25 +11,21 @@ BuildRequires: jpackage-compat
 Summary:          S/MIME and CMS libraries for Bouncy Castle
 Name:             bouncycastle-mail
 Version:          %{ver}
-Release:          alt2_7jpp7
-Group:            System/Libraries
+Release:          alt2_11jpp7
 License:          MIT
 URL:              http://www.bouncycastle.org/
 Source0:          http://www.bouncycastle.org/download/bcmail-%{archivever}.tar.gz
 Source1:          http://repo2.maven.org/maven2/org/bouncycastle/bcmail-jdk16/%{version}/bcmail-jdk16-%{version}.pom
-Requires:         bouncycastle == %{version}
-Requires:         bouncycastle >= 1.46-5
-BuildRequires:    jpackage-utils >= 1.5
-Requires:         jpackage-utils >= 1.5
-Requires(post):   jpackage-utils >= 1.7
-Requires(postun): jpackage-utils >= 1.7
 BuildArch:        noarch
 BuildRequires:    bouncycastle == %{version}
 BuildRequires:    bouncycastle >= 1.46-5
 BuildRequires:    javamail
+BuildRequires:    jpackage-utils >= 1.5
+BuildRequires:    junit
+Requires:         bouncycastle == %{version}
+Requires:         bouncycastle >= 1.46-5
 Requires:         javamail
-BuildRequires:    junit4
-
+Requires:         jpackage-utils >= 1.5
 Provides:         bcmail = %{version}-%{release}
 Source44: import.info
 
@@ -39,11 +36,10 @@ This library package offers additional classes, in particuar
 generators/processors for S/MIME and CMS, for Bouncy Castle.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-BuildArch:      noarch
 Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
+BuildArch: noarch
 
 %description javadoc
 API documentation for the %{name} package.
@@ -58,9 +54,9 @@ find . -type f -name "*.jar" -exec rm -f {} \;
 
 %build
 pushd src
-  export CLASSPATH=$(build-classpath junit4 bcprov javamail)
+  export CLASSPATH=$(build-classpath junit bcprov javamail)
   %javac -g -source 1.6 -target 1.6 -encoding UTF-8 $(find . -type f -name "*.java")
-  jarfile="../bcmail-%{version}.jar"
+  jarfile="../bcmail.jar"
   # Exclude all */test/* , cf. upstream
   files="$(find . -type f \( -name '*.class' -o -name '*.properties' \) -not -path '*/test/*')"
   test ! -d classes && mf="" \
@@ -72,14 +68,12 @@ popd
 %install
 # install bouncy castle mail
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 bcmail-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/bcmail-%{version}.jar
-pushd $RPM_BUILD_ROOT%{_javadir}
-  ln -sf bcmail-%{version}.jar bcmail.jar
-popd
+install -pm 644 bcmail.jar \
+  $RPM_BUILD_ROOT%{_javadir}/bcmail.jar
+
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
 pushd $RPM_BUILD_ROOT%{_javadir}/gcj-endorsed
-  ln -sf ../bcmail-%{version}.jar bcmail-%{version}.jar
+  ln -sf ../bcmail.jar bcmail.jar
 popd
 
 # javadoc
@@ -89,11 +83,11 @@ cp -pr docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # maven pom
 install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-bcmail.pom
-%add_to_maven_depmap org.bouncycastle bcmail-jdk16 %{version} JPP bcmail
+%add_maven_depmap JPP-bcmail.pom bcmail.jar
 
 %check
 pushd src
-  export CLASSPATH=$PWD:$(build-classpath junit4 javamail bcprov)
+  export CLASSPATH=$PWD:$(build-classpath junit javamail bcprov)
   for test in $(find . -name AllTests.class) ; do
     test=${test#./} ; test=${test%.class} ; test=${test//\//.}
     # TODO: failures; get them fixed and remove || :
@@ -104,8 +98,7 @@ popd
 %files
 %doc *.html
 %{_javadir}/bcmail.jar
-%{_javadir}/bcmail-%{version}.jar
-%{_javadir}/gcj-endorsed/bcmail-%{version}.jar
+%{_javadir}/gcj-endorsed/bcmail.jar
 %{_mavenpomdir}/JPP-bcmail.pom
 %{_mavendepmapfragdir}/%{name}
 
@@ -113,6 +106,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_7jpp7
 - new release
 
