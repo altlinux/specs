@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -149,7 +149,9 @@ cat > %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger << '@@@'
 #!/bin/sh -efu
 
 LC_ALL=C sed -rn 's|(^/usr/lib(64)?)/gdk-pixbuf.*/loaders/.*|\1|p' | sort -u | while read L; do
-       $L/%_name-%api_ver/%binary_ver/%_name-query-loaders --update-cache
+       if [ -x "$L/%_name-%api_ver/%binary_ver/%_name-query-loaders" ]; then
+              $L/%_name-%api_ver/%binary_ver/%_name-query-loaders --update-cache
+       fi
 done
 @@@
 chmod 755 %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
@@ -223,6 +225,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.30.8-alt2
+- Fix gdk-pixbuf-loaders.filetrigger.
+
 * Tue May 27 2014 Yuri N. Sedunov <aris@altlinux.org> 2.30.8-alt1
 - 2.30.8
 
