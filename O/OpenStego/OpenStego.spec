@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           OpenStego
 Version:        0.5.2
-Release:        alt2_11jpp7
+Release:        alt2_12jpp7
 Summary:        Free Steganography solution
 Summary(fr):    Solution libre pour la steganographie
 
@@ -93,6 +93,9 @@ touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_11jpp7
 - new release
 
