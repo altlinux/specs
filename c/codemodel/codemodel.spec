@@ -1,43 +1,32 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name: codemodel
-Version: 2.6
-Release: alt2_8jpp7
-Summary: Java library for code generators
-Group: Development/Java
-License: CDDL and GPLv2
-URL: http://codemodel.java.net
-
+Name:         codemodel
+Version:      2.6
+Release:      alt2_10jpp7
+Summary:      Java library for code generators
+License:      CDDL and GPLv2
+URL:          http://codemodel.java.net
 # svn export https://svn.java.net/svn/codemodel~svn/tags/codemodel-project-2.6/ codemodel-2.6
 # tar -zcvf codemodel-2.6.tar.gz codemodel-2.6
-Source0: %{name}-%{version}.tar.gz
-
+Source0:      %{name}-%{version}.tar.gz
 # Remove the dependency on istack-commons (otherwise it will be a
 # recursive dependency with the upcoming changes to that package):
-Patch0: %{name}-remove-istack-commons-dependency.patch
+Patch0:       %{name}-remove-istack-commons-dependency.patch
 
-BuildArch: noarch
+BuildArch:     noarch
 
-BuildRequires: jpackage-utils
+
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-release-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
-BuildRequires: jvnet-parent
+BuildRequires: mvn(net.java:jvnet-parent)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(junit:junit)
 
-Requires: jpackage-utils
-Requires: jvnet-parent
+Requires:      mvn(net.java:jvnet-parent)
 Source44: import.info
 
 
@@ -47,17 +36,13 @@ generate Java programs in a way much nicer than PrintStream.println().
 This project is a spin-off from the JAXB RI for its schema compiler
 to generate Java source files.
 
-
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary: Javadocs for %{name}
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
 
 %prep
 
@@ -68,50 +53,25 @@ This package contains the API documentation for %{name}.
 # Remove bundled jar files:
 find . -name '*.jar' -print -delete
 
-
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate
 
+%mvn_file :%{name} %{name}
+%mvn_file :%{name}-annotation-compiler %{name}-annotation-compiler
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
+%mvn_install
 
-# JAR
-cp -p codemodel/target/codemodel-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-cp -p codemodel-annotation-compiler/target/codemodel-annotation-compiler-%{version}.jar %{buildroot}%{_javadir}/%{name}-annotation-compiler.jar
-
-# JAVADOC
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# POM
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-project.pom
-cp -p codemodel/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-cp -p codemodel-annotation-compiler/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-annotation-compiler.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}-project.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-annotation-compiler.pom %{name}-annotation-compiler.jar
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc LICENSE.html
 
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.html
-
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_8jpp7
 - new release
 
