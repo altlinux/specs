@@ -1,29 +1,26 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# these packages are not configured to run as a server
 Name:          apacheds
 Version:       1.5.7
-Release:       alt2_4jpp7
+Release:       alt2_7jpp7
 Summary:       Apache Directory Server
-# these packages are not configured to run as a server
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://directory.apache.org/
 # svn export http://svn.apache.org/repos/asf/directory/apacheds/tags/1.5.7/ apacheds-1.5.7
 # tar czf apacheds-1.5.7-src-svn.tar.gz apacheds-1.5.7
 Source0:       %{name}-%{version}-src-svn.tar.gz
-
 # remove unavailable / unused deps
 # fix bouncycastle gId aId
 Patch0:        %{name}-%{version}-fixbuild.patch
 # add maven-surefire-plugin version
 Patch1:        %{name}-%{version}-i18n-pom.patch
 
-BuildRequires: jpackage-utils
 BuildRequires: directory-project
 
 BuildRequires: apache-commons-io
@@ -63,19 +60,10 @@ BuildRequires: apache-commons-net
 
 BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      apacheds-shared
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -89,17 +77,8 @@ views to the world of LDAP which has lacked these rich
 constructs.
 
 %package core
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS Core
-Requires:      %{name}-jdbm = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      %{name}-xdbm = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      %{name}-kerberos = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      %{name}-protocols = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      apache-commons-io
-Requires:      bouncycastle
-Requires:      %{name}-ldap-client
-Requires:      junit
-Requires:      ldapjdk >= 0:4.18-11
 
 %description core
 Server's core contains the JNDI provider, interceptors,
@@ -127,17 +106,15 @@ A linked in memory splay tree implementation with Cursor.
 Core unit tests. 
 
 %package i18n
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS I18n
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description i18n
 Internationalization of errors and other messages.
 
 %package jdbm
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS specific JDBM Implementation
-Requires:      %{name}-i18n = %{?epoch:%epoch:}%{version}-%{release}
 
 %description jdbm
 A specific JDBM Implementation.
@@ -152,10 +129,8 @@ to build the schema partition used for bootstrapping the
 server. 
 
 %package kerberos
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS Kerberos
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      apache-mina
 
 %description kerberos
 This package provides:
@@ -163,10 +138,8 @@ This package provides:
 - Interceptors used by the ApacheDS kerberos service.
 
 %package protocols
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS Protocols
-Requires:      %{name}-kerberos = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      apache-mina
 
 %description protocols
 This package provides the following protocols for ApacheDS:
@@ -177,12 +150,8 @@ This package provides the following protocols for ApacheDS:
 - NTP
 
 %package server
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS Server modules
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
-#R equires:      {name}-ldap-client
-#R equires:      junit
-#R equires:      ldapjdk >= 0:4.18-11
 
 %description server
 Integration testing framework for Apache Directory Server.
@@ -198,9 +167,8 @@ Unit testing framework for ApacheDS Server JNDI Provider.
 A single authoritative server.XML file. 
 
 %package utils
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS Utils
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description utils
 Contains utility classes for ApacheDS. 
@@ -213,7 +181,7 @@ Contains utility classes for ApacheDS.
 #%% description xbean-spring
 
 %package xdbm
-Group:         Development/Java
+Group: Development/Java
 Summary:       ApacheDS XDBM
 
 %description xdbm
@@ -230,16 +198,15 @@ on them. This module contains common tools that could be
 used to manage aspects common to all xdbm implementations. 
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n apacheds-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p0
 chmod 644 README.txt
@@ -252,6 +219,12 @@ chmod 644 README.txt
 # org.apache.xbean xbean-spring maven-xbean-plugin
 # org.springframework spring-core spring-beans spring-context
 %pom_disable_module xbean-spring
+# TODO
+# http-integration
+# default-config
+# server-sar
+# server-tools
+# server-xml
 %pom_disable_module server-tools
 %pom_disable_module server-xml
 # depend on jetty 6.x
@@ -264,199 +237,87 @@ rm -rf i18n/src/test/java/org/apache/directory/server/i18n/GermanLanguageTest.ja
 rm -rf xdbm-search/src/test/java/org/apache/directory/server/xdbm/search/impl/LessEqTest.java
 
 %build
+
+%mvn_package ":%{name}-avl-partition" core
+%mvn_package ":%{name}-core" core
+%mvn_package ":%{name}-core-annotations" core
+%mvn_package ":%{name}-core-api" core
+%mvn_package ":%{name}-core-avl" core
+%mvn_package ":%{name}-core-constants" core
+%mvn_package ":%{name}-core-entry" core
+%mvn_package ":%{name}-core-integ" core
+%mvn_package ":%{name}-core-jndi" core
+%mvn_package ":%{name}-core-mock" core
+%mvn_package ":%{name}-jdbm-partition" core
+%mvn_package ":%{name}-jdbm-store" core
+%mvn_package ":%{name}-ldif-partition" core
+%mvn_package ":%{name}-server-annotations" core
+%mvn_package ":%{name}-test-framework" core
+%mvn_package ":%{name}-i18n" i18n
+%mvn_package ":%{name}-jdbm" jdbm
+%mvn_package ":%{name}-interceptor-kerberos" kerberos
+%mvn_package ":%{name}-kerberos-shared" kerberos
+%mvn_package ":%{name}-kerberos-test" kerberos
+%mvn_package ":%{name}-protocol-kerberos" kerberos
+%mvn_package ":%{name}-protocol-changepw" protocols
+%mvn_package ":%{name}-protocol-dhcp" protocols
+%mvn_package ":%{name}-protocol-dns" protocols
+%mvn_package ":%{name}-protocol-ldap" protocols
+%mvn_package ":%{name}-protocol-ntp" protocols
+%mvn_package ":%{name}-protocol-shared" protocols
+%mvn_package ":%{name}-server-integ" server
+%mvn_package ":%{name}-server-jndi" server
+%mvn_package ":%{name}-server-replication" server
+%mvn_package ":%{name}-utils" utils
+%mvn_package ":%{name}-xdbm-base" xdbm
+%mvn_package ":%{name}-xdbm-search" xdbm
+%mvn_package ":%{name}-xdbm-tools" xdbm
+
 # server-integ fails
-mvn-rpmbuild -Pquicktest -Dmaven.test.failure.ignore=true install javadoc:aggregate
+%mvn_build -s -- -Pquicktest -Dmaven.test.failure.ignore=true
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-
-# core modules
-for m in avl-partition \
-  core \
-  core-annotations \
-  core-api \
-  core-avl \
-  core-constants \
-  core-entry \
-  core-integ \
-  core-jndi \
-  core-mock \
-  jdbm-partition \
-  jdbm-store \
-  ldif-partition \
-  server-annotations \
-  test-framework; do
-  install -m 644 ${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap -f core JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-install -m 644 i18n/target/%{name}-i18n-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-i18n.jar
-install -pm 644 i18n/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-i18n.pom
-%add_maven_depmap -f i18n JPP.%{name}-%{name}-i18n.pom %{name}/%{name}-i18n.jar
-
-install -m 644 jdbm/target/%{name}-jdbm-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-jdbm.jar
-install -pm 644 jdbm/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-jdbm.pom
-%add_maven_depmap -f jdbm JPP.%{name}-%{name}-jdbm.pom %{name}/%{name}-jdbm.jar
-
-# kerberos modules
-for m in interceptor-kerberos \
-  kerberos-shared \
-  kerberos-test \
-  protocol-kerberos; do
-  install -m 644 ${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap -f kerberos JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-# protocols modules
-for m in protocol-changepw \
-  protocol-dhcp \
-  protocol-dns \
-  protocol-ldap \
-  protocol-ntp \
-  protocol-shared; do
-  install -m 644 ${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap -f protocols JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-# server modules
-# TODO
-# http-integration
-# default-config
-# server-sar
-# server-tools
-# server-xml
-for m in server-integ \
-  server-jndi \
-  server-replication; do
-  install -m 644 ${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap -f server JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-install -m 644 utils/target/%{name}-utils-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-utils.jar
-install -pm 644 utils/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-utils.pom
-%add_maven_depmap -f utils JPP.%{name}-%{name}-utils.pom %{name}/%{name}-utils.jar
-
-# TODO
-# xbean-spring
-
-# xdbm modules
-for m in xdbm-base \
-  xdbm-search \
-  xdbm-tools; do
-  install -m 644 ${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap -f xdbm JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles-%{name}-parent
 %dir %{_javadir}/%{name}
-%{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
 %doc LICENSE NOTICE README.txt
 
-%files core
-%{_javadir}/%{name}/%{name}-core*.jar
-%{_javadir}/%{name}/%{name}-avl-partition.jar
-%{_javadir}/%{name}/%{name}-jdbm-partition.jar
-%{_javadir}/%{name}/%{name}-jdbm-store.jar
-%{_javadir}/%{name}/%{name}-ldif-partition.jar
-%{_javadir}/%{name}/%{name}-server-annotations.jar
-%{_javadir}/%{name}/%{name}-test-framework.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-core*.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-avl-partition.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-jdbm-partition.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-jdbm-store.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-ldif-partition.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-server-annotations.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-test-framework*.pom
-%{_mavendepmapfragdir}/%{name}-core
+%files core -f .mfiles-core
 %doc LICENSE NOTICE
 
-%files i18n
-%{_javadir}/%{name}/%{name}-i18n.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-i18n.pom
-%{_mavendepmapfragdir}/%{name}-i18n
+# files http-integration
+
+%files i18n -f .mfiles-i18n
 %doc LICENSE NOTICE
 
-%files jdbm
-%{_javadir}/%{name}/%{name}-jdbm.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-jdbm.pom
-%{_mavendepmapfragdir}/%{name}-jdbm
+%files jdbm -f .mfiles-jdbm
 %doc LICENSE NOTICE
 
-%files kerberos
-%{_javadir}/%{name}/%{name}-*kerberos*.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-*kerberos*.pom
-%{_mavendepmapfragdir}/%{name}-kerberos
+%files kerberos -f .mfiles-kerberos
 %doc LICENSE NOTICE
 
-%files protocols
-%{_javadir}/%{name}/%{name}-protocol-changepw.jar
-%{_javadir}/%{name}/%{name}-protocol-dhcp.jar
-%{_javadir}/%{name}/%{name}-protocol-dns.jar
-%{_javadir}/%{name}/%{name}-protocol-ldap.jar
-%{_javadir}/%{name}/%{name}-protocol-ntp.jar
-%{_javadir}/%{name}/%{name}-protocol-shared.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-changepw.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-dhcp.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-dns.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-ldap.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-ntp.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-protocol-shared.pom
-%{_mavendepmapfragdir}/%{name}-protocols
+%files protocols -f .mfiles-protocols
 %doc LICENSE NOTICE
 
-%files server
-%{_javadir}/%{name}/%{name}-server-integ.jar
-%{_javadir}/%{name}/%{name}-server-jndi.jar
-%{_javadir}/%{name}/%{name}-server-replication.jar
-# default-config.jar
-# http-integration.jar
-# server-sar.jar
-# server-tools.jar
-# server-xml.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-server-integ.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-server-jndi.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-server-replication.pom
-# default-config.pom
-# http-integration.pom
-# server-sar.pom
-# server-tools.pom
-# server-xml.pom
-%{_mavendepmapfragdir}/%{name}-server
+%files server -f .mfiles-server
 %doc LICENSE NOTICE
 
-%files utils
-%{_javadir}/%{name}/%{name}-utils.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-utils.pom
-%{_mavendepmapfragdir}/%{name}-utils
+%files utils -f .mfiles-utils
 %doc LICENSE NOTICE
 
 # files xbean-spring 
 
-%files xdbm
-%{_javadir}/%{name}/%{name}-xdbm*.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-xdbm*.pom
-%{_mavendepmapfragdir}/%{name}-xdbm
+%files xdbm -f .mfiles-xdbm
 %doc LICENSE NOTICE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_4jpp7
 - new release
 
