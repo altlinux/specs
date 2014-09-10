@@ -1,6 +1,6 @@
 Name: monotone
-Version: 1.1
-Release: alt1
+Version: 1.2
+Release: alt1.dev.mtn20140605
 
 Summary: Distributed version control system
 License: GPL
@@ -8,6 +8,8 @@ Group: Development/Tools
 
 Url: http://monotone.ca
 
+# get: mtn clone mtn://code.monotone.ca/monotone?net.venge.monotone
+# update: mtn pull --update
 Source: %name-%version.tar
 
 BuildRequires: pcre-devel boost-devel libbotan-devel pkg-config
@@ -49,6 +51,9 @@ functions to client-side RSA certificates.
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.dev.mtn20140605
+- Version 1.2dev
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Version 1.1
 
