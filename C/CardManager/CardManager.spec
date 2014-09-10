@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           CardManager
 Version:        3
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 Group:          Games/Other
@@ -18,7 +18,6 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
-BuildRequires:  ant-nodeps
 BuildRequires:  desktop-file-utils
 
 Requires:       jpackage-utils
@@ -94,6 +93,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3-alt1_3jpp7
+- new release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_1jpp7
 - fc update
 
