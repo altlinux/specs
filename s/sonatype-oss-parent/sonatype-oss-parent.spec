@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Sonatype OSS Parent
 
 Group:          Development/Java
@@ -38,6 +38,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 7-alt1_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 7-alt1_5jpp7
 - update
 
