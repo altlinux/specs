@@ -1,16 +1,15 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt3_6jpp7
+Release:       alt3_9jpp7
 Summary:       Java templating framework for web application user interfaces
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://tiles.apache.org/
 Source0:       http://www.apache.org/dist/%{name}/v%{version}/%{name}-%{version}-src.tar.gz
@@ -32,7 +31,6 @@ Patch2:        %{name}-%{version}-parent-pom.patch
 Patch3:        %{name}-%{version}-servlet-servlet30.patch
 Patch4:        %{name}-%{version}-jsp-servlet30.patch
 
-BuildRequires: jpackage-utils
 
 BuildRequires: apache-commons-digester
 BuildRequires: apache-commons-ognl
@@ -44,38 +42,24 @@ BuildRequires: tomcat-lib
 BuildRequires: tomcat-el-2.2-api
 BuildRequires: tomcat-jsp-2.2-api
 BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: velocity-tools
 
 # test deps
-# org.easymock easymockclassextension 2.4
-# org.apache.shale shale-test 1.0.5
-BuildRequires: easymock2
-BuildRequires: junit4
+%if 0
+BuildRequires: mvn(org.easymock:easymockclassextension) >= 2.4
+BuildRequires: mvn(org.apache.shale:shale-test) >= 1.0.5
+%endif
+BuildRequires: junit
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
 # requires by remote-resources-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-artifact-resolver)
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
 
-Requires:      apache-commons-digester
-Requires:      apache-commons-ognl
-Requires:      freemarker
-Requires:      mvel
-Requires:      portlet-2.0-api
-Requires:      slf4j
-Requires:      tomcat-lib
-Requires:      tomcat-el-2.2-api
-Requires:      tomcat-jsp-2.2-api
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -94,9 +78,8 @@ extracted from Struts and is now integrated with various
 frameworks, such as Struts 2 and Shale.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -112,72 +95,63 @@ This package contains javadoc for %{name}.
 %patch4 -p0
 
 # require org.springframework spring-webmvc-portlet 2.5.6
-sed -i "s|<module>tiles-portlet-wildcard</module>|<!--module>tiles-portlet-wildcard</module-->|" src/pom.xml
+%pom_disable_module tiles-portlet-wildcard src/pom.xml
 # org.springframework spring-web 2.5.6
-sed -i "s|<module>tiles-servlet-wildcard</module>|<!--module>tiles-servlet-wildcard</module-->|" src/pom.xml
-# require org.apache.velocity velocity-tools 2.0
-sed -i "s|<module>tiles-velocity</module>|<!--module>tiles-velocity</module-->|" src/pom.xml
+%pom_disable_module tiles-servlet-wildcard src/pom.xml
 # depends on previous artifacts
-sed -i "s|<module>tiles-extras</module>|<!--module>tiles-extras</module-->|" src/pom.xml
+%pom_disable_module tiles-extras src/pom.xml
+%pom_disable_module assembly src/pom.xml
 
-sed -i "s|<module>assembly</module>|<!--module>assembly</module-->|" src/pom.xml
+sed -i "s|<artifactId>jasper-el|<artifactId>tomcat-jasper-el|" src/tiles-el/pom.xml
 
 cp -p %{SOURCE1} pom.xml
 
 %build
 
 cd src
-# test skip for unavailable deps:
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  -Dmaven.local.depmap.file="%{SOURCE2}" \
-  install javadoc:aggregate
-
-%install
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
-%add_maven_depmap JPP.%{name}-master.pom
-
-install -pm 644 src/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
 # TODO
 # extras
 # portlet-wildcard
 # servlet-wildcard
-# velocity
-mkdir -p %{buildroot}%{_javadir}/%{name}
-for m in api \
- compat \
- core \
- el \
- freemarker \
- jsp \
- mvel \
- ognl \
- portlet \
- servlet \
- template; do
-  install -pm 644 src/%{name}-${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-  install -pm 644 src/%{name}-${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-  %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
+%mvn_file :%{name}-api %{name}/api
+%mvn_file :%{name}-compat %{name}/compat
+%mvn_file :%{name}-core %{name}/core
+%mvn_file :%{name}-el %{name}/el
+%mvn_file :%{name}-freemarker %{name}/freemarker
+%mvn_file :%{name}-jsp %{name}/jsp
+%mvn_file :%{name}-mvel %{name}/mvel
+%mvn_file :%{name}-ognl %{name}/ognl
+%mvn_file :%{name}-portlet %{name}/portlet
+%mvn_file :%{name}-servlet %{name}/servlet
+%mvn_file :%{name}-template %{name}/template
+%mvn_file :%{name}-velocity %{name}/velocity
 
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+# test skip for unavailable deps
+%mvn_build -f -- -Dmaven.local.depmap.file="%{SOURCE2}"
 
-%files
-%{_javadir}/%{name}
-%{_mavenpomdir}/JPP.%{name}-*.pom
+%install
+
+(
+cd src
+%mvn_install
+)
+
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
+%add_maven_depmap JPP.%{name}-master.pom
+
+%files -f src/.mfiles
+%dir %{_javadir}/%{name}
+%{_mavenpomdir}/JPP.%{name}-master.pom
 %{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f src/.mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_9jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_6jpp7
 - added BR: for xmvn
 
