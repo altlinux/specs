@@ -18,7 +18,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{?scl_prefix}sat4j
 Version:        2.3.5
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        A library of SAT solvers written in Java
 
 Group:          Development/Java
@@ -70,6 +70,9 @@ cp -rp dist/%{version}/org.sat4j.pb.jar \
 %{_javadir}/org.sat4j*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_2jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_1jpp7
 - new version
 
