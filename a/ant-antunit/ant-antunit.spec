@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             ant-%{base_name}
 Version:          1.2
-Release:          alt2_6jpp7
+Release:          alt2_12jpp7
 Summary:          Provide antunit ant task
 Group:            Development/Java
 License:          ASL 2.0
@@ -21,9 +21,6 @@ BuildRequires:    ant-testutil
 
 Requires:         jpackage-utils
 Requires:         ant
-
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 
@@ -41,9 +38,8 @@ such target it then will:
 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,29 +59,29 @@ ant package
 
 %install
 # jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 build/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 0755 %{buildroot}%{_javadir}/ant
+install -pm 644 build/lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/ant/%{name}.jar
+install -d -m 0755 %{buildroot}%{_datadir}/ant/lib
+ln -s ../../java/ant/%{name}.jar %{buildroot}%{_datadir}/ant/lib
 
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{name}-%{version}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.ant %{name} %{version} JPP %{name}
+install -pm 644 %{name}-%{version}.pom %{buildroot}%{_mavenpomdir}/JPP.ant-%{name}.pom
+%add_maven_depmap JPP.ant-%{name}.pom ant/%{name}.jar
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
 
 # OPT_JAR_LIST fragments
-mkdir -p %{buildroot}%{_sysconfdir}/%{name}.d
-echo "ant/ant-antunit" > %{buildroot}%{_sysconfdir}/%{name}.d/antunit
+mkdir -p %{buildroot}%{_sysconfdir}/ant.d
+echo "%{base_name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
-%files
+%files -f .mfiles
 %doc CONTRIBUTORS LICENSE NOTICE README README.html WHATSNEW
-%config(noreplace) %{_sysconfdir}/%{name}.d/antunit
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%config(noreplace) %{_sysconfdir}/ant.d/%{base_name}
+%{_datadir}/ant/lib/%{name}.jar
 
 %files javadoc
 %doc LICENSE
@@ -93,6 +89,9 @@ echo "ant/ant-antunit" > %{buildroot}%{_sysconfdir}/%{name}.d/antunit
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_6jpp7
 - new release
 
