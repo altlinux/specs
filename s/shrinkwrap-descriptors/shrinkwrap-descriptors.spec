@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,9 +13,8 @@ BuildRequires: jpackage-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.4.alpha2jpp7
+Release:       alt3_0.7.alpha2jpp7
 Summary:       ShrinkWrap subproject for creating Archive Descriptors
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://www.jboss.org/shrinkwrap/
 
@@ -26,12 +25,11 @@ Source0:       %{name}-%{namedversion}.tar.xz
 # saxon-dom is built in saxon in Fedora
 Patch0:        %{name}-saxon-dom.patch
 
-BuildRequires: jboss-parent
-BuildRequires: jpackage-utils
+BuildArch:     noarch
 
+BuildRequires: jboss-parent
 BuildRequires: apiviz
 BuildRequires: junit4
-
 BuildRequires: maven-local
 BuildRequires: maven-checkstyle-plugin
 BuildRequires: maven-compiler-plugin
@@ -43,31 +41,21 @@ BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-plugin-build-helper
 
 BuildRequires: apache-commons-lang3
 BuildRequires: saxon
 BuildRequires: codemodel
 BuildRequires: glassfish-dtd-parser
 BuildRequires: xmlunit
-
-Requires:      junit4
-Requires:      apache-commons-lang3
-Requires:      saxon
-Requires:      codemodel
-Requires:      glassfish-dtd-parser
-Requires:      xmlunit
-
-Requires:      jpackage-utils
-BuildArch:     noarch
 Source44: import.info
 
 %description
 ShrinkWrap subproject for creating Archive Descriptors
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -83,57 +71,20 @@ sed -i "s|<module>test</module>|<!--module>test</module-->|" pom.xml
 %build
 
 export JAVA5_HOME=%{_jvmdir}/java
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-for m in api-base \
-         api-javaee \
-         api-jboss \
-         gen \
-         impl-base \
-         impl-javaee \
-         impl-jboss \
-         impl-misc \
-         metadata-parser \
-         metadata-parser-test \
-         spi \
-         test-util \
-       ; do
-
-   # JAR
-   install -pm 644 ${m}/target/%{name}-${m}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${m}.jar
-   # POM
-   install -pm 644 ${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-   # DEPMAP
-   %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-
-done
-
-# POMs and DEPMAP
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-install -pm 644 bom/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-bom.pom
-%add_maven_depmap JPP.%{name}-%{name}-bom.pom
-install -pm 644 depchain/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-depchain.pom
-%add_maven_depmap JPP.%{name}-%{name}-depchain.pom
-
-# APIDOCS
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}/*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.7.alpha2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.4.alpha2jpp7
 - new release
 
