@@ -1,13 +1,12 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-util
 Version:        1.0.1
-Release:        alt1_26jpp7
+Release:        alt1_27jpp7
 Summary:        Common utilities from the Apache Web Services Project
 
 Group:          System/Libraries
@@ -79,6 +78,9 @@ cp -pR target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_27jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_26jpp7
 - new release
 
