@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		rome
 Version:	0.9
-Release:	alt3_13jpp7
+Release:	alt3_14jpp7
 Summary:	RSS and Atom Utilities
 
 Group:		Development/Java
@@ -83,6 +83,9 @@ cp -rp dist/docs/api/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt3_13jpp7
 - new release
 
