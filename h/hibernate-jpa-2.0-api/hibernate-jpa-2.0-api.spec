@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_11jpp7
+Release:          alt3_12jpp7
 Summary:          Java Persistence 2.0 (JSR 317) API
 
 Group:            Development/Java
@@ -96,6 +96,9 @@ ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 %doc license.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_12jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_11jpp7
 - new release
 
