@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          aries-blueprint
 Version:       0.3.1
-Release:       alt2_5jpp7
+Release:       alt2_7jpp7
 Summary:       Apache Aries Blueprint
 License:       ASL 2.0
 Group:         Development/Java
@@ -21,6 +20,8 @@ Patch1:        %{name}-%{version}-java.patch
 
 BuildArch:     noarch
 
+Epoch:         1
+
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
@@ -33,7 +34,7 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: aries-util
 BuildRequires: aries-proxy
 BuildRequires: aries-quiesce
-BuildRequires: asm2
+BuildRequires: objectweb-asm
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: xbean
@@ -42,7 +43,7 @@ Requires:      jpackage-utils
 Requires:      aries-util
 Requires:      aries-proxy
 Requires:      aries-quiesce
-Requires:      asm2
+Requires:      objectweb-asm
 Requires:      felix-osgi-compendium
 Requires:      felix-osgi-core
 Requires:      xbean
@@ -112,6 +113,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.3.1-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_5jpp7
 - new release
 
