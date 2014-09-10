@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ritopt
 Version:        0.2.1
-Release:        alt1_8jpp7
+Release:        alt1_10jpp7
 Summary:        A Java library for parsing command-line options
 License:        GPLv2+
 Group:          Development/Java
@@ -17,7 +17,6 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-all.
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
-BuildRequires:  ant-nodeps
 BuildRequires:  dos2unix
 BuildRequires: /usr/bin/latex texlive-latex-recommended
 
@@ -71,6 +70,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_8jpp7
 - new release
 
