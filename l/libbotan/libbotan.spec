@@ -1,6 +1,6 @@
 Name: libbotan
-Version: 1.8.10
-Release: alt2.1.qa1
+Version: 1.10.5
+Release: alt1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -22,6 +22,7 @@ supported, including RSA, DSA, DES, AES, MD5, and SHA-1.
 Summary: Headers for %name
 Group: Development/C
 Requires: %name = %version-%release
+Conflicts: libbotan1.11-devel
 
 %description devel
 Headers for building software that uses %name
@@ -40,7 +41,7 @@ BuildArch: noarch
 %build
 ./configure.py --prefix=%prefix \
 	--libdir=%_libdir \
-	--docdir=%_defaultdocdir/%name-%version \
+	--docdir=%_defaultdocdir \
 	--includedir=%_includedir \
 	--with-bzip2 \
 	--with-zlib \
@@ -50,22 +51,26 @@ BuildArch: noarch
 %make_build
 
 %install
-install -d %buildroot%_defaultdocdir/%name-%version
-cp -rp readme.txt doc/{examples,scripts} %buildroot%_defaultdocdir/%name-%version/
+install -d %buildroot%_defaultdocdir/botan-%version
+cp -rp readme.txt doc/examples %buildroot%_defaultdocdir/botan-%version/
 %makeinstall_std
 
 %files
 %_libdir/*.so.*
 
 %files devel
+%_bindir/*
 %_includedir/botan/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %files doc
-%doc %_defaultdocdir/%name-%version
+%doc %_defaultdocdir/botan-%version
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.5-alt1
+- Version 1.10.5
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.10-alt2.1.qa1
 - NMU: rebuilt for updated dependencies.
 
