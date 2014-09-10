@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 Summary:        High-performance, full-featured text search engine
 Name:           lucene
 Version:        3.6.2
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -256,6 +256,9 @@ cp -pr build/docs/api/* \
 %endif
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.6.2-alt1_2jpp7
 - new version
 
