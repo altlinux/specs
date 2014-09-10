@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -6,21 +7,18 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       saxpath
 Version:    1.0
-Release:    alt4_5.8jpp7
+Release:    alt4_8jpp7
 Summary:    Simple API for XPath
-
-Group:      Development/Java
 License:    Saxpath
 URL:        http://sourceforge.net/projects/saxpath/
 Source0:    http://downloads.sourceforge.net/saxpath/saxpath-1.0.tar.gz
 Source1:    %{name}-%{version}.pom
+Source2:    LICENSE
+BuildArch:  noarch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  ant-trax
 Requires:       jpackage-utils
-
-BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -29,18 +27,19 @@ in that the API abstracts away the details of parsing and provides a simple
 event based callback interface.
 
 %package javadoc
-Summary:    Javadoc for saxpath
-Group:      Development/Java
-Requires:   jpackage-utils
+Group: Development/Java
+Summary:    API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-Java API documentation for saxpath.
+This package contains %{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}-FCS
 
-find -type f -name "*.jar" -exec rm -f '{}' \;
+find -name \*.jar -delete
+
+cp %{SOURCE2} .
 
 %build
 mkdir src/conf
@@ -50,37 +49,34 @@ ant
 
 # fix rpmlint warings: saxpath-javadoc.noarch: W: wrong-file-end-of-line-encoding /usr/share/javadoc/saxpath/**/*.css
 for file in `find build/doc -type f | grep .css`; do
-    %{__sed} -i 's/\r//g' $file
+    sed -i 's/\r//g' $file
 done
 
 %install
+install -d -m 755 %{buildroot}/%{_javadir}
+install -d -m 755 %{buildroot}/%{_mavenpomdir}
+install -d -m 755 %{buildroot}/%{_javadocdir}/%{name}
 
-# install jar
-install -dm 755 $RPM_BUILD_ROOT/%{_javadir}
-cp -p build/saxpath.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}.jar
+install -p -m 644 build/%{name}.jar %{buildroot}/%{_javadir}/
+install -p -m 644 %{SOURCE1} %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
+cp -a build/doc/* %{buildroot}/%{_javadocdir}/%{name}/
 
-#install pom
-install -dm 755 $RPM_BUILD_ROOT/%{_datadir}/maven2/poms
-cp -p %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-saxpath.pom
+%check
+ant test
 
-#depmap entry
-%add_to_maven_depmap saxpath saxpath %{version}-FCS JPP saxpath
-
-# install javadoc
-install -dm 755 $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
-cp -a build/doc/* $RPM_BUILD_ROOT/%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/*
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_5.8jpp7
 - new release
 
