@@ -1,26 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          seam-parent
 Version:       19
-Release:       alt1_4jpp7
+Release:       alt1_6jpp7
 Summary:       The parent for Seam modules
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://www.seamframework.org/
-# git clone git://github.com/seam/parent.git seam-parent-19
-# (cd seam-parent-19/ && git archive --format=tar --prefix=seam-parent-19/ 19 | xz > ../seam-parent-19.tar.xz)
-Source0:       %{name}-%{version}.tar.xz
+Source0:       https://github.com/seam/parent/archive/%{version}.tar.gz
 # seam-parent package don't include the license file
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires: jpackage-utils
-
 BuildRequires: maven-local
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -28,7 +19,7 @@ Source44: import.info
 Parent for seamframework.org Projects.
 
 %prep
-%setup -q
+%setup -q -n parent-%{version}
 
 %pom_remove_dep junit:junit-dep
 %pom_remove_dep org.jboss.arquillian.extension:arquillian-drone-bom
@@ -65,22 +56,19 @@ cp -p %{SOURCE1} .
 sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
-# Nothing to do
+
+%mvn_build
+
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-%check
-mvn-rpmbuild verify
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 19-alt1_6jpp7
+- new release
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 19-alt1_4jpp7
 - new release
 
