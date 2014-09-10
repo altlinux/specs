@@ -9,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: sac
 Version: 1.3
-Release: alt3_15jpp7
+Release: alt3_17jpp7
 Summary: Java standard interface for CSS parser
 License: W3C
 Group: System/Libraries
@@ -47,7 +47,6 @@ find . -name "*.jar" -exec rm -f {} \;
 ant jar javadoc
 
 %install
-
 # inject OSGi manifests
 mkdir -p META-INF
 cp -p %{SOURCE2} META-INF/MANIFEST.MF
@@ -60,12 +59,12 @@ cp -p ./build/lib/sac.jar $RPM_BUILD_ROOT%{_javadir}/sac.jar
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%add_to_maven_depmap org.w3c.css sac %{version} JPP sac
-
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 %{SOURCE3} \
     %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
 %doc COPYRIGHT.html
@@ -78,6 +77,9 @@ install -pm 644 %{SOURCE3} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_17jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_15jpp7
 - new release
 
