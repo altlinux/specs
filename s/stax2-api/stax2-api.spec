@@ -1,18 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             stax2-api
 Version:          3.1.1
-Release:          alt2_6jpp7
+Release:          alt2_8jpp7
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
-Group:            Development/Java
-
+# NOTE. new home http://wiki.fasterxml.com/WoodstoxStax2
 URL:              http://docs.codehaus.org/display/WSTX/StAX2
-
+# NOTE. newer release available here https://github.com/FasterXML/stax2-api/
 Source0:          http://repository.codehaus.org/org/codehaus/woodstox/%{name}/%{version}/%{name}-%{version}-sources.jar
 Source1:          http://repository.codehaus.org/org/codehaus/woodstox/%{name}/%{version}/%{name}-%{version}.pom
 
@@ -21,10 +17,6 @@ BuildArch:        noarch
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    bea-stax-api
 BuildRequires:    maven-local
-BuildRequires:    jpackage-utils
-
-Requires:         bea-stax-api
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
@@ -35,11 +27,9 @@ StAX specification (if they do). As such, it is intended
 to be freely implementable by all StAX implementations same way
 as StAX, but without going through a formal JCP process.
 
-
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -52,32 +42,25 @@ mkdir -p src/main/java
 mv -f org src/main/java/
 
 cp %{SOURCE1} pom.xml
+%pom_remove_dep javax.xml.stream:stax-api
+%pom_add_dep stax:stax-api:1.0.1
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+
+%mvn_file :%{name} %{name}
+%mvn_build
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
 
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_6jpp7
 - new release
 
