@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Summary:        High-Availability JDBC
 Name:           ha-jdbc
 Version:        2.0.16
-Release:        alt1_0.5.rc1jpp7
+Release:        alt1_0.6.rc1jpp7
 Epoch:          0
 License:        LGPLv2+
 URL:            http://ha-jdbc.sourceforge.net/
@@ -90,6 +90,9 @@ cp -pr doc/src/content/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.16-alt1_0.6.rc1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.16-alt1_0.5.rc1jpp7
 - new release
 
