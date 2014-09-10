@@ -1,7 +1,8 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -23,15 +24,13 @@ Name:           xbean
 Version:        3.13
 BuildArch:      noarch
 
-Release:        alt1_1jpp7
+Release:        alt1_4jpp7
 Summary:        Java plugin based web server
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        xbean.depmap
 
 BuildRequires:  apache-commons-beanutils
 BuildRequires:  apache-commons-logging
@@ -44,7 +43,6 @@ BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-idea-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
@@ -75,15 +73,6 @@ BuildRequires:  springframework-beans
 BuildRequires:  springframework-context
 BuildRequires:  springframework-web
 %endif
-
-Requires:       apache-commons-logging
-Requires:       objectweb-asm
-Requires:       slf4j
-%if %{with equinox}
-Requires:       eclipse-equinox-osgi
-%else
-Requires:       felix-framework
-%endif
 Source44: import.info
 
 %description
@@ -101,12 +90,6 @@ integration.
 %package        blueprint
 Group: Development/Java
 Summary:        Schema-driven namespace handler for Apache Aries Blueprint
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       apache-commons-jexl
-Requires:       aries-blueprint
-Requires:       felix-osgi-compendium
-Requires:       geronimo-annotation
-Requires:       pax-logging
 
 %description    blueprint
 This package provides %{summary}.
@@ -115,9 +98,6 @@ This package provides %{summary}.
 %package        classloader
 Group: Development/Java
 Summary:        A flexibie multi-parent classloader
-# maven-xbean-plugin
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       springframework-beans
 
 %description    classloader
 This package provides %{summary}.
@@ -126,9 +106,6 @@ This package provides %{summary}.
 Group: Development/Java
 Summary:        Schema-driven namespace handler for spring contexts
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       springframework-beans
-Requires:       springframework-context
-Requires:       springframework-web
 
 %description    spring
 This package provides %{summary}.
@@ -136,25 +113,14 @@ This package provides %{summary}.
 %package        -n maven-%{name}-plugin
 Group: Development/Java
 Summary:        XBean plugin for Apache Maven
-Requires:       %{name}-spring = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       maven
-Requires:       maven-archiver
-Requires:       maven-project
-Requires:       plexus-archiver
-Requires:       plexus-utils
-Requires:       qdox
-Requires:       springframework
-Requires:       springframework-beans
-Requires:       springframework-context
-Requires:       springframework-web
 
 %description    -n maven-%{name}-plugin
 This package provides %{summary}.
 %endif
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -181,6 +147,10 @@ rm src/site/site.xml
    %pom_disable_module xbean-classloader
    %pom_disable_module xbean-spring
    %pom_disable_module maven-xbean-plugin
+%else
+   %mvn_package :xbean-classloader classloader
+   %mvn_package :xbean-spring spring
+   %mvn_package :maven-xbean-plugin maven-xbean-plugin
 %endif
 # blueprint FTBFS, disable for now
 %pom_disable_module xbean-blueprint
@@ -211,95 +181,38 @@ find -name pom.xml -exec sed -i "s|<groupId>ant</groupId>|<groupId>org.apache.an
 find -name pom.xml -exec sed -i "s|<artifactId>cglib-nodep</artifactId>|<artifactId>cglib</artifactId>|" {} \;
 
 %build
-mvn-rpmbuild -e \
-        -Dmaven.compiler.source=1.5 \
-        -Dmaven.compiler.target=1.5 \
-        -Dmaven.local.depmap.file="%{SOURCE1}" \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
-
+%mvn_build -f
 
 %install
-install -dm 755 $RPM_BUILD_ROOT/%{_javadir}/%{name}
-install -dm 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
-install -dm 755 $RPM_BUILD_ROOT/%{_mavendepmapfragdir}
-install -dm 755 $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
+%mvn_install
 
-# parent pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-main.pom
-%add_maven_depmap JPP.%{name}-main.pom
-
-for sub in bundleutils classpath finder naming reflect; do
-    install -m 644 %{name}-${sub}/target/%{name}-${sub}-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/%{name}-${sub}.jar
-    install -pm 644 %{name}-${sub}/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-${sub}.pom
-    %add_maven_depmap JPP.%{name}-%{name}-${sub}.pom %{name}/%{name}-${sub}.jar
-done
-
-%if %{with spring}
-   for m in classloader spring; do  # blueprint should be there too
-       install -m 644 %{name}-${m}/target/%{name}-${m}-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/%{name}-${m}.jar;
-       install -pm 644 %{name}-${m}/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-       %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar -f ${m}
-   done
-   # maven-xbean-plugin
-   install -m 644 maven-%{name}-plugin/target/maven-%{name}-plugin-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}/maven-%{name}-plugin.jar
-   install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-maven-%{name}-plugin.pom
-   %add_maven_depmap JPP.%{name}-maven-%{name}-plugin.pom %{name}/maven-%{name}-plugin.jar -f maven-plugin
-%endif
-
-# javadocs
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-bundleutils.jar
-%{_javadir}/%{name}/%{name}-classpath.jar
-%{_javadir}/%{name}/%{name}-finder.jar
-%{_javadir}/%{name}/%{name}-naming.jar
-%{_javadir}/%{name}/%{name}-reflect.jar
-%{_mavenpomdir}/JPP.%{name}-main.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-bundleutils.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-classpath.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-finder.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-naming.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-reflect.pom
-%{_mavendepmapfragdir}/%{name}
 
 %if %{with spring}
 %if 0
-%files blueprint
+%files blueprint -f .mfiles-blueprint
 %doc LICENSE NOTICE %{name}-blueprint/target/restaurant.xsd*
-%{_javadir}/%{name}/%{name}-blueprint.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-blueprint.pom
-%{_mavendepmapfragdir}/%{name}-blueprint
 %endif
 
-%files classloader
+%files classloader -f .mfiles-classloader
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/%{name}-classloader.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-classloader.pom
-%{_mavendepmapfragdir}/%{name}-classloader
 
-%files spring
+%files spring -f .mfiles-spring
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/%{name}-spring.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-spring.pom
-%{_mavendepmapfragdir}/%{name}-spring
 
-%files -n maven-%{name}-plugin
+%files -n maven-%{name}-plugin -f .mfiles-maven-%{name}-plugin
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/maven-%{name}-plugin.jar
-%{_mavenpomdir}/JPP.%{name}-maven-%{name}-plugin.pom
-%{_mavendepmapfragdir}/%{name}-maven-plugin
 %endif
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.13-alt1_4jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.13-alt1_1jpp7
 - new version
 
