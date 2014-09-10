@@ -1,4 +1,5 @@
 Epoch: 1
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -14,9 +15,8 @@ BuildRequires: jpackage-compat
 
 Name:          apache-commons-jci
 Version:       1.0
-Release:       alt4_7jpp7
+Release:       alt4_10jpp7
 Summary:       Commons Java Compiler Interface
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/commons/%{base_name}/source/%{short_name}-%{namedversion}-src.tar.gz
@@ -39,19 +39,12 @@ Patch4:        %{name}-%{namedversion}-janino26.patch
 
 Patch5:        %{name}-%{namedversion}-ecj4.patch
 
-BuildRequires: jpackage-utils
 
 BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
 BuildRequires: apache-commons-logging
@@ -67,8 +60,6 @@ BuildRequires: junit
 BuildRequires: objectweb-asm
 
 Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -86,19 +77,15 @@ compilers:
 * rhino
 
 %package core
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - core
-Requires:      apache-commons-io
-Requires:      %{name}-fam = %{?epoch:%epoch:}%{version}-%{release}
 
 %description core
 Commons JCI core interfaces and implementations.
 
 %package fam
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - FAM
-Requires:      apache-commons-logging
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description fam
 Commons JCI FileAlterationMonitor (FAM) to
@@ -106,9 +93,8 @@ monitor local file systems and get notified
 about changes.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -117,37 +103,29 @@ This package contains javadoc for %{name}.
 # compilers
 
 %package eclipse
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - eclipse
-Requires:      ecj >= 3.4.2-13
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description eclipse
 Commons JCI compiler implementation for the eclipse compiler.
 
 %package groovy
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - groovy
-Requires:      groovy
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description groovy
 Commons JCI compiler implementation for the groovy compiler.
 
 %package janino
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - janino
-Requires:      janino
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description janino
 Commons JCI compiler implementation for the janino compiler.
 
 %package rhino
-Group:         Development/Java
+Group: Development/Java
 Summary:       Commons Java Compiler Interface - rhino
-Requires:      rhino
-Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description rhino
 Commons JCI compiler implementation for rhino JavaScript.
@@ -171,81 +149,48 @@ find . -name "*.jar" -delete
 sed -i "s|<maven.compile.source>1.4<|<maven.compile.source>1.5<|" pom.xml
 sed -i "s|<maven.compile.target>1.4<|<maven.compile.target>1.5<|" pom.xml
 
+# Fix installation directory      
+
+%mvn_file :%{short_name}-core    %{short_name}/%{short_name}-core
+%mvn_file :%{short_name}-fam     %{short_name}/%{short_name}-fam
+%mvn_file :%{short_name}-eclipse %{short_name}/%{short_name}-eclipse
+%mvn_file :%{short_name}-groovy  %{short_name}/%{short_name}-groovy
+%mvn_file :%{short_name}-janino  %{short_name}/%{short_name}-janino
+%mvn_file :%{short_name}-rhino   %{short_name}/%{short_name}-rhino
+
 %build
 
 # random tests failures
-mvn-rpmbuild \
-  -Dmaven.test.failure.ignore=true \
-  -Dmaven.local.depmap.file="%{SOURCE1}" \
-  package javadoc:aggregate
+%mvn_build -s -- -Dmaven.test.failure.ignore=true -Dmaven.local.depmap.file="%{SOURCE1}"
 
 %install
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{short_name}-parent.pom
-%add_maven_depmap JPP.%{short_name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{short_name}
-for m in core \
-  fam;do
-    install -m 644 ${m}/target/%{short_name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{short_name}/%{short_name}-${m}.jar
-    install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-${m}.pom
-    %add_maven_depmap -f ${m} JPP.%{short_name}-%{short_name}-${m}.pom %{short_name}/%{short_name}-${m}.jar
-done
-
-#  javac
-for mc in eclipse \
-  janino \
-  groovy \
-  rhino;do
-    install -m 644 compilers/${mc}/target/%{short_name}-${mc}-%{namedversion}.jar %{buildroot}%{_javadir}/%{short_name}/%{short_name}-${mc}.jar
-    install -pm 644 compilers/${mc}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-${mc}.pom
-    %add_maven_depmap  -f ${mc} JPP.%{short_name}-%{short_name}-${mc}.pom %{short_name}/%{short_name}-${mc}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 %files
-%{_mavenpomdir}/JPP.%{short_name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
+%dir %{_javadir}/%{short_name}
+%{_mavendepmapfragdir}/apache-commons-jci-commons-jci.xml
+%{_mavenpomdir}/JPP.apache-commons-jci-org.apache.commons@commons-jci.pom
 %doc LICENSE.txt NOTICE.txt README.txt TODO.txt
 
-%files core
-%{_javadir}/%{short_name}/%{short_name}-core.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-core.pom
-%{_mavendepmapfragdir}/%{name}-core
+%files core -f .mfiles-%{short_name}-core
 
-%files fam
-%{_javadir}/%{short_name}/%{short_name}-fam.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-fam.pom
-%{_mavendepmapfragdir}/%{name}-fam
+%files fam -f .mfiles-%{short_name}-fam
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
-%files eclipse
-%{_javadir}/%{short_name}/%{short_name}-eclipse.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-eclipse.pom
-%{_mavendepmapfragdir}/%{name}-eclipse
+%files eclipse -f .mfiles-%{short_name}-eclipse
 
-%files groovy
-%{_javadir}/%{short_name}/%{short_name}-groovy.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-groovy.pom
-%{_mavendepmapfragdir}/%{name}-groovy
+%files groovy -f .mfiles-%{short_name}-groovy
 
-%files janino
-%{_javadir}/%{short_name}/%{short_name}-janino.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-janino.pom
-%{_mavendepmapfragdir}/%{name}-janino
+%files janino -f .mfiles-%{short_name}-janino
 
-%files rhino
-%{_javadir}/%{short_name}/%{short_name}-rhino.jar
-%{_mavenpomdir}/JPP.%{short_name}-%{short_name}-rhino.pom
-%{_mavendepmapfragdir}/%{name}-rhino
+%files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt4_10jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt4_7jpp7
 - new release
 
