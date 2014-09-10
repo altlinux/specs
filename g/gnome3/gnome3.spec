@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -23,7 +23,7 @@ BuildPreReq: rpm-build-licenses
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
 %define applets_ver 2.91.4
-%define gedit_plugins_ver 3.10
+%define gedit_plugins_ver %ver_major
 %define gnome_nettool_ver 3.0
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
@@ -60,6 +60,8 @@ Requires: gnome-tweak-tool >= %ver_major
 #Requires: gnome-initial-setup
 # default font
 Requires: fonts-otf-abattis-cantarell
+# backgrounds
+Requires: gnome-backgrounds
 
 # Help browser
 Requires: yelp >= %ver_major
@@ -67,7 +69,7 @@ Requires: yelp >= %ver_major
 
 # GNOME Utilities
 Requires: gnome-search-tool >= 3.6.0
-#Requires: gnome-system-monitor >= %ver_major
+Requires: gnome-system-monitor >= %ver_major
 Requires: gnome-logs >= %ver_major
 Requires: gucharmap >= 3.9.90
 Requires: gnome-calculator >= %ver_major
@@ -80,7 +82,7 @@ Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
 Requires: file-roller >= %ver_major
 ## Default text editor
-Requires: gedit >= 3.10
+Requires: gedit >= %ver_major
 
 # Look & Feel
 ## Default themes
@@ -356,6 +358,10 @@ itself).
 #%files a11y
 
 %changelog
+* Wed Sep 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
+- added lost gnome-backgrounds to minimal
+- updated gedit* versions
+
 * Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 - replaced gnome-system-monitor by gnome-logs
