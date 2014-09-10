@@ -1,6 +1,6 @@
 Name: c-ares
-Version: 1.7.5
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -36,7 +36,11 @@ compile applications or shared objects that use c-ares.
 %setup -n c-ares-%version
 
 %build
-%configure --enable-shared --disable-static
+%autoreconf
+%configure \
+	--enable-shared \
+	--disable-static \
+	--enable-debug
 # strip rpath
 subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -60,6 +64,9 @@ install -pm755 .libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt1
+- Version 1.10.0
+
 * Tue Dec 27 2011 Victor Forsiuk <force@altlinux.org> 1.7.5-alt2
 - Fix RPATH issue.
 
