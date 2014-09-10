@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,18 +36,17 @@ BuildRequires: jpackage-compat
 
 Name:           kxml
 Version:        2.3.0
-Release:        alt1_1jpp7
+Release:        alt1_3jpp7
 Summary:        Small XML pull parser
 License:        MIT
 URL:            http://kxml.sourceforge.net/
-Group:          Development/Java
-Source0:        http://downloads.sourceforge.net/sourceforge/kxml/kxml2-src-%{version}.zip
+# ./create-tarball %%{version}
+Source0:        kxml-2.3.0-clean.tar.gz
 Source1:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2/%{version}/kxml2-%{version}.pom
-BuildRequires:  jpackage-utils >= 0:1.7.4
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  xpp3 >= 0:1.1.3.1
-Requires:  jpackage-utils
-Requires:  xpp3
+Requires:       xpp3 >= 0:1.1.3.1
+
 BuildArch:      noarch
 Source44: import.info
 Provides: kxml2 = %version-%release
@@ -59,19 +58,15 @@ kXML is a small XML pull parser, specially designed for constrained
 environments such as Applets, Personal Java or MIDP devices.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 API documentation for %{name}.
 
 %prep
-%setup -q -c
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
+%setup -q
 ln -sf $(build-classpath xpp3) lib/xmlpull_1_1_3_1.jar
 
 %build
@@ -109,6 +104,9 @@ ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_1jpp7
 - new version
 
