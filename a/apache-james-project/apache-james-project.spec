@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global server_ver      2.2.0
@@ -8,12 +5,14 @@ BuildRequires: jpackage-compat
 
 Name:             %{short_name}-project
 Version:          1.8.1
-Release:          alt1_3jpp7
+Release:          alt1_5jpp7
 Summary:          Main project POM files and resources
 License:          ASL 2.0
 Group:            Development/Java
 URL:              http://james.apache.org/
-Source0:          http://repo1.maven.org/maven2/org/apache/james/james-project/%{version}/james-project-%{version}-source-release.zip
+# ./create-tarball.sh %%{VERSION}
+Source0:          james-project-1.8.1-clean.tar.gz
+Source1:          create-tarball.sh
 BuildArch:        noarch
 
 BuildRequires:    maven-local
@@ -40,6 +39,9 @@ Main project POM files and resources for Apache James project
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_5jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_3jpp7
 - new version
 
