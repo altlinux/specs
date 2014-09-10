@@ -1,7 +1,7 @@
 # SPEC file for dosage package
 
 Name:    dosage
-Version: 2.12
+Version: 2.15
 Release: alt1
 
 Summary: a commandline webcomic downloader and archiver
@@ -18,9 +18,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Thu Jan 03 2013
-# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-email
-BuildRequires: python-module-distribute python-module-zope ruby ruby-stdlibs
+# Automatically added by buildreq on Wed Sep 10 2014
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings
+BuildRequires: python-module-distribute python-module-google python-module-zope
 
 %description
 Dosage is designed to keep a local copy of specific webcomics
@@ -45,9 +45,12 @@ webcomic's site layout makes this impossible).
 %_man1dir/*
 %python_sitelibdir/%{name}lib*
 %python_sitelibdir/*egg-info
-%python_sitelibdir/_Dosage*
+%python_sitelibdir/_dosage*
 
 %changelog
+* Wed Sep 10 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.15-alt1
+- New version 2.15
+
 * Wed Feb 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.12-alt1
 - New version 2.12
 
