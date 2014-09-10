@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    appframework
 Version: 1.03
-Release: alt2_10jpp7
+Release: alt2_12jpp7
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -16,13 +16,14 @@ Source0: https://appframework.dev.java.net/downloads/AppFramework-1.03-src.zip
 Patch0:  %{name}-%{version}-no-local-storage.diff
 Patch1:  %{name}-%{version}-openjdk.diff
 
-BuildRequires: ant
-BuildRequires: ant-nodeps
-BuildRequires: ant-junit
 BuildRequires: jpackage-utils
+
+BuildRequires: ant
+BuildRequires: ant-junit
 BuildRequires: swing-layout >= 1.0.3
 
 Requires: jpackage-utils
+
 Requires: swing-layout >= 1.0.3
 
 BuildArch: noarch
@@ -54,24 +55,24 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{ant} -Dlibs.swing-layout.classpath=%{_javadir}/swing-layout.jar dist
 
 %install
-%{__rm} -fr %{buildroot}
 # jar
 %{__install} -d -m 755 %{buildroot}%{_javadir}
-%{__install} -m 644 dist/AppFramework-1.03.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__ln_s} %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%{__install} -m 644 dist/AppFramework-1.03.jar %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/*
 %doc COPYING README
 
 %files javadoc
-%dir %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}-%{version}/*
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_10jpp7
 - new release
 
