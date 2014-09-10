@@ -1,52 +1,49 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define debug_package %{nil}
+%global debug_package %{nil}
 
-Name: jibx
-Version:	1.2.5
-Release:	alt1_2jpp7
-Summary:	Framework for binding XML data to Java objects
+Name:          jibx
+Version:       1.2.5
+Release:       alt1_5jpp7
+Summary:       Framework for binding XML data to Java objects
+License:       BSD and ASL 1.1
+URL:           http://sourceforge.net/projects/jibx/
+Source0:       http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.5/%{name}_1_2_5.zip
+Patch0:        %{name}-classpath.patch
+Patch1:        %{name}-%{version}-poms.patch
 
-Group:		Development/Java
-License:	BSD and ASL 1.1
-URL:		http://sourceforge.net/projects/jibx/
-Source0:	http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.5/%{name}_1_2_5.zip
-Patch0: %{name}-classpath.patch
-Patch1: %{name}-%{version}-poms.patch
-
-BuildArch: noarch
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: junit
-BuildRequires: asm2
+BuildRequires: objectweb-asm
 BuildRequires: bcel
 BuildRequires: bea-stax-api
+BuildRequires: eclipse-equinox-osgi
 BuildRequires: eclipse-jdt
-BuildRequires: eclipse-rcp
 BuildRequires: eclipse-platform
 BuildRequires: joda-time
 BuildRequires: qdox
 BuildRequires: dom4j
 BuildRequires: jdom
 BuildRequires: xpp3
-	
-Requires: jpackage-utils
+
+Requires:      jpackage-utils
 Source44: import.info
+BuildArch: noarch
 
 %description
 JiBX is a framework for binding XML data to Java objects. It lets you
 work with data from XML documents using your own class structures. 
 
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires: jpackage-utils
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -60,12 +57,14 @@ This package contains the API documentation for %{name}.
 #Patch to add maven poms
 %patch1 -p0
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
+
 rm -rf %{_builddir}/%{name}/build/docs/src/*
 
 
-#Symlink the eclipse dependencies 
+#Symlink the eclipse dependencies
+# platform
 plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.core.contenttype_*.jar`
 ln -s "$plugin_file" lib/org.eclipse.core.contenttype.jar
 
@@ -87,19 +86,20 @@ ln -s "$plugin_file" lib/org.eclipse.equinox.preferences.jar
 plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.text_*.jar`
 ln -s "$plugin_file" lib/org.eclipse.text.jar
 
-plugin_file=`ls %{_libdir}/eclipse/dropins/jdt/plugins/org.eclipse.jdt.core.manipulation_*.jar`
-ln -s "$plugin_file" lib/org.eclipse.jdt.core.manipulation.jar
-
-plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.osgi_*.jar`
-ln -s "$plugin_file" lib/org.eclipse.osgi.jar
-
 plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.jdt.core_*jar`
 ln -s "$plugin_file" lib/org.eclipse.jdt.core.jar
 
+# equinox-osgi
+#plugin_file=`ls %%{_libdir}/eclipse/plugins/org.eclipse.osgi_*.jar`
+#ln -s "$plugin_file" lib/org.eclipse.osgi.jar
+ln -s $(build-classpath eclipse/osgi) lib/org.eclipse.osgi.jar
+
+# jdt
+plugin_file=`ls %{_libdir}/eclipse/dropins/jdt/plugins/org.eclipse.jdt.core.manipulation_*.jar`
+ln -s "$plugin_file" lib/org.eclipse.jdt.core.manipulation.jar
+
 
 build-jar-repository -p lib \
-asm2/asm2 \
-asm2/asm2-commons \
 bcel \
 bea-stax-api \
 dom4j \
@@ -108,6 +108,9 @@ joda-time \
 log4j \
 qdox \
 xpp3 
+
+ln -s $(build-classpath objectweb-asm/asm) lib/
+ln -s $(build-classpath objectweb-asm/asm-commons) lib/
 
 sed -i '/Class-Path/I d' %{_builddir}/%{name}/build/build.xml
 
@@ -128,10 +131,8 @@ install -pm 644 build/maven/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-main
 
 for sub_component in bind extras run schema tools; do
 install -m 644 lib/%{name}-${sub_component}.jar \
-%{buildroot}/%{_javadir}/%{name}/${sub_component}-%{version}.jar
-# TODO unversioned jars
-( cd %{buildroot}%{_javadir}/%{name} && ln -sf ${sub_component}-%{version}.jar ${sub_component}.jar )
-install -m 644 build/maven/jibx-${sub_component}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${sub_component}.pom
+%{buildroot}/%{_javadir}/%{name}/${sub_component}.jar
+install -pm 644 build/maven/jibx-${sub_component}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${sub_component}.pom
 %add_maven_depmap JPP.%{name}-${sub_component}.pom %{name}/${sub_component}.jar
 done
 
@@ -150,6 +151,9 @@ cp -rp %{_builddir}/%{name}/build/docs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_5jpp7
+- new release
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.5-alt1_2jpp7
 - update
 
