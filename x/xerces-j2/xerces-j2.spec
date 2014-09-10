@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:          xerces-j2
 Version:       2.11.0
-Release:       alt1_14jpp7
+Release:       alt1_16jpp7
 Summary:       Java XML parser
 Group:         Development/Java
 License:       ASL 2.0
@@ -49,6 +49,7 @@ BuildRequires: xml-commons-resolver >= 1.2
 BuildRequires: ant
 BuildRequires: jaxp_parser_impl
 BuildRequires: fonts-ttf-dejavu
+BuildRequires: xerces-j2
 Requires:      jpackage-utils
 Requires:      xalan-j2 >= 2.7.1
 Requires:      xml-commons-apis >= 1.4.01
@@ -145,9 +146,10 @@ jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
 javac -classpath /usr/lib/jvm/java/lib/tools.jar org/apache/xerces/util/*Taglet.java
 jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
 
-ln -sf $(build-classpath xalan-j2) serializer.jar
+ln -sf $(build-classpath xalan-j2-serializer) serializer.jar
 ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
 ln -sf $(build-classpath xml-commons-resolver) resolver.jar
+ln -sf $(build-classpath xerces-j2) x.jar
 popd
 
 # Build everything
@@ -217,6 +219,9 @@ EOF
 %{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt1_16jpp7
+- new release
+
 * Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt1_14jpp7
 - new release
 
