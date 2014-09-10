@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.3
-Release:          alt3_15jpp7
+Release:          alt3_17jpp7
 Summary:          Simple XPath interpreter
 
 Group:            Development/Java
@@ -22,7 +22,6 @@ BuildRequires:    maven-local
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-idea-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
@@ -79,6 +78,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_17jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_15jpp7
 - new release
 
