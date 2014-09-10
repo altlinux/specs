@@ -1,72 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
 Name:           bcel
 Version:        5.2
-Release:        alt4_15jpp7
+Release:        alt4_17jpp7
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
-Source0:        %{name}-%{version}-src.tar.gz
-#svn export https://svn.apache.org/repos/asf/jakarta/bcel/tags/BCEL_5_2
-#tar czvf bcel-5.2-src.tar.gz BCEL_5_2
-Source1:        pom-maven2jpp-depcat.xsl
-Source2:        pom-maven2jpp-newdepmap.xsl
-Source3:        pom-maven2jpp-mapdeps.xsl
-Source4:        %{name}-%{version}-jpp-depmap.xml
-#Source5:        commons-build.tar.gz
-Source5:        bcel-jakarta-site2.tar.gz
-Source6:        %{name}-%{version}-build.xml
-Source7:        %{name}-%{version}.pom
-Source8:        %{name}-MANIFEST.MF
-
-Patch0:         %{name}-%{version}-project_properties.patch
-URL:            http://jakarta.apache.org/%{name}/
-Group:          Development/Java
-Requires:       regexp
-BuildRequires:  zip
-BuildRequires:  ant
-BuildRequires:  jdom
-BuildRequires:  velocity
-BuildRequires:  jakarta-commons-collections
-BuildRequires:  apache-commons-lang
-BuildRequires:  avalon-logkit
-BuildRequires:  werken-xpath
-BuildRequires:  regexp
-BuildRequires:  jpackage-utils >= 0:1.7.2
+URL:            http://commons.apache.org/proper/commons-bcel/
+Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-5.2-src.tar.gz
+# Upstream uses Maven 1, which is not available in Fedora.
+# The following is upstream project.xml converted to Maven 2/3.
+Source1:        %{name}-pom.xml
 BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(regexp:regexp)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 Source44: import.info
 
 %description
@@ -86,93 +36,37 @@ optimizers, obfuscators and analysis tools, the most popular probably
 being the Xalan XSLT processor at Apache.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        API documentation for %{name}
+Obsoletes:      %{name}-manual < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%package manual
-Summary:        Manual for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description manual
-%{summary}.
+This package provides %{summary}.
 
 %prep
-%setup -q -n BCEL_5_2
-gzip -dc %{SOURCE5} | tar xf -
-# remove all binary libs
-find . -name "*.jar" -exec rm -f {} \;
-mkdir jakarta-site2/lib
-pushd jakarta-site2/lib/
-  build-jar-repository -s -p . jdom
-  build-jar-repository -s -p . velocity
-  build-jar-repository -s -p . commons-collections
-  build-jar-repository -s -p . commons-lang
-  build-jar-repository -s -p . avalon-logkit
-  build-jar-repository -s -p . werken-xpath
-popd
-cp %{SOURCE6} build.xml
-%patch0 -b .sav
-
-# fix wrong-file-end-of-line-encoding
-sed -i 's/\r//' docs/verifier/V_API_SD.eps docs/eps/classloader.fig
+%setup -q
+cp -p %{SOURCE1} pom.xml
+%mvn_alias : bcel:
+%mvn_file : %{name}
 
 %build
-#ant -Dregexp.jar="file://$(build-classpath regexp)" jar javadoc
-ant     -Dbuild.dest=build/classes -Dbuild.dir=build -Ddocs.dest=docs \
-        -Ddocs.src=xdocs -Djakarta.site2=jakarta-site2 -Djdom.jar=jdom.jar \
-        -Dregexp.jar="file://$(build-classpath regexp)" \
-        jar javadoc xdocs
+%mvn_build
 
 %install
-# inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE8} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
+%mvn_install
 
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__install} -m 0644 target/%{name}-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc README.txt
+%doc LICENSE.txt NOTICE.txt
 
-# pom
-%{__mkdir_p} %{buildroot}%{_mavenpomdir}
-%{__install} -m 0644 %{SOURCE7} \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap frags
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.apache.bcel:%{name}
-
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
-%{__rm} -rf dist/docs/api
-
-# manual
-%{__mkdir_p} %{buildroot}%{_docdir}/%{name}-%{version}
-%{__cp} -pr docs/* %{buildroot}%{_docdir}/%{name}-%{version}
-%{__cp} LICENSE.txt %{buildroot}%{_docdir}/%{name}-%{version}
-%{__cp} NOTICE.txt %{buildroot}%{_docdir}/%{name}-%{version}
-
-%files
-%doc %{_docdir}/%{name}-%{version}
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
-
-%files manual
-%doc %{_docdir}/%{name}-%{version}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_17jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_15jpp7
 - new release
 
