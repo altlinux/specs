@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           annogen 
 Version:        0.1.0
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Java framework for JSR-175 annotations
 
 Group:          Development/Java
@@ -80,6 +80,9 @@ cp -rp build/docs/* %{buildroot}%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_5jpp7
 - new release
 
