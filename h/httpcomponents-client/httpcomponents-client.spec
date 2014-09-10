@@ -3,12 +3,13 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 %global base_name httpcomponents
 
 Name:              httpcomponents-client
 Summary:           HTTP agent implementation based on httpcomponents HttpCore
 Version:           4.2.5
-Release:           alt1_1jpp7
+Release:           alt1_3jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -17,10 +18,15 @@ Source0:           http://archive.apache.org/dist/httpcomponents/httpclient/sour
 BuildArch:         noarch
 
 BuildRequires:     maven-local
-BuildRequires:     httpcomponents-project
-BuildRequires:     httpcomponents-core
-BuildRequires:     apache-mime4j
-BuildRequires:     apache-commons-codec
+BuildRequires:     mvn(commons-codec:commons-codec)
+BuildRequires:     mvn(commons-logging:commons-logging)
+BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:     mvn(org.apache.httpcomponents:project)
+%if 0%{?fedora}
+# Test dependencies
+BuildRequires:     mvn(org.mockito:mockito-core)
+BuildRequires:     mvn(junit:junit)
+%endif
 Source44: import.info
 
 Obsoletes: hc-httpclient < 4.1.1
@@ -50,11 +56,13 @@ BuildArch: noarch
 %pom_disable_module httpclient-cache
 %pom_disable_module httpclient-osgi
 %pom_disable_module fluent-hc
-%pom_remove_dep :mockito-core httpclient
 %pom_remove_plugin :maven-notice-plugin
 %pom_remove_plugin :docbkx-maven-plugin
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :maven-clover2-plugin httpclient
+%if !0%{?fedora}
+%pom_remove_dep :mockito-core httpclient
+%endif
 
 # Add proper Apache felix bundle plugin instructions
 # so that we get a reasonable OSGi manifest.
@@ -104,7 +112,14 @@ done
 
 %build
 %mvn_file ":{*}" httpcomponents/@1
+
+# Build with tests enabled on Fedora
+%if 0%{?fedora}
+%mvn_build
+%else
 %mvn_build -f
+%endif
+
 
 %install
 %mvn_install
@@ -118,6 +133,9 @@ done
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt1_3jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt1_1jpp7
 - new version
 
