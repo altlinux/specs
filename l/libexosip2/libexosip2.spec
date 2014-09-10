@@ -1,15 +1,15 @@
 Name: libexosip2
-Version: 3.5.0
-Release: alt1.qa1
+Version: 4.1.0
+Release: alt1
 
 Group: System/Libraries
 Summary: The eXtended osip library
 License: LGPL
 Url: http://savannah.nongnu.org/projects/exosip/
-Packager: Egor Glukhov <kaman@altlinux.org>
+# git://git.sv.gnu.org/exosip
 Source0: %name-%version.tar
 BuildRequires: libosip2-devel >= 3.5.0
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel libcares-devel
 
 %description
 eXosip is a GPL library that  extend  the  capability  of
@@ -49,11 +49,15 @@ This package contains tools related to eXosip library.
 ./autogen.sh
 
 %build
-%configure --disable-static
+%configure \
+	--disable-static \
+	--enable-semaphore \
+	--enable-sysv \
+	--enable-openssl
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog NEWS README
@@ -67,6 +71,9 @@ This package contains tools related to eXosip library.
 %_bindir/sip_reg
 
 %changelog
+* Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.0-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
