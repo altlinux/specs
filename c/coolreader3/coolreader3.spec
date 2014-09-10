@@ -5,7 +5,7 @@
 
 Name:     coolreader3
 Version:  3.0.56
-Release:  alt1
+Release:  alt2
 
 Summary: E-Book reader
 
@@ -23,15 +23,15 @@ Source2: %real_name-32.png
 Source3: %real_name-48.png
 
 Patch1: %name-3.0.54-alt-desktop.patch
+Patch2: %name-3.0.56-save_settings.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 
-# Automatically added by buildreq on Wed Jan 04 2012
-# optimized out: cmake-modules fontconfig fontconfig-devel libfreetype-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config zlib-devel
-BuildRequires: cmake gcc-c++ libjpeg-devel phonon-devel
-
-BuildPreReq: libpng-devel
+# Automatically added by buildreq on Wed Sep 10 2014
+# optimized out: cmake-modules fontconfig fontconfig-devel libcloog-isl4 libfreetype-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config zlib-devel
+BuildRequires: cmake gcc-c++ libicu50 libjpeg-devel phonon-devel
+BuildRequires(pre): libpng-devel
 
 %description
 CoolReader is fast and small cross-platform XML/CSS based
@@ -44,6 +44,7 @@ CHM, PDB.
 %patch0 -p1
 
 %patch1
+%patch2 -p1
 
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -84,6 +85,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Wed Sep 10 2014 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.56-alt2
+- Fix save settings bug (Closes: 29721)
+
 * Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.56-alt1
 - New version
 
