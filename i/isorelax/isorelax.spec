@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -41,9 +42,8 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.12.release20050331jpp7
+Release:        alt1_0.14.release20050331jpp7
 License:        MIT and ASL 1.1
-Group:          Development/Java
 BuildArch:      noarch
 
 # mkdir isorelax-release-20050331-src
@@ -72,17 +72,16 @@ useful for applications to support RELAX Core. Now, however,
 some of the hosted material is schema language-neutral.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+%{summary}.
 
 %prep
 %setup -q -n %{name}-%{cvstag}-src
-find . -name "*.jar" -exec rm -f {} \;
+find -name "*.jar" -delete
 ln -s %{_javadir}/ant.jar lib/
 %patch0 -p0
 cp %{SOURCE1} .
@@ -93,28 +92,28 @@ ant release
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 # POM and depmap
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap
 
-%files
+%files -f .mfiles
 %doc license.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc license.txt
 %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.14.release20050331jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.12.release20050331jpp7
 - new release
 
