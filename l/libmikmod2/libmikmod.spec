@@ -1,20 +1,32 @@
-Name: libmikmod
-Version: 3.3.7
-Release: alt1
+%define origname libmikmod
+%define soname 2
+%define libname %origname%soname
+
+Name: %libname
+Version: 3.1.12
+Release: alt5
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
-Group: System/Libraries
+Group: System/Legacy libraries
 
-Url: http://mikmod.raphnet.net
-# http://download.sourceforge.net/mikmod/%name-%version.tar.gz
-Source: %name-%version.tar
-Patch0: 0014-playercode-mdreg-Register-the-NULL-driver-before-the.patch
-Patch1: use-gnu-install-directories.patch
+Url: http://mikmod.sf.net
+# http://download.sourceforge.net/mikmod/%origname-%version.tar.gz
+Source: %origname-%version.tar
+Patch1: libmikmod-3.1.12-alt-configure.patch
+Patch2: libmikmod-3.1.12-alt-esd-m4.patch
+Patch3: libmikmod-3.1.12-CVE-2007-6720.patch
+Patch4: libmikmod-3.1.12-CVE-2009-0179.patch
+Patch5: libmikmod-3.1.12-CVE-2009-3995,3996.patch
+Patch6: libmikmod-3.1.12-mdk-virtch_common-fix.patch
+Patch7: libmikmod-3.1.12-suse-loopingvolume-fix.patch
+Patch8: libmikmod-3.1.12-rh-esd.patch
+# found in patched libmikmod from SDL_mixer 1.2.11
+Patch9: libmikmod-3.1.12-64bit-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 03 2011
-BuildRequires: libalsa-devel libesd-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libesd-devel
 
 %description
 Libmikmod is a portable sound library, capable of playing samples as
@@ -22,27 +34,19 @@ well as module files, originally written by Jean-Paul Mikkers (MikMak)
 for DOS. It has subsequently been hacked by many hands and now runs on
 many Unix flavours.
 
-It uses the OSS /dev/dsp driver including in all recent kernels for
-output, as well as ALSA and EsounD, and will also write wav files.
-
-Supported file formats include mod, stm, s3m, mtm, xm, and it.
-Full source included, use of this library for music/sound effects in
-your own programs is encouraged!
-
-%package devel
-Summary: Header files and libraries for developing apps which will use %name
-Group: Development/C
-Requires: %name = %version-%release
-Requires: libpulseaudio-devel
-
-%description devel
-Install the %name-devel package if you want to develop applications that
-will use the %name library.
+This is a compatibility library version for existing applications.
 
 %prep
-%setup
-%patch0 -p1
-%patch1 -p1
+%setup -n %origname-%version
+%patch1
+%patch2
+%patch3
+%patch4
+%patch5
+%patch6
+%patch7
+%patch8
+%patch9 -p1
 
 %build
 %autoreconf
@@ -54,25 +58,11 @@ will use the %name library.
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS NEWS README TODO
-
-%files devel
-%_bindir/*
-%_libdir/*.so
-%_includedir/*
-%_man1dir/*
-%_infodir/*.info*
-%_datadir/aclocal/*
-%_pkgconfigdir/*.pc
-
-# TODO:
-# - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
-* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 3.3.7-alt1
-- 3.3.7
-- dropped 3.1.12 patches
-- added debian patches
+* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 3.1.12-alt5
+- turned into compat library
+- updated an Url:
 
 * Wed Dec 28 2011 Michael Shigorin <mike@altlinux.org> 3.1.12-alt4
 - applied libmikmod-3.1.12-64bit-fix.patch from SDL_mixer distribution;

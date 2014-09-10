@@ -1,22 +1,20 @@
 Name: mikmod
-Version: 3.2.1
-Release: alt3
-
-%define fversion 3.2.1
+Version: 3.2.6
+Release: alt1
 
 Summary: A MOD music file player
 License: LGPL
 Group: Sound
-Url: http://mikmod.raphnet.net
-Source: %name-%fversion.tar.gz
-Patch1: %name-3.1.6-tmpfile.patch
-Patch2: %name-3.1.6-security.patch
+
+Url: http://mikmod.sf.net
+Source: %name-%version.tar.gz
+Patch: %name-3.1.6-tmpfile.patch
 
 # Automatically added by buildreq on Tue Aug 31 2004
 BuildRequires: libmikmod-devel libncurses-devel libtinfo-devel
 
-Summary(ru_RU.KOI8-R): Мультиформатный проигрыватель трекерной музыки
-Summary(uk_UA.KOI8-U): Мультиформатний програвач трекерно╖ музыки
+Summary(ru_RU.UTF-8): п°я┐п╩я▄я┌п╦я└п╬я─п╪п╟я┌п╫я▀п╧ п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ я┌я─п╣п╨п╣я─п╫п╬п╧ п╪я┐п╥я▀п╨п╦
+Summary(uk_UA.UTF-8): п°я┐п╩я▄я┌п╦я└п╬я─п╪п╟я┌п╫п╦п╧ п©я─п╬пЁя─п╟п╡п╟я┤ я┌я─п╣п╨п╣я─п╫п╬я≈ п╪я┐п╥я▀п╨п╦
 
 %description
 MikMod is one of the best and most well known MOD music file players for
@@ -29,28 +27,27 @@ loading from gzip/pkzip/zoo archives and the loading/saving of playlists.
 
 Install the %name package if you need a MOD music file player.
 
-%description -l ru_RU.KOI8-R  
-MikMod - высококачественный консольный проигрыватель трекерных модулей в
-форматах IT, XM, S3M, MTM, 669, STM, ULT, FAR, MED, AMF, DSM, IMF, GDM,
-STX, OKT и MOD, умеет работать с плей-листами, выдает информацию о
-треках, работает с драйверами различных устройств вывода и сетевыми
-звуковыми сервисами, может записывать в RAW- и WAV-файлы, поддерживает
-перенаправление вывода в "трубу", читает треки из архивов (zoo, gz, bz2,
+%description -l ru_RU.UTF-8  
+MikMod - п╡я▀я│п╬п╨п╬п╨п╟я┤п╣я│я┌п╡п╣п╫п╫я▀п╧ п╨п╬п╫я│п╬п╩я▄п╫я▀п╧ п©я─п╬п╦пЁя─я▀п╡п╟я┌п╣п╩я▄ я┌я─п╣п╨п╣я─п╫я▀я┘ п╪п╬п╢я┐п╩п╣п╧ п╡
+я└п╬я─п╪п╟я┌п╟я┘ IT, XM, S3M, MTM, 669, STM, ULT, FAR, MED, AMF, DSM, IMF, GDM,
+STX, OKT п╦ MOD, я┐п╪п╣п╣я┌ я─п╟п╠п╬я┌п╟я┌я▄ я│ п©п╩п╣п╧-п╩п╦я│я┌п╟п╪п╦, п╡я▀п╢п╟п╣я┌ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬
+я┌я─п╣п╨п╟я┘, я─п╟п╠п╬я┌п╟п╣я┌ я│ п╢я─п╟п╧п╡п╣я─п╟п╪п╦ я─п╟п╥п╩п╦я┤п╫я▀я┘ я┐я│я┌я─п╬п╧я│я┌п╡ п╡я▀п╡п╬п╢п╟ п╦ я│п╣я┌п╣п╡я▀п╪п╦
+п╥п╡я┐п╨п╬п╡я▀п╪п╦ я│п╣я─п╡п╦я│п╟п╪п╦, п╪п╬п╤п╣я┌ п╥п╟п©п╦я│я▀п╡п╟я┌я▄ п╡ RAW- п╦ WAV-я└п╟п╧п╩я▀, п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌
+п©п╣я─п╣п╫п╟п©я─п╟п╡п╩п╣п╫п╦п╣ п╡я▀п╡п╬п╢п╟ п╡ "я┌я─я┐п╠я┐", я┤п╦я┌п╟п╣я┌ я┌я─п╣п╨п╦ п╦п╥ п╟я─я┘п╦п╡п╬п╡ (zoo, gz, bz2,
 lha, lzh, rar, zip).
 
-%description -l uk_UA.KOI8-U  
-MikMod - як╕сний консольний програвач трекерних модул╕й у форматах
+%description -l uk_UA.UTF-8  
+MikMod - я▐п╨я√я│п╫п╦п╧ п╨п╬п╫я│п╬п╩я▄п╫п╦п╧ п©я─п╬пЁя─п╟п╡п╟я┤ я┌я─п╣п╨п╣я─п╫п╦я┘ п╪п╬п╢я┐п╩я√п╧ я┐ я└п╬я─п╪п╟я┌п╟я┘
 IT, XM, S3M, MTM, 669, STM, ULT, FAR, MED, AMF, DSM, IMF, GDM,
-STX, OKT та MOD, що вм╕╓ працювати ╕з плей-л╕стами, вида╓ ╕нформац╕ю щодо
-трек╕в, працю╓ ╕з драйверами р╕зних пристро╖в виведення та мережевими 
-звуковими серв╕сами, може записувати до RAW- та WAV-файл╕в, п╕дтриму╓
-перенаправлення виводу до "труби", чита╓ треки з арх╕в╕в (zoo, gz, bz2,
+STX, OKT я┌п╟ MOD, я┴п╬ п╡п╪я√я■ п©я─п╟я├я▌п╡п╟я┌п╦ я√п╥ п©п╩п╣п╧-п╩я√я│я┌п╟п╪п╦, п╡п╦п╢п╟я■ я√п╫я└п╬я─п╪п╟я├я√я▌ я┴п╬п╢п╬
+я┌я─п╣п╨я√п╡, п©я─п╟я├я▌я■ я√п╥ п╢я─п╟п╧п╡п╣я─п╟п╪п╦ я─я√п╥п╫п╦я┘ п©я─п╦я│я┌я─п╬я≈п╡ п╡п╦п╡п╣п╢п╣п╫п╫я▐ я┌п╟ п╪п╣я─п╣п╤п╣п╡п╦п╪п╦ 
+п╥п╡я┐п╨п╬п╡п╦п╪п╦ я│п╣я─п╡я√я│п╟п╪п╦, п╪п╬п╤п╣ п╥п╟п©п╦я│я┐п╡п╟я┌п╦ п╢п╬ RAW- я┌п╟ WAV-я└п╟п╧п╩я√п╡, п©я√п╢я┌я─п╦п╪я┐я■
+п©п╣я─п╣п╫п╟п©я─п╟п╡п╩п╣п╫п╫я▐ п╡п╦п╡п╬п╢я┐ п╢п╬ "я┌я─я┐п╠п╦", я┤п╦я┌п╟я■ я┌я─п╣п╨п╦ п╥ п╟я─я┘я√п╡я√п╡ (zoo, gz, bz2,
 lha, lzh, rar, zip).
 
 %prep
-%setup -q -n %name-%fversion
-%patch1 -p1
-#patch2 -p1
+%setup
+#patch -p1
 
 %build
 %configure
@@ -62,9 +59,14 @@ lha, lzh, rar, zip).
 %files
 %_bindir/*
 %_man1dir/*
+%_datadir/%name/
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 3.2.6-alt1
+- 3.2.6
+- disabled patch
+
 * Fri Nov 23 2007 Michael Shigorin <mike@altlinux.org> 3.2.1-alt3
 - removed Obsoletes: tracker (#13512)
 
@@ -109,13 +111,13 @@ lha, lzh, rar, zip).
 * Mon Mar 27 2000 Daouda Lo <daouda@mandrakesoft.com> 3.1.6a-2mdk
 - fix group + cleanup spec file.
 
-* Sat Sep 11 1999 Giuseppe GhibР <ghibo@linux-mandrake.com>
+* Sat Sep 11 1999 Giuseppe Ghibп═ <ghibo@linux-mandrake.com>
 - updated to version 3.1.6.
 
-* Sat Jul 17 1999 Giuseppe GhibР <ghibo@linux-mandrake.com>
+* Sat Jul 17 1999 Giuseppe Ghibп═ <ghibo@linux-mandrake.com>
 - fixed to work with shared libmikmod 3.1.6.
 
-* Tue May 11 1999 Bernhard RosenkrДnzer <bero@mandrakesoft.com>
+* Tue May 11 1999 Bernhard Rosenkrп■nzer <bero@mandrakesoft.com>
 - Mandrake adaptions
 
 * Mon Mar 22 1999 Cristian Gafton <gafton@redhat.com>
