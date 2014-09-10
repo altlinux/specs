@@ -1,9 +1,9 @@
 BuildRequires: /proc
-BuildRequires: jpackage-compat maven-local
+BuildRequires: jpackage-compat
 Name:              httpcomponents-project
 Summary:           Common POM file for HttpComponents
 Version:           6
-Release:           alt2_2jpp7
+Release:           alt2_4jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -12,7 +12,7 @@ URL:               http://hc.apache.org/
 Source:            %{name}-%{version}.tar.xz
 BuildArch:         noarch
 
-BuildRequires:     xmvn
+BuildRequires:     maven-local
 Source44: import.info
 
 Obsoletes: hc-project < 4.1.1-alt1_1jpp6
@@ -44,6 +44,9 @@ use it as runtime requirement.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 6-alt2_4jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 6-alt2_2jpp7
 - new release
 
