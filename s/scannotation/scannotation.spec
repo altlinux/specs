@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name: scannotation
 Version: 1.0.3
-Release:  alt2_0.6.r12jpp7
+Release:  alt2_0.7.r12jpp7
 Summary: A Java annotation scanner
 Group: Development/Java
 License: ASL 2.0
@@ -103,6 +102,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.7.r12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.6.r12jpp7
 - new release
 
