@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt1_0.3.20120218gitjpp7
+Release:        alt1_0.4.20120218gitjpp7
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -80,6 +80,9 @@ cp -a api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.4.20120218gitjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.3.20120218gitjpp7
 - new release
 
