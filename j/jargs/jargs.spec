@@ -6,26 +6,25 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jargs
 Version:        1.0
-Release:        alt1_10jpp7
+Release:        alt1_12jpp7
 Summary:        Java command line option parsing suite
 
 Group:          Development/Java
 License:        BSD
 URL:            http://jargs.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  junit
-
-Requires:       jpackage-utils
 Source44: import.info
+
 
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -54,18 +53,28 @@ cp -p lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
+# pom
+mkdir -p %{buildroot}%{_mavenpomdir}
+cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
 
 
 %files
 %doc README LICENCE TODO doc/CHANGES 
 %{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 
 %files javadoc
+%doc LICENCE
 %{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_10jpp7
 - new release
 
