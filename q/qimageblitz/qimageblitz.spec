@@ -1,8 +1,6 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: qimageblitz
 Version: 0.0.6
-Release: alt3
+Release: alt4
 
 Summary: Graphical effect and filter library for KDE4.0
 License: BSD
@@ -11,11 +9,14 @@ Url: http://www.kde.org/
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Source: %name-%version.tar
+# FC
+Patch1: qimageblitz-0.0.4-noexecstack.patch
 
 Requires: libqt4-core >= %{get_version libqt4-core}
 
 BuildRequires(pre): libqt4-devel
 BuildRequires: cmake gcc-c++ libqt4-devel
+BuildRequires: kde-common-devel
 
 %description 
 Blitz is a graphical effect and filter library for KDE4.0 that contains
@@ -47,35 +48,29 @@ This package contains %name development library and headers.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-mkdir -p build
-pushd build
-cmake ../ \
-	-DCMAKE_INSTALL_PREFIX=%_prefix \
-%ifarch x86_64
-        -DLIB_SUFFIX=64 \
-%endif		
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_SKIP_RPATH=YES
-%make_build VERBOSE=1
-popd
+%Kbuild
 
 %install
-%makeinstall_std -C build
+%Kinstall
 
 
 %files -n lib%name
 %_bindir/*
 %_libdir/*.so.*
-%doc README.BLITZ README.PORTING
 
 %files -n lib%name-devel
+%doc README.BLITZ README.PORTING
 %_libdir/*.so
 %_includedir/%name/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Sep 11 2014 Sergey V Turchin <zerg@altlinux.org> 0.0.6-alt4
+- Added a patch from FC to fix "executable-stack" rpmlint warning
+
 * Wed Sep 28 2011 Dmitry V. Levin <ldv@altlinux.org> 0.0.6-alt3
 - Fixed interpackage dependencies.
 - Rebuilt for debuginfo.
