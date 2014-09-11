@@ -1,10 +1,10 @@
 Name:           libnftnl
-Version:        1.0.0
-Release:        alt2
+Version:        1.0.2
+Release:        alt1.git20140908
 Summary:        Netfilter nf_tables infrastructure library
 Group:          System/Libraries
 License:        LGPLv2.1+
-URL:            http://netfilter.org/projects/libmnl
+URL:            http://netfilter.org/projects/libnftnl/
 Source:        %name-%version.tar
 BuildRequires: libmnl-devel libmxml-devel libjansson-devel
 
@@ -75,6 +75,9 @@ cp examples/.libs/* %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20140908
+- Version 1.0.2
+
 * Tue Jan 21 2014 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.0-alt2
 - move examples to own package
 
