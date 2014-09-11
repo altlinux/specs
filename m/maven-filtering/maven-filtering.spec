@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-filtering
 Version:          1.1
-Release:          alt1_1jpp7
+Release:          alt1_2jpp7
 Summary:          Shared component providing resource filtering
 License:          ASL 2.0
 URL:              http://maven.apache.org/shared/%{name}/index.html
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1jpp7
 - new version
 
