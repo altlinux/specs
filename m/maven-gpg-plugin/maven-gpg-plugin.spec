@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-gpg-plugin
 Version:        1.4
-Release:        alt3_7jpp7
+Release:        alt3_10jpp7
 Summary:        Maven GPG Plugin
 
 Group:          Development/Java
@@ -18,7 +18,7 @@ Patch0:         0001-Add-support-for-maven-3.patch
 BuildArch: noarch
 
 BuildRequires: plexus-utils
-BuildRequires: ant-nodeps
+BuildRequires: ant
 BuildRequires: maven-local
 BuildRequires: maven-install-plugin
 BuildRequires: maven-compiler-plugin
@@ -28,6 +28,9 @@ BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+
+# Uses system gpg binary for actual signing
+Requires:      gnupg
 
 Obsoletes: maven2-plugin-gpg <= 0:2.0.8
 Provides: maven2-plugin-gpg = 1:%{version}-%{release}
@@ -67,6 +70,9 @@ sed -i 's/${mavenVersion}/3.0.4/' pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_10jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_7jpp7
 - new release
 
