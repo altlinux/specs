@@ -1,16 +1,19 @@
 Name: libmodplug
-Version: 0.8.8.4
-Release: alt2
+Version: 0.8.8.5
+Release: alt1
 
 Summary: Modplug mod music file format library
 License: Public Domain
 Group: Sound
+
 Url: http://modplug-xmms.sourceforge.net/
 # http://download.sourceforge.net/modplug-xmms/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: libmodplug-0.8.8.1-rh-timidity.patch
-Patch1: libmodplug-0.8.8.4-alt-no-overflow.patch
+Patch0: libmodplug-0.8.8.1-rh-timidity.patch
+Patch1: libmodplug-0.8.8.5-alt-no-overflow.patch
+
 BuildRequires: gcc-c++
+
 # backwards compatibility
 %{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
 Provides: libmodplug.so.0%lib_suffix
@@ -29,8 +32,8 @@ for the software development using libmodplug library.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p2
+%patch0 -p1
+%patch1 -p1
 
 %build
 #add_optflags -fpermissive
@@ -52,6 +55,10 @@ ln -s libmodplug.so.1.0.0 %buildroot%_libdir/libmodplug.so.0
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 0.8.8.5-alt1
+- 0.8.8.5
+  + CVE-2013-4233, CVE-2013-4234 fixes
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8.4-alt2
 - Fixed build
 
