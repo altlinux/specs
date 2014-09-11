@@ -1,6 +1,6 @@
 Name: pmacct
 Version: 0.14.3
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: pcap-based accounting tools
 Group: System/Servers
@@ -12,7 +12,7 @@ Patch: %name-%version-%release.patch
 PreReq: %name-storage = %version-%release 
 Requires: %name-common = %version-%release
 
-BuildRequires: zlib-devel libpcap-devel libMySQL-devel postgresql-devel libsqlite3-devel libGeoIP-devel setproctitle-devel libmongoc-devel 
+BuildRequires: zlib-devel libpcap-devel libMySQL-devel postgresql-devel libsqlite3-devel libGeoIP-devel setproctitle-devel libmongoc0-devel 
 
 %description
 pcap-based accounting daemon; it gathers packets from an
@@ -633,6 +633,9 @@ __EOF__
 %_altdir/uacct-mongodb
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.3-alt2
+- Rebuilt with libmongoc0 instead of libmongoc
+
 * Mon Jul 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.3-alt1
 - New release
 
