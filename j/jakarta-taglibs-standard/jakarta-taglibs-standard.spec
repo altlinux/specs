@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -38,11 +39,10 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-taglibs-standard
 Version:        1.1.2
-Release:        alt4_9jpp7
+Release:        alt4_11jpp7
 Epoch:          0
 Summary:        An open-source implementation of the JSP Standard Tag Library
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://jakarta.apache.org/taglibs/
 Source0:        http://archive.apache.org/dist/jakarta/taglibs/standard/source/jakarta-taglibs-standard-%{version}-src.tar.gz
 Source1:        http://repo1.maven.org/maven2/jstl/jstl/%{version}/jstl-%{version}.pom
@@ -66,16 +66,19 @@ BuildRequires:  xalan-j2 >= 2.6.0
 Requires:       tomcat-servlet-3.0-api
 Requires:       tomcat-jsp-2.2-api
 Requires:       xalan-j2 >= 2.6.0
+
+
+Provides:       javax.servlet.jsp.jstl
 Source44: import.info
 
 %description
-This package contains Jakarta Taglibs's open-source implementation of the 
+This package contains Jakarta Taglibs's open-source implementation of the
 JSP Standard Tag Library (JSTL), version 1.1. JSTL is a standard under the
 Java Community Process.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -129,12 +132,17 @@ install -pm 644 standard-1.1.2.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.po
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr standard/dist/standard/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
+# J2EE API dir
+install -d -m 755 %{buildroot}%{_javadir}/javax.servlet.jsp.jstl/
+ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.servlet.jsp.jstl/
+ln -sf ../jakarta-taglibs-core.jar %{buildroot}%{_javadir}/javax.servlet.jsp.jstl/
+
+%files -f .mfiles
 %doc LICENSE NOTICE
 %doc standard/README_src.txt standard/README_bin.txt standard/dist/doc/doc/standard-doc/*.html
-%{_javadir}/*
-%{_mavenpomdir}/JPP-*.pom
-%{_mavendepmapfragdir}/%{name}
+%{_javadir}/taglibs-core.jar
+%{_javadir}/taglibs-standard.jar
+%{_javadir}/javax.servlet.jsp.jstl/
 
 %files javadoc
 %doc LICENSE NOTICE
@@ -142,6 +150,9 @@ cp -pr standard/dist/standard/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt4_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt4_9jpp7
 - new release
 
