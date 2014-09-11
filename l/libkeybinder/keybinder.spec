@@ -3,17 +3,18 @@
 %define luaver 5.1
 
 Name: libkeybinder
-Version: 0.2.2
-Release: alt2.1
+Version: 0.3.0
+Release: alt1.git20120617
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
 Group: System/Libraries
 Url: http://kaizer.se/wiki/keybinder/
-Packager: Alexey Morsov <swi@altlinux.ru>
 
 BuildRequires: libgtk+2-devel xorg-server-common python-dev liblua5-devel
 BuildRequires: python-module-pygtk-devel libXext-devel
+BuildPreReq: gtk-doc gtk-doc-mkpdf
+# https://github.com/engla/keybinder.git
 Source: %name-%version.tar
 
 %description
@@ -65,8 +66,10 @@ Lua5 binding to %name
 
 %build
 %autoreconf -I m4
-%configure %{subst_enable static}
-%make_build
+%configure %{subst_enable static} \
+	--enable-gtk-doc \
+	--with-html-dir=%_docdir
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -79,6 +82,7 @@ Lua5 binding to %name
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%doc %_docdir/%sname
 
 %if_enabled static
 %files devel-static
@@ -93,6 +97,9 @@ Lua5 binding to %name
 
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20120617
+- Version 0.3.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.2-alt2.1
 - Rebuild with Python-2.7
 
