@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           electric
 Version:        8.09
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Summary:        Sophisticated ASIC and MEM CAD System
 
 Group:          Engineering
@@ -110,6 +110,9 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_6jpp7
 - new release
 
