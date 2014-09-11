@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jettison
 Version:        1.3.3
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        A JSON StAX implementation
 Group:          Development/Java
 License:        ASL 2.0
@@ -97,6 +96,9 @@ cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_2jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_1jpp7
 - new version
 
