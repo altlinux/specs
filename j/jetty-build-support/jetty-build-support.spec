@@ -1,13 +1,9 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-build-support
 Version:        1.1
-Release:        alt3_6jpp7
+Release:        alt3_8jpp7
 Summary:        Jetty build support files
 
 Group:          Development/Java
@@ -58,35 +54,22 @@ BuildArch: noarch
 
 %build
 pushd %{name}
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
 pushd %{name}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-popd
-
-
-%files
+%files -f %{name}/.mfiles
 %doc jetty-distribution-remote-resources/src/main/resources/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f %{name}/.mfiles-javadoc
 %doc jetty-distribution-remote-resources/src/main/resources/*
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_6jpp7
 - new release
 
