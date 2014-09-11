@@ -1,42 +1,34 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 21
 %global site_name org.apache.felix.bundlerepository
 %global grp_name  felix
 
-Name:             felix-bundlerepository
-Version:          1.6.6
-Release:          alt2_9jpp7
-Summary:          Bundle repository service
-License:          ASL 2.0 and BSD
-Group:            Development/Java
-URL:              http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
+Name:           felix-bundlerepository
+Version:        1.6.6
+Release:        alt2_15jpp7
+Summary:        Bundle repository service
+License:        ASL 2.0 and MIT
+URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
 
-Source0:          http://www.fightrice.com/mirrors/apache/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
-Patch1:           0001-Unbundle-libraries.patch
-Patch2:           0002-Add-xpp3-dependency.patch
-Patch3:           0003-Make-felix-utils-mandatory-dep.patch
+Source0:        http://www.fightrice.com/mirrors/apache/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
+Patch1:         0001-Unbundle-libraries.patch
 
-BuildArch:        noarch
+BuildArch:      noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    felix-shell
-BuildRequires:    felix-utils
-BuildRequires:    kxml
-BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    woodstox-core
-BuildRequires:    xpp3
-
-Requires:         jpackage-utils
-Requires:         felix-shell
-Requires:         felix-utils
-Requires:         kxml
-Requires:         woodstox-core
-Requires:         xpp3
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.sf.kxml:kxml2)
+BuildRequires:  mvn(org.apache.felix:felix-parent)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.shell)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
+BuildRequires:  mvn(org.apache.felix:org.osgi.service.obr)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.osgi:org.osgi.compendium)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(xpp3:xpp3)
+%{?fedora:BuildRequires: mvn(org.easymock:easymock)}
 Source44: import.info
 
 
@@ -44,9 +36,8 @@ Source44: import.info
 Bundle repository service
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,36 +46,51 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{site_name}-%{version}
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
+
+# Parent POM pulls in unneeded dependencies (mockito)
+%pom_remove_parent
+%pom_xpath_inject "pom:project" "<groupId>org.apache.felix</groupId>"
+%pom_add_dep junit:junit::test
+%if 0%{?fedora}
+  # easymock is test dependency
+  %pom_xpath_inject "pom:dependency[pom:artifactId[text()='easymock']]" "<scope>test</scope>"
+%else
+  %pom_remove_dep org.easymock:easymock
+%endif
+
+%if !0%{?fedora}
+  # These tests won't work without easymock3
+  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryAdminTest.java
+  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryImplTest.java
+  rm -f src/test/java/org/apache/felix/bundlerepository/impl/StaxParserTest.java
+  rm -f src/test/java/org/apache/felix/bundlerepository/impl/ResolverImplTest.java
+%endif
+
+# Add xpp3 dependency (upstream bundles this)
+%pom_add_dep "xpp3:xpp3:1.1.3.4.O" pom.xml "<optional>true</optional>"
+
+# Make felix utils mandatory dep
+%pom_xpath_remove "pom:dependency[pom:artifactId[text()='org.apache.felix.utils']]/pom:optional"
+
+# For compatibility reasons
+%mvn_file : felix/%{name}
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -Dpm 644 target/%{site_name}-%{version}.jar %{buildroot}%{_javadir}/%{grp_name}/%{name}.jar
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{grp_name}-%{name}.pom
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP.%{grp_name}-%{name}.pom %{grp_name}/%{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE LICENSE.kxml2 NOTICE DEPENDENCIES
-%{_javadir}/%{grp_name}/%{name}.jar
-%{_mavenpomdir}/JPP.%{grp_name}-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE LICENSE.kxml2 NOTICE
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt2_15jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt2_9jpp7
 - new release
 
