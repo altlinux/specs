@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt2_14jpp7
+Release:        alt2_15jpp7
 Epoch:          0
 License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
@@ -112,6 +112,9 @@ cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_15jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_14jpp7
 - new release
 
