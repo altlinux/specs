@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.12.beta2jpp7
+Release:        alt2_0.13.beta2jpp7
 Summary:        Plexus Container-Backed Active Collections
 
 Group:          Development/Java
@@ -98,6 +97,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.beta2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.12.beta2jpp7
 - new release
 
