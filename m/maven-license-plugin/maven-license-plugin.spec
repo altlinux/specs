@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt4_14jpp7
+Release:        alt4_15jpp7
 Summary:        Maven plugin to update header licenses of source files
 
 Group:          Development/Java
@@ -23,7 +22,7 @@ Patch0:         001-mavenlicenseplugin-fixbuild.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
+BuildRequires:  apache-resource-bundles
 BuildRequires:  maven-local
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-deploy-plugin
@@ -120,6 +119,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt4_15jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt4_14jpp7
 - new release
 
