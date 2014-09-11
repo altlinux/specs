@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           nekohtml
 Version:        1.9.14
-Release:        alt2_11jpp7
+Release:        alt2_12jpp7
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
@@ -149,6 +149,9 @@ cp -a build/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}-samples.jar
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_12jpp7
+- new release
+
 * Wed Jul 30 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_11jpp7
 - new release
 
