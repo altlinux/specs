@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt2_10jpp7
+Release:        alt2_11jpp7
 Summary:        Plexus Security Dispatcher Component
 
 Group:          Development/Java
@@ -81,6 +80,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_10jpp7
 - new release
 
