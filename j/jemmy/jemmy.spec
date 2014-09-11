@@ -16,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_9jpp7
+Release:        alt2_10jpp7
 Summary:        Java UI testing library
 
 Group:          Development/Java
@@ -99,6 +99,9 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_9jpp7
 - new release
 
