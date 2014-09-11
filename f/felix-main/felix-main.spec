@@ -1,24 +1,15 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Prevent brp-java-repack-jars from being run.
-%define __jar_repack %{nil}
-
-%global project felix
 %global bundle org.apache.felix.main
-%global groupId org.apache.felix
 
-Name:    %{project}-main
+Name:    felix-main
 Version: 4.2.0
-Release: alt1_1jpp7
+Release: alt1_4jpp7
 Summary: Apache Felix Main
-
 Group:   Development/Java
 License: ASL 2.0
 URL:     http://felix.apache.org
-Source0: http://www.apache.org/dist/%{project}/%{bundle}-%{version}-source-release.tar.gz
+Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +24,7 @@ BuildRequires: felix-framework >= 4.2.0
 BuildRequires: maven-local
 BuildRequires: maven-dependency-plugin
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mockito
 
 Requires: felix-bundlerepository
 Requires: felix-gogo-command
@@ -41,7 +33,6 @@ Requires: felix-gogo-shell
 Requires: felix-osgi-compendium
 Requires: felix-osgi-core
 Requires: felix-framework >= 4.2.0
-Requires: jpackage-utils
 Source44: import.info
 Obsoletes: felix < 2
 
@@ -50,46 +41,33 @@ Apache Felix Main Classes.
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
 
+%mvn_file :%{bundle} "felix/%{bundle}"
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}/%{project}
-install -m 644 target/%{bundle}-%{version}.jar \
-        %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
+%files -f .mfiles
+%doc LICENSE NOTICE DEPENDENCIES
 
-%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadir}/%{project}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_4jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_1jpp7
 - new version
 
