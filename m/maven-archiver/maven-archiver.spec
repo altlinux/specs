@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-archiver
 Version:        2.5
-Release:        alt2_7jpp7
+Release:        alt2_8jpp7
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -61,6 +61,9 @@ rm -fr src/test/java/org/apache/maven/archiver/*.java
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt2_8jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt2_7jpp7
 - new release
 
