@@ -1,6 +1,8 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -35,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacc
 Version:        5.0
-Release:        alt4_8jpp7
+Release:        alt4_9jpp7
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -43,13 +45,12 @@ Source0:        http://java.net/projects/%{name}/downloads/download/%{name}-%{ve
 Source1:        javacc.sh
 Source2:        jjdoc
 Source3:        jjtree
-#Jar used for bootstrapping
-Source4:        javacc.jar
+Patch0:         0001-Add-javadoc-target-to-build.xml.patch
 URL:            http://javacc.java.net/
-Group:          Development/Java
-Requires:       jpackage-utils >= 0:1.5
-BuildRequires:  ant ant-junit junit >= 0:3.8.1
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  ant
+BuildRequires:  ant-junit
+BuildRequires:  junit
+BuildRequires:  javacc
 
 BuildArch:      noarch
 Source44: import.info
@@ -63,32 +64,43 @@ standard capabilities related to parser generation such as tree building (via
 a tool called JJTree included with JavaCC), actions, debugging, etc.
 
 %package manual
+Group: Development/Java
 Summary:        Manual for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description manual
 Manual for %{name}.
 
 %package demo
+Group: Development/Java
 Summary:        Examples for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Examples for %{name}.
 
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
 %setup -q -n %{name}
 
+%patch0 -p1
+
 # Remove binary information in the source tar
-find . -name "*.jar" -exec rm {} \;
-find . -name "*.class" -exec rm {} \;
+find . -name "*.jar" -delete
+find . -name "*.class" -delete
 
 find ./examples -type f -exec sed -i 's/\r//' {} \;
 
-cp -p %{SOURCE4} bootstrap/javacc.jar
+ln -s `build-classpath javacc` bootstrap/javacc.jar
+
+sed -i 's/source="1.4"/source="1.5"/g' src/org/javacc/{parser,jjdoc,jjtree}/build.xml
 
 %build
 # Use the bootstrap javacc.jar to generate some required
@@ -96,23 +108,27 @@ cp -p %{SOURCE4} bootstrap/javacc.jar
 # remove the bootstrap jar and build the binary from source.
 ant -f src/org/javacc/parser/build.xml parser-files
 ant -f src/org/javacc/jjtree/build.xml tree-files
-find . -name "*.jar" -exec rm {} \;
-ant jar
+find . -name "*.jar" -delete
+ant jar javadoc
 
 %install
 # jar
-install -Dpm 644 bin/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -Dpm 644 bin/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # bin
-install -Dp -T -m 755 %{SOURCE1} $RPM_BUILD_ROOT/%{_bindir}/javacc.sh
-install -Dp -T -m 755 %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}/jjdoc
-install -Dp -T -m 755 %{SOURCE3} $RPM_BUILD_ROOT/%{_bindir}/jjtree
+install -Dp -T -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/javacc.sh
+install -Dp -T -m 755 %{SOURCE2} %{buildroot}/%{_bindir}/jjdoc
+install -Dp -T -m 755 %{SOURCE3} %{buildroot}/%{_bindir}/jjtree
+
+# javadoc
+install -d -p 755 %{buildroot}/%{_javadocdir}/%{name}
+cp -rp api/* %{buildroot}/%{_javadocdir}/%{name}
 
 # pom
-install -Dpm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
+install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 ln -s javacc.sh %buildroot%_bindir/%name
+
 
 %files
 %{_javadir}/*.jar
@@ -123,12 +139,20 @@ ln -s javacc.sh %buildroot%_bindir/%name
 %_bindir/%name
 
 %files manual
+%doc LICENSE README
 %doc www/*
 
 %files demo
 %doc examples
 
+%files javadoc
+%doc LICENSE README
+%{_javadocdir}/%{name}
+
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt4_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt4_8jpp7
 - new release
 
