@@ -9,7 +9,7 @@
 
 Name: calligra
 Version: 2.8.5
-Release: alt2
+Release: alt3
 Epoch: 0
 %define libname lib%name
 
@@ -674,6 +674,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libkritasketchlib.so
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.5-alt3
+- rebuild
+
 * Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 0:2.8.5-alt2
 - rebuilt with new KDE
 
