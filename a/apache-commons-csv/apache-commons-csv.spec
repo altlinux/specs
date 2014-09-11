@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          alt3_0.6.svn1071189jpp7
+Release:          alt3_0.7.svn1071189jpp7
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Java
@@ -57,6 +57,9 @@ sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.7.svn1071189jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.6.svn1071189jpp7
 - new release
 
