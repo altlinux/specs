@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -87,7 +87,7 @@ install -p -m 644 build/lib/gnu.getopt.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -sf %{name}.jar %{buildroot}%{_javadir}/gnu.getopt.jar
 
 install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a urbanophile:java-getopt
+%add_maven_depmap -a urbanophile:java-getopt,gnu.getopt:java-getopt
 
 cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
 
@@ -107,6 +107,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_4jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_2jpp7
 - new version
 
