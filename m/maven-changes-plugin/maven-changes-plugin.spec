@@ -6,13 +6,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
 Version:        2.8
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        Plugin to support reporting of changes between releases
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Patch0:         0001-Remove-dependency-on-velocity-tools.patch
 
 BuildArch:      noarch
 
@@ -48,7 +49,6 @@ BuildRequires: xmlrpc3-common
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: velocity
-BuildRequires: velocity-tools
 
 Obsoletes: maven2-plugin-changes <= 0:2.0.8
 Provides: maven2-plugin-changes = 1:%{version}-%{release}
@@ -74,6 +74,10 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+
+# remove dependency on velocity-tools
+%patch0 -p1
+%pom_remove_dep :velocity-tools
 
 # Javamail is provided by JDK
 %pom_remove_dep :geronimo-javamail_1.4_mail
@@ -103,6 +107,9 @@ rm -rf src/main/java/org/apache/maven/plugin/github
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_6jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4jpp7
 - new version
 
