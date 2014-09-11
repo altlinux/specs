@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -17,7 +16,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{?scl_prefix}%{project}-gogo-command
 Version:        0.12.0
-Release:        alt2_7jpp7
+Release:        alt2_9jpp7
 Summary:        Apache Felix Gogo Command
 
 Group:          Development/Java
@@ -36,6 +35,8 @@ BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  jpackage-utils
+BuildRequires:  maven-install-plugin
+BuildRequires:  mockito
 
 BuildRequires:  felix-osgi-core
 BuildRequires:  felix-framework
@@ -101,6 +102,9 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{pkg_name}
 %{_javadocdir}/%{pkg_name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2_7jpp7
 - new release
 
