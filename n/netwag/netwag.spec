@@ -1,6 +1,6 @@
 Name: netwag
-Version: 5.34.0
-Release: alt1.qa4
+Version: 5.39.0
+Release: alt1
 
 Summary: GUI for netwox
 License: GPL
@@ -9,7 +9,7 @@ Group: Networking/Other
 Url: http://www.laurentconstantin.com/en/netw/netwag/
 Source0: http://www.laurentconstantin.com/common/netw/netwag/download/v5/%name-%version-src.tgz
 Source1: %name.desktop
-Patch0: %name-config.patch
+Source2: html.tar
 BuildArch: noarch
 
 Requires: netwox
@@ -21,9 +21,19 @@ BuildRequires: desktop-file-utils
 GUI for Netwox (Netwox is a toolbox for network administrators and
 network hackers).
 
+%package docs
+Summary: Documentation for %name
+Group: Documentation
+
+%description docs
+GUI for Netwox (Netwox is a toolbox for network administrators and
+network hackers).
+
+This package contains documentation for %name.
+
 %prep
-%setup -q -n %name-%version-src
-%patch0 -p1
+%setup -n %name-%version-src
+tar -xf %SOURCE2
 
 %build
 cd src
@@ -51,7 +61,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 %_desktopdir/*
 
+%files docs
+%doc html/*
+
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.39.0-alt1
+- Version 5.39.0
+
 * Sat May 21 2011 Repocop Q. A. Robot <repocop@altlinux.org> 5.34.0-alt1.qa4
 - NMU: fix desktop permissions
 

@@ -1,9 +1,8 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define origname netwib
 
 Name: libnetwib
-Version: 5.34.0
-Release: alt2.qa2
+Version: 5.39.0
+Release: alt1
 
 Summary: Functions for network programs
 License: GPL
@@ -11,7 +10,7 @@ Group: System/Libraries
 
 Url: http://www.laurentconstantin.com/en/netw/netwib/
 Source: http://www.laurentconstantin.com/common/netw/netwib/download/v5/%origname-%version-src.tgz
-#Patch0: netwib-5.33.0-alt.patch
+Source1: html.tar
 
 # Automatically added by buildreq on Wed Feb 15 2006
 BuildRequires: libnet2-devel libpcap-devel
@@ -44,8 +43,8 @@ The %name-devel package contains the header files and libraries needed
 to develop programs that use the %name library.
 
 %prep
-%setup -q -n %origname-%version-src
-#%%patch0 -p1
+%setup -n %origname-%version-src
+tar -xf %SOURCE1
 
 %build
 cd src
@@ -61,19 +60,22 @@ cd src
 	INSTMAN3=%buildroot%_man3dir \
 	installso
 
-
 %files
+%doc doc/*.txt README.TXT
 %_libdir/libnetwib*.so
 %_man3dir/netwib*
 
 %files doc
-%doc doc README.TXT
+%doc html/*
 
 %files devel
 %_includedir/netwib*
 %_bindir/netwib*-config
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.39.0-alt1
+- Version 5.39.0
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 5.34.0-alt2.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
