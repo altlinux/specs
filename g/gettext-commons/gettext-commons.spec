@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           gettext-commons
 Version:        0.9.6
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Java internationalization (i18n) library
 
 Group:          Development/Java
@@ -96,6 +96,9 @@ popd
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1_8jpp7
 - new release
 
