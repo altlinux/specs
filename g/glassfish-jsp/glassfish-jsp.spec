@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:       glassfish-jsp
 Version:    2.2.6
-Release:    alt2_7jpp7
+Release:    alt2_11jpp7
 Summary:    Glassfish J2EE JSP API implementation
 
 Group:      Development/Java
@@ -23,34 +22,25 @@ Source0:    %{artifactId}-%{version}.tar.xz
 # SVN tag
 Source1:    generate_tarball.sh
 Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
+Source3:    https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
 
 Patch0:     %{name}-build-eclipse-compilers.patch
 
 BuildArch:  noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-source-plugin
 BuildRequires:  glassfish-jsp-api
-BuildRequires:  mvn(org.eclipse.jdt:core)
-BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.el:javax.el-api)
-BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
-
-Requires:       jpackage-utils
-Requires:       mvn(javax.servlet:javax.servlet-api)
-Requires:       mvn(javax.el:javax.el-api)
-Requires:       mvn(javax.servlet.jsp:javax.servlet.jsp-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(net.java:jvnet-parent)
+BuildRequires:  mvn(org.eclipse.jdt:core)
 
 Provides:   jsp = %{jspspec}
 Provides:   jsp%{jspspec}
+
+Provides:   javax.servlet.jsp
+# make sure the symlinks will be correct
+Requires:  glassfish-jsp-api
 Source44: import.info
 
 %description
@@ -66,7 +56,6 @@ This project provides a container independent implementation of JSP
 %package javadoc
 Summary:    API documentation for %{name}
 Group:      Development/Java
-Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -78,38 +67,45 @@ BuildArch: noarch
 cp -p %{SOURCE2} LICENSE
 cp -p %{SOURCE3} cddllicense.txt
 
-%build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_alias : "javax.servlet:jsp-api" "org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
 
+# compat symlink
+%mvn_file : %{name}/javax.servlet.jsp %{name}
+
+%build
+%mvn_build
 
 %install
+%mvn_install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+# install j2ee api symlinks
+install -d -m 755 %{buildroot}%{_javadir}/javax.servlet.jsp/
+pushd %{buildroot}%{_javadir}/javax.servlet.jsp/
+for jar in ../%{name}/*jar; do
+    ln -sf $jar .
+done
+# copy jsp-api so that build-classpath will include dep as well
+if [ -f %{_javadir}/%{name}-api*.jar ];then
+   cp %{_javadir}/glassfish-jsp-api*.jar .
+else
+   cp %{_javadir}/glassfish-jsp-api/*.jar .
+fi
+xmvn-subst .
+popd
 
-install -m 644 target/%{artifactId}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap -a "javax.servlet:jsp-api,org.eclipse.jetty.orbit:org.apache.jasper.glassfish"
-
-%files
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%{_javadir}/javax.servlet.jsp
 %doc LICENSE cddllicense.txt
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE cddllicense.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_7jpp7
 - new release
 
