@@ -1,90 +1,69 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-antrun-plugin
 Version:        1.7
-Release:        alt3_5jpp7
+Release:        alt3_6jpp7
 Summary:        Maven AntRun Plugin
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-antrun-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         fix-deps.patch
 
-BuildArch: noarch
+BuildArch:      noarch
 
-BuildRequires: plexus-utils
-BuildRequires: ant
-BuildRequires: maven-local
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+
 
 Obsoletes: maven2-plugin-antrun <= 0:2.0.8
 Provides: maven2-plugin-antrun = 1:%{version}-%{release}
 Source44: import.info
-Patch33: maven-antrun-plugin-1.7-alt-build-with-maven-3.0.4.patch
-
 
 %description
-Runs Ant scripts embedded in the POM
+This plugin provides the ability to run Ant tasks from within Maven.
+It is even possible to embed Ant scripts in the POM.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0
-#%patch1
-%patch33 -p1
+
+%pom_add_dep org.apache.maven:maven-compat
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_6jpp7
+- new release
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_5jpp7
 - dropped maven2 dependencies
 
