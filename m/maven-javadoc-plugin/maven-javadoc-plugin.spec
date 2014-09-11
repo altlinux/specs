@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-javadoc-plugin
 Version:        2.9.1
-Release:        alt1_1.1jpp7
+Release:        alt1_2jpp7
 Summary:        Maven Javadoc Plugin
 
 Group:          Development/Java
@@ -29,7 +29,7 @@ BuildRequires:  maven-artifact-manager
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-common-artifact-filters
 BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-doxia
+BuildRequires:  maven-doxia-sink-api
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-install-plugin
@@ -67,7 +67,7 @@ Requires:       maven-archiver
 Requires:       maven-artifact
 Requires:       maven-artifact-manager
 Requires:       maven-common-artifact-filters
-Requires:       maven-doxia
+Requires:       maven-doxia-sink-api
 Requires:       maven-doxia-sitetools
 Requires:       maven-model
 Requires:       maven-plugin-annotations
@@ -162,6 +162,9 @@ rm -rf target/site/api*
 %endif
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_2jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_1.1jpp7
 - update
 
