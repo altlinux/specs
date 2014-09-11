@@ -1,16 +1,12 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname GMetrics
 
 Name:          gmetrics
 Version:       0.6
-Release:       alt1_5jpp7
+Release:       alt1_7jpp7
 Summary:       Groovy library that provides reports and metrics for Groovy code
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://gmetrics.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}/%{oname}-%{version}-bin.tar.gz
@@ -22,7 +18,6 @@ Patch0:        gmetrics-0.5-pom.patch
 # add groovy-all deps with generic version
 Patch1:        gmetrics-0.6-antrun-plugin.patch
 
-BuildRequires: jpackage-utils
 
 BuildRequires: ant
 BuildRequires: groovy
@@ -37,20 +32,8 @@ BuildRequires: slf4j
 # depend on rhbz#914056 BuildRequires: gmaven
 BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
-Requires:      ant
-Requires:      apache-commons-cli
-Requires:      groovy
-Requires:      log4j
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -61,9 +44,8 @@ code with an Ant Task, applying a set of metrics, and
 generating an HTML or XML report of the results.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -89,38 +71,24 @@ done
 
 %build
 
+%mvn_file :%{oname} %{name}
+%mvn_file :%{oname} %{oname}
 # test skipped require Codenarc, circular deps
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{oname}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-(
-  cd %{buildroot}%{_javadir}
-  ln -sf %{name}.jar %{oname}.jar
-)
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{oname}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_5jpp7
 - new release
 
