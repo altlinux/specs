@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           netbeans-javaparser
 Version:        7.0.1
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        NetBeans Java Parser
 License:        GPLv2 with exceptions
 Url:            http://netbeans.org/
@@ -22,7 +22,6 @@ Group:          Development/Java
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  ant
-BuildRequires:  ant-nodeps
 BuildRequires:  jpackage-utils
 
 Requires:       jpackage-utils
@@ -54,6 +53,9 @@ find . -name "*.jar" -exec %__rm -f {} \;
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_4jpp7
 - new release
 
