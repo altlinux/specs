@@ -3,13 +3,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-io
 Version:        2.0.5
-Release:        alt1_6jpp7
+Release:        alt1_8jpp7
 Summary:        Plexus IO Components
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://plexus.codehaus.org/plexus-components/plexus-io
 Source0:        https://github.com/sonatype/plexus-io/tarball/plexus-io-%{version}#/%{name}-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch: noarch
 
 BuildRequires: jpackage-utils
@@ -45,6 +46,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n sonatype-plexus-io-1a0010b
+cp %{SOURCE1} .
 
 %build
 export XMVN_COMPILER_SOURCE="1.5"
@@ -55,12 +57,16 @@ export XMVN_COMPILER_SOURCE="1.5"
 %mvn_install
 
 %files -f .mfiles
-%doc NOTICE.txt
+%doc NOTICE.txt LICENSE-2.0.txt
 
 %files javadoc -f .mfiles-javadoc
+%doc NOTICE.txt LICENSE-2.0.txt
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt1_8jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt1_6jpp7
 - update
 
