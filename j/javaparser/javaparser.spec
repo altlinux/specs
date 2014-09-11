@@ -1,38 +1,27 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          javaparser
 Version:       1.0.8
-Release:       alt2_3jpp7
+Release:       alt2_5jpp7
 Summary:       Java 1.5 Parser and AST
-Group:         Development/Java
 License:       GPLv3+ and LGPLv3+
 URL:           http://code.google.com/p/javaparser/
 Source0:       http://javaparser.googlecode.com/files/%{name}-%{version}-src.zip
 Source1:       http://%{name}.googlecode.com/svn/maven2/com/google/code/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-# remove org.jvnet.wagon-svn wagon-svn 1.9
-Patch0:        %{name}-%{version}-remove-wagon-svn.patch
 
-BuildRequires: jpackage-utils
 
 # test deps
 BuildRequires: junit
 
 BuildRequires: javacc
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 # BuildRequires: maven-surefire-provider-junit4
 BuildRequires: sonatype-oss-parent
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -43,9 +32,8 @@ comments. It is also possible to change the AST nodes or
 create new ones to modify the source code.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,7 +43,8 @@ This package contains javadoc for %{name}.
 %setup -q -c
 
 cp -p %{SOURCE1} pom.xml
-%patch0 -p0
+# remove org.jvnet.wagon-svn wagon-svn 1.9
+%pom_xpath_remove "pom:project/pom:build/pom:extensions"
 
 for s in $(find . -name "*.java");do
   native2ascii -encoding UTF8 ${s} ${s}
@@ -75,33 +64,23 @@ sed -i 's/\r//' COPYING.LESSER
   rm JavaCharStream.java ParseException.java Token.java TokenMgrError.java
   javacc.sh java_1_5.jj
 )
-
+%mvn_file :%{name} %{name}
 # test skip http://code.google.com/p/javaparser/issues/detail?id=43
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc COPYING COPYING.LESSER readme.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc COPYING COPYING.LESSER readme.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_3jpp7
 - new release
 
