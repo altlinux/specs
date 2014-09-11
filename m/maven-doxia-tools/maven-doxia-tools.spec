@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		maven-doxia-tools
 Version:	1.4
-Release:	alt3_11jpp7
+Release:	alt3_12jpp7
 Summary:	Maven Doxia Integration Tools
 
 Group:		Development/Java
@@ -93,6 +93,9 @@ install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_12jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_11jpp7
 - new release
 
