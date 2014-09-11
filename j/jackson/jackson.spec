@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jackson
 Version: 1.9.4
-Release: alt2_6jpp7
+Release: alt2_7jpp7
 Summary: Jackson Java JSON-processor
 
 Group: Development/Java
@@ -133,6 +133,9 @@ cp -rp dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.4-alt2_6jpp7
 - new release
 
