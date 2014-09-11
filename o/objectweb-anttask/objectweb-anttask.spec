@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_8jpp7
+Release:        alt4_9jpp7
 Epoch:          0
 Group:          Development/Java
 License:        LGPLv2+
@@ -109,6 +109,9 @@ echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_8jpp7
 - new release
 
