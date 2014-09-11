@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           naga
 Version:        3.0
-Release:        alt1_1.82svnjpp7
+Release:        alt1_2.82svnjpp7
 Summary:        Simplified Java NIO asynchronous sockets
 
 Group:        	System/Base
@@ -85,6 +85,9 @@ ln -s naga-3_0.jar %{buildroot}%{_javadir}/naga.jar
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2.82svnjpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_1.82svnjpp7
 - new version
 
