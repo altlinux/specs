@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		geronimo-parent-poms
 Version:	1.6
-Release:	alt1_14jpp7
+Release:	alt1_16jpp7
 Summary:	Parent POM files for geronimo-specs
 Group:		Development/Java
 License:	ASL 2.0
@@ -29,6 +29,8 @@ The Project Object Model files for the geronimo-specs modules.
 cp -p %{SOURCE0} .
 cp -p %{SOURCE1} LICENSE
 %pom_remove_parent
+# IDEA plugin is not really useful in Fedora
+%pom_remove_plugin :maven-idea-plugin
 
 %build
 %mvn_alias : org.apache.geronimo.specs:specs
@@ -42,6 +44,9 @@ cp -p %{SOURCE1} LICENSE
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_16jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_14jpp7
 - new release
 
