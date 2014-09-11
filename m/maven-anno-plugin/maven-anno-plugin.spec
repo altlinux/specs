@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: maven-anno-plugin
 Version: 1.4.1
-Release: alt3_6jpp7
+Release: alt3_7jpp7
 Summary: Maven Annotated Mojo
 Group: Development/Java
 License: ASL 2.0
@@ -109,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_6jpp7
 - new release
 
