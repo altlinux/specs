@@ -10,7 +10,7 @@ Name:          jasperreports
 # xmlbeans >= 2.5.0
 # castor-xml modules see also https://bugzilla.redhat.com/show_bug.cgi?id=820676
 Version:       4.0.2
-Release:       alt2_5jpp7
+Release:       alt2_6jpp7
 Summary:       Report-generating tool
 Group:         Development/Java
 License:       LGPLv3+
@@ -311,6 +311,9 @@ rm -rf dist/docs/api
 %doc license.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt2_5jpp7
 - new release
 
