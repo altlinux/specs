@@ -1,6 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -11,10 +11,8 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:           mercury
 Version:        1.0
-Release:        alt1_0.12.alpha6jpp7
+Release:        alt1_0.15.alpha6jpp7
 Summary:        Replacement for the Maven Artifact subsystem
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/mercury/mercury-artifact/
 # svn export http://svn.apache.org/repos/asf/maven/mercury/tags/mercury-1.0-alpha-6
@@ -28,19 +26,11 @@ BuildRequires:  classworlds
 BuildRequires:  apache-commons-collections
 BuildRequires:  apache-commons-lang
 BuildRequires:  apache-commons-logging
-BuildRequires:  jpackage-utils
 BuildRequires:  junit
 BuildRequires:  log4j
 BuildRequires:  maven-local
-BuildRequires:  maven2-common-poms
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-archiver
-BuildRequires:  maven-surefire
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-wagon
 BuildRequires:  plexus-archiver
@@ -52,7 +42,6 @@ BuildRequires:  plexus-velocity
 BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  velocity
 
-Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
@@ -67,9 +56,8 @@ Tasks, Shared Utilities, Maven resolusion comparison, Wagon provider
 and Plexus Component are not provided.
 
 %package javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -84,30 +72,27 @@ Javadoc HTML documentation for %{name}.
 find -name '*.java' -exec grep -l org.codehaus.plexus.lang '{}' \; |
         xargs perl -ni mercury-lang-i18n.pl
 
-mvn-rpmbuild install javadoc:aggregate \
-  -Dmaven.test.skip=true \
+%mvn_file :%{name}-artifact %{name}/artifact
+%mvn_file :%{name}-event %{name}/event
+%mvn_file :%{name}-external %{name}/external
+%mvn_file :%{name}-logging %{name}/logging
+
+%mvn_build -f
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}/%{name}
-for S in logging artifact external event ; do
-# Code
- install -p -m644 %{name}-$S/target/%{name}-$S-%{namedversion}.jar \
-   %{buildroot}%{_javadir}/%{name}/$S.jar
-done
-
-# Javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc release.notes.txt ./src/licenses/apache.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc ./src/licenses/apache.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.15.alpha6jpp7
+- new release
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.12.alpha6jpp7
 - new release
 
