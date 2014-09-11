@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{short_name}-pom
 Version:        23
-Release:        alt3_6jpp7
+Release:        alt3_7jpp7
 Summary:        Maven Plugins POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -37,6 +37,9 @@ Apache Maven plugins.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt3_7jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt3_6jpp7
 - new release
 
