@@ -6,15 +6,14 @@
 %define libname libmpd
 
 Name: %libname%sonum
-Version: 0.19.0
-Release: alt3.qa1
+Version: 11.8.90
+Release: alt1.git20130319
 Summary: Client library for MPD
 License: GPLv2+
 Group: System/Libraries
 URL: http://gmpcwiki.sarine.nl/index.php/Libmpd
+# git://repo.or.cz/libmpd.git
 Source: %name-%version.tar
-Patch: %name-%version-alt1.patch
-Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 Provides: %libname
 
@@ -64,7 +63,6 @@ This package contains documentation for %libname.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -104,6 +102,9 @@ install -m 0644 doc/html/* %buildroot%_docdir/%name-%version/html/
 %endif
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.8.90-alt1.git20130319
+- Version 11.8.90
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19.0-alt3.qa1
 - NMU: rebuilt for updated dependencies.
 
