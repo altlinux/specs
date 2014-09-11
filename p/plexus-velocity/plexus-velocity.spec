@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -39,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-velocity
 Version:        1.1.8
-Release:        alt2_14jpp7
+Release:        alt2_15jpp7
 Epoch:          0
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
@@ -129,6 +128,9 @@ cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt2_15jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt2_14jpp7
 - new release
 
