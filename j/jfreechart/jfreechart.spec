@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           jfreechart
 Version:        1.0.14
-Release:        alt3_9jpp7
+Release:        alt3_10jpp7
 Summary:        Java chart library
 
 Group:          Development/Java
@@ -122,6 +122,9 @@ ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_9jpp7
 - new release
 
