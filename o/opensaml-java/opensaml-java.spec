@@ -1,13 +1,11 @@
-BuildRequires: xmlunit springframework
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          opensaml-java
 Version:       2.5.3
-Release:       alt2_4jpp7
+Release:       alt2_6jpp7
 Summary:       Java OpenSAML library
 License:       ASL 2.0
 Group:         Development/Java
@@ -19,7 +17,6 @@ Source0:       opensaml-java-%{version}.tar.xz
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -42,19 +39,8 @@ BuildRequires: xml-commons-resolver
 BuildRequires: tomcat-servlet-3.0-api
 BuildRequires: logback
 BuildRequires: junit
-
-Requires:      jpackage-utils
-Requires:      opensaml-java-openws
-Requires:      owasp-esapi-java
-Requires:      apache-commons-codec
-Requires:      apache-commons-collections
-Requires:      apache-commons-lang
-Requires:      velocity
-Requires:      joda-time
-Requires:      xalan-j2
-Requires:      xerces-j2
-Requires:      xml-commons-resolver
-Requires:      tomcat-servlet-3.0-api
+BuildRequires: springframework
+BuildRequires: xmlunit
 Source44: import.info
 
 %description
@@ -65,7 +51,6 @@ OpenSAML 2, the current version, supports SAML 1.0, 1.1, and 2.0.
 %package javadoc
 Summary:       Javadocs for %{name}
 Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -85,40 +70,21 @@ mv -f doc/CREDITS.txt.conv doc/CREDITS.txt
 
 %build
 # No org.springframework:spring-mock available
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  -Dmaven.test.skip=true \
-  package javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-# jar
-install -pm 644 target/opensaml-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc doc
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%dir %{_javadir}/%{name}
 
-%files javadoc
-%doc doc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_6jpp7
+- new release
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_4jpp7
 - added BR: for xmvn
 
