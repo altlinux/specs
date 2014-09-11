@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-jar-plugin
 Version:        2.4
-Release:        alt2_5jpp7
+Release:        alt2_6jpp7
 Summary:        Maven JAR Plugin
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Patch0:         %{name}-maven-core-dep.patch
 
 BuildArch: noarch
 
-BuildRequires: javapackages-tools >= 0.7.0
+BuildRequires: maven-local >= 0.7.0
 BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-jar-plugin
@@ -97,6 +97,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_5jpp7
 - new release
 
