@@ -1,12 +1,11 @@
 Name: lockfile-progs
-Version: 0.1.11
-Release: alt2.qa1
+Version: 0.1.17
+Release: alt1
 
 Summary: Programs for locking and unlocking files and mailboxes
 License: GPLv2
 Group: File tools
-
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
+URL: https://packages.debian.org/unstable/misc/lockfile-progs
 
 # http://ftp.debian.org/debian/pool/main/l/lockfile-progs/%{name}_%version.tar.gz
 Source: %name-%version.tar
@@ -33,7 +32,7 @@ unlocking.
 %setup
 
 %build
-%make
+%make CC=gcc
 
 %install
 install -d %buildroot{%_bindir,%_man1dir}
@@ -49,11 +48,15 @@ install lockfile-progs.1 %buildroot%_man1dir/mail-lock.1
 install lockfile-progs.1 %buildroot%_man1dir/mail-unlock.1
 install lockfile-progs.1 %buildroot%_man1dir/mail-touchlock.1
 
+%check
+%make check
+
 %files
 %doc TODO debian/changelog
 %_bindir/lockfile-create
 %_bindir/lockfile-remove
 %_bindir/lockfile-touch
+%_bindir/lockfile-check
 %_bindir/mail-lock
 %_bindir/mail-touchlock
 %_bindir/mail-unlock
@@ -61,11 +64,15 @@ install lockfile-progs.1 %buildroot%_man1dir/mail-touchlock.1
 %_man1dir/lockfile-progs.1*
 %_man1dir/lockfile-remove.1*
 %_man1dir/lockfile-touch.1*
+%_man1dir/lockfile-check.1*
 %_man1dir/mail-lock.1*
 %_man1dir/mail-touchlock.1*
 %_man1dir/mail-unlock.1*
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.17-alt1
+- Version 0.1.17
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.11-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
