@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           not-yet-commons-ssl
 Version:        0.3.11
-Release:        alt2_9jpp7
+Release:        alt2_10jpp7
 Summary:        Library to make SSL and Java Easier
 
 Group:          Development/Java
@@ -83,6 +83,9 @@ install -pm 644 %{SOURCE2} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.3.11-alt2_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.3.11-alt2_9jpp7
 - new release
 
