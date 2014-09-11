@@ -1,37 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          guava
 Version:       13.0
-Release:       alt1_3jpp7
+Release:       alt1_6jpp7
 Summary:       Google Core Libraries for Java
-
-Group:         Development/Java
 License:       ASL 2.0 
 URL:           http://code.google.com/p/guava-libraries
 # git clone https://code.google.com/p/guava-libraries/
 # (cd ./guava-libraries && git archive --format=tar --prefix=guava-%{version}/ v%{version}) | xz >guava-%{version}.tar.xz
 Source0:       %{name}-%{version}.tar.xz
 
-BuildRequires: jpackage-utils
-BuildRequires: sonatype-oss-parent
+BuildRequires: mvn(org.sonatype.oss:oss-parent)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-dependency-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-resources-plugin
 
-BuildRequires: jsr-305 >= 0-0.6.20090319svn
-BuildRequires: ant-nodeps
+BuildRequires: mvn(com.google.code.findbugs:jsr305) >= 0-0.6.20090319svn
+BuildRequires: ant
 
-Requires:      jsr-305
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -44,9 +31,8 @@ into a single jar.  Individual portions of Guava can be used
 by downloading the appropriate module and its dependencies.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -60,39 +46,27 @@ find . -name '*.jar' -delete
 %pom_disable_module guava-testlib
 %pom_disable_module guava-tests
 %pom_remove_plugin :animal-sniffer-maven-plugin guava
+%pom_remove_plugin :maven-gpg-plugin
 
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file :%{name} %{name}
+%mvn_alias :%{name} "com.google.collections:google-collections"
+%mvn_build
 
 %install
+%mvn_install
 
-# jars
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 %{name}/target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# poms
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-parent.pom
-install -pm 644 %{name}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "com.google.collections:google-collections"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc AUTHORS CONTRIBUTORS COPYING README*
-%{_javadir}/%{name}*.jar
-%{_mavenpomdir}/JPP-%{name}*.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc COPYING
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 13.0-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 13.0-alt1_3jpp7
 - new release
 
