@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -15,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             %{?scl_prefix}%{project}-gogo-shell
 Version:          0.10.0
-Release:          alt2_7jpp7
+Release:          alt2_9jpp7
 Summary:          Community OSGi R4 Service Platform Implementation - Basic Commands
 Group:            Development/Java
 License:          ASL 2.0
@@ -32,11 +31,15 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
+BuildRequires:    xmvn
 BuildRequires:    maven-plugin-bundle
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    %{?scl_prefix}felix-gogo-parent
 BuildRequires:    %{?scl_prefix}felix-gogo-runtime
 BuildRequires:    felix-osgi-compendium
+BuildRequires:    maven-install-plugin
+BuildRequires:    mockito
+
 %{?scl:BuildRequires:	  %{?scl_prefix}build}
 
 Requires:         jpackage-utils
@@ -96,6 +99,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{pkg_name}
 %{_javadocdir}/%{pkg_name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_7jpp7
 - new release
 
