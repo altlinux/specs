@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-graph
 Version:        0.13.1
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Graph data structures manipulation library
 
 Group:          Development/Java
@@ -67,6 +67,9 @@ cp -rp doc/javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_8jpp7
 - new release
 
