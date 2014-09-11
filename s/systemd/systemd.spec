@@ -1,6 +1,7 @@
 %define firmwaredir /lib/firmware
 %define _localstatedir %_var
 
+%def_enable elfutils
 %def_enable libcryptsetup
 %def_enable logind
 %def_enable vconsole
@@ -8,11 +9,12 @@
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
-%def_disable smack
 %def_disable gcrypt
 %def_disable qrencode
 %def_enable microhttpd
-%def_enable myhostname
+%def_enable gnutls
+%def_enable libcurl
+%def_enable libidn
 %def_enable bootchart
 %def_enable polkit
 %def_enable efi
@@ -22,11 +24,24 @@
 %def_disable kdbus
 %def_with python
 %def_enable gtk_doc
+%def_enable xz
+%def_enable lz4
 
+%def_disable smack
 %def_disable seccomp
 %def_disable ima
 %def_enable selinux
 %def_disable apparmor
+
+
+%def_disable sysusers
+%def_disable ldconfig
+%def_disable firstboot
+
+%if_enabled sysusers
+%def_enable ldconfig
+%def_enable firstboot
+%endif
 
 %ifarch ia64 %ix86 ppc64 x86_64
 %define mmap_min_addr 65536
@@ -40,8 +55,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 214
-Release: alt14
+Version: 216
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -55,6 +70,7 @@ Source5: altlinux-openresolv.service
 Source6: altlinux-libresolv.path
 Source7: altlinux-libresolv.service
 Source8: altlinux-clock-setup.service
+Source15: systemd-logind-launch
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
 Source18: altlinux-save-dmesg
@@ -93,7 +109,7 @@ Source53: localectl-bash3
 Source54: loginctl-bash3
 Source55: systemctl-bash3
 Source56: systemd-analyze-bash3
-Source57: systemd-coredumpctl-bash3
+Source57: coredumpctl-bash3
 Source58: timedatectl-bash3
 Source59: udevadm-bash3
 Source60: bootctl-bash3
@@ -120,10 +136,12 @@ BuildRequires: libdbus-devel >= %dbus_ver
 %{?_enable_seccomp:BuildRequires: pkgconfig(libseccomp) >= 1.0.0}
 %{?_enable_selinux:BuildRequires: pkgconfig(libselinux) >= 2.1.9}
 %{?_enable_apparmor:BuildRequires: pkgconfig(libapparmor)}
+%{?_enable_elfutils:BuildRequires: elfutils-devel >= 0.158}
 BuildRequires: libaudit-devel
 BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
-BuildRequires: liblzma-devel
+%{?_enable_xz:BuildRequires: liblzma-devel}
+%{?_enable_lz4:BuildRequires: liblz4-devel}
 BuildRequires: libkmod-devel >= 15 kmod
 BuildRequires: kexec-tools
 %{?_with_python:BuildRequires: python-devel python-module-sphinx}
@@ -135,10 +153,12 @@ BuildRequires: libblkid-devel >= 2.20
 BuildRequires: libgcrypt-devel
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
+%{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
+%{?_enable_libcurl:BuildRequires: pkgconfig(libcurl)}
+%{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %epoch:%version-%release
-Requires: libnss-myhostname = %epoch:%version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
@@ -146,6 +166,8 @@ Requires: acl
 # Requires: selinux-policy >= 3.8.5
 
 Requires: %name-utils = %epoch:%version-%release
+Requires: %name-services = %epoch:%version-%release
+Requires: pam_%name = %epoch:%version-%release
 Requires: journalctl = %epoch:%version-%release
 
 # /*bin/journalctl is in a subpackage.
@@ -213,7 +235,7 @@ APIs for new-style daemons, as implemented by the systemd init system.
 
 %package -n libnss-myhostname
 Group: System/Libraries
-Summary: glibc plugin for local system host name resolution
+Summary: nss-myhostname provide hostname resolution for the locally configured system hostname
 Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 
@@ -234,6 +256,51 @@ locally. Patching /etc/hosts is thus no longer necessary.
 
 It is necessary to change "hosts" in /etc/nsswitch.conf to
 hosts: files myhostname
+
+%package -n libnss-mymachines
+Group: System/Libraries
+Summary: libnss-mymachines is plugin for local system host name resolution
+Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(postun): chrooted >= 0.3.5-alt1 sed
+Requires: dbus >= %dbus_ver
+Requires: %name-services = %epoch:%version-%release
+
+%description -n libnss-mymachines
+nss-mymachines for automatically resolves the names
+of all local registered containers to their respective IP addresses.
+
+It is necessary to change "hosts" in /etc/nsswitch.conf to
+hosts: files mymachines
+
+%package -n libnss-resolve
+Group: System/Libraries
+Summary: nss-resolve is plugin for resolve hostnames via systemd-resolved
+Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(postun): chrooted >= 0.3.5-alt1 sed
+Requires: dbus >= %dbus_ver
+Requires: %name-networkd = %epoch:%version-%release
+
+%description -n libnss-resolve
+NSS module "nss-resolve" has been added which can be used
+instead of glibc's own "nss-dns" to resolve hostnames via
+systemd-resolved. Hostnames, addresses and arbitrary RRs may
+be resolved via systemd-resolved D-Bus APIs. In contrast to
+the glibc internal resolver systemd-resolved is aware of
+multi-homed system, and keeps DNS server and caches separate
+and per-interface.
+
+It is necessary to change "hosts" in /etc/nsswitch.conf to
+hosts: files resolve
+
+%package -n pam_%name
+Group: System/Base
+Summary: Register user sessions in the systemd login manager
+Requires: dbus >= %dbus_ver
+Conflicts: %name < 1:216-alt1
+
+%description -n pam_%name
+pam_systemd registers user sessions with the systemd login manager
+systemd-logind.service, and hence the systemd control group hierarchy.
 
 %package devel
 Group: Development/C
@@ -261,10 +328,31 @@ Drop-in replacement for the System V init tools of systemd.
 %package utils
 Group: System/Configuration/Boot and Init
 Summary: systemd utils
-Conflicts: %name < %version-%release
+Conflicts: %name < %epoch:%version-%release
 
 %description utils
-This package contains utils (systemd-binfmt,systemd-modules-load,systemd-sysctl,systemd-tmpfiles) from systemd.
+This package contains utils from systemd:
+ - systemd-binfmt
+ - systemd-modules-load
+ - systemd-sysctl
+ - systemd-tmpfiles
+
+%package services
+Group: System/Configuration/Boot and Init
+Summary: systemd services
+Conflicts: %name < 1:216-alt1
+Requires: pam_%name = %epoch:%version-%release
+Requires: dbus >= %dbus_ver
+Conflicts: service <= 0.5.25-alt1
+Conflicts: chkconfig <= 1.3.59-alt3
+
+%description services
+This package contains dbus services and utils from systemd:
+ - systemd-hostnamed and hostnamectl
+ - systemd-localed and localectl
+ - systemd-logind and loginctl
+ - systemd-machine and machinectl
+ - systemd-timedated and timedatectl
 
 %package networkd
 Group: System/Base
@@ -324,11 +412,33 @@ Tool to query the journal from systemd.
 
 %package coredump
 Group: System/Servers
-Summary: systemd-coredump and systemd-coredumpctl utils
+Summary: systemd-coredump and coredumpctl utils
 Requires: %name = %epoch:%version-%release
 
 %description coredump
-systemd-coredump and systemd-coredumpctl utils.
+systemd-coredump and coredumpctl utils.
+
+%package stateless
+Group: System/Servers
+Summary: systems that boot up with an empty /etc directory
+Requires: %name = %epoch:%version-%release
+
+%description stateless
+This package contains:
+ - systemd-sysusers util and unit
+ - systemd-firstboot util and unit
+ - ldconfig unit
+ - systemd-update-done unit
+
+systemd-sysusers tool creates system users and groups in /etc/passwd and
+/etc/group, based on static declarative system user/group
+definitions in /lib/sysusers.d/. This is useful to
+enable factory resets and volatile systems that boot up with
+an empty /etc directory, and thus need system users and
+groups created during early boot. systemd now also ships
+with two default sysusers.d/ files for the most basic
+users and groups systemd and the core operating system
+require.
 
 %package -n bash-completion-%name
 Summary: Bash completion for systemd utils
@@ -346,6 +456,8 @@ Bash completion for %name.
 Summary: Zsh completion for systemd utils
 Group: Shells
 BuildArch: noarch
+Requires: %name = %epoch:%version-%release
+Requires: zsh-completion-journalctl = %epoch:%version-%release
 
 %description -n zsh-completion-%name
 Zsh completion for %name.
@@ -363,6 +475,16 @@ Conflicts: bash-completion-%name < 0:208-alt3
 
 %description -n bash-completion-journalctl
 Bash completion for journalctl from systemd.
+
+%package -n zsh-completion-journalctl
+Summary: Zsh completion for journalctl from systemd
+Group: Shells
+BuildArch: noarch
+Requires: journalctl = %epoch:%version-%release
+Conflicts: zsh-completion-%name < 1:214-alt14
+
+%description -n zsh-completion-journalctl
+Zsh completion for journalctl from systemd
 
 %package -n python-module-%name
 Summary: Python Bindings for systemd
@@ -461,6 +583,16 @@ Requires: udev = %epoch:%version-%release
 
 %description -n bash-completion-udev
 Bash completion for udev.
+
+%package -n zsh-completion-udev
+Summary: Zsh completion for udev utils
+Group: Shells
+BuildArch: noarch
+Requires: udev = %epoch:%version-%release
+Conflicts: zsh-completion-%name < 1:214-alt14
+
+%description -n zsh-completion-udev
+Zsh completion for udev.
 
 %package -n libudev1
 Summary: Shared library to access udev device information
@@ -564,6 +696,10 @@ intltoolize --force --automake
 	--with-telinit=/sbin/telinit \
 	--with-system-uid-max=499 \
 	--with-system-gid-max=499 \
+	--with-tty-gid=5 \
+	%{subst_enable elfutils} \
+	%{subst_enable xz} \
+	%{subst_enable lz4} \
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
 	%{subst_enable vconsole} \
@@ -575,13 +711,18 @@ intltoolize --force --automake
 	%{subst_enable gcrypt} \
 	%{subst_enable qrencode} \
 	%{subst_enable microhttpd} \
-	%{subst_enable myhostname} \
+	%{subst_enable gnutls} \
+	%{subst_enable libcurl} \
+	%{subst_enable libidn} \
 	%{subst_enable bootchart} \
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
 	%{subst_enable networkd} \
 	%{subst_enable resolved} \
 	%{subst_enable timesyncd} \
+	%{subst_enable sysusers} \
+	%{subst_enable ldconfig} \
+	%{subst_enable firstboot} \
 	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
@@ -633,6 +774,7 @@ ln -r -s %buildroot%_unitdir/var-run.mount %buildroot%_unitdir/local-fs.target.w
 rm -f %buildroot%_unitdir/tmp.mount
 rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
+install -m755 %SOURCE15 %buildroot/lib/systemd/systemd-logind-launch
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
@@ -703,10 +845,6 @@ ln -r -s %buildroot%_sysconfdir/modules %buildroot%_sysconfdir/modules-load.d/mo
 mkdir -p %buildroot%_sysconfdir/sysctl.d
 ln -r -s %buildroot%_sysconfdir/sysctl.conf %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
 
-# Make sure the NTP units dir exists
-mkdir -p %buildroot/lib/systemd/ntp-units.d
-mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
-
 # Make sure directories in /var exist
 mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
 mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
@@ -728,7 +866,7 @@ install -m644 %SOURCE53 %buildroot%_sysconfdir/bash_completion.d/localectl
 install -m644 %SOURCE54 %buildroot%_sysconfdir/bash_completion.d/loginctl
 install -m644 %SOURCE55 %buildroot%_sysconfdir/bash_completion.d/systemctl
 install -m644 %SOURCE56 %buildroot%_sysconfdir/bash_completion.d/systemd-analyze
-install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/systemd-coredumpctl
+install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/coredumpctl
 install -m644 %SOURCE58 %buildroot%_sysconfdir/bash_completion.d/timedatectl
 install -m644 %SOURCE59 %buildroot%_sysconfdir/bash_completion.d/udevadm
 install -m644 %SOURCE60 %buildroot%_sysconfdir/bash_completion.d/bootctl
@@ -861,15 +999,12 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
-
 %pre
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
-
 
 %_sbindir/groupadd -r -f systemd-bus-proxy >/dev/null 2>&1 ||:
 %_sbindir/useradd -g systemd-bus-proxy -c 'systemd Bus Proxy' \
     -d /var/empty -s /dev/null -r -l -M systemd-bus-proxy >/dev/null 2>&1 ||:
-
 
 %post
 /sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
@@ -1008,11 +1143,29 @@ update_chrooted all
 %_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
     -d %_localstatedir/log/journal -s /dev/null -r -l systemd-journal-gateway >/dev/null 2>&1 ||:
 
+%_sbindir/groupadd -r -f systemd-journal-remote ||:
+%_sbindir/useradd -g systemd-journal-gateway -c 'Journal Remote' \
+    -d %_localstatedir/log/journal/remote -s /dev/null -r -l systemd-journal-remote >/dev/null 2>&1 ||:
+
+%if_enabled libcurl
+%_sbindir/groupadd -r -f systemd-journal-upload ||:
+%_sbindir/useradd -g systemd-journal-upload -c 'Journal Upload' \
+    -d %_localstatedir/log/journal/upload -s /dev/null -r -l systemd-journal-upload >/dev/null 2>&1 ||:
+%endif
+
 %post journal-gateway
 %post_service systemd-journal-gatewayd
+%post_service systemd-journal-remote
+%if_enabled libcurl
+%post_service systemd-journal-upload
+%endif
 
 %preun journal-gateway
 %preun_service systemd-journal-gatewayd
+%preun_service systemd-journal-remote
+%if_enabled libcurl
+%preun_service systemd-journal-upload
+%endif
 
 %endif
 
@@ -1042,13 +1195,11 @@ update_chrooted all
 
 %_sysconfdir/xdg/systemd
 
-%config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
-%config(noreplace) %_sysconfdir/systemd/*.conf
-%config %_sysconfdir/pam.d/systemd-user
-%ghost %config(noreplace) %_sysconfdir/hostname
-%ghost %config(noreplace) %_sysconfdir/vconsole.conf
-%ghost %config(noreplace) %_sysconfdir/locale.conf
-%ghost %config(noreplace) %_sysconfdir/machine-info
+%config(noreplace) %_sysconfdir/systemd/bootchart.conf
+%config(noreplace) %_sysconfdir/systemd/journald.conf
+%config(noreplace) %_sysconfdir/systemd/system.conf
+%config(noreplace) %_sysconfdir/systemd/user.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
 
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel2.target
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel3.target
@@ -1063,49 +1214,178 @@ update_chrooted all
 /sbin/systemd-machine-id-setup
 /sbin/systemd-notify
 /sbin/systemd-tty-ask-password-agent
-/sbin/loginctl
-/sbin/machinectl
+%_bindir/bootctl
+%_bindir/busctl
+%_bindir/systemd-cat
+%_bindir/systemd-cgls
+%_bindir/systemd-cgtop
+%_bindir/systemd-delta
+%_bindir/systemd-detect-virt
+%_bindir/systemd-nspawn
+%_bindir/systemd-path
+%_bindir/systemd-run
+%_bindir/systemd-stdio-bridge
+/lib/systemd/systemd
+/lib/systemd/systemd-ac-power
+/lib/systemd/systemd-activate
+/lib/systemd/systemd-bootchart
+/lib/systemd/systemd-bus-proxyd
+/lib/systemd/systemd-cgroups-agent
+/lib/systemd/systemd-cryptsetup
+/lib/systemd/systemd-fsck
+/lib/systemd/systemd-initctl
+/lib/systemd/systemd-journald
+/lib/systemd/systemd-multi-seat-x
+/lib/systemd/systemd-quotacheck
+/lib/systemd/systemd-random-seed
+/lib/systemd/systemd-readahead
+/lib/systemd/systemd-remount-fs
+/lib/systemd/systemd-reply-password
+/lib/systemd/systemd-rfkill
+/lib/systemd/systemd-shutdown
+/lib/systemd/systemd-shutdownd
+/lib/systemd/systemd-sleep
+/lib/systemd/systemd-socket-proxyd
+/lib/systemd/systemd-update-done
+/lib/systemd/systemd-update-utmp
+/lib/systemd/systemd-user-sessions
+/lib/systemd/systemd-vconsole-setup
+/lib/systemd/altlinux-save-dmesg
 
-%dir /lib/systemd
-/lib/systemd/*
-%exclude /lib/systemd/network
-%exclude /lib/systemd/system-preset/85-networkd.preset
-%exclude /lib/systemd/system-preset/85-timesyncd.preset
+%_unitdir/*
+%exclude %_unitdir/systemd-backlight@.service
+%exclude %_unitdir/systemd-binfmt.service
+%exclude %_unitdir/*/systemd-binfmt.service
+%exclude %_unitdir/systemd-modules-load.service
+%exclude %_unitdir/*/systemd-modules-load.service
+%exclude %_unitdir/systemd-sysctl.service
+%exclude %_unitdir/*/systemd-sysctl.service
+%exclude %_unitdir/systemd-tmpfiles-*.*
+%exclude %_unitdir/*/systemd-tmpfiles-*.*
+%exclude %_unitdir/*.busname
+%exclude %_unitdir/*/*.busname
+%exclude %_unitdir/*dbus-org.freedesktop*.service
+%exclude %_unitdir/systemd-hostnamed.service
+%exclude %_unitdir/systemd-localed.service
+%exclude %_unitdir/systemd-logind.service
+%exclude %_unitdir/*/systemd-logind.service
+%exclude %_unitdir/systemd-machined.service
+%exclude %_unitdir/systemd-timedated.service
 
-%dir /usr/lib/systemd
-/usr/lib/systemd/*
-%_bindir/*
-%exclude %_bindir/systemd-analyze
+%if_enabled networkd
+%exclude %_unitdir/*openresolv*
+%exclude %_unitdir/*networkd*
+%exclude %_unitdir/*resolved*
+%endif
+%if_enabled timesyncd
+%exclude %_unitdir/*timesyncd*
+%endif
+%if_enabled microhttpd
+%exclude %_unitdir/systemd-journal-gatewayd*
+%endif
+%if_enabled libcurl
+%exclude %_unitdir/systemd-journal-upload*
+%endif
+%exclude %_unitdir/*udev*
+%exclude %_unitdir/*/*udev*
+
+%_man1dir/bootctl.*
+%_man1dir/busctl.*
+%_man1dir/systemctl.*
+%_mandir/*/systemd-ask-password*
+%_mandir/*/*bootchart.*
+%_man1dir/systemd-cat.*
+%_man1dir/systemd-cgls.*
+%_man1dir/systemd-cgtop.*
+%_man1dir/systemd-delta.*
+%_man1dir/systemd-detect-virt.*
+%_man1dir/systemd-inhibit.*
+%_man1dir/systemd-notify.*
+%_man1dir/systemd-nspawn.*
+%_man1dir/systemd-path.*
+%_man1dir/systemd-run.*
+%_mandir/*/systemd-tty-ask-password*
+%_man1dir/systemd.*
+%_man5dir/crypttab*
+%_mandir/*/*cryptsetup*
+%_mandir/*/*journald*
+%_man5dir/localtime*
+%_man5dir/os-release*
+%_man5dir/systemd-sleep.conf*
+%_man5dir/systemd-system.conf*
+%_man5dir/systemd-user.conf*
+%_man5dir/systemd.automount*
+%_man5dir/systemd.exec*
+%_man5dir/systemd.kill*
+%_man5dir/systemd.mount*
+%_man5dir/systemd.path*
+%_man5dir/systemd.preset*
+%_man5dir/systemd.resource-control*
+%_man5dir/systemd.scope*
+%_man5dir/systemd.service*
+%_man5dir/systemd.slice*
+%_man5dir/systemd.snapshot*
+%_man5dir/systemd.socket*
+%_man5dir/systemd.swap*
+%_man5dir/systemd.target*
+%_man5dir/systemd.timer*
+%_man5dir/systemd.unit*
+%_mandir/*/*vconsole*
+
+%_man8dir/systemd-activate*
+%_man8dir/systemd-debug-generator*
+%_man8dir/systemd-efi-boot-generator*
+%_man8dir/systemd-fsck*
+%_man8dir/systemd-fstab-generator*
+%_man8dir/systemd-getty-generator*
+%_man8dir/systemd-gpt-auto-generator*
+%_man8dir/systemd-hibernate*
+%_man8dir/systemd*sleep*
+%_man8dir/systemd-initctl*
+%_man8dir/systemd-kexec*
+%_man8dir/systemd-quota*
+%_man8dir/systemd-random-seed*
+%_man8dir/systemd-readahead*
+%_man8dir/systemd-remount*
+%_man8dir/systemd-rfkill*
+%_man8dir/systemd-socket-proxyd*
+%_man8dir/systemd-suspend*
+%_man8dir/systemd-system-update-generator*
+%_man8dir/systemd-update-utmp*
+%_man8dir/systemd-user-sessions*
+%_man8dir/systemd-vconsole-setup*
+%_man8dir/systemd-update-done*
+
+%exclude %_mandir/*/systemd-firstboot*
+%exclude %_mandir/*/*sysusers*
+%exclude %_datadir/factory
+%exclude /lib/tmpfiles.d/etc.conf
+
+/usr/lib/systemd
+/lib/systemd/system-generators
+
+/lib/systemd/system-preset/85-display-manager.preset
+/lib/systemd/system-preset/90-default.preset
+/lib/systemd/system-preset/90-systemd.preset
+/lib/systemd/system-preset/99-default-disable.preset
+
+
 /lib/udev/rules.d/70-uaccess.rules
 /lib/udev/rules.d/71-seat.rules
 /lib/udev/rules.d/73-seat-late.rules
 /lib/udev/rules.d/99-systemd.rules
-/%_lib/security/pam_systemd.so
-%_man1dir/*
-%exclude %_man1dir/init.*
-%exclude %_man1dir/journalctl.*
-%_man5dir/*
 %_man7dir/*
 %exclude %_man7dir/udev*
-%_man8dir/*
-%exclude %_man8dir/systemd-udevd*
-%exclude %_man8dir/udevadm.*
-%exclude %_man8dir/udevd.*
-%exclude %_man8dir/halt.*
-%exclude %_man8dir/reboot.*
-%exclude %_man8dir/shutdown.*
-%exclude %_man8dir/poweroff.*
-%exclude %_man8dir/telinit.*
-%exclude %_man8dir/runlevel.*
-%if_enabled myhostname
-%exclude %_man8dir/nss-myhostname.*
-%endif
-%_datadir/systemd
-%_datadir/dbus-1/services/*.service
-%_datadir/dbus-1/system-services/*.service
+
+%dir %_datadir/systemd
+%_datadir/systemd/kbd-model-map
+%_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
+%_datadir/dbus-1/services/org.freedesktop.systemd1.service
+
 %if_enabled polkit
-%_datadir/polkit-1/actions/*.policy
+%_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %endif
+
 %dir %_localstatedir/log/journal
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
@@ -1116,73 +1396,6 @@ update_chrooted all
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
 %_localstatedir/log/README
-%exclude %_unitdir/*udev*
-%exclude %_unitdir/sockets.target.wants/systemd-udevd*.socket
-%exclude %_unitdir/sysinit.target.wants/systemd-udev*.service
-%exclude /lib/systemd/systemd-udevd
-%if_enabled microhttpd
-%exclude /lib/systemd/systemd-journal-gatewayd
-%exclude /lib/systemd/systemd-journal-remote
-%exclude %_unitdir/systemd-journal-gatewayd.*
-%exclude %_datadir/systemd/gatewayd
-%exclude %_man8dir/systemd-journal-gatewayd.*
-%exclude %_man8dir/systemd-journal-remote.*
-%endif
-%if_enabled networkd
-%exclude %_sysconfdir/systemd/resolved.conf
-%exclude /lib/systemd/systemd-networkd
-%exclude /lib/systemd/systemd-networkd-wait-online
-%exclude /lib/systemd/systemd-resolved
-%exclude %_unitdir/systemd-networkd.service
-%exclude %_unitdir/systemd-networkd-wait-online.service
-%exclude %_unitdir/systemd-resolved.service
-%exclude %_man5dir/systemd.network.*
-%exclude %_man8dir/systemd-networkd*.*
-%exclude %_man5dir/resolved.conf.*
-%exclude %_man8dir/systemd-resolved.*
-%endif
-%exclude %_unitdir/altlinux-openresolv.*
-%if_enabled timesyncd
-%exclude %_sysconfdir/systemd/timesyncd.conf
-%exclude /lib/systemd/systemd-timesyncd
-%exclude %_unitdir/systemd-timesyncd.service
-%exclude %_man8dir/systemd-timesyncd.*
-%exclude /lib/systemd/ntp-units.d
-%endif
-%if_enabled coredump
-%exclude %_bindir/*coredumpctl
-%exclude /lib/systemd/systemd-coredump
-%exclude %_man1dir/*coredumpctl.*
-#%exclude %_man5dir/coredump.conf.*
-#%exclude %_man8dir/systemd-coredump.*
-#%exclude %_sysconfdir/systemd/coredump.conf
-%endif
-
-# systemd-utils
-%exclude /lib/systemd/systemd-binfmt
-%exclude /lib/systemd/systemd-modules-load
-%exclude /lib/systemd/systemd-sysctl
-%exclude /lib/systemd/systemd-backlight
-%exclude %_unitdir/systemd-tmpfiles-clean.service
-%exclude %_unitdir/systemd-tmpfiles-setup.service
-%exclude %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
-%exclude %_unitdir/systemd-binfmt.service
-%exclude %_unitdir/sysinit.target.wants/systemd-binfmt.service
-%exclude %_unitdir/systemd-modules-load.service
-%exclude %_unitdir/sysinit.target.wants/systemd-modules-load.service
-%exclude %_unitdir/systemd-sysctl.service
-%exclude %_unitdir/sysinit.target.wants/systemd-sysctl.service
-%exclude %_unitdir/systemd-backlight@.service
-%exclude %_man5dir/tmpfiles.*
-%exclude %_man8dir/systemd-tmpfiles.*
-%exclude %_man5dir/binfmt.*
-%exclude %_man8dir/systemd-binfmt.*
-%exclude %_man5dir/modules-load.*
-%exclude %_man8dir/systemd-modules-load.*
-%exclude %_man5dir/sysctl.*
-%exclude %_man8dir/systemd-sysctl.*
-%exclude %_man8dir/systemd-backlight*
-
 # may be need adapt for ALTLinux?
 %exclude /usr/lib/kernel
 %exclude %_bindir/kernel-install
@@ -1191,7 +1404,7 @@ update_chrooted all
 %files -n libsystemd
 /%_lib/*.so.*
 %exclude /%_lib/*udev*.so.*
-%exclude /%_lib/libnss_myhostname.so.2
+%exclude /%_lib/libnss*
 
 %files -n libsystemd-devel
 %_libdir/*.so
@@ -1200,11 +1413,20 @@ update_chrooted all
 %exclude %_pkgconfigdir/*udev*.pc
 %_includedir/systemd
 
-%if_enabled myhostname
 %files -n libnss-myhostname
-/%_lib/libnss_myhostname.so.2
+/%_lib/libnss_myhostname.so.*
 %_man8dir/nss-myhostname.*
-%endif
+
+%files -n libnss-mymachines
+/%_lib/libnss_mymachines.so.*
+
+%files -n libnss-resolve
+/%_lib/libnss_resolve.so.*
+
+%files -n pam_%name
+%config %_sysconfdir/pam.d/systemd-user
+/%_lib/security/pam_systemd.so
+%_man8dir/pam_systemd*
 
 %files devel
 %doc LICENSE.LGPL2.1 LICENSE.MIT
@@ -1219,112 +1441,200 @@ update_chrooted all
 /sbin/shutdown
 /sbin/telinit
 /sbin/runlevel
-%_man1dir/init.*
-%_man8dir/halt.*
-%_man8dir/reboot.*
-%_man8dir/shutdown.*
-%_man8dir/poweroff.*
-%_man8dir/telinit.*
-%_man8dir/runlevel.*
+%_man1dir/init*
+%_man8dir/*halt*
+%_man8dir/*reboot*
+%_man8dir/*shutdown*
+%_man8dir/*poweroff*
+%_man8dir/*telinit*
+%_man8dir/runlevel*
 %_initdir/README
 
 %files utils
+/sbin/systemd-escape
+%_mandir/*/*escape*
+
 /sbin/systemd-tmpfiles
+%_mandir/*/*tmpfiles*
 %_rpmlibdir/systemd-tmpfiles.filetrigger
-%_unitdir/systemd-tmpfiles-clean.service
-%_unitdir/systemd-tmpfiles-setup.service
-%_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
+%_unitdir/systemd-tmpfiles*.*
+%_unitdir/*/systemd-tmpfiles*.*
 /lib/tmpfiles.d/legacy.conf
 /lib/tmpfiles.d/x11.conf
 /lib/tmpfiles.d/tmp.conf
 /lib/tmpfiles.d/var.conf
-%_man5dir/tmpfiles.*
-%_man8dir/systemd-tmpfiles.*
+
 
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
 %_unitdir/systemd-binfmt.service
-%_unitdir/sysinit.target.wants/systemd-binfmt.service
-%_man5dir/binfmt.*
-%_man8dir/systemd-binfmt.*
+%_unitdir/*/systemd-binfmt.service
+%_mandir/*/*binfmt*
 
 /lib/systemd/systemd-modules-load
 %_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load
 %_unitdir/systemd-modules-load.service
-%_unitdir/sysinit.target.wants/systemd-modules-load.service
-%_man5dir/modules-load.*
-%_man8dir/systemd-modules-load.*
+%_unitdir/*/systemd-modules-load.service
+%_mandir/*/*modules-load*
 
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
 %_unitdir/systemd-sysctl.service
-%_unitdir/sysinit.target.wants/systemd-sysctl.service
+%_unitdir/*/systemd-sysctl.service
 /lib/sysctl.d/50-default.conf
 /lib/sysctl.d/49-coredump-null.conf
-%_man5dir/sysctl.*
-%_man8dir/systemd-sysctl.*
+%_mandir/*/*sysctl*
 
 /lib/systemd/systemd-backlight
 %_unitdir/systemd-backlight@.service
-%_man8dir/systemd-backlight*
+%_mandir/*/*backlight*
 %ghost %dir %_localstatedir/lib/systemd/backlight
+
+%files services
+%dir %_sysconfdir/systemd
+%config(noreplace) /etc/systemd/logind.conf
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.*.conf
+%exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
+%_unitdir/org.freedesktop.*.busname
+%_unitdir/*/org.freedesktop.*.busname
+%exclude %_unitdir/org.freedesktop.resolve1.busname
+%exclude %_unitdir/*/org.freedesktop.resolve1.busname
+%_unitdir/dbus-org.freedesktop.*.service
+%exclude %_unitdir/dbus-org.freedesktop.resolve1.service
+%_datadir/dbus-1/system-services/org.freedesktop.*.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
+%exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%_unitdir/systemd-hostnamed.service
+%_unitdir/systemd-localed.service
+%_unitdir/systemd-logind.service
+%_unitdir/systemd-machined.service
+%_unitdir/systemd-timedated.service
+%if_enabled polkit
+%_datadir/polkit-1/actions/*.policy
+%exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
+%endif
+
+%ghost %config(noreplace) %_sysconfdir/hostname
+%ghost %config(noreplace) %_sysconfdir/vconsole.conf
+%ghost %config(noreplace) %_sysconfdir/locale.conf
+%ghost %config(noreplace) %_sysconfdir/machine-info
+
+/sbin/loginctl
+/lib/systemd/systemd-logind
+/lib/systemd/systemd-logind-launch
+/sbin/machinectl
+/lib/systemd/systemd-machined
+%_bindir/hostnamectl
+/lib/systemd/systemd-hostnamed
+%_bindir/localectl
+/lib/systemd/systemd-localed
+%_bindir/timedatectl
+/lib/systemd/systemd-timedated
+
+%_mandir/*/*login*
+%exclude %_man3dir/*
+%_mandir/*/*machine*
+%_mandir/*/*hostname*
+%exclude %_mandir/*/nss-myhostname*
+%_mandir/*/*locale*
+%_mandir/*/*timedate*
 
 %if_enabled networkd
 %files networkd
+/sbin/networkctl
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 /lib/systemd/system-preset/85-networkd.preset
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
 /lib/systemd/systemd-resolved
+/lib/systemd/systemd-resolve-host
+/lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.service
 %_unitdir/systemd-networkd-wait-online.service
 %_unitdir/systemd-resolved.service
+%_unitdir/dbus-org.freedesktop.resolve1.service
+%_unitdir/org.freedesktop.resolve1.busname
+%_unitdir/*/org.freedesktop.resolve1.busname
 %_unitdir/altlinux-openresolv.*
 /lib/systemd/network/*.network
-%_man5dir/systemd.network.*
-%_man8dir/systemd-networkd-*.*
-%_man5dir/resolved.conf.*
-%_man8dir/systemd-resolved.*
+%_mandir/*/*network*
+%_mandir/*/*netdev*
+%_mandir/*/*resolved*
 %endif
 
 %if_enabled timesyncd
 %files timesyncd
 %config(noreplace) %_sysconfdir/systemd/timesyncd.conf
 /lib/systemd/system-preset/85-timesyncd.preset
-%dir /lib/systemd/ntp-units.d
-%dir %_sysconfdir/systemd/ntp-units.d
 /lib/systemd/systemd-timesyncd
 %_unitdir/systemd-timesyncd.service
-%_man8dir/systemd-timesyncd.8.gz
-%_man8dir/systemd-timesyncd.service.8.gz
-/lib/systemd/ntp-units.d/90-systemd.list
+%_mandir/*/*timesyncd*
 %endif
 
 %files analyze
 %_bindir/systemd-analyze
+%_man1dir/systemd-analyze.*
 
 %if_enabled microhttpd
 %files journal-gateway
+%dir %_localstatedir/log/journal/remote
+%config(noreplace) %_sysconfdir/systemd/journal-remote.conf
 /lib/systemd/systemd-journal-gatewayd
 /lib/systemd/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
 %_datadir/systemd/gatewayd
+/lib/tmpfiles.d/systemd-remote.conf
 %_man8dir/systemd-journal-gatewayd.*
 %_man8dir/systemd-journal-remote.*
+
+%if_enabled sysusers
+/lib/sysusers.d/systemd-remote.conf
+%endif
+
+%if_enabled libcurl
+%config(noreplace) %_sysconfdir/systemd/journal-upload.conf
+/lib/systemd/systemd-journal-upload
+%_unitdir/systemd-journal-upload.service
+%_man8dir/systemd-journal-upload*
+%endif
 %endif
 
 %if_enabled coredump
 %files coredump
-#%config(noreplace) %_sysconfdir/systemd/coredump.conf
+%config(noreplace) %_sysconfdir/systemd/coredump.conf
 /lib/systemd/systemd-coredump
 %_bindir/*coredumpctl
 /lib/sysctl.d/50-coredump.conf
 %_man1dir/*coredumpctl.*
-#%_man5dir/coredump.conf.*
-#%_man8dir/systemd-coredump.*
+%_man5dir/coredump.conf.*
+%_man8dir/systemd-coredump.*
 %dir %_localstatedir/lib/systemd/coredump
+%endif
+
+%if_enabled sysuser
+%files stateless
+/sbin/systemd-sysusers
+%dir /lib/sysusers.d
+%dir %_datadir/factory
+%_datadir/factory/*
+%_unitdir/systemd-sysusers.service
+%_unitdir/sysinit.target.wants/systemd-sysusers.service
+/lib/sysusers.d/systemd.conf
+/lib/sysusers.d/basic.conf
+/lib/tmpfiles.d/etc.conf
+%_mandir/*/*sysusers*
+
+%if_enabled firstboot
+/sbin/systemd-firstboot
+%_unitdir/systemd-firstboot.service
+%_unitdir/sysinit.target.wants/systemd-firstboot.service
+%endif
+%if_enabled ldconfig
+%_unitdir/ldconfig.service
+%_unitdir/sysinit.target.wants/ldconfig.service
+%endif
 %endif
 
 %files -n bash-completion-%name
@@ -1334,6 +1644,8 @@ update_chrooted all
 
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/*
+%exclude %_datadir/zsh/site-functions/_udevadm
+%exclude %_datadir/zsh/site-functions/_journalctl
 
 %if_with python
 %files -n python-module-%name
@@ -1348,9 +1660,15 @@ update_chrooted all
 %files -n bash-completion-journalctl
 %_sysconfdir/bash_completion.d/journalctl
 
+%files -n zsh-completion-journalctl
+%_datadir/zsh/site-functions/_journalctl
+
 %files -n bash-completion-udev
 %_sysconfdir/bash_completion.d/udevadm
 #%_datadir/bash-completion/completions/udevadm
+
+%files -n zsh-completion-udev
+%_datadir/zsh/site-functions/_udevadm
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -1389,8 +1707,7 @@ update_chrooted all
 %config(noreplace) %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
-%_unitdir/sockets.target.wants/systemd-udevd*.socket
-%_unitdir/sysinit.target.wants/systemd-udev*.service
+%_unitdir/*/*udev*
 %dir %firmwaredir
 %dir %firmwaredir/updates
 %dir /lib/udev
@@ -1406,10 +1723,9 @@ update_chrooted all
 /sbin/udevd
 /lib/systemd/systemd-udevd
 %_rpmlibdir/udev.filetrigger
-%_man8dir/udevadm*
-%_man8dir/systemd-udevd*
-%_man8dir/udevd*
-%_man7dir/udev*
+%_mandir/*/*udev*
+%_mandir/*/*link*
+%_man5dir/systemd.device*
 
 %files -n udev-extras
 /lib/udev/accelerometer
@@ -1454,6 +1770,20 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Sep 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt1
+- 216
+- drop use /proc/sys/kernel/hotplug in init script (ALT#30275)
+- split zsh completions for systemd, journalctl, udev (ALT#29698)
+- update altlinux-openresolv units
+- run first_time before display-manager (ALT#29200)
+- add systemd-logind shell wrapper
+- revert aloow copy to /etc/localtime (Debian patch)
+- make hostnamed/localed/logind/machined/timedated D-Bus activatable (Debian patch)
+- split systemd-network support from main tmpfiles.d/systemd.conf
+- move hostnamed/localed/logind/machined/timedated and *ctl utils to systemd-service package
+- split pam_systemd to separate package
+- add libnss-mymachines, libnss-resolve packages
+
 * Fri Aug 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:214-alt14
 - add altlinux-openresolv unit to networkd package
 
