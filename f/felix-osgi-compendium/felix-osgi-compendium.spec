@@ -1,21 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Prevent brp-java-repack-jars from being run.
-%define __jar_repack %{nil}
-
 %global bundle org.osgi.compendium
-%global felixdir %{_javadir}/felix
-%global POM %{_mavenpomdir}/JPP.felix-%{bundle}.pom
 
 Name:    felix-osgi-compendium
 Version: 1.4.0
-Release: alt3_14jpp7
+Release: alt3_16jpp7
 Summary: Felix OSGi R4 Compendium Bundle
-
 Group:   Development/Java
 License: ASL 2.0
 URL:     http://felix.apache.org
@@ -34,33 +27,24 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-plugin-bundle
 BuildRequires: maven-surefire-provider-junit4
 BuildRequires: felix-osgi-core
 BuildRequires: felix-osgi-foundation
 BuildRequires: tomcat-servlet-3.0-api
-
-Requires: felix-osgi-core
-Requires: felix-osgi-foundation
-Requires: tomcat-servlet-3.0-api
+BuildRequires: mockito
 Source44: import.info
+
 
 %description
 OSGi Service Platform Release 4 Compendium Interfaces and Classes.
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
@@ -76,37 +60,25 @@ API documentation for %{name}.
 # add getResourceURL method
 %patch4 -p1
 
+%mvn_file :%{bundle} "felix/%{bundle}"
+%mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build -- -Drat.numUnapprovedLicenses=100
 
 %install
-# jar
-install -pD -T -m 644 target/%{bundle}-%{version}.jar \
-  %{buildroot}%{felixdir}/%{bundle}.jar
+%mvn_install
 
-# pom
-install -pD -T -m 644 pom.xml %{buildroot}%{POM}
-%add_maven_depmap JPP.felix-%{bundle}.pom felix/%{bundle}.jar -a "org.osgi:%{bundle}"
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
-%doc LICENSE
-%{_mavendepmapfragdir}/%{name}
-%{felixdir}
-%{POM}
-
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_16jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_14jpp7
 - new release
 
