@@ -1,34 +1,25 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-clean-plugin
 Version:        2.5
-Release:        alt2_5jpp7
+Release:        alt2_7jpp7
 Summary:        Maven Clean Plugin
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-clean-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-testing-harness
-Requires: maven
-Requires:       jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Provides:       maven2-plugin-clean = 1:%{version}-%{release}
 Obsoletes:      maven2-plugin-clean <= 0:2.0.8
@@ -39,9 +30,8 @@ The Maven Clean Plugin is a plugin that removes files generated
 at build-time in a project's directory.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,35 +47,22 @@ API documentation for %{name}.
 %pom_add_dep org.apache.maven:maven-core::test
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins maven-clean-plugin %{version} JPP maven-clean-plugin
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt2_5jpp7
 - new release
 
