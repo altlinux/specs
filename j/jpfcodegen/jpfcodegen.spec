@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jpfcodegen
 Version:        0.4
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        A tool for generating classes from JPF plug-ins
 
 Group:          Development/Java
@@ -74,6 +74,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_5jpp7
 - new release
 
