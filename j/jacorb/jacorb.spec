@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jacorb
 Version:          2.3.1
-Release:          alt1_5jpp7
+Release:          alt1_9jpp7
 Summary:          The Java implementation of the OMG's CORBA standard
 Group:            Development/Java
 License:          LGPLv2
@@ -53,8 +53,8 @@ Requires:         jpackage-utils
 Requires:         antlr-tool
 Requires:         avalon-logkit
 Requires:         slf4j
+Requires:         bsh
 Source44: import.info
-Source33: jacorb.pom-hide-compile.patch
 
 %description
 This package contains the Java implementation of the OMG's CORBA standard
@@ -98,6 +98,13 @@ ln -s $(build-classpath slf4j/api) lib/slf4j-api-1.5.6.jar
 subst 's,maxmemory="256m",maxmemory="512m",' build.xml
 export CLASSPATH=$(build-classpath avalon-logkit slf4j/api)
 
+sed -i "s|>avalon<|>avalon-logkit<|g" jacorb-idl-compiler.pom
+
+%pom_remove_dep "tanukisoft:wrapper" jacorb.pom
+%pom_remove_dep "picocontainer:picocontainer" jacorb.pom
+%pom_remove_dep "nanocontainer:nanocontainer" jacorb.pom
+%pom_remove_dep "nanocontainer:nanocontainer-remoting" jacorb.pom
+
 ant all doc
 
 %install
@@ -115,16 +122,11 @@ install -pm 644 jacorb-idl-compiler.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{nam
 # DEPMAP
 %add_maven_depmap JPP-%{name}-parent.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jacorb:jacorb"
-%add_maven_depmap JPP-%{name}-idl-compiler.pom %{name}-idl-compiler.jar -a "jacorb:jacorb-idl-compiler"
+%add_maven_depmap JPP-%{name}-idl-compiler.pom %{name}-idl-compiler.jar -a "jacorb:jacorb-idl-compiler,jacorb:idl"
 
 # APIDOCS
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# hack for old maven
-pushd $RPM_BUILD_ROOT%{_mavenpomdir}/
-patch JPP-%{name}.pom < %{SOURCE33}
-popd
 
 %files
 %{_mavenpomdir}/*
@@ -137,6 +139,9 @@ popd
 %doc doc/LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_9jpp7
+- new release
+
 * Thu Jul 31 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_5jpp7
 - new release
 
