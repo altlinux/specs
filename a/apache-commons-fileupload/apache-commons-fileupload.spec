@@ -1,7 +1,6 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -10,8 +9,8 @@ BuildRequires: jpackage-compat
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
-Version:          1.2.2
-Release:          alt3_11jpp7
+Version:          1.3
+Release:          alt1_4jpp7
 Summary:          This package provides an api to work with html file upload
 License:          ASL 2.0
 Group:            Development/Java
@@ -20,7 +19,6 @@ Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short
 BuildArch:        noarch
 
 Patch1:           %{name}-portlet20.patch
-Patch2:           %{name}-remove-portlet.patch
 
 BuildRequires:    maven-local
 BuildRequires:    junit >= 0:3.8.1
@@ -30,14 +28,12 @@ BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-doxia-sitetools
-BuildRequires:    maven-idea-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-plugin-bundle
 BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
 %if 0%{?fedora}
 BuildRequires:    portlet-2.0-api
 %endif
@@ -80,14 +76,15 @@ sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 
 %if 0%{?fedora}
-%patch1 -p1
 # fix gId
 sed -i "s|<groupId>portlet-api</groupId>|<groupId>javax.portlet</groupId>|" pom.xml
 %else
 # Non-Fedora: remove portlet stuff
-%patch2 -p0
-rm -rf src/java/org/apache/commons/fileupload/portlet
-rm -f src/test/org/apache/commons/fileupload/*Portlet*
+%pom_remove_dep portlet-api:portlet-api
+%pom_xpath_remove pom:properties/pom:commons.osgi.import
+%pom_xpath_remove pom:properties/pom:commons.osgi.dynamicImport
+rm -r src/main/java/org/apache/commons/fileupload/portlet
+rm src/test/java/org/apache/commons/fileupload/*Portlet*
 %endif
 
 # -----------------------------------------------------------------------------
@@ -134,6 +131,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.3-alt1_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt3_11jpp7
 - new release
 
