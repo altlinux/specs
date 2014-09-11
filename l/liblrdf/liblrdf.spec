@@ -1,24 +1,22 @@
 %def_disable static
 
 Name: liblrdf
-Version: 0.4.0
-Release: alt3.1.qa1
+Version: 0.5.0
+Release: alt1.git20111004
 
 Summary: Library for handling RDF descriptions of audio plugins
 License: GPLv2+
 Group: System/Libraries
 Url: http://lrdf.sourceforge.net
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
-Source: http://prdownloads.sf.net/lrdf/%name-%version.tar.gz
-
-%define raptor_ver 1.2.0
+# https://github.com/swh/LRDF.git
+Source: %name-%version.tar.gz
 
 BuildPreReq: ladspa_sdk >= 1.12-alt2
-BuildPreReq: libraptor-devel >= %raptor_ver
+BuildPreReq: raptor2-devel
 
 # Automatically added by buildreq on Sun Apr 04 2004
-BuildRequires: gcc-c++ glib2-devel ladspa_sdk libcurl-devel libraptor-devel libssl-devel libstdc++-devel libxml2-devel pkgconfig zlib-devel
+BuildRequires: gcc-c++ glib2-devel ladspa_sdk libcurl-devel libssl-devel libstdc++-devel libxml2-devel pkgconfig zlib-devel
 
 %description
 liblrdf is a library for handling RDF (http://www.w3.org/RDF/)
@@ -34,14 +32,15 @@ semnatic goodness.
 Summary: Headers for developing programs that will use %name
 Group: Development/C++
 Requires: %name = %version-%release
-Requires: libraptor-devel >= %raptor_ver
+Requires: raptor2-devel
 
 %description devel
 This package contains the headers that programmers will need to develop
 applications which will use libraries from %name.
 
 %prep
-%setup -q
+%setup
+rm -f m4/*
 
 %build
 %autoreconf
@@ -64,6 +63,9 @@ applications which will use libraries from %name.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20111004
+- Version 0.5.0
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt3.1.qa1
 - NMU: rebuilt for updated dependencies.
 
