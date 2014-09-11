@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           metadata-extractor
 Version:        2.3.1
-Release:        alt1_10jpp7
+Release:        alt1_11jpp7
 Summary:        JPEG metadata extraction framework
 
 Group:          Development/Java
@@ -106,6 +106,9 @@ popd
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_10jpp7
 - new release
 
