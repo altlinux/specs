@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_6jpp7
+Release: alt1_7jpp7
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
 Group:   Development/Java
@@ -60,6 +60,9 @@ dos2unix -k LICENSE.resolver.txt
 %doc LICENSE.resolver.txt KEYS
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_7jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_6jpp7
 - new release
 
