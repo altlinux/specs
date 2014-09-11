@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.25
+Version: 1.8.26
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Sep 11 2014 Michael Shigorin <mike@altlinux.org> 1.8.26-alt1
+- 20-systemd.sh: update systemd check
+  a la sd_booted from service-0.5.26-alt1
+
 * Fri Jun 20 2014 Mikhail Efremov <sem@altlinux.org> 1.8.25-alt1
 - 20-systemd.sh: Check for systemd-sysvinit installed.
 
