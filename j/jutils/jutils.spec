@@ -1,12 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt2_7.20110719svnjpp7
+Release:        alt2_9.20110719svnjpp7
 Summary:        Common utilities for the Java Gaming Interface
 
 Group:          Development/Java
@@ -21,8 +17,6 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -33,7 +27,6 @@ for the other Java Games Initiative APIs.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -44,37 +37,24 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}
 sed -i 's/-SNAPSHOT//' pom.xml
 
+%mvn_file : %{name}
+
 %build
 # Skip tests because they require an X display
-mvn-rpmbuild -e -Dmaven.test.skip=true -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -- -Dmaven.test.skip=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_install
 
-# jar
-install -Dp -m 644 target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -a target/site/apidocs  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc README.txt 
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_9.20110719svnjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7.20110719svnjpp7
 - new release
 
