@@ -7,12 +7,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           mojo-parent
 Version:        32
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Codehaus MOJO parent project pom file
 
 License:        ASL 2.0
 URL:            http://mojo.codehaus.org/
 Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -30,6 +31,8 @@ Codehaus MOJO parent project pom file
 # wagon-webdav-jackrabbit is not available in Fedora
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
 
+cp %SOURCE1 .
+
 %build
 %mvn_alias : org.codehaus.mojo:mojo
 %mvn_build
@@ -38,8 +41,12 @@ Codehaus MOJO parent project pom file
 %mvn_install
 
 %files -f .mfiles
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:32-alt1_4jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:32-alt1_2jpp7
 - new version
 
