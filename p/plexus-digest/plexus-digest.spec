@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-digest
 Version:        1.1
-Release:        alt2_12jpp7
+Release:        alt2_14jpp7
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -47,6 +47,7 @@ Source0:        %{name}-%{version}-src.tar.gz
 
 Patch0:         %{name}-migration-to-component-metadata.patch
 Patch1:         %{name}-fix-test-dependencies.patch
+Patch2:         0001-Do-not-use-algorithm-name-as-regular-expression.patch
 
 BuildArch:      noarch
 
@@ -86,6 +87,7 @@ Javadoc for %{name}.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %mvn_file  : %{parent}/%{subname}
@@ -99,6 +101,9 @@ Javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_14jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_12jpp7
 - update
 
