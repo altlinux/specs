@@ -1,38 +1,25 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_4jpp7
+Release:       alt2_6jpp7
 Summary:       Open Source Java SQL Database
-Group:         Development/Java
 License:       GPLv2
 URL:           http://mckoi.com/database/
 Source0:       http://mckoi.com/database/ver/%{name}%{version}.zip
-
 Patch0:        %{name}-%{version}-jdk7.patch
-
 Patch1:        %{name}-%{version}-fix_fsf-address.patch
 
-BuildRequires: jpackage-utils
-
+BuildRequires: gnu-regexp
 BuildRequires: javacc
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: zip
-
-BuildRequires: gnu-regexp
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -45,16 +32,15 @@ write-ahead-logging. Many of the design ideas implemented in this project
 were carried through into MckoiDDB, the evolution of this project.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %package demos
-Group:         Development/Java
+Group: Development/Java
 Summary:       Demonstrations and samples for %{name}
 Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:      gnu-regexp
@@ -87,21 +73,12 @@ javacc.sh SQL.jj
 
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file :MckoiSQLDB %{name}
+%mvn_file :MckoiSQLDB MckoiSQLDB
+
+%mvn_build
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/MckoiSQLDB-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-( cd %{buildroot}%{_javadir} && ln -s %{name}.jar MckoiSQLDB.jar )
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "mckoi:mckoi"
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 mkdir -p %{buildroot}%{_datadir}/%{name}
 (
@@ -113,19 +90,17 @@ cp -pr contrib %{buildroot}%{_datadir}/%{name}
 cp -pr demo %{buildroot}%{_datadir}/%{name}
 cp -pr test %{buildroot}%{_datadir}/%{name}
 
+%mvn_install
+
+
 %check
 cd test
 sh ./runLocalTest.sh
 
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/MckoiSQLDB.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %files demos
@@ -133,6 +108,9 @@ sh ./runLocalTest.sh
 %doc docs/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_4jpp7
 - new release
 
