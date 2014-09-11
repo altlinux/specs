@@ -1,13 +1,16 @@
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define api_version 1.0
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
 Version:       1.1
-Release:       alt3_7jpp7
+Release:       alt3_9jpp7
 Summary:       Java Authentication SPI for Containers
 License:       ASL 2.0 and W3C
-Group:         Development/Java
 URL:           http://geronimo.apache.org/
 Source0:       http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{pkg_name}/%{version}/%{pkg_name}-%{version}-source-release.tar.gz
 
@@ -18,15 +21,16 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: geronimo-osgi-support
 BuildRequires: geronimo-parent-poms
 BuildRequires: jpackage-utils
+
+Provides:      javax.security.auth.message
 Source44: import.info
 
 %description
 Java Authentication Service Provider Interface for Containers (JSR-196) api.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,13 +61,20 @@ done
 %install
 %mvn_install
 
+install -d -m 755 %{buildroot}%{_javadir}/javax.security.auth.message/
+ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.security.auth.message/
+
 %files -f .mfiles
 %doc LICENSE NOTICE
+%{_javadir}/javax.security.auth.message/
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_9jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_7jpp7
 - new release
 
