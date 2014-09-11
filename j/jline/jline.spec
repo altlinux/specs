@@ -1,7 +1,7 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jline
 Version:        1.0
-Release:        alt3_4jpp7
+Release:        alt3_5jpp7
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -148,6 +148,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_4jpp7
 - new release
 
