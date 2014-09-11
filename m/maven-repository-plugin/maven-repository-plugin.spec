@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-repository-plugin
 Version:        2.3.1
-Release:        alt2_8jpp7
+Release:        alt2_10jpp7
 Summary:        Plugin to create bundles of artifacts for manual uploaded to repository
 
 Group:          Development/Java
@@ -25,18 +24,15 @@ BuildRequires: maven-plugin-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-surefire-provider-junit4
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: jpackage-utils
-BuildRequires: junit4
+BuildRequires: junit
 BuildRequires: maven-shared-verifier
 Requires: ant
 Requires: maven
 Requires: jpackage-utils
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 Obsoletes: maven2-plugin-repository <= 0:2.0.8
 Provides: maven2-plugin-repository = 1:%{version}-%{release}
@@ -61,39 +57,21 @@ API documentation for %{name}.
 %patch0
 
 %build
-#FIXME: test gets java.lang.NullPointerException
-mvn-rpmbuild \
-        -e \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins %{name} %{version} JPP %{name}
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_8jpp7
 - new release
 
