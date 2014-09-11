@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           javatar
 Version:        2.5
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Summary:        Java tar archive io package
 
 Group:          Development/Java
@@ -80,6 +80,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_9jpp7
 - new release
 
