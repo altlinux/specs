@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-doxia
 Version:        1.4
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -322,6 +322,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
 - update
 
