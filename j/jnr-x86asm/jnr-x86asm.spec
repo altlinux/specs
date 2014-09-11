@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jnr-x86asm
 Version:        1.0.2
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Pure-java port of asmjit
 
 Group:          Development/Java
@@ -74,6 +73,9 @@ install -pm 644 pom.xml  \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp7
 - new version
 
