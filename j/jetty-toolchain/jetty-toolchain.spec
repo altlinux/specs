@@ -1,15 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt3_7jpp7
+Release:        alt3_8jpp7
 Summary:        Jetty Toolchain main POM file
 
-Group:          Development/Java
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
 Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
@@ -18,12 +14,8 @@ Source1:        .rpmlint
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
 BuildRequires:  jetty-parent
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       jetty-parent
+BuildRequires:  maven-release-plugin
 Source44: import.info
 
 %description
@@ -35,25 +27,20 @@ cp -p jetty-distribution-remote-resources/src/main/resources/* .
 
 %build
 pushd %{name}
-mvn-rpmbuild install
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
 pushd %{name}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom
-popd
-
-%files
+%files -f %{name}/.mfiles
 %doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_7jpp7
 - new release
 
