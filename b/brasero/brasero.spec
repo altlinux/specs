@@ -15,7 +15,7 @@
 %def_disable introspection
 
 Name: brasero
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
@@ -23,8 +23,8 @@ Group: Archiving/Cd burning
 License: %gpl2plus
 Url: http://www.gnome.org/projects/brasero/
 
-Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
@@ -231,6 +231,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Thu Sep 11 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1
+- 3.11.4
+
 * Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.11.3-alt1
 - after 3.11.3 snapshot (718139441)
 
