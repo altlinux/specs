@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             guessencoding
 Version:          1.4
-Release:          alt2_7jpp7
+Release:          alt2_8jpp7
 Summary:          Guess encoding of files and return configured reader
 Group:            Development/Java
 License:          ASL 2.0
@@ -96,6 +95,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_7jpp7
 - new release
 
