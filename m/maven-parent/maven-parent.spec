@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-parent
 Version:        20
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Apache Maven parent POM
 License:        ASL 2.0
 URL:            http://maven.apache.org
@@ -33,6 +33,9 @@ Apache Maven parent POM file used by other Maven projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20-alt1_5jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 20-alt1_4jpp7
 - new release
 
