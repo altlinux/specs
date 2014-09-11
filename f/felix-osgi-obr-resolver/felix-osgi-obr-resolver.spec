@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -13,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             felix-osgi-obr-resolver
 Version:          0.1.0
-Release:          alt2_0.7.Beta1jpp7
+Release:          alt2_0.9.Beta1jpp7
 Summary:          Apache Felix Resolver
 Group:            Development/Java
 License:          ASL 2.0
@@ -30,7 +29,6 @@ Patch2:           0003-Compile-with-target-1.5-or-greater.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -39,9 +37,7 @@ BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    felix-framework
 BuildRequires:    apache-rat-plugin
-
-Requires:         jpackage-utils
-Requires:         felix-framework
+BuildRequires:    mockito
 Source44: import.info
 
 %description
@@ -50,7 +46,6 @@ This package contains the Apache Felix Resolver
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -70,34 +65,20 @@ This package contains the API documentation for %{name}.
 # rm -rf src/main/java/org/osgi/framework/wiring
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/felix
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/%{osginame}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/felix/%{osginame}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.felix-%{osginame}.pom
-
-# DEPMAP
-%add_maven_depmap JPP.felix-%{osginame}.pom felix/%{osginame}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.9.Beta1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.7.Beta1jpp7
 - new release
 
