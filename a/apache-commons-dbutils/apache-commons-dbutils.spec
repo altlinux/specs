@@ -1,21 +1,16 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name       dbutils
-%global short_name      commons-%{base_name}
+%global short_name      commons-dbutils
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_3jpp7
+Release:          alt1_5jpp7
 Summary:          Apache Commons DbUtils Package
 Group:            Development/Java
 License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:              http://commons.apache.org/dbutils/
+Source0:          http://www.apache.org/dist/commons/dbutils/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
@@ -41,39 +36,30 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
 %setup -q -n %{short_name}-%{version}-src
 sed -i 's/\r//' *.txt
 
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :commons-dbutils %{short_name} %{name}
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{short_name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_5jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_3jpp7
 - new version
 
