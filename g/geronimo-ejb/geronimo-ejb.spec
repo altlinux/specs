@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: geronimo-annotation geronimo-interceptor
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -10,15 +6,13 @@ BuildRequires: jpackage-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt2_9jpp7
+Release:          alt2_12jpp7
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://geronimo.apache.org
 
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
-# Use parent pom files instead of unavailable 'genesis-java5-flava'
-Patch1:           use_parent_pom.patch
 
 BuildArch:        noarch
 
@@ -31,13 +25,6 @@ BuildRequires:    annotation_api
 BuildRequires:    jaxrpc_api
 BuildRequires:    geronimo-osgi-locator
 
-Requires:         jta
-Requires:         interceptor_api
-Requires:         annotation_api
-Requires:         jaxrpc_api
-Requires:         geronimo-osgi-locator
-Requires:         jpackage-utils
-
 Provides:         ejb_api = %{spec_ver}
 Source44: import.info
 
@@ -46,14 +33,13 @@ Source44: import.info
 ##Provides:       ejb_3_1_api = %{version}-%{release}
 
 %description
-Contains the Enterprise JavaBeans classes and interfaces that define the 
-contracts between the enterprise bean and its clients and between the 
-enterprise bean and the EJB container. 
+Contains the Enterprise JavaBeans classes and interfaces that define the
+contracts between the enterprise bean and its clients and between the
+enterprise bean and the EJB container.
 
 %package javadoc
-Group:            Development/Java
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,25 +49,21 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{spec_name}-%{version}
 sed -i 's/\r//' LICENSE
-%patch1 -p0
+# Use parent pom files instead of unavailable 'genesis-java5-flava'
+%pom_set_parent org.apache.geronimo.specs:specs:1.4
+
+%mvn_alias : org.apache.geronimo.specs:geronimo-ejb_2.1_spec
+%mvn_alias : org.apache.geronimo.specs:geronimo-ejb_3.0_spec
+%mvn_alias : javax.ejb:ejb
+%mvn_alias : javax.ejb:ejb-api
+
+%mvn_file : %{name} ejb
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{spec_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/ejb.jar
-
-# poms
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.geronimo.specs:geronimo-ejb_2.1_spec,org.apache.geronimo.specs:geronimo-ejb_3.0_spec,javax.ejb:ejb"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
+%mvn_install
 
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_geronimo-ejb<<EOF
 %{_javadir}/ejb.jar	%{_javadir}/geronimo-ejb.jar	30100
@@ -97,11 +79,8 @@ EOF
 # EOF
 
 
-%files
-%doc LICENSE
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE NOTICE
 
 #%_altdir/ejb_3_1_api_geronimo-ejb
 #%_altdir/ejb_3_0_api_geronimo-ejb
@@ -110,11 +89,13 @@ EOF
 %exclude %{_javadir}*/ejb.jar
 
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp7
 - new release
 
