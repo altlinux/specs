@@ -1,18 +1,14 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             joni
 Version:          1.1.9
-Release:          alt1_1jpp7
+Release:          alt1_3jpp7
 Summary:          Java port of Oniguruma regexp library 
 Group:            Development/Java
 License:          MIT
 URL:              http://github.com/jruby/%{name}
 Source0:          https://github.com/jruby/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0:           joni-add-build-lib-deps.patch
 Patch1:           joni-remove-useless-wagon-dependency.patch
 
 BuildRequires:    jcodings
@@ -22,6 +18,7 @@ BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
+
 BuildRequires:    objectweb-asm4
 
 Requires:         jcodings
@@ -36,40 +33,41 @@ Source44: import.info
 joni is a port of Oniguruma, a regular expressions library,
 to java. It is used by jruby.
 
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
 %setup -q
-%patch0 -p0
 %patch1 -p0
-
-find ./ -name '*.jar' -delete
-find ./ -name '*.class' -delete
-
-mkdir build_lib
-build-jar-repository -s -p build_lib objectweb-asm4/asm jcodings
-
-%build
-mvn-rpmbuild install javadoc:aggregate
-
-%install
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # fixes rpmlint warning about wrong-file-end-of-line-encoding
 sed -i -e 's|\r||' test/org/joni/test/TestC.java
 sed -i -e 's|\r||' test/org/joni/test/TestU.java
 sed -i -e 's|\r||' test/org/joni/test/TestA.java
 
-%files
+%mvn_file : %{name}
+
+%build
+%mvn_build -f
+
+%install
+%mvn_install
+
+%files -f .mfiles
 %doc MANIFEST.MF
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.9-alt1_3jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.9-alt1_1jpp7
 - new version
 
