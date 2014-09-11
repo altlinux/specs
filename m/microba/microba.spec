@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           microba
 Version:        0.4.4.3
-Release:        alt1_9jpp7
+Release:        alt1_10jpp7
 Summary:        Set of JFC (Swing) components
 Group:          Development/Java
 License:        BSD
@@ -84,6 +84,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc license.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_10jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_9jpp7
 - new release
 
