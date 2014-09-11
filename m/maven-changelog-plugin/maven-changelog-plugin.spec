@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changelog-plugin
 Version:        2.2
-Release:        alt4_16jpp7
+Release:        alt4_17jpp7
 Summary:        Produce SCM changelog reports
 
 Group:          Development/Java
@@ -100,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt4_17jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt4_16jpp7
 - new release
 
