@@ -1,13 +1,12 @@
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jbossxb
 Version:        2.0.3
-Release:        alt2_3jpp7
+Release:        alt2_4jpp7
 Summary:        JBoss XML Binding
 
 Group:          Development/Java
@@ -103,6 +102,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_4jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_3jpp7
 - new release
 
