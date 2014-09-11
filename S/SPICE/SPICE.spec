@@ -7,7 +7,7 @@
 
 Name: SPICE
 Version: 0.12.5
-Release: alt1
+Release: alt2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt2
+- upstream git snapshot 5eb9967dbc508d99a4b2bec49a51f3510c91e022
+
 * Wed May 21 2014 Alexey Shabalin <shaba@altlinux.ru> 0.12.5-alt1
 - 0.12.5
 
