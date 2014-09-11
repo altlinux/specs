@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jaxws-2.2-api
 Version:          2.0.2
-Release:          alt2_0.4.20120507gitd6937fjpp7
+Release:          alt2_0.5.20120507gitd6937fjpp7
 Summary:          Java API for XML-Based Web Services 2.2
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -89,6 +88,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc src/main/resources/NOTE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_0.5.20120507gitd6937fjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_0.4.20120507gitd6937fjpp7
 - new release
 
