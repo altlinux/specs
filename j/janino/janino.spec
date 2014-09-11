@@ -1,7 +1,8 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,9 +37,8 @@ BuildRequires: jpackage-compat
 #
 Name:          janino
 Version:       2.6.1
-Release:       alt2_16jpp7
+Release:       alt2_18jpp7
 Summary:       An embedded Java compiler
-Group:         Development/Java
 License:       BSD
 URL:           http://docs.codehaus.org/display/JANINO/Home
 Source0:       http://dist.codehaus.org/%{name}/%{name}-%{version}.zip
@@ -50,27 +50,17 @@ Source4:       http://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}/%{vers
 # change artifactId ant-nodeps in ant
 Patch0:        %{name}-%{version}-poms.patch
 
-BuildRequires: jpackage-utils
 BuildRequires: codehaus-parent
 
 BuildRequires: ant
-BuildRequires: junit4
+BuildRequires: junit
 
 BuildRequires: buildnumber-maven-plugin
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
 
-Requires:      ant
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -84,9 +74,8 @@ run-time compilation purposes, e.g. expression evaluators or "server pages"
 engines like JSP.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -127,39 +116,22 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-
-for m in \
-  commons-compiler\
-  commons-compiler-jdk \
-  %{name};do
-    install -m 644 ${m}/target/${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-    install -m 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}/*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc new_bsd_license.txt README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc new_bsd_license.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_18jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_16jpp7
 - new release
 
