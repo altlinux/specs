@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt11_0.18.a14jpp7
+Release:        alt11_0.19.a14jpp7
 Epoch:          0
 Summary:        Plexus Component Descriptor Creator
 # Almost whole gleaner subpackage is ASL 2.0
@@ -103,6 +103,9 @@ cp -p %{SOURCE2} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.19.a14jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.18.a14jpp7
 - update
 
