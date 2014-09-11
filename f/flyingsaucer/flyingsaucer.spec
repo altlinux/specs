@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_5jpp7
+Release:       alt1_6jpp7
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
 Group:         Development/Java
 License:       LGPLv2+
@@ -157,6 +157,9 @@ cp -pr doc/full/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt1_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt1_5jpp7
 - new release
 
