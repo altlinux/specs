@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             maven-injection-plugin
 Version:          1.0.2
-Release:          alt3_8jpp7
+Release:          alt3_9jpp7
 Summary:          Bytecode injection at Maven build time
 Group:            Development/Java
 License:          LGPLv2+
@@ -84,6 +83,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_8jpp7
 - new release
 
