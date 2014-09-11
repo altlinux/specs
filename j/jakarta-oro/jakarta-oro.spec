@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_13jpp7
+Release:        alt2_14jpp7
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
@@ -122,6 +122,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_13jpp7
 - new release
 
