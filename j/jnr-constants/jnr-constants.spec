@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jnr-constants
 Version:        0.8.4
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Java Native Runtime constants 
 Group:          Development/Java
 License:        ASL 2.0
@@ -75,6 +75,9 @@ install -pm 644 pom.xml  \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_3jpp7
+- new release
+
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_2jpp7
 - new version
 
