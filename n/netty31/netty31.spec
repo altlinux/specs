@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           netty31
 Version:        3.1.5
-Release:        alt3_5jpp7
+Release:        alt3_7jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
 Group:          Development/Java
@@ -95,8 +94,7 @@ rm -rf src/main/java/org/jboss/netty/channel/xnio/
 
 %build
 # skipping tests because we don't have all dependencies in Fedora
-mvn-rpmbuild -Dmaven.test.skip=true \
-        install javadoc:javadoc
+%mvn_build -f
 dos2unix target/api/stylesheet.css
 
 %install
@@ -125,6 +123,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt3_7jpp7
+- new release
+
 * Thu Aug 21 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.5-alt3_5jpp7
 - added BR: for xmvn
 
