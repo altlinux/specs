@@ -11,20 +11,23 @@ BuildRequires: jpackage-compat
 
 Name:           groovy
 Version:        1.8.9
-Release:        alt1_2jpp7
+Release:        alt1_5jpp7
 Summary:        Dynamic language for the Java Platform
 
 Group:          Development/Java
 # Some of the files are licensed under BSD and CPL terms, but the CPL has been superceded
 # by the EPL. We include copies of both for completeness.
-License:        ASL 2.0 and BSD and EPL
+# groovyConsole uses CC-BY licensed icons
+# (see: subprojects/groovy-console/target/tmp/groovydoc/groovy/ui/icons/credits.txt)
+License:        ASL 2.0 and BSD and EPL and Public Domain and CC-BY
 URL:            http://groovy.codehaus.org/
 Source0:        http://dist.groovy.codehaus.org/distributions/%{name}-src-%{version}.zip
 Source1:        groovy-script
 Source2:        groovy-starter.conf
 Source3:        groovy.desktop
-Source4:	cpl-v10.txt
-Source5:	epl-v10.txt
+Source4:        cpl-v10.txt
+Source5:        epl-v10.txt
+Source6:        http://www.apache.org/licenses/LICENSE-2.0.txt
 # http://jira.codehaus.org/browse/GROOVY-6085
 Patch0:         groovy-inner-interface-annotations.patch
 BuildArch:      noarch
@@ -45,6 +48,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-cli
 BuildRequires:  unzip
+BuildRequires:  ecj
 Requires:       jpackage-utils
 
 # The are all runtime dependencies of the script
@@ -86,7 +90,9 @@ JavaDoc documentation for %{name}
 
 %prep
 %setup -q
-cp %{SOURCE4} %{SOURCE5} .
+cp %{SOURCE4} %{SOURCE5} %{SOURCE6} .
+# Remove bundled JARs and classes
+find \( -name *.jar -o -name *.class \) -delete
 
 %patch0 -p1
 
@@ -100,6 +106,13 @@ build-jar-repository target/lib/compile servlet jsp \
         antlr ant/ant-antlr antlr \
         bsf jline xstream ant junit ivy commons-cli \
         jansi
+
+# Use ECJ instead of OpenJDK to compile MethodHandle.  This is a
+# workaround for a bug in OpenJDK that causes compilation of
+# MethodHandle to take many minutes (15min or even more), while ECJ
+# can compile it under five seconds.  See rhbz#971483 and
+# http://mail.openjdk.java.net/pipermail/compiler-dev/2013-May/006339.html
+ecj -d target/classes `find -name MethodHandle.java -o -name ArrayUtil.java`
 
 # Build
 # TODO: Build at least tests, maybe examples
@@ -156,15 +169,19 @@ touch $RPM_BUILD_ROOT/etc/groovy.conf
 %{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*
 %config(noreplace) %{_sysconfdir}/*
-%doc LICENSE.txt NOTICE.txt README.md cpl-v10.txt epl-v10.txt
+%doc README.md
+%doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 %config(noreplace,missingok) /etc/groovy.conf
 
 
 %files javadoc
 %{_javadocdir}/*
-%doc LICENSE.txt NOTICE.txt cpl-v10.txt epl-v10.txt
+%doc LICENSE.txt LICENSE-2.0.txt NOTICE.txt cpl-v10.txt epl-v10.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_5jpp7
+- new release
+
 * Sun Jul 20 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.9-alt1_2jpp7
 - update
 
