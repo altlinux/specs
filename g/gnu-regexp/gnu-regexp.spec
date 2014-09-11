@@ -1,4 +1,5 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -36,16 +37,21 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_17jpp7
+Release:        alt1_18jpp7
 Summary:        Java NFA regular expression engine implementation
-License:        LGPLv2+ and GPLv2+
-Source0:        ftp://ftp.tralfamadore.com/pub/java/gnu.regexp-1.1.4.tar.gz
+# GPLv2+: gnu/regexp/util/Egrep.java
+#         gnu/regexp/util/Grep.java
+#         gnu/regexp/util/REApplet.java
+# Public Domain: gnu/regexp/util/RETest.java
+#                gnu/regexp/util/Tests.java
+# Rest is LGPLv2+
+# Note files under GPLv2+ and Public Domain are included in -demo subpackage
+License:        LGPLv2+
+Source0:        http://ftp.frugalware.org/pub/other/sources/gnu.regexp/gnu.regexp-1.1.4.tar.gz
 Source1:        %{name}.build.xml
 BuildRequires:  ant
 BuildRequires:  gnu-getopt
-BuildRequires:  jpackage-utils >= 0:1.6
-URL:            http://nlp.stanford.edu/nlp/javadoc/gnu-regexp-docs/
-Group:          Development/Java
+URL:            http://savannah.gnu.org/projects/gnu-regexp
 BuildArch:      noarch
 Provides:       gnu.regexp = %{version}-%{release}
 Obsoletes:      gnu.regexp < %{version}-%{release}
@@ -59,10 +65,11 @@ a relatively complete list of supported and non-supported syntax, refer
 to the syntax and usage notes.
 
 %package demo
+Group: Development/Java
 Summary:        Demo for %{name}
+License:        LGPLv2+ and GPLv2+ and Public Domain
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       gnu.getopt
-Group:          Development/Java
+Requires:       gnu-getopt
 Provides:       gnu.regexp-demo = %{version}-%{release}
 Obsoletes:      gnu.regexp-demo < %{version}-%{release}
 
@@ -70,8 +77,9 @@ Obsoletes:      gnu.regexp-demo < %{version}-%{release}
 Demonstrations and samples for %{name}.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
+License:        LGPLv2+ and GPLv2+ and Public Domain
 Provides:       gnu.regexp-javadoc = %{version}-%{release}
 Obsoletes:      gnu.regexp-javadoc < %{version}-%{release}
 BuildArch: noarch
@@ -81,31 +89,26 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n gnu.regexp-%{version}
-%__cp -a %{SOURCE1} build.xml
-# remove all binary libs
-find . -name "*.jar" -exec %__rm -f {} \;
+cp %{SOURCE1} build.xml
 
 %build
-export CLASSPATH=$(build-classpath gnu.getopt)
-%ant jar javadoc
+export CLASSPATH=$(build-classpath gnu-getopt)
+ant jar javadoc
 
 %install
-
 # jars
-%__mkdir_p %{buildroot}%{_javadir}
-%__cp -a build/lib/gnu.regexp.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %__ln_s ${jar} `echo $jar| sed "s|-%{version}||g"`; done
-%__ln_s %{name}.jar gnu.regexp.jar)
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 build/lib/gnu.regexp.jar %{buildroot}%{_javadir}/%{name}.jar
+ln -s %{name}.jar %{buildroot}%{_javadir}/gnu.regexp.jar
 
 # demo
-%__mkdir_p %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
-%__cp -a build/classes/gnu/regexp/util/*.class \
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
+install -p -m 644 build/classes/gnu/regexp/util/*.class \
   %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
 
 # javadoc
-%__mkdir_p %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__cp -a build/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-(cd %{buildroot}%{_javadocdir} && %__ln_s %{name}-%{version} %{name})
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %doc COPYING COPYING.LIB README TODO docs/*.html
@@ -115,10 +118,13 @@ export CLASSPATH=$(build-classpath gnu.getopt)
 %{_datadir}/%{name}
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
+%doc COPYING COPYING.LIB
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_18jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_17jpp7
 - new release
 
