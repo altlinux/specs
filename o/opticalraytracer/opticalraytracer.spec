@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		opticalraytracer
 Version:	2.7
-Release:	alt1_7jpp7
+Release:	alt1_8jpp7
 Summary:	Utility that analyzes systems of lenses
 
 Group:		Toys
@@ -87,6 +87,9 @@ cp -rp dist/javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_7jpp7
 - new release
 
