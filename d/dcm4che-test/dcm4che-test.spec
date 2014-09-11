@@ -1,8 +1,4 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # use dcm4che-test as name, no use carrying the version in the name
@@ -10,83 +6,50 @@ BuildRequires: jpackage-compat
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt3_0.5.20110530svn15516jpp7
+Release:        alt3_0.8.20110530svn15516jpp7
 Summary:        Test images for dcm4che2
-
 License:        MPLv1.1 or GPLv2 or LGPLv2
 URL:            http://www.dcm4che.org/confluence/display/proj/The+Project
 BuildArch:      noarch
+# Generated from an svn checkout:
+# svn export svn://svn.code.sf.net/p/dcm4che/svn/dcm4che2-test/tags/dcm4che2-test-2.6
+# tar -cvJf dcm4che2-test-2.6.tar.xz dcm4che2-test-2.6/
+Source0:        dcm4che2-test-%{version}.tar.xz
 
-# Generated from an svn checkout: TODO: use svn export next time
-# svn export https://dcm4che.svn.sourceforge.net/svnroot/dcm4che/dcm4che2-test/tags/dcm4che2-test-2.6
-# tar -cvzf dcm4che2-test-2.6.tar.gz dcm4che2-test-2.6/
-Source0:        dcm4che2-test-%{version}.tar.gz
-
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-
-Requires:       jpackage-utils
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 Source44: import.info
 
 %description
 DCM4CHE Test Data and Libraries
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n dcm4che2-test-2.6
+%setup -q -n dcm4che2-test-%{version}
 
 %build
-mvn-rpmbuild -X install javadoc:aggregate 
+
+%mvn_file :%{name}-image %{name}-image
+%mvn_build -X -- -Dproject.build.sourceEncoding=UTF-8
+rm -rf target/site/apidocs/javadoc.sh
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p  %{name}-image/target/%{name}-image-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-image.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-install -pm 644 %{name}-image/pom.xml \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-image.pom
-
-# note that the artifact id is %%{name}-image, not dcm4che2-test-image
-%add_to_maven_depmap org.dcm4che.test %{name}-image %{version} JPP %{name}-image
-
-# Check on this: there is no jar for the -test pom, do we need a add_to_maven_depmap here?
-%add_to_maven_depmap org.dcm4che.test dcm4che2-test %{version} JPP %{name}
-
-find $RPM_BUILD_ROOT%{_javadocdir}/%{name} -name "javadoc.sh" -exec chmod a-x '{}' \;
-
-%files
-%{_mavenpomdir}/*.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}-image.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.8.20110530svn15516jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.5.20110530svn15516jpp7
 - new release
 
