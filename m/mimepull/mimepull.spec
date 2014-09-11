@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             mimepull
 Version:          1.8
-Release:          alt2_5jpp7
+Release:          alt2_6jpp7
 Summary:          Streaming API to access attachments from a MIME message
 Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
@@ -83,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_6jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_5jpp7
 - new release
 
