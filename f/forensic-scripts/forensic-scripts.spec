@@ -1,6 +1,6 @@
 Name: forensic-scripts
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: Handle MDRAID, LVM2 and filesystems read-only via loop devices
 License: GPLv2+
@@ -36,6 +36,10 @@ install -pm755 *-forensic %buildroot/sbin
 /sbin/*
 
 %changelog
+* Thu Sep 11 2014 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- ext3: mount as -t ext4 -o noload
+- btrfs: ignore explicitly
+
 * Mon May 12 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - made noarch
 
