@@ -1,12 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt3_7jpp7
+Release:        alt3_9jpp7
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Java
@@ -36,25 +32,18 @@ Jetty assembly descriptors used for building
 cp -p %{SOURCE1} %{SOURCE2} .
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-# bug in upstream pom. It inherits version from toolchain parent
-install -Dp -m 644 target/%{name}-1.4.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE-2.0.txt epl-v10.html
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_7jpp7
 - new release
 
