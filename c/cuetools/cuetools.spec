@@ -1,15 +1,13 @@
 Name: cuetools
-Version: 1.3.1
-Release: alt4.qa1
+Version: 1.4.0
+Release: alt1.git20131123
 
 Summary: cue and toc file parsers and utilities
 Group: Sound
 License: GPL
 Url: http://developer.berlios.de/projects/cuetools/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 Source0: http://prdownload.berlios.de/cuetools/%name-%version.tar.gz
-Patch: %name-%version-%release-alt-changes.patch
 
 # Automatically added by buildreq on Thu Jul 27 2006
 BuildRequires: flex
@@ -25,29 +23,33 @@ It includes:
 * cueprint - print disc and track infomation for a cue or toc file
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
-install -pD extras/cuetag.sh %buildroot%_bindir/cuetag
+%makeinstall_std
+mv %buildroot%_bindir/cuetag.sh %buildroot%_bindir/cuetag
+install -p -m644 doc/cuetag.1 %buildroot%_man1dir/
 
 %files
 %doc AUTHORS ChangeLog NEWS README TODO
-%doc extras/formats.txt extras/index.txt
+%doc doc/formats.txt extras/index.txt
 %doc --no-dereference COPYING
 
 %_bindir/cue*
 %_man1dir/cue*.1*
 
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20131123
+- Version 1.4.0
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
