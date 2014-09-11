@@ -1,21 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Prevent brp-java-repack-jars from being run.
-%define __jar_repack %{nil}
-
 %global bundle org.osgi.foundation
-%global felixdir %{_javadir}/felix
-%global POM %{_mavenpomdir}/JPP.felix-%{bundle}.pom
 
 Name:    felix-osgi-foundation
 Version: 1.2.0
-Release: alt3_12jpp7
+Release: alt3_14jpp7
 Summary: Felix OSGi Foundation EE Bundle
-
 Group:   Development/Java
 License: ASL 2.0
 URL:     http://felix.apache.org
@@ -25,13 +15,8 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-plugin-bundle
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mockito
 Source44: import.info
 
 
@@ -40,46 +25,34 @@ OSGi Foundation Execution Environment (EE) Classes.
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
 
+%mvn_file :%{bundle} "felix/%{bundle}"
+%mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{felixdir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
+%mvn_install
 
-# jar
-install -p -m 644 target/%{bundle}-%{version}.jar \
-  %{buildroot}%{felixdir}/%{bundle}.jar
-
-# pom
-install -p -m 644 pom.xml %{buildroot}%{POM}
-%add_maven_depmap JPP.felix-%{bundle}.pom felix/%{bundle}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{felixdir}
-%{POM}
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_14jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_12jpp7
 - new release
 
