@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           junitperf
 Version:        1.9.1
-Release:        alt1_11jpp7
+Release:        alt1_12jpp7
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
 Group:          Development/Java
@@ -120,6 +120,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_12jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_11jpp7
 - new release
 
