@@ -1,13 +1,12 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Plexus Build API
 
 Group:          Development/Java
@@ -95,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_8jpp7
 - new release
 
