@@ -1,59 +1,40 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name chain
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_6jpp7
+Release:       alt1_8jpp7
 Summary:       An implementation of the GoF Chain of Responsibility pattern
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-# replace myfaces-api with jboss-jsf-2.1-api
-Patch0:        %{name}-%{version}-pom.patch
 # javax.servlet 3.0 api support
-Patch1:        %{name}-%{version}-tests-servlet30.patch
+Patch0:        %{name}-%{version}-tests-servlet30.patch
 # javax.portlet 2.0 api support
-Patch2:        %{name}-%{version}-portlet20.patch
+Patch1:        %{name}-%{version}-portlet20.patch
 
-BuildRequires: jpackage-utils
 
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-digester
-BuildRequires: apache-commons-logging
-BuildRequires: jboss-jsf-2.1-api
-BuildRequires: portlet-2.0-api
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(commons-digester:commons-digester)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(javax.portlet:portlet-api)
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
 
 # test deps
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
+BuildRequires: buildnumber-maven-plugin
 BuildRequires: maven-local
 BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
+BuildRequires: maven-remote-resources-plugin
 BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 
-Requires:      apache-commons-beanutils
-Requires:      apache-commons-digester
-Requires:      apache-commons-logging
-Requires:      jboss-jsf-2.1-api
-Requires:      portlet-2.0-api
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -76,9 +57,8 @@ whether or not processing for the current chain has been completed
 command in the chain (false).
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -90,41 +70,39 @@ find . -name '*.class' -delete
 find . -name '*.jar' -delete
 
 perl -pi -e 's/\r$//g;' *.txt
-%patch0 -p0
-%patch1 -p1
-%patch2 -p0
-# Failed tests:   testDefaut(org.apache.commons.chain.config.ConfigParserTestCase): Correct command count expected:<17> but was:<19>
+
+%patch0 -p1
+%patch1 -p0
+# Failed tests:   testDefaut(org.apache.commons.chain.config.ConfigParserTestCase):
+# Correct command count expected:<17> but was:<19>
 rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
+
+%pom_remove_dep :myfaces-api
+%pom_add_dep org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec
+# Force tomcat apis
+%pom_remove_dep javax.servlet:servlet-api
+%pom_add_dep org.apache.tomcat:tomcat-servlet-api
+
+%mvn_file :%{short_name} %{name}
+%mvn_file :%{short_name} %{short_name}
 
 %build
 
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 install javadoc:aggregate
+%mvn_build -- -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-( cd %{buildroot}%{_javadir} && ln -s %{name}.jar %{short_name}.jar )
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_8jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_6jpp7
 - new release
 
