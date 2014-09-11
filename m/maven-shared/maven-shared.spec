@@ -38,7 +38,7 @@ Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
 Version:        19
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 License:        ASL 2.0
 Group:          Development/Java
 
@@ -79,6 +79,9 @@ chmod -R go=u-w *
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:19-alt1_4jpp7
+- new release
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:19-alt1_3jpp7
 - new version
 
