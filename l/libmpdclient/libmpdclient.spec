@@ -2,16 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.5
-Release: alt1.1.qa1
+Version: 2.10
+Release: alt1.git20140711
 
 Summary: MPD client library
 License: BSD-like
 Group: System/Libraries
 Url: http://mpd.wikia.com/wiki/ClientLib:libmpdclient
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source: http://dl.sourceforge.net/musicpd/%name-%version.tar.gz
+# git://repo.or.cz/libmpdclient.git
+Source: %name-%version.tar.gz
+
+BuildPreReq: doxygen graphviz libvala-devel
 
 %description
 Library for Music Player Daemon client development.
@@ -24,32 +26,60 @@ Requires: %name = %version-%release
 %description devel
 Header files for MPD client library.
 
+%package devel-docs
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-docs
+Development documentation for %name.
+
+%package vala
+Summary: Vala language bindings for %name
+Group: Development/Other
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description vala
+This package provides Vala language bindings for %name.
+
 %prep
 %setup
 
 %build
-%configure --disable-werror
-%make_build --silent --no-print-directory
+%autoreconf
+%configure \
+	--disable-werror \
+	--enable-static=no \
+	--enable-debug
+%make_build --no-print-directory
 
 %check
-%make_build --silent --no-print-directory check
+%make_build --no-print-directory check
 
 %install
-%makeinstall_std --silent --no-print-directory
+%makeinstall_std --no-print-directory
 
 %files
 %doc README COPYING AUTHORS NEWS
 %_libdir/%name.so.*.*.*
 %ghost %_libdir/%name.so.?
-%exclude %_datadir/doc/%name/
-%exclude %_libdir/%name.a
 
 %files devel
 %_libdir/%name.so
 %_includedir/mpd/
 %_pkgconfigdir/%name.pc
 
+%files devel-docs
+%_docdir/%name
+
+%files vala
+%_vapidir/*
+
 %changelog
+* Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10-alt1.git20140711
+- Version 2.10
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
