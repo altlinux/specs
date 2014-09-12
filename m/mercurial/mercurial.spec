@@ -1,5 +1,5 @@
 
-Version: 3.0
+Version: 3.1.1
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -131,6 +131,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Fri Sep 12 2014 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Tue May 13 2014 Alexey Shabalin <shaba@altlinux.ru> 3.0-alt1
 - 3.0
 
