@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm -spec -*-
 
 Name: pam_pkcs11
-Version: 0.6.4
-Release: alt2
+Version: 0.6.8
+Release: alt1.git20140828
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -10,10 +10,11 @@ License: LGPL
 Url: http://www.opensc-project.org/pam_pkcs11/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Jul 31 2009 (-bi)
 BuildRequires: cvs docbook-style-xsl flex libldap-devel libpam-devel libpcsclite-devel libssl-devel xsltproc
+
+BuildPreReq: gcc-c++
 
 %description
 This Linux-PAM login module allows a X.509 certificate based user login.
@@ -53,7 +54,6 @@ as a separate package.
 
 %prep
 %setup
-%patch -p1
 
 # fixup configs
 sed -i -e '
@@ -64,10 +64,13 @@ sed -i -e '
 
 %build
 %autoreconf
+#	--disable-rpath \
 %configure \
 	--libdir=/%_lib \
 	--disable-static \
 	--enable-shared \
+	--enable-debug \
+	--with-ldap \
 	--with-confdir=%_sysconfdir/security/%name \
 	#
 %make_build
@@ -98,6 +101,7 @@ done
 %_bindir/pkcs11_inspect
 %_bindir/pkcs11_listcerts
 %_bindir/pkcs11_setup
+%_bindir/pkcs11_make_hash_link
 %dir /%_lib/%name
 /%_lib/%name/openssh_mapper.so
 /%_lib/%name/opensc_mapper.so
@@ -107,27 +111,31 @@ done
 %_man1dir/pkcs11_listcerts.1*
 %_man1dir/pkcs11_setup.1*
 %_man1dir/pklogin_finder.1*
+%_man1dir/pkcs11_make_hash_link.1*
 %_man8dir/pam_pkcs11.8*
-%dir %_datadir/%name
-%_datadir/%name/pam_pkcs11.conf.example
-%_datadir/%name/pam.d_login.example
-%_datadir/%name/subject_mapping.example
-%_datadir/%name/mail_mapping.example
-%_datadir/%name/digest_mapping.example
-%_datadir/%name/pkcs11_eventmgr.conf.example
+%dir %_docdir/%name
+%_docdir/%name/pam_pkcs11.conf.example
+%_docdir/%name/pam.d_login.example
+%_docdir/%name/subject_mapping.example
+%_docdir/%name/mail_mapping.example
+%_docdir/%name/digest_mapping.example
+%_docdir/%name/pkcs11_eventmgr.conf.example
 
 %files pcsc
 %doc doc/README.eventmgr
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
 %_mandir/man1/card_eventmgr.1.gz
-%_datadir/%name/card_eventmgr.conf.example
+%_docdir/%name/card_eventmgr.conf.example
 
 %files ldap
 %doc doc/README.ldap_mapper
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt1.git20140828
+- Version 0.6.8
+
 * Mon Jul 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.4-alt2
 - fix build
 
