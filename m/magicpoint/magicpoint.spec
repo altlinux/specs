@@ -1,6 +1,6 @@
 Name: magicpoint
 Version: 1.13a
-Release: alt1.1.qa1
+Release: alt1.20140908
 
 Summary: Presentation tool
 Group: Office
@@ -10,21 +10,6 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 # ftp://sh.wide.ad.jp/WIDE/free-ware/mgp/%name-%version.tar.bz2
 Source: %name-%version.tar
-
-Patch1:  magicpoint-1.13a-install-path.patch
-Patch2:  magicpoint-1.09a-emacs-mode--add-font-lock.patch
-Patch3:  magicpoint-1.13a-alt-i18n.patch
-Patch5:  magicpoint-1.13a-tffonts.patch
-Patch6:  magicpoint-1.13a-sample.patch
-Patch7:  magicpoint-1.13a-nonvoid.patch
-Patch8:  magicpoint-1.13a-cflags.patch
-Patch9:  magicpoint-1.13a-compile-warning.patch
-Patch10: magicpoint-1.13a-null.patch
-Patch11: magicpoint-1.13a-xft-rendering-fix.patch
-Patch12: magicpoint-1.13a-lib64.patch
-Patch13: magicpoint-1.13a-warnings.patch
-Patch14: magicpoint-1.13a-m17n.patch
-Patch15: magicpoint-1.13a-alt-DSO.patch
 
 Requires: ghostscript-classic, netpbm, sharutils, /bin/gunzip
 
@@ -36,6 +21,8 @@ BuildRequires: libXmu-devel libXext-devel libXft-devel
 BuildRequires: xorg-xextproto-devel xorg-cf-files
 BuildRequires: libm17n-devel
 
+%add_findreq_skiplist %_bindir/mgpnet
+
 %description
 MagicPoint is an X11 based presentation tool.  It is designed to make
 simple presentations easy while to make complicated presentations
@@ -44,30 +31,16 @@ just text so that you can create presentation files quickly with your
 favorite editor (e.g. Emacs).
 
 %prep
-%setup -q
-%patch1  -p2 -b .fix1
-%patch2  -p1 -b .fix2
-%patch3  -p1 -b .fix3
-%patch5  -p1 -b .fix5
-%patch6  -p1 -b .fix6
-%patch7  -p0 -b .fix7
-%patch8  -p1 -b .fix8
-%patch9  -p1 -b .fix9
-%patch10 -p0 -b .fix10
-#patch11 -p0 -b .fix11
-%patch12 -p0 -b .fix12
-#patch13 -p0 -b .fix13
-%patch14 -p2 -b .fix14
-%patch15 -p2
+%setup
 
 %build
 %add_optflags -D__SABER__ -DFREETYPEFONTDIR=\"%_ttffontsdir\"
 export mgp_cv_path_uuencode=%_bindir/uuencode
 export mgp_cv_path_uudecode=%_bindir/uudecode
 %autoreconf
+#	--disable-vflib \
 %configure \
 	--prefix=%prefix \
-	--disable-vflib \
 	--enable-xft2 \
 	--enable-imlib \
 	--enable-freetype \
@@ -75,10 +48,13 @@ export mgp_cv_path_uudecode=%_bindir/uudecode
 	--enable-locale \
 	--enable-gif \
 	--with-m17n-lib \
+	--enable-debug \
+	--with-x \
 	#
 xmkmf -a
 # SMP-incompatible build.
-make
+sed -i 's|\(CDEBUGFLAGS =.*\)|\1 -g|' Makefile
+%make
 
 %install
 %makeinstall install.man DESTDIR=%buildroot
@@ -90,6 +66,9 @@ make
 %doc COPYRIGHT FAQ README* RELNOTES SYNTAX USAGE sample
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13a-alt1.20140908
+- New snapshot
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.13a-alt1.1.qa1
 - NMU: rebuilt for updated dependencies.
 
