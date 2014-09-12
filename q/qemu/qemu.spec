@@ -154,7 +154,7 @@
 # }}}
 
 Name: qemu
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -653,6 +653,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
+- 2.1.1
+
 * Mon Aug 04 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 

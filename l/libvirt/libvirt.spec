@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -735,6 +735,7 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config /lib/tmpfiles.d/libvirtd.conf
 %_unitdir/libvirtd.service
+%_unitdir/libvirtd.socket
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 /lib/sysctl.d/*
@@ -851,6 +852,8 @@ fi
 %if_with vbox
 %files daemon-driver-vbox
 %_libdir/%name/connection-driver/libvirt_driver_vbox.so
+%_libdir/%name/connection-driver/libvirt_driver_vbox_network.so
+%_libdir/%name/connection-driver/libvirt_driver_vbox_storage.so
 %endif
 %endif #driver_modules
 
@@ -921,6 +924,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.8-alt1
+- 1.2.8
+
 * Wed Aug 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.7-alt1
 - 1.2.7
 

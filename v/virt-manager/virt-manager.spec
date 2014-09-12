@@ -7,7 +7,7 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -27,6 +27,7 @@ Requires: python-module-libxml2
 Requires: vte3
 Requires: dconf
 Requires: dbus-tools-gui
+Requires: libosinfo >= 0.2.10
 Requires: librsvg
 # add requires based on "from gi.repository import foo"
 Requires: typelib(GObject)
@@ -41,6 +42,7 @@ Requires: typelib(GtkVnc)
 Requires: typelib(SpiceClientGtk)
 Requires: typelib(SpiceClientGLib)
 Requires: typelib(Vte)
+Requires: typelib(Libosinfo)
 
 BuildRequires: python-devel python-module-distribute
 BuildRequires: libgio
@@ -76,7 +78,6 @@ Requires: virt-manager-common = %version-%release
 
 Provides: virt-install
 Provides: virt-clone
-Provides: virt-image
 Provides: virt-convert
 Provides: virt-xml
 Obsoletes: python-module-virtinst
@@ -129,22 +130,21 @@ python setup.py install --root=%buildroot
 %files -n virt-install
 %_bindir/virt-install
 %_bindir/virt-clone
-%_bindir/virt-image
 %_bindir/virt-convert
 %_bindir/virt-xml
 %_datadir/%name/virt-install
 %_datadir/%name/virt-clone
-%_datadir/%name/virt-image
 %_datadir/%name/virt-convert
 %_datadir/%name/virt-xml
 %_man1dir/virt-install.1*
 %_man1dir/virt-clone.1*
 %_man1dir/virt-convert.1*
 %_man1dir/virt-xml.1*
-%_man1dir/virt-image.1*
-%_man5dir/virt-image.5*
 
 %changelog
+* Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Wed Apr 02 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 - updare Requires (#29396, #22760)
