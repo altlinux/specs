@@ -6,13 +6,14 @@
 
 Name: libgweather
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 Summary: A library for weather information
 
 Group: System/Libraries
 License: GPLv3
 Url: https://live.gnome.org/LibGWeather
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-3.12.2-up-yr.no_api.patch
 
 # From configure.in
 %define gtk_ver 2.91.7
@@ -101,6 +102,7 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure \
@@ -152,6 +154,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Fri Sep 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
+- Yr.no: update to version 1.9 of the online API (BGO #736334)
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
