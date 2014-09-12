@@ -1,6 +1,6 @@
 Name: pkcs11-helper
-Version: 1.08
-Release: alt1
+Version: 1.12.0
+Release: alt1.git20140427
 Summary: A library for using PKCS#11 providers
 
 Group: Development/Other
@@ -8,11 +8,13 @@ License: GPLv2 or BSD
 Url: http://www.opensc-project.org/pkcs11-helper/
 Packager: Mykola Grechukh <gns@altlinux.ru>
 
-Source: http://www.opensc-project.org/files/%name/%name-%version.tar.bz2
+# https://github.com/OpenSC/pkcs11-helper.git
+Source: %name-%version.tar.bz2
 
 BuildRequires: doxygen graphviz
 BuildRequires: openssl-devel
 BuildRequires: pkg-config
+BuildPreReq: libpolarssl-devel libgnutls-devel libnss-devel
 
 %description
 pkcs11-helper is a library that simplifies the interaction with PKCS#11
@@ -40,7 +42,10 @@ programs using the pkcs11-helper library.
 %setup
 
 %build
-%configure --disable-static --enable-doc
+%autoreconf
+%configure --disable-static --enable-doc \
+	--with-apidocdir \
+	--enable-tests
 %make_build
 
 %install
@@ -48,7 +53,7 @@ programs using the pkcs11-helper library.
 
 # Use %%doc to install documentation in a standard location
 mkdir apidocdir
-mv %buildroot%_docdir/%name/api/ apidocdir/
+mv doc/api/api.out/html/* apidocdir/
 rm -rf %buildroot%_docdir/%name/
 
 # Remove libtool .la files
@@ -67,6 +72,9 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/pkcs11-helper-1.8*
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1.git20140427
+- Version 1.12.0
+
 * Tue Apr 26 2011 Mykola Grechukh <gns@altlinux.ru> 1.08-alt1
 - new version
 
