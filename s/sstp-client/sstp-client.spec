@@ -2,7 +2,7 @@
 
 Name: sstp-client
 Version: 1.0.9
-Release: alt1
+Release: alt2
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
 License: GPLv2+
@@ -60,7 +60,7 @@ install -c -d -m 755 %buildroot%_man8dir
 install -c -m 755 sstpc.8 %buildroot%_man8dir
 
 install -c -d -m 755 %buildroot%_runtimedir/sstpc
-install -Dpm 644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 %_sbindir/groupadd -r -f sstpc
@@ -74,7 +74,7 @@ install -Dpm 644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_man8dir/sstpc.8*
 %_libdir/pppd/%ppp_version/*.so
 %dir %attr(755,sstpc,sstpc) %_runtimedir/sstpc
-%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %files -n libsstp
@@ -86,6 +86,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 12 2014 Alexey Shabalin <shaba@altlinux.ru> 1.0.9-alt2
+- move tmpfiles conf from /etc to /lib
+
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.9-alt1
 - 1.0.9
 
