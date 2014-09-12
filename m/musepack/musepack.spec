@@ -1,6 +1,6 @@
 Name: musepack
 Version: r475
-Release: alt1
+Release: alt2
 Summary: Portable Musepack decoder library
 License: BSD
 Group: Sound
@@ -55,6 +55,14 @@ cmake \
 %install
 %makeinstall_std
 
+# The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
+# It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
+# usually don't belong in releases. 
+# When packaging a CVS/SVN snapshot, export from CVS/SVN rather than use a checkout.
+find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+# the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
+find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+
 %files
 %_bindir/*
 
@@ -67,6 +75,9 @@ cmake \
 %_libdir/*.so
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r475-alt2
+- Applied repocop patch
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r475-alt1
 - Initial build for Sisyphus
 
