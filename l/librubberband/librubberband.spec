@@ -1,18 +1,18 @@
 %def_disable static
 
 Name: librubberband
-Version: 1.7
-Release: alt1
+Version: 1.8.1
+Release: alt1.hg20140905
 
 Summary: high quality library for audio time-stretching and pitch-shifting
 License: %gpl2plus
 Group: System/Libraries
 Url: http://www.breakfastquay.com/rubberband/
-Packager: Alex Karpov <karpov@altlinux.ru>
 
+# hg clone https://bitbucket.org/breakfastquay/rubberband
 Source0: %name-%version.tar
 
-BuildPreReq: rpm-build-licenses
+BuildPreReq: rpm-build-licenses doxygen java-devel-default graphviz
 # Automatically added by buildreq on Fri Aug 07 2009
 BuildRequires: gcc-c++ ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel
 
@@ -20,6 +20,41 @@ BuildRequires: gcc-c++ ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-
 Rubber Band Library is a high quality software library for audio time-stretching
 and pitch-shifting. It permits you to change the tempo and pitch of an audio
 recording or stream dynamically and independently of one another.
+
+%package jni
+Summary: JNI interface for %name
+Group: Development/Java
+
+%description jni
+Rubber Band Library is a high quality software library for audio time-stretching
+and pitch-shifting. It permits you to change the tempo and pitch of an audio
+recording or stream dynamically and independently of one another.
+
+This package contains JNI interface for %name.
+
+%package j
+Summary: Java interface for %name
+Group: Development/Java
+BuildArch: noarch
+
+%description j
+Rubber Band Library is a high quality software library for audio time-stretching
+and pitch-shifting. It permits you to change the tempo and pitch of an audio
+recording or stream dynamically and independently of one another.
+
+This package contains Java interface for %name.
+
+%package docs
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+Rubber Band Library is a high quality software library for audio time-stretching
+and pitch-shifting. It permits you to change the tempo and pitch of an audio
+recording or stream dynamically and independently of one another.
+
+This package contains documentation for %name.
 
 %package devel
 Summary: Headers for %name
@@ -64,19 +99,34 @@ An audio time-stretching and pitch-shifting LADSPA plugin
 %setup
 
 %build
+%autoreconf
 %configure %{subst_enable static} --libdir=%_libdir
 %make_build
+%make_build jni
+doxygen
 
 %install
 %makeinstall_std
-#mv %buildroot%_prefix/libX %buildroot%_libdir
+
+install -d %buildroot%_javadir
+install -m644 lib/rubberband.jar %buildroot%_javadir/
 
 %files
 %_libdir/*.so.*
-%doc README.txt
+%doc README.txt CHANGELOG
+
+%files jni
+%_libdir/librubberband-jni.so
+
+%files j
+%_javadir/*
+
+%files docs
+%doc doc/html/*
 
 %files devel
 %_libdir/*.so
+%exclude %_libdir/librubberband-jni.so
 %_includedir/rubberband
 %_pkgconfigdir/*.pc
 
@@ -96,6 +146,9 @@ An audio time-stretching and pitch-shifting LADSPA plugin
 %_datadir/ladspa/rdf/ladspa-rubberband*
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt1.hg20140905
+- Version 1.8.1
+
 * Wed Jan 11 2012 Alex Karpov <karpov@altlinux.ru> 1.7-alt1
 - new version
 
