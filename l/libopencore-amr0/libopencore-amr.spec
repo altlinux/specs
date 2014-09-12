@@ -4,12 +4,12 @@
 %define soversion 0
 
 Name: %libname%soversion
-Version: 0.1.2
-Release: alt2.1.qa1
+Version: 0.1.3
+Release: alt1.git20140714
 Summary: OpenCore implementation of AMR speech codec.
 
 Group: System/Libraries
-License: GPLv3
+License: ASLv2.0
 
 BuildRequires: gcc-c++
 
@@ -72,23 +72,42 @@ specification for the Adaptive Multi Rate (AMR) speech codec.
 The implementation is derived from the OpenCORE framework, part of
 the Google Android project.
 
+%package -n %libname-examples
+Summary: Examples for %libname
+Group: Development/Documentation
+
+%description -n %libname-examples
+Adaptive Multi Rate speech codec - narrowband version development files.
+This library contains an implementation of the 3GPP TS 26.073
+specification for the Adaptive Multi Rate (AMR) speech codec.
+The implementation is derived from the OpenCORE framework, part of
+the Google Android project.
+
+This package contains examples for %libname.
+
+
 %prep
-%setup -q -n %libname-%version
+%setup -n %libname-%version
 
 %build
 %autoreconf
 
-%configure --disable-static
+%configure --disable-static \
+	--enable-examples
 
-%make_build
+cp -fR test examples
+
+%make_build V=1
 
 %install
-%make_install DESTDIR=%buildroot PREFIX=/usr LIBDIR=%_libdir install
+%makeinstall_std PREFIX=/usr LIBDIR=%_libdir
 
 %files -n %{libname}wb%soversion
+%doc ChangeLog README
 %_libdir/%{libname}wb.so.%{soversion}*
 
 %files -n %{libname}nb%soversion
+%doc ChangeLog README
 %_libdir/%{libname}nb.so.%{soversion}*
 
 %files -n %{libname}wb-devel
@@ -101,7 +120,14 @@ the Google Android project.
 %_libdir/%{libname}nb.so
 %_pkgconfigdir/opencore-amrnb.pc
 
+%files -n %libname-examples
+%doc examples/*
+%_bindir/*
+
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20140714
+- Version 0.1.3
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt2.1.qa1
 - NMU: rebuilt for updated dependencies.
 
