@@ -18,8 +18,8 @@
 %def_with wavpack
 
 Name: moc
-Version: 2.5.0
-Release: alt0.11
+Version: 2.6.0
+Release: alt0.1
 
 Summary: Console player
 Group: Sound
@@ -35,7 +35,7 @@ Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %
 # Automatically added by buildreq on Wed Jun 07 2006
 BuildRequires: gcc-c++ glibc-devel-static jackit-devel libalsa-devel libcurl-devel 
 BuildRequires: libncursesw-devel libsamplerate-devel pkg-config libltdl7-devel
-BuildRequires: libdb4.7-devel libmagic-devel
+BuildRequires: libdb4.8-devel libmagic-devel
 
 %description
 MOC is a console audio player with simple ncurses interface in
@@ -324,6 +324,9 @@ EOF
 %endif
 
 %changelog
+* Fri Sep 12 2014 Alexey Gladkov <legion@altlinux.ru> 2.6.0-alt0.1
+- New version (2.6.0-alpha1)
+
 * Sat Mar 15 2014 Alexey Gladkov <legion@altlinux.ru> 2.5.0-alt0.11
 - New version (2.5.0-beta2)
 
