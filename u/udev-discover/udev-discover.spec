@@ -1,4 +1,4 @@
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Name: udev-discover
 
@@ -45,5 +45,8 @@ helpfull for udev testers, coders, hackers and consumers.
 %_datadir/%name
 
 %changelog
+* Fri Sep 12 2014 Cronbuild Service <cronbuild@altlinux.org> 0.2.3-alt1
+- Freshed up to v0.2.3 with the help of cronbuild and update-source-functions.
+
 * Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
 - Freshed up to v0.2.2 with the help of cronbuild and update-source-functions.
