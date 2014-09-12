@@ -1,6 +1,6 @@
 Name: libtubo
-Version: 4.5.0
-Release: alt4.qa1
+Version: 5.0.14
+Release: alt1.git20140218
 
 Summary: Tubo Remote Process Execution Library
 License: GPL
@@ -8,10 +8,6 @@ Group: System/Libraries
 Url: http://xffm.sourceforge.net/libtubo.html
 
 Source: %name-%version.tar.gz
-
-Patch0: libtubo-4.5.0-alt-unresolved.patch
-
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
 BuildPreReq: gtk-doc
 # Automatically added by buildreq on Tue Nov 07 2006
@@ -35,33 +31,78 @@ stderr and stdin file descriptors.
 The %name-devel package contains the header files and documentation
 needed to develop applications with %name.
 
+%package devel-docs
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-docs
+The Libtubo library is small and simple function set to enable a process to
+run any other process in the background and communicate via the stdout,
+stderr and stdin file descriptors.
+
+This package contains documentation for %name.
+
+%package tools
+Summary: Tools for %name
+Group: Networking/Remote access
+PreReq: %name = %version-%release
+
+%description tools
+The Libtubo library is small and simple function set to enable a process to
+run any other process in the background and communicate via the stdout,
+stderr and stdin file descriptors.
+
+This package contains tools for %name.
+
 %prep
-%setup -q
-%patch0 -p1
+%setup
 
 %build
-libtoolize --copy --force
-aclocal -I m4
-automake -a -f -c
-autoconf
+#libtoolize --copy --force
+#aclocal -I m4
+#automake -a -f -c
+#autoconf
+./autogen.sh
 %configure \
+	--includedir=%_includedir/xffm \
 	--enable-shared \
-	--disable-static
-%make_build
+	--disable-static \
+	--enable-gtk-doc \
+	--enable-gtk-doc-html \
+	--with-debug \
+	--with-html-dir=%_docdir \
+	--with-examples
+%make_build WANT_EXAMPLES=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std WANT_EXAMPLES=1
+
+mv %buildroot%_bindir/example %buildroot%_bindir/%name-example
+ln -s tubo.pc %buildroot%_pkgconfigdir/%name.pc
 
 %files
-%doc AUTHORS ChangeLog
+%doc AUTHORS ChangeLog NEWS README TODO
 %_libdir/lib*.so.*
 
 %files devel
 %_libdir/lib*.so
+%dir %_includedir/xffm
 %_includedir/xffm/tubo.h
-%_pkgconfigdir/libtubo.pc
+%_pkgconfigdir/*
+
+%files devel-docs
+%_docdir/%name
+
+%files tools
+%doc src/example.c
+%_bindir/*
+%_man1dir/*
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.14-alt1.git20140218
+- Version 5.0.14
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
