@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libnxml
-Version: 0.18.1
-Release: alt2.qa1
+Version: 0.18.3
+Release: alt1
 
 Summary: C library for parsing, writing and creating XML 1.0 and 1.1 files or streams
 License: LGPL 2.1
@@ -11,7 +11,6 @@ Group: System/Libraries
 Url: http://www5.autistici.org/bakunin/codes.php
 Source: http://www5.autistici.org/bakunin/libnxml/%name-%version.tar.gz
 
-Packager: Andrey Alexandrov <demion@altlinux.ru>
 BuildRequires: libcurl-devel
 
 %package devel
@@ -40,6 +39,7 @@ It supports utf-8, utf-16be and utf-16le, ucs-4 (1234, 4321, 2143, 2312).
 %setup
 
 %build
+%autoreconf
 %configure %{subst_enable static}
 %make_build
 
@@ -61,6 +61,9 @@ It supports utf-8, utf-16be and utf-16le, ucs-4 (1234, 4321, 2143, 2312).
 %endif
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18.3-alt1
+- Version 0.18.3
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.18.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
