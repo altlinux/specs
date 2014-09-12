@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt46.1
+Release: alt47
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -193,7 +193,7 @@ sed -i 's,/usr/share/common-licenses/GPL,/usr/share/license/GPL,' COPYING
 sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 
 %autoreconf
-
+%add_optflags -DPKG_NEVRA=\\\"%name-%{?epoch:%epoch:}%version-%release.%_target_cpu\\\"
 %configure --includedir=%_includedir/apt-pkg %{subst_enable static}
 
 # Probably this obsolete now?
@@ -274,6 +274,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Fri Sep 12 2014 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt47
+- Added apt's package NEVRA string to OptionsHash.
+
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.15lorg2-alt46.1
 - Bumped soversion.
 - Added aarch64 to archtable.
