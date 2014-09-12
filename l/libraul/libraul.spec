@@ -2,14 +2,13 @@
 %define _waf ./waf --prefix=%_prefix --bindir=%_bindir --configdir=%_sysconfdir --datadir=%_datadir --includedir=%_includedir --libdir=%_libdir --mandir=%_mandir --htmldir=%_docdir/%name-doc --docs
 
 Name: libraul
-Version: 0.7.0
-Release: alt1.qa1
+Version: 0.8.0
+Release: alt1
 
 Summary: utility library for realtime multi-threaded audio applications
 License: %gpl2plus
 Group: System/Libraries
 Url: http://drobilla.net/software/raul/
-Packager: Timur Batyrshin <erthad@altlinux.org>
 
 Source0: %name-%version.tar.bz2
 
@@ -85,6 +84,9 @@ export lt_cv_deplibs_check_method=pass_all
 %doc %_docdir/%name-doc/
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1
+- Version 0.8.0
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
