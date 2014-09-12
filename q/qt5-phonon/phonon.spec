@@ -1,8 +1,8 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.7.80
-Release: alt1
+Version: 4.8.0
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -57,6 +57,7 @@ with Phonon.
 %build
 %Kcmake \
     -DPHONON_BUILD_PHONON4QT5:BOOL=ON \
+    -DSHARE_INSTALL_PREFIX:PATH=%_datadir \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt5_archdatadir \
     -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT:BOOL=ON \
     #
@@ -89,6 +90,15 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt2
+- fix install paths
+
+* Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
+- new version
+
+* Thu Aug 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.80-alt0.M70P.1
+- build for M70P
+
 * Mon Aug 25 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.80-alt1
 - new version
 
