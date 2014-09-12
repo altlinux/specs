@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.4
+Version:  1.5.5
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -30,6 +30,11 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Fri Sep 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
+- girar-show:
+  + fix subtask highlighting
+  + support broken dep, Perl requirements and unmet errors highlight
+
 * Tue Jul 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
 - Add girar-show: show highlighted task list and task log
 
