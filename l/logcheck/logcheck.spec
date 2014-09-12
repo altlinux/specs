@@ -3,17 +3,17 @@
 %define _logcheck_home     %_localstatedir/logcheck
 
 Name: logcheck
-Version: 1.2.68
-Release: alt3
+Version: 1.3.6
+Release: alt1.git20140902
 
 Summary: Mails anomalies in the system logfiles to the administrator
 License: GPL
 Group: Monitoring
 
 Url: http://logcheck.alioth.debian.org/
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 BuildArch: noarch
 
+# git://anonscm.debian.org/logcheck/logcheck.git
 Source: %name-%version.tar
 
 Requires: logtail = %version-%release
@@ -100,6 +100,7 @@ docbook-to-man docs/logcheck.sgml >%buildroot%_man8dir/logcheck.8
 %attr(640,root,%_logcheck_group) %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/header.txt
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/cron.d/%name
 %_sbindir/logcheck
+%_bindir/logcheck-test
 %dir %attr(0770,root,%_logcheck_group) %_localstatedir/%name
 %dir %attr(0770,root,%_logcheck_group) %_lockdir/%name
 
@@ -117,6 +118,9 @@ docbook-to-man docs/logcheck.sgml >%buildroot%_man8dir/logcheck.8
 %_man8dir/logtail*
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20140902
+- Version 1.3.6
+
 * Fri Mar 13 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 1.2.68-alt3
 - Fix pseudouser name in error message (Closes: #19091)
 
