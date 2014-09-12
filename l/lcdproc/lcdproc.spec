@@ -1,6 +1,6 @@
 Name: lcdproc
 Version: 0.5.7
-Release: alt1
+Release: alt2
 
 Summary: Show info on LCD displays
 License: GPL
@@ -9,6 +9,7 @@ Group: System/Kernel and hardware
 Url: http://lcdproc.omnipotent.net
 Source0: %name-%version.tar.gz
 Source1: lcdd.init
+Source2: lcdproc.service
 Source100: lcdproc.watch
 Patch0: lcdproc-fix-return.diff
 Patch1: lcdproc-add-serdisplib.diff
@@ -51,6 +52,7 @@ subst "s#\(DriverPath\)=.*#\1=%_libdir/lcdproc/#" LCDd.conf
 %install
 %makeinstall
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
+install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
 
 %post
 %post_service %name
@@ -66,8 +68,12 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_libdir/lcdproc
 %config %_sysconfdir/*.conf
 %_initdir/*
+%_unitdir/*
 
 %changelog
+* Fri Sep 12 2014 Michael Shigorin <mike@altlinux.org> 0.5.7-alt2
+- added unit file (closes: #30310)
+
 * Fri May 02 2014 Michael Shigorin <mike@altlinux.org> 0.5.7-alt1
 - new version (watch file uupdate)
 
