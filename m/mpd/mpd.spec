@@ -56,8 +56,8 @@
 
 %define  Name MPD
 Name: 	 mpd
-Version: 0.18.11
-Release: alt1.1
+Version: 0.18.14
+Release: alt1
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 
 License: %gpl2plus
@@ -70,6 +70,7 @@ Source1: %name.conf
 Source2: %name.sys.conf.in
 Source3: %name.init.in
 Source4: %name.logrotate
+Source5: %name.tmpfile
 Patch:   %name-%version-%release.patch
 Packager: Alexey Rusakov <ktirf@altlinux.org>
 
@@ -105,6 +106,7 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_fluidsynth:BuildRequires: libfluidsynth-devel}
 %{?_enable_doc:BuildRequires: docbook-dtds doxygen xmlto >= 0.0.21-alt2}
+BuildRequires: systemd-devel
 %if %zeroconf == avahi
 BuildRequires: libavahi-glib-devel
 %endif
@@ -206,6 +208,7 @@ sed -i 's/\[mad\]/[libmad]/' configure.ac
     %{subst_enable fluidsynth} \
     %{subst_enable wildmidi} \
     %{subst_enable_to doc documentation} \
+    --with-systemdsystemunitdir=/lib/systemd/system \
     --with-zeroconf=%zeroconf \
     --docdir=%_docdir/%name-%version
 %make_build
@@ -215,15 +218,16 @@ bzip2 --best --keep --force NEWS
 %install
 %makeinstall_std protocoldir=%_docdir/%name-%version/html
 ln -s html %buildroot%_docdir/%name-%version/protocol
-install -d %buildroot{%_localstatedir/%name/playlists,{/var/run,%_logdir}/%name,%_sysconfdir,%_initdir}
+install -d %buildroot{%_localstatedir/%name/playlists,{%_runtimedir,%_logdir}/%name,%_sysconfdir,%_initdir,%_tmpfilesdir}
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%name.conf
 sed 's/@MPD_USER@/%mpd_user/g' %SOURCE2 > %buildroot%_sysconfdir/%name.sys.conf
 chmod 640 %buildroot%_sysconfdir/%name.sys.conf
 sed 's/@MPD_USER@/%mpd_user/g' %SOURCE3 > %buildroot%_initdir/%name
 chmod 755 %buildroot%_initdir/%name
+sed 's/@MPD_USER@/%mpd_user/g' %SOURCE5 > %buildroot%_tmpfilesdir/%name.conf
+chmod 644 %buildroot%_tmpfilesdir/%name.conf
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 bzip2 --best %buildroot%_docdir/%name-%version/NEWS
-
 
 %pre
 %_sbindir/groupadd -r -f %mpd_group &>/dev/null ||:
@@ -257,9 +261,11 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 %_man1dir/*
 %_man5dir/*
 %_initdir/*
+%_unitdir/*
+%_tmpfilesdir/*
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name
 %attr(775,root,%mpd_group) %dir %_localstatedir/%name/playlists
-%attr(775,root,%mpd_group) %dir /var/run/%name
+%attr(775,root,%mpd_group) %dir %_runtimedir/%name
 %attr(775,root,%mpd_group) %dir %_logdir/%name
 
 
@@ -281,6 +287,12 @@ bzip2 --best %buildroot%_docdir/%name-%version/NEWS
 
 
 %changelog
+* Fri Sep 12 2014 Alexey Shabalin <shaba@altlinux.ru> 0.18.14-alt1
+- 0.18.14
+- fix init script
+- add systemd unit files
+- add tmpfiles conf
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18.11-alt1.1
 - Rebuilt with new audiofile
 
