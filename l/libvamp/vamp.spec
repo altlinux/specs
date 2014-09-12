@@ -1,17 +1,15 @@
 %def_disable static
 
 Name: libvamp
-Version: 2.4
-Release: alt1
+Version: 2.5
+Release: alt1.hg20140905
 
 Summary: plugin system for plugins that extract descriptive information from audio data
 License: %bsdstyle
 Group: System/Libraries
 Url: http://www.vamp-plugins.org/
-Packager: Timur Batyrshin <erthad@altlinux.org>
 
 Source0: %name-%version.tar
-Patch0: fix-paths.patch
 
 BuildPreReq: rpm-build-licenses
 
@@ -75,7 +73,6 @@ energy rise metric.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 %autoreconf
@@ -113,6 +110,9 @@ energy rise metric.
 %_libdir/vamp/vamp-example-plugins*
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.hg20140905
+- Version 2.5
+
 * Tue Oct 16 2012 Paul Wolneykien <manowar@altlinux.ru> 2.4-alt1
 - New version 2.4.
 
