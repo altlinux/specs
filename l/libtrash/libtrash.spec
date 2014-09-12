@@ -1,6 +1,6 @@
 Name: libtrash
-Version: 3.1
-Release: alt1.1.qa1
+Version: 3.3
+Release: alt1
 
 Summary: %name - a trash can for GNU/Linux
 License: GNU GPL
@@ -10,9 +10,6 @@ Url: http://pages.stern.nyu.edu/~marriaga/software/libtrash/
 Source: http://pages.stern.nyu.edu/~marriaga/software/libtrash/%name-%version.tgz
 Source1: %name.README.ALT
 Source2: %name-profile.tar.bz2
-Patch0: libtrash-Makefile-2.4.patch
-Patch1: libtrash-3.1-python.patch
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
 BuildPreReq: /proc
 
@@ -20,29 +17,55 @@ BuildPreReq: /proc
 BuildRequires: python-base
 
 %description
-This is the homepage of libtrash, the shared library which, when preloaded, implements a trash can under GNU/Linux. Through the interception of function calls which might lead to accidental data loss libtrash effectively ensures that your data remains protected from your own mistakes.
+This is the homepage of libtrash, the shared library which, when
+preloaded, implements a trash can under GNU/Linux. Through the
+interception of function calls which might lead to accidental data loss
+libtrash effectively ensures that your data remains protected from your
+own mistakes.
+
+%package devel
+Summary: Development files of %name
+Group: Development/C
+Requires: %name = %EVR
+
+%description devel
+This is the homepage of libtrash, the shared library which, when
+preloaded, implements a trash can under GNU/Linux. Through the
+interception of function calls which might lead to accidental data loss
+libtrash effectively ensures that your data remains protected from your
+own mistakes.
+
+This package contains development files of %name.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p1
+%setup
 
 %build
-%make
+%make_build
 cp %SOURCE1 README.ALT
 tar -jxf %SOURCE2
-%__subst "s@^INSTLIBDIR=\${DESTDIR}/usr/lib@INSTLIBDIR=\${DESTDIR}%_libdir@g" src/Makefile
+subst "s@^INSTLIBDIR=\${DESTDIR}/usr/lib@INSTLIBDIR=\${DESTDIR}%_libdir@g" src/Makefile
 
 %install
-mkdir -p %buildroot{%_libdir,%_sysconfdir}
-%make DESTDIR=%buildroot install
+mkdir -p %buildroot{%_libdir,%_sysconfdir,%_includedir}
+%makeinstall_std
+
+install -p -m644 src/*.h %buildroot%_includedir/
 
 %files
 %doc README.ALT CHANGE.LOG README TODO config.txt libtrash.conf libtrash.sh libtrash.csh cleanTrash
 %config(noreplace) %_sysconfdir/%name.conf
 %_libdir/%name.*
+%exclude %_libdir/%name.so
+
+%files devel
+%_includedir/*
+%_libdir/%name.so
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
+- Version 3.3
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
