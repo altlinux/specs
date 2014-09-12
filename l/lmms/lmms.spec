@@ -1,29 +1,21 @@
 Name: lmms
-Version: 0.4.15
-Release: alt1
+Version: 1.0.95
+Release: alt1.git20140910
 
 Summary: Linux MultiMedia Studio
 License: GPL
 Group: Sound
 Url: http://lmms.sourceforge.net
 
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+# https://github.com/LMMS/lmms.git
 Source: %name-%version.tar
 Source4: %name-16x16.png
 Source5: %name-32x32.png
 Source6: %name-48x48.png
 
-BuildPreReq: rpm-build-lmms
+BuildPreReq: rpm-build-lmms libfltk-devel
 # Automatically added by buildreq on Sun Mar 27 2011
-BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel libwine-devel phonon-devel libfftw3-devel libportaudio2-devel libXft-devel libjpeg-devel
-
-#BuildRequires: cmake gcc-c++ libSDL-devel libalsa-devel libpulseaudio-devel libqt4-devel libstk-devel libvorbis-devel
-#BuildRequires: esound-devel fontconfig freetype2 libfftw3-devel libfluidsynth-devel jackit-devel libICE-devel libSDL_sound-devel libX11-devel libogg-devel libsamplerate-devel libsndfile-devel libstdc++-devel xorg-cf-files xorg-devel
-##BuildRequires: libncurses-devel
-#BuildRequires: libfestival-devel libestools-devel shared-mime-info
-#TODO: Find or build -lFestival
-
-#Requires: ladspa-caps ladspa-mcp-plugins ladspa-tap-plugins ladspa-swh-plugins ladspa-rev-plugins ladspa-vco-plugins
+BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel phonon-devel libfftw3-devel libportaudio2-devel libXft-devel libjpeg-devel
 
 %add_verify_elf_skiplist %_libdir/%name/*
 
@@ -42,7 +34,7 @@ Requires: %name = %version-%release
 Development files and headers for %name
 
 %prep
-%setup -q
+%setup
 
 ##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(QT_LDADD) -lpthread |g"
 ##find ./plugins -type f -print0 | xargs -r0 %__subst "s|(LIBS)|(LIBS) \$(QT_LDADD) -lpthread |g"
@@ -52,10 +44,15 @@ Development files and headers for %name
 %build
 %cmake -DWANT_FFTW3F:BOOL=OFF -DWANT_CMT:BOOL=OFF
 #-DWANT_CAPS:BOOL=OFF  -DWANT_SWH:BOOL=OFF -DWANT_TAP:BOOL=OFF
-%make -C BUILD
+%make_build -C BUILD VERBOSE=1
 
 %install
-%make -C BUILD DESTDIR=%buildroot install
+%makeinstall_std -C BUILD
+
+%ifarch x86_64
+install -d %buildroot%_libdir
+mv %buildroot%_libexecdir/%name %buildroot%_libdir/
+%endif
 
 %find_lang %name
 
@@ -103,6 +100,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.95-alt1.git20140910
+- Version 1.0.95
+
 * Sun Sep 15 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.15-alt1
 - 0.4.15
 
