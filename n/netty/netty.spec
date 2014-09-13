@@ -1,8 +1,8 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           netty
-Version:        3.6.3
-Release:        alt1_3jpp7
+Version:        3.6.6
+Release:        alt1_2jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
 Group:          Development/Java
@@ -99,6 +99,9 @@ sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.6.6-alt1_2jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.6.3-alt1_3jpp7
 - new version
 
