@@ -1,6 +1,6 @@
 Name: lua5
-Version: 5.1.4
-Release: alt5
+Version: 5.1.5
+Release: alt1
 
 Summary: Embeddable programming language
 License: MIT
@@ -158,6 +158,12 @@ mkdir -p %buildroot{%_libdir,%_datadir}/lua5
 %pkgdocdir/test
 
 %changelog
+* Sun Sep  7 2014 Terechkov Evgenii <evg@altlinux.org> 5.1.5-alt1
+- Patch for CVE-2014-5461 applied
+- 5.1.4 -> 5.1.5
+- lua-5.1.4 patches reverted
+- applied official pathes #1/#2 from lua.org/bugs.html
+
 * Tue May  3 2011 Terechkov Evgenii <evg@altlinux.org> 5.1.4-alt5
 - Add more info in lua.pc (ALT#25368)
 
