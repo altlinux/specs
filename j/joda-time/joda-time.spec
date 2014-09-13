@@ -2,11 +2,11 @@ Epoch: 0
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global tzversion tzdata2013c
+%global tzversion tzdata2013g
 
 Name:             joda-time
-Version:          2.2
-Release:          alt1_1.tzdata2013cjpp7
+Version:          2.3
+Release:          alt1_1.tzdata2013gjpp7
 Summary:          Java date and time API
 
 License:          ASL 2.0
@@ -68,6 +68,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_1.tzdata2013gjpp7
+- new release
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1.tzdata2013cjpp7
 - new release
 
