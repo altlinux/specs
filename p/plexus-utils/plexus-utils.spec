@@ -1,7 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -39,8 +38,8 @@ BuildRequires: jpackage-compat
 %global subname utils
 
 Name:           plexus-utils
-Version:        3.0.9
-Release:        alt1_5jpp7
+Version:        3.0.14
+Release:        alt1_1jpp7
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -93,6 +92,21 @@ Javadoc for %{name}.
 %setup -q -n %{name}-%{name}-%{version}
 cp %{SOURCE1} .
 
+# Generate OSGI info
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
+%pom_xpath_inject "pom:build/pom:plugins" "
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <_nouses>true</_nouses>
+              <Export-Package>org.codehaus.plexus.util.*;org.codehaus.plexus.util.cli.*;org.codehaus.plexus.util.cli.shell.*;org.codehaus.plexus.util.dag.*;org.codehaus.plexus.util.introspection.*;org.codehaus.plexus.util.io.*;org.codehaus.plexus.util.reflection.*;org.codehaus.plexus.util.xml.*;org.codehaus.plexus.util.xml.pull.*</Export-Package>
+            </instructions>
+          </configuration>
+        </plugin>"
+
 %build
 mvn-rpmbuild install javadoc:javadoc -Dmaven.test.failure.ignore=true
 
@@ -120,6 +134,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.14-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.0.9-alt1_5jpp7
 - new version
 
