@@ -1,12 +1,12 @@
 Name: livecd-webkiosk
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
 License: Public domain
 Group: System/X11
 
-Url: http://altlinux.org/m-p
+Url: http://en.altlinux.org/starterkits
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
@@ -20,6 +20,16 @@ Requires: ratpoison xinit
 %description
 %summary
 (livecd specific; also employs some ratpoison)
+
+%package seamonkey
+Summary: seamonkey webkiosk setup
+Group: System/X11
+Requires: %name = %version-%release
+Requires: seamonkey
+
+%description seamonkey
+%summary
+(the browser == seamonkey)
 
 %package firefox
 Summary: firefox webkiosk setup
@@ -69,6 +79,13 @@ cat > %buildroot%ifacedir/options << _EOF_
 BOOTPROTO=dhcp
 _EOF_
 
+%post seamonkey
+cat > %wrapper << _EOF_
+#!/bin/sh
+exec seamonkey -chrome "\$@"
+_EOF_
+chmod +x %wrapper
+
 %post firefox
 cat > %wrapper << _EOF_
 #!/bin/sh
@@ -88,11 +105,16 @@ chmod +x %wrapper
 %ifacedir/options
 %xsfile
 
+%files seamonkey
+
 %files firefox
 
 %files chromium
 
 %changelog
+* Sat Sep 13 2014 Michael Shigorin <mike@altlinux.org> 0.3-alt1
+- added seamonkey support
+
 * Fri Jun 07 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt2
 - rebuilt
 
