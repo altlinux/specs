@@ -1,20 +1,20 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(IO/File.pm)
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           tomcat-native
-Version:        1.1.27
-Release:        alt1_2jpp7
+Version:        1.1.29
+Release:        alt1_1jpp7
 Summary:        Tomcat native library
 
+Group:          System/Libraries
 License:        ASL 2.0
 URL:            http://tomcat.apache.org/tomcat-7.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  jpackage-utils
-BuildRequires:  libapr1-devel >= 1.3.0
+BuildRequires:  libapr1-devel >= 1.2.1
 BuildRequires:  libssl-devel
 # Upstream compatibility:
 Provides:       tcnative = %{version}-%{release}
@@ -47,7 +47,7 @@ make %{?_smp_mflags}
 
 
 %install
-%makeinstall_std -C jni/native
+make -C jni/native install DESTDIR=$RPM_BUILD_ROOT
 # Perhaps a devel package sometime?  Not for now; no headers are installed.
 rm -f $RPM_BUILD_ROOT%{_libdir}/libtcnative*.*a
 rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
@@ -60,6 +60,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.29-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.27-alt1_2jpp7
 - new release
 
