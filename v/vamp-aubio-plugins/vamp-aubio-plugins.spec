@@ -1,6 +1,6 @@
 Name: vamp-aubio-plugins
 Version: 0.4.0
-Release: alt1
+Release: alt1.hg20131231
 Summary: A set of Vamp plugins
 License: GPLv2
 Group: Sound
@@ -10,8 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-make
-#BuildPreReq: libvamp-devel libaubio-devel gcc-c++
-BuildPreReq: libvamp-devel gcc-c++
+BuildPreReq: libvamp-devel libaubio4-devel gcc-c++
 
 %description
 A set of Vamp plugins (http://www.sonicvisualiser.org/vamp.html) for
@@ -42,6 +41,9 @@ install -m644 vamp-aubio.* vamp-plugin.* \
 %_libdir/vamp
 
 %changelog
+* Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.hg20131231
+- Snapshot from mercurial
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
 
