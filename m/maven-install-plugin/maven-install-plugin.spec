@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-install-plugin
-Version:        2.4
-Release:        alt1_4jpp7
+Version:        2.5
+Release:        alt1_1jpp7
 Summary:        Maven Install Plugin
 
 Group:          Development/Java
@@ -18,22 +17,14 @@ BuildArch:      noarch
 
 BuildRequires: maven-local
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: plexus-utils
-BuildRequires: plexus-digest
-BuildRequires: junit
 BuildRequires: maven-archiver
-BuildRequires: maven-shared-reporting-impl
 BuildRequires: mvn(org.apache.maven:maven-artifact:2.0.6)
 BuildRequires: mvn(org.apache.maven:maven-model:2.0.6)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-utils)
 
 Requires: maven
 Requires: jpackage-utils
@@ -68,40 +59,21 @@ API documentation for %{name}.
 %pom_add_dep org.apache.maven:maven-core::test
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_4jpp7
 - new version
 
