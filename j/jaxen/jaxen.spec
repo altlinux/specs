@@ -1,6 +1,4 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -34,46 +32,45 @@ BuildRequires: jpackage-compat
 #
 
 Name:           jaxen
-Version:        1.1.3
-Release:        alt3_9jpp7
+Version:        1.1.6
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        An XPath engine written in Java
 License:        BSD
 URL:            http://jaxen.codehaus.org/
-Group:          Development/Java
-Source0:        http://dist.codehaus.org/jaxen/distributions/jaxen-%{version}-src.tar.gz
-Source1:        build.xml
-Source2:        http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-Requires:       dom4j >= 0:1.6.1
-Requires:       jdom >= 0:1.0-0.rc1.1jpp
-Requires:       xalan-j2
-Requires:       xerces-j2
-BuildRequires:  ant >= 0:1.6 jpackage-utils >= 0:1.6 junit ant-junit
-BuildRequires:  dom4j >= 0:1.6.1
-BuildRequires:  jdom >= 0:1.0-0.rc1.1jpp
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
+Source0:        http://dist.codehaus.org/jaxen/distributions/%{name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(jdom:jdom)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xml-apis:xml-apis)
+
 Provides:       jaxen-bootstrap <= %{version}-%{release}
 Obsoletes:      jaxen-bootstrap <= %{version}-%{release}
+
 BuildArch:      noarch
 Source44: import.info
 
 %description
-Jaxen is an XPath engine written in Java to work against a variety of XML
-based object models such as DOM, dom4j and JDOM together with Java
-Beans.
+Jaxen is an open source XPath library written in Java. It is adaptable
+to many different object models, including DOM, XOM, dom4j, and JDOM.
+Is it also possible to write adapters that treat non-XML trees such as compiled
+Java byte code or Java beans as XML, thus enabling you to query these trees
+with XPath too.
 
 %package demo
+Group: Development/Documentation
 Summary:        Samples for %{name}
-Group:          Development/Documentation
 Requires:       jaxen = 0:%{version}-%{release}
 
 %description demo
 %{summary}.
 
 %package javadoc
+Group: Development/Documentation
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
 BuildArch: noarch
 
 %description javadoc
@@ -81,57 +78,37 @@ BuildArch: noarch
 
 %prep
 %setup -q 
-find . -name "*.jar" -exec rm -f {} \;
-cp %{SOURCE1} .
-cp %{SOURCE2} pom.xml
-mkdir -p target/lib
-pushd target/lib
-build-jar-repository . dom4j-1.6.1.jar jdom-1.0.jar 
-ln -s %{_javadir}/xerces-j2.jar xercesImpl-2.6.2.jar
-popd
+
 rm -rf src/java/main/org/jaxen/xom
 rm src/java/test/org/jaxen/test/XOM*.java
 %pom_remove_dep xom:xom
-%pom_remove_dep :maven-cobertura-plugin
-%pom_remove_dep :maven-findbugs-plugin
+
+%mvn_file : %{name}
+%mvn_alias : "saxpath:saxpath"
 
 %build
-mkdir .maven
-export CLASSPATH=$(build-classpath xml-commons-apis)
-ant -Dant.build.sysclasspath=first jar javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}-%{version}.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
 # demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/samples
-cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/samples
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/samples
+cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 
-# POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a saxpath:saxpath
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc %{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %files demo
-%{_datadir}/%{name}-%{version}
+%{_datadir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt3_9jpp7
 - new release
 
