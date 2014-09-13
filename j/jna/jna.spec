@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 21
 Name:           jna
-Version:        3.5.0
+Version:        3.5.2
 Release:        alt1_2jpp7
 Summary:        Pure Java access to native libraries
 
@@ -21,21 +21,20 @@ URL:            https://jna.dev.java.net/
 #   rm -rf jna-%{version}/{dist/*,www}
 #   tar cjf ~/rpm/SOURCES/jna-%{version}.tar.bz2 jna-%{version}
 Source0:        %{name}-%{version}.tar.bz2
-Source1:	pom-%{name}.xml
-Source2:	pom-platform.xml
+Source1:	package-list
 Patch0:         jna-3.5.0-build.patch
 # This patch is Fedora-specific for now until we get the huge
 # JNI library location mess sorted upstream
-Patch1:         jna-3.5.0-loadlibrary.patch
+Patch1:         jna-3.5.2-loadlibrary.patch
 # The X11 tests currently segfault; overall I think the X11 JNA stuff is just a 
 # Really Bad Idea, for relying on AWT internals, using the X11 API at all,
 # and using a complex API like X11 through JNA just increases the potential
 # for problems.
 Patch2:         jna-3.4.0-tests-headless.patch
 # Build using GCJ javadoc
-Patch3:         jna-3.5.0-gcj-javadoc.patch
+Patch3:         jna-3.5.2-gcj-javadoc.patch
 # junit cames from rpm
-Patch4:         jna-3.5.0-junit.patch
+Patch4:         jna-3.5.2-junit.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
@@ -43,7 +42,10 @@ Requires:       jpackage-utils libffi
 Requires(post):	jpackage-utils
 Requires(postun): jpackage-utils
 BuildRequires:  jpackage-utils libffi-devel
-BuildRequires:  ant ant-junit ant-nodeps ant-trax junit
+BuildRequires:  ant ant-junit junit
+%if 0%{?rhel} && 0%{?rhel} < 7
+BuildRequires:	ant-nodeps ant-trax
+%endif
 BuildRequires:  libX11-devel libXt-devel
 # for ExclusiveArch see bug: 468831 640005 548099
 %if 0%{?fedora} < 10 && 0%{?rhel} < 6
@@ -89,18 +91,18 @@ This package contains the contributed examples for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
+cp %{SOURCE1} .
 %patch0 -p1 -b .build
 sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1
 %patch2 -p1 -b .tests-headless
 chmod -Rf a+rX,u+w,g-w,o-w .
 %patch3 -p0 -b .gcj-javadoc
 %patch4 -p1 -b .junit
-cp %{SOURCE1} %{SOURCE2} ./
 
 # UnloadTest fail during build since we modify class loading
 rm test/com/sun/jna/JNAUnloadTest.java
 # current bug: https://jna.dev.java.net/issues/show_bug.cgi?id=155
-rm test/com/sun/jna/DirectTest.java
+#rm test/com/sun/jna/DirectTest.java
 
 # all java binaries must be removed from the sources
 #find . -name '*.jar' -delete
@@ -119,10 +121,10 @@ chmod -c 0644 LICENSE OTHERS CHANGES.md
 %build
 # We pass -Ddynlink.native which comes from our patch because
 # upstream doesn't want to default to dynamic linking.
-ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true javadoc jar contrib-jars javadoc
+ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true compile native javadoc jar contrib-jars
+#ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true clean dist
 # remove compiled contribs
 find contrib -name build -exec rm -rf {} \; || :
-sed -i "s/VERSION/%{version}/" pom-%{name}.xml pom-platform.xml
 
 %install
 
@@ -157,7 +159,7 @@ install -p -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
-#if 0%{?rhel} >= 6 || 0%{?fedora} >= 9
+#%if 0%{?rhel} >= 6 || 0%{?fedora} >= 9
 #%if 0%{?fedora} >= 9
 #%ifnarch ppc s390 s390x
 #%check
@@ -190,6 +192,9 @@ cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.5.2-alt1_2jpp7
+- new release
+
 * Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_2jpp7
 - new version
 
