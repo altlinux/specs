@@ -1,104 +1,71 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 21
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-modules
-%define version 1.1.1
-%global namedreltag .GA
+%define version 1.3.0
+%global namedreltag .Beta3
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-modules
-Version:          1.1.1
-Release:          alt2_9jpp7
+Version:          1.3.0
+Release:          alt1_0.1.Beta3jpp7
 Summary:          A Modular Classloading System
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-modules
-
-# git clone git://github.com/jbossas/jboss-modules.git
-# cd jboss-modules/ && git archive --format=tar --prefix=jboss-modules-1.1.1.GA/ 1.1.1.GA | xz > jboss-modules-1.1.1.GA.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
-
-# Fixes https://issues.jboss.org/browse/MODULES-128
-Patch0:           MODULES-128.patch
+Source0:          https://github.com/jbossas/jboss-modules/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    jboss-parent
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    junit4
+BuildRequires:    shrinkwrap
 %if 0%{?fedora}
 BuildRequires:    apiviz
 %endif
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 Ths package contains A Modular Classloading System.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-
-%patch0 -p1
+%setup -q -n jboss-modules-%{namedversion}
 
 # Conditionally remove dependency on apiviz
 if [ %{?rhel} ]; then
     %pom_remove_plugin :maven-javadoc-plugin
 fi
 
+# Tries to connect to remote host
+rm src/test/java/org/jboss/modules/MavenResourceTest.java
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# JAVADOC
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_0.1.Beta3jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_9jpp7
 - new release
 
