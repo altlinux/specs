@@ -1,41 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-rar-plugin
-Version:        2.2
-Release:        alt2_10jpp7
+Version:        2.3
+Release:        alt1_1jpp7
 Summary:        Plugin to create Resource Adapter Archive which can be deployed to a J2EE server
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-rar-plugin/
-# svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-rar-plugin-2.2/
-# tar jcf maven-rar-plugin-2.2.tar.bz2 maven-rar-plugin-2.2/
-Source0:        %{name}-%{version}.tar.bz2
-Patch0:         add-maven-core.patch
+Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
 BuildRequires: maven-local
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: jpackage-utils
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 Obsoletes: maven2-plugin-rar <= 0:2.0.8
 Provides: maven2-plugin-rar = 1:%{version}-%{release}
@@ -52,47 +35,37 @@ to store these resource adapters to an archive
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
 %setup -q 
-%patch0
+
+# Fix deps to build against maven 3
+%pom_remove_dep org.apache.maven:maven-project
+%pom_add_dep org.apache.maven:maven-compat
+%pom_add_dep org.apache.maven:maven-core
+
+%mvn_file : %{name}
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins %{name} %{version} JPP %{name}
+%files -f .mfiles
+%doc LICENSE NOTICE DEPENDENCIES
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_10jpp7
 - new release
 
