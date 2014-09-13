@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -9,29 +8,23 @@ Name:              args4j
 %global tools_name %{name}-tools
 %global site_name  %{name}-site
 
-Version:          2.0.16
-Release:          alt2_11jpp7
+Version:          2.0.25
+Release:          alt1_1jpp7
 Summary:          Small Java lib that makes it easy to parse command line options/args in CUI apps
 License:          MIT and BSD
 Group:            Development/Java
 # http://args4j.java.net/
 URL:              http://%{name}.java.net/
-# Upload Your personal ssh key to java.net (otherwise the export fails)
-# svn export https://svn.java.net/svn/args4j~svn/tags/args4j-site-2_0_16 args4j-2.0.16
-# tar caf args4j-2.0.16.tar.xz args4j-2.0.16
-Source0:          %{name}-%{version}.tar.xz
-
-Patch0:           %{name}-wagon-svn-removal.patch
-Patch1:           %{name}-ant-removal.patch
-Patch2:           %{name}-osgi.patch
-# https://github.com/kohsuke/args4j/commit/fc85e79 + some additions
-Patch3:           %{name}-srcencoding.patch
+Source0:          https://github.com/kohsuke/%{name}/archive/%{site_name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    maven-dependency-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-shade-plugin
+BuildRequires:    mockito
 
 Requires:         jpackage-utils
 Source44: import.info
@@ -58,23 +51,22 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -q -n %{name}-%{site_name}-%{version}
 
 # removing classpath addition
 sed -i 's/<addClasspath>true/<addClasspath>false/g' %{tools_name}/pom.xml
 
+# fix ant group id
+sed -i 's/<groupId>ant/<groupId>org.apache.ant/g' %{tools_name}/pom.xml
+
 # removing bundled stuff
-rm -rf repo
-rm -rf www
-rm -rf %{name}/lib
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+
+%pom_xpath_remove "pom:parent"
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -pl :args4j-site,:args4j,:args4j-tools install javadoc:aggregate
 
 %install
 # jars
@@ -110,6 +102,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.25-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.16-alt2_11jpp7
 - new release
 
