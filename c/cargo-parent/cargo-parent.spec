@@ -1,37 +1,25 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
 BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cargo-parent
-Version:        4.12
+Version:        4.13
 Release:        alt1_3jpp7
 Summary:        Parent pom file for cargo.codehaus.org project
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://cargo.codehaus.org/
-#svn export http://svn.codehaus.org/cargo/pom/tags/cargo-parent-4.12/
+#svn export http://svn.codehaus.org/cargo/pom/tags/cargo-parent-4.13/
 Source0:        %{name}-%{version}.tar.gz
 # cargo-parent package don't include the license file
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
+BuildRequires:  maven-checkstyle-plugin
+BuildRequires:  maven-release-plugin
 BuildRequires:  codehaus-parent
 
-Requires:       jpackage-utils
 Requires:       codehaus-parent
 Source44: import.info
 
@@ -48,23 +36,18 @@ cp -p %{SOURCE1} .
 sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
-# Nothing to do
+%mvn_build
+
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-
-%check
-mvn-rpmbuild verify
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.13-alt1_3jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.12-alt1_3jpp7
 - new version
 
