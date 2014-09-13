@@ -1,5 +1,5 @@
 Name: libbsd
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
@@ -42,6 +42,8 @@ rm %buildroot%_libdir/%name-ctor.a
 
 rm %buildroot%_man3dir/strlcpy*
 rm %buildroot%_man3dir/strlcat*
+# conflicts with setproctitle-devel
+rm %buildroot/%_man3dir/setproctitle*
 
 %files
 %doc COPYING README TODO ChangeLog
@@ -57,6 +59,9 @@ rm %buildroot%_man3dir/strlcat*
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Sat Sep 13 2014 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - new version 0.6.0 (with rpmrb script)
 
