@@ -6,8 +6,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sqljet
-Version:        1.1.4
-Release:        alt1_4jpp7
+Version:        1.1.7
+Release:        alt1_2jpp7
 Summary:        Pure Java SQLite
 
 Group:          Development/Java
@@ -24,9 +24,9 @@ BuildRequires:  ant
 BuildRequires:  antlr
 BuildRequires:  antlr3-java
 BuildRequires:  antlr3-tool
-BuildRequires:  easymock2
+BuildRequires:  easymock3
 BuildRequires:  netbeans-platform
-BuildRequires:  junit4
+BuildRequires:  junit
 BuildRequires:  desktop-file-utils
 BuildRequires:  stringtemplate4
 Requires:       antlr3-java
@@ -78,7 +78,7 @@ EOF
 
 
 %build
-export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr stringtemplate4 easymock2 junit4)
+export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr stringtemplate4 easymock3 junit)
 
 ant jars osgi javadoc
 
@@ -126,6 +126,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/sqljet-browser.deskt
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.7-alt1_2jpp7
+- new release
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_4jpp7
 - fc update
 
