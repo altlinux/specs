@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipse-emf
-%define version 2.9.0
+%define version 2.9.1
 %{?scl:%scl_package eclipse-emf}
 %{!?scl:%global pkg_name %{name}}
 
@@ -17,13 +17,14 @@ BuildRequires: rpm-build-java-osgi
 %endif
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
-%global emf_tag 352e289de46b6cb684e3b5c6514d95c1c591f405
+%global emf_tag R2_9_1
+%global context_qualifier v20130930-0823
 
 %define __requires_exclude osgi*
 
 Name:      %{?scl_prefix}eclipse-emf
-Version:   2.9.0
-Release:   alt1_0.1.git352e28jpp7
+Version:   2.9.1
+Release:   alt1_1jpp7 
 Summary:   Eclipse Modeling Framework (EMF) Eclipse plugin
 Group:     System/Libraries
 License:   EPL
@@ -159,7 +160,7 @@ fi
 %build
 # Note: We use forceContextQualifier because the docs plugins use custom build
 #       scripts and don't work otherwise.
-OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=v20130501-1417"
+OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=%{context_qualifier}"
 
 # Work around pdebuild entering/leaving symlink it is unaware of.
 ln -s %{_builddir}/emf-%{version}/org.eclipse.emf.license-feature %{_builddir}/emf-%{version}/org.eclipse.emf.license
@@ -255,10 +256,16 @@ rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.eco
 rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.ecore.xmi_*
 
 pushd %{buildroot}%{_javadir}/emf/eclipse/plugins/
-	EMF_EDIT=`ls | grep emf.edit`
+for f in org.eclipse.emf.common \
+		org.eclipse.emf.ecore.change \
+		org.eclipse.emf.ecore.xmi \
+		org.eclipse.emf.ecore \
+		org.eclipse.emf.edit ; do
+	mv ${f}_* ${f}.jar
+done
 popd
 pushd %{buildroot}%{eclipse_dropin}/emf/eclipse/plugins
-	ln -s %{_javadir}/emf/eclipse/plugins/${EMF_EDIT}
+	ln -s %{_javadir}/emf/eclipse/plugins/org.eclipse.emf.edit.jar
 popd
 %files
 %{eclipse_dropin}/emf
@@ -282,6 +289,9 @@ popd
 %{eclipse_dropin}/emf-examples
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt1_0.1.git352e28jpp7
 - new version
 
