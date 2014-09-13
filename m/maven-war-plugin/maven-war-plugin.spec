@@ -1,14 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
 BuildRequires: xpp3-minimal
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-war-plugin
-Version:        2.3
-Release:        alt1_5jpp7
+Version:        2.4
+Release:        alt1_1jpp7
 Summary:        Maven WAR Plugin
 
 Group:          Development/Java
@@ -32,7 +31,6 @@ BuildRequires: maven-shared-filtering
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
-BuildRequires: maven-idea-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-changes-plugin
 # Others
@@ -63,36 +61,21 @@ API documentation for %{name}.
 %setup -q 
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_to_maven_depmap org.apache.maven.plugins maven-war-plugin %{version} JPP maven-war-plugin
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1jpp7
+- new release
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_5jpp7
 - new version
 
