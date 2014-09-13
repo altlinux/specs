@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsoup
-Version:        1.6.1
-Release:        alt1_7jpp7
+Version:        1.7.2
+Release:        alt1_1jpp7
 Summary:        Java library for working with real-world HTML
 
 Group:          Development/Java
@@ -14,9 +13,8 @@ License:        MIT
 
 URL:            http://%{name}.org/
 
-# git clone git://github.com/jhy/jsoup
-# git archive --prefix="jsoup-1.6.1/" --format=tar jsoup-1.6.1 | xz > jsoup-1.6.1.tar.xz
-Source0:        %{name}-%{version}.tar.xz
+# https://github.com/jhy/jsoup/archive/jsoup-1.7.2.tar.gz
+Source0:        jsoup-jsoup-1.7.2.tar.gz
 
 BuildArch: noarch
 
@@ -27,6 +25,7 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-install-plugin
 Requires: jpackage-utils
 Source44: import.info
 
@@ -61,7 +60,7 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n jsoup-jsoup-%{version}
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -90,6 +89,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_7jpp7
 - new release
 
