@@ -4,7 +4,7 @@
 
 Name: libkeybinder
 Version: 0.3.0
-Release: alt1.git20120617
+Release: alt2.git20120617
 
 Summary: keybinder is a library for registering global keyboard shortcuts
 License: GPLv2
@@ -92,11 +92,14 @@ Lua5 binding to %name
 %files -n python-module-%sname
 %python_sitelibdir/%sname
 
-%files -n lua5-%name
-%_libdir/lua/%luaver/*.so
+#files -n lua5-%name
+#_libdir/lua/%luaver/*.so
 
 
 %changelog
+* Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.git20120617
+- Disabled lua5-libkeybinder (ALT #27509)
+
 * Thu Sep 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20120617
 - Version 0.3.0
 
