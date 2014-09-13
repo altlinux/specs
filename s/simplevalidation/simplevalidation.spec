@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
@@ -7,13 +8,15 @@ BuildRequires: jpackage-compat
 Name:       simplevalidation
 # upstream is pretty bad about version numbering
 # this is a guess based on the version of a separate api "release" jar
-Version:    0.4
-Release:    alt1_4jpp7
+Version:    1.0
+Release:    alt1_0.1.SNAPSHOTjpp7
 Summary:    A library for adding user-interface input validation to Swing applications
-Group:      Development/Java
 License:    GPLv2 or CDDL
 URL:        http://kenai.com/projects/simplevalidation
+# svn export -r331 https://svn.kenai.com/svn/simplevalidation~src/trunk/ simplevalidation-1.0-SNAPSHOT
+# tar cJf simplevalidation-1.0-SNAPSHOT-20121212.tar.xz simplevalidation-1.0-SNAPSHOT
 Source0:    http://kenai.com/projects/simplevalidation/downloads/download/validation-src.zip
+
 
 BuildArch:  noarch
 
@@ -36,50 +39,56 @@ validating numbers, email addresses, urls and so forth.
 The primary goal is to make it easy to retrofit validation code on existing
 UIs without needing to rewrite anything or add more than a few lines of code.
 
-
 %package javadoc
-Summary:    Javadocs for %{name}
-Group:      Development/Java
-Requires:   jpackage-utils
+Group: Development/Java
+Summary:    Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}
 
-
 %prep
 %setup -q -c
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find . -name '*.class' -delete
+find . -name '*.jar' -delete
 
+%pom_xpath_remove "pom:project/pom:profiles" maven
 
 %build
+
 cd ValidationAPI
-ant -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar
+ant -Dplatforms.JDK_1.5.home=%{_jvmdir}/java jar javadoc
 
 dos2unix dist/javadoc/package-list
 dos2unix dist/javadoc/stylesheet.css
 
-
 %install
+
 mkdir -p %{buildroot}%{_javadir}
 cp -a ValidationAPI/dist/ValidationAPI.jar %{buildroot}%{_javadir}/ValidationAPI.jar
 
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a ValidationAPI/dist/javadoc %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 maven/pom.xml %{buildroot}%{_mavenpomdir}/JPP-ValidationAPI.pom
+%add_maven_depmap JPP-ValidationAPI.pom ValidationAPI.jar -a "com.kenai:ValidationAPI"
 
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -a ValidationAPI/dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %doc ValidationAPI/doc/overview.html
 %doc ValidationAPI/doc/duckLogo.png
 %{_javadir}/ValidationAPI.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
 
-
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.1.SNAPSHOTjpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_4jpp7
 - new release
 
