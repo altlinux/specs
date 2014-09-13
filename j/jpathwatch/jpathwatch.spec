@@ -5,11 +5,11 @@ BuildRequires: gcc-c++
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
-%global site_ver  0-94
+%global site_ver  0-95
 
 Name:             jpathwatch
-Version:          0.94
-Release:          alt1_7jpp7
+Version:          0.95
+Release:          alt1_1jpp7
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
 Group:            Development/Java
@@ -94,6 +94,9 @@ cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_1jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1_7jpp7
 - new release
 
