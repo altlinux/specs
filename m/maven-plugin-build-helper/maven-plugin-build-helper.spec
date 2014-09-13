@@ -1,46 +1,35 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-build-helper
-Version:        1.5
-Release:        alt3_8jpp7
+Version:        1.8
+Release:        alt1_2jpp7
 Summary:        Build Helper Maven Plugin
-
 Group:          Development/Java
 License:        MIT and ASL 2.0
 URL:            http://mojo.codehaus.org/build-helper-maven-plugin/
-# The source tarball has been generated from upstream VCS:
-# svn export https://svn.codehaus.org/mojo/tags/build-helper-maven-plugin-%{version} 
-#            %{name}-%{version}
-# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
-Source0:        %{name}-%{version}.tar.xz
-Patch0:         add-junit-dependency.patch
-Patch1:         %{name}-core.patch
-
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: plexus-utils
-BuildRequires: maven-local
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-doxia-sitetools
-BuildRequires: mojo-parent
-BuildRequires: junit4
-Requires: jpackage-utils
-Requires: plexus-utils
-Requires: mojo-parent
+# The source tarball has been generated from upstream VCS:
+# svn export https://svn.codehaus.org/mojo/tags/build-helper-maven-plugin-%{version} %{name}-%{version}
+# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
+Source0:        %{name}-%{version}.tar.xz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 Provides: mojo-maven2-plugin-build-helper = %version
@@ -52,49 +41,35 @@ This plugin contains various small independent goals to assist with
 Maven build lifecycle.
 
 %package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+This package provides %{summary}.
 
 %prep
 %setup -q 
-%patch0
-%patch1 -p1
+cp %{SOURCE1} LICENSE-2.0.txt
+%pom_add_dep org.apache.maven:maven-compat
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/build-helper-maven-plugin-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
+%files -f .mfiles
+%doc header.txt LICENSE-2.0.txt
+%dir %{_javadir}/%{name}
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc header.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt3_8jpp7
 - new release
 
