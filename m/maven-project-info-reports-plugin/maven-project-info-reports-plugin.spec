@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip jsoup
+BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
-Version:        2.6
-Release:        alt1_5jpp7
+Version:        2.7
+Release:        alt1_1jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
@@ -94,7 +94,7 @@ popd
 pushd %{name}-%{version}
 mvn-rpmbuild \
         -Dmaven.test.skip=true \
-        install javadoc:javadoc
+        verify javadoc:javadoc
 popd
 
 %install
@@ -120,6 +120,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_1jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_5jpp7
 - new release
 
