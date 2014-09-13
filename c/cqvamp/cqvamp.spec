@@ -1,6 +1,6 @@
 Name: cqvamp
 Version: 1.0
-Release: alt1
+Release: alt1.hg20140808
 Summary: Vamp plugin implementing the Constant-Q transform of a time-domain signal
 License: MIT
 Group: Sound
@@ -72,7 +72,7 @@ This package contains development documentation for libcq.
 %build
 export LD_LIBRARY_PATH=$PWD
 %make_build -f Makefile.linux test/processfile
-%make_build -f Makefile.linux
+%make_build -f Makefile.linux LIBDIR=%_libdir
 
 doxygen
 
@@ -94,6 +94,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.hg20140808
+- Snapshot from mercurial
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
 
