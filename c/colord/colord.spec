@@ -11,7 +11,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Color daemon
@@ -32,7 +32,7 @@ Requires: lib%name = %version-%release
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103
-BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-login-devel
+BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
@@ -279,6 +279,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Sat Sep 13 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
