@@ -3,8 +3,8 @@
 %define real_name Imager-Graph
 
 Name: perl-Imager-Graph
-Version: 0.10
-Release: alt2
+Version: 0.11
+Release: alt1
 
 Summary: producing Graphs using the Imager library
 
@@ -16,16 +16,15 @@ URL: http://search.cpan.org/~tonyc/Imager-Graph/
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
-Patch0: %name-0.10-alt-pod_fix.patch
 
 BuildArch: noarch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Fri Nov 04 2011
-# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-Imager perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-devel
+BuildRequires: perl-Imager
 
 %description
 Perl module Imager::Graph is intended to produce good looking
@@ -36,7 +35,6 @@ is provided.
 
 %prep
 %setup -q -n %real_name-%version
-%patch0
 
 %build
 %perl_vendor_build
@@ -50,6 +48,9 @@ is provided.
 %perl_vendor_privlib/Imager/Graph*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.11-alt1
+- New version
+
 * Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt2
 - Fix POD formating
 
