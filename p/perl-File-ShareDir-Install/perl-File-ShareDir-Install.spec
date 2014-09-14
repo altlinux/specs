@@ -3,7 +3,7 @@
 %define real_name File-ShareDir-Install
 
 Name: perl-File-ShareDir-Install
-Version: 0.05
+Version: 0.09
 Release: alt1
 
 Summary: Perl extension for installing shared files
@@ -22,9 +22,8 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Fri Jan 27 2012
-# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Sep 14 2014
+BuildRequires: perl-devel
 
 %description
 Perl module File::ShareDir::Install allows you to install
@@ -46,6 +45,9 @@ files after installation.
 %perl_vendor_privlib/File/ShareDir/Install*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.09-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.05-alt1
 - New version
 
