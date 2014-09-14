@@ -1,5 +1,6 @@
+Provides: apache-jar-resource-bundle
 Epoch: 1
-BuildRequires: /proc maven-local
+BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global jar_version 1.4
 %global lh_version 1.1
@@ -7,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:		apache-resource-bundles
 Version:	2
-Release:	alt2_9jpp7
+Release:	alt2_11jpp7
 Summary:	Apache Resource Bundles
 
 Group:		Development/Java
@@ -21,9 +22,7 @@ Source4:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource
 Source5:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
 Source6:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
 
-Provides: apache-jar-resource-bundle = %version
-
-BuildRequires:	xmvn >= 0.2.3
+BuildRequires:	maven-local
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-install-plugin
 BuildRequires:	maven-jar-plugin
@@ -83,6 +82,9 @@ popd
 %files -f .mfiles
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt2_11jpp7
+- fixed build
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt2_9jpp7
 - new release
 
