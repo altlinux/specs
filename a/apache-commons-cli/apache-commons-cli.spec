@@ -1,32 +1,24 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name       cli
-%global short_name      commons-%{base_name}
+%global short_name      commons-cli
 
 Name:             apache-%{short_name}
 Version:          1.2
-Release:          alt2_9jpp7
+Release:          alt2_11jpp7
 Summary:          Command Line Interface Library for Java
 Group:            Development/Java
 License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL:              http://commons.apache.org/cli/
+Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 
 Requires:         jpackage-utils
-
-# This should go away with F-17
-Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 0:1.1-6
 Source44: import.info
+Provides: jakarta-%{short_name} = 1:%{version}-%{release}
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
 
@@ -38,8 +30,6 @@ command line arguments and options.
 Summary:          Javadoc for %{name}
 Group:            Development/Java
 Requires:         jpackage-utils
-# This should go away with F-17
-Obsoletes:        jakarta-%{short_name}-javadoc < 0:1.1-6
 BuildArch: noarch
 
 %description javadoc
@@ -48,36 +38,26 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :commons-cli %{short_name} %{name}
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-(cd %{buildroot}%{_javadir} && for jar in *%{name}*; do ln -sf ${jar} `echo $jar| sed  "s|apache-||g"`; done)
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.commons:%{short_name}"
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_11jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_9jpp7
 - new release
 
