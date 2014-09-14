@@ -1,7 +1,7 @@
 ## SPEC file for Perl module String::Flogger
 
 Name: perl-String-Flogger
-Version: 1.101244
+Version: 1.101245
 Release: alt1
 
 Summary: string munging for loggers
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Feb 03 2013
-# optimized out: perl-Data-OptList perl-IPC-Run3 perl-JSON-XS perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Install perl-common-sense perl-devel
-BuildRequires: perl-JSON perl-Sub-Exporter perl-Test-Pod perl-Test-Script
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-Data-OptList perl-Params-Util perl-Sub-Install perl-Types-Serialiser perl-common-sense
+BuildRequires: perl-JSON-MaybeXS perl-JSON-XS perl-Sub-Exporter perl-devel
 
 %description
 Perl module String::Flogger provides string munging for loggers.
@@ -40,6 +40,9 @@ Perl module String::Flogger provides string munging for loggers.
 %perl_vendor_privlib/String/Flogger*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.101245-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.101244-alt1
 - New version
 
