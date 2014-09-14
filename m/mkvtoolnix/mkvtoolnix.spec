@@ -14,7 +14,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 6.1.0
+Version: 7.2.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -28,7 +28,7 @@ Provides: mkvmerge = %version-%release
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
-BuildRequires: libcurl-devel libebml-devel >= 1.2.2 libmatroska-devel >= 1.3.0 
+BuildRequires: libcurl-devel libebml-devel >= 1.3.0 libmatroska-devel >= 1.4.0
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK-devel}
 %{?_enable_qt:BuildRequires: libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libqt4-devel}
@@ -109,7 +109,7 @@ bzip2 --best --force --keep ChangeLog
 ./drake DESTDIR=%buildroot install
 
 mkdir -p %buildroot%_defaultdocdir/%name-%version
-install -m0644 AUTHORS ChangeLog.* README %buildroot%_defaultdocdir/%name-%version
+install -m0644 AUTHORS ChangeLog.* README.md %buildroot%_defaultdocdir/%name-%version
 cp -ar examples %buildroot%_defaultdocdir/%name-%version
 mv %buildroot%_datadir/doc/%name/guide %buildroot%_defaultdocdir/%name-%version
 
@@ -163,6 +163,9 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %endif
 
 %changelog
+* Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2.0-alt1
+- 7.2.0 released
+
 * Sun Apr 14 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.0-alt1
 - 6.1.0 released
 
