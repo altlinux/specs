@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::IMAP::Simple
 
 Name: perl-Net-IMAP-Simple
-Version: 1.2203
+Version: 1.2205
 Release: alt1
 
 Summary: Perl extension for simple IMAP account handling
@@ -20,9 +20,9 @@ Patch0: %real_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Thu Oct 18 2012
-# optimized out: perl-Class-Load perl-Class-Singleton perl-Data-OptList perl-DateTime perl-DateTime-Locale perl-DateTime-TimeZone perl-Email-Address perl-Email-MIME-ContentType perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-Encode perl-List-MoreUtils perl-Math-Round perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-parent
-BuildRequires: perl-Class-Accessor perl-DateTime-Format-Mail perl-DateTime-Format-Strptime perl-Email-MIME perl-Parse-RecDescent perl-Regexp-Common perl-devel
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-Text-Balanced
+BuildRequires: perl-File-Slurp perl-Parse-RecDescent perl-devel
 
 
 %description
@@ -45,6 +45,9 @@ IMAP accounts.
 %perl_vendor_privlib/Net/IMAP/Simple*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.2205-alt1
+- New version
+
 * Sat Oct 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.2203-alt1
 - New version
 
