@@ -1,6 +1,6 @@
 Name: libmatroska
-Version: 1.4.0
-Release: alt0.1
+Version: 1.4.1
+Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
 License: LGPL
@@ -71,6 +71,9 @@ make libdir=%buildroot%_libdir includedir=%buildroot%_includedir/matroska \
 %endif
 
 %changelog
+* Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
+- 1.4.1 released
+
 * Mon Dec 10 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt0.1
 - 1.4.0 prereleased
 
