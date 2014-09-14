@@ -1,7 +1,9 @@
 %def_enable pulse
+%define ver_major 2
+%define api_ver 1.0
 
 Name: guvcview
-Version: 1.7.2
+Version: %ver_major.0.0
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -11,12 +13,14 @@ Url: http://%name.sourceforge.net/
 
 Source: http://prdownload.sourceforge.net/%name/%name-src-%version.tar.gz
 
-# From configure.ac
-BuildPreReq: libSDL-devel >= 1.2.10
+Requires: lib%name = %version-%release
+
+BuildPreReq: libSDL2-devel >= 2.0.0
 BuildRequires: desktop-file-utils intltool
 BuildRequires: libavutil-devel libavcodec-devel
 BuildRequires: libgtk+3-devel libportaudio2-devel
 BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
+BuildRequires: libgsl-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
@@ -25,39 +29,84 @@ viewing video from devices supported by the linux UVC driver. The
 software is based on luvcview  but uses a GTK interface, allowing for a
 more user friendly GUI
 
+%package -n lib%name
+Summary: GTK UVC video viewer libraries
+Group: System/Libraries
+
+%description -n lib%name
+This project aims at providing a simple GTK interface for capturing and
+viewing video from devices supported by the linux UVC driver. The
+software is based on luvcview  but uses a GTK interface, allowing for a
+more user friendly GUI.
+
+This package contains GTK UVC video viewer libraries.
+
+%package -n lib%name-devel
+Summary: GTK UVC video viewer development files
+Group: Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+This package contains files necessary to develop applications that use
+%name libraries.
+
 %prep
 %setup -n %name-src-%version
 
 %build
 export LIBS="$LIBS -lm"
-%configure --disable-debian-menu \
+%autoreconf
+%configure \
+	--disable-static \
+	--disable-debian-menu \
 	%{?_disable_pulse:--enable-pulse=no}
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 mkdir -p %buildroot%_niconsdir
 install -p -m644 %buildroot%_pixmapsdir/guvcview/guvcview.png %buildroot%_niconsdir/guvcview.png
 rm -f %buildroot%_pixmapsdir/guvcview/guvcview.png
 #ln -s %_niconsdir/guvcview.png %_pixmapsdir/guvcview/guvcview.png
 
-%find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Recorder \
 	--add-category=Video \
 	%buildroot%_desktopdir/guvcview.desktop
 
+%find_lang --output=%name.lang %name gview_v4l2core
+
 %files -f %name.lang
-%_bindir/*
-%_desktopdir/*
+%_bindir/%name
+%_desktopdir/%name.desktop
 %_pixmapsdir/*
 %_niconsdir/*
 %_man1dir/*
-%doc AUTHORS ChangeLog README
+%_datadir/appdata/%name.appdata.xml
+%doc AUTHORS ChangeLog NEWS README*
+
+%files -n lib%name
+%_libdir/libgviewaudio-%api_ver.so.*
+%_libdir/libgviewrender-%api_ver.so.*
+%_libdir/libgviewv4l2core-%api_ver.so.*
+%_libdir/libgviewencoder-%api_ver.so.*
+
+%files -n lib%name-devel
+%_includedir/%name-%ver_major/
+%_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Sep 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+- new lib%%name{,-devel} subpackages
+- updated buildreqs
+
+* Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
