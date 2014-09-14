@@ -1,9 +1,10 @@
+BuildRequires: geronimo-saaj
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-scout
 Version:          1.2.6
-Release:          alt2_8jpp7
+Release:          alt3_8jpp7
 Summary:          JSR 93 (JAXR) implementation
 License:          ASL 2.0
 URL:              http://juddi.apache.org/scout
@@ -90,6 +91,9 @@ sed -i "s|UDDIClerkManager|UDDIClient|" \
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt3_8jpp7
+- fixed build
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_8jpp7
 - new release
 
