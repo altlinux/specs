@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 %define fedora 21
 Name:           pdfbox
 Version:        1.8.2
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Java library for working with PDF documents
 
 Group:          Development/Java
@@ -180,7 +180,7 @@ rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
 
 %build
-mvn-rpmbuild -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
+mvn-rpmbuild -Dadobefiles.jar=%{_javadir}/pcfi/pcfi.jar install javadoc:aggregate
 
 
 %install
@@ -263,6 +263,9 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.2-alt2_2jpp7
+- fixed build with pcfi-2010.08.09-alt2_7
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.2-alt1_2jpp7
 - new release
 
