@@ -1,7 +1,7 @@
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 0.98
+Version: 1.000
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -15,9 +15,9 @@ Source: Imager-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Fri Nov 04 2011
-# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-Balanced perl-devel perl-threads pkg-config t1lib zlib-devel
-BuildRequires: libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Inline perl-Parse-RecDescent perl-Pod-Spell perl-Test-Pod perl-Test-Pod-Coverage t1lib-devel xorg-rgb
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: libcloog-isl4 perl-Class-Inspector perl-Class-Tiny perl-Data-OptList perl-Devel-Symdump perl-Encode perl-File-HomeDir perl-File-ShareDir perl-File-ShareDir-ProjectDistDir perl-File-Which perl-Lingua-EN-Inflect perl-Module-Runtime perl-Params-Util perl-Path-FindDev perl-Path-IsDev perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Role-Tiny perl-Sub-Exporter perl-Sub-Install perl-Text-Balanced perl-devel perl-threads pkg-config t1lib
+BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-Image-Math-Constrain perl-Parse-RecDescent perl-Pod-Spell perl-Test-Pod-Coverage t1lib-devel xorg-rgb
 
 %description
 Imager is a module for creating and altering images. It can
@@ -48,6 +48,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.000-alt1
+- New version 1.000
+
 * Thu Feb 27 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.98-alt1
 - New version 0.98
 
