@@ -3,7 +3,7 @@
 %define real_name Perl-Version
 
 Name: perl-Perl-Version
-Version: 1.011
+Version: 1.013
 Release: alt1
 
 Summary: Perl module to parse and manipulate Perl version strings
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-Devel-Symdump perl-Encode perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-podlators
-BuildRequires: perl-File-Slurp perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-Devel-Symdump perl-Encode perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-devel perl-podlators
+BuildRequires: perl-File-Slurp-Tiny perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 Perl module Perl::Version provides a simple interface for parsing,
@@ -52,5 +52,8 @@ version formatted like the original.
 %_bindir/perl-reversion
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.013-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.011-alt1
 - Initial build for ALT Linux Sisyphus
