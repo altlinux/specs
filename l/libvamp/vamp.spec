@@ -2,7 +2,7 @@
 
 Name: libvamp
 Version: 2.5
-Release: alt1.hg20140905
+Release: alt2.hg20140905
 
 Summary: plugin system for plugins that extract descriptive information from audio data
 License: %bsdstyle
@@ -110,6 +110,9 @@ energy rise metric.
 %_libdir/vamp/vamp-example-plugins*
 
 %changelog
+* Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt2.hg20140905
+- Added path to plugins for x86_64
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.hg20140905
 - Version 2.5
 
