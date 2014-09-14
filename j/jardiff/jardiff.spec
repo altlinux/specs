@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt4_3jpp5
+Release:	alt5_3jpp5
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -62,12 +62,10 @@ BuildRequires: ant >= 0:1.6.5
 BuildRequires: ant-junit3
 BuildRequires: junit3
 BuildRequires: asm2
-BuildRequires: jakarta-commons-cli
+BuildRequires: apache-commons-cli
 
 Requires: asm2
-Requires: jakarta-commons-cli
-Requires(post): jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
+Requires: apache-commons-cli
 
 %description
 A tool to help visualise API differences between two 
@@ -143,6 +141,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt5_3jpp5
+- fixed build
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt4_3jpp5
 - explicitly use junit3
 
