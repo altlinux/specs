@@ -1,6 +1,6 @@
 Name: libebml
 Version: 1.3.0
-Release: alt0.1
+Release: alt1
 
 Summary: Extensible Binary Meta Language access library
 License: GPL/QPL
@@ -41,6 +41,9 @@ make libdir=%buildroot%_libdir includedir=%buildroot%_includedir/ebml \
 %_libdir/*.so
 
 %changelog
+* Sun Sep 14 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
 * Mon Dec 10 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt0.1
 - 1.3.0 prerelease
 
