@@ -2,7 +2,7 @@
 
 Name: svcore
 Version: 2.1
-Release: alt1.hg20140910
+Release: alt2.hg20140910
 Summary: Core application library from the Sonic Visualiser project
 License: GPLv2
 Group: Sound
@@ -108,6 +108,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt2.hg20140910
+- Enabled Profiler
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.hg20140910
 - Initial build for Sisyphus
 
