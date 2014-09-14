@@ -1,73 +1,53 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global base_name       parent
-%global short_name      commons-%{base_name}
+%global short_name      commons-parent
 
 Name:             apache-%{short_name}
-Version:          26
-Release:          alt1_5jpp7
+Version:          32
+Release:          alt1_2jpp7
 Summary:          Apache Commons Parent Pom
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
-# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-26
-# tar caf commons-parent-26.tar.xz commons-parent-26
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-32
+# tar caf commons-parent-32.tar.xz commons-parent-32
 Source0:          %{short_name}-%{version}.tar.xz
 
-#common-build-plugin not in fedora yet
-Patch1:           %{name}-remove-build-plugin.patch
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-
 BuildRequires:    mvn(org.apache:apache)
 BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-compiler-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-jar-plugin)
-BuildRequires:    mvn(org.apache.maven.plugins:maven-surefire-plugin)
 BuildRequires:    mvn(org.apache.rat:apache-rat-plugin)
 BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
-
-Requires:         mvn(org.apache:apache)
-Requires:         mvn(org.apache.felix:maven-bundle-plugin)
-Requires:         mvn(org.apache.maven.plugins:maven-antrun-plugin)
-Requires:         mvn(org.apache.maven.plugins:maven-compiler-plugin)
-Requires:         mvn(org.apache.maven.plugins:maven-jar-plugin)
-Requires:         mvn(org.apache.maven.plugins:maven-surefire-plugin)
-Requires:         mvn(org.apache.rat:apache-rat-plugin)
 Requires:         mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 Source44: import.info
-
 
 %description
 The Project Object Model files for the apache-commons packages.
 
 %prep
 %setup -q -n %{short_name}-%{version}
-%patch1 -p0
+
+# Plugin is not in fedora
+%pom_remove_plugin org.apache.commons:commons-build-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-scm-publish-plugin
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{short_name}.pom
-
-%files
-%doc LICENSE.txt NOTICE.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:32-alt1_2jpp7
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:26-alt1_5jpp7
 - fc update
 
