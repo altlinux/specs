@@ -1,8 +1,8 @@
 %define module	JSON-RPC-Common
 
 Name: perl-JSON-RPC-Common
-Version: 0.10
-Release: alt2
+Version: 0.11
+Release: alt1
 
 Summary: Transport agnostic JSON RPC helper objects
 
@@ -11,16 +11,15 @@ Group: Development/Perl
 URL: http://search.cpan.org/dist/JSON-RPC-Common
 
 Source0: %module-%version.tar
-Patch0: %name-0.10-test.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Tue Oct 08 2013
-# optimized out: perl-B-Hooks-EndOfScope perl-Carp-Clan perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Encode perl-Eval-Closure perl-IPC-Run3 perl-JSON-XS perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Probe-Perl perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Try-Tiny perl-URI perl-common-sense perl-devel perl-namespace-autoclean perl-namespace-clean
-BuildRequires: perl-HTTP-Message perl-JSON perl-MooseX-Types perl-Test-Exception perl-Test-Script perl-Variable-Magic
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Carp-Clan perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-JSON-PP perl-JSON-XS perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Metadata perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Try-Tiny perl-Types-Serialiser perl-URI perl-common-sense perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent perl-podlators
+BuildRequires: perl-HTML-Parser perl-HTTP-Message perl-JSON perl-Module-Build perl-MooseX-Types perl-Test-Exception perl-Variable-Magic
 
 %description
 Perl module provides abstractions for JSON-RPC 1.0, 1.1 (both
@@ -37,7 +36,6 @@ the same class.
 
 %prep
 %setup -q -n %module-%version
-%patch0
 
 %build
 %perl_vendor_build
@@ -51,6 +49,9 @@ the same class.
 
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.11-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt2
 - Fix build with Perl 5.18
 
