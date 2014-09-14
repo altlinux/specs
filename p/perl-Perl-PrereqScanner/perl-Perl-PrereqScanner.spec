@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Perl-PrereqScanner
 
 Name: perl-Perl-PrereqScanner
-Version: 1.018
+Version: 1.020
 Release: alt1
 
 Summary: a tool to scan Perl code for its prerequisites
@@ -20,9 +20,10 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sun Oct 06 2013
-# optimized out: perl-B-Hooks-EndOfScope perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-IO-String perl-IPC-Run3 perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-devel perl-namespace-autoclean perl-namespace-clean
-BuildRequires: perl-CPAN-Meta-Requirements perl-Getopt-Long-Descriptive perl-Module-Path perl-Moose perl-PPI perl-String-RewritePrefix perl-Test-Pod perl-Test-Script perl-Variable-Magic
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-B-Hooks-EndOfScope perl-Class-Load perl-Clone perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-IO-String perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-namespace-autoclean perl-namespace-clean perl-parent
+BuildRequires: perl-CPAN-Meta-Requirements perl-Getopt-Long-Descriptive perl-Module-Path perl-PPI perl-String-RewritePrefix perl-Variable-Magic perl-devel
+BuildRequires: perl-Moose
 
 %description
 Perl module Perl-PrereqScanner is the scanner that extracts loosely
@@ -47,6 +48,9 @@ The extraction may not be perfect but tries to do its best.
 %_bindir/scan-perl-prereqs
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.020-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.018-alt1
 - New version
 
