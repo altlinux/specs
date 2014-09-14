@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        2.4
-Release:        alt3_9jpp7
+Release:        alt3_10jpp7
 Epoch:          1
 Summary:        Utilities to assist with developing IO functionality
 License:        ASL 2.0
@@ -49,7 +49,7 @@ sed -i 's/\r//' *.txt
 %build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
@@ -63,6 +63,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt3_10jpp7
+- new release
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt3_9jpp7
 - new release
 
