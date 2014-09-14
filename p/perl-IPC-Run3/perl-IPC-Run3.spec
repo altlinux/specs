@@ -1,7 +1,7 @@
 ## SPEC file for Perl module IPC::Run3
 
 Name: perl-IPC-Run3
-Version: 0.046
+Version: 0.048
 Release: alt1
 
 Summary: run a subprocess in batch mode (a la system) on Unix, Win32, etc.
@@ -21,9 +21,8 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Sep 14 2014
+BuildRequires: perl-devel
 
 %description
 IPC::Run3  Perl module allows you to run a subprocess and
@@ -57,6 +56,9 @@ qx`` / open3() путём  замены их  простым и  написан�
 %perl_vendor_privlib/IPC/Run3*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.048-alt1
+- New version 0.048
+
 * Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.046-alt1
 - New version 0.046
 
