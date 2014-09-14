@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           bluecove
 Version:        2.1.1
-Release:        alt1_0.5.20101024snap63jpp7
+Release:        alt1_0.7.20101024snap63jpp7
 Summary:        Implementation of JSR-82 Java Bluetooth API
 
 Group:          System/Libraries
@@ -30,11 +30,9 @@ Source3:        http://snapshot.bluecove.org/distribution/download/%{version}-SN
 
 Source4:        README.dist
 
-
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  libbluez-devel
-BuildRequires:  ant-nodeps
 BuildRequires:  libmatthew-java
 BuildRequires:  dbus-java >= 2.5.1
 Requires:       jpackage-utils
@@ -71,6 +69,10 @@ cp -p bluecove-gpl-%{version}-SNAPSHOT/LICENSE.txt LICENSE-gpl.txt
 # add README.dist
 cp -p %{SOURCE4} .
 
+# Build 1.5 or newer bytecode
+sed -i -e 's/source="..."/source="1.5"/g' -e 's/target="..."/target="1.5"/' \
+  build.xml */build.xml
+
 %build
 # build main bluecove
 ant jar -Dproduct_version=%{version}
@@ -88,7 +90,7 @@ cd ../bluecove-bluez-%{version}-SNAPSHOT
 ant jar -Dproduct_version=%{version} \
         -Dbluecove_main_dist_dir=../target \
         -Ddbus_java_jar=%{_javadir}/dbus-java/dbus.jar \
-        -Dlibmatthew_java_debug_jar=%{_libdir}/libmatthew-java/unix.jar \
+        -Dlibmatthew_java_debug_jar=%{_jnidir}/unix.jar \
         -Dbluecove.native.resources.skip=true \
         -Dbluecove.native.linker.options="" \
         -DCC_compiler_options="${RPM_OPT_FLAGS} -fPIC -fno-stack-protector"
@@ -99,7 +101,6 @@ ant jar -Dproduct_version=%{version} \
         -Dbluecove_main_dist_dir=../target
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/%{version}-SNAPSHOT
 
@@ -107,17 +108,13 @@ mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/%{version}-SNAPSHOT
 # BlueCove #
 ############
 cp -p target/bluecove-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-# create symlink without version
-(cd $RPM_BUILD_ROOT%{_javadir}/ && ln -sf %{name}-%{version}.jar %{name}.jar)
+        $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 ################
 # BlueCove GPL #
 ################
 cp -p bluecove-gpl-%{version}-SNAPSHOT/target/bluecove-gpl-%{version}.jar \
-        $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}-gpl-%{version}.jar
-# create symlink without version
-(cd $RPM_BUILD_ROOT%{_libdir}/%{name} && ln -sf %{name}-gpl-%{version}.jar %{name}-gpl.jar)
+        $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}-gpl.jar
 
 # copy the GPL JNI library to library directory
 cp -p bluecove-gpl-%{version}-SNAPSHOT/target/*.so $RPM_BUILD_ROOT%{_libdir}/%{name}/%{version}-SNAPSHOT
@@ -126,9 +123,7 @@ cp -p bluecove-gpl-%{version}-SNAPSHOT/target/*.so $RPM_BUILD_ROOT%{_libdir}/%{n
 # BlueCove BlueZ DBUS #
 #######################
 cp -p bluecove-bluez-%{version}-SNAPSHOT/target/bluecove-bluez-%{version}.jar \
-        $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}-bluez-%{version}.jar
-# create symlink without version
-(cd $RPM_BUILD_ROOT%{_libdir}/%{name} && ln -sf %{name}-bluez-%{version}.jar %{name}-bluez.jar)
+        $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}-bluez.jar
 
 # copy the BlueZ JNI library to library directory
 cp -p bluecove-bluez-%{version}-SNAPSHOT/target/*.so $RPM_BUILD_ROOT%{_libdir}/%{name}/%{version}-SNAPSHOT
@@ -137,9 +132,7 @@ cp -p bluecove-bluez-%{version}-SNAPSHOT/target/*.so $RPM_BUILD_ROOT%{_libdir}/%
 # BlueCove Emu #
 ################
 cp -p bluecove-emu-%{version}-SNAPSHOT/target/bluecove-emu-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-emu-%{version}.jar
-# create symlink without version
-(cd $RPM_BUILD_ROOT%{_javadir}/ && ln -sf %{name}-emu-%{version}.jar %{name}-emu.jar)
+        $RPM_BUILD_ROOT%{_javadir}/%{name}-emu.jar
 
 %files
 %{_javadir}/*
@@ -147,6 +140,9 @@ cp -p bluecove-emu-%{version}-SNAPSHOT/target/bluecove-emu-%{version}.jar \
 %doc AUTHORS.txt README.txt LICENSE.txt stacks.txt todo.txt AUTHORS-gpl.txt LICENSE-gpl.txt README.dist
 
 %changelog
+* Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.7.20101024snap63jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_0.5.20101024snap63jpp7
 - new release
 
