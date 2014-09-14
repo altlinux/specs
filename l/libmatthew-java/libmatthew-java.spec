@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        A few useful Java libraries
 Group:          Development/Java
 License:        MIT
@@ -82,11 +85,16 @@ jar umf %{SOURCE2} unix-0.5.jar
 %install
 make install \
     DESTDIR=$RPM_BUILD_ROOT \
-    JARDIR=%{_libdir}/%{name} \
+    JARDIR=%{_jnidir} \
     LIBDIR=%{_libdir}/%{name} \
     DOCDIR=%{_javadocdir}/%{name}
 
+for i in unix cgi io hexdump debug-disable debug-enable ; do
+ln -s %{_jnidir}/$i.jar %buildroot%{_libdir}/%{name}/$i.jar
+done
+
 %files
+%{_jnidir}/*.jar
 %{_libdir}/%{name}
 %doc COPYING INSTALL README
 
@@ -96,6 +104,10 @@ make install \
 
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_7jpp7
+- new release
+- added compat symlinks
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_5jpp7
 - new release
 
