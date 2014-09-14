@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Data::Section
 
 Name: perl-Data-Section
-Version: 0.101622
+Version: 0.200006
 Release: alt1
 
 Summary: Perl module to read multiple hunks of data out of DATA section
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-Data-OptList perl-Params-Util perl-Sub-Install
-BuildRequires: perl-MRO-Compat perl-Sub-Exporter perl-devel
+# Automatically added by buildreq on Sat Mar 01 2014
+# optimized out: perl-Data-OptList perl-Params-Util perl-Sub-Install perl-devel
+BuildRequires: perl-Encode perl-MRO-Compat perl-Sub-Exporter perl-Test-FailWarnings
 
 %description
 Perl module Data::Section provides an easy way to access multiple
@@ -44,6 +44,9 @@ probably has other uses.
 %perl_vendor_privlib/Data/Section*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.200006-alt1
+- New version
+
 * Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.101622-alt1
 - New version
 
