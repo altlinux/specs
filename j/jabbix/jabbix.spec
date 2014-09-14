@@ -1,6 +1,6 @@
 Name: jabbix
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: The set of Java classes providing Zabbix monitoring system agent functionality
 License: LGPLv3
@@ -18,7 +18,7 @@ BuildRequires: java-devel >= 1.6.0
 BuildRequires: ant
 
 # Libraries
-BuildRequires: jakarta-commons-cli log4j json
+BuildRequires: apache-commons-cli log4j json
 
 # GettextDoclet for Russian documentation
 BuildRequires: gettext-doclet >= 1.0.1-alt2
@@ -26,7 +26,7 @@ BuildRequires: gettext-doclet >= 1.0.1-alt2
 BuildArch: noarch
 
 # Libraries (runtime)
-Requires: jakarta-commons-cli log4j json
+Requires: apache-commons-cli log4j json
 
 %description
 Jabbix library is a set of Java classes which can be used to add the
@@ -57,7 +57,7 @@ This package provides Russian Javadoc documentation for %name.
 %package agent
 Summary: Shell command to launch the JabbixAgent program
 Group: Monitoring
-Requires: java-common jabbix log4j jakarta-commons-cli json
+Requires: java-common jabbix log4j apache-commons-cli json
 
 %description agent
 Jabbix library is a set of Java classes which can be used to add the
@@ -105,6 +105,9 @@ install -D -m 0755 cmd/jabbix %buildroot%_bindir/jabbix
 %_bindir/jabbix
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3
+- NMU: fixed build
+
 * Wed Sep 08 2010 Paul Wolneykien <manowar@altlinux.ru> 1.0.1-alt2
 - Build with java >= 1.6 as the implemented methods are marked with @Override.
 
