@@ -1,29 +1,40 @@
-%define dist Net-IDN-Encode
-Name: perl-%dist
-Version: 2.200
+## SPEC file for Perl module Net::IDN::Encode
+
+%define real_name Net-IDN-Encode
+
+Name: perl-Net-IDN-Encode
+Version: 2.201
 Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
-License: GPL or Artistic
+
+License: %perl_license
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/C/CF/CFAERBER/Net-IDN-Encode-%{version}.tar.gz
+URL: http://search.cpan.org/dist/Net-IDN-Encode/
 
-# uses unicode properties
+Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+
+Source: %real_name-%version.tar
+
+BuildRequires(pre): rpm-build-licenses
+
 Requires: perl-unicore
 
-# Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Module-Build perl-Test-NoWarnings perl-unicore
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: libcloog-isl4 perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-StackTrace perl-Devel-Symdump perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Unicode-Normalize perl-devel perl-podlators
+BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-unicore
 
 %description
-Net::IDN::Encode - high-level interface for encoding and decoding of domain
-names (implements toASCII and toUNICODE as defined in RFC 3490).
+Perl module Net::IDN::Encode is a high-level interface for encoding
+and decoding of Internationalized Domain Names (implements toASCII
+and toUNICODE as defined in RFC 3490)
 
-Net::IDN::Punycode - ASCII-compatible encoding of Unicode (Punycode, RFC 3492)
+Net::IDN::Punycode - ASCII-compatible encoding of Unicode
+(Punycode, RFC 3492)
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %real_name-%version
 
 %build
 %perl_vendor_build
@@ -37,6 +48,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode (Punycode, RFC 3492)
 %perl_vendor_archlib/Net
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.201-alt1
+- New version
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 2.200-alt1
 - automated CPAN update
 
