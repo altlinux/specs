@@ -4,7 +4,7 @@
 
 Name: bootchart
 Version: 0.9
-Release: alt1_2jpp5
+Release: alt2_2jpp5
 Summary: Boot Process Performance Visualization
 License: GPL
 Url: http://www.bootchart.org/
@@ -17,10 +17,10 @@ BuildRequires(pre): rpm-build-java
 BuildRequires(pre): java-devel-default
 
 # Automatically added by buildreq on Mon Dec 29 2008
-#BuildRequires: ant jakarta-commons-cli java-1.6.0-sun-accessibility tzdata
+#BuildRequires: ant apache-commons-cli java-1.6.0-sun-accessibility tzdata
 
 BuildRequires: ant tzdata
-BuildRequires: jakarta-commons-cli >= 0:1.0
+BuildRequires: apache-commons-cli
 
 BuildArch: noarch
 
@@ -114,6 +114,9 @@ fi
 %config(noreplace) %_sysconfdir/%{name}d.conf
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_2jpp5
+- NMU: fixed build
+
 * Tue Aug 31 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1_2jpp5
 - Fixed for checkbashisms
 
