@@ -2,11 +2,12 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           derby
 Version:        10.9.1.0
-Release:        alt1_2jpp7
+Release:        alt1_6jpp7
 Summary:        Relational database implemented entirely in Java
 
 Group:          Databases
@@ -41,14 +42,13 @@ Patch1: derby-javacc5.patch
 Patch2: derby-net.patch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  servlet25
+BuildRequires:  servlet3
 BuildRequires:  jakarta-oro
 BuildRequires:  javacc
 BuildRequires:  junit4
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  ant
-Requires:       jpackage-utils
 Requires(pre):  shadow-utils
 
 BuildArch:      noarch
@@ -66,7 +66,7 @@ pushd db-%{name}-%{version}-src
 rm java/engine/org/apache/derby/impl/sql/compile/Token.java
 %patch1 -p0
 popd
-%patch2 -p1
+%patch2 -p1 -F1
 
 %build
 cd db-%{name}-%{version}-src
@@ -90,8 +90,7 @@ find -name build.xml |xargs sed '
 ' -i
 
 # Fire
-ant buildsource -Dderby.source.rpm=%{version}
-ant buildjars -Dderby.source.rpm=%{version}
+ant -verbose clobber buildsource buildjars
 
 
 %install
@@ -102,15 +101,8 @@ install -d $RPM_BUILD_ROOT%{_javadir}/%{name}
 for i in jars/sane/*.jar
 do
         B=$(basename $i |sed 's/.jar$//')
-        install -m644 $i $RPM_BUILD_ROOT%{_javadir}/%{name}/$B-%{version}.jar
-        ln -sf $B-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$B.jar
+        install -m644 $i $RPM_BUILD_ROOT%{_javadir}/%{name}/$B.jar
 done
-
-# We hardlink instead of symlinking so that default security policy
-# applies to derbynet.jar
-ln -f $RPM_BUILD_ROOT%{_javadir}/%{name}/derbynet-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}/derbynet.jar
-
 
 # Wrapper scripts
 install -d $RPM_BUILD_ROOT%{_bindir}
@@ -143,28 +135,22 @@ install -p -m644 %{SOURCE26} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbynet.p
 install -p -m644 %{SOURCE27} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbytools.pom
 
 # Dependency maps
-%add_to_maven_depmap org.apache.derby derby %{version} JPP/derby derby
-%add_to_maven_depmap org.apache.derby derby-project %{version} JPP/derby derby-project
-%add_to_maven_depmap org.apache.derby derbyLocale_cs %{version} JPP/derby derbyLocale_cs
-%add_to_maven_depmap org.apache.derby derbyLocale_de_DE %{version} JPP/derby derbyLocale_de_DE
-%add_to_maven_depmap org.apache.derby derbyLocale_es %{version} JPP/derby derbyLocale_es
-%add_to_maven_depmap org.apache.derby derbyLocale_fr %{version} JPP/derby derbyLocale_fr
-%add_to_maven_depmap org.apache.derby derbyLocale_hu %{version} JPP/derby derbyLocale_hu
-%add_to_maven_depmap org.apache.derby derbyLocale_it %{version} JPP/derby derbyLocale_it
-%add_to_maven_depmap org.apache.derby derbyLocale_ja_JP %{version} JPP/derby derbyLocale_ja_JP
-%add_to_maven_depmap org.apache.derby derbyLocale_ko_KR %{version} JPP/derby derbyLocale_ko_KR
-%add_to_maven_depmap org.apache.derby derbyLocale_pl %{version} JPP/derby derbyLocale_pl
-%add_to_maven_depmap org.apache.derby derbyLocale_pt_BR %{version} JPP/derby derbyLocale_pt_BR
-%add_to_maven_depmap org.apache.derby derbyLocale_ru %{version} JPP/derby derbyLocale_ru
-%add_to_maven_depmap org.apache.derby derbyLocale_zh_CN %{version} JPP/derby derbyLocale_zh_CN
-%add_to_maven_depmap org.apache.derby derbyLocale_zh_TW %{version} JPP/derby derbyLocale_zh_TW
-%add_to_maven_depmap org.apache.derby derbyclient %{version} JPP/derby derbyclient
-%add_to_maven_depmap org.apache.derby derbynet %{version} JPP/derby derbynet
-%add_to_maven_depmap org.apache.derby derbytools %{version} JPP/derby derbytools
+for pom in $RPM_BUILD_ROOT%{_mavenpomdir}/*.pom ; do
+        B=$(basename $pom | sed -e 's/JPP.%{name}-//' -e 's/.pom$//')
+	if [ -f "$RPM_BUILD_ROOT%{_javadir}/%{name}/$B.jar" ] ; then
+		%add_maven_depmap JPP.%{name}-$B.pom %{name}/$B.jar
+	else
+		%add_maven_depmap JPP.%{name}-$B.pom
+	fi
+done
 
+# Systemd unit
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
 install -p -m 644 %{SOURCE2} \
         $RPM_BUILD_ROOT%{_unitdir}/%{name}.service
+
+# Derby home dir
+install -dm 755 $RPM_BUILD_ROOT/var/lib/derby
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
@@ -193,10 +179,14 @@ exit 0
 %{_mavenpomdir}/*.pom
 %{_mavendepmapfragdir}/%{name}
 %{_unitdir}/%{name}.service
+%attr(755,derby,derby) %{_sharedstatedir}/%{name}
 %config(noreplace,missingok) /etc/%{name}.conf
 
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:10.9.1.0-alt1_6jpp7
+- new release
+
 * Wed Jul 09 2014 Igor Vlasenko <viy@altlinux.ru> 0:10.9.1.0-alt1_2jpp7
 - converted from JPackage by jppimport script
 
