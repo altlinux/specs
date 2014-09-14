@@ -3,7 +3,7 @@
 %define real_name Unicode-Stringprep
 
 Name: perl-Unicode-Stringprep
-Version: 1.104
+Version: 1.105
 Release: alt1
 
 Summary: Perl module for preparation of Internationalized Strings
@@ -20,8 +20,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Mar 23 2010
-BuildRequires: perl-Module-Build perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-Unicode-Normalize
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-StackTrace perl-Devel-Symdump perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-podlators
+BuildRequires: perl-HTML-Parser perl-Module-Build perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-Unicode-Normalize
 
 %description
 Perl module Unicode::Stringprep implements the stringprep
@@ -52,6 +53,9 @@ stringprep in order to fully specify the processing options.
 
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.105-alt1
+- New version
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.104-alt1
 - New version
 
