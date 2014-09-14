@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Cache::Memcached::Fast
 
 Name: perl-Cache-Memcached-Fast
-Version: 0.21
-Release: alt2
+Version: 0.22
+Release: alt1
 
 Summary: Perl client for memcached
 
@@ -18,9 +18,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Apr 14 2013
-# optimized out: perl-Compress-Raw-Zlib perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-IO-Compress perl-Test-Pod perl-Test-Pod-Coverage ruby ruby-stdlibs
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: libcloog-isl4 perl-Compress-Raw-Zlib perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
+BuildRequires: perl-IO-Compress perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 Cache::Memcahced::Fast is a Perl client for memcached, a memory cache
@@ -51,6 +51,9 @@ documentation for full details).
 %perl_vendor_archlib/Cache
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.22-alt1
+- New version 0.22
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.21-alt2
 - built for perl 5.18
 
