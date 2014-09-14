@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Config::INI
 
 Name: perl-Config-INI
-Version: 0.023
+Version: 0.024
 Release: alt1
 
 Summary: Perl module to work with simple .ini-file format
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Wed Feb 26 2014
-# optimized out: perl-Data-OptList perl-IO-String perl-Params-Util perl-Sub-Exporter perl-Sub-Install
-BuildRequires: perl-Encode perl-Mixin-Linewise perl-devel perl-unicore
+# Automatically added by buildreq on Sun Sep 14 2014
+# optimized out: perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-IO-String perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Install
+BuildRequires: perl-CPAN-Meta perl-Mixin-Linewise perl-devel perl-unicore
 
 %description
 Perl module Config::INI provides read and write access to the
@@ -43,6 +43,9 @@ simple .ini-file format.
 %perl_vendor_privlib/Config/INI*
 
 %changelog
+* Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt1
+- New version
+
 * Mon Mar 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1
 - automated CPAN update
 
