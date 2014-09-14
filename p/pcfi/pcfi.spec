@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global commit bd245c9
 
 Name:		pcfi
 Version:	2010.08.09
-Release:	alt2_6.20111103gitbd245c9jpp7
+Release:	alt2_7.20111103gitbd245c9jpp7
 Summary:	PDF Core Font Information
 
 Group:		Publishing
@@ -18,8 +14,7 @@ Source0:	https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{commit}.ta
 Source1:	http://opensource.adobe.com/wiki/display/cmap/License
 BuildArch:	noarch
 BuildRequires:	maven-local
-BuildRequires:	maven-surefire-provider-junit
-Requires:	jpackage-utils
+Requires:       jpackage-utils
 Source44: import.info
 
 
@@ -38,26 +33,21 @@ cp %SOURCE1 .
 
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-SNAPSHOT.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
 
 
-%files
+%files -f .mfiles
 %doc README.txt src/main/resources/META-INF/LICENSE.txt License
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
 
 
 %changelog
+* Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_7.20111103gitbd245c9jpp7
+- new release
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_6.20111103gitbd245c9jpp7
 - new release
 
