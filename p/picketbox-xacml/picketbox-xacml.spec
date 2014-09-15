@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             picketbox-xacml
 Version:          2.0.7
-Release:          alt2_5jpp7
+Release:          alt3_5jpp7
 Summary:          JBoss XACML
 Group:            Development/Java
 License:          LGPLv2+
@@ -38,6 +37,7 @@ BuildRequires:    picketbox-commons
 Requires:         picketbox-commons
 Requires:         jpackage-utils
 Source44: import.info
+Source2: depmap
 
 %description
 JBoss XACML Library
@@ -59,7 +59,8 @@ rm .classpath
 
 %build
 # Disabled tests because OpenDS is needed
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE2}" \
+ -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 # JAR
@@ -93,6 +94,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt3_5jpp7
+- fixed build
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_5jpp7
 - new release
 
