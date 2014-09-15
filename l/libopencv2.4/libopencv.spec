@@ -4,10 +4,10 @@
 %def_without unicap
 %def_with swig
 %def_with python
-%def_with xine
+%def_without xine
 %def_without octave
-%def_without gstreamer
-%def_with ffmpeg
+%def_with gstreamer
+%def_without ffmpeg
 %def_with 1394libs
 %def_with v4l
 %def_with gtk
@@ -29,16 +29,23 @@
 %define Name OpenCV
 %define sover 2.4
 Name: lib%bname%sover
-Version: 2.4.8.1
-Release: alt4
+Version: 2.4.9.1
+Release: alt1
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
 URL: http://opencv.org
 # git://code.opencv.org/opencv.git
-Source: %bname-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %bname-%version.tar
+# GStreamer1 releted patches
+Patch100: 0550-bomb-commit-of-gstreamer-videocapture-and-videowrite.patch
+Patch101: 0552-eliminated-warnings.patch
+Patch102: 0587-Fix-build-with-gstreamer-0.10.28.patch
+Patch103: 0865-gstreamer-cleaning-up-resources.patch
+Patch104: 0871-allow-for-arbitraty-number-of-sources-and-sinks.patch
 
 BuildPreReq: chrpath libavformat53 libavcodec53 libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
@@ -53,7 +60,7 @@ BuildPreReq: texlive-latex-base
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel}
-%{?_with_gstreamer:BuildRequires: gstreamer-devel}
+%{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+2-devel}
 %{?_with_xine:BuildRequires: libxine-devel}
 %{?_with_python:BuildRequires: python-devel}
@@ -190,6 +197,11 @@ This package contains %Name examples.
 
 %prep
 %setup
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
 
@@ -216,7 +228,9 @@ cmake \
 	-DPYTHON_PLUGIN_INSTALL_PATH:PATH=%python_sitelibdir/%bname \
 	-DWITH_UNICAP:BOOL=ON \
 	-DWITH_QUICKTIME:BOOL=ON \
-	-DWITH_XINE:BOOL=ON \
+	-DWITH_XINE:BOOL=%{?_with_xine:ON}%{!?_with_xine:OFF} \
+	-DWITH_FFMPEG:BOOL=%{?_with_ffmpeg:ON}%{!?_with_ffmpeg:OFF} \
+	-DWITH_GSTREAMER=%{?_with_gstreamer:ON}%{!?_with_gstreamer:OFF} \
 	-DWITH_OPENGL:BOOL=ON \
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
@@ -270,6 +284,12 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt1
+- new version (ALT#30150)
+- disable ffmpeg
+- disable xine
+- enable gstreamer1
+
 * Fri Mar 21 2014 Dmitry Derjavin <dd@altlinux.org> 1:2.4.8.1-alt4
 - Added pythonX.Y(opencv) require to the python module package.
 
