@@ -1,13 +1,13 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(IO/Null.pm) perl(Mojo/UserAgent.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Output.pm) perl(Test/Without/Module.pm) perl(URI.pm) perl(base.pm) perl(version.pm) perl(CGI.pm)
 # END SourceDeps(oneline)
-%define module_version 2.09
+%define module_version 2.11
 %define module_name Module-Release
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.09
+Version: 2.11
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
@@ -46,6 +46,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
