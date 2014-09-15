@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module Text-Trac
 
 Name: perl-%module
-Version: 0.15
-Release: alt1.1
+Version: 0.16
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Text/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Text-Trac-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ Text::Trac parses text with Trac WikiFormatting and convert it to html format.
 %perl_vendor_privlib/Text/
 
 %changelog
+* Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
