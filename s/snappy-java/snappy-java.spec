@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ maven
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             snappy-java
 Version:          1.0.4.1
-Release:          alt2_5jpp7
+Release:          alt3_5jpp7
 Summary:          Fast compressor/decompresser
 Group:            Development/Java
 License:          ASL 2.0
@@ -33,6 +33,7 @@ Requires:         felix-osgi-core
 Requires:         jboss-logging
 Requires:         jpackage-utils
 Source44: import.info
+Source2: depmap
 
 %description
 A Java port of the snappy, a fast compresser/decompresser written in C++.
@@ -53,7 +54,8 @@ This package contains the API documentation for %{name}.
 
 %build
 # no xerial package available
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE2} \
+-Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -83,6 +85,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4.1-alt3_5jpp7
+- fixed build
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4.1-alt2_5jpp7
 - new release
 
