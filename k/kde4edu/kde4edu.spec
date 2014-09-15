@@ -11,7 +11,7 @@ Name: kde4edu
 %define minor 14
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -51,11 +51,10 @@ Requires: %name-kturtle = %version-%release
 Requires: %name-parley = %version-%release
 Requires: %name-kwordquiz = %version-%release
 Requires: %name-step = %version-%release
-Requires: %name-marble = %version-%release
+Requires: kde4-marble
 Requires: %name-rocs = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
-Patch1: kdeedu-4.12.3-alt-marble-install.patch
 Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
@@ -91,7 +90,6 @@ BuildRequires: kde4base-runtime-devel kde4base-workspace-devel
 * kturtle: Logo Programming Environment
 * kvoctrain: Vocabulary Trainer
 * kwordquiz: Vocabulary Trainer
-* marble: Virtual Globe
 
 %package common
 Summary: %name common package
@@ -609,6 +607,7 @@ Wikipedia article.
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
 Requires: kde4libs-devel libkdeedu4-devel
+Requires: kde4-marble-devel
 Requires: %name-common = %version-%release
 %description devel
 Files needed to build applications based on %name.
@@ -636,7 +635,6 @@ KDE 4 library
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 %patch2 -p1
 
 %if_disabled artikulate
@@ -685,12 +683,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %else
 %_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
 %endif
-%_xdgmimedir/packages/geo.xml
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
-%files -n libastro4
-%_K4libdir/libastro.so.*
 
 %if_enabled artikulate
 %files -n libartikulatecore4
@@ -1061,45 +1056,6 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4apps/libkdeedu/
 %_K4libdir/libscience.so.*
 
-%files -n libmarblewidget4
-%_K4libdir/libmarblewidget.so.*
-
-%files marble
-%ifdef _kde_alternate_placement
-%_kde4_bindir/marble
-%_kde4_bindir/marble-touch
-%_kde4_bindir/marble-mobile
-%_kde4_xdg_apps/marble*.desktop
-%else
-%_K4bindir/marble
-%_K4bindir/marble-qt
-%_K4bindir/marble-touch
-%_K4bindir/marble-mobile
-%_K4xdg_apps/marble*.desktop
-%endif
-%dir %_qt4dir/imports/org/
-%dir %_qt4dir/imports/org/kde
-%dir %_qt4dir/imports/org/kde/edu
-%_qt4dir/imports/org/kde/edu/marble/
-%_K4lib/libmarble_part.*
-%_K4lib/marblethumbnail.so
-%_K4lib/plugins/marble
-%_K4lib/plasma_applet_worldclock.so
-%_K4lib/plasma_runner_marble.so
-%_K4iconsdir/hicolor/*/apps/marble.*
-%_K4apps/marble
-#%_K4apps/marble_part
-%_K4cfg/marble.kcfg
-%_K4srv/marble_part*.desktop
-%_K4srv/marble_thumbnail_*.desktop
-%_K4srv/plasma-applet-kworldclock.desktop
-%_K4srv/plasma-runner-marble.desktop
-%_K4doc/*/marble
-# tools
-#%_kde4_bindir/tilecreator
-#%_kde4_bindir/routing-instructions
-
-
 %files rocs
 %ifdef _kde_alternate_placement
 %_kde4_bindir/rocs
@@ -1122,26 +1078,19 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/librocscore.so.*
 %files -n librocsvisualeditor4
 %_K4libdir/librocsvisualeditor.so.*
-#%files -n libkanagramengine4
-#%_K4libdir/libkanagramengine.so.*
 %files -n libkhangmanengine4
 %_K4libdir/libkhangmanengine.so.*
 
 %files devel
 %_includedir/khangman/
-#%_includedir/kanagram/
-#%_includedir/libkiten/
-#%_includedir/marble/
-#%_includedir/rocs/
 %_K4link/*.so
 %_K4includedir/*
-%_includedir/astro/
-%_K4apps/cmake/modules/*
-#%_K4libdir/cmake/libkdeedu
 %_K4dbus_interfaces/*
-%_K4lib/plugins/designer/*.so
 
 %changelog
+* Thu Sep 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- split marble to separate package
+
 * Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
