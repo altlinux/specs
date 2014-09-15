@@ -56,7 +56,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 216
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -340,8 +340,9 @@ This package contains utils from systemd:
 %package services
 Group: System/Configuration/Boot and Init
 Summary: systemd services
-Conflicts: %name < 1:216-alt1
+Conflicts: %name < %epoch:%version-%release
 Requires: pam_%name = %epoch:%version-%release
+Requires: %name-utils = %epoch:%version-%release
 Requires: dbus >= %dbus_ver
 Conflicts: service <= 0.5.25-alt1
 Conflicts: chkconfig <= 1.3.59-alt3
@@ -1007,7 +1008,6 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
     -d /var/empty -s /dev/null -r -l -M systemd-bus-proxy >/dev/null 2>&1 ||:
 
 %post
-/sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
 /sbin/systemctl daemon-reexec >/dev/null 2>&1 || :
 /sbin/journalctl --update-catalog >/dev/null 2>&1 || :
 
@@ -1066,6 +1066,9 @@ if [ $1 -eq 0 ] ; then
 
         rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
+
+%post utils
+/sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
 
 %if_enabled networkd
 %pre networkd
@@ -1184,7 +1187,6 @@ update_chrooted all
 %preun_service udevd
 
 %files -f %name.lang
-%dir %_sysconfdir/systemd
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
 
@@ -1211,7 +1213,7 @@ update_chrooted all
 /sbin/systemd
 /sbin/systemd-ask-password
 /sbin/systemd-inhibit
-/sbin/systemd-machine-id-setup
+
 /sbin/systemd-notify
 /sbin/systemd-tty-ask-password-agent
 %_bindir/bootctl
@@ -1252,30 +1254,13 @@ update_chrooted all
 /lib/systemd/systemd-vconsole-setup
 /lib/systemd/altlinux-save-dmesg
 
+%dir %_unitdir
 %_unitdir/*
-%exclude %_unitdir/systemd-backlight@.service
-%exclude %_unitdir/systemd-binfmt.service
-%exclude %_unitdir/*/systemd-binfmt.service
-%exclude %_unitdir/systemd-modules-load.service
-%exclude %_unitdir/*/systemd-modules-load.service
-%exclude %_unitdir/systemd-sysctl.service
-%exclude %_unitdir/*/systemd-sysctl.service
-%exclude %_unitdir/systemd-tmpfiles-*.*
-%exclude %_unitdir/*/systemd-tmpfiles-*.*
-%exclude %_unitdir/*.busname
-%exclude %_unitdir/*/*.busname
-%exclude %_unitdir/*dbus-org.freedesktop*.service
-%exclude %_unitdir/systemd-hostnamed.service
-%exclude %_unitdir/systemd-localed.service
-%exclude %_unitdir/systemd-logind.service
-%exclude %_unitdir/*/systemd-logind.service
-%exclude %_unitdir/systemd-machined.service
-%exclude %_unitdir/systemd-timedated.service
 
 %if_enabled networkd
-%exclude %_unitdir/*openresolv*
 %exclude %_unitdir/*networkd*
-%exclude %_unitdir/*resolved*
+%exclude %_unitdir/*resolv*
+%exclude %_unitdir/*/*resolv*
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
@@ -1367,6 +1352,7 @@ update_chrooted all
 /usr/lib/systemd
 /lib/systemd/system-generators
 
+%dir /lib/systemd/system-preset
 /lib/systemd/system-preset/85-display-manager.preset
 /lib/systemd/system-preset/90-default.preset
 /lib/systemd/system-preset/90-systemd.preset
@@ -1454,14 +1440,14 @@ update_chrooted all
 %_initdir/README
 
 %files utils
+%dir /lib/systemd
+
 /sbin/systemd-escape
 %_mandir/*/*escape*
 
 /sbin/systemd-tmpfiles
 %_mandir/*/*tmpfiles*
 %_rpmlibdir/systemd-tmpfiles.filetrigger
-%_unitdir/systemd-tmpfiles*.*
-%_unitdir/*/systemd-tmpfiles*.*
 /lib/tmpfiles.d/legacy.conf
 /lib/tmpfiles.d/x11.conf
 /lib/tmpfiles.d/tmp.conf
@@ -1470,59 +1456,43 @@ update_chrooted all
 
 /lib/systemd/systemd-binfmt
 /sbin/systemd-binfmt
-%_unitdir/systemd-binfmt.service
-%_unitdir/*/systemd-binfmt.service
 %_mandir/*/*binfmt*
 
 /lib/systemd/systemd-modules-load
 %_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load
-%_unitdir/systemd-modules-load.service
-%_unitdir/*/systemd-modules-load.service
 %_mandir/*/*modules-load*
 
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
-%_unitdir/systemd-sysctl.service
-%_unitdir/*/systemd-sysctl.service
 /lib/sysctl.d/50-default.conf
 /lib/sysctl.d/49-coredump-null.conf
 %_mandir/*/*sysctl*
 
 /lib/systemd/systemd-backlight
-%_unitdir/systemd-backlight@.service
 %_mandir/*/*backlight*
 %ghost %dir %_localstatedir/lib/systemd/backlight
 
+/sbin/systemd-machine-id-setup
+%ghost %config(noreplace) %_sysconfdir/machine-info
+%ghost %config(noreplace) %_sysconfdir/hostname
+%ghost %config(noreplace) %_sysconfdir/vconsole.conf
+%ghost %config(noreplace) %_sysconfdir/locale.conf
+
 %files services
 %dir %_sysconfdir/systemd
-%config(noreplace) /etc/systemd/logind.conf
+%config(noreplace) %_sysconfdir/systemd/logind.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.freedesktop.*.conf
 %exclude %_sysconfdir/dbus-1/system.d/org.freedesktop.systemd1.conf
-%_unitdir/org.freedesktop.*.busname
-%_unitdir/*/org.freedesktop.*.busname
-%exclude %_unitdir/org.freedesktop.resolve1.busname
-%exclude %_unitdir/*/org.freedesktop.resolve1.busname
-%_unitdir/dbus-org.freedesktop.*.service
-%exclude %_unitdir/dbus-org.freedesktop.resolve1.service
 %_datadir/dbus-1/system-services/org.freedesktop.*.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.systemd1.service
 %exclude %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
-%_unitdir/systemd-hostnamed.service
-%_unitdir/systemd-localed.service
-%_unitdir/systemd-logind.service
-%_unitdir/systemd-machined.service
-%_unitdir/systemd-timedated.service
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.systemd1.policy
 %endif
 
-%ghost %config(noreplace) %_sysconfdir/hostname
-%ghost %config(noreplace) %_sysconfdir/vconsole.conf
-%ghost %config(noreplace) %_sysconfdir/locale.conf
-%ghost %config(noreplace) %_sysconfdir/machine-info
 
 /sbin/loginctl
 /lib/systemd/systemd-logind
@@ -1556,11 +1526,8 @@ update_chrooted all
 /lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.service
 %_unitdir/systemd-networkd-wait-online.service
-%_unitdir/systemd-resolved.service
-%_unitdir/dbus-org.freedesktop.resolve1.service
-%_unitdir/org.freedesktop.resolve1.busname
-%_unitdir/*/org.freedesktop.resolve1.busname
-%_unitdir/altlinux-openresolv.*
+%_unitdir/*resolv*
+%_unitdir/*/*resolv*
 /lib/systemd/network/*.network
 %_mandir/*/*network*
 %_mandir/*/*netdev*
@@ -1773,6 +1740,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Sep 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt3
+- move systemd-machine-id-setup to systemd-utils
+- move configs /etc/{machine-info,hostname,vconsole.conf,locale.conf} to systemd-utils
+- move all units files frorm systemd-utils,systemd-services to systemd
+
 * Mon Sep 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt2
 - move systemd-{halt,poweroff,reboot,shutdown} man pages to systemd package
 
