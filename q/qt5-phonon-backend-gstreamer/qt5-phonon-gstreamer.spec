@@ -1,6 +1,6 @@
 
 Name: qt5-phonon-backend-gstreamer
-Version: 4.7.80
+Version: 4.8.0
 Release: alt1
 
 Group: System/Libraries
@@ -46,6 +46,12 @@ Gstreamer phonon backend
 %_datadir/kde5/share/icons/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
+- new version
+
+* Mon Sep 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.80-alt0.M70P.1
+- build for M70P
+
 * Mon Aug 25 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.80-alt1
 - new version
 
