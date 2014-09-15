@@ -1,6 +1,6 @@
 Name: cqvamp
 Version: 1.0
-Release: alt1.hg20140808
+Release: alt2.hg20140808
 Summary: Vamp plugin implementing the Constant-Q transform of a time-domain signal
 License: MIT
 Group: Sound
@@ -94,6 +94,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.hg20140808
+- Added cq/CQParameters.h
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.hg20140808
 - Snapshot from mercurial
 
