@@ -56,7 +56,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 216
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1353,8 +1353,11 @@ update_chrooted all
 %_man8dir/systemd-system-update-generator*
 %_man8dir/systemd-update-utmp*
 %_man8dir/systemd-user-sessions*
-%_man8dir/systemd-vconsole-setup*
 %_man8dir/systemd-update-done*
+%_man8dir/systemd-halt*
+%_man8dir/systemd-reboot*
+%_man8dir/systemd-shutdown*
+%_man8dir/systemd-poweroff*
 
 %exclude %_mandir/*/systemd-firstboot*
 %exclude %_mandir/*/*sysusers*
@@ -1442,11 +1445,11 @@ update_chrooted all
 /sbin/telinit
 /sbin/runlevel
 %_man1dir/init*
-%_man8dir/*halt*
-%_man8dir/*reboot*
-%_man8dir/*shutdown*
-%_man8dir/*poweroff*
-%_man8dir/*telinit*
+%_man8dir/halt*
+%_man8dir/reboot*
+%_man8dir/shutdown*
+%_man8dir/poweroff*
+%_man8dir/telinit*
 %_man8dir/runlevel*
 %_initdir/README
 
@@ -1770,6 +1773,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Sep 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt2
+- move systemd-{halt,poweroff,reboot,shutdown} man pages to systemd package
+
 * Fri Sep 05 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt1
 - 216
 - drop use /proc/sys/kernel/hotplug in init script (ALT#30275)
