@@ -1,6 +1,6 @@
 Name: libkface
-Version: 3.0.0
-Release: alt4
+Version: 3.4.0
+Release: alt1
 
 Summary: Libkface is a Qt/C++ wrapper around LibFace
 License: GPL2
@@ -11,7 +11,7 @@ Url: https://projects.kde.org/projects/kdereview/libkface
 Source: %name-%version.tar
 
 BuildRequires(pre): kde-common-devel
-BuildRequires: gcc-c++ kde4libs-devel libopencv-devel
+BuildRequires: gcc-c++ kde4libs-devel libopencv-devel >= 2.4.9
 
 %description
 Libkface is a Qt/C++ wrapper around LibFace library to perform face recognition and detection over pictures.
@@ -42,6 +42,12 @@ Devel files for %name
 %_K4apps/cmake/modules/FindKface.cmake
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 3.4.0-alt1
+- new version
+
+* Tue Jul 01 2014 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
+- new version
+
 * Mon May 19 2014 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt4
 - digikam 4.0.0
 
