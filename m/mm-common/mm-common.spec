@@ -1,7 +1,7 @@
 %define ver_major 0.9
 
 Name: mm-common
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Common build files of the C++ bindings
@@ -28,14 +28,14 @@ Package contains short documentation for %name and example skeleton module,
 which could be used as a base for new mm module.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -51,6 +51,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt1
+- 0.9.7
+
 * Sun Oct 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
 - 0.9.6
 
