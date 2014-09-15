@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Sub-Identify
 Name: perl-%dist
-Version: 0.04
-Release: alt3
+Version: 0.07
+Release: alt1
 
 Summary: Retrieve names of code references
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RG/RGARCIA/Sub-Identify-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod
@@ -32,6 +33,9 @@ For this, it uses perl's introspection mechanism, provided by the B module.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt3
 - built for perl 5.18
 
