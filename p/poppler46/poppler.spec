@@ -37,7 +37,7 @@
 %define somajor_glib 8
 %define major 0
 %define minor 26
-%define bugfix 2
+%define bugfix 4
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -65,7 +65,6 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
-Patch100: alt-find-moc-qt5.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -268,7 +267,6 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-%patch100 -p1
 
 %autoreconf
 #aclocal --force -I m4
@@ -397,6 +395,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.4-alt1
+- new version
+
 * Wed Jul 09 2014 Sergey V Turchin <zerg@altlinux.org> 0.26.2-alt1
 - new version
 
