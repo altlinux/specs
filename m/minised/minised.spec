@@ -1,14 +1,12 @@
-%define svnrev 106
 Name: minised
-Version: 1.12
-Release: alt2.qa1
+Version: 1.14
+Release: alt1.svn20130424
 Summary: Smaller, cheaper, faster SED implementation
 License: GPL
 Group: Editors
 URL: http://www.exactcode.de/site/open_source/%name/
-Source: http://dl.exactcode.de/oss/%name/%name-%version.tar
-%{?svnrev:Patch: %name-svn-r%svnrev.patch}
-Packager: Led <led@altlinux.ru>
+# http://svn.exactcode.de/minised/trunk/
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri May 09 2008
 BuildRequires: dietlibc
@@ -21,7 +19,6 @@ features and POSIX conformance.
 
 %prep
 %setup
-%{?svnrev:%patch -p1}
 
 
 %build
@@ -41,6 +38,9 @@ install -D -m 0644 {,%buildroot%_man1dir/}%name.1
 
 
 %changelog
+* Mon Sep 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt1.svn20130424
+- Version 1.14
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.12-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
