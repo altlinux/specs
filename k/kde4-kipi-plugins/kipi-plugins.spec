@@ -1,17 +1,10 @@
 %define libsover 4
 %define libkipiplugins libkipiplugins%libsover
-%define kde4graphics_ver %{get_version kde4graphics-devel}
-
-%_K_if_ver_gteq %kde4graphics_ver 4.4
-%def_enable expoblending
-%else
-%def_disable expoblending
-%endif
 
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.0.0
+Version: 4.2.0
 Release: alt1
 
 Group: Graphics
@@ -30,9 +23,7 @@ Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
 Patch2: kipi-plugins-4.0.0-alt-lib-version.patch
 
 Requires: %name-core = %version-%release
-%if_enabled expoblending
 Requires: %name-expoblending = %version-%release
-%endif
 Conflicts: kipi-plugins <= 3:0.1.6-alt5
 
 # Automatically added by buildreq on Thu Apr 16 2009 (-bi)
@@ -152,26 +143,26 @@ done
 %_K4xdg_apps/photolayoutseditor.desktop
 %_K4xdg_apps/scangui.desktop
 %_K4tmpl/kipiplugins_photolayoutseditor/
-%if_enabled expoblending
+# exclude expoblending
 %exclude %_K4lib/kipiplugin_expoblending.so
 %exclude %_K4srv/kipiplugin_expoblending.desktop
 %exclude %_K4apps/kipiplugin_expoblending
-%endif
 
-%if_enabled expoblending
 %files expoblending
 %_K4bindir/expoblending
 %_K4lib/kipiplugin_expoblending.so
 %_K4apps/kipiplugin_expoblending
 %_K4srv/kipiplugin_expoblending.desktop
 %_K4xdg_apps/expoblending.desktop
-%endif
 
 %files -n %libkipiplugins
 %_K4libdir/libkipiplugins.so.%libsover
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.2.0-alt1
+- new version
+
 * Mon May 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define rname libmediawiki
 Name: libmediawiki
 Version: 1.0.0
-Release: alt6
+Release: alt7
 
 Group: System/Libraries
 Summary: KDE C++ interface for MediaWiki
@@ -32,12 +32,12 @@ Development files for %name
 
 
 %build
-%K4build
-
+%K4build \
+    -DKDE4_BUILD_TESTS=OFF \
+    #
 
 %install
 %K4install
-
 
 %files
 %_K4libdir/libmediawiki.so.*
@@ -52,6 +52,12 @@ Development files for %name
 
 
 %changelog
+* Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt7
+- digikam-4.2.0
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt5.M70P.1
+- built for M70P
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt6
 - digikam-3.4.0
 
