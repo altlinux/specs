@@ -1,14 +1,15 @@
 %set_automake_version 1.11
 
 Name:		libev4
-Version:	4.15
-Release:	alt1.1
+Version:	4.18
+Release:	alt1
 Summary:	libev - an event notification library
 License:	BSD or GPL v2+
 URL:		http://software.schmorp.de/pkg/libev
 Group:		System/Libraries
 Source:		%name-%version.tar
 Source1:	libev.pc.in
+Source2:        %name.watch
 
 %description
 The libev API provides a mechanism to execute a callback function when
@@ -73,6 +74,12 @@ popd
 %_libdir/libev.a
 
 %changelog
+* Mon Sep 15 2014 Denis Smirnov <mithraen@altlinux.ru> 4.18-alt1
+- new version 4.18
+
+* Mon Sep 15 2014 Denis Smirnov <mithraen@altlinux.ru> 4.15-alt2
+- add watch-file
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.15-alt1.1
 - Fixed build
 
