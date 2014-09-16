@@ -1,4 +1,4 @@
-%define gcc_branch 4.8
+%define gcc_branch 4.9
 
 # this package can be compiled as cross tool, by defining _cross_platform
 # i.e. rpmbuild -ba --define '_cross_platform armh-alt-linux-gnueabi' gcc4.spec
@@ -8,11 +8,11 @@
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
-Version: 4.8.2
-Release: alt4
+Version: 4.9.1
+Release: alt1
 
 Summary: GNU Compiler Collection
-# libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
+# libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
 # GCC Runtime Exception.
 License: GPLv3+, GPLv3+ with exceptions and GPLv2+ with exceptions
 Group: Development/C
@@ -23,8 +23,8 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 482
-%define snapshot 20140120
+%define priority 491
+%define snapshot 20140922
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -62,16 +62,29 @@ Url: http://gcc.gnu.org/
 %define libquadmath_arches	%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm
 %define libtsan_arches		x86_64
+%define libubsan_arches		%ix86 x86_64 %arm
 %define libatomic_arches	%ix86 x86_64 %arm aarch64
 %define libitm_arches		%ix86 x86_64 %arm aarch64
+%define libcilkrts_arches	%ix86 x86_64
+%define liblsan_arches		x86_64
+%define libvtv_arches		%ix86 x86_64
+
+%ifarch %libasan_arches
+%def_with libsanitizer
+%endif
+%ifarch %libtsan_arches
+%def_with libsanitizer
+%endif
+%ifarch %libubsan_arches
+%def_with libsanitizer
+%endif
+%ifarch %liblsan_arches
+%def_with libsanitizer
+%endif
 
 %set_compress_method bzip2
 %ifarch %arm
-# due to libmudflap, libmudflapth and libitm
-%set_verify_elf_method unresolved=relaxed textrel=relaxed
-%else
-# due to libmudflap and libmudflapth
-%set_verify_elf_method unresolved=relaxed
+%set_verify_elf_method textrel=relaxed
 %endif
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
@@ -94,7 +107,7 @@ Url: http://gcc.gnu.org/
 
 %else # _cross_platform
 
-%def_enable compat
+%def_disable compat
 %def_enable multilib
 %def_with cxx
 %def_with fortran
@@ -137,39 +150,35 @@ Source: %srcfilename.tar
 %{?_with_java_bootstrap:Source1: libjava-classes-%version-%release.tar}
 
 # Fedora patches.
-Patch100: gcc48-hack.patch
-Patch101: gcc48-java-nomulti.patch
-Patch102: gcc48-ppc32-retaddr.patch
-Patch104: gcc48-i386-libgomp.patch
-Patch106: gcc48-libgomp-omp_h-multilib.patch
-Patch107: gcc48-libtool-no-rpath.patch
-Patch110: gcc48-pr38757.patch
-Patch113: gcc48-pr56564.patch
-Patch114: gcc48-pr56493.patch
-Patch115: gcc48-color-auto.patch
-Patch116: gcc48-pr28865.patch
-Patch118: gcc48-pr60137.patch
-Patch119: gcc48-pr60010.patch
-Patch120: gcc48-pr60046.patch
+Patch100: gcc49-hack.patch
+Patch101: gcc49-java-nomulti.patch
+Patch102: gcc49-ppc32-retaddr.patch
+Patch104: gcc49-i386-libgomp.patch
+Patch105: gcc49-sparc-config-detection.patch
+Patch106: gcc49-libgomp-omp_h-multilib.patch
+Patch107: gcc49-libtool-no-rpath.patch
+Patch108: gcc49-cloog-dl.patch
+Patch109: gcc49-cloog-dl2.patch
+Patch110: gcc49-pr38757.patch
+Patch112: gcc49-no-add-needed.patch
+Patch114: gcc49-pr56493.patch
+Patch115: gcc49-color-auto.patch
+Patch117: gcc49-aarch64-async-unw-tables.patch
+Patch119: gcc49-pr63285.patch
+
 
 # Debian patches.
 Patch200: gcc-d-lang.diff
 Patch201: gcc-textdomain.diff
 Patch202: libstdc++-doclink.diff
 Patch203: libstdc++-man-3cxx.diff
-Patch204: libstdc++-python3.diff
 Patch205: libjava-stacktrace.diff
 Patch206: libjava-sjlj.diff
 Patch207: libjava-disable-plugin.diff
 Patch208: libjava-fixed-symlinks.diff
 Patch209: boehm-gc-getnprocs.diff
-Patch210: arm-sanitizer.diff
 Patch211: fix-ffi_call_VFP-with-no-VFP-argument.diff
-Patch212: libstdc++-arm-wno-abi.diff
 Patch213: gccgo-version.diff
-Patch214: alt-gcc-base-version.diff
-Patch215: pr57211.diff
-Patch216: libgcc-no-limits-h.diff
 Patch217: testsuite-hardening-format.diff
 Patch218: testsuite-hardening-printf-types.diff
 Patch219: testsuite-hardening-updates.diff
@@ -177,6 +186,13 @@ Patch220: pr47818.diff
 Patch221: ada-gcc-name.diff
 Patch222: ada-symbolic-tracebacks.diff
 Patch223: libjava-armel-unwind.diff
+Patch224: testsuite-glibc-warnings.diff
+Patch225: gccgo-arm64-relocations.diff
+Patch226: gccgo-arm64.diff
+Patch227: pr61294.diff
+Patch228: pr61294-doc.diff
+Patch229: linaro331.diff
+
 
 # ALT patches.
 Patch700: alt-_GCC_AUTOCONF_VERSION.patch
@@ -198,6 +214,8 @@ Patch715: alt-spp-buffer-size.patch
 Patch716: alt-defaults-ssp.patch
 Patch717: alt-escalate-always-overflow.patch
 Patch718: alt-libgo-weak.patch
+Patch719: alt-libitm-fix-build-with-_FORTIFY_SOURCE.patch
+Patch720: alt-linaro.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -213,7 +231,7 @@ Requires: libgcc1 %REQ %EVR
 Requires: libatomic1 %REQ %EVR
 %endif
 %ifarch %libasan_arches
-Requires: libasan0 = %EVR
+Requires: libasan1 %REQ %EVR
 %endif
 %ifarch %libitm_arches
 Requires: libitm1 %REQ %EVR
@@ -223,11 +241,12 @@ Requires: libtsan0 %REQ %EVR
 %endif
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
-BuildPreReq: gcc4.9-c++ coreutils flex makeinfo
+BuildPreReq: gcc-c++ coreutils flex makeinfo
 BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 BuildPreReq: zlib-devel
+
 %{?_with_ada:BuildPreReq: gcc-gnat}
 %{?_with_java:BuildPreReq: %{?_without_java_bootstrap: jdkgcj} /usr/share/java/ecj.jar fastjar imake libXext-devel libXt-devel libXtst-devel libalsa-devel libart_lgpl-devel libgtk+2-devel libltdl-devel sharutils xorg-cf-files xorg-inputproto-devel unzip zip}
 %{?_with_objc:%{?_enable_objc_gc:BuildPreReq: libgc-devel}}
@@ -235,6 +254,13 @@ BuildPreReq: zlib-devel
 %{?_with_pdf:BuildPreReq: tetex-dvips}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, glibc-devel-static, /proc, /dev/pts}}
 %{?_cross_platform:BuildPreReq: %_cross_platform-binutils}
+
+%if_with java
+%ifarch %arm
+# somehow, it helps on armh
+BuildPreReq: ecj-native
+%endif
+%endif
 
 ####################################################################
 # GCC Compiler
@@ -313,12 +339,12 @@ This package contains GNU Atomic static library.
 ####################################################################
 # Address Sanitizer library
 
-%package -n libasan0
+%package -n libasan1
 Summary: The Address Sanitizer runtime library
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libasan0
+%description -n libasan1
 This package contains the Address Sanitizer runtime library
 which is used for -fsanitize=address instrumented programs.
 
@@ -326,7 +352,7 @@ which is used for -fsanitize=address instrumented programs.
 Summary: The Address Sanitizer static library
 Group: Development/C
 Provides: libasan-devel-static = %version
-Requires: libasan0 %REQ %EVR
+Requires: libasan1 %REQ %EVR
 
 %description -n libasan%gcc_branch-devel-static
 This package contains Address Sanitizer static library.
@@ -413,51 +439,6 @@ Requires: libgomp%gcc_branch-devel = %EVR
 This package contains GCC OpenMP static library.
 
 ####################################################################
-# mudflap library
-
-%package -n libmudflap0
-Summary: GCC mudflap shared support libraries
-Group: System/Libraries
-Provides: libmudflap = %version
-Provides: libmudflap4.1 = %version
-Provides: libmudflap4.3 = %version
-Provides: libmudflap4.4 = %version
-Provides: libmudflap4.5 = %version
-Obsoletes: libmudflap < %version
-Obsoletes: libmudflap4.1 < %version
-Obsoletes: libmudflap4.3 < %version
-Obsoletes: libmudflap4.4 < %version
-Obsoletes: libmudflap4.5 < %version
-
-%description -n libmudflap0
-This package contains GCC shared support libraries which are needed for
-mudflap support.
-
-%package -n libmudflap%gcc_branch-devel
-Summary: GCC mudflap support files
-Group: Development/Other
-Provides: libmudflap-devel = %version
-Requires: libmudflap0 %REQ %EVR
-Requires: glibc-devel
-
-%description -n libmudflap%gcc_branch-devel
-This package contains headers and libraries for building
-mudflap-instrumented programs.
-To instrument a non-threaded program, add -fmudflap option to GCC and
-when linking add -lmudflap, for threaded programs also add -fmudflapth
-and -lmudflapth.
-
-%package -n libmudflap%gcc_branch-devel-static
-Summary: GCC mudflap static support libraries
-Group: Development/Other
-Provides: libmudflap-devel-static = %version
-Requires: libmudflap%gcc_branch-devel = %EVR
-
-%description -n libmudflap%gcc_branch-devel-static
-This package contains static libraries for building statically linked
-mudflap-instrumented programs.
-
-####################################################################
 # quadmath library
 %package -n libquadmath0
 Summary: GCC __float128 shared support library
@@ -486,6 +467,98 @@ Requires: libquadmath%gcc_branch-devel = %EVR
 %description -n libquadmath%gcc_branch-devel-static
 This package contains static libraries for building Fortran programs
 using REAL*16 and programs using __float128 math.
+
+####################################################################
+# Cilk+ runtime library
+
+%package -n libcilkrts5
+Summary: The Cilk+ runtime library
+Group: System/Libraries
+
+%description -n libcilkrts5
+This package contains the Cilk+ runtime library.
+
+%package -n libcilkrts%gcc_branch-devel
+Summary: The Cilk+ static runtime library
+Group: Development/Other
+Provides: libquadmath-devel = %version
+Requires: libcilkrts5 %REQ %EVR
+
+%description -n libcilkrts%gcc_branch-devel
+This package contains headers for building programs with Cilk+ static
+runtime library.
+
+%package -n libcilkrts%gcc_branch-devel-static
+Summary: The Cilk+ static runtime library
+Group: Development/Other
+Provides: libcilkrts-devel-static = %version
+Requires: libcilkrts%gcc_branch-devel = %EVR
+
+%description -n libcilkrts%gcc_branch-devel-static
+This package contains the Cilk+ static runtime library.
+
+####################################################################
+# Leak Sanitizer library
+
+%package -n liblsan0
+Summary: The Leak Sanitizer runtime library
+Group: System/Libraries
+Requires: libgcc1 %REQ %EVR
+
+%description -n liblsan0
+This package contains the Leak Sanitizer library
+which is used for -fsanitize=leak instrumented programs.
+
+%package -n liblsan%gcc_branch-devel-static
+Summary: The Leak Sanitizer static library
+Group: Development/C
+Provides: liblsan-devel-static = %version
+Requires: liblsan0 %REQ %EVR
+
+%description -n liblsan%gcc_branch-devel-static
+This package contains Leak Sanitizer static runtime library.
+
+####################################################################
+# Undefined Behavior Sanitizer library
+
+%package -n libubsan0
+Summary: The Undefined Behavior Sanitizer runtime library
+Group: System/Libraries
+Requires: libgcc1 %REQ %EVR
+
+%description -n libubsan0
+This package contains the Undefined Behavior Sanitizer library
+which is used for -fsanitize=undefined instrumented programs.
+
+%package -n libubsan%gcc_branch-devel-static
+Summary: The Undefined Behavior Sanitizer static library
+Group: Development/C
+Provides: libubsan-devel-static = %version
+Requires: libubsan0 %REQ %EVR
+
+%description -n libubsan%gcc_branch-devel-static
+This package contains Undefined Behavior Sanitizer static runtime library.
+
+####################################################################
+# VTable Verification library
+
+%package -n libvtv0
+Summary: The VTable Verification library
+Group: System/Libraries
+Requires: libgcc1 %REQ %EVR
+
+%description -n libvtv0
+This package contains the GNU Transactional Memory library
+which is a GCC transactional memory support runtime library.
+
+%package -n libvtv%gcc_branch-devel-static
+Summary: The GNU Transactional Memory static library
+Group: Development/C
+Provides: libvtv-devel-static = %version
+Requires: libvtv0 %REQ %EVR
+
+%description -n libvtv%gcc_branch-devel-static
+This package contains GNU Transactional Memory static libraries.
 
 ####################################################################
 # Preprocessor
@@ -901,7 +974,7 @@ package includes the static libraries needed for Ada 95 development.
 Summary: Ada 95 support for gcc
 Group: Development/Other
 Provides: gcc-gnat = %version, %_bindir/gnat
-Obsoletes: gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
+Obsoletes: gcc4.8-gnat gcc4.7-gnat gcc4.6-gnat gcc4.5-gnat gcc4.4-gnat gcc4.3-gnat gcc4.2-gnat gcc4.1-gnat
 PreReq: %alternatives_deps, gcc-gnat-common
 Requires: %name = %EVR
 Requires: libgnat%gcc_branch-devel = %EVR
@@ -918,12 +991,12 @@ in order to explicitly use the GNU Ada compiler version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo4
+%package -n libgo5
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo4
+%description -n libgo5
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -932,7 +1005,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 PreReq: gcc-common >= 1.4.7
-Requires: libgo4 %REQ %EVR
+Requires: libgo5 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -987,7 +1060,7 @@ Group: Development/Other
 BuildArch: noarch
 Provides: gcc-doc = %version
 Obsoletes: gcc-doc < %version
-Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc
+Obsoletes: gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc gcc4.7-doc gcc4.8-doc
 Conflicts: gcc-doc > %version
 
 %description doc
@@ -1002,35 +1075,28 @@ version %version.
 %patch101 -p0
 %patch102 -p0
 %patch104 -p0
+%patch105 -p0
 %patch106 -p0
 %patch107 -p0
 %patch110 -p0
-%patch113 -p0
+%patch112 -p0
 %patch114 -p0
 %patch115 -p0
-%patch116 -p0
-%patch118 -p0
+%patch117 -p0
 %patch119 -p0
-%patch120 -p0
 
 # Debian patches.
 %patch200 -p2
 %patch201 -p2
 %patch202 -p2
 %patch203 -p2
-%patch204 -p2
 %patch205 -p2
 %patch206 -p2
 %patch207 -p2
 %patch208 -p2
 %patch209 -p2
-%patch210 -p2
 %patch211 -p2
-%patch212 -p2
 %patch213 -p2
-%patch214 -p2
-%patch215 -p2
-%patch216 -p2
 %patch217 -p2
 %patch218 -p2
 %patch219 -p2
@@ -1040,6 +1106,11 @@ version %version.
 %ifarch %arm
 %patch223 -p2
 %endif
+%patch224 -p2
+%patch225 -p2
+%patch226 -p2
+%patch227 -p2
+%patch228 -p2
 
 # ALT patches.
 %patch700 -p1
@@ -1061,6 +1132,8 @@ version %version.
 %patch716 -p1
 %patch717 -p1
 %patch718 -p1
+%patch719 -p1
+%patch720 -p1
 
 # Set proper version info.
 echo %gcc_branch > gcc/BASE-VER
@@ -1228,7 +1301,6 @@ export CC=%__cc \
 	--libdir=%_cross_lib \
 	--disable-libssp \
 	--disable-libgomp \
-	--disable-libmudflap \
 	--disable-libquadmath \
 	--disable-libgfortran \
 	--disable-libstdc++-v3 \
@@ -1284,6 +1356,7 @@ export CC=%__cc \
 	--with-arch=armv5te --with-float=soft --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
 %endif
+	--with-pkgversion=GCC \
 	#
 
 %make_build MAKEINFOFLAGS=--no-split \
@@ -1426,7 +1499,8 @@ E_O_F
 %else
 pushd %buildroot%_libdir
 	rm lib*.la %{?_with_java:*/lib*.la}
-	rm libssp* libiberty.a
+	rm libssp*
+	rm libiberty.a ||:
 	mv *.a %buildroot%gcc_target_libdir/
 	mv *.o %buildroot%gcc_target_libdir/
 	for f in *.so; do
@@ -1452,6 +1526,12 @@ popd
 mv %buildroot%_libdir/libitm.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgomp.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
+%ifarch %libcilkrts_arches
+mv %buildroot%_libdir/libcilkrts.spec %buildroot%gcc_target_libdir/
+%endif
+%if_with libsanitizer
+mv %buildroot%_libdir/libsanitizer.spec %buildroot%gcc_target_libdir/
+%endif
 %endif
 
 # Package fixed *limits.h
@@ -1534,11 +1614,24 @@ for n in \
 %ifarch %libitm_arches
     libitm-devel-static \
 %endif
+%ifarch %libcilkrts_arches
+    libcilkrts-devel libcilkrts-devel-static \
+%endif
+%ifarch %libtsan_arches
+    liblsan-devel-static \
+%endif
+%ifarch %libubsan_arches
+    libubsan-devel-static \
+%endif
+%ifarch %libvtv_arches
+    libvtv-devel-static \
+%endif
     libgomp-devel libgomp-devel-static \
-    libmudflap-devel libmudflap-devel-static \
     %{?_with_cxx:gcc-c++ libstdc++-devel libstdc++-devel-static} \
     %{?_with_fortran:gcc-fortran libgfortran-devel libgfortran-devel-static} \
+%ifarch %libquadmath_arches
     %{?_with_fortran:libquadmath-devel libquadmath-devel-static} \
+%endif
     %{?_with_ada:gcc-gnat libgnat libgnat-devel libgnat-devel-static} \
     %{?_with_java:gcc-java libgcj libgcj-plugins libgcj-devel} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static %{?_with_cxx:gcc-objc++}} \
@@ -1669,17 +1762,20 @@ EOF
 %gcc_target_libdir/include/stdint.h
 %gcc_target_libdir/include/stdint-gcc.h
 %gcc_target_libdir/include/stdnoreturn.h
+%gcc_target_libdir/include/stdatomic.h
 %gcc_target_libdir/include/syslimits.h
 %gcc_target_libdir/include/unwind.h
 %gcc_target_libdir/include/varargs.h
 
 %if_gcc_arch arm
 %gcc_target_libdir/include/arm_neon.h
+%gcc_target_libdir/include/arm_acle.h
 %gcc_target_libdir/include/mmintrin.h
 %gcc_target_libdir/include/unwind-arm-common.h
 %endif
 %if_gcc_arch armh
 %gcc_target_libdir/include/arm_neon.h
+%gcc_target_libdir/include/arm_acle.h
 %gcc_target_libdir/include/mmintrin.h
 %gcc_target_libdir/include/unwind-arm-common.h
 %endif
@@ -1723,6 +1819,18 @@ EOF
 %ifarch %libtsan_arches
 %gcc_target_libdir/libtsan.so
 %endif
+%ifarch %liblsan_arches
+%gcc_target_libdir/liblsan.so
+%endif
+%ifarch %libubsan_arches
+%gcc_target_libdir/libubsan.so
+%endif
+%ifarch %libvtv_arches
+%gcc_target_libdir/libvtv.so
+%endif
+%if_with libsanitizer
+%gcc_target_libdir/libsanitizer.spec
+%endif
 %ifndef _cross_platform
 %ifarch x86_64
 %dir %gcc_target_lib32dir/
@@ -1747,11 +1855,9 @@ EOF
 %exclude %_man1dir/gnative2ascii-*
 %exclude %_man1dir/rebuild-gcj-db-*
 %endif
-
 %if_with fortran
 %exclude %gcc_target_libdir/libgfortranbegin.la
 %endif
-
 %exclude %gcc_target_libdir/include-fixed
 %exclude %gcc_target_libdir/include/ssp
 %exclude %gcc_target_libdir/libcaf_single.la
@@ -1765,41 +1871,54 @@ EOF
 
 %if_disabled compat
 %files -n libgcc1
-/%_lib/libgcc_s.so.*
+/%_lib/libgcc_s.so.1*
 
 %ifarch %libatomic_arches
 %files -n libatomic1
-%_libdir/libatomic.so.*
-%endif
+%_libdir/libatomic.so.1*
 %endif
 
 %ifarch %libasan_arches
-%files -n libasan0
-%_libdir/libasan.so.0*
+%files -n libasan1
+%_libdir/libasan.so.1*
 %endif
 
-%if_disabled compat
 %ifarch %libtsan_arches
 %files -n libtsan0
-%_libdir/libtsan.so.*
+%_libdir/libtsan.so.0*
 %endif
 
 %ifarch %libitm_arches
 %files -n libitm1
-%_libdir/libitm.so.*
+%_libdir/libitm.so.1*
 %endif
 
 %files -n libgomp1
-%_libdir/libgomp.so.*
-%endif #compat
+%_libdir/libgomp.so.1*
 
-%files -n libmudflap0
-%_libdir/libmudflap*.so.*
+%ifarch %liblsan_arches
+%files -n liblsan0
+%_libdir/liblsan.so.0*
+%endif
 
-%if_disabled compat
+%ifarch %libubsan_arches
+%files -n libubsan0
+%_libdir/libubsan.so.0*
+%endif
+
 %ifarch %libquadmath_arches
 %files -n libquadmath0
 %_libdir/libquadmath.so.0*
+%endif
+
+%ifarch %libcilkrts_arches
+%files -n libcilkrts5
+%_libdir/libcilkrts.so.5*
+%endif
+
+%ifarch %libvtv_arches
+%files -n libvtv0
+%_libdir/libvtv.so.0*
 %endif
 %endif #compat
 
@@ -1850,18 +1969,6 @@ EOF
 %gcc_target_libdir/libitm.a
 %endif
 
-%files -n libmudflap%gcc_branch-devel
-%config %_sysconfdir/buildreqs/packages/substitute.d/libmudflap%gcc_branch-devel
-%dir %gcc_target_libdir/
-%dir %gcc_target_libdir/include/
-%gcc_target_libdir/include/mf-runtime.h
-%gcc_target_libdir/libmudflap*.so
-
-%files -n libmudflap%gcc_branch-devel-static
-%config %_sysconfdir/buildreqs/packages/substitute.d/libmudflap%gcc_branch-devel-static
-%dir %gcc_target_libdir/
-%gcc_target_libdir/libmudflap*.a
-
 %ifarch %libquadmath_arches
 %files -n libquadmath%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libquadmath%gcc_branch-devel
@@ -1875,6 +1982,42 @@ EOF
 %config %_sysconfdir/buildreqs/packages/substitute.d/libquadmath%gcc_branch-devel-static
 %dir %gcc_target_libdir/
 %gcc_target_libdir/libquadmath.a
+%endif
+
+%ifarch %libcilkrts_arches
+%files -n libcilkrts%gcc_branch-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/libcilkrts%gcc_branch-devel
+%dir %gcc_target_libdir/
+%dir %gcc_target_libdir/include/
+%gcc_target_libdir/include/cilk/
+%gcc_target_libdir/libcilkrts.so
+%gcc_target_libdir/libcilkrts.spec
+
+%files -n libcilkrts%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libcilkrts%gcc_branch-devel-static
+%dir %gcc_target_libdir/
+%gcc_target_libdir/libcilkrts.a
+%endif
+
+%ifarch %liblsan_arches
+%files -n liblsan%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/liblsan%gcc_branch-devel-static
+%dir %gcc_target_libdir/
+%gcc_target_libdir/liblsan.a
+%endif
+
+%ifarch %libubsan_arches
+%files -n libubsan%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libubsan%gcc_branch-devel-static
+%dir %gcc_target_libdir/
+%gcc_target_libdir/libubsan.a
+%endif
+
+%ifarch %libvtv_arches
+%files -n libvtv%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libvtv%gcc_branch-devel-static
+%dir %gcc_target_libdir/
+%gcc_target_libdir/libvtv.a
 %endif
 
 %endif # _cross_platform
@@ -1935,7 +2078,7 @@ EOF
 %if_with objc
 %if_disabled compat
 %files -n libobjc4
-%_libdir/libobjc*.so.*
+%_libdir/libobjc*.so.4*
 %endif # compat
 
 %files -n libobjc%gcc_branch-devel
@@ -2003,7 +2146,7 @@ EOF
 %if_with java
 %if_disabled compat
 %files -n libgcj_bc1
-%_libdir/libgcj_bc*.so.*
+%_libdir/libgcj_bc*.so.1*
 %endif # compat
 
 %files -n libgcj%gcc_branch
@@ -2131,8 +2274,8 @@ EOF
 %dir %gcc_target_libexecdir/
 %gcc_target_libexecdir/go1
 
-%files -n libgo4
-%_libdir/libgo.so.4*
+%files -n libgo5
+%_libdir/libgo.so.5*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2176,8 +2319,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
-* Tue Sep 23 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.8.2-alt4
-- Built in gcc4.9 compatibility mode.
+* Mon Sep 22 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.1-alt1
+- Updated to redhat/gcc-4_9-branch r215456.
+- Synced with Fedora gcc-4.9.1-10 and Debian 4.9.1-15.
 
 * Tue Apr 08 2014 Dmitry V. Levin <ldv@altlinux.org> 4.8.2-alt3
 - Synced with Fedora gcc-4.8.2-15.
