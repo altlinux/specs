@@ -1,23 +1,28 @@
 %def_enable static
 %def_with quicktime
-%define shver 2.1
 
-Name: mjpegtools
-Version: 2.1.0
-Release: alt1
+%define oname mjpegtools
+Name: %{oname}1.9
+Version: 1.9.0
+Release: alt6.qa2
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
 Group: Video
 Url: http://mjpeg.sourceforge.net
+Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar.gz
+Patch4: 0003-Fix-path-to-transcode.patch
+Patch5: 0001-Fix-build-with-new-gcc.patch
+Patch6: mjpegtools-1.9.0-alt-v4l.patch
+Patch7: mjpegtools-1.9.0-alt-libpng15.patch
 
 %define quicktime_ver 0.9.7
 %define libdv_ver 0.9
 
 Requires: libquicktime >= %quicktime_ver
-Requires: lib%name%shver = %version-%release 
+Requires: lib%oname = %version-%release 
 Requires: libdv >= %libdv_ver
 
 BuildPreReq: libquicktime-devel >= %quicktime_ver
@@ -42,13 +47,13 @@ NOTE:
 The resultant binaries will ***NOT*** run on a K6 or Pentium CPU
 %endif
 
-%package -n lib%name%shver
+%package -n lib%oname
 Summary: Shared libraries for the mjpegtools
-Group: System/Libraries
+Group: System/Legacy libraries
 Obsoletes: %name-libs
 Provides: %name-libs = %version-%release
 
-%description -n lib%name%shver
+%description -n lib%oname
 This package contains shared libraries needed to run mjpegtools.
 
 %ifarch %ix86
@@ -61,7 +66,7 @@ Summary: Development headers and libraries for the mjpegtools
 Group: Development/C
 Obsoletes: %name-devel
 Provides: %name-devel = %version-%release
-Requires: lib%name%shver = %version-%release
+Requires: lib%oname = %version-%release
 
 %description -n lib%name-devel
 This package contains libraries and header files needed to compile
@@ -83,23 +88,27 @@ NOTE:
 This binaries does ***NOT*** compatible with a K6 or Pentium CPU
 %endif
 
+#set_verify_elf_method textrel=relaxed
+
 %prep
-%setup
+%setup -q
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
 
 %build
-%autoreconf
 %configure \
 	%{subst_enable static} \
 	%{subst_with quicktime} \
 	--enable-large-file \
-	--with-x \
 %ifarch %ix86
 	--enable-simd-accel
 %endif
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-export LD_LIBRARY_PATH=$PWD/utils/.libs
-%make_build
+# SMP-incompatible build
+%make
 
 %install
 %makeinstall
@@ -107,27 +116,27 @@ export LD_LIBRARY_PATH=$PWD/utils/.libs
 # remove non-packaged files
 rm -f %buildroot%_infodir/dir
 
-%files
-%_bindir/*
-%_man1dir/*
-%_infodir/*.info*
-%doc AUTHORS BUGS CHANGES HINTS PLANS README TODO
+#files
+#_bindir/*
+#_man1dir/*
+#_infodir/*.info*
+#doc AUTHORS BUGS CHANGES HINTS PLANS README TODO
 
-%files -n lib%name%shver
+%files -n lib%oname
 %_libdir/*.so.*
 
-%files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*
-%_man5dir/*
+#files -n lib%name-devel
+#_includedir/*
+#_libdir/*.so
+#_libdir/pkgconfig/*
+#_man5dir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
+#files -n lib%name-devel-static
+#_libdir/*.a
 
 %changelog
-* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
-- Version 2.1.0
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt6.qa2
+- Moved this version into System/Legacy libraries
 
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.0-alt6.qa1
 - NMU: rebuilt for updated dependencies.
