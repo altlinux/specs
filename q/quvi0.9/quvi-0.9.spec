@@ -2,14 +2,13 @@
 %define ver_major 0.9
 
 Name: %_name%ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Command line tool for parsing video download links
 Group: Networking/Other
 License: LGPLv2+
 Url: http://quvi.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%name/%ver_major/%_name-%version.tar.xz
 
@@ -51,6 +50,9 @@ supports Youtube and other similar video websites.
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
 * Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4
 

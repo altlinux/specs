@@ -1,6 +1,6 @@
 %define _name libquvi-scripts
 %define ver_major 0.9
-%define snapshot 20131012
+%define snapshot 20131130
 
 Name: %_name%ver_major
 Version: %ver_major.%snapshot
@@ -10,7 +10,6 @@ Summary: Lua scripts for parsing the media details
 Group: System/Libraries
 License: LGPLv2+
 Url: http://quvi.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%_name/%ver_major/%_name-%version.tar.xz
 Patch: %_name-0.9.20130903-alt-pkgconfig.patch
@@ -60,6 +59,9 @@ subst 's@\(^pkgconfigdir[[:space:]]=[[:space:]]\$(\)libdir\()/pkgconfig\)@\1data
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.20131130-alt1
+- new official snapshot
+
 * Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.20131012-alt1
 - official snapshot
 
