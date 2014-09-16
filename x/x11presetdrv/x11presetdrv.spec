@@ -2,7 +2,7 @@
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -53,6 +53,9 @@ install -m 0644 %name.service %buildroot/%_unitdir/
 %_unitdir/%name.service
 
 %changelog
+* Tue Sep 16 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1
+- update service description
+
 * Thu Apr 04 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
 - add systemd service file (ALT#28660)
 
