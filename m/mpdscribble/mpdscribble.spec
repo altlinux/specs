@@ -2,19 +2,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mpdscribble
-Version: 0.18.1
-Release: alt2.qa1
+Version: 0.22
+Release: alt1.git20110709
 
 Summary: Audioscrobbler client for mpd
 License: GPLv2+
 Group: Sound
 Url: http://mpd.wikia.com/wiki/Client:Mpdscribble
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/musicpd/%name-%version.tar.bz2
-Patch0: mpdscribble-alt-src-no_id3_tags.patch
+# git://git.musicpd.org/master/mpdscribble.git/
+Source: %name-%version.tar.bz2
 
 BuildRequires: glib2-devel libsoup-devel pkg-config
+BuildPreReq: libmpdclient-devel libcurl-devel
 
 %description
 mpdscribble is a music player daemon client which submits information about
@@ -39,15 +39,13 @@ sed -i '/^doc_DATA/d' Makefile.am
 # manually.
 sed -i '/^dist_sysconf_DATA/d' Makefile.am
 
-%patch0 -p2
-
 %build
 %autoreconf
-%configure --enable-werror
-%make_build --silent --no-print-directory
+%configure
+%make_build --no-print-directory
 
 %install
-%makeinstall --silent --no-print-directory
+%makeinstall --no-print-directory
 
 %files
 %_bindir/%name
@@ -55,6 +53,9 @@ sed -i '/^dist_sysconf_DATA/d' Makefile.am
 %doc AUTHORS NEWS README doc/%name.conf
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt1.git20110709
+- Version 0.22
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.18.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
