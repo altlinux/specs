@@ -1,6 +1,6 @@
 Name: mpdtoys
-Version: 0.20
-Release: alt1.1
+Version: 0.24
+Release: alt1.git20131103
 
 Summary: Small command line tools and toys for MPD
 License: GPLv2+
@@ -8,7 +8,6 @@ Group: Sound
 
 Url: http://kitenet.net/~joey/code/mpdtoys/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 BuildArch: noarch
 
 # git://git.kitenet.net/mpdtoys
@@ -43,6 +42,9 @@ a text editor.
 %_man1dir/*
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24-alt1.git20131103
+- Version 0.24
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
