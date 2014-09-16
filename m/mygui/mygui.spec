@@ -1,18 +1,18 @@
 Name: mygui
-Version: 3.0.3
-Release: alt3.4
+Version: 3.2.1
+Release: alt1.git20140915
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
-License: LGPLv2+
+License: MIT
 Group: System/Libraries
-Url: http://www.ogre3d.org/wiki/index.php/MyGUI
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+Url: http://mygui.info/
+# https://github.com/MyGUI/mygui.git
 Source0: %name-%version.tar
-#Patch: %name-%version-alt-changes.patch
 Source1: %name.png
-Patch1: mygui-3.0.3-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Jul 20 2009
 BuildRequires: cmake doxygen gcc-c++ libfreetype-devel ogre libogre-devel libois-devel libuuid-devel graphviz boost-devel
+
+BuildPreReq: zlib-devel libpng-devel libharfbuzz-devel
 
 %description
 MyGUI, it is a GUI library for Ogre Rendering Engine. We pursue
@@ -72,23 +72,22 @@ Group: Documentation
 MyGUI api documentation
 
 %prep
-%setup -q
-#%patch -p1
-%patch1 -p0
+%setup
 
 sed -i 's/FREETYPE_LIBRARIES}/FREETYPE_LIBRARIES} -ldl -luuid/' MyGUIEngine/CMakeLists.txt
 
 %build
+%add_optflags %optflags_shared
 %cmake \
     -DMYGUI_BUILD_SAMPLES=OFF \
     -DMYGUI_INSTALL_MEDIA=ON \
     -DMYGUI_INSTALL_TOOLS=ON
 
-%make_build -C BUILD
+%make_build -C BUILD VERBOSE=1
 %make_build -C BUILD api-docs
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT -C BUILD
+%makeinstall_std -C BUILD
 
 # wrapper-script for binaries
 %__cat > %name <<EOF
@@ -178,7 +177,7 @@ mv -f %buildroot/usr/lib %buildroot%_libdir
 %exclude %_datadir/MYGUI/Media/Demos
 
 %files docs
-%doc Docs/html
+%doc BUILD/Docs/html
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -192,6 +191,9 @@ mv -f %buildroot/usr/lib %buildroot%_libdir
 %exclude %_libdir/libPlugin_StrangeButton.so
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1.git20140915
+- Version 3.2.1
+
 * Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.0.3-alt3.4
 - Rebuild with new ogre
 
