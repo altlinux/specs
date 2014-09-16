@@ -1,13 +1,11 @@
 Name: mxk
-Version: 1.8
-Release: alt1.qa1
+Version: 1.10
+Release: alt1
 
 Summary: An evdev/uinput input mangling server
 License: GPLv3+
 Group: System/Configuration/Hardware
 Url: http://welz.org.za/projects/mxk
-
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -35,6 +33,9 @@ userspace, it doesn't require a special kernel driver or patch.
 %doc README
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt1
+- Version 1.10
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
