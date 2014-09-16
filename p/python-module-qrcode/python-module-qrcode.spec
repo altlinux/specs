@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt3
+Version: 5.0.1
+Release: alt1
 
 Summary: Python module to generate QR Codes
 
@@ -84,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 16 2014 Vladimir Didenko <cow@altlinux.ru> 5.0.1-alt1
+- new version
+
 * Mon Apr 28 2014 Vladimir Didenko <cow@altlinux.ru> 4.0.4-alt3
 - don't pack sample script
 
