@@ -4,20 +4,19 @@
 
 Name: nas
 %define dname %{name}d
-Version: 1.9.2
-Release: alt4.1.qa1
+Version: 1.9.4
+Release: alt1.git20131009
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
 License: distributable
 URL: http://radscan.com/%name.html
-Source0: http://%name.codebrilliance.com/%name/%name-%version.src.tar
+# git://git.code.sf.net/p/nas/nas.git
+Source0: %name-%version.src.tar
 Source1: %dname.init
-Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.ru>
 
 BuildRequires: flex gccmakedep imake libXaw-devel libXp-devel xorg-sdk
 BuildRequires: libXau-devel libXpm-devel libXext-devel zlib-devel
-BuildPreReq: libICE-devel libSM-devel libXmu-devel
+BuildPreReq: libICE-devel libSM-devel libXmu-devel gcc-c++ gcc-fortran
 BuildRequires: xorg-cf-files >= 1.0.1-alt5
 
 %description
@@ -137,7 +136,6 @@ needed to control specific audio input and output devices.
 
 %prep
 %setup
-%patch -p1
 subst 's|/%_sysconfdir/%name\(/%dname\.conf\.eg\)|%_docdir/%dname-%version\1|g' \
     doc/html/%dname.conf.5.html server/%dname.conf.man
 
@@ -219,6 +217,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.git20131009
+- Version 1.9.4
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.2-alt4.1.qa1
 - NMU: rebuilt for debuginfo.
 
