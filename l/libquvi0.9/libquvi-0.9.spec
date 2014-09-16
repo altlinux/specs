@@ -2,14 +2,13 @@
 %define ver_major 0.9
 
 Name: %_name%ver_major
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Command line tool for parsing video download links
 Group: System/Libraries
 License: LGPLv2+
 Url: http://quvi.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://downloads.sourceforge.net/project/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -57,6 +56,9 @@ This package provides files needed for building applications against
 %_man7dir/quvi-object.7.*
 
 %changelog
+* Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
 * Tue Sep 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - first build for Sisyphus
 
