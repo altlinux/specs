@@ -1,7 +1,7 @@
 Name: nedit
 Version: 5.5
 #%%define rc_ver RC2
-Release: alt3.qa2
+Release: alt4.git20121025
 %define srcname %name-%version%{?rc_ver:%rc_ver}%{?!rc_ver:-src}
 
 Summary: A text editor for the X Window System
@@ -10,22 +10,17 @@ Group: Editors
 Url: http://www.nedit.org/
 Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# ftp://ftp.nedit.org/pub/NEdit/v5_5/ or ftp://ftp.nedit.org/pub/NEdit/beta/
-Source: ftp.nedit.org:/pub/NEdit/v5_5/%srcname.tar
+# git://git.code.sf.net/p/nedit/git
+Source: %srcname.tar
 Source1: %name.desktop
 Source2: %name-16x16.png
 Source3: %name-32x32.png
 Source4: %name-48x48.png
 
-Patch1: %name-5.4rc1-alt-makefile.patch
-Patch2: %name-5.5-alt-fonts.patch
-Patch3: %name-5.5-alt-tmp.patch
-Patch4: %name-5.5-varfix.patch
-Patch5: %name-5.5-nc-manfix.patch
-Patch6: %name-5.5-visfix.patch
-
 # Automatically added by buildreq on Tue May 23 2006
 BuildRequires: libX11-devel libXext-devel libXmu-devel libXp-devel openmotif-devel
+
+BuildPreReq: perl-podlators
 
 %description
 NEdit is a multi-purpose text editor for the X Window System, which combines a
@@ -36,12 +31,7 @@ and other tools, but at the same time can be used productively by just about any
 who needs to edit text.
 
 %prep
-%setup -q %{?rc_ver:-n %srcname}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1 
-%patch5 -p1
+%setup %{?rc_ver:-n %srcname}
 
 # Change nedit.shell default from /bin/csh to /bin/sh.
 find doc -type f -print0 |
@@ -55,6 +45,8 @@ find -type f -name \*.c -print0 |
 	xargs -r0 subst -p 's,"/bin/csh","/bin/sh",g' --
 
 %build
+%make -C doc all
+
 %add_optflags -DBUILD_UNTESTED_NEDIT -DBUILD_BROKEN_NEDIT
 %make_build linux YACC='bison -y'
 cp -p doc/nedit.{doc,txt}
@@ -80,6 +72,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %doc README ReleaseNotes doc/NEdit.ad doc/*.txt.bz2
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5-alt4.git20121025
+- Snapshot from git
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.5-alt3.qa2
 - NMU: rebuilt for updated dependencies.
 
