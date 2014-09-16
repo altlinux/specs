@@ -1,28 +1,16 @@
 %define libname libmpeg2
-%define cvsdate 20030612
-%undefine cvsdate
 
 Name: mpeg2dec
 Version: 0.5.1
-%define release alt3
+Release: alt3.svn20120718
 
-%ifdef cvsdate
-Release: %{release}cvs%cvsdate.qa1
-%else
-Release: %release
-%endif
-
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Summary: mpeg-1 and mpeg-2 streams decoder
 License: GPL
 Group: Video
 Url: http://%libname.sourceforge.net
 
-%ifndef cvsdate
-Source: %url/files/%name-%version.tar.bz2
-%else
-Source: %name-%cvsdate.tar.bz2
-%endif
+# svn://svn.videolan.org/libmpeg2/trunk
+Source: %name-%version.tar.bz2
 
 Requires: %libname = %version-%release
 
@@ -63,20 +51,16 @@ Requires: %libname-devel = %version-%release
 This package contains static versions of %libname
 
 %prep
-%ifndef cvsdate
-%setup -q -n %name-0.4.1
-%else
-%setup -q -n %name-%cvsdate
-%endif
+%setup -n %name-%version
 
 %build
 %add_optflags %optflags_shared
 %autoreconf
-%configure --enable-shared
+%configure --enable-shared --with-x
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
@@ -99,6 +83,9 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/*.a
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3.svn20120718
+- Snapshot from svn
+
 * Sun Mar 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3
 - Rebuilt for debuginfo
 
