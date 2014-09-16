@@ -1,6 +1,6 @@
 Name: 	  chromium-pepperflash
-Version:  1.5
-Release:  alt3
+Version:  1.5.1
+Release:  alt1
 
 Summary:  Pepper Flash Player - browser plugin for Chromium
 License:  GPLv3+
@@ -25,7 +25,8 @@ user license agreement is available at Google.
 %install
 install -D -m 0755 %SOURCE1 %buildroot%_sbindir/update-pepperflash
 mkdir -p %buildroot%_libdir/browser-plugins
-touch %buildroot%_libdir/browser-plugins/libpepflashplayer.so
+mkdir -p %buildroot%_libdir/pepper-plugins
+touch %buildroot%_libdir/pepper-plugins/libpepflashplayer.so
 mkdir -p %buildroot%_cachedir/pepperflash
 
 %preun
@@ -37,10 +38,15 @@ exit 0
 
 %files
 %_sbindir/update-pepperflash
-%ghost %_libdir/browser-plugins/libpepflashplayer.so
+%ghost %_libdir/pepper-plugins/libpepflashplayer.so
 %dir %_cachedir/pepperflash
 
 %changelog
+* Tue Sep 16 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- Fix version detect in new plugin versions
+- Add arguments --clean and --version
+- Change plugin location to %%_libdir/pepper-plugins
+
 * Mon Sep 01 2014 Andrey Cherepanov <cas@altlinux.org> 1.5-alt3
 - Remove unnecessary require of glibc-utils
 
