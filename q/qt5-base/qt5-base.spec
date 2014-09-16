@@ -1,6 +1,6 @@
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -20,10 +20,10 @@
 %define libname  lib%gname
 %define major  5
 %define minor  3
-%define bugfix 1
+%define bugfix 2
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -33,7 +33,7 @@ Url: http://qt-project.org/
 Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros-addon
 # FC
-Patch1: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
+Patch1: qt-everywhere-opensource-src-5.3.2-QTBUG-35459.patch
 Patch2: qtbase-opensource-src-5.3.0-old-xcb.patch
 # upstream
 # ALT
@@ -706,6 +706,9 @@ done
 
 
 %changelog
+* Tue Sep 16 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
+- new version
+
 * Wed Aug 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt7
 - build docs
 
