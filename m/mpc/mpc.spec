@@ -1,15 +1,14 @@
 %def_enable iconv
 
 Name: mpc
-Version: 0.19
-Release: alt1.qa1
+Version: 0.26
+Release: alt1.git20140603
 Summary: Command line tool to interface MPD
 License: %gpl2plus
 Group: Sound
 Url: http://mpd.wikia.com/?page=%name
+# git://git.musicpd.org/master/mpc.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libmpdclient-devel
@@ -21,7 +20,6 @@ Daemon. %name connects to a MPD running on a machine via a network.
 
 %prep
 %setup
-%patch -p1
 
 
 %build
@@ -33,7 +31,7 @@ Daemon. %name connects to a MPD running on a machine via a network.
 
 
 %install
-%make_install DESTDIR=%buildroot docdir=%_docdir/%name-%version install
+%makeinstall_std docdir=%_docdir/%name-%version
 #install -m 0644 ChangeLog %buildroot%_docdir/%name-%version/
 
 
@@ -44,6 +42,9 @@ Daemon. %name connects to a MPD running on a machine via a network.
 
 
 %changelog
+* Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.26-alt1.git20140603
+- Version 0.26
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
