@@ -2,7 +2,7 @@
 
 Name: perl-Archive-Tar-Wrapper
 Version: 0.19
-Release: alt1
+Release: alt3
 
 Summary: Perl wrapper around the 'tar' utility
 
@@ -46,6 +46,9 @@ files in the temporary directory on disk.
 
 
 %changelog
+* Wed Sep 17 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.19-alt3
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.19-alt1
 - Initial build for ALT Linux Sisyphus
 
