@@ -4,7 +4,7 @@
 %def_disable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -121,6 +121,9 @@ subst 's/0\.26/0.25/' configure*
 %endif
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
+- 0.10.2
+
 * Sat Apr 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 
