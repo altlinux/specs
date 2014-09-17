@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.3.1
+Version: 5.3.2
 Release: alt1
 
 Group: System/Libraries
@@ -144,6 +144,12 @@ mv Source/ThirdParty/{gtest/,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
+- new version
+
+* Fri Jun 27 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt0.M70P.1
+- build for M70P
+
 * Wed Jun 25 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
 - new version
 
