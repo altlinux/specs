@@ -1,5 +1,7 @@
+%define vendorzone ru.
+
 Name: chrony
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -9,12 +11,6 @@ Group: System/Configuration/Other
 Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
 Source1: chronyd.init
-Source2: chrony.conf
-Source3: chrony.keys
-Source4: chrony.logrotate
-Source5: chronyd.sysconfig
-Source6: chronyd.service
-Source7: chrony-wait.service
 
 BuildRequires: libcap-devel libncurses-devel libreadline-devel
 BuildRequires: libnss-devel
@@ -45,23 +41,36 @@ for m in chrony.1 chronyc.1.in chrony.conf.5.in chronyd.8.in; do
   mv -f ${m}_ $m
 done
 
-%build
+# regenerate the file from getdate.y
+rm -f getdate.c
 
+# use our vendor zone
+sed -e 's|\([0-3]\.\)\(pool.ntp.org\)|\1%{vendorzone}\2|' \
+        < examples/chrony.conf.example2 > chrony.conf
+
+echo '# Keys used by chronyd for command and NTP authentication' > chrony.keys
+
+echo '# Pass extra arguments to chronyd' > chronyd.sysconfig
+echo '#CHRONYD_ARGS=' >> chronyd.sysconfig
+
+sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
+
+%build
 %configure \
 	--with-user=_chrony \
 	--with-sendmail=%_sbindir/sendmail
 
-%make_build getdate all docs
+%make_build all docs
 
 %install
 %makeinstall_std
 install -pD -m755 %_sourcedir/chronyd.init %buildroot%_initrddir/chronyd
-install -pD -m644 %_sourcedir/chrony.conf %buildroot%_sysconfdir/chrony.conf
-install -pD -m644 %_sourcedir/chrony.keys %buildroot%_sysconfdir/chrony.keys
-install -pD -m644 %_sourcedir/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
-install -pD -m644 %_sourcedir/chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
-install -pD -m644 %_sourcedir/chronyd.service %buildroot%_unitdir/chronyd.service
-install -pD -m644 %_sourcedir/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
+install -pD -m644 chrony.conf %buildroot%_sysconfdir/chrony.conf
+install -pD -m644 chrony.keys %buildroot%_sysconfdir/chrony.keys
+install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
+install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
+install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
+install -pD -m644 examples/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
 
 install -d %buildroot/lib/systemd/ntp-units.d
 echo 'chronyd.service' > \
@@ -70,6 +79,8 @@ echo 'chronyd.service' > \
 rm -rf %buildroot/usr/doc
 install -d %buildroot%_localstatedir/{lib,log}/%name
 touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
+
+gzip -9 -f -k chrony.txt
 
 %pre
 %_sbindir/groupadd -r -f _chrony 2> /dev/null ||:
@@ -87,7 +98,7 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 
 %files
 %exclude %_docdir/chrony
-%doc COPYING NEWS README chrony.txt examples/*
+%doc COPYING NEWS README chrony.txt.gz
 %_initrddir/chronyd
 %_unitdir/*.service
 /lib/systemd/ntp-units.d/50-chronyd.list
@@ -106,6 +117,9 @@ touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 %_man8dir/*
 
 %changelog
+* Wed Sep 17 2014 Alexey Shabalin <shaba@altlinux.ru> 1.31-alt1
+- 1.31
+
 * Thu Jul 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.30-alt1
 - 1.30
 - moved configs to /etc
