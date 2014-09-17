@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
+%define gst_api_ver 1.0
 %def_enable wayland
+%def_disable wayland_egl
 %def_enable fb
 %def_enable multisense
 %def_disable tslib
@@ -8,9 +10,10 @@
 %def_disable xcb
 %def_enable drm
 %def_enable ibus
+%def_enable gstreamer1
 
 Name: efl
-Version: 1.8.6
+Version: 1.11.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -18,17 +21,15 @@ License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.bz2
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.xz
 #Source: %name-%version.tar
-# from master
-#Patch: efl-1.8.2-up-0947bae12627aa819ff81845b10fcf0af5e924be.patch
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
-BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel gst-plugins-devel zlib-devel
-BuildRequires: liblua5-devel libssl-devel libcurl-devel libdbus-devel
+BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel  zlib-devel
+BuildRequires: libluajit-devel libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
 %if_enabled xcb
@@ -43,7 +44,9 @@ BuildRequires: libGL-devel
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= 1.3.0 libwayland-cursor-devel libxkbcommon-devel}
+%{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
+%{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -151,8 +154,10 @@ documentation for EFL.
 	%{subst_enable egl} \
 	%{subst_enable drm} \
 	%{subst_enable ibus} \
+	%{subst_enable gstreamer1} \
 	%{?_enable_xcb:--with-x11=xcb}
-%make_build
+# SMP-incompatible build since 1.11
+%make
 #%make doc
 
 %install
@@ -162,6 +167,8 @@ find %buildroot%_libdir -name "*.la" -delete
 %find_lang %name
 
 %files -n %name-libs -f %name.lang
+%_bindir/ecore_evas_convert
+%_bindir/vieet
 %_bindir/edje_cc
 %_bindir/edje_codegen
 %_bindir/edje_decc
@@ -178,6 +185,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/eeze_umount
 %_bindir/efreetd
 %_bindir/eina-bench-cmp
+%_bindir/elua
 %_bindir/ethumb
 %_bindir/ethumbd
 %_bindir/ethumbd_client
@@ -187,6 +195,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/ecore/
 %_libdir/ecore_evas/
 %_libdir/ecore_imf/
+%_libdir/ecore_x/
 %_libdir/edje/
 %_libdir/eeze/
 %_libdir/efreet/
@@ -198,6 +207,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/dbus-1/services/org.enlightenment.Ethumb.service
 %_datadir/ecore/
 %_datadir/ecore_imf/
+%_datadir/ecore_x/
 %_datadir/edje/
 %_datadir/eeze/
 %_datadir/efreet/
@@ -209,7 +219,10 @@ find %buildroot%_libdir -name "*.la" -delete
 %_datadir/ethumb/
 %_datadir/ethumb_client/
 %_datadir/evas/
+%_datadir/elua/
 %_datadir/mime/packages/edje.xml
+%_prefix/lib/systemd/user/efreet.service
+%_prefix/lib/systemd/user/ethumb.service
 %doc AUTHORS README NEWS COMPLIANCE
 
 %files -n %name-libs-devel
@@ -217,10 +230,13 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/evas_cserve2_debug
 %_bindir/evas_cserve2_shm_debug
 %_bindir/embryo_cc
+%_bindir/eolian_cxx
+%_bindir/eolian_gen
 %_includedir/*
 %_libdir/cmake/*
 %_libdir/*.so
 %_libdir/pkgconfig/ecore-audio.pc
+%_libdir/pkgconfig/ecore-avahi.pc
 %_libdir/pkgconfig/ecore-con.pc
 %_libdir/pkgconfig/ecore-evas.pc
 %_libdir/pkgconfig/ecore-fb.pc
@@ -254,12 +270,32 @@ find %buildroot%_libdir -name "*.la" -delete
 %_libdir/pkgconfig/evas-software-x11.pc
 %_libdir/pkgconfig/evas-wayland-shm.pc
 %_libdir/pkgconfig/evas.pc
+%_libdir/pkgconfig/ecore-audio-cxx.pc
+%_libdir/pkgconfig/ecore-cxx.pc
+%_libdir/pkgconfig/ecore-drm.pc
+%_libdir/pkgconfig/edje-cxx.pc
+%_libdir/pkgconfig/eet-cxx.pc
+%_libdir/pkgconfig/eina-cxx.pc
+%_libdir/pkgconfig/eo-cxx.pc
+%_libdir/pkgconfig/eolian-cxx.pc
+%_libdir/pkgconfig/eolian.pc
+%_libdir/pkgconfig/evas-cxx.pc
+%_libdir/pkgconfig/evas-drm.pc
+%dir %_datadir/eolian/
+%dir %_datadir/eolian/include
+%_datadir/eolian/include/*
 %_datadir/gdb/
 %exclude %_datadir/gdb/auto-load/*/*/libeo.so.*-gdb.py
 %exclude %_datadir/eo/gdb/eo_gdb.py
 
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
+* Thu Jul 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
 - 1.8.6
 

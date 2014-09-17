@@ -1,7 +1,8 @@
 %define _name python-efl
+%define efl_ver 1.11.2
 
 Name: python-module-efl
-Version: 1.8.1
+Version: 1.11.0
 Release: alt1
 
 Summary: Python bindings for EFL libraries
@@ -9,7 +10,7 @@ Group: Development/Python
 License: LGPLv2+
 Url: http://trac.enlightenment.org/e/wiki/Python
 
-Source: http://download.enlightenment.org/rel/bindings/python/%_name-%version.tar.bz2
+Source: http://download.enlightenment.org/rel/bindings/python/%_name-%version.tar.xz
 #Source: %_name-%version.tar
 
 %setup_python_module ecore
@@ -35,7 +36,7 @@ Provides: python-module-ethumb = %version-%release
 Obsoletes: python-module-evas < 1.8.0
 Provides: python-module-evas = %version-%release
 
-BuildPreReq: efl-libs-devel >= 1.8.0 libelementary-devel >= 1.8.0
+BuildPreReq: efl-libs-devel >= %efl_ver libelementary-devel >= %efl_ver
 BuildRequires: python-module-Cython python-module-dbus-devel
 BuildRequires: rpm-build-python3 python3-devel
 # for check
@@ -79,28 +80,22 @@ pushd py3build
 popd
 
 %files
-%python_sitelibdir/e_dbus/
-%python_sitelibdir/ecore/
-%python_sitelibdir/edje/
 %python_sitelibdir/efl/
-%python_sitelibdir/elementary/
-%python_sitelibdir/emotion/
-%python_sitelibdir/evas/
 %python_sitelibdir/python_efl-*.egg-info
-%doc AUTHORS README
+%doc AUTHORS README* changes.html
 
 %files -n python3-module-efl
-%python3_sitelibdir/e_dbus/
-%python3_sitelibdir/ecore/
-%python3_sitelibdir/edje/
 %python3_sitelibdir/efl/
-%python3_sitelibdir/elementary/
-%python3_sitelibdir/emotion/
-%python3_sitelibdir/evas/
 %python3_sitelibdir/python_efl-*.egg-info
-%doc AUTHORS README
+%doc AUTHORS README* changes.html
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
+* Thu Jul 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sun Jan 19 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
