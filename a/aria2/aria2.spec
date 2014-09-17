@@ -1,5 +1,5 @@
 Name: aria2
-Version: 1.18.7
+Version: 1.18.8
 Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster
@@ -17,7 +17,7 @@ BuildRequires: cppunit-devel
 BuildRequires: gettext
 BuildRequires: libcares-devel
 BuildRequires: libgcrypt-devel
-BuildRequires: libgnutls-devel libgnutls-openssl-devel libgnutls-extra-devel
+BuildRequires: libgnutls-devel libgnutls-openssl-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
@@ -104,6 +104,9 @@ mv %buildroot%_docdir/aria2/README.* %buildroot%_docdir/%name-%version
 
 
 %changelog
+* Wed Sep 17 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.8-alt1
+- 1.18.8
+
 * Tue Jul 22 2014 Ilya Mashkin <oddity@altlinux.ru> 1.18.7-alt1
 - 1.18.7
 
