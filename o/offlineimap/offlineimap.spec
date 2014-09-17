@@ -1,18 +1,19 @@
 Name: offlineimap
-Version: 6.0.0
-Release: alt1.1.1
+Version: 6.5.6.1
+Release: alt1.git20140708
 Summary: Powerful IMAP/Maildir synchronization and reader support
 
 License: GPLv2+
 Group: Networking/Mail
-Url: http://software.complete.org/offlineimap/
-Source0: %version/%{name}_%version.tar.gz
-Packager: Evgenii Terechkov <evg@altlinux.org>
+Url: http://offlineimap.org/
+# https://github.com/OfflineIMAP/offlineimap.git
+Source0: %{name}_%version.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun May 11 2008
 BuildRequires: docbook-utils python-devel
+BuildPreReq: python-module-sphinx-devel
 
 %description
 OfflineIMAP is a tool to simplify your e-mail reading. With OfflineIMAP,
@@ -27,15 +28,21 @@ not provide disconnected operation.
 %prep
 %setup -n %name
 
+%prepare_sphinx docs
+ln -s ../objects.inv docs/doc-src/
+
 %build
-python setup.py build
-cp -p debian/changelog ChangeLog
-docbook2man %name.sgml
+%python_build
+#cp -p debian/changelog ChangeLog
+#docbook2man %name.sgml
 
 %install
-python setup.py install --root=%buildroot --prefix=%prefix
+%python_install --prefix=%prefix
+
+%make -C docs man
 mkdir -p %buildroot/%_man1dir
-install -p %name.1 %buildroot/%_man1dir/
+install -p docs/%name.1 %buildroot/%_man1dir/
+%make doc
 
 %files
 %_bindir/%name
@@ -43,9 +50,12 @@ install -p %name.1 %buildroot/%_man1dir/
 %python_sitelibdir/%name-%version-py*.egg-info
 %_man1dir/%name.1.*
 
-%doc README COPY* UPGRADING %name.conf* FAQ.html ChangeLog
+%doc Changelog.* COPYING MAINTAINERS %name.conf* *.md docs/html
 
 %changelog
+* Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.6.1-alt1.git20140708
+- Version 6.5.6.1
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 6.0.0-alt1.1.1
 - Rebuild with Python-2.7
 
