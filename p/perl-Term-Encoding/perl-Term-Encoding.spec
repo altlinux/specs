@@ -2,7 +2,7 @@
 
 Name: perl-Term-Encoding
 Version: 0.02
-Release: alt1
+Release: alt3
 
 Summary: Perl module to detect encoding of the current terminal
 
@@ -40,6 +40,9 @@ current terminal expects, in various ways.
 
 
 %changelog
+* Wed Sep 17 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.02-alt3
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.02-alt1
 - Initial build for ALT Linux Sisyphus
 
