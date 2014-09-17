@@ -2,7 +2,7 @@
 
 Name: perl-PerlIO-utf8_strict
 Version: 0.004
-Release: alt1
+Release: alt3
 
 Summary: fast and correct UTF-8 IO module
 
@@ -44,5 +44,8 @@ input for correctness.
 %perl_vendor_autolib/PerlIO*
 
 %changelog
+* Wed Sep 17 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt3
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt1
 - Initial build for ALT Linux Sisyphus
