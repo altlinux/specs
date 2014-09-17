@@ -1,5 +1,5 @@
 Name: installer-distro-chainmail
-Version: 2.97.0
+Version: 2.99.0
 Release: alt1
 
 Summary: Installer files for IVK chainmail
@@ -29,6 +29,7 @@ Requires: installer-feature-net-br-stage2
 Requires: installer-feature-quota-stage2 >= 0.4
 Requires: installer-feature-server-raid-fixup-stage2
 Requires: x-cursor-theme-jimmac
+Requires: udev-rule-generator-net
 
 %description stage2
 Installer IVK chainmail stage2.
@@ -73,6 +74,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/postinstall.d/90-vsftpd.sh
 
 %changelog
+* Wed Sep 17 2014 Mikhail Efremov <sem@altlinux.org> 2.99.0-alt1
+- Add udev-rule-generator-net in stage2.
+
 * Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 2.97.0-alt1
 - Add 80-BASE-enable.sh postinstall hook.
 - Enable zabbix_mysql by default.
