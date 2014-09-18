@@ -15,8 +15,8 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.6.1
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -271,6 +271,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Thu Sep 18 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+- CVE-2014-3616
+
 * Thu Aug 28 2014 Denis Smirnov <mithraen@altlinux.ru> 1.6.1-alt2
 - enable geopip module
 
