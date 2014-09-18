@@ -2,7 +2,7 @@
 
 Name: http_post
 
-Version: 20110118
+Version: 20140814
 Release: alt1
 
 Summary: utility to do POST to an HTTP/HTTPS URL
@@ -49,6 +49,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Thu Sep 18 2014 Nikolay A. Fetisov <naf@altlinux.ru> 20140814-alt1
+- New version
+
 * Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 20110118-alt1
 - New version
 
