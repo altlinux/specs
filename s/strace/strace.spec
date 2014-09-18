@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.9
-Release: alt1
+Release: alt2
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -13,7 +13,7 @@ Source: %name-%version-%release.tar
 # due to use of deprecated -k option
 Conflicts: rpm-utils <= 0:0.9.11-alt1
 
-BuildRequires: libacl-devel
+BuildRequires: libacl-devel libaio-devel
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
@@ -66,6 +66,9 @@ export SLEEP_A_BIT='sleep 0.1'
 %_bindir/strace-graph
 
 %changelog
+* Thu Sep 18 2014 Dmitry V. Levin <ldv@altlinux.org> 4.9-alt2
+- Updated to v4.9-10-g2f6510c.
+
 * Fri Aug 15 2014 Dmitry V. Levin <ldv@altlinux.org> 4.9-alt1
 - Updated to v4.9.
 
