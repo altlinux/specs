@@ -24,7 +24,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -99,7 +99,7 @@ Patch1033: kdebase-workspace-4.5.2-alt-lsof-path.patch
 Patch1034: kdebase-workspace-4.7.1-alt-systemsettings-desktop.patch
 Patch1035: kdebase-workspace-4.6.0-alt-disable-effect-startupfeedback.patch
 Patch1036: kdebase-workspace-4.6.3-alt-kdm-apply-colors.patch
-Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
+Patch1037: kdebase-workspace-4.6.4-alt-hide-configs.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.11.4-alt-def-plasma-digitalclock.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
@@ -654,7 +654,7 @@ __EOF__
 mkdir -p %buildroot/%_K4xdg_apps/
 install -m 0644 %buildroot/%_K4srv/kdm.desktop %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^Type=.*$|Type=Application|' %buildroot/%_K4xdg_apps/kdm.desktop
-sed -i 's|^Categories=.*$|Categories=Qt;KDE;System;|' %buildroot/%_K4xdg_apps/kdm.desktop
+sed -i 's|^Categories=.*$|Categories=Qt;KDE;System;Settings;|' %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^X-KDE-System-Settings-Parent-Category.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^X-KDE-ServiceTypes=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^X-KDE-ParentApp=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
@@ -942,6 +942,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.12-alt2
+- hide kdm from systemsettings
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.12-alt1
 - new version
 
