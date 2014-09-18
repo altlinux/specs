@@ -4,7 +4,7 @@
 %define lngg Spanish
 
 Name: kde4-i18n-%lng
-Version: 4.14.0
+Version: 4.14.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
+- new version
+
 * Fri Aug 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
