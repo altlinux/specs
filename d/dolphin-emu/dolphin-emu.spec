@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 4.0.2
-Release: alt2
+Release: alt3.git5fafcb6
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -9,16 +9,17 @@ Group: Emulators
 Url: https://ru.%name.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
+ExclusiveArch: x86_64
+
 Source: dolphin-%version.tar.gz
 Patch0: %name-%version-alt.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libGLEW-devel >= 1.8
 BuildRequires: libSDL2-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXdmcp-devel
-BuildRequires: libXi-devel >= 1.5.0
+BuildRequires: libXi-devel
 BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXxf86vm-devel
@@ -63,6 +64,10 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Wed Sep 17 2014 Nazarov Denis <nenderus@altlinux.org> 4.0.2-alt3.git5fafcb6
+- Version from git (commit 5fafcb6)
+- Rebuild with new polarssl and GLEW
+
 * Tue Apr 22 2014 Nazarov Denis <nenderus@altlinux.org> 4.0.2-alt2
 - Rebuild with new polarssl
 
