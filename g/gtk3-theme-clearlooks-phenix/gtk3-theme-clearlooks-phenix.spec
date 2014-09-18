@@ -1,7 +1,7 @@
 %define  themename Clearlooks-Phenix
 
 Name:    gtk3-theme-clearlooks-phenix
-Version: 3.0.15
+Version: 3.0.16
 Release: alt1
 
 Summary: GTK3 port of the Clearlooks theme
@@ -32,5 +32,8 @@ tar xf %SOURCE0 -C %buildroot%_datadir/themes
 %_datadir/themes/%themename
 
 %changelog
+* Thu Sep 18 2014 Andrey Cherepanov <cas@altlinux.org> 3.0.16-alt1
+- New version
+
 * Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 3.0.15-alt1
 - Initial build in Sisyphus
