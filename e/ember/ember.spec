@@ -2,8 +2,8 @@
 BuildRequires: /usr/bin/xmllint cppunit-devel gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(eris-1.3) pkgconfig(mercator-0.3) pkgconfig(sigc++-2.0) pkgconfig(varconf-1.0) pkgconfig(wfmath-1.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 Name:           ember
-Version:        0.7.0
-Release:        alt1_10
+Version:        0.7.2
+Release:        alt1
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -18,7 +18,7 @@ Patch6:		ember-doc-nover.patch
 
 BuildRequires:  libSDL-devel tinyxml-devel libdevil-devel cegui-devel libogre-devel
 BuildRequires:  liblua5-devel tolua++-devel libopenal-devel libalut-devel
-BuildRequires:  atlascpp-devel
+BuildRequires:  atlascpp-devel chrpath
 BuildRequires:  eris-devel >= 1.3.16
 BuildRequires:  mercator-devel
 BuildRequires:  varconf-devel
@@ -26,7 +26,7 @@ BuildRequires:	wfmath-devel >= 1.0
 BuildRequires:	libwfut-devel
 BuildRequires:  desktop-file-utils
 
-Requires:       %{name}-media >= 0.7.0 %{name}-media < 0.7.1
+Requires:       %{name}-media >= 0.7.2 %{name}-media < 0.7.3
 
 Obsoletes:      sear < 0.6.4-0.16
 Source44: import.info
@@ -39,11 +39,11 @@ It uses the Ogre 3D engine with CEGUI.
 
 %prep
 %setup -q
-%patch1 -p1 -b .fix_implicit_dso
-%patch3 -p0 -b .start
-%patch4 -p1 -b .boost_shared_array
-%patch5 -p1 -b .lua-52
-%patch6 -p0 -b .doc-nover
+#patch1 -p1 -b .fix_implicit_dso
+%patch3 -p2 -b .start
+#patch4 -p1 -b .boost_shared_array
+#patch5 -p1 -b .lua-52
+#patch6 -p0 -b .doc-nover
 
 # Encoding fix
 iconv -f iso-8859-1 -t utf-8 AUTHORS > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
@@ -53,7 +53,7 @@ iconv -f iso-8859-1 -t utf-8 AUTHORS > AUTHORS.conv && mv -f AUTHORS.conv AUTHOR
 %build
 autoreconf -fisv
 %configure --disable-static --disable-freeimage-check
-make %{?_smp_mflags}
+%make_build
 
 
 %install
@@ -72,12 +72,14 @@ mv $RPM_BUILD_ROOT%{_datadir}/icons/worldforge/ember.png \
 rm -f $RPM_BUILD_ROOT%{_datadir}/ember/media/shared/modeldefinitions/{drystan_archer,vehicles,outdoor_structures,buildings,fencegate,palissade,house_A,choppingblockA,choppingblockB,mushroom,male,humanoid}.modeldef
 rm -f $RPM_BUILD_ROOT%{_datadir}/ember/media/shared/common/resources/ogre/scripts/materials/smoke.material
 
+chrpath -d %buildroot%_bindir/%name.bin
+
 %check
-make check
+%make_build check
 
 
 %files
-%doc COPYING README INSTALL AUTHORS
+%doc COPYING README* INSTALL AUTHORS ChangeLog
 %{_bindir}/%{name}
 %{_bindir}/%{name}.bin
 %{_datadir}/applications/*.desktop
@@ -97,6 +99,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
+- Version 0.7.2
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_10
 - update to new release by fcimport
 

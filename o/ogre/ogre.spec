@@ -1,5 +1,5 @@
 Name: ogre
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
@@ -8,11 +8,12 @@ Group: System/Libraries
 Url: http://www.ogre3d.org/
 Source: %name-%version.tar
 Patch: %name-%version-alt-changes.patch
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
-BuildRequires: gcc-c++ cmake cegui-devel zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen libtbb-devel boost-devel
+BuildRequires: gcc-c++ cmake cegui-devel zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel doxygen graphviz texi2html libtbb-devel boost-devel libcg-devel
 BuildRequires: libXaw-devel libXrandr-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXinerama-devel libXi-devel libXpm-devel libXv-devel libXxf86misc-devel xorg-xf86miscproto-devel libXxf86vm-devel libXext-devel libGLU-devel libfreeimage-devel tinyxml-devel
 #BuildRequires:  glew-devel 
+BuildPreReq: libharfbuzz-devel libGLES-devel libpoco-devel
+BuildPreReq: libglsl-optimizer-devel libGLEW-devel hlsl2glsl
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -66,46 +67,54 @@ with Ogre.  It also contains some media (meshes, textures,...) needed by these
 samples.
 
 %prep
-%setup -q -n ogre
+%setup -n ogre
 %patch -p1
 
 %build
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake \
 	-DOGRE_LIB_DIRECTORY=%_lib \
 	-DOGRE_INSTALL_SAMPLES=ON \
-	-DOGRE_BUILD_TESTS=OFF \
+	-DOGRE_BUILD_TESTS=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags"
+	-DOGRE_DOCS_PATH=docs \
+	-DGLSL_Optimizer_INC_SEARCH_PATH=%_includedir/glsl-optimizer/src/glsl \
+	-DHLSL2GLSL_INC_SEARCH_PATH:PATH=%_includedir/hlsl2glsl/include
 
-%make_build -C BUILD
+%cmake_build
+
+#Make doc
+pushd Docs
+    bash ./src/makedocs.sh
+popd
 
 %install
-%make install DESTDIR=$RPM_BUILD_ROOT -C BUILD
+%cmakeinstall_std
 
 # Create config for ldconfig
 mkdir -p $RPM_BUILD_ROOT/etc/ld.so.conf.d
 echo "%_libdir/OGRE" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%name-%_arch.conf
 
 mkdir -p $RPM_BUILD_ROOT%_man1dir
-#install -p -m 644 OgreMaterialUpgrade.1 $RPM_BUILD_ROOT%_man1dir/OgreMaterialUpgrade.1
+install -p -m 644 OgreMaterialUpgrade.1 $RPM_BUILD_ROOT%_man1dir/OgreMaterialUpgrade.1
 install -p -m 644 OgreMeshUpgrade.1 $RPM_BUILD_ROOT%_man1dir/OgreMeshUpgrade.1
 install -p -m 644 OgreXMLConverter.1 $RPM_BUILD_ROOT%_man1dir/OgreXMLConverter.1
 
 #Copy working samples
+subst "s|/usr/lib|%_libdir|"g samples.cfg
 cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 
 %files
 %doc AUTHORS BUGS COPYING
 /etc/ld.so.conf.d/*
 %_bindir/Ogre*
-#_bindir/Test_Ogre
+%_bindir/Test_Ogre*
 %dir %_datadir/OGRE
 %config(noreplace) %_datadir/OGRE/plugins.cfg
 %config(noreplace) %_datadir/OGRE/quakemap.cfg
 %config(noreplace) %_datadir/OGRE/resources.cfg
 %config(noreplace) %_datadir/OGRE/tests.cfg
-%_datadir/OGRE/media
+%_datadir/OGRE/Media
 %_man1dir/*
 
 %exclude %_datadir/OGRE/samples.cfg
@@ -122,7 +131,7 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_includedir/OGRE
 
 %files devel-doc
-%doc Docs/api Docs/licenses Docs/manual Docs/shadows Docs/vbo-update Docs/*html Docs/*gif Docs/*.css
+%_datadir/OGRE/docs
 
 %files samples
 %config(noreplace) %_datadir/OGRE/samples.cfg
@@ -130,6 +139,12 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1
+- Version 1.9.0
+
+* Tue Dec 31 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.9.0-alt1
+- New version
+
 * Tue Jul 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8.1-alt1
 - New version
 

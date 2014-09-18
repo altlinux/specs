@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_13.r1
+Release:        alt3_13.r1.1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -71,7 +71,7 @@ rm objconv/mesher/expat.h
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
-  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS" --disable-ffmpeg \
+  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES %optflags" --disable-ffmpeg \
   --enable-stencil-buffer
 make %{?_smp_mflags} CXXLD="g++ -Wl,--no-as-needed"
 
@@ -110,6 +110,9 @@ desktop-file-install            \
 
 
 %changelog
+* Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3_13.r1.1
+- Rebuilt with new libogre
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_13.r1
 - update to new release by fcimport
 

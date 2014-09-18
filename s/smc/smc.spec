@@ -1,6 +1,6 @@
 Name: smc
 Version: 2.0.0
-Release: alt2.git20110510.6
+Release: alt2.git20110510.7
 Summary: 2D platform game that uses OpenGL in a style similar to Super Mario
 Group: Games/Arcade
 License: GPLv3
@@ -13,7 +13,7 @@ Source2: dochelper.pl
 Patch: smc-2.0.0-alt-DSO.patch
 
 # Automatically added by buildreq on Thu Aug 20 2009
-BuildRequires: boost-filesystem-devel cegui-devel gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libpng-devel
+BuildRequires: boost-filesystem-devel cegui0.7.6-devel gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libpng-devel
 
 BuildRequires: desktop-file-utils
 Requires: %name-data = %version-%release
@@ -88,6 +88,9 @@ desktop-file-install --vendor dribble \
 %doc credits.txt docs/*.html docs/license.txt docs/style.css
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.git20110510.7
+- Built with cegui0.7.6 instead of cegui
+
 * Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt2.git20110510.6
 - Fix build with new gettext-tools
 

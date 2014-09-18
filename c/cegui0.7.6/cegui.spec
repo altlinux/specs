@@ -1,22 +1,19 @@
-Name: cegui
-Version: 0.8.4
-Release: alt1
+%define sover 0.7.6
+%define oname cegui
+Name: %oname%sover
+Version: 0.7.6
+Release: alt1.4
 Summary: Free library providing windowing and widgets for graphics APIs / engines
-Group: System/Libraries
+Group: System/Legacy libraries
 License: MIT
 Url: http://www.cegui.org.uk
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: https://bitbucket.org/cegui/cegui/get/v0-8-4.tar.gz
+Source: http://downloads.sourceforge.net/crayzedsgui/CEGUI-%version.tar.gz
 Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
+Patch: cegui-alt-ogre.patch
 
 BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfreetype-devel libpcre-devel libxerces-c-devel libxml2-devel tinyxml-devel tolua++-devel tzdata libogre-devel libdirectfb-devel
-
-BuildPreReq: cmake libminizip-devel libfribidi-devel libGLEW-devel
-BuildPreReq: libglm-devel libirrlicht-devel libGLES-devel
-BuildPreReq: libdevil-devel libfreeimage-devel libcorona-devel
-BuildPreReq: python-devel boost-devel doxygen graphviz libgtk+2-devel
-BuildPreReq: libglfw-devel rapidxml boost-python-devel
 
 %description
 Crazy Eddie's GUI System is a free library providing windowing and widgets for
@@ -30,6 +27,7 @@ Summary: Development files for cegui
 Group: Development/C++
 Requires: %name = %version-%release
 Requires: libGLU-devel
+Conflicts: cegui-devel
 
 %description devel
 Development files for cegui
@@ -44,7 +42,8 @@ BuildArch: noarch
 API and Falagard skinning documentation for cegui
 
 %prep
-%setup -qb1 -qn CEGUI
+%setup -qb1 -qn CEGUI-%version
+%patch -p2
 
 # Permission fixes for debuginfo RPM
 #chmod -x include/falagard/*.h
@@ -58,48 +57,38 @@ iconv -f iso8859-1 TODO -t utf8 > TODO.conv && mv -f TODO.conv TODO
 iconv -f iso8859-1 README -t utf8 > README.conv && mv -f README.conv README
 
 %build
-%add_optflags -I%_includedir/pcre
-cmake \
-%if %_lib == lib64
-	-DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
-	-DCEGUI_BUILD_RENDERER_NULL:BOOL=ON \
-	.
+%configure --disable-static --disable-corona \
+           --enable-lua-module --disable-irrlicht-renderer --disable-samples \
+           --with-default-xml-parser=ExpatParser --enable-silly \
+           --with-default-image-codec=SILLYImageCodec --with-pici --enable-null-renderer
 
-%make_build VERBOSE=1
-
-pushd doc/doxygen
-doxygen
-popd
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+%make
 
 %install
-%makeinstall_std
+%make_install install DESTDIR=%buildroot
 find %buildroot -name '*.la' -exec rm -f {} ';'
 
 %files
-%doc README*
-%_bindir/*
-%_libdir/*.so.*
-%_libdir/cegui-0.8
+%doc doc/README
+%_libdir/libCEGUI*-%version.so
 
 %files devel
 %_libdir/*.so
-%_pkgconfigdir/*.pc
-%_includedir/*
-%_datadir/cegui-0
-%exclude %_datadir/cegui-0/xml_schemas
+%exclude %_libdir/libCEGUI*-%version.so
+%_pkgconfigdir/CEGUI-OPENGL.pc
+%_pkgconfigdir/CEGUI-OGRE.pc
+%_pkgconfigdir/CEGUI.pc
+%_includedir/CEGUI
+%_datadir/CEGUI
+%exclude %_datadir/CEGUI/xml_schemas
 
-%files devel-doc
-%_datadir/cegui-0/xml_schemas
-%doc doc/doxygen/html
+#files devel-doc
+#_datadir/CEGUI/xml_schemas
 
 %changelog
-* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
-- Version 0.8.4
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.4
+- Moved this version into System/Legacy libraries
 
 * Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.6-alt1.3
 - Rebuild with new ogre
