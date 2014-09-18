@@ -1,5 +1,7 @@
+%def_disable static
+
 Name: polarssl
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -40,6 +42,17 @@ Conflicts: hiawatha
 Contains libraries and header files for
 developing applications that use PolarSSL.
 
+%if_enabled static
+%package -n lib%name-devel-static
+Summary: Static libraries for PolarSSL
+Group: Development/C
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-devel-static
+Static libraries for developing applications
+that use PolarSSL.
+%endif
+
 %package utils
 Summary: Utilities for PolarSSL
 Group: Development/Tools
@@ -73,7 +86,6 @@ popd
 %__mkdir_p %buildroot%_libexecdir/%name
 %__mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 %__rm -rf %buildroot%_bindir
-%__rm -rf %buildroot%_libdir/lib%name.a
 
 %files -n lib%name
 %doc ChangeLog LICENSE README.rst
@@ -84,11 +96,19 @@ popd
 %_includedir/%name/*.h
 %_libdir/lib%name.so
 
+%if_enabled static
+%files -n lib%name-devel-static
+%_libdir/lib%name.a
+%endif
+
 %files utils
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
 
 %changelog
+* Thu Aug 07 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.8-alt1
+- Version 1.3.8
+
 * Thu May 08 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.7-alt1
 - Version 1.3.7
 
