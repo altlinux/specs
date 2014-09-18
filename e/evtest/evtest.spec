@@ -1,6 +1,6 @@
 Name: evtest
-Version: 1.31
-Release: alt2
+Version: 1.32
+Release: alt1
 
 Summary: Input device event monitor and query tool
 License: GPLv2+
@@ -9,7 +9,7 @@ Group: Other
 Url: http://cgit.freedesktop.org/%name/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://cgit.freedesktop.org/%name/snapshot/%name-1.31.tar.gz
+Source: http://cgit.freedesktop.org/%name/snapshot/%name-%version.tar.gz
 
 BuildRequires: asciidoc
 BuildRequires: python-modules-compiler
@@ -56,11 +56,20 @@ X.Org issue.
 %makeinstall_std
 
 %files
-%doc COPYING INSTALL
+%doc COPYING INSTALL README
 %_bindir/%name
 %_man1dir/%name.1*
 
 %changelog
+* Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.32-alt1
+- Version 1.32
+
+* Sun May 25 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt1.M70P.1
+- Build for branch p7
+
+* Sat May 24 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt1.M70T.1
+- Build for branch t7
+
 * Thu May 22 2014 Nazarov Denis <nenderus@altlinux.org> 1.31-alt2
 - Fix release for safe upgrade from autoimports repository
 
