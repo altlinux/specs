@@ -9,9 +9,9 @@
 Name: kde4edu
 %define major 4
 %define minor 14
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1088,6 +1088,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
+- new version
+
 * Thu Sep 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
 - split marble to separate package
 
