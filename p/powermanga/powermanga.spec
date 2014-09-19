@@ -1,12 +1,10 @@
 Name: powermanga
-Version: 0.90
-Release: alt3.1.qa1
+Version: 0.92
+Release: alt1
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
 Group: Games/Arcade
-
-Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 URL: http://linux.tlk.fr/games/Powermanga/
 Source: %name-%version.tar
@@ -16,7 +14,6 @@ Source100: %name.desktop
 Source200: %name.16.png
 Source201: %name.32.png
 Source202: %name.48.png
-Patch: powermanga-0.90-alt-DSO.patch
 
 Requires: %name-data
 
@@ -25,6 +22,7 @@ BuildPreReq: rpm-build-licenses
 # Based on configure.ac
 BuildRequires: libXxf86dga-devel libXext-devel
 BuildRequires: libSDL-devel libSDL_mixer-devel
+BuildPreReq: libpng-devel
 
 %description
 In this shoot them up with 3d graphics, you'll have to face and destroy
@@ -41,15 +39,19 @@ This package contains data files for Powermanga (see %name package for
 description). To play the game, you should install both %name and %name-data packages.
 
 %prep
-%setup -q
-%patch -p2
+%setup
 
 %build
-%configure --mandir=%_man6dir
+%autoreconf
+%add_optflags -DPNG_EXPORT_ENABLE=1
+%configure \
+	--mandir=%_man6dir \
+	--enable-x11 \
+	--with-x
 %make scoredir=%_localstatedir/games
 
 %install
-make DESTDIR=%buildroot gamesdir=%_bindir scoredir=%_localstatedir/games install
+%makeinstall_std gamesdir=%_bindir scoredir=%_localstatedir/games
 
 install -Dpm 644 %SOURCE100 %buildroot/%_desktopdir/%name.desktop
 
@@ -71,6 +73,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92-alt1
+- Version 0.92
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.90-alt3.1.qa1
 - NMU: rebuilt for updated dependencies.
 
