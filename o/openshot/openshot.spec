@@ -1,14 +1,12 @@
 Summary: Non Linear Video Editor using Python and MLT
 Name: openshot
-Version: 1.4.3
-Release: alt1
+Version: 1.4.4
+Release: alt1.alpha1.bzr20131031
+# bzr branch lp:openshot
 Source: %name-%version.tar.gz
 License: GPLv3
 Group: Video
 Url: http://www.openshotvideo.com/
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
-Patch: openshot-1.4.2-fix-dialog.patch
 
 Requires: mlt-utils python-module-pygtk-libglade python-module-httplib2
 
@@ -16,19 +14,20 @@ Requires: mlt-utils python-module-pygtk-libglade python-module-httplib2
 BuildRequires: python-devel rpm-build-python
 
 %description
-OpenShot Video Editor is a free, open-source, non-linear video editor, based on Python, GTK, and MLT.
-It can edit video and audio files, composite and transition video files, and mix multiple layers of
-video and audio together and render the output in many different formats.
+OpenShot Video Editor is a free, open-source, non-linear video editor,
+based on Python, GTK, and MLT.
+It can edit video and audio files, composite and transition video files,
+and mix multiple layers of video and audio together and render the
+output in many different formats.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
-%__python setup.py build
+%python_build_debug
 
 %install
-%__python setup.py install --root=%buildroot --install-lib=%python_sitelibdir
+%python_install --install-lib=%python_sitelibdir
 
 %files
 %doc AUTHORS COPYING README
@@ -45,6 +44,9 @@ video and audio together and render the output in many different formats.
 %_datadir/mime/packages/*
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.alpha1.bzr20131031
+- Version 1.4.4~alpha1
+
 * Tue Oct 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.3-alt1
 - New version
 
