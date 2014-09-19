@@ -1,7 +1,7 @@
 %define Name Oroborus
 Name: oroborus
-Version: 2.0.18
-Release: alt5.qa2
+Version: 2.0.20
+Release: alt1
 Summary: Small window manager for the X Window System
 Summary(uk_UA.CP1251): Маленький віконний менеджер для X Window System
 Summary(ru_RU.CP1251): Маленький оконный менеджер для X Window System
@@ -13,7 +13,6 @@ Source1: %name-icons.tar.bz2
 Source2: start%name
 Source3: %{name}rc
 Source4: %name.startup
-Patch: %name-2.0.18-man.patch
 
 # Automatically added by buildreq on Mon Sep 24 2007
 BuildRequires: imake libSM-devel libXext-devel libXpm-devel xorg-cf-files
@@ -59,11 +58,11 @@ Themes for %Name Window Manager.
 
 %prep
 %setup -a 1
-%patch -p1
 
 
 %build
-%configure
+%configure \
+	--with-x
 %make_build
 
 
@@ -132,6 +131,9 @@ __MENU__
 
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.20-alt1
+- Version 2.0.20
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.18-alt5.qa2
 - NMU: rebuilt for debuginfo.
 
