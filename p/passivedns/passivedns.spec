@@ -1,13 +1,12 @@
 Name: passivedns
 Version: 1.1.3
-Release: alt1
+Release: alt1.git20140826
 Summary: A network sniffer that logs all DNS server replies for use in a passive DNS setup
 License: GPLv2
 Group: Monitoring
 URL: https://github.com/gamelinux/passivedns
 Source: %name-%version.tar
 Source2: %name.init
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires: libpcap-devel libldns-devel perl-DateTime perl-DBI perl-Date-Simple
 
@@ -42,6 +41,7 @@ subst 's|/var/log/passivedns.log|/var/log/passivedns/passivedns.log|g' src/passi
 subst 's|/var/run/passivedns.pid|/var/run/passivedns/passivedns.pid|g' src/passivedns.c
 
 %build
+export CC="gcc %optflags"
 %make_build -C src
 
 %install
@@ -110,6 +110,9 @@ EOF
 %_bindir/*.pl
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20140826
+- New snapshot
+
 * Tue Dec 31 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1.3-alt1
 - New version
 
