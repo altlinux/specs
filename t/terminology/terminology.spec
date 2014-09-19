@@ -2,7 +2,7 @@
 
 Name: terminology
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: EFL terminal emulator
 License: BSD
@@ -10,7 +10,7 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 #Source: %name-%version.tar
-Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
+Source: http://download.enlightenment.org/rel/apps/%name-%version.tar.xz
 Patch: %name-0.2-alt-default_font.patch
 
 Requires: fonts-bitmap-terminus
@@ -60,6 +60,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Thu Sep 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt2
+- rebuilt with efl/elementary-1.11.2
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 

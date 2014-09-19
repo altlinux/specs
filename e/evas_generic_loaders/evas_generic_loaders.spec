@@ -1,30 +1,29 @@
-%define _name evas_generic_loaders
-%define ver_major 1.8
+%define ver_major 1.11
 
-Name: evas_generic_loaders%ver_major
-Version: %ver_major.1
-Release: alt2
+Name: evas_generic_loaders
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of loaders for Evas
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
+Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
 
-Obsoletes: %_name < %version
-Provides:  %_name = %version-%release
+Obsoletes: %{name}1.8 < %version
+Provides:  %{name}1.8 = %version-%release
 
 # to skip libreoffice dependency
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: libreoffice
 
-BuildRequires: gcc-c++ efl-libs-devel
+BuildRequires: gcc-c++ efl-libs-devel >= %ver_major
 BuildRequires: libpoppler-devel
 BuildRequires: libraw-devel-static
 BuildRequires: libspectre-devel
 BuildRequires: librsvg-devel
-BuildRequires: gst-plugins-devel
+BuildRequires: gst-plugins1.0-devel
 BuildRequires: zlib-devel
 
 %description
@@ -38,12 +37,12 @@ loader.
 
 
 %prep
-%setup -n %_name-%version
+%setup -n %name-%version
 # hardcoded path to soffice.bin
 subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 
 %build
-%configure
+%configure --enable-gstreamer1
 %make_build
 
 %check
@@ -57,6 +56,12 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
+* Tue Feb 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt2
 - rebuilt against libraw.so.10
 

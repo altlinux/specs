@@ -1,8 +1,8 @@
-%define _name elementary
-%define ver_major 1.8
+%define _unpackaged_files_terminate_build 1
+%define ver_major 1.11
 
-Name: %_name%ver_major
-Version: %ver_major.5
+Name: elementary
+Version: %ver_major.2
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -10,9 +10,9 @@ Group: Graphical desktop/Enlightenment
 License: LGPLv2+
 Url: http://www.enlightenment.org
 
-Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
+Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
 
-BuildRequires: efl-libs-devel >= 1.8.3
+BuildRequires: efl-libs-devel >= 1.11.2
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 
 %description
@@ -25,9 +25,8 @@ data.
 Summary: Libraries for %name
 Group: System/Libraries
 Requires: %name-data = %version-%release
-Conflicts: lib%_name < %version
-#Obsoletes: lib%_name < %ver_major
-Provides: lib%_name = %version-%release
+Obsoletes: lib%{name}1.8
+Provides:  lib%{name}1.8 = %version-%release
 
 %description -n lib%name
 Elementary is a widget set based on the Enlightenment Foundation
@@ -38,8 +37,8 @@ This package contains shared libraries.
 Summary: noarch data for %name
 Group: Graphical desktop/Enlightenment
 BuildArch: noarch
-Obsoletes: %_name-data < %ver_major
-Provides: %_name-data = %version-%release
+Obsoletes: %{name}1.8-data
+Provides:  %{name}1.8-data = %version-%release
 
 %description data
 The %name-data package contains architecture independent data files for
@@ -49,15 +48,15 @@ Elementary.
 Summary: Development files for Elementary
 Group: Development/C
 Requires: lib%name = %version-%release
-Obsoletes: lib%_name-devel < %ver_major
-Provides: lib%_name-devel = %version-%release
+Obsoletes: lib%{name}1.8-devel
+Provides:  lib%{name}1.8-devel = %version-%release
 
 %description -n lib%name-devel
 The lib%name-devel package contains libraries and header files for
 developing applications that use Elementary libraries.
 
 %prep
-%setup -n %_name-%version
+%setup
 
 %build
 %autoreconf
@@ -68,40 +67,47 @@ developing applications that use Elementary libraries.
 %install
 %makeinstall_std
 
-%find_lang %_name
+%find_lang %name
 
 %files -n lib%name
 %_bindir/elementary_config
 %_bindir/elementary_quicklaunch
 %_bindir/elementary_run
-%_libdir/lib%{_name}*.so.*
+%_libdir/lib%{name}*.so.*
 %_libdir/edje/modules/elm/*/*.so
-%_libdir/%_name/modules/test_entry/*/*.so
-%_libdir/%_name/modules/access_output/*/*.so
-%_libdir/%_name/modules/test_map/*/*.so
-%_libdir/%_name/modules/datetime_input_ctxpopup/*/*.so
-%_libdir/%_name/modules/prefs/*/*.edj
-%_libdir/%_name/modules/prefs/*/*.so
+%_libdir/%name/modules/test_entry/*/*.so
+%_libdir/%name/modules/access_output/*/*.so
+%_libdir/%name/modules/test_map/*/*.so
+%_libdir/%name/modules/datetime_input_ctxpopup/*/*.so
+%_libdir/%name/modules/prefs/*/*.edj
+%_libdir/%name/modules/prefs/*/*.so
 %doc README COPYING
 
 %exclude %_libdir/edje/modules/elm/*/*.la
-%exclude %_libdir/%_name/modules/*/*/*.la
+%exclude %_libdir/%name/modules/*/*/*.la
 
 %files -n lib%name-devel
 %_bindir/elementary_codegen
 %_bindir/elementary_test
 %_bindir/elm_prefs_cc
-%_includedir/%{_name}*/
-%_libdir/lib%{_name}*.so
+%_includedir/%{name}*/
+%_libdir/lib%{name}*.so
 %_libdir/cmake/Elementary/
-%_pkgconfigdir/%{_name}*.pc
+%_pkgconfigdir/%{name}*.pc
+%_datadir/eolian/include/*
 
-%files data -f %_name.lang
-%_datadir/%_name/
+%files data -f %name.lang
+%_datadir/%name/
 %_desktopdir/*.desktop
 %_iconsdir/*.png
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
+* Thu Jul 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 

@@ -1,6 +1,6 @@
-%define _name enlightenment
-%define efl_ver_major 1.8
-%define cvs_date rc2
+%define ver_major 0.19
+%define efl_ver_major 1.11
+%define cvs_date alpha1
 %undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -10,10 +10,11 @@
 %def_disable bluetooth
 %def_enable wayland
 %def_enable systemd
+%def_enable install_sysactions
 %def_with pam_helper
 
-Name: e18
-Version: 0.18.8
+Name: enlightenment
+Version: %ver_major.0
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -28,49 +29,55 @@ Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
 %ifdef cvs_date
-Source: %_name-%version-%cvs_date.tar
+Source: %name-%version-%cvs_date.tar.xz
 %else
-Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
-#Source: %_name-%version.tar
+Source: http://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %endif
 
-Source1: E-18.png
-Source2: start%name
+Source1: E.png
+Source2: start_%name
 Source3: %name.wmsession
-#Source6: %name.png
-#Source7: %name-32.png
-Source8: %_name.desktop
-Source11: e18-alt-sysactions.conf
+Source8: %name.desktop
+%{?_enable_install_sysactions:Source11: %name-alt-sysactions.conf}
 
 Patch0: fix-systray-height.patch
 Patch1: add-systray-mobile.patch
 Patch2: add-systray-standard.patch
 Patch3: illume-keyboard-bigfont.patch
 Patch4: e17-0.17.0-alt-g-s-d_path.patch
-Patch5: e17-0.17.1-alt-e_sys_nosuid.patch
+Patch5: enlightenment-0.19.0-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
-Patch11: enlightenment-0.17.1-pam-helper.patch
+Patch11: enlightenment-0.19.0-alt-pam-helper.patch
 Patch12: fix-connman-module-detection.patch
 
-Obsoletes: e17
-Provides: %_name = %version-%release
-Provides: e18-default
+# Obsoletes/Provides old eNN
+Obsoletes: e17 e18
+Provides: e17 = %EVR
+Provides: e18 = %EVR
+Provides: %name-default
+Obsoletes: e17-default e18-default
+Provides: e17-default = %EVR
+Provides: e18-default = %EVR
 
+Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players >= %efl_ver_major
 # default terminal
 Requires: terminology
-Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players
 #Requires: empower
 # for menu
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
-Requires: altlinux-freedesktop-menu-%_name >= 0.55
+Requires: altlinux-freedesktop-menu-%name >= 0.55
 Requires: udisks2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildRequires: efl-libs-devel libelementary-devel >= 1.8.5
+BuildRequires: rpm-build-xdg
+BuildRequires: efl-libs-devel libelementary-devel >= 1.11.2
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
-BuildRequires: doxygen pm-utils
+BuildRequires: libuuid-devel
+BuildRequires: doxygen
+# for sysv
+BuildRequires: pm-utils
 %{?_enable_bluetooth:BuildRequires: libbluez-devel}
 %{?_enable_wayland:BuildRequires: libwayland-server-devel >= 1.3.0 libpixman-devel libEGL-devel libwayland-egl-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel}
@@ -82,16 +89,19 @@ Enlightenment is a window manager.
 Summary: Development headers for Enlightenment.
 Group: Development/C
 Requires: %name = %EVR
-Conflicts: e17-devel
+# Obsoletes/Provides old eNN
+Obsoletes: e17-devel e18-devel
+Provides: e17-devel = %EVR
+Provides: e18-devel = %EVR
 
 %description devel
 Development headers for Enlightenment.
 
 %prep
 %ifdef cvs_date
-%setup -n %_name-%version-%cvs_date
+%setup -n %name-%version-%cvs_date
 %else
-%setup -n %_name-%version
+%setup -n %name-%version
 %endif
 #%%patch0 -p2
 #%patch1 -p2
@@ -100,12 +110,14 @@ Development headers for Enlightenment.
 %patch4 -p1 -b .gsd
 %patch5 -p1 -b .nosuid
 %patch6 -p2
+%if_with pam_helper
 %patch11 -p1
-%patch12 -p2
+%endif
+#%patch12 -p2
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
+export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3 `pkg-config --cflags uuid`"
 %configure \
 	--with-profile=FAST_PC \
 	--enable-files \
@@ -113,10 +125,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 	--enable-shared \
 	--enable-pam \
 	%{?_enable_wayland:--enable-wayland-clients} \
+	%{?_disable_install_sysactions:--disable-install-sysactions} \
 %if_with pam_helper
 	--with-pam-helper=%prefix/libexec/chkpwd-pam/chkpwd-pam \
 %endif
-
 
 %make_build
 %make doc
@@ -126,27 +138,23 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 
 mkdir -p %buildroot%_rpmmacrosdir
 cat > %buildroot%_rpmmacrosdir/%name <<_EOF_
-%%e18_version		%version
+%%enlightenment_version		%version
 _EOF_
-
-%find_lang %name
 
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
 mkdir -p %buildroot%_bindir/
 install -p -m755 %SOURCE2 %buildroot%_bindir/
-install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E-17
+install -D -pm 644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenment
 
-# Install icons
-#install -pD -m644 %SOURCE6 %buildroot%_miconsdir/%name.xpm
-#install -pD -m644 %SOURCE7 %buildroot%_niconsdir/%name.png
+# Install icon
 install -pD -m644 %SOURCE1 %buildroot%_liconsdir/E-18.png
 
 # desktop file
-install -pD -m 644 %SOURCE8 %buildroot%_datadir/applications/enlightenment.desktop
+install -pD -m 644 %SOURCE8 %buildroot%_datadir/applications/%name.desktop
 
 # PAM-config
 mkdir -p %buildroot%_sysconfdir/pam.d
-cat > %buildroot%_sysconfdir/pam.d/enlightenment << _PAM_
+cat > %buildroot%_sysconfdir/pam.d/%name << _PAM_
 #%%PAM-1.0
 
 auth		include		system-auth
@@ -156,39 +164,39 @@ session		required	pam_deny.so
 _PAM_
 
 # replace original sysaction.conf
-cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
+cp %SOURCE11 %buildroot%_sysconfdir/%name/sysactions.conf
 
-%find_lang enlightenment
+# replace original menus by symlink to our enlightenment.menu
+ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 
-%files -f enlightenment.lang
+%find_lang %name
+
+%files -f %name.lang
 %config %_sysconfdir/X11/wmsession.d/*
-%config %_sysconfdir/enlightenment/sysactions.conf
-%config(noreplace) %_sysconfdir/pam.d/enlightenment
-%dir %_libdir/enlightenment/
-%_libdir/enlightenment/*
+%config %_sysconfdir/%name/sysactions.conf
+%config(noreplace) %_sysconfdir/pam.d/%name
+%dir %_libdir/%name/
+%_libdir/%name/*
 %_liconsdir/*.png
-#%_niconsdir/*.png
 %_bindir/*
-%_datadir/enlightenment/
-%_datadir/xsessions/enlightenment.desktop
+%_datadir/%name/
+%_datadir/xsessions/%name.desktop
 %_datadir/applications/*.desktop
-%{?_enable_systemd:%_prefix/lib/systemd/user/e18.service}
+%{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
+%_xdgmenusdir/e-applications.menu
 %doc AUTHORS COPYING README
-%exclude %_libdir/enlightenment/modules/*/*/*.la
+
+%exclude %_libdir/%name/modules/*/*/*.la
 
 %files devel
-%dir %_includedir/enlightenment/
-%_includedir/enlightenment/*.h
-%_libdir/pkgconfig/enlightenment.pc
+%_includedir/%name/
+%_libdir/pkgconfig/%name.pc
 %_libdir/pkgconfig/everything.pc
 %_rpmmacrosdir/%name
 
 %changelog
-* Thu Jul 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.8-alt1
-- 0.18.8
-
-* Wed Mar 05 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.5-alt1
-- 0.18.5
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.0-alt1
+- 0.19.0 preview
 
 * Tue Jan 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.3-alt2
 - 0.18.3
