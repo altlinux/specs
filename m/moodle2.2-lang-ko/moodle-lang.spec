@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename ko
 %define packagversion 2.2.0
-%define packagedate 201307211406
+%define packagedate 201408290548
 %define moodlebranch 2.2
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Korean
@@ -68,6 +68,10 @@ ln -s -f $(relative %buildroot%_ttffontsdir/nhn-nanum/NanumGothic.ttf \
 %moodle_langdir/*
 
 %changelog
+* Fri Sep 19 2014 Cronbuild Service <cronbuild@altlinux.org> 2.2.0.201408290548-alt1
+- repocop cronbuild 20140919. At your service.
+- ko.zip build 2014-08-29 05:48 UTC
+
 * Fri Jul 26 2013 Cronbuild Service <cronbuild@altlinux.org> 2.2.0.201307211406-alt1
 - repocop cronbuild 20130726. At your service.
 - ko.zip build 2013-07-21 14:06 UTC
