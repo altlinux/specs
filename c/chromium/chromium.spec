@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        37.0.2062.94
+Version:        37.0.2062.120
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -299,7 +299,8 @@ pushd src
 	-Dlinux_strip_binary=1 \
 	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
 	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
-	-Dlinux_use_gold_binary=0 \
+	-Dlinux_use_bundled_binutils=0 \
+	-Dlinux_use_bundled_gold=0 \
 	-Dlinux_use_gold_flags=0 \
 	-Dlogging_like_official_build=1 \
 	-Dproprietary_codecs=1 \
@@ -480,6 +481,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Sep 18 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.120-alt1
+- New version
+- Security fixes:
+  - High CVE-2014-3178: Use-after-free in rendering.
+- Disable bundled binutils and gold
+
 * Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.94-alt1
 - New version
 - Security fixes:
