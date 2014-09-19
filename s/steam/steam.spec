@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.49
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -19,6 +19,7 @@ Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
 Requires: libGL
+Requires: libnss
 Requires: xz
 
 BuildRequires: python-module-distribute
@@ -55,6 +56,12 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/99-%name-controller-perms.rules
 
 %changelog 
+* Fri Sep 19 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.49-alt2
+- Added require on libnss (fix error "Failed to load NSS libraries")
+
+* Fri Aug 29 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.49-alt0.M70P.1
+- Build for branch p7
+
 * Thu Aug 28 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.0.49-alt1
 - Version 1.0.0.49
 
