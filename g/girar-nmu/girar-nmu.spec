@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -29,9 +29,9 @@ gcc -O2 %optflags -o girar-nmu-helper-pos-sort pos-sort.c
 %install
 #make_install install DESTDIR=%buildroot
 mkdir -p %buildroot%_bindir
-install -m 755 girar-* rpm-sign-* %buildroot%_bindir/
+install -m 755 girar-* rpm-sign-* srpmlschangelog %buildroot%_bindir/
 
-for i in girar-*; do
+for i in girar-* srpmlschangelog; do
     pod2man  --name $i --center 'girar-nmu utils' --section 1 --release %version $i > $i.1 ||:
 done
 find . -name '*.1' -size 0 -print -delete
@@ -44,6 +44,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Sep 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- new version
+
 * Sat Jun 14 2014 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - use Gear::Rules library
 
