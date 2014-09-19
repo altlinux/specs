@@ -1,32 +1,40 @@
 Name: patchage
-Version: 0.4.2
-Release: alt3.qa2
+Version: 1.0.0
+Release: alt1
 
 Summary: A modular patch bay for JACK and LASH audio systems
 License: %gpl2plus
 Group: Sound
 Url: http://www.altlinux.org/SampleSpecs/program
 
-Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
 
-BuildPreReq: rpm-build-licenses
-BuildRequires: gcc-c++ libraul-devel libflowcanvas-devel boost-devel libglademm-devel libalsa-devel libjack-devel
-BuildRequires: desktop-file-utils
+BuildPreReq: rpm-build-licenses doxygen graphviz libganv-devel
+BuildRequires: gcc-c++ libraul-devel libflowcanvas-devel boost-devel
+BuildRequires: libglademm-devel libalsa-devel libjack-devel
+BuildRequires: desktop-file-utils libdbus-devel libdbus-glib-devel
 
 %description
-Patchage is a modular patch bay for audio and MIDI systems based on Jack, Lash,
-and Alsa.
+Patchage is a modular patch bay for audio and MIDI systems based on
+Jack, Lash, and Alsa.
 
 %prep
 %setup
 
 %build
-%configure
-%make_build
+./waf configure \
+	--prefix=%prefix \
+	--configdir=%_sysconfdir \
+	--libdir=%_libdir \
+	--docs \
+	--lv2-user \
+	--lv2-system \
+	--debug
+./waf build -j %__nprocs
 
 %install
-%makeinstall_std
+./waf install --destdir=%buildroot
+
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
@@ -34,7 +42,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/patchage.desktop
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog README 
+%doc AUTHORS NEWS README 
 %_bindir/*
 %_desktopdir/*
 %_liconsdir/*
@@ -46,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/*
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Thu Aug 07 2014 Michael Shigorin <mike@altlinux.org> 0.4.2-alt3.qa2
 - NMU: rebuilt against current libflowcanvam
 
