@@ -1,16 +1,19 @@
 Name: pragha
-Version: 1.0.1
-Release: alt1.1
+Version: 1.3.1
+Release: alt1.git20140727
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
 Group: Sound
 Url: http://pragha.wikispaces.com/
 Source0: %name-%version.tar
-Patch: pragha-1.0.1-alt-no-Werror.patch
 
 BuildRequires: gst-plugins-devel libcddb-devel libcdio-devel libclastfm-devel
 BuildRequires: libdbus-glib-devel libexo-devel libglyr-devel
 BuildRequires: libkeybinder-devel libnotify-devel libtag-devel xfce4-dev-tools
+BuildPreReq: gstreamer1.0-devel libgtk+3-devel libpeas-devel
+BuildPreReq: gst-plugins1.0-devel libxfce4ui-devel libtotem-pl-parser-devel
+BuildPreReq: libgudev-devel libsoup-devel libgrilo-devel libmtp-devel
+BuildPreReq: rygel-devel libcdparanoia-devel
 
 %description
 Pragha is a reproducer and administrator of music for GNU/Linux, based
@@ -19,13 +22,12 @@ light, and simultaneously complete without obstructing the daily work.
 
 %prep
 %setup
-%patch -p1
 
 %build
 . autogen.sh
 LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
 %configure
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -33,14 +35,19 @@ LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
 
 %files -f %name.lang
 %doc ChangeLog FAQ NEWS
-%exclude %_datadir/%name/doc
+#exclude %_datadir/%name/doc
+%_datadir/appdata/*
 %_bindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/128x128/apps/pragha.png
 %_man1dir/%name.1.gz
 %_pixmapsdir/%name
+%_libdir/%name
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.git20140727
+- Version 1.3.1
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
 - Disabled -Werror flag
 
