@@ -1,14 +1,12 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Name: polipo
-Version: 1.0.4
-Release: alt1.1.qa1
+Version: 1.1.1
+Release: alt1
 Summary: Single-threaded non blocking HTTP proxy
 License: %mit
 Group: System/Servers
 URL: http://www.pps.jussieu.fr/~jch/software/%name/
 Source0: http://www.pps.jussieu.fr/~jch/software/files/%name/%name-%version.tar.bz2
 Source1: %name.init
-Patch: %name-1.0.2-alt-install.patch
 
 # Automatically added by buildreq on Sat Sep 01 2007 (-bi)
 BuildRequires: symlinks
@@ -24,11 +22,11 @@ process, it optimises and cleans up the network traffic.
 
 %prep
 %setup
-%patch -p1
 
 
 %build
 %define _optlevel s
+%add_optflags -fno-strict-aliasing
 %make_build CDEBUGFLAGS="%optflags"
 
 
@@ -69,6 +67,9 @@ install -pD -m 0755 %SOURCE1 %buildroot%_initdir/%name
 
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
+- Version 1.1.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
