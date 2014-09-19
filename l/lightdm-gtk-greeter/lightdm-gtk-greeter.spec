@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 1.8.3
+Version: 1.9.0
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -20,8 +20,11 @@ Provides: lightdm-greeter
 
 BuildRequires: gcc-c++ intltool gnome-common gobject-introspection-devel
 BuildRequires: glib2-devel
-BuildRequires: libgtk+3-devel
-BuildRequires: libX11-devel
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gmodule-export-2.0)
+BuildRequires: pkgconfig(liblightdm-gobject-1) >= 1.3.5
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(libxklavier)
 BuildRequires: lightdm-devel lightdm-gir-devel
 BuildRequires: /usr/bin/exo-csource
 
@@ -38,6 +41,7 @@ This package provides a GTK+-based LightDM greeter engine.
 	%{subst_enable introspection} \
 	--disable-static \
 	--disable-libindicator \
+	--with-libxklavier \
 	--enable-maintainer-mode \
 	--libexecdir=%_libexecdir
 
@@ -62,6 +66,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Fri Sep 19 2014 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Fri Mar 28 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 

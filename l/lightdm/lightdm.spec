@@ -3,9 +3,10 @@
 %def_enable gobject
 %def_enable introspection
 %def_enable qt
+%def_enable qt5
 
 Name: lightdm
-Version: 1.11.1
+Version: 1.11.9
 Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
@@ -21,6 +22,7 @@ Source4: %name.wms
 Source6: %name-tmpfiles.conf
 Source7: %name-greeter.pam
 Source8: %name.rules
+Source9: %name.service
 
 Patch1: %name-%version-%release.patch
 
@@ -28,16 +30,18 @@ Patch1: %name-%version-%release.patch
 # Requires: accountsservice
 Requires: dbus-tools-gui
 
-BuildRequires: gcc-c++ intltool gnome-common
-BuildRequires: glib2-devel libgio-devel >= 2.30
-BuildRequires: libxcb-devel libXdmcp-devel
+BuildRequires: gcc-c++ intltool
+BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(xcb)
 BuildRequires: libdbus-glib-devel
 BuildRequires: gtk-doc yelp-tools itstool
 BuildRequires: libpam-devel
 BuildRequires: libgcrypt-devel
-%{?_enable_gobject:BuildRequires: libxklavier-devel libX11-devel}
+%{?_enable_gobject:BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_qt:BuildRequires: libqt4-devel}
+%{?_enable_qt:BuildRequires: pkgconfig(QtCore) pkgconfig(QtDBus) pkgconfig(QtGui) /usr/bin/moc-qt4}
+%{?_enable_qt5:BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5DBus) pkgconfig(Qt5Gui) /usr/bin/moc-qt5}
 
 %description
 LightDM is a lightweight, cross-desktop display manager. Its main features are
@@ -62,6 +66,15 @@ License: LGPLv2+
 
 %description -n liblightdm-qt
 A library for LightDM greeters based on Qt which interfaces with LightDM and
+provides common greeter functionality.
+
+%package -n liblightdm-qt5
+Group: System/Libraries
+Summary: LightDM Qt5 Greeter Library
+License: LGPLv2+
+
+%description -n liblightdm-qt5
+A library for LightDM greeters based on Qt5 which interfaces with LightDM and
 provides common greeter functionality.
 
 %package devel
@@ -99,24 +112,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the %name
 
-%package gtk-greeter
-Group: Graphical desktop/Other
-Summary: LightDM GTK+ Greeter
-Requires: %name = %version-%release
-Provides: %name-greeter
-
-%description gtk-greeter
-This package provides a GTK+-based LightDM greeter engine.
-
-%package qt-greeter
-Group: Graphical desktop/Other
-Summary: LightDM Qt Greeter
-Requires: %name = %version-%release
-Provides: %name-greeter
-
-%description qt-greeter
-This package provides a Qt-based LightDM greeter engine.
-
 %prep
 %setup
 %patch1 -p1
@@ -128,13 +123,9 @@ This package provides a Qt-based LightDM greeter engine.
 	--disable-static \
 	--disable-tests \
 	--enable-gtk-doc \
-%if_enabled gobject
-	--enable-liblightdm-gobject \
-%endif
-%if_enabled qt
-	--enable-liblightdm-qt \
-	--disable-liblightdm-qt5 \
-%endif
+	%{?_enable_gobject:--enable-liblightdm-gobject} \
+	%{?_enable_qt:--enable-liblightdm-qt} \
+	%{?_enable_qt5:--enable-liblightdm-qt5} \
 	--with-user-session=default \
 	--libexecdir=%_libexecdir \
 	--with-greeter-user=_ldm \
@@ -144,6 +135,11 @@ This package provides a Qt-based LightDM greeter engine.
 
 %install
 %makeinstall_std
+
+# We don't ship AppAmor
+rm -rf %buildroot%_sysconfdir/apparmor.d/
+# omit upstart support
+rm -rf %buildroot%_sysconfdir/init
 
 mkdir -p %buildroot%_sysconfdir/%name/lightdm.conf.d
 mkdir -p %buildroot%_datadir/%name/lightdm.conf.d
@@ -167,8 +163,9 @@ install -m755 %SOURCE4 %buildroot%_sysconfdir/X11/wms-methods.d/%name
 # install script to launch dbus
 ##install -m755 %%SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 
-install -Dpm 644 %SOURCE6 %buildroot/lib/tmpfiles.d/lightdm.conf
-install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
+install -Dpm 644 %SOURCE6 %buildroot/lib/tmpfiles.d/%name.conf
+install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/%name.rules
+install -m644 -p -D %SOURCE9 %buildroot%_unitdir/%name.service
 echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_environment
 
 %find_lang --with-gnome %name
@@ -177,15 +174,33 @@ echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_envi
 %_sbindir/groupadd -r -f _ldm >/dev/null 2>&1 || :
 %_sbindir/useradd -M -r -d %_localstatedir/lib/ldm -s /bin/false -c "LightDM daemon" -g _ldm _ldm >/dev/null 2>&1 || :
 
+
+%post
+if [ $1 -eq 1 ] ; then
+        SYSTEMCTL=/sbin/systemctl
+        # Initial installation
+        $SYSTEMCTL preset %name.service > /dev/null 2>&1 ||:
+fi
+
+%preun
+if [ $1 -eq 0 ] ; then
+        SYSTEMCTL=/sbin/systemctl
+        # Package removal, not upgrade
+        $SYSTEMCTL --no-reload disable %name.service > /dev/null 2>&1 ||:
+        $SYSTEMCTL stop %name.service > /dev/null 2>&1 ||:
+fi
+
+
 %files -f %name.lang
 %doc NEWS
 %config %_sysconfdir/dbus-1/system.d/org.freedesktop.DisplayManager.conf
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/sessions
-%_sysconfdir/X11/wms-methods.d/lightdm
+%_sysconfdir/X11/wms-methods.d/%name
 %config(noreplace) %_sysconfdir/%name/*.conf
 %config(noreplace) %_sysconfdir/pam.d/%{name}*
 %_sbindir/%name
+%_unitdir/%name.service
 %_man1dir/*
 %_bindir/dm-tool
 %_libexecdir/*
@@ -195,8 +210,8 @@ echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_envi
 %attr(640,_ldm,_ldm) %_localstatedir/lib/ldm/.pam_environment
 %attr(750,_ldm,_ldm) %dir %_localstatedir/lib/lightdm-data
 %attr(775,_ldm,_ldm) %dir %_localstatedir/run/%name
-/lib/tmpfiles.d/lightdm.conf
-%_datadir/polkit-1/rules.d/lightdm.rules
+/lib/tmpfiles.d/%name.conf
+%_datadir/polkit-1/rules.d/%name.rules
 
 %if_enabled gobject
 %files -n liblightdm-gobject
@@ -216,6 +231,11 @@ echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_envi
 %_libdir/liblightdm-qt-?.so.*
 %endif
 
+%if_enabled qt5
+%files -n liblightdm-qt5
+%_libdir/liblightdm-qt5-?.so.*
+%endif
+
 %files devel
 %_libdir/*.so
 %_includedir/*
@@ -226,6 +246,13 @@ echo "GDK_CORE_DEVICE_EVENTS=true" > %buildroot%_localstatedir/lib/ldm/.pam_envi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Sep 18 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.9-alt1
+- 1.11.9
+
+* Tue Jul 01 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.4-alt1
+- 1.11.4
+- add systemd unit
+
 * Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 1.11.1-alt1
 - 1.11.1
 
