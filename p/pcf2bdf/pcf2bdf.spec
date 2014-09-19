@@ -1,6 +1,6 @@
 Name: pcf2bdf
 Version: 1.04
-Release: alt1.1.qa1
+Release: alt1.git20120717
 
 Summary: Pcf2bdf is a font de-compiler
 Summary(ru_RU.KOI8-R): Pcf2bdf - декомпилятор шрифтов
@@ -9,11 +9,7 @@ License: BSD
 Group: System/X11
 Url: http://www.tsg.ne.jp/GANA/S/pcf2bdf/
 
-Packager: Andrei Bulava <abulava@altlinux.ru>
-
 Source0: %url%name-%version.tgz
-Patch0: %name-1.04-alt-cvs_20031217.patch
-Patch1: %name-1.04-alt-popen_type.patch
 
 # Automatically added by buildreq on Tue Nov 30 2004 (-bi)
 BuildRequires: gcc-c++ libstdc++-devel
@@ -29,9 +25,7 @@ Pcf2bdf конвертирует шрифты X из формата PCF в формат BDF. Он также может
 gzip.
 
 %prep
-%setup -q -c -n %name-%version
-%patch0 -p1
-%patch1 -p1
+%setup -c -n %name-%version
 
 %build
 %make CFLAGS="${CFLAGS:-%optflags}" -f Makefile.gcc
@@ -45,6 +39,9 @@ gzip.
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.04-alt1.git20120717
+- Snapshot from git
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.04-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
