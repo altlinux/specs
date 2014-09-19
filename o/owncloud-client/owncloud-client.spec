@@ -1,7 +1,7 @@
 %define rname mirall
 Name: owncloud-client
-Version: 1.0.2
-Release: alt5
+Version: 1.6.3
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Applet for owncloud files syncronization
@@ -11,13 +11,14 @@ Conflicts: mirall <= 1.0.2-alt3
 
 Source: %rname-%version.tar
 Source1: owncloud-client.desktop
-Patch1: mirall-1.0.2-alt-notwarn-notconfigured.patch
-Patch2: mirall-1.0.3-alt-dont-check-updates.patch
-Patch3: mirall-1.0.3-alt-owncloud-client.patch
-Patch4: mirall-1.0.2-alt-datadir.patch
-Patch5: mirall-1.0.2-alt-confdir.patch
+Patch1: mirall-1.6.3-alt-dont-check-updates.patch
+Patch2: mirall-1.0.2-alt-confdir.patch
+Patch3: mirall-1.6.3-alt-static-libs.patch
 
-BuildRequires: rpm-macros-cmake cmake libqt4-devel gcc-c++ libcsync-devel kde-common-devel desktop-file-utils
+# Automatically added by buildreq on Fri Sep 19 2014 (-bi)
+# optimized out: cmake-modules elfutils fontconfig libcloog-isl4 libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base texlive-latex-base
+#BuildRequires: cmake desktop-file-utils gcc-c++ libneon-devel libqt3-devel libqtkeychain-devel libsqlite3-devel phonon-devel python-module-sphinx qt4-designer ruby ruby-stdlibs
+BuildRequires: cmake desktop-file-utils gcc-c++ libneon-devel libqt4-devel libqtkeychain-devel libsqlite3-devel kde-common-devel
 
 %description
 Applet for file syncronization via owncloud.
@@ -25,13 +26,16 @@ Applet for file syncronization via owncloud.
 %prep
 %setup -qn %rname-%version
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
-%Kbuild
+%add_optflags %optflags_shared
+%Kbuild \
+    -DBUILD_WITH_QT4=ON \
+    -DDATA_INSTALL_DIR=%_datadir \
+    -DCMAKE_INSTALL_SYSCONFDIR=/etc/owncloud-client \
+    #
 
 %install
 %Kinstall
@@ -40,18 +44,25 @@ desktop-file-install \
     --dir=%buildroot/%_desktopdir \
     %{SOURCE1}
 
-%find_lang %name
+%find_lang --with-qt mirall
 
-%files -f %name.lang
+%files -f mirall.lang
+%config(noreplace) %_sysconfdir/ownCloud/sync-exclude.lst
 %_bindir/owncloud
-%config(noreplace) %_sysconfdir/owncloud-client/exclude.lst
+%_bindir/owncloudcmd
 %_desktopdir/%name.desktop
-%_datadir/owncloud-client
+#%_datadir/owncloud-client
 %_iconsdir/hicolor/*/apps/owncloud.*
 
 %changelog
-* Tue Aug 28 2012 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt5
-- Update Russian translation
+* Fri Sep 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt1
+- new version
+
+* Fri Aug 24 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1
+- new version
+
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt3.M60P.2
+- built for M60P
 
 * Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt4
 - don't conflict with mirall
