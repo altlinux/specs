@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel libX11-devel pkgconfig(avahi-cli
 # END SourceDeps(oneline)
 Name:           sear
 Version:        0.6.4
-Release:        alt4_0.15.g0b70ddb
+Release:        alt4_0.15.g0b70ddb.1
 Summary:        3D WorldForge client
 
 Group:          Games/Other
@@ -27,7 +27,8 @@ Patch5:         sear-lua-fix.patch
 Patch6:         sear-compileopts.patch
 Patch7:         sear-nopi.patch
 
-BuildRequires:  lib3ds-devel mercator-devel varconf-devel eris-devel sage-devel
+#BuildRequires: eris-devel
+BuildRequires:  lib3ds-devel mercator-devel varconf-devel sage-devel
 BuildRequires:  cal3d-devel libguichan05-devel libmodelfile-devel libGLU-devel
 BuildRequires:  libtiffxx-devel libtiff-devel libjpeg-devel libpng-devel
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel libXt-devel
@@ -61,11 +62,16 @@ chmod a-x */*.xpm
 
 # Since this isn't an actual release we need to do autotools stuff
 ./autogen.sh
+TOPDIR=$PWD
+%add_optflags -std=gnu++11 -I$TOPDIR/Eris
 %configure || cat config.log
-make %{?_smp_mflags}
+%make_build ||:
+sed -i 's|Atlas::Objects::SmartPtr<|SmartPtr<|g' swig/lua/Eris.cxx
+sed -i 's|SmartPtr<|Atlas::Objects::SmartPtr<|g' swig/lua/Eris.cxx
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 desktop-file-install \
     --delete-original --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -87,6 +93,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/icons/worldforge/sear_icon.xpm \
 
 
 %changelog
+* Thu Sep 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4-alt4_0.15.g0b70ddb.1
+- Rebuilt with new libmercator
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.15.g0b70ddb
 - update to new release by fcimport
 
