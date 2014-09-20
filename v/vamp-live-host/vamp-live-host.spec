@@ -1,6 +1,6 @@
 Name: vamp-live-host
 Version: 0.1
-Release: alt1.hg20131203
+Release: alt2.hg20131203
 Summary: Vamp Live Host - activate events based on features of live audio
 License: Free
 Group: Sound
@@ -15,6 +15,7 @@ BuildPreReq: libalsa-devel libid3tag-devel libmad-devel libsvcore-devel
 BuildPreReq: libfishsound-devel liboggz-devel liblrdf-devel liblo-devel
 BuildPreReq: libserd-devel libsord-devel libsamplerate-devel
 BuildPreReq: libsndfile-devel libfftw3-devel bzlib-devel
+BuildPreReq: libportaudio2-devel
 
 %description
 A program that listens to live audio, runs one or more Vamp audio
@@ -42,6 +43,9 @@ install -m755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.hg20131203
+- Built with portaudio
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.hg20131203
 - Initial build for Sisyphus
 
