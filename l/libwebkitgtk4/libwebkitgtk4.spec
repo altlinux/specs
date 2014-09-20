@@ -10,7 +10,7 @@
 %def_disable gtkdoc
 
 Name: libwebkitgtk4
-Version: 2.5.3
+Version: 2.5.90
 Release: alt1
 
 Summary: Web browser engine
@@ -29,7 +29,7 @@ BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
 BuildRequires: libxml2-devel >= 2.6
-BuildRequires: libXt-devel 
+BuildRequires: libXt-devel
 BuildRequires: libgtk+3-devel >= 3.4.0
 BuildRequires: libgail3-devel >= 3.0
 BuildRequires: libenchant-devel >= 0.22
@@ -162,11 +162,9 @@ rm -rf Source/ThirdParty/gtest/
 rm -rf Source/ThirdParty/qunit/
 
 %build
-# Use linker flags to reduce memory consumption on low-mem systems (8Gb is not enough)
-%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
-
-# Decrease debuginfo verbosity to reduce memory consumption even more
+# Decrease debuginfo verbosity and use linker flags to reduce memory consumption
 %define optflags_debug -g1
+%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
 
 %cmake \
 -DPORT=GTK \
@@ -182,11 +180,11 @@ rm -rf Source/ThirdParty/qunit/
 
 %files -f WebKit2GTK-%api_ver.lang
 %_libdir/libwebkit2gtk-%api_ver.so.*
-%dir %_libexecdir/webkitgtk-%api_ver
-%_libexecdir/webkitgtk-%api_ver/WebKitNetworkProcess
-%_libexecdir/webkitgtk-%api_ver/WebKitPluginProcess
-%_libexecdir/webkitgtk-%api_ver/WebKitPluginProcess2
-%_libexecdir/webkitgtk-%api_ver/WebKitWebProcess
+%dir %_libexecdir/webkit2gtk-%api_ver
+%_libexecdir/webkit2gtk-%api_ver/WebKitNetworkProcess
+%_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess
+%_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess2
+%_libexecdir/webkit2gtk-%api_ver/WebKitWebProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
@@ -232,6 +230,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri Sep 19 2014 Yuri N. Sedunov <aris@altlinux.org> 2.5.90-alt1
+- 2.5.90
+
 * Sat Aug 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.5.3-alt1
 - first build for Sisyphus
 
