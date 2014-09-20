@@ -4,7 +4,7 @@
 %define name cmus
 %define version 2.6.0
 %define rcname rc0
-%define release alt0.%rcname
+%define release alt1
 %define debug 0
 
 Name: %name
@@ -19,7 +19,7 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 
 AutoReq: yes, nopython
 
-Source0: %name-%version-%rcname.tar
+Source0: %name-%version.tar
 Source2: cmus.desktop
 
 # Patch0: cmus-vorbis_includes.patch
@@ -68,7 +68,7 @@ executed in vi-style command mode.
 Features
   * Input
     o FLAC
-    o Ogg/Vorbis
+    o Ogg/Vorbis/Opus
     o MP3 (libmad)
     o Wav
     o .mod, .s3m, ... (libmodplug, libmikmod)
@@ -110,7 +110,7 @@ CMus - маленький и быстрый музыкальный проигр�
 Особенности
   * Входные форматы:
     o FLAC
-    o Ogg/Vorbis
+    o Ogg/Vorbis/Opus
     o MP3 (libmad)
     o Wav
     o .mod, .s3m, ... (libmodplug, libmikmod)
@@ -177,6 +177,23 @@ CMus - маленький и быстрый музыкальный проигр�
 библиотеку ncurses.
 
 Этот пакет содержит расширение для воспроизведения Ogg/Vorbis.
+
+%package in-opus
+Summary: Ogg/Opus plugin for CMus
+Group: Sound
+
+Requires: %name = %version-%release
+
+%description in-opus
+CMus is a small and fast music player using the ncurses library.
+
+This package contains Ogg/Opus plugin.
+
+%description -l ru_RU.UTF-8 in-opus
+CMus - маленький и быстрый музыкальный проигрыватель, использующий
+библиотеку ncurses.
+
+Этот пакет содержит расширение для воспроизведения Ogg/Opus.
 
 
 %package in-modplug
@@ -389,7 +406,7 @@ This package contains plugin for Jack Audio Connection Kit support.
 
 
 %prep
-%setup -q -n %name-%version-%rcname
+%setup -q -n %name-%version
 # %patch0 -p1
 # %patch1 -p1
 #%patch2 -p1
@@ -473,6 +490,10 @@ mv cmus-status-display examples
 %_libexecdir/%name/ip/vorbis.so
 
 
+%files in-opus
+%_libexecdir/%name/ip/opus.so
+
+
 %files in-modplug
 %_libexecdir/%name/ip/modplug.so
 
@@ -520,6 +541,10 @@ mv cmus-status-display examples
 
 
 %changelog
+* Sat Sep 20 2014 Terechkov Evgenii <evg@altlinux.org> 2.6.0-alt1
+- 2.6.0
+- Added subpackage for OPUS plugin
+
 * Fri Jul 04 2014 Eugene Vlasov <eugvv@altlinux.ru> 2.6.0-alt0.rc0
 - 2.6.0-rc0
 - build without ffmpeg support
