@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 10.2.8
+Version: 10.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -16,7 +16,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel >= 3.3 llvm-devel-static >= 3.3
+BuildRequires: llvm-devel >= 3.4.2 llvm-devel-static >= 3.4.2
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
@@ -179,15 +179,12 @@ framerate information to stdout
 %autoreconf
 %configure \
 %ifarch %ix86
-	--enable-32-bit \
 	--with-dri-drivers=%dri_ix86 \
 %else
 %ifarch x86_64
-	--enable-64-bit \
 	--with-dri-drivers=%dri_ix86 \
 %else
 %ifarch ppc
-	--enable-32-bit \
 	--with-dri-drivers=%dri_ppc \
 %else
 %ifarch %arm
@@ -329,7 +326,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %endif
 
 %files -n xorg-dri-swrast
-%_libdir/X11/modules/dri/swrast*_dri.so
+%_libdir/X11/modules/dri/*swrast*_dri.so
 
 %ifarch ppc %ix86 x86_64
 %files -n xorg-dri-intel
@@ -349,6 +346,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %ifarch %ix86 x86_64
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/libXvMCr*.so.*
+%_libdir/libXvMCgallium.so.*
 %endif
 %endif
 
@@ -359,6 +357,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Sep 20 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.3-alt1
+- 10.3
+
 * Sat Sep 20 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.2.8-alt1
 - 10.2.8
 
