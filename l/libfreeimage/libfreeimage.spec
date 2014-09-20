@@ -1,6 +1,6 @@
 Name: libfreeimage
-Version: 3.15.4
-Release: alt2
+Version: 3.16.0
+Release: alt1
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -17,7 +17,8 @@ Patch1: FreeImage-3.10.0-syslibs.patch
 # Automatically added by buildreq on Tue Sep 08 2009
 BuildRequires: gcc-c++ libmng-devel libpng-devel openexr-devel unzip
 
-BuildPreReq: rpm-macros-make libopenjpeg-devel libraw-devel zlib-devel
+BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
+BuildPreReq: libtiff-devel
 
 %description
 FreeImage is a library project for developers who would like to support
@@ -45,12 +46,16 @@ subst 's/\r//g' gensrclist.sh
 
 # remove included libs to make sure these don't get used during compile
 rm -r Source/LibPNG Source/ZLib Source/OpenEXR
-rm -fR Source/LibRawLite Source/LibOpenJPEG
+rm -fR Source/LibRawLite
 
 sh ./gensrclist.sh
 %add_optflags %optflags_shared -I$PWD/Source/LibTIFF4
 %add_optflags -g -fpermissive -DPNG_iTXt_SUPPORTED
 %add_optflags $(pkg-config --cflags OpenEXR)
+%add_optflags -I$PWD/Source/LibJXR/jxrgluelib
+%add_optflags -I$PWD/Source/LibJXR/image/sys
+%add_optflags -I$PWD/Source/LibJXR/common/include
+%add_optflags -fno-strict-aliasing
 gcc %optflags_shared -pthread -I. -ISource -ISource/Metadata \
 	-ISource/FreeImageToolkit -ISource/LibJPEG -ISource/LibTIFF4 \
 	-IWrapper/FreeImagePlus -IWrapper/FreeImagePlus/src -c \
@@ -58,7 +63,7 @@ gcc %optflags_shared -pthread -I. -ISource -ISource/Metadata \
 
 %make_build_ext \
 	CXX="g++ %optflags" \
-	LIBRARIES="Source/LibTIFF4/tif_unix.o -lstdc++ -lm -lpng -lmng -lIlmImf -lraw -lopenjpeg -lIex -lHalf -lz"
+	LIBRARIES="Source/LibTIFF4/tif_unix.o -lstdc++ -lm -lpng -lmng -lIlmImf -lraw -lIex -lHalf -lwebpmux -lwebp -lz"
 
 %install
 %ifarch x86_64
@@ -76,6 +81,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.16.0-alt1
+- Version 3.16.0 (ALT #26750)
+
 * Tue Jan 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.4-alt2
 - Rebuilt with new libraw
 
