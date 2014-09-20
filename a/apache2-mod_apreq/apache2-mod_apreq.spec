@@ -1,33 +1,34 @@
-Name: apache2-mod_apreq
+# Spec file for Apache2 HTTP Server Request Library
+
+Name:    apache2-mod_apreq
 Version: 2.13
-Release: alt3
+Release: alt4
 
 Summary: Apache2 HTTP request library
-License: Apache Software License v. 2.0
-Group: System/Servers
+License: %asl 2.0
+Group:   System/Servers
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-URL: http://httpd.apache.org/apreq/
-Source0: libapreq2-%version.tar
+URL:     http://httpd.apache.org/apreq/
 
+Source0: libapreq2-%version.tar
 Source1: apreq.conf
 Source2: apreq.start
-
 Source3: libapreq2.pc.in
-
-Patch0: libapreq2-build.patch
-Patch1: libapreq2-2.07-rc3-ldflags.patch
-Patch2: libapreq2-2.09-pkgconfig.patch
-Patch3: libapreq2-2.12-install.patch
-
+Patch1:  libapreq2-2.07-rc3-ldflags.patch
+Patch2:  libapreq2-2.09-pkgconfig.patch
+Patch3:  libapreq2-2.12-install.patch
 Patch10: libapreq2-2.10-alt-apreq2-config.patch
 Patch11: libapreq2-2.13-alt-t-util-stack.patch
+Patch12: libapreq-2.13-debian-04-pass-libdir-to-configure.patch
 
 Provides: libapreq  = %version
 Provides: libapreq2 = %version
 
 Requires(pre): apache2 >= %apache2_version
+
+BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): apache2-devel >= 2.2.5
 BuildRequires: %apache2_apr_buildreq
 BuildRequires: chrpath
@@ -35,9 +36,6 @@ BuildRequires: chrpath
 # Automatically added by buildreq on Sat Oct 15 2011
 BuildRequires: apache2-httpd-prefork apache2-mod_perl-devel libexpat-devel perl-ExtUtils-XSBuilder perl-libwww
 
-# Skip search dependencies in modules with user-defined hooks
-#add_findreq_skiplist */APR/Request/*.pm
-#add_findreq_skiplist */Apache2/*.pm
 
 %define common_desc  libapreq  is a shared library with associated modules for manipulating\
 client request data via the Apache API.\
@@ -50,8 +48,8 @@ includes language bindings for Perl (Apache::Request and
 Apache::Cookie).
 
 %package devel
-Summary: Development files for %name
-Group: Development/C
+Summary:  Development files for %name
+Group:    Development/C
 Requires: %name = %version-%release
 Requires: apache2-devel
 Provides: libapreq-devel = %version
@@ -63,8 +61,8 @@ This file contains files needed for building XS modules that use
 libapreq2.
 
 %package doc
-Summary: Documentation for %name
-Group: System/Servers
+Summary:   Documentation for %name
+Group:     System/Servers
 BuildArch: noarch
 
 %description doc
@@ -72,8 +70,8 @@ BuildArch: noarch
 This file contains documentation for libapreq2.
 
 %package -n perl-libapreq2
-Summary: Perl interface to the Apache HTTP request library
-Group: Development/Perl
+Summary:  Perl interface to the Apache HTTP request library
+Group:    Development/Perl
 Requires: apache2-mod_perl >= 2.0.0
 Provides: perl-libapreq = %version
 
@@ -85,19 +83,19 @@ library.
 %prep
 %setup -q -n libapreq2-%version
 
-%patch0
 %patch1
 %patch2
 %patch3 -p1
 
 %patch10
 %patch11 -p2
+%patch12 -p1
 
 # Fix multilib
-sed -i -e 's,^libdir=.*,libdir=`pkg-config --variable=libdir libapreq2`,' \
-       -e 's,^LDFLAGS=.*,LDFLAGS=`pkg-config --libs libapreq2`,' \
-       -e 's,^LIBS=.*,LIBS=`pkg-config --libs libapreq2`,' \
-       -e 's,^INCLUDES=.*,INCLUDES=`pkg-config --cflags-only-I libapreq2`,' \
+sed -i -e 's,^libdir=.*,libdir="`pkg-config --variable=libdir libapreq2`",' \
+       -e 's,^LDFLAGS=.*,LDFLAGS="`pkg-config --libs libapreq2`",' \
+       -e 's,^LIBS=.*,LIBS="`pkg-config --libs libapreq2`",' \
+       -e 's,^INCLUDES=.*,INCLUDES="`pkg-config --cflags-only-I libapreq2`",' \
         apreq2-config.in
 
 cp -p %SOURCE3 .
@@ -116,9 +114,6 @@ cp -p %SOURCE3 .
   %nil
 %make_build
 
-%check
-make test
-
 %install
 %make_install install DESTDIR=%buildroot
 
@@ -128,6 +123,13 @@ install -p -m644 libapreq2.pc %buildroot%_pkgconfigdir/
 install -pD -m644 %SOURCE1 %buildroot%apache2_mods_available/apreq.load
 install -pD -m644 %SOURCE2 %buildroot%apache2_mods_start/100-apreq.conf
 
+# Clean up BUILDROOT from files going to the debug package:
+BUILDDIR=$( pwd )
+BUILDDIR=$( dirname "${BUILDDIR}" )
+find glue/ -name '*.c'  -exec sed -e "s#${BUILDDIR}#/usr/src/debug#" -i {} \;
+find glue/ -name '*.xs' -exec sed -e "s#${BUILDDIR}#/usr/src/debug#" -i {} \;
+
+# Clean up RPATHes
 chrpath -d %buildroot%perl_vendor_autolib/*/*/*.so
 chrpath -d %buildroot%perl_vendor_autolib/*/*/*/*.so
 
@@ -138,46 +140,6 @@ mkdir -p %buildroot%_man3dir
 cp -pR docs/man/man3/*  %buildroot%_man3dir/
 rm -f %buildroot%_man3dir/apreq_xs*
 rm -f %buildroot%_man3dir/todo*
-
-%post
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-
-if [ -e %apache2_mods_enabled/apreq.load ]; then
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-	service %apache2_dname condrestart ||:
-    else
-        echo "Some errors detected in Apache2 configuration!"
-	echo "To use libapreq2 check configuration and start %apache2_dname service."
-    echo
-    fi
-else
-    echo "Apache2 libapreq2 module had been installed, but does't enabled."
-    echo "Check %apache2_mods_start directory for files with 'apreq=no' lines."
-    echo
-fi
-
-%preun
-if [ "$1" = "0" ] ; then # last uninstall
-    [ -e %apache2_mods_enabled/apreq.load ] && %apache2_sbindir/a2dismod apreq 2>&1 >/dev/null ||:
-fi
-
-%postun
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-if [ "$1" = "0" ] ; then # last uninstall
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-	service %apache2_dname condrestart ||:
-    else
-        echo "Some errors detected in Apache2 configuration!"
-	echo "To complete libapreq2 uninstalling check configuration and restart %apache2_dname service."
-	echo
-    fi
-fi
 
 %files
 %doc CHANGES NOTICE README
@@ -209,6 +171,10 @@ fi
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.13-alt4
+- Removing paths to buildroot from files
+- Spec file and patch set cleanup
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.13-alt3
 - built for perl 5.18
 
