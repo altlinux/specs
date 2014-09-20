@@ -5,7 +5,7 @@
 
 Name:     keepassx
 Version:  0.4.3
-Release:  alt2
+Release:  alt3
 
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Summary(ru_RU.UTF-8): простой кросс-платформенный менеджер паролей KeePassX Password Safe
@@ -93,12 +93,6 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir
 install -m0644 -- %SOURCE1 %buildroot%_miconsdir/%name.png
 install -m0644 -- %SOURCE2 %buildroot%_niconsdir/%name.png
 install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%name.png
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--remove-category=Security \
-	--add-category=Settings \
-	--add-category=X-PersonalSettings \
-	%buildroot%_desktopdir/keepassx.desktop
 
 %files
 %doc changelog
@@ -119,6 +113,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.3-alt3
+- Removing freedesktop-desktop-file-proposed-patch repocop patch
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.3-alt2
 - Fix build with GCC 4.7
 
