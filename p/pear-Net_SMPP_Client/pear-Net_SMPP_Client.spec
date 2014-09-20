@@ -4,7 +4,7 @@
 %define pear_name Net_SMPP_Client
 
 Name: pear-%pear_name
-Version: 0.3.2
+Version: 0.4.1
 Release: alt1
 
 Summary: PHP/PEAR class for SMPP v3.4 client
@@ -64,5 +64,8 @@ sed -e 's/695c519b637cb658ad84f3584cbac78e/be0b5a47576388e51a99b5ccd1fdce99/' -i
 %pear_dir/docs*
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.1-alt1
+- New version
+
 * Fri Aug 10 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.2-alt1
 - initial build for ALT Linux Sisyphus
