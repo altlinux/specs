@@ -1,4 +1,4 @@
-%define ver_major 0.19
+%define ver_major 0.20
 %define gst_api_ver 1.0
 
 Name: shotwell
@@ -18,7 +18,7 @@ Requires: dconf
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel libGConf-devel
-BuildRequires: libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel
+BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel
 BuildRequires: vala librest-devel libgee0.8-devel desktop-file-utils gnome-doc-utils
@@ -57,6 +57,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Sat Sep 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
