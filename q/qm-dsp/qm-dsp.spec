@@ -2,7 +2,7 @@
 
 Name: qm-dsp
 Version: 1.7
-Release: alt1.hg20140805
+Release: alt2.hg20140805
 Summary: A C++ library for audio analysis
 License: GPLv2+
 Group: Sound
@@ -17,7 +17,7 @@ BuildPreReq: bzlib-devel libfftw3-devel libsndfile-devel
 BuildPreReq: libsamplerate-devel librubberband-devel liblo-devel
 BuildPreReq: libjack-devel liblrdf-devel liboggz-devel
 BuildPreReq: libfishsound-devel libmad-devel libid3tag-devel
-BuildPreReq: libalsa-devel dataquay-devel libclapack-devel
+BuildPreReq: libalsa-devel dataquay-minefeld-devel libclapack-devel
 BuildPreReq: libopenblas-devel
 
 %description
@@ -107,6 +107,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt2.hg20140805
+- Built with dataquay-minefeld instead of dataquay
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.hg20140805
 - Initial build for Sisyphus
 
