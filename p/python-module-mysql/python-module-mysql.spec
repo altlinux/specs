@@ -2,7 +2,7 @@
 %define oname mysql-connector-python
 
 Name: python-module-mysql
-Version: 1.1.6
+Version: 1.2.3
 Release: alt1
 
 Summary: MySQL Connector for Python
@@ -22,9 +22,10 @@ BuildArch: noarch
 
 Provides: %{oname} = %version
 
+# manually removed: python-module-cmd2 python-module-google python-module-mwlib python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Sep 14 2014
 # optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
-BuildRequires: python-module-cmd2 python-module-google python-module-mwlib python3 ruby ruby-stdlibs
+BuildRequires: python-devel
 
 BuildPreReq(pre): rpm-build-python3
 
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Sat Sep 20 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- import archive mysql-connector-python-1.2.3
+
 * Sun Sep 14 2014 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
 - initial build for ALT Linux Sisyphus
 
