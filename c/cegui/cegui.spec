@@ -1,6 +1,6 @@
 Name: cegui
 Version: 0.8.4
-Release: alt1
+Release: alt2
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
@@ -14,7 +14,7 @@ BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfr
 
 BuildPreReq: cmake libminizip-devel libfribidi-devel libGLEW-devel
 BuildPreReq: libglm-devel libirrlicht-devel libGLES-devel
-BuildPreReq: libdevil-devel libfreeimage-devel libcorona-devel
+BuildPreReq: libdevil-devel libcorona-devel
 BuildPreReq: python-devel boost-devel doxygen graphviz libgtk+2-devel
 BuildPreReq: libglfw-devel rapidxml boost-python-devel
 
@@ -98,6 +98,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %doc doc/doxygen/html
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt2
+- Built without freeimage
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1
 - Version 0.8.4
 
