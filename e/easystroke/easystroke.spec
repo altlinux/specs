@@ -3,13 +3,14 @@
 
 Name:     easystroke
 Version:  0.6.0
-Release:  alt1
+Release:  alt2
 
 Summary: a gesture-recognition application for X11
 
 Group:    Accessibility
 License:  ICS License
-URL:      http://sourceforge.net/projects/easystroke/
+URL:      https://github.com/thjaeger/easystroke
+#URL:      http://sourceforge.net/projects/easystroke/
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
@@ -72,6 +73,9 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.6.0-alt2
+- Fix desktop file
+
 * Sun Jun 09 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.6.0-alt1
 - New version
 
