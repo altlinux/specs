@@ -2,7 +2,7 @@
 
 Name: svcore
 Version: 2.1
-Release: alt2.hg20140910
+Release: alt3.hg20140910
 Summary: Core application library from the Sonic Visualiser project
 License: GPLv2
 Group: Sound
@@ -19,7 +19,7 @@ BuildPreReq: bzlib-devel libfftw3-devel libsndfile-devel
 BuildPreReq: libsamplerate-devel librubberband-devel liblo-devel
 BuildPreReq: libjack-devel liblrdf-devel liboggz-devel
 BuildPreReq: libfishsound-devel libmad-devel libid3tag-devel
-BuildPreReq: libalsa-devel dataquay-devel
+BuildPreReq: libalsa-devel dataquay-minefeld-devel
 
 %description
 Core application library from the Sonic Visualiser project, also used by
@@ -108,6 +108,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt3.hg20140910
+- Built with dataquay-minefeld instead of dataquay
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt2.hg20140910
 - Enabled Profiler
 
