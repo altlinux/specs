@@ -1,8 +1,8 @@
 # SPEC file for the DuckDuckGo Plus Firefox extension
 
 %define rname	duckduckgo_plus
-%define version 0.3.8
-%define release alt1.1
+%define version 0.4.2
+%define release alt1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -63,6 +63,9 @@ fi
 %ciddir
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.2-alt1
+- New version
+
 * Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt1.1
 - Adapt for Firefox 24.x
 
