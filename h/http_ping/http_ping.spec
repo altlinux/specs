@@ -1,11 +1,10 @@
 # Spec file for http_ping utility
 
 Name: http_ping
- 
-Version: 20050629
-Release: alt1.1.1
-    
-Summary: utility to send HTTP/HTTPS requests 
+Summary: utility to send HTTP/HTTPS requests
+
+Version: 20140814
+Release: alt1
 
 License: %bsdstyle
 Group: Networking/WWW
@@ -16,7 +15,7 @@ BuildRequires(pre): rpm-build-licenses
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Patch0:  %name-alt-20050629-enable_ssl.patch
 
 AutoReqProv: yes
@@ -49,6 +48,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 20140814-alt1
+- New version
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 20050629-alt1.1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
