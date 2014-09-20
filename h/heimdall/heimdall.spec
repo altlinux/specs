@@ -4,7 +4,7 @@
 
 Name:    heimdall
 Version: 1.4.1
-Release: alt1.rc2
+Release: alt2
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
@@ -17,8 +17,6 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
-
-Patch1:  %name-1.4.1-alt-fix_install.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -59,8 +57,6 @@ This package contains graphic frontend to the Heimdall utility.
 %setup
 %patch0 -p1
 
-%patch1
-
 
 %build
 cd libpit
@@ -84,6 +80,9 @@ cd heimdall-frontend
 %install
 cd heimdall
 %make_install DESTDIR=%buildroot install
+
+mkdir -p -- %buildroot%_udevrulesdir
+mv -- %buildroot%_libdir/udev/rules.d/* %buildroot%_udevrulesdir
 cd ..
 
 %if_with gui
@@ -93,12 +92,12 @@ cd ..
 %endif
 
 %files
-%doc heimdall/doc-pak/README
-%doc heimdall/LICENSE
+%doc README
+%doc LICENSE
 
 %_bindir/%name
 
-%_sysconfdir/udev/rules.d/60-heimdall-galaxy-s.rules
+%_udevrulesdir/60-heimdall.rules
 
 %if_with gui
 %files frontend
@@ -106,6 +105,9 @@ cd ..
 %endif
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt2
+- New version (release 1.4.1)
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1.rc2
 - New version
 
