@@ -1,7 +1,7 @@
-%define ver_major 0.7
+%define ver_major 0.8
 
 Name: geary
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Email client
@@ -70,6 +70,9 @@ Geary's development.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Sep 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Sep 03 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 
