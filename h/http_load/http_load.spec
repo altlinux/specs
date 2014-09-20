@@ -1,10 +1,9 @@
 # Spec file for http_load utility
 
 Name: http_load
- 
-Version: 20060312
-Release: alt1.1.1
-    
+Version: 20140814
+Release: alt1
+
 Summary: a throughput testing tool for web servers
 
 License: %bsdstyle
@@ -16,7 +15,7 @@ BuildRequires(pre): rpm-build-licenses
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 Patch0: %name-alt-20060312-enable_ssl.patch
 
 AutoReqProv: yes
@@ -53,6 +52,9 @@ install -m 0644 %name.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 20140814-alt1
+- New version
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 20060312-alt1.1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
