@@ -2,7 +2,7 @@
 
 Name: svgui
 Version: 2.1
-Release: alt1.hg20140912
+Release: alt2.hg20140912
 Summary: SV GUI Library
 License: GPLv2
 Group: Sound
@@ -17,7 +17,7 @@ BuildPreReq: librubberband-devel libsndfile-devel libsamplerate-devel
 BuildPreReq: libfftw3-devel bzlib-devel liblrdf-devel libmad-devel
 BuildPreReq: libalsa-devel libjack-devel liboggz-devel liblo-devel
 BuildPreReq: libfishsound-devel libid3tag-devel libsvcore-devel
-BuildPreReq: dataquay-devel
+BuildPreReq: dataquay-minefeld-devel libportaudio2-devel
 
 %description
 Implementations of the layer and view abstractions from Sonic
@@ -69,6 +69,7 @@ g++ -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 	-llo -lpthread -lbz2 -lfftw3f -lasound -lQt5Core -ldl -lsamplerate \
 	-lvamp-hostsdk -lfishsound -lid3tag -lsndfile -lQt5Xml -ldataquay \
 	-lmad -loggz -llrdf -lQt5Network -lsvcore -lQt5Gui -lQt5Widgets \
+	-ljack -lportaudio \
 	-Wl,-soname=lib%name.so.%sover -o lib%name.so.%sover
 
 %install
@@ -95,6 +96,9 @@ doxygen
 %doc doc/html/*
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt2.hg20140912
+- Built with dataquay-minefeld instead of dataquay
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.hg20140912
 - Initial build for Sisyphus
 
