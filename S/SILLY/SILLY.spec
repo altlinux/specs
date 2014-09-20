@@ -1,20 +1,20 @@
 Name: SILLY
 Version: 0.1.0
-Release: alt4.1
+Release: alt4.hg20140818
 Summary: Simple and easy to use library for image loading
 Group: System/Libraries
 License: MIT
 Url: http://www.cegui.org.uk
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/crayzedsgui/%name-%version.tar.gz
+# hg clone https://bitbucket.org/cegui/silly
+Source: %name-%version.tar.gz
 Source1: http://downloads.sourceforge.net/crayzedsgui/%name-DOCS-%version.tar.gz
-Patch: SILLY-0.1.0-alt-libpng15.patch
 
 BuildRequires: doxygen
 BuildRequires: libpng-devel
 BuildRequires: libjpeg-devel
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ zlib-devel
 
 %description
 The Simple Image Loading LibrarY is a companion library of the CEGUI project.
@@ -34,8 +34,8 @@ Requires: %name = %version-%release
 Development files for SILLY
 
 %prep
-%setup -q -a1
-%patch -p2
+%setup -a1
+touch NEWS README
 # Don't use full path, otherwise it shows buildroot as part of the path
 sed -i 's|\(FULL_PATH_NAMES[ \t][ \t]*= \)YES|\1NO|' Doxyfile
 
@@ -56,8 +56,11 @@ iconv -f iso8859-1 AUTHORS -t utf8 > AUTHORS.conv && /bin/mv -f AUTHORS.conv AUT
 %autoreconf
 
 %build
-%configure --disable-static --with-pic
-%make
+%configure \
+	--disable-static \
+	--with-pic \
+	--enable-debug
+%make_build
 
 #Build developer documentation
 doxygen
@@ -85,6 +88,9 @@ chmod 0755 %buildroot%_libdir/*.so.*
 %doc %name-%version/doc/html
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4.hg20140818
+- Snapshot from mercurial
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4.1
 - Rebuilt with libpng15
 
