@@ -1,6 +1,6 @@
 Name: sonic-visualiser
 Version: 2.4
-Release: alt1.hg20140912
+Release: alt2.hg20140912
 Summary: Application for viewing and analysing the contents of music audio files
 License: GPLv2+
 Group: Sound
@@ -16,7 +16,7 @@ BuildPreReq: libsndfile-devel libsamplerate-devel libfftw3-devel
 BuildPreReq: bzlib-devel liblrdf-devel libmad-devel libfishsound-devel
 BuildPreReq: liboggz-devel liblo-devel libalsa-devel libjack-devel
 BuildPreReq: libX11-devel libid3tag-devel libsord-devel libserd-devel
-BuildPreReq: dataquay-devel
+BuildPreReq: dataquay-minefeld-devel libportaudio2-devel
 BuildPreReq: doxygen graphviz
 
 %description
@@ -64,6 +64,9 @@ install -p -m644 i18n/* %buildroot%_qt5_translationdir/
 %_pixmapsdir/*
 
 %changelog
+* Sat Sep 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt2.hg20140912
+- Built with dataquay-minefeld instead of dataquay
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt1.hg20140912
 - Initial build for Sisyphus
 
