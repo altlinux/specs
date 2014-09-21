@@ -1,6 +1,6 @@
 Name: libbelle-sip
-Version: 1.3.0
-Release: alt4
+Version: 1.3.3
+Release: alt1
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -56,6 +56,9 @@ make
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Fri Sep 19 2014 Alexei Takaseev <taf@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Fri Aug 08 2014 Alexei Takaseev <taf@altlinux.org> 1.3.0-alt4
 - Rebuild with polarssl-1.3.8
 
