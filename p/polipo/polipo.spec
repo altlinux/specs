@@ -1,12 +1,13 @@
 Name: polipo
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Single-threaded non blocking HTTP proxy
 License: %mit
 Group: System/Servers
 URL: http://www.pps.jussieu.fr/~jch/software/%name/
 Source0: http://www.pps.jussieu.fr/~jch/software/files/%name/%name-%version.tar.bz2
 Source1: %name.init
+Source2: %name.service
 
 # Automatically added by buildreq on Sat Sep 01 2007 (-bi)
 BuildRequires: symlinks
@@ -41,6 +42,8 @@ symlinks -c %buildroot%_docdir/%name-%version
 symlinks -cs %buildroot%_docdir/%name-%version
 install -pD -m 0755 %SOURCE1 %buildroot%_initdir/%name
 
+install -d %buildroot%_unitdir
+install -p -m644 %SOURCE2 %buildroot%_unitdir/
 
 %post
 %post_service %name ||:
@@ -64,9 +67,13 @@ install -pD -m 0755 %SOURCE1 %buildroot%_initdir/%name
 # The line below is added by repocop to fix this bug in a straightforward way. 
 # Another way is to rewrite the spec to use relative doc paths.
 %dir %_docdir/polipo-%version 
+%_unitdir/*
 
 
 %changelog
+* Sun Sep 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2
+- Added .service file (ALT #30188)
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 
