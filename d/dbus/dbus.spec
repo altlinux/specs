@@ -8,7 +8,7 @@
 
 Name: dbus
 Version: 1.8.8
-Release: alt1
+Release: alt2
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -136,7 +136,12 @@ touch %buildroot%_sysconfdir/machine-id
 %_sbindir/useradd -r -n -g %dbus_group -d %system_socket_dir -s /dev/null -c "D-Bus System User" %dbus_user 2> /dev/null ||:
 
 %post
-%post_service messagebus
+if [ $1 -eq 1 ] ; then
+    /sbin/chkconfig --add messagebus
+else
+    /sbin/chkconfig messagebus resetpriorities
+fi
+
 /bin/dbus-uuidgen --ensure
 
 #%triggerin -- %name < %version
@@ -153,7 +158,7 @@ touch %buildroot%_sysconfdir/machine-id
 %dir %_sysconfdir/dbus-1/session.d
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
-%systemdsystemunitdir/*
+%_unitdir/*
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
 /bin/dbus-uuidgen
@@ -198,6 +203,11 @@ touch %buildroot%_sysconfdir/machine-id
 %dir %_datadir/dbus-1/interfaces
 
 %changelog
+* Sun Sep 21 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.8-alt2
+- revert "refuse manual start/stop=yes" for systemd(ALT#30338)
+- recovery support condrestart for sysv init script(ALT#30328)
+- another fix for upgrade package (ALT#14716)
+
 * Wed Sep 17 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.8.8-alt1
 - 1.8.8
 - dbus.service: added refuse manual start/stop=yes (closes: #14716)
