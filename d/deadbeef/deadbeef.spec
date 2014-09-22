@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed 
-%define rev	5f781386
+%define rev	860f7de5
 Name:		deadbeef
-Version:	0.6.0
+Version:	0.6.2
 Release:	alt1.%rev
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
@@ -17,9 +17,9 @@ Patch5:		deadbeef-0.5.1-using-tt.patch
 Patch6:		deadbeef-0.5.4-alt-categories-desktop-file.patch
 Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
 
-# Automatically added by buildreq on Sun Oct 28 2012 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtkglext-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm
+# Automatically added by buildreq on Mon Sep 22 2014 (-bi)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
+BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+2-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm libpng-devel
 
 Requires:	%name-out-alsa %name-gtk2 %name-in-mpeg
 
@@ -27,9 +27,9 @@ Obsoletes:	%name-medialib
 
 %description
 DeaDBeeF is an audio player for GNU/Linux systems with
-X11 written in C and C++. Features: minimal depends;
-native GTK2 GUI; cuesheet support; mp3, ogg, flac, ape;
-chiptune formats with subtunes, song-length databases, etc;
+X11 written in C and C++. Features: minimal depends,
+native GTK2 GUI, cuesheet support, mp3, ogg, flac, ape,
+chiptune formats with subtunes, song-length databases, etc,
 small memory footprint.
 
 # Virlual packages
@@ -634,6 +634,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon Sep 22 2014 Andrew Clark <andyc@altlinux.org> 0.6.2-alt1.860f7de5
+- version update to 0.6.2-alt1.860f7de5
+
 * Thu Jan 9 2014 Andrew Clark <andyc@altlinux.org> 0.6.0-alt1.5f781386
 - version update to 0.6.0-alt1.5f781386
 
