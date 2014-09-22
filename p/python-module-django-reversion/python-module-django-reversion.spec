@@ -1,16 +1,16 @@
 %define module_name django-reversion
 
-%define git_rev 91bd6b
+%def_with python3
+
 Name: python-module-%module_name
-Version: 1.5.1
-Release: alt1.git%git_rev
+Version: 1.8.4
+Release: alt1.git20140907
 
 Summary: Comprehensive version control facilities for Django
 
 License: BSD
 Group: Development/Python
 Url: http://code.google.com/p/django-reversion
-Packager: Denis Klimov <zver@altlinux.org>
 
 # https://github.com/etianen/django-reversion.git
 Source: %name-%version.tar
@@ -18,6 +18,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %setup_python_module %module_name
+
+BuildPreReq: python-module-sphinx-devel
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools
+%endif
 
 %description
 Reversion is an extension to the Django web framework that provides
@@ -34,27 +40,96 @@ comprehensive version control facilities.
 
 This package contains tests for Django Reversion.
 
+%package docs
+Summary: Documentation for Django Reversion
+Group: Development/Documentation
+
+%description docs
+Reversion is an extension to the Django web framework that provides
+comprehensive version control facilities.
+
+This package contains documentation for Django Reversion.
+
+%package -n python3-module-%module_name
+Summary: Comprehensive version control facilities for Django
+Group: Development/Python3
+
+%description -n python3-module-%module_name
+Reversion is an extension to the Django web framework that provides
+comprehensive version control facilities.
+
+%package -n python3-module-%module_name-tests
+Summary: Tests for Django Reversion
+Group: Development/Python3
+Requires: python3-module-%module_name = %version-%release
+
+%description -n python3-module-%module_name-tests
+Reversion is an extension to the Django web framework that provides
+comprehensive version control facilities.
+
+This package contains tests for Django Reversion.
+
 %prep
 %setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%prepare_sphinx .
+ln -s ../objects.inv docs/
 
 %build
 %python_build
 
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
+
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
+
 %files
-%doc *.markdown
+%doc *.rst
 %python_sitelibdir/django_reversion-*
 %python_sitelibdir/reversion
-%exclude %python_sitelibdir/reversion/tests.*
-%exclude %python_sitelibdir/reversion/tests_deprecated.py*
+#exclude %python_sitelibdir/reversion/tests*
 
-%files tests
-%python_sitelibdir/reversion/tests.*
-%python_sitelibdir/reversion/tests_deprecated.py*
+#files tests
+#python_sitelibdir/reversion/tests*
+
+%files docs
+%doc docs/_build/html/*
+
+%if_with python3
+%files -n python3-module-%module_name
+%doc *.rst
+%python3_sitelibdir/django_reversion-*
+%python3_sitelibdir/reversion
+#exclude %python_sitelibdir/reversion/tests*
+#exclude %python_sitelibdir/reversion/*/tests*
+
+#files -n python3-module-%module_name-tests
+#python_sitelibdir/reversion/tests*
+#python_sitelibdir/reversion/*/tests*
+%endif
 
 %changelog
+* Mon Sep 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.4-alt1.git20140907
+- Version 1.8.4
+- Added module for Python 3
+
 * Sun Jan 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.git91bd6b
 - Version 1.5.1 (ALT #26818)
 
