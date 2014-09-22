@@ -10,8 +10,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -209,6 +209,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
+- 3.12.3
+
 * Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - rebuilt against libcolord.so.2
 
