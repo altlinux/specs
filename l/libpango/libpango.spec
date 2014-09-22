@@ -5,9 +5,10 @@
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
+%def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -42,6 +43,7 @@ Obsoletes: gscript
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
 %define hb_ver 0.9.29
+%define thai_ver 0.1.9
 
 # We need to prereq these so we can run pango-querymodules in post
 PreReq: glib2 >= %glib_ver
@@ -56,6 +58,7 @@ BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libharfbuzz-devel >= %hb_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
+%{?_enable_libthai:BuildPreReq: libthai-devel >= %thai_ver}
 BuildPreReq: gcc-c++ help2man
 
 %description
@@ -199,6 +202,10 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.8-alt1
+- 1.36.8
+- libthai support enabled
+
 * Thu Sep 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.36.7-alt1
 - 1.36.7
 
