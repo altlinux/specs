@@ -1,8 +1,8 @@
 %define oname 7z
 
 Name: fuse-7z
-Version: 0.1
-Release: alt1.1
+Version: 0.2
+Release: alt2
 
 Summary: A FUSE filesystem that uses the 7-zip library to interacts with all kind of archives
 
@@ -16,12 +16,14 @@ Source: %name-%version.tar
 Patch: fuse-7z-0.1-alt-link.patch
 
 Requires: %{get_dep fuse}
+
+# we use /usr/lib64/p7zip/7z.so from it
 Requires: p7zip
 
-# manually removed: rpm-build-java rpm-build-mono rpm-build-seamonkey rpm-macros-fillup xorg-sdk
+# manually removed: rpm-build-java rpm-build-mono rpm-build-seamonkey rpm-macros-fillup xorg-sdk  python-module-mwlib python-module-paste
 # Automatically added by buildreq on Fri Aug 17 2012
 # optimized out: libstdc++-devel pkg-config python-base python-module-distribute python-module-peak python-module-zope python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging
-BuildRequires: gcc-c++ libfuse-devel python-module-mwlib python-module-paste
+BuildRequires: gcc-c++ libfuse-devel waf
 
 %description
 A FUSE filesystem that uses the 7-zip library to interacts with all kind
@@ -33,12 +35,12 @@ Contributions are welcome.
 
 %prep
 %setup
-%patch -p1
+# TODO: fix in upstream
+#patch -p1
 
 %build
-# FIXME: need waf
-python .gear/waf-1.6.7 configure
-python .gear/waf-1.6.7
+waf configure
+waf
 
 cat <<EOF >wrapper/fuse-7z
 #!/bin/sh
@@ -57,6 +59,12 @@ install -D wrapper/fuse-7z %buildroot%_bindir/fuse-7z
 %_libexecdir/%name/
 
 %changelog
+* Mon Sep 22 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt2
+- fast hack for fix wchar_t to utf8 convert
+
+* Mon Sep 22 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- build new version, fix build
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.1
 - Completed linking
 
