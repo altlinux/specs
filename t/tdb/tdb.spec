@@ -1,6 +1,6 @@
 Name: tdb
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: A trivial database system
 License: GPL
@@ -126,6 +126,9 @@ rm -f %buildroot%_libdir/libtdb.a
 %python_sitelibdir/tdb.so
 
 %changelog
+* Mon Sep 22 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Tue Jun 10 2014 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt2
 - fixed https://bugzilla.samba.org/show_bug.cgi?id=10625
 
