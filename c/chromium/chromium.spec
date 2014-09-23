@@ -12,7 +12,7 @@
 
 Name:           chromium
 Version:        37.0.2062.120
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -87,6 +87,9 @@ Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
 # See https://code.google.com/p/chromium/issues/detail?id=393535
 Patch97:	chromium-fix-russian-translations.patch
 Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
+
+# Backport from upstream
+Patch110:   chromium-support-ModeSwitch-key.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -246,6 +249,7 @@ tar xf %SOURCE10 -C src
 %patch96 -p0
 %patch97 -p1
 %patch98 -p0
+%patch110 -p1 -d src
 
 # Move vpx/internal/vpx_codec_internal.h to one directory up
 grep -Rl 'vpx/internal/vpx_codec_internal.h' src/third_party/libvpx | xargs subst 's,vpx/internal/vpx_codec_internal.h,vpx/vpx_codec_internal.h,'
@@ -367,7 +371,8 @@ ninja-build -C out/Release \
 	-j $NPROCS \
 	chrome \
 	chrome_sandbox \
-	chromedriver
+	chromedriver \
+	pdf
 
 popd
 
@@ -400,6 +405,7 @@ cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome.1 %buildroot%_mandir/man1/chrome.1
 cp -a chrome.1 %buildroot%_mandir/man1/chromium.1
 cp -a libffmpegsumo.so %buildroot%_libdir/chromium/libffmpegsumo.so
+cp -a libpdf.so %buildroot%_libdir/chromium/libpdf.so
 
 # NaCl
 %if_enabled nacl
@@ -455,6 +461,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_libdir/chromium/chromedriver
 %_libdir/chromium/chromium-generic
 %_libdir/chromium/libffmpegsumo.so
+%_libdir/chromium/libpdf.so
 %_libdir/chromium/icudtl.dat
 %_libdir/chromium/plugins/
 %_libdir/chromium/locales/
@@ -481,6 +488,11 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Sep 23 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.120-alt2
+- Fix RightAlt behaviour. See https://code.google.com/p/chromium/issues/detail?id=377203
+  for details
+- Build PDF viewer plugin
+
 * Thu Sep 18 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.120-alt1
 - New version
 - Security fixes:
