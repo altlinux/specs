@@ -1,14 +1,11 @@
 Name: libpreludedb
-Version: 1.0.0
-Release: alt3
+Version: 1.2.6
+Release: alt1.rc2.git20140916
 Summary: Provide the framework for easy access to the Prelude database
 Group: System/Libraries
 License: GPLv2
 Url: http://prelude-ids.org/
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 %define username _prelude
 %def_disable static
@@ -19,6 +16,8 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 # Automatically added by buildreq on Mon Oct 17 2011
 BuildRequires: gcc-c++ libgcrypt-devel libgnutls-devel libmysqlclient-devel libprelude-devel libsqlite3-devel perl-devel postgresql-devel python-devel swig glib2-devel
+
+BuildPreReq: libpth-devel
 
 %description
 The PreludeDB Library provides an abstraction layer upon the type and the
@@ -106,21 +105,39 @@ Perl bindings for libpreludedb.
 
 
 %prep
-%setup -q
-%patch -p1
+%setup
 %__subst "s|\$dir\/lib\/|%_libdir/|g" configure.in
 
+rm -f bindings/low-level/perl/PreludeDB.pm \
+	bindings/low-level/python/_preludedbold.c
+
+find  -type f -exec sed -i 's|preludedbold|preludedb|g' '{}' +
+find  -type f -exec sed -i 's|preludeold|prelude|g' '{}' +
+
+mv bindings/low-level/python/preludedbold.py \
+	bindings/low-level/python/preludedb.py
+
 %build
+%add_optflags %optflags_shared
 %autoreconf
 %configure %{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--with-perl-installdirs=vendor 
+	--with-perl-installdirs=vendor  \
+	--enable-threads=posix \
+	--disable-rpath \
+	--with-swig
 
 #	--with-html-dir=%_defaultdocdir/%name-%version/html \
 
+pushd bindings/low-level/perl
+swig -perl5 -c++ libpreludedb-perl.i
+g++ %optflags -c libpreludedb-perl_wrap.cxx -I%_libdir/perl5/CORE
+g++ -shared *.o -Wl,-soname=PreludeDB.so -o PreludeDB.so
+popd
+
 sed -i 's|^\(CFLAGS =.*\)|\1 -include %_includedir/stdio.h|' \
 	$(find ./ -name Makefile)
-%make
+%make_build
 
 %install
 %make DESTDIR=%buildroot install
@@ -131,6 +148,14 @@ rm -f %buildroot%_libdir/%name/plugins/sql/mysql.la
 rm -f %buildroot%_libdir/%name/plugins/sql/pgsql.la
 rm -f %buildroot%_libdir/%name/plugins/sql/sqlite3.la
 rm -fr %buildroot%_defaultdocdir/%name-%version/html
+
+install -d %buildroot%perl_vendor_archlib
+install -d %buildroot%perl_vendor_autolib
+
+install -m644 bindings/low-level/perl/PreludeDB.pm \
+	%buildroot%perl_vendor_archlib/
+install -m644 bindings/low-level/perl/PreludeDB.so \
+	%buildroot%perl_vendor_autolib/
 
 %pre sqlite
 /usr/sbin/groupadd -r -f %username &> /dev/null ||:
@@ -187,6 +212,12 @@ chmod 660 %_var/lib/preludedb/idmef-db.sqlite &> /dev/null ||:
 %_datadir/%name/classic/pgsql*
 
 %changelog
+* Thu Sep 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.rc2.git20140916
+- Version 1.2.6rc2
+
+* Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.rc1.git20140916
+- Version 1.2.6rc1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.0-alt3
 - built for perl 5.18
 

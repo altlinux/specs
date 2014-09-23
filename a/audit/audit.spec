@@ -1,6 +1,6 @@
 Name: audit
 Version: 2.4
-Release: alt1
+Release: alt1.1
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -163,6 +163,9 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt1.1
+- Rebuilt with new libprelude
+
 * Mon Sep 08 2014 Anton Farygin <rider@altlinux.ru> 2.4-alt1
 - new version
 

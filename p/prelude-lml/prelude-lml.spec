@@ -1,19 +1,17 @@
 Summary:        Prelude Hybrid Intrusion Detection System - Log Analyzer Sensor
 Name:           prelude-lml
-Version:        1.0.0
-Release:        alt2.2
+Version:        1.2.6
+Release:        alt2.rc1.git20140916
 License:        GPLv2
 Group:          Networking/Other
 URL:            http://www.prelude-ids.org/
-Source:		http://www.prelude-ids.org/download/releases/%name-%version.tar.gz
-Patch:		%name-%version-%release.patch
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+# https://prelude-ids.org/git/prelude-lml.git
+Source:		%name-%version.tar
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires: gcc-c++ libgamin-devel libgnutls-devel libpcre-devel libprelude-devel libltdl-devel libicu-devel libgcrypt-devel
+BuildRequires: gcc-c++ libgamin-devel libgnutls-devel libpcre-devel libprelude-devel libltdl-devel libicu-devel libgcrypt-devel libpth-devel
 
 %description
 The Prelude Log Monitoring Lackey (LML) is the host-based sensor
@@ -120,8 +118,7 @@ IDS.
 %endif
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %add_optflags -include %_includedir/stdio.h
@@ -129,7 +126,9 @@ IDS.
 %configure %{subst_enable static} \
 	--localstatedir=%_var \
 	--sysconfdir=%_sysconfdir/prelude \
-	--enable-unsupported-rulesets
+	--enable-unsupported-rulesets \
+	--enable-threads=posix \
+	--disable-rpath
 
 # Fix undefined symbol
 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(LIBPRELUDE_LIBS) |g" plugins/debug/Makefile
@@ -149,6 +148,8 @@ install -m 755 %name-initd %buildroot%_initdir/%name
 OPTIONS=""
 EOF
 
+find %buildroot -type f -name '*.la' -exec rm -f '{}' +
+
 %post
 %post_service %name
 
@@ -159,10 +160,11 @@ EOF
 %doc AUTHORS COPYING ChangeLog HACKING.README NEWS README
 %config %dir %_sysconfdir/prelude/%name/
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/prelude/%name/*.conf
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/prelude/%name/*.rules
-%config %dir %_sysconfdir/prelude/%name/ruleset/
-%config(noreplace) %attr(0644,root,root)%_sysconfdir/prelude/%name/ruleset/*
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/prelude/%name/*
+#config(noreplace) %attr(0644,root,root) %_sysconfdir/prelude/%name/*.conf
+#config(noreplace) %attr(0644,root,root) %_sysconfdir/prelude/%name/*.rules
+#config %dir %_sysconfdir/prelude/%name/ruleset/
+#config(noreplace) %attr(0644,root,root)%_sysconfdir/prelude/%name/ruleset/*
 %_initdir/%name
 %_bindir/prelude-lml
 %dir %_libdir/%name/
@@ -184,6 +186,9 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt2.rc1.git20140916
+- Version 1.2.6rc1
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.2
 - Rebuilt with icu 5.1
 
