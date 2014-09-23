@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1
+Release: alt2
 Summary: Python Interface for Twitter API
 
 Group: Development/Python
@@ -30,6 +30,7 @@ This library provides a pure python interface for the Twitter API.
 Summary: Python Interface for Twitter API
 Group: Development/Python3
 %py3_requires rfc822py3 requests requests_oauthlib
+%py3_provides %oname
 
 %description -n python3-module-%oname
 This library provides a pure python interface for the Twitter API.
@@ -76,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2
+- Added %%py3_provides for Python 3 module
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Version 2.0
 - Added module for Python 3
