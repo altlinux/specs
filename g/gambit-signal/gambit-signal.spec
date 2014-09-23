@@ -1,6 +1,6 @@
 Name: gambit-signal
 Version: 1.1
-Release: alt3
+Release: alt4
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -44,6 +44,9 @@ This package contains the library link file
 %{_includedir}/gambit/libgambc-signal.c
 
 %changelog
+* Tue Sep 23 2014 Paul Wolneykien <manowar@altlinux.org> 1.1-alt4
+- Rebuild with a new version of Gambit
+
 * Mon Mar 10 2014 Paul Wolneykien <manowar@altlinux.org> 1.1-alt3
 - Rebuild with a new version of Gambit
 
