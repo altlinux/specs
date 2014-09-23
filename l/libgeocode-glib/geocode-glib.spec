@@ -1,10 +1,10 @@
 %define _name geocode-glib
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 1.0
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -104,6 +104,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

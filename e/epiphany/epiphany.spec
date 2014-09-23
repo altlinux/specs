@@ -1,11 +1,11 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.10
 %define ua_ver %ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -13,26 +13,25 @@ Group: Networking/WWW
 License: GPL
 URL: http://www.gnome.org/projects/%name
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Patch: %name-3.12.1-alt-lfs.patch
 
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.4.0
+%define webkit_ver 2.5.2
 
 Requires: %name-data = %version-%release indexhtml iso-codes
-Requires: libwebkitgtk3-webinspector
 
 BuildRequires: gnome-common yelp-tools
 BuildPreReq: intltool >= 0.50.0
 BuildPreReq: libgio-devel >= 2.38.0
-BuildPreReq: libgtk+3-devel >= 3.11.6
+BuildPreReq: libgtk+3-devel >= 3.13.0
 BuildPreReq: libSM-devel
 BuildPreReq: libxml2-devel >= 2.6.12
 BuildPreReq: libxslt-devel >= 1.1.7
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
+BuildPreReq: libwebkitgtk4-devel >= %webkit_ver
 BuildPreReq: libsoup-gnome-devel >= 2.42.1
 BuildPreReq: libsecret-devel
 BuildPreReq: gcr-libs-devel >= 3.5.5
@@ -102,6 +101,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Jul 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt3
 - updated to d7b781a2 (fixed BGO ##730129, 732784, 732784, 727139)
 

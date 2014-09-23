@@ -1,17 +1,21 @@
 %def_disable snapshot
 
-%define ver_major 3.12
-%define parser_ver 3.9.5
+%define ver_major 3.14
+%define parser_ver 3.10.1
 %define gst_api_ver 1.0
-%define gst_ver 1.2.4
+%define gst_ver 1.4.2
 %define gst_plugins_ver 1.2.4
 %define gtk_ver 3.11.5
 %define grilo_ver 0.2.10
 %define glib_ver 2.36.0
 %define clutter_ver 1.17.3
+%define clutter_gtk_ver 1.5.5
+%define clutter_gst_ver 1.5.5
+%define peas_ver 1.1.0
 
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
+%define _name org.gnome.Totem
 
 %def_disable static
 %def_enable vala
@@ -24,19 +28,11 @@
 %def_enable lirc
 %def_disable tracker
 %def_enable python
-%def_enable browser_plugins
 %def_disable coherence_upnp
 %def_disable jamendo
 
-%if_enabled browser_plugins
-%def_enable gmp_plugin
-%def_enable narrowspace_plugin
-%def_enable mully_plugin
-%def_enable cone_plugin
-%endif
-
 Name: totem
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -49,6 +45,7 @@ Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-b
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
 Obsoletes: %name-plugins-bemused  %name-plugins-youtube
 Obsoletes: %name-plugins-publish  %name-plugins-iplayer %name-plugins-grilo
+Obsoletes: mozilla-plugin-%name
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
@@ -80,28 +77,27 @@ BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
-BuildRequires: browser-plugins-npapi-devel
 
 BuildPreReq: iso-codes-devel gnome-icon-theme
-BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= 0.7.3
+BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
 BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
 BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-xproto-devel
 BuildPreReq: libclutter-devel >= %clutter_ver
+BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
+BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
-
+BuildRequires: libgnome-desktop3-devel
 %{?_enable_python:BuildRequires: python-devel python-module-pygobject3-devel pylint}
 %{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
-BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop-schemas-devel
+BuildRequires: libdbus-devel libgdata-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
 %{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
 
-BuildRequires: desktop-file-utils libSM-devel
-BuildRequires: db2latex-xsl yelp-tools gcc-c++
+BuildRequires: desktop-file-utils db2latex-xsl yelp-tools gcc-c++
 BuildRequires: libX11-devel libXext-devel libXi-devel
-BuildRequires: libclutter-gst2.0-devel >= 1.3.9 libclutter-gtk3-devel
 
 %description
 Totem is simple movie player for the Gnome desktop.
@@ -143,20 +139,6 @@ Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Totem library
-
-%package -n mozilla-plugin-%name
-Summary: Mozilla plugin for the Totem media player
-Group: Networking/WWW
-Requires: %name = %version-%release
-Requires: browser-plugins-npapi
-Provides: mozilla-plugin-%name-xine
-Obsoletes: mozilla-plugin-%name-xine < %version-%release
-Provides: mozilla-plugin-%name-gstreamer
-Obsoletes: mozilla-plugin-%name-gstreamer < %version-%release
-
-%description -n mozilla-plugin-%name
-A Mozilla plug-in for that enables media playback from within webpages
-via the Totem media player.
 
 %package plugins
 Summary: default plugins for Totem
@@ -294,20 +276,12 @@ used by other applications like filemanagers.
 [ ! -d m4 ] && mkdir m4
 
 %build
-export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	--disable-schemas-compile \
 	%{subst_enable python} \
 	%{subst_enable vala} \
-%if_enabled browser_plugins
-	--enable-browser-plugins \
-	%{?_enable_gmp_plugin:--enable-gmp-plugin} \
-	%{?_enable_narrowspace_plugin:--enable-narrowspace-plugin} \
-	%{?_enable_mully_plugin:--enable-mully-plugin} \
-	%{?_enable_cone_plugin:--enable-cone-plugin} \
-%endif
 	%{?_enable_nautilus:--enable-nautilus=yes} \
 	--disable-static \
 	%{?_enable_snapshot:--enable-gtk-doc}
@@ -315,7 +289,7 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 find %buildroot%_libdir -name \*.la -delete
 
 %find_lang --with-gnome %name
@@ -326,16 +300,17 @@ find %buildroot%_libdir -name \*.la -delete
 %dir %_libdir/%name
 # depends on pygtk
 #%_libexecdir/%name/totem-bugreport.py
-%_datadir/applications/%name.desktop
+%_desktopdir/%_name.desktop
 %_datadir/icons/hicolor/*/*/*.png
 %_datadir/icons/hicolor/*/*/*.svg
 %_datadir/%name
 %_man1dir/*
 %exclude %_man1dir/%name-video-thumbnailer.1.*
+%_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 %files -n lib%name
@@ -397,12 +372,6 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/tracker/
 %endif
 
-%if_enabled browser_plugins
-%files -n mozilla-plugin-%name
-%_libexecdir/totem-plugin-viewer
-%browser_plugins_path/*
-%endif
-
 %if_enabled jamendo
 %files plugins-jamendo
 %_libdir/%name/plugins/jamendo/
@@ -433,6 +402,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

@@ -1,10 +1,10 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-online-miners
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A set of miners for online content
 Group: Graphical desktop/GNOME
@@ -49,24 +49,29 @@ Flickr, Google, SkyDrive and ownCloud.
 %makeinstall_std
 
 %files
+%_libexecdir/gom-facebook-miner
 %_libexecdir/gom-flickr-miner
 %_libexecdir/gom-gdata-miner
+%_libexecdir/gom-media-server-miner
 %_libexecdir/gom-owncloud-miner
 %_libexecdir/gom-zpj-miner
-%_libexecdir/gom-facebook-miner
 %dir %_libdir/%name
 %_libdir/%name/libgom-%api_ver.so
+%_datadir/dbus-1/services/org.gnome.OnlineMiners.Facebook.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Flickr.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.GData.service
+%_datadir/dbus-1/services/org.gnome.OnlineMiners.MediaServer.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Owncloud.service
 %_datadir/dbus-1/services/org.gnome.OnlineMiners.Zpj.service
-%_datadir/dbus-1/services/org.gnome.OnlineMiners.Facebook.service
 %doc AUTHORS NEWS README
 
 %exclude %_libdir/%name/libgom-%api_ver.la
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
 - rebuilt against libgdata.so.19
 

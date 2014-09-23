@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define _name org.gnome.Photos
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-photos
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: %gpl2plus
 Group: Graphics
-Url: https://live.gnome.org/GnomePhotos
+Url: https://wiki.gnome.org/Apps/Photos
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
@@ -18,10 +18,11 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 
 # From configure.ac
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
-BuildPreReq: libgio-devel >= 2.36.0
-BuildPreReq: libgtk+3-devel >= 3.9.4
+BuildPreReq: libgio-devel >= 2.40.0
+BuildPreReq: libgtk+3-devel >= 3.13.2
 BuildPreReq: libexif-devel >= 0.6.14
 BuildPreReq: tracker-devel >= 0.17.5
+BuildPreReq: libgdata-devel >= 0.15.2
 BuildRequires: libbabl-devel libgegl-devel libexempi-devel
 BuildRequires: liblcms2-devel librsvg-devel libgfbgraph-devel
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel
@@ -34,7 +35,6 @@ applications meant for find and reminding the user about her content.
 The internal architecture Photos is based on Documents -- the document
 manager application for GNOME, because they share similar UI/UX
 patterns and objectives.
-
 
 %prep
 %setup
@@ -52,11 +52,10 @@ rm -rf %buildroot/%_datadir/doc/%name
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%_libexecdir/%name-service
-%_desktopdir/*
-%_datadir/%name
+%_bindir/%name
+%_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*/apps/%name.*
+%_iconsdir/HighContrast/*/apps/%name.*
 %_datadir/appdata/%_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_datadir/dbus-1/services/%_name.service
@@ -64,6 +63,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 

@@ -4,18 +4,17 @@
 %def_enable eds
 
 Name: almanah
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Diary editor for GNOME
 License: LGPLv3+
 Group: Graphical desktop/GNOME
-Url: https://live.gnome.org/Almanah_Diary
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: http://wiki.gnome.org/Apps/Almanah_Diary
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: intltool desktop-file-utils
+BuildRequires: intltool desktop-file-utils appdata-tools libappstream-glib-devel
 BuildRequires: libgio-devel libgtkspell3-devel
 BuildRequires: libsqlite3-devel libcryptui-devel
 %{?_enable_eds:BuildRequires: evolution-data-server-devel >= 3.5.91}
@@ -25,7 +24,7 @@ BuildRequires: libsqlite3-devel libcryptui-devel
 Almanah is a small GTK+3 application to allow you to keep a diary of your life.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -58,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README AUTHORS NEWS
 
 %changelog
+* Thu Sep 25 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Sat Nov 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 - e-d-s support enabled again

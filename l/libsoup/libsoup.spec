@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.46
+%define ver_major 2.48
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -29,7 +29,7 @@ Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.41.3-alt-compat-map.patch
 
-Requires: glib-networking >= 2.38.2
+Requires: glib-networking >= 2.41.92
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
@@ -219,6 +219,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
+- 2.48.0
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
 - 2.46.0
 

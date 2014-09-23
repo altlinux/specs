@@ -1,6 +1,6 @@
 Name: pragha
 Version: 1.3.1
-Release: alt1.git20140727
+Release: alt2.git20140727
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
 Group: Sound
@@ -45,6 +45,9 @@ LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
 %_libdir/%name
 
 %changelog
+* Sat Sep 27 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt2.git20140727
+- rebuilt without rygel support, not ready for 2.4
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.git20140727
 - Version 1.3.1
 

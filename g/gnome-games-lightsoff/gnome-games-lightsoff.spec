@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name lightsoff
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lights Off is a puzzle game
@@ -21,7 +21,8 @@ Provides:  %_name = %version-%release
 %define gtk_ver 3.4.0
 
 BuildRequires: gnome-common intltool yelp-tools
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libclutter-gtk3-devel librsvg-devel
 
 %description
 Lights Off is a puzzle game, where the objective is to turn off all of
@@ -51,6 +52,9 @@ and its non-diagonal neighbors.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

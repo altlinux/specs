@@ -1,5 +1,5 @@
 %define _name org.gnome.clocks
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome-clocks
 Version: %ver_major.0
@@ -12,7 +12,7 @@ Url: https://wiki.gnome.org/Apps/Clocks
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define gweather_ver 3.11.6
+%define gweather_ver 3.13.91
 %define geocode_ver 0.99.3
 
 Requires: geoclue2
@@ -47,10 +47,14 @@ Clock application designed for GNOME 3
 %_datadir/icons/*/*/apps/%name.png
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/dbus-1/services/%_name.service
+%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
 %_datadir/appdata/%_name.appdata.xml
 %doc README NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

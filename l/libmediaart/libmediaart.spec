@@ -1,4 +1,4 @@
-%define ver_major 0.4
+%define ver_major 0.7
 %define api_ver 1.0
 %def_enable introspection
 %def_enable gtk_doc
@@ -14,7 +14,7 @@ Url: https://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: gcc-c++ libgio-devel >= 2.36 libgdk-pixbuf-devel zlib-devel
+BuildRequires: gcc-c++ libgio-devel >= 2.38 libgdk-pixbuf-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildRequires: libvala-devel vala-tools intltool gtk-doc
 # for check
@@ -99,6 +99,15 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
+* Wed Aug 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
+* Mon Jul 28 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Wed Apr 02 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

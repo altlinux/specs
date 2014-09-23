@@ -1,14 +1,14 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 License: %gpl2plus
 Group: Development/Other
-Url: http://live.gnome.org/devhelp
+Url: https://wiki.gnome.org/Apps/Devhelp
 #VCS: git://git.gnome.org/devhelp
 Source: %name-%version.tar
 
@@ -24,8 +24,10 @@ BuildPreReq: gtk-doc
 # From configure.ac
 BuildPreReq: intltool >= 0.40.0
 BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.9.10
-BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.13.4
+# build with webkit2gtk-3.0 or webkit2gtk-4.0
+# BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
+BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.0.0
 BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
 BuildRequires: zlib-devel
 BuildRequires: gettext-tools
@@ -63,10 +65,8 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %setup -q
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-	--disable-static \
-	--disable-schemas-install
+%autoreconf
+%configure --disable-static
 
 %make_build
 
@@ -101,6 +101,13 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+- build with webkit2gtk-4.0
+
+* Tue Sep 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.13.90-alt1
+- 3.13.90
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
 - 3.12.1
 

@@ -1,8 +1,8 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define _name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -17,7 +17,7 @@ Requires: telepathy-mission-control
 Requires: telepathy-idle
 
 %set_typelibdir %_libdir/%name/girepository-1.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.13.4
 
 BuildRequires: gtk-doc gnome-common intltool desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
@@ -56,6 +56,9 @@ with GNOME 3 Desktop.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

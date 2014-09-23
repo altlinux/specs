@@ -1,5 +1,5 @@
 %define rname glibmm
-%define major 2.40
+%define major 2.42
 %def_disable snapshot
 
 Name: libglibmm
@@ -10,7 +10,6 @@ Summary: C++ wrapper for GLib
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %if_enabled snapshot
 Source: %rname-%version.tar
@@ -18,7 +17,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.40.0
+%define glib_ver 2.42.0
 
 AutoReq: yes, noperl
 BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel
@@ -95,6 +94,9 @@ mm-common-prepare --force --copy
 %_docdir/%rname-2.4
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 

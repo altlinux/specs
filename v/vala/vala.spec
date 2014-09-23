@@ -2,10 +2,10 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_with bootstrap
-%define api_ver 0.24
+%define api_ver 0.26
 
 Name: vala
-Version: 0.24.0
+Version: 0.26.0
 Release: alt1
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -129,7 +129,7 @@ cd bootstrap-build
 
 %if_with bootstrap
 autoreconf -v --install
-./configure --enable-vapigen --prefix="$BSINSTALL"
+./configure --prefix="$BSINSTALL"
 
 # Make stamps for pregenerated source code so that Vala build system would not run valac again
 for i in vala codegen ccode gee ; do
@@ -138,7 +138,7 @@ done
 touch vapigen/{vapigen,vapicheck}.vala.stamp
 touch compiler/valac.vala.stamp
 %else
-../configure --enable-vapigen --prefix="$BSINSTALL"
+../configure --prefix="$BSINSTALL"
 %endif
 
 %make
@@ -148,7 +148,7 @@ cd ..
 # now build a pristine variant of the compiler to be packaged
 OLD_PATH="$PATH"
 export PATH="$BSINSTALL/bin:$PATH"
-%configure --enable-vapigen
+%configure
 # Delete stamps to force re-generation of C code with bootstrapped valac
 find . -name '*.stamp' | xargs -r rm
 %make
@@ -203,6 +203,12 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vapigen*
 
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 0.26.0-alt1
+- 0.26.0
+
+* Wed Aug 27 2014 Alexey Shabalin <shaba@altlinux.ru> 0.25.2-alt1
+- 0.25.2
+
 * Tue Mar 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.24.0-alt1
 - 0.24.0
 

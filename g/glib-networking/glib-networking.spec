@@ -1,9 +1,9 @@
-%define ver_major 2.40
+%define ver_major 2.42
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -17,12 +17,15 @@ Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.ta
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
-%define glib_ver 2.35.3
+%define glib_ver 2.40
 %define gnutls_ver 2.12.8
+%define p11kit_ver 0.8
+%define libproxy_ver 0.3.1
 
-BuildRequires: intltool libgio-devel >= %glib_ver libproxy-devel
+BuildRequires: intltool libgio-devel >= %glib_ver libproxy-devel >= %libproxy_ver
 BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel
-BuildRequires: libp11-kit-devel ca-certificates gsettings-desktop-schemas-devel
+BuildRequires: libp11-kit-devel >= %p11kit_ver ca-certificates
+BuildRequires: gsettings-desktop-schemas-devel
 
 %description
 This package contains modules that extend the networking support in GIO.
@@ -77,6 +80,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+
 * Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 

@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.12
+%define ver_major 3.14
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -17,13 +17,14 @@ Requires: %name-libs = %version-%release
 Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
-%define glib_ver 2.32.0
+%define glib_ver 2.38.0
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
+%define gcrypt_ver 1.4.5
 
 BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel
-BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
+BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 
@@ -104,7 +105,7 @@ This package contains development documentation for GCR libraries.
 
 %build
 %autoreconf
-%configure
+%configure --disable-update-mime
 %make_build
 
 %install
@@ -176,6 +177,9 @@ This package contains development documentation for GCR libraries.
 
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

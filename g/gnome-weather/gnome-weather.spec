@@ -1,10 +1,10 @@
-%define _name org.gnome.Weather.Application
+%define _name org.gnome.Weather
 
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -15,31 +15,36 @@ Url: https://live.gnome.org/Design/Apps/Weather
 #Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: %name-data = %version-%release
-Requires: libgweather-gir
+BuildArch: noarch
 
-%add_typelib_req_skiplist typelib(Gd)
+Obsoletes: %name-data
+Provides:  %name-data = %version-%release
 
 %define gtk_ver 3.11.4
 %define gi_ver 1.35.9
-%define gweather_ver 3.11.92
+%define gjs_ver 1.39.91
+%define gweather_ver 3.13.91
 
-BuildRequires: rpm-build-gnome gnome-common intltool
-BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel libgweather-devel >= %gweather_ver
+Requires: libgweather-gir >= %gweather_ver
+# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Gdk)
+Requires: typelib(GeocodeGlib)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GnomeDesktop)
+Requires: typelib(GObject)
+Requires: typelib(Gtk)
+Requires: typelib(GWeather)
+
+BuildRequires: rpm-build-gnome gnome-common intltool rpm-build-gir
+BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver libgweather-devel >= %gweather_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel libgweather-gir-devel
+BuildRequires: libappstream-glib-devel
 
 %description
 %name is a small application that allows you to monitor the current
 weather conditions for your city, or anywhere in the world, and to
 access updated forecasts provided by various internet services.
-
-%package data
-Summary: Arch independent files for %name
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-
-%description data
-This package provides noarch data needed for %name to work.
 
 
 %prep
@@ -58,26 +63,23 @@ This package provides noarch data needed for %name to work.
 
 %find_lang --with-gnome %_name
 
-%files
+%files -f %_name.lang
 %_bindir/%name
-%dir %_libdir/%_name/
-%dir %_libdir/%_name/girepository-1.0
-%_libdir/%_name/girepository-1.0/Gd-1.0.typelib
-%_libdir/%_name/libgd.so
+%_datadir/applications/%_name.Application.desktop
+%_datadir/%_name/
+%_datadir/dbus-1/services/%_name.Application.service
+%_datadir/dbus-1/services/%_name.BackgroundService.service
+%_datadir/glib-2.0/schemas/%_name.Application.gschema.xml
+%_iconsdir/hicolor/*/apps/%_name.Application.png
+%_iconsdir/HighContrast/*x*/apps/%_name.Application.png
+%_datadir/gnome-shell/search-providers/%_name.Application.search-provider.ini
+%_datadir/appdata/%_name.Application.appdata.xml
 %doc NEWS
 
-%exclude %_libdir/%_name/libgd.la
-
-%files data  -f %_name.lang
-%_datadir/applications/%_name.desktop
-%_datadir/%_name/
-%_datadir/dbus-1/services/%_name.service
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_iconsdir/hicolor/*/apps/%_name.png
-%_datadir/gnome-shell/search-providers/org.gnome.Weather.Application.search-provider.ini
-%_datadir/appdata/org.gnome.Weather.Application.appdata.xml
-
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 

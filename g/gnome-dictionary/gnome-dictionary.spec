@@ -1,4 +1,4 @@
-%define ver_major 3.10
+%define ver_major 3.14
 
 Name: gnome-dictionary
 Version: %ver_major.0
@@ -74,6 +74,7 @@ Dictionary Library.
 %_desktopdir/gnome-dictionary.desktop
 %_man1dir/gnome-dictionary.*
 %config %_datadir/glib-2.0/schemas/org.gnome.dictionary.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 %doc NEWS
 
 %files -n libgdict
@@ -91,6 +92,9 @@ Dictionary Library.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Oct 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

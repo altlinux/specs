@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -137,6 +137,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

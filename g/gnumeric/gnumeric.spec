@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -26,19 +26,20 @@ Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
+%define scrollkeeper_ver 0.3.14
+%define gsf_ver 1.14.27
+%define gda_ver 4.0
+%define desktop_file_utils_ver 0.10
+%define goffice_ver 0.10.18
+
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
 %endif
 
-%define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.27
-%define gda_ver 4.0
-%define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.17
-
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
+Requires: libgnomeoffice%goffice_api_ver >= %goffice_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
 Requires: %name-data = %version-%release
 
@@ -113,9 +114,6 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Gnumeric.
 
-
-%set_perl_req_method relaxed
-
 %prep
 %setup
 %patch -p1
@@ -182,6 +180,10 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Fri Sep 26 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12.18-alt1
+- 1.12.18
+- added strict dependency to latest libgnomeoffice (ALT #30170)
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12.17-alt1
 - 1.12.17
 

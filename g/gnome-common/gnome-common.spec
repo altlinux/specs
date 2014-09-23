@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome-common
 Version: %ver_major.0
@@ -27,7 +27,7 @@ needed to run GNOME.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 cp doc-build/README README.doc
 
 %files
@@ -36,10 +36,15 @@ cp doc-build/README README.doc
 %_datadir/aclocal/gnome-common.m4
 %_datadir/aclocal/gnome-compiler-flags.m4
 %_datadir/aclocal/gnome-code-coverage.m4
+%_datadir/aclocal/ax_check_enable_debug.m4
+%_datadir/aclocal/ax_code_coverage.m4
 %_datadir/%name/
-%doc README* ChangeLog doc/usage.txt
+%doc README* ChangeLog
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -12,12 +12,13 @@
 %def_enable windows_live
 %def_enable telepathy
 %def_enable pocket
+%def_enable media_server
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -120,6 +121,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable telepathy} \
 	%{subst_enable pocket} \
 	%{?_enable_windows_live:--enable-windows-live} \
+	%{?_enable_media_server:--enable-media-server} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -133,6 +135,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_libexecdir/goa-daemon
 %_datadir/%name/
 %_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
+%_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
 %_datadir/icons/hicolor/*/*/*.png
 %_man8dir/goa-daemon.*
 %doc NEWS
@@ -166,6 +169,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Jul 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
 - 3.12.4
 

@@ -1,6 +1,7 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
+%define _name org.gnome.Contacts
 %def_with cheese
 
 Name: gnome-contacts
@@ -10,7 +11,7 @@ Release: alt1
 Summary: Contacts manager for GNOME
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: https://live.gnome.org/ThreePointOne/Features/Contacts
+Url: https://wiki.gnome.org/Apps/Contacts
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -46,15 +47,19 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/gnome-contacts-search-provider
-%_datadir/applications/%name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.Contacts.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.Contacts.enums.xml
-%_datadir/dbus-1/services/org.gnome.Contacts.SearchProvider.service
-%_datadir/gnome-shell/search-providers/gnome-contacts-search-provider.ini
-%_datadir/appdata/%name.appdata.xml
+%_datadir/applications/%_name.desktop
+%_datadir/glib-2.0/schemas/%_name.gschema.xml
+%_datadir/glib-2.0/schemas/%_name.enums.xml
+%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%_name.SearchProvider.service
+%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Mar 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

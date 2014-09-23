@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -39,8 +39,6 @@ Requires: cinnamon-settings-daemon
 Requires: nemo
 Requires: upower polkit-gnome gcr
 Requires: %name-translations
-
-Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
 BuildPreReq: rpm-build-gnome >= 0.5
 BuildPreReq: gnome-common
@@ -122,6 +120,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 2 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt2
+- rebuild with new gnome
+
 * Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
 - 2.2.2
 

@@ -1,10 +1,10 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -14,12 +14,13 @@ Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: dconf gdm
-
 %define nm_ver 0.9
 %define glib_ver 2.36.0
 %define gtk_ver 3.11.3
 %define secret_ver 0.18
+%define geoclue_ver 2.1.2
+
+Requires: dconf gdm geoclue2 >= %geoclue_ver
 
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
@@ -32,7 +33,9 @@ BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst2.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libcheese-devel
 BuildRequires: libsecret-devel >= %secret_ver
+BuildRequires: geoclue2-devel >= %geoclue_ver
 
 %description
 GNOME Initial Setup is an alternative to firstboot, providing
@@ -63,6 +66,7 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_libexecdir/gnome-welcome-tour
 %_sysconfdir/xdg/autostart/gnome-welcome-tour.desktop
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
+%_sysconfdir/xdg/autostart/%name-first-login.desktop
 %_datadir/gdm/greeter/applications/%name.desktop
 %_datadir/gdm/greeter/applications/setup-shell.desktop
 %_datadir/gnome-session/sessions/%name.session
@@ -73,6 +77,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 

@@ -1,8 +1,9 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
+%define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -23,6 +24,21 @@ Requires: geoclue2 >= %geoclue_ver
 Requires: libgeocode-glib-gir >= %geocode_ver
 Requires: libchamplain-gir >= %champlain_ver
 
+# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Champlain)
+Requires: typelib(Clutter)
+Requires: typelib(Cogl)
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(GeocodeGlib)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GObject)
+Requires: typelib(Gtk)
+Requires: typelib(GtkChamplain)
+Requires: typelib(GtkClutter)
+Requires: typelib(Soup)
+
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk+3-gir-devel
@@ -41,7 +57,8 @@ in fall of 2013.
 %configure \
 	--disable-static \
 	--disable-schemas-compile
-%make_build
+# SMP-incompatible build
+%make
 
 %install
 %makeinstall_std
@@ -53,11 +70,16 @@ in fall of 2013.
 %_datadir/applications/*
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/*/%name.png
+%_iconsdir/HighContrast/*x*/apps/%name.png
+%_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.maps.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
 %doc README NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

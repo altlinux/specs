@@ -1,9 +1,10 @@
-%define ver_major 3.12
+%define ver_major 3.14
+%define _libexecdir %_prefix/libexec
 %def_enable privatelib
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -29,12 +30,16 @@ BuildRequires: libcairo-devel >= 1.10.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.17.1
-BuildRequires: libgdk-pixbuf-devel
+BuildRequires: libclutter-devel >= 1.19.5 libcogl-devel >= 1.17.1 libwayland-server-devel
+BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= 0.99.0
+BuildRequires: libxkbcommon-x11-devel libinput-devel libxkbfile-devel xkeyboard-config-devel
+# for mutter native backend
+BuildRequires: libdrm-devel libsystemd-devel
+
 
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
@@ -99,6 +104,7 @@ Development docs package for mutter
 
 %prep
 %setup
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -106,7 +112,8 @@ DATADIRNAME=share %configure \
 	--enable-introspection \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
-	--disable-schemas-compile
+	--disable-schemas-compile \
+	--enable-compile-warnings=maximum
 
 %make_build
 
@@ -116,20 +123,22 @@ DATADIRNAME=share %configure \
 %find_lang --with-gnome %name creating-%name-themes
 
 %files -f %name.lang
-%doc README AUTHORS NEWS
 %_bindir/*
+%_libexecdir/%name-restart-helper
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*.so
 %_desktopdir/%name.desktop
 %_man1dir/*
+%doc NEWS
+#%doc README AUTHORS
 
 %if_enabled privatelib
 %files -n lib%name
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%doc doc/*.txt HACKING
+#%doc doc/*.txt HACKING
 %_includedir/%name
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -142,18 +151,22 @@ DATADIRNAME=share %configure \
 %_libdir/%name/*.gir
 
 %files gnome
+%_desktopdir/mutter-wayland.desktop
 %_datadir/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
 %_datadir/GConf/gsettings/mutter-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
-%_datadir/gnome/wm-properties/%name-wm.desktop
+#%_datadir/gnome/wm-properties/%name-wm.desktop
 
 %if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
-
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.0-alt1
+- 3.14.0
+
 * Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.12.2-alt1
 - 3.12.2
 

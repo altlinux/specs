@@ -1,8 +1,8 @@
 %define _name adwaita-icon-theme
-%define ver_major 3.13
+%define ver_major 3.14
 
 Name: icon-theme-adwaita
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Adwaita icon theme
@@ -37,11 +37,14 @@ Adwaita icon theme for GTK+.
 %find_lang %_name
 
 %files -f %_name.lang
-%_iconsdir/Adwaita/*
+%_iconsdir/Adwaita/
 %_datadir/pkgconfig/%_name.pc
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Jul 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.13.4-alt1
 - first build for Sisyphus
 

@@ -1,12 +1,12 @@
 %define _name eog
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
 %def_enable map
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: EOG plugins
 License: %gpl2plus
@@ -76,29 +76,37 @@ export ac_cv_path_POSTR=%_bindir/postr
 %files -f %name.lang
 %_libdir/%_name/plugins/*
 %_datadir/%_name/plugins/*
+%_datadir/appdata/%_name-*.metainfo.xml
 %if_enabled postasa
 %exclude %_libdir/%_name/plugins/postasa.plugin
 %exclude %_libdir/%_name/plugins/libpostasa.so
+%exclude %_datadir/appdata/%_name-postasa.metainfo.xml
 %endif
 %exclude %_libdir/%_name/plugins/libpostr.so
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.exif-display.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.fullscreenbg.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.pythonconsole.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.export-to-folder.gschema.xml
+%exclude %_datadir/appdata/%_name-postr.metainfo.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.exif-display.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.fullscreenbg.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.pythonconsole.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%_name.plugins.export-to-folder.gschema.xml
 %doc AUTHORS NEWS README
 
 %files -n %_name-plugins-postr
 %_libdir/%_name/plugins/libpostr.so
+%_datadir/appdata/%_name-postr.metainfo.xml
 
 %if_enabled postasa
 %files -n %_name-plugins-postasa
 %_libdir/%_name/plugins/postasa.plugin
 %_libdir/%_name/plugins/libpostasa.so
+%_datadir/appdata/%_name-postasa.metainfo.xml
 %endif
 
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
 - rebuilt against libgdata.so.19
 

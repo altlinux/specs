@@ -1,9 +1,9 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.11.90
+Requires: gnome-shell >= 3.14.0
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -162,22 +162,29 @@ __EOF__
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/prefs.js
 
 # launch-new-instance
-%dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/convenience.js
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/extension.js
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/metadata.json
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/stylesheet.css
+%dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/convenience.js
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/stylesheet.css
 
 # window-list
-%dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/classic.css
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/convenience.js
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/extension.js
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/metadata.json
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/prefs.js
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/stylesheet.css
+%dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/classic.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/convenience.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
 
+# screenshot-window-sizer
+%dir %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.screenshot-window-sizer.gschema.xml
+%_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/convenience.js
+%_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
 %doc README
 
@@ -195,6 +202,9 @@ __EOF__
 %endif
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

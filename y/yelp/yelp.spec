@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.12
+%define ver_major 3.14
 %def_disable debug
 %def_disable lzma
 
@@ -17,16 +17,16 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.ac
-%define gio_ver 2.28.5
-%define gtk_ver 3.0.5
+%define gio_ver 2.38
+%define gtk_ver 3.13.3
 %define xslt_ver 1.1.4
-%define webkit_ver 1.3.2
-%define yelpxsl_ver 3.5.91
+%define webkit_ver 1.3.10
+%define yelpxsl_ver 3.12.0
 %define intltool_ver 0.5.0
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
-Requires: dconf gnome-icon-theme
+Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common intltool >= %intltool_ver itstool gtk-doc
 BuildPreReq: libgio-devel >= %gio_ver
@@ -83,7 +83,7 @@ Yelp.
 
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -95,7 +95,7 @@ Yelp.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang %name
 
@@ -119,6 +119,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

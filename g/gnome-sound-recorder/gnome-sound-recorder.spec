@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.12
+%define ver_major 3.14
 %define _name org.gnome.SoundRecorder
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -14,15 +14,29 @@ Url: https://live.gnome.org/Ghex
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+BuildArch: noarch
+
 Obsoletes: gnome-media-common
 Obsoletes: gnome-media-grecord
 Provides:  gnome-media-grecord = %version-%release
 
-Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
-
-%add_typelib_req_skiplist typelib(Gd)
 %define glib_ver 2.31.10
 %define gtk_ver 3.9.4
+%define gjs_ver 1.41
+
+Requires: libgjs >= 1.41
+Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
+# find ./ -name *.js |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
+Requires: typelib(Gdk)
+Requires: typelib(GdkPixbuf)
+Requires: typelib(Gio)
+Requires: typelib(GLib)
+Requires: typelib(GObject)
+Requires: typelib(Gst)
+Requires: typelib(GstAudio)
+Requires: typelib(GstPbutils)
+Requires: typelib(Gtk)
+Requires: typelib(Pango)
 
 BuildRequires: gnome-common libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgjs-devel libgtk+3-gir-devel intltool yelp-tools
@@ -47,18 +61,19 @@ The GNOME application for record and play sound files.
 
 %files -f %name.lang
 %_bindir/*
-%_libdir/%name/
 %_datadir/%name/
 %_datadir/applications/%_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-#%_iconsdir/HighContrast/*x*/apps/%name.png
-#%_datadir/appdata/%name.appdata.xml
+%_iconsdir/HighContrast/*x*/apps/*.png
+%_datadir/appdata/%_name.appdata.xml
 %doc NEWS README
 
-%exclude %_libdir/%name/*.la
 
 %changelog
+* Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0.1-alt1
+- 3.14.0.1
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

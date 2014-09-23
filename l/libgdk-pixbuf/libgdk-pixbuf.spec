@@ -1,7 +1,7 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.30
+%define ver_major 2.31
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
@@ -11,8 +11,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.8
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -119,7 +119,7 @@ the functionality of the installed GdkPixBuf library.
 
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
@@ -139,7 +139,7 @@ echo : >>%_name/abicheck.sh
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 ln %buildroot%_bindir/%_name-query-loaders %buildroot%_libdir/%_name-%api_ver/%binary_ver/
 
@@ -225,6 +225,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Sat Sep 27 2014 Yuri N. Sedunov <aris@altlinux.org> 2.31.1-alt1
+- 2.31.1
+
 * Wed Sep 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.30.8-alt2
 - Fix gdk-pixbuf-loaders.filetrigger.
 

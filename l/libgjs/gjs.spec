@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 1.40
+%define ver_major 1.41
 %define _name gjs
 %define api_ver 1.0
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.91
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -26,8 +26,10 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.39.90
-%define gi_ver 1.39.90
+%define glib_ver 2.41.0
+%define gi_ver 1.41.4
+
+Requires: gobject-introspection
 
 BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs24-devel libcairo-devel
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
@@ -54,7 +56,6 @@ Files for development with %name.
 Summary: Tests for the Gjs package
 Group: Development/Other
 Requires: %name = %version-%release
-
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed Gjs library package.
@@ -66,7 +67,6 @@ the functionality of the installed Gjs library package.
 
 %build
 %autoreconf
-#export GJS_LIBS="$GJS_LIBS `pkg-config --libs nspr`"
 %configure \
     --disable-static \
     %{?_enable_installed_tests:--enable-installed-tests}
@@ -112,6 +112,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Tue Sep 02 2014 Yuri N. Sedunov <aris@altlinux.org> 1.41.91-alt1
+- 1.41.91
+
 * Tue Apr 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.1-alt1
 - 1.40.1
 

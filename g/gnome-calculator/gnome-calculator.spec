@@ -1,7 +1,8 @@
-%define ver_major 3.12
+%define ver_major 3.14
+%define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -16,7 +17,7 @@ Provides: gcalctool = 6.6.2
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 BuildPreReq: intltool yelp-tools itstool
-BuildPreReq: libgtk+3-devel >= 3.10
+BuildPreReq: libgtk+3-devel >= 3.12
 BuildRequires: libgio-devel >= 2.31.0 libxml2-devel vala-tools >= 0.22
 BuildRequires: libgtksourceview3-devel
 
@@ -46,6 +47,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 
 %files -f %name.lang
 %_bindir/*
+%_libexecdir/%name-search-provider
+%_datadir/dbus-1/services/org.gnome.Calculator.SearchProvider.service
+%_datadir/gnome-shell/search-providers/gnome-calculator-search-provider.ini
 %_desktopdir/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
@@ -53,6 +57,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Sep 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
 - 3.12.4
 

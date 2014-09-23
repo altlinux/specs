@@ -1,5 +1,5 @@
 %define _name org.gnome.FileRoller
-%define ver_major 3.12
+%define ver_major 3.14
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -7,13 +7,14 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME 2
-License: %gpl2plus
 Group: File tools
+License: %gpl2plus
+Url: http://fileroller.sourceforge.net
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
@@ -22,7 +23,7 @@ Patch2: %name-3.12.1-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
-%define gtk_ver 3.9.3
+%define gtk_ver 3.12.0
 %define nautilus_ver 2.91.91
 %define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
@@ -40,7 +41,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnautilus-devel >= %nautilus_ver
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: libSM-devel libjson-glib-devel libnotify-devel
+BuildRequires: libjson-glib-devel libnotify-devel
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_magic:BuildRequires: libmagic-devel}
 
@@ -87,7 +88,7 @@ File Roller является графической оболочкой к раз
     * Отдельные файлы сжатые при помощи gzip, bzip, bzip2, compress, lzop.
 
 %prep
-%setup -q
+%setup
 %patch
 %patch1
 %patch2 -p1 -b .tzo
@@ -107,7 +108,7 @@ rm -f data/%name.desktop{,.in}
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -121,16 +122,20 @@ rm -f data/%name.desktop{,.in}
 %_datadir/%name/*
 %_datadir/dbus-1/services/%_name.service
 %_datadir/dbus-1/services/%_name.ArchiveManager1.service
-%_desktopdir/*
+%_desktopdir/%_name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
+%_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS NEWS README
 
 
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

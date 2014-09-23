@@ -1,13 +1,14 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3
 %define so_ver 4
 
 %def_enable xps
 %def_enable introspection
+%def_enable browser_plugin
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -19,21 +20,23 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
-Requires: gnome-icon-theme gnome-icon-theme-symbolic
+Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
 
 %define poppler_ver 0.24.0
-%define gtk_ver 3.8.0
+%define gtk_ver 3.12.0
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc
 BuildRequires: intltool yelp-tools itstool
-BuildRequires: gnome-icon-theme libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
+BuildRequires: icon-theme-adwaita libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
+BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
+%{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
 
 %if_enabled introspection
@@ -84,12 +87,23 @@ Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Evince library
 
+%package -n mozilla-plugin-%name
+Summary: Mozilla plugin for the Evince document viewer
+Group: Networking/WWW
+Requires: %name = %version-%release
+Requires: browser-plugins-npapi
+
+%description -n mozilla-plugin-%name
+A Mozilla plug-in that enables to view documents from within webpages
+via the Evince.
+
 %prep
 %setup
 
 [ ! -d m4 ] && mkdir m4
 
 %build
+export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -103,11 +117,12 @@ GObject introspection devel data for the Evince library
 	--enable-dbus \
 	%{subst_enable xps} \
 	%{subst_enable introspection} \
+	%{?_enable_browser_plugin:--enable-browser-plugin} \
 	--disable-static
 %make
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 
@@ -131,6 +146,13 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_libexecdir/evince*
 %_desktopdir/%name.desktop
 %_desktopdir/%name-previewer.desktop
+%_datadir/appdata/%name-comicsdocument.metainfo.xml
+%_datadir/appdata/%name-djvudocument.metainfo.xml
+%_datadir/appdata/%name-pdfdocument.metainfo.xml
+%_datadir/appdata/%name-psdocument.metainfo.xml
+%_datadir/appdata/%name-tiffdocument.metainfo.xml
+%_datadir/appdata/%name-xpsdocument.metainfo.xml
+%_datadir/appdata/%name.appdata.xml
 
 %_datadir/dbus-1/services/org.gnome.evince.Daemon.service
 %_datadir/%name/
@@ -147,6 +169,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %files dvi
 %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 %_libdir/evince/%so_ver/backends/libdvidocument.so
+%_datadir/appdata/%name-dvidocument.metainfo.xml
 
 %files -n lib%name-devel
 %_includedir/evince
@@ -166,10 +189,19 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_datadir/gir-1.0/EvinceView-3.0.gir
 %endif
 
+%if_enabled browser_plugin
+%files -n mozilla-plugin-%name
+%browser_plugins_path/libevbrowserplugin.so
+%endif
+
+%exclude %browser_plugins_path/libevbrowserplugin.la
 %exclude %_libdir/%name/%so_ver/backends/*.la
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

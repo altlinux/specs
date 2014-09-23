@@ -1,9 +1,9 @@
-%define ver_major 0.3
+%define ver_major 3.14
 %define api_ver 1.0
 %def_enable python
 
 Name: gitg
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -28,7 +28,7 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.12
 %define gtksourceview_ver 3.10
-%define git2_ver 0.0.18
+%define git2_ver 0.0.20
 %define webkit_ver 2.2
 %define gtkspell_ver 3.0.3
 
@@ -40,7 +40,7 @@ BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
 BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libpeas-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel 
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
@@ -151,6 +151,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Jul 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name aisleriot
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -25,7 +25,7 @@ Requires: pysol-cardsets
 %define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 
-BuildRequires: intltool desktop-file-utils yelp-tools libgio-devel >= %glib_ver
+BuildRequires: intltool desktop-file-utils yelp-tools appdata-tools  libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
 BuildRequires: libICE-devel libSM-devel gstreamer-devel guile20 libguile20-devel
 BuildRequires: /proc
@@ -66,11 +66,18 @@ fi
 %_iconsdir/HighContrast/*/apps/*.svg
 %_sysconfdir/gconf/schemas/%_name.schemas
 %_datadir/glib-2.0/schemas/org.gnome.Patience.WindowState.gschema.xml
+%_datadir/appdata/sol.appdata.xml
 %_man6dir/sol.*
 
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
+* Mon Apr 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
