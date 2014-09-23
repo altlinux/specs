@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.4
-Release: alt4
+Release: alt5
 
 Source: %name-%version.tar
 
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Tue Sep 23 2014 Paul Wolneykien <manowar@altlinux.org> 2.4-alt5
+- Rebuild with a new version of Gambit
+
 * Mon Mar 10 2014 Paul Wolneykien <manowar@altlinux.org> 2.4-alt4
 - Rebuild with a new version of Gambit
 

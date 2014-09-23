@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.7.2
+Version: 4.7.3
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -8,14 +8,14 @@ Group: Development/Other
 URL: http://www.iro.umontreal.ca/~gambit/
 Conflicts: ghostscript-minimal < 8.64-alt5
 
-Packager: Paul Wolneykien <manowar@altlinux.ru>
+Packager: Paul Wolneykien <manowar@altlinux.org>
 
 %def_without bootstrap
 
 Source: %name-%version.tar
 %if_with bootstrap
 Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.7.1
+%define bootstrap_version 4.7.2
 BuildRequires: gambit >= %bootstrap_version
 %endif
 
@@ -166,6 +166,9 @@ cd %name-%version
 %_infodir/*.info*
 
 %changelog
+* Tue Sep 23 2014 Paul Wolneykien <manowar@altlinux.org> 4.7.3-alt1
+- New version 4.7.3.
+
 * Mon Mar 10 2014 Paul Wolneykien <manowar@altlinux.ru> 4.7.2-alt1
 - repocop cronbuild 20140310. At your service.
 
