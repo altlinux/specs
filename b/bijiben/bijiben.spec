@@ -1,14 +1,14 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 Name: bijiben
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note editor for GNOME
 License: LGPLv3+
 Group: Graphical desktop/GNOME
-Url: https://live.gnome.org/Bijiben
+Url: https://wiki.gnome.org/Apps/Bijiben
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -22,7 +22,11 @@ BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libclutter-gtk3-devel libwebkitgtk3-devel
 BuildRequires: libgnome-online-accounts-devel libzeitgeist2.0-devel
 BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools
-BuildRequires: libuuid-devel
+BuildRequires: libuuid-devel evolution-data-server-devel evolution-devel
+# following  unusual reqs needed to link against evolution-3.13.6 libraries
+BuildRequires: libchamplain-gtk3-devel libgail3-devel gcr-libs-devel libp11-kit-devel
+BuildRequires: libgnome-desktop3-devel libdbus-devel libdbus-glib-devel libgeocode-glib-devel
+BuildRequires: libgeoclue-devel libgtkspell3-devel
 
 %description
 Bijiben is an attempt to design an intuitive note editor with strong
@@ -36,7 +40,7 @@ desktop integration.
 	--disable-static \
 	--disable-schemas-compile \
 	--disable-update-mimedb
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -59,6 +63,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
