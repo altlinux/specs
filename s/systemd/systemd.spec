@@ -56,7 +56,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 216
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1740,6 +1740,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt4
+- backport fixes for timesyncd from upstream master
+- backport many fixes for mem leak from upstream master
+
 * Mon Sep 15 2014 Alexey Shabalin <shaba@altlinux.ru> 1:216-alt3
 - move systemd-machine-id-setup to systemd-utils
 - move configs /etc/{machine-info,hostname,vconsole.conf,locale.conf} to systemd-utils
