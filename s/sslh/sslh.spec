@@ -1,5 +1,5 @@
 Name: sslh
-Version: 1.13b
+Version: 1.16
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -8,7 +8,8 @@ License: GPL
 Group: System/Servers
 Url: http://www.rutschle.net/tech/sslh.shtml
 
-Source: http://www.rutschle.net/tech/sslh-%version.tar
+# Source-url: http://www.rutschle.net/tech/sslh-v%version.tar.gz
+Source: %name-%version.tar
 Source1: sslh.init
 Source2: sslh.config
 
@@ -44,13 +45,16 @@ install -D -m 755 %SOURCE1 %buildroot%_initdir/%name
 %preun_service %name
 
 %files
-%doc README
+%doc README.md
 %_man8dir/sslh.8.*
 %_sbindir/sslh
 %config(noreplace) %_initdir/sslh
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
+- new version 1.16 (with rpmrb script)
+
 * Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 1.13b-alt1
 - new version (1.13b) with rpmgs script
 
