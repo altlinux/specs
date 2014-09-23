@@ -15,7 +15,7 @@
 
 Name: 	 seamonkey
 Version: 2.29
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -45,6 +45,7 @@ Patch6:		seamonkey-2.13.2-alt-fix-build.patch
 Patch7:     	seamonkey-2.19-elfhack.patch
 Patch8:		seamonkey-2.26-enable-addons.patch
 Patch9:		mozilla-js-makefile.patch
+Patch10:		firefox-32-baseline-disable.patch
 
 PreReq:		urw-fonts
 
@@ -158,6 +159,13 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %patch7 -p2
 #%%patch8 -p2
 %patch9 -p2
+
+# https://bugzilla.altlinux.org/30322
+%ifarch %{ix86}
+pushd mozilla
+%patch10 -p2
+popd
+%endif
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -388,6 +396,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Sep 23 2014 Michael Shigorin <mike@altlinux.org> 1:2.29-alt2
+- NMU: applied fedora patch to disable baseline jit
+  working around a segfault on i586 (closes: #30322)
+
 * Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.29-alt1
 - New version
 
