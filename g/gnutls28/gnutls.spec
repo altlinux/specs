@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.2.17
+Version: 3.2.18
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -274,6 +274,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Wed Sep 24 2014 Mikhail Efremov <sem@altlinux.org> 3.2.18-alt1
+- Updated to 3.2.18.
+
 * Tue Sep 02 2014 Mikhail Efremov <sem@altlinux.org> 3.2.17-alt1
 - Rename utils subpackage to gnutls-utils.
 - Updated to 3.2.17.
