@@ -1,6 +1,6 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.16.2
+Version:        3.17.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
@@ -123,7 +123,7 @@ export NSPR_LIB_DIR=%_libdir
 # Generate symbolic info for debuggers
 export XCFLAGS=$RPM_OPT_FLAGS
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 export USE_64=1
 %endif
 
@@ -244,6 +244,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Wed Sep 24 2014 Alexey Gladkov <legion@altlinux.ru> 3.17.1-alt1
+- New version (3.17.1).
+
 * Mon Jun 30 2014 Alexey Gladkov <legion@altlinux.ru> 3.16.2-alt1
 - New version (3.16.2).
 
