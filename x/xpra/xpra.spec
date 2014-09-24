@@ -1,5 +1,5 @@
 Name: xpra
-Version: 0.13.6
+Version: 0.14.7
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -15,6 +15,8 @@ Patch: xpra-pygtk.patch
 # Automatically added by buildreq on Sat Dec 08 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-module-pygobject-devel python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libavcodec-devel libswscale-devel libvpx-devel libx264-devel python-module-Cython python-module-mwlib python-module-paste python-module-pygtk-devel
+
+BuildPreReq: libxkbfile-devel
 
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
 BuildPreReq: python-module-Cython >= 0.20
@@ -84,6 +86,9 @@ patch -p1 <patches/old-libav-no0RGB.patch
 %_datadir/xpra/
 
 %changelog
+* Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 0.14.7-alt1
+- new version 0.14.7 (with rpmrb script)
+
 * Mon Jul 07 2014 Vitaly Lipatov <lav@altlinux.ru> 0.13.6-alt1
 - new version 0.13.6 (with rpmrb script)
 - fix description (ALT bug #30130)
