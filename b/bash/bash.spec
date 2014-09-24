@@ -2,13 +2,12 @@ Name: bash
 %define bash_version 3.2
 %define bash_patchlevel 51
 Version: %bash_version.%bash_patchlevel
-Release: alt2
+Release: alt3
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
 License: GPLv2+
 Url: http://www.gnu.org/software/%name/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.gnu.org/gnu/bash/bash-%bash_version.tar.bz2
 # ftp://ftp.gnu.org/gnu/bash/bash-%bash_version-patches/
@@ -291,6 +290,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Mon Sep 22 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.51-alt3
+- Applied upstream fix for CVE-2014-6271.
+
 * Tue Nov 12 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.51-alt2
 - Rebuilt with readline6.
 

@@ -2,12 +2,13 @@ Name: bash4
 %define bash_version 4.2
 %define bash_patchlevel .45
 Version: %bash_version%bash_patchlevel
-Release: alt1
+Release: alt2
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
 License: GPLv3+
 Url: http://www.gnu.org/software/%name/
+Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
 
 # ftp://ftp.gnu.org/gnu/bash/bash-%bash_version.tar.bz2
 # ftp://ftp.gnu.org/gnu/bash/bash-%bash_version-patches/
@@ -98,7 +99,7 @@ Bash can dynamically load new builtin commands.
 Included are the necessary headers to compile custom builtins.
 
 %prep
-%setup -q -n bash-%version
+%setup -n bash-%version
 %patch -p1
 
 # Remove files which should be regenerated during build.
@@ -268,6 +269,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Tue Sep 23 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.45-alt2
+- Applied upstream fix for CVE-2014-6271.
+
 * Wed Oct 30 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.45-alt1
 - Updated to 4.2.45.
 
