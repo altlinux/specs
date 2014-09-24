@@ -1,8 +1,8 @@
 %define rname sflphone
 
 Name: sflphone-common
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -16,6 +16,7 @@ Patch1: sflphone-1.3.0-alt-find-gsm.patch
 Patch2: sflphone-1.2.2-alt-find-pcre.patch
 Patch10: pjproject-2.0.1-alt-libav.patch
 Patch11: sflphone-1.3.0-alt-libav10.patch
+Patch12:sflphone-1.4.0-alt-fix-compile.patch
 
 # Automatically added by buildreq on Tue Feb 19 2013 (-bi)
 # optimized out: elfutils gcc-c++ gnu-config libavcodec-devel libavutil-devel libccrtp-devel libcom_err-devel libcommoncpp2-devel libdbus-c++ libdbus-devel libgpg-error libkrb5-devel libopencore-amrnb0 libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base ruby ruby-stdlibs
@@ -23,8 +24,9 @@ Patch11: sflphone-1.3.0-alt-libav10.patch
 BuildRequires: gcc-c++ glibc-devel libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel
 BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
-BuildRequires: libzrtpcpp-devel perl-Pod-Parser python-devel
+BuildRequires: zrtpcpp-devel perl-Pod-Parser python-devel libilbc-devel libopus-devel
 BuildRequires: libudev-devel libavdevice-devel libswscale-devel
+BuildRequires: libgnutls-devel
 
 %description
 SFLphone is meant to be a robust enterprise-class desktop phone.
@@ -43,10 +45,12 @@ Authors:
 pushd libs/pjproject-*/
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 popd
-#sed -i 's|^export[[:space:]][[:space:]]*CC[[:space:]][[:space:]]*=.*$|export CC = gcc -c|' libs/pjproject-*/build/cc-auto.mak.in
-#sed -i 's|^export[[:space:]][[:space:]]*CXX[[:space:]][[:space:]]*=.*$|export CXX = g++ -c|' libs/pjproject-*/build/cc-auto.mak.in
-sed -i 's|^export[[:space:]][[:space:]]*AR[[:space:]][[:space:]]*=.*$|export AR = ar rv|' libs/pjproject-*/build/cc-auto.mak.in
+sed -i 's|^export[[:space:]][[:space:]]*CC[[:space:]][[:space:]]*=.*$|export CC = gcc -c|' libs/pjproject-*/build/cc-auto.mak.in
+sed -i 's|^export[[:space:]][[:space:]]*CXX[[:space:]][[:space:]]*=.*$|export CXX = g++ -c|' libs/pjproject-*/build/cc-auto.mak.in
+#sed -i 's|^export[[:space:]][[:space:]]*AR[[:space:]][[:space:]]*=.*$|export AR = ar rv|' libs/pjproject-*/build/cc-auto.mak.in
+sed -i 's|^export[[:space:]][[:space:]]*AR[[:space:]][[:space:]]*=.*$|export AR = ar|' libs/pjproject-*/build/cc-auto.mak.in
 #sed -i 's|^export[[:space:]][[:space:]]*LD[[:space:]][[:space:]]*=.*$|export LD = gcc|' libs/pjproject-*/build/cc-auto.mak.in
 sed -i 's|^export[[:space:]][[:space:]]*RANLIB[[:space:]][[:space:]]*=.*$|export RANLIB = ranlib|' libs/pjproject-*/build/cc-auto.mak.in
 sed -i 's|\$(CROSS_COMPILE)||' libs/pjproject-*/build/cc-gcc.mak
@@ -55,12 +59,16 @@ sed -i 's|\$CROSS_COMPILE||' libs/pjproject-*/aconfigure
 
 %build
 pushd libs/pjproject-*/
-CFLAGS="-fPIC" CC=gcc %configure
+CFLAGS="%optflags_shared" CC=gcc CXX=g++ %configure
 %make dep
 %make
 popd
 %configure \
-    --enable-video
+    --with-libilbc \
+    --with-opus \
+    --enable-video \
+    --enable-ipv6 \
+    #
 %make_build
 
 %install
@@ -77,6 +85,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
+- new version
+
 * Mon May 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
 - built with new libav
 
