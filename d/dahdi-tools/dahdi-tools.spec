@@ -4,8 +4,8 @@
 #============================================================================
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.10.0
-Release: alt2
+Version: 2.10.0.1
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
@@ -279,6 +279,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_libdir/pppd/*/*.so
 
 %changelog
+* Wed Sep 24 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0.1-alt1
+- new version 2.10.0.1
+
 * Sun Aug 17 2014 Denis Smirnov <mithraen@altlinux.ru> 2.10.0-alt2
 - repocop fix for udev-files-in-etc
 
