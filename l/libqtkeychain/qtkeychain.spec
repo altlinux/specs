@@ -1,6 +1,6 @@
 Name: libqtkeychain 
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: QtKeychain is a Qt API to store passwords and other secret data securely.
@@ -26,18 +26,16 @@ QtKeychain devel files.
 %setup -q
 
 %build
-###From CVS only
-suffix=`echo %_libdir | sed s/[^0-9]*//`
-cmake -DCMAKE_INSTALL_PREFIX=/usr/  -DLIB_SUFFIX="$suffix" .
-make
+%cmake -DBUILD_WITH_QT4=ON
+%cmake_build
 
 %install
-make install DESTDIR=%buildroot
+make install -C BUILD DESTDIR=%buildroot
+%find_lang --with-qt qtkeychain
 
-%files
+%files -f qtkeychain.lang
 %doc COPYING
 %_libdir/*.so.*
-/usr/share/qt4/translations/*
 
 %files devel
 %_libdir/cmake/*
@@ -45,6 +43,9 @@ make install DESTDIR=%buildroot
 /usr/include/*
 
 %changelog
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt2
+- fix compile flags, translation packaging
+
 * Thu Sep 11 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.0-alt1
 - first build
 
