@@ -1,8 +1,8 @@
 Name: bash
 %define bash_version 3.2
-%define bash_patchlevel 51
+%define bash_patchlevel 52
 Version: %bash_version.%bash_patchlevel
-Release: alt3
+Release: alt1
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -290,6 +290,11 @@ EOF
 %_includedir/*
 
 %changelog
+* Thu Sep 25 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.52-alt1
+- Updated to 3.2 patchlevel 52.
+- Applied upstream fix for CVE-2014-7169.
+- Applied functions export hardening patch from Florian Weimer.
+
 * Mon Sep 22 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.51-alt3
 - Applied upstream fix for CVE-2014-6271.
 
