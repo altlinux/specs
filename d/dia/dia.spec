@@ -1,6 +1,7 @@
+%define major 0.97
 Name: dia
-Version: 0.97.2
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -14,7 +15,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 %py_provides dia
 Obsoletes: %name-gnome %name-python
 
-Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/dia/%major/%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
@@ -89,6 +90,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 0.97.3-alt1
+- new version 0.97.3 (with rpmrb script)
+
 * Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.97.2-alt2
 - fix Bug 694025 - GLib drop support for adding interfaces after class_init (ALT bug #28807)
 - cleanup build
