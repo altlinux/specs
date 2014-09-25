@@ -1,6 +1,6 @@
 Name: zsh
-Version: 5.0.5
-Release: alt2
+Version: 5.0.6
+Release: alt1
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -111,6 +111,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Thu Sep 25 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.6-alt1
+- Autobuild version bump to 5.0.6
+
 * Mon Jun 23 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.5-alt2
 - Provide additional fpath (for 3d-party completion etc.)
 
