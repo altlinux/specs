@@ -1,13 +1,14 @@
 %define rname mirall
 Name: owncloud-client
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Applet for owncloud files syncronization
 License: GPLv2
 
-Conflicts: mirall <= 1.0.2-alt3
+Provides: mirall = %version-%release
+Obsoletes: mirall <= %version-%release
 
 Source: %rname-%version.tar
 Source1: owncloud-client.desktop
@@ -55,6 +56,12 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/owncloud.*
 
 %changelog
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt2
+- obsolete mirall
+
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt0.M70P.1
+- built for M70P
+
 * Fri Sep 19 2014 Sergey V Turchin <zerg@altlinux.org> 1.6.3-alt1
 - new version
 
