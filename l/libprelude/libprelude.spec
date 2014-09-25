@@ -1,15 +1,12 @@
 Summary: Prelude Hybrid Intrusion Detection System Library
 Name: libprelude
-Version: 1.0.0
-Release: alt3
+Version: 1.2.6rc1
+Release: alt1.git20140916
 License: GPLv2
 Group: System/Libraries
 Url: http://www.prelude-ids.org/
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Source: %name-%version.tar
-Patch0: libprelude-1.0.0-alt-extern-libltdl.patch
-Patch1: libprelude-1.0.0-alt-DSO.patch
 
 %def_enable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -18,7 +15,9 @@ Patch1: libprelude-1.0.0-alt-DSO.patch
 %{?_enable_gtk_doc:BuildPreReq: gtk-doc}
 
 # Automatically added by buildreq on Mon Oct 17 2011
-BuildRequires: gcc-c++ libgcrypt-devel libgnutls-extra-devel libltdl7-devel liblua5-devel perl-devel python-devel swig glib2-devel
+BuildRequires: gcc-c++ libgcrypt-devel libgnutls-devel libltdl7-devel liblua5-devel perl-devel python-devel swig glib2-devel
+
+BuildPreReq: flex gtk-doc-mkpdf
 
 %description
 The Prelude Library is a collection of generic functions providing
@@ -132,20 +131,20 @@ Install perl-%name if you want to use any perl scripts that use %name.
 
 %prep
 %setup
-%patch0 -p0
-%patch1 -p0
 
 %build
 %autoreconf
 %configure %{subst_enable static} \
 	--localstatedir=%_var \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--with-perl-installdirs=vendor
+	--with-perl-installdirs=vendor \
+	--enable-threads=posix \
+	--disable-rpath
 
 rm -fR libltdl
 sed -i 's|^\(CFLAGS =.*\)|\1 -include %_includedir/stdio.h|' \
 	$(find ./ -name Makefile)
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -153,12 +152,15 @@ sed -i 's|^\(CFLAGS =.*\)|\1 -include %_includedir/stdio.h|' \
 # Fix time stamp for both 32 and 64 bit libraries
 touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 
+# disable broken library
+rm -f %buildroot%_libdir/PreludeEasy.*
+
 %files
 %doc README LICENSE.README AUTHORS COPYING NEWS HACKING.README
 %_bindir/prelude-adduser
 %_bindir/prelude-admin
 %_libdir/%{name}*.so.*
-%_libdir/PreludeEasy.so
+#_libdir/PreludeEasy.so
 %config(noreplace) %_sysconfdir/prelude
 %_man1dir/*
 %dir %_spooldir/*
@@ -166,7 +168,7 @@ touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 %if_enabled static
 %files devel-static
 %_libdir/%{name}*.a
-%_libdir/PreludeEasy.a
+#_libdir/PreludeEasy.a
 %endif
 
 %files devel
@@ -174,6 +176,7 @@ touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 %_libdir/%{name}*.so
 %_includedir/%name
 %_datadir/aclocal/*
+%_datadir/%name
 %_libdir/pkgconfig/%name.pc
 
 %files devel-doc
@@ -187,6 +190,9 @@ touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 %perl_vendor_archlib/Prelude*
 
 %changelog
+* Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6rc1-alt1.git20140916
+- Version 1.2.6rc1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.0-alt3
 - built for perl 5.18
 

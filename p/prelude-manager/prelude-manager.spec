@@ -3,21 +3,20 @@
 
 Summary:        Prelude Hybrid Intrusion Detection System Manager
 Name:           prelude-manager
-Version:        1.0.1
-Release:        alt1.1
+Version:        1.2.6
+Release:        alt1.rc2.git20140923
 License:        GPLv2
 Group:          System/Servers
 URL:            http://www.prelude-ids.org/
 
 Source:		http://www.prelude-ids.org/download/releases/%name-%version.tar.gz
 Source99:	%name-initd
-Patch: %name-%version-alt-changes.patch
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 BuildRequires: gcc-c++ libgnutls-devel libpreludedb-devel libwrap-devel libxml2-devel libgcrypt-devel
+
+BuildPreReq: libpth-devel libprelude-devel
 
 %description
 Prelude Manager is the main program of the Prelude Hybrid IDS suite.
@@ -238,19 +237,20 @@ IDS. Он представляет собой мультитредовый се�
 Данный плагин дает возможность ведения журналов в базе данных.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
-%add_optflags -include %_includedir/stdio.h
+%add_optflags -include %_includedir/stdio.h -fno-strict-aliasing
 # Fix undefined symbol
 find ./plugins -type f -print0 -name Makefile | xargs -r0 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(LIBPRELUDEDB_LIBS) |g"
 
 %configure %{subst_enable static} \
 	--localstatedir=%_var \
 	--docdir=%_defaultdocdir/%name-%version \
-	--sysconfdir=%_sysconfdir/prelude
+	--sysconfdir=%_sysconfdir/prelude \
+	--enable-threads=posix \
+	--disable-rpath
 
 
 %make
@@ -333,6 +333,9 @@ EOF
 %endif
 
 %changelog
+* Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.rc2.git20140923
+- Version 1.2.6rc2
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
 - Fixed build with new glibc
 
