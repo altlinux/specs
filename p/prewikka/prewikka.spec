@@ -1,12 +1,12 @@
 Name: prewikka
-Version: 0.9.14
-Release: alt1.1.1
+Version: 1.2.6
+Release: alt1.rc2.git20140923
 Summary: Graphical front-end analysis console for the Prelude Hybrid IDS Framework
 Group: Security/Networking
 License: GPLv2+
 Url: http://www.prelude-ids.org
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-Source0: http://www.prelude-ids.org/download/releases/%name-%version.tar.gz
+# https://prelude-ids.org/git/prewikka.git
+Source0: %name-%version.tar.gz
 Source1: %name.apache_mod_python
 Source2: %name.apache_cgi
 Source3: %name.init
@@ -50,13 +50,24 @@ Requires: %name = %version
 This package contains %name CGI web frontend
 
 %prep
-%setup -q
+%setup
+
+find -type f -exec sed -i 's|preludedbold|preludedb|g' '{}' +
+find -type f -exec sed -i 's|preludeold|prelude|g' '{}' +
 
 %build
-%__python setup.py build -e %_bindir/python%__python_version
+python setup.py config
+%python_build -e %_bindir/python%_python_version
 
 %install
-%__python setup.py install -O1 --root=%buildroot
+%python_install || (PYTHONPATH=$PWD/prewikka python -c "import siteconfig";
+	install -m644 prewikka/siteconfig.py* \
+		%buildroot%python_sitelibdir/prewikka/)
+%python_install
+
+#install -d %buildroot%python_sitelibdir/prewikka
+#install -p -m644 build/lib/prewikka/siteconfig.py \
+#	%buildroot%python_sitelibdir/prewikka/
 mkdir -p %buildroot%_defaultdocdir/%name-%version
 mkdir -p %buildroot%_sbindir/
 chmod 0644 %buildroot/%_datadir/%name/htdocs/css/style.css
@@ -82,6 +93,7 @@ EOF
 %doc AUTHORS README NEWS HACKING.README
 %dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/%name.conf-dist
 %_datadir/%name
 %python_sitelibdir/%name/
 %python_sitelibdir/%{name}*.egg-info
@@ -104,6 +116,9 @@ EOF
 
 
 %changelog
+* Thu Sep 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.rc2.git20140923
+- Version 1.2.6rc2
+
 * Thu Oct 27 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.14-alt1.1.1
 - Rebuild with Python-2.7
 
