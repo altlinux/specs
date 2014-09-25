@@ -1,6 +1,6 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.3.36
+Version: 1.4.1
 Release: alt1
 
 Summary: Your friendly task manager
@@ -12,7 +12,6 @@ Url: http://taskcoach.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%oname-%version.tar
-Patch: %name.patch
 
 BuildArch: noarch
 
@@ -28,7 +27,7 @@ Requires: lsb-release xprop
 AutoProv: no
 # wait for correct build python-module-pysyncml
 %add_python_req_skip _pysyncml _growl _powermgt
-%add_python_req_skip _winreg pywintypes win32api win32com win32con win32gui
+%add_python_req_skip _winreg pywintypes win32api win32com win32con win32gui win32event win32file
 
 %description
 Task Coach is a simple open source todo manager to manage personal
@@ -40,8 +39,8 @@ deal with composite tasks.
 
 %prep
 %setup -n %oname-%version
-%patch -p2
 %__subst "s|^ *wxversion|#wxversion|g" taskcoach.py
+%__subst "s|current_dist =.*|current_dist = ['debian']|g" setup.py
 
 %build
 %python_build
@@ -64,6 +63,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Sep 25 2014 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Wed Apr 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1.3.36-alt1
 - new version 1.3.36 (with rpmrb script)
 
