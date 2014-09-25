@@ -2,8 +2,8 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.6
-Release: alt2
+Version: 1.1.8
+Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
 Summary: a library for accessing Media Transfer Protocol devices
@@ -110,6 +110,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Thu Sep 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.8-alt1
+- 1.1.8
+
 * Mon Jul 01 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.6-alt2
 - build with --with-udev-group=audio and --with-udev-mode=0660
 
