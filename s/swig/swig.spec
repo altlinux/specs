@@ -2,7 +2,7 @@
 Name: swig
 Epoch: 1
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -26,7 +26,7 @@ BuildPreReq: python3-devel python-tools-2to3 zlib-devel
 BuildRequires: findlib gcc-c++ guile18-devel imake java-devel
 BuildRequires: libXt-devel liblua5-devel libruby-devel lua5 mono-mcs
 BuildRequires: perl-devel php5-devel python-devel ruby ruby-module-etc
-BuildRequires: tcl-devel xorg-cf-files tidy htmldoc
+BuildRequires: tcl-devel xorg-cf-files tidy htmldoc perl-devel
 
 Provides: %name-devel = %version
 Obsoletes: %name-deve
@@ -49,6 +49,7 @@ Summary: SWIG runtime php library
 %package runtime-perl
 Group: System/Libraries
 Summary: SWIG runtime perl library
+Requires: %name = %EVR
 
 %package runtime-python
 Group: System/Libraries
@@ -133,13 +134,14 @@ subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 	--with-boost \
 	--with-pyinc=%_includedir/python%_python_version \
 	--with-pylib=%_libdir/python%_python_version \
-	--with-tclconfig=%_libdir
+	--with-tclconfig=%_libdir \
+	--with-perl5
 	#--with-tcl --with-python --with-perl5 --with-java --with-guile --with-ruby --with-php4
 
 #%__subst -p 's,/usr/local/include/Py,%_includedir/python%__python_version,g' Runtime/Makefile
 # SMP incompatible
 # no `all' target
-%make
+%make_build
 %make docs
 #%make runtime
 #pushd Runtime
@@ -188,9 +190,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%_libdir/libswigphp*.so*
 #%doc CHANGES.current LICENSE
 
-#%files runtime-perl
-#%_libdir/libswigpl*.so*
-#%doc CHANGES.current LICENSE
+#files runtime-perl
+#_libdir/libswigpl*.so*
+#doc CHANGES.current LICENSE
 
 #%files runtime-python
 #%_libdir/libswigpy*.so*
@@ -205,6 +207,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt2
+- Added perl support
+
 * Fri May 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt1
 - Version 3.0.0
 
