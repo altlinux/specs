@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.30
-Release: alt4
+Version: 0.31
+Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Thu Sep 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- added dbus-xml-not-in-devel
+
 * Mon Apr 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt4
 - bugfix release
 
