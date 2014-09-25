@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -24,7 +24,7 @@ Patch12:sflphone-1.4.0-alt-fix-compile.patch
 BuildRequires: gcc-c++ glibc-devel libSDL-devel libalsa-devel libavformat-devel libdbus-c++-devel libexpat-devel
 BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
-BuildRequires: zrtpcpp-devel perl-Pod-Parser python-devel libilbc-devel libopus-devel
+BuildRequires: zrtpcpp-devel perl-Pod-Parser python-devel ilbc-devel libopus-devel
 BuildRequires: libudev-devel libavdevice-devel libswscale-devel
 BuildRequires: libgnutls-devel
 
@@ -85,6 +85,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
+- build wit new ilbc
+
 * Wed Sep 24 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
 
