@@ -10,7 +10,7 @@
 %def_disable gtkdoc
 
 Name: libwebkitgtk4
-Version: 2.5.90
+Version: 2.6.0
 Release: alt1
 
 Summary: Web browser engine
@@ -230,6 +230,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Thu Sep 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri Sep 19 2014 Yuri N. Sedunov <aris@altlinux.org> 2.5.90-alt1
 - 2.5.90
 
