@@ -1,16 +1,19 @@
-%define underscore_version 2_5_3
+%define underscore_version 2_6_2
+%def_with check
 
 Name: tinyxml
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 Summary: A simple, small, C++ XML parser
 Group: System/Libraries
 License: zlib
 Url: http://www.grinninglizard.com/tinyxml/
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 BuildRequires: gcc-c++
 Source: http://downloads.sourceforge.net/%name/%{name}_%underscore_version.tar.gz
 Patch0: tinyxml-2.5.3-stl.patch
+# http://sourceforge.net/p/tinyxml/patches/51/
+Patch1: tinyxml-2.6.2-entity.patch
+Patch2: tinyxml-2.6.2-alt-fix-tests.patch
 
 %description
 TinyXML is a simple, small, C++ XML parser that can be easily integrating
@@ -32,14 +35,22 @@ developing applications that use %name.
 %setup -q -n %name
 %patch0 -p1 -b .stl
 touch -r tinyxml.h.stl tinyxml.h
+%patch1 -p0
+%patch2 -p2
 
 %build
 # Not really designed to be build as lib, DYI
 for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
-  g++ $RPM_OPT_FLAGS -fPIC -o $i.o -c $i
+  g++ %optflags -fPIC -o $i.o -c $i
 done
-g++ $RPM_OPT_FLAGS -shared -o lib%name.so.0.%version \
+g++ %optflags -shared -o lib%name.so.0.%version \
    -Wl,-soname,lib%name.so.0 *.cpp.o
+
+%if_with check
+ln -s lib%name.so.0.%version lib%name.so.0
+ln -s lib%name.so.0.%version lib%name.so
+g++ -I. -L. xmltest.cpp -ltinyxml -o xmltest
+%endif
 
 %install
 # Not really designed to be build as lib, DYI
@@ -49,6 +60,9 @@ install -m 755 lib%name.so.0.%version %buildroot%_libdir
 ln -s lib%name.so.0.%version %buildroot%_libdir/lib%name.so.0
 ln -s lib%name.so.0.%version %buildroot%_libdir/lib%name.so
 install -p -m 644 %name.h %buildroot%_includedir
+
+%check
+LD_LIBRARY_PATH=$PWD${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ./xmltest
 
 %files
 %_libdir/*.so.*
@@ -60,6 +74,11 @@ install -p -m 644 %name.h %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Thu Sep 25 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.2-alt1
+- New version.
+- Fixed Incorrect entity encoding (ALT#25562).
+- Enabled testsuite.
+
 * Wed May 04 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.6.1-alt1
 - 2.6.1 (ALT #25562)
 
