@@ -1,8 +1,8 @@
 Name: bash4
 %define bash_version 4.2
-%define bash_patchlevel .45
+%define bash_patchlevel .49
 Version: %bash_version%bash_patchlevel
-Release: alt2
+Release: alt1
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -269,6 +269,11 @@ EOF
 %_includedir/*
 
 %changelog
+* Fri Sep 26 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.49-alt1
+- Updated to 4.2 patchlevel 49 (fixes: CVE-2014-7169).
+- Applied OOB array access fix from Florian Weimer
+  (fixes: CVE-2014-7186, CVE-2014-7187).
+
 * Tue Sep 23 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.45-alt2
 - Applied upstream fix for CVE-2014-6271.
 
