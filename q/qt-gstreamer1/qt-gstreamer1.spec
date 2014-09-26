@@ -1,6 +1,6 @@
 Name:    qt-gstreamer1
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -42,7 +42,7 @@ Group:          Development/C++
 Requires:       %name = %version-%release
 Requires:       qt4-glib-devel
 Requires:       boost-devel
-Requires:       gst-plugins-devel
+Requires:       gst-plugins1.0-devel
 Requires:       libqt4-devel
 Conflicts: qt-gstreamer-devel
 %description devel
@@ -94,6 +94,9 @@ ln -s /usr/include/QtGStreamer/QGlib src/QGlib
 
 
 %changelog
+* Fri Sep 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2
+- fix requires
+
 * Thu Sep 04 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
 - new version
 
