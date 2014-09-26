@@ -2,7 +2,7 @@
 
 Name: perl-Dist-Zilla-Plugin-Test-Perl-Critic
 Version: 2.112410
-Release: alt1
+Release: alt4
 
 Summary: Dist::Zilla tests to check code against best practices
 
@@ -42,5 +42,8 @@ Dist::Zilla tests to check code against best practices.
 %perl_vendor_privlib/Dist/Zilla/Plugin*
 
 %changelog
+* Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.112410-alt4
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.112410-alt1
 - Initial build for ALT Linux Sisyphus
