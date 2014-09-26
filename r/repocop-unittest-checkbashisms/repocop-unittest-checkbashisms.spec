@@ -2,7 +2,7 @@
 
 Name: repocop-unittest-%testname
 Version: 0.06
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -30,6 +30,9 @@ cat > filepattern <<'EOF'
 EOF
 
 cat > whitelist <<'EOF'
+bash
+bash3
+bash4
 console-scripts
 consolelocker
 gear
@@ -92,6 +95,9 @@ install -m 644 whitelist $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Fri Sep 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt3
+- added bash to whitelist
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
 - bugfixes
 
