@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 4.300039
+Version: 5.020
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -24,10 +24,13 @@ BuildRequires(pre): rpm-build-licenses perl-devel
 
 Requires: perl-Config-MVP-Reader-INI perl-Devel-StackTrace
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-Carp-Clan perl-Class-Inspector perl-Class-Load perl-Class-Singleton perl-Clone perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Data-OptList perl-Data-Section perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-GlobalDestruction perl-Encode perl-Eval-Closure perl-File-Which perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-String perl-IO-Zlib perl-JSON perl-JSON-XS perl-List-MoreUtils perl-Log-Dispatch perl-MRO-Compat perl-Math-Round perl-Mixin-Linewise perl-Module-Pluggable perl-Module-Runtime perl-Moose perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-Types perl-Number-Compare perl-PPI perl-Package-Constants perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Classify perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Path-Class perl-Perl6-Junction perl-Role-HasMessage perl-Role-Identifiable perl-Scope-Guard perl-String-Flogger perl-String-Formatter perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Install perl-Sub-Name perl-Term-ReadKey perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-URI perl-Variable-Magic perl-aliased perl-autobox perl-common-sense perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent
-BuildRequires: perl-App-Cmd perl-Archive-Tar perl-CPAN-Uploader perl-Config-INI perl-Config-MVP perl-DateTime perl-File-Copy-Recursive perl-File-Find-Rule perl-File-HomeDir perl-File-ShareDir perl-File-ShareDir-Install perl-File-pushd perl-Hash-Merge-Simple perl-Log-Dispatchouli perl-Moose-Autobox perl-MooseX-LazyRequire perl-MooseX-SetOnce perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Perl-PrereqScanner perl-Pod-Eventual perl-Software-License perl-Sub-Exporter-ForMethods perl-Term-ReadLine-Gnu perl-Test-Deep perl-Test-Fatal perl-YAML-Tiny perl-autodie
-BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace perl-Test-File-ShareDir perl-CPAN-Meta perl-List-AllUtils perl-Test-Pod perl-Test-Script
+# Automatically added by buildreq on Tue Sep 23 2014
+# optimized out: perl-App-Cmd perl-Archive-Tar perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Uploader perl-Capture-Tiny perl-Carp-Clan perl-Class-Inspector perl-Class-Load perl-Class-Method-Modifiers perl-Class-Singleton perl-Clone perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Data-OptList perl-Data-Section perl-DateTime perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-GlobalDestruction perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-File-Copy-Recursive perl-File-Find-Rule perl-File-HomeDir perl-File-ShareDir perl-File-Which perl-File-pushd perl-Getopt-Long-Descriptive perl-HTTP-Date perl-HTTP-Message perl-Hash-Merge-Simple perl-IO-Compress perl-IO-String perl-IO-Zlib perl-IPC-Run perl-Import-Into perl-JSON perl-JSON-PP perl-JSON-XS perl-List-AllUtils perl-List-MoreUtils perl-Locale-Maketext-Simple perl-Log-Dispatch perl-Log-Dispatch-Array perl-Log-Dispatchouli perl-Log-Log4perl perl-Log-Message perl-Log-Message-Simple perl-MRO-Compat perl-Mixin-Linewise perl-Module-Implementation perl-Module-Load perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-Moose-Autobox perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Number-Compare perl-PPI perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Check perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Path-Class perl-Path-Tiny perl-Perl-OSType perl-Perl-PrereqScanner perl-Perl-Version perl-PerlIO-utf8_strict perl-Pod-Eventual perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Scope-Guard perl-Software-License perl-String-Flogger perl-String-Formatter perl-String-RewritePrefix perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Syntax-Keyword-Junction perl-Term-ReadLine-Gnu perl-Term-UI perl-TermReadKey perl-Test-Deep perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-Types-Serialiser perl-URI perl-YAML-Tiny perl-aliased perl-autobox perl-autodie perl-common-sense perl-devel perl-libwww perl-namespace-autoclean perl-namespace-clean perl-parent perl-strictures perl-unicore tzdata
+BuildRequires: perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-File-ShareDir-Install perl-Term-Encoding perl-Test-FailWarnings perl-Test-Fatal perl-Test-File-ShareDir perl-Variable-Magic
+BuildRequires: perl-autobox perl-autodie perl-common-sense perl-CPAN-Uploader perl-App-Cmd perl-Archive-Tar perl-B-Hooks-EndOfScope perl-YAML-Tiny perl-Moose-Autobox perl-MooseX-LazyRequire
+BuildRequires: perl-MooseX-SetOnce perl-Data-Section perl-DateTime perl-JSON perl-Log-Dispatchouli perl-Software-License perl-Perl-PrereqScanner perl-PPI perl-Pod-Eventual
+BuildRequires: perl-Sub-Exporter-ForMethods perl-File-Find-Rule perl-File-pushd perl-Hash-Merge-Simple perl-MooseX-Types-Path-Class perl-MooseX-Types-Perl perl-Test-Deep perl-Text-Glob
+BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace perl-CPAN-Meta perl-List-AllUtils perl-Test-Pod perl-Test-Script
 
 %description
 Dist::Zilla is a program to make it easier to write, package,
@@ -38,7 +41,9 @@ probably save you a lot of work. It has plugins to automate
 dozens of boring steps.
 
 
-# Excluding Dist/Zilla/Tester.pm due to unrecognized Dist::Zilla::Tester::_Role inside it
+# Dist::Zilla::Tester contains references to the Dist::Zilla::Tester::_Role module and
+# its in-memory definition during run time. findreq can found this requirement, but
+# findprov can't found this providement (and this is quite correct). So skip findreq...
 %add_findreq_skiplist */Dist/Zilla/Tester.pm
 
 %prep
@@ -46,6 +51,10 @@ dozens of boring steps.
 %patch0 -p1
 
 %build
+# set environment variable to make sure DateTime::TimeZone::Local 
+# could determine timezone during tests
+export TZ=UTC
+
 %perl_vendor_build
 
 %install
@@ -61,6 +70,9 @@ dozens of boring steps.
 
 
 %changelog
+* Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 5.020-alt1
+- New version
+
 * Sat Oct 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 4.300039-alt1
 - New version
 
