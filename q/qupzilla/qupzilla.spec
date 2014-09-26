@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.6.6
+Version: 1.8.0
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -59,6 +59,7 @@ make INSTALL_ROOT=%buildroot install
 %_iconsdir/hicolor/*/*/*.png
 %dir %_datadir/%name
 %_datadir/%name/locale
+%exclude %_datadir/%name/locale/uz@Latn.qm
 %_datadir/%name/themes
 %_datadir/bash-completion/completions/qupzilla
 
@@ -66,6 +67,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Fri Sep 26 2014 Michael Shigorin <mike@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 1.6.6-alt1
 - 1.6.6
 
