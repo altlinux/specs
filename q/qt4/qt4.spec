@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	6
 %define beta	%nil
-%define rlz alt2
+%define rlz alt3
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -114,7 +114,7 @@ Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
 Patch505: qt-4.0.1-alt-iso_c_extension.patch
 Patch506: qt-4.8.5-alt-disable-mnemonic-menu-shortcuts.patch
-#
+Patch507: qt-4.8.6-alt-disable-gstreamer.patch
 Patch508: qt-4.7.4-alt-buildkey.patch
 Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
 Patch510: qt-4.8.0-alt-ldflags.patch
@@ -168,9 +168,11 @@ BuildRequires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libX
 %{?_enable_sql_tds:BuildRequires: libfreetds-devel}
 %{?_enable_sql_pgsql:BuildRequires: postgresql-devel > 8.0.4 libpq-devel > 8.0.4 libecpg-devel-static}
 %{?_enable_sql_ibase:BuildRequires: firebird-devel}
-%{?_enable_phonon:BuildRequires: gstreamer-devel gst-plugins-devel libpulseaudio-devel}
+%{?_enable_phonon:BuildRequires: libpulseaudio-devel}
 %if_enabled phonon
-%if_disabled pkg_phonon
+%if_enabled pkg_phonon
+BuildRequires: gstreamer-devel gst-plugins-devel
+%else
 BuildRequires: phonon-devel
 %endif
 %endif
@@ -773,7 +775,7 @@ Install this package if you want to create RPM packages that use %name
 %patch504 -p1
 %patch505 -p1
 %patch506 -p1
-#
+%patch507 -p1
 %patch508 -p1
 ###%patch509 -p1
 %patch510 -p1
@@ -865,6 +867,7 @@ CNFGR="\
 	-multimedia -declarative \
 	-no-nas-sound -no-nis -iconv \
 	%{?_enable_phonon: -phonon}%{!?_enable_phonon: -no-phonon} \
+	%{?_enable_pkg_phonon: -gstreamer}%{!?_enable_pkg_phonon: -no-gstreamer} \
 	%{?_enable_gtkstyle: -gtkstyle}%{!?_enable_gtkstyle: -no-gtkstyle} \
 	%{?_enable_glib: -glib}%{!?_enable_glib: -no-glib} \
 	\
@@ -1556,6 +1559,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Sep 26 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt3
+- build without gstreamer
+
+* Mon Sep 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt1.M70P.1
+- built for M70P
+
 * Thu Aug 28 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.6-alt2
 - add fixes for LibreOffice-kde from QTBUGs 37380,34614,38585
 
