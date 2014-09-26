@@ -1,6 +1,6 @@
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -32,7 +32,7 @@ Summary:        Header files and development documentation for %name
 Group:          Development/C++
 Requires:       %name = %version-%release
 Requires:       boost-devel
-Requires:       gst-plugins-devel
+Requires:       gst-plugins1.0-devel
 Requires:       qt5-base-devel qt5-declarative-devel
 %description devel
 This package contains the header files and development documentation
@@ -85,6 +85,12 @@ for %name.
 
 
 %changelog
+* Fri Sep 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2
+- fix requires
+
+* Thu Sep 04 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt0.M70P.1
+- build for M70P
+
 * Tue Aug 26 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
 - new version
 
