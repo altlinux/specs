@@ -2,7 +2,7 @@
 
 Name: perl-MooseX-AttributeShortcuts
 Version: 0.024
-Release: alt1
+Release: alt2
 
 Summary: Perl module to shorthand for common attribute options
 
@@ -43,5 +43,8 @@ the above variations.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt2
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt1
 - Initial build for ALT Linux Sisyphus
