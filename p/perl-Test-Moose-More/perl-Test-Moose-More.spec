@@ -4,7 +4,7 @@
 
 Name: perl-Test-Moose-More
 Version: 0.024
-Release: alt1
+Release: alt2
 
 Summary: more tools for testing Moose packages
 
@@ -43,8 +43,11 @@ any tests that it has and we do not, yet.
 
 %files
 %doc README Changes
-%perl_vendor_privlib/Test/Moose/More*
+%perl_vendor_privlib/Test*
 
 %changelog
+* Fri Sep 26 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt2
+- Rising release to override package from Autoimports/Sisyphus repository
+
 * Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.024-alt1
 - Initial build for ALT Linux Sisyphus
