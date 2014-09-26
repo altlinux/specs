@@ -14,8 +14,8 @@
 %define sm_develdir     %sm_prefix-devel
 
 Name: 	 seamonkey
-Version: 2.29
-Release: alt2
+Version: 2.29.1
+Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -396,6 +396,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Fri Sep 26 2014 Andrey Cherepanov <cas@altlinux.org> 1:2.29.1-alt1
+- New version with security fix:
+  + MFSA 2014-73 RSA Signature Forgery in NSS
+
 * Tue Sep 23 2014 Michael Shigorin <mike@altlinux.org> 1:2.29-alt2
 - NMU: applied fedora patch to disable baseline jit
   working around a segfault on i586 (closes: #30322)
