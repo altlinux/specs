@@ -11,7 +11,7 @@
 %endif
 
 Name:           chromium
-Version:        37.0.2062.120
+Version:        37.0.2062.124
 Release:        alt2
 
 Summary:        An open source web browser developed by Google
@@ -488,6 +488,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Sep 26 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.124-alt2
+- New version
+- Security fixes:
+  - CVE-2014-1568: RSA signature malleability in NSS
+- Fix path and version detection of PepperFlash
+
 * Tue Sep 23 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.120-alt2
 - Fix RightAlt behaviour. See https://code.google.com/p/chromium/issues/detail?id=377203
   for details
