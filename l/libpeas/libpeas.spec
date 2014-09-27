@@ -1,4 +1,4 @@
-%define ver_major 1.10
+%define ver_major 1.12
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -15,9 +15,9 @@ Summary: A gobject-based plugins engine
 Group: System/Libraries
 License: LGPLv2+
 Url: ftp://ftp.gnome.org/pub/gnome/sources/%name/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 # our python3 --ldflags break build
 Patch: libpeas-1.8.0-alt-python3_build.patch
 
@@ -181,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Fri Aug 01 2014 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
 - 1.10.1
 

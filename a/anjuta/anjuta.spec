@@ -1,5 +1,5 @@
 %set_automake_version 1.11
-%define ver_major 3.12
+%define ver_major 3.14
 %def_enable glade
 %def_enable vala
 %def_enable gtk_doc
@@ -27,10 +27,12 @@ BuildRequires: dconf flex gcc-c++ autogen gnome-common gtk-doc intltool yelp-too
 BuildRequires: gobject-introspection-devel >= 0.6.7
 BuildRequires: libgjs-devel
 BuildRequires: glib2-devel >= 2.34.0 libgio-devel
-BuildRequires: libgtk+3-devel >= 3.6.0 libgtk+3-gir-devel
+BuildRequires: libgtk+3-devel >= 3.10.0 libgtk+3-gir-devel
 BuildRequires: libgdk-pixbuf-devel >= 2.0.0 libgdk-pixbuf-gir-devel
 BuildRequires: libxml2-devel >= 2.4.23
-BuildRequires: libwebkit2gtk-devel
+# build with webkit2gtk-3.0 or webkit2gtk-4.0
+# BuildRequires: pkgconfig(webkit2gtk-3.0)
+BuildRequires: pkgconfig(webkit2gtk-4.0)
 BuildRequires: libgdl3-devel >= 3.5.5 libgdl3-gir-devel
 %{?_enable_plugin_terminal:BuildRequires: libvte3-devel >= 0.27.6}
 %{?_enable_plugin_devhelp:BuildRequires: libdevhelp-devel >= 3.7.4}
@@ -181,7 +183,6 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %schemasdir/org.gnome.anjuta.cvs.gschema.xml
 
 %_iconsdir/*/*/apps/anjuta.*
-%_iconsdir/gnome/*/*/*
 %anjuta_pixmapsdir/
 %exclude %anjuta_pixmapsdir/*cvs*
 %exclude %anjuta_pixmapsdir/*glade*
@@ -189,6 +190,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 %_desktopdir/%name.desktop
 %_datadir/mime/packages/*
+%_iconsdir/*/*/mimetypes/*
 %_datadir/appdata/anjuta.appdata.xml
 
 %_man1dir/*
@@ -225,6 +227,13 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+- build with webkit2gtk-4.0
+
+* Tue Sep 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.13.92-alt1
+- 3.13.92
+
 * Wed Mar 26 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
 - 3.12.0
 

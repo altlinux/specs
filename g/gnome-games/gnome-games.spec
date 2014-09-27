@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome-games
 Version: %ver_major.0
@@ -52,6 +52,9 @@ GlChess:	a chess game which supports several chess engines.
 %files
 
 %changelog
+* Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon May 05 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

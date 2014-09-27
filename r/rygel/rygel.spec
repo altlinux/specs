@@ -1,6 +1,6 @@
 %set_automake_version 1.11
 
-%define ver_major 0.22
+%define ver_major 0.24
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -40,14 +40,17 @@ Source: %name-%version.tar
 %define gst_pbu_ver 1.0
 %define gst_tag_ver 1.0
 %define gst_app_ver 1.0
+%define gst_audio_ver 1.0
 %define gio_ver 2.26
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.44.0
 %define gtk_ver 3.0
 %define libsqlite3_ver 3.5
+%define mediaart_ver 0.5.0
 
 BuildRequires: intltool gnome-common gtk-doc
+BuildRequires: gobject-introspection-devel >= 1.33.4
 BuildRequires: pkgconfig(gssdp-1.0) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.0) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
@@ -59,16 +62,19 @@ BuildRequires: pkgconfig(libsoup-2.4) >= %libsoup_ver
 BuildRequires: pkgconfig(libxml-2.0) >= %libxml_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0) >= %gstreamer_ver
+BuildRequires: pkgconfig(libmediaart-1.0) >= %mediaart_ver
 %if %media_engine == gstreamer
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= %gst_pbu_ver
 BuildRequires: pkgconfig(gstreamer-app-1.0) >= %gst_app_ver
+BuildRequires: pkgconfig(gstreamer-audio-1.0) >= %gst_audio_ver
 BuildRequires: pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 %endif
 BuildRequires: tracker-devel
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
-BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix) 
+BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
+BuildRequires: gir(GUPnP) = 1.0 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
@@ -93,6 +99,23 @@ Requires: tracker
 
 %description tracker
 A plugin for rygel to use tracker to locate media on the local machine.
+
+%package gir
+Summary: GObject introspection data for the %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the %name
+
+%package gir-devel
+Summary: GObject introspection devel data for the %name
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the %name
 
 %prep
 %setup -q
@@ -146,7 +169,16 @@ echo %version > .tarball-version
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
 
+%files gir
+%_typelibdir/*.typelib
+
+%files gir-devel
+%_girdir/*.gir
+
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 0.24.0-alt1
+- 0.24.0
+
 * Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 0.22.3-alt1
 - 0.22.3
 

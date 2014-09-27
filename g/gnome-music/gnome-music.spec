@@ -1,7 +1,7 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome-music
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -17,12 +17,16 @@ AutoReqProv: nopython
 
 %add_typelib_req_skiplist typelib(Gd)
 
-%define gtk_ver 3.9.0
-%define grilo_ver 0.2.6
+Requires: tracker
 
-BuildRequires: intltool yelp-tools libgtk+3-devel >= %gtk_ver libgrilo-devel >= %grilo_ver
+%define gtk_ver 3.12.0
+%define grilo_ver 0.2.6
+%define python_ver 3.3
+
+BuildRequires: intltool yelp-tools libgtk+3-devel >= %gtk_ver
+BuildRequires: libgrilo-devel >= %grilo_ver libmediaart-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: rpm-build-python3 python3-devel
+BuildRequires: rpm-build-python3 python3-devel >= %python_ver
 
 Requires: gst-plugins-base1.0 grilo-tools tracker
 
@@ -48,14 +52,19 @@ Music playing application for GNOME3.
 %_datadir/applications/%name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
 %_datadir/icons/hicolor/*/apps/%name.png
+%_datadir/icons/HighContrast/*/apps/%name.png
 %_libdir/%name/
 %python3_sitelibdir_noarch/gnomemusic/
 %_datadir/appdata/%name.appdata.xml
+#%_man1dir/%name.1.*
 %doc AUTHORS README
 
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon May 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2.1-alt1
 - 3.12.2.1
 

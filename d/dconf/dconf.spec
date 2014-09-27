@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.20
+%define ver_major 0.22
 %def_disable introspection
 %def_enable gtk_doc
 
@@ -161,11 +161,12 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 
 %files -n dconf-editor
 %_bindir/dconf-editor
-%_datadir/applications/dconf-editor.desktop
+%_datadir/applications/ca.desrt.dconf-editor.desktop
+%_datadir/dbus-1/services/ca.desrt.dconf-editor.service
 %_iconsdir/hicolor/*/apps/*.*
 %_iconsdir/HighContrast/*/apps/dconf-editor.png
 %_man1dir/dconf-editor.1.*
-%_datadir/appdata/dconf-editor.appdata.xml
+%_datadir/appdata/ca.desrt.dconf-editor.appdata.xml
 %config %_datadir/glib-2.0/schemas/ca.desrt.dconf-editor.gschema.xml
 
 %if_enabled introspection
@@ -183,6 +184,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Fri Sep 19 2014 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
 - 0.20.0
 

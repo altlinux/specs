@@ -1,11 +1,12 @@
 %define oldname eog2
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
+%def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -83,6 +84,16 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the Eye of GNOME
 
+%package tests
+Summary: Tests for the EOG
+Group: Development/Other
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the EOG GUI.
+
 
 %prep
 %setup
@@ -95,13 +106,14 @@ GObject introspection devel data for the Eye of GNOME
     %{?_enable_color_management:--with-cms} \
     --with-xmp \
     --with-libjpeg \
-    --disable-schemas-compile
+    --disable-schemas-compile \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -110,6 +122,7 @@ GObject introspection devel data for the Eye of GNOME
 %_desktopdir/*
 %_datadir/%name/
 %dir %_libdir/%name
+%_libdir/%name/lib%name.so
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
 %_libdir/%name/plugins/*.plugin
@@ -137,9 +150,19 @@ GObject introspection devel data for the Eye of GNOME
 %_datadir/gir-1.0/*.gir
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/%name/installed-tests/
+%_datadir/installed-tests/%name/
+%endif
+
+%exclude %_libdir/%name/lib%name.la
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

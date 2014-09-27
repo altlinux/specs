@@ -1,4 +1,6 @@
-%define ver_major 3.12
+%define _unpackaged_files_terminate_build 1
+%define ver_major 3.14
+%define _name org.gnome.Screenshot
 
 Name: gnome-screenshot
 Version: %ver_major.0
@@ -34,13 +36,17 @@ GNOME Screenshot Tool makes screenshots from desktop.
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/applications/%name.desktop
+%_datadir/applications/%_name.desktop
+%_datadir/dbus-1/services/%_name.service
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_man1dir/%name.1.*
 %doc NEWS
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

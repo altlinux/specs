@@ -1,14 +1,15 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
-%define panel_api_ver 4.0
+%define _libexecdir %_prefix/libexec
 
-%def_enable rdp
+# freerdp >= 1.1 required
+%def_disable rdp
 %def_enable spice
 %def_enable telepathy
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -18,32 +19,23 @@ URL: http://www.gnome.org/projects/vinagre
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: dconf gnome-icon-theme
-%{?_enable_rdp:Requires: rdesktop}
+Requires: dconf gnome-icon-theme-symbolic
+%{?_enable_rdp:Requires: freerdp}
 
-BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme desktop-file-utils appdata-tools
+BuildPreReq: rpm-build-gnome gnome-common desktop-file-utils
+BuildPreReq: appdata-tools libappstream-glib-devel
 BuildPreReq: intltool >= 0.35 glib2-devel >= 2.28.0
 BuildPreReq: libgtk+3-devel >= 3.9.6 libgtk3vnc-devel >= 0.4.3-alt2
 BuildRequires: libavahi-gobject-devel libavahi-ui-gtk3-devel libsecret-devel
 BuildRequires: yelp-tools itstool xmllint
-%{?_enable_ssh:BuildRequires: libvte3-devel libxml2-devel}
+%{?_enable_ssh:BuildRequires: libvte3-devel >= 0.37 libxml2-devel}
 %{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.11.6 libdbus-glib-devel}
 %{?_enable_spice:BuildRequires: libspice-gtk3-devel}
+%{?_enable_rdp:BuildRequires: libfreerdp-devel >= 1.1}
 BuildRequires: gcc-c++
 
 %description
 This is vinagre, a VNC client for the GNOME Desktop.
-
-%package -n gnome-applets-extra-vinagre
-Summary: Vinagre applet for GNOME panel
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-
-%description -n gnome-applets-extra-vinagre
-This package contains panel applet for Vinagre - VNC client for the
-GNOME Desktop
-
-%define _libexecdir %gnome_appletsdir
 
 %prep
 %setup -q
@@ -53,7 +45,6 @@ GNOME Desktop
 %autoreconf
 # for SSH plugin
 export LIBS="$LIBS `pkg-config --libs libxml-2.0`"
-export ac_cv_path_RDESKTOP_PROGRAM=%_bindir/rdesktop
 %configure \
 	--enable-ssh \
 	%{subst_enable spice} \
@@ -86,6 +77,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

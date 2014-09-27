@@ -1,12 +1,13 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.12
+%define ver_major 3.14
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
+%def_enable vala
 
 Name: lib%{_name}3
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -18,7 +19,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 # From configure.ac
 %define intltool_ver 0.40
-%define gtk_ver 3.9.9
+%define gtk_ver 3.13.7
 %define libxml2_ver 2.6.0
 
 BuildPreReq: rpm-build-gnome
@@ -32,6 +33,7 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 
 BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
+%{?_enable_vala:BuildRequires: vala-tools libvala-devel}
 # for check
 BuildRequires: xvfb-run
 
@@ -111,6 +113,10 @@ GObject introspection devel data for the GtkSourceView library
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
+%if_enabled vala
+%_vapidir/%_name-%api_ver.deps
+%_vapidir/%_name-%api_ver.vapi
+%endif
 %doc HACKING MAINTAINERS
 
 %files devel-doc
@@ -125,6 +131,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 

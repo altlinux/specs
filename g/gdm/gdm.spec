@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -22,12 +22,12 @@
 %def_disable wayland
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
-URL: ftp://ftp.gnome.org/
+URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -237,6 +237,7 @@ xvfb-run %make check
 %_libexecdir/gdm-session-worker
 %_libexecdir/gdm-simple-chooser
 %doc AUTHORS ChangeLog NEWS README TODO
+%_unitdir/gdm.service
 
 %files data -f %name.lang
 # %config %_sysconfdir/pam.d/gdm
@@ -251,7 +252,6 @@ xvfb-run %make check
 %dir %_sysconfdir/X11/sessions
 %config %_controldir/gdm_xdmcp
 %_sysconfdir/X11/wms-methods.d/%name
-%_unitdir/gdm.service
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
@@ -295,6 +295,15 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+
+* Tue Sep 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.13.91-alt1
+- 3.13.91
+
+* Tue Jul 01 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.2-alt2
+- add post_script for enable gdm.service
+
 * Wed Jun 11 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.2-alt1
 - 3.12.2
 

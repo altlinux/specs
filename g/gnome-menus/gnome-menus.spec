@@ -1,9 +1,9 @@
-%define ver_major 3.10
+%define ver_major 3.13
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME desktop menu
@@ -131,6 +131,9 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Mon Aug 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.13.3-alt1
+- 3.13.3
+
 * Wed Oct 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

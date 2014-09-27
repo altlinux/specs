@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: vino
 Version: %ver_major.0
@@ -6,11 +6,12 @@ Release: alt1
 
 Summary: A remote desktop system for GNOME
 License: GPL
-URL: http://www.gnome.org
+URL: https://wiki.gnome.org/Projects/Vino
 Group: Networking/Remote access
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
+
+Requires: gnome-settings-daemon
 
 BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
 BuildRequires: libgio-devel libgtk+3-devel libdbus-devel
@@ -39,7 +40,7 @@ connect to a running GNOME session using VNC.
 
 %files -f %name.lang
 %_libexecdir/vino-server
-%_sysconfdir/xdg/autostart/vino-server.desktop
+%_desktopdir/vino-server.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vino.service
 %_datadir/telepathy/clients/Vino.client
 %config %_datadir/glib-2.0/schemas/*.xml
@@ -47,6 +48,9 @@ connect to a running GNOME session using VNC.
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

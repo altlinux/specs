@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
+%define _name org.gnome.Cheese
 %define gst_api_ver 1.0
+%define _libexecdir %_prefix/libexec
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -18,12 +20,13 @@ Url: http://www.gnome.org/projects/cheese
 Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.tar.xz
 
 # from configure.ac
-%define glib_ver 2.38.0
-%define gtk_ver 3.12.0
+%define glib_ver 2.40.0
+%define gtk_ver 3.13.4
 %define desktop_ver 3.0.0
-%define gst_ver 0.11
+%define gst_ver 1.4.0
 %define vala_ver 0.18.0
 %define clutter_ver 1.10.0
+%define clutter_gst_ver 1.9.0
 
 Requires: lib%name = %version-%release
 Requires: gnome-video-effects
@@ -43,13 +46,14 @@ BuildPreReq: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildPreReq: gst-plugins-good%gst_api_ver >= %gst_ver
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: vala-tools >= %vala_ver
+BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
 BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils appdata-tools
 BuildRequires: librsvg-devel libcanberra-gtk3-devel
 BuildRequires: libgudev-devel
-BuildRequires: libX11-devel libXtst-devel libXext-devel
-BuildRequires: libclutter-gst2.0-devel libclutter-gtk3-devel
+BuildRequires: libX11-devel libXtst-devel libXext-devel libclutter-gtk3-devel
 BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
 BuildRequires: nautilus-sendto-devel
+BuildRequires: libappstream-glib-devel
 %{?_enable_introspection:BuildRequires: libgdk-pixbuf-gir-devel libclutter-gir-devel libgstreamer%gst_api_ver-gir-devel}
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run
@@ -128,9 +132,12 @@ GObject introspection devel data for the Cheese library.
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_libexecdir/gnome-camera-service
+%_desktopdir/%_name.desktop
 %_datadir/icons/hicolor/*/*/*.*
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
+%_datadir/dbus-1/services/org.gnome.Camera.service
+%_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
@@ -155,6 +162,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

@@ -1,21 +1,22 @@
 %define _name folks
-%define ver_major 0.9
+%define ver_major 0.10
 %define api_ver 0.6
 %def_disable static
 %def_enable introspection
 %def_enable vala
 %def_disable libsocialweb
-%def_disable tracker
+%def_enable tracker
 %def_enable bluez
+%def_disable zeitgeist
 
 Name: lib%_name
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
 License: LGPLv2+
-Url: http://telepathy.freedesktop.org/wiki/Folks
+Url: https://wiki.gnome.org/Projects/Folks
 
 Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
@@ -31,10 +32,11 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver
-BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver vala-tools
+BuildRequires: vala-tools
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver}
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel}
-%{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
+%{?_enable_vala:BuildRequires:  libvala-devel >= %vala_ver vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
 
 # for tools
@@ -84,13 +86,14 @@ Requires: %name = %version-%release
 This package provides vala language bindings for %_name library
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{subst_enable vala} \
+	%{subst_enable zeitgeist} \
 	%{?_enable_eds:--enable-eds-backend} \
 	%{?_enable_tracker:--enable-tracker-backend} \
 	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes} \
@@ -123,12 +126,14 @@ This package provides vala language bindings for %_name library
 
 %if_enabled introspection
 %files gir
+%_typelibdir/FolksDummy-%api_ver.typelib
 %_typelibdir/Folks-%api_ver.typelib
 %_typelibdir/FolksEds-%api_ver.typelib
 %_typelibdir/FolksTelepathy-%api_ver.typelib
 %{?_enable_tracker:%_typelibdir/FolksTracker-%api_ver.typelib}
 
 %files gir-devel
+%_girdir/FolksDummy-%api_ver.gir
 %_girdir/Folks-%api_ver.gir
 %_girdir/FolksEds-%api_ver.gir
 %_girdir/FolksTelepathy-%api_ver.gir
@@ -138,6 +143,8 @@ This package provides vala language bindings for %_name library
 %if_enabled vala
 %files vala
 %_vapidir/folks.deps
+%_vapidir/folks-dummy.deps
+%_vapidir/folks-dummy.vapi
 %_vapidir/folks-eds.deps
 %_vapidir/folks-eds.vapi
 %{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.deps}
@@ -149,7 +156,14 @@ This package provides vala language bindings for %_name library
 %_vapidir/folks.vapi
 %endif
 
+
 %changelog
+* Fri Sep 12 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
+* Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.8-alt1
+- 0.9.8
+
 * Tue Feb 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt2
 - rebuilt for GNOME-3.12 (temporarily disabled tracker backend)
 

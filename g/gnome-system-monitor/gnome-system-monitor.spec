@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.12
+%define ver_major 3.14
 %def_enable systemd
 %def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Simple process monitor
 License: GPLv2+
@@ -76,6 +76,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue Jun 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - rebuilt against libgtop-2.0.so.10
 

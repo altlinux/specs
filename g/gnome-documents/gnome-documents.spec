@@ -1,11 +1,11 @@
 %define _name org.gnome.Documents
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -22,8 +22,8 @@ Requires: gnome-online-miners
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-%define glib_ver 2.37.0
-%define gtk_ver 3.11.4
+%define glib_ver 2.40.0
+%define gtk_ver 3.13.3
 %define evince_ver 3.7.4
 %define tracker_ver 0.17.2
 %define goa_ver 3.2.0
@@ -44,6 +44,7 @@ BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel
 BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel
 BuildRequires: libzapojit-gir-devel
+BuildRequires: librsvg
 
 %description
 gnome-documents is a document manager application for GNOME,
@@ -101,7 +102,6 @@ GObject introspection devel data for the %name library.
 
 %files
 %_bindir/%name
-%_libexecdir/%name-service
 %dir %pkglibdir
 %pkglibdir/*.so
 %exclude %pkglibdir/*.la
@@ -126,6 +126,9 @@ GObject introspection devel data for the %name library.
 
 
 %changelog
+* Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
 - rebuilt against libgdata.so.19
 

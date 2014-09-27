@@ -1,5 +1,7 @@
+%def_disable gui
+
 Name: libinput
-Version: 0.2.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Input devices library
@@ -14,6 +16,7 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
 BuildRequires: gcc-c++ libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel
+%{?_enable_gui:BuildRequires: libgtk+3-devel}
 
 %description
 libinput is a library that handles input devices for display servers and
@@ -27,7 +30,6 @@ that users expect.
 Input event processing includes scaling touch coordinates, generating
 pointer events from touchpads, pointer acceleration, etc.
 
-
 %package devel
 Summary: libinput development package
 Group: Development/C
@@ -37,12 +39,22 @@ Requires: %name = %version-%release
 This package contains development libraries and header files
 that are needed to write applications that use %name.
 
+
+%package tools
+Summary: libinput GUI event viewer
+Group: Development/Tools
+Requires: %name = %version-%release
+
+%description tools
+This package contains GUI event viewer from %name.
+
 %prep
 %setup
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+           %{?_enable_gui:--enable-event-gui}
 %make_build
 
 %install
@@ -60,7 +72,19 @@ that are needed to write applications that use %name.
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
+%if_enabled gui
+%files tools
+%_bindir/event-gui
+%endif
+
+
 %changelog
+* Thu Jul 24 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
+* Tue Jul 01 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Thu May 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

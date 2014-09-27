@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.12
+%define ver_major 3.14
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -19,9 +19,9 @@ Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
 Obsoletes: gnome-shell-extension-per-window-input-source
 
-%define clutter_ver 1.13.6
-%define gjs_ver 1.38.0
-%define mutter_ver 3.12.1
+%define clutter_ver 1.15.90
+%define gjs_ver 1.39.0
+%define mutter_ver 3.14.0
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
@@ -185,6 +185,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_libexecdir/gnome-shell-calendar-server
 %_libexecdir/gnome-shell-perf-helper
 %_libexecdir/gnome-shell-hotplug-sniffer
+%_libexecdir/%name-portal-helper
 %dir %_libdir/%name
 %_libdir/%name/libgnome-shell.so
 %_libdir/%name/libgnome-shell-js.so
@@ -196,9 +197,11 @@ rm -f %buildroot%_libdir/%name/*.la
 %exclude %browser_plugins_path/libgnome-shell-browser-plugin.la
 
 %files data -f %name.lang
-%_datadir/applications/%name.desktop
-%_datadir/applications/%name-extension-prefs.desktop
-%_datadir/applications/evolution-calendar.desktop
+%_desktopdir/%name.desktop
+%_desktopdir/%name-extension-prefs.desktop
+%_desktopdir/evolution-calendar.desktop
+%_desktopdir/%name-wayland.desktop
+%_desktopdir/org.gnome.Shell.PortalHelper.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/org.gnome.Shell.CalendarServer.service
 %_datadir/dbus-1/services/org.gnome.Shell.HotplugSniffer.service
@@ -207,6 +210,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 %_datadir/dbus-1/interfaces/org.gnome.Shell.Screencast.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
+%_datadir/dbus-1/services/org.gnome.Shell.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %_man1dir/*
@@ -217,6 +221,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

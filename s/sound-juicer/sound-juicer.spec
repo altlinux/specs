@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define gst_api_ver 1.0
 
 Name: sound-juicer
@@ -62,6 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri May 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

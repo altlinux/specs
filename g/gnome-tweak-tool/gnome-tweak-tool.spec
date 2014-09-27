@@ -1,6 +1,5 @@
 %def_disable snapshot
-
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome-tweak-tool
 Version: %ver_major.0
@@ -69,6 +68,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Thu Mar 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

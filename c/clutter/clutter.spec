@@ -1,8 +1,8 @@
-%define ver_major 1.18
+%define ver_major 1.20
 
 %def_enable x11_backend
 %def_enable gdk_backend
-%def_disable egl_backend
+%def_enable egl_backend
 %def_disable tslib_input
 %def_enable evdev_input
 %def_enable xinput
@@ -15,7 +15,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clutter Core Library
@@ -179,6 +179,9 @@ gtkdocize
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Aug 21 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4 release
 

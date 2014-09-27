@@ -1,4 +1,4 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,14 +7,13 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnome-keyring-3.10.1-alt-lfs.patch
@@ -80,7 +79,7 @@ and start the keyring daemon.
 #xvfb-run %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -110,6 +109,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed May 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 

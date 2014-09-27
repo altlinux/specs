@@ -20,13 +20,13 @@
 %def_disable examples_install
 %def_enable gl
 %def_enable wayland_egl
-%def_disable wayland_server
-%def_disable kms_egl
+%def_enable wayland_server
+%def_enable kms_egl
 %def_enable xlib_egl
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -175,6 +175,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 29 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
+- enabled wayland-egl-server and kms-egl-platform for next mutter/shell
+
 * Fri Jul 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - 1.18.2
 

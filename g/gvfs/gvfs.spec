@@ -1,4 +1,4 @@
-%define ver_major 1.20
+%define ver_major 1.22
 %def_enable http
 %def_enable avahi
 %def_enable cdda
@@ -21,7 +21,7 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -456,6 +456,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Mon Aug 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
 - 1.20.3
 

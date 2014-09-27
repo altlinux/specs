@@ -1,5 +1,6 @@
 %def_disable snapshot
-%define ver_major 1.40
+%define ver_major 1.42
+%def_enable doctool
 
 Name: gobject-introspection
 Version: %ver_major.0
@@ -19,9 +20,10 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-BuildPreReq: libgio-devel >= 2.39.90
+BuildPreReq: libgio-devel >= 2.42.0
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
+%{?_enable_doctool:BuildRequires: python-module-mako}
 
 %description
 GObject introspection provides tools and libraries to help manage its
@@ -63,7 +65,8 @@ gobject-introspection.
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	%{subst_enable doctool}
 %make
 
 %install
@@ -92,6 +95,12 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
+- 1.42.0
+
+* Fri Apr 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1.1
+- updated to 5b105135d2 (fixed BGO #724886)
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
 - 1.40.0
 

@@ -1,7 +1,7 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: yelp-tools
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Collection of tools for building and converting documentation
@@ -12,7 +12,7 @@ Url: http://projects.gnome.org/yelp/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
-Requires: yelp-xsl >= %ver_major itstool xmllint
+Requires: yelp-xsl >= 3.14 itstool xmllint
 
 BuildRequires: yelp-xsl itstool xml-utils xsltproc
 
@@ -30,7 +30,7 @@ package just wraps things up in a developer-friendly way.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/yelp-build
@@ -41,6 +41,9 @@ package just wraps things up in a developer-friendly way.
 %doc AUTHORS README
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Wed Apr 16 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 

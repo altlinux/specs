@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.2
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -302,6 +302,8 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_libexecdir/tracker-miner-fs
 %_libexecdir/tracker-store
 %_libexecdir/tracker-writeback
+%_libexecdir/tracker-miner-apps
+%_libexecdir/tracker-miner-user-guides
 
 %_datadir/dbus-1/services/*.service
 %_man1dir/tracker-miner-fs.*
@@ -344,6 +346,8 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_datadir/icons/*/*/apps/tracker.*
 %_datadir/%name/tracker-preferences.ui
 %_datadir/%name/tracker-needle.ui
+%_datadir/appdata/tracker-needle.appdata.xml
+%_datadir/appdata/tracker-preferences.appdata.xml
 %_man1dir/tracker-preferences.*
 %_man1dir/tracker-needle.*
 
@@ -380,6 +384,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Tue Sep 02 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 

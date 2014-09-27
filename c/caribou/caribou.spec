@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.13
+Version: %ver_major.15
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -90,18 +90,18 @@ make clean
 %make_build
 
 %install
-%make install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/%name
 %_bindir/%name-preferences
+%_libexecdir/%name
 %_datadir/%name
 %_datadir/antler/
 %_datadir/dbus-1/services/org.gnome.Caribou.Antler.service
+%_datadir/dbus-1/services/org.gnome.Caribou.Daemon.service
 %_libexecdir/antler-keyboard
-#%_datadir/applications/%name.desktop
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 %_datadir/glib-2.0/schemas/org.gnome.antler.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.caribou.gschema.xml
@@ -120,9 +120,8 @@ make clean
 %_includedir/lib%name/
 %_libdir/lib%name.so
 %_pkgconfigdir/%name-%api_ver.pc
-# libxklavier bindings required
-%exclude %_vapidir/%name-%api_ver.deps
-%exclude %_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-%api_ver.vapi
 
 %files -n lib%name-gir
 %_typelibdir/Caribou-1.0.typelib
@@ -131,6 +130,9 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Tue Sep 16 2014 Yuri N. Sedunov <aris@altlinux.org> 0.4.15-alt1
+- 0.4.15
+
 * Wed Nov 20 2013 Paul Wolneykien <manowar@altlinux.org> 0.4.13-alt1
 - Fresh up to v0.4.13.
 

@@ -1,9 +1,9 @@
-%define ver_major 0.15
+%define ver_major 0.16
 %def_enable gnome
 %def_enable goa
 
 Name: libgdata
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -94,6 +94,9 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Thu Sep 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Fri Aug 22 2014 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
 - 0.15.2
 

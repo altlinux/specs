@@ -1,22 +1,21 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
 %def_disable static
 %def_enable introspection
 %def_enable vala
 
 Name: libgweather
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 Summary: A library for weather information
 
 Group: System/Libraries
 License: GPLv3
 Url: https://live.gnome.org/LibGWeather
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.12.2-up-yr.no_api.patch
 
 # From configure.in
-%define gtk_ver 2.91.7
+%define gtk_ver 3.13.5
 %define glib_ver 2.35.1
 %define intltool_ver 0.40.0
 %define soup_ver 2.34
@@ -31,7 +30,7 @@ BuildPreReq: libsoup-devel >= %soup_ver
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: xsltproc
 BuildPreReq: rpm-build-gnome gtk-doc
-BuildRequires: libxml2-devel perl-XML-Parser xml-utils gzip
+BuildRequires: libgeocode-glib-devel libxml2-devel perl-XML-Parser xml-utils gzip
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildPreReq: vala-tools >= %vala_ver}
 
@@ -102,7 +101,6 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %configure \
@@ -129,7 +127,6 @@ This package provides Vala language bindings for the %name library.
 %dir %_datadir/libgweather
 %_datadir/libgweather/Locations.xml
 %_datadir/libgweather/locations.dtd
-%_iconsdir/gnome/*/*/*
 
 %files devel
 %_includedir/%name-%api_ver
@@ -154,6 +151,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Sep 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt2
 - Yr.no: update to version 1.9 of the online API (BGO #736334)
 

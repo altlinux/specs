@@ -1,16 +1,15 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
-%def_enable ibus
 # tests require, as minimum, running colord
 %def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -33,7 +32,6 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define upower_ver 0.9.1
 %define systemd_ver 40
 %define wacom_ver 0.7
-%define ibus_ver 1.4.99
 %define geocode_ver 3.10.0
 %define geoclue_ver 2.1.2
 %define gweather_ver 3.9.5
@@ -44,7 +42,6 @@ Requires: system-config-printer
 Requires: system-config-printer-udev
 Requires: rfkill
 Requires: geoclue2 >= %geoclue_ver
-%{?_enable_ibus:Requires:ibus >= %ibus_ver}
 Requires: xkeyboard-config
 
 # From configure.ac
@@ -59,7 +56,6 @@ BuildRequires: libdbus-devel libpolkit1-devel
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
-%{?_enable_ibus:BuildRequires: libibus-devel >= %ibus_ver}
 BuildRequires: libxkbfile-devel
 BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
@@ -68,6 +64,7 @@ BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver geoclue2-devel >= %geoclue_ver
+BuildRequires: libnm-glib-devel libnm-util-devel
 
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
@@ -103,7 +100,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %configure \
 	%{subst_enable static} \
 	%{?_disable_smartcard:--disable-smartcard-support} \
-	%{subst_enable ibus} \
 	--disable-schemas-compile
 
 %make_build
@@ -125,6 +121,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/datetime.gnome-settings-plugin
 %_libdir/%name-%api_ver/housekeeping.gnome-settings-plugin
 %_libdir/%name-%api_ver/keyboard.gnome-settings-plugin
+%_libdir/%name-%api_ver/sharing.gnome-settings-plugin
 %_libdir/%name-%api_ver/liba11y-keyboard.so
 %_libdir/%name-%api_ver/liba11y-settings.so
 %_libdir/%name-%api_ver/libclipboard.so
@@ -142,6 +139,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/libprint-notifications.so
 %_libdir/%name-%api_ver/librfkill.so
 %_libdir/%name-%api_ver/libscreensaver-proxy.so
+%_libdir/%name-%api_ver/libsharing.so
 %_libdir/%name-%api_ver/libsmartcard.so
 %_libdir/%name-%api_ver/libsound.so
 %_libdir/%name-%api_ver/libxrandr.so
@@ -176,7 +174,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %doc AUTHORS NEWS
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
-%{?_enable_ibus:%_datadir/dbus-1/services/org.freedesktop.IBus.service}
 /lib/udev/rules.d/61-gnome-settings-daemon-rfkill.rules
 
 %exclude %_libdir/%name-%api_ver/*.la
@@ -209,6 +206,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 

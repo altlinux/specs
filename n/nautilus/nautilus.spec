@@ -1,6 +1,8 @@
-%define _name nautilus2
-%define ver_major 3.12
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 3.14
 %define api_ver 3.0
+%define _name org.gnome.Nautilus
 
 %def_enable exempi
 %def_disable packagekit
@@ -9,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -20,16 +22,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-# http://bugzilla.gnome.org/show_bug.cgi?id=519743 
+# http://bugzilla.gnome.org/show_bug.cgi?id=519743
 Patch17: %name-filetype-symlink-fix.patch
 
-# (fc) 2.22.2-2mdv auto-unmount ejected medias when mount points are in fstab (Mdv bug #39540) 
+# (fc) 2.22.2-2mdv auto-unmount ejected medias when mount points are in fstab (Mdv bug #39540)
 Patch35: %name-2.22.1-umountfstab.patch
-
-Obsoletes: %_name <= 2.14.1
-Provides: %_name = %version-%release
-Obsoletes: gnome-volume-manager
-Provides: gnome-volume-manager
 
 %define pkgconfig_ver 0.8
 %define icon_theme_ver 2.10.0
@@ -39,7 +36,7 @@ Provides: gnome-volume-manager
 %define glib_ver 2.35.3
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.11.6
+%define gtk_ver 3.13.2
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -180,15 +177,13 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_datadir/mime/packages/nautilus.xml
 %_datadir/applications/*.desktop
 %_sysconfdir/xdg/autostart/nautilus-autostart.desktop
-%_datadir/%name
-%_datadir/dbus-1/services/org.gnome.Nautilus.service
+%_datadir/dbus-1/services/%_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
-%_datadir/dbus-1/services/org.gnome.Nautilus.SearchProvider.service
 %_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
 # gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/GConf/gsettings/nautilus.convert
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%_name.appdata.xml
 # docs
 %doc --no-dereference COPYING
 %doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
@@ -219,6 +214,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.2-alt1
 - 3.12.2
 
