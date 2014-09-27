@@ -1,6 +1,6 @@
 Name: qtmib
-Version: 1.0
-Release: alt3
+Version: 1.1
+Release: alt1
 License: GPLv2
 Group: Networking/Other
 Summary: SNMP MIB Browser for Linux platforms 
@@ -37,6 +37,9 @@ make
 %doc README RELNOTES
 
 %changelog
+* Sat Sep 27 2014 Terechkov Evgenii <evg@altlinux.org> 1.1-alt1
+- New upstream version
+
 * Sat Aug 23 2014 Terechkov Evgenii <evg@altlinux.org> 1.0-alt3
 - Build with debuginfo
 
