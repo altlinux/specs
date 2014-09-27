@@ -1,5 +1,5 @@
 Name: livecd-webkiosk
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
@@ -51,6 +51,16 @@ Requires: chromium
 %summary
 (the browser == chromium)
 
+%package qupzilla
+Summary: qupzilla webkiosk setup
+Group: System/X11
+Requires: %name = %version-%release
+Requires: qupzilla
+
+%description qupzilla
+%summary
+(the browser == qupzilla)
+
 %prep
 
 %build
@@ -100,6 +110,13 @@ exec chromium --kiosk --start-maximized "\$@"
 _EOF_
 chmod +x %wrapper
 
+%post qupzilla
+cat > %wrapper << _EOF_
+#!/bin/sh
+exec qupzilla --fullscreen "\$@"
+_EOF_
+chmod +x %wrapper
+
 %files
 %skeldir/.ratpoisonrc
 %ifacedir/options
@@ -111,7 +128,12 @@ chmod +x %wrapper
 
 %files chromium
 
+%files qupzilla
+
 %changelog
+* Sat Sep 27 2014 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- added qupzilla support
+
 * Sat Sep 13 2014 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - added seamonkey support
 
