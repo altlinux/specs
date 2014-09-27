@@ -1,5 +1,5 @@
 Name: freedink-data
-Version: 1.08.20121209
+Version: 1.08.20140901
 Release: alt1
 Summary: Adventure and role-playing game (game data)
 
@@ -35,6 +35,9 @@ make install PREFIX=%prefix DESTDIR=$RPM_BUILD_ROOT
 %_datadir/dink/
 
 %changelog
+* Sat Sep 27 2014 Fr. Br. George <george@altlinux.ru> 1.08.20140901-alt1
+- Autobuild version bump to 1.08.20140901
+
 * Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 1.08.20121209-alt1
 - Autobuild version bump to 1.08.20121209
 
