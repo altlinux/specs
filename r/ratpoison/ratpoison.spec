@@ -1,6 +1,6 @@
 Name: ratpoison
-Version: 1.4.5
-Release: alt3.20090912.qa1
+Version: 1.4.8
+Release: alt1.git20140917
 
 Group: Graphical desktop/Other
 Summary: ratpoison - Simple window manager with no fat library dependencies
@@ -33,11 +33,12 @@ pieces of software.
     --prefix=%_prefix \
     --infodir=%_infodir \
     --mandir=%_mandir \
+		--with-x
 
-%make
+%make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 install -d %buildroot/%_docdir %buildroot/%_niconsdir
 
@@ -71,6 +72,9 @@ EOF
 %doc README TODO AUTHORS NEWS ChangeLog doc/sample.ratpoisonrc doc/ipaq.ratpoisonrc
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt1.git20140917
+- Version 1.4.8
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.5-alt3.20090912.qa1
 - NMU: rebuilt for debuginfo.
 
