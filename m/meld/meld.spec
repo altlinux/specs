@@ -1,29 +1,19 @@
-%define ver_major 1.8
+%define ver_major 3.12
 
 Name: meld
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Meld Diff Viewer
-
 License: %gpl2plus
 Group: Text tools
-Url: http://meld.sourceforge.net/
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: http://meldmerge.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
 
-%py_package_requires pygtk >= 2.8
-%py_requires gtksourceview2 libglade
-%add_python_req_skip misc
-
-BuildPreReq: rpm-build-licenses
-BuildPreReq: python-devel >= %__python_version
-BuildPreReq: intltool scrollkeeper
-BuildRequires: python-modules-encodings
+BuildRequires: rpm-build-licenses rpm-build-gir intltool yelp-tools python-devel
 
 %description
 Meld is a visual diff and merge tool. It lets you compare two or three
@@ -36,36 +26,34 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %prep
 %setup
 
-# fix prefix
-subst s'|/usr/local|/usr|' INSTALL
-
-# Misuse of localstatedir and the whole Scrollkeeper problem is a matter of
-# http://bugzilla.gnome.org/show_bug.cgi?id=446157
-%__subst "s:-scrollkeeper:#-scrollkeeper:" help/*/Makefile
-%__subst "s:\$(localstatedir)/lib/:\$(localstatedir)/:" help/*/Makefile
-
 %build
-%make
+%python_build
 
 %install
-%make_install DESTDIR=%buildroot prefix=%_prefix install
+%__python setup.py \
+	--no-update-icon-cache \
+	--no-compile-schemas \
+	install --root=%buildroot
 
 %find_lang %name --with-gnome
 
 %files -f %name.lang
 %_bindir/%name
-%dir %_datadir/%name
-%_datadir/%name/*
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
+%python_sitelibdir_noarch/*
+%_datadir/%name/
 %_desktopdir/%name.desktop
-%_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/*/*
 %_iconsdir/HighContrast/*/*/*
+%_datadir/glib-2.0/schemas/org.gnome.meld.gschema.xml
+%_datadir/mime/packages/%name.xml
 %_datadir/appdata/%name.appdata.xml
-%doc NEWS
+%_man1dir/%name.1.*
+%doc NEWS README
 
 %changelog
+* Sat Sep 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Sat Jul 19 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
 - 1.8.6
 
