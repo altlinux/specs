@@ -1,20 +1,23 @@
 Name: qmpdclient
-Version: 1.1.3
-Release: alt2.qa3
+Version: 1.2.2
+Release: alt1.git20130519
 
 Summary: Qt4-based mpd client
 License: %gpl2plus
 Group: Sound
 Url: http://bitcheese.net/wiki/QMPDClient
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
-# git://github.com/Voker57/qmpdclient-ne.git
+# https://github.com/Voker57/qmpdclient.git
 Source0: %name-%version.tar
-Patch0: qmpdclient-1.1.3-patch-DSO.patch
 
 BuildRequires(pre): rpm-build-licenses libqt4-devel >= 4.4.0
-BuildPreReq: gcc-c++ unzip cmake
+BuildPreReq: gcc-c++ unzip cmake qt4-designer libqt4-sql-interbase
+BuildPreReq: libqt4-sql-sqlite2 libqt4-sql-mysql libqt4-sql-interbase
+BuildPreReq: libqt4-sql-odbc libqt4-sql-postgresql libXcomposite-devel
+BuildPreReq: libqt4-assistant-devel libXres-devel libXdamage-devel
+BuildPreReq: libXdmcp-devel libXft-devel libxkbfile-devel libXmu-devel
+BuildPreReq: libXpm-devel libXScrnSaver-devel libXt-devel
+BuildPreReq: libXxf86misc-devel libXxf86vm-devel
 
 Requires: libqt4-core >= 4.4.0
 BuildRequires: desktop-file-utils
@@ -25,19 +28,19 @@ QMPDClient is an easy to use MPD client written in Qt 4.
 
 %prep
 %setup
-%patch0 -p1
 sed -i 's,/home/h/Projects/qmpdclient/qmpdclient/icons/qmpdclient22.png,%_iconsdir/hicolor/22x22/apps/%name.png,' \
 	src/notifications_dbus.cpp
 sed -i 's,Icon=%{name}64.png,Icon=%name,' %name.desktop
 
 %build
+export PATH=$PATH:%_qt4dir/bin
 %cmake
 %make_build -C BUILD VERBOSE=1
 
 %install
 %makeinstall_std -C BUILD
 for i in 16 22 48 64; do
-    install -pD -m644 icons/qmpdclient$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/%name.png
+    install -pD -m644 icons/${i}x$i/qmpdclient.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/%name.png
 done
 install -pD -m644 icons/svg/qmpdclient.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
@@ -65,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS Changelog INSTALL README THANKSTO
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20130519
+- Version 1.2.2
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.3-alt2.qa3
 - NMU: rebuilt for updated dependencies.
 
