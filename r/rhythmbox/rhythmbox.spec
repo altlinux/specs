@@ -1,4 +1,4 @@
-%define ver_major 3.0
+%define ver_major 3.1
 %define rev %nil
 %define gst_api_ver 1.0
 
@@ -12,7 +12,7 @@
 %def_disable zeitgeist
 
 Name: rhythmbox
-Version: %ver_major.3
+Version: %ver_major
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -26,17 +26,17 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #Source: %name-%version.tar
 
 %define dbus_ver 0.35
-%define glib_ver 2.32.0
+%define glib_ver 2.34.0
 %define gst_ver 1.0
 %define gtk_ver 3.6.0
 %define mtp_ver 0.3
-%define brasero_ver 0.9.1
-%define soup_ver 2.26.0
-%define totem_ver 2.32.0
+%define brasero_ver 2.31.5
+%define soup_ver 2.34.0
+%define totem_ver 3.2.0
 %define udev_ver 143
 %define gpod_ver 0.8
 %define mx_ver 1.0.1
-%define secret_ver 0.14
+%define secret_ver 0.18
 %define dmapsharing_ver 2.9.19
 
 Requires: lib%name = %version-%release
@@ -373,6 +373,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_datadir/icons/hicolor/*/*/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 %dir %pkgdocdir
 %doc %pkgdocdir/AUTHORS
 %doc %pkgdocdir/DOCUMENTERS
@@ -481,6 +482,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Sep 28 2014 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1
+
 * Mon May 26 2014 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 
