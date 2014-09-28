@@ -1,5 +1,5 @@
 Name: git
-Version: 1.8.5.5
+Version: 2.0.4
 Release: alt1
 
 Summary: Git core and tools
@@ -289,6 +289,13 @@ ln -s . %buildroot%_includedir/git/xdiff
 chmod a-x %buildroot%gitexecdir/git-sh-setup
 install -pDm644 contrib/completion/git-completion.bash \
 	%buildroot/etc/bash_completion.d/git
+# Generate shell functions provides list.
+(
+	echo '# shell functions provides list'
+	sed -n 's/^\([A-Za-z][A-Za-z_0-9]*\)[[:space:]]*().*/\1/pg' \
+		%buildroot%gitexecdir/git-sh-setup |
+		LC_COLLATE=C sort -u
+) > %buildroot%gitexecdir/.provides.sh
 
 pushd perl
 %perl_vendor_install
@@ -356,7 +363,7 @@ popd
 %config /etc/bash_completion.d/git
 %_bindir/*
 %exclude %_bindir/git-cvs*
-%gitexecdir
+%gitexecdir/
 %exclude %gitexecdir/git-cvs*
 %exclude %gitexecdir/git-gui*
 %exclude %gitexecdir/git-citool
@@ -480,6 +487,12 @@ popd
 %endif #emacs
 
 %changelog
+* Wed Jul 30 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0.4-alt1
+- Updated to maint 2.0.4.
+
+* Fri May 30 2014 Dmitry V. Levin <ldv@altlinux.org> 1.9.4-alt1
+- Updated to maint 1.9.4.
+
 * Fri Feb 14 2014 Dmitry V. Levin <ldv@altlinux.org> 1.8.5.5-alt1
 - Updated to maint v1.8.5.5.
 
