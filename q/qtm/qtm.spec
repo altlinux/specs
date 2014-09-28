@@ -1,21 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtm
-Version: 0.7.1.3
-Release: alt1.qa2
+Version: 1.3.17
+Release: alt1
 
 Summary: Qt4 blogging client
 License: GPLv2+
 Group: Networking/Other
 
 Url: http://qtm.blogistan.co.uk/
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 Source: %name-%version.tar.gz
-Patch0: %name-0.7.3.1-alt-desktop-fixes.patch
 
 BuildPreReq: cmake gcc-c++ libqt4-devel
 BuildRequires: desktop-file-utils
+BuildPreReq: qt4-designer libqt4-sql-interbase libqt4-sql-sqlite2
+BuildPreReq: libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql
+BuildPreReq: libqt4-assistant-devel
 
 %description
 QTM is a blogging client which is presently capable of composing,
@@ -25,7 +26,6 @@ Wordpress (including wordpress.com), Movable Type, Drupal and so on.
 
 %prep
 %setup
-%patch0 -p1
 mkdir build/
 cd build
 cmake ../ \
@@ -33,6 +33,7 @@ cmake ../ \
 %ifarch x86_64
         -DLIB_SUFFIX=64 \
 %endif
+				-DCMAKE_STRIP:FILEPATH="/bin/echo" \
         -DCMAKE_BUILD_TYPE="Release" \
         -DCMAKE_CXX_FLAGS:STRING="%optflags" \
         -DCMAKE_SKIP_RPATH=YES
@@ -59,6 +60,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/%name.*
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.17-alt1
+- Version 1.3.17
+
 * Tue May 17 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.7.1.3-alt1.qa2
 - NMU (by repocop): the following fixes applied:
   * freedesktop-desktop-file-proposed-patch for qtm
