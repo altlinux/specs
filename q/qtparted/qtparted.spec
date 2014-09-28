@@ -1,4 +1,3 @@
-Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %def_disable rpath
 %def_with pic
 %def_disable devel
@@ -21,14 +20,15 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 %define Name QtParted
 Name: qtparted
-Version: 0.5.0
-Release: alt1.qa1
+Version: 0.7.0
+Release: alt1.git20140602
 Group: System/Configuration/Hardware
 Summary: Flexible GUI partitioning tool
 Summary(ru_RU.CP1251): Графический инструмент для работы с разделами жесткого диска
 Summary(uk_UA.CP1251): Графічний інструмент для роботи з разділами жорсткого диску
 License: %gpl2plus
 URL: http://%name.sourceforge.net/
+# https://abf.io/omv_software/qtparted.git
 Source0: %name-%version.tar
 Source1: %name-pam
 Source2: %name-security
@@ -39,11 +39,11 @@ Patch1: %name-0.4.5-notable.patch
 Patch2: %name-0.4.5-ide.patch
 Patch3: %name-0.4.5-makefile.patch
 
-BuildRequires: fontconfig libqt4-devel libXext-devel libXt-devel
+BuildRequires: fontconfig qt5-base-devel libXext-devel libXt-devel
 BuildRequires: libparted-devel libstdc++-devel gcc-c++ zlib-devel
 BuildRequires: libuuid-devel ImageMagick rpm-build-licenses
-BuildPreReq: e2fsprogs cmake
-BuildPreReq: qt4-designer libGL-devel libGLU-devel libjpeg-devel
+BuildPreReq: e2fsprogs cmake qt5-tools-devel
+BuildPreReq: qt5-designer libGL-devel libGLU-devel libjpeg-devel
 BuildPreReq: libmng-devel librsvg-devel libopenmotif-devel
 %{?_enable_ntfs:BuildRequires: ntfsprogs}
 %{?_enable_ext3fs:BuildRequires: libe2fs-devel}
@@ -86,7 +86,7 @@ install -m644 %SOURCE4 .
 
 
 %build
-PATH=%_libdir/qt4/bin:$PATH \
+PATH=%_qt5_bindir:$PATH \
 cmake .
 
 %make_build VERBOSE=1
@@ -123,10 +123,14 @@ install -p -m644 doc/%name.1 %buildroot%_man1dir
 %_datadir/%name
 %_man1dir/*	
 %_iconsdir/hicolor/*/apps/*
+%_pixmapsdir/*
 %_desktopdir/*
 
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20140602
+- Version 0.7.0
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.0-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
