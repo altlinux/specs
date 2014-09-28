@@ -1,16 +1,18 @@
 Name: regexxer
-Version: 0.9
-Release: alt0.2.qa1
+Version: 0.11
+Release: alt1.git20140920
 
 Summary: regexxer is a nifty search/replace tool for the desktop user.
 Group: Text tools
+URL: http://regexxer.sourceforge.net/
+# git://git.gnome.org/regexxer
 Source: %name-%version.tar.gz
-Patch: regexxer-0.9-alt-glib2.patch
 License: GPL
-Packager: Eugene Ostapets <eostapets@altlinux.org>
 
 # Automatically added by buildreq on Sun May 06 2007
 BuildRequires: gcc-c++ GConf libgconfmm2-devel libglademm-devel libpcre-devel perl-XML-Parser
+
+BuildPreReq: intltool libgtkmm3-devel libgtksourceviewmm3-devel
 
 %description
 regexxer is a nifty search/replace tool for the desktop user.  It features
@@ -26,14 +28,14 @@ typing find/grep/sed/awk/perl command lines.
 
 %prep
 %setup
-%patch -p2
 
 %build
+%autoreconf
 %configure 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
@@ -42,9 +44,13 @@ typing find/grep/sed/awk/perl command lines.
 %_liconsdir/%name.png
 %dir %_datadir/%name
 %_datadir/%name/*
-%_sysconfdir/gconf/schemas/%name.schemas
+#_sysconfdir/gconf/schemas/%name.schemas
+%_datadir/glib-2.0/schemas/org.regexxer.gschema.xml
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20140920
+- Version 0.11
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt0.2.qa1
 - NMU: rebuilt for updated dependencies.
 
