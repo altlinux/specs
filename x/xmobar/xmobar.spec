@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmobar
-Version: 0.20.1
+Version: 0.21
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -43,6 +43,9 @@ runghc Setup copy --destdir=%buildroot
 %doc news.md readme.md
 
 %changelog
+* Sun Sep 28 2014 Denis Smirnov <mithraen@altlinux.ru> 0.21-alt1
+- 0.21
+
 * Mon May 12 2014 Denis Smirnov <mithraen@altlinux.ru> 0.20.1-alt1
 - 0.20.1
 
