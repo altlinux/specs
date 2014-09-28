@@ -1,19 +1,18 @@
 %define Name Quimup
 Name: quimup
-Version: 0.3.5
-Release: alt1.2
+Version: 1.3.2
+Release: alt1
 Summary: A client for the music player daemon (MPD)
 License: %gpl2plus
 Group: Sound
 #URL: http://kde-apps.org/content/show.php/Quimup?content=68374
 URL: http://www.coonsden.com/
 Source: %Name%{version}src.tar
-Patch: quimup-0.3.5-alt-gcc4.6.patch
-Patch1: quimup-0.3.5-alt-glibc-2.16.patch
-Packager: Led <led@altlinux.ru>
+Source1: Icons.tar
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: gcc-c++ libqt3-devel ImageMagick-tools
+BuildRequires: gcc-c++ libqt4-devel ImageMagick-tools
+BuildPreReq: libmpdclient-devel libtag-devel
 
 %description
 %Name is a client for the music player daemon (MPD) written in C++ and
@@ -26,18 +25,15 @@ from the system tray.
 
 %prep
 %setup -n %Name%{version}src
-%patch -p0
-%patch1 -p0
 
+tar -xf %SOURCE1
 
 %build
-pushd %Name%version
-%configure \
-    ac_cv_path_ac_qmake=qmake-qt3 \
-    ac_cv_path_ac_moc=moc-q3 \
-    ac_cv_path_ac_uic=uic-qt3
-%make_build
-popd
+export PATH=$PATH:%_qt4dir/bin
+qmake \
+	QMAKE_CXXFLAGS="%optflags" \
+	%name.pro
+%make_build V=1
 
 iconv -f cp1251 -t utf-8 > %name.desktop <<__MENU__
 [Desktop Entry]
@@ -56,9 +52,13 @@ for s in 16 22 24 36 72 96; do
 done
 
 
-
 %install
-%make_install -C %Name%version prefix=%buildroot%_prefix install
+install -d %buildroot%_bindir
+install -m755 %name %buildroot%_bindir/
+
+install -d %buildroot%_pixmapsdir
+install -p -m644 src/resources/* %buildroot%_pixmapsdir/
+
 install -D -m 0644 {,%buildroot%_desktopdir/}%name.desktop
 for s in 16 22 24 32 36 48 64 72 96 128; do
     install -D -m 0644 {Icons/%name$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
@@ -66,13 +66,17 @@ done
 
 
 %files
-%doc Changelog FAQ.txt README
+%doc changelog description FAQ.txt README
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
+%_pixmapsdir/*
 
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
+- Version 1.3.2
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.2
 - Fixed build with glibc 2.16
 
