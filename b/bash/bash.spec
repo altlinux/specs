@@ -1,6 +1,6 @@
 Name: bash
 %define bash_version 3.2
-%define bash_patchlevel 53
+%define bash_patchlevel 54
 Version: %bash_version.%bash_patchlevel
 Release: alt1
 
@@ -290,6 +290,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Sun Sep 28 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.54-alt1
+- Updated to 3.2 patchlevel 54.
+
 * Fri Sep 26 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.53-alt1
 - Updated to 3.2 patchlevel 53.
 - Applied OOB array access fix from Florian Weimer
@@ -298,7 +301,8 @@ EOF
 * Thu Sep 25 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.52-alt1
 - Updated to 3.2 patchlevel 52.
 - Applied upstream fix for CVE-2014-7169.
-- Applied functions export hardening patch from Florian Weimer.
+- Applied functions export hardening patch from Florian Weimer
+  (fixes: CVE-2014-6278).
 
 * Mon Sep 22 2014 Dmitry V. Levin <ldv@altlinux.org> 3.2.51-alt3
 - Applied upstream fix for CVE-2014-6271.

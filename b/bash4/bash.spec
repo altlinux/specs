@@ -1,6 +1,6 @@
 Name: bash4
 %define bash_version 4.2
-%define bash_patchlevel .49
+%define bash_patchlevel .50
 Version: %bash_version%bash_patchlevel
 Release: alt1
 
@@ -269,6 +269,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Sun Sep 28 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.50-alt1
+- Updated to 4.2 patchlevel 50 (fixes: CVE-2014-6278).
+
 * Fri Sep 26 2014 Dmitry V. Levin <ldv@altlinux.org> 4.2.49-alt1
 - Updated to 4.2 patchlevel 49 (fixes: CVE-2014-7169).
 - Applied OOB array access fix from Florian Weimer
