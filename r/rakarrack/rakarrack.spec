@@ -1,11 +1,10 @@
 Name: rakarrack
 Version: 0.6.2
-Release: alt2.git.56026bac.1.qa5
+Release: alt3.git20140722
 Summary: Guitar effects for Linux
 License: GPLv2+
 Group: Sound
 Url: http://rakarrack.sourceforge.net/
-Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
 Requires: %name-data = %version-%release
 
@@ -14,7 +13,7 @@ BuildRequires: libXpm-devel libalsa-devel libfltk-devel libjpeg-devel
 BuildRequires: libpng-devel libsamplerate-devel libsndfile-devel
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
-BuildPreReq: libXfixes-devel
+BuildPreReq: libXfixes-devel libfftw3-devel libXcursor-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -47,11 +46,14 @@ This package contains data files and documentation for Rakarrack.
 %build
 %autoreconf
 
+%configure \
 %ifarch x86_64
-%configure --enable-sse2
-%else
-%configure
+	--enable-sse \
+	--enable-sse2 \
 %endif
+	--enable-jack-session \
+	--enable-datadir=yes \
+	--enable-docdir=yes
 
 %make_build
 
@@ -72,6 +74,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/doc/%name
 
 %changelog
+* Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt3.git20140722
+- New snapshot
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git.56026bac.1.qa5
 - Rebuilt with updated libfltk
 
