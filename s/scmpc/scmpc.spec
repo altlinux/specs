@@ -1,17 +1,17 @@
 Name: scmpc
-Version: 0.2.2
-Release: alt1.0.qa1
+Version: 0.4.1
+Release: alt1.git20130304
 
 Summary: Audioscrobbler client for MPD
 License: GPL
 Group: Sound
-Url: http://scmpc.berlios.de/
+Url: https://bitbucket.org/cmende/scmpc/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
-
+# https://bitbucket.org/cmende/scmpc.git
 Source: %name-%version.tar.bz2
 
-BuildPreReq: libargtable2-devel libconfuse-devel libcurl-devel libdaemon-devel
+BuildPreReq: libargtable2-devel libconfuse-devel libcurl-devel
+BuildPreReq: libdaemon-devel libmpdclient-devel glib2-devel
 
 %description
 scmpc is a client for MPD (the Music Player Daemon) which submits your
@@ -20,23 +20,25 @@ default behaviour, or it can be run in the foreground with the logs
 directed to standard out.
 
 %prep
-%setup -q
+%setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall
-%__mkdir_p %buildroot%_docdir/%name-%version/
-mv %buildroot{%_datadir/%name/scmpc.conf,%_docdir/%name-%version/}
 
 %files
+%doc AUTHORS NEWS *.md scmpc.conf.example
 %_bindir/*
 %_man1dir/*
-%doc %_docdir/%name-%version/
 
 %changelog
+* Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20130304
+- Version 0.4.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt1.0.qa1
 - NMU: rebuilt for debuginfo.
 
