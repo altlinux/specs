@@ -1,9 +1,9 @@
 %define qt4_ver %{get_version libqt4-devel}
-%define farstream farstream
-%define farstream_dev farstream-devel libtelepathy-farstream0.4-devel
+%define farstream farstream0.2
+%define farstream_dev  pkgconfig(farstream-0.2) libtelepathy-farstream-devel
 
 Name: telepathy-qt4
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Telepathy framework - Qt4 connection manager library 
@@ -16,13 +16,14 @@ Packager: Nazarov Denis <nenderus@altlinux.ru>
 Source: telepathy-qt-%version.tar
 # ALT
 Patch10: alt-fix-install.patch
-Patch11: alt-pkgconfig.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
 #BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel libicu libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libtelepathy-farstream-devel phonon-devel python-module-dbus python-module-distribute qt4-doc-html
 BuildRequires(pre): libqt4-devel
-BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel phonon-devel
+BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
+BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
+BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: %farstream_dev
 BuildRequires: python-module-dbus python-module-distribute
 BuildRequires: kde-common-devel
@@ -45,10 +46,21 @@ Requires: libtelepathy-glib-devel
 %description -n lib%name-devel
 Development libraries and header files for %name.
 
+%package -n lib%name-devel-static
+Summary: Static libraries for %name
+Group: Development/KDE and QT
+Requires: lib%name-devel
+%description -n lib%name-devel-static
+Static libraries for %name.
+
 %prep
 %setup -qn telepathy-qt-%version
 %patch10 -p1
-%patch11 -p1
+
+find -type f -name \*.pc.in | \
+while read f ; do
+    sed -i 's|${CMAKE_INSTALL_PREFIX}||g' $f
+done
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -72,11 +84,22 @@ popd
 %files -n lib%name-devel
 %_libdir/cmake/TelepathyQt4/
 %_libdir/cmake/TelepathyQt4Farstream/
+%_libdir/cmake/TelepathyQt4Service/
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 %_includedir/telepathy-qt4
 
+%files -n lib%name-devel-static
+%_libdir/lib*.a
+
 %changelog
+* Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
+- new version
+- build with gstreamer1
+
+* Mon Jun 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt0.M70P.1
+- built for M70P
+
 * Mon Jun 16 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
 - new version
 

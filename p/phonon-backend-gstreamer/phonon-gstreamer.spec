@@ -3,7 +3,7 @@
 %endif
 
 Name: phonon-backend-gstreamer
-Version: 4.7.2
+Version: 4.8.0
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 # optimized out: cmake-modules elfutils fontconfig glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-xml libstdc++-devel libxkbfile-devel libxml2-devel pkg-config python-base ruby xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: automoc cmake gcc-c++ glibc-devel-static gst-plugins-devel libXxf86misc-devel libalsa-devel libqt3-devel libqt4-opengl phonon-devel rpm-build-ruby
 BuildRequires(pre): phonon-devel
-BuildRequires: automoc cmake gcc-c++ glibc-devel gst-plugins-devel libalsa-devel phonon-devel libxml2-devel libGL-devel
+BuildRequires: automoc cmake gcc-c++ glibc-devel gst-plugins1.0-devel libalsa-devel phonon-devel libxml2-devel libGL-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -30,7 +30,7 @@ Provides: phonon-backend = %{get_version phonon-devel}
 Provides: phonon-backend-gstreamer = %EVR phonon-gstreamer = %EVR
 Obsoletes: phonon-gstreamer < %EVR
 Obsoletes: phonon-backend-xine < 4.5 phonon-xine < 4.5 phonon-backend-0-xine < 4.5
-Requires: gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly
+Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0
 %description -n phonon-backend-5-gstreamer
 Gstreamer phonon backend
 
@@ -41,7 +41,7 @@ Gstreamer phonon backend
 %K4cmake \
     -DINCLUDE_INSTALL_DIR=%_K4includedir \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt4dir
-%K4make
+%K4make VERBOSE=1
 
 %install
 %K4install
@@ -52,6 +52,9 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Fri Sep 12 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
+- new version
+
 * Tue Jun 24 2014 Sergey V Turchin <zerg@altlinux.org> 4.7.2-alt1
 - new version
 
