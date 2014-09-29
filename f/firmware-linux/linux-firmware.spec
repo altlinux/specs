@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20140828
-Release: alt2
+Version: 20140902
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -60,6 +60,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Tue Sep 30 2014 Michael Shigorin <mike@altlinux.org> 20140902-alt1
+- updated from git
+
 * Wed Sep 10 2014 Michael Shigorin <mike@altlinux.org> 20140828-alt2
 - add P:/O: firmware-amd-ucode
 
