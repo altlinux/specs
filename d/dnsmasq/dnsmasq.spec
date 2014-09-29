@@ -1,5 +1,5 @@
 Name: dnsmasq
-Version: 2.71
+Version: 2.72
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -127,6 +127,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Sep 29 2014 Mikhail Efremov <sem@altlinux.org> 2.72-alt1
+- Updated to 2.72.
+
 * Mon May 26 2014 Mikhail Efremov <sem@altlinux.org> 2.71-alt1
 - Updated to 2.71.
 
