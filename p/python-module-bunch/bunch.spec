@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20120312
+Release: alt2.git20120312
 Summary: A dot-accessible dictionary (a la JavaScript objects)
 License: MIT
 Group: Development/Python
@@ -39,6 +39,7 @@ This package contains test for %oname.
 %package -n python3-module-%oname
 Summary: A dot-accessible dictionary (a la JavaScript objects)
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 Bunch is a dictionary that supports attribute-style access, a la
@@ -101,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20120312
+- Added provides for Python 3 module
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20120312
 - Initial build for Sisyphus
 
