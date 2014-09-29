@@ -1,6 +1,6 @@
 Name: jboss-as-vanilla
 Version: 7.1.1
-Release: alt1
+Release: alt9
 
 Summary: jboss-as-vanilla - Vanilla Edition Of JBoss Application Server
 
@@ -18,6 +18,7 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 
 #PreReq:
 Requires: java >= 1.7
+AutoReq: yes, nomingw
 #Provides:
 #Conflicts:
 
@@ -45,11 +46,19 @@ enables services on-demand when your application requires them.
 #in jboss-as
 mkdir -p %buildroot/%_bindir/
 mkdir -p %buildroot/%jbossdir/
+mkdir -p %buildroot/%_initdir/
+mkdir -p %buildroot/etc/jboss-as/
 cp %SOURCE1 %buildroot/%_bindir/
+
+cp ./bin/init.d/jboss-as-standalone %buildroot/%_initdir/
+cp ./bin/init.d/jboss-as.conf %buildroot/etc/jboss-as/jboss-as.conf
 
 cp -a ./* %buildroot/%jbossdir/
 rm -f %buildroot/%jbossdir/bin/*\.bat
 mkdir -p %buildroot/%jbossdir/docs/examples/properties/
+mkdir -p %buildroot/%jbossdir/standalone/data/
+mkdir -p %buildroot/%jbossdir/standalone/log/
+
 cp %buildroot/%jbossdir/standalone/configuration/logging.properties %buildroot/%jbossdir/docs/examples/properties/
 cp %buildroot/%jbossdir/standalone/configuration/mgmt-users.properties %buildroot/%jbossdir/docs/examples/properties/
 cp %SOURCE1 %buildroot/%jbossdir/docs/examples/properties/standalone-web.xml
@@ -60,7 +69,6 @@ cp %buildroot/%jbossdir/bin/jboss-cli.sh %buildroot/%_bindir/jboss-cli
 rm -rf %buildroot/%jbossdir/modules/org/jboss/as/web/main/lib/*
 rm -rf %buildroot/%jbossdir/modules/org/hornetq/main/lib/*
 chmod 755 %buildroot/%jbossdir/bin/*\.sh
-
 %check
 
 %pre
@@ -72,7 +80,21 @@ useradd -d %jbossdir -r -s /bin/nologin %jbossuser >/dev/null 2>&1 || :
 
 %attr(755,root,root) %_bindir/jboss-cli
 %attr(755,root,root) %_bindir/jboss-as-cp
+%attr(755,root,root) /etc/jboss-as/jboss-as.conf
+%attr(755,root,root) %_initdir/*
 
 %changelog
+* Mon Sep 29 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt9
+- remove chown
+
+* Mon Sep 29 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt8
+- added deroctory and fix init script
+
+* Fri Sep 26 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt7
+- remove mingw req
+
+* Tue Sep 23 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt6
+- fix start by init.d
+
 * Mon Mar 31 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt1
 - jboss-as binary from jboss.org without build
