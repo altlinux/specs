@@ -2,7 +2,7 @@
 
 Name: appdata-tools
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Tools for AppData files
 Group: Text tools
@@ -47,6 +47,9 @@ application descriptions for standards compliance and to the style guide.
 %exclude %_datadir/emacs/site-lisp/site-start.d/appdata-rng-init.el
 
 %changelog
+* Sat Sep 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt2
+- rebuilt against libappstream-glib.so.7
+
 * Thu Jun 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
 - 0.1.8
 
