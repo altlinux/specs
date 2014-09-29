@@ -1,10 +1,10 @@
 Name: xtruss
-Version: 10030
+Version: 10272
 Release: alt1
 Summary: Trace X protocol exchanges, in the manner of strace
 License: MIT/X11
 Group: System/X11
-Source: %name-r%version.tar.gz
+Source: %name-%version.tar.gz
 Url: http://www.chiark.greenend.org.uk/~sgtatham/xtruss/
 
 # Automatically added by buildreq on Mon Aug 23 2010
@@ -17,7 +17,7 @@ similar to xmon(1), but intended to combine xmon's basic
 functionality with an interface much more similar to strace(1).
 
 %prep
-%setup -n %name-r%version
+%setup
 
 %build
 %configure
@@ -34,6 +34,10 @@ halibut --man=%name.1 %name.but
 %_man1dir/*
 
 %changelog
+* Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 10272-alt1
+- Autobuild version bump to 10272
+- Fix upstream versioning
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 10030-alt1
 - Autobuild version bump to 10030
 
