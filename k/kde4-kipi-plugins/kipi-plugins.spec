@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -33,7 +33,7 @@ BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-de
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
-BuildRequires: qt-gstreamer-devel libImageMagick-devel ImageMagick-tools
+BuildRequires: qt-gstreamer1-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
 
 %description
@@ -160,6 +160,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt2
+- build with qt-gstreamer1
+
 * Tue Sep 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt1
 - new version
 

@@ -1,6 +1,6 @@
 Name:           kamoso
 Version:        2.0.2
-Release:        alt8
+Release:        alt9
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
@@ -8,6 +8,8 @@ URL:            https://projects.kde.org/projects/extragear/multimedia/kamoso/
 License:        GPLv2+
 
 Source0:        ftp://ftp.kde.org/pub/kde/stable/kamoso/%{version}/src/%{name}-%{version}.tar.bz2
+# upstream
+Patch0: kamoso-2.0.2-gst1.0.patch
 # FC
 Patch1: kamoso-2.0.2-libkipi-4.8.80.patch
 Patch2: kamoso-2.0.2-libkipi-4.9.50.patch
@@ -17,7 +19,7 @@ Patch10: kamoso-2.0.2-alt-desktop-i18n-ru.patch
 BuildRequires(pre): kde4libs-devel >= 4.6.0
 BuildRequires:  gcc-c++ 
 BuildRequires:  libkipi4-devel 
-BuildRequires:  qt-gstreamer-devel
+BuildRequires:  qt-gstreamer1-devel
 BuildRequires:  libsoprano-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
@@ -26,6 +28,7 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch10 -p1
@@ -49,6 +52,12 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_iconsdir/hicolor/*/actions/youtube.*
 
 %changelog
+* Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt9
+- build with qt-gstreamer1
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt7.M70P.1
+- built for M70P
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt8
 - built with new libkipi
 
