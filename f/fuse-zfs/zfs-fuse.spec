@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_19
+Release:          alt1_20
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -18,17 +18,15 @@ Source04:         zfs-fuse-helper
 Patch0:           zfs-fuse-0.7.0-umem.patch
 Patch1:           zfs-fuse-0.7.0-stack.patch
 Patch2:           zfs-fuse-printf-format.patch
+Patch3:           zfs-fuse-0.7.0-ppc64le.patch
 BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel
 %ifnarch aarch64 ppc64le
 BuildRequires:    prelink
 %endif
 BuildRequires:    systemd
 Requires:         fuse >= 2.7.4-1
-Requires(post):   systemd
-Requires(preun):  systemd
-Requires(postun): systemd
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
-ExcludeArch:      s390 s390x %{arm} aarch64 ppc64le
+ExcludeArch:      s390 s390x %{arm} aarch64
 Source44: import.info
 Source45: zfs-fuse.init
 
@@ -45,6 +43,7 @@ operating system.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1 -b .ppc64le
 
 f=LICENSE
 mv $f $f.iso88591
@@ -55,6 +54,7 @@ chmod -x contrib/test-datasets
 chmod -x contrib/find-binaries
 chmod -x contrib/solaris/fixfiles.py
 chmod -x contrib/zfsstress.py
+# cp -f /usr/lib/rpm/config.{guess,sub} src/lib/libumem/
 
 %build
 export CCFLAGS="%{optflags}"
@@ -70,10 +70,12 @@ install -Dp -m 0755 %{SOURCE2} %{buildroot}%{_sysconfdir}/cron.weekly/98-%{oldna
 install -Dp -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sysconfig/%{oldname}
 install -Dp -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/zfs-fuse-helper
 
+%ifnarch aarch64 ppc64le
 #set stack not executable, BZ 911150
 for i in zdb zfs zfs-fuse zpool ztest; do
        /usr/bin/execstack -c %{buildroot}%{_bindir}/$i
 done
+%endif
 
 mkdir -p -m 0755 %buildroot%_initdir
 install -D -m 0755 %SOURCE45 %buildroot%_initdir/zfs-fuse
@@ -93,16 +95,14 @@ else
 fi
 
 %post_service zfs-fuse
-%post_service zfs-fuse
 
 %preun
 %preun_service zfs-fuse
-%preun_service zfs-fuse
 
 %postun
-echo "Removing files since we removed the last package"
-rm -rf /var/run/zfs
-rm -rf /var/lock/zfs
+#echo "Removing files since we removed the last package"
+#rm -rf /var/run/zfs
+#rm -rf /var/lock/zfs
 
 %files
 %doc BUGS CHANGES contrib HACKING LICENSE README 
@@ -126,6 +126,9 @@ rm -rf /var/lock/zfs
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Mon Sep 29 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_20
+- new release (closes: #30364)
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_19
 - update to new release by fcimport
 
