@@ -1,19 +1,16 @@
 Name: SDL_sound
 Version: 1.0.3
-Release: alt3.2
+Release: alt3.hg20120815
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
 License: LGPLv2+
 Group: System/Libraries
 URL: http://icculus.org/SDL_sound/
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-# http://icculus.org/SDL_sound/downloads/%name-%version.tar.gz
+# hg clone http://hg.icculus.org/icculus/SDL_sound/
 Source: %name-%version.tar
-Patch: %name-1.0.3-autotools.patch
 
-# Automatically added by buildreq on Fri Nov 19 2010
-BuildRequires: doxygen libSDL-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
+BuildRequires: doxygen libSDL2-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
 %ifnarch %arm
 BuildRequires: libsmpeg-devel
 %endif
@@ -68,7 +65,6 @@ Static library for develop SDL_sound applications.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %add_optflags -I%_includedir/smpeg
@@ -104,7 +100,7 @@ popd
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-cp -a CHANGELOG COPYING CREDITS README docs/html %buildroot%docdir/
+cp -a *.txt docs/html %buildroot%docdir/
 
 
 %files -n %lib_name
@@ -121,6 +117,9 @@ cp -a CHANGELOG COPYING CREDITS README docs/html %buildroot%docdir/
 %docdir/html
 
 %changelog
+* Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt3.hg20120815
+- Snapshot from mercurial
+
 * Fri Mar 25 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt3.2
 - Rebuilt for debuginfo
 
