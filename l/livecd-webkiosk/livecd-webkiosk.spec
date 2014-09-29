@@ -1,5 +1,5 @@
 Name: livecd-webkiosk
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
@@ -55,7 +55,7 @@ Requires: chromium
 Summary: qupzilla webkiosk setup
 Group: System/X11
 Requires: %name = %version-%release
-Requires: qupzilla
+Requires: qupzilla >= 1.8.0
 
 %description qupzilla
 %summary
@@ -131,6 +131,9 @@ chmod +x %wrapper
 %files qupzilla
 
 %changelog
+* Mon Sep 29 2014 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
+- require qupzilla 1.8.0 or later for --fullscreen
+
 * Sat Sep 27 2014 Michael Shigorin <mike@altlinux.org> 0.4-alt1
 - added qupzilla support
 
