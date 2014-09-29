@@ -16,7 +16,7 @@
 
 Name: clutter
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -179,6 +179,9 @@ gtkdocize
 
 
 %changelog
+* Mon Sep 29 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt2
+- rebuilt against libinput.so.5
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 
