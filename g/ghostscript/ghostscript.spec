@@ -1,6 +1,6 @@
 Name: ghostscript
-Version: 9.10
-Release: alt2
+Version: 9.15
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -16,20 +16,39 @@ Summary: PostScript interpreter and renderer, most printer drivers
 Group: Publishing
 
 Source: %name-%version.tar.gz
+Source1: repatch_spec.sh
+Source2: repatch_spec.unused
+Source3: README.patches
 
-Patch2: ghostscript-rh-Fontmap.local.patch
-Patch3: ghostscript-rh-gdevcups-debug-uninit.patch
-Patch4: ghostscript-rh-iccprofiles-initdir.patch
-Patch5: ghostscript-rh-multilib.patch
-Patch6: ghostscript-rh-noopt.patch
-Patch7: ghostscript-rh-runlibfileifexists.patch
-Patch8: ghostscript-rh-scripts.patch
-Patch9: ghostscript-rh-icc-missing-check.patch
+## FC patches
+Patch1: FC-multilib.patch
+Patch2: FC-scripts.patch
+Patch3: FC-noopt.patch
+Patch4: FC-runlibfileifexists.patch
+Patch5: FC-icc-missing-check.patch
+Patch6: FC-Fontmap.local.patch
+Patch7: FC-wrf-snprintf.patch
 
-Patch100: ghostscript-alt-ijs-version.patch
+## Ubuntu patches
+Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch102: Ubuntu-2002_gs_man_fix_debian.patch
+Patch103: Ubuntu-2003_support_multiarch.patch
+Patch104: Ubuntu-020130903-5ae4180-ps-interpreter-dont-interpolate-imagemask-data-for-high-level-devices.patch
+Patch105: Ubuntu-020131023-ad3e3ed-handle-type-0-font-in-annotation.patch
+Patch106: Ubuntu-020131127-87a7fd8-cups-pwg-raster-output-ppd-less-support.patch
+Patch107: Ubuntu-020131218-5ddd13e-ps2write-dont-emit-a-page-size-change-if-the-last-request-failed.patch
+Patch108: Ubuntu-020131219-d997bc4-pwgraster-output-device.patch
+Patch109: Ubuntu-020140313-5d6b18a-set-correct-portrait-landscape-orientation-on-pcl-5ce.patch
+Patch110: Ubuntu-020140313-6498483-ps2write-fix-a-dsc-comment.patch
+Patch111: Ubuntu-020140313-095ae57-ps2write-fix-missing-beginresource-comment-for-fontfile-objects.patch
+Patch112: Ubuntu-020140324-b780ff0-protection-against-pxl-segfault-with-image-data-without-colorspace-info.patch
+Patch113: Ubuntu-020140331-4b44b41-pxlcolor-support-jpeg-in-output.patch
+Patch114: Ubuntu-020140331-41ab485-pxl-transform-deep-images-with-icc-transform-to-emit-high-level-images.patch
+Patch115: Ubuntu-020140331-8ae4ee2-fixes-pxl-segfault-with-trying-to-set-up-icc-transform-for-bitmasks.patch
+Patch116: Ubuntu-1002_pxl-make-dicctransform-default.patch
 
-# Remove in futher version (should be part of next release)
-Patch200: ghostscript-alt-cups-banner.patch
+## ALT patches
+Patch500: ghostscript-alt-ijs-version.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -158,24 +177,41 @@ Classic edition of %name
 %description common
 Common files for the %name
 
-
 %prep
 %setup
 
 # force system library usage
 rm -rf -- libpng zlib jpeg jasper freetype
 
-%patch2 -p1
-%patch3 -p1
+## FC apply patches
+%patch1 -p1 -b .multilib
+%patch2 -p1 -b .scripts
+%patch3 -p1 -b .noopt
 %patch4 -p1
-%patch5 -p1
+%patch5 -p1 -b .icc-missing-check
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch7 -p1 -b .wrf-snprintf
 
-%patch100 -p1
+## Ubuntu apply patches
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+#patch104 -p1
+#patch105 -p1
+#patch106 -p1
+#patch107 -p1
+##patch108 -p1
+#patch109 -p1
+##patch110 -p1
+#patch111 -p1
+#patch112 -p1
+#patch113 -p1
+#patch114 -p1
+#patch115 -p1
+%patch116 -p1
 
-%patch200 -p2
+## ALT apply patches
+%patch500 -p1
 
 %build
 %autoreconf
@@ -198,7 +234,7 @@ export CFLAGS=-DA4
 
 cd ijs
     ./autogen.sh
-    %configure --enable-shared --enable-static
+    %configure --enable-shared --disable-static
     %make_build
 cd -
 
@@ -234,6 +270,7 @@ mkdir -p %buildroot/etc/buildreqs/packages/ignore.d
 echo %name-module-X >%buildroot/etc/buildreqs/packages/ignore.d/%name-module-X
 
 mkdir -p %buildroot/%_datadir/ghostscript/conf.d
+mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%version/
 
 %files
 %files common
@@ -283,6 +320,15 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_includedir/ijs
 
 %changelog
+* Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 9.15-alt1
+- Autobuild version bump to 9.15
+- Freshen third-party patches
+
+* Thu Apr 10 2014 Fr. Br. George <george@altlinux.ru> 9.14-alt1
+- Autobuild version bump to 9.14
+- Freshen third-party patches
+- Provide semi-automatic FC and Ubuntu patch sucker
+
 * Fri Nov 08 2013 Andriy Stepanov <stanv@altlinux.ru> 9.10-alt2
 - Fix version definition
 
