@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.16.1
+Version: 4.17.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -83,6 +83,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Sep 29 2014 Andriy Stepanov <stanv@altlinux.ru> 4.17.0-alt1
+- Add vlan support for Ajax version
+
 * Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
 - Don't show IPv6 in the list if IPv6 is disabled.
 - Replace valid_ipv4() with valid_ipv4addr().
