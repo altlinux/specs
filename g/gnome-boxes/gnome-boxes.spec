@@ -4,7 +4,7 @@
 %def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.12.2
+Version: 3.14.0
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -18,9 +18,9 @@ Source2: libgd.tar
 # From configure.ac
 %define govirt_ver 0.2.0
 %define glib_ver 2.38.0
-%define gtk_ver 3.11
+%define gtk_ver 3.13.2
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 0.1.7
+%define libvirt_glib_ver 0.1.9
 %define libxml2_ver 2.7.8
 %define spice_gtk_ver 0.15
 %define gudev_ver 165
@@ -28,6 +28,7 @@ Source2: libgd.tar
 %define tracker_ver 0.13.1
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
+%define libarchive_ver 3.0.0
 
 BuildRequires: intltool >= 0.40.0
 BuildRequires: yelp-tools
@@ -46,6 +47,7 @@ BuildRequires: libosinfo-devel >= %osinfo_ver
 BuildRequires: tracker-devel >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
+BuildRequires: libarchive-devel >= %libarchive_ver
 %{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
 
 
@@ -91,15 +93,18 @@ intltoolize -f
 %doc AUTHORS COPYING README NEWS TODO
 %_bindir/%name
 %_datadir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
 %_iconsdir/hicolor/*/apps/gnome-boxes.*
 %_libexecdir/gnome-boxes-search-provider
-%_datadir/dbus-1/services/org.gnome.Boxes.SearchProvider.service
+%_datadir/dbus-1/services/*.service
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
 %_datadir/appdata/*.xml
 
 %changelog
+* Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+
 * Tue May 13 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.2-alt1
 - 3.12.2
 
