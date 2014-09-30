@@ -1,6 +1,6 @@
 
 Name: accerciser
-Version: 3.12.0
+Version: 3.14.0
 Release: alt1
 
 Summary: An interactive Python tool for querying accessibility information
@@ -78,6 +78,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Sep 30 2014 Paul Wolneykien <manowar@altlinux.org> 3.14.0-alt1
+- Fresh up to v3.14.0 with the help of cronbuild and update-source-functions.
+
 * Mon Apr 14 2014 Paul Wolneykien <manowar@altlinux.org> 3.12.0-alt1
 - Fresh up to v3.12.0 with the help of cronbuild and update-source-functions.
 
