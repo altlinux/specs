@@ -1,8 +1,8 @@
-%define ver_major 3.12
+%define ver_major 3.14
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -24,10 +24,12 @@ BuildPreReq: rpm-build-licenses
 %define evince_ver %ver_major
 %define applets_ver 2.91.4
 %define gedit_plugins_ver %ver_major
-%define gnome_nettool_ver 3.0
+%define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
-%define gdu_ver 3.0
+%define gdu_ver 3.12
+%define evo_ver 3.12
+%define emp_ver 3.12
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -35,7 +37,7 @@ BuildPreReq: rpm-build-licenses
 %define gtk_theme_prefix gtk3-theme
 %define gnome_theme_prefix gnome-theme
 ## a11y
-%define orca_ver 3.9.92
+%define orca_ver %ver_major
 
 %description
 A set of virtual packages for GNOME Desktop version 3 installation.
@@ -57,7 +59,7 @@ Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 # user settings utility
 Requires: gnome-tweak-tool >= %ver_major
-#Requires: gnome-initial-setup
+
 # default font
 Requires: fonts-otf-abattis-cantarell
 # backgrounds
@@ -68,10 +70,9 @@ Requires: yelp >= %ver_major
 #Requires: gnome-menus >= %ver_major
 
 # GNOME Utilities
-Requires: gnome-search-tool >= 3.6.0
 Requires: gnome-system-monitor >= %ver_major
 Requires: gnome-logs >= %ver_major
-Requires: gucharmap >= 3.9.90
+Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
 
 # Applications
@@ -86,10 +87,10 @@ Requires: gedit >= %ver_major
 
 # Look & Feel
 ## Default themes
-Requires: gnome-icon-theme >= %ver_major
-Requires: gnome-icon-theme-symbolic >= %ver_major
+Requires: gnome-icon-theme >= 3.12
+Requires: gnome-icon-theme-symbolic >= 3.12
 Requires: gnome-themes-standard >= %ver_major
-Requires: libgtk3-engine-adwaita
+#Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
 
 # And, of course, the documentation
@@ -113,6 +114,9 @@ Provides: gnome-default = %version-%release
 
 Requires: %name-minimal = %version-%release
 
+# initial setup
+Requires: gnome-initial-setup
+
 ## Canberra modules for both GTK+
 Requires: libcanberra-gtk2
 Requires: libcanberra-gtk3
@@ -129,13 +133,13 @@ Requires: fuse-gvfs
 Requires: gnome-disk-utility >= %gdu_ver
 ## Display manager (gdm or gdm2.20)
 Requires: gdm-gnome >= %ver_major
-## Default web-browser (firefox or galeon?)
+## Default web-browser
 Requires: epiphany >=  %epiphany_ver
 Requires: mozilla-plugin-adobe-flash
 ## Default mailer
-Requires: evolution >= %ver_major
+Requires: evolution >= %evo_ver
 ## Default messenger
-Requires: empathy >= %ver_major
+Requires: empathy >= %emp_ver
 Requires: gnome-contacts >= %ver_major
 ## Default RSS-reader
 #Requires: liferea
@@ -149,8 +153,7 @@ Requires: cheese
 Requires: bijiben
 
 # Utilities
-Requires: gnome-utils >= 3.6
-Requires: gconf-editor >= 3.0
+Requires: gnome-utils >= %ver_major
 Requires: dconf-editor >= 0.10
 
 ## Let's have nice notifications
@@ -189,6 +192,8 @@ Requires: totem-nautilus
 Requires: gnome-kra-ora-thumbnailer
 #  Epub thumbnailer for Nautilus
 Requires: gnome-epub-thumbnailer
+# Nautilus extension for terminal
+Requires: gnome-terminal-nautilus
 # Menu editor
 Requires: alacarte
 # Weather application
@@ -204,6 +209,10 @@ Requires: NetworkManager-gnome >= %network_manager_ver
 Requires: gnome-bluetooth
 ## frontend for various networking tools
 Requires: gnome-nettool >= %gnome_nettool_ver
+## VNC server for the GNOME Desktop
+Requires: vino
+## VNC client for the GNOME Desktop
+Requires: vinagre
 
 %description default
 This virtual package installs GNOME Desktop for an average user's
@@ -240,13 +249,7 @@ Requires: kino
 #Requires: dvgrab
 ## SANE (Scanner Access Now Easy) frontend
 Requires: xsane
-
-# Networking
 ## Utilities
-## VNC server for the GNOME Desktop
-Requires: vino
-## VNC client for the GNOME Desktop
-Requires: vinagre
 ## Internet telephon
 Requires: ekiga
 ## Client for ed2k network
@@ -259,7 +262,6 @@ Requires: rdesktop
 ## NX
 Requires: freenx
 # Requires: nxlaunch
-
 # Disks management
 Requires: gparted
 Requires: consolehelper
@@ -358,6 +360,10 @@ itself).
 #%files a11y
 
 %changelog
+* Tue Sep 30 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- added vino, vinagre, gnome-terminal-nautilus, gnome-initial-setup to -default
+- removed gnome-search-tool, gconf-editor
+
 * Wed Sep 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
 - added lost gnome-backgrounds to minimal
 - updated gedit* versions
