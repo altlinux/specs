@@ -4,7 +4,7 @@
 %def_without x11_support
 
 Name: gnote
-Version: 3.12.0
+Version: 3.14.0
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -47,6 +47,7 @@ and consumes fewer resources.
 %autoreconf
 %configure \
 	%{?_with_x11_support:--with-x11-support} \
+	--with-cxx11-support \
 	--disable-static
 
 %make_build
@@ -79,6 +80,9 @@ desktop-file-install \
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 
 %changelog
+* Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
+- 3.14.0
+
 * Wed Mar 26 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.0-alt1
 - 3.12.0
 
