@@ -1,5 +1,5 @@
 Name: orca
-Version: 3.12.2
+Version: 3.14.0
 Release: alt1
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
@@ -88,6 +88,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %changelog
+* Tue Sep 30 2014 Paul Wolneykien <manowar@altlinux.org> 3.14.0-alt1
+- Fresh up to v3.14.0 with the help of cronbuild and update-source-functions.
+
 * Fri May 23 2014 Cronbuild Service <cronbuild@altlinux.org> 3.12.2-alt1
 - Fresh up to v3.12.2 with the help of cronbuild and update-source-functions.
 
