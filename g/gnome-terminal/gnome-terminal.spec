@@ -1,10 +1,10 @@
-%define ver_major 3.12
+%define ver_major 3.14
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -16,7 +16,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.38
 %define gtk_ver 3.9.9
-%define vte_ver 0.36.2
+%define vte_ver 0.38.0
 
 Provides: xvt
 
@@ -28,7 +28,7 @@ BuildRequires: gnome-common intltool yelp-tools desktop-file-utils appdata-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
-
+BuildRequires: libvala-devel vala-tools
 BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
@@ -97,6 +97,9 @@ EOF
 %endif
 
 %changelog
+* Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Fri Jun 27 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1
 - 3.12.3
 
