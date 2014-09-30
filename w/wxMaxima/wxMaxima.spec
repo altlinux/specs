@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 13.04.2
+Version: 14.09.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -8,7 +8,7 @@ Group: Sciences/Mathematics
 URL: http://wxmaxima.sourceforge.net
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source0: %name-%version.tar.gz
+Source0: wxmaxima-%version.tar.gz
 Source1: %name-16.xpm
 Source2: %name-32.xpm
 Source3: %name-48.xpm
@@ -31,7 +31,7 @@ wxMaxima provides 2d formated display of maxima output.
 
 
 %prep
-%setup -q 
+%setup -q -n wxmaxima-%version
 
 bzcat %SOURCE5 >locales/ru.po
 
@@ -68,6 +68,8 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Tue Sep 30 2014 Ilya Mashkin <oddity@altlinux.ru> 14.09.0-alt1
+- 14.09.0
 
 * Sat Nov 15 2013 Ilya Mashkin <oddity@altlinux.ru> 13.04.2-alt1
 - 13.04.2
