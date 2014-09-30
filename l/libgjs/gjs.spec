@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 1.41
+%define ver_major 1.42
 %define _name gjs
 %define api_ver 1.0
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -26,8 +26,8 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.41.0
-%define gi_ver 1.41.4
+%define glib_ver 2.42.0
+%define gi_ver 1.42.0
 
 Requires: gobject-introspection
 
@@ -78,7 +78,7 @@ the functionality of the installed Gjs library package.
 
 %check
 # check failed if installed-tests disabled
-#%make check
+%make check
 
 %files
 %_bindir/%_name
@@ -112,6 +112,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Tue Sep 30 2014 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
+- 1.42.0
+
 * Tue Sep 02 2014 Yuri N. Sedunov <aris@altlinux.org> 1.41.91-alt1
 - 1.41.91
 
