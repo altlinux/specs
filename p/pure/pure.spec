@@ -1,5 +1,5 @@
 Name: pure
-Version: 0.60
+Version: 0.62
 Release: alt1
 
 Summary: A term-rewriting functional programming language
@@ -8,6 +8,7 @@ Group: Development/Functional
 Url: http://purelang.bitbucket.org
 # https://bitbucket.org/purelang/pure-lang/downloads/%name-%version.tar.gz
 Source: %name-%version.tar.gz
+Patch: pure-0.62-gcc49.patch
 
 #Requires: pure-doc
 #Requires:		web_browser
@@ -73,6 +74,7 @@ This package contains examples for programming in pure.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %configure
@@ -107,6 +109,10 @@ make check
 %doc examples
 
 %changelog
+* Tue Sep 30 2014 Fr. Br. George <george@altlinux.ru> 0.62-alt1
+- Autobuild version bump to 0.62
+- Patch for gcc 4.9
+
 * Tue Apr 08 2014 Fr. Br. George <george@altlinux.ru> 0.60-alt1
 - Autobuild version bump to 0.60
 - Remove FC patches
