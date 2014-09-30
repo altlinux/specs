@@ -4,8 +4,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fluxbox
-Version: 1.3.1
-Release: alt2.1
+Version: 1.3.5
+Release: alt1
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -13,7 +13,6 @@ Summary(ru_RU.UTF-8): Легкий и быстрый оконный менедж
 License: MIT
 Group: Graphical desktop/Other
 Url: http://fluxbox.org
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 Source0: http://dl.sourceforge.net/fluxbox/fluxbox-%version.tar.bz2
 Source1: fluxbox.menu
@@ -23,13 +22,6 @@ Source4: fluxbox-icons.tar.bz2
 Source5: README.ALT-ru_RU.UTF-8
 Source6: Cthulhain
 Source7: fluxbox.vim
-
-Patch0: fluxbox-alt-makefile-no_generate_menu.patch
-Patch1: fluxbox-alt-style-disable_fonts.patch
-Patch2: fluxbox-alt-scripts-find_requires_protect.patch
-Patch3: fluxbox-alt-configure-use_pkgconfig.patch
-Patch4: fluxbox-alt-doc-drop_outdated_url.patch
-Patch5: fluxbox-alt-gcc4.6.patch
 
 # Explanation:
 # - xmessages uses by fbsetbg plus can be invoked from menu
@@ -70,13 +62,6 @@ VIm syntax for fluxbox apps, keys and menu files.
 
 %prep
 %setup -a4
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
 
 # Using mouse wheel for changes Tabs
 sed -i '22a\
@@ -152,6 +137,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Tue Sep 30 2014 Mikhail Kolchin <mvk@altlinux.org> 1.3.5-alt1
+- new version
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt2.1
 - Fixed build
 
