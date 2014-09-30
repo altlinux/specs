@@ -154,7 +154,7 @@
 # }}}
 
 Name: qemu
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -206,7 +206,7 @@ BuildRequires: iasl
 %{?_enable_libnfs:BuildRequires: libnfs-devel >= 1.9.3}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.0}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 pkgconfig(vte-2.90) >= 0.32.0}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 %{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
@@ -653,6 +653,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue Sep 30 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt1
+- 2.1.2
+
 * Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
 - 2.1.1
 
