@@ -1,9 +1,10 @@
-%set_verify_elf_method textrel=relaxed
+#%%set_verify_elf_method textrel=relaxed
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
+%define api_ver 1.0
 %define gtk_ver 2.0
 
-%define oname webkit
+%define _name webkitgtk
 # none/opengl/cairo/clutter
 %define acceleration_backend opengl
 %def_enable introspection
@@ -13,7 +14,7 @@
 %def_enable spellcheck
 
 Name: libwebkitgtk2
-Version: 2.2.5
+Version: 2.2.8
 Release: alt1
 
 Summary: Web browser engine
@@ -23,8 +24,8 @@ Url: http://www.webkitgtk.org/
 
 Source: webkitgtk-%version.tar.xz
 Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Patch2: webkitgtk-2.4.0-up-textrel.patch
+Patch3: webkitgtk-2.4.0-alt-link.patch
 
 Requires: libjavascriptcoregtk2 = %version-%release
 
@@ -180,8 +181,10 @@ Requires: libjavascriptcoregtk2-devel = %version-%release
 GObject introspection devel data for the JavaScriptCore library
 
 %prep
-%setup -q -n webkitgtk-%version
+%setup -n webkitgtk-%version
 %patch
+%patch2 -p1
+%patch3
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
@@ -214,14 +217,14 @@ mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
 mkdir -p DerivedSources/WebKit2/webkit2gtk/webkit2
 mkdir -p DerivedSources/InjectedBundle
-mkdir -p DerivedSources/Platform
 mkdir -p DerivedSources/webkitdom
+mkdir -p DerivedSources/Platform
 mkdir -p Programs/resources
 
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 #cleanup
 rm -rf %buildroot%_includedir/webkitgtk-1.0/webkit2
@@ -232,47 +235,50 @@ rm -rf %buildroot%_includedir/webkitgtk-1.0/webkit2
 xvfb-run make check
 
 %files -f WebKitGTK-2.0.lang
-%_libdir/libwebkitgtk-1.0.so.*
-%dir %_datadir/webkitgtk-1.0
-%_datadir/webkitgtk-1.0/images
-%_datadir/webkitgtk-1.0/resources
+%_libdir/lib%_name-%api_ver.so.*
+%dir %_datadir/%_name-%api_ver
+%_datadir/%_name-%api_ver/images
+%_datadir/%_name-%api_ver/resources
 
 %files devel
-%_libdir/libwebkitgtk-1.0.so
-%dir %_includedir/webkitgtk-1.0
-%_includedir/webkitgtk-1.0/webkit
-%_includedir/webkitgtk-1.0/webkitdom
-%_pkgconfigdir/webkit-1.0.pc
+%_libdir/lib%_name-%api_ver.so
+%dir %_includedir/%_name-%api_ver
+%_includedir/%_name-%api_ver/webkit/
+%_includedir/%_name-%api_ver/webkitdom/
+%_pkgconfigdir/webkit-%api_ver.pc
 
 %files devel-doc
 %_gtk_docdir/*
 
 %files -n libjavascriptcoregtk2
-%_libdir/libjavascriptcoregtk-1.0.so.*
+%_libdir/libjavascriptcoregtk-%api_ver.so.*
 
 %files -n libjavascriptcoregtk2-devel
-%_includedir/webkitgtk-1.0/JavaScriptCore
-%_libdir/libjavascriptcoregtk-1.0.so
-%_pkgconfigdir/javascriptcoregtk-1.0.pc
+%_includedir/%_name-%api_ver/JavaScriptCore/
+%_libdir/libjavascriptcoregtk-%api_ver.so
+%_pkgconfigdir/javascriptcoregtk-%api_ver.pc
 
 %files jsc
 %_bindir/jsc*
 
 %if_enabled introspection
 %files gir
-%_typelibdir/WebKit-1.0.typelib
+%_typelibdir/WebKit-%api_ver.typelib
 
 %files gir-devel
-%_girdir/WebKit-1.0.gir
+%_girdir/WebKit-%api_ver.gir
 
 %files -n libjavascriptcoregtk2-gir
-%_typelibdir/JavaScriptCore-1.0.typelib
+%_typelibdir/JavaScriptCore-%api_ver.typelib
 
 %files -n libjavascriptcoregtk2-gir-devel
-%_girdir/JavaScriptCore-1.0.gir
+%_girdir/JavaScriptCore-%api_ver.gir
 %endif
 
 %changelog
+* Wed Oct 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.8-alt1
+- 2.2.8
+
 * Sat Feb 22 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.5-alt1
 - 2.2.5
 
