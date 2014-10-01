@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define lname lib%name
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -43,6 +43,8 @@ Source1: %rname-po-%version.tar
 Source2: %rname-doc-%version.tar
 Source3: %rname-doc-translated-%version.tar
 Patch1: build-without-mysql.patch
+# Upstream
+Patch100: digikam-4.3.0-fix-job-crash.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -141,6 +143,7 @@ Marble support for %lname.
 %prep
 %setup -q -n %rname-%version  -a1 -a2 -a3
 %patch1 -p2
+%patch100 -p1
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -223,6 +226,9 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt2
+- add fix against KDE bug 325580
+
 * Tue Sep 23 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt1
 - new version
 
