@@ -6,7 +6,7 @@
 
 Name: qt5-webkit
 Version: 5.3.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -23,8 +23,8 @@ Patch10: 5.2.1-alt-flags.patch
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: flex fontconfig-devel gcc-c++ gperf gst-plugins-devel libXcomposite-devel libXext-devel libXrender-devel libgio-devel libicu-devel libjpeg-devel libpng-devel libsqlite3-devel libudev-devel libwebp-devel libxslt-devel perl-Term-ANSIColor python-module-distribute python-module-simplejson qt5-webkit-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
 BuildRequires: flex fontconfig-devel gcc-c++ libicu-devel libjpeg-devel libpng-devel
-BuildRequires: libsqlite3-devel libudev-devel libwebp-devel libxslt-devel libpcre-devel
-BuildRequires: gst-plugins-devel libgio-devel gperf
+BuildRequires: libsqlite3-devel libudev-devel libwebp-devel libxslt-devel libpcre-devel gperf
+BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) pkgconfig(gstreamer-1.0) pkgconfig(gstreamer-plugins-base-1.0) pkgconfig(gstreamer-app-1.0)
 BuildRequires: libXcomposite-devel libXext-devel libXrender-devel libGL-devel
 BuildRequires: python-module-distribute python-module-simplejson rpm-build-python
 BuildRequires: rpm-build-ruby
@@ -144,6 +144,9 @@ mv Source/ThirdParty/{gtest/,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt2
+- build with gstreamer-1.0
+
 * Wed Sep 17 2014 Sergey V Turchin <zerg@altlinux.org> 5.3.2-alt1
 - new version
 
