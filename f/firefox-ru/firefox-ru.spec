@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-ru
-Version:	31.0
+Version:	32.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 
@@ -77,6 +77,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %cid_dict_dir
 
 %changelog
+* Wed Oct 01 2014 Alexey Gladkov <legion@altlinux.ru> 32.0-alt1
+- New version (32.0).
+
 * Wed Jul 30 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
 - New version (31.0).
 

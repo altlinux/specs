@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	31.0
+Version:	31.1.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -453,6 +453,16 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Sep 25 2014 Alexey Gladkov <legion@altlinux.ru> 31.1.2-alt1
+- New version (31.1.2).
+- Fixed:
+  + MFSA 2014-73 RSA Signature Forgery in NSS
+  + MFSA 2014-72 Use-after-free setting text directionality
+  + MFSA 2014-70 Out-of-bounds read in Web Audio audio timeline
+  + MFSA 2014-69 Uninitialized memory use during GIF rendering
+  + MFSA 2014-68 Use-after-free during DOM interactions with SVG
+  + MFSA 2014-67 Miscellaneous memory safety hazards (rv:32.0 / rv:31.1 / rv:24.8)
+
 * Mon Jul 28 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
 - New version (31.0).
 - Fixed:
