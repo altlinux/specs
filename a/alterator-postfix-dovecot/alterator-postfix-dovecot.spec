@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.8.0
-Release: alt3
+Version: 0.8.1
+Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
 License: GPL
@@ -60,6 +60,9 @@ fi
 %_sysconfdir/control.d/facilities/*
 
 %changelog
+* Mon Sep 29 2014 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Fix postfix inject port (by "Valery V. Inozemtsev").
+
 * Wed Jun 18 2014 Andriy Stepanov <stanv@altlinux.ru> 0.8.0-alt3
 - Relaxed dependence on Augeas
 
