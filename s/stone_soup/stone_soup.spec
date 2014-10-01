@@ -1,5 +1,5 @@
 Name: stone_soup
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
@@ -7,7 +7,6 @@ License: GPLv2
 Group: Games/Adventure
 Source: %name-%version-nodeps.tar.xz
 Url: http://crawl.develz.org/wordpress/
-Patch: stone_soup-0.13.1-throw.patch
 
 Requires: %name-data = %version, %name-tiles = %version
 
@@ -46,7 +45,6 @@ Console version of %name, %Sum
 
 %prep
 %setup
-%patch -p1
 
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -67,6 +65,7 @@ for N in 64 128 192 256; do
   convert source/dat/tiles/stone_soup_icon-512x512.png -resize ${N}x${N} $N.png
 done
 rm -f source/.cflags
+sed -i 's/install: all/install:/' source/Makefile
 
 %build
 cd source
@@ -85,7 +84,7 @@ done
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 cd source
-%makeinstall TILES=1 DATADIR=share/%name/ SAVEDIR=~/.crawl/
+%makeinstall TILES=1 DATADIR=share/%name/ SAVEDIR=~/.crawl/ STRIP=touch
 mv %buildroot/%_bindir/crawl %buildroot/%_bindir/crawl-tiled
 install ../crawl %buildroot/%_bindir/crawl
 
@@ -106,6 +105,10 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Tue Sep 30 2014 Fr. Br. George <george@altlinux.ru> 0.15.1-alt1
+- Autobuild version bump to 0.15.1
+- Drop unused patch
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 0.14.1-alt1
 - Autobuild version bump to 0.14.1
 
