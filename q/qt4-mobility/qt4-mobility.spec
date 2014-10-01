@@ -2,8 +2,8 @@
 %define qt4_docdir %_docdir/qt-%qt4ver
 
 Name: qt4-mobility
-Version: 1.2.0
-Release: alt3
+Version: 1.2.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt Mobility Framework
@@ -12,11 +12,13 @@ Url: http://qt.nokia.com/products/qt-addons/mobility
 
 #Provides: qt-mobility = %version-%release
 
-Source: qt-mobility-opensource-src-1.2.0.tar
+Source: qt-mobility-opensource-src-%version.tar
 # FC
 Patch50: qt-mobility-opensource-src-1.2.0-translationsdir.patch
-Patch51: qt-mobility-opensource-src-1.2.0-pkgconfig.patch
+Patch51: qt-mobility-opensource-src-1.2.2-pkgconfig.patch
 Patch52: qt-mobility-opensource-src-1.1.0-pulseaudio-lib.patch
+Patch53: qt-mobility-opensource-src-1.2.2-no_rpath.patch
+Patch54: qt-mobility-opensource-src-1.2.2-sensors_ftbfs.patch
 # SuSE
 Patch101: qt-mobility-opensource-src-1.2.0-include-unistdh.patch
 
@@ -211,6 +213,8 @@ Requires: %name-common = %version-%release
 %patch50 -p1 -b .translationsdir
 %patch51 -p1 -b .pkgconfig
 %patch52 -p1 -b .pulseaudio_lib
+%patch53 -p1 -b .no_rpath
+%patch54 -p1 -b .sensors_ftbfs
 %patch101 -p1
 
 QMFCLIENT_FLAGS=
@@ -222,11 +226,6 @@ linux*-g++*:QMAKE_CFLAGS += %optflags %optflags_shared $QMFCLIENT_FLAGS $QMFMESS
 linux*-g++*:QMAKE_CXXFLAGS += %optflags %optflags_shared $QMFCLIENT_FLAGS $QMFMESSAGESERVER_FLAGS
 __EOF__
 
-sed -i 's|^[[:space:]]*QMAKE_RPATHDIR.*||' features/mobility.prf.template
-find -type f -name '*.pr[oif]' | \
-while read f; do
-    sed -i 's|^[[:space:]]*QMAKE_RPATHDIR.*||' $f
-done
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -371,6 +370,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1
+- update to master 20140410
+
 * Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3
 - fix to build with gcc 4.7
 
