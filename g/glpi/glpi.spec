@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.84.5
+Version: 0.84.7
 Release: alt1
 
 
@@ -54,7 +54,7 @@ Apache 2.x web-server configuration for %name
 %package php5
 Summary: PHP5 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap
+Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap, php5-curl
 %description php5
 PHP5 dependencies for %name
 
@@ -145,6 +145,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Sat Aug 09 2014 Pavel Zilke <zidex at altlinux dot org> 0.84.7-alt1
+- New version 0.84.5 This version correct several minor bugs.
+
 * Thu Mar 13 2014 Pavel Zilke <zidex at altlinux dot org> 0.84.5-alt1
 - New version 0.84.5 This version correct several minor bugs.
 
