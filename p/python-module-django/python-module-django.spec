@@ -1,5 +1,5 @@
-%define branch 1.6
-%define version %branch.6
+%define branch 1.7
+%define version %branch
 %define release alt1
 %define origname Django
 %define oname django
@@ -292,9 +292,14 @@ popd
 %endif
 
 
-%files -f INSTALLED_FILES
+#files -f INSTALLED_FILES
+%files
 #%%exclude %python_sitelibdir/%modulename/core/handlers/modpython.py*
 #%%exclude %python_sitelibdir/%modulename/contrib/auth/handlers/modpython.py*
+
+%_bindir/django-admin
+%_bindir/django-admin.py
+%python_sitelibdir/*
 
 %exclude %python_sitelibdir/%modulename/db/backends/mysql/
 #exclude %python_sitelibdir/%modulename/db/backends/postgresql/
@@ -376,6 +381,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1
+- Version 1.7
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
 - Version 1.6.6
 
