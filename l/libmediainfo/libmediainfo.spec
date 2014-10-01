@@ -1,8 +1,7 @@
 Name: libmediainfo
-Version: 0.7.53
+Version: 0.7.70
 Release: alt1
 
-%def_disable libmms
 Group: System/Libraries
 Summary: %name - Shared library for mediainfo
 License: LGPL
@@ -13,20 +12,19 @@ Source0: %{name}_%{version}.tar.bz2
 
 # Automatically added by buildreq on Sat Dec 03 2005
 BuildRequires: gcc-c++ automake autoconf libtool
-#BuildRequires: dos2unix
+BuildRequires: dos2unix
 BuildRequires: doxygen
 BuildRequires: zlib-devel
+BuildRequires: libmms-devel
 BuildRequires: id3lib-devel
 BuildRequires: pkg-config
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.24
+BuildRequires: libzen-devel >= 0.4.29
 BuildRequires: libcurl-devel
 #Can't compile using g++ because of "this" vars in definitions
-%if_enabled libmms
-BuildRequires: libmms-devel
-%endif
+#BuildRequires: libmms-devel
 
 %package devel
 Group: System/Libraries
@@ -64,39 +62,32 @@ This package includes the development support files of the libmediainfo
 pushd Source/Doc
 doxygen Doxyfile
 popd
-cp Source/Doc/*.txt ./
-export LDFLAGS="$LDFLAGS -ldl"
+#cp Source/Doc/*.txt ./
 pushd Project/GNU/Library
 %autoreconf
-
-%if_enabled libmms
 %configure --enable-shared=yes --enable-static=no --with-libcurl=system --with-libmms=system
-%else
-%configure --enable-shared=yes --enable-static=no --with-libcurl=system
-%endif
-
 %make
 popd
-rm -rf ReadMe.txt
-cp Release/ReadMe_DLL_Linux.txt ReadMe.txt
 
 %install
 pushd Project/GNU/Library
 %makeinstall
 popd
 # Add here commands to install the package
-install -dm 755 %buildroot%_includedir/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfo.h %buildroot%_includedir/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfoList.h %buildroot%_includedir/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfo_Const.h %buildroot%_includedir/MediaInfo
+install -dm 755 %buildroot%_includedir/MediaInfo/{Duplicate,Multiple,Tag}/
+install -m 644 Source/MediaInfo/*.h %buildroot%_includedir/MediaInfo
+install -m 644 Source/MediaInfo/Duplicate/*.h %buildroot%_includedir/MediaInfo/Duplicate
+install -m 644 Source/MediaInfo/Multiple/*.h %buildroot%_includedir/MediaInfo/Multiple
+install -m 644 Source/MediaInfo/Tag/*.h %buildroot%_includedir/MediaInfo/Tag
+install -m 644 Source/ThirdParty/tinyxml2/tinyxml2.h %buildroot%_includedir/MediaInfo/
+install -m 644 Source/ThirdParty/aes-gladman/*.h %buildroot%_includedir/MediaInfo/
+install -m 644 Source/ThirdParty/md5/*.h %buildroot%_includedir/MediaInfo/
+
 install -dm 755 %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL.def %buildroot%_includedir/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.h %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNA.java %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNative.java %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %buildroot%_includedir/MediaInfoDLL
-#install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %buildroot%_includedir/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/*.h %buildroot%_includedir/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %buildroot%_includedir/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.*.java %buildroot%_includedir/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL*.py %buildroot%_includedir/MediaInfoDLL
 
 sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
 install -dm 755 %buildroot%_pkgconfigdir
@@ -113,6 +104,9 @@ install -m 644 Project/GNU/Library/libmediainfo.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 
 %changelog
+* Wed Oct 01 2014 Motsyo Gennadi <drool@altlinux.ru> 0.7.70-alt1
+- 0.7.70
+
 * Sat Feb 18 2012 Sergei Epiphanov <serpiph@altlinux.ru> 0.7.53-alt1
 - New version
 - Add libmms test build support
@@ -143,9 +137,6 @@ install -m 644 Project/GNU/Library/libmediainfo.pc %buildroot%_pkgconfigdir
 
 * Tue Mar 02 2010 Sergei Epiphanov <serpiph@altlinux.ru> 0.7.28-alt1
 - New version
-
-* Thu Dec 03 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.25-alt1.1
-- Rebuilt with python 2.6
 
 * Mon Nov 23 2009 Sergei Epiphanov <serpiph@altlinux.ru> 0.7.25-alt1
 - New version
