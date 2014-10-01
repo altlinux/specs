@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        31.0
+Version:        32.0.3
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -294,6 +294,16 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Sep 24 2014 Alexey Gladkov <legion@altlinux.ru> 32.0.3-alt1
+- New release (32.0.3).
+- Fixed:
+  + MFSA 2014-72 Use-after-free setting text directionality
+  + MFSA 2014-71 Profile directory file access through file: protocol
+  + MFSA 2014-70 Out-of-bounds read in Web Audio audio timeline
+  + MFSA 2014-69 Uninitialized memory use during GIF rendering
+  + MFSA 2014-68 Use-after-free during DOM interactions with SVG
+  + MFSA 2014-67 Miscellaneous memory safety hazards (rv:32.0 / rv:31.1 / rv:24.8)
+
 * Sun Jul 27 2014 Alexey Gladkov <legion@altlinux.ru> 31.0-alt1
 - New release (31.0).
 - Fixed:
