@@ -1,9 +1,9 @@
 Summary: User monitoring and command logging
 Name: snoopy
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 Url: https://github.com/a2o/snoopy
-Source: v%version.tar.gz
+Source: %name-%version.tar.gz
 Group: Development/Debuggers
 License: GPL
 
@@ -30,6 +30,9 @@ It is very useful to track and monitor the users.
 %_libdir/snoopy.so
 
 %changelog
+* Mon Sep 29 2014 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
+
 * Tue Feb 12 2013 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
 - Autobuild version bump to 1.8.1
 
