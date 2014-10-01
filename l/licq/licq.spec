@@ -34,8 +34,24 @@
 
 # name-version-release
 %define rname licq
-%define ver 1.8.1
+%define ver 1.8.2
 %define rlz alt1
+
+%define common_summary Multi-protocol IM-client (icq,jabber,msn) written on C++
+
+%define common_description Licq was written as ICQ clone but it is multi-protocol IM now.\
+Licq supports different interfaces, protocols and functions via plugins.\
+\
+This package contains the base files for Licq (the Licq daemon) and the QT\
+plugin, which is written using the Qt widget set. Currently this UI plugin\
+is only available (since v1.8).\
+\
+This starts the QT plugin by default, so to run other plugins, you will have\
+to issue the command "licq -p <plugin>" once. To get back the Qt plugin, you\
+will have to run once "licq -p qt-gui". Alternatively you may be able to do\
+it in a plugin dialog box if your plugin supports this feature.\
+\
+This version of Licq has SSL support for those plugins that support it.
 
 Name: %rname
 Version: %ver
@@ -102,11 +118,11 @@ Patch22: licq-1.3.6-alt-qt4-yes-stl.patch
 Patch200: licq-1.2.7-remove-pidfile.patch
 
 #Errata
-Patch500: f288367c758de16fc013c6f4c9851ca85813eb59.patch
+#Patch500:
 
 #package licq
 Group: Networking/Instant messaging
-Summary: ICQ clone written in C++
+Summary: %common_summary
 License: GPL
 Url: http://www.licq.org/
 Requires: %name-jabber = %version-%release
@@ -122,7 +138,7 @@ Requires: %name-ui
 
 %package maxi
 Group: Networking/Instant messaging
-Summary: ICQ clone written in C++
+Summary: %common_summary
 BuildArch: noarch
 %if %with_msn
 Requires: %name-msn = %version-%release
@@ -168,7 +184,7 @@ Requires: %name-ui
 
 %package mini
 Group: Networking/Instant messaging
-Summary: ICQ clone written in C++
+Summary: %common_summary
 BuildArch: noarch
 %if %with_qt4
 Requires: %name-qt4 = %version-%release
@@ -188,7 +204,7 @@ Requires: sound_handler
 
 %package kde4
 Group: Networking/Instant messaging
-Summary: ICQ clone written in C++, and the default plugin for KDE4
+Summary: The default Licq's plugin for KDE4
 Provides: %name-plugin %name-ui
 Provides: licq-kde = %version-%release
 Obsoletes: licq-kde < %version-%release
@@ -197,7 +213,7 @@ Requires: kde4libs >= %{get_version kde4libs}
 Requires: %name-qt4
 
 %package qt4
-Summary: Qt4 based GUI plugin  for %name
+Summary: Qt4 based GUI plugin  for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin %name-ui
 Provides: licq-qt = %version-%release
@@ -206,113 +222,79 @@ Requires: %name-common = %version-%release
 Requires: libqt4-core >= %{get_version libqt4-core}
 
 %package gtk
-Summary: GTK+ based GUI plugin  for %name
+Summary: GTK+ based GUI plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin %name-ui
 Requires: %name-common = %version-%release
 
 %package console
-Summary: Console based plugin for %name that uses ncurses
+Summary: Console based plugin for Licq that uses ncurses
 Group: Networking/Instant messaging
 Provides: %name-plugin %name-ui
 Requires: %name-common = %version-%release
 
 %package email
-Summary: Email forwarder plugin for %name
+Summary: Email forwarder plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin, %name-forwarder = %version-%release
 Obsoletes: %name-forwarder < %version-%release
 Requires: %name-common = %version-%release
 
 %package autoreply
-Summary: Autoreply Licq plugin for %name
+Summary: Autoreply plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package rms
-Summary: Remote management service plugin for %name
+Summary: Remote management service plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package osd
-Summary: OSD (On Screen Dysplay) plugin for %name
+Summary: OSD (On Screen Dysplay) plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package aosd
-Summary: OSD (On Screen Dysplay) plugin for %name
+Summary: OSD (On Screen Dysplay) plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package icq
-Summary: ICQ protocol plugin for %name
+Summary: ICQ protocol plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package msn
-Summary: MSN protocol plugin for %name
+Summary: MSN protocol plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package jabber
-Summary: XMPP(Jabber) protocol plugin for %name
+Summary: XMPP(Jabber) protocol plugin for Licq
 Group: Networking/Instant messaging
 Provides: %name-plugin
 Requires: %name-common = %version-%release
 
 %package devel
-Summary: Development files for %name
+Summary: Development files for Licq
 Group: Development/C
 Requires: %name-common = %version-%release
 
-%description maxi
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
-
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
-
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
-%description mini
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
-
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
-
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
 %description
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
+%common_description
 
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
+%description maxi
+%common_description
 
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
+%description mini
+%common_description
 
 %description kde4
 This is the KDE4 based GUI plugin for Licq.
@@ -386,50 +368,6 @@ Jabber(XMPP) Protocol Plugin.
 
 Install this if you want to add this function to Licq.
 
-%description maxi
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
-
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
-
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
-%description mini
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
-
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
-
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
-%description
-Licq supports different interfaces and functions via plugins. Currently there are
-plugins for both the X Windowing System and the console.
-
-This package contains the base files for Licq (the Licq daemon) and the QT
-plugin, which is written using the Qt widget set. Currently this GUI plugin has
-most of the ICQ functions implemented.
-
-This starts the QT plugin by default, so to run other plugins, you will have to
-issue the command "licq -p <plugin>" once. To get back the Qt plugin, you will
-have to run once "licq -p qt-gui". Alternatively you may be able to do it in a
-plugin dialog box if your plugin supports this feature.
-
-This version of licq has SSL support for those plugins that support it.
-
-
 ### PREP ##########################################
 %prep
 %ifdef autoreconf
@@ -440,7 +378,7 @@ This version of licq has SSL support for those plugins that support it.
 %setup -q -n %name
 
 #Errata
-%patch500 -p2
+#patch500 -p2
 
 pushd plugins
 %if %with_gtk
@@ -703,6 +641,9 @@ popd
 
 ########################################################
 %changelog
+* Wed Oct 01 2014 Sergey Y. Afonin <asy@altlinux.ru> 1.8.2-alt1
+- new version
+
 * Sun Nov 03 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.8.1-alt1
 - new version
 
