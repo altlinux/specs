@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Utilities to work with LDAP users
@@ -48,6 +48,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Mon Sep 29 2014 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- ldap-useradd: Create user mail spool file.
+
 * Tue Aug 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.1-alt1
 - misstemplation of slapd-template.conf fixed
 
