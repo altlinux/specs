@@ -2,7 +2,7 @@
 
 Name:    apache2-mod_apreq
 Version: 2.13
-Release: alt4
+Release: alt5
 
 Summary: Apache2 HTTP request library
 License: %asl 2.0
@@ -101,6 +101,8 @@ sed -i -e 's,^libdir=.*,libdir="`pkg-config --variable=libdir libapreq2`",' \
 cp -p %SOURCE3 .
 
 %build
+rm -f aclocal.m4
+
 ./buildconf
 %autoreconf
 %configure \
@@ -171,6 +173,9 @@ rm -f %buildroot%_man3dir/todo*
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Thu Oct 02 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.13-alt5
+- Removing paths to buildroot from perl module
+
 * Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 2.13-alt4
 - Removing paths to buildroot from files
 - Spec file and patch set cleanup
