@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1.git20140930
+Release: alt2.git20140930
 Summary: Python social authentication made simple
 License: BSD
 Group: Development/Python
@@ -21,6 +21,8 @@ BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+%py_provides social
 
 %description
 Python Social Auth is an easy-to-setup social
@@ -51,6 +53,7 @@ This package contains tests for %oname.
 Summary: Python social authentication made simple
 Group: Development/Python3
 %add_python3_req_skip web
+%py3_provides social
 
 %description -n python3-module-%oname
 Python Social Auth is an easy-to-setup social
@@ -180,6 +183,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt2.git20140930
+- Fixed requirement
+- Added necessary provides
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20140930
 - Initial build for Sisyphus
 
