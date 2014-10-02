@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Util-Test-KENTNL
 
 Name: perl-Dist-Zilla-Util-Test-KENTNL
-Version: 1.003002
+Version: 1.003003
 Release: alt1
 
 Summary: KENTNL's DZil plugin testing tool
@@ -43,5 +43,8 @@ to test Dist::Zilla plugins.
 %perl_vendor_privlib/Dist/Zilla/Util/Test/KENTNL*
 
 %changelog
+* Thu Oct 02 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.003003-alt1
+- New version
+
 * Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.003002-alt1
 - Initial build for ALT Linux Sisyphus
