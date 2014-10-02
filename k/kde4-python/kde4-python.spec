@@ -1,10 +1,16 @@
+
 %add_findpackage_path %_kde4_bindir
-%define python_sip_ver %{get_version python-module-sip-devel}
+
+%if_enabled kde_mobile
+%def_disable desktop
+%else
+%def_enable desktop
+%endif
 
 %define rname pykde4
 Name: kde4-python
 Version: 4.14.0
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -52,9 +58,15 @@ Python bindings for KDE4
 %prep
 %setup -n %rname-%version
 %patch10 -p1
-%ifarch %arm
+#
+%if_enabled desktop
+    %ifarch %arm
+%patch100 -p1
+    %endif
+%else
 %patch100 -p1
 %endif
+#
 %patch101 -p1
 
 %build
@@ -80,6 +92,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Thu Oct 02 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- apply patch for mobile builds
+
 * Fri Aug 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
