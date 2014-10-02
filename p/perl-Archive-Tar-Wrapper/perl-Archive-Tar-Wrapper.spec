@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Archive::Tar::Wrapper
 
 Name: perl-Archive-Tar-Wrapper
-Version: 0.19
-Release: alt3
+Version: 0.20
+Release: alt1
 
 Summary: Perl wrapper around the 'tar' utility
 
@@ -46,6 +46,9 @@ files in the temporary directory on disk.
 
 
 %changelog
+* Thu Oct 02 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.20-alt1
+- New version
+
 * Wed Sep 17 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.19-alt3
 - Rising release to override package from Autoimports/Sisyphus repository
 
