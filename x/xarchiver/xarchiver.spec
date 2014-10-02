@@ -1,6 +1,6 @@
 Name: xarchiver
-Version: 0.5.2
-Release: alt2
+Version: 0.5.4
+Release: alt1
 
 Summary: A GTK+2 only archive manager
 License: %gpl2plus
@@ -8,11 +8,13 @@ Group: File tools
 
 Url: http://xarchiver.sourceforge.net/
 Source: %name-%version.tar
-Patch1: xarchiver-0.5.2-fedora-no-donators-menu.patch
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Patch1: xarchiver-0.5.4-debian-desktop-file.patch
+Patch2: xarchiver-0.5.4-debian-encrypted-7z-archives.patch
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: glibc-devel-static libgtk+2-devel
 
 %description
@@ -24,9 +26,11 @@ supported.
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
+%patch2 -p1
 
 %build
+%xfce4reconf
 %configure \
     -enable-debug=no
 %make_build
@@ -45,6 +49,14 @@ supported.
 %doc %_docdir/%name
 
 %changelog
+* Thu Oct 02 2014 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Patches from Debian:
+  + Detect encrypted 7z archives.
+  + Fix desktop file.
+- Drop obsoleted patch.
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 0.5.4.
+
 * Mon Feb 21 2011 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt2
 - Added patch from Fedora.
 - Spec updated, sources: bz2.tar -> tar.
