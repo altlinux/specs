@@ -1,8 +1,8 @@
 Name: Catch
 Version: 1.0
-Release: alt0.2
+Release: alt1
 
-Summary: Catch - Automated Test Cases for C++ (in single header)
+Summary: Catch - Automated Test Cases for C++ ("all in one header")
 
 License: GPL
 Group: Development/C++
@@ -29,14 +29,16 @@ but is packaged up as a single header for extra convenience.
 %build
 
 %install
-mkdir -p %buildroot%_includedir/%name
-mv -f *.hpp %buildroot%_includedir/%name/
+mkdir -p %buildroot%_includedir
+mv -f *.hpp %buildroot%_includedir
 
 %files
-%dir %_includedir/%name/
-%_includedir/%name/*.hpp
+%_includedir/*.hpp
 
 %changelog
+* Thu Oct 02 2014 Pavel Vainerman <pv@altlinux.ru> 1.0-alt1
+- moved catch.hpp directly into %_includedir
+
 * Tue Sep 30 2014 Pavel Vainerman <pv@altlinux.ru> 1.0-alt0.2
 - test build
 
