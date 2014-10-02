@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1
+Release: alt2
 Summary: Jmbo generic behaviour/templates app
 License: BSD
 Group: Development/Python
@@ -75,6 +75,12 @@ pushd ../python3
 popd
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -96,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt2
+- Applied python-module-jmbo-generic-0.0.2-alt1.diff
+
 * Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus
 
