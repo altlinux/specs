@@ -1,7 +1,7 @@
 ## SPEC file for Perl module UNIVERSAL-isa
 
 Name: perl-UNIVERSAL-isa
-Version: 1.20140824
+Version: 1.20140927
 Release: alt1
 
 Summary: Perl module UNIVERSAL::isa
@@ -21,9 +21,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-podlators
-BuildRequires: perl-CGI perl-HTML-Parser perl-Module-Build
+# Automatically added by buildreq on Thu Oct 02 2014
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-Module-Load perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-devel perl-podlators
+BuildRequires: perl-CGI perl-HTML-Parser perl-Module-Build perl-Module-Build-Tiny
 
 %description
 Perl module UNIVERSAL::isa attempts to work around people calling
@@ -45,6 +45,9 @@ UNIVERSAL::isa() as a function, which it is not.
 
 
 %changelog
+* Thu Oct 02 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.20140927-alt1
+- New version 1.20140927
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.20140824-alt1
 - New version 1.20140824
 
