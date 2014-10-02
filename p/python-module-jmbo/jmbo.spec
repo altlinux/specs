@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1.git20140903
+Release: alt2.git20140903
 Summary: The Jmbo base product introduces a content type and various tools required to build Jmbo products
 License: BSD
 Group: Development/Python
@@ -100,6 +100,12 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc *.rst
 %python_sitelibdir/*
@@ -129,6 +135,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.git20140903
+- Applied python-module-jmbo-1.1.1-alt1.git20140903.diff
+
 * Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20140903
 - Initial build for Sisyphus
 
