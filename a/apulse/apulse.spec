@@ -1,6 +1,6 @@
 Name: apulse
-Version: 0.1.0
-Release: alt2
+Version: 0.1.1
+Release: alt1
 
 Summary: PulseAudio emulation for ALSA
 License: MIT, LGPLv2.1+
@@ -48,6 +48,9 @@ chmod 0755 %buildroot%_bindir/i586-apulse
 %_libdir/apulse/
 
 %changelog
+* Thu Oct 02 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.1-alt1
+- 0.1.1
+
 * Wed Sep 24 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.0-alt2
 - minor spec cleanup (thanks to mike@)
 - add i586-apulse to x86_64 builds (for use with i586-apulse)
