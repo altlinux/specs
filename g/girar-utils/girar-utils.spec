@@ -1,5 +1,5 @@
 Name:     girar-utils
-Version:  1.5.5
+Version:  1.5.6
 Release:  alt1
 
 Summary:  git.alt client utilities
@@ -30,6 +30,16 @@ This package contains client utilities for git.alt.
 %_mandir/man?/*
 
 %changelog
+* Thu Oct 02 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1
+- girar-show:
+  + fix highlight unmets with version and names containing ., _ and :
+    symbols
+  + add highlight for fatal errors (such as `No such file or directory`)
+    and "should be made noarch"
+  + <tasknum>@! now display only errors without service message except
+    failed subtask
+  + do not display removed subtasks in subtask list
+
 * Fri Sep 12 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
 - girar-show:
   + fix subtask highlighting
