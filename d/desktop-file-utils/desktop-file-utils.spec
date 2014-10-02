@@ -2,7 +2,7 @@
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
-Version: 0.21.0.patchset1
+Version: 0.22.0.patchset1
 Release: alt1
 
 Summary: Utilities for manipulating .desktop files
@@ -105,6 +105,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %_emacslispdir/%emacs_mode-mode.el
 
 %changelog
+* Thu Oct 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.22.0.patchset1-alt1
+- sync with 22.0 (closes: #30359)
+
 * Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.21.0.patchset1-alt1
 - 0.21 patchset1:
   desktop-file-utils-0.21-altlinux-add-de-to-main-categories.patch
