@@ -2,8 +2,8 @@
 %def_with python3
 
 Name:               python-module-oauthlib
-Version:            0.6.0
-Release:            alt1.1
+Version:            0.6.3
+Release:            alt1
 Summary:            An implementation of the OAuth request-signing logic
 
 Group:              Development/Python
@@ -63,7 +63,7 @@ very little effort.
 %prep
 %setup
 
-%patch0 -p0
+%patch0 -p2
 
 # Remove bundled egg-info in case it exists
 rm -rf %{modname}.egg-info
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1
+- Version 0.6.3
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.1
 - Added module for Python 3
 
