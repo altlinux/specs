@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.5.8
+Version:        5.5.9
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -136,6 +136,9 @@ sh -v %SOURCE33
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Thu Oct 02 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.9-alt1
+- New version
+
 * Mon Jul 28 2014 Andrey Cherepanov <cas@altlinux.org> 5.5.8-alt1
 - New version
 - Add .watch file
