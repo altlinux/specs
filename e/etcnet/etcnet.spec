@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt13
+Release:	alt14
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -139,6 +139,9 @@ fi
 %files full
 
 %changelog
+* Thu Oct 02 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt14
+- use '--release' option to stop dhcpcd (closes: #30369)
+
 * Sat Sep 06 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt13
 - fixed use with recent ipset (closes: #30286)
 - added support for macvlan/macvtap iface types
