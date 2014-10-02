@@ -13,8 +13,8 @@
 %define nv_version 340
 %define nv_release 32
 %define nv_minor %nil
-%define pkg_rel alt138
-%define set_gl_nvidia_ver 0.10.2
+%define pkg_rel alt139
+%define set_gl_nvidia_ver 0.10.3
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -248,6 +248,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Oct 01 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt139
+- update message when restoring symlinks
+
 * Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt138
 - bump version
 
