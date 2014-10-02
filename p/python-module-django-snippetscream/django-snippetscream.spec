@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.7
-Release: alt1.git20110919
+Release: alt2.git20110919
 Summary: Django app packaging the best snippets found on http://djangosnippets.org
 License: BSD
 Group: Development/Python
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt2.git20110919
+- Additional fix for Python 3
+
 * Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.git20110919
 - Initial build for Sisyphus
 
