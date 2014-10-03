@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Oct 03 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- update pkgrepls
+- rpmgs: remove file if download is failed, change order for try tarballs
+- rpmgp: more clean output during search
+- rpmbsh: fix -a -A command parse
+
 * Wed Jun 04 2014 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
 - fix rpm-build-intro replacement (for rpm-build-intro since 1.8.0)
 - gacl: print command for show command
