@@ -1,15 +1,17 @@
 Name: source-highlight
-Version: 3.1.4
-Release: alt2.6
+Version: 3.1.8
+Release: alt1.git20121231
 
 Summary: syntax highlighting for source documents
 License: GPL
 Group: Text tools
 
 Url: http://www.gnu.org/software/src-highlite/
+# git://git.savannah.gnu.org/src-highlite.git
 Source: %name-%version.tar
 
 BuildRequires: boost-devel gcc-c++ ctags help2man doxygen tetex-core texinfo
+BuildPreReq: flex
 
 %description
 This program, given a source file, produces a document
@@ -56,8 +58,10 @@ BuildArch: noarch
 %build
 %autoreconf
 %configure \
+	--enable-static=no \
 	--enable-maintainer-mode \
-	--with-boost-regex=boost_regex
+	--with-boost-regex=boost_regex \
+	--with-doxygen
 
 %make_build
 
@@ -75,6 +79,7 @@ BuildArch: noarch
 %_libdir/*.so.*
 
 %files -n lib%name-devel
+%doc lib/srchilite/html
 %_includedir/srchilite
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -85,6 +90,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.8-alt1.git20121231
+- Version 3.1.8
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt2.6
 - Rebuilt with Boost 1.53.0
 
