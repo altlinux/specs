@@ -98,7 +98,7 @@
 %def_without wireshark
 
 Name: libvirt
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -865,6 +865,7 @@ fi
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel/target
+%dir %attr(0711, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/nvram
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/cache/libvirt/qemu
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
@@ -924,6 +925,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.9-alt1
+- 1.2.9
+- fixed CVE-2014-3633, CVE-2014-3657
+
 * Thu Sep 11 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.8-alt1
 - 1.2.8
 
