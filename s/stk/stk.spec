@@ -1,13 +1,11 @@
 Name: stk
-Version: 4.4.4
+Version: 4.5.0
 Release: alt1
 License: GPL
 Group: Sound
 Summary: C++ classes for audio digital signal processing
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Url: http://www-ccrma.stanford.edu/software/stk/
 Source: stk-%version.tar
-Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 
@@ -77,7 +75,6 @@ you need to know if you want to develop an STK application.
 
 %prep
 %setup
-%patch -p1
 
 sed -i "s|/usr/lib|%_libdir|g" src/Makefile.in
 sed -i 's:../../rawwaves/:/usr/share/stk/rawwaves/:g' projects/demo/demo.cpp
@@ -86,6 +83,7 @@ sed -i 's:../../rawwaves/:/usr/share/stk/rawwaves/:g' projects/demo/demo.cpp
 %autoreconf
 %configure --with-alsa \
 	--with-jack \
+	--enable-shared \
 	RAWWAVE_PATH=%_datadir/stk/rawwaves/
 
 %make
@@ -164,7 +162,7 @@ mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 
 %files -n lib%name
 %dir %_datadir/stk
-%doc README
+%doc README*
 %_libdir/*.so.*
 %_datadir/stk/rawwaves
 
@@ -179,6 +177,9 @@ mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 %doc doc/html doc/*.txt
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1
+- Version 4.5.0
+
 * Sat Sep 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 4.4.4-alt1
 - New version (ALT#28756)
 
