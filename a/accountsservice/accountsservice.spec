@@ -3,7 +3,7 @@
 
 
 Name: accountsservice
-Version: 0.6.37
+Version: 0.6.38
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -89,8 +89,6 @@ GObject introspection devel data for the accountsservice library
 %doc COPYING README AUTHORS NEWS
 %_sysconfdir/dbus-1/system.d/org.freedesktop.Accounts.conf
 %_libexecdir/accounts-daemon
-%_datadir/dbus-1/interfaces/org.freedesktop.Accounts.xml
-%_datadir/dbus-1/interfaces/org.freedesktop.Accounts.User.xml
 %_datadir/dbus-1/system-services/org.freedesktop.Accounts.service
 %_datadir/polkit-1/actions/org.freedesktop.accounts.policy
 %dir %_localstatedir/lib/AccountsService/
@@ -108,11 +106,15 @@ GObject introspection devel data for the accountsservice library
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_datadir/dbus-1/interfaces/*.xml
 
 %files -n lib%name-gir-devel
 %_girdir/*.gir
 
 %changelog
+* Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 0.6.38-alt1
+- 0.6.38
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 0.6.37-alt1
 - 0.6.37
 
