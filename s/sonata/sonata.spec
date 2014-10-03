@@ -1,27 +1,29 @@
 Name: sonata
-Version: 1.6.2.1
-Release: alt2.1
+Version: 1.7
+Release: alt1.a2.git20140903
 
 Summary: Sonata is an elegant GTK+ music client for the Music Player Daemon (MPD).
 Summary(ru_RU.UTF8): Sonata - элегантный клиент для Music Player Daemon (MPD), написаный на GTK+
 License: GPL3+
 Group: Sound
-Url: http://sonata.berlios.de
+Url: https://github.com/multani/sonata
 
-Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar
+BuildArch: noarch
 Source1: %{name}_16.png
 Source2: %{name}_32.png
 Source3: %{name}_48.png
 
-BuildPreReq: desktop-file-utils
-BuildRequires: python-devel >= 2.4 python-module-tagpy python-module-pygtk-devel >= 2.10.0 
-BuildRequires: python-module-pygobject-devel
-BuildRequires: python-module-dbus-devel
-BuildRequires: libX11-devel gcc4.1-c++ libgtk+2-devel
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: desktop-file-utils python3-module-setuptools
+BuildRequires: python3-devel python3-module-tagpy
+BuildRequires: python3-module-pygobject-devel
+BuildRequires: python3-module-dbus-devel
+BuildRequires: libX11-devel gcc-c++ libgtk+3-devel
 
-Requires: python-module-tagpy python-module-elementtree python-module-ZSI python-module-python-mpd
-Requires: python-module-dbus
+#Requires: python-module-tagpy python-module-elementtree python-module-ZSI python-module-python-mpd
+#Requires: python-module-dbus
+Requires: python3-module-%name = %EVR
 Requires: dbus-tools-gui
 Requires(post,postun): desktop-file-utils
 
@@ -43,15 +45,41 @@ Sonata is an elegant GTK+ music client for the Music Player Daemon
 - Support for multimedia keys
 - Commandline control
 
+%package -n python3-module-%name
+Summary: Python module for %name
+Group: Development/Python3
+BuildArch: noarch
+Conflicts: %name < %EVR
+
+%description -n python3-module-%name
+Sonata is an elegant GTK+ music client for the Music Player Daemon
+(MPD).
+- Expanded and collapsed views
+- Automatic remote and local album art
+- User-configurable columns
+- Automatic fetching of lyrics
+- Playlist and stream support
+- Support for editing song tags
+- Popup notification
+- Playlist queue support
+- Library and playlist searching
+- Audioscrobbler (last.fm) support
+- Multiple MPD profiles
+- Keyboard friendly
+- Support for multimedia keys
+- Commandline control
+
+This package contains Python module of Sonata.
+
 %prep
-%setup -q
+%setup
 subst "s|'share/sonata'|'share/doc/%name-%version'|g" setup.py
 
 %build
-python setup.py build
+%python3_build
 
 %install
-python setup.py install --root=$RPM_BUILD_ROOT --optimize=2 --record=INSTALLED_FILES
+%python3_install
 %find_lang %name
 
 # set up icons for 'not the only and mighty Gnome and KDE'
@@ -61,20 +89,24 @@ install -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 install -m 644 %SOURCE3 %buildroot%_liconsdir/%name.png
 
 %files -f %name.lang
-%doc README TODO TRANSLATORS CHANGELOG
+%doc *.rst TODO TRANSLATORS CHANGELOG
 %_bindir/*
 %_desktopdir/*
 %_datadir/locale/*/*/%name.mo
 %_man1dir/*
-%_pixmapsdir/%{name}*
+#_pixmapsdir/%{name}*
 %_defaultdocdir/%name-%version
-%python_sitelibdir/*
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 %_miconsdir/%name.png
 
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.a2.git20140903
+- Version 1.7a2
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6.2.1-alt2.1
 - Rebuild with Python-2.7
 
