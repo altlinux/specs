@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.8.11
+Version: 1.8.12
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -18,8 +18,7 @@ Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
 Source3: pcsc-lite.tmpfiles
 
-Conflicts: libpcsclite < %version-%release
-Conflicts: libpcsclite > %version-%release
+Requires: libpcsclite = %version-%release
 
 BuildRequires: rpm-build-licenses perl-podlators
 BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111
@@ -111,7 +110,7 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 
 %files
 %doc AUTHORS COPYING DRIVERS HELP NEWS README SECURITY TODO doc/README.DAEMON doc/README.polkit
-%dir %_sysconfdir/reader.conf.d/
+%dir %_sysconfdir/reader.conf.d
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
 %_unitdir/*
@@ -144,6 +143,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.12-alt1
+- 1.8.12
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.8.11-alt1
 - 1.8.11
 
