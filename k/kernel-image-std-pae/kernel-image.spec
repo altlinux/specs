@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.14
 %define kernel_sublevel	.19
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Oct 02 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.19-alt2
+- patches from ldv added
+
 * Thu Sep 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.19-alt1
 - 3.14.19
 
