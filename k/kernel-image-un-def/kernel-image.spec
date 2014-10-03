@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.16
 %define kernel_sublevel	.3
@@ -542,6 +542,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Oct 02 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.3-alt2
+- ldv and sem patches added
+
 * Thu Sep 18 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.16.3-alt1
 - 3.16.3
 
