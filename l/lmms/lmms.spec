@@ -1,6 +1,6 @@
 Name: lmms
 Version: 1.0.95
-Release: alt1.git20140910
+Release: alt2.git20140910
 
 Summary: Linux MultiMedia Studio
 License: GPL
@@ -100,6 +100,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.95-alt2.git20140910
+- Rebuilt with new stk
+
 * Fri Sep 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.95-alt1.git20140910
 - Version 1.0.95
 
