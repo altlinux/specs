@@ -1,5 +1,5 @@
 Name: python-module-zabbix-api
-Version: 0.1
+Version: 0.2
 Release: alt1
 Summary: Zabbix API
 
@@ -33,5 +33,8 @@ cd zabbix
 %doc zabbix/README zabbix/examples zabbix/zabbix_rpc_test.py zabbix/zabbix_item_add_example.py
 
 %changelog
+* Wed Oct  1 2014 Evgenii Terechkov <evg@altlinux.org> 0.2-alt1
+- Update code to work with zabbix-2.4
+
 * Sat Aug 31 2013 Terechkov Evgenii <evg@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
