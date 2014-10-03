@@ -1,23 +1,22 @@
 %define name sqsh
 %define release alt1
-%define version 2.1.5
+%define version 2.5.16.1
 
 Name: 		%name
 Version: 	%version
-Release: alt1.qa1
+Release: alt1
 
 Summary: 	SQL Shell. It is intended as a replacement for the Sybase 'isql'.
 License: 	GPL
 Group: 		Databases
-Url: 		http://www.sqsh.org/
+Url: 		http://sourceforge.net/projects/sqsh/
 
-Source0: 	http://www.sqsh.org/%name-%version.tar.bz2
-Patch0:		%name-2.1.5-alt-makefile.patch
-Patch1:		%name-2.1.5-alt-configure.patch
+Source0: 	%name-%version.tar.bz2
 
 # Automatically added by buildreq on Sat May 22 2004
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libfreetds-devel >= 0.64
+BuildPreReq: libX11-devel imake libXt-devel libXaw-devel libXext-devel
 Requires: libfreetds >= 0.64
 
 %description
@@ -38,29 +37,33 @@ library (http://www.freetds.org).
 
 %prep
 
-%setup -q
-%patch0 -p1 -b .alt-p0
-%patch1 -p1 -b .alt-p1
+%setup
 
 %build
 export SYBASE=/usr
 export SYBASE_LIBDIR=%_libdir
-%configure --with-readline=yes
+%autoreconf
+%configure \
+	--with-readline=yes \
+	--with-x
 
 %make_build
 
 %install
-make DESTDIR=%buildroot install
-make DESTDIR=%buildroot install.man
+%makeinstall_std
+%make DESTDIR=%buildroot install.man
 
 %files
 %config(noreplace) %_sysconfdir/sqshrc
 %_bindir/sqsh
 %_mandir/man1/sqsh.1*
 %doc COPYING ChangeLog INSTALL README
-%doc doc/FAQ doc/RELEASE doc/sample.* doc/*.sqshrc doc/sqsh.html
+%doc doc/FAQ doc/README* doc/sample.* doc/*.sqshrc doc/sqsh.html
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.16.1-alt1
+- Version 2.5.16.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
