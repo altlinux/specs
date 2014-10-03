@@ -1,12 +1,12 @@
 
 Name: ilbc
 Version: 1.1.1
-Release: alt1
+Release: alt2
 %define sover 100
 %define libilbc libilbc%sover
 
 Group: System/Libraries
-Summary: Internet Low Bitrate Codec
+Summary: Internet Low Bitrate Codec (iLBC)
 Url: https://github.com/dekkers/libilbc/
 License: BSD
 
@@ -39,9 +39,15 @@ Additional header files for development with %name.
 
 %package -n %libilbc
 Group: System/Libraries
-Summary: %name library
+Summary: Internet Low Bitrate Codec (iLBC) library
 %description -n %libilbc
-%name library
+iLBC (internet Low Bitrate Codec) is a FREE speech codec suitable for
+robust voice communication over IP. The codec is designed for narrow
+band speech and results in a payload bit rate of 13.33 kbit/s with an
+encoding frame length of 30 ms and 15.20 kbps with an encoding length
+of 20 ms. The iLBC codec enables graceful speech quality degradation in
+the case of lost frames, which occurs in connection with lost or
+delayed IP packets.
 
 %prep
 %setup -q
@@ -76,6 +82,9 @@ ln -s ilbc.h iLBC_encode.h
 %_libdir/lib%name.so
 
 %changelog
+* Fri Oct 03 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
+- update package description
+
 * Thu Sep 25 2014 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt1
 - initial build (ALT#30353)
 
