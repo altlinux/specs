@@ -1,5 +1,7 @@
+%def_disable check
+
 Name: srm
-Version: 1.2.11
+Version: 1.2.14
 Release: alt1
 License: X11
 Url: http://srm.sourceforge.net
@@ -8,6 +10,8 @@ Group: File tools
 Source: %name-%version.tar.bz2
 
 Summary: srm (secure rm) is a command-line compatible rm(1) which overwrites file contents before unlinking
+
+BuildPreReq: attr
 
 %description
 This is srm, a secure replacement for rm(1). Unlike the standard rm,
@@ -37,5 +41,8 @@ make test
 %_man1dir/*
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.14-alt1
+- Version 1.2.14
+
 * Wed Feb 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.11-alt1
 - Build for ALT
