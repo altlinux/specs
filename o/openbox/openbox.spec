@@ -1,6 +1,6 @@
 Name: openbox
 Version: 3.5.0
-Release: alt3
+Release: alt5
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -91,6 +91,7 @@ Openbox pure WM.
 %package kde
 Summary: Run KDE with Openbox as the WM
 Group: Graphical desktop/Other
+BuildArch: noarch
 Requires: %name-base = %version-%release
 
 %description kde
@@ -107,6 +108,7 @@ Run GNOME with Openbox as the WM.
 %package autostart
 Summary: XDG support for Openbox
 Group: Graphical desktop/Other
+BuildArch: noarch
 Requires: %name-base = %version-%release
 Requires: python-module-pyxdg
 
@@ -223,6 +225,12 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %endif
 
 %changelog
+* Fri Oct 03 2014 Lenar Shakirov <snejok@altlinux.ru> 3.5.0-alt5
+- make autostart and kde packages noarch
+
+* Fri Oct 03 2014 Lenar Shakirov <snejok@altlinux.ru> 3.5.0-alt4
+- finally fix wmsession file (ALT #28627)
+
 * Tue Mar 05 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt3
 - execute autostart and environment when run standalone from DM
 
