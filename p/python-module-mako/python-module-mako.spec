@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.3
-Release: alt1.1
+Version: 1.0.0
+Release: alt1
 Summary: template library written in Python
 
 Group: Development/Python
@@ -95,6 +95,9 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %endif
 
 %changelog
+* Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Wed Apr 17 2013 Fr. Br. George <george@altlinux.ru> 0.7.3-alt1.1
 - Fix build with 2to3
 
