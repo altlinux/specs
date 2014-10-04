@@ -1,10 +1,9 @@
-%define svn_release svn255
+%define svn_release svn312
 %define our_release alt1
-%define minor_release 3
 
 Name: structuresynth
-Version: 1.0.0
-Release: %branch_release %our_release.%svn_release.%minor_release.4
+Version: 1.5.0
+Release: %our_release.%svn_release
 
 Summary: Application for generating 3D structures by specifying a design grammar
 License: %gpl3only / %lgpl21only
@@ -14,10 +13,10 @@ Url: http://structuresynth.sourceforge.net
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-Patch0: structuresynth-alt-GLU.patch
 
 BuildRequires(pre): rpm-macros-branch rpm-build-licenses rpm-build-python3
-BuildRequires: qt4-devel gcc-c++ ImageMagick-tools python-tools-2to3
+BuildRequires: qt5-base-devel gcc-c++ ImageMagick-tools python-tools-2to3
+BuildPreReq: qt5-script-devel libGLU-devel libGLUT-devel
 
 %add_python3_path %_datadir/%name/Misc
 
@@ -35,15 +34,18 @@ system.
 
 %prep
 %setup
-%patch0 -p1
 rm -rf Examples/DontDeploy
 2to3 -w Misc/Blender_Importer_2.py
 
 %build
-qmake-qt4 -project -after "CONFIG+=opengl" -after "QT+=xml opengl script" \
-	-after "LIBS+=-lGLU"
-qmake-qt4 
-%make_build
+%add_optflags -I%_includedir/GL
+#qmake-qt5 -project \
+#	-after "CONFIG+=opengl" \
+#	-after "QT+=xml opengl script" \
+#	-after "LIBS+=-lGLU"
+qmake-qt5  QMAKE_CXXFLAGS="%optflags" \
+	StructureSynth.pro
+%make_build V=1
 
 %install
 install -pDm0755 structuresynth-1 %buildroot%_bindir/structuresynth
@@ -60,7 +62,7 @@ install -pDm0644 structuresynth48x48.png %buildroot%_liconsdir/structuresynth.pn
 install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hicolor/128x128/structuresynth.png
 
 %files 
-%doc LICENSE.README STRUCSYN.NFO bugs.txt changelog.txt notes.txt roadmap.txt 
+%doc LICENSE.README bugs.txt changelog.txt notes.txt roadmap.txt 
 %_bindir/*
 %_datadir/%name/
 %_desktopdir/*
@@ -69,6 +71,9 @@ install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hi
 %_iconsdir/hicolor/128x128/*
 
 %changelog
+* Sat Oct 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn312
+- Version 1.5.0
+
 * Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt1.svn255.3.4
 - Rebuild with Python-3
 
