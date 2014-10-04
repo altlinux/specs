@@ -1,10 +1,10 @@
 Name: gnucash-docs
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: Documentation for the Gnucash
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 License: GPL
 Group: Office
@@ -46,6 +46,9 @@ This is the documentation module for GnuCash.
 #%%_datadir/omf/gnucash-*/
 
 %changelog
+* Sat Oct 04 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
+- New version
+
 * Fri Apr 11 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.3-alt1
 - New version
 
