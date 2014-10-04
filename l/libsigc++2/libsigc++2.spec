@@ -1,5 +1,6 @@
-Name: libsigc++2
-Version: 2.3.1
+%define _name libsigc++
+Name: %{_name}2
+Version: 2.4.0
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -7,7 +8,9 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://libsigc.sourceforge.net/
 # http://git.altlinux.org/gears/l/%name.git
-Source: %name-%version-%release.tar
+
+Source: %_name-%version.tar.xz
+
 Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
 # Automatically added by buildreq on Fri Nov 19 2010
@@ -41,7 +44,7 @@ Obsoletes: libsigc++2.0-doc < %version-%release
 This package provides API documentation of libsigc++ library.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n %_name-%version
 
 %build
 mm-common-prepare -f
@@ -74,6 +77,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Sat Oct 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.1-alt1
 - Updated to 2.3.1-2-g7c6ff31.
 
