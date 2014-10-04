@@ -1,5 +1,5 @@
 Name: mediainfo
-Version: 0.7.53
+Version: 0.7.70
 Release: alt1
 
 Group: File tools
@@ -16,8 +16,8 @@ BuildRequires: dos2unix
 BuildRequires: pkg-config
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
-BuildRequires: libzen-devel >= 0.4.24
-BuildRequires: libmediainfo-devel >= 0.7.53
+BuildRequires: libzen-devel >= 0.4.29
+BuildRequires: libmediainfo-devel >= 0.7.70
 BuildRequires: libwxGTK-devel
 BuildRequires: sgml-common
 
@@ -147,6 +147,9 @@ grep -v '^Encoding=' Project/GNU/GUI/mediainfo-gui.kde4.desktop >%buildroot%_K4s
 %_K4srv/ServiceMenus/mediainfo-gui.desktop
 
 %changelog
+* Wed Oct 01 2014 Motsyo Gennadi <drool@altlinux.ru> 0.7.70-alt1
+- 0.7.70
+
 * Sat Feb 18 2012 Sergei Epiphanov <serpiph@altlinux.ru> 0.7.53-alt1
 - New version
 
