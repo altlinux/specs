@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.7
+Version: 2.0.9
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -47,6 +47,20 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Oct 04 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
+- korlogin: comment out local checking
+- install: use quotes for epm install (due parenteses in a packages names)
+- update system lists
+- selta: use Postgre link as needed PG package dir
+- parse link to get real PG path
+- windows: set correct status after copying
+
+* Mon Jun 09 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.8-alt1
+- update lists, add FreeBSD/8.4
+- rewrite windows build script
+- cleanup install script
+- major fixes for fix FreeBSD build
+
 * Sat Mar 29 2014 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
 - update system lists
 
