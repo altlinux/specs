@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: numactl
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Simple NUMA policy support
@@ -52,14 +52,17 @@ developing applications that use %name.
 %setup
 
 %build
+%autoreconf
+%configure
 %make
 
 %install
-%make install prefix=%buildroot%prefix
+%makeinstall_std
 
 %files
 %doc README CHANGES DESIGN TODO
 %_bindir/*
+%_man2dir/*
 %_man3dir/*
 %_man8dir/*
 
@@ -79,6 +82,9 @@ developing applications that use %name.
 # - 2.0.4 RC series are slowly rolling over here
 
 %changelog
+* Sat Oct 04 2014 Michael Shigorin <mike@altlinux.org> 2.0.10-alt1
+- new version (watch file uupdate)
+
 * Mon Jun 23 2014 Michael Shigorin <mike@altlinux.org> 2.0.9-alt1
 - new version (watch file uupdate)
 
