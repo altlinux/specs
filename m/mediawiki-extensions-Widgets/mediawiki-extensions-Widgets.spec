@@ -1,7 +1,7 @@
 %define ShortName Widgets
 
 Name: mediawiki-extensions-%ShortName
-Version: 0.9.2
+Version: 1.1
 Release: alt1
 
 BuildArch: noarch
@@ -19,7 +19,7 @@ BuildPreReq: rpm-build-intro
 Requires: mediawiki-common >= 1.15.1-alt4
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://mediawiki-widgets.googlecode.com/files/%{ShortName}_%version.tgz
+# Source-url: https://git.wikimedia.org/zip/?r=mediawiki/extensions/Widgets&h=%version&format=zip
 Source: %name-%version.tar
 
 %description
@@ -39,5 +39,8 @@ subst "4i\$wgGroupPermissions['sysop']['editwidgets'] = true;" %buildroot%_media
 %files -f %ShortName.files
 
 %changelog
+* Sun Oct 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
+- new version 1.1 (with rpmrb script)
+
 * Sat Mar 19 2011 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - initial build for ALT Linux Sisyphus
