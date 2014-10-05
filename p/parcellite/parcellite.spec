@@ -1,5 +1,5 @@
 Name: parcellite
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
@@ -40,6 +40,9 @@ print for those who like simplicity.
 %_man1dir/%name.1*
 
 %changelog
+* Sun Oct 05 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.9-alt1
+- 1.1.9
+
 * Sun Jul 06 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.8-alt1
 - 1.1.8
 
