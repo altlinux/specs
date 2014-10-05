@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -26,6 +26,8 @@ BuildRequires: gcc-c++ phonon-devel
 
 BuildRequires: libqt4-devel >= 4.7
 BuildRequires: gdb
+
+Requires: libqt4-sql-sqlite
 
 %description
 QupZilla is a new and very fast World Wide Web Browser
@@ -67,6 +69,10 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Sun Oct 05 2014 Michael Shigorin <mike@altlinux.org> 1.8.1-alt1
+- 1.8.1
+- added missing dependency (closes: #30370)
+
 * Fri Sep 26 2014 Michael Shigorin <mike@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
