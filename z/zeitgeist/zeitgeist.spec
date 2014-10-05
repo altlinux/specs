@@ -6,7 +6,7 @@
 %def_enable fts
 
 Name: zeitgeist
-Version: %major.14
+Version: %major.15
 Release: alt1
 
 Summary: Framework providing Desktop activity awareness
@@ -15,15 +15,15 @@ Group: Office
 License: LGPLv3+ and LGPLv3
 # zeitgeist/loggers/iso_strptime.py is LGPLv3 and the rest LGPLv3+
 Url: https://launchpad.net/zeitgeist
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar
-Patch: %name-0.9.12-alt-python3_syntax.patch
+# VCS: git://anongit.freedesktop.org/zeitgeist/zeitgeist
+Source: %name-%version.tar
+#Source: http://launchpad.net/%name/%major/%version/+download/%name-%version.tar
+Patch1: %name-0.9.12-alt-python3_syntax.patch
 
 Requires: lib%name%api_ver = %version-%release
 
-%define vala_ver 0.18
+%define glib_ver 2.36
+%define vala_ver 0.22
 %define tp_glib_ver 0.18
 
 # can't do buildreq correctly
@@ -32,7 +32,7 @@ BuildRequires: raptor
 BuildRequires: gettext perl-XML-Parser intltool gtk-doc
 BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libgio-devel libdbus-devel
 BuildRequires: libxapian-devel
-BuildRequires: libgtk+3-devel libjson-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libjson-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala-tools >= %vala_ver libtelepathy-glib-vala
@@ -140,7 +140,7 @@ This package contains development documentation for the Zeitgeist library.
 %setup -D -c
 mv %name-%version py3build
 pushd py3build
-%patch
+%patch1
 popd
 
 %build
@@ -213,6 +213,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Sun Oct 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.9.15-alt1
+- 0.9.15_ce9affa8
+
 * Fri Aug 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.14-alt1
 - 0.9.14
 
