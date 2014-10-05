@@ -7,11 +7,11 @@
 %def_disable libsocialweb
 %def_enable tracker
 %def_enable bluez
-%def_disable zeitgeist
+%def_enable zeitgeist
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -27,7 +27,7 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 %define eds_ver 3.10.1
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
-%define zeitgeist_ver 0.9.14
+%define zeitgeist_ver 0.9.15
 
 BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
@@ -158,6 +158,9 @@ This package provides vala language bindings for %_name library
 
 
 %changelog
+* Sun Oct 05 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt2
+- rebuilt with zeitgeist support
+
 * Fri Sep 12 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
