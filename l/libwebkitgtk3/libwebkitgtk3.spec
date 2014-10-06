@@ -14,10 +14,10 @@
 %def_enable geolocation
 %def_enable web_audio
 %def_enable spellcheck
-%def_enable webkit2
+%def_disable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: Web browser engine
@@ -259,16 +259,16 @@ mkdir -p Programs/resources
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang WebKitGTK-3.0
 
 mkdir -p %buildroot%_libexecdir/%_name
-install -m755 Programs/{GtkLauncher,MiniBrowser} %buildroot%_libexecdir/%_name/
-
-chrpath --delete %buildroot%_libexecdir/%_name/{GtkLauncher,MiniBrowser}
-
-%check
-#xvfb-run make check
+install -m755 Programs/GtkLauncher %buildroot%_libexecdir/%_name/
+chrpath --delete %buildroot%_libexecdir/%_name/GtkLauncher
+%if_enabled webkit2
+install -m755 Programs/MiniBrowser %buildroot%_libexecdir/%_name/
+chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
+%endif
 
 %files -f WebKitGTK-3.0.lang
 %_libdir/libwebkitgtk-%api_ver.so.*
@@ -340,6 +340,10 @@ chrpath --delete %buildroot%_libexecdir/%_name/{GtkLauncher,MiniBrowser}
 
 
 %changelog
+* Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.6-alt1
+- 2.4.6
+- disabled webkit2
+
 * Fri Aug 29 2014 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
 - 2.4.5
 
