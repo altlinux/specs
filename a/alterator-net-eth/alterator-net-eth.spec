@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.17.0
+Version: 4.18.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -83,6 +83,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Oct 06 2014 Andriy Stepanov <stanv@altlinux.ru> 4.18.0-alt1
+- Add VLAN for X/qt
+
 * Mon Sep 29 2014 Andriy Stepanov <stanv@altlinux.ru> 4.17.0-alt1
 - Add vlan support for Ajax version
 
