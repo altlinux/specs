@@ -1,6 +1,6 @@
 Name: runawfe4-server
-Version: 4.1.0
-Release: alt7
+Version: 4.1.2
+Release: alt6
 
 Summary: Runawfe server
 
@@ -13,6 +13,8 @@ Url: http://sourceforge.net/projects/runawfe/
 #cp -a svn/runawfe-code/RunaWFE-4.x/trunk/projects/wfe runawfe4-server/wfe/      #copy to git dir
 Source: %name-%version.tar
 Source1: standalone-runa.xml
+Source2: runawfe4-server
+Source3: jboss-as-runawfe4-server.conf
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
@@ -29,6 +31,7 @@ BuildRequires: aether
 BuildRequires: maven jboss-as-vanilla
 BuildArch: noarch
 
+%define jbossuser jboss-as
 %define runauser _runa
 %define runadir /var/lib/runawfe4-server
 %define jbossdir %_datadir/jboss-as/standalone
@@ -49,27 +52,29 @@ export MAVEN_OPTS="-Dmaven.repo.local=/tmp/.m2"
 cd wfe-app/repository/
 ./add_dependencies.sh
 cd ..
-#mvn clean package -Dappserver=jboss7
-mvn -o clean package -Dappserver=jboss7 #for offline build in git.alt
+mvn clean package -Dappserver=jboss7
+#mvn -o package -Dappserver=jboss7 #for offline build in git.alt
 
 
 %install
 #jboss-as-cp -l %buildroot/%runadir
 #rm -f %buildroot/%runadir/bin/standalone.sh
 mkdir -p %buildroot/%jbossdir/{bin,data,deployments,log,tmp,configuration}
-
+mkdir -p %buildroot/etc/jboss-as/
 #FIX correct path to jboss-as/bin
 cp %SOURCE1 %buildroot%jbossdir/configuration/
+cp %SOURCE3 %buildroot/etc/jboss-as/
 mkdir -p %buildroot/%_sbindir/
 #FIX JBOSS_BASE_DIR not work in jboss from zip, unused
 cat >%buildroot/%_sbindir/runawfe4-server <<EOF
-JBOSS_BASE_DIR=%jbossdir %_datadir/jboss-as/bin/standalone.sh -c standalone-runa.xml \
+JBOSS_BASE_DIR=%jbossdir su - %jbossuser -s /bin/sh -c "%_datadir/jboss-as/bin/standalone.sh -c standalone-runa.xml" \
 && echo \$$ > /var/run/runawfe4-server.pid;
 EOF
 
-mkdir -p %buildroot/%jbossdir/deployments/
 cp -a wfe-ear/target/runawfe.ear %buildroot/%jbossdir/deployments/
 
+install -D -m754 %SOURCE2 %buildroot%_initdir/%name
+#chown -R %jbossuser %buildroot/%jbossdir/
 #start jboss, copy ear to deploy dir and start deploy DONE
 #Create user _runa and run
 #sh standalone.sh -c standalone-runa.xml
@@ -82,35 +87,38 @@ cp -a wfe-ear/target/runawfe.ear %buildroot/%jbossdir/deployments/
 useradd -d %runadir -r -s %_sbindir/runawfe4-server %runauser >/dev/null 2>&1 || :
 
 %files
-%jbossdir/
-%attr(755,root,root) %dir %jbossdir/
-#%dir %runadir/configuration/
-#%config(noreplace) %runadir/configuration/*
-#%attr(755,%runauser,root) %dir %runadir/data/
-#%runadir/deployments/
-#%attr(755,%runauser,root) %dir %runadir/log/
-#%attr(755,%runauser,root) %dir %runadir/tmp/
-
+/etc/jboss-as/jboss-as-runawfe4-server.conf
+%attr(755,%jbossuser,root) %jbossdir/configuration/*
+%attr(755,%jbossuser,root) %jbossdir/deployments/*
 %attr(755,root,root) %_sbindir/runawfe4-server
 
+%_initdir/%name
+
 %changelog
-* Mon Jun 30 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt7
-- On offline build
+* Mon Oct 06 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt6
+- added deployments dir
+- change jbdc to keep db in file
+- change jbdc to keep db in file
 
-* Thu Apr 24 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt6
-- Off offline build [temporary]
+* Mon Sep 29 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt5
+- added new init realisatio
+- create etc dir
+- fix confict file standalone
+- added files
+- change standalone attribute
+- remove sh -x in init
+- fix permission
+- added files
+- fix files
 
-* Wed Apr 23 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt5
-- Fixed recreate db
+* Fri Sep 26 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt4
+- remove depends from init
 
-* Tue Apr 22 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt4
-- Fixed server stop
+* Thu Sep 25 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt3
+- added new standalone.xml
 
-* Thu Apr 03 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt3
-- set maven offline build
+* Tue Sep 23 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt2
+- initial init.d support
 
-* Mon Mar 31 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-alt2
-- added maven cache for ofline build
-
-* Mon Mar 24 2014 Danil Mikhailov <danil@altlinux.org> 4.1.0-eter1
-- initial build 4.1.0
+* Mon Aug 18 2014 Danil Mikhailov <danil@altlinux.org> 4.1.2-alt1
+- initial build 4.1.2
