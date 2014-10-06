@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 340.32
+Version: 340.46
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -98,6 +98,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 340.46-alt1
+- new version
+
+* Tue Aug 19 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt0.M70P.1
+- built for M70P
+
 * Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt1
 - new version
 
