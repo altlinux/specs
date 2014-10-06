@@ -1,6 +1,6 @@
 Name: jboss-as-vanilla
 Version: 7.1.1
-Release: alt9
+Release: alt10
 
 Summary: jboss-as-vanilla - Vanilla Edition Of JBoss Application Server
 
@@ -18,7 +18,7 @@ Packager: Danil Mikhailov <danil@altlinux.org>
 
 #PreReq:
 Requires: java >= 1.7
-AutoReq: yes, nomingw
+AutoReq: yes, nomingw, nomingw32
 #Provides:
 #Conflicts:
 
@@ -76,7 +76,7 @@ useradd -d %jbossdir -r -s /bin/nologin %jbossuser >/dev/null 2>&1 || :
 #mkdir -p %jbossdir/
 
 %files
-%jbossdir/
+%attr(755,%jbossuser,root) %jbossdir/
 
 %attr(755,root,root) %_bindir/jboss-cli
 %attr(755,root,root) %_bindir/jboss-as-cp
@@ -84,6 +84,10 @@ useradd -d %jbossdir -r -s /bin/nologin %jbossuser >/dev/null 2>&1 || :
 %attr(755,root,root) %_initdir/*
 
 %changelog
+* Mon Oct 06 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt10
+- added set owner to jboss dir
+- remove req mingw32
+
 * Mon Sep 29 2014 Danil Mikhailov <danil@altlinux.org> 7.1.1-alt9
 - remove chown
 
