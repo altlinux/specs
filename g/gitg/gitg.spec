@@ -4,7 +4,7 @@
 
 Name: gitg
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer targeting gtk+/GNOME
 Group: Development/Other
@@ -29,19 +29,19 @@ AutoReqProv: nopython
 %define gtk_ver 3.12
 %define gtksourceview_ver 3.10
 %define git2_ver 0.0.20
-%define webkit_ver 2.2
+%define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgit2-glib-devel >= %git2_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
-BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
+BuildPreReq: libwebkitgtk4-devel >= %webkit_ver
 BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
 BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libpeas-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
+BuildRequires: libgit2-glib-gir-devel libwebkitgtk4-gir-devel libgee0.8-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_python:BuildRequires: python3-devel rpm-build-python3 python3-module-pygobject3-devel}
@@ -100,12 +100,13 @@ library.
 
 %prep
 %setup
+subst 's/name=\"WebKit2\" version=\"3.0\"/name="WebKit2" version="4.0"/' Gitg-%api_ver.gir
 
 %build
 %autoreconf
 %configure --disable-static \
 	%{subst_enable python}
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -151,6 +152,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- rebuilt with libwebkit2gtk-4.0
+
 * Wed Sep 24 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
