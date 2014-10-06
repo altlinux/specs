@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) perl(File/Find/Rule.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/bin/tapper-installer-*.pl
 %define upstream_name    Tapper-Installer
@@ -8,7 +8,7 @@ BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) 
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
@@ -48,7 +48,7 @@ BuildRequires: perl(subs.pm)
 BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
 
-%define _requires_exceptions /sbin/runscript
+%global __requires_exclude /sbin/runscript
 Source44: import.info
 
 %description
@@ -89,6 +89,9 @@ popd
 /usr/share/man/man1/tapper-installer-simnow.pl.1*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_4
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_3
 - update by mgaimport
 
