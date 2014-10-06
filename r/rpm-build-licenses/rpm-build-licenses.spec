@@ -6,7 +6,7 @@
 %define _name licenses
 
 Name: rpm-build-%_name
-Version: 2.0.4
+Version: 2.0.5
 Release: %branch_release alt1
 
 Summary: RPM macros for well-known licenses
@@ -57,6 +57,7 @@ cat <<__EOF__ >%_name.rpmmacros
 %%artistic_license_v2 Artistic 2.0
 %%perl_license Perl (GPL or Artistic)
 %%fdl FDL
+%%gfdl GFDL
 %%lppl LPPL
 %%qpl1 QPLv1.0
 %%ccbysa30 CC-BY-SA-3.0
@@ -66,6 +67,8 @@ cat <<__EOF__ >%_name.rpmmacros
 %%epl Erlang Public License
 %%pubdomain Public domain
 %%distributable Distributable, non-free
+%%gagpl3only GAGPLv3
+%%gagpl3plus GAGPLv3+
 
 # Not sure whether these ones should exist at all. Too clumsy names and vague
 # semantics.
@@ -90,6 +93,10 @@ install -pD -m644 %_name.rpmmacros %buildroot%_rpmmacrosdir/%_name
 %doc --no-dereference COPYING
 
 %changelog
+* Fri Oct 03 2014 Sergey Y. Afonin <asy@altlinux.ru> 2.0.5-alt1
+- added a more specific macros for the GNU Free Documentation License (Bug #24945)
+- added a set of macroses for the GNU Affero General Public License (Bug #26826)
+
 * Mon Apr 04 2011 Aleksey Avdeev <solo@altlinux.ru> 2.0.4-alt1
 - added Qt Public License Version 1.0 (Bug #25374)
 - relocated macro files to %%_rpmmacrosdir/
