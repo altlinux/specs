@@ -2,14 +2,15 @@ BuildRequires: desktop-file-utils
 Summary: 	Manager for the Matchbox Desktop panel
 Name: 		matchbox-panel-manager
 Version: 	0.1
-Release: 	alt1_8
+Release: 	alt1_9
 Url: 		http://matchbox-project.org
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
 Source0: 	http://matchbox-project.org/sources/%version/%{name}-%{version}.tar.bz2
 Patch0:		matchbox-panel-manager-0.1-linking.patch
 Patch1:		matchbox-panel-manager-0.1-automake-1.13.patch
-BuildRequires:	libmatchbox-devel libgtk+2-devel
+BuildRequires:	libmatchbox-devel
+BuildRequires:	libgtk+2-devel
 Requires:	matchbox-panel
 Source44: import.info
 
@@ -52,6 +53,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_9
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_8
 - update by mgaimport
 
