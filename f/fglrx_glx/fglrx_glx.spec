@@ -1,4 +1,4 @@
-%define cat_ver 14.20
+%define cat_ver 14.301.1001
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,7 +18,7 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 2
-Version: 14.20
+Version: 14.301.1001
 Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
@@ -124,7 +124,7 @@ for d in {common,%archdir}/lib/modules/%bname/build_mod; do
 	find $d -type f -exec chmod 644 \{} \;
 done
 
-ln -sf ../../../../../$(ls %archdir/lib/modules/%bname/build_mod/*) common/lib/modules/%bname/build_mod/
+##ln -sf ../../../../../$(ls %archdir/lib/modules/%bname/build_mod/*) common/lib/modules/%bname/build_mod/
 
 install -d -m 0755 %{bname}_tools
 tar -C %{bname}_tools -xf common/usr/src/ati/%{bname}_sample_source.tgz
@@ -279,6 +279,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Mon Oct 06 2014 barssc <barssc@altlinux.ru> 2:14.301.1001-alt1
+- Catalyst 14.9
+
 * Wed Aug 28 2014 barssc <barssc@altlinux.ru> 2:14.20-alt1
 - Catalyst 14.6 Beta
 
