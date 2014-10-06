@@ -6,7 +6,7 @@
 
 Name: luarocks
 Version: 2.2.0
-Release: alt0.rc1
+Release: alt1.rc1
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -54,7 +54,8 @@ site_config.lua \
 	%buildroot%lua_modulesdir/%name
 #enable lib -> lib64 right path settings
 LIBSUBDIR=`echo %_libdir | sed 's|/usr/||'`
-echo 'lib_modules_path = "/lib/lua/"..lua_version' | \
+echo 'gcc_rpath = false
+lib_modules_path = "/lib/lua/"..lua_version' | \
 	sed "s|/lib/|/$LIBSUBDIR/|" >> \
 	`eval echo "%buildroot%_sysconfdir/%name/config-*.lua"`
 SITECFG_ADDITION="site_config.LUAROCKS_EXTERNAL_DEPS_SUBDIRS =\\
@@ -62,13 +63,12 @@ SITECFG_ADDITION="site_config.LUAROCKS_EXTERNAL_DEPS_SUBDIRS =\\
       bin = \"bin\",\\
       lib = \"$LIBSUBDIR\",\\
       include = \"include\"\\
-    }\\
-"
+    }"
 sed -i "/^return/ i $SITECFG_ADDITION" \
 	%buildroot%lua_modulesdir/%name/site_config.lua
 
 #%%ghost
-touch %buildroot%luarocks_dbdir/{index.html,manifest}
+touch %buildroot%luarocks_dbdir/{index.html,manifest{,-5.{1,2,3}}}
 # RPM triggers
 install -m755 %SOURCE1 %buildroot%_rpmlibdir/
 install -m644 %SOURCE2 %buildroot%_rpmlibdir/
@@ -79,13 +79,16 @@ install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 %dir %_prefix/lib/luarocks
 %dir %luarocks_dbdir
 %ghost %luarocks_dbdir/index.html
-%ghost %luarocks_dbdir/manifest
+%ghost %luarocks_dbdir/manifest*
 %_rpmlibdir/%{name}*
 %lua_modulesdir/%name
 %lua_modulesdir_noarch/%name
 %doc COPYING README*
 
 %changelog
+* Mon Oct 06 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.2.0-alt1.rc1
+- fix rpath for builtin biulds
+
 * Fri Aug 15 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.2.0-alt0.rc1
 - new version
 - ignored Vladimir Didenko's <cow@> releases
