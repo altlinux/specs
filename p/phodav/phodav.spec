@@ -2,7 +2,7 @@
 
 Name: phodav
 Version: 0.4
-Release: alt1
+Release: alt2
 Summary: A WebDAV server using libsoup
 
 Group: Networking/WWW
@@ -105,10 +105,12 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %_sbindir/spice-webdavd
 /lib/udev/rules.d/70-spice-webdavd.rules
 %_unitdir/spice-webdavd.service
-%_unitdir/spice-webdavd.target
 %_initdir/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Mon Oct 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4-alt2
+- webdavd: remove systemd target, use only service
+
 * Fri Apr 18 2014 Alexey Shabalin <shaba@altlinux.ru> 0.4-alt1
 - initial build
