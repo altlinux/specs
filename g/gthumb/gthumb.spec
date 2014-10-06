@@ -1,17 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_base 3.2
-%define ver_major 3.2
+%define ver_base 3.3
+%define ver_major 3.3
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
 %def_enable libbrasero
 %def_enable web_albums
-%def_enable libchamplain
-%def_disable libopenraw
+%def_disable libchamplain
+%def_enable libraw
 
 Name: gthumb
-Version: %ver_major.8
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -33,12 +33,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define clutter_gtk_ver 1.0.0
 %define gst_ver 1.0
 %define exiv2_ver 0.20
-%define openraw_ver 0.0.8
+%define libraw_ver 0.16
 %define brasero_ver 3.2.0
 %define soup_ver 2.36
 %define gnome_common_ver 2.8.0
 %define webp_ver 0.2.0
-%define webkit_ver 1.10.0
+%define webkit_ver 2.6.0
 %define champlain_ver 0.12.0
 %define desktop_file_utils_ver 0.8
 
@@ -49,16 +49,15 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
-
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
 BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champlain_ver
-%{?_enable_libopenraw:BuildPreReq: libopenraw-gnome-devel >= %openraw_ver}
+BuildRequires: libwebkitgtk4-devel >= %webkit_ver
+%{?_enable_libraw:BuildPreReq: libraw-devel >= %libraw_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
-%{?_enabled_libchamplain:BuildRequires: libchamplain-devel >= %champlain_ver}
+%{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 
 %if_enabled exiv2
 BuildPreReq: libexiv2-devel >= %exiv2_ver gcc-c++
@@ -113,7 +112,7 @@ This package contains headers needed to build extensions for gThumb.
     %{subst_enable debug} \
     %{subst_enable libbrasero} \
     %{subst_enable libchamplain} \
-    %{subst_enable libopenraw} \
+    %{subst_enable libraw} \
     --disable-static \
     --disable-schemas-compile \
     --enable-libopenraw \
@@ -122,7 +121,7 @@ This package contains headers needed to build extensions for gThumb.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -160,6 +159,7 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/gthumb.1.*
 %doc AUTHORS NEWS README
 
@@ -169,6 +169,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Oct 06 2014 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
+- 3.3.2
+
 * Sun May 18 2014 Yuri N. Sedunov <aris@altlinux.org> 3.2.8-alt1
 - 3.2.8
 
