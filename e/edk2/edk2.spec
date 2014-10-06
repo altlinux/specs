@@ -1,10 +1,10 @@
-%define SVNDATE 20130809
-%define SVNREV 2594
+%define SVNDATE 20140722
+%define SVNREV 2674
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 0.1
-Release: alt1.svn%SVNREV
+Version: %{SVNDATE}svn%{SVNREV}
+Release: alt1
 Summary: EFI Development Kit II
 
 Source0: %name-%version.tar
@@ -53,6 +53,8 @@ build EFI executables and ROMs using the GNU tools.
 
 %build
 # source ./BuildEnv
+export WORKSPACE=`pwd`
+unset MAKEFLAGS
 make
 
 %install
@@ -70,7 +72,9 @@ install	\
 	Source/C/bin/GenVtf \
 	Source/C/bin/GnuGenBootSector \
 	Source/C/bin/LzmaCompress \
+	BinWrappers/PosixLike/LzmaF86Compress \
 	Source/C/bin/Split \
+	Source/C/bin/TianoCompress \
 	Source/C/bin/VfrCompile \
 	Source/C/bin/VolInfo \
 	%buildroot%_bindir
@@ -79,11 +83,27 @@ ln -f %buildroot%_bindir/GnuGenBootSector \
 	%buildroot%_bindir/GenBootSector
 
 mkdir -p %buildroot%_datadir/%name
+install \
+        BuildEnv \
+        %buildroot%_datadir/%name
+
+mkdir -p %buildroot%_datadir/%name/Conf
+install \
+        Conf/build_rule.template \
+        Conf/tools_def.template \
+        Conf/target.template \
+        %buildroot%_datadir/%name/Conf
+
+mkdir -p %buildroot%_datadir/%name/Scripts
+install \
+        Scripts/gcc4.4-ld-script \
+        %buildroot%_datadir/%name/Scripts
+
 cp -R Source/Python %buildroot%_datadir/%name/Python
 
 find %buildroot%_datadir/%name/Python -name "*.pyd" | xargs rm
 
-for i in BPDG GenDepex GenFds GenPatchPcdTable PatchPcdValue TargetTool Trim UPT; do
+for i in BPDG Ecc GenDepex GenFds GenPatchPcdTable PatchPcdValue TargetTool Trim UPT; do
   echo '#!/bin/sh
 PYTHONPATH=%_datadir/%name/Python
 export PYTHONPATH
@@ -105,12 +125,17 @@ done
 %_bindir/GenVtf
 %_bindir/GnuGenBootSector
 %_bindir/LzmaCompress
+%_bindir/LzmaF86Compress
 %_bindir/Split
+%_bindir/TianoCompress
 %_bindir/VfrCompile
 %_bindir/VolInfo
+%_datadir/%name/Conf
+%_datadir/%name/Scripts
 
 #%files tools-python
 #%_bindir/BPDG
+#%_bindir/Ecc
 #%_bindir/GenDepex
 #%_bindir/GenFds
 #%_bindir/GenPatchPcdTable
@@ -124,5 +149,8 @@ done
 %doc UserManuals/*.rtf
 
 %changelog
+* Mon Oct 06 2014 Alexey Shabalin <shaba@altlinux.ru> 20140722svn2674-alt1
+- svn snapshot r2674
+
 * Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1-alt1.svn2594
 - initial build
