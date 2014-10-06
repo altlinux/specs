@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(English.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-BaseCalc
 %define upstream_version 1.017
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_2
+Release:    alt2_3
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
@@ -41,7 +41,6 @@ make
 make test
 
 %install
-
 make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT 
 
 %files 
@@ -49,6 +48,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_3
+- update by mgaimport
+
 * Thu Feb 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_2
 - moved to Sisyphus
 
