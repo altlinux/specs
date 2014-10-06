@@ -1,9 +1,9 @@
 # TODO:fix build Python bindings
 %def_disable python
-%define  git_rev 166cbb7
+%define  git_rev 79bdcf1
 
 Name: 	 gnucash
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -178,6 +178,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Sat Oct 04 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
+- New version
+
 * Fri Apr 11 2014 Andrey Cherepanov <cas@altlinux.org> 2.6.3-alt1
 - New version
 
