@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Tapper - Network performance measurements - Client
 License:    GPL+ or Artistic
@@ -55,6 +55,9 @@ Network performance measurements client for Tapper.
 /usr/share/man/man1/tapper-testsuite-netperf-server.1*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_4
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_3
 - update by mgaimport
 
