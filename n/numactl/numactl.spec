@@ -2,7 +2,7 @@
 
 Name: numactl
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: Simple NUMA policy support
 License: GPL
@@ -62,7 +62,6 @@ developing applications that use %name.
 %files
 %doc README CHANGES DESIGN TODO
 %_bindir/*
-%_man2dir/*
 %_man3dir/*
 %_man8dir/*
 
@@ -78,10 +77,10 @@ developing applications that use %name.
 %_libdir/*.a
 %endif
 
-# TODO:
-# - 2.0.4 RC series are slowly rolling over here
-
 %changelog
+* Mon Oct 06 2014 Michael Shigorin <mike@altlinux.org> 2.0.10-alt2
+- dropped numactl(2) page conflicting with man-pages package
+
 * Sat Oct 04 2014 Michael Shigorin <mike@altlinux.org> 2.0.10-alt1
 - new version (watch file uupdate)
 
