@@ -6,8 +6,8 @@
 %def_with python
 %def_without xine
 %def_without octave
-%def_with gstreamer
-%def_without ffmpeg
+%def_without gstreamer
+%def_with ffmpeg
 %def_with 1394libs
 %def_with v4l
 %def_with gtk
@@ -30,7 +30,7 @@
 %define sover 2.4
 Name: lib%bname%sover
 Version: 2.4.9.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Open Source Computer Vision Library
 License: Distributable
@@ -40,14 +40,16 @@ URL: http://opencv.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %bname-%version.tar
-# GStreamer1 releted patches
+# Debian
+Patch50: libav10.patch
+# FC, GStreamer1 releted patches
 Patch100: 0550-bomb-commit-of-gstreamer-videocapture-and-videowrite.patch
 Patch101: 0552-eliminated-warnings.patch
 Patch102: 0587-Fix-build-with-gstreamer-0.10.28.patch
 Patch103: 0865-gstreamer-cleaning-up-resources.patch
 Patch104: 0871-allow-for-arbitraty-number-of-sources-and-sinks.patch
 
-BuildPreReq: chrpath libavformat53 libavcodec53 libcvmser
+BuildPreReq: chrpath libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
 BuildPreReq: cmake libnumpy-devel eigen3 doxygen zlib-devel
@@ -197,6 +199,7 @@ This package contains %Name examples.
 
 %prep
 %setup
+%patch50 -p1
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
@@ -284,6 +287,10 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt2
+- enable ffmpeg
+- disable gstreamer1
+
 * Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 1:2.4.9.1-alt1
 - new version (ALT#30150)
 - disable ffmpeg
