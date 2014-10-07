@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _without_test 1
-%define module_version 0.008
+%define module_version 0.009
 %define module_name Type-Tie
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(Hash/FieldHash.pm) perl(Hash/Util/FieldHash.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types/Moose.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Requires.pm)
@@ -8,7 +8,7 @@ BuildRequires: perl(Data/Dumper.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMak
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008
+Version: 0.009
 Release: alt1
 Summary: tie a variable to a type constraint
 Group: Development/Perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - automated CPAN update
 
