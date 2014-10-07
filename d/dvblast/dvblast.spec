@@ -1,6 +1,6 @@
 Name: dvblast
 Version: 2.2
-Release: alt6
+Release: alt7
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -47,6 +47,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Tue Oct 07 2014 Alexei Takaseev <taf@altlinux.org> 2.2-alt7
+- update to git:71736aae24aad273874f86fdf13a802532e6475d
+
 * Sun Jun 29 2014 Alexei Takaseev <taf@altlinux.org> 2.2-alt6
 - update to git:9a2ea9ffb2141e1b4f29a181d97a4efbcb8fbc61
 
