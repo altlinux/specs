@@ -1,6 +1,6 @@
 Name: wxlua
 Version: 2.8.12.3
-Release: alt2.r244
+Release: alt3.r246
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -13,10 +13,8 @@ Source: http://sourceforge.net/projects/wxlua/files/wxlua/%version/wxLua-%versio
 
 # Automatically added by buildreq on Thu Oct 09 2014 (-bi)
 # optimized out: cmake-modules elfutils fontconfig libGL-devel libX11-devel libcloog-isl4 libgdk-pixbuf libgst-plugins libstdc++-devel libwayland-client libwayland-server libwxGTK-contrib-stc python-base xorg-xproto-devel
-BuildRequires: cmake desktop-file-utils gcc-c++ libGLU-devel liblua5-devel libwxGTK3.0-devel libwxstedit-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ libGLU-devel liblua5-devel libwxGTK3.1-devel libwxstedit-devel lua5
 #BuildRequires: doxygen graphviz
-#TODO: need wxMediaCtrl for this binding
-%def_disable wxbindmedia
 
 %description
 wxLua is a set of bindings to the C++ wxWidgets cross-platform GUI library for
@@ -71,7 +69,7 @@ applications with %name.
 
 %prep
 %setup -n wxLua-%version-src
-rm -r modules/{lua-*,wxstedit}/*
+rm -rf modules/{lua-*,wxstedit}/*
 sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 	CMakeLists.txt
 
@@ -84,6 +82,10 @@ echo "project( wxStEdit )" > modules/wxstedit/CMakeLists.txt
 	-DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
 	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit
 
+pushd bindings
+	make clean all \
+		LUA=%_bindir/lua
+popd
 %make_build -C BUILD
 if [ -x /usr/bin/doxygen ]; then
 	%make_build -C BUILD wxLua_doxygen
@@ -126,6 +128,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Oct 27 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt3.r246
+- build with wxGTK3.1 + GTK+3
+- fixed upstream
+
 * Wed Oct 15 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt2.r244
 - SVN version
 - build with libwxGTK3.0-devel
