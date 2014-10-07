@@ -1,12 +1,8 @@
 %filter_from_requires /^.etc.matchbox.session/d
-%define name 	matchbox-common
-%define version 0.9.1
-%define release 7
-
 Summary: 	Shared files for the Matchbox Desktop
-Name: 		%name
-Version: 	%version
-Release: 	alt1_7
+Name: 		matchbox-common
+Version: 	0.9.1
+Release: 	alt1_8
 Url: 		http://matchbox.handhelds.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -44,6 +40,9 @@ This package contains graphics and scripts required by Matchbox.
 
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_8
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_7
 - update by mgaimport
 
