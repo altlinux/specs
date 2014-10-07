@@ -1,20 +1,20 @@
-%define module_version 0.07
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.08
 %define module_name Data-Munge
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm) perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm) perl(strict.pm) perl(warnings.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
-Release: alt2
+Version: 0.08
+Release: alt1
 Summary: various utility functions
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/MA/MAUKE/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAUKE/Data-Munge-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Tue Sep 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
 - moved to Sisyphus as dependency
 
