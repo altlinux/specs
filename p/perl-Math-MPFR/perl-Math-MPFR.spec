@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 3.22
+%define module_version 3.23
 %define module_name Math-MPFR
 # BEGIN SourceDeps(oneline):
 BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/Decimal64.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
@@ -7,7 +7,7 @@ BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.22
+Version: 3.23
 Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
@@ -41,6 +41,9 @@ A bigfloat module utilising the MPFR library. Basically.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.23-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 3.22-alt1
 - automated CPAN update
 
