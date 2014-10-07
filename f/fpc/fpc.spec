@@ -7,7 +7,7 @@
 Name: 	  fpc
 Epoch:    2
 Version:  2.6.4
-Release:  alt1
+Release:  alt2
 
 Summary:  Free Pascal Compiler -- Meta Package
 License:  GPL
@@ -221,6 +221,7 @@ iconv -f CP866 -t UTF8 %buildroot%fpc_dir/msg/errorr.msg > %buildroot%fpc_dir/ms
 install -p -m 644 utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
 sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
 sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/fp.cfg
+sed -i "s|/usr/lib|%_libdir|g" %buildroot%_sysconfdir/fp.cfg
 %else
 install -p -m 644 utils/fppkg/units/i386-linux/*.{o,ppu} %buildroot%fpc_dir/units/i386-linux/fppkg/
 sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/%name.cfg
@@ -788,6 +789,9 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Mon Oct 06 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt2
+- Fix pathes in configuration on x86_64
+
 * Wed Aug 13 2014 Andrey Cherepanov <cas@altlinux.org> 2:2.6.4-alt1
 - New version
 - Apply patches from Debian and Mageia
