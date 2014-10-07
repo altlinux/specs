@@ -5,14 +5,17 @@ BuildRequires: desktop-file-utils
 Summary: 	Panel for the Matchbox Desktop
 Name: 		matchbox-panel
 Version: 	0.9.3
-Release: 	alt1_8
+Release: 	alt1_9
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
 Source0: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
 Patch0:		matchbox-panel-0.9.3-linking.patch
 Patch1:		matchbox-panel-0.9.3-automake-1.13.patch
-BuildRequires:	libmatchbox-devel libapm-devel libstartup-notification-devel libwireless-devel
+BuildRequires:	libmatchbox-devel
+BuildRequires:	libapm-devel
+BuildRequires:	libstartup-notification-devel
+BuildRequires:	libwireless-devel
 Source44: import.info
 Patch33: matchbox-panel-0.9.3-alt-xvt.patch
 
@@ -66,6 +69,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_9
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_8
 - update by mgaimport
 
