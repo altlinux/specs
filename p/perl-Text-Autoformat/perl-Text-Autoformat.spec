@@ -1,6 +1,6 @@
 %define dist Text-Autoformat
 Name: perl-%dist
-Version: 1.669004
+Version: 1.669006
 Release: alt1
 
 Summary: Automatic text wrapping and reformatting
@@ -37,6 +37,9 @@ various capitalization schemes.
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.669006-alt1
+- automated CPAN update
+
 * Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.669004-alt1
 - automated CPAN update
 
