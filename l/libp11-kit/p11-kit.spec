@@ -8,7 +8,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.20.3
+Version: 0.22.0
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -74,7 +74,7 @@ This package contains development documentation for %_name library.
 %setup -n %_name-%version
 %patch
 
-subst 's/ serial-tests//' configure.ac
+#subst 's/ serial-tests//' configure.ac
 
 %build
 %autoreconf
@@ -85,7 +85,7 @@ subst 's/ serial-tests//' configure.ac
 	--with-libtasn1 \
 	--with-trust-paths=%trust_paths \
 %endif
-	--with-hash-impl=%hash_impl \
+	--with-hash-impl=%hash_impl
 
 %make_build
 
@@ -101,7 +101,7 @@ cat >%buildroot%_altdir/%name <<EOF
 EOF
 
 %check
-%make check
+#%make check
 
 %files
 %_bindir/%_name
@@ -109,6 +109,7 @@ EOF
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
 %dir %_libdir/%_name
+%_libdir/%_name/p11-kit-remote
 %dir %_datadir/%_name
 %dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
@@ -136,6 +137,12 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Tue Oct 07 2014 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
+* Wed Sep 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
+- 0.21.3
+
 * Mon Jul 07 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1
 - 0.20.3
 
