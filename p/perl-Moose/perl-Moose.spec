@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Moose
 Name: perl-%dist
-Version: 2.1211
+Version: 2.1213
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -57,6 +57,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.1213-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.1211-alt1
 - automated CPAN update
 
