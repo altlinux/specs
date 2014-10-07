@@ -1,14 +1,14 @@
 %define dist Digest-Whirlpool
 Name: perl-%dist
-Version: 1.09
-Release: alt3
+Version: 2.03
+Release: alt1
 
 Summary: A 512-bit, collision-resistant, one-way hash function
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AV/AVAR/Digest-Whirlpool-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Pod-Parser perl-Test-Pod
@@ -36,6 +36,9 @@ adopted as ISO/IEC 10118-3.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.09-alt3
 - built for perl 5.18
 
