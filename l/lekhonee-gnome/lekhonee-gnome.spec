@@ -1,6 +1,6 @@
 BuildRequires: desktop-file-utils
 Name: lekhonee-gnome
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: The GNOME frontend for lekhonee wordpress client
@@ -9,14 +9,15 @@ License: GPLv2+
 Url: http://fedorahosted.org/lekhonee
 Source: https://fedorahosted.org/releases/l/e/lekhonee/%name-%version.tar.bz2
 
-BuildRequires: intltool libsoup-devel libgtksourceview-devel libgtkspell-devel libxml2-devel vala
+BuildRequires: intltool libsoup-devel libgtksourceview-devel
+BuildRequires: libgtkspell-devel libxml2-devel vala
 BuildRequires: libwebkitgtk2-devel libgee-devel
 
 %description
 Lekhonee-gnome is a desktop Wordpress blog client for GNOME
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -38,6 +39,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*.desktop
 
 %changelog
+* Wed Oct 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
+- 0.12
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
