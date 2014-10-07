@@ -5,14 +5,14 @@ BuildRequires: perl(AnyEvent.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/Socket.p
 %define srcname AnyEvent-I3
 
 Name:           perl-AnyEvent-I3
-Version:        0.15
-Release:        alt2_4
+Version:        0.16
+Release:        alt1
 Summary:        Communicate with the i3 window manager
 
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/anyevent-i3/
-Source0:        http://search.cpan.org/CPAN/authors/id/M/MS/MSTPLBG/%{srcname}-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/M/MS/MSTPLBG/AnyEvent-I3-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -49,6 +49,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Mon Jul 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_4
 - new version
 
