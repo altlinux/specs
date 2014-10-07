@@ -2,7 +2,7 @@
 
 Name: qtscriptgenerator
 Version: 0.2.0
-Release: alt2
+Release: alt3
 
 Group: Development/KDE and QT
 Summary: Qt bindings for Qt Script
@@ -48,38 +48,25 @@ from within Qt Script.
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
+%ifarch %arm
 %patch54 -p1
+%endif
 
-cat >>qtbindings/qtbindingsbase.pri <<__EOF__
-CONFIG -= debug_ang_release
-CONFIG += release
-QMAKE_CXXFLAGS += \$(RPM_OPT_FLAGS)
-__EOF__
-cat >>generator/generator.pri <<__EOF__
-CONFIG -= debug_ang_release
-CONFIG += release
-QMAKE_CXXFLAGS += \$(RPM_OPT_FLAGS)
-__EOF__
-cat >>tools/qsexec/src/qsexec.pro <<__EOF__
-CONFIG -= debug_ang_release
-CONFIG += release
-QMAKE_CXXFLAGS += \$(RPM_OPT_FLAGS)
-__EOF__
 pushd generator
-qmake-qt4
+%qmake_qt4
 popd
 pushd qtbindings
-qmake-qt4
+%qmake_qt4
 popd
 pushd tools/qsexec/src
-qmake-qt4
+%qmake_qt4
 popd
 
 
 %build
 export QTDIR="" INCLUDE=%_includedir/qt4
 pushd generator
-%make 
+%make
 ./generator
 popd
 
@@ -112,6 +99,10 @@ cp -a tools/qsexec/README.TXT README.qsexec
 %_qt4dir/plugins/script/libqtscript*
 
 %changelog
+* Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt3
+- apply patch for arm only for arm
+- cleanup specfile
+
 * Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt2
 - fixed build on arm
 
