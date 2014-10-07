@@ -1,6 +1,6 @@
 %define dist Test-Exception
 Name: perl-%dist
-Version: 0.32
+Version: 0.35
 Release: alt1
 
 Summary: Test exception based code
@@ -8,7 +8,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADIE/Test-Exception-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/EX/EXODIST/Test-Exception-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ Test::More and friends.
 %perl_vendor_privlib/Test/Exception.pm
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
