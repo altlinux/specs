@@ -2,7 +2,7 @@
 
 Name: devhelp
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Developer's help program
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -101,6 +101,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Tue Oct 07 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt2
+- rebuild
+
 * Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
 - 3.14.0
 - build with webkit2gtk-4.0

@@ -11,7 +11,7 @@
 
 Name: libwebkitgtk4
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -21,7 +21,6 @@ Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 
-Requires: libjavascriptcoregtk4 = %version-%release
 BuildPreReq: rpm-build-licenses
 
 BuildRequires: gcc-c++ cmake libicu-devel bison perl-Switch zlib-devel
@@ -63,29 +62,42 @@ The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux.
 
-%package devel
+%package -n libwebkit2gtk
+Summary: WebKit2 is a new API layer for WebKit
+Group: System/Libraries
+Provides: %name = %version-%release
+Requires: libjavascriptcoregtk4 = %version-%release
+
+%description -n libwebkit2gtk
+WebKit2 is a new API layer for WebKit designed from the ground up to support a split process model,
+where the web content (JavaScript, HTML, layout, etc) lives in a separate process from the application UI.
+This model is very similar to what Google Chrome offers, with the major difference being
+that we have built the process split model directly into the framework, allowing other clients of WebKit to use it.
+
+%package -n libwebkit2gtk-devel
 Summary: Development files for WebKit GTK+ port
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Provides: %name-devel = %version-%release
+Requires: libwebkit2gtk = %version-%release
 Requires: libjavascriptcoregtk4-devel = %version-%release
 
-%description devel
+%description -n libwebkit2gtk-devel
 The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux. This package contains development headers.
 
-%package devel-doc
-Summary: Development documentation for %name
+%package -n libwebkit2gtk-devel-doc
+Summary: Development documentation for WebKit2GTK
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Conflicts: libwebkit2gtk < %version-%release
 
-%description devel-doc
+%description -n libwebkit2gtk-devel-doc
 The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux.
 
-This package provides development documentation for %name.
+This package provides development documentation for WebKit2GTK.
 
 %package -n libjavascriptcoregtk4
 Summary: GTK+3 version of the JavaScriptCore engine
@@ -114,27 +126,27 @@ Conflicts: jsc
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
 allows you to interact with the JavaScript engine directly.
 
-%package gir
-Summary: GObject introspection data for the WebkitGTK library
+%package -n libwebkit2gtk-gir
+Summary: GObject introspection data for the Webkit2GTK library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: libwebkit2gtk = %version-%release
 Requires: libjavascriptcoregtk4 = %version-%release
 Requires: libjavascriptcoregtk4-gir  = %version-%release
 
-%description gir
-GObject introspection data for the WebkitGTK library
+%description -n libwebkit2gtk-gir
+GObject introspection data for the Webkit2GTK library
 
-%package gir-devel
-Summary: GObject introspection devel data for the WebkitGTK library
-Group: Development/GNOME and GTK+
+%package -n libwebkit2gtk-gir-devel
+Summary: GObject introspection devel data for the Webkit2GTK library
+Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: libwebkit2gtk-gir = %version-%release
 Requires: libjavascriptcoregtk4-gir = %version-%release
 Requires: libjavascriptcoregtk4-devel = %version-%release
 Requires: libjavascriptcoregtk4-gir-devel = %version-%release
 
-%description gir-devel
-GObject introspection devel data for the WebkitGTK library
+%description -n libwebkit2gtk-gir-devel
+GObject introspection devel data for the Webkit2GTK library
 
 %package -n libjavascriptcoregtk4-gir
 Summary: GObject introspection data for the JavaScriptCore library
@@ -178,7 +190,7 @@ rm -rf Source/ThirdParty/qunit/
 
 %find_lang WebKit2GTK-%api_ver
 
-%files -f WebKit2GTK-%api_ver.lang
+%files -n libwebkit2gtk -f WebKit2GTK-%api_ver.lang
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %_libexecdir/webkit2gtk-%api_ver
 %_libexecdir/webkit2gtk-%api_ver/WebKitNetworkProcess
@@ -190,7 +202,7 @@ rm -rf Source/ThirdParty/qunit/
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
 %doc NEWS
 
-%files devel
+%files -n libwebkit2gtk-devel
 %_libdir/libwebkit2gtk-%api_ver.so
 %dir %_includedir/webkitgtk-%api_ver
 %_includedir/webkitgtk-%api_ver/webkit2
@@ -199,7 +211,7 @@ rm -rf Source/ThirdParty/qunit/
 %_pkgconfigdir/webkit2gtk-web-extension-%api_ver.pc
 
 %if_enabled gtkdoc
-%files devel-doc
+%files -n libwebkit2gtk-devel-doc
 %_gtk_docdir/*
 %endif
 
@@ -214,11 +226,11 @@ rm -rf Source/ThirdParty/qunit/
 %files jsc4
 %_bindir/jsc*
 
-%files gir
+%files -n libwebkit2gtk-gir
 %_typelibdir/WebKit2-%api_ver.typelib
 %_typelibdir/WebKit2WebExtension-%api_ver.typelib
 
-%files gir-devel
+%files -n libwebkit2gtk-gir-devel
 %_girdir/WebKit2-%api_ver.gir
 %_girdir/WebKit2WebExtension-%api_ver.gir
 
@@ -230,6 +242,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Oct 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt2
+- libwebkitgtk4* subpackages renamed to libwebkit2gtk*
+
 * Thu Sep 25 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
