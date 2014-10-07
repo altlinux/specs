@@ -1,6 +1,6 @@
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 2.25
+Version: 2.26
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.template-toolkit.org
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AB/ABW/Template-Toolkit-%{version}.tar.gz
 Patch: Template-Toolkit-2.22-alt-no-apache.patch
 
 # Automatically added by buildreq on Sun Oct 09 2011
@@ -62,6 +62,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.26-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 2.25-alt1
 - 2.24 -> 2.25
 
