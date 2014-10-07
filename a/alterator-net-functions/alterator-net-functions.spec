@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -40,6 +40,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Tue Oct 07 2014 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
+- Improve is_ipv6_enabled() (thx stanv@).
+
 * Mon Aug 11 2014 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
 - Added is_ipv6_enabled() function.
 
