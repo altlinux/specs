@@ -2,7 +2,7 @@
 %define dist Log-Dispatch
 
 Name: perl-%dist
-Version: 2.42
+Version: 2.43
 Release: alt1
 
 Summary: Dispatches messages to one or more outputs
@@ -15,7 +15,7 @@ Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Log-Dispatch-%{version}.tar.
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 16 2010
-BuildRequires: apache-mod_perl-base perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm)
+BuildRequires: apache-mod_perl-base perl-MIME-Lite perl-Mail-Sender perl-Mail-Sendmail perl-Params-Validate perl(Class/Load.pm) perl(Test/Fatal.pm) perl(Test/Requires.pm) perl(Devel/GlobalDestruction.pm)
 
 %description
 Log::Dispatch is a suite of OO modules for logging messages to multiple
@@ -40,6 +40,9 @@ and particularly for creating new outputs.
 %perl_vendor_privlib/Log/
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.43-alt1
+- automated CPAN update
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.42-alt1
 - automated CPAN update
 
