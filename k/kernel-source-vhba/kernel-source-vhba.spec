@@ -1,5 +1,5 @@
 Name: kernel-source-vhba
-Version: 20140629
+Version: 20140928
 Release: alt1
 
 Summary: Source for VHBA module
@@ -46,6 +46,15 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Tue Oct 07 2014 Nazarov Denis <nenderus@altlinux.org> 20140928-alt1
+- Version 20140928
+
+* Sun Jul 20 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt0.M70P.1
+- Build for branch p7
+
+* Fri Jul 04 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt0.M70T.1
+- Build for branch t7
+
 * Wed Jul 02 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt1
 - Version 20140629
 

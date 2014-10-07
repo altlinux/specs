@@ -1,6 +1,6 @@
 %define module_name     vhba
-%define module_version  20140629
-%define module_release alt3
+%define module_version  20140928
+%define module_release alt1
 
 %define flavour         std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -60,6 +60,9 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Oct 07 2014 Nazarov Denis <nenderus@altlinux.org> 20140928-alt1
+- Version 20140928
 
 * Tue Jul 15 2014 Nazarov Denis <nenderus@altlinux.org> 20140629-alt3
 - Move init script to cdemu-daemon
