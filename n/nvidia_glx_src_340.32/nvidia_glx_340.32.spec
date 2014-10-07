@@ -15,7 +15,7 @@
 %define nv_version 340
 %define nv_release 32
 %define nv_minor %nil
-%define pkg_rel alt132
+%define pkg_rel alt133
 %ifarch x86_64
 %def_enable egl
 %else
@@ -342,6 +342,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt133
+- don't package kernel module sources
+
 * Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 340.32-alt132
 - new version
 
