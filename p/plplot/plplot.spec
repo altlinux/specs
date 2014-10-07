@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.10.0
-Release: alt1.svn20140707
+Release: alt2.svn20140707
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -155,6 +155,7 @@ bindings.
 Summary: Functions for scientific plotting with Lua
 Group: Development/Other
 Requires: %name = %version-%release
+Requires: lua5.1-alt-compat
 
 %description lua
 PLplot is a cross-platform software package for creating scientific
@@ -518,8 +519,8 @@ cp -fR doc/doxygen/html doxygen
 %_datadir/plplot%version/examples/test_f95.sh
 
 %files lua
-%dir %_libdir/lua
-%dir %_libdir/lua/5.1
+#dir %_libdir/lua
+#dir %_libdir/lua/5.1
 %_libdir/lua/5.1/plplot/
 %_datadir/plplot%version/examples/lua/
 %_datadir/plplot%version/examples/test_lua.sh
@@ -592,6 +593,9 @@ cp -fR doc/doxygen/html doxygen
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Tue Oct 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt2.svn20140707
+- plplot-lua: added requirement on lua5.1-alt-compat (ALT #30379)
+
 * Wed Jul 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1.svn20140707
 - New snapshot
 
