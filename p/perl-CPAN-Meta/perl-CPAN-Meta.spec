@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta
 Name: perl-%dist
-Version: 2.142060
+Version: 2.142690
 Release: alt1
 
 Summary: The distribution metadata for a CPAN dist
@@ -41,6 +41,9 @@ interrogating that data.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 2.142690-alt1
+- automated CPAN update
+
 * Mon Aug 04 2014 Igor Vlasenko <viy@altlinux.ru> 2.142060-alt1
 - automated CPAN update
 
