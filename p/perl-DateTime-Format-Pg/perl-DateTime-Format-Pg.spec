@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(DateTime.pm) perl(DateTime/Duration.pm) perl(DateTime/Format/Builder.pm) perl(DateTime/TimeZone.pm) perl(DateTime/TimeZone/Floating.pm) perl(DateTime/TimeZone/UTC.pm) perl(Module/Build.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 0.16009
+%define module_version 0.16010
 %define module_name DateTime-Format-Pg
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.16009
+Version: 0.16010
 Release: alt1
 Summary: Parse and format PostgreSQL dates and times
 Group: Development/Perl
 License: perl
 URL: https://github.com/lestrrat/DateTime-Format-Pg
 
-Source0: http://cpan.org.ua/authors/id/D/DM/DMAKI/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DM/DMAKI/DateTime-Format-Pg-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.16010-alt1
+- automated CPAN update
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.16009-alt1
 - regenerated from template by package builder
 
