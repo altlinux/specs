@@ -14,8 +14,8 @@
 %define _disable_test 1
 
 Name: perl-Cache-Cache
-Version: 1.06
-Release: alt1.1
+Version: 1.07
+Release: alt1
 
 Summary: Cache-Cache - - the Cache interface
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/~dclinton/Cache-Cache-1.04
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/Cache-Cache-1.06.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Cache-Cache-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jun 14 2008 (-bi)
 BuildRequires: perl-Digest-SHA1 perl-Error perl-IPC-ShareLite perl-Log-Agent perl-Storable perl-devel
@@ -59,6 +59,9 @@ corresponding static methods for persisting data across method calls.
 %perl_vendor_privlib/Cache/
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
