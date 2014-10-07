@@ -1,5 +1,5 @@
 Name: qbittorrent
-Version: 3.1.9
+Version: 3.1.10
 Epoch: 1
 Release: alt1
 
@@ -11,8 +11,6 @@ Url: http://qbittorrent.org
 
 Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar
-Source2: %{name}_ru.ts
-Source3: %{name}_ru.qm
 Patch: qbittorrent-2.9.3-alt-glibc-2.16.patch
 
 %define libtorrent_version 2:0.15.9-alt0.1.svn6292
@@ -60,7 +58,6 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 %prep
 %setup
 %patch -p0
-#cp -f %SOURCE2 %SOURCE3 src/lang/
 
 # Adapt to new Boost
 subst 's/BOOST_FILESYSTEM_VERSION=2/BOOST_FILESYSTEM_VERSION=3/' src/src.pro
@@ -88,13 +85,16 @@ make clean
 %_man1dir/%name-nox.1.*
 
 %files -f %name.lang
-%doc AUTHORS COPYING INSTALL NEWS README TODO Changelog
+%doc AUTHORS COPYING INSTALL NEWS README.* TODO Changelog
 %_bindir/%name
 %_datadir/applications/*
 %_man1dir/%name.1.*
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Tue Oct 07 2014 Motsyo Gennadi <drool@altlinux.ru> 1:3.1.10-alt1
+- 3.1.10 (ALT #30384)
+
 * Wed Mar  5 2014 Terechkov Evgenii <evg@altlinux.org> 1:3.1.9-alt1
 - 3.1.9 (ALT #29820)
 
