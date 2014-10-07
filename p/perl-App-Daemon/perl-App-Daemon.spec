@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Daemon
-Version:        0.21
+Version:        0.22
 Release:        alt1
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
@@ -45,6 +45,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Fri May 02 2014 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
