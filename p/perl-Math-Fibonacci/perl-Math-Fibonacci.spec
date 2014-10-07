@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-Fibonacci
 %define upstream_version 1.5
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_3
+Release:    alt2_4
 
 Summary:    Fibonacci numbers
 License:    GPL+ or Artistic
@@ -44,6 +44,9 @@ This module provides a few functions related to Fibonacci numbers.
 
 
 %changelog
+* Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_4
+- update by mgaimport
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_3
 - moved to Sisyphus
 
