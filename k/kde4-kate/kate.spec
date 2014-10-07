@@ -7,7 +7,7 @@
 #add_findreq_skiplist %_K4apps/kate/pate/python_autocomplete/*.py
 %add_python_req_skip pate jedi pyflakes pyplete 
 
-%ifarch %arm
+%if_enabled kde_mobile
 %def_disable desktop
 %else
 %def_enable desktop
@@ -19,7 +19,7 @@
 %define bugfix 1
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Editors
 Summary: Advanced text editor
@@ -223,6 +223,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt2
+- fix package files on arm
+
 * Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
 - new version
 
