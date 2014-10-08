@@ -1,21 +1,20 @@
 Name: wxlua
-Version: 2.8.10.0
-Release: alt1.qa4
+Version: 2.8.12.3
+Release: alt1
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
 Url: http://wxlua.sourceforge.net/
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/wxlua/wxLua-2.8.10.0-src.tar
+Source: http://sourceforge.net/projects/wxlua/files/wxlua/%version/wxLua-%version-src.tar
 #.gz
-Patch: %name-alt-build.patch
 
-# Automatically added by buildreq on Thu Jun 17 2010
-BuildRequires: gcc-c++ libGL-devel libX11-devel liblua5-devel libwxGTK-contrib-stc-devel libwxGTK-devel libwxstedit-devel
+# Automatically added by buildreq on Thu Oct 09 2014 (-bi)
+# optimized out: cmake-modules elfutils fontconfig libGL-devel libX11-devel libcloog-isl4 libgdk-pixbuf libgst-plugins libstdc++-devel libwayland-client libwayland-server libwxGTK-contrib-stc python-base xorg-xproto-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ libGLU-devel liblua5-devel libwxGTK-contrib-stc-devel libwxGTK-devel libwxstedit-devel
 #TODO: need wxMediaCtrl for this binding
 %def_disable wxbindmedia
-BuildRequires: desktop-file-utils
 
 %description
 wxLua is a set of bindings to the C++ wxWidgets cross-platform GUI library for
@@ -69,47 +68,51 @@ applications with %name.
 %endif #enabled static
 
 %prep
-%setup -n wxLua
-%patch -p1
+%setup -n wxLua-%version-src
+rm -r modules/{lua-*,wxstedit}/*
+sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
+	CMakeLists.txt
+
+# prepare external wxstedit
+ln -s /usr/include modules/wxstedit
+echo "project( wxStEdit )" > modules/wxstedit/CMakeLists.txt
 
 %build
-%add_optflags -fpermissive
-export CPPFLAGS="%optflags"
-autoconf -o configure -I build/autoconf build/autoconf/configure.ac
-%configure %{subst_enable static} \
-	%{subst_enable wxbindmedia} \
+%cmake \
+	-DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
+	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit
 
-make
+%make_build -C BUILD
 
 %install
-%makeinstall
+%makeinstall_std -C BUILD
+
 mkdir -p \
+	%buildroot%_desktopdir/ \
 	%buildroot%_libdir/lua5/ \
 	%buildroot%_iconsdir/hicolor/scalable/apps/
-subst 's|width="898.612"$|width="350.80908"|' art/wxlualogo.svg
 install -p art/wxlualogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/
-mv %buildroot%_libdir/lua/*/*.so %buildroot%_libdir/lua5/
-subst 's|\.xpm$||;/^Encoding=/d' %buildroot%_desktopdir/*.desktop
+mv %buildroot%_libdir/libwx.so %buildroot%_libdir/lua5/wx.so
+install -p distrib/autopackage/%name.desktop %buildroot%_desktopdir/
+sed -r -i "s|wxluaedit|wxLuaEdit|" %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Application \
 	--add-category=IDE \
-	%buildroot%_desktopdir/wxlua.desktop
+	%buildroot%_desktopdir/%name.desktop
 
 %files
-%_bindir/%{name}*
-%_desktopdir/%{name}*.desktop
+%_bindir/*
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/*
-%_datadir/mime/packages/%name.xml
 %_datadir/%name
 %doc docs/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/*.so
 %_libdir/lua5/*.so
 
 %files -n lib%name-devel
-%_includedir/wx*
-%_libdir/*.so
+%_includedir/%name
 
 %if_enabled static
 %files devel-static
@@ -117,6 +120,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Wed Oct 08 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.8.12.3-alt1
+- new version
+
 * Tue Jan 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.10.0-alt1.qa4
 - Rebuilt with wxGTK 2.8.12
 
