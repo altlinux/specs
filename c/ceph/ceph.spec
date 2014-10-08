@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.85
+Version: 0.86
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -176,7 +176,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-authtool
 %_bindir/ceph-brag
 %_bindir/ceph-crush-location
-%_bindir/ceph_filestore_tool
+%_bindir/ceph_objectstore_tool
 %_bindir/ceph-syn
 %_bindir/ceph-run
 %_bindir/ceph-mon
@@ -184,7 +184,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-osd
 %_bindir/ceph-post-file
 %_bindir/ceph-rest-api
-%_bindir/ceph_filestore_dump
 %_bindir/ceph_mon_store_converter
 %_bindir/ceph-rbdnamer
 %_bindir/ceph-dencoder
@@ -192,6 +191,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/librados-config
 %_bindir/rados
 %_bindir/rbd
+%_bindir/rbd-replay
 %_bindir/ceph-debugpack
 %_bindir/ceph-coverage
 %_sbindir/ceph-create-keys
@@ -227,6 +227,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/mount.ceph.8*
 %_mandir/man8/rados.8*
 %_mandir/man8/rbd.8*
+%_mandir/man8/rbd-replay-prep.8*
+%_mandir/man8/rbd-replay.8*
 %_mandir/man8/ceph-rbdnamer.8*
 %_mandir/man8/ceph-authtool.8*
 %_mandir/man8/ceph-debugpack.8*
@@ -284,6 +286,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Oct 08 2014 Alexei Takaseev <taf@altlinux.org> 0.86-alt1
+- 0.86
+
 * Tue Sep 09 2014 Alexei Takaseev <taf@altlinux.org> 0.85-alt1
 - 0.85
 
