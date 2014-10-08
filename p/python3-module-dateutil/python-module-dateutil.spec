@@ -1,7 +1,7 @@
 %define oname dateutil
 Name: python3-module-%oname
-Version: 2.0
-Release: alt1.1
+Version: 2.2
+Release: alt1.bzr20131101
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -13,7 +13,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %add_python3_req_skip _winreg winreg
 
-Source: http://labix.org/download/python-dateutil/python-dateutil-%version.tar
+# bzr branch lp:dateutil
+Source: python-dateutil-%version.tar
 
 BuildArch: noarch
 
@@ -54,6 +55,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/zoneinfo
 
 
 %changelog
+* Wed Oct 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.bzr20131101
+- Version 2.2
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0-alt1.1
 - Rebuild with Python-3.3
 
