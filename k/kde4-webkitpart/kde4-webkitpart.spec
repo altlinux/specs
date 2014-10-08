@@ -1,20 +1,19 @@
 %define _kde_alternate_placement 1
 
 Name: kde4-webkitpart
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 Epoch: 1
 
 Group: Networking/WWW
 Summary: WebKit render engine for Konqueror
 License: LGPLv2+
-Url: http://websvn.kde.org/trunk/playground/libs/webkitkde/
+Url: https://projects.kde.org/projects/extragear/base/kwebkitpart
 
 #Requires: libkwebkit4 = %version-%release
 Provides: kde4-kwebkitpart = %EVR
 
 Source0: kwebkitpart-%version.tar
-Source1: lang.tar
 
 BuildRequires: gcc-c++ kde4libs-devel
 
@@ -36,9 +35,9 @@ KDE 4 library
 
 
 %prep
-%setup -q -n kwebkitpart-%version -a 1
+%setup -q -n kwebkitpart-%version
 
-echo "add_subdirectory(lang)" >> CMakeLists.txt
+sed -i '/add_subdirectory(kdelauncher)/d' CMakeLists.txt
 
 for f in icons/*-webkit.png; do mv $f `echo $f| sed "s|-webkit\.png$|-kwebkit.png|"`; done
 sed -i "s|^Icon=.*|Icon=kwebkit|" src/kwebkitpart.desktop
@@ -68,6 +67,12 @@ sed -i "s|^Icon=.*|Icon=kwebkit|" src/kwebkitpart.desktop
 #%_K4apps/cmake/modules/*.cmake
 
 %changelog
+* Wed Oct 08 2014 Sergey V Turchin <zerg@altlinux.org> 1:1.3.4-alt1
+- new version
+
+* Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.3.3-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.3.3-alt1
 - new version
 
