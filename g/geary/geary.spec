@@ -1,7 +1,7 @@
 %define ver_major 0.8
 
 Name: geary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -14,8 +14,9 @@ Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 %define vala_ver 0.22.1
-%define gtk_ver 3.6.0
+%define gtk_ver 3.10.0
 %define sqlite_ver 3.7.4
+%define gcr_ver 3.10.1
 
 BuildPreReq: vala-tools >= %vala_ver libvala-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -29,9 +30,10 @@ BuildRequires: libXdmcp-devel libXdamage-devel libxshmfence-devel
 BuildRequires: libXxf86vm-devel libXinerama-devel libXrandr-devel libXi-devel
 BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
 BuildRequires: libwayland-cursor-devel
+BuildRequires: libat-spi2-core-devel at-spi2-atk-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsoup-gir-devel libwebkitgtk3-gir-devel libcanberra-vala
-BuildRequires: gcr-libs-devel gcr-libs-vala
+BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
 
 # TODO:
 # -- Unity indicate support: OFF
@@ -50,7 +52,9 @@ Geary's development.
 %setup
 
 %build
-%cmake
+%cmake -DGSETTINGS_COMPILE:BOOL=OFF \
+	-DICON_UPDATE:BOOL=OFF \
+	-DDESKTOP_UPDATE:BOOL=OFF
 %cmake_build VERBOSE=1
 
 %install
@@ -70,6 +74,9 @@ Geary's development.
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Oct 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Sat Sep 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
