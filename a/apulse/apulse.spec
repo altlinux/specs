@@ -1,5 +1,5 @@
 Name: apulse
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: PulseAudio emulation for ALSA
@@ -48,6 +48,9 @@ chmod 0755 %buildroot%_bindir/i586-apulse
 %_libdir/apulse/
 
 %changelog
+* Wed Oct 08 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt1
+- 0.1.2
+
 * Thu Oct 02 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.1-alt1
 - 0.1.1
 
