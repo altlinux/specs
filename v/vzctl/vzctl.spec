@@ -1,6 +1,6 @@
 Name: vzctl
-Version: 4.7.2
-Release: alt3
+Version: 4.8
+Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPL
@@ -129,6 +129,9 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Wed Oct  8 2014 Terechkov Evgenii <evg@altlinux.org> 4.8-alt1
+- Updated to vzctl-4.8
+
 * Sat Jul  5 2014 Terechkov Evgenii <evg@altlinux.org> 4.7.2-alt3
 - Drop symlink creation
 
