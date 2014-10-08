@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: libdmapsharing
-Version: 2.9.25
+Version: 2.9.29
 Release: alt1
 
 Summary: A DMAP client and server library
@@ -13,8 +13,8 @@ Source: http://www.flyn.org/projects/libdmapsharing/%name-%version.tar.gz
 
 BuildRequires: gtk-doc libgdk-pixbuf-devel libsoup-devel >= 2.32
 BuildRequires: gst-plugins1.0-devel libavahi-glib-devel zlib-devel
-# for dpapview and tests if maintainer mode enabled
-#BuildRequires: vala-tools libgtk+2-devel libgee0.8-devel libcheck-devel
+BuildRequires: gobject-introspection-devel vala-tools libsoup-gir-devel
+BuildRequires:libgtk+2-devel libgee0.8-devel libcheck-devel
 
 %description
 libdmapsharing implements the DMAP protocols. This includes support for
@@ -42,6 +42,23 @@ DAAP and DPAP.
 
 This package contains development documentation for the %name library.
 
+%package gir
+Summary: GObject introspection data for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the %name.
+
+%package gir-devel
+Summary: GObject introspection devel data for %name
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the %name.
+
 %prep
 %setup
 
@@ -65,13 +82,22 @@ This package contains development documentation for the %name library.
 %_libdir/pkgconfig/%name-%api_ver.pc
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-#%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/%name-%api_ver/
 
+%files gir
+%_typelibdir/DMAP-%api_ver.typelib
+
+%files gir-devel
+%_girdir/DMAP-%api_ver.gir
 
 %changelog
+* Wed Oct 08 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9.29-alt1
+- 2.9.29
+- new -gir{,-devel} subpackages
+
 * Sun Apr 20 2014 Yuri N. Sedunov <aris@altlinux.org> 2.9.25-alt1
 - 2.9.25
 
