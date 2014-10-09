@@ -1,14 +1,14 @@
 # -*- coding: latin-1; mode: rpm-spec -*-
 
 Name: bwping
-Version: 1.4
-Release: alt1
+Version: 1.7
+Release: alt2
 
 Summary: Tool to measure bandwidth and response times between two hosts using Internet Control Message Protocol (ICMP)
 License: BSD
 Group: Monitoring
 Url: bwping.sourceforge.net
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
@@ -41,6 +41,7 @@ matches the QoS class to be tested.
 %prep
 %setup
 %build
+sed -i 's|ac_cv_ipv6=no|ac_cv_ipv6=yes|g' configure
 %configure
 %make
 
@@ -49,8 +50,16 @@ matches the QoS class to be tested.
 
 %files
 %_sbindir/%name
+%_sbindir/%{name}6
 %_man8dir/%{name}.8.*
+%_man8dir/%{name}6.8.*
 
 %changelog
+* Thu Oct  9 2014 Terechkov Evgenii <evg@altlinux.org> 1.7-alt2
+- Hack to build with IPv6 supoort
+
+* Tue Oct  7 2014 Terechkov Evgenii <evg@altlinux.org> 1.7-alt1
+- new version
+
 * Tue Jun 14 2011 Terechkov Evgenii <evg@altlinux.org> 1.4-alt1
 - Initial build for ALT Linux Sisyphus
