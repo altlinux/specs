@@ -1,15 +1,13 @@
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
-%define ibus_xkb_ver 1.5.0.20140114
 
 %def_enable python
 %def_enable dconf
 %def_disable gconf
-%def_enable xkb
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.7
+Version: 1.5.9
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -19,20 +17,13 @@ Url: http://code.google.com/p/%name/
 
 Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
 Source1: ibus-xinput
-Source2: ibus-xkb-%ibus_xkb_ver.tar.gz
 
-# fedora's patches
-Patch0: ibus-1.5.7-up.patch
-
-Patch1: ibus-810211-no-switch-by-no-trigger.patch
-Patch2: ibus-541492-xkb.patch
-Patch3: ibus-530711-preload-sys.patch
-Patch4: ibus-xx-setup-frequent-lang.patch
+Patch: ibus-1.5.9-up.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
 
-Requires: iso-codes
+Requires: iso-codes setxkbmap xmodmap
 Requires: lib%name = %version-%release
 Requires: lib%name-gir = %version-%release
 
@@ -55,12 +46,11 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: libXi-devel
 BuildRequires: libnotify-devel
-%{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject-devel}
+%{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject-devel python-module-pygobject3-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
 BuildRequires: libGConf-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
-%{?_enable_xkb:BuildRequires: libxkbfile-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
 # gsettings-schema-convert
 BuildRequires: GConf
@@ -140,25 +130,19 @@ BuildArch: noarch
 
 %description -n python-module-ibus
 This package contains IBus im module for python.
+
+%package -n python-module-ibus-overrides
+Summary: IBus Python override library
+Group: Development/Python
+
+%description -n python-module-ibus-overrides
+This package provides Python override library for IBus. The Python files
+override some functions in GObject-Introspection.
 %endif
 
 %prep
-%setup -a2
+%setup
 %patch -p1
-
-%patch1 -p1 -b .noswitch
-
-%if_enabled xkb
-%patch2 -p1 -b .xkb
-rm -f bindings/vala/ibus-%api_ver.vapi
-rm -f data/dconf/00-upstream-settings
-# merge translations
-for po in $(basename -a $(ls ibus-xkb-%ibus_xkb_ver/po/*.po)); do
-    msgcat --use-first po/$po ibus-xkb-%ibus_xkb_ver/po/$po -o po/$po
-done
-%endif
-%patch3 -p1
-%patch4 -p1
 
 %build
 %autoreconf
@@ -176,11 +160,6 @@ done
     %{subst_enable wayland} \
     --enable-surrounding-text \
     --enable-introspection
-
-%if_enabled xkb
-make -C ui/gtk3 maintainer-clean-generic
-%endif
-
 %make_build
 
 %install
@@ -271,7 +250,14 @@ fi
 %files -n lib%name-devel-docs
 %_datadir/gtk-doc/html/*
 
+%files -n python-module-ibus-overrides
+%python_sitelibdir/gi/overrides/IBus.py*
+
 %changelog
+* Thu Oct 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.9-alt1
+- 1.5.9
+- remove upstreamed patches
+
 * Tue Jul 08 2014 Yuri N. Sedunov <aris@altlinux.org> 1.5.7-alt1
 - 1.5.7
 - updated fc patchset
