@@ -1,5 +1,5 @@
 Name: 	  chromium-pepperflash
-Version:  1.5.1
+Version:  1.5.2
 Release:  alt1
 
 Summary:  Pepper Flash Player - browser plugin for Chromium
@@ -35,6 +35,7 @@ exit 0
 
 %post
 %_sbindir/update-pepperflash --install --quiet ||:
+%_sbindir/update-pepperflash --status ||:
 
 %files
 %_sbindir/update-pepperflash
@@ -42,6 +43,10 @@ exit 0
 %dir %_cachedir/pepperflash
 
 %changelog
+* Thu Oct 09 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- Use only IPv4 for curl (fix hang up in %%post script)
+- Show status on %%post section
+
 * Tue Sep 16 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - Fix version detect in new plugin versions
 - Add arguments --clean and --version
