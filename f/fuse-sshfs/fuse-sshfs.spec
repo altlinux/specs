@@ -1,5 +1,5 @@
 Name: fuse-sshfs
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: SSH filesystem using FUSE
@@ -7,8 +7,7 @@ License: GPLv2
 Group: System/Kernel and hardware
 Url: http://fuse.sourceforge.net/sshfs.html
 
-Source: http://dl.sourceforge.net/sourceforge/fuse/sshfs-fuse-%version.tar.gz
-Patch0: sshfs-fuse-1.8-alt-makefile.patch
+Source: http://dl.sourceforge.net/sourceforge/fuse/sshfs-fuse-%version.tar
 
 Requires: fuse >= 2.3
 Requires: openssh-clients
@@ -37,11 +36,10 @@ that codebase, so he rewrote it. Features of this implementation are:
 
 %prep
 %setup -q -n sshfs-fuse-%version
-%patch0 -p1
 
 %build
 %autoreconf
-%configure
+%configure --disable-sshnodelay
 %make
 
 %install
@@ -53,6 +51,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Thu Oct  9 2014 Terechkov Evgenii <evg@altlinux.org> 2.5-alt1
+- 2.4 -> 2.5
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.4-alt1
 - 2.3 -> 2.4
 
