@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt3
+Release: alt4
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -99,6 +99,9 @@ DOSBox позволяет запускать на современном ком�
 %prep
 %setup
 %patch -p2
+
+# Create script dosbox-set-lang (#24306)
+
 cat > %name-set-lang << EOF
 #!/bin/bash
 #
@@ -150,7 +153,7 @@ EOF
 	--disable-fpu-x86
 
 %make_build
-cp -a src/dosbox src/dosbox.debug
+cp -a src/dosbox src/dosbox-debug
 
 make distclean
 %configure \
@@ -162,7 +165,9 @@ xsltproc %docbook_man %{SOURCE4}
 
 %install
 %makeinstall_std
-install src/dosbox.debug %buildroot%_bindir/dosbox.debug
+
+# install dosbox debugger
+install src/%name-debug %buildroot%_bindir/%name-debug
 
 # install additional scripts
 install -D -p %{SOURCE2} %buildroot/%_bindir/%name-install
@@ -186,9 +191,8 @@ mkdir -p %buildroot{%_datadir/%name,%_gamesbindir/%name}
 install -D -m 0644 %{SOURCE5} %buildroot/%_iconsdir/%name.xpm
 install -D -m 0644 %{SOURCE6} %buildroot/%_desktopdir/%name.desktop
 
-install -m755 %name-set-lang %buildroot%_bindir/%name-set-lang
-
 # fix #24306 bug
+install -D -m755 %name-set-lang %buildroot%_bindir/%name-set-lang
 cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 
 %files
@@ -200,6 +204,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Thu Oct 09 2014 Mikhail Kolchin <mvk@altlinux.org> 0.74-alt4
+- fix %install section
+
 * Sat Jul 12 2014 Fr. Br. George <george@altlinux.ru> 0.74-alt3
 - add debugger-enabled binary
 
