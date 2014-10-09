@@ -11,8 +11,8 @@
 %endif
 
 Name:           chromium
-Version:        37.0.2062.124
-Release:        alt2
+Version:        38.0.2125.101
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -34,8 +34,6 @@ Obsoletes:      chromium-browser < %version
 
 ## Start Patches
 # Patches from SUSE
-# PATCH-FIX-OPENSUSE Don't use -m32 for the ARM builds
-Patch5:	 	chromium-fix-arm-icu.patch
 # PATCH-FIX-OPENSUSE Fix the WEBRTC cpu-features for the ARM builds
 Patch6:	 	chromium-arm-webrtc-fix.patch
 # PATCH-FIX-OPENSUSE removes build part for courgette
@@ -220,7 +218,6 @@ to Gnome's Keyring.
 %setup -q -n %name
 tar xf %SOURCE10 -C src
 
-%patch5  -p0 -d src
 %patch6  -p0 -d src
 %patch8  -p2
 %patch13 -p2
@@ -289,6 +286,7 @@ pushd src
 %endif
 	-Ddisable_sse2=1 \
 	-Denable_plugin_installation=0 \
+	-Dclang=0 \
 	-Dgoogle_api_key="$_google_api_key" \
 	-Dgoogle_default_client_id="$_google_default_client_id" \
 	-Dgoogle_default_client_secret="$_google_default_client_secret" \
@@ -488,6 +486,25 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Oct 09 2014 Andrey Cherepanov <cas@altlinux.org> 38.0.2125.101-alt1
+- New version
+- Security fixes:
+  - Critical CVE-2014-3188: A special thanks to Juri Aedla for a
+    combination of V8 and IPC bugs that can lead to remote code
+    execution outside of the sandbox.
+  - High CVE-2014-3189: Out-of-bounds read in PDFium.
+  - High CVE-2014-3190: Use-after-free in Events.
+  - High CVE-2014-3191: Use-after-free in Rendering.
+  - High CVE-2014-3192: Use-after-free in DOM.
+  - High CVE-2014-3193: Type confusion in Session Management.
+  - High CVE-2014-3194: Use-after-free in Web Workers.
+  - Medium CVE-2014-3195: Information Leak in V8.
+  - Medium CVE-2014-3197: Information Leak in XSS Auditor.
+  - Medium CVE-2014-3198: Out-of-bounds read in PDFium.
+  - Low CVE-2014-3199: Release Assert in V8 bindings.
+- Replace chromium-support-ModeSwitch-key.patch by upstream version from
+  commit 8585724
+
 * Fri Sep 26 2014 Andrey Cherepanov <cas@altlinux.org> 37.0.2062.124-alt2
 - New version
 - Security fixes:
