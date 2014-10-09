@@ -1,27 +1,34 @@
 %def_disable doxygen
 %def_with ocaml
 
-%define gccbootstrap 0
+%def_with gccbootstrap
+
+%define llvm_version 3.4.2
+%define clang_version 3.4.2
+%define compilerrt_version 3.4
+%define clangtools_version 3.4
+
+%define clang_name cfe
 
 Name: llvm
-Version: 3.4
-Release: alt2
+Version: 3.4.2
+Release: alt1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
 Url: http://llvm.org/
 
-Source0: http://llvm.org/releases/%version/llvm-%version.src.tar.gz
-Source1: http://llvm.org/releases/%version/clang-%version.src.tar.gz
-Source2: http://llvm.org/releases/%version/compiler-rt-%version.src.tar.gz
-Source3: http://llvm.org/releases/%version/clang-tools-extra-%version.src.tar.gz
+Source0: http://llvm.org/releases/%version/llvm-%llvm_version.src.tar.gz
+Source1: http://llvm.org/releases/%version/%clang_name-%clang_version.src.tar.gz
+Source2: http://llvm.org/releases/%version/compiler-rt-%clangtools_version.src.tar.gz
+Source3: http://llvm.org/releases/%version/clang-tools-extra-%clangtools_version.src.tar.gz
 
-Patch1: llvm+clang-3.4-alt-add-alt-triplet.patch
+Patch1: llvm+clang-3.4.2-alt-add-alt-triple.patch
 Patch2: llvm+clang-3.3-alt-arm-default-to-hardfloat.patch
 
 BuildPreReq: /proc
 
-%if %gccbootstrap
+%if_with gccbootstrap
 BuildRequires: gcc-c++
 %else
 BuildRequires: clang gcc-c++
@@ -180,10 +187,10 @@ HTML documentation for LLVM's OCaml binding.
 %add_python_req_skip AppKit
 
 %prep
-%setup -n llvm-%version -a1 -a2 -a3
-mv clang-%version tools/clang
-mv clang-tools-extra-%version tools/clang/tools/extra
-mv compiler-rt-%version projects/compiler-rt
+%setup -n llvm-%{llvm_version}.src -a1 -a2 -a3
+mv %clang_name-%{clang_version}.src tools/clang
+mv clang-tools-extra-%{clangtools_version} tools/clang/tools/extra
+mv compiler-rt-%{compilerrt_version} projects/compiler-rt
 
 %patch1 -p1
 %ifarch armh
@@ -198,13 +205,13 @@ find -name doxygen.cfg.in | xargs sed -i 's,\(^DOT_PATH[[:blank:]]*=\).*,\1,'
 #sed -i 's/\(OmitFramePointer := \).*/\1/' Makefile.rules
 
 # some strange failing tests
-rm tools/clang/test/Driver/{android-standalone,linux-header-search,mips-cs-header-search}.cpp
+rm tools/clang/test/Driver/{android-standalone,linux-header-search}.cpp
 
 %build
 mkdir build
 cd build
 
-%if %gccbootstrap == 0
+%if_without gccbootstrap
 CC=clang
 CXX=clang++
 export CC CXX
@@ -310,10 +317,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt build/llvm-testlog.txt
+%exclude %_bindir/llvm-config
 %_bindir/bugpoint
 %_bindir/llc
 %_bindir/lli*
-%exclude %_bindir/llvm-config
 %_bindir/llvm*
 %_bindir/opt
 %_bindir/macho-dump
@@ -386,6 +393,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Wed Oct 08 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4.2-alt1
+- New version (bootstrap with gcc).
+
 * Thu Apr 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4-alt2
 - clang: add R: gcc (any gcc).
 
