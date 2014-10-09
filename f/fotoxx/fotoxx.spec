@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 14.06
+Version: 14.10.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -53,16 +53,16 @@ This package provides noarch data needed for Fotox to work.
 
 %prep
 %setup
-%patch1
+#%patch1
 %patch2 -p1
 
 %build
 # build with docs (in fact, gui help) in program data directory
 subst 's|share/doc|share|' Makefile
 # verbose and with our optimization
-subst 's/@ g++/g++/g; s/-O. /%optflags /' Makefile
+#subst 's/@ g++/g++/g; s/-O. /%optflags /' Makefile
 
-%make_build PREFIX=/usr
+%make_build PREFIX=/usr CXXFLAGS="%optflags"
 
 %install
 install -d %buildroot%_man1dir
@@ -84,8 +84,12 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_liconsdir/*
 %_datadir/fotoxx/
 %_man1dir/*
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Oct 09 2014 Yuri N. Sedunov <aris@altlinux.org> 14.10.1-alt1
+- 14.10.1
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 14.06-alt1
 - 14.06
 
