@@ -1,9 +1,9 @@
-%define kernel_base_version 3.14
+%define kernel_base_version 3.17
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
 Version: %kernel_base_version
-Release: alt5
+Release: alt1
 Summary:  HyperV daemons suite
 License: GPLv2
 Group: Emulators
@@ -192,6 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Thu Oct 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3.17-alt1
+- build from kernel-source-3.17
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14-alt5
 - update from 3.14.5
 - fixed typo in init scripts
