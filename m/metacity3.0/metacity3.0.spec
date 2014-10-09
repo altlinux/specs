@@ -1,5 +1,5 @@
 %define _name metacity
-%define ver_major 3.12
+%define ver_major 3.14
 %define api_ver 3.0
 %def_disable static
 %def_enable compositor
@@ -15,7 +15,7 @@ License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: http://blogs.gnome.org/metacity/
 
-Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
 
 %define theme_prefix theme
 
@@ -246,6 +246,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Thu Oct 09 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Mon Sep 08 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - first build for Sisyphus
 
