@@ -1,8 +1,8 @@
-%define kernel_base_version 3.14
+%define kernel_base_version 3.17
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: cpupower
-Version: %kernel_base_version.1
+Version: %kernel_base_version
 Release: alt1
 
 Summary: Linux kernel tool to examine and tune power saving related features of your processor
@@ -128,6 +128,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_includedir/*
 
 %changelog
+* Thu Oct 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3.17-alt1
+- build from kernel-source-3.17
+
 * Wed Apr 16 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.1-alt1
 - build from kernel-source-3.14
 - add libcpupower package
