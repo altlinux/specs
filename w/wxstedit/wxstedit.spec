@@ -1,21 +1,22 @@
 %def_disable static
 
 Name: wxstedit
-Version: 1.2.5
-Release: alt1.1.qa1
+Version: 1.6.0
+Release: alt1
 Summary: sample program for the wxWidgets's wxStyledTextCtrl Scintilla wrapper
 License: wxWidgets License
 Group: Editors
 Url: http://wxcode.sourceforge.net/showcomp.php?name=wxStEdit
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
-Source: https://sourceforge.net/projects/wxcode/files/Components/wxStEdit/wxstedit-1.2.5.tar
+#http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/stedit/
+Source: wxstedit.tar
 #.gz
-Source1: %name.desktop
+Source1: wxStEdit.desktop
 
-# Automatically added by buildreq on Wed Jun 16 2010
-BuildRequires: gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel
-BuildRequires: desktop-file-utils
+# Automatically added by buildreq on Wed Oct 08 2014
+# optimized out: cmake cmake-modules fontconfig libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server libwxGTK-contrib-stc python3-base
+BuildRequires: cmake gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel
 
 %description
 wxStEdit is a library and sample program for the wxWidgets's wxStyledTextCtrl
@@ -68,8 +69,8 @@ Summary: Static library of %name
 Requires: %name-devel = %version-%release
 
 %description -n lib%name-devel-static
-wxstedit is a collection library providing GObject-based interfaces and classes
-for commonly used data structures.
+wxStEdit is a library and sample program for the wxWidgets's wxStyledTextCtrl
+wrapper around the Scintilla text editor widget.
 
 This package contains the static library required for statically linking
 applications with %name.
@@ -78,41 +79,40 @@ applications with %name.
 
 %prep
 %setup -n %name
+sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
+	CMakeLists.txt
 
 %build
-ln -s setup0.h include/wx/stedit/setup.h
-%configure %{subst_enable static}
-# broken parallel build
-#make_build
-%make
+%cmake
+%make_build -C BUILD
 
 %install
-%makeinstall
+%makeinstall_std -C BUILD
 mkdir -p \
 	%buildroot%_bindir/ \
 	%buildroot%_desktopdir/ \
 	%buildroot%_niconsdir/
-install -p samples/stedit/%name %buildroot%_bindir/
-install -p %SOURCE1 %buildroot%_desktopdir/
-install -p art/pencil32.xpm %buildroot%_niconsdir/
-# FIXME: i guess this is right
-ln -s setup0.h %buildroot%_includedir/wx/stedit/setup.h
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Utility \
-	%buildroot%_desktopdir/wxstedit.desktop
+install -p -m 755 BUILD/bin/*/* %buildroot%_bindir/
+install -p -m 644 %SOURCE1 %buildroot%_desktopdir/
+install -p -m 644 art/pencil32.xpm %buildroot%_niconsdir/
+pushd %buildroot%_libdir/
+ln -s lib%{name}*.so libwxStEditLib.so
+popd
 
 %files
-%_bindir/%name
-%_desktopdir/%name.desktop
+%_bindir/*
+%_desktopdir/wxStEdit.desktop
 %_niconsdir/*
+%doc docs/*
+#%%eclude %_datadir/{%name,wxStEdit}
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/lib%{name}*.so
 %doc docs/* website
 
 %files -n lib%name-devel
 %_includedir/wx/stedit
-%_libdir/*.so
+%_libdir/libwxStEditLib.so
 
 %if_enabled static
 %files devel-static
@@ -120,6 +120,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Wed Oct 08 2014 Ildar Mulyukov <ildar@altlinux.ru> 1.6.0-alt1
+- new version (SVN)
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.5-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
