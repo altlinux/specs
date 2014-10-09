@@ -2,7 +2,7 @@
 %def_disable zart
 
 Name: gmic
-Version: 1.6.0.0
+Version: 1.6.0.1
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -16,6 +16,7 @@ Patch1: gmic-1.6.0.0-alt-makefile.patch
 
 Requires: lib%name = %version-%release
 
+BuildRequires: dos2unix
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
 BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel libgomp-devel
@@ -73,6 +74,7 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version
+dos2unix src/Makefile
 %patch1 -p1
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
 
@@ -118,6 +120,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Oct 09 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0.1-alt1
+- 1.6.0.1
+
 * Thu Aug 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.6.0.0-alt1
 - 1.6.0.0
 
