@@ -1,5 +1,9 @@
-Name: python-module-docopt
-Version: 0.6.1
+%define oname docopt
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 0.6.2
 Release: alt1
 
 Summary: Pythonic argument parser, that will make you smile
@@ -18,6 +22,11 @@ BuildArch: noarch
 BuildRequires:  python-module-setuptools
 BuildRequires:  python-module-nose
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools python3-module-nose
+%endif
+
 %description
 Isn't it awesome how optparse and argparse generate help messages
 based on your code?!
@@ -27,23 +36,63 @@ generated based on the beautiful help message that you write yourself!
 This way you don't need to write thisstupid repeatable parser-code,
 and instead can write only the help message--*the way you want it*.
 
+%package -n python3-module-%oname
+Summary: Pythonic argument parser, that will make you smile
+Group: Development/Python3
+
+%description -n python3-module-%oname
+Isn't it awesome how optparse and argparse generate help messages
+based on your code?!
+
+Hell no! You know what's awesome? It's when the option parser is
+generated based on the beautiful help message that you write yourself!
+This way you don't need to write thisstupid repeatable parser-code,
+and instead can write only the help message--*the way you want it*.
+
 %prep
-%setup -n docopt-%version
+%setup -n %oname-%version
 
 # remove upstream egg-info
 rm -rf *.egg-info
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
 %python_build
+
+%if_with python3
+pushd ../python3
+%python3_build
+popd
+%endif
 
 %install
 %python_install
 
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
 %files
-%python_sitelibdir/docopt.py*
-%python_sitelibdir/docopt-*.egg-info
+%python_sitelibdir/%oname.py*
+%python_sitelibdir/%oname-*.egg-info
+
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%oname.*
+%python3_sitelibdir/%oname-*.egg-info
+%endif
 
 %changelog
+* Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+- Added module for Python 3
+
 * Sat Feb 23 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1 (with rpmrb script)
 
