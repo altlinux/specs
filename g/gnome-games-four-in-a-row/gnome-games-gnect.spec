@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Four in a row game
@@ -22,7 +22,7 @@ Provides:  gnome-games-gnect = %version-%release
 %define glib_ver 2.31.13
 %define gtk_ver 3.0.0
 
-BuildRequires: gnome-common
+BuildRequires: gnome-common vala-tools appdata-tools desktop-file-utils
 BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: libcanberra-gtk3-devel zlib-devel
 
@@ -57,6 +57,9 @@ line can be horizontal, vertical or diagonal.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Fri Oct 10 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
