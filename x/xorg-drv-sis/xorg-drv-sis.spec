@@ -1,6 +1,6 @@
 Name: xorg-drv-sis
 Version: 0.10.7
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: SiS and XGI video driver
 License: MIT/X11
@@ -43,6 +43,9 @@ are supported as well.
 %_man4dir/*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.7-alt5
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.7-alt4
 - requires XORG_ABI_VIDEODRV = 15.0
 

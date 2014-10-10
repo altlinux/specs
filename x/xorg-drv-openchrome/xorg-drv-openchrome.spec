@@ -1,6 +1,6 @@
 Name: xorg-drv-openchrome
 Version: 0.3.3
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: VIA openchrome graphics driver
 License: MIT/X11
@@ -58,6 +58,9 @@ is available at dri.sourceforge.net.
 %_man4dir/*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.3-alt3
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.3-alt2
 - requires XORG_ABI_VIDEODRV = 15.0
 

@@ -1,10 +1,13 @@
-%define mesaversion 10.0
+%define mesaversion 10.3
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
 %define _modulesdir %_libdir/X11/modules
 %define _fontsdir %_datadir/fonts
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
+
+%def_enable glamor
+%def_enable xwayland
 
 %def_enable dmx
 %def_enable xnest
@@ -18,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.15.2
+Version: 1.16.1
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -28,12 +31,19 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 15.0
-Provides: XORG_ABI_XINPUT = 20.0
+Provides: XORG_ABI_VIDEODRV = 18.0
+Provides: XORG_ABI_XINPUT = 21.0
 Provides: XORG_ABI_EXTENSION = 8.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
+%if_enabled glamor
+Provides: xorg-glamor = %epoch:%version-%release
+Obsoletes: xorg-glamor < %epoch:%version-%release
+%endif
 PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
-Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-vesa xorg-drv-evdev
+Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-evdev
+%ifarch %ix86 x86_64
+Requires: xorg-drv-vesa
+%endif
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -45,6 +55,12 @@ BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel
 BuildRequires: xorg-xcmiscproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel
 BuildRequires: xorg-font-utils xorg-xtrans-devel xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools
 BuildRequires: xorg-glproto-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel
+%if_enabled glamor
+BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
+%endif
+%if_enabled xwayland
+BuildRequires: libwayland-client-devel
+%endif
 %if_enabled xephyr
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel
 %endif
@@ -148,10 +164,22 @@ large screen.
 Xdmx communicates to the back-end X servers using the standard X11 pro-
 tocol, and standard and/or commonly available X server extensions.
 
+%package -n xorg-xwayland
+Summary: Wayland X server
+Group: System/X11
+Requires: %name = %epoch:%version-%release
+
+%description -n xorg-xwayland
+Xwayland is an X server for running X clients under Wayland
+
 %package -n xorg-sdk
 Summary: SDK for X server driver module development
 Group: Development/C
 Requires: xorg-util-macros
+%if_enabled glamor
+Provides: xorg-glamor-devel = %epoch:%version-%release
+Obsoletes: xorg-glamor-devel < %epoch:%version-%release
+%endif
 
 %description -n xorg-sdk
 The SDK package provides the developmental files which are necessary for
@@ -181,13 +209,14 @@ drivers, input drivers, or other X modules should install this package.
 	--enable-xcsecurity \
 	--enable-xselinux \
 	--enable-config-udev \
-	--disable-config-dbus \
 	--disable-config-hal \
 	--disable-linux-apm \
 	--disable-linux-acpi \
 	--enable-drv-switch \
 	--with-drv-switch-path=%_libexecdir/X11/drv.d \
 	--enable-record \
+	%{subst_enable xwayland} \
+	%{subst_enable glamor} \
 	%{subst_enable dmx} \
 	%{subst_enable xnest} \
 	--enable-glx-tls \
@@ -295,6 +324,11 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_man1dir/*dmx*.1*
 %endif
 
+%if_enabled xwayland
+%files -n xorg-xwayland
+%_bindir/Xwayland
+%endif
+
 %files -n xorg-sdk
 %_includedir/xorg
 %_pkgconfigdir/*.pc
@@ -302,6 +336,15 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Sep 29 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.16.1-alt1
+- 1.16.1
+
+* Tue Sep 16 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.16.0.901-alt1
+- 1.16.1 RC1
+
+* Fri Jul 18 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.16.0-alt1
+- 1.16.0
+
 * Fri Jun 27 2014 Valery Inozemtsev <shrek@altlinux.ru> 2:1.15.2-alt1
 - 1.15.2
 

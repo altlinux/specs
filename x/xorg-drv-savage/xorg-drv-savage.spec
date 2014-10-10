@@ -1,6 +1,6 @@
 Name: xorg-drv-savage
 Version: 2.3.7
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: S3 Savage video driver
 License: MIT/X11
@@ -43,6 +43,9 @@ on MX, IX, and SuperSavage chips.
 %_man4dir/*
 
 %changelog
+* Fri Oct 10 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3.7-alt2
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Fri Jan 31 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3.7-alt1
 - 2.3.7
 

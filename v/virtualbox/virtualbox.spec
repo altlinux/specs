@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.3.14
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -86,6 +86,7 @@ Source16:	os_altlinux_64.png
 Source17:	http://download.virtualbox.org/%name/%version/%distname.chm
 Source20:	http://download.virtualbox.org/%name/%version/SDKRef.pdf
 Source21:	%distname-HTML-%{version}_OSE.tar
+Source22:	virtualbox.service
 
 %if_enabled debug
 Source99:	%vboxdbg.in
@@ -533,6 +534,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-doc-%version
 cp %SOURCE13 %SOURCE17 %SOURCE20 %buildroot%_defaultdocdir/%name-doc-%version/
 tar -xf %SOURCE21 -C %buildroot%_defaultdocdir/%name-doc-%version/
 
+# install unit file
+install -pDm644 %SOURCE22 %buildroot%_unitdir/%name.service
+
 %if_with vnc
  cp -a ExtensionPacks/VNC %buildroot%vboxdir/ExtensionPacks/
 %endif
@@ -680,6 +684,7 @@ mountpoint -q /dev || {
 
 %files common
 %_initdir/%name
+%_unitdir/%name.service
 %_controldir/%name
 %config %_udevrulesdir/90-%name.rules
 %dir %vboxdatadir
@@ -697,6 +702,10 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Oct 16 2014 Michael Shigorin <mike@altlinux.org> 4.3.14-alt2
+- Added systemd unit file (see also #30260)
+- Rebuild with xorg-1.16.1
+
 * Tue Sep 02 2014 Michael Shigorin <mike@altlinux.org> 4.3.14-alt1
 - Update to new release
 

@@ -2,7 +2,7 @@
 
 Name: tigervnc
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: A TigerVNC remote display system
 
 Group: Networking/Remote access
@@ -203,10 +203,13 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE6
 %_man1dir/vncserver.1*
 %_man1dir/x0vncserver.1*
 
-%files -n xorg-extension-vnc
-%_xorgmoduledir/extensions/*.so
+#%files -n xorg-extension-vnc
+#%_xorgmoduledir/extensions/*.so
 
 %changelog
+* Wed Oct 22 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt2
+- disabled vnc extension
+
 * Wed May 02 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 

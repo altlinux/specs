@@ -1,6 +1,6 @@
 Name: xorg-drv-modesetting
-Version: 0.8.1
-Release: alt2
+Version: 0.9.0
+Release: alt1
 Summary: Generic modesetting driver fo Xorg 
 License: MIT/X11
 Group: System/X11
@@ -9,6 +9,7 @@ Url: http://xorg.freedesktop.org
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel xorg-glproto-devel xorg-xf86driproto-devel libudev-devel libXext-devel
@@ -24,9 +25,10 @@ acceleration isn't useful, usb devices, dumb framebuffers etc.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
-mkdir m4
+mkdir -p m4
 %autoreconf
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
@@ -35,15 +37,18 @@ mkdir m4
 
 %install
 %make DESTDIR=%buildroot install
-install -m0640 -D cirrus-kms.xinf %buildroot/usr/share/hwdatabase/videoaliases/cirrus-kms.xinf
 
 %files
 %_x11modulesdir/drivers/*.so
 %_man4dir/*
-%doc COPYING README
-/usr/share/hwdatabase/videoaliases/cirrus-kms.xinf
 
 %changelog
+* Sat Oct 18 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.9.0-alt1
+- 0.9.0
+
+* Sat Oct 18 2014 Valery Inozemtsev <shrek@altlinux.ru> 0.8.1-alt2.1
+- requires XORG_ABI_VIDEODRV = 18.0
+
 * Mon Apr 21 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8.1-alt2
 - rendering under emulated cyrrus fixed
 
