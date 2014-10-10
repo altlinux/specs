@@ -10,7 +10,7 @@
 
 Name: libcanberra
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Portable Sound Event Library
 Group: System/Libraries
@@ -18,6 +18,8 @@ License: LGPLv2+
 Url: http://0pointer.de/lennart/projects/libcanberra
 
 Source: http://0pointer.de/lennart/projects/libcanberra/%name-%version.tar.xz
+# up
+Patch: gtk-Don-t-assume-all-GdkDisplays-are-GdkX11Displays.patch
 
 %define pa_ver 0.9.11
 %define gtk_ver 2.20
@@ -121,7 +123,8 @@ This package provides Vala language bindings for libcanberra and
 libcanberra-gtk libraries
 
 %prep
-%setup -q
+%setup
+%patch -p1
 
 %build
 %configure --disable-static \
@@ -211,6 +214,9 @@ rm -f %buildroot%_docdir/libcanberra/README
 %{?_enable_gtk3:%exclude %_libdir/gtk-%gtk3_api_ver/modules/*.la}
 
 %changelog
+* Fri Oct 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt2
+- upstream patch to drop hardcoded X11 assumptions
+
 * Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt1
 - 0.30
 
