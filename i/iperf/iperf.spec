@@ -4,10 +4,10 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt3
+Release: alt4
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
-License: GPL
+License: BSD
 Group:  Monitoring
 
 URL: http://iperf.sourceforge.net
@@ -88,6 +88,9 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Fri Oct 10 2014 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt4
+- License fixed (ALT #30388)
+
 * Wed Aug 13 2014 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt3
 - Systemd unit files added
 
