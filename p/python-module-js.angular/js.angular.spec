@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Summary: Fanstatic packaging of AngularJS
 License: MIT
 Group: Development/Python
@@ -93,6 +93,12 @@ install -p -m644 %mname/__init__.py \
 popd
 %endif
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files
 %doc *.rst
 %python_sitelibdir/*.egg-info
@@ -119,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt2
+- Applied python-module-js.angular-1.1.4-alt1.diff
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt1
 - Initial build for Sisyphus
 
