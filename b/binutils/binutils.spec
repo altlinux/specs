@@ -1,6 +1,6 @@
 Name: binutils
 Version: 2.24.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -34,6 +34,8 @@ Patch0014: 0014-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
 Patch0015: 0015-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
 
 Patch100: binutils-alt-ld-testsuite-workaround-x86.patch
+Patch101: binutils-2.24-alt-fix-gold-testsuite.patch
+Patch102: binutils-2.24-alt-fix-ld-testsuite.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -95,6 +97,9 @@ libiberty.
 %ifarch %ix86
 %patch100 -p1
 %endif
+
+%patch101 -p2
+%patch102 -p2
 
 grep -FlZ 'LD="${LD-ld} -m elf_x86_64"' libtool.m4 */configure |
         xargs -0 sed -i -e '
@@ -261,6 +266,9 @@ XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
 %doc NEWS*
 
 %changelog
+* Fri Oct 10 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.24.0-alt2
+- Fixed ld and gold tests (gcc4.9).
+
 * Mon Jan 13 2014 Dmitry V. Levin <ldv@altlinux.org> 1:2.24.0-alt1
 - Updated to 2.24.0 20140113.
 - ld, gold: changed defaults:
