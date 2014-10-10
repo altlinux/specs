@@ -1,48 +1,59 @@
 Name: yad
-Version: 0.23.1
+Version: 0.27.0
 Release: alt1
-
 Summary: Display graphical dialogs from shell scripts or command line
-Group: System/Libraries
-License: GPL
-URL: http://code.google.com/p/yad
 
-BuildRequires: libgtk+3-devel > 3.0.0
-BuildRequires: intltool
+Group: Graphical desktop/GNOME
+License: GPLv3+
+Url: http://sourceforge.net/projects/yad-dialog/
+Source0: http://downloads.sourceforge.net/%name-dialog/%name-%version.tar.xz
+Patch0: fix-missing-buttons.patch
 
-Source0: %name-%{version}.tar
-
-Packager: Afanasov Dmitry <ender@altlinux.org>
+BuildRequires: desktop-file-utils
+# Automatically added by buildreq on Fri Oct 10 2014
+# optimized out: at-spi2-atk fontconfig glib2-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-XML-Parser pkg-config xorg-xproto-devel xz
+BuildRequires: intltool libgtk+3-devel
 
 %description
-Yad (yet another dialog) is a fork of Zenity with many improvements,
-such as custom buttons, additional dialogs, pop-up menu in
-notification icon and more.
+Yad (yet another dialog) is a fork of zenity with many improvements, such as
+custom buttons, additional dialogs, pop-up menu in notification icon and more.
 
 %prep
-%setup -q
+%setup
+%patch0 -p0
 
 %build
-%autoreconf
 %configure \
     --with-gtk=gtk3 \
     --with-rgb=/usr/share/X11/rgb.txt \
     --enable-icon-browser \
     #
+
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
-%find_lang yad
-%files -f yad.lang
+%find_lang %name
+
+desktop-file-install --remove-key Encoding     \
+    --remove-category Development              \
+    --add-category    Utility                  \
+    --dir=%buildroot%_desktopdir \
+    %buildroot%_desktopdir/%name-icon-browser.desktop
+
+%files -f %name.lang
+%doc README ChangeLog AUTHORS COPYING NEWS THANKS TODO
 %_bindir/*
-#_aclocaldir/*
 %_iconsdir/hicolor/*/apps/*
+#_datadir/aclocal/#name.m4
 %_man1dir/*
 %_desktopdir/*
 
 %changelog
+* Fri Oct 10 2014 Fr. Br. George <george@altlinux.ru> 0.27.0-alt1
+- Fresh build from FC
+
 * Thu Oct 31 2013 Afanasov Dmitry <ender@altlinux.org> 0.23.1-alt1
 - initial build
 
