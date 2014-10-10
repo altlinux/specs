@@ -4,8 +4,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 4.3.0
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -160,6 +160,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Oct 10 2014 Sergey V Turchin <zerg@altlinux.org> 4.4.0-alt1
+- new version
+
 * Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt2
 - build with qt-gstreamer1
 
