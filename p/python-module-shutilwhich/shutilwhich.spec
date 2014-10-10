@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20130302
+Release: alt2.git20130302
 Summary: shutil.which for those not using Python 3.3 yet
 License: PSF
 Group: Development/Python
@@ -21,12 +21,15 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
+%py_provides %oname
+
 %description
 A copy & paste backport of Python 3.3's shutil.which function.
 
 %package -n python3-module-%oname
 Summary: shutil.which for those not using Python 3.3 yet
 Group: Development/Python3
+%py3_provides %oname
 
 %description -n python3-module-%oname
 A copy & paste backport of Python 3.3's shutil.which function.
@@ -67,6 +70,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20130302
+- Added provides %oname
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20130302
 - Initial build for Sisyphus
 
