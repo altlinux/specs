@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 2.13.22
-Release: alt1
+Release: alt2
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -11,7 +11,6 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 # http://cvs.zope.org/*checkout*/Python-2.2.3/Lib/regsub.py?rev=1.1.1.1&cvsroot=Zope.org&sortby=author&content-type=text/plain
 Source1: regsub.py
-BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
 BuildPreReq: python-module-sphinx-devel
@@ -70,6 +69,10 @@ popd
 %install
 %python_install
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 touch %buildroot%python_sitelibdir/Shared/__init__.py
 touch %buildroot%python_sitelibdir/Products/__init__.py
 touch %buildroot%python_sitelibdir/Testing/__init__.py
@@ -114,6 +117,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt2
+- Set as archdep
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt1
 - Version 2.13.22
 
