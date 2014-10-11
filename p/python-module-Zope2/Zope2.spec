@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 2.13.22
-Release: alt4
+Release: alt5
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -30,7 +30,7 @@ Requires: python-module-Products.MIMETools python-module-zope.size
 Requires: python-module-zope.traversing python-module-zope.tales
 Requires: python-module-zope.testbrowser python-module-zope.tal
 Requires: python-module-zope.site python-module-zope.ptresource
-Requires: python-module-zope.processlifetime
+Requires: python-module-zope.processlifetime python-module-ZODB3
 Requires: python-module-zope.pagetemplate
 Requires: python-module-zope.lifecycleevent
 Requires: python-module-zope.contentprovider
@@ -41,6 +41,13 @@ Requires: python-module-zope.browsermenu python-module-mechanize
 Requires: python-module-initgroups python-module-Missing
 Requires: python-module-zope.filerepresentation
 Requires: python-module-zope.dottedname
+Requires: python-module-Products.MailHost
+Requires: python-module-Products.StandardCacheManagers
+Requires: python-module-Products.ZCTextIndex
+Requires: python-module-Products.ZCatalog
+Requires: python-module-Products.ExternalMethod
+Requires: python-module-Products.BTreeFolder2
+Requires: python-module-Products.OFSP
 
 %add_python_req_skip http_date
 
@@ -135,6 +142,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt5
+- Added more testing requirements
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt4
 - Added testing requirements
 
