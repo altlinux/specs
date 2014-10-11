@@ -1,13 +1,14 @@
 %define oname Zope2
 Name: python-module-%oname
-Version: 2.13.22
-Release: alt5
+Version: 4.0
+Release: alt1.a1.dev.git20140402
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/Zope2/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/Zope.git
 Source: %name-%version.tar
 # http://cvs.zope.org/*checkout*/Python-2.2.3/Lib/regsub.py?rev=1.1.1.1&cvsroot=Zope.org&sortby=author&content-type=text/plain
 Source1: regsub.py
@@ -97,9 +98,11 @@ popd
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-touch %buildroot%python_sitelibdir/Shared/__init__.py
-touch %buildroot%python_sitelibdir/Products/__init__.py
-touch %buildroot%python_sitelibdir/Testing/__init__.py
+for i in Shared Products Testing; do
+	for j in $(find %buildroot%python_sitelibdir/$i -type d); do
+		touch $j/__init__.py
+	done
+done
 
 install -p -m644 %SOURCE1 %buildroot%python_sitelibdir
 
@@ -142,6 +145,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a1.dev.git20140402
+- Version 4.0a1.dev
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt5
 - Added more testing requirements
 
