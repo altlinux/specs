@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 2.13.22
-Release: alt3
+Release: alt4
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -24,6 +24,23 @@ Zope2 is an open-source web application server.
 Summary: Tests for Zope2
 Group: Development/Python
 Requires: %name = %version-%release
+Requires: python-module-zope.sendmail python-module-zope.viewlet
+Requires: python-module-Products.PythonScripts python-module-zLOG
+Requires: python-module-Products.MIMETools python-module-zope.size
+Requires: python-module-zope.traversing python-module-zope.tales
+Requires: python-module-zope.testbrowser python-module-zope.tal
+Requires: python-module-zope.site python-module-zope.ptresource
+Requires: python-module-zope.processlifetime
+Requires: python-module-zope.pagetemplate
+Requires: python-module-zope.lifecycleevent
+Requires: python-module-zope.contentprovider
+Requires: python-module-zope.container python-module-zope.annotation
+Requires: python-module-zope.browserresource
+Requires: python-module-zope.browserpage
+Requires: python-module-zope.browsermenu python-module-mechanize
+Requires: python-module-initgroups python-module-Missing
+Requires: python-module-zope.filerepresentation
+Requires: python-module-zope.dottedname
 
 %add_python_req_skip http_date
 
@@ -118,6 +135,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt4
+- Added testing requirements
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt3
 - Excluded .pth file
 
