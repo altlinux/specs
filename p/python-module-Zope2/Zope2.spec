@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 2.13.22
-Release: alt2
+Release: alt3
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -92,6 +92,7 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_bindir/*
 %exclude %_bindir/zpasswd
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/*test*
 %exclude %python_sitelibdir/*/*/*/test*
@@ -117,6 +118,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt3
+- Excluded .pth file
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.22-alt2
 - Set as archdep
 
