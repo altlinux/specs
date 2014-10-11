@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 3.13.4
-Release: alt2
+Version: 4.0.0
+Release: alt1.a4
 Summary: The Zope publisher publishes Python objects on the web
 License: Boost Software License, Version 1.0
 Group: Development/Python
@@ -85,10 +85,14 @@ cp -fR . ../python3
 
 %build
 %python_build
+sed -i 's|qhttp|http|g' src/zope/publisher/http.py
+sed -i 's|qxmlrpc|xmlrpc|g' src/zope/publisher/xmlrpc.py
 
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+sed -i 's|qhttp|http|g' src/zope/publisher/http.py
+sed -i 's|qxmlrpc|xmlrpc|g' src/zope/publisher/xmlrpc.py
 %python3_build
 popd
 %endif
@@ -135,6 +139,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.0-alt1.a4
+- Version 4.0.0a4 again
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.13.4-alt2
 - Added module for Python 3
 
