@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %f_pkg_name
-Version: 0.12.5.1
+Version: 0.13.0.2
 Release: alt1
 License: GPL-2
 
@@ -45,6 +45,9 @@ Haskell. These tools are not needed to actually run Gtk2Hs programs.
 %files -f %name-files.all
 
 %changelog
+* Sat Oct 11 2014 Denis Smirnov <mithraen@altlinux.ru> 0.13.0.2-alt1
+- 0.13.0.2
+
 * Wed Dec 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.12.5.1-alt1
 - 0.12.5.1
 
