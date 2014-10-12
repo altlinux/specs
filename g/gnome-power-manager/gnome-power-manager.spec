@@ -1,7 +1,7 @@
 %define ver_major 3.14
 
 Name: gnome-power-manager
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -49,7 +49,7 @@ GNOME Power Manager comes in three parts:
 %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # The license
 ln -sf %_licensedir/GPL-2 COPYING
@@ -71,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Sun Oct 12 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
