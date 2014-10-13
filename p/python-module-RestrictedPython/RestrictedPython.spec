@@ -1,13 +1,14 @@
 %define oname RestrictedPython
 Name: python-module-%oname
-Version: 3.6.0
-Release: alt1.1
+Version: 3.6.1
+Release: alt1.dev.git20130312
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/RestrictedPython/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/RestrictedPython.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -46,6 +47,9 @@ This package contains tests for RestrictedPython.
 #python_sitelibdir/%oname/tests
 
 %changelog
+* Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt1.dev.git20130312
+- Version 3.6.1dev
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.6.0-alt1.1
 - Rebuild with Python-2.7
 
