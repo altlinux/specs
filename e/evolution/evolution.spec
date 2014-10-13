@@ -15,15 +15,15 @@
 
 Name: evolution
 Version: %ver_major.7
-Release: alt0.1
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
 Group: Office
 Url: https://wiki.gnome.org/Apps/Evolution
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 ### Patches ###
 # hack to properly link against ldap libs
@@ -40,10 +40,10 @@ Provides: camel
 %define glib_ver 2.36.0
 %define gtk_ver 3.4
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.12.5
+%define eds_ver 3.12.7
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
-%define gtkhtml_ver 4.8.4
+%define gtkhtml_ver 4.8.5
 %define libsoup_ver 2.42.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
@@ -290,6 +290,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt1
+- 3.12.7 release
+
 * Wed Oct 01 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt0.1
 - updated to 3.12.7_c8335691
 
