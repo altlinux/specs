@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 4.0.1
-Release: alt1
+Version: 4.0.2
+Release: alt1.dev.git20140324
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.2-alt1.dev.git20140324
+- Version 4.0.2dev
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.1-alt1
 - Version 4.0.1
 
