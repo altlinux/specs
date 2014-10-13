@@ -1,6 +1,6 @@
 Name: xfce4-weather-plugin
 Version: 0.8.3
-Release: alt3
+Release: alt4
 
 Summary: Weather plugin for the Xfce panel
 License: %gpl2plus
@@ -48,6 +48,13 @@ Requires: xfce4-panel >= 4.8.0
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Oct 13 2014 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt4
+- Patches from upstream git:
+  + Support upower-0.99 (Xfce bug #10922)..
+  + Switch to met.no locationforecastLTS-1.2 API (Xfce bug #10916).
+  + Make plugin ready for met.no locationforecast-1.2 API
+    (Xfce bug #10916).
+
 * Fri Mar 28 2014 Paul Wolneykien <manowar@altlinux.org> 0.8.3-alt3
 - Rebuild with upower v0.99.0
 
