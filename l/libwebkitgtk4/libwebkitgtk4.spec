@@ -10,8 +10,8 @@
 %def_disable gtkdoc
 
 Name: libwebkitgtk4
-Version: 2.6.0
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -116,13 +116,13 @@ Requires: libjavascriptcoregtk4 = %version-%release
 This package provides development files for GTK+3 version of the
 JavaScriptCore engine.
 
-%package jsc4
+%package -n jsc4
 Summary: JavaScriptCore shell for WebKit GTK+
 Group: Development/GNOME and GTK+
 Requires: libjavascriptcoregtk4 = %version-%release
 Conflicts: jsc
 
-%description jsc4
+%description -n jsc4
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
 allows you to interact with the JavaScript engine directly.
 
@@ -223,7 +223,7 @@ rm -rf Source/ThirdParty/qunit/
 %_libdir/libjavascriptcoregtk-%api_ver.so
 %_pkgconfigdir/javascriptcoregtk-%api_ver.pc
 
-%files jsc4
+%files -n jsc4
 %_bindir/jsc*
 
 %files -n libwebkit2gtk-gir
@@ -242,6 +242,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Tue Oct 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt2
 - libwebkitgtk4* subpackages renamed to libwebkit2gtk*
 
