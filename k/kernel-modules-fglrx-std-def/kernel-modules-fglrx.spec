@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	14.20
-%define module_release alt1
+%define module_version	14.301.1001
+%define module_release alt2
 
 %define flavour std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 10 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.301.1001-alt1
+- 14.301.1001
 
 * Tue Sep  2 2014 Anton V. Boyarshinov <boyarsh@altlinux.org> 2:14.20-alt1
 - 14.20
