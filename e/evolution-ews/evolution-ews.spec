@@ -1,7 +1,7 @@
 %define ver_major 3.12
 
 Name: evolution-ews
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Group: Networking/Mail
@@ -30,7 +30,7 @@ BuildPreReq: evolution-devel >= %evolution_ver
 BuildPreReq: libmspack-devel >= %libmspack_ver
 
 BuildPreReq: intltool
-BuildRequires: glib2-devel >= 2.32
+BuildRequires: glib2-devel >= 2.34
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.42
 BuildRequires: libsqlite3-devel libical-devel
@@ -69,8 +69,12 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_libdir/evolution/%evo_ver_base/modules/*.so
 %_datadir/evolution/%evo_ver_base/errors/*.error
 %_datadir/evolution-data-server/ews/windowsZones.xml
+%_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Mon Oct 13 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.7-alt1
+- 3.12.7
+
 * Wed Aug 27 2014 Alexey Shabalin <shaba@altlinux.ru> 3.12.5-alt1
 - 3.12.5
 
