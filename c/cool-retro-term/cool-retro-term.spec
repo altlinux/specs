@@ -1,6 +1,6 @@
 Name: cool-retro-term
 Version: 0.9
-Release: alt3
+Release: alt4
 
 Summary: Cool Retro Terminal
 License: GPLv3
@@ -47,6 +47,9 @@ desktop-file-install \
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Oct 13 2014 Michael Shigorin <mike@altlinux.org> 0.9-alt4
+- ge4f89f0 (incl. --fullscreen)
+
 * Mon Oct 06 2014 Michael Shigorin <mike@altlinux.org> 0.9-alt3
 - actually fixed upstream #143
 
