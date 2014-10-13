@@ -1,6 +1,6 @@
 Name: 	  chromium-pepperflash
 Version:  1.5.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Pepper Flash Player - browser plugin for Chromium
 License:  GPLv3+
@@ -30,7 +30,7 @@ touch %buildroot%_libdir/pepper-plugins/libpepflashplayer.so
 mkdir -p %buildroot%_cachedir/pepperflash
 
 %preun
-%_sbindir/update-pepperflash --uninstall --quiet ||:
+[ "$1" -eq "0" ] && %_sbindir/update-pepperflash --uninstall --quiet ||:
 exit 0
 
 %post
@@ -43,6 +43,9 @@ exit 0
 %dir %_cachedir/pepperflash
 
 %changelog
+* Mon Oct 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt2
+- Do not remove plugin on update
+
 * Thu Oct 09 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - Use only IPv4 for curl (fix hang up in %%post script)
 - Show status on %%post section
