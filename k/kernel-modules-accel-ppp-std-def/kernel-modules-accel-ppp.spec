@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.8.0
-%define module_release          alt2
+%define module_release          alt4
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -60,6 +60,12 @@ install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko %buildroot/%module_dir/ipoe.k
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct 13 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt4
+- update upstream to git:8d3351d4cdfcaf45aa2c918b0f8920798be4dc04
+
+* Mon Sep 01 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt3
+- update upstream to git:ec9968885ed2f273c4d2c18297986c463fb9cf9b
 
 * Tue Aug 05 2014 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt2
 - update upstream to git:2cdd67782c6d11af141992dba2943e03134593b5
