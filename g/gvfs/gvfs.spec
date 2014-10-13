@@ -21,7 +21,7 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -107,6 +107,7 @@ BuildRequires: gcc-c++ perl-XML-Parser
 %package devel
 Summary: Libraries and include files for developing gvfs applications
 Group: Development/GNOME and GTK+
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %package -n fuse-gvfs
@@ -456,6 +457,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Oct 13 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
+- 1.22.1
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
