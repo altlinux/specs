@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.4.7
+Version: 6.5.0
 Release: alt1
 
 Summary: DHCP Client
@@ -71,6 +71,9 @@ fi
 %exclude /lib/%name/%name-hooks/15-timezone
 
 %changelog
+* Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 1:6.5.0-alt1
+- Updated to 6.5.0.
+
 * Wed Oct 01 2014 Mikhail Efremov <sem@altlinux.org> 1:6.4.7-alt1
 - Updated to 6.4.7.
 
