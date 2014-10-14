@@ -3,7 +3,7 @@
 %define api_ver 2.90
 
 Name: gucharmap
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -107,6 +107,9 @@ GObject introspection devel data for the GNOME Unicode character map library
 %endif
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 

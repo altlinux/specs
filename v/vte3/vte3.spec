@@ -3,7 +3,7 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %def_enable pty_helper
@@ -18,7 +18,7 @@ Group: Terminals
 Requires: lib%name = %version-%release
 Requires: gnome-pty-helper
 
-Source: ftp://gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define gtk3_ver 3.1.9
 %define glib_ver 2.31.13
@@ -198,6 +198,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.38.1-alt1
+- 0.38.1
+
 * Sun Sep 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 
