@@ -1,12 +1,12 @@
 Name: firewalld
-Version: 0.3.11
+Version: 0.3.12
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
 License: %gpl2plus
 Group: System/Configuration/Networking
 
-URL: http://fedorahosted.org/firewalld
+URL: http://www.firewalld.org/
 # git://git.fedorahosted.org/firewalld.git
 Source: %name-%version.tar
 Source1: %name.init
@@ -94,6 +94,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_datadir/firewalld/
 
 %changelog
+* Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 0.3.12-alt1
+- Update URL.
+- Updated to 0.3.12.
+
 * Wed Aug 27 2014 Mikhail Efremov <sem@altlinux.org> 0.3.11-alt1
 - Fixes from upstream git:
   + Fixed rename of zones, services and icmptypes not to create new
