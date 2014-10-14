@@ -3,10 +3,11 @@
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
+# python-behave required
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -160,6 +161,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
