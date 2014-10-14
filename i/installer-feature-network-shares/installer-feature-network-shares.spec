@@ -1,5 +1,5 @@
 Name: installer-feature-network-shares
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
@@ -30,7 +30,7 @@ This package contains installer stage2 hooks for NFS, SMB and FTP services.
 %setup
 
 %install
-%define hookdir %_datadir/install2/postinstall.d
+%define hookdir %_datadir/install2/preinstall.d
 mkdir -p %buildroot/%hookdir
 install -pm755 *.sh %buildroot/%hookdir/
 
@@ -38,6 +38,10 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Oct 13 2014 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
+- Don't require install2-init-functions.
+- Move hook to preinstall.
+
 * Mon Nov 08 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
 - s/portmap/rpcbind/
 
