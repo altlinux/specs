@@ -1,5 +1,5 @@
 Name: installer-distro-chainmail
-Version: 2.99.0
+Version: 2.99.1
 Release: alt1
 
 Summary: Installer files for IVK chainmail
@@ -30,6 +30,7 @@ Requires: installer-feature-quota-stage2 >= 0.4
 Requires: installer-feature-server-raid-fixup-stage2
 Requires: x-cursor-theme-jimmac
 Requires: udev-rule-generator-net
+Requires: installer-step-chainmail-domain
 
 %description stage2
 Installer IVK chainmail stage2.
@@ -67,13 +68,19 @@ cp -a * %buildroot%install2dir/
 
 %files stage3
 %install2dir/preinstall.d/*.sh
-%install2dir/postinstall.d/20-alterator-defaults.sh
-%install2dir/postinstall.d/30-ahttpd.sh
-%install2dir/postinstall.d/50-dovecot-no-ipv6.sh
-%install2dir/postinstall.d/80-BASE-enable.sh
-%install2dir/postinstall.d/90-vsftpd.sh
+%install2dir/postinstall.d/*.sh
+%exclude %install2dir/postinstall.d/01-remove-installer-office-server-pkgs.sh
 
 %changelog
+* Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 2.99.1-alt1
+- Disable some services.
+- Add net-iptables-off preinstall hook.
+- Add 'Domain' step.
+- Disable IPv6 by the kernel command line.
+- Minor spec cleanup.
+- Add 50-disable-ddos-deflate.sh postinstall hook.
+- vsftpd hook: Set local_root to /home.
+
 * Wed Sep 17 2014 Mikhail Efremov <sem@altlinux.org> 2.99.0-alt1
 - Add udev-rule-generator-net in stage2.
 

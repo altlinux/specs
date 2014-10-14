@@ -1,5 +1,5 @@
 Name: alterator-distro-chainmail
-Version: 2.97.0
+Version: 2.99.0
 Release: alt1
 
 Source: %name-%version.tar
@@ -29,6 +29,19 @@ special alterator modules for IVK Chainmail:
 - alterator's workflow
 - hooks for administrator password
 
+%package -n installer-step-chainmail-domain
+Summary: Installer step for creating domain
+Group: System/Configuration/Other
+
+Requires: alterator-net-domain
+Requires: alterator-net-iptables
+
+Conflicts: installer-feature-network-shares-stage3 < 0.5-alt1
+
+%description -n installer-step-chainmail-domain
+Create domain and set external interfaces
+during installation.
+
 %prep
 %setup
 
@@ -41,11 +54,20 @@ special alterator modules for IVK Chainmail:
 
 %files
 %config(noreplace) %_sysconfdir/alterator/logs/.order
-%_datadir/alterator/ui/*
+%dir %_datadir/alterator/ui/chainmail/
+%_datadir/alterator/ui/chainmail/framework/
+%_datadir/alterator/ui/chainmail/login/
 %_libexecdir/alterator/hooks/*.d/*
 %_datadir/alterator/interfaces/guile/workflow/*
 
+%files -n installer-step-chainmail-domain
+%_datadir/alterator/ui/chainmail/domain/
+%_datadir/install2/steps/*.desktop
+
 %changelog
+* Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 2.99.0-alt1
+- Add 'Domain' installer step.
+
 * Wed Aug 20 2014 Mikhail Efremov <sem@altlinux.org> 2.97.0-alt1
 - Add hook for setup MySQL password.
 
