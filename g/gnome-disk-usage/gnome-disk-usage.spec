@@ -6,13 +6,13 @@
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org/projects/Baobab
+Url: https://wiki.gnome.org/Apps/Baobab
 
 Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
 
@@ -57,6 +57,9 @@ popd
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Mon Sep 22 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
