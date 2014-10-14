@@ -15,6 +15,7 @@ Patch0:		php-mysql-force-libmysqlclient_r.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
+Conflicts: php5-mysqlnd-mysql
 
 # Automatically added by buildreq on Fri Jul 01 2005
 BuildRequires: libMySQL-devel

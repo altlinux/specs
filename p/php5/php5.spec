@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.5.16
+Version: 5.5.17
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20140821
+%define _php5_snapshot 20140916
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -50,6 +50,7 @@ Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
 Patch60: php-5.4.15-alt-bison-2.7.1.patch
 Patch61: php5-5.5.9-phar-phppath.patch
+Patch62: php-mysqlnd-socket.patch
 
 PreReq:  php5-libs = %version-%release
 Requires(post):  php5-suhosin
@@ -81,6 +82,14 @@ BuildArch:	noarch
 These helper macros provide possibility to rebuild
 PHP5 packages by some Alt Linux Team Policy compatible way.
 
+%package mysqlnd
+Group: System/Servers
+Summary: Native PHP driver for MySQL
+Requires: php5 = %rpm_build_version-%php5_release
+Provides: %name-mysqlnd = %rpm_build_version-%php5_release
+
+%description mysqlnd
+Native PHP driver for MySQL
 
 %package devel
 Group: Development/C
@@ -168,6 +177,7 @@ in use by other PHP5-related packages.
 %patch51 -p2
 %patch60 -p2
 %patch61 -p1
+%patch62 -p1
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
@@ -215,6 +225,7 @@ subst "s,./stamp=$,," build/buildcheck.sh
 	--enable-sysvmsg \
 	--enable-libxml \
 	--disable-dom \
+	--disable-opcache \
 	--enable-simplexml \
 	--disable-pdo \
 	--enable-hash \
@@ -230,6 +241,7 @@ subst "s,./stamp=$,," build/buildcheck.sh
 	--with-zlib=%_usr \
 	--with-gettext=%_usr \
 	--with-iconv \
+	--enable-mysqlnd=shared \
 	--without-mysql \
 	--with-mm=%_usr \
 	--without-sqlite \
@@ -305,6 +317,17 @@ cp -dpR include                   %buildroot%_usrsrc/php5-devel/sapi/BUILD
 install -m644 -D ext/pdo/php_pdo.h %buildroot%_includedir/php/%_php5_version/ext/pdo/php_pdo.h
 install -m644 -D ext/pdo/php_pdo_driver.h %buildroot%_includedir/php/%_php5_version/ext/pdo/php_pdo_driver.h
 
+# install headers for mysqlnd subpackages
+install -m644 -D ext/mysqlnd/mysqlnd.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd.h
+install -m644 -D ext/mysqlnd/php_mysqlnd_config.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/php_mysqlnd_config.h
+install -m644 -D ext/mysqlnd/mysqlnd_portability.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_portability.h
+install -m644 -D ext/mysqlnd/mysqlnd_enum_n_def.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_enum_n_def.h
+install -m644 -D ext/mysqlnd/mysqlnd_structs.h %buildroot%_includedir/php/%_php5_version/ext/mysqlnd/mysqlnd_structs.h
+
+mkdir -p %buildroot/%php5_extconf/mysqlnd
+echo "file_ini=01_mysqlnd.ini" >%buildroot/%php5_extconf/mysqlnd/params
+echo "extension=mysqlnd.so" >%buildroot/%php5_extconf/mysqlnd/config
+
 # clean rpath in phpinfo
 chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 
@@ -314,6 +337,7 @@ ln -sf phar.phar %buildroot%_bindir/phar
 # rpm macros 
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
+
 
 subst 's,@php5_name@,%php5_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
 subst 's,@_php5_version@,%_php5_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php5_name-ver
@@ -327,6 +351,14 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 
 %preun
 %php5_sapi_preun
+
+%define		php5_extension	mysqlnd
+
+%post mysqlnd
+%php5_extension_postin
+
+%preun mysqlnd
+%php5_extension_preun
 
 %files
 %_altdir/php5
@@ -350,9 +382,15 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %dir %php5_sysconfdir
 %php5_libdir
 %php5_datadir
+%exclude %php5_extdir/mysqlnd*
+%exclude %php5_extconf/mysqlnd
 %_libdir/libphp-%_php5_version.so*
 %exclude %php5_libdir/build
 %exclude %php5_servicedir/cli
+
+%files mysqlnd
+%php5_extdir/mysqlnd*
+%php5_extconf/mysqlnd/*
 
 %files devel
 %_bindir/php-config
@@ -368,6 +406,11 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Wed Sep 24 2014 Anton Farygin <rider@altlinux.ru> 5.5.17-alt1
+- new version
+- build mysqlnd extension
+- disable opcache - its need to build from separate package
+
 * Tue Sep 09 2014 Anton Farygin <rider@altlinux.ru> 5.5.16-alt1
 - new version
 

@@ -20,6 +20,7 @@ Source2:	php-%php5_extension-params.sh
 BuildRequires(pre): rpm-build-php5
 BuildRequires: gcc-c++ libMySQL-devel
 BuildRequires: php5-devel = %php5_version
+Conflicts: php5-mysqlnd-%php5_extension
 
 Requires: php5-pdo = %php5_version-%release
 Provides: php5-pdo-driver
