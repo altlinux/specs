@@ -8,7 +8,7 @@
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -25,6 +25,7 @@ Patch: gnome-keyring-3.10.1-alt-lfs.patch
 %define p11kit_ver 0.18.1
 %define gcr_ver 3.7.91
 
+PreReq: libcap-utils
 Requires: libp11-kit >= %p11kit_ver
 
 # From configure.in
@@ -32,8 +33,10 @@ BuildPreReq: gnome-common libgio-devel >= %glib_ver
 BuildPreReq: intltool >= 0.35.0 gtk-doc xsltproc
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
-BuildPreReq: libtasn1-devel >= %tasn1_ver libtasn1-utils libcap-ng-devel libp11-kit-devel >= %p11kit_ver
+BuildPreReq: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
+BuildRequires: libtasn1-utils
+BuildRequires: libcap-ng-devel
 %{?_enable_pam:BuildPreReq: libpam-devel}
 %{?_enable_valgrind:BuildPreReq: valgrind}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -83,6 +86,9 @@ and start the keyring daemon.
 
 %find_lang --with-gnome %name
 
+%post
+setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
+
 %files -f %name.lang
 %_bindir/gnome-keyring
 %_bindir/gnome-keyring-3
@@ -109,6 +115,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- call setcap cap_ipc_lock=ep %%_bindir/gnome-keyring-daemon in %%post
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
