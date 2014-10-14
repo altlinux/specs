@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt18
+Release: alt19
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -39,6 +39,9 @@ alterator module to edit system network domain
 
 
 %changelog
+* Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 0.4-alt19
+- Drop QT UI leftovers.
+
 * Wed Jan 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt18
 - delete dependence on samba, this package should not depend on it
   95-smb hook moved to alt-domain-server package
