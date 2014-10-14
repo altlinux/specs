@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.6
+Version: 2.9.7
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.7-alt1
+- Complete Russian translation of alterator-postfix-dovecot
+
 * Thu Sep 18 2014 Andrey Cherepanov <cas@altlinux.org> 2.9.6-alt1
 - Complete translations of some updated modules
 - Fix typo in Russian translations (thanks mike@)
