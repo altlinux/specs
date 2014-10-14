@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt2.git20120125
+Version: 0.6
+Release: alt1.git20140921
 Summary: Wrapper for lxml trees which serializes to string upon iteration
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20140921
+- Version 0.6
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2.git20120125
 - Added module for Python 3
 
