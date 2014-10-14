@@ -1,5 +1,5 @@
 Name: menu-cache
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
@@ -12,7 +12,7 @@ Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: glib2-devel pkg-config
-BuildRequires: gtk-doc libgio-devel
+BuildRequires: gtk-doc libfm-devel libgio-devel
 
 %description
 libmenu-cache is a library creating and utilizing caches to speed up
@@ -77,6 +77,9 @@ This package contains development headers for libmenu-cache.
 %exclude %_libdir/*.a
 
 %changelog
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 0.6.1-alt1
 - 0.6.1
 

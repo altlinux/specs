@@ -1,6 +1,6 @@
 Name: lxqt-config
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -16,6 +16,9 @@ BuildRequires: rpm-build-xdg
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
+
+Provides: lxqt-config-randr = %version
+Obsoletes: lxqt-config-randr < 0.8.0
 
 %description
 %summary
@@ -39,6 +42,10 @@ Obsoletes: razorqt-config < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+- lxqt-config-monitor replaces lxqt-config-randr
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
 - replace razorqt-config
 

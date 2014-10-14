@@ -1,6 +1,6 @@
 Name: lxqt-appswitcher
 Version: 0.7.0
-Release: alt2
+Release: alt3
 
 Summary: Application switcher
 License: LGPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
+BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
 BuildRequires: lxqt-globalkeys-devel
 
 Provides: razorqt-appswitcher = %version
@@ -35,6 +35,9 @@ Obsoletes: razorqt-appswitcher < 0.7.0
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt3
+- use commit g085b8ef
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
 - replace razorqt-appswitcher
 

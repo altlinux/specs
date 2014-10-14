@@ -1,6 +1,6 @@
 Name: lxqt-session
-Version: 0.7.0
-Release: alt3
+Version: 0.8.0
+Release: alt1
 
 Summary: Session manager
 License: LGPL
@@ -43,6 +43,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt3
 - replace razorqt-session
 

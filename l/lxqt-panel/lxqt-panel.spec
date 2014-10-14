@@ -1,6 +1,6 @@
 Name: lxqt-panel
-Version: 0.7.0
-Release: alt7
+Version: 0.8.0
+Release: alt2
 
 Summary: Desktop panel
 License: LGPL
@@ -14,10 +14,13 @@ BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel liblxqt-mount-devel
 BuildRequires: libqtxdg-devel libqt4-devel
 BuildRequires: lxqt-globalkeys-devel
-BuildRequires: libalsa-devel libsysstat-devel
+BuildRequires: libalsa-devel
 BuildRequires: libXdmcp-devel libXdamage-devel
 BuildRequires: libXcomposite-devel libXrender-devel
 BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
+
+# there's an untagged mess there
+BuildRequires: libsysstat-devel >= 0.1.0-alt2
 
 Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
@@ -38,6 +41,10 @@ This package provides the development files for %name.
 
 %prep
 %setup
+# FIXME: 0.8.0 glitch?
+sed -i 's,^#include <LXQtMount/Mount>,#include <lxqtmount/LXQtMount/Mount>,' \
+	plugin-mount/popup.cpp plugin-mount/menudiskitem.cpp \
+	plugin-mount/lxqtmountplugin.cpp plugin-mount/actions/deviceaction.h
 
 %build
 %cmake_insource
@@ -45,7 +52,7 @@ This package provides the development files for %name.
 
 %install
 %makeinstall_std
-# bad ELF symbols: _ZN28LxQtKbIndicatorConfiguration*
+# bad ELF symbols: _ZN28LxQtKbIndicatorConfiguration* (still in 0.8.0)
 rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 
 %files
@@ -59,6 +66,12 @@ rm -f %buildroot%_libdir/%name/libpanelkbindicator.so
 %_includedir/*/*.h
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
+- bad ELF symbols still in libpanelkbindicator.so, sigh
+
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu May 15 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt7
 - R: menu-cache (bails out otherwise)
 

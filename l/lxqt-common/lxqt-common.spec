@@ -1,6 +1,6 @@
 Name: lxqt-common
-Version: 0.7.0
-Release: alt4
+Version: 0.8.0
+Release: alt1
 
 Summary: Default configuration files for LXQt desktop session
 License: LGPL
@@ -13,7 +13,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
+BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
 BuildRequires: rpm-build-xdg
 
 Requires: dbus-tools-gui
@@ -45,6 +45,9 @@ Obsoletes: razorqt-desktop < 0.7.0
 %_datadir/lxqt/
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt4
 - replace razorqt, razorqt-desktop
 
