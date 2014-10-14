@@ -3,7 +3,7 @@
 
 Name:       lazarus
 Version:    1.2.4
-Release:    alt1
+Release:    alt3
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -19,11 +19,16 @@ Source3:    environmentoptions.xml
 Source4:    projectoptions.xml
 
 Patch0:     %name-0.9.22-alt-relax-onwine.patch
-Patch1:     %name-set-correct-path-to-xterm.patch
 Patch2:     %name-fix-desktop-file.patch
 Patch3:     %name-fix-install-path-in-Makefile.patch
 Patch4:     %name-1.0.8-fix-fpc-search.patch
 Patch5:     %name-1.2.0-fix-trailing-comma.patch
+Patch6:	    %name-set-user-TestBuildDirectory.patch
+
+# Patches from Debian
+Patch11: lazarus-default-config.patch
+Patch12: lazarus-lcl-with-multple-widget-sets.patch
+Patch13: lazarus-spell-errors.patch
 
 BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -57,15 +62,21 @@ Development tool) на FreePascal, использующая библиотеки
 %patch0 -p1
 
 tar xf %SOURCE2
-%patch1 -p2
 %patch2 -p1
 %patch3 -p1
 subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
+
+# Replace xterm call with real path
+find . -name *.lpi -print0 -o -name *.kof -print0 | xargs -0 -L 1 subst 's,[\\/]usr[\\/]\(X11R6[\\/]\)\?bin[\\/]\(xterm\|gnome-terminal\),/usr/bin/xterm,'
 
 %build
 MAKEOPTS="-Fl/opt/gnome/lib"
@@ -182,6 +193,15 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt3
+- Place TestBuildDirectory in ~/.lazarus/tmp by default and if /tmp/ is
+  used from previous configuration
+
+* Thu Oct 09 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt2
+- Apply patches from Debian
+- Replace xterm path fix patch by regular expression in command line
+- Use user personal temporary directory to prevent temporary files clash
+
 * Wed Aug 13 2014 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt1
 - New version
 
