@@ -16,7 +16,7 @@
 %define rname kdepim
 %define major 4
 %define minor 14
-%define bugfix 1
+%define bugfix 2
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -1177,6 +1177,7 @@ based on kdepim.
 %_K4conf/messageviewer_header_themes.knsrc
 %_K4conf_update/grantleetheme.upd
 %_K4xdg_apps/konsolekalendar.desktop
+%_K4xdg_apps/pimsettingexporter.desktop
 %_K4xdg_apps/storageservicemanager.desktop
 %_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
@@ -1722,6 +1723,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Oct 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
 - new version
 
