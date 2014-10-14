@@ -6,6 +6,7 @@
 %else
 %def_enable desktop
 %endif
+%def_enable baloo
 %def_disable ruby
 %define x11confdir %_sysconfdir/X11
 
@@ -20,11 +21,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 12
+%define bugfix 13
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -135,6 +136,9 @@ BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel
+%if_disabled baloo
+BuildRequires: kde4-nepomuk-core-devel
+%endif
 BuildRequires: python-module-sip python-devel libselinux-devel
 BuildRequires: libsystemd-login-devel libsystemd-journal-devel libsystemd-id128-devel libsystemd-daemon-devel systemd-devel
 #BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
@@ -200,7 +204,11 @@ Requires: kde4-kscreen
 #Requires: google-gadgets-qt
 %endif
 Requires: polkit-kde-agent-1
+%if_enabled baloo
 Requires: kde4-baloo
+%else
+Requires: kde4-nepomuk-core
+%endif
 Provides: kde4base-kinfocenter = %version-%release
 Obsoletes: kde4base-kinfocenter < %version-%release
 %description core
@@ -482,7 +490,6 @@ Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkwinactiveeffects4
 KDE 4 library
-
 
 %prep
 %setup -q -n %rname-%version
@@ -942,6 +949,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Oct 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.13-alt1
+- new version
+
+* Mon Oct 06 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.12-alt1.M70P.1
+- built for M70P
+
 * Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.11.12-alt2
 - hide kdm from systemsettings
 
