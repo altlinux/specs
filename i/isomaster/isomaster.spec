@@ -1,5 +1,5 @@
 Name: isomaster
-Version: 1.3.11
+Version: 1.3.12
 Release: alt1
 
 Summary: An open-source, graphical CD image editor
@@ -39,6 +39,9 @@ rm -rf %buildroot%_defaultdocdir/bkisofs
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 1.3.12-alt1
+- new version (watch file uupdate)
+
 * Thu Apr 17 2014 Michael Shigorin <mike@altlinux.org> 1.3.11-alt1
 - new version (watch file uupdate)
 - merged 1.3.8-alt1.qa1 changelog record
