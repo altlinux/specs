@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -12,7 +12,7 @@ License: LGPL
 Group: System/Libraries
 Url: http://live.gnome.org/Libgee
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires: libgio-devel >= 2.36 libvala-devel >= 0.23.2 vala-tools gobject-introspection-devel
 
@@ -110,6 +110,9 @@ applications with %name.
 %endif
 
 %changelog
+* Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
