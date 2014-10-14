@@ -5,7 +5,7 @@
 Name: toxcore
 Summary: %name
 Version: 0.0.1
-Release: alt1.20140717.1
+Release: alt1.20141014
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel
@@ -33,6 +33,13 @@ Summary: %summary
 Group: System/Libraries
 
 %description -n libtoxdns0
+%summary
+
+%package -n libtoxencryptsave0
+Summary: %summary
+Group: System/Libraries
+
+%description -n libtoxencryptsave0
 %summary
 
 %package devel
@@ -78,11 +85,16 @@ Requires: toxcore-devel
 %_libdir/libtoxdns.so.0
 %_libdir/libtoxdns.so.0.0.0
 
+%files -n libtoxencryptsave0
+%_libdir/libtoxencryptsave.so.0
+%_libdir/libtoxencryptsave.so.0.0.0
+
 %files devel
 %_includedir/tox
 %_libdir/libtoxav.so
 %_libdir/libtoxcore.so
 %_libdir/libtoxdns.so
+%_libdir/libtoxencryptsave.so
 %_pkgconfigdir/libtoxav.pc
 %_pkgconfigdir/libtoxcore.pc
 
@@ -90,8 +102,12 @@ Requires: toxcore-devel
 %_libdir/libtoxav.a
 %_libdir/libtoxcore.a
 %_libdir/libtoxdns.a
+%_libdir/libtoxencryptsave.a
 
 %changelog
+* Tue Oct 14 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20141014
+- update from upstream git (ALT #30394)
+
 * Mon Aug 25 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20140717.1
 - rebuild with new libsodium
 
