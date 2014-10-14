@@ -1,6 +1,6 @@
 Name: 	  chromium-pepperflash
 Version:  1.5.2
-Release:  alt2
+Release:  alt3
 
 Summary:  Pepper Flash Player - browser plugin for Chromium
 License:  GPLv3+
@@ -43,6 +43,9 @@ exit 0
 %dir %_cachedir/pepperflash
 
 %changelog
+* Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt3
+- Force update from alt2 to prevent wrong %%preun trigger
+
 * Mon Oct 13 2014 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt2
 - Do not remove plugin on update
 
