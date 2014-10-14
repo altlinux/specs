@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -52,6 +52,9 @@ install -m644 tools/base_conf.php %buildroot/%_datadir/alterator-snort/
 %_datadir/alterator-snort/base_conf.php
 
 %changelog
+* Mon Oct 13 2014 Mikhail Efremov <sem@altlinux.org> 0.3.5-alt1
+- Ensure that fail2ban is enabled.
+
 * Tue Aug 19 2014 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt1
 - Add reference to BASE web interface.
 - Changes for BASE-1.4.5-alt7.
