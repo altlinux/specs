@@ -1,11 +1,9 @@
 %define mname plone.portlet
 %define oname %mname.collection
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: Portlet displaying results from a collection
 License: GPLv2
 Group: Development/Python
@@ -23,7 +21,7 @@ BuildPreReq: python-module-plone.app.vocabularies
 BuildPreReq: python-module-plone.app.form
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-plone.app.contenttypes
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
@@ -87,6 +85,9 @@ python setup.py test
 %python_sitelibdir/plone/portlet/__init__.py*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20140826
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
