@@ -1,10 +1,8 @@
 %define oname plone.app.testing
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 5.0a3
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Testing tools for Plone-the-application, based on plone.testing
 License: GPLv2
 Group: Development/Python
@@ -28,20 +26,21 @@ BuildPreReq: python-module-Products.PluggableAuthService
 BuildPreReq: python-module-Products.CMFPlacefulWorkflow
 BuildPreReq: python-module-unittest2
 BuildPreReq: python-module-zope.publisher
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-selenium
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires plone.testing Products.GenericSetup
 %py_requires zope.site zope.testing five.localsitemanager plone.memoize
 %py_requires plone.app zope.configuration zope.component zope.dottedname
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 # for tests:
 %py_requires Products.CMFCore Products.PluggableAuthService
 %py_requires Products.CMFPlacefulWorkflow unittest2 zope.interface
 %py_requires zope.publisher
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description
 plone.app.testing provides tools for writing integration and functional
@@ -73,6 +72,10 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0a3-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0a3-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
