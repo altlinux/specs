@@ -1,7 +1,7 @@
 %define oname Products.contentmigration
 Name: python-module-%oname
 Version: 2.1.10
-Release: alt1.dev0.git20140907
+Release: alt2.dev0.git20140907
 Summary: A generic content migration framework for Plone
 License: LGPL
 Group: Development/Python
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-archetypes.schemaextender
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -30,7 +30,7 @@ but makes it easy to write certain type of content migrations.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-#py_requires Products.PloneTestCase Products.CMFPlone
+%py_requires Products.PloneTestCase Products.CMFPlone
 
 %description tests
 This is a generic content migration framework, which should help you
@@ -65,6 +65,9 @@ python setup.py test
 %python_sitelibdir/Products/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.10-alt2.dev0.git20140907
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.10-alt1.dev0.git20140907
 - Initial build for Sisyphus
 
