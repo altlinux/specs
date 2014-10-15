@@ -1,5 +1,5 @@
 Name: liblxqt-mount
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Library used to manage removable devices
@@ -26,6 +26,8 @@ This package provides the development files for LXQt-mount library.
 
 %prep
 %setup
+# FIXME: https://github.com/lxde/lxde-qt/issues/299
+sed -i 's,^set(MINOR_VERSION 7)$,set(MINOR_VERSION 8),' CMakeLists.txt
 
 %build
 %cmake_insource
@@ -33,6 +35,8 @@ This package provides the development files for LXQt-mount library.
 
 %install
 %makeinstall_std
+# FIXME: kludge to get pkgconfig file straight
+sed -i 's,^Version:.*$,Version: %version,' %buildroot%_pkgconfigdir/*.pc
 
 %files
 %_libdir/*.so.*
@@ -44,6 +48,10 @@ This package provides the development files for LXQt-mount library.
 %_datadir/cmake/*/
 
 %changelog
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+- pkgconfig file fixup
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 

@@ -1,5 +1,5 @@
 Name: lxqt-about
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
+BuildRequires: liblxqt-devel libqt4-devel libqtxdg-devel
 
 %description
 %summary
@@ -32,6 +32,9 @@ BuildRequires: liblxqt-devel libqt4-devel
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - initial release
 

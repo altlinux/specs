@@ -1,5 +1,5 @@
 Name: lxmenu-data
-Version: 0.0.0
+Version: 0.1.4
 Release: alt1
 
 Summary: Freedesktop.org application menu definition files
@@ -43,6 +43,9 @@ autoconf
 %doc AUTHORS README TODO
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.1.4-alt1
+- 0.1.4
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.0.0-alt1
 - initial release
 

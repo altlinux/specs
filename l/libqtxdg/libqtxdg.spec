@@ -1,5 +1,5 @@
 Name: libqtxdg
-Version: 0.5.3
+Version: 1.0.0
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libqt4-devel libmagic-devel
+BuildRequires: libqt4-devel libmagic-devel libqtmimetypes-devel
 
 %description
 %summary
@@ -46,6 +46,9 @@ which implements functions of the XDG Specifications in Qt.
 %_datadir/cmake/*/
 
 %changelog
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.5.3-alt1
 - 0.5.3
   + thanks jleclanche for rapid update so the standalone

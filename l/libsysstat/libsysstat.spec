@@ -1,6 +1,6 @@
 Name: libsysstat
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Library used to query system info and statistics
 License: LGPL
@@ -36,6 +36,8 @@ sed -i 's,RAZOR_VERSION,SYSSTAT_VERSION,' cmake/create_pkgconfig_file.cmake
 
 %install
 %makeinstall_std
+# FIXME
+sed -i 's,^Version:.*$,Version: %version,' %buildroot%_pkgconfigdir/*.pc
 
 %files
 %_libdir/*.so.*
@@ -47,6 +49,9 @@ sed -i 's,RAZOR_VERSION,SYSSTAT_VERSION,' cmake/create_pkgconfig_file.cmake
 %_datadir/cmake/*/
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt2
+- use untagged upstream commit g151ef16 (NB: API change)
+
 * Thu May 08 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt1
 - initial release
 

@@ -1,6 +1,6 @@
 Name: compton-conf
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: GUI configuration tool for compton X composite manager
 License: LGPL
@@ -34,6 +34,9 @@ BuildRequires: libconfig-c++-devel libconfig-devel
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt2
+- rebuilt against current libraries
+
 * Tue May 13 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt1
 - initial release
 

@@ -1,5 +1,5 @@
 Name: pcmanfm
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: PCMan File Manager
@@ -56,6 +56,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_man1dir/*
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

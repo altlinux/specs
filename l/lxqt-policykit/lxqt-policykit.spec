@@ -1,6 +1,6 @@
 Name: lxqt-policykit
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: Policykit authentication agent
 License: LGPL
@@ -37,6 +37,9 @@ export CMAKE_PREFIX_PATH=%_libdir/cmake/PolkitQt-1
 %doc AUTHORS
 
 %changelog
+* Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed May 14 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt2
 - replace razorqt-polkit-agent
 

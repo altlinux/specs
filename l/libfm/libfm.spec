@@ -1,7 +1,7 @@
 %define soname 4
 
 Name: libfm
-Version: 1.2.2.1
+Version: 1.2.3
 Release: alt1
 
 Summary: Core library of PCManFM file manager
@@ -106,6 +106,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Tue Oct 14 2014 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 1.2.2.1-alt1
 - 1.2.2.1
 
