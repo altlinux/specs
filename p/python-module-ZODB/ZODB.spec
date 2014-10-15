@@ -1,21 +1,33 @@
 %define oname ZODB
 
 %def_with python3
+# test is very slow
+%def_disable check
 
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt1.dev.git20140724
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ZODB
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/ZODB.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
 BuildPreReq: python-module-zope.interface python-module-persistent
+BuildPreReq: python-module-BTrees
+BuildPreReq: python-module-zconfig
+BuildPreReq: python-module-transaction
+BuildPreReq: python-module-six
+BuildPreReq: python-module-zc.lockfile
+BuildPreReq: python-module-zdaemon
+BuildPreReq: python-module-zodbpickle
+BuildPreReq: python-module-manuel-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -24,7 +36,7 @@ BuildPreReq: python3-module-zope.interface python3-module-persistent
 
 %py_provides %oname
 %py_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
-%py_requires zope.event zope.interface zope.proxy
+%py_requires zope.event zope.interface zope.proxy zodbpickle
 
 %description
 The Zope Object Database provides an object-oriented database for Python
@@ -124,6 +136,9 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt *.rst
 %_bindir/*
@@ -161,6 +176,10 @@ popd
 %endif
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20140724
+- Version 4.0.1dev
+- Enabled testing
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Initial build for Sisyphus
 
