@@ -1,7 +1,7 @@
 %define oname Products.validation
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1.git20120103
+Release: alt2.git20120103
 Summary: Data validation package for Archetypes
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-zope.i18n python-module-docutils
 BuildPreReq: python-module-zope.i18nmessageid
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -27,7 +27,7 @@ Data validation package for Archetypes.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 
 %description tests
 Data validation package for Archetypes.
@@ -60,6 +60,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt2.git20120103
+- Added necessary requirements
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.git20120103
 - Initial build for Sisyphus
 
