@@ -1,7 +1,7 @@
 %define oname Products.CMFDynamicViewFTI
 Name: python-module-%oname
 Version: 4.0.6
-Release: alt1.dev0.git20130523
+Release: alt2.dev0.git20130523
 Summary: CMFDynamicViewFTI is a product for dynamic views in CMF
 License: ZPL
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-Products.CMFTestCase
-#BuildPreReq: python-module-plone.app.contentmenu
+BuildPreReq: python-module-plone.app.contentmenu
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -34,7 +34,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.publisher Products.CMFTestCase
-#py_requires plone.app.contentmenu
+%py_requires plone.app.contentmenu
 
 %description tests
 CMFDynamicViewFTI is a product for dynamic views in CMF. The product
@@ -69,6 +69,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.6-alt2.dev0.git20130523
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.6-alt1.dev0.git20130523
 - Initial build for Sisyphus
 
