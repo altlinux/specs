@@ -1,10 +1,8 @@
 %define oname plone.app.contentmenu
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.1.2
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Plone's content menu implementation
 License: GPLv2
 Group: Development/Python
@@ -27,7 +25,7 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.CMFDynamicViewFTI
 BuildPreReq: python-module-plone.protect
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -35,7 +33,7 @@ Requires: python-module-Zope2
 %py_requires zope.interface zope.i18n zope.i18nmessageid zope.publisher
 %py_requires zope.browsermenu zope.component zope.contentprovider
 %py_requires plone.app plone.locking plone.memoize plone.app.content
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.contentmenu contains the logic that powers Plone's content
@@ -79,6 +77,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
