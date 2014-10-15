@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec/upower
 
 Name: upower
-Version: 0.99.0
-Release: alt2
+Version: 0.99.1
+Release: alt1
 
 Summary: Power Management Service
 License: GPLv2+
@@ -67,7 +67,7 @@ GObject introspection devel data for the UPower library
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
 rm -f acinclude.m4
 
@@ -82,7 +82,7 @@ rm -f acinclude.m4
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 
@@ -120,6 +120,10 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.1-alt1
+- 0.99.1
+- built against libimobiledevice.so.5/libplist.so.3
+
 * Fri Jun 20 2014 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt2
 - rebuilt against libplist.so.2
 

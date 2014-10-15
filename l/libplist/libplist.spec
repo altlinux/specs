@@ -1,5 +1,5 @@
 Name: libplist
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
@@ -57,8 +57,7 @@ Python libraries and bindings for %name
 %build
 %autoreconf
 %configure --disable-static
-# SMP-incompatible build
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -87,6 +86,9 @@ Python libraries and bindings for %name
 %exclude %python_sitelibdir/plist.la
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
+- 1.12
+
 * Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt1
 - 1.11
 

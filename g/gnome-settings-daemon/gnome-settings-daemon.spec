@@ -10,7 +10,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -206,6 +206,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt2
+- rebuilt against libupower-glib.so.3
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

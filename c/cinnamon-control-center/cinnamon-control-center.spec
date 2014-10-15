@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -174,6 +174,9 @@ you'll want to install this package.
 
 
 %changelog
+* Wed Oct 15 2014 Vladimir Didenko <cow@altlinux.org> 2.2.10-alt2
+- rebuild with new upower
+
 * Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.10-alt1
 - 2.2.10
 
