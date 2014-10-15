@@ -1,7 +1,7 @@
 %define oname Missing
 Name: python-module-%oname
-Version: 3.0
-Release: alt1
+Version: 3.0.1
+Release: alt1.dev.git20130505
 Summary: Special Missing objects used in Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
 
 %py_requires ExtensionClass
 
@@ -38,6 +39,9 @@ This package contains tests for Special Missing objects used in Zope2.
 %install
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -47,6 +51,10 @@ This package contains tests for Special Missing objects used in Zope2.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev.git20130505
+- Version 3.0.1dev
+- Enabled testing
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Version 3.0
 
