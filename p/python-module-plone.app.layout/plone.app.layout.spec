@@ -1,10 +1,8 @@
 %define oname plone.app.layout
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.5.2
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Core visual components for Plone, such as viewlets and general views
 License: GPLv2
 Group: Development/Python
@@ -39,8 +37,9 @@ BuildPreReq: python-module-plone.locking
 BuildPreReq: python-module-plone.testing
 BuildPreReq: python-module-z3c.relationfield
 BuildPreReq: python-module-zope.annotation
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-markdown
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -50,7 +49,7 @@ Requires: python-module-Zope2
 %py_requires plone.app.viewletmanager plone.memoize plone.portlets
 %py_requires plone.app plone.app.content plone.app.portlets plone.i18n
 %py_requires zope.schema zope.viewlet
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 This package contains various visual components for Plone, such as
@@ -63,7 +62,7 @@ Requires: %name = %EVR
 %py_requires plone.app.intid plone.app.relationfield plone.app.testing
 %py_requires plone.dexterity plone.locking plone.testing
 %py_requires z3c.relationfield zope.annotation
-#py_requires plone.app.contenttypes
+%py_requires plone.app.contenttypes
 
 %description tests
 This package contains various visual components for Plone, such as
@@ -99,6 +98,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.2-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
