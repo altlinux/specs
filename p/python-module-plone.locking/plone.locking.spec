@@ -1,7 +1,7 @@
 %define oname plone.locking
 Name: python-module-%oname
 Version: 2.0.5
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: webdav locking support
 License: GPLv2
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -38,7 +38,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 
 %description tests
 Provides basic automatic locking support for Plone. Locks are stealable
@@ -75,6 +75,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt2.dev0.git20140826
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
