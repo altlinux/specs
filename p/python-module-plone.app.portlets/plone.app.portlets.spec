@@ -1,10 +1,8 @@
 %define oname plone.app.portlets
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.2
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Plone integration for the basic plone.portlets package
 License: GPLv2
 Group: Development/Python
@@ -40,9 +38,9 @@ BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-Products.PluggableAuthService
 BuildPreReq: python-module-plone.app.blob
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.layout
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-plone.app.layout
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.ATContentTypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -54,7 +52,7 @@ Requires: python-module-Zope2
 %py_requires zope.annotation zope.browser zope.component zope.container
 %py_requires plone.portlets plone.app.i18n plone.app.vocabularies
 %py_requires plone.app five.customerize plone.i18n plone.memoize
-#py_requires plone.app.layout Products.CMFPlone
+%py_requires plone.app.layout Products.CMFPlone
 
 %description
 plone.app.portlets provides a Plone-specific user interface for
@@ -66,7 +64,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.blob plone.app.testing
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description tests
 plone.app.portlets provides a Plone-specific user interface for
@@ -101,6 +99,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
