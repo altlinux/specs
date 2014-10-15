@@ -1,7 +1,7 @@
 %define oname Persistence
 Name: python-module-%oname
 Version: 2.13.2
-Release: alt4
+Release: alt5
 Summary: Persistent ExtensionClass
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
 
 %py_requires ExtensionClass ZODB3
 
@@ -40,6 +41,9 @@ This package contains tests for Persistent ExtensionClass.
 %install
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -49,6 +53,9 @@ This package contains tests for Persistent ExtensionClass.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt5
+- Enabled testing
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.2-alt4
 - Return requirement on ZODB3
 
