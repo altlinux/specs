@@ -1,7 +1,7 @@
 %define oname ExtensionClass
 Name: python-module-%oname
 Version: 4.1
-Release: alt1.a1
+Release: alt1.a1.git20130504
 Summary: Metaclass for subclassable extension types
 License: ZPLv2.1
 Group: Development/Python
@@ -10,7 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
 
 %description
 ExtensionClass:
@@ -52,6 +53,9 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 %install
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -61,6 +65,10 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt1.a1.git20130504
+- Snapshot from git
+- Enabled testing
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt1.a1
 - Version 4.1a1
 
