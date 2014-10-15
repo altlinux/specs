@@ -1,10 +1,8 @@
 %define oname plone.app.blob
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.5.11
-Release: alt1.dev0.git20141001
+Release: alt2.dev0.git20141001
 Summary: ZODB blob support for Plone
 License: GPLv2
 Group: Development/Python
@@ -21,15 +19,17 @@ BuildPreReq: python-module-plone.app.imaging
 BuildPreReq: python-module-plone.scale
 BuildPreReq: python-module-collective.monkeypatcher
 BuildPreReq: python-module-Products.contentmigration
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-unittest2
+BuildPreReq: python-module-plone.app.testing
+BuildPreReq: python-module-plone.testing
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires plone.app ZODB3 zope.proxy archetypes.schemaextender
-%py_requires plone.app.imaging plone.scale
-#py_requires Products.Archetypes
-# for tests:
-%py_requires collective.monkeypatcher Products.contentmigration
+%py_requires plone.app.imaging plone.scale Products.CMFPlone
+%py_requires Products.Archetypes
 
 %description
 This package aims to be an add-on for Plone (>= 3.x) integrating ZODB
@@ -42,6 +42,8 @@ Data.fs and better performance both cpu- as well as memory-wise.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires collective.monkeypatcher Products.contentmigration
+%py_requires plone.app.testing plone.testing
 
 %description tests
 This package aims to be an add-on for Plone (>= 3.x) integrating ZODB
@@ -66,6 +68,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
+export PYTHONPATH=$PWD/src
 python setup.py test
 
 %files
@@ -78,6 +81,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.11-alt2.dev0.git20141001
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.11-alt1.dev0.git20141001
 - Initial build for Sisyphus
 
