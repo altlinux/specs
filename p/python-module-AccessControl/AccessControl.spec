@@ -1,16 +1,25 @@
 %define oname AccessControl
+
 Name: python-module-%oname
-Version: 3.0.8
-Release: alt3
+Version: 3.0.10
+Release: alt1.dev.git20140808
 Summary: Security framework for Zope2
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/AccessControl/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/AccessControl.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.deferredimport
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-zope.security
+BuildPreReq: python-module-zope.testing
 
 %py_requires Acquisition DateTime ExtensionClass Persistence Record
 %py_requires RestrictedPython transaction zExceptions ZODB3
@@ -40,6 +49,9 @@ This package contains tests for Security framework for Zope2.
 %install
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -49,6 +61,10 @@ This package contains tests for Security framework for Zope2.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.10-alt1.dev.git20140808
+- Version 3.0.10dev
+- Enabled testing
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt3
 - Return requirement on ZODB3
 
