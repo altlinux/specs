@@ -1,7 +1,7 @@
 %define oname plone.rfc822
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1.dev0.git20140620
+Release: alt1.dev0.git20141012
 Summary: RFC822 marshalling for zope.schema fields
 License: BSD
 Group: Development/Python
@@ -13,11 +13,11 @@ Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-zope.schema python-module-dateutil
-#BuildPreReq: python-module-plone.supermodel
+BuildPreReq: python-module-plone.supermodel
 
 %py_provides %oname
 %py_requires plone zope.schema zope.component zope.interface
-#py_requires plone.supermodel
+%py_requires plone.supermodel
 
 %description
 This package provides primitives for turning content objects described
@@ -62,6 +62,10 @@ python setup.py test
 %python_sitelibdir/plone/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.dev0.git20141012
+- New snapshot
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.dev0.git20140620
 - Initial build for Sisyphus
 
