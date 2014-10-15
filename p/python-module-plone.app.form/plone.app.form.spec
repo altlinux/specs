@@ -1,10 +1,8 @@
 %define oname plone.app.form
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.3.1
-Release: alt1.dev0.git20140925
+Release: alt2.dev0.git20140925
 Summary: zope.formlib integration for Plone
 License: GPLv2
 Group: Development/Python
@@ -36,7 +34,7 @@ BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-plone.app.layout
 BuildPreReq: python-module-plone.app.contentlisting
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -90,6 +88,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt2.dev0.git20140925
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1.dev0.git20140925
 - Initial build for Sisyphus
 
