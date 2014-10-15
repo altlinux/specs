@@ -4,10 +4,10 @@
 %define rname marble
 %define major 4
 %define minor 14
-%define bugfix 0
+%define bugfix 2
 Name: kde4-marble
 Version: %major.%minor.%bugfix
-Release: alt10
+Release: alt1
 
 Group: Education
 Summary: A virtual globe and world atlas
@@ -126,5 +126,8 @@ KDE 4 library
 
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Thu Sep 11 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt10
 - split from kde4edu
