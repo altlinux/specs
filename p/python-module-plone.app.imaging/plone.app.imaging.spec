@@ -1,10 +1,8 @@
 %define oname plone.app.imaging
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt1.dev0.git20140903
+Release: alt2.dev0.git20140903
 Summary: User-configurable, blob-aware image scaling for Plone
 License: GPLv2
 Group: Development/Python
@@ -17,19 +15,17 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-z3c.caching
 BuildPreReq: python-module-five.globalrequest
-#BuildPreReq: python-module-plone.app.controlpanel
-#BuildPreReq: python-module-plone.scale
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-plone.app.controlpanel
+BuildPreReq: python-module-plone.scale
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-plone.app.testing
+BuildPreReq: python-module-Products.ATContentTypes
 
 %py_provides %oname
 Requires: python-module-plone.app = %EVR
 Requires: python-module-Zope2
 %py_requires z3c.caching five.globalrequest
-#py_requires plone.app.controlpanel plone.scale Products.Archetypes
-# for tests:
-#py_requires plone.app.testing Products.ATContentTypes
+%py_requires plone.app.controlpanel plone.scale Products.Archetypes
 
 %description
 This package tries to factor out and re-use the image scaling code from
@@ -40,6 +36,7 @@ and add support for storing the image data into ZODB blobs.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires plone.app.testing Products.ATContentTypes
 
 %description tests
 This package tries to factor out and re-use the image scaling code from
@@ -90,6 +87,10 @@ python setup.py test
 %python_sitelibdir/plone/app/__init__.py*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.dev0.git20140903
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.dev0.git20140903
 - Initial build for Sisyphus
 
