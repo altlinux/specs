@@ -1,10 +1,8 @@
 %define oname Products.ATContentTypes
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Core content types for Plone 2.1 - 4.3
 License: GPL
 Group: Development/Python
@@ -37,10 +35,11 @@ BuildPreReq: python-module-Products.PortalTransforms
 BuildPreReq: python-module-Products.validation
 BuildPreReq: python-module-zope.annotation
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.CMFFormController
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.CMFFormController
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -51,8 +50,8 @@ Requires: python-module-Zope2
 %py_requires zope.component zope.i18n zope.i18nmessageid zope.interface
 %py_requires plone.app.collection plone.app.folder plone.app.widgets
 %py_requires plone.i18n plone.memoize plone.app.blob plone.app.layout
-#py_requires Products.CMFPlone Products.Archetypes
-#py_requires Products.CMFFormController
+%py_requires Products.CMFPlone Products.Archetypes
+%py_requires Products.CMFFormController
 
 %description
 Default Content Types for Plone.
@@ -62,7 +61,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.annotation zope.testing
-#py_requires Products.PloneTestCase
+%py_requires Products.PloneTestCase
 %add_python_req_skip exif
 
 %description tests
@@ -98,6 +97,10 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
