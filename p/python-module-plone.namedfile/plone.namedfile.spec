@@ -1,7 +1,7 @@
 %define oname plone.namedfile
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20141007
+Release: alt2.dev0.git20141007
 Summary: File types and fields for images, files and blob files with filenames
 License: BSD
 Group: Development/Python
@@ -18,13 +18,13 @@ BuildPreReq: python-module-zope.traversing
 BuildPreReq: python-module-plone.rfc822
 BuildPreReq: python-module-plone.supermodel
 BuildPreReq: python-module-plone.scale
-#BuildPreReq: python-module-plone.schemaeditor
+BuildPreReq: python-module-plone.schemaeditor
 
 %py_provides %oname
 %py_requires plone zope.browserpage zope.component zope.security
 %py_requires zope.traversing plone.rfc822
 %py_requires plone.supermodel plone.scale
-#py_requires plone.schemaeditor
+%py_requires plone.schemaeditor
 
 %description
 This package contains fields and wrapper objects for storing:
@@ -71,6 +71,9 @@ python setup.py test
 %python_sitelibdir/plone/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20141007
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20141007
 - Initial build for Sisyphus
 
