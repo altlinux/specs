@@ -1,7 +1,7 @@
 %define oname Products.CMFPlone
 Name: python-module-%oname
 Version: 5.0
-Release: alt1.a3.dev0.git20141009
+Release: alt2.a3.dev0.git20141009
 Summary: The Plone Content Management System (core)
 License: GPLv2
 Group: Development/Python
@@ -137,7 +137,7 @@ Requires: python-module-Zope2
 %py_requires Products.MimetypesRegistry Products.PasswordResetTool
 %py_requires Products.PlacelessTranslationService ZODB3
 %py_requires Products.PloneLanguageTool Products.PluggableAuthService
-%py_requires Products.PlonePAS
+%py_requires Products.PlonePAS markdown
 %py_requires Products.PluginRegistry Products.PortalTransforms
 %py_requires Products.ResourceRegistries Products.statusmessages
 %py_requires borg.localrole five.customerize five.localsitemanager
@@ -203,6 +203,9 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt2.a3.dev0.git20141009
+- Added requirement on markdown
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.a3.dev0.git20141009
 - Initial build for Sisyphus
 
