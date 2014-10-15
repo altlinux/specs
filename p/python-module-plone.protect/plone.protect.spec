@@ -1,7 +1,7 @@
 %define oname plone.protect
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: Security for browser forms
 License: BSD
 Group: Development/Python
@@ -18,7 +18,7 @@ BuildPreReq: python-module-repoze.xmliter
 BuildPreReq: python-module-five.globalrequest
 BuildPreReq: python-module-collective.monkeypatcher
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -35,7 +35,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description tests
 This package contains utilities that can help to protect parts of Plone
@@ -69,6 +69,9 @@ python setup.py test
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20140826
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
