@@ -1,10 +1,8 @@
 %define oname plone.app.versioningbehavior
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1.dev0.git20140915
+Release: alt2.dev0.git20140915
 Summary: Provides a behavior for using CMFEditions with dexterity content types
 License: GPLv2
 Group: Development/Python
@@ -24,13 +22,14 @@ BuildPreReq: python-module-zope.app.container
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-Products.CMFDiffTool
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.dexterity
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.PloneTestCase
 
 %py_provides %oname
 %py_requires plone.app plone.autoform plone.dexterity plone.namedfile
 %py_requires Products.CMFEditions zope.app.container
-#py_requires plone.app.dexterity
+%py_requires plone.app.dexterity
 
 %description
 The ``IVersionable`` behavior is used for enabling the CMFEditions
@@ -44,7 +43,7 @@ Group: Development/Python
 Requires: %name = %EVR
 Requires: python-module-Products.CMFEditions-tests
 %py_requires plone.app.testing Products.CMFDiffTool plone.app.testing
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone Products.PloneTestCase
 
 %description tests
 The ``IVersionable`` behavior is used for enabling the CMFEditions
@@ -80,6 +79,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.dev0.git20140915
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.dev0.git20140915
 - Initial build for Sisyphus
 
