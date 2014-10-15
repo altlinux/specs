@@ -2,21 +2,21 @@
 
 Name: wxstedit
 Version: 1.6.0
-Release: alt1
+Release: alt2.r3169
 Summary: sample program for the wxWidgets's wxStyledTextCtrl Scintilla wrapper
 License: wxWidgets License
 Group: Editors
 Url: http://wxcode.sourceforge.net/showcomp.php?name=wxStEdit
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
-#http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/stedit/
+# http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/stedit/
 Source: wxstedit.tar
 #.gz
 Source1: wxStEdit.desktop
 
 # Automatically added by buildreq on Wed Oct 08 2014
 # optimized out: cmake cmake-modules fontconfig libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server libwxGTK-contrib-stc python3-base
-BuildRequires: cmake gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel
+BuildRequires: cmake gcc-c++ libwxGTK3.0-devel doxygen
 
 %description
 wxStEdit is a library and sample program for the wxWidgets's wxStyledTextCtrl
@@ -85,6 +85,7 @@ sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 %build
 %cmake
 %make_build -C BUILD
+#%%make_build -C BUILD wxStEdit_doxygen
 
 %install
 %makeinstall_std -C BUILD
@@ -120,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 15 2014 Ildar Mulyukov <ildar@altlinux.ru> 1.6.0-alt2.r3169
+- rebuild with libwxGTK3.0-devel
+
 * Wed Oct 08 2014 Ildar Mulyukov <ildar@altlinux.ru> 1.6.0-alt1
 - new version (SVN)
 
