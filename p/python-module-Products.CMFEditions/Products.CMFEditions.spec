@@ -1,7 +1,7 @@
 %define oname Products.CMFEditions
 Name: python-module-%oname
 Version: 2.2.11
-Release: alt1.dev0.git20141007
+Release: alt2.dev0.git20141007
 Summary: Versioning for Plone
 License: GPL
 Group: Development/Python
@@ -24,9 +24,9 @@ BuildPreReq: python-module-Products.ZopeVersionControl
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-Products.CMFDynamicViewFTI
 BuildPreReq: python-module-plone.app.blob-tests
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.PloneTestCase
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -46,8 +46,8 @@ Group: Development/Python
 Requires: %name = %EVR
 Requires: python-module-plone.app.blob-tests
 %py_requires zope.testing Products.CMFDynamicViewFTI
-#py_requires Products.CMFPlone Products.Archetypes
-#py_requires Products.PloneTestCase
+%py_requires Products.CMFPlone Products.Archetypes
+%py_requires Products.PloneTestCase
 
 %description tests
 CMFEditions provides versioning in Plone.
@@ -99,6 +99,9 @@ python setup.py test
 %doc doc/*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.11-alt2.dev0.git20141007
+- Added necessary requirements
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.11-alt1.dev0.git20141007
 - Initial build for Sisyphus
 
