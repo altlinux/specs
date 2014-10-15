@@ -1,5 +1,5 @@
 Name: libxcbutil
-Version: 0.3.9
+Version: 0.4.0
 Release: alt1
 Epoch: 1
 Summary: XCB util modules
@@ -52,6 +52,9 @@ Header files for XCB util libraries
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 15 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.0-alt1
+- 0.4.0
+
 * Wed Aug 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.9-alt1
 - 0.3.9
 
