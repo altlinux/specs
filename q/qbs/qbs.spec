@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Qt Build Suite
@@ -87,6 +87,9 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Wed Oct 15 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.2-alt1
+- Version 1.3.2
+
 * Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 
