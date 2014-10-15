@@ -1,10 +1,8 @@
 %define oname Products.CMFPlacefulWorkflow
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.6.1
-Release: alt1.dev0.git20140416
+Release: alt2.dev0.git20140416
 Summary: Workflow policies for CMF and Plone
 License: GPL
 Group: Development/Python
@@ -19,17 +17,15 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires zope.component zope.interface zope.i18nmessageid
 %py_requires Products.CMFCore Products.GenericSetup
-#py_requires Products.CMFPlone
-# for tests:
-%py_requires zope.testing
-#py_requires Products.PloneTestCase
+%py_requires Products.CMFPlone
 
 %description
 Plone product that allows you to define workflow policies that define
@@ -40,6 +36,8 @@ of your Plone site.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires zope.testing
+%py_requires Products.PloneTestCase
 
 %description tests
 Plone product that allows you to define workflow policies that define
@@ -74,6 +72,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.dev0.git20140416
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.dev0.git20140416
 - Initial build for Sisyphus
 
