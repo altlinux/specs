@@ -1,10 +1,8 @@
 %define oname Products.PlonePAS
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 4.1.4
-Release: alt1
+Version: 5.0.1
+Release: alt1.dev0.git20140405
 Summary: PlonePAS adapts the PluggableAuthService for use by Plone
 License: ZPL
 Group: Development/Python
@@ -25,13 +23,20 @@ BuildPreReq: python-module-unidecode
 BuildPreReq: python-module-zope.ramcache
 BuildPreReq: python-module-repoze.xmliter
 BuildPreReq: python-module-future
+BuildPreReq: python-module-Products.Archetypes-tests
+BuildPreReq: python-module-plone.session
+BuildPreReq: python-module-plone.i18n
+BuildPreReq: python-module-Products.GenericSetup
+BuildPreReq: python-module-plone.app.testing
+BuildPreReq: python-module-plone.testing
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires Products.PluggableAuthService Products.CMFCore
 %py_requires Products.LDAPMultiPlugins Products.LDAPUserFolder
 %py_requires Products.Five plone.memoize unidecode zope.ramcache
-%py_requires Products.BTreeFolder2 repoze.xmliter
+%py_requires Products.BTreeFolder2 repoze.xmliter Products.Archetypes
+%py_requires plone.session plone.i18n Products.GenericSetup
 
 %description
 This product adapts the "PluggableAuthService" for use by Plone.
@@ -40,7 +45,8 @@ This product adapts the "PluggableAuthService" for use by Plone.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires Products.PluginRegistry
+%py_requires Products.PluginRegistry plone.app.testing plone.testing
+%py_requires Products.Archetypes.tests
 
 %description tests
 This product adapts the "PluggableAuthService" for use by Plone.
@@ -73,6 +79,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.1-alt1.dev0.git20140405
+- Version 5.0.1.dev0
+- Enabled testing
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.4-alt1
 - Initial build for Sisyphus
 
