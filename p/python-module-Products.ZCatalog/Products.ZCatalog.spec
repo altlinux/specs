@@ -1,10 +1,8 @@
 %define oname Products.ZCatalog
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 3.0.2
-Release: alt1
+Version: 3.0.3
+Release: alt1.dev.git20140304
 Summary: Zope 2's indexing and search solution
 License: ZPLv2.1
 Group: Development/Python
@@ -54,7 +52,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=$PWD/src
 python setup.py test
 
 %files
@@ -69,6 +67,10 @@ python setup.py test
 %python_sitelibdir/Products/*/*/tests*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1.dev.git20140304
+- Version 3.0.3dev
+- Enabled testing
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1
 - Initial build for Sisyphus
 
