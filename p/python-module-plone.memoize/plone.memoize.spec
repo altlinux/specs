@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt4
+Version: 1.1.2
+Release: alt1.git20140826
 Summary: Decorators for caching the values of functions and methods
 License: GPLv2
 Group: Development/Python
@@ -13,7 +13,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
+BuildPreReq: python-module-zope.annotation
+BuildPreReq: python-module-zope.ramcache
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -141,8 +147,11 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 touch %buildroot%python3_sitelibdir/plone/__init__.py
 %endif
 
+%check
+python setup.py test
+
 %files
-%doc *.txt docs/*
+%doc *.rst docs/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/plone/__init__.py*
@@ -156,7 +165,7 @@ touch %buildroot%python3_sitelibdir/plone/__init__.py
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt docs/*
+%doc *.rst docs/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/plone/__init__.py
@@ -174,6 +183,10 @@ touch %buildroot%python3_sitelibdir/plone/__init__.py
 %endif
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20140826
+- Version 1.1.2
+- Enabled testing
+
 * Thu Jul 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt4
 - Added module for Python 3
 
