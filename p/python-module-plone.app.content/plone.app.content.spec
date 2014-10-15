@@ -1,10 +1,8 @@
 %define oname plone.app.content
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Content Views for Plone
 License: GPLv2
 Group: Development/Python
@@ -30,8 +28,8 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.CMFDefault
 BuildPreReq: python-module-Products.CMFDynamicViewFTI
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.contenttypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -40,7 +38,7 @@ Requires: python-module-Zope2
 %py_requires zope.container zope.event zope.lifecycleevent
 %py_requires zope.i18n zope.i18nmessageid zope.interface zope.component
 %py_requires plone.app plone.memoize plone.batching plone.i18n
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.content contains various views for Plone, such as
@@ -52,7 +50,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires plone.app.contenttypes
+%py_requires plone.app.contenttypes
 
 %description tests
 plone.app.content contains various views for Plone, such as
@@ -87,6 +85,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
