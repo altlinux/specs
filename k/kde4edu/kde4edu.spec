@@ -1,6 +1,6 @@
 
 %def_disable kpercentage
-%def_disable artikulate
+%def_enable artikulate
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/parley/plugins/*.py
@@ -9,7 +9,7 @@
 Name: kde4edu
 %define major 4
 %define minor 14
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -64,7 +64,7 @@ BuildRequires: python-modules-encodings python-devel boost-devel boost-python-de
 BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
 BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
 %if_enabled artikulate
-BuildRequires: qt-gstreamer-devel
+BuildRequires: qt-gstreamer1-devel
 %endif
 BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
@@ -626,6 +626,13 @@ Requires: %name-common = %version-%release
 %description -n libartikulatelearnerprofile4
 KDE 4 library
 
+%package -n libartikulatesound4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libartikulatesound4
+KDE 4 library
+
 %package -n libastro4
 Summary: KDE 4 library
 Group: System/Libraries
@@ -688,10 +695,6 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4libdir/libcompoundviewer.so.*
 
 %if_enabled artikulate
-%files -n libartikulatecore4
-%_K4libdir/libartikulatecore.so.*
-%files -n libartikulatelearnerprofile4
-%_K4libdir/libartikulatelearnerprofile.so.*
 %files artikulate
 %ifdef _kde_alternate_placement
 %_kde4_bindir/artikulate
@@ -706,6 +709,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4cfg/artikulate.kcfg
 %_K4iconsdir/hicolor/*/apps/artikulate.*
 %_K4doc/en/artikulate/
+%files -n libartikulatecore4
+%_K4libdir/libartikulatecore.so.*
+%files -n libartikulatelearnerprofile4
+%_K4libdir/libartikulatelearnerprofile.so.*
+%files -n libartikulatesound4
+%_K4libdir/libartikulatesound.so.*
 %endif
 
 %files kqtquickcharts
@@ -1088,6 +1097,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Thu Sep 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt1
 - new version
 
