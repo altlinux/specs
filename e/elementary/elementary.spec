@@ -2,7 +2,7 @@
 %define ver_major 1.11
 
 Name: elementary
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -12,7 +12,7 @@ Url: http://www.enlightenment.org
 
 Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
 
-BuildRequires: efl-libs-devel >= 1.11.2
+BuildRequires: efl-libs-devel >= 1.11.3
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 
 %description
@@ -102,6 +102,9 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.3-alt1
+- 1.11.3
+
 * Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
 - 1.11.2
 

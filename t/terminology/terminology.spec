@@ -1,8 +1,8 @@
-%define ver_major 0.6
+%define ver_major 0.7
 
 Name: terminology
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: EFL terminal emulator
 License: BSD
@@ -30,7 +30,7 @@ to do everything a mature terminal emulator does is a bit premature, but
 considering it's young age, it does a lot.
 
 %prep
-%setup -q
+%setup
 %patch -b .def_font
 
 %build
@@ -60,6 +60,12 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
+* Sun Sep 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.99-alt1
+- 0.6.99_a61c3499
+
 * Thu Sep 18 2014 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt2
 - rebuilt with efl/elementary-1.11.2
 

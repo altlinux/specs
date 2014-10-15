@@ -14,7 +14,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.0
+Version: %ver_major.1
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -50,6 +50,7 @@ Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.19.0-alt-pam-helper.patch
 Patch12: fix-connman-module-detection.patch
 
+Provides: e19 = %EVR
 # Obsoletes/Provides old eNN
 Obsoletes: e17 e18
 Provides: e17 = %EVR
@@ -117,7 +118,7 @@ Development headers for Enlightenment.
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3 `pkg-config --cflags uuid`"
+export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` `pkg-config --cflags uuid` -g -ggdb3"
 %configure \
 	--with-profile=FAST_PC \
 	--enable-files \
@@ -195,6 +196,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.1-alt1
+- 0.19.1
+
 * Wed Sep 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1:0.19.0-alt1
 - 0.19.0 preview
 
