@@ -1,12 +1,9 @@
-%set_automake_version 1.11
-
 %def_enable printing
 %def_enable backup
-%def_without libsyncml
 
 Name: osmo
-Version: 0.2.10
-Release: alt6
+Version: 0.2.12
+Release: alt1
 
 Summary: Personal organizer
 License: GPLv2+
@@ -14,14 +11,9 @@ Group: Office
 Url: http://clayo.org/osmo/
 Source: http://downloads.sourceforge.net/%name-pim/%name-%version.tar.gz
 
-Patch: %name-0.2.8-alt-configure.patch
-Patch1: osmo-0.2.10-libnotify-0.7.0.patch
-Patch2: osmo-0.2.10-alt-libm.patch
-
 BuildRequires: libgtk+2-devel libgtkspell-devel libxml2-devel
-BuildRequires: libnotify-devel libical-devel libgtkhtml2-devel
-%{?_with_libsyncml:BuildRequires: libsyncml-devel}
-%{?_enable_backup:BuildRequires: libgringotts-devel libtar-devel}
+BuildRequires: libnotify-devel libical-devel libwebkitgtk2-devel
+%{?_enable_backup:BuildRequires: libgringotts-devel libarchive-devel}
 
 %description
 Osmo is a handy personal organizer which includes calendar, tasks manager and
@@ -32,29 +24,17 @@ all operations using keyboard. Also, a lot of parameters are configurable to
 meet user preferences.
 
 %prep
-%setup -q
-%patch
-%patch1 -p1
-%patch2
+%setup
 
 %build
-export CFLAGS="$CFLAGS -I%_includedir/libical"
 %autoreconf
 %configure \
 	%{?_enable_backup:--enable-backup=yes} \
-	%{?_enable_printing:--enable-printing} \
-	%{subst_with libsyncml}
-
+	%{?_enable_printing:--enable-printing}
 %make_build
 
 %install
-mkdir -p %buildroot%_datadir/icons/hicolor/{48x48,scalable}/apps
-
-%make DESTDIR=%buildroot install
-
-# move icon
-mv %buildroot%_datadir/pixmaps/%name.png \
-  %buildroot%_datadir/icons/hicolor/48x48/apps/
+%makeinstall_std
 
 %find_lang %name
 
@@ -65,9 +45,12 @@ mv %buildroot%_datadir/pixmaps/%name.png \
 %_man1dir/*
 %dir %_datadir/sounds/%name
 %_datadir/sounds/%name/alarm.wav
-%doc AUTHORS ChangeLog README README.syncml TRANSLATORS
+%doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt1
+- 0.2.12
+
 * Mon Feb 10 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt6
 - explicitly link against libm
 
