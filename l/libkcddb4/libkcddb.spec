@@ -2,7 +2,7 @@
 
 %define rname libkcddb
 Name: libkcddb4
-Version: 4.13.0
+Version: 4.14.2
 Release: alt1
 
 Group: System/Libraries
@@ -57,6 +57,9 @@ install -m 0644 %SOURCE1 cmake/modules/
 %_K4includedir/libkcddb/
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Tue Apr 22 2014 Sergey V Turchin <zerg@altlinux.org> 4.13.0-alt1
 - new version
 
