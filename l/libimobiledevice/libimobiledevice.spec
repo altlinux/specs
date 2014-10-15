@@ -1,7 +1,7 @@
 %def_disable python
 
 Name: libimobiledevice
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
@@ -73,6 +73,9 @@ Python bindings for libimobiledevice.
 %endif
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
+- 1.1.7
+
 * Mon Jun 16 2014 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
 - 1.1.6
 

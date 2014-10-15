@@ -24,7 +24,7 @@ BuildRequires: xvfb-run
 
 Name:           mate-applets
 Version:        %{branch}.0
-Release:        alt3_1
+Release:        alt4_1
 #Release:        0.1%{?git_rel}%{?dist}
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
@@ -171,6 +171,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt4_1
+- rebuilt against libupower-glib.so.3
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt3_1
 - rebuild with libgtop
 

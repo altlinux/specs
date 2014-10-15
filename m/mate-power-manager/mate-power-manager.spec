@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 Name:          mate-power-manager
 Version:       1.8.0
 #Release:       0.4.git%%{_internal_version}%{?dist}
-Release:       alt2_1
+Release:       alt3_1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
@@ -127,6 +127,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt3_1
+- rebuilt against libupower-glib.so.3
+
 * Mon Mar 31 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt2_1
 - rebuild with new upower
 

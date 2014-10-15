@@ -1,32 +1,28 @@
-Name: libusbmuxd
-Version: 1.0.10
+Name: usbmuxd
+Version: 1.0.9
 Release: alt1
 
-Summary: Interface library for usbmuxd
-Group: System/Libraries
+Summary: Daemon for communicating with Apple's iPod Touch and iPhone
+Group: System/Servers
 License: GPLv3+
 Url: http://www.libimobiledevice.org/
 
-Source: %url/downloads/%name-%version.tar.bz2
+Source: http://marcansoft.com/uploads/%name/%name-%version.tar.bz2
 
-BuildRequires: gcc-c++ libusb-devel >= 1.0.3 libplistmm-devel >= 1.12
+%define plist_ver 1.12
+%define usb_ver 1.0.3
+%define imobiledevice_ver 1.1.6
+
+BuildRequires: gcc-c++ cmake
+BuildRequires: libplist-devel >= %plist_ver
+BuildRequires: libusb-devel >= %usb_ver
+BuildRequires: libimobiledevice-devel >= %imobiledevice_ver
+BuildRequires: libudev-devel systemd-devel
 
 %description
 usbmuxd (USB Multiplex Daemon) is a daemon used for communicating with
 Apple's iPod Touch and iPhone devices. It allows multiple services on
 the device to be accessed simultaneously.
-
-This package contains the usbmuxd communication interface library -
-'libusbmuxd'.
-
-%package devel
-Summary: Development package for %name
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-This package provides headers and libraries needed for development
-%name clients.
 
 %prep
 %setup
@@ -40,19 +36,14 @@ This package provides headers and libraries needed for development
 %makeinstall_std
 
 %files
-%_bindir/iproxy
-%_libdir/libusbmuxd.so.*
-
-%files devel
-%_includedir/*.h
-%_libdir/libusbmuxd.so
-%_libdir/pkgconfig/libusbmuxd.pc
+%_sbindir/usbmuxd
+/lib/udev/rules.d/39-%name.rules
+/lib/systemd/system/%name.service
+/usr/share/man/man1/%name.1.*
+%doc AUTHORS README
 
 %changelog
-* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
-- 1.0.10
-
-* Tue Mar 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.9-alt1
 - 1.0.9
 
 * Sun Apr 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1

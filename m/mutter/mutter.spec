@@ -5,7 +5,7 @@
 
 Name: mutter
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -164,6 +164,9 @@ DATADIRNAME=share %configure \
 %endif
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.1-alt2
+- rebuilt against libupower-glib.so.3
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1:3.14.1-alt1
 - 3.14.1
 

@@ -12,7 +12,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -179,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt2
+- rebuilt against libupower-glib.so.3
+
 * Tue Oct 14 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 

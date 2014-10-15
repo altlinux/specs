@@ -10,11 +10,12 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
 Group: Graphical desktop/GNOME
+Url: https://github.com/linuxmint/cinnamon-settings-daemon
 Packager: Vladimir Didenko <cow at packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -192,6 +193,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-automount
 
 %changelog
+* Wed Oct 15 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt2
+- rebuild with new upower
+
 * Tue Jul 22 2014 Vladimir Didenko <cow@altlinux.org> 2.2.4-alt1
 - 2.2.4
 - add Alt Linux datetime mechanism
