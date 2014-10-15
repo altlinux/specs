@@ -1,10 +1,8 @@
 %define oname plone.app.robotframework
 
-%def_disable check
-
 Name: python-module-%oname
-Version: 0.9.7
-Release: alt1.dev0.git20141011
+Version: 0.9.8
+Release: alt1.dev0.git20141013
 Summary: Robot Framework testing resources for Plone
 License: GPL
 Group: Development/Python
@@ -40,9 +38,9 @@ BuildPreReq: python-module-robotframework-selenium2library
 BuildPreReq: python-module-collective.js.speakjs
 BuildPreReq: python-module-sphinxcontrib-robotdoc
 BuildPreReq: python-module-watchdog python-module-sphinx-devel
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-plone.app.dexterity
-#BuildPreReq: python-module-plone.app.textfield
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-plone.app.textfield
 
 %py_provides %oname
 %py_requires collective.js.speakjs watchdog zope.component
@@ -51,7 +49,7 @@ BuildPreReq: python-module-watchdog python-module-sphinx-devel
 %py_requires five.globalrequest plone.app.testing plone.testing
 %py_requires Products.PlonePAS Products.PluggableAuthService
 %py_requires plone.app Products.CMFCore Products.MailHost plone.uuid
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.robotframework provides Robot Framework compatible resources
@@ -63,7 +61,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.dexterity plone.namedfile z3c.form
-#py_requires plone.app.dexterity plone.app.textfield
+%py_requires plone.app.dexterity plone.app.textfield
 
 %description tests
 plone.app.robotframework provides Robot Framework compatible resources
@@ -102,6 +100,11 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1.dev0.git20141013
+- Version 0.9.8.dev0
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt1.dev0.git20141011
 - Initial build for Sisyphus
 
