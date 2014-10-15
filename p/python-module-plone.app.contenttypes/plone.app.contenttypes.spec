@@ -1,10 +1,8 @@
 %define oname plone.app.contenttypes
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.a5.dev0.git20141009
+Release: alt1.a5.dev0.git20141013
 Summary: Default content types for Plone based on Dexterity
 License: GPL
 Group: Development/Python
@@ -27,8 +25,8 @@ BuildPreReq: python-module-plone.app.robotframework
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-Products.contentmigration
 BuildPreReq: python-module-plone.app.referenceablebehavior
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.ATContentTypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -36,7 +34,7 @@ Requires: python-module-Zope2
 %py_requires plone.app.relationfield plone.namedfile
 %py_requires plone.app.dexterity plone.app.querystring plone.dexterity
 %py_requires plone.app plone.app.contentmenu plone.app.event
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.contenttypes offers default content types for Plone based on
@@ -49,7 +47,7 @@ Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.robotframework plone.app.testing
 %py_requires Products.contentmigration plone.app.referenceablebehavior
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description tests
 plone.app.contenttypes offers default content types for Plone based on
@@ -84,6 +82,11 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.a5.dev0.git20141013
+- New snapshot
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.a5.dev0.git20141009
 - Initial build for Sisyphus
 
