@@ -1,10 +1,8 @@
 %define oname plone.app.collection
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: This package adds 'saved search' functionality to Plone
 License: GPLv2
 Group: Development/Python
@@ -30,9 +28,9 @@ BuildPreReq: python-module-zope.configuration
 BuildPreReq: python-module-zope.formlib
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.ATContentTypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -42,7 +40,7 @@ Requires: python-module-Zope2
 %py_requires plone.app.vocabularies plone.app.widgets zope.component
 %py_requires plone.app.portlets plone.app.querystring zope.configuration
 %py_requires plone.app plone.app.contentlisting plone.app.form
-#py_requires Products.Archetypes Products.CMFPlone
+%py_requires Products.Archetypes Products.CMFPlone
 
 %description
 Collections in Plone are the most powerful tool content editors and site
@@ -53,7 +51,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description tests
 Collections in Plone are the most powerful tool content editors and site
@@ -87,6 +85,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.dev0.git20140826
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
