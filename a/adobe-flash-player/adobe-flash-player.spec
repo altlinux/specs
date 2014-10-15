@@ -6,9 +6,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake 11
-%define ver_ix86 11.2.202.406
-%define ver_x86_64 11.2.202.406
-Release: alt33
+%define ver_ix86 11.2.202.411
+%define ver_x86_64 11.2.202.411
+Release: alt34
 Serial: 3
 
 %define ver_real %ver_fake
@@ -138,6 +138,10 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt34
+- new version
+- security fixes: CVE-2014-0570, CVE-2014-0571, CVE-2014-0572
+
 * Wed Sep 10 2014 Sergey V Turchin <zerg@altlinux.org> 3:11-alt33
 - new version
 - security fixes:
