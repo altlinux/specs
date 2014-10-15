@@ -1,7 +1,7 @@
 %define oname Products.CMFDiffTool
 Name: python-module-%oname
 Version: 3.0
-Release: alt1.dev0.git20140930
+Release: alt2.dev0.git20140930
 Summary: Diff tool for Plone
 License: GPL
 Group: Development/Python
@@ -16,14 +16,14 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-plone.namedfile
-#BuildPreReq: python-module-plone.app.versioningbehavior
-#BuildPreReq: python-module-plone.app.dexterity
-#BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-plone.app.versioningbehavior
+BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-plone.app.contenttypes
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires Products.CMFCore Products.GenericSetup zope.interface
-#py_requires plone.app.versioningbehavior
+%py_requires plone.app.versioningbehavior
 
 %description
 Diff tool for Plone.
@@ -33,7 +33,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.component plone.app.testing plone.namedfile
-#py_requires plone.app.dexterity plone.app.contenttypes
+%py_requires plone.app.dexterity plone.app.contenttypes
 
 %description tests
 Diff tool for Plone.
@@ -66,6 +66,9 @@ python setup.py test
 %python_sitelibdir/Products/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt2.dev0.git20140930
+- Added necessary requirements
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.dev0.git20140930
 - Initial build for Sisyphus
 
