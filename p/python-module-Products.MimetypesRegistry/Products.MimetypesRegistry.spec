@@ -1,7 +1,7 @@
 %define oname Products.MimetypesRegistry
 Name: python-module-%oname
 Version: 2.0.7
-Release: alt1.dev0.git20140907
+Release: alt2.dev0.git20140907
 Summary: MIME type handling for Zope
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-zope.contenttype
 BuildPreReq: python-module-Products.CMFCore
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -29,7 +29,7 @@ information.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 
 %description tests
 mimetypes_registry (the mimetypes tool) : handle mime types
@@ -63,6 +63,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.7-alt2.dev0.git20140907
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.7-alt1.dev0.git20140907
 - Initial build for Sisyphus
 
