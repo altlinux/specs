@@ -1,10 +1,8 @@
 %define oname plone.app.event
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.a5.dev0.git20141009
+Release: alt1.a5.dev0.git20141014
 Summary: The Plone calendar framework
 License: GPL
 Group: Development/Python
@@ -66,10 +64,11 @@ BuildPreReq: python-module-plone.testing
 BuildPreReq: python-module-mock python-module-robotsuite
 BuildPreReq: python-module-transaction python-module-unittest2
 BuildPreReq: python-module-zExceptions
-#BuildPreReq: python-module-plone.app.contenttypes
-#BuildPreReq: python-module-plone.app.collection
-#BuildPreReq: python-module-plone.app.contentlisting
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-plone.app.collection
+BuildPreReq: python-module-plone.app.contentlisting
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.controlpanel
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -87,7 +86,7 @@ Requires: python-module-Zope2
 %py_requires Products.statusmessages collective.elephantvocabulary
 %py_requires Products.GenericSetup Products.ZCatalog plone.app.dexterity
 %py_requires plone.app Products.CMFCore Products.DateRecurringIndex
-#py_requires Products.CMFPlone plone.app.contentlisting
+%py_requires Products.CMFPlone plone.app.contentlisting
 
 %description
 Plone.app.event is the calendaring framework for Plone. It provides
@@ -99,7 +98,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.robotframework plone.app.testing plone.testing
-#py_requires plone.app.collection plone.app.contenttypes
+%py_requires plone.app.collection plone.app.contenttypes
 
 %description tests
 Plone.app.event is the calendaring framework for Plone. It provides
@@ -178,6 +177,11 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.a5.dev0.git20141014
+- New snapshot
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.a5.dev0.git20141009
 - Initial build for Sisyphus
 
