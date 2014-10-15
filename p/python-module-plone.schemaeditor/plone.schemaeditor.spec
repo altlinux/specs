@@ -1,7 +1,7 @@
 %define oname plone.schemaeditor
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1.dev0.git20140930
+Release: alt2.dev0.git20140930
 Summary: Provides through-the-web editing of a zope schema/interface
 License: BSD
 Group: Development/Python
@@ -20,7 +20,7 @@ BuildPreReq: python-module-plone.z3cform
 BuildPreReq: python-module-plone.autoform
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-plone.app.robotframework
-#BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-plone.app.dexterity
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -37,7 +37,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing plone.app.robotframework
-#py_requires plone.app.dexterity
+%py_requires plone.app.dexterity
 
 %description tests
 plone.schemaeditor provides a through-the-web interface for modifying
@@ -71,6 +71,9 @@ python setup.py test
 %python_sitelibdir/plone/*/test*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt2.dev0.git20140930
+- Added necessary requirements
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.dev0.git20140930
 - Initial build for Sisyphus
 
