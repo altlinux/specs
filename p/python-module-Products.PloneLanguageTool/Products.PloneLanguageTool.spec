@@ -1,10 +1,8 @@
 %define oname Products.PloneLanguageTool
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.2.8
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Allows to set available languages in a Plone site e.t.c.
 License: GPL
 Group: Development/Python
@@ -68,6 +66,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.8-alt2.dev0.git20141009
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.8-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
