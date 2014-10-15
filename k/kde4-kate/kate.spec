@@ -16,10 +16,10 @@
 %define rname kate
 %define major 4
 %define minor 14
-%define bugfix 1
+%define bugfix 2
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Editors
 Summary: Advanced text editor
@@ -223,6 +223,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.1-alt2
 - fix package files on arm
 
