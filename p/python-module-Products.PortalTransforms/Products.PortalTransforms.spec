@@ -1,7 +1,7 @@
 %define oname Products.PortalTransforms
 Name: python-module-%oname
 Version: 2.1.5
-Release: alt1.dev0.git20140907
+Release: alt2.dev0.git20140907
 Summary: MIME based content transformations
 License: BSD
 Group: Development/Python
@@ -19,7 +19,7 @@ BuildPreReq: python-module-Products.CMFDefault
 BuildPreReq: python-module-Products.MimetypesRegistry
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-Pillow python-module-markdown
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -40,7 +40,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.testing
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 %add_python_req_skip rigging
 
 %description tests
@@ -77,6 +77,9 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt2.dev0.git20140907
+- Added necessary requirements
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt1.dev0.git20140907
 - Initial build for Sisyphus
 
