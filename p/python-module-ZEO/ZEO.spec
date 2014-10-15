@@ -4,21 +4,34 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt1.git20140813
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/ZEO
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/ZEO.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-manuel
+BuildPreReq: python-module-random2
+BuildPreReq: python-module-ZODB-tests
+BuildPreReq: python-module-transaction
+BuildPreReq: python-module-persistent
+BuildPreReq: python-module-zc.lockfile
+BuildPreReq: python-module-zconfig
+BuildPreReq: python-module-zdaemon
+BuildPreReq: python-module-zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+%py_requires ZODB persistent zc.lockfile ZConfig zdaemon zope.interface
 
 %description
 ZEO is a client-server system for sharing a single storage among many
@@ -32,6 +45,7 @@ protocol layered on top of TCP.
 Summary: Tests for ZEO
 Group: Development/Python
 Requires: %name = %EVR
+%py_requires zope.testing ZODB.tests
 
 %description tests
 ZEO is a client-server system for sharing a single storage among many
@@ -100,6 +114,9 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %_bindir/*
@@ -130,6 +147,10 @@ popd
 %endif
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.git20140813
+- Snapshot from git
+- Enabled testing
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus
 
