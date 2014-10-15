@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a1.dev.git20140402
+Release: alt2.a1.dev.git20140402
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -13,10 +13,79 @@ Source: %name-%version.tar
 # http://cvs.zope.org/*checkout*/Python-2.2.3/Lib/regsub.py?rev=1.1.1.1&cvsroot=Zope.org&sortby=author&content-type=text/plain
 Source1: regsub.py
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python-module-AccessControl
+BuildPreReq: python-module-Acquisition
+BuildPreReq: python-module-DateTime
+BuildPreReq: python-module-DocumentTemplate
+BuildPreReq: python-module-ExtensionClass
+BuildPreReq: python-module-Missing
+BuildPreReq: python-module-MultiMapping
+BuildPreReq: python-module-Persistence
+BuildPreReq: python-module-Products.OFSP
+BuildPreReq: python-module-Products.ZCatalog
+BuildPreReq: python-module-Products.ZCTextIndex
+BuildPreReq: python-module-Record
+BuildPreReq: python-module-RestrictedPython
+BuildPreReq: python-module-zconfig
+BuildPreReq: python-module-ZODB3
+BuildPreReq: python-module-ZopeUndo
+BuildPreReq: python-module-docutils
+BuildPreReq: python-module-initgroups
+BuildPreReq: python-module-pytz
+BuildPreReq: python-module-tempstorage
+BuildPreReq: python-module-transaction
+BuildPreReq: python-module-zdaemon
+BuildPreReq: python-module-zExceptions
+BuildPreReq: python-module-zLOG
+BuildPreReq: python-module-zope.browser
+BuildPreReq: python-module-zope.browsermenu
+BuildPreReq: python-module-zope.browserpage
+BuildPreReq: python-module-zope.browserresource
+BuildPreReq: python-module-zope.configuration
+BuildPreReq: python-module-zope.container
+BuildPreReq: python-module-zope.contentprovider
+BuildPreReq: python-module-zope.contenttype
+BuildPreReq: python-module-zope.deferredimport
+BuildPreReq: python-module-zope.event
+BuildPreReq: python-module-zope.exceptions
+BuildPreReq: python-module-zope.i18n
+BuildPreReq: python-module-zope.i18nmessageid
+BuildPreReq: python-module-zope.lifecycleevent
+BuildPreReq: python-module-zope.location
+BuildPreReq: python-module-zope.pagetemplate
+BuildPreReq: python-module-zope.processlifetime
+BuildPreReq: python-module-zope.proxy
+BuildPreReq: python-module-zope.ptresource
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.schema
+BuildPreReq: python-module-zope.security
+BuildPreReq: python-module-zope.sendmail
+BuildPreReq: python-module-zope.sequencesort
+BuildPreReq: python-module-zope.site
+BuildPreReq: python-module-zope.size
+BuildPreReq: python-module-zope.structuredtext
+BuildPreReq: python-module-zope.tal
+BuildPreReq: python-module-zope.tales
+BuildPreReq: python-module-zope.testbrowser
+BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-zope.traversing
+BuildPreReq: python-module-zope.viewlet
+BuildPreReq: python-module-zope.filerepresentation
 
 %add_python_req_skip ntsecuritycon pywintypes win32api win32con win32event
+%py_requires zope.testbrowser zope.testing zope.traversing zope.viewlet
+%py_requires zope.size zope.structuredtext zope.tal zope.tales
+%py_requires zope.security zope.sendmail zope.sequencesort zope.site
+%py_requires zope.proxy zope.ptresource zope.publisher zope.schema
+%py_requires zope.location zope.pagetemplate zope.processlifetime
+%py_requires zope.i18nmessageid zope.interface zope.lifecycleevent
+%py_requires zope.deferredimport zope.event zope.exceptions zope.i18n
+%py_requires zope.container zope.contentprovider zope.contenttype
+%py_requires ZODB3 Products.OFSP Products.ZCatalog Products.ZCTextIndex
+%py_requires docutils pytz zope.browser zope.browsermenu zope.browserpage
+%py_requires zope.browserresource zope.component zope.configuration
 
 %description
 Zope2 is an open-source web application server.
@@ -25,29 +94,29 @@ Zope2 is an open-source web application server.
 Summary: Tests for Zope2
 Group: Development/Python
 Requires: %name = %version-%release
-Requires: python-module-zope.sendmail python-module-zope.viewlet
-Requires: python-module-Products.PythonScripts python-module-zLOG
-Requires: python-module-Products.MIMETools python-module-zope.size
-Requires: python-module-zope.traversing python-module-zope.tales
-Requires: python-module-zope.testbrowser python-module-zope.tal
-Requires: python-module-zope.site python-module-zope.ptresource
-Requires: python-module-zope.processlifetime python-module-ZODB3
-Requires: python-module-zope.pagetemplate
-Requires: python-module-zope.lifecycleevent
-Requires: python-module-zope.contentprovider
-Requires: python-module-zope.container python-module-zope.annotation
-Requires: python-module-zope.browserresource
-Requires: python-module-zope.browserpage
-Requires: python-module-zope.browsermenu python-module-mechanize
-Requires: python-module-initgroups python-module-Missing
-Requires: python-module-zope.filerepresentation
-Requires: python-module-zope.dottedname
-Requires: python-module-Products.MailHost
-Requires: python-module-Products.StandardCacheManagers
-Requires: python-module-Products.ZCTextIndex
-Requires: python-module-Products.ZCatalog
-Requires: python-module-Products.ExternalMethod
-Requires: python-module-Products.BTreeFolder2
+Requires: python-module-zope.sendmail-tests python-module-zope.viewlet-tests
+Requires: python-module-Products.PythonScripts-tests python-module-zLOG-tests
+Requires: python-module-Products.MIMETools-tests python-module-zope.size-tests
+Requires: python-module-zope.traversing-tests python-module-zope.tales-tests
+Requires: python-module-zope.testbrowser python-module-zope.tal-tests
+Requires: python-module-zope.site-tests python-module-zope.ptresource-tests
+Requires: python-module-zope.processlifetime-tests python-module-ZODB3
+Requires: python-module-zope.pagetemplate-tests
+Requires: python-module-zope.lifecycleevent-tests
+Requires: python-module-zope.contentprovider-tests
+Requires: python-module-zope.container-tests python-module-zope.annotation-tests
+Requires: python-module-zope.browserresource-tests
+Requires: python-module-zope.browserpage-tests
+Requires: python-module-zope.browsermenu-tests python-module-mechanize
+Requires: python-module-initgroups python-module-Missing-tests
+Requires: python-module-zope.filerepresentation-tests
+Requires: python-module-zope.dottedname-tests
+Requires: python-module-Products.MailHost-tests
+Requires: python-module-Products.StandardCacheManagers-tests
+Requires: python-module-Products.ZCTextIndex-tests
+Requires: python-module-Products.ZCatalog-tests
+Requires: python-module-Products.ExternalMethod-tests
+Requires: python-module-Products.BTreeFolder2-tests
 Requires: python-module-Products.OFSP
 
 %add_python_req_skip http_date
@@ -114,6 +183,9 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %_bindir/*
@@ -145,6 +217,10 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %doc doc/.build/html/*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2.a1.dev.git20140402
+- More requirements
+- Enabled testing
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a1.dev.git20140402
 - Version 4.0a1.dev
 
