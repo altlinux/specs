@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.0.5
-Release: alt1.dev.git20140320
+Release: alt2.dev.git20140320
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -17,7 +17,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %setup_python_module %modulename
-BuildPreReq: python-module-distribute
+BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -133,6 +134,9 @@ popd
 
 %python_install
 
+%check
+python setup.py test
+
 %files
 %_bindir/*
 %exclude %_bindir/py3_*
@@ -157,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.5-alt2.dev.git20140320
+- Enabled testing
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.5-alt1.dev.git20140320
 - Version 3.0.5dev
 
