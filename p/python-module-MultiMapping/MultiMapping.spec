@@ -1,16 +1,18 @@
 %define oname MultiMapping
 Name: python-module-%oname
-Version: 2.13.0
-Release: alt2.1.1
+Version: 2.13.1
+Release: alt1.dev.git20130313
 Summary: Special MultiMapping objects used in Zope2
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/MultiMapping/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/MultiMapping.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-Zope2-tests
 
 %py_requires ExtensionClass
 
@@ -38,6 +40,9 @@ This package contains tests for MultiMapping.
 %install
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -47,6 +52,10 @@ This package contains tests for MultiMapping.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.dev.git20130313
+- Version 2.13.1dev
+- Enabled testing
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.13.0-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
