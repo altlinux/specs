@@ -5,7 +5,7 @@
 Name: kde4accessibility
 %define major 4
 %define minor 14
-%define bugfix 0
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -211,6 +211,9 @@ done
 #%_K4link/*.so
 
 %changelog
+* Wed Oct 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.2-alt1
+- new version
+
 * Mon Aug 18 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
