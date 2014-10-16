@@ -1,10 +1,8 @@
 %define oname plone.app.upgrade
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.3.7
-Release: alt1.dev0.git20140920
+Release: alt2.dev0.git20140920
 Summary: Database upgrade steps for the Plone CMS
 License: GPLv2
 Group: Development/Python
@@ -49,11 +47,12 @@ BuildPreReq: python-module-plone.app.openid
 BuildPreReq: python-module-plone.app.redirector
 BuildPreReq: python-module-plone.app.viewletmanager
 BuildPreReq: python-module-plone.app.theming
-#BuildPreReq: python-module-plone.app.portlets
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.CMFFormController
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-plone.app.portlets
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.CMFFormController
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -68,8 +67,8 @@ Requires: python-module-Zope2
 %py_requires zope.component zope.interface zope.location
 %py_requires plone.portlets plone.session plone.app.folder
 %py_requires plone.app borg.localrole five.localsitemanager
-#py_requires plone.app.portlets Products.CMFPlone Products.Archetypes
-#py_requires Products.CMFFormController
+%py_requires plone.app.portlets Products.CMFPlone Products.Archetypes
+%py_requires Products.CMFFormController
 
 %description
 This package contains the upgrade machinery to upgrade a Plone site to a
@@ -83,7 +82,7 @@ Requires: %name = %EVR
 %py_requires plone.app.i18n plone.app.iterate plone.app.openid
 %py_requires plone.app.redirector plone.app.viewletmanager
 %py_requires plone.app.theming
-#py_requires Products.PloneTestCase
+%py_requires Products.PloneTestCase
 %add_python_req_skip alphas
 
 %description tests
@@ -120,6 +119,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt2.dev0.git20140920
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1.dev0.git20140920
 - Initial build for Sisyphus
 
