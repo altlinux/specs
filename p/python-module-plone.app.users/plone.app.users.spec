@@ -1,10 +1,8 @@
 %define oname plone.app.users
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.1
-Release: alt1.dev0.git20141009
+Release: alt1.dev0.git20141016
 Summary: A package for all things users and groups related (specific to plone)
 License: GPLv2
 Group: Development/Python
@@ -33,7 +31,8 @@ BuildPreReq: python-module-zope.site
 BuildPreReq: python-module-Products.MailHost
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-plone.keyring
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -43,7 +42,7 @@ Requires: python-module-Zope2
 %py_requires plone.formwidget.namedfile plone.protect plone.uuid
 %py_requires z3c.form zope.component zope.event zope.interface
 %py_requires zope.schema zope.site
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 This package provide the registration form for new users using z3c.form
@@ -89,6 +88,11 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.dev0.git20141016
+- New snapshot
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
