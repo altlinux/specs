@@ -1,10 +1,8 @@
 %define oname Products.Archetypes
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.10.2
-Release: alt1.dev0.git20140817
+Release: alt2.dev0.git20140817
 Summary: Default Content Type Framework for Plone 2.1-4.x
 License: GPL
 Group: Development/Python
@@ -30,7 +28,8 @@ BuildPreReq: python-module-plone.app.folder
 BuildPreReq: python-module-zope.annotation python-module-zope.publisher
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-Products.CMFTestCase
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -44,7 +43,7 @@ Requires: python-module-Zope2
 %py_requires Products.PlacelessTranslationService Products.ZSQLMethods
 %py_requires Products.statusmessages Products.validation plone.uuid
 %py_requires plone.app.folder ZODB3 zope.annotation zope.publisher
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 %add_python_req_skip apelib
 
 %description
@@ -107,6 +106,10 @@ python setup.py test
 %python_sitelibdir/Products/*/*/*/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt2.dev0.git20140817
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1.dev0.git20140817
 - Initial build for Sisyphus
 
