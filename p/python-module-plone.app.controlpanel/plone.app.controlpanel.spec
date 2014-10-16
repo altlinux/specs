@@ -1,10 +1,8 @@
 %define oname plone.app.controlpanel
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.4.5
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Formlib-based controlpanels for Plone
 License: GPLv2
 Group: Development/Python
@@ -40,7 +38,7 @@ BuildPreReq: python-module-Products.PortalTransforms
 BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-Products.PloneTestCase
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -51,7 +49,7 @@ Requires: python-module-Zope2
 %py_requires zope.ramcache zope.publisher zope.schema zope.testing
 %py_requires Products.CMFCore Products.CMFDefault Products.PlonePAS
 %py_requires Products.PortalTransforms Products.statusmessages ZODB3
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 This package provides various control panels for Plone and some
@@ -97,6 +95,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
