@@ -1,11 +1,9 @@
 %define mname plone.portlet
 %define oname %mname.static
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: A simple static HTML portlet for Plone
 License: GPLv2
 Group: Development/Python
@@ -23,7 +21,7 @@ BuildPreReq: python-module-plone.i18n
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -71,6 +69,9 @@ python setup.py test
 %python_sitelibdir/plone/portlet/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20141009
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
