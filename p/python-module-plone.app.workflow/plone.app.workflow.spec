@@ -1,10 +1,8 @@
 %define oname plone.app.workflow
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1.dev0.git20140826
+Release: alt2.dev0.git20140826
 Summary: Workflow and security settings for Plone
 License: GPLv2
 Group: Development/Python
@@ -29,7 +27,7 @@ BuildPreReq: python-module-Products.DCWorkflow
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -38,7 +36,7 @@ Requires: python-module-Zope2
 %py_requires zope.lifecycleevent zope.site zope.testing Products.CMFCore
 %py_requires Products.DCWorkflow Products.GenericSetup
 %py_requires Products.statusmessages
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.workflow contains workflow- and security-related features for
@@ -82,6 +80,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2.dev0.git20140826
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.dev0.git20140826
 - Initial build for Sisyphus
 
