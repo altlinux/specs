@@ -1,10 +1,8 @@
 %define oname plone.app.theming
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Integrates the Diazo theming engine with Plone
 License: GPL
 Group: Development/Python
@@ -26,13 +24,13 @@ BuildPreReq: python-module-repoze.xmliter
 BuildPreReq: python-module-five.globalrequest
 BuildPreReq: python-module-zope.traversing
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 %py_requires plone.app.registry plone.subrequest plone.transformchain
 %py_requires plone.resource plone.resourceeditor repoze.xmliter
 %py_requires five.globalrequest zope.traversing
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 This package offers a simple way to develop and deploy Plone themes
@@ -76,6 +74,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
