@@ -1,10 +1,8 @@
 %define oname plone.app.folder
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.0.7
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Integration package for `plone.folder` into Plone
 License: GPLv2
 Group: Development/Python
@@ -16,11 +14,12 @@ Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-plone.folder
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 %py_requires plone.app plone.folder
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 This package provides base classes for folderish Archetypes /
@@ -67,6 +66,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
