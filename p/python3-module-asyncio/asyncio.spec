@@ -1,0 +1,61 @@
+%define oname asyncio
+Name: python3-module-%oname
+Version: 3.4.1
+Release: alt1
+Summary: Reference implementation of PEP 3156
+License: Free
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/asyncio/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-coverage
+
+%py3_provides %oname
+%add_python3_req_skip _winapi msvcrt
+
+%description
+Reference implementation of PEP 3156.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Reference implementation of PEP 3156.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%build
+%python3_build_debug
+
+%install
+%python3_install
+
+%check
+python3 setup.py test
+%make check
+nosetests3
+
+%files
+%doc README
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+
+%files tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+
+%changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1-alt1
+- Initial build for Sisyphus
+
