@@ -1,10 +1,8 @@
 %define oname plone.app.querystring
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.3
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Queryparser, querybuilder and extra helper tools, to parse stored queries to actual results
 License: GPLv2
 Group: Development/Python
@@ -27,10 +25,10 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.schema
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-plone.app.contentlisting
-#BuildPreReq: python-module-plone.app.layout
-#BuildPreReq: python-module-plone.app.vocabularies
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.contentlisting
+BuildPreReq: python-module-plone.app.layout
+BuildPreReq: python-module-plone.app.vocabularies
 
 %py_provides %oname
 %py_requires zope.i18nmessageid zope.interface zope.publisher
@@ -38,8 +36,8 @@ BuildPreReq: python-module-plone.app.testing
 %py_requires plone.app.upgrade plone.batching plone.registry
 %py_requires plone.app Products.CMFCore plone.app.registry zope.i18n
 %py_requires zope.schema
-#py_requires Products.CMFPlone plone.app.contentlisting plone.app.layout
-#py_requires plone.app.vocabularies
+%py_requires Products.CMFPlone plone.app.contentlisting plone.app.layout
+%py_requires plone.app.vocabularies
 
 %description
 This package provides an queryparser, querybuilder and extra helper
@@ -87,6 +85,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
