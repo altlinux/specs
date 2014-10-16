@@ -1,10 +1,8 @@
 %define oname plone.app.widgets
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Integrating plone.widgets into plone
 License: GPL
 Group: Development/Python
@@ -22,21 +20,21 @@ BuildPreReq: python-module-plone.app.search
 BuildPreReq: python-module-archetypes.schemaextender
 BuildPreReq: python-module-plone.app.robotframework
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.vocabularies
-#BuildPreReq: python-module-plone.app.registry
-#BuildPreReq: python-module-plone.app.querystring
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-plone.app.dexterity
-#BuildPreReq: python-module-plone.app.contenttypes
-#BuildPreReq: python-module-plone.app.event
+BuildPreReq: python-module-plone.app.vocabularies
+BuildPreReq: python-module-plone.app.registry
+BuildPreReq: python-module-plone.app.querystring
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-plone.app.event
 
 %py_provides %oname
 %py_requires plone.app Products.ResourceRegistries plone.app.jquery
 %py_requires plone.app.search archetypes.schemaextender
-#py_requires plone.app.vocabularies plone.app.registry
-#py_requires plone.app.querystring Products.Archetypes
-#py_requires plone.app.dexterity plone.app.contenttypes
-#py_requires plone.app.event
+%py_requires plone.app.vocabularies plone.app.registry
+%py_requires plone.app.querystring Products.Archetypes
+%py_requires plone.app.dexterity plone.app.contenttypes
+%py_requires plone.app.event
 
 %description
 The goal of plone.app.widgets is to provide an implementation for a new
@@ -86,6 +84,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
