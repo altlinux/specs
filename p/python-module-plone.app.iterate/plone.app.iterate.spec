@@ -1,10 +1,8 @@
 %define oname plone.app.iterate
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.1.14
-Release: alt1.dev0.git20140923
+Release: alt2.dev0.git20140923
 Summary: check-out/check-in staging for Plone
 License: GPLv2
 Group: Development/Python
@@ -28,8 +26,9 @@ BuildPreReq: python-module-Products.CMFEditions
 BuildPreReq: python-module-Products.CMFPlacefulWorkflow
 BuildPreReq: python-module-Products.DCWorkflow
 BuildPreReq: python-module-Products.statusmessages
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -38,7 +37,7 @@ Requires: python-module-Zope2
 %py_requires zope.lifecycleevent zope.schema zope.viewlet
 %py_requires Products.CMFCore Products.CMFEditions Products.DCWorkflow
 %py_requires Products.CMFPlacefulWorkflow Products.statusmessages
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 
 %description
 iterate is a Plone add-on that allows one to utilize a checkin /
@@ -50,7 +49,7 @@ for easy customization.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-#py_requires Products.PloneTestCase
+%py_requires Products.PloneTestCase
 
 %description tests
 iterate is a Plone add-on that allows one to utilize a checkin /
@@ -88,6 +87,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/*/test
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.14-alt2.dev0.git20140923
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.14-alt1.dev0.git20140923
 - Initial build for Sisyphus
 
