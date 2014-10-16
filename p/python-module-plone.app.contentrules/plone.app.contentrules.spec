@@ -1,10 +1,8 @@
 %define oname plone.app.contentrules
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.8
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Plone integration for plone.contentrules
 License: GPLv2
 Group: Development/Python
@@ -39,7 +37,7 @@ BuildPreReq: python-module-Products.CMFDefault
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -51,7 +49,7 @@ Requires: python-module-Zope2
 %py_requires zope.schema zope.traversing Products.CMFCore ZODB3
 %py_requires Products.CMFDefault Products.GenericSetup
 %py_requires Products.statusmessages
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.contentrules provides Plone-specific conditions and actions,
@@ -95,6 +93,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.8-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
