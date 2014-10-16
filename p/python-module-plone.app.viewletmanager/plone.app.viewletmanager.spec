@@ -1,10 +1,8 @@
 %define oname plone.app.viewletmanager
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.0.7
-Release: alt1.dev0.git20140801
+Release: alt2.dev0.git20140801
 Summary: TTW configurable viewlet manager for Plone
 License: GPLv2
 Group: Development/Python
@@ -21,14 +19,14 @@ BuildPreReq: python-module-zope.site
 BuildPreReq: python-module-zope.viewlet
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-zope.publisher
-#BuildPreReq: python-module-plone.app.vocabularies
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-plone.app.vocabularies
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires plone.app Products.GenericSetup ZODB3 zope.component
 %py_requires zope.contentprovider zope.interface zope.site zope.viewlet
-#py_requires plone.app.vocabularies
+%py_requires plone.app.vocabularies
 
 %description
 This component expects you to register storage.ViewletSettingsStorage as
@@ -42,7 +40,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing zope.publisher
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description tests
 This component expects you to register storage.ViewletSettingsStorage as
@@ -79,6 +77,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.7-alt2.dev0.git20140801
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.7-alt1.dev0.git20140801
 - Initial build for Sisyphus
 
