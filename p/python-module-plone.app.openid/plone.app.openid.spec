@@ -1,10 +1,8 @@
 %define oname plone.app.openid
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.0.3
-Release: alt1.dev.git20140823
+Release: alt2.dev.git20140823
 Summary: Plone OpenID authentication support
 License: GPLv2
 Group: Development/Python
@@ -22,14 +20,15 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.PlonePAS
 BuildPreReq: python-module-Products.PluggableAuthService
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.portlets
+BuildPreReq: python-module-plone.app.portlets
+BuildPreReq: python-module-openid
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires plone.app plone.openid plone.portlets zope.component
 %py_requires zope.i18nmessageid zope.interface Products.CMFCore
 %py_requires Products.PlonePAS Products.PluggableAuthService
-#py_requires plone.app.portlets
+%py_requires plone.app.portlets
 
 %description
 This package makes Plone a complete OpenID consumer, allowing people to
@@ -79,6 +78,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt2.dev.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1.dev.git20140823
 - Initial build for Sisyphus
 
