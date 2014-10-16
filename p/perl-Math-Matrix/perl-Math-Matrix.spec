@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Config.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-Matrix
 %define upstream_version 0.8
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
@@ -41,6 +41,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Oct 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3
+- update by mgaimport
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_2
 - update by mgaimport
 
