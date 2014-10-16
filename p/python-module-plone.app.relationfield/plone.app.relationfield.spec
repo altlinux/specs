@@ -1,10 +1,8 @@
 %define oname plone.app.relationfield
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.3
-Release: alt1.dev0.git20140910
+Release: alt2.dev0.git20140910
 Summary: Plone support for z3c.relationfield
 License: GPL
 Group: Development/Python
@@ -29,7 +27,7 @@ BuildPreReq: python-module-plone.schemaeditor
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-plone.rfc822
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.dexterity
+BuildPreReq: python-module-plone.app.dexterity
 
 %py_provides %oname
 %py_requires plone.app zope.interface zope.component zope.schema
@@ -48,7 +46,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires plone.app.dexterity
+%py_requires plone.app.dexterity
 
 %description tests
 Plone support for z3c.relationfield. If this package is installed, you
@@ -83,6 +81,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt2.dev0.git20140910
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1.dev0.git20140910
 - Initial build for Sisyphus
 
