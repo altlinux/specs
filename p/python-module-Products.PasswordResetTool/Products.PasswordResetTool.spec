@@ -1,10 +1,8 @@
 %define oname Products.PasswordResetTool
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Password reset UI and infrastructure for the Plone CMS
 License: GPL
 Group: Development/Python
@@ -20,13 +18,14 @@ BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.i18n
 BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-Products.PloneTestCase
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires plone.memoize zope.component zope.i18nmessageid zope.i18n
 %py_requires zope.interface Products.CMFCore
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 The Password Reset Tool hooks into the standard mechanisms for password
@@ -74,6 +73,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
