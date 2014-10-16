@@ -1,5 +1,5 @@
 Name: cgmanager
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Linux cgroup manager
@@ -12,12 +12,6 @@ Source: %name-%version.tar
 Source1: %name.init
 Source2: cgproxy.init
 Patch: %name-%version-%release.patch
-
-# From Debian
-Patch1: 0001-fix-regression-introduced-by-recent-switch-to-nih_lo.patch
-Patch2: 0002-gettasksrecursive-call-the-scm-completion.patch
-Patch3: 0003-gettasksrecursive_scm-call-the-right-main-function.patch
-Patch4: 0004-cgmanager-remount-sys-fs-cgroup-rw-if-needed.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -48,10 +42,6 @@ development with lib%name.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # Fix systemd units path
 sed -i 's;^SYSTEMD_UNIT_DIR = .*$;SYSTEMD_UNIT_DIR = %systemd_unitdir;' config/init/systemd/Makefile.am
@@ -70,6 +60,19 @@ sed -i 's;^SYSTEMD_UNIT_DIR = .*$;SYSTEMD_UNIT_DIR = %systemd_unitdir;' config/i
 
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 install -pDm755 %SOURCE2 %buildroot%_initdir/cgproxy
+
+%post
+# cgmanager shouldn't be run on container
+if ! service %name status >/dev/null 2>&1 &&
+   cgproxy --check-master; then
+%post_service cgproxy
+else
+%post_service %name
+fi
+
+%preun
+%preun_service %name
+%preun_service cgproxy
 
 %files
 %_bindir/*
@@ -91,6 +94,16 @@ install -pDm755 %SOURCE2 %buildroot%_initdir/cgproxy
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Oct 15 2014 Mikhail Efremov <sem@altlinux.org> 0.33-alt1
+- Patches from upstream git:
+  + check "enabled" column when parsing /proc/cgroups.
+  + do_move_pid_main: don't break out of while loop on error; return
+    error after.
+- Use post_service/preun_service.
+- cgmanager.init: Don't run cgproxy --check-master if lockfile exists.
+- Drop obsoleted patches.
+- Updated to 0.33.
+
 * Wed Oct 01 2014 Mikhail Efremov <sem@altlinux.org> 0.32-alt1
 - Add patches from Debian.
 - Add init scripts.
