@@ -1,10 +1,8 @@
 %define oname Products.ResourceRegistries
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Registry for managing CSS and JS
 License: GPLv2
 Group: Development/Python
@@ -20,14 +18,15 @@ BuildPreReq: python-module-Products.CMFCore
 BuildPreReq: python-module-plone.protect
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-zope.contentprovider
-#BuildPreReq: python-module-plone.app.registry
-#BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-plone.app.registry
+BuildPreReq: python-module-Products.PloneTestCase
+BuildPreReq: python-module-unittest2
 
 %py_provides %oname
 Requires: python-module-Zope2
 %py_requires zope.component zope.interface zope.viewlet Products.CMFCore
 %py_requires plone.protect Products.GenericSetup ZODB3
-#py_requires plone.app.registry
+%py_requires plone.app.registry
 
 %description
 Provides a registry for linked Stylesheet and Javascript files.
@@ -37,7 +36,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires zope.contentprovider
-#py_requires Products.PloneTestCase
+%py_requires Products.PloneTestCase
 
 %description tests
 Provides a registry for linked Stylesheet and Javascript files.
@@ -70,6 +69,10 @@ python setup.py test
 %python_sitelibdir/Products/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
