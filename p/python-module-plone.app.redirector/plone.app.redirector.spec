@@ -1,7 +1,7 @@
 %define oname plone.app.redirector
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1.dev0.git20140730
+Release: alt2.dev0.git20140730
 Summary: Redirects to moved content after accessing old URLs
 License: GPLv2
 Group: Development/Python
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
 BuildPreReq: python-module-plone.memoize
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-plone.app.contenttypes
+BuildPreReq: python-module-plone.app.contenttypes
 
 %py_provides %oname
 %py_requires plone.app plone.memoize
@@ -29,7 +29,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires plone.app.contenttypes
+%py_requires plone.app.contenttypes
 
 %description tests
 Bring dead links back to life! plone.app.redirector knows where your
@@ -64,6 +64,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2.dev0.git20140730
+- Added necessary requirements
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.dev0.git20140730
 - Initial build for Sisyphus
 
