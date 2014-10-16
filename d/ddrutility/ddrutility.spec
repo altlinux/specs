@@ -1,5 +1,5 @@
 Name: ddrutility
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: Utility for use with gnuddrescue to aid with data recovery
@@ -35,6 +35,9 @@ ddru_ntfsfindbad
 %_infodir/*
 
 %changelog
+* Thu Oct 16 2014 Michael Shigorin <mike@altlinux.org> 2.6-alt1
+- new version (watch file uupdate)
+
 * Tue Jun 10 2014 Michael Shigorin <mike@altlinux.org> 2.5-alt1
 - new version (watch file uupdate)
 
