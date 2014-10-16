@@ -1,10 +1,8 @@
 %define oname plone.app.vocabularies
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.1.17
-Release: alt1.dev0.git20140907
+Release: alt2.dev0.git20140907
 Summary: A bundle of generally useful vocabularies in Plone
 License: GPLv2
 Group: Development/Python
@@ -73,6 +71,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.17-alt2.dev0.git20140907
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.17-alt1.dev0.git20140907
 - Initial build for Sisyphus
 
