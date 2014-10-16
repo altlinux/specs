@@ -1,11 +1,9 @@
 %define mname plone.formwidget
 %define oname %mname.recurrence
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.6
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Recurrence widget for Plone
 License: GPL
 Group: Development/Python
@@ -27,15 +25,15 @@ BuildPreReq: python-module-Products.validation
 BuildPreReq: python-module-Products.GenericSetup
 BuildPreReq: python-module-plone.app.testing
 BuildPreReq: python-module-plone.app.z3cform
-#BuildPreReq: python-module-Products.CMFPlone
-#BuildPreReq: python-module-Products.Archetypes
-#BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.ATContentTypes
 
 %py_provides %oname
 %py_requires %mname Products.CMFCore zope.component zope.i18n z3c.form
 %py_requires zope.i18nmessageid zope.interface zope.schema
 %py_requires zope.traversing Products.validation
-#py_requires Products.CMFPlone Products.Archetypes
+%py_requires Products.CMFPlone Products.Archetypes
 
 %description
 The plone.formwidget.recurrence package provides an Archetype and a
@@ -46,7 +44,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires Products.GenericSetup plone.app.testing plone.app.z3cform
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description tests
 The plone.formwidget.recurrence package provides an Archetype and a
@@ -80,6 +78,10 @@ python setup.py test
 %python_sitelibdir/plone/formwidget/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
