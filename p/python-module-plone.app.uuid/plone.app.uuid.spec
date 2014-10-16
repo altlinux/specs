@@ -1,7 +1,7 @@
 %define oname plone.app.uuid
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Plone integration for the basic plone.uuid package
 License: GPL
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-module-plone.indexer
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-plone.dexterity
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.Archetypes
+BuildPreReq: python-module-Products.Archetypes
 
 %py_provides %oname
 %py_requires plone.app plone.uuid plone.indexer zope.publisher
@@ -32,7 +32,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.dexterity plone.app.testing
-#py_requires Products.Archetypes
+%py_requires Products.Archetypes
 
 %description tests
 This package integrates the low-level plone.uuid into Plone-the-
@@ -66,6 +66,9 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.dev0.git20140823
+- Added necessary requirements
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
