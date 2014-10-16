@@ -3,22 +3,25 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.12.2
-Release: alt3
+Version: 2.13
+Release: alt1.dev0.git20140318
 Summary: A RAM-based storage for ZODB
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/tempstorage/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/tempstorage.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.testing python-module-ZODB3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python-tools-2to3 python3-module-zope.testing
+BuildPreReq: python3-module-ZODB3 python3-module-zodbpickle
 %endif
 
 %py_requires ZODB3
@@ -92,6 +95,14 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -111,6 +122,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13-alt1.dev0.git20140318
+- Version 2.13.dev0
+- Enabled testing
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.2-alt3
 - Added module for Python 3
 
