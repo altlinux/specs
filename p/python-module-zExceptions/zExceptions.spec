@@ -3,21 +3,28 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.13.0
-Release: alt2
+Version: 2.13.1
+Release: alt1.dev.git20130313
 Summary: zExceptions contains common exceptions used in Zope2
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zExceptions/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zExceptions.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-zope.publisher
+BuildPreReq: python-module-zope.security
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-zope.interface
+BuildPreReq: python3-module-zope.publisher
+BuildPreReq: python3-module-zope.security
 %endif
 
 %py_requires zope.interface zope.publisher zope.security
@@ -93,6 +100,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 %endif
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
@@ -112,6 +127,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.dev.git20130313
+- Version 2.13.1dev
+- Enabled testing
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.0-alt2
 - Added module for Python 3
 
