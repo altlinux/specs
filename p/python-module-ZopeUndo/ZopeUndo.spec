@@ -3,18 +3,19 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0
-Release: alt2
+Version: 4.0.1
+Release: alt1.dev.git20130313
 Summary: ZODB undo support for Zope2
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/ZopeUndo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/ZopeUndo.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
@@ -91,6 +92,9 @@ pushd ../python3
 popd
 %endif
 
+%check
+python setup.py test
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -110,6 +114,10 @@ popd
 %endif
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20130313
+- Version 4.0.1dev
+- Enabled testing
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2
 - Added module for Python 3
 
