@@ -1,16 +1,15 @@
 %define oname Products.StandardCacheManagers
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.13.1
-Release: alt1
+Release: alt1.git20140914
 Summary: Cache managers for Zope 2
 License: ZPLv2.1
 Group: Development/Python
 Url: https://pypi.python.org/pypi/Products.StandardCacheManagers/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/Products.StandardCacheManagers.git
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
@@ -53,7 +52,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-export PYTHONPATH=%buildroot%python_sitelibdir
+export PYTHONPATH=$PWD/src
 python setup.py test
 
 %files
@@ -65,6 +64,10 @@ python setup.py test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1.git20140914
+- Snapshot from git
+- Enabled testing
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.1-alt1
 - Initial build for Sisyphus
 
