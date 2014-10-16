@@ -1,11 +1,9 @@
 %define mname borg
 %define oname %mname.localrole
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1.dev0.git20140921
+Release: alt2.dev0.git20140921
 Summary: Zope 2 PAS plugin managing local roles via an adapter lookup on the current context
 License: LGPL
 Group: Development/Python
@@ -30,8 +28,8 @@ BuildPreReq: python-module-plone.keyring
 BuildPreReq: python-module-collective.monkeypatcher
 BuildPreReq: python-module-five.globalrequest
 BuildPreReq: python-module-plone.transformchain
-#BuildPreReq: python-module-Products.ATContentTypes
-#BuildPreReq: python-module-plone.session
+BuildPreReq: python-module-Products.ATContentTypes
+BuildPreReq: python-module-plone.session
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
@@ -50,7 +48,7 @@ Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
 %py_requires plone.app.testing
-#py_requires Products.ATContentTypes
+%py_requires Products.ATContentTypes
 
 %description tests
 A PAS plugin which can manage local roles via an adapter lookup on the
@@ -99,6 +97,10 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt2.dev0.git20140921
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.dev0.git20140921
 - Initial build for Sisyphus
 
