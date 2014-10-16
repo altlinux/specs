@@ -1,10 +1,8 @@
 %define oname plone.app.registry
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.2.4
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: Zope 2 and Plone integration for plone.registry
 License: GPL
 Group: Development/Python
@@ -26,7 +24,7 @@ BuildPreReq: python-module-Products.statusmessages
 BuildPreReq: python-module-zope.i18nmessageid
 BuildPreReq: python-module-zope.dottedname
 BuildPreReq: python-module-plone.app.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -34,7 +32,7 @@ Requires: python-module-Zope2
 %py_requires plone.autoform Products.CMFCore Products.GenericSetup
 %py_requires Products.statusmessages zope.component zope.interface
 %py_requires zope.i18nmessageid zope.dottedname
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.registry provides Plone UI and GenericSetup integration for
@@ -80,6 +78,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/test*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
