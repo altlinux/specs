@@ -3,24 +3,28 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.3
-Release: alt1
+Version: 1.4.4
+Release: alt1.dev.git20140404
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/transaction/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/transaction.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-repoze.sphinx.autointerface
+BuildPreReq: python-module-nose python-module-coverage
 %py_requires zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose python3-module-coverage
+BuildPreReq: python3-module-zope.interface
 %endif
 
 %description
@@ -149,6 +153,14 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
+
 %files
 %doc *.txt *.rst
 %python_sitelibdir/*
@@ -175,6 +187,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.dev.git20140404
+- Version 1.4.4dev
+- Enables testing
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1
 - Version 1.4.3
 
