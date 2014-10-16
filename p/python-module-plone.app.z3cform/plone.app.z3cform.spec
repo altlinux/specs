@@ -1,10 +1,8 @@
 %define oname plone.app.z3cform
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.dev0.git20140823
+Release: alt2.dev0.git20140823
 Summary: A Plone specific integration and HTML mark-up for z3c.form
 License: GPL
 Group: Development/Python
@@ -34,7 +32,7 @@ BuildPreReq: python-module-plone.testing
 BuildPreReq: python-module-zope.contentprovider
 BuildPreReq: python-module-zope.publisher
 BuildPreReq: python-module-zope.testing
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 Requires: python-module-Zope2
@@ -43,7 +41,7 @@ Requires: python-module-Zope2
 %py_requires zope.browserpage zope.component zope.globalrequest
 %py_requires zope.i18nmessageid zope.interface zope.schema
 %py_requires zope.traversing
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 A collection of widgets, templates and other components for use with
@@ -88,6 +86,10 @@ python setup.py test
 %python_sitelibdir/plone/app/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.dev0.git20140823
+- Added necessary requirements
+- Enabled testing
+
 * Mon Oct 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.dev0.git20140823
 - Initial build for Sisyphus
 
