@@ -3,22 +3,29 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt3
+Version: 4.0.1
+Release: alt1.dev.git20140809
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zdaemon/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zdaemon.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-zconfig python-module-zope.testing
+BuildPreReq: python-module-zope.testrunner python-module-manuel
+BuildPreReq: python-module-zc.customdoctests python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
+BuildPreReq: python3-module-zconfig python3-module-zope.testing
+BuildPreReq: python3-module-zope.testrunner python3-module-manuel
+BuildPreReq: python3-module-zc.customdoctests python3-module-mock
 %endif
 
 %description
@@ -44,7 +51,7 @@ instance, it has been used to manage the 'spread' daemon).
 Summary: Tests for zdaemon (Python 3)
 Group: Development/Python3
 Requires: python3-module-%oname = %version-%release
-%py3_requires zope.testing
+%py3_requires zope.testing zope.testrunner zc.customdoctests
 
 %description -n python3-module-%oname-tests
 zdaemon is a Python package which provides APIs for managing
@@ -60,7 +67,7 @@ This package contains tests for zdaemon.
 Summary: Tests for zdaemon
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testing
+%py_requires zope.testing zope.testrunner zc.customdoctests
 
 %description tests
 zdaemon is a Python package which provides APIs for managing
@@ -97,6 +104,9 @@ mv %buildroot%_bindir/zdaemon %buildroot%_bindir/zdaemon3
 
 %python_install
 
+%check
+python setup.py test
+
 %files
 %doc *.txt
 %_bindir/zdaemon
@@ -119,6 +129,10 @@ mv %buildroot%_bindir/zdaemon %buildroot%_bindir/zdaemon3
 %endif
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20140809
+- Version 4.0.1dev
+- Enabled testing
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
 - Version 4.0.0
 
