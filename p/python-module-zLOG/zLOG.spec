@@ -1,13 +1,14 @@
 %define oname zLOG
 Name: python-module-%oname
 Version: 2.12.0
-Release: alt1
+Release: alt1.git20130313
 Summary: A general logging facility
 License: ZPLv2.1
 Group: Development/Python
 Url: https://pypi.python.org/pypi/zLOG/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/zopefoundation/zLOG.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -55,6 +56,9 @@ python setup.py test
 %python_sitelibdir/*/tests
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.0-alt1.git20130313
+- Snapshot from git
+
 * Sat Oct 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.0-alt1
 - Initial build for Sisyphus
 
