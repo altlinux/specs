@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.2.18
+Version: 3.3.9
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -13,17 +13,13 @@ Source: gnutls-%version.tar
 %define libcxx libgnutlsxx28
 %define libssl libgnutls27-openssl
 %def_disable guile
-%def_with lzo
 #set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
-BuildRequires: libnettle-devel
+BuildRequires: libnettle-devel autogen libopts-devel
 %if_enabled guile
 BuildRequires: guile-devel
-%endif
-%if_with lzo
-BuildRequires: liblzo2-devel 
 %endif
 
 %description
@@ -191,13 +187,16 @@ sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-
 	--disable-rpath \
 	--disable-static \
 	--disable-silent-rules \
-	--with-libgcrypt \
+	-disable-libdane  \
+	--without-tpm \
+	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
 	%{subst_enable guile} \
-	%{subst_with lzo}
-%make_build LTLIBTASN1=-ltasn1 MAKEINFOFLAGS=--no-split
+	--disable-local-libopts \
+	--with-included-libtasn1=no
+make MAKEINFOFLAGS=--no-split
 
 %install
-%makeinstall_std LTLIBTASN1=-ltasn1
+%makeinstall_std
 find %buildroot%_infodir/ -name '*.png' -delete -print
 %define docdir %_docdir/gnutls-%version
 mkdir -p %buildroot%docdir/{examples,reference}
@@ -219,7 +218,6 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %dir %docdir
 %docdir/[ACNRT]*
 %_libdir/libgnutls.so.*
-%exclude %_libdir/libgnutls-xssl.*
 
 %files -n %libcxx
 %_libdir/libgnutlsxx.so.*
@@ -231,7 +229,6 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %_includedir/gnutls/
 %exclude %_includedir/gnutls/gnutlsxx.h
 %exclude %_includedir/gnutls/openssl.h
-%exclude %_includedir/gnutls/xssl.h
 %_libdir/libgnutls.so
 %_pkgconfigdir/gnutls.pc
 
@@ -274,6 +271,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Thu Oct 16 2014 Mikhail Efremov <sem@altlinux.org> 3.3.9-alt1
+- Build with external libopts.
+- Updated to 3.3.9.
+
 * Wed Sep 24 2014 Mikhail Efremov <sem@altlinux.org> 3.2.18-alt1
 - Updated to 3.2.18.
 
