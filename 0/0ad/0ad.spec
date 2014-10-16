@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.16.alpha
+Version: 0.0.17.alpha
 Release: alt1
 
 Group: Games/Strategy
@@ -14,7 +14,7 @@ BuildRequires: gcc-c++ python zip cmake
 BuildRequires: boost-devel boost-filesystem-devel boost-flyweight-devel boost-signals-devel 
 BuildRequires: libgamin-devel libgamin-fam libcurl-devel libjpeg-devel libpng-devel libvorbis-devel
 BuildRequires: libxml2-devel libopenal-devel libSDL-devel wxGTK-devel libXcursor-devel libgloox-devel
-BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel
+BuildRequires: libnspr-devel python-dev python-modules-json libicu-devel libenet-devel
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -53,7 +53,6 @@ install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
 install -Dm 0755 binaries/system/libnvtt.so %buildroot%_libdir/%name/libnvtt.so
-install -Dm 0755 binaries/system/libenet.so.1 %buildroot%_libdir/%name/libenet.so.1
 install -Dm 0755 binaries/system/libminiupnpc.so.9 %buildroot%_libdir/%name/libminiupnpc.so.9
 
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
@@ -73,7 +72,6 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_libdir/%name/libnvimage.so
 %_libdir/%name/libnvmath.so
 %_libdir/%name/libnvtt.so
-%_libdir/%name/libenet.so.1
 %_libdir/%name/libminiupnpc.so.9
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
@@ -81,6 +79,9 @@ cp -a binaries/data/* %buildroot/%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Tue Oct 14 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.17.alpha-alt1
+- 0.0.17
+
 * Mon May 19 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.16.alpha-alt1
 - 0.0.16
 

@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.16.alpha
+Version: 0.0.17.alpha
 Release: alt1
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ mv binaries/data/* %buildroot/%_datadir/0ad
 %_datadir/0ad
 
 %changelog
+* Wed Oct 15 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.17.alpha-alt1
+- 0.0.17
+
 * Tue May 20 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.16.alpha-alt1
 - 0.0.16
 
