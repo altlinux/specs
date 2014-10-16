@@ -1,10 +1,8 @@
 %define oname plone.app.discussion
 
-%def_disable check
-
 Name: python-module-%oname
 Version: 2.3.3
-Release: alt1.dev0.git20141009
+Release: alt2.dev0.git20141009
 Summary: Enhanced discussion support for Plone
 License: GPL
 Group: Development/Python
@@ -37,7 +35,7 @@ BuildPreReq: python-module-plone.contentrules
 BuildPreReq: python-module-plone.app.contentrules
 BuildPreReq: python-module-plone.app.contenttypes-tests
 BuildPreReq: python-module-plone.app.robotframework
-#BuildPreReq: python-module-Products.CMFPlone
+BuildPreReq: python-module-Products.CMFPlone
 
 %py_provides %oname
 %py_requires plone.app collective.monkeypatcher plone.app.layout
@@ -45,7 +43,7 @@ BuildPreReq: python-module-plone.app.robotframework
 %py_requires plone.indexer plone.registry ZODB3 zope.interface
 %py_requires zope.component zope.annotation zope.event zope.container
 %py_requires zope.lifecycleevent zope.site z3c.form
-#py_requires Products.CMFPlone
+%py_requires Products.CMFPlone
 
 %description
 plone.app.discussion replaces the old commenting system in Plone 4.1 and
@@ -139,6 +137,10 @@ python setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt2.dev0.git20141009
+- Added necessary requirements
+- Enabled testing
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt1.dev0.git20141009
 - Initial build for Sisyphus
 
