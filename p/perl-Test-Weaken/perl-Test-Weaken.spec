@@ -7,7 +7,7 @@ BuildRequires: perl(Array/RefElem.pm) perl(Carp.pm) perl(Data/Dumper.pm) perl(De
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_3
+Release:    alt2_4
 
 Summary:    Test that freed memory is, in fact, freed
 License:    GPL+ or Artistic
@@ -55,6 +55,9 @@ are weakened and expected to be then freed.
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Oct 16 2014 Igor Vlasenko <viy@altlinux.ru> 3.022000-alt2_4
+- update by mgaimport
+
 * Wed Feb 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.022000-alt2_3
 - moved to Sisyphus
 
