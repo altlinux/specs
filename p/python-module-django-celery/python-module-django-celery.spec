@@ -3,18 +3,26 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.1.10
-Release: alt1.git20140331
+Version: 3.2.0
+Release: alt1.a1.git20140924
 Group: Development/Python
 License: BSD License
 Summary: django-celery provides Celery integration for Django
 URL: https://github.com/celery/django-celery
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
+BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-pytest python-module-django-tests
+BuildPreReq: python-module-celery python-module-django-nose
+BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-nose-cover3 python-module-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-pytest python3-module-django-tests
+BuildPreReq: python3-module-celery python3-module-django-nose
+BuildPreReq: python3-module-django-dbbackend-sqlite3
+BuildPreReq: python3-module-nose-cover3 python3-module-py
 %endif
 
 %description
@@ -60,6 +68,9 @@ popd
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
+%check
+python setup.py test
+
 %files
 %doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
 %python_sitelibdir/djcelery*
@@ -73,6 +84,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.a1.git20140924
+- Version 3.2.0a1
+- Enabled testing
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.10-alt1.git20140331
 - Version 3.1.10
 - Added module for Python 3
