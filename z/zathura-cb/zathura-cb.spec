@@ -1,6 +1,6 @@
 Name: zathura-cb
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Summary: Comic book support for zathura
 License: %bsdstyle
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgirara-devel zathura-devel
+BuildRequires: libgdk-pixbuf-devel libgio-devel
 BuildRequires: intltool libcairo-devel libarchive-devel
 
 Requires: zathura
@@ -39,6 +40,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Oct 17 2014 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1
+- Updated to 0.1.3.
+
 * Fri Feb 21 2014 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt2
 - Rebuild with new libgirara and zathura for GTK+3.
 
