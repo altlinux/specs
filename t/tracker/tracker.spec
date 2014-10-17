@@ -49,8 +49,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -384,6 +384,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt2
 - rebuilt against libupower-glib.so.3
 
