@@ -1,5 +1,5 @@
 Name: zathura
-Version: 0.2.9
+Version: 0.3.0
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -12,7 +12,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libgirara-devel >= 0.2.0-alt1
-BuildRequires: intltool libgtk+3-devel libsqlite3-devel python-module-docutils libmagic-devel
+BuildRequires: intltool libgtk+3-devel libsqlite3-devel python-module-docutils libmagic-devel zlib-devel
 # For man pages
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
@@ -53,6 +53,7 @@ mkdir -p %buildroot%_libdir/zathura
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
+%_datadir/appdata/%name.appdata.xml
 %_man1dir/*
 %_man5dir/*
 %_datadir/dbus-1/interfaces/org.pwmt.*
@@ -62,6 +63,10 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Oct 17 2014 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Package appdata file.
+- Updated to 0.3.0.
+
 * Thu Jul 03 2014 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
 - Updated to 0.2.9.
 

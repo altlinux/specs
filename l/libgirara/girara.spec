@@ -1,7 +1,7 @@
 %define _name girara
 
 Name: lib%_name
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -56,6 +56,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Oct 17 2014 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
+- Updated to 0.2.3.
+
 * Thu Jul 03 2014 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
 - Enable libnotify support.
 - Updated to 0.2.2.
