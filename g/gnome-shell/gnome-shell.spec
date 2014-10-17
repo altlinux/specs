@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -65,6 +65,7 @@ Requires: typelib(GLib)
 Requires: typelib(GnomeBluetooth)
 Requires: typelib(GnomeDesktop)
 Requires: typelib(GObject)
+Requires: typelib(GSystem)
 Requires: typelib(Gtk)
 Requires: typelib(Gvc)
 Requires: typelib(IBus)
@@ -83,6 +84,7 @@ Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
+Requires: typelib(WebKit2)
 
 BuildRequires: gcc-c++ gnome-common intltool gtk-doc
 BuildRequires: python-devel
@@ -221,6 +223,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1.1
+- fixed reqs
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
 - 3.14.1
 
