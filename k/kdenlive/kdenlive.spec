@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.7.8
 
 Name: kdenlive
-Version: 0.9.8
-Release: alt3
+Version: 0.9.10
+Release: alt1
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -67,6 +67,12 @@ mv altlinux/doc .
 %_K4xdg_mime/*
 
 %changelog
+* Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.10-alt1
+- new version
+
+* Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt2.M70P.1
+- built for M70P
+
 * Fri Jun 06 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt3
 - prefer vlc for preview
 

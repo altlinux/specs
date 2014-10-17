@@ -8,8 +8,9 @@
 %define lname lib%name
 
 Name: mlt
-Version: 0.9.0
+Version: 0.9.2
 Release: alt1
+
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
 Group: Video
@@ -19,9 +20,8 @@ Packager: Maxim Ivanov <redbaron@altlinux.org>
 
 Source: %name-%version.tar
 Source1: mlt++-config.h
-Patch1: mlt-0.5.4-alt-configure-mmx.patch
-Patch2: mlt-0.8.8-alt-fix-compile.patch
-Patch3: mlt-0.9.0-alt-no-version-script.patch
+Patch1: mlt-0.9.2-alt-configure-mmx.patch
+Patch2: mlt-0.9.0-alt-no-version-script.patch
 # SuSE
 Patch10: libmlt-0.8.2-vdpau.patch
 
@@ -88,7 +88,6 @@ This module allows to work with MLT using python..
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch10 -p0
 
 [ -f src/mlt++/config.h ] || \
@@ -161,6 +160,12 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
+- new version
+
+* Fri Oct 17 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M70P.1
+- built for M70P
+
 * Tue May 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
