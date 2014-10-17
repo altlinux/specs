@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.0.21
-Release: alt1.git20140707
+Version: 3.1.0
+Release: alt1.a1.git20141013
 Group: Development/Python
 License: BSD License
 Summary: Kombu is an AMQP messaging framework for Python
@@ -152,6 +152,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1.a1.git20141013
+- Version 3.1.0a1
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.21-alt1.git20140707
 - Version 3.0.21
 - Added module for Python 3
