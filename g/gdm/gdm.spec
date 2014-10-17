@@ -22,14 +22,13 @@
 %def_disable wayland
 
 Name: gdm
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
 URL: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: gdm_xdmcp.control
@@ -295,6 +294,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Fri Oct 17 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.1-alt1
+- 3.14.1
+
 * Tue Sep 23 2014 Alexey Shabalin <shaba@altlinux.ru> 3.14.0-alt1
 - 3.14.0
 
