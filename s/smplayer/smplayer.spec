@@ -1,4 +1,4 @@
-%define		svn 6216
+%define		svn 6415
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -7,7 +7,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer (QT4)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	14.3.0
+Version:	14.9.0
 Release:	alt1.%svn
 Packager:	Alexey Morsov <swi@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -75,6 +75,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Fri Oct 17 2014 Motsyo Gennadi <drool@altlinux.ru> 14.9.0-alt1.6415
+- 14.9.0 svn6415
+
 * Wed Apr 23 2014 Motsyo Gennadi <drool@altlinux.ru> 14.3.0-alt1.6216
 - svn6216
 
