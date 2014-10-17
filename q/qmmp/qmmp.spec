@@ -1,5 +1,5 @@
 %define branch 0.9
-%define svn svn4425
+%define svn svn4582
 
 Version: %branch.0
 Epoch: 1
@@ -823,6 +823,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Oct 17 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4582
+- 0.9.0 svn4582 version
+
+* Thu Oct 16 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4581
+- 0.9.0 svn4581 version
+
 * Thu Aug 07 2014 Motsyo Gennadi <drool@altlinux.ru> 1:0.9.0-alt1.svn4425
 - 0.9.0 svn4425 version
 
