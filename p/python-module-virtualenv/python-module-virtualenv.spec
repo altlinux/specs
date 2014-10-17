@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 1.9.1
-Release: alt2
+Version: 1.11.6
+Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.6-alt1
+- Version 1.11.6
+
 * Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt2
 - Added provides '%modulename' for Python 3
 
