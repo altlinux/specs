@@ -1,11 +1,13 @@
 %define sname restkit
 
 %def_with python3
+%def_disable check
 
 Summary: Restkit is an HTTP resource kit for Python
 Name: python-module-%sname
-Version: 2.3.1
-Release: alt1.2
+Version: 4.2.2
+Release: alt1.git20140731
+# http://github.com/benoitc/restkit
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/r/%sname/%sname-%version.tar.gz
 License: BSD
@@ -16,15 +18,15 @@ BuildArch: noarch
 
 #add_python_req_skip eventlet
 
-# Automatically added by buildreq on Thu Jul 10 2008
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-http-parser python-module-socketpool
+BuildPreReq: python-module-nose python-module-webob
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-http-parser python3-module-socketpool
+BuildPreReq: python-tools-2to3 python3-module-nose python3-module-webob
 %endif
 
 %description
@@ -72,6 +74,11 @@ popd
 
 %python_install
 
+rm -f doc/NOTICE
+
+%check
+python setup.py test
+
 %files
 %doc README.rst THANKS LICENSE NOTICE examples/* doc/*
 %_bindir/restcli
@@ -90,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1.git20140731
+- Version 4.2.2
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1.2
 - Added module for Python 3
 
