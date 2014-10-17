@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.1.13
-Release: alt1.git20140710
+Version: 3.1.16
+Release: alt1.git20141003
 Group: Development/Python
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -12,14 +12,18 @@ URL: https://github.com/celery/celery
 Source: %name-%version.tar
 
 BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
-BuildPreReq: python-module-billiard python-module-kombu
-BuildPreReq: python-module-sphinxcontrib-issuetracker
+BuildPreReq: python-module-billiard python-module-kombu-tests
+BuildPreReq: python-module-sphinxcontrib-issuetracker python-module-nose
 BuildPreReq: python-module-dateutil texlive-latex-recommended
-BuildPreReq: python-module-amqplib dvipng
+BuildPreReq: python-module-amqplib dvipng python-module-anyjson
+BuildPreReq: python-module-pytz python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 python3-module-anyjson
+BuildPreReq: python3-module-pytz python3-module-unittest2
+BuildPreReq: python3-module-billiard python3-module-kombu-tests
+BuildPreReq: python3-module-amqp python3-module-nose
 %endif
 
 %description
@@ -128,6 +132,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.16-alt1.git20141003
+- Version 3.1.16
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.13-alt1.git20140710
 - Version 3.1.13
 - Added module for Python 3
