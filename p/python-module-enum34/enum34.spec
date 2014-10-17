@@ -1,0 +1,110 @@
+%define oname enum34
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 1.0
+Release: alt1
+Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
+License: BSD
+Group: Development/Python
+Url: https://pypi.python.org/pypi/enum34/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools-tests
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-setuptools-tests
+%endif
+
+%py_provides %oname
+
+%description
+An enumeration is a set of symbolic names (members) bound to unique,
+constant values. Within an enumeration, the members can be compared by
+identity, and the enumeration itself can be iterated over.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+An enumeration is a set of symbolic names (members) bound to unique,
+constant values. Within an enumeration, the members can be compared by
+identity, and the enumeration itself can be iterated over.
+
+This package contains tests for %oname.
+
+%package -n python3-module-%oname
+Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
+Group: Development/Python3
+%py3_provides %oname
+
+%description -n python3-module-%oname
+An enumeration is a set of symbolic names (members) bound to unique,
+constant values. Within an enumeration, the members can be compared by
+identity, and the enumeration itself can be iterated over.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+An enumeration is a set of symbolic names (members) bound to unique,
+constant values. Within an enumeration, the members can be compared by
+identity, and the enumeration itself can be iterated over.
+
+This package contains tests for %oname.
+
+%prep
+%setup
+
+%if_with python3
+cp -fR . ../python3
+%endif
+
+%build
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
+
+%install
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
+
+%files
+%python_sitelibdir/*
+%exclude %python_sitelibdir/*/test*
+
+%files tests
+%python_sitelibdir/*/test*
+
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/test*
+%exclude %python3_sitelibdir/*/*/test*
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/test*
+%python3_sitelibdir/*/*/test*
+%endif
+
+%changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
+- Initial build for Sisyphus
+
