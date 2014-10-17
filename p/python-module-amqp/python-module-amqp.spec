@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 1.4.5
-Release: alt1.git20140415
+Version: 2.0.0
+Release: alt1.a1.git20140930
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -112,6 +112,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1.git20140930
+- Version 2.0.0a1
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.5-alt1.git20140415
 - Version 1.4.5
 - Added modulefor Python 3
