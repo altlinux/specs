@@ -2,7 +2,7 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.5.4
+Version:	3.6.0
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -136,6 +136,7 @@ Requires:	%name-gb-gtk = %version-%release
 Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
+Requires:	%name-gb-markdown = %version-%release
 Requires:	%name-gb-qt4 = %version-%release
 Requires:	%name-gb-qt4-ext = %version-%release
 Requires:	%name-gb-qt4-webkit = %version-%release
@@ -195,9 +196,11 @@ Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
 Requires:	%name-gb-image-imlib = %version-%release
 Requires:	%name-gb-image-io = %version-%release
+Requires:	%name-gb-inotify = %version-%release
 Requires:	%name-gb-jit = %version-%release
 Requires:	%name-gb-logging = %version-%release
 Requires:	%name-gb-map = %version-%release
+Requires:	%name-gb-markdown = %version-%release
 Requires:	%name-gb-media = %version-%release
 Requires:	%name-gb-memcached = %version-%release
 Requires:	%name-gb-mime = %version-%release
@@ -513,6 +516,14 @@ Requires:	%name-runtime = %version-%release
 %description gb-image-io
 This component allows you to perform images input output operations.
 
+%package gb-inotify
+Summary:	Gambas3 component package for inotify (unstable)
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-inotify
+This component allows you to perform inotify operations.
+
 %package gb-jit
 Summary:	Gambas3 Just In Time compiler
 Group:		Development/Tools
@@ -536,6 +547,14 @@ Requires:   %name-runtime = %version-%release
 
 %description gb-map
 Gambas3 component package for map
+
+%package gb-markdown
+Summary:    Gambas3 component package for markup syntax
+Group:      Development/Tools
+Requires:   %name-runtime = %version-%release
+
+%description gb-markdown
+Gambas3 component package for markup syntax
 
 %package gb-media
 Summary:    Gambas3 component package for media
@@ -938,14 +957,6 @@ rm -rf %buildroot%_libdir/%name/gb.la %buildroot%_libdir/%name/gb.so*
 # No need for the static libs
 rm -rf %buildroot%_libdir/%name/*.a
 
-# Replace the bundled font with a symlink to our system copy
-pushd %buildroot%appdir/gb.sdl/
-rm -f DejaVuSans.ttf
-ln -s ../../fonts/ttf/dejavu/DejaVuSans.ttf DejaVuSans.ttf
-popd
-
-chmod -x %buildroot%appdir/gb.sdl/LICENSE
-
 # Mime types.
 mkdir -p %buildroot%_datadir/mime/packages/
 install -m 0644 -p app/mime/application-x-gambasscript.xml %buildroot%_xdgmimedir/packages/
@@ -965,6 +976,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_bindir/gbx3
 %_datadir/pixmaps/%name.png
 %_datadir/applications/*.desktop
+%_datadir/appdata/%name.appdata.xml
 %dir %appdir/
 %dir %appdir/info/
 %appdir/info/gb.debug.*
@@ -998,7 +1010,6 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %dir %appdir/examples/
 
 %files examples
-%appdir/examples/Automation/
 %appdir/examples/Basic/
 %appdir/examples/Control/
 %appdir/examples/Database/
@@ -1010,6 +1021,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/examples/Networking/
 %appdir/examples/OpenGL/
 %appdir/examples/Printing/
+%appdir/examples/Web/
 
 %files gb-args
 %_libdir/%name/gb.args.*
@@ -1169,6 +1181,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.image.io.*
 %appdir/info/gb.image.io.*
 
+%files gb-inotify
+%_libdir/%name/gb.inotify.*
+%appdir/info/gb.inotify.*
+
 %files gb-jit
 %_libdir/%name/gb.jit.*
 %appdir/info/gb.jit.*
@@ -1182,9 +1198,14 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.map.*
 %appdir/control/gb.map/
 
+%files gb-markdown
+%_libdir/%name/gb.markdown.*
+%appdir/info/gb.markdown.*
+
 %files gb-media
 %_libdir/%name/gb.media.*
 %appdir/info/gb.media.*
+%appdir/control/gb.media.form/
 
 %files gb-memcached
 %_libdir/%name/gb.memcached.*
@@ -1204,6 +1225,8 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.net.la
 %appdir/info/gb.net.info
 %appdir/info/gb.net.list
+%appdir/control/gb.net.pop3/
+%appdir/control/gb.net.smtp/
 
 %files gb-net-curl
 %_libdir/%name/gb.net.curl.*
@@ -1293,7 +1316,6 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.sdl.la
 %appdir/info/gb.sdl.info
 %appdir/info/gb.sdl.list
-%appdir/gb.sdl/
 
 %files gb-sdl-sound
 %_libdir/%name/gb.sdl.sound.*
@@ -1344,6 +1366,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Oct 14 2014 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version
+- New subpackages: gambas3-gb-inotify and gambas3-gb-markdown
+
 * Wed Jul 09 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.4-alt1
 - New version
 - Drop obsoleted patch
