@@ -1,6 +1,6 @@
-Version:	1.4.8
+Version:	1.5.0
 Name:		qosmic
-Release:	alt1.1
+Release:	alt1
 Summary:	Qosmic Fractal Flame Editor
 License: 	GPLv2
 Group: 		Graphics
@@ -10,10 +10,9 @@ Source0:	http://qosmic.googlecode.com/files/%name-%version.tar.bz2
 Source1:	%name.desktop
 Source2:	%name
 Patch0:		%name-1.4.8-alt_dirs.diff
-Patch1:   %name-1.4.8-alt-glibc-2.16.diff
 Requires:	flam3-palettes
 
-BuildRequires: ImageMagick flam3-palettes flam3-devel-static >= 2.7.18 gcc-c++ libjpeg-devel liblua5-devel libqt4-devel libxml2-devel
+BuildRequires: /usr/bin/convert flam3-palettes flam3-devel-static >= 3.0.1 gcc-c++ libjpeg-devel liblua5-devel libqt4-devel libxml2-devel
 
 %description
 Qosmic is a nifty toy with which you can
@@ -22,7 +21,6 @@ edit and render flam3 fractal images.
 %prep
 %setup -n %name
 %patch0 -p1
-%patch1 -p2
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -51,6 +49,9 @@ convert -resize 48x48 icons/%name.xpm %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Sat Oct 18 2014 Motsyo Gennadi <drool@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt1.1
 - Fixed build with glibc 2.16
 
