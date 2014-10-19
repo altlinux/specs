@@ -1,7 +1,7 @@
-%define rev 2b04e7f4
+%define rev a664ddeb
 Name: feh
 Version: 2.12
-Release: alt2.%rev
+Release: alt3.%rev
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -46,6 +46,9 @@ cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Sun Oct 19 2014 Andrew Clark <andyc@altlinux.org> 2.12-alt3.a664ddeb
+- version update to 2.12-alt3.a664ddeb
+
 * Thu Jun 12 2014 Andrew Clark <andyc@altlinux.org> 2.12-alt2.2b04e7f4
 - version update to 2.12-alt2.2b04e7f4
 
