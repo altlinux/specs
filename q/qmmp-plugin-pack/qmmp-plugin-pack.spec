@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.9
-%define		svn svn4582
+%define		svn svn4587
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -111,6 +111,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Mon Oct 20 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn4587
+- rebuild with new qmmp svn snapshot
+
 * Fri Oct 17 2014 Motsyo Gennadi <drool@altlinux.ru> 0.9.0-alt1.svn4582
 - build svn4582
 
