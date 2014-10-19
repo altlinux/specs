@@ -1,7 +1,7 @@
 %define srcName leptonlib
 
 Name: libleptonica
-Version: 1.70
+Version: 1.71
 Release: alt1
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
@@ -130,6 +130,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Sun Oct 19 2014 Andrey Bergman <vkni@altlinux.org> 1.71-alt1
+- update to version 1.71
+
 * Tue Jan 28 2014 Andrey Bergman <vkni@altlinux.org> 1.70-alt1
 - update to version 1.70
 
