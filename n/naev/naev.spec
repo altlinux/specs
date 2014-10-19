@@ -1,7 +1,7 @@
-%define rev 8ae4ad6b
+%define rev 79a3a21d
 Name: naev
-Version: 0.5.3
-Release: alt8.%rev
+Version: 0.6.0
+Release: alt1.%rev
 Summary: NAEV is a 2D space trading and combat game, in a similar vein to Escape Velocity
 Group: Games/Other
 License: GPLv3
@@ -13,9 +13,9 @@ Source2: %name.png
 Source3: %name.sh
 Patch0: %name-desktop.patch
 
-# Automatically added by buildreq on Mon Jun 13 2011
-# optimized out: libGL-devel libGLU-devel libSDL-devel libogg-devel pkg-config zlib-devel
-BuildRequires: libSDL_image-devel libSDL_mixer-devel libfreetype-devel libopenal-devel libpng-devel libvorbis-devel libxml2-devel
+# Automatically added by buildreq on Sun Oct 19 2014
+# optimized out: libGL-devel libGLU-devel libSDL-devel libcloog-isl4 libogg-devel pkg-config zlib-devel
+BuildRequires: libSDL_mixer-devel libfreetype-devel libopenal-devel libpng-devel libvorbis-devel libxml2-devel libzip-devel zip
 
 Requires: %name-data = %version
 
@@ -61,10 +61,14 @@ install -pD -m 755 %SOURCE3 %buildroot%_bindir/%name.sh
 %_pixmapsdir/*.png
 %_desktopdir/%name.desktop
 %_liconsdir/*.png
+%_datadir/appdata/%name.appdata.xml
 %files data
 %_gamesdatadir/ndata/
 
 %changelog
+* Sun Oct 19 2014 Andrew Clark <andyc@altlinux.org> 0.6.0-alt1.79a3a21d
+- version update to 0.6.0-alt1.79a3a21d
+
 * Fri May 23 2014 Andrew Clark <andyc@altlinux.org> 0.5.3-alt8.8ae4ad6b
 - version update to 0.5.3-alt8.8ae4ad6b
 
