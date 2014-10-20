@@ -1,5 +1,5 @@
 Name: libcairomm
-Version: 1.9.8
+Version: 1.11.2
 Release: alt1
 Summary: This library provides a C++ interface to cairo
 License: LGPL
@@ -30,6 +30,7 @@ of %name library.
 %patch -p1
 
 >build/doc-reference.am
+>build/dist-changelog.am
 
 %build
 %autoreconf
@@ -51,6 +52,9 @@ of %name library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 20 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.11.2-alt1
+- 1.11.2
+
 * Tue Feb 15 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.9.8-alt1
 - 1.9.8
 
