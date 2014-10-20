@@ -12,15 +12,15 @@
 
 Name: nautilus
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Nautilus is a network user environment
 License: GPLv2+
 Group: Graphical desktop/GNOME
-URL: http://gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://wiki.gnome.org/Apps/Nautilus
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=519743
 Patch17: %name-filetype-symlink-fix.patch
@@ -144,6 +144,7 @@ subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nautilus
 %configure \
     --disable-update-mimedb \
     --disable-schemas-compile \
+    --enable-gtk-doc \
     %{subst_enable tracker} \
     %{subst_enable packagekit}
 
@@ -214,6 +215,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Oct 20 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt2
+- updated to 3.14.0_0b5db3e2d (fixed BGO #738280, 738430, 738087)
+
 * Tue Sep 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
