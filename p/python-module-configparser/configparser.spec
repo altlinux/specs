@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.5.0
-Release: alt1.b2
+Release: alt2.b2
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 License: MIT
 Group: Development/Python
@@ -12,15 +12,17 @@ Url: https://pypi.python.org/pypi/configparser/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
+%py_requires backports
 
 %description
 The ancient ConfigParser module available in the standard library 2.x
@@ -31,6 +33,7 @@ changes so that they can be used directly in Python 2.6 - 3.5.
 Summary: This library brings the updated configparser from Python 3.5 to Python 2.6-3.5
 Group: Development/Python3
 %py3_provides %oname
+%py3_requires backports
 
 %description -n python3-module-%oname
 The ancient ConfigParser module available in the standard library 2.x
@@ -62,6 +65,10 @@ pushd ../python3
 popd
 %endif
 
+%ifarch x86_64
+mv %buildroot%_libexecdir %buildroot%_libdir
+%endif
+
 %check
 python setup.py test
 %if_with python3
@@ -73,14 +80,20 @@ popd
 %files
 %doc *.rst
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.rst
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt2.b2
+- Set package as archdep
+- Excluded .pth
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.b2
 - Initial build for Sisyphus
 
