@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.4
-Release: alt1.dev1.hg20141009
+Release: alt2.dev1.hg20141009
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -23,6 +23,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 %endif
 
+%py_requires py
+
 %description
 py.test is a command line tool to collect, run and report about
 automated tests. It runs well on Linux, Windows and OSX and on Python
@@ -36,6 +38,7 @@ distribute along with your application.
 %package -n python3-module-%oname
 Summary: Simple and popular testing tool for Python 3
 Group: Development/Python3
+%py3_requires py
 %add_python3_req_skip compiler
 
 %description -n python3-module-%oname
@@ -136,6 +139,9 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt2.dev1.hg20141009
+- Added requirement on py
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1.dev1.hg20141009
 - Version 2.6.4.dev1
 
