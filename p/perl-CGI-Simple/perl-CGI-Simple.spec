@@ -1,6 +1,6 @@
 %define dist CGI-Simple
 Name: perl-%dist
-Version: 1.113
+Version: 1.115
 Release: alt1
 
 Summary: A Simple totally OO CGI interface that is CGI.pm compliant 
@@ -8,7 +8,7 @@ License: Artistic and GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/CGI-Simple-%{version}.tar.gz
 Patch: perl-CGI-Simple-1.112-alt-mod_perl.patch
 
 BuildArch: noarch
@@ -39,6 +39,9 @@ the CGI::Simple::Standard module.
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.115-alt1
+- automated CPAN update
+
 * Wed Mar 16 2011 Alexey Tourbin <at@altlinux.ru> 1.113-alt1
 - 1.112 -> 1.113
 
