@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
-Version:    0.5 
-Release:    alt5_16
+Version:    0.51
+Release:    alt1
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
 Summary:    Change the start and speed of Event time 
-Source:     http://search.cpan.org/CPAN/authors/id/J/JP/JPRIT/Time-Warp-%{version}.tar.gz
+Source:     http://www.cpan.org/authors/id/S/SZ/SZABGAB/Time-Warp-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Time-Warp
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -54,6 +54,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
+- automated CPAN update
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt5_16
 - update to new release by fcimport
 
