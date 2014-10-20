@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.84.7
+Version: 0.84.8
 Release: alt1
 
 
@@ -145,6 +145,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Mon Oct 20 2014 Pavel Zilke <zidex at altlinux dot org> 0.84.8-alt1
+- This version fix several minor bugs and a security bug.
+
 * Sat Aug 09 2014 Pavel Zilke <zidex at altlinux dot org> 0.84.7-alt1
 - New version 0.84.5 This version correct several minor bugs.
 
