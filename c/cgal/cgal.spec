@@ -1,7 +1,7 @@
 %define somver 9
 %define sover %somver.0.0
 Name: cgal
-Version: 4.4
+Version: 4.5
 Release: alt1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
@@ -10,7 +10,7 @@ Url: http://www.cgal.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: CGAL-%version.tar.gz
-Source1: https://gforge.inria.fr/frs/download.php/33521/CGAL-4.4-doc_html.tar.gz
+Source1: https://gforge.inria.fr/frs/download.php/file/34143/CGAL-4.5-doc_html.tar.gz
 Source2: https://gforge.inria.fr/frs/download.php/32357/cgal_manual.pdf
 Source4: cmk.txt
 Source5: %name.pc
@@ -18,8 +18,8 @@ Source5: %name.pc
 Requires: lib%name = %version-%release
 
 BuildPreReq: gcc-c++ gcc-fortran cmake libqt4-devel qt4-devel
-BuildPreReq: boost-devel libgmp-devel libgmpxx-devel
-BuildPreReq: libGLU-devel libGL-devel libmpfr-devel
+BuildPreReq: boost-devel libgmp-devel libgmpxx-devel eigen3
+BuildPreReq: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
 BuildPreReq: zlib-devel qt3-devel libX11 phonon-devel
 BuildPreReq: liblapack-devel libtaucs-devel
 
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5-alt1
+- Version 4.5
+
 * Fri Apr 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4-alt1
 - Version 4.4
 
