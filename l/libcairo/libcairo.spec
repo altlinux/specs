@@ -1,5 +1,5 @@
 Name: libcairo
-Version: 1.12.16
+Version: 1.14.0
 Release: alt1
 Epoch: 1
 Summary: Multi-platform 2D graphics library
@@ -122,6 +122,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Sun Oct 19 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:1.14.0-alt1
+- 1.14.0
+
 * Tue Aug 27 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.12.16-alt1
 - 1.12.16
 
