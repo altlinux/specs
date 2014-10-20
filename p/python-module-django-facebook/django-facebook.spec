@@ -1,7 +1,10 @@
 %define oname django-facebook
+
+%def_disable check
+
 Name: python-module-%oname
-Version: 6.0.1
-Release: alt1.git20140903
+Version: 6.0.2
+Release: alt1.git20141016
 Summary: Facebook open graph API client in python
 License: BSD
 Group: Development/Python
@@ -12,9 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools python-module-celery
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 BuildPreReq: python-module-django-tests python-modules-sqlite3
+BuildPreReq: python-module-django-dbbackend-sqlite3
+BuildPreReq: python-module-unidecode python-module-celery
+BuildPreReq: python-module-memcached python-module-Pillow
+BuildPreReq: python-module-mock python-module-pytest
+BuildPreReq: python-module-pytest-django
 
 %description
 Facebook open graph API client in python. Enables django applications to
@@ -87,6 +95,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
+%check
+python setup.py test
+
 %files
 %doc AUTHORS *.rest
 %python_sitelibdir/*
@@ -105,6 +116,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.2-alt1.git20141016
+- Version 6.0.2
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.1-alt1.git20140903
 - Initial build for Sisyphus
 
