@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Date-Format
 Name: perl-%dist
-Version: 1.004
+Version: 1.005
 Release: alt1
 
 Summary: Produce RFC 2822 date strings
@@ -35,6 +35,9 @@ they use a four digit year, which is not allowed in RFC 822.)
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
 - automated CPAN update
 
