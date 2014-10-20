@@ -1,6 +1,6 @@
 Name: flam3
-Version: 2.7.18
-Release: alt2.1
+Version: 3.0.1
+Release: alt1
 
 Summary: Cosmic Recursive Fractal Flames
 License: GPL
@@ -9,7 +9,7 @@ Url: http://flam3.com/
 
 Packager: Alexandra Panyukova <mex3@altlinux.ru>
 Source: %name-%version.tar.gz
-Patch: flam3-2.7.18-alt-libpng15.diff
+Patch: flam3-3.0.1-alt-libpng15.diff
 
 # Automatically added by buildreq on Wed Apr 11 2007
 BuildRequires: libjpeg-devel libpng-devel libxml2-devel
@@ -46,6 +46,7 @@ Static libraries for %name
 %patch -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -69,6 +70,9 @@ Static libraries for %name
 %_libdir/lib%name.a
 
 %changelog
+* Sat Oct 18 2014 Motsyo Gennadi <drool@altlinux.ru> 3.0.1-alt1
+- 3.0.1
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.18-alt2.1
 - Fixed built with libpng15
 
