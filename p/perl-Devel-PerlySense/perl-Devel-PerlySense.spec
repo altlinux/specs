@@ -1,4 +1,4 @@
-%define module_version 0.0211
+%define module_version 0.0213
 %define module_name Devel-PerlySense
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense.pm
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense*.pm
@@ -10,14 +10,14 @@ BuildRequires: perl(App/Ack.pm) perl(Cache/Cache.pm) perl(Cache/FileCache.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.0211
-Release: alt2
+Version: 0.0213
+Release: alt1
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/J/JO/JOHANL/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JO/JOHANL/Devel-PerlySense-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -50,6 +50,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.0213-alt1
+- automated CPAN update
+
 * Tue Feb 18 2014 Igor Vlasenko <viy@altlinux.ru> 0.0211-alt2
 - moved to Sisyphus for Slic3r (by dd@ request)
 
