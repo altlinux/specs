@@ -1,20 +1,20 @@
-%define module_version 0.03
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.04
 %define module_name TOML-Parser
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(Exporter.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Storable.pm) perl(TOML.pm) perl(Test/More.pm) perl(Types/Serialiser.pm) perl(constant.pm) perl(parent.pm)
+BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(Exporter.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Storable.pm) perl(TOML.pm) perl(Test/More.pm) perl(Types/Serialiser.pm) perl(constant.pm) perl(parent.pm) perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.03
-Release: alt2
+Version: 0.04
+Release: alt1
 Summary: simple toml parser
 Group: Development/Perl
 License: perl
 URL: https://github.com/karupanerura/TOML-Parser
 
-Source0: http://cpan.org.ua/authors/id/K/KA/KARUPA/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KARUPA/TOML-Parser-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_privlib/T*
 
 %changelog
+* Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2
 - moved to Sisyphus as dependency
 
