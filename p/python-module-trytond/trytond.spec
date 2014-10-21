@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 3.2.3
+Version: 3.4.0
 Release: alt1
 Summary: Tryton server
 License: GPL
@@ -176,6 +176,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.3-alt1
 - Initial build for Sisyphus
 
