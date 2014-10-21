@@ -1,7 +1,7 @@
 %define oname trytond_nereid
 Name: python-module-%oname
 Version: 3.2.0.5
-Release: alt1.git20141013
+Release: alt2.git20141013
 Summary: Tryton base module for Nereid
 License: GPLv3
 Group: Development/Python
@@ -78,17 +78,17 @@ cp -fR %_datadir/flask-sphinx-themes/* docs/_themes/
 %install
 %python_install
 
-export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
+#export PYTHONPATH=$PWD
+#make -C docs pickle
+#make -C docs html
 
-install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+#install -d %buildroot%python_sitelibdir/%oname
+#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc CHANGELOG COPYRIGHT MIGRATION *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+#exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/*/*/tests
 %exclude %python_sitelibdir/*/*/*/*/tests
@@ -98,13 +98,16 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/*/*/tests
 %python_sitelibdir/*/*/*/*/tests
 
-%files pickles
-%python_sitelibdir/*/pickle
+#files pickles
+#python_sitelibdir/*/pickle
 
-%files docs
-%doc docs/_build/html/*
+#files docs
+#doc docs/_build/html/*
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.5-alt2.git20141013
+- Don't requires distribute
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0.5-alt1.git20141013
 - Initial build for Sisyphus
 
