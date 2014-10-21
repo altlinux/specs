@@ -1,8 +1,8 @@
 %def_disable zeitgeist
 
 Name: qt5-phonon
-Version: 4.8.0
-Release: alt3
+Version: 4.8.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -91,6 +91,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.1-alt1
+- new version
+
 * Mon Sep 15 2014 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt3
 - fix cmake configs
 
