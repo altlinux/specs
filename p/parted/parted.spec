@@ -1,79 +1,227 @@
+%set_verify_elf_method unresolved=relaxed
+
+%def_enable static
+%def_enable shared
+%def_disable rpath
+%def_disable mtrace
+%def_disable debug
+%def_disable ro
+%def_disable discover_only
+%def_enable dynamic_loading
+%def_disable pc98
+%def_enable largefile
+%def_enable nls
+%def_with readline
+%def_with pic
+%def_enable selinux
+%def_enable device_mapper
+%def_without usermode
+#----------------------------------------------------------------------
+%define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
+
+%define Name Parted
 Name: parted
-Version: 2.4
-Release: alt3
-Summary: The GNU disk partition manipulation program
-License: GPLv3+
+%define lname lib%name
+Version: 3.2
+%define prerel %nil
+Release: alt1
+
+Summary: Flexible partitioning tool
+Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
+Summary(ru_RU.CP1251): Универсальный инструмент для работы с разделами диска
+License: GPL3+
 Group: System/Configuration/Hardware
-URL: http://www.gnu.org/software/parted/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+URL: http://www.gnu.org/software/%name
 
-Source: http://ftp.gnu.org/gnu/parted/%name-%version.tar.gz
-Patch0: parted-2.3-gpt-labels.patch
-Patch1: parted-2.4-alt-headers-regression.patch
-Patch2: parted-2.4-alt-glibc-gets.patch
+Source: ftp://ftp.gnu.org/gnu/%name/%name-%version%prerel.tar.xz
+Source1: %name-pam
+Source2: %name-security
 
-Requires: lib%name = %version-%release
+Requires: %lname = %version-%release
 
-BuildRequires: libblkid-devel libdevmapper-devel libreadline-devel libtinfo-devel libuuid-devel
+BuildRequires: gcc-c++ libtinfo-devel libreadline-devel
+BuildRequires: libe2fs-devel libuuid-devel libblkid-devel
+BuildRequires: libcheck-devel
+%{?_enable_static:BuildRequires: glibc-devel-static}
+%{?_enable_device_mapper:BuildRequires: libdevmapper-devel}
+%{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
+# for check
+BuildRequires: e2fsprogs xfsprogs dosfstools perl-Digest-CRC bc
 
 %description
-The GNU Parted program allows you to create, destroy, resize, move,
-and copy hard disk partitions. Parted can be used for creating space
-for new operating systems, reorganizing disk usage, and copying data
-to new hard disks.
+GNU %Name is a program that allows you to create, destroy, resize,
+move and copy hard disk partitions. This is useful for creating space
+for new operating systems, reorganising disk usage, and copying data to
+new hard disks.
 
-%package -n lib%name
-Summary: The GNU Parted runtime library
+%description -l uk_UA.CP1251
+GNU %Name - програма для створення, знищення, зміни розміру,
+переміщення та копіювання розділів диску. Це може бути корисним при
+створенні місця для нових операційних систем, реорганізації
+використання диску та копіювання даних на новий жорсткий диск.
+
+%description -l ru_RU.CP1251
+GNU %Name - программа для создания, уничтожения, изменения размера,
+перемещения и копирования разделов диска. Это может быть полезно при
+создании места для новых операционных систем, реорганизации
+использования диска и копировании данных на новый жесткий диск.
+
+
+%if_enabled shared
+%package -n %lname
+Summary: Shared library for flexible partitioning tool
 Group: System/Libraries
 
-%description -n lib%name
-This package contains the runtime library required to run
-lib%name-based software.
+%description -n %lname
+This package includes the shared library needed to run
+%lname-based software.
 
-%package -n lib%name-devel
-Summary: Files required to compile software that uses lib%name
+%description -n %lname -l uk_UA.CP1251
+Цей пакет включає в себе роздільні бібліотеки, необхідні для запуску
+програм, що використовують %lname.
+
+%description -n %lname -l ru_RU.CP1251
+Этот пакет включает в себя разделяемые библиотеки, необходимые для
+запуска программ, которые используют %lname.
+%endif
+
+%package -n %lname-devel
+Summary: Files required to compile software that uses %lname
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
 Provides: %name-devel = %version-%release
-Obsoletes: %name-devel < %version
+Obsoletes: %name-devel
 
-%description -n lib%name-devel
-This package contains the GNU Parted development files.
+%description -n %lname-devel
+This package includes the header files.
+
+%description -n %lname-devel -l uk_UA.CP1251
+Цей пакет включає в себе файли заголовків.
+
+%description -n %lname-devel -l ru_RU.CP1251
+Этот пакет включает в себя файлы заголовков.
+
+%if_enabled static
+%package -n %lname-devel-static
+Summary: Files required to compile statically linked software that uses %lname
+Group: Development/C
+Requires: %lname-devel = %version-%release
+Provides: %name-devel-static = %version-%release
+Obsoletes: %name-devel-static
+
+%description -n %lname-devel-static
+This package includes the libraries needed to statically link software
+with %lname.
+
+%description -n %lname-devel-static -l uk_UA.CP1251
+Цей пакет включає в себе бібліотеки, необхідні для статичного
+лінкування з %lname.
+
+%description -n %lname-devel-static -l ru_RU.CP1251
+Этот пакет включает в себя библиотеки, необходимые для статической
+линковки с %lname.
+%endif
+
 
 %prep
-%setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -n %name-%version%prerel
 
 %build
+%autoreconf
 %configure \
-	--disable-rpath \
-	--disable-static \
-	--disable-silent-rules
+    %{subst_enable rpath} \
+    %{subst_with pic} \
+    %{subst_enable mtrace} \
+    %{subst_enable debug} \
+    %{subst_enable_to ro read-only} \
+    %{subst_enable_to discover_only discover-only} \
+    %{subst_enable_to dynamic_loading dynamic-loading} \
+    %{subst_enable shared} \
+    %{subst_enable static} \
+    %{subst_enable pc98} \
+    %{subst_enable largefile} \
+    %{subst_enable nls} \
+    %{subst_with readline} \
+    %{subst_enable_to device_mapper device-mapper} \
+    %{subst_enable selinux}
+
 %make_build
+
+bzip2 --best --keep --force ChangeLog
 
 %install
 %makeinstall_std
 
-%find_lang %name
+%if_with usermode
+#usermode
+install -D -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
+install -D -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
+install -d %buildroot%_bindir
+ln -s %_bindir/consolehelper %buildroot%_bindir/%name
+
+#menu
+install -d %buildroot%_desktopdir
+iconv -f cp1251 -t utf-8 > %buildroot%_desktopdir/%name.desktop <<__MENU__
+[Desktop Entry]
+Encoding=UTF-8
+Exec=%name
+Name=%Name
+Icon=
+Terminal=true
+Type=Application
+Comment=Flexible partitioning tool
+Comment[uk]=Универсальний інструмент для роботи з разділами диску
+Comment[ru]=Универсальный инструмент для работы с разделами диска
+Categories=Application;System;Filesystem;ConsoleOnly;
+__MENU__
+%endif
+
+%find_lang --output=%name.lang %name
+
+# some tests require root priviledges
+#%check
+#export LD_LIBRARY_PATH=$(pwd)/libparted/.libs
+#%make check
+
+%post
+%{?_with_usermode:}
 
 %files -f %name.lang
-%_sbindir/*
-%_man8dir/*
-%_infodir/*.info*
-%doc AUTHORS BUGS NEWS THANKS TODO
+%doc AUTHORS BUGS NEWS README THANKS TODO
+%_sbindir/%name
+%_sbindir/partprobe
+%_infodir/*
+%_man8dir/%name.*
+%_man8dir/partprobe.*
+%if_with usermode
+%_bindir/%name
+%_sysconfdir/pam.d/*
+%_sysconfdir/security/console.apps/*
+%_desktopdir/*
+%endif
 
-%files -n lib%name
-%_libdir/*.so.*
+%if_enabled shared
+%files -n %lname
+%_libdir/%lname.so.*
+%_libdir/%lname-fs-resize.so.*
+%endif
 
-%files -n lib%name-devel
-%_libdir/*.so
-%_includedir/%name
-%_pkgconfigdir/*.pc
-%doc doc/API doc/FAT
+%files -n %lname-devel
+%doc doc/API doc/FAT ChangeLog.*
+%{?_enable_shared:%_libdir/*.so}
+%_includedir/%name/
+%_pkgconfigdir/%lname.pc
+
+%if_enabled static
+%files -n %lname-devel-static
+%_libdir/*.a
+%endif
+
 
 %changelog
+* Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
+- 3.2
+
 * Sun Dec 09 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4-alt3
 - Fixed interpackage dependencies.
 - Really fixed build.
@@ -141,13 +289,13 @@ This package contains the GNU Parted development files.
 - cleaned up spec
 
 * Sun Mar 25 2007 Led <led@altlinux.ru> 1.8.6-alt1
-- 1.8.6: changed lib%name soname
+- 1.8.6: changed %lname soname
 
 * Mon Mar 19 2007 Led <led@altlinux.ru> 1.8.4-alt1
-- 1.8.4: changed lib%name soname
+- 1.8.4: changed %lname soname
 - removed %name-1.7.0-configure.patch (fixed in upstream)
 - fixed BuildRequires
-- added lib%name.pc
+- added %lname.pc
 
 * Tue Jan 16 2007 Led <led@altlinux.ru> 1.8.2-alt1
 - 1.8.2

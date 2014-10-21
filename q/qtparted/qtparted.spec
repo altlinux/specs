@@ -21,7 +21,7 @@
 %define Name QtParted
 Name: qtparted
 Version: 0.7.0
-Release: alt1.git20140602
+Release: alt2.git20140602
 Group: System/Configuration/Hardware
 Summary: Flexible GUI partitioning tool
 Summary(ru_RU.CP1251): Графический инструмент для работы с разделами жесткого диска
@@ -128,6 +128,9 @@ install -p -m644 doc/%name.1 %buildroot%_man1dir
 
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt2.git20140602
+- Rebuilt with new libparted
+
 * Sun Sep 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20140602
 - Version 0.7.0
 

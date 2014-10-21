@@ -1,30 +1,29 @@
 %def_with pic
-
 %define Name GParted
+
 Name: gparted
-Version: 0.8.0
-Release: alt1.1
+Version: 0.20.0
+Release: alt1
+
 Summary: %Name Partition Editor
-Summary(ru_RU.CP1251): Редактор разделов %Name
-Summary(uk_UA.CP1251): Редактор розділів %Name
+Summary(ru_RU.UTF-8): Р РµРґР°РєС‚РѕСЂ СЂР°Р·РґРµР»РѕРІ %Name
+Summary(uk_UA.UTF-8): Р РµРґР°РєС‚РѕСЂ СЂРѕР·РґС–Р»С–РІ %Name
 License: %gpl2plus
 Group: System/Configuration/Hardware
 URL: http://%name.sourceforge.net/
-Source0: %name-%version.tar
+
+Source: %name-%version.tar
 #http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2?download
 Source1: %name-pam
 Source2: %name-security
-Patch0: %name-%version-%release.patch
-Patch1: %name-0.8.0-alt-DSO.patch
-#Patch1: %name-%version-led.patch
-Packager: Led <led@altlinux.ru>
+
 AutoReq: yes, noshell
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libparted-devel >= 1.7.1
-BuildRequires: libgtkmm2-devel >= 2.8
+BuildRequires: libparted-devel >= 3.2
+BuildRequires: libgtkmm2-devel >= 2.22.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel intltool
-BuildRequires: perl-XML-Parser gnome-doc-utils librarian
+BuildRequires: perl-XML-Parser gnome-doc-utils gnome-common librarian
 
 %description
 %Name stands for %Name Partition Editor. It uses libparted to detect
@@ -35,41 +34,39 @@ don't require a rebuild of %Name.
 %Name is written in C++ and uses gtkmm as Graphical Toolkit. The
 general approach is to keep the GUI as simple as possible.
 
-%description -l ru_RU.CP1251
-%Name - %Name Partition Editor. Он использует libparted для
-обнаружения и манипуляций с устройствами и таблицами разделов, а также
-некоторые (необязательные) инструменты (не включенные в libparted),
-обеспечивающие поддержку файловых систем. Эти необязательные пакеты
-обнаруживаются во время выполнения и не требуют пересборки %Name.
-%Name написан на C++ с использованием gtkmm в качестве графического
-инструментария. Главная задача - оставить GUI максимально простым.
+%description -l ru_RU.UTF-8
+%Name - %Name Partition Editor. РћРЅ РёСЃРїРѕР»СЊР·СѓРµС‚ libparted РґР»СЏ
+РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ Рё РјР°РЅРёРїСѓР»СЏС†РёР№ СЃ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё Рё С‚Р°Р±Р»РёС†Р°РјРё СЂР°Р·РґРµР»РѕРІ, Р° С‚Р°РєР¶Рµ
+РЅРµРєРѕС‚РѕСЂС‹Рµ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ) РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹ (РЅРµ РІРєР»СЋС‡РµРЅРЅС‹Рµ РІ libparted),
+РѕР±РµСЃРїРµС‡РёРІР°СЋС‰РёРµ РїРѕРґРґРµСЂР¶РєСѓ С„Р°Р№Р»РѕРІС‹С… СЃРёСЃС‚РµРј. Р­С‚Рё РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїР°РєРµС‚С‹
+РѕР±РЅР°СЂСѓР¶РёРІР°СЋС‚СЃСЏ РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Рё РЅРµ С‚СЂРµР±СѓСЋС‚ РїРµСЂРµСЃР±РѕСЂРєРё %Name.
+%Name РЅР°РїРёСЃР°РЅ РЅР° C++ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј gtkmm РІ РєР°С‡РµСЃС‚РІРµ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ
+РёРЅСЃС‚СЂСѓРјРµРЅС‚Р°СЂРёСЏ. Р“Р»Р°РІРЅР°СЏ Р·Р°РґР°С‡Р° - РѕСЃС‚Р°РІРёС‚СЊ GUI РјР°РєСЃРёРјР°Р»СЊРЅРѕ РїСЂРѕСЃС‚С‹Рј.
 
-%description -l uk_UA.CP1251
-%Name - %Name Partition Editor. Він використовує libparted для
-виявлення та маніпуляцій з пристроями і таблицями разділів, а також
-деякі (необов'язкові) інструменти (не включені в libparted), які
-забезпечують підтримку файлових систем. Ці необов'язкові пакети
-виявляються під час виконання і не потребують перебудови %Name.
-%Name написано на C++ з використанням gtkmm в якості графічного
-інструментарію. Головне завдання - залишити GUI максимально простим.
+%description -l uk_UA.UTF-8
+%Name - %Name Partition Editor. Р’С–РЅ РІРёРєРѕСЂРёСЃС‚РѕРІСѓС” libparted РґР»СЏ
+РІРёСЏРІР»РµРЅРЅСЏ С‚Р° РјР°РЅС–РїСѓР»СЏС†С–Р№ Р· РїСЂРёСЃС‚СЂРѕСЏРјРё С– С‚Р°Р±Р»РёС†СЏРјРё СЂР°Р·РґС–Р»С–РІ, Р° С‚Р°РєРѕР¶
+РґРµСЏРєС– (РЅРµРѕР±РѕРІ'СЏР·РєРѕРІС–) С–РЅСЃС‚СЂСѓРјРµРЅС‚Рё (РЅРµ РІРєР»СЋС‡РµРЅС– РІ libparted), СЏРєС–
+Р·Р°Р±РµР·РїРµС‡СѓСЋС‚СЊ РїС–РґС‚СЂРёРјРєСѓ С„Р°Р№Р»РѕРІРёС… СЃРёСЃС‚РµРј. Р¦С– РЅРµРѕР±РѕРІ'СЏР·РєРѕРІС– РїР°РєРµС‚Рё
+РІРёСЏРІР»СЏСЋС‚СЊСЃСЏ РїС–Рґ С‡Р°СЃ РІРёРєРѕРЅР°РЅРЅСЏ С– РЅРµ РїРѕС‚СЂРµР±СѓСЋС‚СЊ РїРµСЂРµР±СѓРґРѕРІРё %Name.
+%Name РЅР°РїРёСЃР°РЅРѕ РЅР° C++ Р· РІРёРєРѕСЂРёСЃС‚Р°РЅРЅСЏРј gtkmm РІ СЏРєРѕСЃС‚С– РіСЂР°С„С–С‡РЅРѕРіРѕ
+С–РЅСЃС‚СЂСѓРјРµРЅС‚Р°СЂС–СЋ. Р“РѕР»РѕРІРЅРµ Р·Р°РІРґР°РЅРЅСЏ - Р·Р°Р»РёС€РёС‚Рё GUI РјР°РєСЃРёРјР°Р»СЊРЅРѕ РїСЂРѕСЃС‚РёРј.
 
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p0
-
 
 %build
-%define _optlevel s
-%autoreconf
-%configure %{subst_with pic} --bindir=%_sbindir
+#%%define _optlevel s
+NOCONFIGURE=1 ./autogen.sh
+%configure %{subst_with pic} --bindir=%_sbindir \
+	--enable-libparted-dmraid \
+	--enable-online-resize
 %make_build
 bzip2 --best --keep --force ChangeLog
 
-
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # usermode
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
@@ -78,7 +75,6 @@ install -d -m 0755 %buildroot%_bindir
 ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 
 %find_lang --with-gnome %name
-
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog.* README
@@ -89,9 +85,12 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 %_sysconfdir/security/console.apps/*
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
-
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.1
 - Fixed build
 

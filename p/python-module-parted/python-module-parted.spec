@@ -1,14 +1,17 @@
 %define _upstream pyparted
-Name: python-module-parted
-Version: 3.4
-Release: alt2.1.1
+%define oname parted
+
+%def_with python3
+
+Name: python-module-%oname
+Version: 3.10.0
+Release: alt1
 
 Summary: Python bindings for libparted
 
 Group: Development/Python
 License: GPL v2 or later
 URL: https://fedorahosted.org/pyparted/
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 Source: %_upstream-%version.tar.gz
 Provides: %_upstream
 
@@ -16,6 +19,11 @@ Provides: %_upstream
 # Automatically added by buildreq on Fri Feb 20 2009
 BuildRequires: libparted-devel python-devel
 BuildPreReq: python-module-decorator
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel python3-module-decorator
+%endif
 
 %description
 pyparted is a set of native Python bindings for libparted.  libparted is the
@@ -28,25 +36,64 @@ mapping of externally accessible libparted functions was written.  This
 mapping is provided in the _ped Python module.  You can use that module if
 you want to, but it's really just meant for the larger parted module.
 
+%package -n python3-module-%oname
+Summary: Python bindings for libparted
+Group: Development/Python3
+
+%description -n python3-module-%oname
+pyparted is a set of native Python bindings for libparted.  libparted is the
+library portion of the GNU parted project.  With pyparted, you can write
+applications that interact with disk partition tables and filesystems.
+
+The Python bindings are implemented in two layers.  Since libparted itself
+is written in C without any real implementation of objects, a simple 1:1
+mapping of externally accessible libparted functions was written.  This
+mapping is provided in the _ped Python module.  You can use that module if
+you want to, but it's really just meant for the larger parted module.
 
 %prep
 %setup -n %_upstream-%version
 
+%if_with python3
+cp -fR . ../python3
+%endif
+
 %build
-%autoreconf
-%configure
-%make_build 
+%add_optflags -fno-strict-aliasing
+%python_build_debug
+
+%if_with python3
+pushd ../python3
+%python3_build_debug
+popd
+%endif
 
 %install
-%makeinstall_std
+%python_install
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %files
 %doc AUTHORS BUGS ChangeLog NEWS README TODO
 %python_sitelibdir/parted
 %python_sitelibdir/*.so
-%exclude %python_sitelibdir/*.la
+
+%if_with python3
+%files -n python3-module-%oname
+%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%python3_sitelibdir/parted
+%python3_sitelibdir/*.so
+%endif
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt1
+- Version 3.10.0 (ALT #30392)
+- Added module for Python 3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.4-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
