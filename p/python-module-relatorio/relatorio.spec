@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: A templating library able to output odt and pdf files
 License: GPL
 Group: Development/Python
@@ -25,6 +25,7 @@ BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
+%add_python_req_skip pycha
 
 %description
 A templating library which provides a way to easily output all kind of
@@ -34,6 +35,23 @@ filetype is easy: you just have to create a plugin for this.
 relatorio also provides a report repository allowing you to link python
 objects and report together, find reports by mimetypes/name/python
 objects.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python
+Requires: %name = %EVR
+%add_python_req_skip pycha
+
+%description tests
+A templating library which provides a way to easily output all kind of
+different files (odt, ods, png, svg, ...). Adding support for more
+filetype is easy: you just have to create a plugin for this.
+
+relatorio also provides a report repository allowing you to link python
+objects and report together, find reports by mimetypes/name/python
+objects.
+
+This package contains tests for %oname.
 
 %package -n python3-module-%oname
 Summary: A templating library able to output odt and pdf files
@@ -48,6 +66,22 @@ filetype is easy: you just have to create a plugin for this.
 relatorio also provides a report repository allowing you to link python
 objects and report together, find reports by mimetypes/name/python
 objects.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: python3-module-%oname = %EVR
+
+%description -n python3-module-%oname-tests
+A templating library which provides a way to easily output all kind of
+different files (odt, ods, png, svg, ...). Adding support for more
+filetype is easy: you just have to create a plugin for this.
+
+relatorio also provides a report repository allowing you to link python
+objects and report together, find reports by mimetypes/name/python
+objects.
+
+This package contains tests for %oname.
 
 %prep
 %setup
@@ -86,14 +120,25 @@ popd
 %files
 %doc AUTHORS CHANGES LICENSE README
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/tests
+
+%files tests
+%python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS CHANGES LICENSE README
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
+- Moved tests into separate package
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus
 
