@@ -1,6 +1,6 @@
 %define sover 5
 Name: libotr%sover
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Group: Networking/Instant messaging
@@ -84,6 +84,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Tue Oct 21 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Tue Nov 12 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.0-alt1
 - New version.
 
