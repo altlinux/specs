@@ -61,7 +61,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: StrongSWAN IPSEC implementation
@@ -213,6 +213,9 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Sun Oct 19 2014 Michael Shigorin <mike@altlinux.org> 5.2.1-alt1
+- new version (watch file uupdate)
+
 * Wed Jul 09 2014 Michael Shigorin <mike@altlinux.org> 5.2.0-alt1
 - new version (watch file uupdate)
 
