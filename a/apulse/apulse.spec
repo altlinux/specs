@@ -1,6 +1,6 @@
 Name: apulse
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Summary: PulseAudio emulation for ALSA
 License: MIT, LGPLv2.1+
@@ -27,8 +27,8 @@ $ apulse <program-name> [parameters]
 %patch -p1
 
 %build
-%cmake_insource -DNDEBUG=1 -DAPULSEPATH=%_libdir/apulse
-%make_build NODEBUG=1 # VERBOSE=1
+%cmake_insource -DAPULSEPATH=%_libdir/apulse
+%make_build # VERBOSE=1
 
 %install
 %makeinstall_std
@@ -48,6 +48,10 @@ chmod 0755 %buildroot%_bindir/i586-apulse
 %_libdir/apulse/
 
 %changelog
+* Tue Oct 21 2014 Denis Smirnov <mithraen@altlinux.ru> 0.1.3-alt1
+- new version 0.1.3
+- really disable debug output
+
 * Sun Oct 19 2014 Michael Shigorin <mike@altlinux.org> 0.1.2-alt2
 - *disable* debug output
 
