@@ -5,7 +5,7 @@
 Name: toxcore
 Summary: %name
 Version: 0.0.1
-Release: alt1.20141014
+Release: alt1.20141022
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel
@@ -105,6 +105,9 @@ Requires: toxcore-devel
 %_libdir/libtoxencryptsave.a
 
 %changelog
+* Wed Oct 22 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20141022
+- update from upstream git
+
 * Tue Oct 14 2014 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt1.20141014
 - update from upstream git (ALT #30394)
 
