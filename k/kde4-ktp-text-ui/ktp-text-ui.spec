@@ -3,7 +3,7 @@
 
 %define rname ktp-text-ui
 Name: kde4-ktp-text-ui
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ License: GPLv2+ and (BSD or AFL) and MIT
 Requires: telepathy-logger
 
 Source0: %rname-%version.tar
-Patch1: ktp-text-ui-0.3.0-alt-libktpchat-soname.patch
+Patch1: ktp-text-ui-0.9.0-alt-soname.patch
 
 # Automatically added by buildreq on Tue Apr 17 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgio-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -25,7 +25,8 @@ Patch1: ktp-text-ui-0.3.0-alt-libktpchat-soname.patch
 BuildRequires: gcc-c++ libtelepathy-glib-devel
 BuildRequires: kde4-ktp-common-internals-devel kde4libs-devel qjson-devel
 BuildRequires: kde-common-devel
-BuildRequires: libtelepathy-logger-devel telepathy-logger-qt4-devel qt-gstreamer-devel
+BuildRequires: libtelepathy-logger-devel telepathy-logger-qt4-devel
+BuildRequires: libkpeople-devel
 
 %description
 %summary
@@ -43,6 +44,13 @@ Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %version-%release
 %description -n libktpchat4
+%name library.
+
+%package -n libktpimagesharer4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %version-%release
+%description -n libktpimagesharer4
 %name library.
 
 %package devel
@@ -74,6 +82,8 @@ done
 
 %files -n libktpchat4
 %_K4libdir/libktpchat.so.*
+%files -n libktpimagesharer4
+%_K4libdir/libktpimagesharer.so.*
 
 
 %files -f %name.lang
@@ -104,6 +114,12 @@ done
 #%_K4includedir/KTp/*
 
 %changelog
+* Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+
+* Wed May 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt0.M70P.1
+- built for M70P
+
 * Tue May 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
 - new version
 
