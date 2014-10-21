@@ -1,9 +1,9 @@
 Name: engcom
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: The Open English-Russian Dictionary of Computer Terms
-Summary(ru_RU.KOI8-R): Свободный англо-русский словарь компьютерных терминов
+Summary(ru_RU.UTF-8): п║п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘ я┌п╣я─п╪п╦п╫п╬п╡
 
 License: FDL
 URL: http://www.etersoft.ru/engcom
@@ -11,8 +11,7 @@ Group: Text tools
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %name-%version.tar
-#Source: http://etersoft.ru/download/engcom/%name-%version.tar.bz2
+Source: ftp://download.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
 
 BuildArchitectures: noarch
 
@@ -29,14 +28,14 @@ BuildRequires: dict-tools makedict perl-Unicode-Map8 python-module-PyXML python-
 The %name package contains free (as speech) English-Russian
 Dictionary of Computer Terms. It is not academic dictionary.
 
-%description -l ru_RU.KOI8-R
-Пакет %name содержит англо-русский словарь компьютерных
-терминов, составленный по мотивам реальной жизни.
+%description -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘
+я┌п╣я─п╪п╦п╫п╬п╡, я│п╬я│я┌п╟п╡п╩п╣п╫п╫я▀п╧ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я─п╣п╟п╩я▄п╫п╬п╧ п╤п╦п╥п╫п╦.
 
 %package -n mova-%name
 
 Summary: %dictdesc for mova
-Summary(ru_RU.KOI8-R): Свободный англо-русский словарь компьютерных терминов для mova
+Summary(ru_RU.UTF-8): п║п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘ я┌п╣я─п╪п╦п╫п╬п╡ п╢п╩я▐ mova
 Group: Text tools
 Obsoletes: engcom engcom-mova
 Provides: engcom engcom-mova
@@ -46,15 +45,15 @@ Requires: mova
 The %name package contains free (with FDL license ) English-Russian
 Dictionary of Computer Terms in mova format. It is not academic dictionary.
 
-%description -n mova-%name -l ru_RU.KOI8-R
-Пакет %name содержит свободный англо-русский словарь компьютерных
-терминов в формате mova, составленный по мотивам реальной жизни,
-содержанию компьютерной прессы и рассылок.
+%description -n mova-%name -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ я│п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘
+я┌п╣я─п╪п╦п╫п╬п╡ п╡ я└п╬я─п╪п╟я┌п╣ mova, я│п╬я│я┌п╟п╡п╩п╣п╫п╫я▀п╧ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я─п╣п╟п╩я▄п╫п╬п╧ п╤п╦п╥п╫п╦,
+я│п╬п╢п╣я─п╤п╟п╫п╦я▌ п╨п╬п╪п©я▄я▌я┌п╣я─п╫п╬п╧ п©я─п╣я│я│я▀ п╦ я─п╟я│я│я▀п╩п╬п╨.
 
 %package -n dict-%name
 
 Summary: %dictdesc for dict dictionary
-Summary(ru_RU.KOI8-R): Свободный англо-русский словарь компьютерных терминов в формате dict
+Summary(ru_RU.UTF-8): п║п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘ я┌п╣я─п╪п╦п╫п╬п╡ п╡ я└п╬я─п╪п╟я┌п╣ dict
 Group: Text tools
 Requires: dictd >= 1.7.1
 
@@ -62,15 +61,15 @@ Requires: dictd >= 1.7.1
 The %name package contains free (with FDL license) English-Russian
 Computer Dictionary in dict format. It is not academic dictionary.
 
-%description -n dict-%name -l ru_RU.KOI8-R
-Пакет %name содержит свободный англо-русский словарь компьютерных
-терминов в формате словарей dictd, составленный по мотивам реальной жизни,
-содержанию компьютерной прессы и рассылок.
+%description -n dict-%name -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ я│п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘
+я┌п╣я─п╪п╦п╫п╬п╡ п╡ я└п╬я─п╪п╟я┌п╣ я│п╩п╬п╡п╟я─п╣п╧ dictd, я│п╬я│я┌п╟п╡п╩п╣п╫п╫я▀п╧ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я─п╣п╟п╩я▄п╫п╬п╧ п╤п╦п╥п╫п╦,
+я│п╬п╢п╣я─п╤п╟п╫п╦я▌ п╨п╬п╪п©я▄я▌я┌п╣я─п╫п╬п╧ п©я─п╣я│я│я▀ п╦ я─п╟я│я│я▀п╩п╬п╨.
 
 %package -n stardict-%name
 
 Summary: The Open English-Russian Dictionary of Computer Terms for stardict dictionary
-Summary(ru_RU.KOI8-R): Свободный англо-русский словарь компьютерных терминов в формате stardict
+Summary(ru_RU.UTF-8): п║п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘ я┌п╣я─п╪п╦п╫п╬п╡ п╡ я└п╬я─п╪п╟я┌п╣ stardict
 Group: Text tools
 Requires: stardict
 
@@ -78,10 +77,10 @@ Requires: stardict
 The %name package contains free (with FDL license) English-Russian
 Computer Dictionary in stardict format. It is not academic dictionary.
 
-%description -n stardict-%name -l ru_RU.KOI8-R
-Пакет %name содержит свободный англо-русский словарь компьютерных
-терминов в формате словарей stardict, составленный по мотивам реальной жизни,
-содержанию компьютерной прессы и рассылок.
+%description -n stardict-%name -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name я│п╬п╢п╣я─п╤п╦я┌ я│п╡п╬п╠п╬п╢п╫я▀п╧ п╟п╫пЁп╩п╬-я─я┐я│я│п╨п╦п╧ я│п╩п╬п╡п╟я─я▄ п╨п╬п╪п©я▄я▌я┌п╣я─п╫я▀я┘
+я┌п╣я─п╪п╦п╫п╬п╡ п╡ я└п╬я─п╪п╟я┌п╣ я│п╩п╬п╡п╟я─п╣п╧ stardict, я│п╬я│я┌п╟п╡п╩п╣п╫п╫я▀п╧ п©п╬ п╪п╬я┌п╦п╡п╟п╪ я─п╣п╟п╩я▄п╫п╬п╧ п╤п╦п╥п╫п╦,
+я│п╬п╢п╣я─п╤п╟п╫п╦я▌ п╨п╬п╪п©я▄я▌я┌п╣я─п╫п╬п╧ п©я─п╣я│я│я▀ п╦ я─п╟я│я│я▀п╩п╬п╨.
 
 %prep
 %setup
@@ -154,6 +153,9 @@ cd -
 %_datadir/stardict/dic/*
 
 %changelog
+* Tue Oct 21 2014 Vitaly Lipatov <lav@altlinux.ru> 1.37-alt1
+- new version, about 2450 articles
+
 * Tue Dec 22 2009 Vitaly Lipatov <lav@altlinux.ru> 1.36-alt1
 - new version, build from git
 
