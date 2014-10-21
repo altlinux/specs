@@ -99,7 +99,7 @@
 
 Name: libvirt
 Version: 1.2.9
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -925,6 +925,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Oct 21 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.9-alt2
+- rebuild with parted-3.2-alt1
+
 * Fri Oct 03 2014 Alexey Shabalin <shaba@altlinux.ru> 1.2.9-alt1
 - 1.2.9
 - fixed CVE-2014-3633, CVE-2014-3657

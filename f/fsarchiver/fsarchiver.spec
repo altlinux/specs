@@ -1,19 +1,18 @@
 Summary: Filesystem Archiver for Linux
 Name: fsarchiver
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 License: GPLv2+
 Group: Archiving/Backup
 
 # Automatically added by buildreq on Tue Nov 29 2011
 # optimized out: libcom_err-devel libgpg-error libgpg-error-devel pkg-config
-BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libparted-devel libuuid-devel zlib-devel
-
-BuildRequires: libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libuuid-devel zlib-devel
+BuildRequires: bzlib-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel
+BuildRequires: liblzma-devel liblzo2-devel libparted-devel libuuid-devel zlib-devel
 
 %description
 FSArchiver is a system tool that allows you to save the contents of
@@ -75,10 +74,15 @@ FSArchiver  - системный инструментарий, позволяя�
 
 %files
 %doc COPYING ChangeLog AUTHORS README
+%config %_sysconfdir/%name.conf
 %_sbindir/%name
 %_man8dir/*
 
 %changelog
+* Tue Oct 21 2014 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt2
+- update source to 0.7.0_6a7efc616
+- built with libparted-3.2
+
 * Tue Nov 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.7.0-alt1
 - Major feature: implemented savept, restpt, showpt (save and restore partition tables)
 - Added configuration file: /etc/fsarchiver.conf (it currently only supports "exclude_restpt")
