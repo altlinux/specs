@@ -1,10 +1,11 @@
 %define oname babel
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
-Version: 0.9.6
-Release: alt1.1
+Version: 1.0
+Release: alt1.svn20121012
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -14,12 +15,9 @@ Url: http://babel.edgewall.org
 
 Source: %name-%version.tar
 Source1: CLDR.tar
-Patch: %name-%version-%release.patch
-
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools 
+BuildPreReq: python-module-setuptools-tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
@@ -61,8 +59,6 @@ localization (L10N) can be separated into two different aspects:
 
 %prep
 %setup -a1
-%patch -p1
-mkdir babel/localedata
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -94,6 +90,11 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 
 %check
 python setup.py test
+%if_with python3
+pushd ../python3
+python3 setup.py test
+popd
+%endif
 
 %files
 %_bindir/pybabel
@@ -110,6 +111,9 @@ python setup.py test
 %endif
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20121012
+- Version 1.0
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt1.1
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
