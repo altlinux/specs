@@ -1,6 +1,6 @@
 Name: lxqt-policykit
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Policykit authentication agent
 License: LGPL
@@ -24,8 +24,6 @@ Obsoletes: razorqt-polkit-agent < 0.7.0
 %setup
 
 %build
-# borrowed from ABF spec; https://github.com/lxde/lxde-qt/issues/114
-export CMAKE_PREFIX_PATH=%_libdir/cmake/PolkitQt-1
 %cmake_insource
 %make_build
 
@@ -37,6 +35,9 @@ export CMAKE_PREFIX_PATH=%_libdir/cmake/PolkitQt-1
 %doc AUTHORS
 
 %changelog
+* Tue Oct 21 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt2
+- no need to spoonfeed cmake anymore (upstream#114)
+
 * Wed Oct 15 2014 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
