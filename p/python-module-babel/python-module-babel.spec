@@ -1,11 +1,11 @@
 %define oname babel
 
 %def_with python3
-%def_disable check
+#def_disable check
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.svn20121012
+Version: 2.0
+Release: alt1.dev.git20140407
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -13,17 +13,18 @@ Group: Development/Python
 
 Url: http://babel.edgewall.org
 
+# https://github.com/mitsuhiko/babel.git
 Source: %name-%version.tar
 Source1: CLDR.tar
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools-tests
+BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-pytz python-tools-2to3
 %endif
 %py_requires pytz
@@ -64,6 +65,9 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
 python scripts/import_cldr.py CLDR/
 %python_build
@@ -88,6 +92,8 @@ mv %buildroot%_bindir/pybabel %buildroot%_bindir/pybabel3
 %endif
 %python_install
 
+%make -C docs html
+
 %check
 python setup.py test
 %if_with python3
@@ -100,17 +106,20 @@ popd
 %_bindir/pybabel
 %python_sitelibdir/babel/
 %python_sitelibdir/*.egg-info
-%doc ChangeLog doc
+%doc AUTHORS CHANGES README docs/_build/html
 
 %if_with python3
 %files -n python3-module-%oname
-%doc ChangeLog doc
+%doc AUTHORS CHANGES README docs/_build/html
 %_bindir/pybabel3
 %python3_sitelibdir/babel/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.dev.git20140407
+- Version 2.0-dev
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20121012
 - Version 1.0
 
