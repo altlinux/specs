@@ -1,6 +1,6 @@
 Name: wine-vanilla
-Version: 1.7.28
-Release: alt2
+Version: 1.7.29
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -345,6 +345,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue Oct 21 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.29-alt1
+- new version 1.7.29
+
 * Sat Oct 11 2014 Vitaly Lipatov <lav@altlinux.ru> 1.7.28-alt2
 - update winetricks to 20140302 (ALT bug #30382)
 
