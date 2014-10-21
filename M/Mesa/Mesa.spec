@@ -1,10 +1,11 @@
 %def_enable egl
 %def_enable gles2
 %def_enable wayland_egl
+%def_enable xa
 
 Name: Mesa
 Version: 10.3.1
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -104,6 +105,20 @@ Requires: libwayland-egl = %epoch:%version-%release
 
 %description -n libwayland-egl-devel
 Mesa Wayland-EGL development package
+
+%package -n libxatracker
+Summary: Mesa XA state tracker
+Group: System/Libraries
+
+%description -n libxatracker
+Xorg Gallium3D acceleration library
+
+%package -n libxatracker-devel
+Summary: Mesa XA state tracker development package
+Group: Development/C
+
+%description -n libxatracker-devel
+Xorg Gallium3D acceleration development package
 
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
@@ -213,8 +228,9 @@ framerate information to stdout
 	--with-dri-driverdir=%_libdir/X11/modules/dri \
 %if_enabled wayland_egl
 	--with-egl-platforms=x11,wayland,drm \
-	--enable-gbm
+	--enable-gbm \
 %endif
+	%{subst_enable xa}
 #
 
 %make_build
@@ -325,6 +341,16 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_pkgconfigdir/wayland-egl.pc
 %endif
 
+%if_enabled xa
+%files -n libxatracker
+%_libdir/libxatracker.so.*
+
+%files -n libxatracker-devel
+%_includedir/xa_*.h
+%_libdir/libxatracker.so
+%_pkgconfigdir/xatracker.pc
+%endif
+
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/*swrast*_dri.so
 
@@ -357,6 +383,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Oct 21 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.3.1-alt2
+- enabled XA state tracker
+
 * Mon Oct 13 2014 Valery Inozemtsev <shrek@altlinux.ru> 4:10.3.1-alt1
 - 10.3.1
 
