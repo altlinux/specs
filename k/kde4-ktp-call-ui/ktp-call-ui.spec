@@ -3,8 +3,8 @@
 
 %define rname ktp-call-ui
 Name: kde4-ktp-call-ui
-Version: 0.8.1
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Telepathy VoIP client GUI
@@ -12,14 +12,6 @@ Url: https://projects.kde.org/projects/extragear/network/telepathy/%rname
 License: LGPLv2+
 
 Source0: %rname-%version.tar
-Patch1: ktp-call-ui-0.8.1-gstreamer1-0001-Require-farstream-0.2.patch
-Patch2: ktp-call-ui-0.8.1-gstreamer1-0002-Rename-src-d-to-src_-u.patch
-Patch3: ktp-call-ui-0.8.1-gstreamer1-0003-rename-enable-last-buffer-to-enable-last-sample.patch
-Patch4: ktp-call-ui-0.8.1-gstreamer1-0004-rename-caps-type-name-removing-0.10-format.patch
-Patch5: ktp-call-ui-0.8.1-gstreamer1-0005-ffmpegcolorspace-videoconvert.patch
-Patch6: ktp-call-ui-0.8.1-gstreamer1-0006-Update-cmake-to-look-for-farstream-0.2.patch
-Patch7: ktp-call-ui-0.8.1-gstreamer1-0007-videomaxrate-seems-to-have-been-generalized-into-vid.patch
-Patch8: ktp-call-ui-0.8.1-gstreamer1-0008-Remove-postproc_tmpnoise-from-TfVideoContentHandler-.patch
 
 # Automatically added by buildreq on Mon Jun 18 2012 (-bi)
 # optimized out: automoc boost-devel-headers cmake cmake-modules elfutils farstream farstream-devel fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbus-glib libdbus-glib-devel libdbusmenu-qt2 libfreetype-devel libgio-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-svg libqt4-xml libssl-devel libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel libxml2-devel phonon-devel pkg-config python-base qt-gstreamer xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -50,14 +42,6 @@ Requires: libtelepathy-qt4-devel
 
 %prep
 %setup -qn %rname-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %build
 %K4build
@@ -78,6 +62,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+
 * Mon Sep 29 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt2
 - build with gstreamer1
 

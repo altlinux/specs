@@ -3,7 +3,7 @@
 
 %define rname ktp-common-internals
 Name: kde4-ktp-common-internals
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel libtelepathy-qt4-devel
 BuildRequires: libtelepathy-logger-devel telepathy-logger-qt4-devel
 BuildRequires: kde4libs-devel kde4pimlibs-devel libkpeople-devel
+BuildRequires: libotr5-devel libgcrypt-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -69,6 +70,13 @@ Requires: %name-common >= %version-%release
 %description -n libktploggerprivate4
 %name library.
 
+%package -n libktpotrprivate4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %version-%release
+%description -n libktpotrprivate4
+%name library.
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
@@ -105,14 +113,18 @@ done
 #%_datadir/ontology/telepathy/*
 
 %files core
+%_K4exec/ktp-proxy
 %_K4lib/imports/org/kde/telepathy/
 %_K4lib/*plugin.so
 %_K4lib/ktploggerplugin_tplogger.so
+%_K4cfg/ktp-proxy-config.kcfg
 #%_K4lib/nepomuktelepathyservice.so
 %_K4srv/*plugin.desktop
 %_K4srv/ktploggerplugin_tplogger.desktop
 #%_K4srv/nepomuktelepathyservice.desktop
 %_K4srvtyp/ktp_logger_plugin.desktop
+%_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.Proxy.service
+%_datadir/telepathy/clients/KTp.Proxy.client
 
 %files  -n libktpcommoninternalsprivate4
 %_K4libdir/libktpcommoninternalsprivate.so.*
@@ -122,6 +134,8 @@ done
 %_K4libdir/libktpwidgetsprivate.so.*
 %files  -n libktploggerprivate4
 %_K4libdir/libktploggerprivate.so.*
+%files  -n libktpotrprivate4
+%_K4libdir/libktpotrprivate.so.*
 
 %files devel
 %_K4apps/katepart/syntax/*
@@ -130,6 +144,12 @@ done
 %_K4includedir/KTp/
 
 %changelog
+* Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+
+* Wed May 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt0.M70P.1
+- built for M70P
+
 * Tue May 20 2014 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
 - new version
 
