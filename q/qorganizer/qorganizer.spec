@@ -1,7 +1,7 @@
 %define		src qOrganizer
-Version:	3.1
+Version:	3.1.5
 Name:		qorganizer
-Release:	alt4.qa1
+Release:	alt1
 Summary:	qOrganizer is a personal organizer
 License: 	GPLv2
 Group: 		Office
@@ -9,7 +9,6 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		https://sourceforge.net/projects/qorganizer
 Source0:	http://kent.dl.sourceforge.net/sourceforge/qorganizer/%src-%version.tar.gz
 Source1:	%name.desktop
-Patch0:		%src-qt-4.5.0.patch
 
 # Automatically added by buildreq on Mon Apr 06 2009 (-bi)
 BuildRequires: ImageMagick-tools gcc-c++ libqt4-devel
@@ -23,7 +22,6 @@ a booklet with marks and absences.
 
 %prep
 %setup -q -n %src
-%patch0 -p1
 
 %build
 cd src
@@ -47,8 +45,8 @@ convert -resize 48x48 images/logo.png %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
-* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt4.qa1
-- NMU: rebuilt for debuginfo.
+* Wed Oct 22 2014 Motsyo Gennadi <drool@altlinux.ru> 3.1.5-alt1
+- 3.1.5
 
 * Mon Apr 06 2009 Motsyo Gennadi <drool@altlinux.ru> 3.1-alt4
 - fix build with qt4.5 (thanks to E.Ostapets for help)
