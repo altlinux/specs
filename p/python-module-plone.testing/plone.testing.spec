@@ -1,7 +1,7 @@
 %define oname plone.testing
 Name: python-module-%oname
 Version: 4.0.13
-Release: alt1.dev0.git20140907
+Release: alt2.dev0.git20140907
 Summary: Testing infrastructure for Zope and Plone projects
 License: BSD
 Group: Development/Python
@@ -19,12 +19,16 @@ BuildPreReq: python-module-zope.app.publisher
 BuildPreReq: python-module-zope.site
 BuildPreReq: python-module-zope.testbrowser
 BuildPreReq: python-module-zope.testing
+BuildPreReq: python-module-zope.component-tests
 BuildPreReq: python-module-unittest2 python-module-docutils
+BuildPreReq: python-module-zope.app.testing
+BuildPreReq: python-module-zope.password-tests
+BuildPreReq: python-module-nose
 
 %py_provides %oname
 %py_requires zope.security zope.app.publisher zope.site zope.testbrowser
 %py_requires plone ZODB3 zope.component zope.event zope.configuration
-%py_requires zope.testing
+%py_requires zope.testing zope.component.testing zope.password.testing
 
 %description
 plone.testing provides tools for writing unit and integration tests in a
@@ -46,6 +50,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 %check
 python setup.py test
+nosetests
 
 %files
 %doc *.rst docs/*
@@ -53,6 +58,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Oct 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt2.dev0.git20140907
+- Fixed build with new zope.testbrowser
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt1.dev0.git20140907
 - Initial build for Sisyphus
 
