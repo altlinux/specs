@@ -1,5 +1,5 @@
 Name: mksh
-Version: 40b
+Version: 50d
 Release: alt1
 
 Summary: MirBSD enhanced version of the Korn Shell
@@ -37,6 +37,9 @@ install -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %doc dot.mkshrc
 
 %changelog
+* Wed Oct 22 2014 Alexey Gladkov <legion@altlinux.ru> 50d-alt1
+- new version (R50d).
+
 * Fri Sep 16 2011 Alexey Gladkov <legion@altlinux.ru> 40b-alt1
 - new version (R40b).
 
