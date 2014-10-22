@@ -1,5 +1,5 @@
 Name: zsh
-Version: 5.0.6
+Version: 5.0.7
 Release: alt1
 Epoch: 1
 
@@ -111,6 +111,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Wed Oct 22 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.7-alt1
+- Autobuild version bump to 5.0.7
+
 * Thu Sep 25 2014 Fr. Br. George <george@altlinux.ru> 1:5.0.6-alt1
 - Autobuild version bump to 5.0.6
 
